@@ -810,6 +810,7 @@ namespace Alternet.UI
 
             OnChildInserted(index, childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
+            childControl.OnInsertedToParent(this);
 
             RaiseNotifications((n) => n.AfterChildInserted(this, index, childControl));
         }
@@ -827,6 +828,7 @@ namespace Alternet.UI
                 return;
             OnChildRemoved(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
+            childControl.OnRemovedFromParent(this);
 
             RaiseNotifications((n) => n.AfterChildRemoved(this, childControl));
             if (childControl.Visible && !childControl.IgnoreLayout)

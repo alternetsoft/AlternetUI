@@ -425,17 +425,17 @@ namespace Alternet.UI
             return NativeControl.Handle;
         }
 
-        public SizeD GetPreferredSize(PreferredSizeContext context)
+        public virtual SizeD GetPreferredSize(PreferredSizeContext context)
         {
             return NativeControl.GetPreferredSize(context.AvailableSize);
         }
 
-        public Graphics OpenPaintDrawingContext()
+        public virtual Graphics OpenPaintDrawingContext()
         {
             return new WxGraphics(NativeControl.OpenPaintDrawingContext());
         }
 
-        public void OnNativeControlDestroyed()
+        public virtual void OnNativeControlDestroyed()
         {
             if (needDispose)
             {
@@ -477,7 +477,7 @@ namespace Alternet.UI
             return result;
         }
 
-        public void OnChildInserted(AbstractControl childControl)
+        public virtual void OnChildInserted(AbstractControl childControl)
         {
             if (childControl is GenericControl)
                 return;
@@ -489,7 +489,7 @@ namespace Alternet.UI
             nativeControl?.AddChild(child);
         }
 
-        public void OnChildRemoved(AbstractControl childControl)
+        public virtual void OnChildRemoved(AbstractControl childControl)
         {
             if (childControl is GenericControl)
                 return;
@@ -512,12 +512,12 @@ namespace Alternet.UI
             }
         }
 
-        public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
+        public virtual void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
         {
             NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
         }
 
-        public bool EnableTouchEvents(TouchEventsMask flag)
+        public virtual bool EnableTouchEvents(TouchEventsMask flag)
         {
             return NativeControl.EnableTouchEvents((int)flag);
         }
@@ -527,7 +527,7 @@ namespace Alternet.UI
             NativeControl.InvalidateBestSize();
         }
 
-        public void UpdateFocusFlags(bool canSelect, bool tabStop)
+        public virtual void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
             NativeControl.SetFocusFlags(canSelect, tabStop && canSelect, canSelect);
         }
@@ -546,6 +546,14 @@ namespace Alternet.UI
         }
 
         public virtual void OnSystemColorsChanged()
+        {
+        }
+
+        public virtual void OnRemovedFromParent(AbstractControl parentControl)
+        {
+        }
+
+        public virtual void OnInsertedToParent(AbstractControl parentControl)
         {
         }
     }

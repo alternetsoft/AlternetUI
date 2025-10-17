@@ -173,11 +173,6 @@ namespace PropertyGridSample
                     App.LogReplace($"{prefix}: {st}", prefix);
                 }
             };
-
-            listBox.ParentChanged += (s, e) =>
-            {
-                listBox.RecreateHandler();
-            };
         }
 
         public static void InitStdListBox(object control)

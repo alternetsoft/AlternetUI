@@ -41,6 +41,11 @@ namespace Alternet.UI
             ItemsToPlatform();
         }
 
+        public override void OnInsertedToParent(AbstractControl parentControl)
+        {
+            base.OnInsertedToParent(parentControl);
+        }
+
         public void ItemsToPlatform()
         {
             if (Control is null || Control.Items.Count == 0)

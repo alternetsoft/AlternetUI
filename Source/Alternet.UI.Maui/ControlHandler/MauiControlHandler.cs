@@ -415,5 +415,13 @@ namespace Alternet.UI
 
             c?.Invalidate();
         }
+
+        public virtual void OnRemovedFromParent(AbstractControl parentControl)
+        {
+        }
+
+        public virtual void OnInsertedToParent(AbstractControl parentControl)
+        {
+        }
     }
 }

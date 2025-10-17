@@ -237,6 +237,25 @@ namespace Alternet.UI
         void OnChildRemoved(AbstractControl childControl);
 
         /// <summary>
+        /// Called when the control is removed from its parent control.
+        /// </summary>
+        /// <remarks>This method allows the control to perform any necessary cleanup or state updates when
+        /// it is detached from its parent.</remarks>
+        /// <param name="parentControl">The parent control from which this control was removed.
+        /// Cannot be <see langword="null"/>.</param>
+        void OnRemovedFromParent(AbstractControl parentControl);
+
+        /// <summary>
+        /// Called when the current control is inserted into a parent control.
+        /// </summary>
+        /// <remarks>This method allows the control to perform any necessary initialization or setup  when
+        /// it becomes part of a parent control. The behavior may depend on the specific  implementation of the parent
+        /// control.</remarks>
+        /// <param name="parentControl">The parent control into which this control is being inserted.
+        /// Cannot be <see langword="null"/>.</param>
+        void OnInsertedToParent(AbstractControl parentControl);
+
+        /// <summary>
         /// Attaches this handler to the specified <see cref="Control"/>.
         /// </summary>
         /// <param name="control">The <see cref="Control"/> to attach this

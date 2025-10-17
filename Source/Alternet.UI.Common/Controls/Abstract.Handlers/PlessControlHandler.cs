@@ -338,5 +338,15 @@ namespace Alternet.UI
         public void SetRenderingFlags(ControlRenderingFlags flags)
         {
         }
+
+        /// <inheritdoc/>
+        public void OnRemovedFromParent(AbstractControl parentControl)
+        {
+        }
+
+        /// <inheritdoc/>
+        public void OnInsertedToParent(AbstractControl parentControl)
+        {
+        }
     }
 }

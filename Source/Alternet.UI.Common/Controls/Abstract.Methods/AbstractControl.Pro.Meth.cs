@@ -222,7 +222,7 @@ namespace Alternet.UI
         {
             SuspendLayout();
 
-            if(HasComponents)
+            if (HasComponents)
             {
                 var componentsCopy = components!.ToArray();
                 components!.Clear();
@@ -481,5 +481,28 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         protected virtual HandlerType GetRequiredHandlerType() => HandlerType.Native;
+
+        /// <summary>
+        /// Called when this control is inserted into a parent control.
+        /// </summary>
+        /// <remarks>This method provides an opportunity to perform any initialization or setup required
+        /// when the control becomes part of a parent control. Override this method in a derived  class to implement
+        /// custom behavior.</remarks>
+        /// <param name="parentControl">The parent control into which this control is inserted. Cannot be null.</param>
+        protected virtual void OnInsertedToParent(AbstractControl parentControl)
+        {
+        }
+
+        /// <summary>
+        /// Called when the control is removed from its parent control.
+        /// </summary>
+        /// <remarks>This method provides an opportunity to perform cleanup or respond to the removal of
+        /// the control  from its parent. Override this method in a derived class to implement custom
+        /// behavior.</remarks>
+        /// <param name="parentControl">The parent control from which this control was removed.
+        /// Cannot be null.</param>
+        protected virtual void OnRemovedFromParent(AbstractControl parentControl)
+        {
+        }
     }
 }

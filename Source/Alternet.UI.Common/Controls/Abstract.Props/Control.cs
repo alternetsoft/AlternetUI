@@ -508,15 +508,14 @@ namespace Alternet.UI
         public override void RaiseChildInserted(int index, AbstractControl childControl)
         {
             base.RaiseChildInserted(index, childControl);
-            Handler.OnChildInserted(childControl);
+            RaiseHandlerChildInserted(childControl);
         }
 
         /// <inheritdoc/>
         public override void RaiseChildRemoved(AbstractControl childControl)
         {
             base.RaiseChildRemoved(childControl);
-            if(handler is not null)
-                Handler.OnChildRemoved(childControl);
+            RaiseHandlerChildRemoved(childControl);
         }
 
         /// <summary>
@@ -854,7 +853,7 @@ namespace Alternet.UI
                         var child = Children[i];
                         if (child is GenericControl)
                             continue;
-                        handler.OnChildInserted(child);
+                        RaiseHandlerChildInserted(child);
                     }
                 }
             }
@@ -1022,6 +1021,18 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Handler?.OnSystemColorsChanged();
+        }
+
+        private void RaiseHandlerChildInserted(AbstractControl childControl)
+        {
+            Handler.OnChildInserted(childControl);
+            (childControl as Control)?.Handler.OnInsertedToParent(this);
+        }
+
+        private void RaiseHandlerChildRemoved(AbstractControl childControl)
+        {
+            handler?.OnChildRemoved(childControl);
+            (childControl as Control)?.Handler.OnRemovedFromParent(this);
         }
 
         private class EmptyControl : Control
