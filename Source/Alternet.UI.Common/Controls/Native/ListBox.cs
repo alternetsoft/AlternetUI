@@ -419,5 +419,18 @@ namespace Alternet.UI
         {
             return ControlFactory.Handler.CreateListBoxHandler(this);
         }
+
+        /// <inheritdoc/>
+        protected override void OnInsertedToParent(AbstractControl parentControl)
+        {
+            base.OnInsertedToParent(parentControl);
+
+            // This is needed to fix rendering issues with wxWidgets on Windows
+            // when dark mode is used.
+            if (App.PlatformKind == UIPlatformKind.WxWidgets && App.IsWindowsOS)
+            {
+                RecreateHandler();
+            }
+        }
     }
 }
