@@ -5,9 +5,10 @@
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
 
-  <Import Project="..\Version\StyleCopAnalyzers.props" />  
+  <Import Project="..\Version\StyleCopAnalyzers.props" />
 
   <PropertyGroup>
+    <DefineConstants>$(DefineConstants);ALTERNETUI</DefineConstants>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>

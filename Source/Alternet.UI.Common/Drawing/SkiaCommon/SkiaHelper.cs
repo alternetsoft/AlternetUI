@@ -7,7 +7,11 @@ using System.Text;
 
 using SkiaSharp;
 
+#if ALTERNETUI
 namespace Alternet.Skia
+#else
+namespace Alternet.Editor.Skia
+#endif
 {
     /// <summary>
     /// Provides utility methods and helpers for working with SkiaSharp, a 2D graphics library.
@@ -635,6 +639,322 @@ namespace Alternet.Skia
         }
 
         /// <summary>
+        /// Draws a dotted line on the specified graphics context, alternating between two colors.
+        /// </summary>
+        /// <remarks>This method supports drawing horizontal or vertical dotted lines only.
+        /// The line alternates between <paramref name="color1"/> and
+        /// <paramref name="color2"/> (or transparency if <paramref name="color2"/> is
+        /// null). The size of the dots is determined by the
+        /// <paramref name="size"/> parameter.</remarks>
+        /// <param name="dc">The <see cref="SKCanvas"/> object used to draw the line.</param>
+        /// <param name="x1">The starting x-coordinate of the line.</param>
+        /// <param name="y1">The starting y-coordinate of the line.</param>
+        /// <param name="x2">The ending x-coordinate of the line.</param>
+        /// <param name="y2">The ending y-coordinate of the line.</param>
+        /// <param name="color1">The primary color used for the dots in the line.</param>
+        /// <param name="color2">The secondary color used for the dots in the line.
+        /// If set to null, the line will
+        /// alternate between the primary color and transparency.</param>
+        /// <param name="size">The size of each dot in pixels. Defaults to 1.
+        /// Larger values result in thicker dots.</param>
+        public static void DrawDotLine(
+            SKCanvas dc,
+            float x1,
+            float y1,
+            float x2,
+            float y2,
+            SKPaint color1,
+            SKPaint? color2,
+            int size = 1)
+        {
+            var pxSize = size;
+
+            bool isTransparent = color2 is null;
+            if (x1 == x2)
+            {
+                if (pxSize > 1)
+                {
+                    int oldStart = 0;
+                    SKPaint? oldColor = null;
+                    SKPaint? color;
+
+                    for (int i = 0; i < y2 - y1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            color = color1;
+                        else
+                            color = color2;
+
+                        if (i != 0 && color != oldColor)
+                        {
+                            if (oldColor != null)
+                            {
+                                DrawVertLine(
+                                    dc,
+                                    oldColor,
+                                    new SKPoint(x1, oldStart + y1),
+                                    i - oldStart,
+                                    1);
+                            }
+
+                            oldStart = i;
+                            oldColor = color;
+                        }
+                    }
+
+                    if (oldColor != null && oldStart + y1 < y2)
+                    {
+                        DrawVertLine(
+                            dc,
+                            oldColor,
+                            new SKPoint(x1, oldStart + y1),
+                            y2 - oldStart - y1,
+                            1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < y2 - y1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            DrawHorzLine(dc, color1, new SKPoint(x1, i + y1), 1, 1);
+                        else
+                            if (color2 is not null)
+                            DrawHorzLine(dc, color2, new SKPoint(x1, i + y1), 1, 1);
+                    }
+                }
+            }
+            else
+            if (y1 == y2)
+            {
+                if (pxSize > 1)
+                {
+                    int oldStart = 0;
+                    SKPaint? oldColor = null;
+                    SKPaint? color;
+
+                    for (int i = 0; i < x2 - x1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            color = color1;
+                        else
+                            color = color2;
+
+                        if (i != 0 && color != oldColor)
+                        {
+                            if (oldColor != null)
+                            {
+                                DrawHorzLine(
+                                    dc,
+                                    oldColor,
+                                    new SKPoint(oldStart + x1, y1),
+                                    i - oldStart,
+                                    1);
+                            }
+
+                            oldStart = i;
+                            oldColor = color;
+                        }
+                    }
+
+                    if (oldColor != null && oldStart + y1 < y2)
+                    {
+                        DrawHorzLine(
+                            dc,
+                            oldColor,
+                            new SKPoint(oldStart + x1, y1),
+                            x2 - x1 - oldStart,
+                            1);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < x2 - x1; i++)
+                    {
+                        if ((i + y1) % (size * 2) < size)
+                            DrawHorzLine(dc, color1, new SKPoint(i + x1, y1), 1, 1);
+                        else
+                            if (color2 is not null)
+                            DrawHorzLine(dc, color2, new SKPoint(i + x1, y1), 1, 1);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws a horizontal line on the specified canvas.
+        /// </summary>
+        /// <param name="dc">The <see cref="SKCanvas"/> on which the line will be drawn.</param>
+        /// <param name="brush">The <see cref="SKPaint"/> used to define the color, style,
+        /// and other properties of the line.</param>
+        /// <param name="point">The starting point of the line, represented as a <see cref="SKPoint"/>.</param>
+        /// <param name="length">The length of the horizontal line.</param>
+        /// <param name="width">The width of the horizontal line.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawHorzLine(
+            SKCanvas dc,
+            SKPaint brush,
+            SKPoint point,
+            float length,
+            float width)
+        {
+            var rect = SKRect.Create(point, new SKSize(length, width));
+            dc.DrawRect(rect, brush);
+        }
+
+        /// <summary>
+        /// Draws a border around the specified rectangle using the provided paint and border width.
+        /// </summary>
+        /// <param name="dc">The <see cref="SKCanvas"/> on which the border will be drawn.</param>
+        /// <param name="paint">The <see cref="SKPaint"/> used to define the appearance of the border.</param>
+        /// <param name="rect">The <see cref="SKRect"/> representing the rectangle
+        /// around which the border will be drawn.</param>
+        /// <param name="borderWidth">The width of the border. The default value is 1.</param>
+        public static void DrawBorderWithPaint(
+            SKCanvas dc,
+            SKPaint paint,
+            SKRect rect,
+            float borderWidth = 1)
+        {
+            dc.DrawRect(GetTopLineRect(rect, borderWidth), paint);
+            dc.DrawRect(GetBottomLineRect(rect, borderWidth), paint);
+            dc.DrawRect(GetLeftLineRect(rect, borderWidth), paint);
+            dc.DrawRect(GetRightLineRect(rect, borderWidth), paint);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the left border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static SKRect GetLeftLineRect(this SKRect rect, float width)
+        {
+            var point = new SKPoint(rect.Left, rect.Top);
+            var size = new SKSize(width, rect.Height);
+            return SKRect.Create(point, size);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="SKPath"/> from a collection of drawing points,
+        /// optionally specifying the fill mode.
+        /// </summary>
+        /// <remarks>The method creates a closed path by connecting the points in the order they appear in
+        /// the span,  and then closing the path to form a polygon. The <paramref name="fillMode"/>
+        /// determines how the
+        /// interior  of the polygon is filled.</remarks>
+        /// <param name="points">A read-only span of <see cref="System.Drawing.Point"/> representing
+        /// the vertices of the path.  Must contain
+        /// at least three points to create a valid path.</param>
+        /// <param name="fillMode">The fill mode to use for the path. Defaults to <see cref="SkiaFillMode.Alternate"/>.</param>
+        /// <returns>An <see cref="SKPath"/> representing the closed polygon defined by the provided points,  or <see
+        /// langword="null"/> if the <paramref name="points"/> span is empty
+        /// or contains fewer than three points.</returns>
+        public static SKPath? GetPathFromSystemPoints(
+            ReadOnlySpan<System.Drawing.Point> points,
+            SkiaFillMode fillMode = SkiaFillMode.Alternate)
+        {
+            if (points == null || points.Length < 3)
+                return null;
+
+            var path = new SKPath
+            {
+                FillType = fillMode.ToSkia(),
+            };
+
+            // Move to the first point
+            path.MoveTo(points[0].X, points[0].Y);
+
+            // Draw lines between the points
+            for (int i = 1; i < points.Length; i++)
+            {
+                path.LineTo(points[i].X, points[i].Y);
+            }
+
+            // Ensures the polygon is closed
+            path.Close();
+
+            return path;
+        }
+
+        /// <summary>
+        /// Converts <see cref="SkiaFillMode"/> to <see cref="SKPathFillType"/>.
+        /// </summary>
+        /// <param name="fillMode">Value to convert.</param>
+        /// <returns></returns>
+        public static SKPathFillType ToSkia(this SkiaFillMode fillMode)
+        {
+            switch (fillMode)
+            {
+                case SkiaFillMode.Alternate:
+                    return SKPathFillType.EvenOdd;
+                case SkiaFillMode.Winding:
+                    return SKPathFillType.Winding;
+                default:
+                    return SKPathFillType.EvenOdd;
+            }
+        }
+
+        /// <summary>
+        /// Gets rectangle of the right border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static SKRect GetRightLineRect(this SKRect rect, float width)
+        {
+            var point = new SKPoint(rect.Right - width, rect.Top);
+            var size = new SKSize(width, rect.Height);
+            return SKRect.Create(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the bottom border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static SKRect GetBottomLineRect(this SKRect rect, float width)
+        {
+            var point = new SKPoint(rect.Left, rect.Bottom - width);
+            var size = new SKSize(rect.Width, width);
+            return SKRect.Create(point, size);
+        }
+
+        /// <summary>
+        /// Gets rectangle of the top border edge with the specified width.
+        /// </summary>
+        /// <param name="rect">Border rectangle.</param>
+        /// <param name="width">Border side width.</param>
+        public static SKRect GetTopLineRect(this SKRect rect, float width)
+        {
+            var point = new SKPoint(rect.Left, rect.Top);
+            var size = new SKSize(rect.Width, width);
+            return SKRect.Create(point, size);
+        }
+
+        /// <summary>
+        /// Draws a vertical line on the specified canvas.
+        /// </summary>
+        /// <param name="dc">The <see cref="SKCanvas"/> on which the vertical line will be drawn.</param>
+        /// <param name="brush">The <see cref="SKPaint"/> used to define the color, style,
+        /// and other properties of the line.</param>
+        /// <param name="point">The starting point of the vertical line, representing the
+        /// top-left corner of the line's bounding rectangle.</param>
+        /// <param name="length">The length of the vertical line, measured in the coordinate
+        /// space of the canvas.</param>
+        /// <param name="width">The width of the vertical line, measured in the coordinate
+        /// space of the canvas.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawVertLine(
+            SKCanvas dc,
+            SKPaint brush,
+            SKPoint point,
+            float length,
+            float width)
+        {
+            var rect = SKRect.Create(point, new SKSize(width, length));
+            dc.DrawRect(rect, brush);
+        }
+
+        /// <summary>
         /// Computes the pixel-snapping offset (in canvas/logical coordinates) that aligns
         /// 1px strokes to device pixel centers, taking the canvas TotalMatrix into account.
         /// Returns an SKPoint { X = offsetX, Y = offsetY } where:
@@ -661,6 +981,150 @@ namespace Alternet.Skia
             float offsetY = 0.5f / scaleY;
 
             return new SKPoint(offsetX, offsetY);
+        }
+
+        /// <summary>
+        /// Draws a line on the canvas using a dash style similar to System.Drawing.Pen.DashStyle.
+        /// This helper creates and configures an SKPaint internally (caller does not own/dispose it).
+        /// </summary>
+        /// <param name="canvas">Canvas to draw on (not null).</param>
+        /// <param name="p1">Start point in canvas coordinates.</param>
+        /// <param name="p2">End point in canvas coordinates.</param>
+        /// <param name="color">Stroke color.</param>
+        /// <param name="strokeWidth">Stroke width in canvas units (use 0 for hairline).</param>
+        /// <param name="dashStyle">Dash style from System.Drawing.Drawing2D.DashStyle.</param>
+        /// <param name="customPattern">
+        /// If dashStyle == DashStyle.Custom, this supplies the pattern as
+        /// device pixels: {on, off, on, off, ...}.
+        /// If null when Custom is requested, falls back to a dotted pattern.
+        /// </param>
+        /// <param name="dashOffset">
+        /// Phase/offset in device pixels. This is converted to canvas units
+        /// using the canvas transform so animation/phase
+        /// matches device-space expectations.
+        /// </param>
+        /// <param name="antialiasing">Whether to enable antialiasing on the paint.</param>
+        public static void DrawDashedLine(
+            SKCanvas canvas,
+            SKPoint p1,
+            SKPoint p2,
+            SKColor color,
+            float strokeWidth = 1f,
+            SkiaDashStyle dashStyle = SkiaDashStyle.Solid,
+            float[]? customPattern = null,
+            float dashOffset = 0f,
+            bool antialiasing = true)
+        {
+            if (canvas is null) throw new ArgumentNullException(nameof(canvas));
+
+            // Create paint
+            using var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Stroke,
+                Color = color,
+                StrokeWidth = strokeWidth,
+                IsAntialias = antialiasing,
+                StrokeJoin = SKStrokeJoin.Miter,
+            };
+
+            // Compute effective canvas scale so dash lengths/offsets specified in "device pixels"
+            // are converted to canvas units. This keeps dash pattern visually consistent across DPI/scale.
+            float scale = SkiaHelper.GetAverageCanvasScale(canvas);
+            if (scale <= 0f) scale = 1f; // safety
+
+            // Common base patterns (device-pixel units). These approximate GDI+ defaults.
+            // We will scale them by strokeWidth (so wider pens yield proportionally longer dashes).
+            // You can tweak these constants to better match your exact target renderer.
+            const float baseDash = 4f;
+            const float baseGap = 2f;
+            const float baseDot = 1f;
+
+            // pattern described in device pixels (on, off, on, off...)
+            float[]? patternDevice;
+
+            switch (dashStyle)
+            {
+                case SkiaDashStyle.Solid:
+                case SkiaDashStyle.Custom when customPattern == null || customPattern.Length == 0:
+                    patternDevice = null;
+                    break;
+
+                case SkiaDashStyle.Dash:
+                    patternDevice = new[]
+                    {
+                        baseDash * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    break;
+
+                case SkiaDashStyle.Dot:
+                    // short "on" + gap, with round caps produces dots
+                    patternDevice = new[]
+                    {
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    paint.StrokeCap = SKStrokeCap.Round;
+                    break;
+
+                case SkiaDashStyle.DashDot:
+                    patternDevice = new[]
+                    {
+                        baseDash * strokeWidth,
+                        baseGap * strokeWidth,
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    paint.StrokeCap = SKStrokeCap.Round;
+                    break;
+                case SkiaDashStyle.DashDotDot:
+                    patternDevice = new[]
+                    {
+                        baseDash * strokeWidth,
+                        baseGap * strokeWidth,
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                        baseDot * strokeWidth,
+                        baseGap * strokeWidth,
+                    };
+                    paint.StrokeCap = SKStrokeCap.Round;
+                    break;
+                case SkiaDashStyle.Custom:
+                    // customPattern is expected in device pixels; clone defensively
+                    if (customPattern != null && customPattern.Length > 0)
+                    {
+                        patternDevice = new float[customPattern.Length];
+                        Array.Copy(customPattern, patternDevice, customPattern.Length);
+                    }
+                    else
+                    {
+                        // fallback to dot if nothing provided
+                        patternDevice = new[] { baseDot * strokeWidth, baseGap * strokeWidth };
+                        paint.StrokeCap = SKStrokeCap.Round;
+                    }
+
+                    break;
+
+                default:
+                    patternDevice = null;
+                    break;
+            }
+
+            if (patternDevice != null)
+            {
+                // convert pattern from device pixels into canvas units by dividing by scale
+                var patternCanvas = new float[patternDevice.Length];
+                for (int i = 0; i < patternDevice.Length; i++)
+                    patternCanvas[i] = patternDevice[i] / scale;
+
+                // convert dashOffset (device pixels) to canvas units as well
+                float phaseCanvas = dashOffset / scale;
+
+                paint.PathEffect = SKPathEffect.CreateDash(patternCanvas, phaseCanvas);
+            }
+
+            // Draw the line
+            canvas.DrawLine(p1, p2, paint);
         }
     }
 }

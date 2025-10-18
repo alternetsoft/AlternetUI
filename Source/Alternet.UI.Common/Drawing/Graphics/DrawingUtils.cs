@@ -895,27 +895,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws a horizontal line on the specified canvas.
-        /// </summary>
-        /// <param name="dc">The <see cref="SKCanvas"/> on which the line will be drawn.</param>
-        /// <param name="brush">The <see cref="SKPaint"/> used to define the color, style,
-        /// and other properties of the line.</param>
-        /// <param name="point">The starting point of the line, represented as a <see cref="PointD"/>.</param>
-        /// <param name="length">The length of the horizontal line.</param>
-        /// <param name="width">The width of the horizontal line.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void DrawHorzLine(
-            SKCanvas dc,
-            SKPaint brush,
-            SKPoint point,
-            Coord length,
-            Coord width)
-        {
-            var rect = SKRect.Create(point, new SKSize(length, width));
-            dc.DrawRect(rect, brush);
-        }
-
-        /// <summary>
         /// Draws vertical line using <see cref="Graphics.FillRectangle(Brush,RectD)"/>.
         /// </summary>
         /// <param name="dc">Drawing context.</param>
@@ -933,30 +912,6 @@ namespace Alternet.UI
         {
             var rect = new RectD(point, new SizeD(width, length));
             dc.FillRectangle(brush, rect);
-        }
-
-        /// <summary>
-        /// Draws a vertical line on the specified canvas.
-        /// </summary>
-        /// <param name="dc">The <see cref="SKCanvas"/> on which the vertical line will be drawn.</param>
-        /// <param name="brush">The <see cref="SKPaint"/> used to define the color, style,
-        /// and other properties of the line.</param>
-        /// <param name="point">The starting point of the vertical line, representing the
-        /// top-left corner of the line's bounding rectangle.</param>
-        /// <param name="length">The length of the vertical line, measured in the coordinate
-        /// space of the canvas.</param>
-        /// <param name="width">The width of the vertical line, measured in the coordinate
-        /// space of the canvas.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void DrawVertLine(
-            SKCanvas dc,
-            SKPaint brush,
-            SKPoint point,
-            Coord length,
-            Coord width)
-        {
-            var rect = SKRect.Create(point, new SKSize(width, length));
-            dc.DrawRect(rect, brush);
         }
 
         /// <summary>
@@ -1016,26 +971,6 @@ namespace Alternet.UI
             dc.FillRectangle(brush, GetBottomLineRect(rect, borderWidth));
             dc.FillRectangle(brush, GetLeftLineRect(rect, borderWidth));
             dc.FillRectangle(brush, GetRightLineRect(rect, borderWidth));
-        }
-
-        /// <summary>
-        /// Draws a border around the specified rectangle using the provided paint and border width.
-        /// </summary>
-        /// <param name="dc">The <see cref="SKCanvas"/> on which the border will be drawn.</param>
-        /// <param name="paint">The <see cref="SKPaint"/> used to define the appearance of the border.</param>
-        /// <param name="rect">The <see cref="RectD"/> representing the rectangle
-        /// around which the border will be drawn.</param>
-        /// <param name="borderWidth">The width of the border. The default value is 1.</param>
-        public static void DrawBorderWithPaint(
-            SKCanvas dc,
-            SKPaint paint,
-            SKRect rect,
-            Coord borderWidth = 1)
-        {
-            dc.DrawRect(GetTopLineRect(rect, borderWidth), paint);
-            dc.DrawRect(GetBottomLineRect(rect, borderWidth), paint);
-            dc.DrawRect(GetLeftLineRect(rect, borderWidth), paint);
-            dc.DrawRect(GetRightLineRect(rect, borderWidth), paint);
         }
 
         /// <summary>
