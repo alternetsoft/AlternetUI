@@ -11,11 +11,6 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    /*
-     Please do not remove StructLayout(LayoutKind.Sequential) atrtribute.
-     Also do not change order of the fields.
-    */
-
     /// <summary>
     /// Stores the location and size of a rectangular region.
     /// </summary>
@@ -28,17 +23,37 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly RectI Empty;
 
-#pragma warning disable
-        [FieldOffset(0)] private int x;
-        [FieldOffset(4)] private int y;
-        [FieldOffset(0)] private PointI location;
-        [FieldOffset(0)] private ulong xy;
+        [FieldOffset(0)]
+        private int x;
+        
+        [FieldOffset(4)]
+        private int y;
+        
+        [FieldOffset(8)]
+        private int width;
+        
+        [FieldOffset(12)]
+        private int height;
 
-        [FieldOffset(8)] private int width;
-        [FieldOffset(12)] private int height;
-        [FieldOffset(8)] private SizeI size;
-        [FieldOffset(8)] private ulong wh;
+        [FieldOffset(0)]
+        private PointI location;
+        
+        [FieldOffset(8)]
+        private SizeI size;
+
+#pragma warning disable
+        [FieldOffset(0)]
+        private ulong xy;
+        
+        [FieldOffset(8)]
+        private ulong wh;
 #pragma warning restore
+
+        [FieldOffset(0)]
+        private SKPointI skiaLocation;
+
+        [FieldOffset(8)]
+        private SKSizeI skiaSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='Drawing.RectI'/> class with the
@@ -90,6 +105,32 @@ namespace Alternet.Drawing
             set
             {
                 size = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the SkiaSharp location (<see cref="SKPointI"/>) of this rectangle.
+        /// </summary>
+        [Browsable(false)]
+        public readonly SKPointI SkiaLocation
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return skiaLocation;
+            }
+        }
+
+        /// <summary>
+        /// Gets the SkiaSharp size (<see cref="SKSizeI"/>) of this rectangle.
+        /// </summary>
+        [Browsable(false)]
+        public readonly SKSizeI SkiaSize
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return skiaSize;
             }
         }
 
