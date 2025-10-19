@@ -1361,12 +1361,15 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">Item to add.</param>
         /// <param name="kind">Item kind.</param>
+        /// <param name="wait">Indicates whether the method should wait
+        /// for the log item to be processed.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AddLogItem(
             TreeViewItem item,
-            LogItemKind kind = LogItemKind.Information)
+            LogItemKind kind = LogItemKind.Information,
+            bool wait = false)
         {
-            AddLogItem(new(item, kind), false);
+            AddLogItem(new(item, kind), wait);
         }
 
         /// <summary>
@@ -1445,8 +1448,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds log item.
+        /// Adds a log item to the logging system, optionally waiting for the operation to complete.
         /// </summary>
+        /// <remarks>If the logging system is configured to use a log queue, the log item is enqueued
+        /// before processing. The processing behavior depends on the value of the <paramref name="wait"/>
+        /// parameter.</remarks>
+        /// <param name="item">The log item to be added. This parameter cannot be null.</param>
+        /// <param name="wait">A value indicating whether the method should wait for the log item to be processed.
+        /// If <see langword="true"/>, the method blocks until the log item is processed;
+        /// otherwise, the operation is performed asynchronously.</param>
         public static void AddLogItem(LogUtils.LogItem item, bool wait)
         {
             if (UseLogQueue)
