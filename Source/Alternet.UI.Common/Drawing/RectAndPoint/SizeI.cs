@@ -6,19 +6,16 @@ using System.Runtime.InteropServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
-    /*
-        Please do not remove StructLayout(LayoutKind.Sequential) attribute.
-        Also do not change order of the fields.
-    */
-
     /// <summary>
     /// Represents the size of a rectangular region with an ordered pair
     /// of width and height.
     /// </summary>
     [Serializable]
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    [StructLayout(LayoutKind.Explicit)]
     public struct SizeI : IEquatable<SizeI>
     {
         /// <summary>
@@ -41,8 +38,22 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly SizeI One = new(1, 1);
 
-        private int width; // Do not rename (binary serialization)
-        private int height; // Do not rename (binary serialization)
+        [FieldOffset(0)]
+        private int width;
+
+        [FieldOffset(4)]
+        private int height;
+
+#pragma warning disable
+        [FieldOffset(0)]
+        private long wh;
+#pragma warning restore
+
+        [FieldOffset(0)]
+        private SKPointI skiaPoint;
+
+        [FieldOffset(0)]
+        private SKSizeI skiaSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='SizeI'/>
@@ -54,6 +65,16 @@ namespace Alternet.Drawing
         {
             width = pt.X;
             height = pt.Y;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SizeI"/> struct using the specified <see cref="SKSizeI"/>.
+        /// </summary>
+        /// <param name="size">The <see cref="SKSizeI"/> value to initialize the <see cref="SizeI"/> instance.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeI(SKSizeI size)
+        {
+            skiaSize = size;
         }
 
         /// <summary>
@@ -102,7 +123,7 @@ namespace Alternet.Drawing
         /// width and height.
         /// </summary>
         [Browsable(false)]
-        public readonly bool IsEmpty => width == 0 && height == 0;
+        public readonly bool IsEmpty => wh == 0;
 
         /// <summary>
         /// Gets <see cref="SizeI"/> with absolute values of (Width, Height).
@@ -140,7 +161,14 @@ namespace Alternet.Drawing
         /// Gets whether width and height are equal.
         /// </summary>
         [Browsable(false)]
-        public readonly bool SameWidthHeight => width == height;
+        public readonly bool SameWidthHeight
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return width == height;
+            }
+        }
 
         /// <summary>
         /// Gets minimal of width and height.
@@ -148,6 +176,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly int MinWidthHeight
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return Math.Min(width, height);
@@ -160,6 +189,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly int MaxWidthHeight
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return Math.Max(width, height);
@@ -201,6 +231,18 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator SizeD(SizeI p) => new(p.Width, p.Height);
+
+        /// <summary>
+        /// Implicitly converts a <see cref="SizeI"/> instance to an <see cref="SKSizeI"/> instance.
+        /// </summary>
+        /// <param name="size">The <see cref="SizeI"/> instance to convert.</param>
+        public static implicit operator SKSizeI(SizeI size) => size.skiaSize;
+
+        /// <summary>
+        /// Converts an <see cref="SKSizeI"/> to a <see cref="SizeI"/>.
+        /// </summary>
+        /// <param name="size">The <see cref="SKSizeI"/> instance to convert.</param>
+        public static implicit operator SizeI(SKSizeI size) => new(size);
 
         /// <summary>
         /// Converts the specified <see cref='int'/> to a <see cref='SizeI'/>.
@@ -294,15 +336,13 @@ namespace Alternet.Drawing
         /// Tests whether two <see cref='SizeI'/> objects are identical.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(SizeI sz1, SizeI sz2) =>
-            sz1.Width == sz2.Width && sz1.Height == sz2.Height;
+        public static bool operator ==(SizeI sz1, SizeI sz2) => sz1.wh == sz2.wh;
 
         /// <summary>
         /// Tests whether two <see cref='SizeI'/> objects are different.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator !=(SizeI sz1, SizeI sz2) =>
-            !(sz1 == sz2);
+        public static bool operator !=(SizeI sz1, SizeI sz2) => !(sz1 == sz2);
 
         /// <summary>
         /// Gets maximal width and height from the two specified <see cref="SizeI"/> values.
@@ -363,6 +403,7 @@ namespace Alternet.Drawing
         /// Contracts a <see cref='SizeI'/> by another
         /// <see cref='SizeI'/> .
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SizeI Subtract(SizeI sz1, SizeI sz2) =>
             new(
                 unchecked(sz1.Width - sz2.Width),
@@ -401,12 +442,27 @@ namespace Alternet.Drawing
         /// <param name="other">An object to compare with this object.</param>
         /// <returns><c>true</c> if the current object is equal to other;
         /// otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly bool Equals(SizeI other) => this == other;
+
+        /// <summary>
+        /// Converts the current instance to an <see cref="SKSizeI"/> structure.
+        /// </summary>
+        /// <returns>An <see cref="SKSizeI"/> representing the size of the current instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly SKSizeI ToSkiaSize() => skiaSize;
+
+        /// <summary>
+        /// Converts the current instance to an <see cref="SKPointI"/>.
+        /// </summary>
+        /// <returns>An <see cref="SKPointI"/> representing the current instance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly SKPointI ToSkiaPoint() => skiaPoint;
 
         /// <summary>
         /// Returns a hash code.
         /// </summary>
-        public override readonly int GetHashCode() => (Width, Height).GetHashCode();
+        public override readonly int GetHashCode() => wh.GetHashCode();
 
         /// <summary>
         /// Creates new <see cref="SizeI"/> with the height of this object
@@ -425,6 +481,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="newHeight">The height to use in the returned <see cref="SizeI"/>.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly SizeI WithHeight(int newHeight)
         {
             return new(width, newHeight);
