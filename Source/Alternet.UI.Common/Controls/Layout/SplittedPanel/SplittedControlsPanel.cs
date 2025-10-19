@@ -177,11 +177,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds <see cref="Action"/> to the <see cref="ActionsControl"/>.
+        /// Create <see cref="Action"/> which can be added to the <see cref="ActionsControl"/>.
         /// </summary>
         /// <param name="title">Action title.</param>
         /// <param name="action">Action method.</param>
-        public virtual ListControlItem AddAction(string title, Action? action)
+        public virtual TreeViewItem CreateAction(string title, Action? action)
         {
             TreeViewItem item = new(title)
             {
@@ -198,6 +198,17 @@ namespace Alternet.UI
                 },
             };
 
+            return item;
+        }
+
+        /// <summary>
+        /// Adds <see cref="Action"/> to the <see cref="ActionsControl"/>.
+        /// </summary>
+        /// <param name="title">Action title.</param>
+        /// <param name="action">Action method.</param>
+        public virtual TreeViewItem AddAction(string title, Action? action)
+        {
+            var item = CreateAction(title, action);
             ActionsControl.Add(item);
             return item;
         }
@@ -221,7 +232,10 @@ namespace Alternet.UI
                 RemoveActions();
                 AddActions(type);
                 if (addMethods)
+                {
+                    ActionsControl.AddSeparator();
                     AddMethodsAsActions(type, instance);
+                }
             }
             finally
             {
@@ -239,6 +253,9 @@ namespace Alternet.UI
         public virtual void AddMethodsAsActions(Type type, object? instance)
         {
             var methods = AssemblyUtils.EnumMethods(type);
+
+            var actionsToSort = new List<TreeViewItem>();
+
             foreach (var method in methods)
             {
                 if (method.IsSpecialName)
@@ -255,7 +272,7 @@ namespace Alternet.UI
                 if (!browsable)
                     continue;
                 var methodName = $"{method.Name}()";
-                var methodNameForDisplay = $"<b>{methodName}</b>";
+                var methodNameForDisplay = $"{method.DeclaringType.Name}.<b>{methodName}</b>";
 
                 if (resultIsVoid)
                 {
@@ -266,11 +283,26 @@ namespace Alternet.UI
                     var retParamDisplayName =
                     AssemblyUtils.GetTypeDisplayName(retParam.ParameterType);
 
+                    retParamDisplayName = StringUtils.RemovePrefix(
+                        retParamDisplayName,
+                        "Alternet.UI.",
+                        StringComparison.Ordinal);
+
+                    retParamDisplayName = StringUtils.RemovePrefix(
+                        retParamDisplayName,
+                        "Alternet.Drawing.",
+                        StringComparison.Ordinal);
+
+                    retParamDisplayName = StringUtils.RemovePrefix(
+                        retParamDisplayName,
+                        "Alternet.",
+                        StringComparison.Ordinal);
+
                     methodNameForDisplay
                     = $"{methodNameForDisplay} : {retParamDisplayName}";
                 }
 
-                var item = AddAction(methodName, () =>
+                var item = CreateAction(methodName, () =>
                 {
                     var selectedControl = instance;
                     if (selectedControl is null)
@@ -278,8 +310,16 @@ namespace Alternet.UI
                     AssemblyUtils.InvokeMethodAndLogResult(selectedControl, method);
                 });
 
+                actionsToSort.Add(item);
+
                 item.DisplayText = methodNameForDisplay;
                 item.TextHasBold = true;
+            }
+
+            var orderedActions = actionsToSort.OrderBy(item => item.DisplayText);
+            foreach (var action in orderedActions)
+            {
+                ActionsControl.Add(action);
             }
         }
 
