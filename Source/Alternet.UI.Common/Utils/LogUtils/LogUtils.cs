@@ -1012,7 +1012,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="parent">The parent tree item to which the logged elements will be added.</param>
         /// <param name="result">The object to log, which may be an array or an enumerable collection.</param>
-        public static void LogAsTreeItemChilds(TreeViewItem parent, object? result)
+        public static bool LogAsTreeItemChilds(TreeViewItem parent, object? result)
         {
             if (result is Array array)
             {
@@ -1027,6 +1027,8 @@ namespace Alternet.UI
                 {
                     parent.AddWithText("... (truncated after 100 items)");
                 }
+
+                return true;
             }
             else
             if (result is IEnumerable enumerable)
@@ -1047,7 +1049,10 @@ namespace Alternet.UI
                 }
 
                 parent.PrependWithText($"Total Items: {EnumerableUtils.GetCount(enumerable)}");
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>

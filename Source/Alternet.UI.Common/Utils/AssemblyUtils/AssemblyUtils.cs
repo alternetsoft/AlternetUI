@@ -2185,16 +2185,18 @@ namespace Alternet.UI
 
                 var itemText = $"Called <b>{declaringType.Name}.{methodName}</b>";
 
+                var withChilds = false;
+
                 if (!resultIsVoid)
                 {
                     itemText += $" with result = <b>{result}</b>";
 
-                    LogUtils.LogAsTreeItemChilds(item, result);
+                    withChilds = LogUtils.LogAsTreeItemChilds(item, result);
                 }
 
                 item.Text = itemText;
 
-                App.AddLogItem(item);
+                App.AddLogItem(item, LogItemKind.Information, true);
 
                 return true;
             }
