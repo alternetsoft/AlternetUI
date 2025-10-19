@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -17,7 +18,8 @@ namespace Alternet.Editor.Skia
     /// Provides utility methods and helpers for working with SkiaSharp, a 2D graphics library.
     /// This class contains methods that do not use Alternet.UI.
     /// </summary>
-    /// <remarks>This class contains static methods designed to simplify common tasks when using SkiaSharp. It
+    /// <remarks>This class contains static methods designed to simplify common tasks
+    /// when using SkiaSharp. It
     /// is intended to be a central place for reusable SkiaSharp-related functionality.</remarks>
     public static class SkiaHelper
     {
@@ -955,6 +957,316 @@ namespace Alternet.Editor.Skia
         }
 
         /// <summary>
+        /// Checks whether array of <see cref="SKPoint"/> parameter is ok.
+        /// </summary>
+        /// <param name="points">Parameter value.</param>
+        /// <exception cref="Exception">Raised if parameter is not ok.</exception>
+        [Conditional("DEBUG")]
+        [System.Diagnostics.DebuggerNonUserCodeAttribute]
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DebugBezierPointsAssert(ReadOnlySpan<SKPoint> points)
+        {
+            var length = points.Length;
+
+            if (length == 0)
+                return;
+
+            if ((length - 1) % 3 != 0)
+            {
+                throw new ArgumentException(
+                    "The number of points should be a multiple of 3 plus 1, such as 4, 7, or 10.",
+                    nameof(points));
+            }
+        }
+
+        /// <summary>
+        /// Draws a series of Bezier splines from an array of <see cref="SKPoint"/> structures.
+        /// </summary>
+        /// <param name="pen"><see cref="SKPaint"/> that determines the color, width, and style
+        /// of the curve.</param>
+        /// <param name="points">
+        /// Array of <see cref="SKPoint"/> structures that represent the points that
+        /// determine the curve.
+        /// The number of points in the array should be a multiple of 3 plus 1, such as 4, 7, or 10.
+        /// </param>
+        /// <param name="canvas">Drawing context.</param>
+        public static void DrawBeziers(this SKCanvas canvas, SKPaint pen, ReadOnlySpan<SKPoint> points)
+        {
+            var pointsCount = points.Length;
+            DebugBezierPointsAssert(points);
+
+            SKPath path = new();
+            path.MoveTo(points[0]);
+
+            for (int i = 1; i <= pointsCount - 3; i += 3)
+            {
+                path.CubicTo(points[i], points[i + 1], points[i + 2]);
+            }
+
+            canvas.DrawPath(path, pen);
+        }
+
+        /// <summary>
+        /// Draws the specified text on the canvas at the given location using the
+        /// specified font and paint settings.
+        /// </summary>
+        /// <remarks>The method measures the text using the specified font and adjusts the drawing
+        /// position to account for font metrics. If a background color is provided,
+        /// a rectangle is drawn behind the
+        /// text to match its dimensions.</remarks>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the text will be drawn.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="s">The text to draw, represented as a <see cref="ReadOnlySpan{Char}"/>.
+        /// If the span is empty, no text will be
+        /// drawn.</param>
+        /// <param name="location">The <see cref="SKPoint"/> specifying the top-left corner
+        /// where the text will be drawn.</param>
+        /// <param name="font">The <see cref="SKFont"/> to use for rendering the text. Cannot
+        /// be <see langword="null"/>.</param>
+        /// <param name="foreColor">The <see cref="SKPaint"/> used to define the foreground
+        /// color and style of the text. Cannot be <see
+        /// langword="null"/>.</param>
+        /// <param name="backColor">An optional <see cref="SKPaint"/> used to define
+        /// the background color and style. If provided, a rectangle
+        /// will be drawn behind the text. If <see langword="null"/>,
+        /// no background will be drawn.</param>
+        public static void DrawText(
+            SKCanvas canvas,
+            ReadOnlySpan<char> s,
+            SKPoint location,
+            SKFont font,
+            SKPaint foreColor,
+            SKPaint? backColor = null)
+        {
+            if (s.Length == 0)
+                return;
+
+            float x = location.X;
+            float y = location.Y;
+
+            var offsetX = 0;
+            var offsetY = MathF.Abs(font.Metrics.Top);
+
+            if (backColor is not null)
+            {
+                var measureResult = font.MeasureText(s);
+
+                var rect = SKRect.Create(
+                    measureResult,
+                    MathF.Abs(font.Metrics.Top) + MathF.Abs(font.Metrics.Bottom));
+                rect.Offset(x, y);
+
+                canvas.DrawRect(rect, backColor);
+            }
+
+            using var blob = SKTextBlob.Create(s, font);
+            canvas.DrawText(blob, x + offsetX, y + offsetY, foreColor);
+        }
+
+        /// <summary>
+        /// Fills the specified rectangular area on the canvas with a linear gradient.
+        /// </summary>
+        /// <remarks>This method creates a linear gradient between <paramref name="point1"/> and
+        /// <paramref name="point2"/> and fills the specified rectangle with it.
+        /// If the gradient points are identical, the
+        /// rectangle is filled with a solid color instead.</remarks>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the gradient will be drawn.
+        /// Cannot be <c>null</c>.</param>
+        /// <param name="rect">The rectangular area to fill, specified as a <see cref="SKRect"/>.
+        /// If the width or height is less than or
+        /// equal to zero, the method does nothing.</param>
+        /// <param name="beginColor">The starting color of the gradient.</param>
+        /// <param name="endColor">The ending color of the gradient.</param>
+        /// <param name="point1">The starting point of the gradient, specified as a <see cref="SKPoint"/>.</param>
+        /// <param name="point2">The ending point of the gradient, specified as a <see cref="SKPoint"/>.
+        /// If this point coincides with
+        /// <paramref name="point1"/>, the method falls back to a solid fill
+        /// using <paramref name="beginColor"/>.</param>
+        public static void FillGradient(
+            SKCanvas canvas,
+            SKRect rect,
+            SKColor beginColor,
+            SKColor endColor,
+            SKPoint point1,
+            SKPoint point2)
+        {
+            if (rect.Width <= 0 || rect.Height <= 0)
+                return;
+
+            // If the two gradient points coincide, fall back to a solid fill.
+            if (MathF.Abs(point1.X - point2.X) < float.Epsilon && MathF.Abs(point1.Y - point2.Y) < float.Epsilon)
+            {
+                using var solid = new SKPaint
+                {
+                    Style = SKPaintStyle.Fill,
+                    IsAntialias = true,
+                    Color = beginColor,
+                };
+                canvas.DrawRect(rect, solid);
+                return;
+            }
+
+            // Create shader and paint, ensure proper disposal.
+            using var shader = SKShader.CreateLinearGradient(
+                point1,
+                point2,
+                new[] { beginColor, endColor },
+                new float[] { 0f, 1f },
+                SKShaderTileMode.Clamp);
+
+            using var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                IsAntialias = true,
+                Shader = shader,
+            };
+
+            canvas.DrawRect(rect, paint);
+        }
+
+        /// <summary>
+        /// Generates an array of points representing a wave pattern within the specified rectangular area.
+        /// </summary>
+        /// <remarks>The method ensures that the wave pattern fits within the bounds of the specified
+        /// rectangle. The horizontal spacing and vertical offsets of the wave are determined by internal scaling
+        /// factors.</remarks>
+        /// <param name="rect">The rectangular area within which the wave pattern is generated.</param>
+        /// <returns>An array of <see cref="SKPoint"/> objects representing the points of the wave pattern.
+        /// The wave spans the
+        /// horizontal range of the rectangle and alternates vertically to create the pattern.</returns>
+        public static SKPoint[] GetSKPointsForDrawWave(SKRectI rect)
+        {
+            int minSize = 4;
+            int offset = 6;
+
+            int left = rect.Left - (rect.Left % offset);
+            int i = rect.Right % offset;
+            int right = (i != 0) ? rect.Right + (offset - i) : rect.Right;
+
+            int scale = 2;
+            int size = (right - left) / scale;
+
+            offset = 3;
+
+            if (size < minSize)
+                size = minSize;
+            else
+            {
+                i = (int)((size - minSize) / offset);
+                if ((size - minSize) % offset != 0)
+                    i++;
+                size = minSize + (i * offset);
+            }
+
+            SKPoint[] pts = new SKPoint[size];
+            for (int index = 0; index < size; index++)
+            {
+                pts[index].X = left + (index * scale);
+                pts[index].Y = rect.Bottom - 1;
+                switch (index % 3)
+                {
+                    case 0:
+                        {
+                            pts[index].Y -= scale;
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            pts[index].Y += scale;
+                            break;
+                        }
+                }
+            }
+
+            return pts;
+        }
+
+        /// <summary>
+        /// Recreates a bitmap-backed <see cref="SKCanvas"/> with the specified scale factor and size.
+        /// </summary>
+        /// <remarks>This method ensures that the <paramref name="measureCanvas"/> is properly recreated
+        /// when necessary, such as when the canvas is null or the scale factor has changed.
+        /// If the canvas does not need to be recreated, the method leaves the existing canvas unchanged.</remarks>
+        /// <param name="measureCanvas">A reference to the <see cref="SKCanvas"/> to be recreated.
+        /// If the canvas is null or the scale factor has
+        /// changed, it will be replaced with a new instance.</param>
+        /// <param name="measureCanvasScale">A reference to the scale factor associated
+        /// with the <paramref name="measureCanvas"/>. This value will be
+        /// updated to match the new scale factor if the canvas is recreated.</param>
+        /// <param name="scaleFactor">The scale factor to apply to the new canvas.
+        /// This determines the resolution of the bitmap backing the
+        /// canvas.</param>
+        /// <param name="size">The dimensions of the canvas, specified as an <see cref="SKSize"/>.</param>
+        /// <param name="isTransparent">A boolean value indicating whether
+        /// the canvas should have a transparent background. The default value is
+        /// <see langword="true"/>.</param>
+        public static void RecreateBitmapCanvas(
+            ref SKCanvas? measureCanvas,
+            ref float? measureCanvasScale,
+            float scaleFactor,
+            SKSize size,
+            bool isTransparent = true)
+        {
+            if (measureCanvas is null)
+            {
+                measureCanvas = SkiaHelper.CreateBitmapCanvas(size, scaleFactor, isTransparent);
+                measureCanvasScale = scaleFactor;
+            }
+            else
+            {
+                if (measureCanvasScale != scaleFactor)
+                {
+                    measureCanvas.Dispose();
+                    measureCanvas = SkiaHelper.CreateBitmapCanvas(size, scaleFactor, isTransparent);
+                    measureCanvasScale = scaleFactor;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates canvas on the bitmap with the specified size and scaling factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scaling factor.</param>
+        /// <param name="size">Size of the bitmap.</param>
+        /// <param name="isTransparent">Whether canvas is transparent.</param>
+        /// <returns></returns>
+        public static SKCanvas CreateBitmapCanvas(
+            SKSize size,
+            float scaleFactor,
+            bool isTransparent = true)
+        {
+            var boundsInPixels = SkiaHelper.PixelFromDip(size, scaleFactor);
+
+            SKBitmap bitmap;
+
+            if (size == SKSize.Empty)
+            {
+                bitmap = new();
+            }
+            else
+            {
+                bitmap = new(boundsInPixels.Width, boundsInPixels.Height, !isTransparent);
+            }
+
+            var result = CreateBitmapCanvas(bitmap, scaleFactor);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates canvas on the specified bitmap.
+        /// </summary>
+        /// <param name="bitmap">Bitmap to create canvas on.</param>
+        /// <param name="scaleFactor">Initial scale factor for the canvas.</param>
+        /// <returns></returns>
+        public static SKCanvas CreateBitmapCanvas(SKBitmap bitmap, float scaleFactor)
+        {
+            var result = new SKCanvas(bitmap);
+            result.Scale(scaleFactor);
+            return result;
+        }
+
+        /// <summary>
         /// Computes the pixel-snapping offset (in canvas/logical coordinates) that aligns
         /// 1px strokes to device pixel centers, taking the canvas TotalMatrix into account.
         /// Returns an SKPoint { X = offsetX, Y = offsetY } where:
@@ -981,6 +1293,34 @@ namespace Alternet.Editor.Skia
             float offsetY = 0.5f / scaleY;
 
             return new SKPoint(offsetX, offsetY);
+        }
+
+        /// <summary>
+        /// Converts device-independent units to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <returns>Converted value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int PixelFromDip(Coord value, float scaleFactor)
+        {
+            if (scaleFactor == 1)
+                return (int)value;
+            return (int)MathF.Round(value * scaleFactor);
+        }
+
+        /// <summary>
+        /// Converts device-independent units to pixels.
+        /// </summary>
+        /// <param name="value">Value in device-independent units.</param>
+        /// <returns></returns>
+        /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
+        /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static SKSizeI PixelFromDip(SKSize value, float scaleFactor)
+        {
+            return new(PixelFromDip(value.Width, scaleFactor), PixelFromDip(value.Height, scaleFactor));
         }
 
         /// <summary>
