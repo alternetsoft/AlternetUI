@@ -116,6 +116,19 @@ namespace PropertyGridSample
             }
         }
 
+        public static void AddManyItems(ListBox listBox, int numItems)
+        {
+            listBox.DoInsideUpdate(() =>
+            {
+                for (int i = 0; i < numItems; i++)
+                    listBox.Items.Add($"Item #{LogUtils.GenNewId()}");
+
+                App.Log($"Added {numItems} items");
+            });
+
+            listBox.SelectLastItem();
+        }
+
         public static void AddManyItems(VirtualListBox listBox)
         {
             listBox.DoInsideUpdate(() =>

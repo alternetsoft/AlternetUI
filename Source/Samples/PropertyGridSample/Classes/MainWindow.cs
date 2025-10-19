@@ -126,6 +126,8 @@ namespace PropertyGridSample
 
                 ToolBox.SelectionChanged += ControlsListBox_SelectionChanged;
                 panel.LogControl.Required();
+                panel.LogControl.BindApplicationLog();
+
                 panel.PropGrid.Required();
                 panel.ActionsControl.Required();
 
@@ -439,6 +441,8 @@ namespace PropertyGridSample
 
         protected override void DisposeManaged()
         {
+            panel.LogControl.UnbindApplicationLog();
+
             ComponentDesigner.SafeDefault.ObjectPropertyChanged -= Designer_PropertyChanged;
             ComponentDesigner.SafeDefault.MouseLeftButtonDown -= Designer_MouseLeftButtonDown;
 
