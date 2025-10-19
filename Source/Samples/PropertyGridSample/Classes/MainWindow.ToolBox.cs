@@ -48,6 +48,7 @@ namespace PropertyGridSample
                 }
 
                 bool logAddedControls = false;
+                bool logNotAddedControls = false;
 
                 LimitedTypes.Add(typeof(Border));
                 LimitedTypes.Add(typeof(PictureBox));
@@ -104,8 +105,86 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(TreeView));
                 LimitedTypes.Add(typeof(StdTreeView));
                 LimitedTypes.Add(typeof(ListBox));
-
                 LimitedTypes.Add(typeof(Label));
+
+                void ToolBoxAdd<T>()
+                {
+                    LimitedTypes.Add(typeof(T));
+                }
+
+                ToolBoxAdd<Alternet.UI.Slider>();
+
+                /*
+                ToolBoxAdd<Alternet.UI.HiddenBorder>();
+                ToolBoxAdd<Alternet.UI.VerticalLine>();
+                ToolBoxAdd<Alternet.UI.ContainerControl>();
+                ToolBoxAdd<Alternet.UI.GraphicControl>();
+                ToolBoxAdd<Alternet.UI.PaintActionsControl>();
+                ToolBoxAdd<Alternet.UI.ScrollableUserControl>();
+                ToolBoxAdd<Alternet.UI.Control>();
+                ToolBoxAdd<Alternet.UI.ColorPickerAndButton>();
+                ToolBoxAdd<Alternet.UI.ComboBoxAndButton>();
+                ToolBoxAdd<Alternet.UI.EnumPickerAndButton>();
+                ToolBoxAdd<Alternet.UI.ComboBoxAndLabel>();
+                ToolBoxAdd<Alternet.UI.ValueEditorDouble>();
+                ToolBoxAdd<Alternet.UI.ValueEditorSingle>();
+                ToolBoxAdd<Alternet.UI.ValueEditorUDouble>();
+                ToolBoxAdd<Alternet.UI.ValueEditorUSingle>();
+                ToolBoxAdd<Alternet.UI.ValueEditorInt16>();
+                ToolBoxAdd<Alternet.UI.ValueEditorInt32>();
+                ToolBoxAdd<Alternet.UI.ValueEditorInt64>();
+                ToolBoxAdd<Alternet.UI.ValueEditorSByte>();
+                ToolBoxAdd<Alternet.UI.ValueEditorEMail>();
+                ToolBoxAdd<Alternet.UI.ValueEditorString>();
+                ToolBoxAdd<Alternet.UI.ValueEditorUrl>();
+                ToolBoxAdd<Alternet.UI.ValueEditorByte>();
+                ToolBoxAdd<Alternet.UI.ValueEditorUInt16>();
+                ToolBoxAdd<Alternet.UI.ValueEditorUInt32>();
+                ToolBoxAdd<Alternet.UI.ValueEditorUInt64>();
+                ToolBoxAdd<Alternet.UI.HeaderLabel>();
+                ToolBoxAdd<Alternet.UI.Grid>();
+                ToolBoxAdd<Alternet.UI.LayoutPanel>();
+                ToolBoxAdd<Alternet.UI.SplittedTreeAndCards>();
+                ToolBoxAdd<Alternet.UI.ScrollViewer>();
+                ToolBoxAdd<Alternet.UI.PanelListBoxAndCards>();
+                ToolBoxAdd<Alternet.UI.PanelTreeAndCards>();
+                ToolBoxAdd<Alternet.UI.SplittedControlsPanel>();
+                ToolBoxAdd<Alternet.UI.Splitter>();
+                ToolBoxAdd<Alternet.UI.ColorComboBox>();
+                ToolBoxAdd<Alternet.UI.FontComboBox>();
+                ToolBoxAdd<Alternet.UI.ListBoxHeader>();
+                ToolBoxAdd<Alternet.UI.StdCheckListBox>();
+                ToolBoxAdd<Alternet.UI.ActionsListBox>();
+                ToolBoxAdd<Alternet.UI.FileListBox>();
+                ToolBoxAdd<Alternet.UI.LogListBox>();
+                ToolBoxAdd<Alternet.UI.FontListBox>();
+                ToolBoxAdd<Alternet.UI.VirtualCheckListBox>();
+                ToolBoxAdd<Alternet.UI.AnimationPlayer>();
+                ToolBoxAdd<Alternet.UI.InnerPopupToolBar>();
+                ToolBoxAdd<Alternet.UI.PopupControl>();
+                ToolBoxAdd<Alternet.UI.PreviewFile>();
+                ToolBoxAdd<Alternet.UI.PreviewFileSplitted>();
+                ToolBoxAdd<Alternet.UI.PreviewInBrowser>();
+                ToolBoxAdd<Alternet.UI.PreviewTextFile>();
+                ToolBoxAdd<Alternet.UI.PreviewUixml>();
+                ToolBoxAdd<Alternet.UI.PreviewUixmlSplitted>();
+                ToolBoxAdd<Alternet.UI.PropertyGrid>();
+                ToolBoxAdd<Alternet.UI.HScrollBar>();
+                ToolBoxAdd<Alternet.UI.VScrollBar>();
+                ToolBoxAdd<Alternet.UI.FontSizePicker>();
+                ToolBoxAdd<Alternet.UI.SpeedButtonWithListPopup>();
+                ToolBoxAdd<Alternet.UI.SpeedDateButton>();
+                ToolBoxAdd<Alternet.UI.SpeedEnumButton>();
+                ToolBoxAdd<Alternet.UI.TemplateControl>();
+                ToolBoxAdd<Alternet.UI.ToolBarSeparatorItem>();
+                ToolBoxAdd<Alternet.UI.WebBrowser>();
+                ToolBoxAdd<Alternet.UI.PanelFormSelector>();
+                ToolBoxAdd<Alternet.UI.PanelMultilineTextBox>();
+                ToolBoxAdd<Alternet.UI.PanelRichTextBox>();
+                ToolBoxAdd<Alternet.UI.PanelSettings>();
+                ToolBoxAdd<Alternet.UI.PanelWebBrowser>();
+                ToolBoxAdd<Alternet.UI.PanelWithToolBar>();
+                */
 
                 if (DebugUtils.IsDebugDefined)
                 {
@@ -113,6 +192,35 @@ namespace PropertyGridSample
                 }
 
                 LimitedTypes.AddRange(LimitedTypesStatic);
+
+                var otherCat = new ControlCategoryAttribute("Other");
+
+                if (logNotAddedControls)
+                {
+                    logNotAddedControls = false;
+                    LogNotShownTypes();
+                }
+
+                void LogNotShownTypes()
+                {
+                    var exportedTypes = AssemblyUtils.GetExportedTypesSafe(KnownAssemblies.LibraryCommon);
+                    foreach (var type in exportedTypes)
+                    {
+                        if (LimitedTypes.Contains(type))
+                            continue;
+                        if (!typeof(Control).IsAssignableFrom(type))
+                            continue;
+                        if (type.IsAbstract || type.IsInterface)
+                            continue;
+
+                        var categoryAttr = AssemblyUtils.GetControlCategory(type) ?? otherCat;
+
+                        if (categoryAttr.IsHidden || categoryAttr.IsInternal)
+                            continue;
+
+                        Debug.WriteLine($"Not added to ToolBox: {type.FullName}");
+                    }
+                }
 
                 List<ControlListBoxItem> items = new();
 
@@ -144,8 +252,6 @@ namespace PropertyGridSample
                 items.Sort();
 
                 BaseDictionary<string, TreeViewItem> categories = new();
-
-                var otherCat = new ControlCategoryAttribute("Other");
 
                 foreach (var elem in items)
                 {
