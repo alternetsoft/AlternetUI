@@ -1143,6 +1143,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Copies the properties and child items from the specified <see cref="TreeViewItem"/>
+        /// to the current instance.
+        /// </summary>
+        /// <remarks>This method copies the visibility and expansion state of the source item,
+        /// clears the current item's child collection, and adds clones of the source
+        /// item's children to the current instance.
+        /// The cloning operation ensures that the child items are independent
+        /// of the source item's children.</remarks>
+        /// <param name="assignFrom">The <see cref="TreeViewItem"/> whose
+        /// properties and child items  are to be copied.
+        /// Cannot be <see langword="null"/>.</param>
+        public virtual void Assign(TreeViewItem assignFrom)
+        {
+            DoInsideUpdate(Internal);
+
+            void Internal()
+            {
+                base.Assign(assignFrom);
+                IsVisible = assignFrom.IsVisible;
+                IsExpanded = assignFrom.IsExpanded;
+                Clear();
+
+                if (!assignFrom.HasItems)
+                    return;
+                foreach (var item in assignFrom.Items)
+                {
+                    var newItem = item.Clone();
+                    Add(newItem);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="TreeViewItem"/>
+        /// class with the same properties as the current instance.
+        /// </summary>
+        /// <remarks>The returned <see cref="TreeViewItem"/> is a deep copy of the current instance,
+        /// including all relevant properties.</remarks>
+        /// <returns>A new <see cref="TreeViewItem"/> instance that is a copy of the current instance.</returns>
+        public new virtual TreeViewItem Clone()
+        {
+            var result = new TreeViewItem();
+            result.Assign(this);
+            return result;
+        }
+
+        /// <summary>
         /// Collapses child items.
         /// </summary>
         public void CollapseItems(bool onlyVisible = true)
