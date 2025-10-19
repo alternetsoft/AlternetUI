@@ -378,7 +378,7 @@ namespace Alternet.UI
             }
 
             lastLogMessage = item.Text;
-            Add(item);
+            Add(item.Clone());
             SelectLastItemAndScroll();
             return item;
         }
