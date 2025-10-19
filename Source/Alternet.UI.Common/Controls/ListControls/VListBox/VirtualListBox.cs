@@ -32,7 +32,7 @@ namespace Alternet.UI
     /// properties provide access to
     /// the three collections that are used by the control.
     /// </remarks>
-    public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter
+    public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter, IListBoxActions
     {
         /// <summary>
         /// Represents the default rendering flags for <see cref="VirtualListBox"/> and it's descendants.
