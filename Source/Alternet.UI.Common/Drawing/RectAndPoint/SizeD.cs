@@ -12,11 +12,6 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    /*
-        Please do not remove StructLayout(LayoutKind.Sequential) attribute.
-        Also do not change order of the fields.
-    */
-
     /// <summary>
     /// Represents the size of a rectangular region with an ordered pair of width
     /// and height.

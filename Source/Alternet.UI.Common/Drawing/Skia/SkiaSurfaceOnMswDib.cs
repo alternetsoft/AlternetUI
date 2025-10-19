@@ -24,7 +24,7 @@ namespace Alternet.Drawing
     /// 32-bit BGRA image with pre-multiplied alpha, and it is optimized for top-down memory layout,
     /// which is required by SkiaSharp. </para>
     /// <para> Call <see cref="EnsureSurface(int, int)"/> to initialize or resize the surface,
-    /// <see cref="Paint(IntPtr, RectI, SizeI, SKColor, Action{SKSurface, RectI})"/>
+    /// <see cref="Paint(IntPtr, SKRectI, SKSizeI, SKColor, Action{SKSurface, SKRectI})"/>
     /// to render content and transfer it
     /// to a target HDC, and <see cref="DisposeSurface"/>
     /// to release resources when the surface is no longer needed.
@@ -39,6 +39,7 @@ namespace Alternet.Drawing
         private int surfWidth;
         private int surfHeight;
         private int rowBytes;
+        private SKPaint? clearColorPaint;
 
         /// <summary>
         /// Renders content to the specified target device context within the given clipping region.
@@ -64,10 +65,10 @@ namespace Alternet.Drawing
         /// <see cref="SKSurface"/> to draw on and the clipping region as a <see cref="RectI"/>.</param>
         public void Paint(
             IntPtr hdcTarget,
-            RectI clip,
-            SizeI clientSize,
+            SKRectI clip,
+            SKSizeI clientSize,
             SKColor clearColor,
-            Action<SKSurface, RectI> drawAction)
+            Action<SKSurface, SKRectI> drawAction)
         {
             var w = clientSize.Width;
             var h = clientSize.Height;
@@ -81,7 +82,7 @@ namespace Alternet.Drawing
             canvas.Save();
 
             if (clip.IsEmpty)
-                clip = new RectI(0, 0, w, h);
+                clip = SKRectI.Create(0, 0, w, h);
             else
                 canvas.ClipRect(new SKRect(clip.Left, clip.Top, clip.Right, clip.Bottom));
 
@@ -90,15 +91,16 @@ namespace Alternet.Drawing
                 // Clear only the clip (optional) or full:
                 // canvas.Clear(new SKColor(0xFF, 0xFF, 0xFF, 0xFF));
                 // If partial clear is needed:
-                using var paint = new SKPaint
+                clearColorPaint ??= new SKPaint
                 {
                     BlendMode = SKBlendMode.Src,
-                    Color = clearColor,
                 };
+
+                clearColorPaint.Color = clearColor;
 
                 canvas.DrawRect(
                     new SKRect(clip.Left, clip.Top, clip.Right, clip.Bottom),
-                    paint);
+                    clearColorPaint);
             }
 
             drawAction(surface, clip);
@@ -106,7 +108,7 @@ namespace Alternet.Drawing
             canvas.Restore();
             canvas.Flush();
 
-            var bitBltResult = MswUtils.NativeMethods.BitBlt(
+            MswUtils.NativeMethods.BitBlt(
                 hdcTarget,
                 clip.Left,
                 clip.Top,
