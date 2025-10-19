@@ -26,7 +26,7 @@ namespace Alternet.UI
     [DefaultProperty("Items")]
     [DefaultBindingProperty("SelectedValue")]
     [ControlCategory("Common")]
-    public partial class ListBox : Control, ICollectionChangeRouter
+    public partial class ListBox : Control, ICollectionChangeRouter, IListBoxActions
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBox"/> class
@@ -246,6 +246,114 @@ namespace Alternet.UI
             if (item is IFormattable formattable)
                 return formattable.ToString(null, System.Globalization.CultureInfo.CurrentCulture);
             return item.ToString() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Selects all items in the list box, if the selection mode allows multiple selections.
+        /// </summary>
+        /// <remarks>This method performs the selection operation only if the <see cref="SelectionMode"/>
+        /// property is set to a mode that supports multiple selections.</remarks>
+        /// <returns><see langword="true"/> if all items were successfully selected;
+        /// <see langword="false"/> if the selection
+        /// mode does not allow multiple selections.</returns>
+        public virtual void SelectAll()
+        {
+            if (SelectionMode == SelectionMode.One || SelectionMode == SelectionMode.None)
+                return;
+
+            DoInsideUpdate(() =>
+            {
+                var count = GetCount();
+                for (int i = 0; i < count; i++)
+                {
+                    SetSelected(i, true);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Deselects all currently selected items.
+        /// </summary>
+        /// <remarks>This method clears the selection state of all items. After calling this method, no
+        /// items will be selected.</remarks>
+        public virtual void UnselectAll()
+        {
+            DoInsideUpdate(() =>
+            {
+                foreach (var index in SelectedIndices)
+                {
+                    Deselect(index);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Removes the items at the currently selected indices from the collection.
+        /// </summary>
+        /// <remarks>The indices are processed in descending order to ensure that removing an item does
+        /// not affect the positions of subsequent indices. This operation is performed
+        /// within an update block to
+        /// maintain consistency.</remarks>
+        public virtual void RemoveSelectedItems()
+        {
+            var descendingSelectedIndices = SelectedIndices.OrderByDescending(i => i);
+
+            DoInsideUpdate(() =>
+            {
+                foreach (var index in descendingSelectedIndices)
+                {
+                    Items.RemoveAt(index);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Selects the first item in the list box, if any items are available.
+        /// </summary>
+        /// <remarks>If the list box is empty, this method performs no action. Otherwise, it clears the
+        /// current selection and selects the first item in the list box.</remarks>
+        public virtual void SelectFirstItem()
+        {
+            if (GetCount() == 0)
+                return;
+
+            DoInsideUpdate(() =>
+            {
+                ClearSelected();
+                SetSelection(0);
+            });
+        }
+
+        /// <summary>
+        /// Selects the last item in the list box, if any items are available.
+        /// </summary>
+        /// <remarks>If the list box is empty, this method performs no action. Otherwise, it clears the
+        /// current selection and selects the last item in the list box.</remarks>
+        public virtual void SelectLastItem()
+        {
+            if (GetCount() == 0)
+                return;
+
+            DoInsideUpdate(() =>
+            {
+                ClearSelected();
+                SetSelection(GetCount() - 1);
+            });
+        }
+
+        /// <summary>
+        /// Removes all items from the list box.
+        /// </summary>
+        /// <remarks>If the list box is already empty, this method performs no operation. This method
+        /// ensures that the removal operation is performed within an update context.</remarks>
+        public virtual void RemoveAll()
+        {
+            if (GetCount() == 0)
+                return;
+            DoInsideUpdate(() =>
+            {
+                Items.Clear();
+            });
         }
 
         /// <summary>
