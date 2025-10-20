@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Skia;
 using Alternet.UI;
 using Alternet.UI.Extensions;
 
@@ -39,7 +40,7 @@ namespace Alternet.Drawing
         /// with <see cref="SKPaintStyle.Fill"/> style.
         /// </summary>
         public static Func<Color, SKPaint> ColorToFillPaint
-            = (color) => GraphicsFactory.CreateFillPaint(color);
+            = (color) => SkiaHelper.CreateFillPaint(color);
 
         /// <summary>
         /// Gets or sets function which is used when
@@ -47,7 +48,7 @@ namespace Alternet.Drawing
         /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
         /// </summary>
         public static Func<Color, SKPaint> ColorToStrokeAndFillPaint
-            = (color) => GraphicsFactory.CreateStrokeAndFillPaint(color);
+            = (color) => SkiaHelper.CreateStrokeAndFillPaint(color);
 
         /// <summary>
         /// Gets or sets function which is used when
@@ -55,7 +56,7 @@ namespace Alternet.Drawing
         /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
         /// </summary>
         public static Func<Color, SKPaint> ColorToStrokePaint
-            = (color) => GraphicsFactory.CreateStrokePaint(color);
+            = (color) => SkiaHelper.CreateStrokePaint(color);
 
         /// <summary>
         /// Gets or sets function which is used when
@@ -68,12 +69,6 @@ namespace Alternet.Drawing
         /// <see cref="Font"/> is converted to <see cref="SKFont"/>.
         /// </summary>
         public static Func<Font, SKFont> FontToSkiaFont = DefaultFontToSkiaFont;
-
-        /// <summary>
-        /// Gets or sets default value for <see cref="SKPaint.IsAntialias"/> property
-        /// when <see cref="SKPaint"/> is created by the conversion methods.
-        /// </summary>
-        public static bool DefaultAntialiasing = true;
 
         private static readonly BaseDictionary<Graphics.CanvasCreateParams, Graphics>
             MemoryCanvases = new();
@@ -88,12 +83,6 @@ namespace Alternet.Drawing
         static GraphicsFactory()
         {
         }
-
-        /// <summary>
-        /// Occurs when <see cref="SKPaint"/> instance is created by one of the create methods
-        /// implemented in the <see cref="GraphicsFactory"/>.
-        /// </summary>
-        public static event EventHandler? PaintCreated;
 
         /// <summary>
         /// Gets or sets <see cref="IGraphicsFactoryHandler"/> object which is used internally
@@ -380,64 +369,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// This method is called by all <see cref="SKPaint"/> create methods.
-        /// It raises <see cref="PaintCreated"/> event and initializes <see cref="SKPaint"/>
-        /// instance properties with the default values.
-        /// </summary>
-        /// <param name="paint"></param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetPaintDefaults(SKPaint paint)
-        {
-            paint.IsAntialias = GraphicsFactory.DefaultAntialiasing;
-            PaintCreated?.Invoke(paint, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.Fill"/> style
-        /// for the specified <see cref="SKColor"/> value.
-        /// </summary>
-        /// <param name="color">Color for which <see cref="SKPaint"/> is created.</param>
-        /// <returns></returns>
-        public static SKPaint CreateFillPaint(SKColor color)
-        {
-            var result = new SKPaint();
-            result.Color = color;
-            result.Style = SKPaintStyle.Fill;
-            SetPaintDefaults(result);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.Stroke"/> style
-        /// for the specified <see cref="SKColor"/> value.
-        /// </summary>
-        /// <param name="color">Color for which <see cref="SKPaint"/> is created.</param>
-        /// <returns></returns>
-        public static SKPaint CreateStrokePaint(SKColor color)
-        {
-            var result = new SKPaint();
-            result.Color = color;
-            result.Style = SKPaintStyle.Stroke;
-            SetPaintDefaults(result);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.StrokeAndFill"/> style
-        /// for the specified <see cref="SKColor"/> value.
-        /// </summary>
-        /// <param name="color">Color for which <see cref="SKPaint"/> is created.</param>
-        /// <returns></returns>
-        public static SKPaint CreateStrokeAndFillPaint(SKColor color)
-        {
-            var result = new SKPaint();
-            result.Color = color;
-            result.Style = SKPaintStyle.StrokeAndFill;
-            SetPaintDefaults(result);
-            return result;
-        }
-
-        /// <summary>
         /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.StrokeAndFill"/> style
         /// for the specified <see cref="BrushAndPen"/> value.
         /// </summary>
@@ -481,7 +412,7 @@ namespace Alternet.Drawing
             LineJoin lineJoin,
             Coord width)
         {
-            var paint = GraphicsFactory.CreateStrokePaint(color);
+            var paint = SkiaHelper.CreateStrokePaint(color);
             paint.StrokeCap = lineCap.ToSkia();
             paint.StrokeJoin = lineJoin.ToSkia();
             paint.StrokeWidth = width;

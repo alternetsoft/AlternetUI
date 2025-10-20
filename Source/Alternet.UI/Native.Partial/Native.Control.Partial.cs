@@ -7,7 +7,7 @@ namespace Alternet.UI.Native
 {
     internal partial class Control
     {
-        private readonly Alternet.Drawing.SkiaSurfaceOnMswDib dibSurface = new();
+        private readonly Alternet.Skia.SkiaSurfaceOnMswDib dibSurface = new();
 
         private Drawing.DynamicBitmap? dynamicBitmap;
 

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
+#pragma warning disable
 #if ALTERNETUI
 namespace Alternet.Skia
 #else
-namespace Alternet.Editor.Skia
+namespace Alternet.Common.Skia
 #endif
+#pragma warning restore
 {
     /// <summary>
     /// Specifies how the interior of a closed path is filled.

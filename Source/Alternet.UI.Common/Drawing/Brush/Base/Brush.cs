@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 
+using Alternet.Skia;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
@@ -196,7 +197,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         protected virtual SKPaint CreateSkiaPaint()
         {
-            SKPaint result = GraphicsFactory.CreateFillPaint(AsColor);
+            SKPaint result = SkiaHelper.CreateFillPaint(AsColor);
             return result;
         }
 

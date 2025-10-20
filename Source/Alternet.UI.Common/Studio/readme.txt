@@ -1,0 +1,1 @@
+This folder contains the source code common to Alternet.UI and Alternet.Studio libraries.

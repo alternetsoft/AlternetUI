@@ -1,8 +1,10 @@
-﻿#if ALTERNETUI
+﻿#pragma warning disable
+#if ALTERNETUI
 namespace Alternet.Skia
 #else
-namespace Alternet.Editor.Skia
+namespace Alternet.Common.Skia
 #endif
+#pragma warning restore
 {
     /// <summary>
     /// Gets or sets the style used for dashed lines drawn with the pen.

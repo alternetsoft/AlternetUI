@@ -4,7 +4,13 @@ using System.Text;
 
 using SkiaSharp;
 
-namespace Alternet.Drawing
+#pragma warning disable
+#if ALTERNETUI
+namespace Alternet.Skia
+#else
+namespace Alternet.Common.Skia
+#endif
+#pragma warning restore
 {
     /// <summary>
     /// Represents font information used to create <see cref="SKFont"/>.

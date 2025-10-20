@@ -43,7 +43,7 @@ namespace Alternet.UI.WinForms
         /// <inheritdoc/>
         public override bool GetAppearanceIsDark()
         {
-            return WinFormsUtils.ApplicationIsDarkMode;
+            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

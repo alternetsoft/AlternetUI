@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Skia;
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -36,7 +37,7 @@ namespace Alternet.Drawing
             {
                 SizeD result = SizeD.Empty;
 
-                SpanUtils.InvokeWithUTF8Span(text, (ptr, length) =>
+                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
                 {
                     result = dc.GetTextExtentSimple(
                         ptr,
@@ -150,7 +151,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                SpanUtils.InvokeWithUTF8Span(text, (ptr, length) =>
+                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
                 {
                     dc.DrawText(
                         ptr,

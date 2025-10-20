@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using Alternet.UI;
 using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
+using Alternet.Skia;
 
 using SkiaSharp;
 

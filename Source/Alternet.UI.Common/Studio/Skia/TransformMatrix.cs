@@ -4,11 +4,17 @@ using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-using Alternet.UI;
-
 using SkiaSharp;
 
+#pragma warning disable
+#if ALTERNETUI
+using Alternet.Skia;
+
 namespace Alternet.Drawing
+#else
+namespace Alternet.Common.Skia
+#endif
+#pragma warning restore
 {
     /*
     SKMatrix:
@@ -44,7 +50,7 @@ namespace Alternet.Drawing
         /// This is the value in the first row and first column of the matrix.
         /// </summary>
         [FieldOffset(FieldOffsetM11)]
-        public Coord M11;
+        public float M11;
 
         /// <summary>
         /// Gets or sets the skew in the y-direction.
@@ -52,7 +58,7 @@ namespace Alternet.Drawing
         /// This is the same as <see cref="SkewY"/>.
         /// </summary>
         [FieldOffset(FieldOffsetM12)]
-        public Coord M12;
+        public float M12;
 
         /// <summary>
         /// Gets or sets the skew in the x-direction.
@@ -60,7 +66,7 @@ namespace Alternet.Drawing
         /// This is the same as <see cref="SkewX"/>.
         /// </summary>
         [FieldOffset(FieldOffsetM21)]
-        public Coord M21;
+        public float M21;
 
         /// <summary>
         /// Gets or sets the scaling in the y-direction.
@@ -68,14 +74,14 @@ namespace Alternet.Drawing
         /// This is the same as <see cref="ScaleY"/>.
         /// </summary>
         [FieldOffset(FieldOffsetM22)]
-        public Coord M22;
+        public float M22;
 
         /// <summary>
         /// Get or sets the translation in the x-direction (the dx value, or the element
         /// in the third row and first column) of the matrix. This is the same as <see cref="TransX"/>.
         /// </summary>
         [FieldOffset(FieldOffsetDX)]
-        public Coord DX;
+        public float DX;
 
         /// <summary>
         /// Get or sets the translation in the y-direction (the dy value, or the
@@ -83,7 +89,7 @@ namespace Alternet.Drawing
         /// This is the same as <see cref="TransY"/>.
         /// </summary>
         [FieldOffset(FieldOffsetDY)]
-        public Coord DY;
+        public float DY;
 
         /* Alternative field names */
 
@@ -92,14 +98,14 @@ namespace Alternet.Drawing
         /// This is the value in the first row and first column of the matrix.
         /// </summary>
         [FieldOffset(FieldOffsetM11)]
-        public Coord ScaleX;
+        public float ScaleX;
 
         /// <summary>
         /// Gets or sets the skew in the x-direction. This is the same as <see cref="M21"/>.
         /// This is the value in the second row and first column in the matrix.
         /// </summary>
         [FieldOffset(FieldOffsetM21)]
-        public Coord SkewX;
+        public float SkewX;
 
         /// <summary>
         /// Get or sets the translation in the x-direction.
@@ -107,7 +113,7 @@ namespace Alternet.Drawing
         /// This is the value in the third row and first column in the matrix.
         /// </summary>
         [FieldOffset(FieldOffsetDX)]
-        public Coord TransX;
+        public float TransX;
 
         /// <summary>
         /// Gets or sets the skew in the y-direction.
@@ -115,7 +121,7 @@ namespace Alternet.Drawing
         /// This is the same as <see cref="M12"/>.
         /// </summary>
         [FieldOffset(FieldOffsetM12)]
-        public Coord SkewY;
+        public float SkewY;
 
         /// <summary>
         /// Gets or sets the scaling in the y-direction.
@@ -123,7 +129,7 @@ namespace Alternet.Drawing
         /// This is the value in the second row and second column in the matrix.
         /// </summary>
         [FieldOffset(FieldOffsetM22)]
-        public Coord ScaleY;
+        public float ScaleY;
 
         /// <summary>
         /// Get or sets the translation in the y-direction.
@@ -131,7 +137,7 @@ namespace Alternet.Drawing
         /// This is the value in the third row and second column in the matrix.
         /// </summary>
         [FieldOffset(FieldOffsetDY)]
-        public Coord TransY;
+        public float TransY;
 
         /* Vector fields */
 
@@ -179,7 +185,7 @@ namespace Alternet.Drawing
         [FieldOffset(FieldOffsetM11)]
         public System.Numerics.Matrix3x2 Matrix3x2;
 
-        private const int SizeOf = sizeof(Coord);
+        private const int SizeOf = sizeof(float);
         private const int FieldOffsetM11 = 0;
         private const int FieldOffsetM12 = SizeOf;
         private const int FieldOffsetM21 = SizeOf * 2;
@@ -208,12 +214,12 @@ namespace Alternet.Drawing
         /// <param name="dx">The translation in the x-direction.</param>
         /// <param name="dy">The translation in the x-direction.</param>
         public TransformMatrix(
-            Coord m11,
-            Coord m12,
-            Coord m21,
-            Coord m22,
-            Coord dx,
-            Coord dy)
+            float m11,
+            float m12,
+            float m21,
+            float m22,
+            float dx,
+            float dy)
         {
             this.M11 = m11;
             this.M12 = m12;
@@ -255,7 +261,7 @@ namespace Alternet.Drawing
         /// <see cref="TransformMatrix"/> are represented by the
         /// values in the array in that order.
         /// </remarks>
-        public Coord[] Elements
+        public float[] Elements
         {
             readonly get => new[] { M11, M12, M21, M22, DX, DY };
             set
@@ -318,7 +324,7 @@ namespace Alternet.Drawing
         /// Gets the determinant of this matrix.
         /// </summary>
         [Browsable(false)]
-        public readonly Coord Determinant
+        public readonly float Determinant
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -388,7 +394,7 @@ namespace Alternet.Drawing
         /// <param name="offsetY">The y value by which to translate
         /// this <see cref="TransformMatrix"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TransformMatrix CreateTranslation(Coord offsetX, Coord offsetY)
+        public static TransformMatrix CreateTranslation(float offsetX, float offsetY)
         {
             var matrix = new TransformMatrix();
             matrix.Translate(offsetX, offsetY);
@@ -403,7 +409,7 @@ namespace Alternet.Drawing
         /// <param name="scaleY">The value by which to scale
         /// this <see cref="TransformMatrix"/> in the y-axis direction.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TransformMatrix CreateScale(Coord scaleX, Coord scaleY)
+        public static TransformMatrix CreateScale(float scaleX, float scaleY)
         {
             var matrix = new TransformMatrix();
             matrix.Scale(scaleX, scaleY);
@@ -416,7 +422,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TransformMatrix CreateRotation(Coord angle)
+        public static TransformMatrix CreateRotation(float angle)
         {
             var matrix = new TransformMatrix();
             matrix.Rotate(angle);
@@ -474,7 +480,7 @@ namespace Alternet.Drawing
         /// translate this <see cref="TransformMatrix"/>.</param>
         /// <param name="offsetY">The y value by which to
         /// translate this <see cref="TransformMatrix"/>.</param>
-        public void Translate(Coord offsetX, Coord offsetY)
+        public void Translate(float offsetX, float offsetY)
         {
             /*
             add the translation to this matrix
@@ -495,7 +501,7 @@ namespace Alternet.Drawing
         /// scale this <see cref="TransformMatrix"/> in the x-axis direction.</param>
         /// <param name="scaleY">The value by which to
         /// scale this <see cref="TransformMatrix"/> in the y-axis direction.</param>
-        public void Scale(Coord scaleX, Coord scaleY)
+        public void Scale(float scaleX, float scaleY)
         {
             /*
             // add the scale to this matrix
@@ -516,10 +522,10 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="angle">The angle of the clockwise rotation, in degrees.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Rotate(Coord angle)
+        public void Rotate(float angle)
         {
-            angle %= CoordD.Coord360; // Doing the modulo before converting to radians reduces total error
-            RotateRadians(angle * MathUtils.DegToRadF);
+            angle %= 360f; // Doing the modulo before converting to radians reduces total error
+            RotateRadians(angle * SkiaHelper.DegToRadF);
         }
 
         /// <summary>
@@ -527,7 +533,7 @@ namespace Alternet.Drawing
         /// origin to this <see cref="TransformMatrix"/>.
         /// </summary>
         /// <param name="angleRadians">The angle of the clockwise rotation, in radians.</param>
-        public void RotateRadians(Coord angleRadians)
+        public void RotateRadians(float angleRadians)
         {
             /*
             // add the rotation to this matrix (clockwise, radians)
@@ -577,6 +583,7 @@ namespace Alternet.Drawing
             return true;
         }
 
+#if ALTERNETUI
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a point.
         /// </summary>
@@ -599,6 +606,7 @@ namespace Alternet.Drawing
 
             return new(x, y);
         }
+#endif
 
         /// <summary>
         /// Creates a copy of this matrix.
@@ -620,6 +628,7 @@ namespace Alternet.Drawing
             Matrix3x2 = matrix.Matrix3x2;
         }
 
+#if ALTERNETUI
         /// <summary>
         /// Applies the geometric transform this <see cref="TransformMatrix"/> represents to a size.
         /// </summary>
@@ -651,6 +660,7 @@ namespace Alternet.Drawing
         {
             return new(TransformPoint(rect.Location), TransformSize(rect.Size));
         }
+#endif
 
         /// <summary>
         /// Gets whether this matrix equals another matrix.
@@ -689,7 +699,7 @@ namespace Alternet.Drawing
         /// </returns>
         public readonly bool IsRotationIdentity()
         {
-            const Coord epsilon = 0.00001f;
+            const float epsilon = 0.00001f;
 
             bool isRotationIdentity =
                 MathF.Abs(M11 - 1f) < epsilon &&
@@ -704,17 +714,17 @@ namespace Alternet.Drawing
         /// <returns>
         /// The rotation angle in radians. Returns 0 if the matrix has no rotation.
         /// </returns>
-        public readonly Coord GetRotationAngleInRadians()
+        public readonly float GetRotationAngleInRadians()
         {
             if(IsRotationIdentity())
-                return CoordD.Empty;
+                return 0f;
 
             // Extract angle using clockwise convention
-            Coord angleRadians = MathF.Atan2(M21, M11);
+            float angleRadians = MathF.Atan2(M21, M11);
 
             // Normalize to [0, 2*pi) if needed
-            if (angleRadians < CoordD.Empty)
-                angleRadians += CoordD.Two * MathF.PI;
+            if (angleRadians < 0f)
+                angleRadians += 2f * MathF.PI;
 
             return angleRadians;
         }
@@ -724,14 +734,14 @@ namespace Alternet.Drawing
         /// Returns 0 if there's no rotational component (identity rotation).
         /// </summary>
         /// <returns>The rotation angle in degrees.</returns>
-        public readonly Coord GetRotationAngleInDegrees()
+        public readonly float GetRotationAngleInDegrees()
         {
-            Coord angleRadians = GetRotationAngleInRadians();
+            float angleRadians = GetRotationAngleInRadians();
 
             if (angleRadians == 0f)
                 return 0f;
 
-            Coord angleDegrees = MathUtils.ToDegrees(angleRadians);
+            float angleDegrees = SkiaHelper.ToDegrees(angleRadians);
 
             return angleDegrees;
         }

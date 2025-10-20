@@ -4,7 +4,13 @@ using System.Text;
 
 using SkiaSharp;
 
-namespace Alternet.Drawing
+#pragma warning disable
+#if ALTERNETUI
+namespace Alternet.Skia
+#else
+namespace Alternet.Common.Skia
+#endif
+#pragma warning restore
 {
     /// <summary>
     /// Provides default values for SkiaSharp font properties used when
@@ -18,13 +24,13 @@ namespace Alternet.Drawing
     {
         /// <summary>
         /// Gets or sets default value for <see cref="SKFont.ScaleX"/> which is used
-        /// when <see cref="Font"/> is converted to <see cref="SKFont"/>.
+        /// when font is converted to <see cref="SKFont"/>.
         /// </summary>
         public static float TextScaleX = 1.0f;
 
         /// <summary>
         /// Gets or sets default value for <see cref="SKFont.Subpixel"/> which is used
-        /// when <see cref="Font"/> is converted to <see cref="SKFont"/>.
+        /// when font is converted to <see cref="SKFont"/>.
         /// </summary>
         /// <remarks>
         /// It allows to control whether glyph positioning uses subpixel precision — meaning
@@ -38,7 +44,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets default value for <see cref="SKFont.ForceAutoHinting"/> which is used
-        /// when <see cref="Font"/> is converted to <see cref="SKFont"/>.
+        /// when font is converted to <see cref="SKFont"/>.
         /// </summary>
         /// <remarks>
         /// Forces the font engine (especially FreeType-based platforms) to apply automatic
@@ -49,7 +55,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets default value for <see cref="SKFont.Hinting"/> which is used
-        /// when <see cref="Font"/> is converted to <see cref="SKFont"/>.
+        /// when font is converted to <see cref="SKFont"/>.
         /// </summary>
         /// <remarks>
         /// This affects glyph shape adjustments to align better with pixel grids.
@@ -73,7 +79,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets default value for <see cref="SKFont.Edging"/> which is used
-        /// when <see cref="Font"/> is converted to <see cref="SKFont"/>.
+        /// when font is converted to <see cref="SKFont"/>.
         /// </summary>
         /// <remarks>
         /// This controls how glyph edges are rendered — whether they are aliased,

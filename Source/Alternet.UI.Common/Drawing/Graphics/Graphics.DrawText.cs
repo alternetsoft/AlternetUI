@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
+using Alternet.Skia;
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -85,7 +86,7 @@ namespace Alternet.Drawing
 
             SizeD result = SizeD.Empty;
 
-            SpanUtils.InvokeWithFilledSpan(
+            SkiaHelper.InvokeWithFilledSpan(
                 count,
                 ch,
                 span =>

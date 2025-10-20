@@ -434,22 +434,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Rounds the specified floating-point value up to the nearest integer and returns
-        /// the result as an <see cref="int"/>.
-        /// </summary>
-        /// <remarks>This method performs a fast ceiling operation by adding a small offset to the input
-        /// value before truncating it to an integer. It is optimized for performance
-        /// and may not handle edge cases such
-        /// as very large or special floating-point values (e.g., NaN, infinity).</remarks>
-        /// <param name="value">The single-precision floating-point value to round up.</param>
-        /// <returns>The smallest integer greater than or equal to <paramref name="value"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int FastCeilToInt(float value)
-        {
-            return (int)(value + 0.9999999f);
-        }
-
-        /// <summary>
         /// Determines whether the first floating-point
         /// value is greater than or approximately equal
         /// to the second value.
@@ -531,22 +515,6 @@ namespace Alternet.UI
 #else
             return MathF.Ceiling(value);
 #endif
-        }
-
-        /// <summary>
-        /// Converts an angle from radians to degrees.
-        /// </summary>
-        /// <param name="radians">Angle in radians.</param>
-        /// <returns>Angle in degrees.</returns>
-        public static float ToDegrees(float radians)
-        {
-            var angleDegrees = radians * RadToDegF;
-
-            // Ensure angle is in [0, 360)
-            if (angleDegrees < 0f)
-                angleDegrees += 360f;
-
-            return angleDegrees;
         }
 
         /// <summary>

@@ -366,40 +366,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns the size of a sequence of identical characters when drawn with the specified font.
-        /// </summary>
-        /// <param name="canvas">The <see cref="SKCanvas"/> on which the character will be measured.</param>
-        /// <param name="ch">The character to measure.</param>
-        /// <param name="count">The number of times the character is repeated.</param>
-        /// <param name="font">The font used for measurement.</param>
-        /// <returns>
-        /// A <see cref="SizeD"/> structure representing the width and height of the repeated characters.
-        /// </returns>
-        public static SKSize CharSize(
-            this SKCanvas canvas,
-            char ch,
-            int count,
-            SKFont font)
-        {
-            if (count == 1)
-                return canvas.CharSize(ch, font);
-            if (count <= 0)
-                return SKSize.Empty;
-
-            SKSize result = SKSize.Empty;
-
-            SpanUtils.InvokeWithFilledSpan(
-                count,
-                ch,
-                span =>
-                {
-                    result = canvas.GetTextExtent(span, font);
-                });
-
-            return result;
-        }
-
-        /// <summary>
         /// Draws the specified test message on the canvas at the given location,
         /// using default styling if no parameters are provided.
         /// </summary>

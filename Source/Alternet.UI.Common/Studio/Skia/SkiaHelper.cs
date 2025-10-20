@@ -8,11 +8,13 @@ using System.Text;
 
 using SkiaSharp;
 
+#pragma warning disable
 #if ALTERNETUI
 namespace Alternet.Skia
 #else
-namespace Alternet.Editor.Skia
+namespace Alternet.Common.Skia
 #endif
+#pragma warning restore
 {
     /// <summary>
     /// Provides utility methods and helpers for working with SkiaSharp, a 2D graphics library.
@@ -24,11 +26,34 @@ namespace Alternet.Editor.Skia
     public static class SkiaHelper
     {
         /// <summary>
+        /// Gets <see cref="MathF.PI"/> divided by 180f.
+        /// </summary>
+        public const float DegToRadF = MathF.PI / 180f;
+
+        /// <summary>
+        /// Gets 180f divided by <see cref="MathF.PI"/>.
+        /// </summary>
+        public const float RadToDegF = 180f / MathF.PI;
+
+        /// <summary>
         /// Represents the name of the SkiaSharp canvas method used to draw points.
         /// </summary>
         /// <remarks>This constant is typically used as an identifier or key for referencing the
         /// "sk_canvas_draw_points" method in SkiaSharp, a 2D graphics library.</remarks>
         public const string SKCanvasDrawPointsName = "sk_canvas_draw_points";
+
+        /// <summary>
+        /// Gets or sets default value for <see cref="SKPaint.IsAntialias"/> property
+        /// when <see cref="SKPaint"/> is created by the conversion methods.
+        /// </summary>
+        public static bool DefaultAntialiasing = true;
+
+        /// <summary>
+        /// Represents the maximum number of spans that can be stored in a stack.
+        /// </summary>
+        /// <remarks>This constant defines the upper limit for the size of a span stack. It is used to
+        /// prevent excessive memory usage or stack overflow scenarios when working with spans.</remarks>
+        public static int SpanStackLimit = 256;
 
         /// <summary>
         /// A sample string containing characters commonly used to test whether a font is monospaced.
@@ -86,6 +111,21 @@ namespace Alternet.Editor.Skia
             IntPtr paint);
 
         /// <summary>
+        /// Represents a method that performs an action on a read-only span
+        /// of elements of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <remarks>This delegate is commonly used to define operations that work on spans of data
+        /// without modifying the underlying memory.</remarks>
+        /// <typeparam name="T">The type of the elements in the read-only span.</typeparam>
+        /// <param name="span">The read-only span of elements to process.</param>
+        public delegate void ReadOnlySpanAction<T>(ReadOnlySpan<T> span);
+
+        /// <summary>
+        /// Occurs when <see cref="SKPaint"/> instance is created by one of the create methods.
+        /// </summary>
+        public static event EventHandler? PaintCreated;
+
+        /// <summary>
         /// Gets a null SKCanvas instance that performs no drawing operations.
         /// </summary>
         /// <remarks>This property provides a placeholder <see cref="SKCanvas"/>
@@ -112,7 +152,7 @@ namespace Alternet.Editor.Skia
         /// <summary>
         /// Gets or sets default font size for use with SkiaSharp.
         /// </summary>
-        public static Coord DefaultFontSize
+        public static float DefaultFontSize
         {
             get => defaultSkiaFont?.Size ?? defaultFontSize;
 
@@ -508,6 +548,40 @@ namespace Alternet.Editor.Skia
         }
 
         /// <summary>
+        /// Returns the size of a sequence of identical characters when drawn with the specified font.
+        /// </summary>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the character will be measured.</param>
+        /// <param name="ch">The character to measure.</param>
+        /// <param name="count">The number of times the character is repeated.</param>
+        /// <param name="font">The font used for measurement.</param>
+        /// <returns>
+        /// A <see cref="SKSize"/> structure representing the width and height of the repeated characters.
+        /// </returns>
+        public static SKSize CharSize(
+            this SKCanvas canvas,
+            char ch,
+            int count,
+            SKFont font)
+        {
+            if (count == 1)
+                return canvas.CharSize(ch, font);
+            if (count <= 0)
+                return SKSize.Empty;
+
+            SKSize result = SKSize.Empty;
+
+            SkiaHelper.InvokeWithFilledSpan(
+                count,
+                ch,
+                span =>
+                {
+                    result = canvas.GetTextExtent(span, font);
+                });
+
+            return result;
+        }
+
+        /// <summary>
         /// Measures the size of a single character when drawn using the specified font.
         /// </summary>
         /// <param name="canvas">The <see cref="SKCanvas"/> on which the character will be measured.</param>
@@ -855,7 +929,7 @@ namespace Alternet.Editor.Skia
             ReadOnlySpan<System.Drawing.Point> points,
             SkiaFillMode fillMode = SkiaFillMode.Alternate)
         {
-            if (points == null || points.Length < 3)
+            if (points.Length < 3)
                 return null;
 
             var path = new SKPath
@@ -1302,7 +1376,7 @@ namespace Alternet.Editor.Skia
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns>Converted value.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int PixelFromDip(Coord value, float scaleFactor)
+        public static int PixelFromDip(float value, float scaleFactor)
         {
             if (scaleFactor == 1)
                 return (int)value;
@@ -1321,6 +1395,64 @@ namespace Alternet.Editor.Skia
         public static SKSizeI PixelFromDip(SKSize value, float scaleFactor)
         {
             return new(PixelFromDip(value.Width, scaleFactor), PixelFromDip(value.Height, scaleFactor));
+        }
+
+        /// <summary>
+        /// This method is called by all <see cref="SKPaint"/> create methods.
+        /// It raises <see cref="PaintCreated"/> event and initializes <see cref="SKPaint"/>
+        /// instance properties with the default values.
+        /// </summary>
+        /// <param name="paint"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetPaintDefaults(SKPaint paint)
+        {
+            paint.IsAntialias = SkiaHelper.DefaultAntialiasing;
+            PaintCreated?.Invoke(paint, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.Fill"/> style
+        /// for the specified <see cref="SKColor"/> value.
+        /// </summary>
+        /// <param name="color">Color for which <see cref="SKPaint"/> is created.</param>
+        /// <returns></returns>
+        public static SKPaint CreateFillPaint(SKColor color)
+        {
+            var result = new SKPaint();
+            result.Color = color;
+            result.Style = SKPaintStyle.Fill;
+            SetPaintDefaults(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.Stroke"/> style
+        /// for the specified <see cref="SKColor"/> value.
+        /// </summary>
+        /// <param name="color">Color for which <see cref="SKPaint"/> is created.</param>
+        /// <returns></returns>
+        public static SKPaint CreateStrokePaint(SKColor color)
+        {
+            var result = new SKPaint();
+            result.Color = color;
+            result.Style = SKPaintStyle.Stroke;
+            SetPaintDefaults(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.StrokeAndFill"/> style
+        /// for the specified <see cref="SKColor"/> value.
+        /// </summary>
+        /// <param name="color">Color for which <see cref="SKPaint"/> is created.</param>
+        /// <returns></returns>
+        public static SKPaint CreateStrokeAndFillPaint(SKColor color)
+        {
+            var result = new SKPaint();
+            result.Color = color;
+            result.Style = SKPaintStyle.StrokeAndFill;
+            SetPaintDefaults(result);
+            return result;
         }
 
         /// <summary>
@@ -1465,6 +1597,127 @@ namespace Alternet.Editor.Skia
 
             // Draw the line
             canvas.DrawLine(p1, p2, paint);
+        }
+
+        /// <summary>
+        /// Allocates a <see cref="Span{Char}"/> of the specified length,
+        /// fills it with the given character,
+        /// and invokes the provided action with the resulting <see cref="ReadOnlySpan{Char}"/>.
+        /// Uses stack allocation if the span size is below the threshold; otherwise falls back to heap.
+        /// </summary>
+        /// <param name="count">The number of characters to allocate and fill.</param>
+        /// <param name="ch">The character to fill the span with.</param>
+        /// <param name="action">The callback to invoke with the filled span.</param>
+        /// <param name="invokeOnEmpty">
+        /// If <c>true</c>, the action will be invoked with an empty span
+        /// when <paramref name="count"/> is zero or negative.
+        /// If <c>false</c>, the action will be skipped in that case.
+        /// </param>
+        public static void InvokeWithFilledSpan(
+            int count,
+            char ch,
+            ReadOnlySpanAction<char> action,
+            bool invokeOnEmpty = false)
+        {
+            if (count <= 0)
+            {
+                if (invokeOnEmpty)
+                    action(ReadOnlySpan<char>.Empty);
+                return;
+            }
+
+            if (count <= SpanStackLimit)
+            {
+                Span<char> buffer = stackalloc char[count];
+                buffer.Fill(ch);
+                action(buffer);
+            }
+            else
+            {
+                char[] buffer = new char[count];
+                Array.Fill(buffer, ch);
+                action(buffer);
+            }
+        }
+
+        /// <summary>
+        /// Converts an angle from radians to degrees.
+        /// </summary>
+        /// <param name="radians">Angle in radians.</param>
+        /// <returns>Angle in degrees.</returns>
+        public static float ToDegrees(float radians)
+        {
+            var angleDegrees = radians * RadToDegF;
+
+            // Ensure angle is in [0, 360)
+            if (angleDegrees < 0f)
+                angleDegrees += 360f;
+
+            return angleDegrees;
+        }
+
+        /// <summary>
+        /// Rounds the specified floating-point value up to the nearest integer and returns
+        /// the result as an <see cref="int"/>.
+        /// </summary>
+        /// <remarks>This method performs a fast ceiling operation by adding a small offset to the input
+        /// value before truncating it to an integer. It is optimized for performance
+        /// and may not handle edge cases such
+        /// as very large or special floating-point values (e.g., NaN, infinity).</remarks>
+        /// <param name="value">The single-precision floating-point value to round up.</param>
+        /// <returns>The smallest integer greater than or equal to <paramref name="value"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int FastCeilToInt(float value)
+        {
+            return (int)(value + 0.9999999f);
+        }
+
+        /// <summary>
+        /// Converts the specified UTF-16 character span to UTF-8 and invokes
+        /// the provided action with a pointer to the
+        /// UTF-8 data and its length.
+        /// </summary>
+        /// <remarks>This method uses stack allocation for small UTF-8 buffers
+        /// and heap allocation for
+        /// larger ones. Callers should ensure that the action does not store
+        /// or use the pointer outside the scope of
+        /// the action.</remarks>
+        /// <param name="input">The UTF-16 character span to be converted to UTF-8.
+        /// If the span is empty, the action is invoked with a null
+        /// pointer and a length of 0.</param>
+        /// <param name="action">The action to invoke with the UTF-8 data.
+        /// The action receives a pointer to the UTF-8-encoded bytes and the
+        /// number of bytes in the UTF-8 data. The pointer is valid only
+        /// for the duration of the action's execution.</param>
+        public static unsafe void InvokeWithUTF8Span(ReadOnlySpan<char> input, Action<IntPtr, int> action)
+        {
+            if (input.IsEmpty)
+            {
+                action(IntPtr.Zero, 0);
+                return;
+            }
+
+            var utf8 = Encoding.UTF8;
+            int byteCount = utf8.GetByteCount(input);
+
+            if (byteCount <= SpanStackLimit)
+            {
+                Span<byte> buffer = stackalloc byte[byteCount];
+                utf8.GetBytes(input, buffer);
+                fixed (byte* ptr = buffer)
+                {
+                    action((IntPtr)ptr, byteCount);
+                }
+            }
+            else
+            {
+                byte[] buffer = new byte[byteCount];
+                utf8.GetBytes(input, buffer);
+                fixed (byte* ptr = buffer)
+                {
+                    action((IntPtr)ptr, byteCount);
+                }
+            }
         }
     }
 }
