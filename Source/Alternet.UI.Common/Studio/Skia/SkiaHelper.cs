@@ -619,6 +619,29 @@ namespace Alternet.Common.Skia
             return result;
         }
 
+#if !NET5_0_OR_GREATER && !NETSTANDARD2_1_OR_GREATER
+        /// <summary>
+        /// Gets text size.
+        /// </summary>
+        /// <param name="canvas">Drawing context.</param>
+        /// <param name="text">Text to measure.</param>
+        /// <param name="font">Font.</param>
+        /// <returns></returns>
+        public static SKSize GetTextExtent(
+            this SKCanvas canvas,
+            string text,
+            SKFont font)
+        {
+            var measureResult = font.MeasureText(text);
+
+            SKSize result = new(
+                measureResult,
+                MathF.Abs(font.Metrics.Top) + MathF.Abs(font.Metrics.Bottom));
+
+            return result;
+        }
+#endif
+
         /// <summary>
         /// Converts the specified <see cref="SKBitmap"/> to a grayscale version using a color filter.
         /// </summary>
@@ -1635,9 +1658,29 @@ namespace Alternet.Common.Skia
             else
             {
                 char[] buffer = new char[count];
-                Array.Fill(buffer, ch);
+                buffer.Fill(ch);
                 action(buffer);
             }
+        }
+
+        /// <summary>
+        /// Sets all elements in the specified array to the specified value.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements in the array.</typeparam>
+        /// <param name="array">The array whose elements will be set. Cannot be <see langword="null"/>.</param>
+        /// <param name="value">The value to assign to each element of the array.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="array"/> is <see langword="null"/>.</exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Fill<T>(this T[] array, T value)
+        {
+#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
+            Array.Fill(array, value);
+#else
+            if (array == null)
+                throw new ArgumentNullException(nameof(array));
+            for (int i = 0; i < array.Length; i++)
+                array[i] = value;
+#endif
         }
 
         /// <summary>
@@ -1645,6 +1688,7 @@ namespace Alternet.Common.Skia
         /// </summary>
         /// <param name="radians">Angle in radians.</param>
         /// <returns>Angle in degrees.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float ToDegrees(float radians)
         {
             var angleDegrees = radians * RadToDegF;
@@ -1691,6 +1735,7 @@ namespace Alternet.Common.Skia
         /// for the duration of the action's execution.</param>
         public static unsafe void InvokeWithUTF8Span(ReadOnlySpan<char> input, Action<IntPtr, int> action)
         {
+#if NET5_0_OR_GREATER || NETSTANDARD2_1_OR_GREATER
             if (input.IsEmpty)
             {
                 action(IntPtr.Zero, 0);
@@ -1718,6 +1763,22 @@ namespace Alternet.Common.Skia
                     action((IntPtr)ptr, byteCount);
                 }
             }
+#else
+            var s = input.ToString();
+
+            if (string.IsNullOrEmpty(s))
+            {
+                action(IntPtr.Zero, 0);
+                return;
+            }
+
+            var utf8 = System.Text.Encoding.UTF8;
+            byte[] buffer = utf8.GetBytes(s);
+            fixed (byte* ptr = buffer)
+            {
+                action((IntPtr)ptr, buffer.Length);
+            }
+#endif
         }
     }
 }
