@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
+using Alternet.Skia;
 using Alternet.UI;
 using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
-using Alternet.Skia;
 
 using SkiaSharp;
 

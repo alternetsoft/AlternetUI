@@ -1,3 +1,17 @@
+# 0.9.757 (2025 October 20)
+
+- Return native ListBox control.
+- Move Skia drawing helpers from SkiaUtils to SkiaHelper
+- Refactor SizeI and RectI structs for better SkiaSharp compatibility
+- LogListBox: Fix log item addition to use cloned instance on TreeViewItem.
+- TreeViewItem: Add Assign and Clone methods.
+- AbstractControl: OnInsertedToParent and OnRemovedFromParent methods.
+- MathUtils: Enhanced IsInteger and IsEvenInteger to handle NaN, infinity, and large values correctly.
+- Color: Updated GetAsPen and GetAsPen with DashStyle to improve pen caching logic: pens with integer widths are cached, others are created on demand.
+- Refactor SkiaSharp related drawing utilities to use SKPoint and SKRect.
+
+---
+
 # 0.9.756 (2025 October 12)
 
 - Handle system color changes in ListPicker, EnumPicker, ColorPicker, TreeView, ComboBox, ScrollBar, DatePicker, Calendar, TimePicker, RichToolTip, PropertyGrid.
@@ -15,6 +29,8 @@
 - Introduced SuspendEvents and ResumeEvents methods with an internalcounter to allow temporarily suspending event notifications in ListView and TreeView.
 - Improved LogWriter classes.
 - Improve demo behavior on system colors change.
+
+---
 
 # 0.9.755 (2025 October 6)
 
@@ -42,6 +58,8 @@
 - Replaced redundant ARGB conversion with direct cache access for known colors in Color and System.Drawing.Color conversions.
 - Add ColorCache and SystemDrawingColorCache for cached color retrieval.
 - Add NativeGraphicsContext property to control handlers, providing access to the native graphics context (e.g., CGContextRef on macOS).
+
+---
 
 # 0.9.754 (2025 September 26)
 
@@ -89,6 +107,8 @@
 - Add LogWriter staticclass, providing several ILogWriter implementations for logging to debug output, console, application log, and StringBuilder.
 - Refactor NotifyIcon context menu handling.
 - OpenGL rendering for UserControl
+
+---
 
 # 0.9.753 (2025 September 15)
 

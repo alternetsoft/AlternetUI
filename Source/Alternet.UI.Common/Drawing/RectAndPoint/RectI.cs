@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+
 using Alternet.UI;
 using Alternet.UI.Localization;
 using Alternet.UI.Markup;
@@ -25,26 +26,26 @@ namespace Alternet.Drawing
 
         [FieldOffset(0)]
         private int x;
-        
+
         [FieldOffset(4)]
         private int y;
-        
+
         [FieldOffset(8)]
         private int width;
-        
+
         [FieldOffset(12)]
         private int height;
 
         [FieldOffset(0)]
         private PointI location;
-        
+
         [FieldOffset(8)]
         private SizeI size;
 
 #pragma warning disable
         [FieldOffset(0)]
         private ulong xy;
-        
+
         [FieldOffset(8)]
         private ulong wh;
 #pragma warning restore
