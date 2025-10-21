@@ -112,6 +112,7 @@ namespace Alternet.Common.Skia
             canvas.Restore();
             canvas.Flush();
 
+#pragma warning disable
             NativeMethods.BitBlt(
                 hdcTarget,
                 clip.Left,
@@ -122,6 +123,7 @@ namespace Alternet.Common.Skia
                 clip.Left,
                 clip.Top,
                 NativeMethods.SRCCOPY);
+#pragma warning restore
         }
 
         /// <summary>
