@@ -41,6 +41,28 @@ ALTERNET_UI_API void ListBox_SetHasBorder_(ListBox* obj, c_bool value)
     #endif
 }
 
+ALTERNET_UI_API void ListBox_Check_(ListBox* obj, int item, c_bool check)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->Check(item, check);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API c_bool ListBox_IsChecked_(ListBox* obj, int item)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<c_bool>([&](){
+    #endif
+        return obj->IsChecked(item);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API void* ListBox_CreateListBox_(ListBoxHandlerCreateFlags createFlags)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)

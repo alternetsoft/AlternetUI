@@ -59,6 +59,14 @@ namespace Alternet::UI
         return value;
     }
 
+    wxCheckListBox* ListBox::GetCheckListBox()
+    {
+        auto value = dynamic_cast<wxCheckListBox*>(GetWxWindow());
+        if (value == nullptr)
+            throwExInvalidOp;
+        return value;
+    }
+
     wxItemContainer* ListBox::GetItemContainer()
     {
         auto value = dynamic_cast<wxItemContainer*>(GetWxWindow());
@@ -123,6 +131,16 @@ namespace Alternet::UI
                     &ListBox::OnCheckedChanged, this);
             }
         }
+    }
+
+    void ListBox::Check(int item, bool check)
+    {
+		GetCheckListBox()->Check(item, check);
+    }
+
+    bool ListBox::IsChecked(int item)
+    {
+		return GetCheckListBox()->IsChecked(item);
     }
 
     void ListBox::OnSelectedChanged(wxCommandEvent& event)

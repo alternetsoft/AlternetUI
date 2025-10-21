@@ -39,6 +39,18 @@ namespace Alternet.UI.Native
             }
         }
         
+        public void Check(int item, bool check)
+        {
+            CheckDisposed();
+            NativeApi.ListBox_Check_(NativePointer, item, check);
+        }
+        
+        public bool IsChecked(int item)
+        {
+            CheckDisposed();
+            return NativeApi.ListBox_IsChecked_(NativePointer, item);
+        }
+        
         public static System.IntPtr CreateListBox(Alternet.UI.ListBoxHandlerCreateFlags createFlags)
         {
             return NativeApi.ListBox_CreateListBox_(createFlags);
@@ -282,6 +294,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_SetHasBorder_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_Check_(IntPtr obj, int item, bool check);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool ListBox_IsChecked_(IntPtr obj, int item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr ListBox_CreateListBox_(Alternet.UI.ListBoxHandlerCreateFlags createFlags);

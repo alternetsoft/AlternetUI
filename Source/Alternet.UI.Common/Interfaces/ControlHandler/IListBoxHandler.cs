@@ -42,6 +42,23 @@ namespace Alternet.UI
         bool IsSorted();
 
         /// <summary>
+        /// Performs a check on the specified item, with an optional flag to enable or disable the check.
+        /// </summary>
+        /// <param name="item">The item to be checked. Must be a valid integer representing
+        /// the target of the check.</param>
+        /// <param name="check">A boolean value indicating whether the check should be performed.
+        /// <see langword="true"/> to perform the
+        /// check; otherwise, <see langword="false"/>. Defaults to <see langword="true"/>.</param>
+        void Check(int item, bool check = true);
+
+        /// <summary>
+        /// Determines whether the specified item is checked.
+        /// </summary>
+        /// <param name="item">The identifier of the item to check.</param>
+        /// <returns><see langword="true"/> if the specified item is checked; otherwise, <see langword="false"/>.</returns>
+        bool IsChecked(int item);
+
+        /// <summary>
         /// Updates the selection state of an item at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the item to update.
@@ -178,5 +195,24 @@ namespace Alternet.UI
         /// Updates internal selection state. Implementations should refresh selection caches when necessary.
         /// </summary>
         void UpdateSelections();
+
+        /// <summary>
+        /// Gets the count of indexes that are currently checked.
+        /// </summary>
+        /// <returns>The number of indexes that are checked. Returns 0 if no indexes are checked.</returns>
+        int GetCheckedIndexesCount();
+
+        /// <summary>
+        /// Retrieves the item index in the specified position inside the checked items list.
+        /// </summary>
+        int GetCheckedIndexesItem(int index);
+
+        /// <summary>
+        /// Updates the collection of indexes that are marked as checked.
+        /// </summary>
+        /// <remarks>This method refreshes the state of the checked indexes, ensuring that the collection
+        /// reflects the current selection or state. Use this method when the underlying data or selection criteria have
+        /// changed and the checked indexes need to be recalculated.</remarks>
+        void UpdateCheckedIndexes();
     }
 }

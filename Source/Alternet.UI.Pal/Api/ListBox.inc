@@ -4,6 +4,8 @@ public:
 bool GetHasBorder();
 void SetHasBorder(bool value);
 
+void Check(int item, bool check);
+bool IsChecked(int item);
 static void* CreateListBox(ListBoxHandlerCreateFlags createFlags);
 int GetSelection();
 bool IsSelected(int n);

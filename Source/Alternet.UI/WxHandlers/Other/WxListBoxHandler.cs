@@ -232,6 +232,31 @@ namespace Alternet.UI
             NativeControl.SetItemSelection(index, select);
         }
 
+        public void Check(int item, bool check = true)
+        {
+            NativeControl.Check(item, check);
+        }
+
+        public bool IsChecked(int item)
+        {
+            return NativeControl.IsChecked(item);
+        }
+
+        public int GetCheckedIndexesCount()
+        {
+            return NativeControl.GetCheckedIndexesCount();
+        }
+
+        public int GetCheckedIndexesItem(int index)
+        {
+            return NativeControl.GetCheckedIndexesItem(index);
+        }
+
+        public void UpdateCheckedIndexes()
+        {
+            NativeControl.UpdateCheckedIndexes();
+        }
+
         internal class NativeCheckListBox : Native.ListBox
         {
             public NativeCheckListBox()

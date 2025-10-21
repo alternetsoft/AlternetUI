@@ -62,9 +62,11 @@ namespace Alternet::UI
         bool hasBorder = true;
 		ListBoxHandlerFlags _flags = ListBoxHandlerFlags::SingleSelection | ListBoxHandlerFlags::IntegralHeight;
         wxArrayInt _selections = wxArrayInt();
+        wxArrayInt _checked = wxArrayInt();
 
         wxListBoxBase* GetListBoxBase();
         wxListBox* GetListBox();
+        wxCheckListBox* GetCheckListBox();
         wxItemContainer* GetItemContainer();
 
         bool HasCheckBoxes()

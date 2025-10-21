@@ -10,6 +10,10 @@ namespace NativeApi.Api
         public event EventHandler? SelectionChanged;
         public event EventHandler? CheckedChanged;
 
+        public void Check(int item, bool check = true) { }
+
+        public bool IsChecked(int item) => default;
+
         public static IntPtr CreateListBox(ListBoxHandlerCreateFlags createFlags) => default;
 
         public int GetSelection() => default;

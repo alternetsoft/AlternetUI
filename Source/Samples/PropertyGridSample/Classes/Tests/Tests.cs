@@ -248,6 +248,11 @@ namespace PropertyGridSample
                     ObjectInit.AddManyItems(c, 100);
                 });
 
+                AddControlAction<CheckedListBox>("Toggle selected item checked", (c) =>
+                {
+                    c.SetItemChecked(c.SelectedIndex, !c.GetItemChecked(c.SelectedIndex));
+                });
+
                 AddControlAction<VirtualListBox>("Set dark theme", (c) =>
                 {
                     c.SetColorThemeToDark();
