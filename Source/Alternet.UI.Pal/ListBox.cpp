@@ -2,6 +2,30 @@
 
 namespace Alternet::UI
 {
+    int ListBox::GetCheckedIndexesCount()
+    {
+        return 0;
+    }
+
+    int ListBox::GetCheckedIndexesItem(int index)
+    {
+        return -1;
+    }
+
+    void ListBox::UpdateCheckedIndexes()
+    {
+    }
+
+    void* ListBox::CreateListBox(ListBoxHandlerCreateFlags createFlags)
+    {
+		return new ListBox(createFlags);
+    }
+
+    ListBox::ListBox(ListBoxHandlerCreateFlags createFlags)
+    {
+		_createFlags = createFlags;
+    }
+
     ListBox::ListBox()
     {
     }
@@ -56,14 +80,31 @@ namespace Alternet::UI
         if (!hasBorder)
             style = style | wxBORDER_NONE;
 
-        auto value = new wxListBox2(
-            parent,
-            wxID_ANY,
-            wxDefaultPosition,
-            wxDefaultSize,
-            0,
-            nullptr,
-            style);
+        wxListBox* value;
+
+        if (HasCheckBoxes())
+        {
+            value = new wxCheckListBox2(
+                parent,
+                wxID_ANY,
+                wxDefaultPosition,
+                wxDefaultSize,
+                0,
+                nullptr,
+                style);
+            value->Bind(wxEVT_CHECKLISTBOX, &ListBox::OnCheckedChanged, this);
+        }
+        else
+        {
+            value = new wxListBox2(
+                parent,
+                wxID_ANY,
+                wxDefaultPosition,
+                wxDefaultSize,
+                0,
+                nullptr,
+                style);
+        }
 
         value->Bind(wxEVT_LISTBOX, &ListBox::OnSelectedChanged, this);
         return value;
@@ -76,6 +117,11 @@ namespace Alternet::UI
             auto window = GetListBox();
             window->Unbind(wxEVT_LISTBOX,
                 &ListBox::OnSelectedChanged, this);
+            if (HasCheckBoxes())
+            {
+                window->Unbind(wxEVT_CHECKLISTBOX,
+                    &ListBox::OnCheckedChanged, this);
+            }
         }
     }
 
@@ -83,6 +129,12 @@ namespace Alternet::UI
     {
         event.Skip();
         RaiseEvent(ListBoxEvent::SelectionChanged);
+    }
+
+    void ListBox::OnCheckedChanged(wxCommandEvent& event)
+    {
+        event.Skip();
+        RaiseEvent(ListBoxEvent::CheckedChanged);
     }
 
     ListBoxHandlerFlags ListBox::GetFlags()

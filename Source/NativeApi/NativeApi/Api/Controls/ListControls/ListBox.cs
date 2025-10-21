@@ -8,7 +8,10 @@ namespace NativeApi.Api
     public class ListBox : Control
     {
         public event EventHandler? SelectionChanged;
-        
+        public event EventHandler? CheckedChanged;
+
+        public static IntPtr CreateListBox(ListBoxHandlerCreateFlags createFlags) => default;
+
         public int GetSelection() => default;
 
         public bool HasBorder { get; set; }
@@ -48,5 +51,12 @@ namespace NativeApi.Api
         public void SetFlags(Alternet.UI.ListBoxHandlerFlags flags) { }
 
         public Alternet.UI.ListBoxHandlerFlags GetFlags() => default;
+
+        public int GetCheckedIndexesCount() => default;
+
+        public int GetCheckedIndexesItem(int index) => default;
+
+        public void UpdateCheckedIndexes() { }
+
     }
 }

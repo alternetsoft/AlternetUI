@@ -41,6 +41,17 @@ ALTERNET_UI_API void ListBox_SetHasBorder_(ListBox* obj, c_bool value)
     #endif
 }
 
+ALTERNET_UI_API void* ListBox_CreateListBox_(ListBoxHandlerCreateFlags createFlags)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<void*>([&](){
+    #endif
+        return ListBox::CreateListBox(createFlags);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
 ALTERNET_UI_API int ListBox_GetSelection_(ListBox* obj)
 {
     #if !defined(__WXMSW__) || defined(_DEBUG)
@@ -322,6 +333,39 @@ ALTERNET_UI_API ListBoxHandlerFlags ListBox_GetFlags_(ListBox* obj)
     return MarshalExceptions<ListBoxHandlerFlags>([&](){
     #endif
         return obj->GetFlags();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int ListBox_GetCheckedIndexesCount_(ListBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetCheckedIndexesCount();
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API int ListBox_GetCheckedIndexesItem_(ListBox* obj, int index)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    return MarshalExceptions<int>([&](){
+    #endif
+        return obj->GetCheckedIndexesItem(index);
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    });
+    #endif
+}
+
+ALTERNET_UI_API void ListBox_UpdateCheckedIndexes_(ListBox* obj)
+{
+    #if !defined(__WXMSW__) || defined(_DEBUG)
+    MarshalExceptions<void>([&](){
+    #endif
+        obj->UpdateCheckedIndexes();
     #if !defined(__WXMSW__) || defined(_DEBUG)
     });
     #endif

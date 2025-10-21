@@ -65,6 +65,8 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
+            if(Control?.CheckBoxVisible ?? false)
+                return new NativeCheckListBox();
             return new Native.ListBox();
         }
 
@@ -228,6 +230,15 @@ namespace Alternet.UI
         public void SetSelection(int index, bool select)
         {
             NativeControl.SetItemSelection(index, select);
+        }
+
+        internal class NativeCheckListBox : Native.ListBox
+        {
+            public NativeCheckListBox()
+                 : base()
+            {
+                SetNativePointer(NativeApi.ListBox_CreateListBox_(ListBoxHandlerCreateFlags.CheckBoxes));
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ public:
 bool GetHasBorder();
 void SetHasBorder(bool value);
 
+static void* CreateListBox(ListBoxHandlerCreateFlags createFlags);
 int GetSelection();
 bool IsSelected(int n);
 bool IsSorted();
@@ -30,12 +31,16 @@ int GetSelectionsItem(int index);
 void UpdateSelections();
 void SetFlags(ListBoxHandlerFlags flags);
 ListBoxHandlerFlags GetFlags();
+int GetCheckedIndexesCount();
+int GetCheckedIndexesItem(int index);
+void UpdateCheckedIndexes();
 
 public:
 
 enum class ListBoxEvent
 {
     SelectionChanged,
+    CheckedChanged,
 };
 
 typedef void* (*ListBoxEventCallbackType)(ListBox* obj, ListBoxEvent event, void* param);

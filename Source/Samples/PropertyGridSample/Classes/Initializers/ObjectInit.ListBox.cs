@@ -163,6 +163,18 @@ namespace PropertyGridSample
             }
         }
 
+        public static void InitCheckedListBox(object control)
+        {
+            InitListBox(control);
+            if (control is not CheckedListBox listBox)
+                return;
+            listBox.CheckedItemsChanged += (s, e) =>
+            {
+                var prefix = "CheckedListBox CheckedItemsChanged";
+                App.LogReplace($"{prefix}", prefix);
+            };
+        }
+
         public static void InitListBox(object control)
         {
             if (control is not ListBox listBox)

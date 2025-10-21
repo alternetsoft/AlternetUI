@@ -106,6 +106,7 @@ namespace PropertyGridSample
                 LimitedTypes.Add(typeof(StdTreeView));
                 LimitedTypes.Add(typeof(ListBox));
                 LimitedTypes.Add(typeof(Label));
+                LimitedTypes.Add(typeof(CheckedListBox));
 
                 void ToolBoxAdd<T>()
                 {

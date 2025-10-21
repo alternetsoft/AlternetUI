@@ -63,6 +63,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether checkboxes are shown in the items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CheckBoxVisible
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         internal IListBoxHandler PlatformControl
         {
             get

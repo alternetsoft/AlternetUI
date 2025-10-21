@@ -1293,6 +1293,12 @@ namespace Alternet::UI
         All = 37,
     };
     
+    enum class ListBoxHandlerCreateFlags
+    {
+        None = 0,
+        CheckBoxes = 1,
+    };
+    
     enum class ListBoxHandlerFlags
     {
         None = 0,
@@ -2991,13 +2997,6 @@ namespace Alternet::UI
         Any = 63,
     };
     
-    enum class SystemColorModeType
-    {
-        Classic = 0,
-        System = 1,
-        Dark = 2,
-    };
-    
     enum class SystemSettingsFeature
     {
         CanDrawFrameDecorations = 1,
@@ -3651,6 +3650,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::ControlFlags> { static 
 template<> struct enable_bitmask_operators<Alternet::UI::ControlRefreshOptions> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlRenderingFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlStyles> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::ListBoxHandlerCreateFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ListBoxHandlerFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::SetBoundsFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::VisualControlStates> { static const bool enable = true; };

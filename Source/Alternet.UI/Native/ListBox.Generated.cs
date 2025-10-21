@@ -39,6 +39,11 @@ namespace Alternet.UI.Native
             }
         }
         
+        public static System.IntPtr CreateListBox(Alternet.UI.ListBoxHandlerCreateFlags createFlags)
+        {
+            return NativeApi.ListBox_CreateListBox_(createFlags);
+        }
+        
         public int GetSelection()
         {
             CheckDisposed();
@@ -195,6 +200,24 @@ namespace Alternet.UI.Native
             return NativeApi.ListBox_GetFlags_(NativePointer);
         }
         
+        public int GetCheckedIndexesCount()
+        {
+            CheckDisposed();
+            return NativeApi.ListBox_GetCheckedIndexesCount_(NativePointer);
+        }
+        
+        public int GetCheckedIndexesItem(int index)
+        {
+            CheckDisposed();
+            return NativeApi.ListBox_GetCheckedIndexesItem_(NativePointer, index);
+        }
+        
+        public void UpdateCheckedIndexes()
+        {
+            CheckDisposed();
+            NativeApi.ListBox_UpdateCheckedIndexes_(NativePointer);
+        }
+        
         static GCHandle eventCallbackGCHandle;
         public static ListBox? GlobalObject;
         
@@ -219,7 +242,18 @@ namespace Alternet.UI.Native
         
         IntPtr OnEvent(NativeApi.ListBoxEvent e, IntPtr parameter)
         {
-            OnPlatformEventSelectionChanged(); return IntPtr.Zero;
+            switch (e)
+            {
+                case NativeApi.ListBoxEvent.SelectionChanged:
+                {
+                    OnPlatformEventSelectionChanged(); return IntPtr.Zero;
+                }
+                case NativeApi.ListBoxEvent.CheckedChanged:
+                {
+                    OnPlatformEventCheckedChanged(); return IntPtr.Zero;
+                }
+                default: throw new Exception("Unexpected ListBoxEvent value: " + e);
+            }
         }
         
         
@@ -234,6 +268,7 @@ namespace Alternet.UI.Native
             public enum ListBoxEvent
             {
                 SelectionChanged,
+                CheckedChanged,
             }
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -247,6 +282,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_SetHasBorder_(IntPtr obj, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr ListBox_CreateListBox_(Alternet.UI.ListBoxHandlerCreateFlags createFlags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_GetSelection_(IntPtr obj);
@@ -325,6 +363,15 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.ListBoxHandlerFlags ListBox_GetFlags_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListBox_GetCheckedIndexesCount_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ListBox_GetCheckedIndexesItem_(IntPtr obj, int index);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ListBox_UpdateCheckedIndexes_(IntPtr obj);
             
         }
     }
