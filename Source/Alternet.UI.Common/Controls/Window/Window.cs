@@ -292,6 +292,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this window is the main window of the application.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsMainWindow
+        {
+            get
+            {
+                return App.MainWindow == this;
+            }
+        }
+
+        /// <summary>
         /// Gets time when window was last time shown as modal dialog.
         /// </summary>
         [Browsable(false)]
