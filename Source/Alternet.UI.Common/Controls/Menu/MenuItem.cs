@@ -1214,8 +1214,13 @@ namespace Alternet.UI
             Role = source.Role;
             Checked = source.Checked;
             ClickAction = source.RaiseClick;
+
+            /*
+            This should not be copied directly as we assign ClickAction to source.RaiseClick.
             Command = source.CommandSource.Command;
             CommandParameter = source.CommandSource.CommandParameter;
+            */
+
             Enabled = source.Enabled;
             Visible = source.Visible;
         }
