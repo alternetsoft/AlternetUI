@@ -170,9 +170,20 @@ namespace PropertyGridSample
                 return;
             listBox.CheckedItemsChanged += (s, e) =>
             {
-                var prefix = "CheckedListBox CheckedItemsChanged";
-                App.LogReplace($"{prefix}", prefix);
+                LogItems("ListBox CheckedItemsChanged", listBox.CheckedItems);
             };
+        }
+
+        public static void LogItems(string prefix, IReadOnlyList<object> items)
+        {
+            if (items.Count > 100)
+                App.LogReplace($"{prefix}: {items.Count} items", prefix);
+            else
+            {
+                var st = items.Count == 0 ? "<none>" :
+                string.Join(", ", items.Select(x => x.ToString()));
+                App.LogReplace($"{prefix}: {st}", prefix);
+            }
         }
 
         public static void InitListBox(object control)
@@ -184,20 +195,7 @@ namespace PropertyGridSample
             foreach (var item in GetTenItems())
                 listBox.Items.Add(item);
 
-            listBox.SelectedIndexChanged += (s, e) =>
-            {
-                var prefix = "ListBox SelectedIndexChanged";
-                var selectedItems = listBox.SelectedItems;
-
-                if(selectedItems.Count > 100)
-                    App.LogReplace ($"{prefix}: {selectedItems.Count} items selected", prefix);
-                else
-                {
-                    var st = selectedItems.Count == 0 ? "<none>" :
-                    string.Join(", ", selectedItems.Select(x => x.ToString()));
-                    App.LogReplace($"{prefix}: {st}", prefix);
-                }
-            };
+            listBox.SelectedIndexChanged += (s, e) => LogItems("ListBox SelectedIndexChanged", listBox.SelectedItems);
         }
 
         public static void InitStdListBox(object control)

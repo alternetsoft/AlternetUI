@@ -4,16 +4,17 @@ namespace Alternet::UI
 {
     int ListBox::GetCheckedIndexesCount()
     {
-        return 0;
+        return (int)_checked.GetCount();
     }
 
     int ListBox::GetCheckedIndexesItem(int index)
     {
-        return -1;
+        return _checked.Item(index);
     }
 
     void ListBox::UpdateCheckedIndexes()
     {
+		GetCheckListBox()->GetCheckedItems(_checked);
     }
 
     void* ListBox::CreateListBox(ListBoxHandlerCreateFlags createFlags)

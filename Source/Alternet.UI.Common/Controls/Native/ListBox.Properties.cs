@@ -171,11 +171,11 @@ namespace Alternet.UI
         {
             get
             {
-                var result = new List<int>();
-                PlatformControl.UpdateSelections();
-                var count = PlatformControl.GetSelectionsCount();
-                for (int i = 0; i < count; i++)
-                    result.Add(PlatformControl.GetSelectionsItem(i));
+                var result = ListUtils.GetSelectedItems(
+                    PlatformControl.UpdateSelections,
+                    PlatformControl.GetSelectionsCount,
+                    PlatformControl.GetSelectionsItem);
+
                 return result;
             }
         }
@@ -222,15 +222,18 @@ namespace Alternet.UI
         {
             get
             {
-                var result = new List<object>();
-                PlatformControl.UpdateSelections();
-                var count = PlatformControl.GetSelectionsCount();
-                for (int i = 0; i < count; i++)
+                object GetItemAtIndex(int index)
                 {
-                    var index = PlatformControl.GetSelectionsItem(i);
-                    if (index >= 0 && index < Items.Count)
-                        result.Add(Items[index]);
+                    var itemIndex = PlatformControl.GetSelectionsItem(index);
+                    if (itemIndex >= 0 && itemIndex < Items.Count)
+                        return Items[itemIndex];
+                    return null!;
                 }
+
+                var result = ListUtils.GetSelectedItems(
+                    PlatformControl.UpdateSelections,
+                    PlatformControl.GetSelectionsCount,
+                    GetItemAtIndex);
 
                 return result;
             }

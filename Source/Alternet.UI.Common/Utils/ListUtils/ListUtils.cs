@@ -13,6 +13,35 @@ namespace Alternet.UI
     public static class ListUtils
     {
         /// <summary>
+        /// Retrieves a list of selected items by executing the specified update action and item retrieval functions.
+        /// </summary>
+        /// <remarks>The <paramref name="update"/> action is called to ensure the selection state is
+        /// current before items are retrieved. The <paramref name="getItem"/> function is expected to return a non-null
+        /// item for each valid index.</remarks>
+        /// <typeparam name="T">The type of items to retrieve.</typeparam>
+        /// <param name="update">An action that updates the selection state before retrieving items.</param>
+        /// <param name="getCount">A function that returns the total number of items available for selection.</param>
+        /// <param name="getItem">A function that retrieves an item by its index.</param>
+        /// <returns>A read-only list of selected items of type <typeparamref name="T"/>. The list will be empty if no items are
+        /// selected.</returns>
+        public static IReadOnlyList<T> GetSelectedItems<T>(Action update, Func<int> getCount, Func<int, T> getItem)
+        {
+            update();
+
+            var count = getCount();
+            var result = new List<T>(count);
+
+            for (int i = 0; i < count; i++)
+            {
+                var item = getItem(i);
+                if (item != null)
+                    result.Add(item);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Moves the specified item to the front of the list, if it exists.
         /// </summary>
         public static void MoveItemToFront<T>(List<T> list, T item)
