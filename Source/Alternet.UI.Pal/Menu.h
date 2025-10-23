@@ -142,7 +142,7 @@ namespace Alternet::UI
 
         wxAlternetMenuItem* GetMenuItemById(const string& id)
         {
-            for (int i = 0; i < GetMenuCount(); i++)
+            for (size_t i = 0; i < GetMenuCount(); i++)
             {
                 wxMenu* menu = GetMenu(i);
                 if (menu != nullptr)
@@ -160,7 +160,7 @@ namespace Alternet::UI
 
         int GetItemIndex(const string& id)
         {
-            for (int i = 0; i < GetMenuCount(); i++)
+            for (size_t i = 0; i < GetMenuCount(); i++)
             {
                 wxMenu* menu = GetMenu(i);
                 if (menu != nullptr)
