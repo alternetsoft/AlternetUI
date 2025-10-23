@@ -178,6 +178,38 @@ namespace Alternet.UI
 
                 return result;
             }
+
+            set
+            {
+                if (IsSelectionModeSingle)
+                {
+                    if (value is null || value.Count == 0)
+                    {
+                        SelectedIndex = -1;
+                        return;
+                    }
+
+                    SelectedIndex = value[0];
+                }
+                else
+                {
+                    if (value is null || value.Count == 0)
+                    {
+                        UnselectAll();
+                        return;
+                    }
+
+                    DoInsideUpdate(() =>
+                    {
+                        UnselectAll();
+                        foreach (var index in value)
+                        {
+                            if (index >= 0 && index < Items.Count)
+                                PlatformControl.SetSelection(index, true);
+                        }
+                    });
+                }
+            }
         }
 
         /// <summary>
@@ -265,11 +297,6 @@ namespace Alternet.UI
                     return;
                 switch (value)
                 {
-                    case SelectionMode.None:
-                        ChangeHandlerFlags(
-                            ListBoxHandlerFlags.None,
-                            ListBoxHandlerFlags.SingleSelection | ListBoxHandlerFlags.MultipleSelection | ListBoxHandlerFlags.ExtendedSelection);
-                        break;
                     case SelectionMode.One:
                         ChangeHandlerFlags(
                             ListBoxHandlerFlags.SingleSelection,
@@ -286,6 +313,30 @@ namespace Alternet.UI
                             ListBoxHandlerFlags.SingleSelection | ListBoxHandlerFlags.MultipleSelection);
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether selection mode is single.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSelectionModeSingle
+        {
+            get
+            {
+                return !IsSelectionModeMultiple;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether selection mode is multiple.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsSelectionModeMultiple
+        {
+            get
+            {
+                return SelectionMode == SelectionMode.MultiExtended || SelectionMode == SelectionMode.MultiSimple;
             }
         }
 
