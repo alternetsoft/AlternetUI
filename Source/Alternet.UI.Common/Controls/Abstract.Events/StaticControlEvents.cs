@@ -12,6 +12,16 @@ namespace Alternet.UI
     public static class StaticControlEvents
     {
         /// <summary>
+        /// Occurs when the DPI setting of the main window changes.
+        /// </summary>
+        public static event EventHandler? MainWindowDpiChanged;
+
+        /// <summary>
+        /// Occurs when the DPI setting of the window changes.
+        /// </summary>
+        public static event EventHandler? WindowDpiChanged;
+
+        /// <summary>
         /// Occurs when the name is changed.
         /// </summary>
         /// <remarks>This event is raised whenever the name is updated. Subscribers can handle this event
@@ -224,6 +234,25 @@ namespace Alternet.UI
         public static void RaiseVisibleChanged(object? sender, EventArgs e)
         {
             VisibleChanged?.Invoke(sender, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="WindowDpiChanged"/> event.
+        /// </summary>
+        /// <remarks>This method invokes the <see cref="WindowDpiChanged"/> event, allowing subscribers to
+        /// handle changes in DPI settings.</remarks>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        public static void RaiseWindowDpiChanged(object? sender, EventArgs e)
+        {
+            if (sender is not Window window)
+                return;
+            WindowDpiChanged?.Invoke(sender, e);
+
+            if (window.IsMainWindow)
+            {
+                MainWindowDpiChanged?.Invoke(sender, e);
+            }
         }
     }
 }

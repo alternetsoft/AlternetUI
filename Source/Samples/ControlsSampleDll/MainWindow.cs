@@ -20,6 +20,11 @@ namespace ControlsSample
             DefaultUseParentFont = true;
 
             AddGlobalWindowNotification(new GlobalFormActivity());
+
+            StaticControlEvents.MainWindowDpiChanged += (s, e) =>
+            {
+                App.Log($"MainWindow DPI changed: {((Window)s).DPI}");
+            };
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)

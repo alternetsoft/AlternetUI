@@ -1022,6 +1022,8 @@ namespace Alternet.UI
             DpiChanged?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterDpiChanged(this, e));
+
+            StaticControlEvents.RaiseWindowDpiChanged(this, e);
         }
 
         /// <summary>
