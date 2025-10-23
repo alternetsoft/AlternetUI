@@ -248,6 +248,16 @@ namespace PropertyGridSample
                     ObjectInit.AddManyItems(c, 100);
                 });
 
+                AddControlAction<CheckedListBox>("Recreate Native Window", (c) =>
+                {
+                    c.Handler.RecreateWindow();
+                });
+
+                AddControlAction<ListBox>("Recreate Native Window", (c) =>
+                {
+                    c.Handler.RecreateWindow();
+                });
+
                 AddControlAction<CheckedListBox>("Toggle selected item checked", (c) =>
                 {
                     c.SetItemChecked(c.SelectedIndex, !c.GetItemChecked(c.SelectedIndex));

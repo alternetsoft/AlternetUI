@@ -8,6 +8,8 @@ namespace Alternet.UI
 {
     internal class WxListBoxHandler : WxControlHandler, IListBoxHandler
     {
+        private IReadOnlyList<int>? checkedIndexes;
+
         /// <summary>
         /// Returns <see cref="ListBox"/> instance with which this handler
         /// is associated.
@@ -27,6 +29,10 @@ namespace Alternet.UI
             }
         }
 
+        public bool IsCheckedListBox => Control?.CheckBoxVisible ?? false;
+
+        public CheckedListBox? AsCheckedListBox => Control as CheckedListBox;
+
         internal new Native.ListBox NativeControl =>
             (Native.ListBox)base.NativeControl!;
 
@@ -36,9 +42,24 @@ namespace Alternet.UI
             set => NativeControl.SetFlags(value);
         }
 
+        public override void OnBeforeHandleDestroyed()
+        {
+            base.OnBeforeHandleDestroyed();
+
+            if (IsCheckedListBox)
+            {
+                checkedIndexes = AsCheckedListBox?.CheckedIndices;
+            }
+        }
+
         public override void OnHandleCreated()
         {
             ItemsToPlatform();
+
+            if (Control is CheckedListBox checkedListBox)
+            {
+                checkedListBox.CheckedIndices = checkedIndexes;
+            }
         }
 
         public override void OnInsertedToParent(AbstractControl parentControl)

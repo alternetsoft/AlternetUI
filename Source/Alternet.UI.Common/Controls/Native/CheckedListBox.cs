@@ -69,6 +69,25 @@ namespace Alternet.UI
                     PlatformControl.GetCheckedIndexesItem);
                 return result;
             }
+
+            set
+            {
+                if (value is null || value.Count == 0)
+                {
+                    UncheckAllItems();
+                    return;
+                }
+
+                DoInsideUpdate(() =>
+                {
+                    CheckAllItems(false);
+                    foreach (var index in value)
+                    {
+                        if (index >= 0 && index < Items.Count)
+                            PlatformControl.Check(index, true);
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -120,6 +139,45 @@ namespace Alternet.UI
             if (index < 0 || index >= Items.Count)
                 return false;
             return PlatformControl.IsChecked(index);
+        }
+
+        /// <summary>
+        /// Unchecks all items in the collection.
+        /// </summary>
+        /// <remarks>This method sets the checked state of all items to <see langword="false"/>. It is
+        /// useful for resetting the checked state of items in a control.</remarks>
+        public void UncheckAllItems()
+        {
+            CheckAllItems(false);
+        }
+
+        /// <summary>
+        /// Checks all items in the collection.
+        /// </summary>
+        /// <remarks>This method sets the checked state of all items to <see langword="true"/>. It is
+        /// useful for setting the checked state of items in a control.</remarks>
+        public void CheckAllItems()
+        {
+            CheckAllItems(true);
+        }
+
+        /// <summary>
+        /// Sets the checked state of all items in the collection.
+        /// </summary>
+        /// <remarks>This method iterates over all items in the collection and updates their checked state
+        /// to the specified <paramref name="checkedValue"/>. It performs the operation
+        /// within an update context to ensure consistency.</remarks>
+        /// <param name="checkedValue">A <see langword="true"/> to check all items;
+        /// <see langword="false"/> to uncheck all items.</param>
+        public virtual void CheckAllItems(bool checkedValue)
+        {
+            DoInsideUpdate(() =>
+            {
+                for (int i = 0; i < Items.Count; i++)
+                {
+                    PlatformControl.Check(i, checkedValue);
+                }
+            });
         }
 
         /// <summary>
