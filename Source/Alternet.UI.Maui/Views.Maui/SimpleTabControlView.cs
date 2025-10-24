@@ -170,7 +170,15 @@ namespace Alternet.Maui
         public virtual void SelectTab(int index)
         {
             var tab = GetTabButton(index);
-            tab?.ClickedAction?.Invoke();
+
+            if(tab is null)
+            {
+                Content = null;
+            }
+            else
+            {
+                tab.ClickedAction?.Invoke();
+            }
         }
 
         /// <summary>
