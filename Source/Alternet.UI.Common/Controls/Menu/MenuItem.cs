@@ -734,6 +734,14 @@ namespace Alternet.UI
                 {
                     if (enabled == value)
                         return;
+
+                    if (value)
+                    {
+                    }
+                    else
+                    {
+                    }
+
                     enabled = value;
                     RaiseEnabledChanged(EventArgs.Empty);
                 });
@@ -983,6 +991,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the command source can currently execute its associated command.
+        /// </summary>
+        /// <returns><see langword="true"/> if the command source can execute the command; otherwise,
+        /// <see langword="false"/>.</returns>
+        public bool CommandSourceCanExecute()
+        {
+            return commandSource.CanExecute;
+        }
+
+        /// <summary>
         /// Notifies that the state of the command source has changed.
         /// </summary>
         /// <remarks>This method should be called when the conditions affecting
@@ -1213,13 +1231,19 @@ namespace Alternet.UI
             IsShortcutEnabled = source.IsShortcutEnabled;
             Role = source.Role;
             Checked = source.Checked;
-            ClickAction = source.RaiseClick;
 
-            /*
-            This should not be copied directly as we assign ClickAction to source.RaiseClick.
-            Command = source.CommandSource.Command;
-            CommandParameter = source.CommandSource.CommandParameter;
-            */
+            if(source.CommandSource.Command is not null)
+            {
+                Command = source.CommandSource.Command;
+                CommandParameter = source.CommandSource.CommandParameter;
+                ClickAction = null;
+            }
+            else
+            {
+                ClickAction = source.RaiseClick;
+                Command = null;
+                CommandParameter = null;
+            }
 
             Enabled = source.Enabled;
             Visible = source.Visible;
