@@ -157,6 +157,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Notifies the command manager that the ability to execute the command may have changed.
+        /// </summary>
+        /// <remarks>This method raises the  <see cref="CanExecuteChanged"/> event.
+        /// Call this method when the
+        /// conditions that determine whether the command can execute have changed.</remarks>
+        public void ChangeCanExecute()
+        {
+            RaiseCanExecuteChanged();
+        }
+
+        /// <summary>
         /// Raises the <see cref="CanExecuteChanged"/> event.
         /// </summary>
         public virtual void RaiseCanExecuteChanged()
