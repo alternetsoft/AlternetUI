@@ -246,9 +246,16 @@ namespace Alternet.UI
             static void UpdateEnabled(MenuItem item)
             {
                 var func = item.EnabledFunc;
-                if (func is null)
+                if (func is not null)
+                {
+                    item.Enabled = func();
                     return;
-                item.Enabled = func();
+                }
+
+                if (item.Command is not null)
+                {
+                    item.Enabled = item.CommandSourceCanExecute();
+                }
             }
 
             OnOpening(e);
