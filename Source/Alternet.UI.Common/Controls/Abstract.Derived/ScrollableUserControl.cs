@@ -235,6 +235,25 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override Cursor? Cursor
+        {
+            get
+            {
+                return base.Cursor;
+            }
+
+            set
+            {
+                if (IsMouseOverScrollBar())
+                {
+                    value = Cursors.Default;
+                }
+
+                base.Cursor = value;
+            }
+        }
+
         /// <summary>
         /// Gets the vertical scrollbar settings. Initializes them if required.
         /// </summary>
@@ -478,6 +497,30 @@ namespace Alternet.UI
                 HasBorder = oldHasBorder;
                 IsScrollable = true;
             }
+        }
+
+        /// <summary>
+        /// Determines whether the mouse pointer is currently positioned
+        /// over a scroll bar or thumb within the control.
+        /// </summary>
+        /// <remarks>This method checks if the control has its own interior and performs a hit test to
+        /// determine whether the mouse pointer is over a scroll bar or thumb. Override this method to customize the
+        /// behavior for detecting mouse interactions with scrollable elements.</remarks>
+        /// <returns><see langword="true"/> if the mouse pointer is over a scroll bar or thumb; otherwise, <see
+        /// langword="false"/>.</returns>
+        protected virtual bool IsMouseOverScrollBar()
+        {
+            if (!HasOwnInterior)
+                return false;
+            var pt = Mouse.GetPosition(this);
+            var hitTest = Interior.HitTests(this, pt);
+            return hitTest.IsScrollBar || hitTest.IsThumb;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnCursorRequested(EventArgs e)
+        {
+            base.OnCursorRequested(e);
         }
 
         /// <inheritdoc/>
