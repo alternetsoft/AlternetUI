@@ -122,6 +122,7 @@ namespace Alternet.UI.Native
             var uiControl = UIControl;
             if (uiControl is null)
                 return;
+            uiControl.RaiseCursorRequested(EventArgs.Empty);
         }
 
         public virtual void OnPlatformEventDpiChanged()

@@ -247,6 +247,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Invoked when a cursor request event occurs.
+        /// </summary>
+        /// <remarks>This method is called to handle cursor request events and can be overridden in a
+        /// derived class  to provide custom handling. The base implementation does nothing.</remarks>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnCursorRequested(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called from the constructor. This method is added for the compatibility
         /// with legacy code.
         /// </summary>

@@ -49,6 +49,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the cursor requested event to notify subscribers that a cursor-related action is required.
+        /// </summary>
+        /// <remarks>This method invokes the <see cref="OnCursorRequested"/> method unless the object is
+        /// in a disposing or disposed state. It is typically used to signal that a cursor update or related operation
+        /// is needed.</remarks>
+        public void RaiseCursorRequested(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnCursorRequested(e);
+        }
+
+        /// <summary>
         /// Raises <see cref="LayoutUpdated"/> event.
         /// </summary>
         [Browsable(false)]
