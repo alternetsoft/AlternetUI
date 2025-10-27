@@ -417,10 +417,15 @@ namespace Alternet.UI
                 position = window.ScreenToClient(pt);
             }
 
+            var savedCursor = control.Cursor;
+            control.Cursor = Cursors.Default;
+
             Native.Menu.Show(
                 menuPtr,
                 (UI.Native.Control)control.NativeControl ?? throw new Exception(),
                 position.Value);
+
+            control.Cursor = savedCursor;
         }
 
         /// <summary>
