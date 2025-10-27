@@ -36,6 +36,42 @@ namespace Alternet.UI
             Action? onClick = null);
 
         /// <summary>
+        /// Adds a new column to the user interface with the specified title, width, and click action.
+        /// </summary>
+        /// <param name="title">The title of the column. Can be <see langword="null"/> to create an untitled column.</param>
+        /// <param name="width">The width of the column, specified as a <see cref="Coord"/>.
+        /// Can be <see langword="null"/> to use the
+        /// default width.</param>
+        /// <param name="onClick">An optional action to be executed when the column is clicked.
+        /// Can be <see langword="null"/> if no action is
+        /// required.</param>
+        /// <returns>A <see cref="SpeedButton"/> representing the newly added column.</returns>
+        SpeedButton AddColumnCore(
+            string? title,
+            Coord? width = null,
+            Action? onClick = null);
+
+        /// <summary>
+        /// Inserts a new column at the specified index with the given title, width, and optional click action.
+        /// </summary>
+        /// <remarks>This method allows dynamic insertion of columns into a collection. Ensure that the
+        /// <paramref name="index"/> is within the valid range to avoid exceptions.</remarks>
+        /// <param name="index">The zero-based index at which the column should be inserted.
+        /// Must be within the valid range of existing
+        /// columns.</param>
+        /// <param name="title">The title of the column. Can be null or empty if no title is required.</param>
+        /// <param name="width">The optional width of the column, specified as a <see cref="Coord"/>.
+        /// If null, a default width is used.</param>
+        /// <param name="onClick">An optional action to be executed when the column is clicked.
+        /// Can be null if no action is required.</param>
+        /// <returns>A <see cref="SpeedButton"/> representing the inserted column.</returns>
+        SpeedButton InsertColumnCore(
+            int index,
+            string? title,
+            Coord? width = null,
+            Action? onClick = null);
+
+        /// <summary>
         /// Deletes all columns from the control.
         /// </summary>
         void DeleteColumns();

@@ -78,6 +78,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the last column control in the collection.
+        /// </summary>
+        /// <remarks>This property iterates through the child elements in reverse order to locate the last
+        /// column control. If no column control is found, the property returns <see langword="null"/>.</remarks>
+        public virtual SpeedButton? LastColumn
+        {
+            get
+            {
+                for (int i = Children.Count - 1; i >= 0; i--)
+                {
+                    if (IsColumnControl(Children[i]))
+                        return Children[i] as SpeedButton;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the first child control in the collection that is identified as a column control.
+        /// </summary>
+        public virtual SpeedButton? FirstColumn
+        {
+            get
+            {
+                foreach (var child in Children)
+                {
+                    if (IsColumnControl(child))
+                        return child as SpeedButton;
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Gets an enumerable collection of <see cref="SpeedButton"/> controls
         /// that are identified as column controls.
         /// </summary>
@@ -221,7 +257,26 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual SpeedButton AddColumnCore(
+            string? title,
+            Coord? width = null,
+            Action? onClick = null)
+        {
+            return InsertColumnCore(int.MaxValue, title, width, onClick);
+        }
+
+        /// <inheritdoc/>
         public virtual ObjectUniqueId InsertColumn(
+            int index,
+            string? title,
+            Coord? width = null,
+            Action? onClick = null)
+        {
+            return InsertColumnCore(index, title, width, onClick).UniqueId;
+        }
+
+        /// <inheritdoc/>
+        public virtual SpeedButton InsertColumnCore(
             int index,
             string? title,
             Coord? width = null,
@@ -287,7 +342,7 @@ namespace Alternet.UI
                 }
             });
 
-            return label.UniqueId;
+            return label;
         }
 
         /// <summary>

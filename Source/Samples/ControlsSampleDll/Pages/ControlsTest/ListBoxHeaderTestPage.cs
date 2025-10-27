@@ -10,6 +10,11 @@ namespace ControlsSample
     {
         public ListBoxHeaderTestPage()
         {
+            var contextMenu = new ContextMenuStrip();
+            contextMenu.Add("Menu Item 1", () => App.Log("Menu Item 1 clicked"));
+            contextMenu.Add("Menu Item 2", () => App.Log("Menu Item 2 clicked"));
+            contextMenu.Add("Menu Item 3", () => App.Log("Menu Item 3 clicked"));
+
             Padding = 20;
             Layout = LayoutStyle.Vertical;
             var header = new ListBoxHeader();
@@ -45,6 +50,13 @@ namespace ControlsSample
             });
 
             header.Parent = this;
+
+            var firstColumn = header.FirstColumn;
+            if (firstColumn is not null)
+            {
+                firstColumn.ContextMenuStrip = contextMenu;
+                firstColumn.Cursor = Cursors.Hand;
+            }
         }
     }
 }
