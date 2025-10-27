@@ -1876,7 +1876,12 @@ namespace Alternet.UI
                 SuggestedSize = (Coord.NaN, SuggestedHeight);
                 SetContentHorizontalAlignment(HorizontalAlignment.Left);
                 Label.HorizontalAlignment = HorizontalAlignment.Fill;
-                RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+
+                if(Shortcut is not null)
+                    RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+                else
+                    RightSideElement = SpeedButton.RightSideElementKind.None;
+
                 ShowDropDownMenuWhenHovered = true;
 
                 if(!App.IsMaui)
