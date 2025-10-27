@@ -1922,6 +1922,8 @@ namespace Alternet.UI
 
             if (menuItem.SvgImage is not null)
             {
+                ImageSet = null;
+                DisabledImageSet = null;
                 SetSvgImage(menuItem.SvgImage, null);
             }
             else
@@ -1937,15 +1939,17 @@ namespace Alternet.UI
             if (menuItem.Count == 0)
             {
                 DropDownMenu = null;
-                RightSideElement = RightSideElementKind.KeyGesture;
+                SetLabelImage(null);
             }
             else
             {
                 RightSideElement = RightSideElementKind.Image;
                 DropDownMenu ??= new ContextMenu();
                 DropDownMenu.Assign(menuItem);
-                SetRightSideImage(MenuItem.DefaultMenuArrowImage);
+                SetLabelImage(MenuItem.DefaultMenuArrowImage);
             }
+
+            ConfigureAsMenuItem();
         }
 
         /// <inheritdoc/>
@@ -2082,7 +2086,11 @@ namespace Alternet.UI
             {
                 var elements = GetRightSideElements(ref prm);
                 if (elements is null || elements.Length == 0)
+                {
+                    prm.SuffixElements = null;
                     return;
+                }
+
                 prm.SuffixElements = elements;
             }
         }
