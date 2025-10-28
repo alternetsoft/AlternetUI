@@ -1031,7 +1031,10 @@ namespace Alternet.UI
                 return;
             Display.Reset();
             ResetScaleFactor();
+            PerformLayoutAndInvalidate();
+
             OnDpiChanged(e);
+
             DpiChanged?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterDpiChanged(this, e));

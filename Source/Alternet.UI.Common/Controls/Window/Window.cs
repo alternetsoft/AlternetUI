@@ -2060,10 +2060,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnDpiChanged(DpiChangedEventArgs e)
         {
-            if (DisposingOrDisposed)
-                return;
             base.OnDpiChanged(e);
-            PerformLayoutAndInvalidate();
         }
 
         /// <summary>
