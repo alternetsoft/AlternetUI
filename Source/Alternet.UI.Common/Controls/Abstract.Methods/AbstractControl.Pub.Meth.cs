@@ -1193,7 +1193,10 @@ namespace Alternet.UI
         /// returns a value of <c>false</c> until the <see cref="Show"/> method
         /// is called.
         /// </remarks>
-        public void Hide() => Visible = false;
+        public void Hide()
+        {
+            Visible = false;
+        }
 
         /// <summary>
         /// Creates the <see cref="Graphics"/> for the control.

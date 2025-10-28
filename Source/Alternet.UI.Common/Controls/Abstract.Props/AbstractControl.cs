@@ -3678,7 +3678,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets absolute position of the control. Returned value is <see cref="Location"/>
-        /// plus all control's parents locations.
+        /// plus all locations of its parents.
         /// </summary>
         [Browsable(false)]
         public virtual PointD AbsolutePosition
