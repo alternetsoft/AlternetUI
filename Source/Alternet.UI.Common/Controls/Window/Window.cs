@@ -304,6 +304,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets time when window was last time shown.
+        /// </summary>
+        [Browsable(false)]
+        public virtual DateTime? LastShownTime
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets time when window was last time shown as modal dialog.
         /// </summary>
         [Browsable(false)]

@@ -1094,6 +1094,11 @@ namespace Alternet.UI
                 return;
             if (Visible)
             {
+                if (this is Window window)
+                {
+                    window.LastShownTime = DateTime.Now;
+                }
+
                 ResetScaleFactor();
             }
 
