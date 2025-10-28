@@ -358,6 +358,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets collection of the visible popup windows of the specified type.
+        /// Result is sorted by last activation time.
+        /// </summary>
+        public static IEnumerable<T1> GetVisiblePopups<T1>()
+            where T1 : PopupWindow<T>
+        {
+            if (!App.HasApplication)
+                yield break;
+
+            var windows = App.Current.VisibleWindows
+                .Where(x => x is T1)
+                .OrderBy(x => x.LastShownTime).ToArray();
+
+            foreach (var window in windows)
+            {
+                if (window is T1 popupWindow)
+                {
+                    yield return popupWindow;
+                }
+            }
+        }
+
+        /// <summary>
         /// Calculates the interior size of the control based on the specified flags.
         /// </summary>
         /// <remarks>The method calculates the interior size by summing the sizes of the specified
