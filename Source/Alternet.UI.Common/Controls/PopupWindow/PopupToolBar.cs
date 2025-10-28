@@ -53,8 +53,13 @@ namespace Alternet.UI
             {
                 if (!Visible)
                     return;
-                if (PopupOwner?.IsSibling(s as AbstractControl) ?? false)
+                var control = s as AbstractControl;
+
+                if (PopupOwner?.IsSibling(control) ?? false)
                 {
+                    if (!PopupOwner.HasIndirectParent<PopupToolBar>())
+                        return;
+                    HideAllAfterThis();
                     HideOnlyThisPopup();
                 }
             };
@@ -69,6 +74,7 @@ namespace Alternet.UI
                     return;
                 if (PopupOwner?.IsSibling(control.PopupOwner) ?? false)
                 {
+                    HideAllAfterThis();
                     HideOnlyThisPopup();
                 }
             };
@@ -83,6 +89,20 @@ namespace Alternet.UI
             get
             {
                 return hideOnDeactivateSuppressCounter > 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of currently visible popup toolbars.
+        /// </summary>
+        /// <remarks>This property retrieves all popup toolbars that are currently visible in the
+        /// application. Use this property to enumerate or interact with the
+        /// visible popup toolbars.</remarks>
+        public static IEnumerable<PopupToolBar> VisiblePopupToolbars
+        {
+            get
+            {
+                return GetVisiblePopups<PopupToolBar>();
             }
         }
 
@@ -282,6 +302,24 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Hides all visible popup toolbars that appear after the current instance in the sequence.
+        /// </summary>
+        /// <remarks>This method identifies the current instance within the collection of visible popup
+        /// toolbars and hides all subsequent toolbars in the sequence. If the current instance is not found in the
+        /// collection, the method performs no action.</remarks>
+        public virtual void HideAllAfterThis()
+        {
+            var popups = VisiblePopupToolbars.ToArray();
+            var idx = Array.IndexOf(popups, this);
+            if (idx < 0)
+                return;
+            for (int i = idx + 1; i < popups.Length; i++)
+            {
+                popups[i].HideOnlyThisPopup();
+            }
+        }
+
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
@@ -322,8 +360,12 @@ namespace Alternet.UI
             if (Visible)
                 return;
 
-            if(!hideOtherPopupsSuppressed)
+            HideAllAfterThis();
+
+            if (!hideOtherPopupsSuppressed)
+            {
                 HideOtherPopups();
+            }
         }
 
         /// <summary>
