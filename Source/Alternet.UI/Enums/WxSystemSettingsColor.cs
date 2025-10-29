@@ -9,7 +9,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// System colors enumeration in wxWidgets.
     /// </summary>
-    public enum SystemSettingsColor
+    public enum WxSystemSettingsColor
     {
         /// <summary>
         /// The system-defined color of the background of a scroll bar.

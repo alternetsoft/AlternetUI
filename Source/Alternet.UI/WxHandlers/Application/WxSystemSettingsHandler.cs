@@ -161,7 +161,7 @@ namespace Alternet.UI
 
         public ColorStruct? GetColor(KnownSystemColor index)
         {
-            SystemSettingsColor systemSettingsColor = WxColorUtils.Convert(index);
+            WxSystemSettingsColor systemSettingsColor = WxColorUtils.Convert(index);
             return (ColorStruct)UI.Native.WxOtherFactory.SystemSettingsGetColor((int)systemSettingsColor);
         }
 

@@ -11,194 +11,194 @@ namespace Alternet.Drawing
         /// <summary>
         /// All known color values (in order of definition in the <see cref="KnownColor"/>).
         /// </summary>
-        private static readonly SystemSettingsColor[] KnownColorToSystemSettingsColorTable
-            = new SystemSettingsColor[]
+        private static readonly WxSystemSettingsColor[] KnownColorToSystemSettingsColorTable
+            = new WxSystemSettingsColor[]
         {
             /*"not a known color"*/
-            SystemSettingsColor.Max,
+            WxSystemSettingsColor.Max,
 
             /*"System" colors, Part 1*/
-            SystemSettingsColor.ActiveBorder,     // ActiveBorder
-            SystemSettingsColor.ActiveCaption,     // ActiveCaption
-            SystemSettingsColor.ActiveCaptionText,     // ActiveCaptionText
-            SystemSettingsColor.AppWorkspace,     // AppWorkspace
-            SystemSettingsColor.ButtonFace,     // Control
-            SystemSettingsColor.ButtonShadow,     // ControlDark
-            SystemSettingsColor.ControlDarkDark,     // ControlDarkDark
-            SystemSettingsColor.ControlLight,     // ControlLight
-            SystemSettingsColor.ButtonHighlight,     // ControlLightLight
-            SystemSettingsColor.ControlText,     // ControlText
-            SystemSettingsColor.Desktop,     // Desktop
-            SystemSettingsColor.GrayText,     // GrayText
-            SystemSettingsColor.Highlight,     // Highlight
-            SystemSettingsColor.HighlightText,     // HighlightText
-            SystemSettingsColor.HotTrack,     // HotTrack
-            SystemSettingsColor.InactiveBorder,     // InactiveBorder
-            SystemSettingsColor.InactiveCaption,     // InactiveCaption
-            SystemSettingsColor.InactiveCaptionText,     // InactiveCaptionText
-            SystemSettingsColor.Info,     // Info
-            SystemSettingsColor.InfoText,     // InfoText
-            SystemSettingsColor.Menu,     // Menu
-            SystemSettingsColor.MenuText,     // MenuText
-            SystemSettingsColor.ScrollBar,     // ScrollBar
-            SystemSettingsColor.Window,     // Window
-            SystemSettingsColor.WindowFrame,     // WindowFrame
-            SystemSettingsColor.WindowText,     // WindowText
+            WxSystemSettingsColor.ActiveBorder,     // ActiveBorder
+            WxSystemSettingsColor.ActiveCaption,     // ActiveCaption
+            WxSystemSettingsColor.ActiveCaptionText,     // ActiveCaptionText
+            WxSystemSettingsColor.AppWorkspace,     // AppWorkspace
+            WxSystemSettingsColor.ButtonFace,     // Control
+            WxSystemSettingsColor.ButtonShadow,     // ControlDark
+            WxSystemSettingsColor.ControlDarkDark,     // ControlDarkDark
+            WxSystemSettingsColor.ControlLight,     // ControlLight
+            WxSystemSettingsColor.ButtonHighlight,     // ControlLightLight
+            WxSystemSettingsColor.ControlText,     // ControlText
+            WxSystemSettingsColor.Desktop,     // Desktop
+            WxSystemSettingsColor.GrayText,     // GrayText
+            WxSystemSettingsColor.Highlight,     // Highlight
+            WxSystemSettingsColor.HighlightText,     // HighlightText
+            WxSystemSettingsColor.HotTrack,     // HotTrack
+            WxSystemSettingsColor.InactiveBorder,     // InactiveBorder
+            WxSystemSettingsColor.InactiveCaption,     // InactiveCaption
+            WxSystemSettingsColor.InactiveCaptionText,     // InactiveCaptionText
+            WxSystemSettingsColor.Info,     // Info
+            WxSystemSettingsColor.InfoText,     // InfoText
+            WxSystemSettingsColor.Menu,     // Menu
+            WxSystemSettingsColor.MenuText,     // MenuText
+            WxSystemSettingsColor.ScrollBar,     // ScrollBar
+            WxSystemSettingsColor.Window,     // Window
+            WxSystemSettingsColor.WindowFrame,     // WindowFrame
+            WxSystemSettingsColor.WindowText,     // WindowText
 
             // "Web" Colors, Part 1
-            SystemSettingsColor.Max,     // Transparent
-            SystemSettingsColor.Max,     // AliceBlue
-            SystemSettingsColor.Max,     // AntiqueWhite
-            SystemSettingsColor.Max,     // Aqua
-            SystemSettingsColor.Max,     // Aquamarine
-            SystemSettingsColor.Max,     // Azure
-            SystemSettingsColor.Max,     // Beige
-            SystemSettingsColor.Max,     // Bisque
-            SystemSettingsColor.Max,     // Black
-            SystemSettingsColor.Max,     // BlanchedAlmond
-            SystemSettingsColor.Max,     // Blue
-            SystemSettingsColor.Max,     // BlueViolet
-            SystemSettingsColor.Max,     // Brown
-            SystemSettingsColor.Max,     // BurlyWood
-            SystemSettingsColor.Max,     // CadetBlue
-            SystemSettingsColor.Max,     // Chartreuse
-            SystemSettingsColor.Max,     // Chocolate
-            SystemSettingsColor.Max,     // Coral
-            SystemSettingsColor.Max,     // CornflowerBlue
-            SystemSettingsColor.Max,     // Cornsilk
-            SystemSettingsColor.Max,     // Crimson
-            SystemSettingsColor.Max,     // Cyan
-            SystemSettingsColor.Max,     // DarkBlue
-            SystemSettingsColor.Max,     // DarkCyan
-            SystemSettingsColor.Max,     // DarkGoldenrod
-            SystemSettingsColor.Max,     // DarkGray
-            SystemSettingsColor.Max,     // DarkGreen
-            SystemSettingsColor.Max,     // DarkKhaki
-            SystemSettingsColor.Max,     // DarkMagenta
-            SystemSettingsColor.Max,     // DarkOliveGreen
-            SystemSettingsColor.Max,     // DarkOrange
-            SystemSettingsColor.Max,     // DarkOrchid
-            SystemSettingsColor.Max,     // DarkRed
-            SystemSettingsColor.Max,     // DarkSalmon
-            SystemSettingsColor.Max,     // DarkSeaGreen
-            SystemSettingsColor.Max,     // DarkSlateBlue
-            SystemSettingsColor.Max,     // DarkSlateGray
-            SystemSettingsColor.Max,     // DarkTurquoise
-            SystemSettingsColor.Max,     // DarkViolet
-            SystemSettingsColor.Max,     // DeepPink
-            SystemSettingsColor.Max,     // DeepSkyBlue
-            SystemSettingsColor.Max,     // DimGray
-            SystemSettingsColor.Max,     // DodgerBlue
-            SystemSettingsColor.Max,     // Firebrick
-            SystemSettingsColor.Max,     // FloralWhite
-            SystemSettingsColor.Max,     // ForestGreen
-            SystemSettingsColor.Max,     // Fuchsia
-            SystemSettingsColor.Max,     // Gainsboro
-            SystemSettingsColor.Max,     // GhostWhite
-            SystemSettingsColor.Max,     // Gold
-            SystemSettingsColor.Max,     // Goldenrod
-            SystemSettingsColor.Max,     // Gray
-            SystemSettingsColor.Max,     // Green
-            SystemSettingsColor.Max,     // GreenYellow
-            SystemSettingsColor.Max,     // Honeydew
-            SystemSettingsColor.Max,     // HotPink
-            SystemSettingsColor.Max,     // IndianRed
-            SystemSettingsColor.Max,     // Indigo
-            SystemSettingsColor.Max,     // Ivory
-            SystemSettingsColor.Max,     // Khaki
-            SystemSettingsColor.Max,     // Lavender
-            SystemSettingsColor.Max,     // LavenderBlush
-            SystemSettingsColor.Max,     // LawnGreen
-            SystemSettingsColor.Max,     // LemonChiffon
-            SystemSettingsColor.Max,     // LightBlue
-            SystemSettingsColor.Max,     // LightCoral
-            SystemSettingsColor.Max,     // LightCyan
-            SystemSettingsColor.Max,     // LightGoldenrodYellow
-            SystemSettingsColor.Max,     // LightGray
-            SystemSettingsColor.Max,     // LightGreen
-            SystemSettingsColor.Max,     // LightPink
-            SystemSettingsColor.Max,     // LightSalmon
-            SystemSettingsColor.Max,     // LightSeaGreen
-            SystemSettingsColor.Max,     // LightSkyBlue
-            SystemSettingsColor.Max,     // LightSlateGray
-            SystemSettingsColor.Max,     // LightSteelBlue
-            SystemSettingsColor.Max,     // LightYellow
-            SystemSettingsColor.Max,     // Lime
-            SystemSettingsColor.Max,     // LimeGreen
-            SystemSettingsColor.Max,     // Linen
-            SystemSettingsColor.Max,     // Magenta
-            SystemSettingsColor.Max,     // Maroon
-            SystemSettingsColor.Max,     // MediumAquamarine
-            SystemSettingsColor.Max,     // MediumBlue
-            SystemSettingsColor.Max,     // MediumOrchid
-            SystemSettingsColor.Max,     // MediumPurple
-            SystemSettingsColor.Max,     // MediumSeaGreen
-            SystemSettingsColor.Max,     // MediumSlateBlue
-            SystemSettingsColor.Max,     // MediumSpringGreen
-            SystemSettingsColor.Max,     // MediumTurquoise
-            SystemSettingsColor.Max,     // MediumVioletRed
-            SystemSettingsColor.Max,     // MidnightBlue
-            SystemSettingsColor.Max,     // MintCream
-            SystemSettingsColor.Max,     // MistyRose
-            SystemSettingsColor.Max,     // Moccasin
-            SystemSettingsColor.Max,     // NavajoWhite
-            SystemSettingsColor.Max,     // Navy
-            SystemSettingsColor.Max,     // OldLace
-            SystemSettingsColor.Max,     // Olive
-            SystemSettingsColor.Max,     // OliveDrab
-            SystemSettingsColor.Max,     // Orange
-            SystemSettingsColor.Max,     // OrangeRed
-            SystemSettingsColor.Max,     // Orchid
-            SystemSettingsColor.Max,     // PaleGoldenrod
-            SystemSettingsColor.Max,     // PaleGreen
-            SystemSettingsColor.Max,     // PaleTurquoise
-            SystemSettingsColor.Max,     // PaleVioletRed
-            SystemSettingsColor.Max,     // PapayaWhip
-            SystemSettingsColor.Max,     // PeachPuff
-            SystemSettingsColor.Max,     // Peru
-            SystemSettingsColor.Max,     // Pink
-            SystemSettingsColor.Max,     // Plum
-            SystemSettingsColor.Max,     // PowderBlue
-            SystemSettingsColor.Max,     // Purple
-            SystemSettingsColor.Max,     // Red
-            SystemSettingsColor.Max,     // RosyBrown
-            SystemSettingsColor.Max,     // RoyalBlue
-            SystemSettingsColor.Max,     // SaddleBrown
-            SystemSettingsColor.Max,     // Salmon
-            SystemSettingsColor.Max,     // SandyBrown
-            SystemSettingsColor.Max,     // SeaGreen
-            SystemSettingsColor.Max,     // SeaShell
-            SystemSettingsColor.Max,     // Sienna
-            SystemSettingsColor.Max,     // Silver
-            SystemSettingsColor.Max,     // SkyBlue
-            SystemSettingsColor.Max,     // SlateBlue
-            SystemSettingsColor.Max,     // SlateGray
-            SystemSettingsColor.Max,     // Snow
-            SystemSettingsColor.Max,     // SpringGreen
-            SystemSettingsColor.Max,     // SteelBlue
-            SystemSettingsColor.Max,     // Tan
-            SystemSettingsColor.Max,     // Teal
-            SystemSettingsColor.Max,     // Thistle
-            SystemSettingsColor.Max,     // Tomato
-            SystemSettingsColor.Max,     // Turquoise
-            SystemSettingsColor.Max,     // Violet
-            SystemSettingsColor.Max,     // Wheat
-            SystemSettingsColor.Max,     // White
-            SystemSettingsColor.Max,     // WhiteSmoke
-            SystemSettingsColor.Max,     // Yellow
-            SystemSettingsColor.Max,     // YellowGreen
+            WxSystemSettingsColor.Max,     // Transparent
+            WxSystemSettingsColor.Max,     // AliceBlue
+            WxSystemSettingsColor.Max,     // AntiqueWhite
+            WxSystemSettingsColor.Max,     // Aqua
+            WxSystemSettingsColor.Max,     // Aquamarine
+            WxSystemSettingsColor.Max,     // Azure
+            WxSystemSettingsColor.Max,     // Beige
+            WxSystemSettingsColor.Max,     // Bisque
+            WxSystemSettingsColor.Max,     // Black
+            WxSystemSettingsColor.Max,     // BlanchedAlmond
+            WxSystemSettingsColor.Max,     // Blue
+            WxSystemSettingsColor.Max,     // BlueViolet
+            WxSystemSettingsColor.Max,     // Brown
+            WxSystemSettingsColor.Max,     // BurlyWood
+            WxSystemSettingsColor.Max,     // CadetBlue
+            WxSystemSettingsColor.Max,     // Chartreuse
+            WxSystemSettingsColor.Max,     // Chocolate
+            WxSystemSettingsColor.Max,     // Coral
+            WxSystemSettingsColor.Max,     // CornflowerBlue
+            WxSystemSettingsColor.Max,     // Cornsilk
+            WxSystemSettingsColor.Max,     // Crimson
+            WxSystemSettingsColor.Max,     // Cyan
+            WxSystemSettingsColor.Max,     // DarkBlue
+            WxSystemSettingsColor.Max,     // DarkCyan
+            WxSystemSettingsColor.Max,     // DarkGoldenrod
+            WxSystemSettingsColor.Max,     // DarkGray
+            WxSystemSettingsColor.Max,     // DarkGreen
+            WxSystemSettingsColor.Max,     // DarkKhaki
+            WxSystemSettingsColor.Max,     // DarkMagenta
+            WxSystemSettingsColor.Max,     // DarkOliveGreen
+            WxSystemSettingsColor.Max,     // DarkOrange
+            WxSystemSettingsColor.Max,     // DarkOrchid
+            WxSystemSettingsColor.Max,     // DarkRed
+            WxSystemSettingsColor.Max,     // DarkSalmon
+            WxSystemSettingsColor.Max,     // DarkSeaGreen
+            WxSystemSettingsColor.Max,     // DarkSlateBlue
+            WxSystemSettingsColor.Max,     // DarkSlateGray
+            WxSystemSettingsColor.Max,     // DarkTurquoise
+            WxSystemSettingsColor.Max,     // DarkViolet
+            WxSystemSettingsColor.Max,     // DeepPink
+            WxSystemSettingsColor.Max,     // DeepSkyBlue
+            WxSystemSettingsColor.Max,     // DimGray
+            WxSystemSettingsColor.Max,     // DodgerBlue
+            WxSystemSettingsColor.Max,     // Firebrick
+            WxSystemSettingsColor.Max,     // FloralWhite
+            WxSystemSettingsColor.Max,     // ForestGreen
+            WxSystemSettingsColor.Max,     // Fuchsia
+            WxSystemSettingsColor.Max,     // Gainsboro
+            WxSystemSettingsColor.Max,     // GhostWhite
+            WxSystemSettingsColor.Max,     // Gold
+            WxSystemSettingsColor.Max,     // Goldenrod
+            WxSystemSettingsColor.Max,     // Gray
+            WxSystemSettingsColor.Max,     // Green
+            WxSystemSettingsColor.Max,     // GreenYellow
+            WxSystemSettingsColor.Max,     // Honeydew
+            WxSystemSettingsColor.Max,     // HotPink
+            WxSystemSettingsColor.Max,     // IndianRed
+            WxSystemSettingsColor.Max,     // Indigo
+            WxSystemSettingsColor.Max,     // Ivory
+            WxSystemSettingsColor.Max,     // Khaki
+            WxSystemSettingsColor.Max,     // Lavender
+            WxSystemSettingsColor.Max,     // LavenderBlush
+            WxSystemSettingsColor.Max,     // LawnGreen
+            WxSystemSettingsColor.Max,     // LemonChiffon
+            WxSystemSettingsColor.Max,     // LightBlue
+            WxSystemSettingsColor.Max,     // LightCoral
+            WxSystemSettingsColor.Max,     // LightCyan
+            WxSystemSettingsColor.Max,     // LightGoldenrodYellow
+            WxSystemSettingsColor.Max,     // LightGray
+            WxSystemSettingsColor.Max,     // LightGreen
+            WxSystemSettingsColor.Max,     // LightPink
+            WxSystemSettingsColor.Max,     // LightSalmon
+            WxSystemSettingsColor.Max,     // LightSeaGreen
+            WxSystemSettingsColor.Max,     // LightSkyBlue
+            WxSystemSettingsColor.Max,     // LightSlateGray
+            WxSystemSettingsColor.Max,     // LightSteelBlue
+            WxSystemSettingsColor.Max,     // LightYellow
+            WxSystemSettingsColor.Max,     // Lime
+            WxSystemSettingsColor.Max,     // LimeGreen
+            WxSystemSettingsColor.Max,     // Linen
+            WxSystemSettingsColor.Max,     // Magenta
+            WxSystemSettingsColor.Max,     // Maroon
+            WxSystemSettingsColor.Max,     // MediumAquamarine
+            WxSystemSettingsColor.Max,     // MediumBlue
+            WxSystemSettingsColor.Max,     // MediumOrchid
+            WxSystemSettingsColor.Max,     // MediumPurple
+            WxSystemSettingsColor.Max,     // MediumSeaGreen
+            WxSystemSettingsColor.Max,     // MediumSlateBlue
+            WxSystemSettingsColor.Max,     // MediumSpringGreen
+            WxSystemSettingsColor.Max,     // MediumTurquoise
+            WxSystemSettingsColor.Max,     // MediumVioletRed
+            WxSystemSettingsColor.Max,     // MidnightBlue
+            WxSystemSettingsColor.Max,     // MintCream
+            WxSystemSettingsColor.Max,     // MistyRose
+            WxSystemSettingsColor.Max,     // Moccasin
+            WxSystemSettingsColor.Max,     // NavajoWhite
+            WxSystemSettingsColor.Max,     // Navy
+            WxSystemSettingsColor.Max,     // OldLace
+            WxSystemSettingsColor.Max,     // Olive
+            WxSystemSettingsColor.Max,     // OliveDrab
+            WxSystemSettingsColor.Max,     // Orange
+            WxSystemSettingsColor.Max,     // OrangeRed
+            WxSystemSettingsColor.Max,     // Orchid
+            WxSystemSettingsColor.Max,     // PaleGoldenrod
+            WxSystemSettingsColor.Max,     // PaleGreen
+            WxSystemSettingsColor.Max,     // PaleTurquoise
+            WxSystemSettingsColor.Max,     // PaleVioletRed
+            WxSystemSettingsColor.Max,     // PapayaWhip
+            WxSystemSettingsColor.Max,     // PeachPuff
+            WxSystemSettingsColor.Max,     // Peru
+            WxSystemSettingsColor.Max,     // Pink
+            WxSystemSettingsColor.Max,     // Plum
+            WxSystemSettingsColor.Max,     // PowderBlue
+            WxSystemSettingsColor.Max,     // Purple
+            WxSystemSettingsColor.Max,     // Red
+            WxSystemSettingsColor.Max,     // RosyBrown
+            WxSystemSettingsColor.Max,     // RoyalBlue
+            WxSystemSettingsColor.Max,     // SaddleBrown
+            WxSystemSettingsColor.Max,     // Salmon
+            WxSystemSettingsColor.Max,     // SandyBrown
+            WxSystemSettingsColor.Max,     // SeaGreen
+            WxSystemSettingsColor.Max,     // SeaShell
+            WxSystemSettingsColor.Max,     // Sienna
+            WxSystemSettingsColor.Max,     // Silver
+            WxSystemSettingsColor.Max,     // SkyBlue
+            WxSystemSettingsColor.Max,     // SlateBlue
+            WxSystemSettingsColor.Max,     // SlateGray
+            WxSystemSettingsColor.Max,     // Snow
+            WxSystemSettingsColor.Max,     // SpringGreen
+            WxSystemSettingsColor.Max,     // SteelBlue
+            WxSystemSettingsColor.Max,     // Tan
+            WxSystemSettingsColor.Max,     // Teal
+            WxSystemSettingsColor.Max,     // Thistle
+            WxSystemSettingsColor.Max,     // Tomato
+            WxSystemSettingsColor.Max,     // Turquoise
+            WxSystemSettingsColor.Max,     // Violet
+            WxSystemSettingsColor.Max,     // Wheat
+            WxSystemSettingsColor.Max,     // White
+            WxSystemSettingsColor.Max,     // WhiteSmoke
+            WxSystemSettingsColor.Max,     // Yellow
+            WxSystemSettingsColor.Max,     // YellowGreen
 
             // "System" colors, Part 2
-            SystemSettingsColor.ButtonFace,     // ButtonFace
-            SystemSettingsColor.ButtonHighlight,     // ButtonHighlight
-            SystemSettingsColor.ButtonShadow,     // ButtonShadow
-            SystemSettingsColor.GradientActiveCaption,     // GradientActiveCaption
-            SystemSettingsColor.GradientInactiveCaption,     // GradientInactiveCaption
-            SystemSettingsColor.MenuBar,     // MenuBar
-            SystemSettingsColor.MenuHighlight,     // MenuHighlight
+            WxSystemSettingsColor.ButtonFace,     // ButtonFace
+            WxSystemSettingsColor.ButtonHighlight,     // ButtonHighlight
+            WxSystemSettingsColor.ButtonShadow,     // ButtonShadow
+            WxSystemSettingsColor.GradientActiveCaption,     // GradientActiveCaption
+            WxSystemSettingsColor.GradientInactiveCaption,     // GradientInactiveCaption
+            WxSystemSettingsColor.MenuBar,     // MenuBar
+            WxSystemSettingsColor.MenuHighlight,     // MenuHighlight
 
             // "Web" colors, Part 2
-            SystemSettingsColor.Max,     // RebeccaPurple
+            WxSystemSettingsColor.Max,     // RebeccaPurple
         };
 
         private static readonly KnownColor[] SystemSettingsColorToKnownColorTable = new KnownColor[]
@@ -237,11 +237,11 @@ namespace Alternet.Drawing
         };
 
         /// <summary>
-        /// Converts <see cref="SystemSettingsColor"/> to <see cref="KnownColor"/>.
+        /// Converts <see cref="WxSystemSettingsColor"/> to <see cref="KnownColor"/>.
         /// </summary>
         /// <param name="color">Color value.</param>
         /// <returns>Converted color value.</returns>
-        public static KnownColor Convert(SystemSettingsColor color)
+        public static KnownColor Convert(WxSystemSettingsColor color)
         {
             if (color >= 0 && (int)color <= 0x1E)
                 return SystemSettingsColorToKnownColorTable[(int)color];
@@ -249,22 +249,22 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts <see cref="KnownColor"/> to <see cref="SystemSettingsColor"/>.
+        /// Converts <see cref="KnownColor"/> to <see cref="WxSystemSettingsColor"/>.
         /// </summary>
         /// <param name="color">Color value.</param>
         /// <returns>Converted color value.</returns>
-        public static SystemSettingsColor Convert(KnownColor color)
+        public static WxSystemSettingsColor Convert(KnownColor color)
         {
             var result = KnownColorToSystemSettingsColorTable[(int)color];
             return result;
         }
 
         /// <summary>
-        /// Converts <see cref="KnownSystemColor"/> to <see cref="SystemSettingsColor"/>.
+        /// Converts <see cref="KnownSystemColor"/> to <see cref="WxSystemSettingsColor"/>.
         /// </summary>
         /// <param name="color">Color value.</param>
         /// <returns>Converted color value.</returns>
-        public static SystemSettingsColor Convert(KnownSystemColor color)
+        public static WxSystemSettingsColor Convert(KnownSystemColor color)
         {
             var result = KnownColorToSystemSettingsColorTable[(int)color];
             return result;
