@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// No special options; default behavior.
         /// </summary>
         None = 0x0000,
-        
+
         /// <summary>
         /// Display a check box next to each item in the list box.
         /// </summary>
