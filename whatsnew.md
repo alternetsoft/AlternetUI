@@ -1,3 +1,25 @@
+# 0.9.758 (2025 October 29)
+
+- Return native CheckedListBox.
+- Add image cache reset in list controls, so it is called on DPI and system color changes to keep image caches up to date.
+- Refactor DPI change handling in controls and window.
+- Fixed PopupToolBar hiding when multiple PopupToolBar controls are shown.
+- Add LastShownTime property to Window class.
+- SpeedButton: Fix RightSideElement assignment based on Shortcut presence.
+- Fix cursor when showing context menu.
+- Add core column methods and context menu to ListBoxHeader.
+- Fix cursor when mouse is over internal scrollbars.
+- Introduced the OnCursorRequested virtual method and RaiseCursorRequested to AbstractControl for handling cursor request events.
+- MAUI: Introduced extension methods to convert Alternet.UI.MenuItem to MenuBarItem and MenuFlyoutItem.
+- Fix SpeedButton menu item image and suffix handling.
+- Fix ContextMenu item enabled state logic.
+- Add IsMainWindow property to Window class.
+- Add global events WindowDpiChanged and MainWindowDpiChanged events in StaticControlEvents.
+- ListBox: Add setter for SelectedIndices and selection mode helpers.
+- Add compatibility helpers for older .NET versions support.
+
+---
+
 # 0.9.757 (2025 October 20)
 
 - Return native ListBox control.
