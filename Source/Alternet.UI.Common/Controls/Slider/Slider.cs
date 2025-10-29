@@ -539,6 +539,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnInsertedToParent(AbstractControl parentControl)
+        {
+            base.OnInsertedToParent(parentControl);
+        }
+
+        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return (ControlFactory.Handler as IWxControlFactoryHandler)?.CreateSliderHandler(this)

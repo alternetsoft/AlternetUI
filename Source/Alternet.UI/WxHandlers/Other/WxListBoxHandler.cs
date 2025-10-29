@@ -58,7 +58,7 @@ namespace Alternet.UI
 
             if (Control is CheckedListBox checkedListBox)
             {
-                checkedListBox.CheckedIndices = checkedIndexes;
+                checkedListBox.CheckedIndices = checkedIndexes ?? Array.Empty<int>();
             }
         }
 
