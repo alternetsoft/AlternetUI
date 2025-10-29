@@ -50,72 +50,78 @@ namespace PropertyGridSample
                 bool logAddedControls = false;
                 bool logNotAddedControls = false;
 
-                LimitedTypes.Add(typeof(Border));
-                LimitedTypes.Add(typeof(PictureBox));
-                LimitedTypes.Add(typeof(Button));
-                LimitedTypes.Add(typeof(ToolBar));
-                LimitedTypes.Add(typeof(SplittedPanel));
-                LimitedTypes.Add(typeof(Calendar));
-                LimitedTypes.Add(typeof(CheckBox));
-                LimitedTypes.Add(typeof(ComboBox));
-                LimitedTypes.Add(typeof(StdComboBox));
-                LimitedTypes.Add(typeof(GroupBox));
-                LimitedTypes.Add(typeof(HorizontalStackPanel));
-                LimitedTypes.Add(typeof(TabControl));
-                LimitedTypes.Add(typeof(LinkLabel));
-                LimitedTypes.Add(typeof(StdListBox));
-                LimitedTypes.Add(typeof(ListView));
-                LimitedTypes.Add(typeof(MultilineTextBox));
-                LimitedTypes.Add(typeof(NumericUpDown));
-                LimitedTypes.Add(typeof(Panel));
-                LimitedTypes.Add(typeof(PanelOkCancelButtons));
-                LimitedTypes.Add(typeof(ProgressBar));
-                LimitedTypes.Add(typeof(RadioButton));
-                LimitedTypes.Add(typeof(RichTextBox));
-                LimitedTypes.Add(typeof(FindReplaceControl));
-                LimitedTypes.Add(typeof(StdSlider));
-                LimitedTypes.Add(typeof(ScrollBar));
-                LimitedTypes.Add(typeof(StackPanel));
-                LimitedTypes.Add(typeof(TextBox));
-                LimitedTypes.Add(typeof(VerticalStackPanel));
-                LimitedTypes.Add(typeof(CardPanel));
-                LimitedTypes.Add(typeof(SpeedButton));
-                LimitedTypes.Add(typeof(TextBoxAndLabel));
-                LimitedTypes.Add(typeof(SpeedTextButton));
-                LimitedTypes.Add(typeof(SpeedColorButton));
-                LimitedTypes.Add(typeof(ToolBarSet));
-                LimitedTypes.Add(typeof(SideBarPanel));
-                LimitedTypes.Add(typeof(ColorListBox));
-                LimitedTypes.Add(typeof(VirtualListBox));
-                LimitedTypes.Add(typeof(UserControl));
-                LimitedTypes.Add(typeof(RichToolTip));
-                LimitedTypes.Add(typeof(TextBoxAndButton));
-                LimitedTypes.Add(typeof(FontNamePicker));
-                LimitedTypes.Add(typeof(Calculator));
-                LimitedTypes.Add(typeof(LabelAndButton));
-                LimitedTypes.Add(typeof(IntPicker));
-                LimitedTypes.Add(typeof(DatePicker));
-                LimitedTypes.Add(typeof(DateTimePicker));
-                LimitedTypes.Add(typeof(TimePicker));
-                LimitedTypes.Add(typeof(ListPicker));
-                LimitedTypes.Add(typeof(EnumPicker));
-                LimitedTypes.Add(typeof(ColorPicker));
-                LimitedTypes.Add(typeof(TextBoxWithListPopup));
-                LimitedTypes.Add(typeof(CardPanelHeader));
-                LimitedTypes.Add(typeof(TreeView));
-                LimitedTypes.Add(typeof(StdTreeView));
-                LimitedTypes.Add(typeof(ListBox));
-                LimitedTypes.Add(typeof(Label));
-                LimitedTypes.Add(typeof(CheckedListBox));
+                ToolBoxAdd<Border>();
+                ToolBoxAdd<PictureBox>();
+                ToolBoxAdd<Button>();
+                ToolBoxAdd<ToolBar>();
+                ToolBoxAdd<SplittedPanel>();
+                ToolBoxAdd<Calendar>();
+                ToolBoxAdd<CheckBox>();
+                ToolBoxAdd<ComboBox>();
+                ToolBoxAdd<StdComboBox>();
+                ToolBoxAdd<GroupBox>();
+                ToolBoxAdd<HorizontalStackPanel>();
+                ToolBoxAdd<TabControl>();
+                ToolBoxAdd<LinkLabel>();
+                ToolBoxAdd<StdListBox>();
+                ToolBoxAdd<ListView>();
+                ToolBoxAdd<MultilineTextBox>();
+                ToolBoxAdd<NumericUpDown>();
+                ToolBoxAdd<Panel>();
+                ToolBoxAdd<PanelOkCancelButtons>();
+                ToolBoxAdd<ProgressBar>();
+                ToolBoxAdd<RadioButton>();
+                ToolBoxAdd<RichTextBox>();
+                ToolBoxAdd<FindReplaceControl>();
+                ToolBoxAdd<StdSlider>();
+                ToolBoxAdd<ScrollBar>();
+                ToolBoxAdd<StackPanel>();
+                ToolBoxAdd<TextBox>();
+                ToolBoxAdd<VerticalStackPanel>();
+                ToolBoxAdd<CardPanel>();
+                ToolBoxAdd<SpeedButton>();
+                ToolBoxAdd<TextBoxAndLabel>();
+                ToolBoxAdd<SpeedTextButton>();
+                ToolBoxAdd<SpeedColorButton>();
+                ToolBoxAdd<ToolBarSet>();
+                ToolBoxAdd<SideBarPanel>();
+                ToolBoxAdd<ColorListBox>();
+                ToolBoxAdd<VirtualListBox>();
+                ToolBoxAdd<UserControl>();
+                ToolBoxAdd<RichToolTip>();
+                ToolBoxAdd<TextBoxAndButton>();
+                ToolBoxAdd<FontNamePicker>();
+                ToolBoxAdd<Calculator>();
+                ToolBoxAdd<LabelAndButton>();
+                ToolBoxAdd<IntPicker>();
+                ToolBoxAdd<DatePicker>();
+                ToolBoxAdd<DateTimePicker>();
+                ToolBoxAdd<TimePicker>();
+                ToolBoxAdd<ListPicker>();
+                ToolBoxAdd<EnumPicker>();
+                ToolBoxAdd<ColorPicker>();
+                ToolBoxAdd<TextBoxWithListPopup>();
+                ToolBoxAdd<CardPanelHeader>();
+                ToolBoxAdd<TreeView>();
+                ToolBoxAdd<StdTreeView>();
+                ToolBoxAdd<ListBox>();
+                ToolBoxAdd<Label>();
+                ToolBoxAdd<CheckedListBox>();
+                ToolBoxAdd<FileListBox>();
+                ToolBoxAdd<FontListBox>();
 
                 void ToolBoxAdd<T>()
                 {
                     LimitedTypes.Add(typeof(T));
                 }
 
+                /*
+                This is commented out because Slider control doesn't work property on Windows when dark mode is enabled.
                 ToolBoxAdd<Alternet.UI.Slider>();
+                */
 
                 /*
+                ToolBoxAdd<StdCheckListBox>();
                 ToolBoxAdd<Alternet.UI.HiddenBorder>();
                 ToolBoxAdd<Alternet.UI.VerticalLine>();
                 ToolBoxAdd<Alternet.UI.ContainerControl>();
@@ -154,11 +160,8 @@ namespace PropertyGridSample
                 ToolBoxAdd<Alternet.UI.ColorComboBox>();
                 ToolBoxAdd<Alternet.UI.FontComboBox>();
                 ToolBoxAdd<Alternet.UI.ListBoxHeader>();
-                ToolBoxAdd<Alternet.UI.StdCheckListBox>();
                 ToolBoxAdd<Alternet.UI.ActionsListBox>();
-                ToolBoxAdd<Alternet.UI.FileListBox>();
                 ToolBoxAdd<Alternet.UI.LogListBox>();
-                ToolBoxAdd<Alternet.UI.FontListBox>();
                 ToolBoxAdd<Alternet.UI.VirtualCheckListBox>();
                 ToolBoxAdd<Alternet.UI.AnimationPlayer>();
                 ToolBoxAdd<Alternet.UI.InnerPopupToolBar>();
@@ -176,8 +179,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<Alternet.UI.SpeedButtonWithListPopup>();
                 ToolBoxAdd<Alternet.UI.SpeedDateButton>();
                 ToolBoxAdd<Alternet.UI.SpeedEnumButton>();
-                ToolBoxAdd<Alternet.UI.TemplateControl>();
-                ToolBoxAdd<Alternet.UI.ToolBarSeparatorItem>();
                 ToolBoxAdd<Alternet.UI.WebBrowser>();
                 ToolBoxAdd<Alternet.UI.PanelFormSelector>();
                 ToolBoxAdd<Alternet.UI.PanelMultilineTextBox>();
@@ -189,7 +190,7 @@ namespace PropertyGridSample
 
                 if (DebugUtils.IsDebugDefined)
                 {
-                    LimitedTypes.Add(typeof(GenericWrappedTextControl));
+                    ToolBoxAdd<GenericWrappedTextControl>();
                 }
 
                 LimitedTypes.AddRange(LimitedTypesStatic);

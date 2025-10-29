@@ -142,6 +142,14 @@ namespace PropertyGridSample
             listBox.SelectLastItemAndScroll();
         }
 
+        public static void InitFileListBox(object control)
+        {
+            if (control is not FileListBox listBox)
+                return;
+            listBox.SuggestedSize = defaultListSize;
+            listBox.SelectInitialFolder();
+        }
+
         public static void InitVListBox(object control)
         {
             if (control is not VirtualListBox listBox)
