@@ -1583,8 +1583,17 @@ namespace Alternet.UI
             return null;
         }
 
+        /// <inheritdoc/>
+        public override void ResetCachedImages()
+        {
+            base.ResetCachedImages();
+            ResetCachedImagesInItems();
+        }
+
         /// <summary>
         /// Resets the cached images for all items in the collection.
+        /// This method is called from <see cref="ResetCachedImages"/> to clear
+        /// the cached images for all items.
         /// </summary>
         /// <remarks>This method iterates through all items in the collection and invokes their
         /// <see cref="ListControlItem.ResetCachedImages"/> method to clear any
@@ -2119,6 +2128,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnDpiChanged(DpiChangedEventArgs e)
+        {
+            ResetCachedImages();
+            base.OnDpiChanged(e);
+        }
+
+        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             if (AutoUpdateColors)
@@ -2129,7 +2145,7 @@ namespace Alternet.UI
                     SetColorThemeToLight();
             }
 
-            ResetCachedImagesInItems();
+            ResetCachedImages();
 
             base.OnSystemColorsChanged(e);
         }

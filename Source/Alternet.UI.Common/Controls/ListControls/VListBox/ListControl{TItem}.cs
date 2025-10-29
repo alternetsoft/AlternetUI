@@ -686,6 +686,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clears all cached images associated with the current instance.
+        /// Normally, this method is called automatically when the control's
+        /// DPI settings change or system colors change.
+        /// </summary>
+        /// <remarks>This method resets the cached images by invoking the appropriate internal logic. Use
+        /// this method to ensure that any outdated or unnecessary image data is removed and the cache is
+        /// refreshed.</remarks>
+        public virtual void ResetCachedImages()
+        {
+            checkImageUnchecked?.ResetCachedImages();
+            checkImageChecked?.ResetCachedImages();
+            checkImageIndeterminate?.ResetCachedImages();
+        }
+
+        /// <summary>
         /// Called when items are attached to the control.
         /// </summary>
         /// <param name="itm">Attached items.</param>
