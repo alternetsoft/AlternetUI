@@ -1043,4 +1043,14 @@ namespace Alternet.UI
             }
         }
     }
+
+#pragma warning disable
+    public class RedControl : Control
+    {
+        public RedControl()
+        {
+            BackgroundColor = Color.Red;
+        }
+    }
+#pragma warning restore
 }
