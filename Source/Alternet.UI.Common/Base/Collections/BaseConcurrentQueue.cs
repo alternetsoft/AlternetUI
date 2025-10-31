@@ -12,16 +12,5 @@ namespace Alternet.UI
     /// <typeparam name="T">The type of elements in the queue.</typeparam>
     public class BaseConcurrentQueue<T> : ConcurrentQueue<T>
     {
-#if NETSTANDARD2_0
-        /// <summary>
-        /// Removes all items from the queue in a thread-safe manner.
-        /// </summary>
-        public void Clear()
-        {
-            while (TryDequeue(out _))
-            {
-            }
-        }
-#endif
     }
 }

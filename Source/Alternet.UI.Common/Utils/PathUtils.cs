@@ -191,21 +191,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string GetFullPath(string path, string basePath)
         {
-#if NETSTANDARD2_1_OR_GREATER
             var result = Path.GetFullPath(path, basePath);
             return result;
-#else
-            try
-            {
-                PushDirectory(basePath);
-                var result = Path.GetFullPath(path);
-                return result;
-            }
-            finally
-            {
-                PopDirectory();
-            }
-#endif
         }
 
         /// <summary>

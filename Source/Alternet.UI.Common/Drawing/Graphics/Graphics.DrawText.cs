@@ -643,18 +643,6 @@ namespace Alternet.Drawing
                 }
                 else
                 {
-#if DEBUG
-                    if(length > 1)
-                    {
-                        if(DebugElementId == prm.DebugId && prm.DebugId is not null)
-                        {
-                        }
-                    }
-
-                    if (element.IsImage)
-                    {
-                    }
-#endif
                     var elementAfterAlign = AlignUtils.AlignRectInRect(
                         elementBeforeAlign,
                         rect,

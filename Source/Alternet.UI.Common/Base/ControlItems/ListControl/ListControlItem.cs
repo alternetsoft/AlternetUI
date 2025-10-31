@@ -1545,13 +1545,38 @@ namespace Alternet.UI
                 prm.Flags = item.LabelFlags;
                 prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
                 prm.LineDistance = item.TextLineDistance ?? 0;
-
-#if DEBUG
-                prm.DebugId = item.UniqueId;
-#endif
             }
 
-#if DEBUG
+            DefaultDebugDrawForeground(container, e, prm);
+
+            e.Graphics.DrawLabel(ref prm);
+            e.LabelMetrics = prm;
+        }
+
+        /// <summary>
+        /// Draws debug information for a list control item during the foreground painting phase in debug mode.
+        /// </summary>
+        /// <remarks>This method is only executed in debug builds and is used to render visual debugging
+        /// aids, such as design corners, on list control items. The debug corners are drawn if <see
+        /// cref="DrawDebugCornersOnElements"/> is set to <see langword="true"/>.</remarks>
+        /// <param name="container">The container that holds the list control items. Can be <see langword="null"/>.</param>
+        /// <param name="e">The event arguments containing details about the item being painted,
+        /// including its graphics context and item
+        /// data.</param>
+        /// <param name="prm">The parameters used for drawing the label, including debug-specific settings.</param>
+        [Conditional("DEBUG")]
+        public static void DefaultDebugDrawForeground(
+            IListControlItemContainer? container,
+            ListBoxItemPaintEventArgs e,
+            Graphics.DrawLabelParams prm)
+        {
+            var item = e.Item;
+
+            if (item is not null)
+            {
+                prm.DebugId = item.UniqueId;
+            }
+
             prm.DrawDebugCorners = DrawDebugCornersOnElements;
 
             if (DrawDebugCornersOnElements)
@@ -1561,10 +1586,6 @@ namespace Alternet.UI
                     prm.Rect,
                     BorderSettings.DebugBorderGreen);
             }
-#endif
-
-            e.Graphics.DrawLabel(ref prm);
-            e.LabelMetrics = prm;
         }
 
         /// <summary>
@@ -1950,12 +1971,6 @@ namespace Alternet.UI
                 result.ImageUnchecked = container.CheckImageUnchecked;
                 result.ImageIndeterminate = container.CheckImageIndeterminate;
             }
-
-#if DEBUG
-            if(Graphics.DebugElementId is not null)
-            {
-            }
-#endif
 
             var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize);
             result.CheckRect = checkRect;

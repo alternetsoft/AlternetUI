@@ -55,13 +55,12 @@ namespace Alternet.UI
                 }
                 else
                 {
-#if NET6_0_OR_GREATER || NETSTANDARD2_1
                     if (!RuntimeFeature.IsDynamicCodeSupported)
                     {
                         throw new InvalidOperationException(
                             $"Assembly {name} needs to be referenced and explicitly loaded before loading resources");
                     }
-#endif
+
                     name = Uri.UnescapeDataString(name);
                     rv = LoadAssemblyDescriptor(name, Assembly.Load(name));
                 }

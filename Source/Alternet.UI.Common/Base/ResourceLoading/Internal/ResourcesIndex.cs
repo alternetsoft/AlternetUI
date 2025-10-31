@@ -9,9 +9,6 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    // #if !BUILDTASK
-    //    public
-    // #endif
 #pragma warning disable
     internal static class ResourcesIndexReaderWriter
 #pragma warning restore
@@ -81,9 +78,6 @@ namespace Alternet.UI
         }
     }
 
-    // #if !BUILDTASK
-    //    public
-    // #endif
     [DataContract]
 #pragma warning disable
     internal class UIResourcesIndex
@@ -93,9 +87,6 @@ namespace Alternet.UI
         public List<UIResourcesIndexEntry> Entries { get; set; } = new();
     }
 
-    // #if !BUILDTASK
-    //    public
-    // #endif
     [DataContract]
 #pragma warning disable
     internal class UIResourcesIndexEntry

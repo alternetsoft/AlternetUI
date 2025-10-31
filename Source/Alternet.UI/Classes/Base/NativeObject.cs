@@ -22,12 +22,6 @@ namespace Alternet.UI.Native
 
         ~NativeObject()
         {
-            if (!App.IsNetOrCoreApp)
-            {
-                if (App.Terminating)
-                    return;
-            }
-
             Dispose(disposing: false);
         }
 

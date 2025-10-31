@@ -416,19 +416,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls the specified action inside try catch block when DEBUG is specified; otherwise
-        /// simply calls the action without try catch block.
-        /// </summary>
-        public static void InsideTryCatchIfDebug(Action? action)
-        {
-#if DEBUG
-            InsideTryCatch(action);
-#else
-            action?.Invoke();
-#endif
-        }
-
-        /// <summary>
         /// Wraps exception for the debug purposes.
         /// </summary>
         /// <param name="e">Exception.</param>

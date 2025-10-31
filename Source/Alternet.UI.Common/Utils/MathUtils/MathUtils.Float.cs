@@ -506,15 +506,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Ceiling(float value)
         {
-#if NETSTANDARD2_0
-            if (float.IsNaN(value) || float.IsInfinity(value))
-                return value;
-
-            int i = (int)value;
-            return (value > i) ? i + 1 : i;
-#else
             return MathF.Ceiling(value);
-#endif
         }
 
         /// <summary>

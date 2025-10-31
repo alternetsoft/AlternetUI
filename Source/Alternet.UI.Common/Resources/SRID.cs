@@ -2202,10 +2202,8 @@ namespace Alternet.UI
 
         internal static global::System.Globalization.CultureInfo Culture { get; set; }
 
-#if !NET20
         [global::System.Runtime.CompilerServices.MethodImpl(
             global::System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
-#endif
 #pragma warning disable
         internal static string GetResourceString(string resourceKey, string defaultValue = null) =>
             ResourceManager.GetString(resourceKey, Culture);

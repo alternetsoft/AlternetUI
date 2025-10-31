@@ -158,11 +158,7 @@ namespace Alternet.UI
         /// all border sides
         /// have the same settings.
         /// </remarks>
-#if DEBUG
         [Browsable(true)]
-#else
-        [Browsable(false)]
-#endif
         public virtual Coord? UniformBorderWidth
         {
             get

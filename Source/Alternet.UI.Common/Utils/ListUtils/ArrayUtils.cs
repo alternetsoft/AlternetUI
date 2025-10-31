@@ -164,15 +164,7 @@ namespace Alternet.UI
         /// <typeparam name="T">Type of value.</typeparam>
         public static void Fill<T>(ref T[] a, T value)
         {
-#if NETSTANDARD2_1_OR_GREATER
             Array.Fill(a, value);
-#else
-            // Manual fallback for older frameworks
-            for (int i = 0; i < a.Length; i++)
-            {
-                a[i] = value;
-            }
-#endif
         }
 
         /// <summary>

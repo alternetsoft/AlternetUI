@@ -29,13 +29,7 @@ namespace Alternet.UI
                 Assembly assembly)
             Compile(string xaml, string? targetDllFileName = null)
         {
-#if !NETCOREAPP && !NETSTANDARD
-            var da = AppDomain.CurrentDomain.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString("N")),
-                AssemblyBuilderAccess.RunAndSave,
-                Directory.GetCurrentDirectory());
-#else
             var da = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName(Guid.NewGuid().ToString("N")), AssemblyBuilderAccess.Run);
-#endif
 
             var dm = da.DefineDynamicModule(targetDllFileName == null ? "testasm.dll" : Path.GetFileName(targetDllFileName));
             var t = dm.DefineType(Guid.NewGuid().ToString("N"), TypeAttributes.Public);
