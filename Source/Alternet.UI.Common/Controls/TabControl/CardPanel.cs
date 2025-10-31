@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace Alternet.UI
     {
         private CardPanelItem? selectedCard;
         private BaseCollection<CardPanelItem>? cards;
+        private bool insideSelectCard;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanel"/> class.
@@ -228,39 +230,56 @@ namespace Alternet.UI
         /// <param name="card">Card.</param>
         public virtual CardPanel SelectCard(CardPanelItem? card)
         {
-            if (card is null)
+            if(insideSelectCard)
                 return this;
-            if (card == selectedCard)
-                return this;
-            selectedCard = card;
-            var busyCursor = false;
-            SuspendLayout();
+            insideSelectCard = true;
+
             try
             {
-                GetVisibleChildOrNull()?.Hide();
-                var loaded = card.ControlCreated;
-
-                if (!loaded)
-                {
-                    if (UseBusyCursor)
-                    {
-                        App.BeginBusyCursor();
-                        busyCursor = true;
-                    }
-                }
-
-                var control = card.Control;
-                control.Visible = true;
-                control.Parent = this;
+                SelectCardInternal(card);
+                return this;
             }
             finally
             {
-                if (busyCursor)
-                    App.EndBusyCursor();
-                ResumeLayout();
+                insideSelectCard = false;
             }
 
-            return this;
+            void SelectCardInternal(CardPanelItem? card)
+            {
+                if (card is null)
+                    return;
+                if (card == selectedCard)
+                    return;
+                selectedCard = card;
+                var busyCursor = false;
+                SuspendLayout();
+                try
+                {
+                    GetVisibleChildOrNull()?.Hide();
+                    var loaded = card.ControlCreated;
+
+                    if (!loaded)
+                    {
+                        if (UseBusyCursor)
+                        {
+                            App.BeginBusyCursor();
+                            busyCursor = true;
+                        }
+                    }
+
+                    var control = card.Control;
+
+                    control.Visible = true;
+                    control.Parent = this;
+                }
+                finally
+                {
+                    ResumeLayout();
+
+                    if (busyCursor)
+                        App.EndBusyCursor();
+                }
+            }
         }
 
         /// <summary>
