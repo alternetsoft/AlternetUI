@@ -24,6 +24,13 @@ namespace Alternet.UI
     public static partial class LogUtils
     {
         /// <summary>
+        /// Represents the time format used for logging timestamps to a file.
+        /// </summary>
+        /// <remarks>By default this format ensures that log entries include precise timestamps down to the
+        /// millisecond level, which can be useful for debugging and performance analysis.</remarks>
+        public static string LogToFileTimeFormat = "HH:mm:ss.fff";
+
+        /// <summary>
         /// Gets or sets whether to redirect all log to file operations to <see cref="App.Log"/>.
         /// </summary>
         public static bool RedirectLogFromFileToScreen = false;
@@ -624,7 +631,7 @@ namespace Alternet.UI
             var msg = obj?.ToString() ?? string.Empty;
             filename ??= App.LogFilePath;
 
-            string dt = System.DateTime.Now.ToString("HH:mm:ss");
+            string dt = System.DateTime.Now.ToString(LogToFileTimeFormat);
             string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.None);
 
             string contents = string.Empty;
