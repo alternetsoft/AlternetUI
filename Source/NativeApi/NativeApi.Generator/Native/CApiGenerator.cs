@@ -113,6 +113,8 @@ namespace ApiGenerator.Native
 
         class MarshalExceptionsScope : IDisposable
         {
+            private bool UseConditional = false;
+
             private readonly IndentedTextWriter writer;
             private readonly string conditional;
 
@@ -125,13 +127,18 @@ namespace ApiGenerator.Native
                 if (!UseMarshalExceptionsScope)
                     return;
 
-                writer.WriteLine($"#if {conditional}");
+                if(UseConditional)
+                    writer.WriteLine($"#if {conditional}");
+
                 if (returnTypeName != "void")
                     writer.Write("return ");
 
                 writer.Write($"MarshalExceptions<{returnTypeName}>([&]()");
                 writer.WriteLine("{");
-                writer.WriteLine("#endif");
+
+                if (UseConditional)
+                    writer.WriteLine("#endif");
+
                 writer.Indent++;
             }
 
@@ -141,9 +148,14 @@ namespace ApiGenerator.Native
                     return;
 
                 writer.Indent--;
-                writer.WriteLine($"#if {conditional}");
+
+                if (UseConditional)
+                    writer.WriteLine($"#if {conditional}");
+
                 writer.WriteLine("});");
-                writer.WriteLine("#endif");
+
+                if (UseConditional)
+                    writer.WriteLine("#endif");
             }
         }
 
