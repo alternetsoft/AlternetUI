@@ -24,6 +24,7 @@ namespace Alternet.UI
 
         private TreeKind kind = TreeKind.TreeView;
         private AbstractControl? leftControl;
+        private bool ignoreSelectionChange;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedTreeAndCards"/> class.
@@ -262,7 +263,17 @@ namespace Alternet.UI
 
         private void SetActiveCard()
         {
-            cardPanel.SelectedCardIndex = (int?)SelectedItemTag;
+            if(ignoreSelectionChange)
+                return;
+            ignoreSelectionChange = true;
+            try
+            {
+                cardPanel.SelectedCardIndex = (int?)SelectedItemTag;
+            }
+            finally
+            {
+                ignoreSelectionChange = false;
+            }
         }
     }
 }
