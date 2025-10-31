@@ -12,155 +12,99 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API AnimationControl* AnimationControl_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<AnimationControl*>([&](){
-    #endif
         return new AnimationControl();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool AnimationControl_GetUseGeneric_(AnimationControl* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetUseGeneric();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void AnimationControl_SetUseGeneric_(AnimationControl* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetUseGeneric(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int AnimationControl_GetDelay_(AnimationControl* obj, uint32_t i)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetDelay(i);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* AnimationControl_GetFrame_(AnimationControl* obj, uint32_t i)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return obj->GetFrame(i);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API uint32_t AnimationControl_GetFrameCount_(AnimationControl* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<uint32_t>([&](){
-    #endif
         return obj->GetFrameCount();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API SizeI_C AnimationControl_GetSize_(AnimationControl* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<SizeI_C>([&](){
-    #endif
         return obj->GetSize();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool AnimationControl_IsOk_(AnimationControl* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->IsOk();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool AnimationControl_Play_(AnimationControl* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->Play();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void AnimationControl_Stop_(AnimationControl* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->Stop();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool AnimationControl_IsPlaying_(AnimationControl* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->IsPlaying();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool AnimationControl_LoadFile_(AnimationControl* obj, const char16_t* filename, int type)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->LoadFile(filename, type);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool AnimationControl_Load_(AnimationControl* obj, void* stream, int type)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->Load(stream, type);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void AnimationControl_SetInactiveBitmap_(AnimationControl* obj, ImageSet* bitmapBundle)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetInactiveBitmap(bitmapBundle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 

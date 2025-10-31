@@ -10,453 +10,289 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ComboBox* ComboBox_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ComboBox*>([&](){
-    #endif
         return new ComboBox();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ComboBox_GetAllowMouseWheel_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetAllowMouseWheel();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetAllowMouseWheel_(ComboBox* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetAllowMouseWheel(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API char16_t* ComboBox_GetEmptyTextHint_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<char16_t*>([&](){
-    #endif
         return AllocPInvokeReturnString(obj->GetEmptyTextHint());
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetEmptyTextHint_(ComboBox* obj, const char16_t* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetEmptyTextHint(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ComboBox_GetHasBorder_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetHasBorder();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetHasBorder_(ComboBox* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetHasBorder(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetItemsCount_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetItemsCount();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ComboBox_GetIsEditable_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetIsEditable();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetIsEditable_(ComboBox* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetIsEditable(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetSelectedIndex_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetSelectedIndex();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetSelectedIndex_(ComboBox* obj, int value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetSelectedIndex(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetTextSelectionStart_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetTextSelectionStart();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetTextSelectionLength();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API PointI_C ComboBox_GetTextMargins_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<PointI_C>([&](){
-    #endif
         return obj->GetTextMargins();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetOwnerDrawStyle_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetOwnerDrawStyle();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetOwnerDrawStyle_(ComboBox* obj, int value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetOwnerDrawStyle(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* ComboBox_GetPopupWidget_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return obj->GetPopupWidget();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* ComboBox_GetEventDc_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return obj->GetEventDc();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API RectI_C ComboBox_GetEventRect_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<RectI_C>([&](){
-    #endif
         return obj->GetEventRect();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetEventItem_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetEventItem();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetEventFlags_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetEventFlags();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_GetEventResultInt_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetEventResultInt();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetEventResultInt_(ComboBox* obj, int value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetEventResultInt(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ComboBox_GetEventCalled_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetEventCalled();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetEventCalled_(ComboBox* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetEventCalled(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_DismissPopup_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->DismissPopup();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_ShowPopup_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->ShowPopup();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_DefaultOnMeasureItemWidth_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->DefaultOnMeasureItemWidth();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ComboBox_DefaultOnMeasureItem_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->DefaultOnMeasureItem();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_DefaultOnDrawBackground_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->DefaultOnDrawBackground();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_DefaultOnDrawItem_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->DefaultOnDrawItem();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* ComboBox_CreateItemsInsertion_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return obj->CreateItemsInsertion();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_AddItemToInsertion_(ComboBox* obj, void* insertion, const char16_t* item)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->AddItemToInsertion(insertion, item);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_CommitItemsInsertion_(ComboBox* obj, void* insertion, int index)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->CommitItemsInsertion(insertion, index);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16_t* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->InsertItem(index, value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_RemoveItemAt_(ComboBox* obj, int index)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->RemoveItemAt(index);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_ClearItems_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->ClearItems();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SelectTextRange_(ComboBox* obj, int start, int length)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SelectTextRange(start, length);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SelectAllText_(ComboBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SelectAllText();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetItem_(ComboBox* obj, int index, const char16_t* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetItem(index, value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ComboBox_SetEventCallback_(ComboBox::ComboBoxEventCallbackType callback)

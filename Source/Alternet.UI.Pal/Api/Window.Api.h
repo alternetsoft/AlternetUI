@@ -12,431 +12,275 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Window* Window_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Window*>([&](){
-    #endif
         return new Window();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API char16_t* Window_GetTitle_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<char16_t*>([&](){
-    #endif
         return AllocPInvokeReturnString(obj->GetTitle());
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetTitle_(Window* obj, const char16_t* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetTitle(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetShowInTaskbar_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetShowInTaskbar();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetShowInTaskbar_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetShowInTaskbar(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetMinimizeEnabled_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetMinimizeEnabled();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetMinimizeEnabled_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetMinimizeEnabled(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetMaximizeEnabled_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetMaximizeEnabled();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetMaximizeEnabled_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetMaximizeEnabled(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetCloseEnabled_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetCloseEnabled();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetCloseEnabled_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetCloseEnabled(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetAlwaysOnTop_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetAlwaysOnTop();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetAlwaysOnTop_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetAlwaysOnTop(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetIsToolWindow_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetIsToolWindow();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetIsToolWindow_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetIsToolWindow(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetResizable_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetResizable();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetResizable_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetResizable(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetHasBorder_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetHasBorder();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetHasBorder_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetHasBorder(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetHasTitleBar_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetHasTitleBar();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetHasTitleBar_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetHasTitleBar(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetHasSystemMenu_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetHasSystemMenu();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetHasSystemMenu_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetHasSystemMenu(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool Window_GetIsPopupWindow_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetIsPopupWindow();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetIsPopupWindow_(Window* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetIsPopupWindow(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API Window* Window_GetActiveWindow_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Window*>([&](){
-    #endif
         return Window::GetActiveWindow();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API WindowState Window_GetState_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<WindowState>([&](){
-    #endif
         return obj->GetState();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetState_(Window* obj, WindowState value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetState(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API IconSet* Window_GetIcon_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<IconSet*>([&](){
-    #endif
         return obj->GetIcon();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetIcon_(Window* obj, IconSet* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetIcon(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* Window_GetWxStatusBar_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return obj->GetWxStatusBar();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetWxStatusBar_(Window* obj, void* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetWxStatusBar(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* Window_CreateEx_(int kind)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return Window::CreateEx(kind);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetDefaultBounds_(RectD bounds)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         Window::SetDefaultBounds(bounds);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetParkingWindowFont_(Font* font)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         Window::SetParkingWindowFont(font);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetMinSize_(Window* obj, SizeD size)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetMinSize(size);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetMaxSize_(Window* obj, SizeD size)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetMaxSize(size);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_Close_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->Close();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_Activate_(Window* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->Activate();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void Window_SetEventCallback_(Window::WindowEventCallbackType callback)

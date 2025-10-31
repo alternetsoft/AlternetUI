@@ -10,12 +10,8 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API Panel* Panel_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Panel*>([&](){
-    #endif
         return new Panel();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 

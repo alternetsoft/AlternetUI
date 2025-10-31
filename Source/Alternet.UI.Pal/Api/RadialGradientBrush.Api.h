@@ -10,23 +10,15 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API RadialGradientBrush* RadialGradientBrush_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<RadialGradientBrush*>([&](){
-    #endif
         return new RadialGradientBrush();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void RadialGradientBrush_Initialize_(RadialGradientBrush* obj, PointD center, float radius, PointD gradientOrigin, Color* gradientStopsColors, int gradientStopsColorsCount, float* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->Initialize(center, radius, gradientOrigin, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 

@@ -10,35 +10,23 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API RadioButton* RadioButton_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<RadioButton*>([&](){
-    #endif
         return new RadioButton();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool RadioButton_GetIsChecked_(RadioButton* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetIsChecked();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void RadioButton_SetIsChecked_(RadioButton* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetIsChecked(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void RadioButton_SetEventCallback_(RadioButton::RadioButtonEventCallbackType callback)

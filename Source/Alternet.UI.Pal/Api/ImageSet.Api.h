@@ -12,144 +12,92 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ImageSet* ImageSet_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ImageSet*>([&](){
-    #endif
         return new ImageSet();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ImageSet_GetIsOk_(ImageSet* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetIsOk();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ImageSet_GetIsReadOnly_(ImageSet* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetIsReadOnly();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API SizeI_C ImageSet_GetDefaultSize_(ImageSet* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<SizeI_C>([&](){
-    #endif
         return obj->GetDefaultSize();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ImageSet_LoadFromStream_(ImageSet* obj, void* stream)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->LoadFromStream(stream);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ImageSet_AddImage_(ImageSet* obj, Image* image)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->AddImage(image);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ImageSet_Clear_(ImageSet* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->Clear();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, int width, int height, Color color)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->LoadSvgFromStream(stream, width, height, color);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ImageSet_LoadSvgFromString_(ImageSet* obj, const char16_t* s, int width, int height, Color color)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->LoadSvgFromString(s, width, height, color);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ImageSet_InitImage_(ImageSet* obj, Image* image, int width, int height)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->InitImage(image, width, height);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ImageSet_InitImageFor_(ImageSet* obj, Image* image, void* window)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->InitImageFor(image, window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API SizeI_C ImageSet_GetPreferredBitmapSizeAtScale_(ImageSet* obj, float scale)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<SizeI_C>([&](){
-    #endif
         return obj->GetPreferredBitmapSizeAtScale(scale);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API SizeI_C ImageSet_GetPreferredBitmapSizeFor_(ImageSet* obj, void* window)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<SizeI_C>([&](){
-    #endif
         return obj->GetPreferredBitmapSizeFor(window);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 

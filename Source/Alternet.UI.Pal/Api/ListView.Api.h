@@ -11,519 +11,331 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API ListView* ListView_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ListView*>([&](){
-    #endif
         return new ListView();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ListView_GetHasBorder_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetHasBorder();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetHasBorder_(ListView* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetHasBorder(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int64_t ListView_GetItemsCount_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
-    #endif
         return obj->GetItemsCount();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API ImageList* ListView_GetSmallImageList_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ImageList*>([&](){
-    #endif
         return obj->GetSmallImageList();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetSmallImageList_(ListView* obj, ImageList* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetSmallImageList(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API ImageList* ListView_GetLargeImageList_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ImageList*>([&](){
-    #endif
         return obj->GetLargeImageList();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetLargeImageList_(ListView* obj, ImageList* value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetLargeImageList(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API ListViewView ListView_GetCurrentView_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ListViewView>([&](){
-    #endif
         return obj->GetCurrentView();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetCurrentView_(ListView* obj, ListViewView value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetCurrentView(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API ListViewSelectionMode ListView_GetSelectionMode_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ListViewSelectionMode>([&](){
-    #endif
         return obj->GetSelectionMode();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetSelectionMode_(ListView* obj, ListViewSelectionMode value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetSelectionMode(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ListView_GetAllowLabelEdit_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetAllowLabelEdit();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetAllowLabelEdit_(ListView* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetAllowLabelEdit(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int64_t ListView_GetTopItemIndex_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
-    #endif
         return obj->GetTopItemIndex();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API ListViewGridLinesDisplayMode ListView_GetGridLinesDisplayMode_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ListViewGridLinesDisplayMode>([&](){
-    #endif
         return obj->GetGridLinesDisplayMode();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetGridLinesDisplayMode_(ListView* obj, ListViewGridLinesDisplayMode value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetGridLinesDisplayMode(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API ListViewSortMode ListView_GetSortMode_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ListViewSortMode>([&](){
-    #endif
         return obj->GetSortMode();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetSortMode_(ListView* obj, ListViewSortMode value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetSortMode(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool ListView_GetColumnHeaderVisible_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return obj->GetColumnHeaderVisible();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetColumnHeaderVisible_(ListView* obj, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetColumnHeaderVisible(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int64_t ListView_GetFocusedItemIndex_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
-    #endif
         return obj->GetFocusedItemIndex();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetFocusedItemIndex_(ListView* obj, int64_t value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetFocusedItemIndex(value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* ListView_OpenSelectedIndicesArray_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return obj->OpenSelectedIndicesArray();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int ListView_GetSelectedIndicesItemCount_(ListView* obj, void* array)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetSelectedIndicesItemCount(array);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int64_t ListView_GetSelectedIndicesItemAt_(ListView* obj, void* array, int index)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
-    #endif
         return obj->GetSelectedIndicesItemAt(array, index);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_CloseSelectedIndicesArray_(ListView* obj, void* array)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->CloseSelectedIndicesArray(array);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_InsertItemAt_(ListView* obj, int64_t index, const char16_t* text, int64_t columnIndex, int imageIndex)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->InsertItemAt(index, text, columnIndex, imageIndex);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_RemoveItemAt_(ListView* obj, int64_t index)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->RemoveItemAt(index);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_ClearItems_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->ClearItems();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_InsertColumnAt_(ListView* obj, int64_t index, const char16_t* header, float width, ListViewColumnWidthMode widthMode)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->InsertColumnAt(index, header, width, widthMode);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_RemoveColumnAt_(ListView* obj, int64_t index)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->RemoveColumnAt(index);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_ClearSelected_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->ClearSelected();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetSelected_(ListView* obj, int64_t index, c_bool value)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetSelected(index, value);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* ListView_ItemHitTest_(ListView* obj, PointD point)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return obj->ItemHitTest(point);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API ListViewHitTestLocations ListView_GetHitTestResultLocations_(ListView* obj, void* hitTestResult)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<ListViewHitTestLocations>([&](){
-    #endif
         return obj->GetHitTestResultLocations(hitTestResult);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int64_t ListView_GetHitTestResultItemIndex_(ListView* obj, void* hitTestResult)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
-    #endif
         return obj->GetHitTestResultItemIndex(hitTestResult);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int64_t ListView_GetHitTestResultColumnIndex_(ListView* obj, void* hitTestResult)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
-    #endif
         return obj->GetHitTestResultColumnIndex(hitTestResult);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_FreeHitTestResult_(ListView* obj, void* hitTestResult)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->FreeHitTestResult(hitTestResult);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_BeginLabelEdit_(ListView* obj, int64_t itemIndex)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->BeginLabelEdit(itemIndex);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API RectD_C ListView_GetItemBounds_(ListView* obj, int64_t itemIndex, ListViewItemBoundsPortion portion)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<RectD_C>([&](){
-    #endif
         return obj->GetItemBounds(itemIndex, portion);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_Clear_(ListView* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->Clear();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_EnsureItemVisible_(ListView* obj, int64_t itemIndex)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->EnsureItemVisible(itemIndex);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetItemText_(ListView* obj, int64_t itemIndex, int64_t columnIndex, const char16_t* text)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetItemText(itemIndex, columnIndex, text);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetItemImageIndex_(ListView* obj, int64_t itemIndex, int64_t columnIndex, int imageIndex)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetItemImageIndex(itemIndex, columnIndex, imageIndex);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetColumnWidth_(ListView* obj, int64_t columnIndex, float fixedWidth, ListViewColumnWidthMode widthMode)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetColumnWidth(columnIndex, fixedWidth, widthMode);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetColumnTitle_(ListView* obj, int64_t columnIndex, const char16_t* text)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         obj->SetColumnTitle(columnIndex, text);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void ListView_SetEventCallback_(ListView::ListViewEventCallbackType callback)

@@ -10,34 +10,22 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API GroupBox* GroupBox_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<GroupBox*>([&](){
-    #endif
         return new GroupBox();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int GroupBox_GetTopBorderForSizer_(GroupBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetTopBorderForSizer();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int GroupBox_GetOtherBorderForSizer_(GroupBox* obj)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return obj->GetOtherBorderForSizer();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 

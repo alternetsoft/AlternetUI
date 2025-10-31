@@ -10,1057 +10,673 @@ using namespace Alternet::UI;
 
 ALTERNET_UI_API TextBoxTextAttr* TextBoxTextAttr_Create_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<TextBoxTextAttr*>([&](){
-    #endif
         return new TextBoxTextAttr();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_Delete_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::Delete(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_DeleteRichTextAttr_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::DeleteRichTextAttr(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_Copy_(void* toAttr, void* fromAttr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::Copy(toAttr, fromAttr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* TextBoxTextAttr_CreateTextAttr_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return TextBoxTextAttr::CreateTextAttr();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* TextBoxTextAttr_CreateRichTextAttr_()
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return TextBoxTextAttr::CreateRichTextAttr();
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void* TextBoxTextAttr_RichGetTextBoxAttr_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<void*>([&](){
-    #endif
         return TextBoxTextAttr::RichGetTextBoxAttr(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetTextColor_(void* attr, Color colText)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetTextColor(attr, colText);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetBackgroundColor_(void* attr, Color colBack)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetBackgroundColor(attr, colBack);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetAlignment_(void* attr, int alignment)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetAlignment(attr, alignment);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontPointSize_(void* attr, int pointSize)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontPointSize(attr, pointSize);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontStyle_(void* attr, int fontStyle)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontStyle(attr, fontStyle);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontWeight_(void* attr, int fontWeight)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontWeight(attr, fontWeight);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontFaceName_(void* attr, const char16_t* faceName)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontFaceName(attr, faceName);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlined_(void* attr, c_bool underlined)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontUnderlined(attr, underlined);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlinedEx_(void* attr, int type, Color colour)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontUnderlinedEx(attr, type, colour);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontStrikethrough_(void* attr, c_bool strikethrough)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontStrikethrough(attr, strikethrough);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFontFamily_(void* attr, int family)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFontFamily(attr, family);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API Color_C TextBoxTextAttr_GetTextColor_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Color_C>([&](){
-    #endif
         return TextBoxTextAttr::GetTextColor(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API Color_C TextBoxTextAttr_GetBackgroundColor_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Color_C>([&](){
-    #endif
         return TextBoxTextAttr::GetBackgroundColor(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetAlignment_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetAlignment(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetURL_(void* attr, const char16_t* url)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetURL(attr, url);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetFlags_(void* attr, int64_t flags)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetFlags(attr, flags);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetParagraphSpacingAfter_(void* attr, int spacing)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetParagraphSpacingAfter(attr, spacing);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetParagraphSpacingBefore_(void* attr, int spacing)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetParagraphSpacingBefore(attr, spacing);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetLineSpacing_(void* attr, int spacing)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetLineSpacing(attr, spacing);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetBulletStyle_(void* attr, int style)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetBulletStyle(attr, style);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetBulletNumber_(void* attr, int n)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetBulletNumber(attr, n);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetBulletText_(void* attr, const char16_t* text)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetBulletText(attr, text);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetPageBreak_(void* attr, c_bool pageBreak)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetPageBreak(attr, pageBreak);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetCharacterStyleName_(void* attr, const char16_t* name)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetCharacterStyleName(attr, name);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetParagraphStyleName_(void* attr, const char16_t* name)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetParagraphStyleName(attr, name);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetListStyleName_(void* attr, const char16_t* name)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetListStyleName(attr, name);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetBulletFont_(void* attr, const char16_t* bulletFont)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetBulletFont(attr, bulletFont);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetBulletName_(void* attr, const char16_t* name)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetBulletName(attr, name);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetTextEffects_(void* attr, int effects)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetTextEffects(attr, effects);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetTextEffectFlags_(void* attr, int effects)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetTextEffectFlags(attr, effects);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_SetOutlineLevel_(void* attr, int level)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::SetOutlineLevel(attr, level);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int64_t TextBoxTextAttr_GetFlags_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int64_t>([&](){
-    #endif
         return TextBoxTextAttr::GetFlags(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetFontSize_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetFontSize(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetFontStyle_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetFontStyle(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetFontWeight_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetFontWeight(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_GetFontUnderlined_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::GetFontUnderlined(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetUnderlineType_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetUnderlineType(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API Color_C TextBoxTextAttr_GetUnderlineColor_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<Color_C>([&](){
-    #endif
         return TextBoxTextAttr::GetUnderlineColor(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_GetFontStrikethrough_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::GetFontStrikethrough(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API char16_t* TextBoxTextAttr_GetFontFaceName_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<char16_t*>([&](){
-    #endif
         return AllocPInvokeReturnString(TextBoxTextAttr::GetFontFaceName(attr));
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetFontFamily_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetFontFamily(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetParagraphSpacingAfter_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetParagraphSpacingAfter(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetParagraphSpacingBefore_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetParagraphSpacingBefore(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetLineSpacing_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetLineSpacing(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetBulletStyle_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetBulletStyle(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetBulletNumber_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetBulletNumber(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API char16_t* TextBoxTextAttr_GetBulletText_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<char16_t*>([&](){
-    #endif
         return AllocPInvokeReturnString(TextBoxTextAttr::GetBulletText(attr));
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API char16_t* TextBoxTextAttr_GetURL_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<char16_t*>([&](){
-    #endif
         return AllocPInvokeReturnString(TextBoxTextAttr::GetURL(attr));
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetTextEffects_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetTextEffects(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetTextEffectFlags_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetTextEffectFlags(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API int TextBoxTextAttr_GetOutlineLevel_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<int>([&](){
-    #endif
         return TextBoxTextAttr::GetOutlineLevel(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_IsCharacterStyle_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::IsCharacterStyle(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_IsParagraphStyle_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::IsParagraphStyle(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_IsDefault_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::IsDefault(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextColor_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasTextColor(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasBackgroundColor_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasBackgroundColor(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasAlignment_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasAlignment(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasTabs_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasTabs(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasLeftIndent_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasLeftIndent(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasRightIndent_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasRightIndent(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontWeight_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontWeight(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontSize_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontSize(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontPointSize_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontPointSize(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontPixelSize_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontPixelSize(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontItalic_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontItalic(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontUnderlined_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontUnderlined(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontStrikethrough_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontStrikethrough(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontFaceName_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontFaceName(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontEncoding_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontEncoding(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFontFamily_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFontFamily(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFont_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFont(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasParagraphSpacingAfter_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasParagraphSpacingAfter(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasParagraphSpacingBefore_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasParagraphSpacingBefore(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasLineSpacing_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasLineSpacing(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasCharacterStyleName_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasCharacterStyleName(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasParagraphStyleName_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasParagraphStyleName(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasListStyleName_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasListStyleName(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletStyle_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasBulletStyle(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletNumber_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasBulletNumber(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletText_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasBulletText(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasBulletName_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasBulletName(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasURL_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasURL(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasPageBreak_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasPageBreak(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffects_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasTextEffects(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasTextEffect_(void* attr, int effect)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasTextEffect(attr, effect);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasOutlineLevel_(void* attr)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasOutlineLevel(attr);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API c_bool TextBoxTextAttr_HasFlag_(void* attr, int64_t flag)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     return MarshalExceptions<c_bool>([&](){
-    #endif
         return TextBoxTextAttr::HasFlag(attr, flag);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_RemoveFlag_(void* attr, int64_t flag)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::RemoveFlag(attr, flag);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
 ALTERNET_UI_API void TextBoxTextAttr_AddFlag_(void* attr, int64_t flag)
 {
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     MarshalExceptions<void>([&](){
-    #endif
         TextBoxTextAttr::AddFlag(attr, flag);
-    #if !defined(__WXMSW__) || defined(_DEBUG)
     });
-    #endif
 }
 
