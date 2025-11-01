@@ -11,6 +11,8 @@ namespace ControlsSample
     {
         static MainWindow()
         {
+            DebugUtils.AreDeveloperToolsShown = true;
+
             DebugUtils.RegisterExceptionsLoggerIfDebug((e) =>
             {
             });

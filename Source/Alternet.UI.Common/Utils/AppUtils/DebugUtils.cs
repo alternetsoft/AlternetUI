@@ -43,6 +43,7 @@ namespace Alternet.UI
         private static bool hookedExceptionEvents;
         private static bool? ignoreSomeExceptionsInLogger;
         private static bool exceptionsLoggerDebugWriteLine = false;
+        private static bool? areDeveloperToolsShown;
 
         static DebugUtils()
         {
@@ -53,6 +54,17 @@ namespace Alternet.UI
 #endif
 
             DebugLoading = DebugUtils.IsDebugDefined && false;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether developer tools are currently displayed.
+        /// By default, developer tools are shown in debug mode.
+        /// </summary>
+        /// <remarks>The default value is determined by the debug configuration.</remarks>
+        public static bool AreDeveloperToolsShown
+        {
+            get => areDeveloperToolsShown ?? DebugUtils.IsDebugDefined;
+            set => areDeveloperToolsShown = value;
         }
 
         /// <summary>
