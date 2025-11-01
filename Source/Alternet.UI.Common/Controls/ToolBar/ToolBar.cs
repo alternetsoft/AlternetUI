@@ -973,6 +973,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds known <see cref="SpeedButton"/> to the control with the specified action.
+        /// </summary>
+        public ObjectUniqueId AddSpeedBtn(KnownButton button, Action action)
+        {
+            return AddSpeedBtn(button, (s, e) => action());
+        }
+
+        /// <summary>
         /// Adds known <see cref="SpeedButton"/> to the control.
         /// </summary>
         public virtual ObjectUniqueId AddSpeedBtn(KnownButton button, EventHandler? action = null)
