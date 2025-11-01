@@ -21,6 +21,12 @@ namespace Alternet.UI
         public static readonly bool IsDebugDefined;
 
         /// <summary>
+        /// Indicates whether the developer tools window should be recreated when Ctrl+Shift+Alt+F12 is pressed.
+        /// Default is false (previously created window will be shown if it exists).
+        /// </summary>
+        public static bool RecreateDeveloperToolsWindow = false;
+
+        /// <summary>
         /// Gets or sets whether to log application loading process.
         /// </summary>
         public static bool DebugLoading = false;
@@ -55,6 +61,13 @@ namespace Alternet.UI
 
             DebugLoading = DebugUtils.IsDebugDefined && false;
         }
+
+        /// <summary>
+        /// Occurs when the developer tools are shown.
+        /// </summary>
+        /// <remarks>This event is triggered whenever the developer tools are displayed. Subscribers can
+        /// use this event to perform additional debug related actions when Ctrl+Shift+Alt+F12 is pressed.</remarks>
+        public static event EventHandler? DeveloperToolsShown;
 
         /// <summary>
         /// Gets or sets a value indicating whether developer tools are currently displayed.
@@ -278,9 +291,9 @@ namespace Alternet.UI
 
         /// <summary>
         /// Waits until debugger is attached. Uses <paramref name="debugOptionFileName"/>
-        /// file existance in order to get "wait" setting on/off.
+        /// file existence in order to get "wait" setting on/off.
         /// </summary>
-        /// <param name="debugOptionFileName">Path to file name which existance specifies
+        /// <param name="debugOptionFileName">Path to file name which existence specifies
         /// whether wait for debugger is on. Optional. When not specified, file
         /// "e:\debugserver.on" is used.</param>
         public static void WaitDebugger(string? debugOptionFileName = null)
@@ -307,6 +320,18 @@ namespace Alternet.UI
         public static void HookExceptionEvents()
         {
             RegisterExceptionsLogger();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="DeveloperToolsShown"/> event to notify subscribers
+        /// that the developer tools have been shown.
+        /// </summary>
+        /// <remarks>This method invokes the <see cref="DeveloperToolsShown"/> event with a null sender
+        /// and an empty <see cref="EventArgs"/> instance. Ensure that any event handlers attached to
+        /// <see cref="DeveloperToolsShown"/> are prepared to handle a null sender.</remarks>
+        internal static void RaiseDeveloperToolsShown()
+        {
+            DeveloperToolsShown?.Invoke(null, EventArgs.Empty);
         }
 
         /// <summary>

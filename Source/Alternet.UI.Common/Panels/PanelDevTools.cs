@@ -234,6 +234,13 @@ namespace Alternet.UI
 
         public static WindowDevTools GetOrCreateDeveloperTools()
         {
+            if (DebugUtils.RecreateDeveloperToolsWindow && devToolsWindow is not null)
+            {
+                devToolsWindow.Hide();
+                devToolsWindow.Dispose();
+                devToolsWindow = null;
+            }
+
             if (devToolsWindow is null)
             {
                 devToolsWindow = new();
