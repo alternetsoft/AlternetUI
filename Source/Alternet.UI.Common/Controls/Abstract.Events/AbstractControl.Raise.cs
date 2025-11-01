@@ -1104,7 +1104,7 @@ namespace Alternet.UI
             VisibleChanged?.Invoke(this, e);
             StaticControlEvents.RaiseVisibleChanged(this, e);
 
-            if(Parent is not null)
+            if (Parent is not null)
             {
                 Parent.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
                 Parent.PerformLayout();
@@ -1187,7 +1187,7 @@ namespace Alternet.UI
 
             RaiseNotifications((n) => n.AfterKeyDown(this, e));
 
-            if (!e.Handled && DebugUtils.AreDeveloperToolsShown)
+            if (DebugUtils.AreDeveloperToolsShown && !e.Handled)
             {
                 KeyInfo.Run(
                     KnownShortcuts.ShowDeveloperTools,
