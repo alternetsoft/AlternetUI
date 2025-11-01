@@ -149,7 +149,7 @@ namespace Alternet.UI
             }
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             pageContainer = new(SplittedTreeAndCards.TreeKind.ListBox);
             panel.Parent = this;

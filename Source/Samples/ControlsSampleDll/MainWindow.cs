@@ -31,27 +31,61 @@ namespace ControlsSample
 
             DebugUtils.RecreateDeveloperToolsWindow = true;
 
-            DebugUtils.DeveloperToolsShown += (s, e) =>
+            var hookDeveloperToolsShown = true;
+
+            if (hookDeveloperToolsShown)
             {
-                void LogEvent(string message)
+                DebugUtils.DeveloperToolsShown += (s, e) =>
                 {
-                    LogUtils.LogToFile(message);
-                    Debug.WriteLine(message);
-                }
+                    void LogEvent(string message)
+                    {
+                        LogUtils.LogToFile(message);
+                        Debug.WriteLine(message);
+                    }
 
-                LogEvent("Developer tools shown.");
-                var firstControlOfMainWindow = App.MainWindow?.FirstChild;
+                    LogEvent("Developer tools shown.");
+                    var firstControlOfMainWindow = App.MainWindow?.FirstChild;
 
-                if (firstControlOfMainWindow is not null)
+                    if (firstControlOfMainWindow is not null)
+                    {
+                        LogEvent($"First control of MainWindow is visible: {firstControlOfMainWindow.Visible}");
+                        LogEvent($"First control of MainWindow bounds: {firstControlOfMainWindow.Bounds}");
+                        LogEvent($"MainWindow child count: {App.MainWindow?.Children.Count}");
+                    }
+                    else
+                    {
+                        LogEvent("First control of MainWindow is null");
+                    }
+                };
+            }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            var showStatusBar = false;
+
+            if (showStatusBar)
+            {
+                var statusBar = new ToolBar();
+                statusBar.Dock = DockStyle.Bottom;
+
+                var zoomInButtonId = statusBar.AddSpeedBtn(KnownButton.ZoomIn, () =>
                 {
-                    LogEvent($"First control of MainWindow is visible: {firstControlOfMainWindow.Visible}");
-                    LogEvent($"First control of MainWindow bounds: {firstControlOfMainWindow.Bounds}");
-                }
-                else
+                    Font = RealFont.Larger();
+                });
+
+                var zoomOutButtonId = statusBar.AddSpeedBtn(KnownButton.ZoomOut, () =>
                 {
-                    LogEvent("First control of MainWindow is null");
-                }
-            };
+                    Font = RealFont.Smaller();
+                });
+
+                statusBar.SetToolAlignRight(zoomInButtonId);
+                statusBar.SetToolAlignRight(zoomOutButtonId);
+
+                statusBar.Parent = this;
+            }
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)
