@@ -621,26 +621,26 @@ namespace Alternet.UI
         /// when this parameter is <c>null</c>.</param>
         public static void LogToFile(object? obj = null, string? filename = null)
         {
-            if (RedirectLogFromFileToScreen)
-            {
-                App.LogFileIsEnabled = false;
-                App.Log(obj);
-                return;
-            }
-
-            var msg = obj?.ToString() ?? string.Empty;
-            filename ??= App.LogFilePath;
-
-            string dt = System.DateTime.Now.ToString(LogToFileTimeFormat);
-            string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.None);
-
-            string contents = string.Empty;
-
-            foreach (string s2 in result)
-                contents += $"{dt} :: {s2}{Environment.NewLine}";
-
             try
             {
+                if (RedirectLogFromFileToScreen)
+                {
+                    App.LogFileIsEnabled = false;
+                    App.Log(obj);
+                    return;
+                }
+
+                var msg = obj?.ToString() ?? string.Empty;
+                filename ??= App.LogFilePath;
+
+                string dt = System.DateTime.Now.ToString(LogToFileTimeFormat);
+                string[] result = msg.Split(StringUtils.StringSplitToArrayChars, StringSplitOptions.None);
+
+                string contents = string.Empty;
+
+                foreach (string s2 in result)
+                    contents += $"{dt} :: {s2}{Environment.NewLine}";
+
                 File.AppendAllText(filename, contents);
             }
             catch
