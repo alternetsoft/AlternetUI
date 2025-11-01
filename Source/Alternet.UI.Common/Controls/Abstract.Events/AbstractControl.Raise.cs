@@ -11,22 +11,17 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        /// <summary>
-        /// Gets or sets whether to call activated/deactivated events for all child
-        /// controls recursively.
-        /// Default is True. If this property is False, only top-most forms are notified.
-        /// </summary>
-        public static bool RaiseActivatedForChildren = true;
-
         private static
             (VisualControlStates ControlState, ObjectUniqueId ControlId)? reportedVisualStates;
 
         private DelayedEvent<EventArgs> delayedTextChanged = new();
 
         /// <summary>
-        /// Occurs when the layout of the various visual elements changes.
+        /// Gets or sets whether to call activated/deactivated events for all child
+        /// controls recursively.
+        /// Default is True. If this property is False, only top-most forms are notified.
         /// </summary>
-        public event EventHandler? LayoutUpdated;
+        public static bool RaiseActivatedForChildren { get; set; } = true;
 
         /// <summary>
         /// Gets or sets the last reported visual states of the control.
@@ -1192,16 +1187,13 @@ namespace Alternet.UI
 
             RaiseNotifications((n) => n.AfterKeyDown(this, e));
 
-            DebugUtils.DebugCall(() =>
+            if (!e.Handled && DebugUtils.AreDeveloperToolsShown)
             {
-                if (!e.Handled)
-                {
-                    KeyInfo.Run(
-                        KnownShortcuts.ShowDeveloperTools,
-                        e,
-                        DialogFactory.ShowDeveloperTools);
-                }
-            });
+                KeyInfo.Run(
+                    KnownShortcuts.ShowDeveloperTools,
+                    e,
+                    DialogFactory.ShowDeveloperTools);
+            }
 
             if (ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e)))
                 return;

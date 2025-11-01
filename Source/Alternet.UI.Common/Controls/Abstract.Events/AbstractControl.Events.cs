@@ -12,6 +12,12 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Occurs when the layout of the various visual elements changes.
+        /// </summary>
+        [Category("Layout")]
+        public event EventHandler? LayoutUpdated;
+
+        /// <summary>
         /// Occurs when the context menu for the control is created.
         /// </summary>
         [Category("Behavior")]
