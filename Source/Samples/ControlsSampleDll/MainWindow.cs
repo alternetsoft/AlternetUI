@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 
 using Alternet.Drawing;
@@ -26,6 +27,30 @@ namespace ControlsSample
             StaticControlEvents.MainWindowDpiChanged += (s, e) =>
             {
                 App.Log($"MainWindow DPI changed: {((Window)s).DPI}");
+            };
+
+            DebugUtils.RecreateDeveloperToolsWindow = true;
+
+            DebugUtils.DeveloperToolsShown += (s, e) =>
+            {
+                void LogEvent(string message)
+                {
+                    LogUtils.LogToFile(message);
+                    Debug.WriteLine(message);
+                }
+
+                LogEvent("Developer tools shown.");
+                var firstControlOfMainWindow = App.MainWindow?.FirstChild;
+
+                if (firstControlOfMainWindow is not null)
+                {
+                    LogEvent($"First control of MainWindow is visible: {firstControlOfMainWindow.Visible}");
+                    LogEvent($"First control of MainWindow bounds: {firstControlOfMainWindow.Bounds}");
+                }
+                else
+                {
+                    LogEvent("First control of MainWindow is null");
+                }
             };
         }
 
