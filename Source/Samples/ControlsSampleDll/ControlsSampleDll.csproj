@@ -4,7 +4,7 @@
     <LangVersion>12.0</LangVersion>
     <Nullable>enable</Nullable>
     <UseStyleCop>false</UseStyleCop>
-    <TargetFrameworks>netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <IncludeSymbols>true</IncludeSymbols>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
