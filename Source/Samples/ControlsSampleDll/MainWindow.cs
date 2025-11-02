@@ -31,7 +31,7 @@ namespace ControlsSample
 
             DebugUtils.RecreateDeveloperToolsWindow = true;
 
-            var hookDeveloperToolsShown = true;
+            var hookDeveloperToolsShown = false;
 
             if (hookDeveloperToolsShown)
             {
