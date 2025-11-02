@@ -28,10 +28,10 @@ namespace Alternet.UI.Port
         }
 
         /// <inheritdoc />
-        public override object ConvertTo(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value,
+        public override object? ConvertTo(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
             Type destinationType)
         {
             var uri = value as Uri;
@@ -70,9 +70,9 @@ namespace Alternet.UI.Port
         }
 
         /// <inheritdoc />
-        public override object ConvertFrom(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
+        public override object? ConvertFrom(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
             object value)
         {
             if (value is string uriString)
@@ -107,7 +107,7 @@ namespace Alternet.UI.Port
         }
 
         /// <inheritdoc />
-        public override bool IsValid(ITypeDescriptorContext context, object value)
+        public override bool IsValid(ITypeDescriptorContext? context, object? value)
         {
             if (value is string uriString)
             {
