@@ -1372,7 +1372,7 @@ namespace Alternet::UI
         // until the window is shown.
 
         auto window = GetWxWindow();
-        return toDip(GetWxWindow()->ClientToWindowSize(fromDip(clientSize, window)), window);
+        return toDip(window->ClientToWindowSize(fromDip(clientSize, window)), window);
     }
 
     Size Control::SizeToClientSize(const Size& size)
