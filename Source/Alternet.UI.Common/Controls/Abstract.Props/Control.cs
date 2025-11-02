@@ -221,11 +221,20 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override RectD Bounds
         {
-            get => SafeHandler?.Bounds ?? RectD.Empty;
+            get
+            {
+                var result = SafeHandler?.Bounds;
+
+                if (result == null)
+                    return RectD.Empty;
+
+                return result.Value;
+            }
+
             set
             {
                 value = CoerceBounds(value);
-                if (Bounds == value || DisposingOrDisposed)
+                if (DisposingOrDisposed || Bounds == value)
                     return;
                 Handler.Bounds = value;
             }
