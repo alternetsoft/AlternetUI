@@ -165,10 +165,10 @@ namespace Alternet.UI
         /// <typeparam name="T">Type of the deserialized object.</typeparam>
         /// <param name="text">String with xml data.</param>
         /// <returns></returns>
-        public static T DeserializeFromString<T>(string text)
+        public static T? DeserializeFromString<T>(string text)
         {
             using TextReader reader = new StringReader(text);
-            return (T)new XmlSerializer(typeof(T)).Deserialize(reader);
+            return (T?)new XmlSerializer(typeof(T)).Deserialize(reader);
         }
 
         /// <summary>
@@ -177,9 +177,9 @@ namespace Alternet.UI
         /// <typeparam name="T">Type of the deserialized object.</typeparam>
         /// <param name="stream">Stream with xml data.</param>
         /// <returns></returns>
-        public static T Deserialize<T>(Stream stream)
+        public static T? Deserialize<T>(Stream stream)
         {
-            return (T)new XmlSerializer(typeof(T)).Deserialize(stream);
+            return (T?)new XmlSerializer(typeof(T)).Deserialize(stream);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Alternet.UI
             Func<XmlNode, object?, bool>? nodeAction,
             object? userData = null)
         {
-            if (nodeAction is null)
+            if (nodeAction is null || document.DocumentElement is null)
                 return false;
 
             return ProcessRootNode(document.DocumentElement);
@@ -421,7 +421,7 @@ namespace Alternet.UI
 
             bool convertPerformed = false;
 
-            if (prm.RootNodeAction is not null)
+            if (prm.RootNodeAction is not null && xDoc.DocumentElement is not null)
             {
                 convertPerformed = prm.RootNodeAction(xDoc.DocumentElement, prm.UserData);
             }

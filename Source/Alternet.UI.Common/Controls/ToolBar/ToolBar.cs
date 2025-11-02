@@ -2627,7 +2627,7 @@ namespace Alternet.UI
         {
             if (customButtonType is null)
                 return new SpeedButton();
-            return (SpeedButton)Activator.CreateInstance(customButtonType);
+            return (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedButton();
         }
 
         /// <summary>
@@ -2639,7 +2639,7 @@ namespace Alternet.UI
         {
             if (customButtonType is null)
                 return new SpeedTextButton();
-            return (SpeedButton)Activator.CreateInstance(customButtonType);
+            return (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedTextButton();
         }
 
         /// <summary>

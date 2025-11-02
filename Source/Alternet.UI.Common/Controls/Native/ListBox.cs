@@ -371,9 +371,9 @@ namespace Alternet.UI
         /// <summary>
         /// Returns a string representation for this control.
         /// </summary>
-        public override string ToString()
+        public override string? ToString()
         {
-            string s = base.ToString();
+            string? s = base.ToString();
             if (itemsCollection is not null)
             {
                 s += $", Items.Count: {Items.Count}";

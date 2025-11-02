@@ -93,7 +93,7 @@ namespace Alternet.UI
 
                 string cssFileName = appFileName + ".gtk.css";
 
-                string appDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location ?? "");
+                var appDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location ?? "");
 
                 if (string.IsNullOrEmpty(appDirectory))
                     return null;

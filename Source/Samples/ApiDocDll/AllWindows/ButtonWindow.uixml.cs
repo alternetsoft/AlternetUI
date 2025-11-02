@@ -23,7 +23,7 @@ namespace ApiDoc
         }
 
         #region ButtonEventHandler
-        private void ExecuteButton_Click(object sender, System.EventArgs e)
+        private void ExecuteButton_Click(object? sender, System.EventArgs e)
         {
             MessageBox.Show("Hello", "Message");
         }
