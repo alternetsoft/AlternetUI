@@ -101,9 +101,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="type">Type to test.</param>
         /// <returns></returns>
-        public static bool IsInternalType(Type type)
+        public static bool IsInternalType(Type? type)
         {
-            Type originalType = type;
+            Type? originalType = type;
             Debug.Assert(type != null, "Type passed to IsInternalType is null");
 
             // If this is an internal nested type or a parent nested public type,
@@ -1636,6 +1636,9 @@ namespace Alternet.UI
             var types = GetTypeDescendants(type);
             foreach (var item in types)
             {
+                if(item.FullName is null)
+                    continue;
+
                 result.Add(item.FullName, item);
             }
 
@@ -1839,7 +1842,7 @@ namespace Alternet.UI
 
                 if (method is not null)
                 {
-                    var result = (bool)method.Invoke(obj, param);
+                    var result = (bool?)method.Invoke(obj, param);
                     return result;
                 }
 
@@ -2162,7 +2165,7 @@ namespace Alternet.UI
             if (method is null)
                 return false;
 
-            Type declaringType = method.DeclaringType;
+            var declaringType = method.DeclaringType;
 
             var methodName = $"{method.Name}()";
             var retParam = method.ReturnParameter;
@@ -2172,7 +2175,7 @@ namespace Alternet.UI
             if (methodParameters.Length > 0)
             {
                 App.LogWarning(
-                    $"{declaringType.Name}.{methodName} has parameters, so it is not called.");
+                    $"{declaringType?.Name}.{methodName} has parameters, so it is not called.");
                 return false;
             }
 
@@ -2183,7 +2186,7 @@ namespace Alternet.UI
                 TreeViewItem item = new();
                 item.TextHasBold = true;
 
-                var itemText = $"Called <b>{declaringType.Name}.{methodName}</b>";
+                var itemText = $"Called <b>{declaringType?.Name}.{methodName}</b>";
 
                 var withChilds = false;
 
@@ -2222,7 +2225,7 @@ namespace Alternet.UI
             if (objType is null)
                 return default;
             var result = Activator.CreateInstance(objType);
-            return (T)result;
+            return (T?)result;
         }
 
         /*

@@ -48,7 +48,7 @@ namespace Alternet.UI
         public bool ToBoolean(in PlessVariant value, IFormatProvider provider)
             => Convert.ToBoolean(value.AsObject, provider);
 
-        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider provider)
+        public object? ToType(in PlessVariant value, Type conversionType, IFormatProvider provider)
             => Convert.ChangeType(value.AsObject, conversionType, provider);
 
         public long ToInt64(in PlessVariant value) => Convert.ToInt64(value.AsObject);

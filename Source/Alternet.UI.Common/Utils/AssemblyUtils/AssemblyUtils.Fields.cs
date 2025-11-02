@@ -241,7 +241,7 @@ namespace Alternet.UI
             get
             {
                 return specialDummyPropertyInfo
-                    ??= typeof(AssemblyUtils).GetProperty(nameof(SpecialDummyProperty));
+                    ??= typeof(AssemblyUtils).GetProperty(nameof(SpecialDummyProperty))!;
             }
         }
     }

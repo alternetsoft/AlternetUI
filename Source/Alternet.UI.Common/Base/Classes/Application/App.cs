@@ -441,7 +441,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Path.GetDirectoryName(ExecutingAssemblyLocation);
+                return Path.GetDirectoryName(ExecutingAssemblyLocation) ?? string.Empty;
             }
         }
 
@@ -1495,9 +1495,10 @@ namespace Alternet.UI
                     try
                     {
                         var data = XmlUtils.DeserializeFromString<AssertFailureExceptionData>(s);
-                        var e = new AssertFailureException(data.Message ?? "Native assert failure");
+                        var msg = data?.Message ?? "Native assert failure";
+                        var e = new AssertFailureException(msg);
                         e.AssertData = data;
-                        LogMessageInternal(data.Message, e);
+                        LogMessageInternal(msg, e);
                     }
                     catch
                     {

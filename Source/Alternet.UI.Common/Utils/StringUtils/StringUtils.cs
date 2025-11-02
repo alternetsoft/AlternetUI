@@ -516,6 +516,8 @@ namespace Alternet.UI
             if (typeConverter is null)
                 return null;
 
+            text ??= string.Empty;
+
             object? result;
 
             if (useInvariantCulture)

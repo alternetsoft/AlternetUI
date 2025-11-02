@@ -8,15 +8,15 @@ namespace Alternet.UI.Port
     /// </summary>
     internal class TypeTypeConverter : BaseTypeConverter
     {
-        public override object ConvertFrom(
-            ITypeDescriptorContext context,
-            System.Globalization.CultureInfo culture,
+        public override object? ConvertFrom(
+            ITypeDescriptorContext? context,
+            System.Globalization.CultureInfo? culture,
             object value)
         {
             if (context != null && value is string typeName)
             {
-                IXamlTypeResolver xamlTypeResolver
-                    = (IXamlTypeResolver)context.GetService(typeof(IXamlTypeResolver));
+                IXamlTypeResolver? xamlTypeResolver
+                    = (IXamlTypeResolver?)context.GetService(typeof(IXamlTypeResolver));
 
                 if (xamlTypeResolver != null)
                 {

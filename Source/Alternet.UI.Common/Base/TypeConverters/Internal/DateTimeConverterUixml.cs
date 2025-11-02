@@ -47,10 +47,10 @@ namespace Alternet.UI.Port
             }
         }
 
-        public override object ConvertFrom(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object? value)
+        public override object? ConvertFrom(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object value)
         {
             if(value is string str)
                 return FromString(str);
@@ -108,10 +108,10 @@ namespace Alternet.UI.Port
                 App.InvariantEnglishUS);
         }
 
-        public override object ConvertTo(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value,
+        public override object? ConvertTo(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
             Type destinationType)
         {
             if (destinationType != null && value is DateTime dt)
@@ -119,7 +119,7 @@ namespace Alternet.UI.Port
                 return ConvertDateTimeToString(dt);
             }
 
-            return base.ConvertTo(context, culture, value, destinationType);
+            return base.ConvertTo(context, culture, value, destinationType!);
         }
     }
 }

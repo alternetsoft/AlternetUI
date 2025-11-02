@@ -193,7 +193,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override string ToString()
+        public override string? ToString()
         {
             if(cursorType is not null)
                 return Enum.GetName(typeof(Cursor), cursorType);

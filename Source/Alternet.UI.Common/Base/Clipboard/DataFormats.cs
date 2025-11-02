@@ -113,7 +113,7 @@ namespace Alternet.UI
         /// <summary>
         /// Specifies the common language runtime (CLR) string class data format.
         /// </summary>
-        public static readonly string StringFormat = typeof(string).FullName;
+        public static readonly string StringFormat = typeof(string).FullName ?? "System.String";
 
         /// <summary>
         /// Specifies a data format that encapsulates any type of serializable data objects.

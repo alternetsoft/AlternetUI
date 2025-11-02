@@ -82,7 +82,7 @@ namespace Alternet.UI
         public static Window CreateFirstWindowClone(bool show = true)
         {
             var type = App.FirstWindow()?.GetType() ?? typeof(Window);
-            var instance = (Window)Activator.CreateInstance(type);
+            var instance = (Window?)Activator.CreateInstance(type) ?? new Window();
             if (show)
                 instance.Show();
             return instance;
@@ -97,7 +97,7 @@ namespace Alternet.UI
         public static Window CreateMainWindowClone(bool show = true)
         {
             var type = App.MainWindow?.GetType() ?? typeof(Window);
-            var instance = (Window)Activator.CreateInstance(type);
+            var instance = (Window?)Activator.CreateInstance(type) ?? new Window();
             if (show)
                 instance.Show();
             return instance;
