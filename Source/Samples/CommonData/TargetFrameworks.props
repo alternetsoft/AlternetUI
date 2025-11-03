@@ -3,6 +3,7 @@
 
   <ItemGroup>
     <None Remove="$(MSBuildThisFileDirectory)\Sample.ico" />
+    <EmbeddedResource Remove="$(MSBuildThisFileDirectory)\Sample.ico" />
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)\Sample.ico" />
   </ItemGroup>
 
@@ -17,37 +18,21 @@
   <PropertyGroup>
     	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   	<BoolNet9>true</BoolNet9>
-  	<BoolNet8>false</BoolNet8>
+  	<BoolNet8>true</BoolNet8>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsOsxX64)=='true'">
+  	<BoolNet9>false</BoolNet9>
   </PropertyGroup>
-
-  <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-  	<BoolNet7>false</BoolNet7>
-  	<BoolNet6>false</BoolNet6>
-  	<BoolNet48>false</BoolNet48>
-  	<BoolNet46>false</BoolNet46>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-  	<BoolNet7>false</BoolNet7>
-  	<BoolNet6>false</BoolNet6>
-  	<BoolNet48>false</BoolNet48>
-  	<BoolNet46>false</BoolNet46>
-  </PropertyGroup>
-
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
 
   <PropertyGroup>
-	<TF6 Condition="$(BoolNet6)">net6.0;</TF6>
-	<TF7 Condition="$(BoolNet7)">net7.0;</TF7>
 	<TF8 Condition="$(BoolNet8)">net8.0;</TF8>
 	<TF9 Condition="$(BoolNet9)">net9.0;</TF9>
 
-    	<UIIntegrationUIXmlHostAppTargetFrameworks>net9.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
-	<TargetFrameworks>net9.0</TargetFrameworks>
+    	<UIIntegrationUIXmlHostAppTargetFrameworks>net8.0-windows;net9.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
+	<TargetFrameworks>$(TF9)$(TF8)</TargetFrameworks>
   </PropertyGroup>
 
 </Project>

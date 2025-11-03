@@ -3,13 +3,13 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
+  <Import Project="..\Version\TargetFrameworks.props" />
 
 <!-- ================================================= -->
 
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NoWarn>$(NoWarn);CS8032</NoWarn>
-    <TargetFrameworks>net9.0</TargetFrameworks>
     <LangVersion>12.0</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Nullable>enable</Nullable>

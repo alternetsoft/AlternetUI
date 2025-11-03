@@ -4,12 +4,12 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
+  <Import Project="..\Version\TargetFrameworks.props" />
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);ALTERNETUI</DefineConstants>
     <Nullable>enable</Nullable>
     <LangVersion>12.0</LangVersion>
-    <TargetFramework>net9.0</TargetFramework>
     <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
 

@@ -4,8 +4,8 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
-
   <Import Project="..\Version\StyleCopAnalyzers.props" />
+  <Import Project="..\Version\TargetFrameworks.props" />
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);ALTERNETUI</DefineConstants>
@@ -15,7 +15,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>$(DefineConstants);XAMLX_INTERNAL</DefineConstants>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <TargetFrameworks>net9.0</TargetFrameworks>
     <IncludeSymbols>true</IncludeSymbols>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <PackageId>Alternet.UI.Common</PackageId>
