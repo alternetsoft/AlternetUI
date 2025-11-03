@@ -614,6 +614,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs the specified object to a file and writes its string representation to the debug output.
+        /// </summary>
+        /// <remarks>This method combines file logging and debug output for the provided object.
+        /// The object's string representation is used for both operations.</remarks>
+        /// <param name="obj">The object to log. If <see langword="null"/>,
+        /// an empty string is logged and written to the debug output.</param>
+        public static void LogToFileAndDebug(object? obj = null)
+        {
+            LogToFile(obj);
+            Debug.WriteLine(obj?.ToString() ?? string.Empty);
+        }
+
+        /// <summary>
         /// Logs message to the specified file or to default application log file.
         /// </summary>
         /// <param name="obj">Object to log.</param>
