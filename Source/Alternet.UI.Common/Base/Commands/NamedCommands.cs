@@ -169,7 +169,7 @@ namespace Alternet.UI
                 Command?.Execute(parameter);
             }
 
-            private void Command_CanExecuteChanged(object sender, EventArgs e)
+            private void Command_CanExecuteChanged(object? sender, EventArgs e)
             {
                 RaiseCanExecuteChanged();
             }

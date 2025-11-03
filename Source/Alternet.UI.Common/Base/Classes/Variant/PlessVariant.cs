@@ -233,7 +233,7 @@ namespace Alternet.UI
             {
                 if (ValueType == TypeCode.String)
                     return (string?)Data ?? string.Empty;
-                return Extender.ToString();
+                return Extender.ToString() ?? string.Empty;
             }
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -914,7 +914,7 @@ namespace Alternet.UI
         /// <exception cref="ArgumentException">if <paramref name="value"/>
         /// is not <see cref="PlessVariant"/>.</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly int CompareTo(object value)
+        public readonly int CompareTo(object? value)
         {
             if (value == null)
                 return 1;
@@ -1039,7 +1039,7 @@ namespace Alternet.UI
         /// <c>true</c> if the specified object is a <see cref="PlessVariant"/> and it equals
         /// this object; <c>false</c> otherwise.
         /// </returns>
-        public override readonly bool Equals(object value)
+        public override readonly bool Equals(object? value)
         {
             if (value is not PlessVariant v)
                 return false;
@@ -1076,14 +1076,14 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="IValueToString.ToString(IFormatProvider)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly string ToString(IFormatProvider provider)
+        public readonly string ToString(IFormatProvider? provider)
         {
             return Extender.ToString(this, provider);
         }
 
         /// <inheritdoc cref="IValueToString.ToString(string, IFormatProvider)"/>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly string ToString(string format, IFormatProvider provider)
+        public readonly string ToString(string? format, IFormatProvider? provider)
         {
             return Extender.ToString(this, format, provider);
         }
@@ -1106,7 +1106,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly bool ToBoolean(IFormatProvider provider)
+        public readonly bool ToBoolean(IFormatProvider? provider)
         {
             return Extender.ToBoolean(this, provider);
         }
@@ -1119,7 +1119,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly byte ToByte(IFormatProvider provider)
+        public readonly byte ToByte(IFormatProvider? provider)
         {
             return Extender.ToByte(this, provider);
         }
@@ -1132,7 +1132,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly char ToChar(IFormatProvider provider)
+        public readonly char ToChar(IFormatProvider? provider)
         {
             return Extender.ToChar(this, provider);
         }
@@ -1145,7 +1145,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly DateTime ToDateTime(IFormatProvider provider)
+        public readonly DateTime ToDateTime(IFormatProvider? provider)
         {
             return Extender.ToDateTime(this, provider);
         }
@@ -1158,7 +1158,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly decimal ToDecimal(IFormatProvider provider)
+        public readonly decimal ToDecimal(IFormatProvider? provider)
         {
             return Extender.ToDecimal(this, provider);
         }
@@ -1171,7 +1171,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly double ToDouble(IFormatProvider provider)
+        public readonly double ToDouble(IFormatProvider? provider)
         {
             return Extender.ToDouble(this, provider);
         }
@@ -1184,7 +1184,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly short ToInt16(IFormatProvider provider)
+        public readonly short ToInt16(IFormatProvider? provider)
         {
             return Extender.ToInt16(this, provider);
         }
@@ -1197,7 +1197,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly int ToInt32(IFormatProvider provider)
+        public readonly int ToInt32(IFormatProvider? provider)
         {
             return Extender.ToInt32(this, provider);
         }
@@ -1210,7 +1210,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly long ToInt64(IFormatProvider provider)
+        public readonly long ToInt64(IFormatProvider? provider)
         {
             return Extender.ToInt64(this, provider);
         }
@@ -1223,7 +1223,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly sbyte ToSByte(IFormatProvider provider)
+        public readonly sbyte ToSByte(IFormatProvider? provider)
         {
             return Extender.ToSByte(this, provider);
         }
@@ -1236,14 +1236,14 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly float ToSingle(IFormatProvider provider)
+        public readonly float ToSingle(IFormatProvider? provider)
         {
             return Extender.ToSingle(this, provider);
         }
 
-        readonly object? IConvertible.ToType(Type conversionType, IFormatProvider provider)
+        readonly object IConvertible.ToType(Type conversionType, IFormatProvider? provider)
         {
-            return Extender.ToType(this, conversionType, provider);
+            return Extender.ToType(this, conversionType, provider)!;
         }
 
         /// <summary>
@@ -1254,7 +1254,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly ushort ToUInt16(IFormatProvider provider)
+        public readonly ushort ToUInt16(IFormatProvider? provider)
         {
             return Extender.ToUInt16(this, provider);
         }
@@ -1267,7 +1267,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly uint ToUInt32(IFormatProvider provider)
+        public readonly uint ToUInt32(IFormatProvider? provider)
         {
             return Extender.ToUInt32(this, provider);
         }
@@ -1280,7 +1280,7 @@ namespace Alternet.UI
         /// information.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly ulong ToUInt64(IFormatProvider provider)
+        public readonly ulong ToUInt64(IFormatProvider? provider)
         {
             return Extender.ToUInt64(this, provider);
         }

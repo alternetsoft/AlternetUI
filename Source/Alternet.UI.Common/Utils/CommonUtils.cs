@@ -119,7 +119,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string GetAppExePath()
         {
-            return System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            return System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? string.Empty;
         }
 
         /// <summary>

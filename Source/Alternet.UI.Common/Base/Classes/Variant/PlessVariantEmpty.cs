@@ -6,35 +6,35 @@ namespace Alternet.UI
 {
     internal class PlessVariantEmpty : IPlessVariantExtender
     {
-        public long ToInt64(in PlessVariant value, IFormatProvider provider) => 0;
+        public long ToInt64(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public decimal ToDecimal(in PlessVariant value, IFormatProvider provider) => decimal.Zero;
+        public decimal ToDecimal(in PlessVariant value, IFormatProvider? provider) => decimal.Zero;
 
-        public ulong ToUInt64(in PlessVariant value, IFormatProvider provider) => 0;
+        public ulong ToUInt64(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public uint ToUInt32(in PlessVariant value, IFormatProvider provider) => 0;
+        public uint ToUInt32(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public ushort ToUInt16(in PlessVariant value, IFormatProvider provider) => 0;
+        public ushort ToUInt16(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public DateTime ToDateTime(in PlessVariant value, IFormatProvider provider) => Convert.ToDateTime(0);
+        public DateTime ToDateTime(in PlessVariant value, IFormatProvider? provider) => Convert.ToDateTime(0);
 
-        public byte ToByte(in PlessVariant value, IFormatProvider provider) => 0;
+        public byte ToByte(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public double ToDouble(in PlessVariant value, IFormatProvider provider) => 0;
+        public double ToDouble(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public short ToInt16(in PlessVariant value, IFormatProvider provider) => 0;
+        public short ToInt16(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public int ToInt32(in PlessVariant value, IFormatProvider provider) => 0;
+        public int ToInt32(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public sbyte ToSByte(in PlessVariant value, IFormatProvider provider) => 0;
+        public sbyte ToSByte(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public float ToSingle(in PlessVariant value, IFormatProvider provider) => 0;
+        public float ToSingle(in PlessVariant value, IFormatProvider? provider) => 0;
 
-        public char ToChar(in PlessVariant value, IFormatProvider provider) => '\0';
+        public char ToChar(in PlessVariant value, IFormatProvider? provider) => '\0';
 
-        public bool ToBoolean(in PlessVariant value, IFormatProvider provider) => false;
+        public bool ToBoolean(in PlessVariant value, IFormatProvider? provider) => false;
 
-        public object? ToType(in PlessVariant value, Type conversionType, IFormatProvider provider) => null;
+        public object? ToType(in PlessVariant value, Type conversionType, IFormatProvider? provider) => null;
 
         public long ToInt64(in PlessVariant value) => 0;
 
@@ -86,12 +86,12 @@ namespace Alternet.UI
             return string.Empty;
         }
 
-        public string ToString(in PlessVariant value, IFormatProvider provider)
+        public string ToString(in PlessVariant value, IFormatProvider? provider)
         {
             return string.Empty;
         }
 
-        public string ToString(in PlessVariant value, string format, IFormatProvider provider)
+        public string ToString(in PlessVariant value, string? format, IFormatProvider? provider)
         {
             return string.Empty;
         }

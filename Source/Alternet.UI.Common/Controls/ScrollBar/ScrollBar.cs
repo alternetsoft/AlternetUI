@@ -535,7 +535,7 @@ namespace Alternet.UI
             return result;
         }
 
-        private void OnPositionPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPositionPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;

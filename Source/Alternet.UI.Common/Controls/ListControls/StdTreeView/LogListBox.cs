@@ -333,7 +333,7 @@ namespace Alternet.UI
         /// <param name="sender">The source of the event, typically the control that triggered the context menu.</param>
         /// <param name="e">A <see cref="CancelEventArgs"/> instance containing the event data,
         /// including the ability to cancel the operation.</param>
-        protected virtual void OnContextMenuOpening(object sender, CancelEventArgs e)
+        protected virtual void OnContextMenuOpening(object? sender, CancelEventArgs e)
         {
             MenuItemCopy?.SetEnabled(SelectedItems.Count > 0);
             MenuItemClear?.SetEnabled(RootItem.ItemCount > 0);

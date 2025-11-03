@@ -2152,7 +2152,7 @@ namespace Alternet.UI
         /// implementation to maintain the default behavior.</remarks>
         /// <param name="sender">The source of the event, typically the object being disposed.</param>
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnMenuDisposed(object sender, EventArgs e)
+        protected virtual void OnMenuDisposed(object? sender, EventArgs e)
         {
             Menu = null;
         }
@@ -2165,7 +2165,7 @@ namespace Alternet.UI
         /// method to provide additional cleanup logic.</remarks>
         /// <param name="sender">The source of the event, typically the object being disposed.</param>
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
-        protected virtual void OnStatusBarDisposed(object sender, EventArgs e)
+        protected virtual void OnStatusBarDisposed(object? sender, EventArgs e)
         {
             StatusBar = null;
         }

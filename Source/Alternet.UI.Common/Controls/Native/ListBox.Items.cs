@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// specific behavior for object management.</remarks>
         public class BaseObjectCollection : ObjectCollection
         {
-            private readonly BaseCollection<object> items = new(CollectionSecurityFlags.None);
+            private readonly BaseCollection<object?> items = new(CollectionSecurityFlags.None);
 
             /// <summary>
             /// Initializes a new instance of the <see cref="BaseObjectCollection"/> class.
@@ -99,14 +99,14 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override object this[int index]
+            public override object? this[int index]
             {
                 get => items[index];
                 set => items[index] = value;
             }
 
             /// <inheritdoc/>
-            public override int Add(object value)
+            public override int Add(object? value)
             {
                 items.Add(value);
                 return items.Count - 1;
@@ -119,7 +119,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override bool Contains(object value)
+            public override bool Contains(object? value)
             {
                 return items.Contains(value);
             }
@@ -137,19 +137,19 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override int IndexOf(object value)
+            public override int IndexOf(object? value)
             {
                 return items.IndexOf(value);
             }
 
             /// <inheritdoc/>
-            public override void Insert(int index, object value)
+            public override void Insert(int index, object? value)
             {
                 items.Insert(index, value);
             }
 
             /// <inheritdoc/>
-            public override void Remove(object value)
+            public override void Remove(object? value)
             {
                 items.Remove(value);
             }
@@ -199,16 +199,16 @@ namespace Alternet.UI
             public abstract object SyncRoot { get; }
 
             /// <inheritdoc/>
-            public abstract object this[int index] { get; set; }
+            public abstract object? this[int index] { get; set; }
 
             /// <inheritdoc/>
-            public abstract int Add(object value);
+            public abstract int Add(object? value);
 
             /// <inheritdoc/>
             public abstract void Clear();
 
             /// <inheritdoc/>
-            public abstract bool Contains(object value);
+            public abstract bool Contains(object? value);
 
             /// <inheritdoc/>
             public abstract void CopyTo(Array array, int index);
@@ -217,13 +217,13 @@ namespace Alternet.UI
             public abstract IEnumerator GetEnumerator();
 
             /// <inheritdoc/>
-            public abstract int IndexOf(object value);
+            public abstract int IndexOf(object? value);
 
             /// <inheritdoc/>
-            public abstract void Insert(int index, object value);
+            public abstract void Insert(int index, object? value);
 
             /// <inheritdoc/>
-            public abstract void Remove(object value);
+            public abstract void Remove(object? value);
 
             /// <inheritdoc/>
             public abstract void RemoveAt(int index);

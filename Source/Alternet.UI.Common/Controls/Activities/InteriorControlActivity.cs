@@ -301,7 +301,7 @@ namespace Alternet.UI
             return hitTests;
         }
 
-        private void OnClickRepeatTimerEvent(object sender, EventArgs e)
+        private void OnClickRepeatTimerEvent(object? sender, EventArgs e)
         {
             if (control is null)
                 return;

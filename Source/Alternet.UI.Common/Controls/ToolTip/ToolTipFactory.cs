@@ -185,7 +185,7 @@ namespace Alternet.UI
             HideLastShownInOverlay();
             if (control is null || tooltip is null)
                 return false;
-            var tooltipStr = tooltip.ToString().Trim();
+            var tooltipStr = tooltip.ToString()?.Trim() ?? string.Empty;
             if (tooltipStr.Length == 0)
                 return false;
 

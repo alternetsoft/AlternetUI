@@ -1476,7 +1476,7 @@ namespace Alternet.UI
         /// whose property has changed.</param>
         /// <param name="e">An object that contains the event data, including the name
         /// of the property that changed.</param>
-        protected virtual void OnColumnsItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected virtual void OnColumnsItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (HeaderControl is null)
                 return;

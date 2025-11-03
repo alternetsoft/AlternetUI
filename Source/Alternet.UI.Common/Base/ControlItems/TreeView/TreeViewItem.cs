@@ -548,7 +548,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual int CompareTo(TreeViewItem other)
+        public virtual int CompareTo(TreeViewItem? other)
         {
             return base.CompareTo(other);
         }

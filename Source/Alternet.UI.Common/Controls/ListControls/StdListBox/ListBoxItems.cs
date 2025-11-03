@@ -113,10 +113,12 @@ namespace Alternet.UI
                 return items[index].Value!;
             }
 
+#pragma warning disable
             set
             {
                 items[index].Value = value;
             }
+#pragma warning restore
         }
 
         /// <summary>
@@ -157,7 +159,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool Contains(object value)
+        public bool Contains(object? value)
         {
             foreach(var item in items)
             {
@@ -169,7 +171,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void Insert(int index, object value)
+        public void Insert(int index, object? value)
         {
             ListControlItem item = new();
             item.Value = value;
@@ -183,7 +185,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public int IndexOf(object item)
+        public int IndexOf(object? item)
         {
             for (int i = 0; i < items.Count; i++)
             {
@@ -197,7 +199,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool Remove(object item)
+        public bool Remove(object? item)
         {
             var index = IndexOf(item);
 
@@ -215,14 +217,14 @@ namespace Alternet.UI
             return GetEnumerator();
         }
 
-        int IList.Add(object value)
+        int IList.Add(object? value)
         {
             ListControlItem item = new();
             item.Value = value;
             return ((IList)items).Add(item);
         }
 
-        void IList.Remove(object value)
+        void IList.Remove(object? value)
         {
             Remove(value);
         }
@@ -247,12 +249,12 @@ namespace Alternet.UI
             return itm.GetEnumerator();
         }
 
-        private void Items_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Items_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             PropertyChanged?.Invoke(this, e);
         }
 
-        private void Items_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
             if (CollectionChanged is null)
                 return;

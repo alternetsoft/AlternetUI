@@ -6,48 +6,48 @@ namespace Alternet.UI
 {
     internal class PlessVariantBoolean : IPlessVariantExtender
     {
-        public long ToInt64(in PlessVariant value, IFormatProvider provider)
+        public long ToInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt64(value.AsBoolean, provider);
 
-        public decimal ToDecimal(in PlessVariant value, IFormatProvider provider)
+        public decimal ToDecimal(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDecimal(value.AsBoolean, provider);
 
-        public ulong ToUInt64(in PlessVariant value, IFormatProvider provider)
+        public ulong ToUInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt64(value.AsBoolean, provider);
 
-        public uint ToUInt32(in PlessVariant value, IFormatProvider provider)
+        public uint ToUInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt32(value.AsBoolean, provider);
 
-        public ushort ToUInt16(in PlessVariant value, IFormatProvider provider)
+        public ushort ToUInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt16(value.AsBoolean, provider);
 
-        public DateTime ToDateTime(in PlessVariant value, IFormatProvider provider)
+        public DateTime ToDateTime(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDateTime(value.AsBoolean, provider);
 
-        public byte ToByte(in PlessVariant value, IFormatProvider provider)
+        public byte ToByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToByte(value.AsBoolean, provider);
 
-        public double ToDouble(in PlessVariant value, IFormatProvider provider)
+        public double ToDouble(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDouble(value.AsBoolean, provider);
 
-        public short ToInt16(in PlessVariant value, IFormatProvider provider)
+        public short ToInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt16(value.AsBoolean, provider);
 
-        public int ToInt32(in PlessVariant value, IFormatProvider provider)
+        public int ToInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt32(value.AsBoolean, provider);
 
-        public sbyte ToSByte(in PlessVariant value, IFormatProvider provider)
+        public sbyte ToSByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToSByte(value.AsBoolean, provider);
 
-        public float ToSingle(in PlessVariant value, IFormatProvider provider)
+        public float ToSingle(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToSingle(value.AsBoolean, provider);
 
-        public char ToChar(in PlessVariant value, IFormatProvider provider)
+        public char ToChar(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToChar(value.AsBoolean, provider);
 
-        public bool ToBoolean(in PlessVariant value, IFormatProvider provider) => value.AsBoolean;
+        public bool ToBoolean(in PlessVariant value, IFormatProvider? provider) => value.AsBoolean;
 
-        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider provider)
+        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider? provider)
             => Convert.ChangeType(value.AsBoolean, conversionType, provider);
 
         public long ToInt64(in PlessVariant value) => Convert.ToInt64(value.AsBoolean);
@@ -102,12 +102,12 @@ namespace Alternet.UI
             return value.AsBoolean.ToString();
         }
 
-        public string ToString(in PlessVariant value, IFormatProvider provider)
+        public string ToString(in PlessVariant value, IFormatProvider? provider)
         {
             return value.AsBoolean.ToString(provider);
         }
 
-        public string ToString(in PlessVariant value, string format, IFormatProvider provider)
+        public string ToString(in PlessVariant value, string? format, IFormatProvider? provider)
         {
             return value.AsBoolean.ToString(provider);
         }

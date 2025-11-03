@@ -251,7 +251,7 @@ namespace Alternet.UI
             }
         }
 
-        private void ComboBox_TextChanged(object sender, EventArgs e)
+        private void ComboBox_TextChanged(object? sender, EventArgs e)
         {
             if (DisposingOrDisposed)
                 return;
@@ -294,7 +294,7 @@ namespace Alternet.UI
                 if (member.Name.EndsWith("_"))
                     return null;
 
-                var fullName = $"{member.DeclaringType.Name}.{member.Name}";
+                var fullName = $"{member.DeclaringType?.Name}.{member.Name}";
 
                 var replaced = StringUtils.InsertBoldTags(fullName, containsText);
 

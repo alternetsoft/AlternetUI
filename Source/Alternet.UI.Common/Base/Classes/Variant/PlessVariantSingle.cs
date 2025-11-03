@@ -6,49 +6,49 @@ namespace Alternet.UI
 {
     internal class PlessVariantSingle : IPlessVariantExtender
     {
-        public long ToInt64(in PlessVariant value, IFormatProvider provider)
+        public long ToInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt64(value.AsSingle, provider);
 
-        public decimal ToDecimal(in PlessVariant value, IFormatProvider provider)
+        public decimal ToDecimal(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDecimal(value.AsSingle, provider);
 
-        public ulong ToUInt64(in PlessVariant value, IFormatProvider provider)
+        public ulong ToUInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt64(value.AsSingle, provider);
 
-        public uint ToUInt32(in PlessVariant value, IFormatProvider provider)
+        public uint ToUInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt32(value.AsSingle, provider);
 
-        public ushort ToUInt16(in PlessVariant value, IFormatProvider provider)
+        public ushort ToUInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt16(value.AsSingle, provider);
 
-        public DateTime ToDateTime(in PlessVariant value, IFormatProvider provider)
+        public DateTime ToDateTime(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDateTime(value.AsSingle, provider);
 
-        public byte ToByte(in PlessVariant value, IFormatProvider provider)
+        public byte ToByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToByte(value.AsSingle, provider);
 
-        public double ToDouble(in PlessVariant value, IFormatProvider provider)
+        public double ToDouble(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDouble(value.AsSingle, provider);
 
-        public short ToInt16(in PlessVariant value, IFormatProvider provider)
+        public short ToInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt16(value.AsSingle, provider);
 
-        public int ToInt32(in PlessVariant value, IFormatProvider provider)
+        public int ToInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt32(value.AsSingle, provider);
 
-        public sbyte ToSByte(in PlessVariant value, IFormatProvider provider)
+        public sbyte ToSByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToSByte(value.AsSingle, provider);
 
-        public float ToSingle(in PlessVariant value, IFormatProvider provider)
+        public float ToSingle(in PlessVariant value, IFormatProvider? provider)
             => value.AsSingle;
 
-        public char ToChar(in PlessVariant value, IFormatProvider provider)
+        public char ToChar(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToChar(value.AsSingle, provider);
 
-        public bool ToBoolean(in PlessVariant value, IFormatProvider provider)
+        public bool ToBoolean(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToBoolean(value.AsSingle, provider);
 
-        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider provider)
+        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider? provider)
             => Convert.ChangeType(value.AsSingle, conversionType, provider);
 
         public long ToInt64(in PlessVariant value) => Convert.ToInt64(value.AsSingle);
@@ -103,12 +103,12 @@ namespace Alternet.UI
             return value.AsSingle.ToString(format);
         }
 
-        public string ToString(in PlessVariant value, IFormatProvider provider)
+        public string ToString(in PlessVariant value, IFormatProvider? provider)
         {
             return value.AsSingle.ToString(provider);
         }
 
-        public string ToString(in PlessVariant value, string format, IFormatProvider provider)
+        public string ToString(in PlessVariant value, string? format, IFormatProvider? provider)
         {
             return value.AsSingle.ToString(format, provider);
         }

@@ -6,49 +6,49 @@ namespace Alternet.UI
 {
     internal class PlessVariantDecimal : IPlessVariantExtender
     {
-        public long ToInt64(in PlessVariant value, IFormatProvider provider)
+        public long ToInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt64(value.AsDecimal, provider);
 
-        public decimal ToDecimal(in PlessVariant value, IFormatProvider provider)
+        public decimal ToDecimal(in PlessVariant value, IFormatProvider? provider)
             => value.AsDecimal;
 
-        public ulong ToUInt64(in PlessVariant value, IFormatProvider provider)
+        public ulong ToUInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt64(value.AsDecimal, provider);
 
-        public uint ToUInt32(in PlessVariant value, IFormatProvider provider)
+        public uint ToUInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt32(value.AsDecimal, provider);
 
-        public ushort ToUInt16(in PlessVariant value, IFormatProvider provider)
+        public ushort ToUInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt16(value.AsDecimal, provider);
 
-        public DateTime ToDateTime(in PlessVariant value, IFormatProvider provider)
+        public DateTime ToDateTime(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDateTime(value.AsDecimal, provider);
 
-        public byte ToByte(in PlessVariant value, IFormatProvider provider)
+        public byte ToByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToByte(value.AsDecimal, provider);
 
-        public double ToDouble(in PlessVariant value, IFormatProvider provider)
+        public double ToDouble(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDouble(value.AsDecimal, provider);
 
-        public short ToInt16(in PlessVariant value, IFormatProvider provider)
+        public short ToInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt16(value.AsDecimal, provider);
 
-        public int ToInt32(in PlessVariant value, IFormatProvider provider)
+        public int ToInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt32(value.AsDecimal, provider);
 
-        public sbyte ToSByte(in PlessVariant value, IFormatProvider provider)
+        public sbyte ToSByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToSByte(value.AsDecimal, provider);
 
-        public float ToSingle(in PlessVariant value, IFormatProvider provider)
+        public float ToSingle(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToSingle(value.AsDecimal, provider);
 
-        public char ToChar(in PlessVariant value, IFormatProvider provider)
+        public char ToChar(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToChar(value.AsDecimal, provider);
 
-        public bool ToBoolean(in PlessVariant value, IFormatProvider provider)
+        public bool ToBoolean(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToBoolean(value.AsDecimal, provider);
 
-        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider provider)
+        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider? provider)
             => Convert.ChangeType(value.AsDecimal, conversionType, provider);
 
         public long ToInt64(in PlessVariant value) => Convert.ToInt64(value.AsDecimal);
@@ -110,12 +110,12 @@ namespace Alternet.UI
             return value.AsDecimal.ToString(format);
         }
 
-        public string ToString(in PlessVariant value, IFormatProvider provider)
+        public string ToString(in PlessVariant value, IFormatProvider? provider)
         {
             return value.AsDecimal.ToString(provider);
         }
 
-        public string ToString(in PlessVariant value, string format, IFormatProvider provider)
+        public string ToString(in PlessVariant value, string? format, IFormatProvider? provider)
         {
             return value.AsDecimal.ToString(format, provider);
         }

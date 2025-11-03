@@ -79,7 +79,7 @@ namespace Alternet.UI.Localization
 
             foreach(var nestedType in nestedTypes)
             {
-                var splitted = nestedType.FullName.Split('+');
+                var splitted = nestedType.FullName?.Split('+') ?? Array.Empty<string>();
                 if (splitted.Length < 2)
                     continue;
                 var suffix = splitted[1];

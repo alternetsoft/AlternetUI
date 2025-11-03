@@ -1309,7 +1309,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The event source.</param>
         /// <param name="e">Event arguments containing information about the click event.</param>
-        protected virtual void OnCardPanelHeaderBeforeTabClick(object sender, BaseCancelEventArgs e)
+        protected virtual void OnCardPanelHeaderBeforeTabClick(object? sender, BaseCancelEventArgs e)
         {
             if (DisposingOrDisposed)
                 return;

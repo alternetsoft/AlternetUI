@@ -94,7 +94,7 @@ namespace Alternet.UI
             return result;
         }
 
-        private void Disposable_Disposed(object sender, EventArgs e)
+        private void Disposable_Disposed(object? sender, EventArgs e)
         {
             Unbind();
         }

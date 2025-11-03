@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// <returns>The <see cref="string"/> representation of the value as
         /// specified by <paramref name="provider"/>.</returns>
         /// <param name="value">Variant to convert.</param>
-        string ToString(in PlessVariant value, IFormatProvider provider);
+        string ToString(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Converts the variant to its equivalent <see cref="string"/>
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// <returns>The <see cref="string"/> representation of the value as
         /// specified by <paramref name="format"/> and <paramref name="provider"/>.</returns>
         /// <param name="value">Variant to convert.</param>
-        string ToString(in PlessVariant value, string format, IFormatProvider provider);
+        string ToString(in PlessVariant value, string? format, IFormatProvider? provider);
 
         /// <summary>
         /// Converts the variant to its equivalent <see cref="string"/> representation,
@@ -187,7 +187,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        bool ToBoolean(in PlessVariant value, IFormatProvider provider);
+        bool ToBoolean(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="byte"/> using the specified format provider.
@@ -196,7 +196,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        byte ToByte(in PlessVariant value, IFormatProvider provider);
+        byte ToByte(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="char"/> using the specified format provider.
@@ -205,7 +205,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        char ToChar(in PlessVariant value, IFormatProvider provider);
+        char ToChar(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="DateTime"/> using the specified format provider.
@@ -214,7 +214,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        DateTime ToDateTime(in PlessVariant value, IFormatProvider provider);
+        DateTime ToDateTime(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="decimal"/> using the specified format provider.
@@ -223,7 +223,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        decimal ToDecimal(in PlessVariant value, IFormatProvider provider);
+        decimal ToDecimal(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="double"/> using the specified format provider.
@@ -232,7 +232,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        double ToDouble(in PlessVariant value, IFormatProvider provider);
+        double ToDouble(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="short"/> using the specified format provider.
@@ -241,7 +241,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        short ToInt16(in PlessVariant value, IFormatProvider provider);
+        short ToInt16(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="int"/> using the specified format provider.
@@ -250,7 +250,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        int ToInt32(in PlessVariant value, IFormatProvider provider);
+        int ToInt32(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="long"/> using the specified format provider.
@@ -259,7 +259,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        long ToInt64(in PlessVariant value, IFormatProvider provider);
+        long ToInt64(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="sbyte"/> using the specified format provider.
@@ -268,7 +268,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        sbyte ToSByte(in PlessVariant value, IFormatProvider provider);
+        sbyte ToSByte(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="float"/> using the specified format provider.
@@ -277,7 +277,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        float ToSingle(in PlessVariant value, IFormatProvider provider);
+        float ToSingle(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="object"/> of the specified type using format provider.
@@ -287,7 +287,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        object? ToType(in PlessVariant value, Type resultType, IFormatProvider provider);
+        object? ToType(in PlessVariant value, Type resultType, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="ushort"/> using the specified format provider.
@@ -296,7 +296,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        ushort ToUInt16(in PlessVariant value, IFormatProvider provider);
+        ushort ToUInt16(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="uint"/> using the specified format provider.
@@ -305,7 +305,7 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        uint ToUInt32(in PlessVariant value, IFormatProvider provider);
+        uint ToUInt32(in PlessVariant value, IFormatProvider? provider);
 
         /// <summary>
         /// Gets variant as <see cref="ulong"/> using the specified format provider.
@@ -314,6 +314,6 @@ namespace Alternet.UI
         /// <param name="provider">An object that supplies culture-specific formatting
         /// information.</param>
         /// <returns></returns>
-        ulong ToUInt64(in PlessVariant value, IFormatProvider provider);
+        ulong ToUInt64(in PlessVariant value, IFormatProvider? provider);
     }
 }

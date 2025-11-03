@@ -162,7 +162,7 @@ namespace Alternet.UI
                 App.LogMessage -= HandleLogMessage;
             }
 
-            void HandleLogMessage(object sender, LogMessageEventArgs e)
+            void HandleLogMessage(object? sender, LogMessageEventArgs e)
             {
                 logAction(e.Message ?? string.Empty);
             }

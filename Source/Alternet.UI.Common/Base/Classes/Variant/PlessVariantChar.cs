@@ -6,49 +6,49 @@ namespace Alternet.UI
 {
     internal class PlessVariantChar : IPlessVariantExtender
     {
-        public long ToInt64(in PlessVariant value, IFormatProvider provider)
+        public long ToInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt64(value.AsChar, provider);
 
-        public decimal ToDecimal(in PlessVariant value, IFormatProvider provider)
+        public decimal ToDecimal(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDecimal(value.AsChar, provider);
 
-        public ulong ToUInt64(in PlessVariant value, IFormatProvider provider)
+        public ulong ToUInt64(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt64(value.AsChar, provider);
 
-        public uint ToUInt32(in PlessVariant value, IFormatProvider provider)
+        public uint ToUInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt32(value.AsChar, provider);
 
-        public ushort ToUInt16(in PlessVariant value, IFormatProvider provider)
+        public ushort ToUInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToUInt16(value.AsChar, provider);
 
-        public DateTime ToDateTime(in PlessVariant value, IFormatProvider provider)
+        public DateTime ToDateTime(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDateTime(value.AsChar, provider);
 
-        public byte ToByte(in PlessVariant value, IFormatProvider provider)
+        public byte ToByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToByte(value.AsChar, provider);
 
-        public double ToDouble(in PlessVariant value, IFormatProvider provider)
+        public double ToDouble(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToDouble(value.AsChar, provider);
 
-        public short ToInt16(in PlessVariant value, IFormatProvider provider)
+        public short ToInt16(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt16(value.AsChar, provider);
 
-        public int ToInt32(in PlessVariant value, IFormatProvider provider)
+        public int ToInt32(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToInt32(value.AsChar, provider);
 
-        public sbyte ToSByte(in PlessVariant value, IFormatProvider provider)
+        public sbyte ToSByte(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToSByte(value.AsChar, provider);
 
-        public float ToSingle(in PlessVariant value, IFormatProvider provider)
+        public float ToSingle(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToSingle(value.AsChar, provider);
 
-        public char ToChar(in PlessVariant value, IFormatProvider provider)
+        public char ToChar(in PlessVariant value, IFormatProvider? provider)
             => value.AsChar;
 
-        public bool ToBoolean(in PlessVariant value, IFormatProvider provider)
+        public bool ToBoolean(in PlessVariant value, IFormatProvider? provider)
             => Convert.ToBoolean(value.AsChar, provider);
 
-        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider provider)
+        public object ToType(in PlessVariant value, Type conversionType, IFormatProvider? provider)
             => Convert.ChangeType(value.AsChar, conversionType, provider);
 
         public long ToInt64(in PlessVariant value) => Convert.ToInt64(value.AsChar);
@@ -104,12 +104,12 @@ namespace Alternet.UI
             return value.AsChar.ToString();
         }
 
-        public string ToString(in PlessVariant value, IFormatProvider provider)
+        public string ToString(in PlessVariant value, IFormatProvider? provider)
         {
             return value.AsChar.ToString(provider);
         }
 
-        public string ToString(in PlessVariant value, string format, IFormatProvider provider)
+        public string ToString(in PlessVariant value, string? format, IFormatProvider? provider)
         {
             return value.AsChar.ToString(provider);
         }
