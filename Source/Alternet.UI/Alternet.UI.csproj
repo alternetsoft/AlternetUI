@@ -7,6 +7,12 @@
 
 <!-- ================================================= -->
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net8.0'">
+    <Optimize>false</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <PropertyGroup>
     <NuGetAuditMode>direct</NuGetAuditMode>
     <NoWarn>$(NoWarn);CS8032</NoWarn>

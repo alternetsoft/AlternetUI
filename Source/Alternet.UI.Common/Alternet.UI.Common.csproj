@@ -7,6 +7,12 @@
   <Import Project="..\Version\StyleCopAnalyzers.props" />
   <Import Project="..\Version\TargetFrameworks.props" />
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net8.0'">
+    <Optimize>false</Optimize>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);ALTERNETUI</DefineConstants>
     <NuGetAuditMode>direct</NuGetAuditMode>
