@@ -249,7 +249,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static SKPath? GetPathFromPoints(ReadOnlySpan<PointD> points, FillMode fillMode = FillMode.Alternate)
         {
-            if (points == null || points.Length < 3)
+            if (points.Length < 3)
                 return null;
 
             var path = new SKPath
@@ -624,7 +624,6 @@ namespace Alternet.Drawing
             var font = UI.Control.DefaultFont.Scaled(Display.MaxScaleFactor);
             var foreColor = Drawing.Color.Black;
             var backColor = Drawing.Color.LightYellow;
-            var borderColor = Drawing.Color.DarkGray;
 
             var textSize = graphics.GetTextExtent(text, font);
 

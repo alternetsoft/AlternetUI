@@ -182,14 +182,14 @@ namespace PropertyGridSample
             };
         }
 
-        public static void LogItems(string prefix, IReadOnlyList<object> items)
+        public static void LogItems(string prefix, IReadOnlyList<object?> items)
         {
             if (items.Count > 100)
                 App.LogReplace($"{prefix}: {items.Count} items", prefix);
             else
             {
                 var st = items.Count == 0 ? "<none>" :
-                string.Join(", ", items.Select(x => x.ToString()));
+                string.Join(", ", items.Select(x => x?.ToString()));
                 App.LogReplace($"{prefix}: {st}", prefix);
             }
         }

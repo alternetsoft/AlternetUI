@@ -95,16 +95,16 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IReadOnlyList<object> CheckedItems
+        public IReadOnlyList<object?> CheckedItems
         {
             get
             {
-                object GetItemAtIndex(int index)
+                object? GetItemAtIndex(int index)
                 {
                     var itemIndex = PlatformControl.GetCheckedIndexesItem(index);
                     if (itemIndex >= 0 && itemIndex < Items.Count)
                         return Items[itemIndex];
-                    return null!;
+                    return null;
                 }
 
                 var result = ListUtils.GetSelectedItems(

@@ -42,7 +42,7 @@ namespace Alternet.UI.Threading
         /// <param name="cancellationToken">Cancellation token for the notification
         /// that operations should be canceled.</param>
         /// <returns></returns>
-        public virtual async Task<Func<Task>> DequeueAsync(CancellationToken cancellationToken)
+        public virtual async Task<Func<Task>?> DequeueAsync(CancellationToken cancellationToken)
         {
             await signal.WaitAsync(cancellationToken);
 
