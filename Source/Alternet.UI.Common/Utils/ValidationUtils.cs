@@ -14,6 +14,8 @@ namespace Alternet.UI
     {
         private static Func<string?, bool> funcIsValidMailAddress = (email) =>
         {
+            const bool resultIfNullOrEmpty = false;
+
             var method = typeof(MailAddress).GetMethod(
                 "TryCreate",
                 [typeof(string), typeof(MailAddress).MakeByRefType()]);
@@ -24,6 +26,9 @@ namespace Alternet.UI
                 {
                     try
                     {
+                        if (email is null)
+                            return resultIfNullOrEmpty;
+
                         var mail = new MailAddress(email);
                         return true;
                     }
@@ -37,7 +42,11 @@ namespace Alternet.UI
             {
                 funcIsValidMailAddress = (email) =>
                 {
-                    return (bool)method.Invoke(null, [email, null]);
+                    if (email is null)
+                        return resultIfNullOrEmpty;
+
+                    var result = (bool?)method.Invoke(null, [email, null]);
+                    return result ?? resultIfNullOrEmpty;
                 };
             }
 

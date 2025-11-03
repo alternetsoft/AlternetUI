@@ -259,7 +259,7 @@ namespace Alternet.UI
                 {
                     writeLine(LogUtils.SectionSeparator);
                     writeLine(title);
-                    var s = e.ToString();
+                    var s = e.ToString() ?? string.Empty;
                     writeLine(s);
                     writeLine(LogUtils.SectionSeparator);
                 }
@@ -347,13 +347,13 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void Write(string message)
+            public override void Write(string? message)
             {
                 CommonUtils.Nop();
             }
 
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override void WriteLine(string? message)
             {
                 CommonUtils.Nop();
             }

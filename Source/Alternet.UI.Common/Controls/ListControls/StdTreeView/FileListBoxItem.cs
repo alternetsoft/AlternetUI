@@ -88,6 +88,9 @@ namespace Alternet.UI
         {
             get
             {
+                if (Path is null)
+                    return info;
+
                 try
                 {
                     if (IsFile)

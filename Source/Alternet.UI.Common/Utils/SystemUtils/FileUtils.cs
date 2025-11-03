@@ -150,7 +150,7 @@ namespace Alternet.UI
         public static void CreateFilePath(string pathToFile)
         {
             var dir = Path.GetDirectoryName(pathToFile);
-            if (Directory.Exists(dir))
+            if (string.IsNullOrEmpty(dir) || Directory.Exists(dir))
                 return;
             Directory.CreateDirectory(dir);
         }

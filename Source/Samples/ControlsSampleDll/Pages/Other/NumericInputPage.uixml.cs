@@ -32,7 +32,7 @@ namespace ControlsSample
             intPicker4.ValueChanged += IntPicker_ValueChanged;
         }
 
-        private void IntPicker_ValueChanged(object sender, EventArgs e)
+        private void IntPicker_ValueChanged(object? sender, EventArgs e)
         {
             App.LogNameValueReplace("IntPicker.ValueChanged", (sender as IntPicker)?.Value);
         }

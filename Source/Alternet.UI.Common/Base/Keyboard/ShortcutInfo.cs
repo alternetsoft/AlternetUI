@@ -248,7 +248,7 @@ namespace Alternet.UI
             if (key is null)
                 return null;
 
-            if (options.UseTemplate)
+            if (options.UseTemplate && options.Template is not null)
             {
                 var result = string.Format(options.Template, key.ToString(options.ForUser));
                 return result;

@@ -249,7 +249,7 @@ namespace Alternet.UI
         /// <see cref="System.IFormattable"/>, its formatted string representation
         /// is returned using the current culture.
         /// Otherwise, the result of <see cref="object.ToString"/> is returned.</returns>
-        public virtual string GetItemText(object item)
+        public virtual string GetItemText(object? item)
         {
             if (item == null)
                 return string.Empty;

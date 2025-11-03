@@ -951,6 +951,9 @@ namespace Alternet.UI
         {
             try
             {
+                if(selectedFolder == null)
+                    return;
+
                 var upperFolder = Path.Combine(selectedFolder, "..");
                 var fullFolder = Path.GetFullPath(upperFolder);
                 if (SelectedFolder == fullFolder)

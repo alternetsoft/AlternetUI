@@ -14,7 +14,7 @@ namespace ControlsSample
     {
         public static int TestTimerInterval = 30;
 
-        public static System.Timers.Timer TestSystemTimer = new System.Timers.Timer();
+        public static System.Timers.Timer TestSystemTimer = new ();
         public static System.Threading.Timer? TestThreadingTimer;
         public static Timer TestTimer = new();
         public static int TestCounter = 0;
@@ -182,22 +182,22 @@ namespace ControlsSample
             control.Deactivated += Control_Deactivated;
         }
 
-        private static void Control_Deactivated(object sender, EventArgs e)
+        private static void Control_Deactivated(object? sender, EventArgs e)
         {
             App.Log("Control is Deactivated");
         }
 
-        private static void Window_Deactivated(object sender, EventArgs e)
+        private static void Window_Deactivated(object? sender, EventArgs e)
         {
             App.Log("Window is Deactivated");
         }
 
-        private static void Control_Activated(object sender, EventArgs e)
+        private static void Control_Activated(object? sender, EventArgs e)
         {
             App.Log("Control is Activated");
         }
 
-        private static void Window_Activated(object sender, EventArgs e)
+        private static void Window_Activated(object? sender, EventArgs e)
         {
             App.Log("Window is Activated");
         }

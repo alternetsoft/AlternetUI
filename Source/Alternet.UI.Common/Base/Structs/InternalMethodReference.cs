@@ -71,6 +71,9 @@ namespace Alternet.UI
                 name,
                 BindingFlags.NonPublic | BindingFlags.Static);
 
+            if (method is null)
+                return null;
+
             var result = (TDelegate?)Delegate.CreateDelegate(typeof(TDelegate), method);
             internalMethod = result;
             return result;

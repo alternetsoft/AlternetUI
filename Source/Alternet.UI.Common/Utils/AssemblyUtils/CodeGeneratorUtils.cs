@@ -35,9 +35,12 @@ namespace Alternet.UI
         /// Gets dotnet path based on the <see cref="GetSystemDllPath"/> result.
         /// </summary>
         /// <returns></returns>
-        public static string GetDotNetPathFromSystemDllPath()
+        public static string? GetDotNetPathFromSystemDllPath()
         {
-            var combined = Path.Combine(GetSystemDllPath(), "..", "..", "..");
+            var systemDllPath = GetSystemDllPath();
+            if (systemDllPath is null)
+                return null;
+            var combined = Path.Combine(systemDllPath, "..", "..", "..");
             var result = Path.GetFullPath(combined);
             return result;
         }

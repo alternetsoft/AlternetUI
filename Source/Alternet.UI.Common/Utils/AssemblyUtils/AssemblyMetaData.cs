@@ -119,11 +119,19 @@ namespace Alternet.UI
             HashSet<string> folders = new ();
             var location = typeof(object).Assembly.Location;
             if (!string.IsNullOrEmpty(location))
-                folders.Add(Path.GetDirectoryName(location));
+            {
+                var dirName = Path.GetDirectoryName(location);
+                if (!string.IsNullOrEmpty(dirName))
+                    folders.Add(dirName);
+            }
 
             location = RuntimeEnvironment.GetRuntimeDirectory();
             if (!string.IsNullOrEmpty(location))
-                folders.Add(Path.GetDirectoryName(location));
+            {
+                var dirName = Path.GetDirectoryName(location);
+                if (!string.IsNullOrEmpty(dirName))
+                    folders.Add(dirName);
+            }
 
             folders.Add(folder);
 

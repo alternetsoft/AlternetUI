@@ -26,6 +26,8 @@ namespace ControlsSample
 
             StaticControlEvents.MainWindowDpiChanged += (s, e) =>
             {
+                if (s is null)
+                    return;
                 App.Log($"MainWindow DPI changed: {((Window)s).DPI}");
             };
 

@@ -250,16 +250,16 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public IReadOnlyList<object> SelectedItems
+        public IReadOnlyList<object?> SelectedItems
         {
             get
             {
-                object GetItemAtIndex(int index)
+                object? GetItemAtIndex(int index)
                 {
                     var itemIndex = PlatformControl.GetSelectionsItem(index);
                     if (itemIndex >= 0 && itemIndex < Items.Count)
                         return Items[itemIndex];
-                    return null!;
+                    return null;
                 }
 
                 var result = ListUtils.GetSelectedItems(

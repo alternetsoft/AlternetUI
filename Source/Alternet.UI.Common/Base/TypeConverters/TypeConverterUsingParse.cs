@@ -16,9 +16,9 @@ namespace Alternet.UI
             this.method = method;
         }
 
-        public override object ConvertFrom(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
+        public override object? ConvertFrom(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
             object value)
         {
             if(value is string str)
@@ -30,10 +30,10 @@ namespace Alternet.UI
             return base.ConvertFrom(context, culture, value);
         }
 
-        public override object ConvertTo(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value,
+        public override object? ConvertTo(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
             Type destinationType)
         {
             if (destinationType == typeof(string) && value is not null)
