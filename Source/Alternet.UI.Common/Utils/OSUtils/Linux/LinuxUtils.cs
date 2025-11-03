@@ -455,7 +455,7 @@ namespace Alternet.UI
             {
                 var errPtr = dlerror();
                 if (errPtr != IntPtr.Zero)
-                    return (Marshal.PtrToStringAnsi(errPtr), errPtr);
+                    return (Marshal.PtrToStringAnsi(errPtr) ?? string.Empty, errPtr);
                 return (string.Empty, default);
             }
 

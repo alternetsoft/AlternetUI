@@ -77,6 +77,8 @@ namespace Alternet.Drawing
         ///     <see langword="false" />.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type? sourceType)
         {
+            if (sourceType == null)
+                return false;
             return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
         }
 

@@ -77,7 +77,7 @@ namespace Alternet.UI
         /// If the string specifies "auto", <see cref="Coord.NaN"/> is returned.</returns>
         /// <exception cref="FormatException">Thrown if the string cannot be parsed
         /// into a valid coordinate value.</exception>
-        public static Coord FromString(string s, CultureInfo cultureInfo)
+        public static Coord FromString(string s, CultureInfo? cultureInfo)
         {
             /* NOTE - This code is called from FontSizeConverter, so changes will affect both. */
 
@@ -166,9 +166,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override object ConvertFrom(
+        public override object? ConvertFrom(
             ITypeDescriptorContext? typeDescriptorContext,
-            CultureInfo cultureInfo,
+            CultureInfo? cultureInfo,
             object source)
         {
             if (source != null)
@@ -187,10 +187,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override object ConvertTo(
+        public override object? ConvertTo(
             ITypeDescriptorContext? typeDescriptorContext,
-            CultureInfo cultureInfo,
-            object value,
+            CultureInfo? cultureInfo,
+            object? value,
             Type destinationType)
         {
             if (destinationType == null)

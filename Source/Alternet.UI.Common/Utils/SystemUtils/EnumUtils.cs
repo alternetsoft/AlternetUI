@@ -116,7 +116,7 @@ namespace Alternet.UI
             where T : struct, Enum
         {
             var enumValues = Enum.GetValues(typeof(T));
-            var result = (T)enumValues.GetValue(enumValues.Length - 1);
+            var result = (T)enumValues.GetValue(enumValues.Length - 1)!;
             return result;
         }
 

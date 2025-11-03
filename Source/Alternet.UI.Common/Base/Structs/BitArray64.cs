@@ -182,7 +182,7 @@ namespace Alternet.UI
         /// <c>true</c> if the specified object is a <see cref="BitArray64"/> and its bits
         /// are the same as this objects's bits; <c>false</c> otherwise.
         /// </returns>
-        public readonly override bool Equals(object obj)
+        public readonly override bool Equals(object? obj)
         {
             return obj is BitArray64 array && Bits == array.Bits;
         }

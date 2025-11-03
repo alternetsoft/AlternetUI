@@ -10,17 +10,17 @@ namespace Alternet.UI
     {
         public static string NanString = "nan";
 
-        public override object ConvertTo(
-            ITypeDescriptorContext context,
-            CultureInfo culture,
-            object value,
+        public override object? ConvertTo(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object? value,
             Type destinationType)
         {
-            if(value is Coord coord)
+            if (value is Coord coordinate)
             {
                 if (destinationType == typeof(string))
                 {
-                    if (Coord.IsNaN(coord))
+                    if (Coord.IsNaN(coordinate))
                     {
                         return NanString;
                     }

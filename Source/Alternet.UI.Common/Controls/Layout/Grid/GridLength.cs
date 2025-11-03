@@ -156,7 +156,7 @@ namespace Alternet.UI
         /// <see cref="GridLength"/>.</param>
         /// <returns>true if the specified object is equal to the current <see cref="GridLength"/>;
         /// otherwise, false.</returns>
-        public readonly override bool Equals(object oCompare)
+        public readonly override bool Equals(object? oCompare)
         {
             if (oCompare is GridLength l)
                 return this == l;

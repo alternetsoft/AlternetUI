@@ -209,7 +209,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="x64onArm">Whether to return x64 runtime on arm OS.</param>
         /// <returns></returns>
-        public static string GetDefaultLocation(bool x64onArm = false)
+        public static string? GetDefaultLocation(bool x64onArm = false)
         {
             string? Ep(string? path)
             {
@@ -273,7 +273,7 @@ namespace Alternet.UI
             App.Log(CmdListRuntimesResult);
         }
 
-        internal static void LogInstalledSdks()
+        internal static void LogInstalledSdk()
         {
             App.Log(CmdListSdksResult);
         }

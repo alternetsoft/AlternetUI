@@ -286,7 +286,13 @@ namespace Alternet.UI
         public virtual void AddEnumValues(Type type, object? selectValue = default)
         {
             foreach (var item in Enum.GetValues(type))
-                Add(new ListControlItem(item.ToString(), item));
+            {
+                var st = item.ToString();
+                if(st is null)
+                    continue;
+                Add(new ListControlItem(st, item));
+            }
+
             if (selectValue is not null)
                 Value = selectValue;
         }
