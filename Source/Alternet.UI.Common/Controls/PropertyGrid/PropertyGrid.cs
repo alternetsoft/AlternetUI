@@ -1041,7 +1041,7 @@ namespace Alternet.UI
             ref TypeConverter? typeConverter)
         {
             object? propValue = propInfo.GetValue(instance, null);
-            string value = string.Empty;
+            string? value = null;
 
             if (propValue is not null)
             {
@@ -1080,7 +1080,7 @@ namespace Alternet.UI
                 }
             }
 
-            return value;
+            return value ?? string.Empty;
         }
 
         /// <summary>

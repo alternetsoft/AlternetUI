@@ -272,7 +272,7 @@ namespace Alternet.UI
                 if (!browsable)
                     continue;
                 var methodName = $"{method.Name}()";
-                var methodNameForDisplay = $"{method.DeclaringType.Name}.<b>{methodName}</b>";
+                var methodNameForDisplay = $"{method.DeclaringType?.Name}.<b>{methodName}</b>";
 
                 if (resultIsVoid)
                 {

@@ -1590,8 +1590,9 @@ namespace Alternet.UI
 
             if (result == null)
                 return null;
-            var resultStr = result.ToString().Trim();
-            if (resultStr.Length == 0)
+            var resultStr = result.ToString()?.Trim();
+
+            if (resultStr is null || resultStr.Length == 0)
                 return result;
             if (resultStr[0] == '-')
                 return "0";

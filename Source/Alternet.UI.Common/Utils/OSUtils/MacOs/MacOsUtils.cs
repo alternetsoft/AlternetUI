@@ -22,7 +22,7 @@ namespace Alternet.UI
             for (int i = 0; i < count; i++)
             {
                 IntPtr namePtr = NativeMethods._dyld_get_image_name(i);
-                string name = Marshal.PtrToStringAnsi(namePtr);
+                var name = Marshal.PtrToStringAnsi(namePtr);
                 if (!string.IsNullOrEmpty(name))
                     libraries.Add(name);
             }

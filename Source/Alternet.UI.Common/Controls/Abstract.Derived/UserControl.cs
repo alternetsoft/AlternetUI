@@ -447,7 +447,7 @@ namespace Alternet.UI
             OverlayToolTipFlags options = OverlayToolTipFlags.DismissAfterInterval,
             int? dismissIntervalMilliseconds = null)
         {
-            string msg;
+            string? msg;
 
             if(e is Exception exception)
             {

@@ -245,7 +245,7 @@ namespace Alternet.UI
             }
 
             XmlRootAttribute xRoot = new();
-            xRoot.ElementName = dataObject.GetType().FullName;
+            xRoot.ElementName = dataObject.GetType().FullName ?? dataObject.GetType().Name;
             xRoot.Namespace = XmlUtils.UIXmlNamespace;
             xRoot.IsNullable = false;
 
@@ -399,7 +399,7 @@ namespace Alternet.UI
                     return null;
 
                 XmlRootAttribute xRoot = new();
-                xRoot.ElementName = type.FullName;
+                xRoot.ElementName = type.FullName ?? type.Name;
                 xRoot.Namespace = XmlUtils.UIXmlNamespace;
                 xRoot.IsNullable = false;
 
@@ -687,6 +687,8 @@ namespace Alternet.UI
                         if (value?.ToString() == NullableKey)
                             value = null;
 
+                        if (key is null)
+                            continue;
                         instance.Add(key, value);
                     }
 

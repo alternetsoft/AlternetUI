@@ -274,7 +274,7 @@ namespace Alternet.UI
                     return;
                 }
 
-                displayTextBox.Text = result.ToString();
+                displayTextBox.Text = result.ToString() ?? string.Empty;
                 displayTextBox.ReportError(false);
             }
             catch (Exception e)

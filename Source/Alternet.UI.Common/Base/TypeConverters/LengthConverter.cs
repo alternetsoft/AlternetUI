@@ -210,7 +210,7 @@ namespace Alternet.UI
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
-                    ConstructorInfo ci = typeof(Coord).GetConstructor(new Type[] { typeof(Coord) });
+                    var ci = typeof(Coord).GetConstructor(new Type[] { typeof(Coord) });
                     return new InstanceDescriptor(ci, new object[] { l });
                 }
             }

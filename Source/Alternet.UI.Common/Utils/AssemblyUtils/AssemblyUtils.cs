@@ -127,17 +127,12 @@ namespace Alternet.UI
         /// <returns>True if type is public</returns>
         public static bool IsPublicType(Type? type)
         {
-            if (type is null)
-                return false;
-
-            // If this is a nested internal type, walk up the declaring types.
-            while (type.IsNestedPublic)
+            while (type?.IsNestedPublic ?? false)
             {
                 type = type.DeclaringType;
             }
 
-            // If we're on a non-public nested type, IsPublic will return false.
-            return type.IsPublic;
+            return type?.IsPublic ?? false;
         }
 
         /// <summary>
@@ -182,7 +177,7 @@ namespace Alternet.UI
         public static Type? GetEventArgsType(EventInfo? ev)
         {
             var eventArgsType
-                = ev?.EventHandlerType.GetMethod("Invoke")?.GetParameters()[1]?.ParameterType;
+                = ev?.EventHandlerType?.GetMethod("Invoke")?.GetParameters()[1]?.ParameterType;
             return eventArgsType;
         }
 
@@ -397,7 +392,7 @@ namespace Alternet.UI
                         addedMethods.Add(name, 0);
                     }
 
-                    var fullName = $"{type.Name}.{name}";
+                    var fullName = $"{type?.Name}.{name}";
 
                     if (fullName.IndexOf(
                         nameContainsText,
@@ -1272,7 +1267,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if property is browsable, <c>false</c> otherwise.</returns>
         public static bool GetBrowsable(MemberInfo p)
         {
-            var browsable = p.GetCustomAttribute(typeof(BrowsableAttribute)) as BrowsableAttribute;
+            var browsable = p.GetCustomAttribute<BrowsableAttribute>();
             if (browsable is not null)
                 return browsable.Browsable;
             return true;
@@ -1285,7 +1280,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if type is browsable, <c>false</c> otherwise.</returns>
         public static bool TypeIsBrowsable(Type p)
         {
-            var browsable = p.GetCustomAttribute(typeof(BrowsableAttribute)) as BrowsableAttribute;
+            var browsable = p.GetCustomAttribute<BrowsableAttribute>();
             if (browsable is not null)
                 return browsable.Browsable;
             return true;
@@ -1312,7 +1307,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static string? GetDescription(MemberInfo p)
         {
-            var attr = p.GetCustomAttribute(typeof(DescriptionAttribute)) as DescriptionAttribute;
+            var attr = p.GetCustomAttribute<DescriptionAttribute>();
             return attr?.Description;
         }
 
@@ -1350,8 +1345,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static ControlCategoryAttribute? GetControlCategory(Type type)
         {
-            var attr = type.GetCustomAttribute(typeof(ControlCategoryAttribute))
-                as ControlCategoryAttribute;
+            var attr = type.GetCustomAttribute<ControlCategoryAttribute>();
             return attr;
         }
 
@@ -1363,14 +1357,14 @@ namespace Alternet.UI
         /// <returns></returns>
         public static bool GetDefaultValue(PropertyInfo p, out object? defValue)
         {
-            var attr = p.GetCustomAttribute(typeof(DefaultValueAttribute));
-            if (attr is not DefaultValueAttribute defaultValueAttr)
+            var attr = p.GetCustomAttribute<DefaultValueAttribute>();
+            if (attr is null)
             {
                 defValue = null;
                 return false;
             }
 
-            defValue = defaultValueAttr.Value;
+            defValue = attr.Value;
             return true;
         }
 
@@ -1448,7 +1442,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool EnumIsFlags(Type type)
         {
-            var flags = type.GetCustomAttribute(typeof(FlagsAttribute)) as FlagsAttribute;
+            var flags = type.GetCustomAttribute<FlagsAttribute>();
             if (flags is not null)
                 return true;
             return false;

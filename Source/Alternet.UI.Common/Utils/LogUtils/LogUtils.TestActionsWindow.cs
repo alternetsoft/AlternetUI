@@ -30,7 +30,7 @@ namespace Alternet.UI
             if (!isBrowsable)
                 return null;
 
-            var fullName = $"{member.DeclaringType.FullName}.{member.Name}";
+            var fullName = $"{member.DeclaringType?.FullName}.{member.Name}";
 
             var desc = AssemblyUtils.GetDescription(member);
 

@@ -53,8 +53,8 @@ namespace Alternet.Drawing
         public static Color GetColorOrEmpty(string name)
         {
             var found = Colors.TryGetValue(name, out var colorFunc);
-            if (found)
-                return colorFunc();
+            if (found && colorFunc is not null)
+                return colorFunc.Invoke();
             else
                 return Color.Empty;
         }
@@ -67,7 +67,7 @@ namespace Alternet.Drawing
         {
             var found = Colors.TryGetValue(name, out var colorFunc);
             if (found)
-                return colorFunc();
+                return colorFunc?.Invoke();
             else
                 return null;
         }
@@ -79,7 +79,7 @@ namespace Alternet.Drawing
         public static Color GetColorOrDefault(string name, Func<Color> defaultFunc)
         {
             var found = Colors.TryGetValue(name, out var colorFunc);
-            if (found)
+            if (found && colorFunc is not null)
                 return colorFunc();
             else
                 return defaultFunc();
@@ -92,7 +92,7 @@ namespace Alternet.Drawing
         public static Color GetColorOrDefault(string name, Color defaultValue)
         {
             var found = Colors.TryGetValue(name, out var colorFunc);
-            if (found)
+            if (found && colorFunc is not null)
                 return colorFunc();
             else
                 return defaultValue ?? Color.Empty;

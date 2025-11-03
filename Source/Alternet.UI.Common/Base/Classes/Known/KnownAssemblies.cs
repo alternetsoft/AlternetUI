@@ -100,8 +100,8 @@ namespace Alternet.UI
         {
             get
             {
-                Assembly executingAssembly = Assembly.GetEntryAssembly();
-                AssemblyName[] referencedAssemblies = executingAssembly.GetReferencedAssemblies();
+                var executingAssembly = Assembly.GetEntryAssembly();
+                var referencedAssemblies = executingAssembly?.GetReferencedAssemblies() ?? [];
                 return referencedAssemblies;
             }
         }

@@ -26,10 +26,7 @@ namespace Alternet.UI.Port
                 return DateTime.MinValue;
             }
 
-            DateTimeFormatInfo dateTimeFormatInfo;
-
-            dateTimeFormatInfo =
-                (DateTimeFormatInfo)App.InvariantEnglishUS.GetFormat(
+            var dateTimeFormatInfo = (DateTimeFormatInfo?)App.InvariantEnglishUS.GetFormat(
                     typeof(DateTimeFormatInfo));
 
             DateTimeStyles dateTimeStyles = DateTimeStyles.RoundtripKind

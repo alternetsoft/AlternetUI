@@ -163,9 +163,11 @@ namespace Alternet.UI
 
             process.Disposed += (x, y) =>
             {
+                if (x is not Process process)
+                    return;
                 if (x == RunningProcess)
                     RunningProcess = null;
-                NotifyDisposed((Process)x);
+                NotifyDisposed(process);
             };
 
             process.Exited += (x, y) =>
@@ -177,15 +179,13 @@ namespace Alternet.UI
                     Task.Delay(100).Wait();
                 }
 
-                var process = x as Process;
-
-                if (process is null)
+                if (x is not Process process)
                     return;
 
                 if (x == RunningProcess)
                     RunningProcess = null;
 
-                NotifyExited((Process)x);
+                NotifyExited(process);
 
                 var exitCode = process.ExitCode;
 

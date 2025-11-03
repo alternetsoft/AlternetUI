@@ -41,7 +41,7 @@ namespace Alternet.UI
 
             foreach (var sysColor in systemValues)
             {
-                string name = sysColor.ToString();
+                var name = sysColor.ToString();
                 int value = (int)sysColor;
 
                 if (Enum.TryParse(name, out Alternet.Drawing.KnownColor altColor))

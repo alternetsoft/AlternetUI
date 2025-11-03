@@ -253,7 +253,7 @@ namespace Alternet.UI
 
             int Callback(ref NativeMethods.DlPhdrInfo info, IntPtr size)
             {
-                string name = Marshal.PtrToStringAnsi(info.Name);
+                var name = Marshal.PtrToStringAnsi(info.Name);
                 if (!string.IsNullOrEmpty(name))
                     libraries.Add(name);
                 return 0;
