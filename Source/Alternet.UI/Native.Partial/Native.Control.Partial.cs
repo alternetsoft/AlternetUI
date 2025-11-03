@@ -200,6 +200,19 @@ namespace Alternet.UI.Native
         public virtual void OnPlatformEventSizeChanged()
         {
             UIControl?.RaiseHandlerSizeChanged(EventArgs.Empty);
+
+            /*
+            var bounds1 = UIControl?.Bounds;
+            UIControl?.RaiseHandlerSizeChanged(EventArgs.Empty);
+            var bounds2 = UIControl?.Bounds;
+
+            if(UIControl is Alternet.UI.Window)
+            {
+                LogUtils.LogToFileAndDebug("============");
+            }
+
+            LogUtils.LogToFileAndDebug($"{UIControl?.GetType()}.OnPlatformEventSizeChanged: {bounds1} => {bounds2}");
+            */
         }
 
         public virtual void OnPlatformEventLocationChanged()

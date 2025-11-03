@@ -1444,6 +1444,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resumes the usual layout logic.
+        /// </summary>
+        /// <param name="performLayout"><c>true</c> to execute pending
+        /// layout requests; otherwise, <c>false</c>.</param>
+        /// <remarks>
+        /// Resumes the usual layout logic after <see cref="SuspendLayout"/> has
+        /// been called.
+        /// When the <c>performLayout</c> parameter is set to <c>true</c>,
+        /// an immediate layout occurs.
+        /// <para>
+        /// The <see cref="SuspendLayout"/> and <see cref="ResumeLayout"/> methods
+        /// are used in tandem to suppress
+        /// multiple layouts while you adjust multiple attributes of the control.
+        /// For example, you would typically call the
+        /// <see cref="SuspendLayout"/> method, then set some
+        /// properties of the control, or add child controls to it, and then call
+        /// the <see cref="ResumeLayout"/>
+        /// method to enable the changes to take effect.
+        /// </para>
+        /// </remarks>
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        [Browsable(false)]
+        public virtual void ResumeLayout(bool performLayout = true, bool layoutParent = true)
+        {
+            layoutSuspendCount--;
+            if (layoutSuspendCount < 0)
+                throw new InvalidOperationException();
+
+            if (!IsLayoutSuspended)
+            {
+                if (performLayout)
+                    PerformLayout(layoutParent);
+            }
+        }
+
+        /// <summary>
         /// Sets 'ParentBackColor' property for all child controls.
         /// </summary>
         /// <param name="value">New property value</param>
@@ -1593,43 +1630,6 @@ namespace Alternet.UI
         public void SetCursor(Cursor? value)
         {
             Cursor = value;
-        }
-
-        /// <summary>
-        /// Resumes the usual layout logic.
-        /// </summary>
-        /// <param name="performLayout"><c>true</c> to execute pending
-        /// layout requests; otherwise, <c>false</c>.</param>
-        /// <remarks>
-        /// Resumes the usual layout logic after <see cref="SuspendLayout"/> has
-        /// been called.
-        /// When the <c>performLayout</c> parameter is set to <c>true</c>,
-        /// an immediate layout occurs.
-        /// <para>
-        /// The <see cref="SuspendLayout"/> and <see cref="ResumeLayout"/> methods
-        /// are used in tandem to suppress
-        /// multiple layouts while you adjust multiple attributes of the control.
-        /// For example, you would typically call the
-        /// <see cref="SuspendLayout"/> method, then set some
-        /// properties of the control, or add child controls to it, and then call
-        /// the <see cref="ResumeLayout"/>
-        /// method to enable the changes to take effect.
-        /// </para>
-        /// </remarks>
-        /// <param name="layoutParent">Specifies whether to call parent's
-        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
-        [Browsable(false)]
-        public virtual void ResumeLayout(bool performLayout = true, bool layoutParent = true)
-        {
-            layoutSuspendCount--;
-            if (layoutSuspendCount < 0)
-                throw new InvalidOperationException();
-
-            if (!IsLayoutSuspended)
-            {
-                if (performLayout)
-                    PerformLayout(layoutParent);
-            }
         }
 
         /// <summary>
@@ -1858,6 +1858,8 @@ namespace Alternet.UI
             {
                 if (layoutParent)
                     Parent?.PerformLayout();
+
+                /* LogUtils.LogToFileAndDebug($"PerformLayout: {GetType()}"); */
 
                 OnLayout();
             }
@@ -2632,6 +2634,11 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool ReportBoundsChanged(bool layoutOnLocation = true)
         {
+            /*
+            LogUtils.LogToFileAndDebug(
+                $"{nameof(ReportBoundsChanged)} '{GetType()}'. Old={reportedBounds}, New={Bounds}");
+            */
+
             var newBounds = Bounds;
 
             var locationChanged = reportedBounds.Location != newBounds.Location;

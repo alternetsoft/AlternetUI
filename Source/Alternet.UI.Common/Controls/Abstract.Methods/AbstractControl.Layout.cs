@@ -80,6 +80,10 @@ namespace Alternet.UI
 
             var items = AllChildrenInLayout;
 
+            /*
+            LogUtils.LogToFileAndDebug($"OnLayout: {this.GetType().Name}, Layout={layoutType}, ChildrenCount={items.Count}");
+            */
+
             if (StaticControlEvents.HasLayoutHandlers)
             {
                 var e = new DefaultLayoutEventArgs(this, layoutType, GetSpace(), items);
