@@ -19,6 +19,7 @@ namespace Alternet::UI
         void OnTextMaxLength(wxCommandEvent& event);
         TextBox(void* validator);
     protected:
+        bool IsCursorSuppressed() override { return true; }
 
     private:
         bool _editControlOnly = false;

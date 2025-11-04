@@ -8,7 +8,6 @@
 
 #include <wx/richtext/richtextctrl.h>
 #include <wx/richtext/richtexthtml.h>
-/*#include <wx/richtext/richtextxml.h>*/
 
 #include "Api/InputStream.h"
 #include "Api/OutputStream.h"
@@ -26,6 +25,9 @@ namespace Alternet::UI
         wxRichTextCtrl* GetTextCtrl();
         void OnTextEnter(wxCommandEvent& event);
         void OnTextUrl(wxTextUrlEvent& event);
+    protected:
+        bool IsCursorSuppressed() override { return true; }
+
     private:
         string _eventUrl = wxStr(wxEmptyString);
         bool hasBorder = true;
