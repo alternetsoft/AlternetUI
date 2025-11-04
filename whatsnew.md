@@ -1,3 +1,17 @@
+# 0.9.759 (2025 November 4)
+
+- Fix mouse cursor behavior in RichTextBox, TextBox, WebBrowser.
+- Disable optimization and enable debug symbols for Release net8.0. This is done in order to fix issues found when app is compiled to this platform.
+- Remove warnings introduced by changing target platforms of the library.
+- ToolBar: Add overload for AddSpeedBtn with Action parameter.
+- Wrap LogToFile logic in try-catch block.
+- Add AreDeveloperToolsShown property to DebugUtils for controlling the visibility of developer tools, defaulting to debug mode.
+- Remove #if defines which are no longer needed.
+- Update api import files.
+- Add configurable time format for log file timestamps.
+
+---
+
 # 0.9.758 (2025 October 29)
 
 - Return native CheckedListBox.
