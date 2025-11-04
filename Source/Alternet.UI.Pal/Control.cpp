@@ -374,7 +374,10 @@ namespace Alternet::UI
 
         wxWindow->Unbind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
         wxWindow->Unbind(wxEVT_TEXT, &Control::OnTextChanged, this);
-        wxWindow->Unbind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
+
+        if (!IsCursorSuppressed())
+            wxWindow->Unbind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
+
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
         wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
@@ -1001,7 +1004,10 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
-        _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
+
+
+        if(!IsCursorSuppressed())
+            _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
 
         if (bindScrollEvents)
         {
@@ -1405,6 +1411,9 @@ namespace Alternet::UI
 
     void Control::SetCursor(void* handle)
     {
+        if (IsCursorSuppressed())
+			return;
+
         if (handle == nullptr)
         {
             _cursor = wxNullCursor;

@@ -196,6 +196,8 @@ namespace Alternet::UI
 
         void OnMouseCaptureLost(wxEvent& event);
 
+		virtual bool IsCursorSuppressed() { return false; }
+
         virtual void OnMouseWheel(wxMouseEvent& event);
         virtual void OnContextMenu(wxContextMenuEvent& event);
         virtual void OnMouseLeftUp(wxMouseEvent& event);
