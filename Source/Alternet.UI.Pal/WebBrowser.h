@@ -80,6 +80,7 @@ namespace Alternet::UI
 
     protected:
         void OnWxWindowCreated() override;
+        bool IsCursorSuppressed() override { return true; }
 
     private:
         wxString _defaultPage;
