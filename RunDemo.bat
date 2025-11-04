@@ -1,6 +1,9 @@
 pushd Install.Scripts
 pushd BuildAndRunSamples
 
-MSW.BuildAndRun.ControlsSample.bat
+start "" cmd /c "MSW.BuildAndRun.ControlsSample.bat"
+
 popd
 popd
+exit /b
+
