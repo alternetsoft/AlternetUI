@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <LangVersion>latest</LangVersion>
-    <TargetFrameworks>net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)\..\..\Alternet.UI.Common\SignDll.proj" />
