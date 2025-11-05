@@ -1,3 +1,3 @@
-call "TestDotNetNew\01-VSIX.Uninstall.bat"
-call "MSW.Publish.2.Build.NuGet.Managed.bat"
-call "TestDotNetNew\10-VSIX.Install.bat"
+call "A2.Vsix.Install.bat"
+call "MSW.Publish.7.Build.Vsix.bat"
+call "A2.Vsix.Uninstall.bat"
