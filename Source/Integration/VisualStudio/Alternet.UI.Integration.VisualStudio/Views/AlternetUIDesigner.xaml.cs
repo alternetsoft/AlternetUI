@@ -582,11 +582,12 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         private async void ErrorChanged(object sender, EventArgs e)
         {
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
             if (Process.PreviewData == null || Process.Error != null)
             {
-                ShowError("Error while generating preview", "Check the Output window, \"AlterNET UI\" source for more information.");
+                ShowError("Preview failed", "Check \"AlterNET UI\" section in the Output window for more info.");
             }
-            else if (Process.Error == null)
+            else
             {
                 ShowPreview();
             }

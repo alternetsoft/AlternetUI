@@ -766,6 +766,8 @@ namespace Alternet.UI
         public static bool HasVisibleForms => HasForms
             && Current.VisibleWindows.FirstOrDefault() != null;
 
+        internal static bool IsInUixmlPreviewerMode => HasApplication && Current.InUixmlPreviewerMode == true;
+
         /// <summary>
         /// Gets the instantiated windows in the application.
         /// </summary>
@@ -837,8 +839,18 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool InUixmlPreviewerMode
         {
-            get => Handler.InUixmlPreviewerMode;
-            set => Handler.InUixmlPreviewerMode = value;
+            get
+            {
+                return inUixmlPreviewerMode;
+            }
+
+            set
+            {
+                if (inUixmlPreviewerMode == value)
+                    return;
+                inUixmlPreviewerMode = value;
+                Handler.InUixmlPreviewerMode = value;
+            }
         }
 
         /// <summary>
@@ -2483,6 +2495,7 @@ namespace Alternet.UI
         public static int BuildCounter = 6;
         private static Exception? lastUnhandledException;
         private static bool lastUnhandledExceptionThrown;
+        private bool inUixmlPreviewerMode;
 #pragma warning restore
     }
 }

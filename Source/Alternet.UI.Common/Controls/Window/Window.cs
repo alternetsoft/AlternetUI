@@ -1950,7 +1950,7 @@ namespace Alternet.UI
         {
             base.OnPaint(e);
 
-            if(GetWindowKind() == WindowKind.Control)
+            if (GetWindowKind() == WindowKind.Control || App.IsInUixmlPreviewerMode)
                 DrawDefaultBackground(e);
         }
 

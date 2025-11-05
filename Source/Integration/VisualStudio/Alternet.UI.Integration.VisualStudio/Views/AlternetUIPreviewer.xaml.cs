@@ -56,7 +56,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             // Debugging will cause Loaded/Unloaded events to fire, we only want to do this
             // the first time the designer is loaded, so unsub
             Loaded -= AlternetUIPreviewer_Loaded;
-            _centerPreviewer = true;
+            //_centerPreviewer = true;
         }
 
         public PreviewerProcess Process
@@ -252,6 +252,10 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 previewScroller.ScrollToHorizontalOffset(previewScroller.ScrollableWidth / 2);
                 previewScroller.ScrollToVerticalOffset(previewScroller.ScrollableHeight / 2);
                 _centerPreviewer = false;
+            }
+            else
+            {
+
             }
         }
         private static T FindParent<T>(DependencyObject child) where T : DependencyObject

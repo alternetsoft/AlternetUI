@@ -16,6 +16,7 @@ namespace Alternet.UI.Integration
         private readonly Action onTick;
         private readonly string screenshotsDirectory;
 
+        private Window? mainWindow;
         private Application? application;
 #pragma warning disable
         private Timer? queueTimer;
@@ -63,13 +64,14 @@ namespace Alternet.UI.Integration
                 (App.Handler as WxApplicationHandler)?.WakeUpIdle();
             }
 
-            application.Run(
-                new Window
-                {
-                    IsToolWindow = true,
-                    StartLocation = WindowStartLocation.Manual,
-                    Location = new PointD(20000, 20000),
-                });
+            mainWindow = new Window
+            {
+                IsToolWindow = true,
+                StartLocation = WindowStartLocation.Manual,
+                Location = new PointD(20000, 20000),
+            };
+
+            application.Run(mainWindow);
         }
 
         public void ProcessUixmlUpdate(IDictionary<string, object> parameters)
@@ -80,6 +82,7 @@ namespace Alternet.UI.Integration
                 var window = GetUixmlControlWindow(control);
 
                 window.Show();
+                App.DoEvents();
 
                 var timer = new Timer(TimeSpan.FromMilliseconds(10));
 
@@ -101,8 +104,10 @@ namespace Alternet.UI.Integration
 
                     Debug.WriteLine($"Screenshot saved to: {screenshotFileName}");
 
-                    window.Hide();
-                    App.Exit();
+                    BaseObject.Post(() =>
+                    {
+                        window.Close();
+                    });
                 };
 
                 timer.Start();

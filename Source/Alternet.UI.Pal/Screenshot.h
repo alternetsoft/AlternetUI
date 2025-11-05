@@ -59,6 +59,7 @@ namespace Alternet::UI
         auto rectWidth = rcClient.right - rcClient.left;
         auto rectHeight = rcClient.bottom - rcClient.top;
 
+        /*
         if (hasChildWindows) 
         {
             // The source DC is the entire screen, and the destination DC is the current window (HWND).
@@ -77,6 +78,7 @@ namespace Alternet::UI
         else 
         {
         }
+        */
         
         // Create a compatible bitmap from the Window DC.
         hbmScreen = CreateCompatibleBitmap(hdcWindow, rectWidth, rectHeight);
@@ -89,22 +91,14 @@ namespace Alternet::UI
         // Select the compatible bitmap into the compatible memory DC.
         SelectObject(hdcMemDC, hbmScreen);
 
-        RECT rcBmp;
-        SetRect(&rcBmp, 0, 0, rectWidth, rectHeight);
-        HBRUSH backgroundBrush = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
-        HGDIOBJ oldBrush = SelectObject(hdcMemDC, backgroundBrush);
-        FillRect(hdcMemDC, &rcBmp, backgroundBrush);
-        SelectObject(hdcMemDC, oldBrush);
-        DeleteObject(backgroundBrush);
-
         if (hasChildWindows) 
         {
             // Bit block transfer into our compatible memory DC.
             if (!BitBlt(hdcMemDC,
                 0, 0,
-                rcClient.right - rcClient.left, rcClient.bottom - rcClient.top,
+                rectWidth, rectHeight,
                 hdcWindow,
-                0, 0,
+                rcClient.left, rcClient.top,
                 SRCCOPY))
             {
                 throwEx(u"BitBlt has failed");
@@ -112,6 +106,13 @@ namespace Alternet::UI
         }
         else 
         {
+            RECT rcBmp;
+            SetRect(&rcBmp, 0, 0, rectWidth, rectHeight);
+            HBRUSH backgroundBrush = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
+            HGDIOBJ oldBrush = SelectObject(hdcMemDC, backgroundBrush);
+            FillRect(hdcMemDC, &rcBmp, backgroundBrush);
+            SelectObject(hdcMemDC, oldBrush);
+            DeleteObject(backgroundBrush);
         }
 
         // Get the BITMAP from the HBITMAP.

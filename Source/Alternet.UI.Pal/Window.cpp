@@ -299,7 +299,7 @@ namespace Alternet::UI
 
     void Window::Close()
     {
-        GetTopLevelWindow()->Close();
+        DestroyWxWindow();
     }
 
     bool Window::GetShowInTaskbar()
@@ -652,6 +652,11 @@ namespace Alternet::UI
             auto font = const_cast<wxFont*>(super::GetFont(item));
             return font;
         }
+    }
+
+    void Window::DestroyWxWindow()
+    {
+        Control::DestroyWxWindow();
     }
 
     void Window::OnWxWindowCreated()

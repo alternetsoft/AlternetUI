@@ -18,6 +18,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         private readonly BuildEvents _buildEvents;
         private AlternetUIDesigner _content;
         private bool _isPaused;
+        private bool _isDummy;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DesignerPane"/> class.
@@ -30,9 +31,12 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             Project project,
             string xamlPath,
             IVsCodeWindow editorWindow,
-            IWpfTextViewHost editorHost)
+            IWpfTextViewHost editorHost,
+            bool dummy = false)
             : base(editorWindow)
         {
+            _isDummy = dummy;
+
             ThreadHelper.ThrowIfNotOnUIThread();
 
             _project = project;
@@ -71,9 +75,19 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             var settings = this.GetMefService<IAlternetUIVisualStudioSettings>();
             var xamlEditorView = new AlternetUIDesigner();
             xamlEditorView.IsPaused = _isPaused;
+
             xamlEditorView.Settings = settings;
             xamlEditorView.SplitOrientation = settings.DesignerSplitOrientation;
-            xamlEditorView.View = settings.DesignerView;
+
+            if (_isDummy)
+            {
+                xamlEditorView.View = AlternetUIDesignerView.Source;
+            }
+            else
+            {
+                xamlEditorView.View = settings.DesignerView;
+            }
+
             xamlEditorView.Start(_project, _xamlPath, _editorHost);
             _content = xamlEditorView;
 

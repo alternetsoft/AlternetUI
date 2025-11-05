@@ -146,6 +146,9 @@ namespace Alternet::UI
         }
 
         virtual void OnWxWindowCreated() override;
+
+        virtual void DestroyWxWindow() override;
+
     private:
         int _frameKind = 0;
 

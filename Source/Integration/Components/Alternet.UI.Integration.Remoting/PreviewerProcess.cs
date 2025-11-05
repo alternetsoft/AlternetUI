@@ -138,6 +138,14 @@ namespace Alternet.UI.Integration
                 hostAppPath = newHostAppPath;
             }
 
+            newHostAppPath
+                = @"E:\DIMA\AlternetUI\Source\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net8.0\Alternet.UI.Integration.UIXmlHostApp.exe";
+
+            if (File.Exists(newHostAppPath))
+            {
+                hostAppPath = newHostAppPath;
+            }
+
             if (string.IsNullOrWhiteSpace(hostAppPath))
             {
                 throw new ArgumentException(
@@ -461,6 +469,7 @@ namespace Alternet.UI.Integration
                     {
                         PreviewData = null;
                         PreviewData = new PreviewData(frame.ImageFileName);
+                        Error = null;
 
                         await SendAsync(new PreviewDataReceivedMessage
                         {

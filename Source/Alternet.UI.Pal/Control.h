@@ -256,6 +256,7 @@ namespace Alternet::UI
         virtual void OnBeginInit();
         virtual void OnEndInit();
 
+        virtual void DestroyWxWindow();
     private:
         string _textValue = u"";
         RectD _eventBounds;
@@ -331,8 +332,6 @@ namespace Alternet::UI
         void OnLostFocus(wxFocusEvent& event);
 
         void ApplyToolTip();
-
-        void DestroyWxWindow();
 
         static ControlsByWxWindowsMap s_controlsByWxWindowsMap;
 
