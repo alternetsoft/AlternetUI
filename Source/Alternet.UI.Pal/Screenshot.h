@@ -89,6 +89,14 @@ namespace Alternet::UI
         // Select the compatible bitmap into the compatible memory DC.
         SelectObject(hdcMemDC, hbmScreen);
 
+        RECT rcBmp;
+        SetRect(&rcBmp, 0, 0, rectWidth, rectHeight);
+        HBRUSH backgroundBrush = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
+        HGDIOBJ oldBrush = SelectObject(hdcMemDC, backgroundBrush);
+        FillRect(hdcMemDC, &rcBmp, backgroundBrush);
+        SelectObject(hdcMemDC, oldBrush);
+        DeleteObject(backgroundBrush);
+
         if (hasChildWindows) 
         {
             // Bit block transfer into our compatible memory DC.
@@ -104,13 +112,6 @@ namespace Alternet::UI
         }
         else 
         {
-            RECT rcBmp;
-            SetRect(&rcBmp, 0, 0, rectWidth, rectHeight);
-            HBRUSH backgroundBrush = CreateSolidBrush(GetSysColor(COLOR_BTNFACE));
-            HGDIOBJ oldBrush = SelectObject(hdcMemDC, backgroundBrush);
-            FillRect(hdcMemDC, &rcBmp, backgroundBrush);
-            SelectObject(hdcMemDC, oldBrush);
-            DeleteObject(backgroundBrush);
         }
 
         // Get the BITMAP from the HBITMAP.

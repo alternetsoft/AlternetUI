@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -95,11 +96,13 @@ namespace Alternet.UI.Integration
 
                     var screenshotFileName = SaveWindowScreenshotToFile(window);
 
-                    window.Close();
-                    window.Dispose();
-
                     onUixmlUpdateSuccess(
                         new Dictionary<string, object> { { "ImageFileName", screenshotFileName } });
+
+                    Debug.WriteLine($"Screenshot saved to: {screenshotFileName}");
+
+                    window.Hide();
+                    App.Exit();
                 };
 
                 timer.Start();

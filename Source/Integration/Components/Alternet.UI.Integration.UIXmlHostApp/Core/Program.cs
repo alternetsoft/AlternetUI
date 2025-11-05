@@ -66,14 +66,9 @@ namespace Alternet.UI.Integration.UIXmlHostApp
         {
             if(cmdline.Length > 0)
             {
-                if (cmdline[0] == "net6simple")
+                if (cmdline[0] == "net8simple")
                 {
-                    cmdline = FillSimpleParams("net6.0");
-                }
-                else
-                if(cmdline[0] == "net462simple")
-                {
-                    cmdline = FillSimpleParams("net462");
+                    cmdline = FillSimpleParams("net8.0");
                 }
             }
 

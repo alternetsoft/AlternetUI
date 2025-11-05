@@ -1,17 +1,13 @@
 {
   "profiles": {
-    "net6 SimpleApp": {
-      "commandName": "Project",
-      "commandLineArgs": "net6simple",
-      "nativeDebugging": true
-    },
-    "net462 SimpleApp": {
-      "commandName": "Project",
-      "commandLineArgs": "net462simple"
-    },
     "all": {
       "commandName": "Project",
       "commandLineArgs": "--transport file:///e://source//AlternetUIApp3//MainWindow.uixml --html-url http://127.0.0.1:8081 --method html E:\\\\source\\\\AlternetUIApp3\\\\bin\\\\Debug\\\\net6.0\\\\AlternetUIApp3.dll"
+    },
+    "net8 SimpleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "net8simple",
+      "nativeDebugging": true
     }
   }
 }
