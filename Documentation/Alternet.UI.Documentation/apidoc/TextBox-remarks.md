@@ -18,11 +18,6 @@ Set <xref:Alternet.UI.AbstractControl.Text> property to specify the text display
 A <xref:Alternet.UI.TextBox>, like any other <xref:Alternet.UI.Control>, can be disabled by
  setting its <xref:Alternet.UI.AbstractControl.Enabled> property to `false`.
 
-<xref:Alternet.UI.TextBox> has rich edit capabilities. You can enable this feature by setting its 
-<xref:Alternet.UI.TextBox.IsRichEdit> property to `true`.
-
-![RichEdit feature](images/richedit.png)
-
 ## TextBox Text Format
 
 The multiline text controls always store the text as a sequence of lines separated by '\n' characters, 
