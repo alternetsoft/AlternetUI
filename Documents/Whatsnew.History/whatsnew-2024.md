@@ -1637,4 +1637,4 @@ SetToolImage, SetToolDisabledImage, GetToolImage, GetToolDisabledImage.
 
 ---
 
-Older items can be found [here](Documents/Whatsnew.History/whatsnew-2023.md)
+Older items can be found [here](whatsnew-2023.md)
