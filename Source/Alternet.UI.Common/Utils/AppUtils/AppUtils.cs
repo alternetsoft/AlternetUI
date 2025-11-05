@@ -362,7 +362,6 @@ namespace Alternet.UI
             return result;
         }
 
-        /// <inheritdoc cref="ProcessStart"/>
         /// <remarks>
         /// Uses shell execute to start the process.
         /// </remarks>
