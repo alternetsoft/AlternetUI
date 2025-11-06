@@ -581,11 +581,34 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private async void ErrorChanged(object sender, EventArgs e)
         {
+            const string strCheckDetails = "Check \"AlterNET UI\" section in the Output window for more info.";
+
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
             if (Process.PreviewData == null || Process.Error != null)
             {
-                ShowError("Preview failed", "Check \"AlterNET UI\" section in the Output window for more info.");
+                if(Process.Error != null)
+                {
+                    var errorMessage = Process.Error.Message;
+
+                    if (errorMessage != null && errorMessage.Length > 0)
+                    {
+                        var ln = Process.Error.UixmlLineNumber;
+
+                        if (ln is not null)
+                        {
+                            ShowError("Preview failed", $"{errorMessage}({ln}){Environment.NewLine}{strCheckDetails}");
+                        }
+                        else
+                        {
+                            ShowError("Preview failed", $"{errorMessage}{Environment.NewLine}{strCheckDetails}");
+                        }
+
+                        return;
+                    }
+                }
+
+                ShowError("Preview failed", strCheckDetails);
             }
             else
             {
