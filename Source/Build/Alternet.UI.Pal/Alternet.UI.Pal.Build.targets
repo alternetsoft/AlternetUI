@@ -28,8 +28,8 @@
     </ItemGroup>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -p:Configuration=Debug;Platform=x86;OutDir=&quot;$(OutputDirectoryPath_X86_Debug)\&quot;" />
-        <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -p:Configuration=Release;Platform=x86;OutDir=&quot;$(OutputDirectoryPath_X86_Release)\&quot;" />
+        <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Debug|x86&quot;" />
+        <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Release|x86&quot;" />
 
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
@@ -54,8 +54,15 @@
 
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+
+        <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Debug|x64&quot;" />
+        <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Release|x64&quot;" />
+
+
+<!--
         <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -t:Rebuild -p:Configuration=Debug;Platform=x64;OutDir=&quot;$(OutputDirectoryPath_X64_Debug)\&quot;" />
         <Exec Command="&quot;$(CppMsBuildPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; -maxcpucount -t:Rebuild -p:Configuration=Release;Platform=x64;OutDir=&quot;$(OutputDirectoryPath_X64_Release)\&quot;" Condition="'$(OnlyDebug)' != 'true'"/>
+-->
 
         <CallTarget Targets="Zip_Pal_64" />
     </Target>
@@ -91,7 +98,7 @@
 	</Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-		<CallTarget Targets="RunVSWhere" />	
+
         <CallTarget Targets="BuildNative_Windows_X86" Condition="'$(OnlyDebug)' != 'true'"/>
 
         <CallTarget Targets="BuildNative_Windows_X64" />
