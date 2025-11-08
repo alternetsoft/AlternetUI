@@ -44,7 +44,7 @@ are required.
 
 - Windows 7 or newer is supported (Windows 11 is preferred).
 - Install Visual Studio 2022 Version 17.12.4 or later, with C# Desktop development, C++ Desktop development workloads, 
-VS Extenstion Development installed. Net 9.0, 8.0, 6.0, 7.0, 4.62, 4.81 targeting packs are required.
+VS Extenstion Development installed. Net 9.0, 8.0 targeting packs are required.
 - For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, maui-windows.
 - Clone the AlterNET UI repo.
 - Use the "C:\Alternet.UI" folder or any other root folder. The folder name should not contain any spaces or non-English letters.
