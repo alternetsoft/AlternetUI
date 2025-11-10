@@ -60,9 +60,12 @@
    <!-- ====================================================== -->
 
     <PropertyGroup>
+        <Palx64Release>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll</Palx64Release>
         <Palx86Release>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Release\Alternet.UI.Pal.dll</Palx86Release>
 	<Palx86Debug>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.dll</Palx86Debug>
+	<Palx64Debug>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll</Palx64Debug>
 	<Palx86DebugPdb>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x86\Debug\Alternet.UI.Pal.pdb</Palx86DebugPdb>
+	<Palx64DebugPdb>$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.pdb</Palx64DebugPdb>
     </PropertyGroup>
 	
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|x86'">
@@ -97,10 +100,12 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.dll"
+		 Link="x64\Alternet.UI.Pal.dll" Condition="Exists($(Palx64Debug))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.pdb" Link="x64\Alternet.UI.Pal.pdb">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Debug\Alternet.UI.Pal.pdb"
+		 Link="x64\Alternet.UI.Pal.pdb" Condition="Exists($(Palx64DebugPdb))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
@@ -108,7 +113,8 @@
    <!-- ====================================================== -->
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows')) And '$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll" Link="x64\Alternet.UI.Pal.dll">
+        <None Include="$(MSBuildThisFileDirectory)\..\Alternet.UI.Pal\bin\x64\Release\Alternet.UI.Pal.dll"
+		 Link="x64\Alternet.UI.Pal.dll" Condition="Exists($(Palx64Release))">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>
