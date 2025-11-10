@@ -166,5 +166,5 @@ behaviors can be achieved using one of these approaches:
 
 - Implement <xref:Alternet.UI.AbstractControl.CustomLayout> event handler.
 
-- Implement <xref:Alternet.UI.AbstractControl.GlobalOnLayout>
- and/or <xref:Alternet.UI.AbstractControl.GlobalGetPreferredSize> event handlers.
+- Implement global <xref:Alternet.UI.StaticControlEvents.Layout>
+ and/or <xref:Alternet.UI.StaticControlEvents.RequestPreferredSize> event handlers.
