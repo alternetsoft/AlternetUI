@@ -73,6 +73,19 @@
             WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
             Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=X64 RUNTIME_LIBS=static &quot;" />
     </Target>
+
+    <!-- ========================================== -->
+    <Target Name="BuildWxWidgets_Windows_ARM64">
+        <!-- Windows ARM 64 Release -->
+        <Exec Condition="'$(DebugOnlyWxWidgetsBuild)' != 'true'"
+            WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
+            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64_arm64 &amp;&amp; nmake /f makefile.vc BUILD=release TARGET_CPU=ARM64 RUNTIME_LIBS=static &quot;" />
+
+        <!-- Windows ARM 64 Debug -->
+        <Exec Condition="'$(ReleaseOnlyWxWidgetsBuild)' != 'true'"
+            WorkingDirectory="$(WxWidgetsWindowsBuildDirectory)"
+            Command="cmd.exe /s /c &quot; &quot;$(VCVarsAllPath)&quot; x64_arm64 &amp;&amp; nmake /f makefile.vc BUILD=debug TARGET_CPU=ARM64 RUNTIME_LIBS=static &quot;" />
+    </Target>
     <!-- ========================================== -->
     <Target Name="BuildWxWidgets_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" 

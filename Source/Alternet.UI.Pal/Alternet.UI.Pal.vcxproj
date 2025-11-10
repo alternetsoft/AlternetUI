@@ -12,7 +12,6 @@
     <Platform>ARM64</Platform>
   </ProjectConfiguration>
 
-
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -30,6 +29,7 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{79F2529C-C711-457A-9087-325C333CDE60}</ProjectGuid>
@@ -268,6 +268,7 @@
       <AdditionalIncludeDirectories>../../External/WxWidgets/include/</AdditionalIncludeDirectories>
     </ResourceCompile>
   </ItemDefinitionGroup>
+
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -292,6 +293,7 @@
       <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -318,6 +320,7 @@
       <AdditionalLibraryDirectories>..\..\External\wxWidgets\3rdparty\webview2\build\native\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
+
   <ItemGroup>
     <ClCompile Include="AnimationControl.cpp" />
     <ClCompile Include="Api.cpp" />
