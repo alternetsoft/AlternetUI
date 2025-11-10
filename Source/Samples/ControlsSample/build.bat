@@ -1,2 +1,2 @@
 ECHO ====================
-dotnet build
+dotnet build -tl:off
