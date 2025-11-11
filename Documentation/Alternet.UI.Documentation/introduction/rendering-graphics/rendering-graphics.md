@@ -104,7 +104,7 @@ The transforms can include translation, rotation, and scale (see the
 and <xref:Alternet.Drawing.TransformMatrix.CreateScale%2A> methods). Use the
 <xref:Alternet.Drawing.Graphics.Transform%2A> property of <xref:Alternet.Drawing.Graphics> to set the
 current transform. The transforms can be applied sequentially with a stack-like approach, using the
-<xref:Alternet.Drawing.Graphics.PushTransform%2A> and <xref:Alternet.Drawing.Graphics.Pop%2A> methods.
+<xref:Alternet.Drawing.Graphics.PushTransform%2A> and <xref:Alternet.Drawing.Graphics.PopTransorm%2A> methods.
 
 ### Clip Regions
 
@@ -112,8 +112,10 @@ current transform. The transforms can be applied sequentially with a stack-like 
 
 ![](images/drawing-sample-clip.png)
 
-Use the <xref:Alternet.Drawing.Graphics.Clip%2A> property of <xref:Alternet.Drawing.Graphics> to set the
-current clip region.
+Use the <xref:Alternet.Drawing.Graphics.ClipRect%2A> or <xref:Alternet.Drawing.Graphics.ClipRegion%2A> methods 
+of <xref:Alternet.Drawing.Graphics> to set clipping. Use the <xref:Alternet.Drawing.Graphics.Save%2A> and 
+<xref:Alternet.Drawing.Graphics.Restore%2A> methods of <xref:Alternet.Drawing.Graphics> to
+save/restore current clipping and transform.
 
 ### Drawing Images
 

@@ -29,8 +29,8 @@ A <xref:Alternet.UI.ScrollViewer> is a special kind of container which makes its
 
 These controls most often detect and respond to user input. The control classes expose API to handle text and mouse input, focus management, and more.
 
-**Data display**: <xref:Alternet.UI.ListBox>, <xref:Alternet.UI.ListView>, <xref:Alternet.UI.TreeView>, 
-<xref:Alternet.UI.CheckListBox>, <xref:Alternet.UI.VirtualListBox>, <xref:Alternet.UI.PropertyGrid>.
+**Data display**: <xref:Alternet.UI.ListBox>, <xref:Alternet.UI.StdListBox>, <xref:Alternet.UI.ListView>, <xref:Alternet.UI.TreeView>, 
+<xref:Alternet.UI.CheckedListBox>, <xref:Alternet.UI.VirtualListBox>, <xref:Alternet.UI.PropertyGrid>.
 
 These controls provide a visual representation of data elements in different layouts or views.
 
