@@ -766,8 +766,6 @@ namespace Alternet.UI
         public static bool HasVisibleForms => HasForms
             && Current.VisibleWindows.FirstOrDefault() != null;
 
-        internal static bool IsInUixmlPreviewerMode => HasApplication && Current.InUixmlPreviewerMode == true;
-
         /// <summary>
         /// Gets the instantiated windows in the application.
         /// </summary>
@@ -952,6 +950,8 @@ namespace Alternet.UI
                 return SystemSettings.Handler.GetLangDirection();
             }
         }
+
+        internal static bool IsInUixmlPreviewerMode => HasApplication && Current.InUixmlPreviewerMode == true;
 
         /// <summary>
         /// Informs all message pumps that they must terminate, and then closes
