@@ -9,10 +9,12 @@
   <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
   <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
   <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
+  <IsWindows Condition="$([MSBuild]::IsOsPlatform('Windows'))">true</IsWindows>
 </PropertyGroup>
 
   <PropertyGroup>
     	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
+  	<BoolNet10>false</BoolNet10>
   	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
   </PropertyGroup>
@@ -21,14 +23,19 @@
   	<BoolNet9>false</BoolNet9>
   </PropertyGroup>
 
+  <PropertyGroup Condition="$(IsWindows)=='true'">
+  	<BoolNet10>true</BoolNet10>
+  </PropertyGroup>
+
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
 
   <PropertyGroup>
-	<TF8 Condition="$(BoolNet8)">net8.0$(TFSUFFIX);</TF8>
-	<TF9 Condition="$(BoolNet9)">net9.0$(TFSUFFIX);</TF9>
+	<TF8 Condition="$(BoolNet8)">net8.0;</TF8>
+	<TF9 Condition="$(BoolNet9)">net9.0;</TF9>
+	<TF10 Condition="$(BoolNet10)">net10.0;</TF10>
 
     	<UIIntegrationUIXmlHostAppTargetFrameworks>net8.0-windows;net9.0-windows</UIIntegrationUIXmlHostAppTargetFrameworks>
-	<TargetFrameworks>$(TF9)$(TF8)</TargetFrameworks>
+	<TargetFrameworks>$(TF10)$(TF9)$(TF8)</TargetFrameworks>
   </PropertyGroup>
 
 </Project>

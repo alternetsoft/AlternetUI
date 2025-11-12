@@ -76,10 +76,6 @@
     <None Include="..\Alternet.UI.Build.Tasks\bin\Release\netstandard2.0\Alternet.UI.Build.Tasks.dll" Visible="false" Pack="True" PackagePath="tools\netstandard2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-  </ItemGroup>
-
   <!-- ================================================= -->
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' == ''">

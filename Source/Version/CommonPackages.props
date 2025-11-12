@@ -22,19 +22,22 @@
 
     <PackageReference Include="System.CodeDom" Version="9.0.3" />
   <PackageReference Include="System.Reflection.MetadataLoadContext" Version="9.0.5" />
+
+<!--
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.3" />
-    <PackageReference Include="System.Text.Json" Version="9.0.3" />
     <PackageReference Include="System.IO.Packaging" Version="9.0.3" />
 
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Memory" Version="4.6.3" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
-    <PackageReference Include="System.ValueTuple" Version="4.6.1" />
-    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
 
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.3" />
+    <PackageReference Include="System.Memory" Version="4.6.3" />
+    <PackageReference Include="System.ValueTuple" Version="4.6.1" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
+-->
   </ItemGroup>
 
 </Project>

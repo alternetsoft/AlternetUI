@@ -38,13 +38,14 @@ here is step by step instruction:
 - 3 build machines are needed: Windows, macOS, Linux.
 - On all machines installations of .NET SDK [8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0), [9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0) 
 are required.
+- On Windows installation of .NET SDK [10.0](https://dotnet.microsoft.com/en-us/download/dotnet/10.0) is required.
 - If you want to use UI on single platform, skip installation steps for other platforms.
 
 <b>STEP 1.</b> Windows Machine Setup:
 
-- Windows 7 or newer is supported (Windows 11 is preferred).
-- Install Visual Studio 2022 Version 17.12.4 or later, with C# Desktop development, C++ Desktop development workloads, 
-VS Extenstion Development installed. Net 9.0, 8.0 targeting packs are required.
+- Windows 11 is preferred.
+- Install Visual Studio 2026 Version 18.0.0 or later, with C# Desktop development, C++ Desktop development workloads, 
+VS Extenstion Development installed. Net 10.0, 9.0, 8.0 targeting packs are required.
 - For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, maui-windows.
 - Clone the AlterNET UI repo.
 - Use the "C:\Alternet.UI" folder or any other root folder. The folder name should not contain any spaces or non-English letters.
