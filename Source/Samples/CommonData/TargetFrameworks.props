@@ -6,14 +6,16 @@
 <PropertyGroup>
   <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
   <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsOsx Condition="$([MSBuild]::IsOsPlatform('OSX'))">true</IsOsx>
   <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
+  <IsLinux Condition="$([MSBuild]::IsOsPlatform('Linux'))">true</IsLinux>
   <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
   <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
   <IsWindows Condition="$([MSBuild]::IsOsPlatform('Windows'))">true</IsWindows>
 </PropertyGroup>
 
   <PropertyGroup>
-    	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
+   	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
   	<BoolNet10>false</BoolNet10>
   	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
@@ -21,6 +23,11 @@
 
   <PropertyGroup Condition="$(IsOsxX64)=='true'">
   	<BoolNet9>false</BoolNet9>
+  	<BoolNet10>false</BoolNet10>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsOsxArm64)=='true'">
+  	<BoolNet10>true</BoolNet10>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsWindows)=='true'">
