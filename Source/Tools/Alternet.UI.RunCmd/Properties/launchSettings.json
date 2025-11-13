@@ -34,6 +34,10 @@
     "ZipFile": {
       "commandName": "Project",
       "commandLineArgs": "-r=zipFile File=\"e:\\Alternet.UI.Pal.dll\" Result=\"e:\\result-_UIVersion_-_OSArchitectureX86_.zip\" Ext=\"exp,lib\""
+    },
+    "svgToPngProject": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=svgToPng Config=\"..\\..\\..\\..\\..\\..\\..\\AlternetStudio\\NewImages\\ProjectExplorerImages\\ProjectExplorerSvgToPng.xml\""
     }
   }
 }

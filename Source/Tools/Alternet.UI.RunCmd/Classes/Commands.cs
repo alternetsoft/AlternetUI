@@ -388,6 +388,23 @@ namespace Alternet.UI
             Console.WriteLine("Completed");
         }
 
+        public static void CmdSvgToPng(CommandLineArgs args)
+        {
+            string pathToConfig = args.AsString("Config");
+
+            Console.WriteLine($"Command: svgToPng");
+            Console.WriteLine($"Config: {pathToConfig}");
+
+            var fullPath = Path.GetFullPath(pathToConfig);
+
+            if (!File.Exists(fullPath))
+            {
+                Console.WriteLine($"File doesn't exist: [{fullPath}]");
+                return;
+            }
+
+            SvgToPngUtils.ConvertSvgToPng(fullPath);
+        }
 
         public static void CmdZipFolder(CommandLineArgs args)
         {
@@ -563,6 +580,11 @@ namespace Alternet.UI
                     "darkImages",
                     CmdDarkImages,
                     "-r=darkImages Path=\"d:\\Images\" Result=\"d:\\ImagesConverted\"");
+
+                RegisterCommand(
+                    "svgToPng",
+                    CmdSvgToPng,
+                    "-r=svgToPng Config=\"d:\\svg2png.xml\"");
             }
 
             RegisterCommand(
