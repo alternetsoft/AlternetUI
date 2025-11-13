@@ -104,7 +104,7 @@ The transforms can include translation, rotation, and scale (see the
 and <xref:Alternet.Drawing.TransformMatrix.CreateScale%2A> methods). Use the
 <xref:Alternet.Drawing.Graphics.Transform%2A> property of <xref:Alternet.Drawing.Graphics> to set the
 current transform. The transforms can be applied sequentially with a stack-like approach, using the
-<xref:Alternet.Drawing.Graphics.PushTransform%2A> and <xref:Alternet.Drawing.Graphics.PopTransorm%2A> methods.
+<xref:Alternet.Drawing.Graphics.PushTransform%2A> and <xref:Alternet.Drawing.Graphics.PopTransform%2A> methods.
 
 ### Clip Regions
 
