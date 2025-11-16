@@ -1,3 +1,13 @@
+# 0.9.800 (2025 November 16)
+
+- Add Net 10 support.
+- Fix uixml previewer.
+- Remove libgspell usage as causes problems when running on Ubuntu.
+- Remove usage of some wxWidgets related libs. This makes it more compatible with the different Linux distributives.
+- Update documentation.
+
+---
+
 # 0.9.759 (2025 November 4)
 
 - Fix mouse cursor behavior in RichTextBox, TextBox, WebBrowser.
