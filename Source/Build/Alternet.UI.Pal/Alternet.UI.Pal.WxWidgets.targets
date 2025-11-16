@@ -109,7 +109,7 @@
             <ConfigureCommand>../configure</ConfigureCommand>
             <DebugFlag>--enable-debug</DebugFlag>
     
-            <ConfigureCommandParameters>--enable-webview --enable-webviewwebkit --disable-shared --without-libtiff --without-regex --without-expat --without-libwebp</ConfigureCommandParameters>
+            <ConfigureCommandParameters>--enable-webview --enable-webviewwebkit --disable-shared --without-libtiff --without-regex --without-expat --without-libwebp --without-gspell</ConfigureCommandParameters>
         </PropertyGroup>
 
         <!-- Linux Debug -->
@@ -135,7 +135,7 @@
             <DebugFlag>--enable-debug</DebugFlag>
     
             <!-- without-expat On macOS High Sierra (10.13.6, the minimum supported version), libtiff, expat, pcre fail to build. So have to exclude them. -->
-            <ConfigureCommandParameters>--disable-shared --enable-webview --enable-webviewwebkit --disable-sys-libs --with-macosx-version-min=10.15 --without-libtiff --without-regex --without-expat --without-libwebp</ConfigureCommandParameters>
+            <ConfigureCommandParameters>--disable-shared --enable-webview --enable-webviewwebkit --disable-sys-libs --with-macosx-version-min=10.15 --without-libtiff --without-regex --without-expat --without-libwebp --without-gspell</ConfigureCommandParameters>
         </PropertyGroup>
 
         <!-- MacOS Debug -->

@@ -16,7 +16,7 @@ else()
     set(wxWidgets_CONFIG_EXECUTABLE ${PROJECT_SOURCE_DIR}/../../External/WxWidgets/gtk-build/wx-config)
 endif()
 
-find_package(wxWidgets REQUIRED COMPONENTS net core base webview adv aui html propgrid richtext media stc gl)
+find_package(wxWidgets REQUIRED COMPONENTS net core base webview adv html propgrid richtext media gl)
 include(${wxWidgets_USE_FILE})
 
 include_directories(".")
