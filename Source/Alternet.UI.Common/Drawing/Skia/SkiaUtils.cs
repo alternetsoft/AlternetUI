@@ -286,6 +286,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Saves the specified bitmap to a PNG file at the given path.
+        /// </summary>
+        /// <param name="bitmap">The bitmap image to be saved. Cannot be null.</param>
+        /// <param name="fileName">The path and file name where the PNG image will be saved. Must be a valid file path.</param>
+        public static void SaveBitmapToPng(SKBitmap bitmap, string fileName)
+        {
+            using var image = SKImage.FromBitmap(bitmap);
+            SaveImageToPng(image, fileName);
+        }
+
+        /// <summary>
         /// Saves an <see cref="SKImage"/> instance to a file in PNG format.
         /// </summary>
         /// <param name="image">The <see cref="SKImage"/> to save.</param>
