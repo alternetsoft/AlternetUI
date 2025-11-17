@@ -136,6 +136,54 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a single image strip by combining all images in the collection horizontally.
+        /// </summary>
+        /// <remarks>Each image in the collection is placed side by side in the resulting strip,
+        /// maintaining its original size and order. The width of the strip is the sum of the widths of all images, and
+        /// the height matches the individual image height. This method is useful for generating sprite sheets or
+        /// preview strips from a sequence of images.</remarks>
+        /// <returns>An <see cref="Image"/> containing the combined image strip, or <see langword="null"/> if the collection
+        /// contains no images.</returns>
+        public virtual Image? AsImageStrip()
+        {
+            var result = AsSkiaStrip();
+            if (result == null)
+                return null;
+
+            return (Bitmap)result;
+        }
+
+        /// <summary>
+        /// Creates a single horizontal bitmap strip by concatenating all images in the collection.
+        /// </summary>
+        /// <remarks>The resulting bitmap arranges each image side by side in the order they appear in the
+        /// collection. The width of the strip is the sum of the widths of all images, and the height matches the
+        /// individual image height. The caller is responsible for disposing the returned <see cref="SKBitmap"/> when it
+        /// is no longer needed.</remarks>
+        /// <returns>An <see cref="SKBitmap"/> representing the concatenated image strip, or <see langword="null"/> if the
+        /// collection contains no images.</returns>
+        public virtual SKBitmap? AsSkiaStrip()
+        {
+            if (Images.Count == 0)
+                return null;
+            var width = ImageSize.Width;
+            var height = ImageSize.Height;
+            var stripWidth = width * Images.Count;
+
+            var stripImage = new SKBitmap(stripWidth, height, false);
+            var canvas = new SKCanvas(stripImage);
+
+            for (int i = 0; i < Images.Count; i++)
+            {
+                var image = Images[i];
+                var x = i * width;
+                canvas.DrawBitmap((SKBitmap)image, x, 0);
+            }
+
+            return stripImage;
+        }
+
+        /// <summary>
         /// Gets suggested size of the image for the specified scale factor.
         /// </summary>
         /// <param name="scaleFactor">Scale factor for which to get suggested size of the image.</param>
