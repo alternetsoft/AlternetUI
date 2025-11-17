@@ -5,6 +5,10 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+
 using Alternet.UI;
 
 using SkiaSharp;
@@ -36,7 +40,7 @@ namespace Alternet.Drawing
     [DebuggerDisplay("{DebugString}")]
     [Serializable]
     [TypeConverter(typeof(ColorConverter))]
-    public partial class Color : IEquatable<Color>
+    public partial class Color : IEquatable<Color>, IXmlSerializable
     {
         /// <summary>
         /// Shift count for Alpha component of the color.
@@ -94,17 +98,13 @@ namespace Alternet.Drawing
 
         // User supplied name of color. Will not be filled in if
         // we map to a known color.
-        private readonly string? name;
-
-        private ColorStruct color;
+        private string? name;
 
         // Ignored, unless "state" says it is valid
-#pragma warning disable
-        private readonly KnownColor knownColor;
-#pragma warning restore
+        private KnownColor knownColor;  
 
-        private readonly StateFlags state;
-
+        private ColorStruct color;
+        private StateFlags state;
         private CachedResources resources = new();
 
         /// <summary>
@@ -2096,6 +2096,55 @@ namespace Alternet.Drawing
             var result = AsStruct;
             result.A = alpha;
             return new(result);
+        }
+
+        /// <inheritdoc/>
+        public XmlSchema? GetSchema()
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Copies the color data and related properties from the specified <see cref="Color"/>
+        /// instance to the current instance.
+        /// </summary>
+        /// <remarks>After assignment, the current instance will have the same color data and properties
+        /// as the specified <paramref name="other"/>. Any existing resources associated with this instance are replaced
+        /// with new resources.</remarks>
+        /// <param name="other">The <see cref="Color"/> instance whose color data and properties are assigned to this instance.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="other"/> is <see langword="null"/>.</exception>
+        public virtual void Assign(Color other)
+        {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
+            color = other.color;
+            name = other.name;
+            knownColor = other.knownColor;
+            state = other.state;
+            resources = new ();
+        }
+
+        /// <inheritdoc/>
+        public virtual void ReadXml(XmlReader reader)
+        {
+            string s = reader.ReadElementContentAsString();
+
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                Assign(Color.Empty);
+                return;
+            }
+
+            var parsedColor = Color.Parse(s);
+            Assign(parsedColor);
+        }
+
+        /// <inheritdoc/>
+        public virtual void WriteXml(XmlWriter writer)
+        {
+            var s = ColorConverter.ConvertToString(this);
+            writer.WriteString(s);
         }
 
         /// <summary>
