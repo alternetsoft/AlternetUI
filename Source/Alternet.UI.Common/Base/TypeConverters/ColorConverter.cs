@@ -7,6 +7,8 @@ using System.Reflection;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>Converts colors from one data type to another. Access this class through the
@@ -121,6 +123,75 @@ namespace Alternet.Drawing
                 return base.ConvertFrom(context, culture, value);
         }
 
+        /// <summary>
+        /// Converts the specified color to its string representation, using the provided context and culture
+        /// information if available.
+        /// </summary>
+        /// <remarks>For colors with an alpha value less than 255, the string includes the alpha
+        /// component. The separator used between components is determined by the specified culture. This method is
+        /// useful for serializing colors for display or storage in a culture-sensitive format.</remarks>
+        /// <param name="color">The color to convert to a string. If the color is empty, an empty string is returned.</param>
+        /// <param name="context">An optional type descriptor context that can provide additional information about the conversion.
+        /// May be null.</param>
+        /// <param name="culture">An optional culture information object used to format the string output. If null,
+        /// the invariant culture is used.</param>
+        /// <returns>A string representation of the color. Returns the color's name for known or named colors, or a
+        /// comma-separated list of ARGB components for other colors. Returns an empty string if the color is empty.
+        /// Returns null if the color is null.</returns>
+        public static string? ConvertToString(
+            Color? color,
+            ITypeDescriptorContext? context = null,
+            CultureInfo? culture = null)
+        {
+            if (color == null)
+            {
+                return null;
+            }
+
+            if (color == Color.Empty)
+            {
+                return string.Empty;
+            }
+
+            if (color.IsKnownColor)
+            {
+                return color.Name;
+            }
+
+            if (color.IsNamedColor)
+            {
+                return "'" + color.Name + "'";
+            }
+
+            culture ??= CultureInfo.InvariantCulture;
+
+            string separator = culture.TextInfo.ListSeparator + " ";
+            TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
+            int num = 0;
+            string[] array;
+
+            SKColor v = color;
+
+            if (v.Alpha < 255)
+            {
+                array = new string[4];
+                array[num++] =
+                    converter.ConvertToString(context, culture, v.Alpha)!;
+            }
+            else
+            {
+                array = new string[3];
+            }
+
+            array[num++] =
+                converter.ConvertToString(context, culture, v.Red)!;
+            array[num++] =
+                converter.ConvertToString(context, culture, v.Green)!;
+            array[num++] =
+                converter.ConvertToString(context, culture, v.Blue)!;
+            return string.Join(separator, array);
+        }
+
         /// <summary>Converts the specified object to another type. </summary>
         /// <param name="context">A formatter context. Use this object to extract
         /// additional information about the environment from which this converter is being invoked.
@@ -141,55 +212,11 @@ namespace Alternet.Drawing
             object? value,
             Type destinationType)
         {
-            if (destinationType == null)
-            {
-                throw new ArgumentNullException(nameof(destinationType));
-            }
-
             if (value is Color color1)
             {
                 if (destinationType == typeof(string))
                 {
-                    Color left = color1;
-                    if (left == Color.Empty)
-                    {
-                        return string.Empty;
-                    }
-
-                    if (left.IsKnownColor)
-                    {
-                        return left.Name;
-                    }
-
-                    if (left.IsNamedColor)
-                    {
-                        return "'" + left.Name + "'";
-                    }
-
-                    culture ??= CultureInfo.CurrentCulture;
-
-                    string separator = culture.TextInfo.ListSeparator + " ";
-                    TypeConverter converter = TypeDescriptor.GetConverter(typeof(int));
-                    int num = 0;
-                    string[] array;
-                    if (left.A < 255)
-                    {
-                        array = new string[4];
-                        array[num++] =
-                            converter.ConvertToString(context, culture, left.A)!;
-                    }
-                    else
-                    {
-                        array = new string[3];
-                    }
-
-                    array[num++] =
-                        converter.ConvertToString(context, culture, left.R)!;
-                    array[num++] =
-                        converter.ConvertToString(context, culture, left.G)!;
-                    array[num++] =
-                        converter.ConvertToString(context, culture, left.B)!;
-                    return string.Join(separator, array);
+                    return ConvertToString(color1, context, culture) ?? string.Empty;
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
