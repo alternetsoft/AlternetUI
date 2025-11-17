@@ -32,10 +32,23 @@ namespace Alternet.UI
 
             var svgImage = new MonoSvgImage(fileToConvert);
 
-            var light16 = svgImage.AsNormalImage(16, isDark: false);
-            var light32 = svgImage.AsNormalImage(32, isDark: false);
-            var dark16 = svgImage.AsNormalImage(16, isDark: true);
-            var dark32 = svgImage.AsNormalImage(32, isDark: true);
+            Color lightColor = item.LightColor ?? Color.FromArgb(255, 0, 0, 0);
+            Color darkColor = item.DarkColor ?? Color.FromArgb(255, 0xE6, 0xE6, 0xE6);
+
+            if (lightColor != Color.FromArgb(255, 0, 0, 0))
+            {
+            }
+
+            var light16 = svgImage.ImageWithColor(16, lightColor);
+            var light32 = svgImage.ImageWithColor(32, lightColor);
+            var dark16 = svgImage.ImageWithColor(16, darkColor);
+            var dark32 = svgImage.ImageWithColor(32, darkColor);
+
+            item.Light16 = light16;
+            item.Light32 = light32;
+            item.Dark16 = dark16;
+            item.Dark32 = dark32;
+
             var light16Name = fileNameWithoutExt + "16";
             var light32Name = fileNameWithoutExt + "32";
             var dark16Name = fileNameWithoutExt + "16.Dark";
@@ -50,12 +63,23 @@ namespace Alternet.UI
             light32Name = Path.Combine(filePath, light32Name);
             dark16Name = Path.Combine(filePath, dark16Name);
             dark32Name = Path.Combine(filePath, dark32Name);
+
+            File.Delete(light16Name);
+            File.Delete(light32Name);
+            File.Delete(dark16Name);
+            File.Delete(dark32Name);
+
+            light16?.Save(light16Name);
+            light32?.Save(light32Name);
+            dark16?.Save(dark16Name);
+            dark32?.Save(dark32Name);
         }
 
         public static void ConvertSvgToPng(string configFile)
         {
             try
             {
+                var basePath = Path.GetDirectoryName(configFile);
                 var settings = XmlUtils.DeserializeFromFile<SvgToPngSettings>(configFile);
 
                 if (settings is null)
@@ -64,10 +88,39 @@ namespace Alternet.UI
                     return;
                 }
 
+                var darkStripName16 = settings.DarkStripName16 ?? "Images.16.Dark.png";
+                var darkStripName32 = settings.DarkStripName32 ?? "Images.32.Dark.png";
+                var lightStripName16 = settings.LightStripName16 ?? "Images.16.png";
+                var lightStripName32 = settings.LightStripName32 ?? "Images.32.png";
+
+                var light16Images = new ImageList(16);
+                var light32Images = new ImageList(32);
+                var dark16Images = new ImageList(16);
+                var dark32Images = new ImageList(32);
+
                 foreach (var item in settings.Items)
                 {
                     ConvertSvgToPng(configFile, settings, item);
+                    light16Images.Add(item.Light16);
+                    light32Images.Add(item.Light32);
+                    dark16Images.Add(item.Dark16);
+                    dark32Images.Add(item.Dark32);
                 }
+
+                var light16strip = light16Images.AsSkiaStrip();
+                var light32strip = light32Images.AsSkiaStrip();
+                var dark16strip = dark16Images.AsSkiaStrip();
+                var dark32strip = dark32Images.AsSkiaStrip();
+
+                lightStripName16 = Path.GetFullPath(lightStripName16!, basePath!);
+                lightStripName32 = Path.GetFullPath(lightStripName32!, basePath!);
+                darkStripName16 = Path.GetFullPath(darkStripName16!, basePath!);
+                darkStripName32 = Path.GetFullPath(darkStripName32!, basePath!);
+
+                SkiaUtils.SaveBitmapToPng(light16strip!, lightStripName16!);
+                SkiaUtils.SaveBitmapToPng(light32strip!, lightStripName32!);
+                SkiaUtils.SaveBitmapToPng(dark16strip!, darkStripName16!);
+                SkiaUtils.SaveBitmapToPng(dark32strip!, darkStripName32!);
             }
             catch (Exception e)
             {

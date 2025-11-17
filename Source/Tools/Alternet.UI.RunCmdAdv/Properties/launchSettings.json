@@ -38,6 +38,10 @@
     "darkImages": {
       "commandName": "Project",
       "commandLineArgs": "-r=darkImages Path=\"e:\\Images\" Result=\"e:\\ImagesConverted\""
+    },
+    "svgToPng": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=svgToPng Config=\"..\\..\\..\\..\\..\\..\\..\\AlternetStudio\\NewImages\\ProjectExplorerImages\\ProjectExplorerSvgToPng.xml\""
     }
   }
 }
