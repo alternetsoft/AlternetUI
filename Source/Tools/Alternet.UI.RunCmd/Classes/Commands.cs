@@ -388,6 +388,69 @@ namespace Alternet.UI
             Console.WriteLine("Completed");
         }
 
+        public static void ExtractFromImageList()
+        {
+            const string basePath = @"E:\DIMA\AlternetStudio\NewImages\CodeExplorerImages\RoslynImages\";
+
+            ExtractFromImageList(Path.Combine(basePath, @"RoslynDark16.png"));
+            ExtractFromImageList(Path.Combine(basePath, @"RoslynDark32.png"));
+            ExtractFromImageList(Path.Combine(basePath, @"RoslynLight16.png"));
+            ExtractFromImageList(Path.Combine(basePath, @"RoslynLight32.png"));
+        }
+
+        public static void ExtractFromImageList(string pathToImageList)
+        {
+            try
+            {
+                var dir = Path.GetDirectoryName(pathToImageList);
+                var onlyName = Path.GetFileNameWithoutExtension(pathToImageList);
+                var resultDir = Path.Combine(dir ?? string.Empty, onlyName);
+                var namesFile = Path.Combine(dir ?? string.Empty, "Names.txt");
+
+                if (!Directory.Exists(resultDir))
+                {
+                    Directory.CreateDirectory(resultDir);
+                }
+
+                if (!File.Exists(pathToImageList))
+                {
+                    Console.WriteLine($"File not found: {pathToImageList}");
+                    return;
+                }
+
+                var imageList = new ImageList(pathToImageList);
+
+                if (File.Exists(namesFile))
+                {
+                    var str = FileUtils.StringFromFile(namesFile);
+                    var splitted = StringUtils.Split(str);
+                    imageList.ExportImagesToFiles(resultDir, splitted);
+                }
+                else
+                {
+                    var generatedNames = new List<string>();
+                    for (int i = 0; i < imageList.Images.Count; i++)
+                    {
+                        var name = $"onlyName-{i}";
+                        generatedNames.Add(name);
+                    }
+
+                    imageList.ExportImagesToFiles(resultDir, generatedNames.ToArray());
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error extracting from image list");
+                Console.WriteLine($"Error info logged to file");
+                LogUtils.LogExceptionToFile(e);
+            }
+        }
+
+        public static void CmdSomeAction(CommandLineArgs args)
+        {
+            ExtractFromImageList();
+        }
+
         public static void CmdSvgToPng(CommandLineArgs args)
         {
             string pathToConfig = args.AsString("Config");
@@ -585,6 +648,11 @@ namespace Alternet.UI
                     "svgToPng",
                     CmdSvgToPng,
                     "-r=svgToPng Config=\"d:\\svg2png.xml\"");
+
+                RegisterCommand(
+                    "someAction",
+                    CmdSomeAction,
+                    "");
             }
 
             RegisterCommand(

@@ -42,6 +42,10 @@
     "svgToPng": {
       "commandName": "Project",
       "commandLineArgs": "-r=svgToPng Config=\"..\\..\\..\\..\\..\\..\\..\\AlternetStudio\\NewImages\\ProjectExplorerImages\\ProjectExplorerSvgToPng.xml\""
+    },
+    "someAction": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=someAction"
     }
   }
 }
