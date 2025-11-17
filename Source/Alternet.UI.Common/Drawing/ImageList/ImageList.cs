@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using Alternet.Base.Collections;
@@ -70,6 +71,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ImageList"/> class using an image strip loaded from the specified URL.
+        /// </summary>
+        /// <param name="url">The URL of the image to load. Can be a relative or absolute path. Cannot be null or empty.</param>
+        /// <param name="baseUri">An optional base URI to resolve relative URLs. If null, relative URLs are resolved based on the
+        /// application's context.</param>
+        public ImageList(string? url, Uri? baseUri = null)
+            : this(new Bitmap(url, baseUri))
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <c>ImageList</c> class with specified image strip.
         /// </summary>
         /// <param name="stripImage">List of images concatenated in a single image strip.</param>
@@ -136,54 +148,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a single image strip by combining all images in the collection horizontally.
-        /// </summary>
-        /// <remarks>Each image in the collection is placed side by side in the resulting strip,
-        /// maintaining its original size and order. The width of the strip is the sum of the widths of all images, and
-        /// the height matches the individual image height. This method is useful for generating sprite sheets or
-        /// preview strips from a sequence of images.</remarks>
-        /// <returns>An <see cref="Image"/> containing the combined image strip, or <see langword="null"/> if the collection
-        /// contains no images.</returns>
-        public virtual Image? AsImageStrip()
-        {
-            var result = AsSkiaStrip();
-            if (result == null)
-                return null;
-
-            return (Bitmap)result;
-        }
-
-        /// <summary>
-        /// Creates a single horizontal bitmap strip by concatenating all images in the collection.
-        /// </summary>
-        /// <remarks>The resulting bitmap arranges each image side by side in the order they appear in the
-        /// collection. The width of the strip is the sum of the widths of all images, and the height matches the
-        /// individual image height. The caller is responsible for disposing the returned <see cref="SKBitmap"/> when it
-        /// is no longer needed.</remarks>
-        /// <returns>An <see cref="SKBitmap"/> representing the concatenated image strip, or <see langword="null"/> if the
-        /// collection contains no images.</returns>
-        public virtual SKBitmap? AsSkiaStrip()
-        {
-            if (Images.Count == 0)
-                return null;
-            var width = ImageSize.Width;
-            var height = ImageSize.Height;
-            var stripWidth = width * Images.Count;
-
-            var stripImage = new SKBitmap(stripWidth, height, false);
-            var canvas = new SKCanvas(stripImage);
-
-            for (int i = 0; i < Images.Count; i++)
-            {
-                var image = Images[i];
-                var x = i * width;
-                canvas.DrawBitmap((SKBitmap)image, x, 0);
-            }
-
-            return stripImage;
-        }
-
-        /// <summary>
         /// Gets suggested size of the image for the specified scale factor.
         /// </summary>
         /// <param name="scaleFactor">Scale factor for which to get suggested size of the image.</param>
@@ -232,6 +196,54 @@ namespace Alternet.Drawing
                 var image = strip.GetSubBitmap(sourceRectangle);
                 Add(image);
             }
+        }
+
+        /// <summary>
+        /// Creates a single image strip by combining all images in the collection horizontally.
+        /// </summary>
+        /// <remarks>Each image in the collection is placed side by side in the resulting strip,
+        /// maintaining its original size and order. The width of the strip is the sum of the widths of all images, and
+        /// the height matches the individual image height. This method is useful for generating sprite sheets or
+        /// preview strips from a sequence of images.</remarks>
+        /// <returns>An <see cref="Image"/> containing the combined image strip, or <see langword="null"/> if the collection
+        /// contains no images.</returns>
+        public virtual Image? AsImageStrip()
+        {
+            var result = AsSkiaStrip();
+            if (result == null)
+                return null;
+
+            return (Bitmap)result;
+        }
+
+        /// <summary>
+        /// Creates a single horizontal bitmap strip by concatenating all images in the collection.
+        /// </summary>
+        /// <remarks>The resulting bitmap arranges each image side by side in the order they appear in the
+        /// collection. The width of the strip is the sum of the widths of all images, and the height matches the
+        /// individual image height. The caller is responsible for disposing the returned <see cref="SKBitmap"/> when it
+        /// is no longer needed.</remarks>
+        /// <returns>An <see cref="SKBitmap"/> representing the concatenated image strip, or <see langword="null"/> if the
+        /// collection contains no images.</returns>
+        public virtual SKBitmap? AsSkiaStrip()
+        {
+            if (Images.Count == 0)
+                return null;
+            var width = ImageSize.Width;
+            var height = ImageSize.Height;
+            var stripWidth = width * Images.Count;
+
+            var stripImage = new SKBitmap(stripWidth, height, false);
+            var canvas = new SKCanvas(stripImage);
+
+            for (int i = 0; i < Images.Count; i++)
+            {
+                var image = Images[i];
+                var x = i * width;
+                canvas.DrawBitmap((SKBitmap)image, x, 0);
+            }
+
+            return stripImage;
         }
 
         /// <summary>
@@ -334,6 +346,35 @@ namespace Alternet.Drawing
         public virtual ImageList WithLightColors()
         {
             return WithConvertedColors(ControlPaint.Light);
+        }
+
+        /// <summary>
+        /// Exports all images in the collection to files at the specified base path, using the provided file names or
+        /// default names if none are specified.
+        /// </summary>
+        /// <remarks>If a file name does not have a supported image extension (.png, .jpg, .jpeg, .bmp),
+        /// the method appends '.png' by default. Existing files with the same names may be overwritten.</remarks>
+        /// <param name="basePath">The directory path where the image files will be saved. Must be a valid, writable file system path.</param>
+        /// <param name="fileNames">An array of file names to use for the exported images. If the array contains fewer names than images,
+        /// default names in the format 'ImageN.png' will be used for remaining images.</param>
+        public virtual void ExportImagesToFiles(string basePath, IReadOnlyList<string> fileNames)
+        {
+            for (int i = 0; i < Images.Count; i++)
+            {
+                var image = Images[i];
+                var fileName = fileNames.Count > i ? fileNames[i] : $"Image{i}.png";
+
+                var extension = System.IO.Path.GetExtension(fileName).ToLowerInvariant();
+                if (extension != ".png" && extension != ".jpg" && extension != ".jpeg" && extension != ".bmp")
+                    fileName += ".png";
+
+                var filePath = System.IO.Path.Combine(basePath, fileName);
+
+                if(File.Exists(filePath))
+                    File.Delete(filePath);
+
+                image.Save(filePath);
+            }
         }
 
         /// <inheritdoc/>
