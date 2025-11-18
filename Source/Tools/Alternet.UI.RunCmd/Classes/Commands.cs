@@ -446,9 +446,129 @@ namespace Alternet.UI
             }
         }
 
+        public static void CombineCodeExplorerImages()
+        {
+            const string basePath = @"E:\DIMA\AlternetStudio\NewImages\CodeExplorerImages\RoslynImages\";
+            const string resultPath = @"E:\DIMA\AlternetStudio\NewImages\CodeExplorerImages\";
+            const string svgPath = resultPath;
+
+            var roslynDark16 = Path.Combine(basePath, @"RoslynDark16");
+            var roslynDark32 = Path.Combine(basePath, @"RoslynDark32");
+            var roslynLight16 = Path.Combine(basePath, @"RoslynLight16");
+            var roslynLight32 = Path.Combine(basePath, @"RoslynLight32");
+
+            var resultDark16 = Path.Combine(resultPath, "CodeExplorerImages.16.Dark.png");
+            var resultLight16 = Path.Combine(resultPath, "CodeExplorerImages.16.png");
+            var resultDark32 = Path.Combine(resultPath, "CodeExplorerImages.32.Dark.png");
+            var resultLight32 = Path.Combine(resultPath, "CodeExplorerImages.32.png");
+
+            var imageListDark16 = new ImageList(16);
+            var imageListLight16 = new ImageList(16);
+            var imageListDark32 = new ImageList(32);
+            var imageListLight32 = new ImageList(32);
+
+            void AddToImageList(ImageList images, string imageFolder, string imageName)
+            {
+                var path = Path.Combine(imageFolder, imageName);
+                var image = new Bitmap(path);
+                images.Add(image);
+            }
+
+            void AddImage(int index, string imageName)
+            {
+                AddToImageList(imageListDark16, roslynDark16, imageName);
+                AddToImageList(imageListLight16, roslynLight16, imageName);
+                AddToImageList(imageListDark32, roslynDark32, imageName);
+                AddToImageList(imageListLight32, roslynLight32, imageName);
+            }
+
+            void AddSvgImage(int index, string svgName, LightDarkColor? color)
+            {
+                var path = Path.Combine(svgPath, svgName);
+                var svgImage = new MonoSvgImage(path);
+
+                imageListDark16.AddSvg(svgImage, color?.Dark);
+                imageListLight16.AddSvg(svgImage, color?.Light);
+                imageListDark32.AddSvg(svgImage, color?.Dark);
+                imageListLight32.AddSvg(svgImage, color?.Light);
+            }
+
+            void AddColorSvgImage(int index, string svgName)
+            {
+                var path = Path.Combine(svgPath, svgName);
+                var svgImage = new ColorSvgImage(path);
+
+                imageListDark16.AddSvg(svgImage);
+                imageListLight16.AddSvg(svgImage);
+                imageListDark32.AddSvg(svgImage);
+                imageListLight32.AddSvg(svgImage);
+            }
+
+            AddImage(0, "0-None.png"); //DotImage.txt
+            AddImage(1, "21-EnumItem.png"); //EnumFieldImage-Blue.txt
+            AddImage(2, "47-Namespace.png"); //NameSpaceImage-Std.txt
+            AddImage(3, "1-Class.png"); //ClassImage-Yellow.txt
+            AddImage(4, "6-Constant.png"); //ConstImage-Std.txt
+            AddImage(5, "11-Delegate.png"); //DelegateImage-Purple.txt
+            AddImage(6, "16-Enum.png"); //EnumImage-Yellow.txt
+            AddImage(7, "26-Event.png"); //EventImage-Yellow.txt
+            AddImage(8, "31-Field.png"); //FieldImage-Blue.txt
+            AddImage(9, "36-Interface.png"); //InterfaceImage-Blue.txt
+            AddImage(10, "42-Method.png"); //MethodImage-Purple.txt
+            AddImage(11, "52-Property.png"); //PropImage-Std.svg
+            AddImage(12, "57-Struct.png"); //StructImage-Blue.txt
+            
+            AddImage(13, "3-ClassPrivate.png"); //ClassImage-Private.txt
+            AddImage(14, "8-ConstantPrivate.png"); //ConstImage-Private.txt
+            AddImage(15, "13-DelegatePrivate.png"); //DelegateImage-Private.txt
+            AddImage(16, "18-EnumPrivate.png"); //EnumImage-Private.txt
+            AddImage(17, "28-EventPrivate.png"); //EventImage-Private.txt
+            AddImage(18, "33-FieldPrivate.png"); //FieldImage-Private.txt
+            AddImage(19, "38-InterfacePrivate.png"); //InterfaceImage-Private.txt
+            AddImage(20, "44-MethodPrivate.png"); //MethodImage-Private.txt
+            AddImage(21, "54-PropertyPrivate.png"); //PropImage-Private.txt
+            AddImage(22, "59-StructPrivate.png"); //StructImage-Private.txt
+            
+            AddImage(23, "4-ClassProtected.png"); //ClassImage-Protected-Internal.txt
+            AddImage(24, "9-ConstantProtected.png"); //ConstImage-Protected-Internal.txt
+            AddImage(25, "14-DelegateProtected.png"); //DelegateImage-Protected-Internal.txt
+            AddImage(26, "19-EnumProtected.png"); //EnumImage-Protected-Internal.txt
+            AddImage(27, "29-EventProtected.png"); //EventImage-Protected-Internal.txt
+            AddImage(28, "34-FieldProtected.png"); //FieldImage-Protected-Internal.txt
+            AddImage(29, "39-InterfaceProtected.png"); //InterfaceImage-Protected-Internal.txt
+            AddImage(30, "45-MethodProtected.png"); //MethodImage-Protected-Internal.txt
+            AddImage(31, "55-PropertyProtected.png"); //PropImage-Protected-Internal.txt
+            AddImage(32, "60-StructProtected.png"); //StructImage-Protected-Internal.txt
+            
+            AddImage(33, "1-Class.png"); //ClassImage-Yellow.txt
+            AddImage(34, "6-Constant.png"); //ConstImage-Std.txt
+            AddImage(35, "11-Delegate.png"); //DelegateImage-Purple.txt
+            AddImage(36, "16-Enum.png"); //EnumImage-Yellow.txt
+            AddImage(37, "26-Event.png"); //EventImage-Yellow.txt
+            AddImage(38, "31-Field.png"); //FieldImage-Blue.txt
+            AddImage(39, "36-Interface.png"); //InterfaceImage-Blue.txt
+            AddImage(40, "42-Method.png"); //MethodImage-Purple.txt
+            AddImage(41, "52-Property.png"); //PropImage-Std.svg
+            AddImage(42, "57-Struct.png"); //StructImage-Blue.txt
+
+            AddColorSvgImage(43, "43-ErrorImage-Red.svg"); //ErrorImage-Red.txt
+            AddSvgImage(44, "44-CSharpImage-Green.svg", LightDarkColors.Green); //CSharpImage-Green.svg
+            AddSvgImage(45, "45-VisualBasicImage-Blue.svg", LightDarkColors.Blue); //VisualBasicImage-Blue.svg            
+
+            var stripDark16 = imageListDark16.AsSkiaStrip();
+            var stripLight16 = imageListLight16.AsSkiaStrip();
+            var stripDark32 = imageListDark32.AsSkiaStrip();
+            var stripLight32 = imageListLight32.AsSkiaStrip();
+
+            SkiaUtils.SaveBitmapToPng(stripDark16!, resultDark16);
+            SkiaUtils.SaveBitmapToPng(stripLight16!, resultLight16);
+            SkiaUtils.SaveBitmapToPng(stripDark32!, resultDark32);
+            SkiaUtils.SaveBitmapToPng(stripLight32!, resultLight32);
+        }
+
         public static void CmdSomeAction(CommandLineArgs args)
         {
-            ExtractFromImageList();
+            CombineCodeExplorerImages();
         }
 
         public static void CmdSvgToPng(CommandLineArgs args)
