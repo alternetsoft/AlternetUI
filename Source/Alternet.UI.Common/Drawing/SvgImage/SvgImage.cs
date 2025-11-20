@@ -25,7 +25,7 @@ namespace Alternet.Drawing
 
         private string? url;
         private string? svg;
-        private Data?[] data = new Data?[16];
+        private Data?[] data = new Data?[17];
         private bool wasLoaded;
         private Exception? loadingError;
         private Color?[]? colorOverridesLight;
@@ -329,7 +329,9 @@ namespace Alternet.Drawing
 
             var color = GetSvgColor(knownColor, isDark);
             result = LoadImage(size, color);
-            data[size] ??= new();
+
+            if (data[size] is null)
+                data[size] = new();
 
             if(isDark)
                 data[size]!.KnownColorImagesDark[(int)knownColor] = result;
@@ -552,7 +554,11 @@ namespace Alternet.Drawing
         /// stored data. It can be used to free up memory or prepare the cache for reuse.</remarks>
         public virtual void ResetCachedImages()
         {
-            data = new Data?[16];
+            App.Invoke(() =>
+            {
+                for (int i = 0; i < data.Length; i++)
+                    data[i] = null;
+            });
         }
 
         /// <summary>
