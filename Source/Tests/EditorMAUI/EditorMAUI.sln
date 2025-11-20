@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.11.35303.130
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11205.157 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Alternet.UI.Maui", "..\..\Alternet.UI.Maui\Alternet.UI.Maui.csproj", "{1C9ED836-6338-4373-9A83-28F49B631565}"
 EndProject
@@ -151,8 +151,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.Scripter.Integration.AlternetUI", "..\..\..\..\AlternetStudio\Source\Libraries.AlternetUI\Scripter.Integration.AlternetUI\Alternet.Scripter.Integration.AlternetUI.csproj", "{528C5456-003B-3F85-A996-519381516870}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.Editor.Common.AlternetUI", "..\..\..\..\AlternetStudio\Source\Libraries.AlternetUI\Editor.Common.AlternetUI\Alternet.Editor.Common.AlternetUI.csproj", "{FF20B269-4CCE-5021-D456-F9A920252219}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditorUI.Dll", "..\..\..\..\AlternetStudio\Demo\Editor.AlternetUI\AllDemos\EditorUI\EditorUI.Dll.csproj", "{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alternet.Scripter.Integration.MAUI", "..\..\..\..\AlternetStudio\Source\Libraries.MAUI\Scripter.Integration.MAUI\Alternet.Scripter.Integration.MAUI.csproj", "{C7B05250-C255-050A-653C-0613FEDF2906}"
 EndProject
@@ -988,18 +986,6 @@ Global
 		{FF20B269-4CCE-5021-D456-F9A920252219}.Release|x64.Build.0 = Release|Any CPU
 		{FF20B269-4CCE-5021-D456-F9A920252219}.Release|x86.ActiveCfg = Release|Any CPU
 		{FF20B269-4CCE-5021-D456-F9A920252219}.Release|x86.Build.0 = Release|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Debug|x64.Build.0 = Debug|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Debug|x86.Build.0 = Debug|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Release|x64.ActiveCfg = Release|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Release|x64.Build.0 = Release|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Release|x86.ActiveCfg = Release|Any CPU
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7}.Release|x86.Build.0 = Release|Any CPU
 		{C7B05250-C255-050A-653C-0613FEDF2906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C7B05250-C255-050A-653C-0613FEDF2906}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7B05250-C255-050A-653C-0613FEDF2906}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -1386,7 +1372,6 @@ Global
 		{441D5A49-ADB5-4F61-8B5E-A477ACF2083C} = {466C809B-2459-4588-A92C-3D2DEF80B84C}
 		{528C5456-003B-3F85-A996-519381516870} = {B2A9BC6A-3E80-4D51-A37B-9DA316EABDC0}
 		{FF20B269-4CCE-5021-D456-F9A920252219} = {244F8BFE-0438-4B3D-BB0D-C37B91C9BE04}
-		{F6FDCCEA-4729-A338-C1D9-0BA404FD5AF7} = {244F8BFE-0438-4B3D-BB0D-C37B91C9BE04}
 		{C7B05250-C255-050A-653C-0613FEDF2906} = {3F75BEA6-1088-4505-A7B2-133971CEB90A}
 		{FB2AF525-DB30-9E37-FCF0-56EA5BB0C682} = {3F75BEA6-1088-4505-A7B2-133971CEB90A}
 		{2013BE4E-09C9-BCB7-FF0A-10B64873FAD1} = {3F75BEA6-1088-4505-A7B2-133971CEB90A}

@@ -228,6 +228,9 @@ namespace Alternet.UI
                     {
                         var exception = GetException();
 
+                        if(exception is OperationCanceledException)
+                            return;
+
                         if (ExceptionLoggerIgnored(exception.GetType()))
                             return;
 

@@ -439,15 +439,18 @@ namespace Alternet.UI
                 return;
             }
 
-            var images = Alternet.UI.MauiUtils.ImageSourceFromSvg(svg, size);
-
-            if (images is not null)
+            Alternet.UI.App.Invoke(() =>
             {
-                button.SetAppTheme<ImageSource>(
-                    Microsoft.Maui.Controls.ImageButton.SourceProperty,
-                    images.Value.Light,
-                    images.Value.Dark);
-            }
+                var images = Alternet.UI.MauiUtils.ImageSourceFromSvg(svg, size);
+
+                if (images is not null)
+                {
+                    button.SetAppTheme<ImageSource>(
+                        Microsoft.Maui.Controls.ImageButton.SourceProperty,
+                        images.Value.Light,
+                        images.Value.Dark);
+                }
+            });
         }
 
         /// <summary>

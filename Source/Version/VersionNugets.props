@@ -8,12 +8,12 @@
 	<SkiaSharpVersion>3.116.1</SkiaSharpVersion>
 	<SkiaSharpExtendedVersion>3.0.0-preview.13</SkiaSharpExtendedVersion>
 	<SvgSkiaVersion>3.0.0</SvgSkiaVersion>
-	<SkiaSharpExtendedIconifyVersion>1.60.0</SkiaSharpExtendedIconifyVersion>
-	<SkiaSharpExtendedIconifyFontAwesomeVersion>5.0.0</SkiaSharpExtendedIconifyFontAwesomeVersion>
 
-	<MicrosoftMauiVersion>9.0.30</MicrosoftMauiVersion>
-	<CommunityToolkitMauiVersion>10.0.0</CommunityToolkitMauiVersion>
+	<MicrosoftMauiVersion>10.0.10</MicrosoftMauiVersion>
+	<CommunityToolkitMauiVersion>13.0.0</CommunityToolkitMauiVersion>
 
+<!--
     	<WindowsSdkPackageVersion>10.0.19041.52</WindowsSdkPackageVersion>
+-->
   </PropertyGroup>
 </Project>
