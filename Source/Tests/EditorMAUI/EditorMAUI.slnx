@@ -1,0 +1,218 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/DebuggerOld/">
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/corapi/corapi.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/mdbgeng/mdbgeng.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/NativeDebugWrappers/NativeDebugWrappers.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/raw/raw.csproj" />
+  </Folder>
+  <Folder Name="/Editor/">
+    <Project Path="../../../../AlternetStudio/Source/Common.AlternetUI/Alternet.Common.AlternetUI.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Common.Winforms/Alternet.Common.Winforms.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Common/Alternet.Common.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Editor/Alternet.Editor.AlternetUI.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Libraries.AlternetUI/Editor.Common.AlternetUI/Alternet.Editor.Common.AlternetUI.csproj" />
+  </Folder>
+  <Folder Name="/EditorDemoPages/" />
+  <Folder Name="/EditorDemoPages/Editor/">
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Bookmarks/Bookmarks.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/CodeCompletion/CodeCompletion.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/CodeOutlining/CodeOutlining.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/CodeSnippets/CodeSnippets.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Customize/Customize.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Gutter/Gutter.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/HyperText/HyperText.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/LineStyles/LineStyles.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Margin/Margin.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Miscellaneous/Miscellaneous.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/SearchReplace/SearchReplace.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Selection/Selection.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/SelectionAnchors/SelectionAnchors.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/SyntaxHighlighting/SyntaxHighlighting.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/UndoRedo/UndoRedo.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/VisualTheme/VisualTheme.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/WordWrap/WordWrap.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/EditorDemoPages/Parsers/">
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Parsers/AdvancedSyntaxParsing/AdvancedSyntaxParsing.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Parsers/PowerFXSyntaxParsing/PowerFXSyntaxParsing.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Parsers/RoslynSyntaxParsing/RoslynSyntaxParsing.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Parsers/SQLDOMParser/SQLDOMParser.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Parsers/TextMateParsing/TextMateParsing.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Parsers/TypeScriptParsing/TypeScriptParsing.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/Parsers/XAMLParsing/XamlParsing.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/EditorDemoPages/Scripter.CSharp/">
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CallMethod/CallMethod.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CustomAssembly/CustomAssembly.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CustomAssembly/ExternalAssembly/ExternalAssembly/ExternalAssembly.csproj" />
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ExpressionEvaluation/ExpressionEvaluation.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/IsolatedScript/IsolatedScript.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ObjectReference/ObjectReference.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/Threading/Threading.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/EditorDemoPages/Scripter.Python/">
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CallMethod.Python/CallMethod.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ObjectReference.Python/ObjectReference.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/EditorDemoPages/Scripter.TypeScript/">
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CallMethod.TypeScript/CallMethod.TypeScript.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ObjectReference.TypeScript/ObjectReference.TypeScript.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/Maui.Scripter/">
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.MAUI/QuickStarts/AllQuickStarts/AllQuickStarts.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.MAUI/QuickStarts/Debugger/DebuggerIntegration.Python/DebuggerIntegration.Python.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.MAUI/QuickStarts/Debugger/DebuggerIntegration/DebuggerIntegration.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Source/Libraries.MAUI/Scripter.Integration.MAUI/Alternet.Scripter.Integration.MAUI.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/UI.MAUI/Alternet.Scripter.Debugger.UI.MAUI.csproj" />
+  </Folder>
+  <Folder Name="/Maui/">
+    <Project Path="../../../../AlternetStudio/Demo/Editor.MAUI/AllQuickStarts/AllQuickStarts.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Source/Editor.MAUI/Alternet.Editor.MAUI.csproj" />
+    <Project Path="../../Alternet.UI.Maui/Alternet.UI.Maui.csproj" />
+    <Project Path="../MauiControlsTest/MauiControlsTest.csproj">
+      <Deploy />
+    </Project>
+    <Project Path="../MauiTest/MauiTest.csproj">
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/Other/">
+    <Project Path="../../../../AlternetStudio/Source/ProviderAi/Common/Alternet.ProviderAi.Common.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/Scripter/">
+    <Project Path="../../../../AlternetStudio/Source/Common/Python/Alternet.Common.Python.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Common/TypeScript/Alternet.Common.TypeScript.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Libraries.AlternetUI/Scripter.Integration.AlternetUI/Alternet.Scripter.Integration.AlternetUI.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter.Python/Alternet.Scripter.Python.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter.Python/Debugger/Alternet.Scripter.Python.Debugger.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter.Python/Scripter.Python.Embedded/Alternet.Scripter.Python.Embedded.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter.TypeScript/Alternet.Scripter.TypeScript.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter.TypeScript/Thirdparty/BaristaLabs.ChromeDevTools.Runtime/BaristaLabs.ChromeDevTools.Runtime.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter.TypeScript/Thirdparty/SourcemapToolkit.SourcemapParser/SourcemapToolkit.SourcemapParser.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Alternet.Scripter.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Common/Alternet.Scripter.Common.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/Alternet.Scripter.Debugger.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/Common/Alternet.Scripter.Debugger.Common.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/UI.AlternetUI/Alternet.Scripter.Debugger.UI.AlternetUI.csproj" />
+  </Folder>
+  <Folder Name="/SyntaxParsers/">
+    <Project Path="../../../../AlternetStudio/Source/Parsers/Advanced/Alternet.Syntax.Parsers.Advanced.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/Alternet.Syntax.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/Generic/Alternet.Syntax.Parsers.Generic.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/PowerFX/Alternet.Syntax.Parsers.PowerFX.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/Python/Alternet.Syntax.Parsers.Advanced.Python.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/Roslyn/Alternet.Syntax.Parsers.Roslyn.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/TextMate/Alternet.Syntax.Parsers.TextMate.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/TypeScript/Alternet.Syntax.Parsers.TypeScript.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Parsers/Xaml/Alternet.Syntax.Parsers.Xaml.csproj" />
+  </Folder>
+  <Folder Name="/UI/">
+    <Project Path="../../../../AlternetStudio/Demo/Editor.AlternetUI/AllQuickStarts/AllQuickStarts.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/Debugger/DebuggerIntegration.Python/DebuggerIntegration.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/Debugger/DebuggerIntegration/DebuggerIntegration.csproj">
+      <BuildDependency Project="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../Alternet.UI.Common/Alternet.UI.Common.csproj" />
+    <Project Path="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" Id="79f2529c-c711-457a-9087-325c333cde60" />
+    <Project Path="../../Alternet.UI/Alternet.UI.csproj">
+      <BuildDependency Project="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="../../Samples/ApiDocDll/ApiDocDll.csproj" />
+    <Project Path="../../Samples/ControlsSample/ControlsSample.csproj">
+      <BuildDependency Project="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="../../Samples/ControlsSampleDll/ControlsSampleDll.csproj" />
+  </Folder>
+</Solution>
