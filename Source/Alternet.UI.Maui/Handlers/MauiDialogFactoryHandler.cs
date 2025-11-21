@@ -151,7 +151,7 @@ namespace Alternet.UI
             switch (info.Buttons)
             {
                 case MessageBoxButtons.OK:
-                    var t = page.DisplayAlert(caption, text, strings.ButtonOk)
+                    var t = page.DisplayAlertAsync(caption, text, strings.ButtonOk)
                     .ContinueWith((t) =>
                     {
                         Alternet.UI.App.Invoke(() =>
@@ -192,7 +192,7 @@ namespace Alternet.UI
 
             void ShowWithTwoButtons(string button1, string button2, DialogResult result1, DialogResult result2)
             {
-                page.DisplayAlert(caption, text, button1, button2)
+                page.DisplayAlertAsync(caption, text, button1, button2)
                 .ContinueWith((t) =>
                 {
                     bool result = t.Result;

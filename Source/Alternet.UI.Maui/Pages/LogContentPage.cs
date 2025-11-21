@@ -21,7 +21,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
     private static Alternet.UI.BaseDictionary<string, Action>? actions;
     private static Alternet.UI.BaseDictionary<string, Action>? testActions;
 
-    private readonly ListView listView;
+    private readonly CollectionView listView;
     private readonly TitleWithTwoButtonsView titleView;
 
     static LogContentPage()
@@ -48,9 +48,11 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
         ObservableCollection<string> itemsClone = new(itemsArray);
 
-        listView = new ListView
+        listView = new CollectionView
         {
             ItemsSource = itemsClone,
+
+            /*
             ItemTemplate = new DataTemplate(() =>
             {
                 var label = new Label
@@ -62,8 +64,9 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
 
                 label.SetBinding(Label.TextProperty, ".");
 
-                return new ViewCell { View = label };
+                return label;
             }),
+            */
         };
 
         Content = listView;
@@ -158,7 +161,7 @@ public partial class LogContentPage : Alternet.UI.DisposableContentPage
     {
         string[] buttons = actions.Keys.Order().ToArray();
 
-        string actionTitle = await DisplayActionSheet(
+        string actionTitle = await DisplayActionSheetAsync(
             title,
             "Cancel",
             null,

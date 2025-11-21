@@ -12,12 +12,12 @@ using Microsoft.Maui.Controls;
 namespace Alternet.Maui
 {
     /// <summary>
-    /// Represents a log view which internally uses <see cref="ListView"/>.
+    /// Represents a log view which internally uses <see cref="CollectionView"/>.
     /// </summary>
     internal partial class ListLogView : BaseLogView
     {
         private readonly ObservableCollection<LogItem> logItems = new();
-        private readonly ListView collectionView = new();
+        private readonly CollectionView collectionView = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListLogView"/> class.
@@ -25,6 +25,7 @@ namespace Alternet.Maui
         public ListLogView()
         {
             collectionView.ItemsSource = logItems;
+            collectionView.SelectionMode = SelectionMode.Single;
             collectionView.VerticalScrollBarVisibility = ScrollBarVisibility.Always;
             collectionView.HorizontalScrollBarVisibility = ScrollBarVisibility.Always;
 
@@ -49,7 +50,7 @@ namespace Alternet.Maui
             LogItem item = new(s);
             logItems.Add(item);
             collectionView.SelectedItem = item;
-            collectionView.ScrollTo(item, ScrollToPosition.MakeVisible, false);
+            collectionView.ScrollTo(item, -1, ScrollToPosition.MakeVisible, false);
         }
     }
 }

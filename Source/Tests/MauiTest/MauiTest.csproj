@@ -30,6 +30,7 @@
     <RootNamespace>SpinPaint</RootNamespace>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 

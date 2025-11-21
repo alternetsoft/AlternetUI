@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets id of the application thread.
         /// </summary>
-        public static readonly int AppThreadId = Thread.CurrentThread.ManagedThreadId;
+        public static readonly int AppThreadId = Environment.CurrentManagedThreadId;
 
         /// <summary>
         /// Returns true if operating system is Windows.
@@ -362,7 +362,7 @@ namespace Alternet.UI
         /// Gets whether current thread is the thread which was used to initialize the application.
         /// It is better to use platform specific ways to get whether current thread is UI thread.
         /// </summary>
-        public static bool IsAppThread => Thread.CurrentThread.ManagedThreadId == AppThreadId;
+        public static bool IsAppThread => Environment.CurrentManagedThreadId == AppThreadId;
 
         /// <summary>
         /// Gets top-most modal dialog or Null if no modal dialogs are shown.
@@ -2361,6 +2361,13 @@ namespace Alternet.UI
         public virtual void SetUseBestVisual(bool flag, bool forceTrueColor = false)
         {
             SystemSettings.Handler.SetUseBestVisual(flag, forceTrueColor);
+        }
+
+#pragma warning disable
+        [ModuleInitializer]
+#pragma warning restore
+        internal static void Initialization()
+        {
         }
 
         internal static void WriteToLogFileIfAllowed(string? msg)
