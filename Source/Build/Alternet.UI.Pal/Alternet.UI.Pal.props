@@ -5,7 +5,7 @@
 
     <PropertyGroup>
 	    <DotNetRunSuffix>net8.0</DotNetRunSuffix>
-	<DevenvPath>C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.com</DevenvPath>	
+	<DevenvPath>C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\devenv.com</DevenvPath>	
     </PropertyGroup>
  
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
