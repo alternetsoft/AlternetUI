@@ -4,7 +4,6 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
-  <Import Project="..\Version\StyleCopAnalyzers.props" />
   <Import Project="..\Version\TargetFrameworks.props" />
 
   <PropertyGroup Condition="'$(Configuration)' == 'Release' and '$(TargetFramework)' == 'net8.0'">

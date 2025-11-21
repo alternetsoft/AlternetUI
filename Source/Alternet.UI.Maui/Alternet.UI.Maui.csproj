@@ -4,7 +4,6 @@
   <Import Project="..\Version\VersionNugets.props" />
   <Import Project="..\Keys\Keys.props" />
   <Import Project="..\Version\CommonPackages.props" />
-  <Import Project="..\Version\StyleCopAnalyzers.props" />
 
   <PropertyGroup>
 
@@ -20,11 +19,6 @@
 
 
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-<!--
-    <TargetFrameworks>net9.0-maccatalyst;net9.0-ios;net9.0-android</TargetFrameworks>
-    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net9.0-windows10.0.19041.00</TargetFrameworks>
--->
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);NETSDK1206;CS8002;NU1608</NoWarn>
     <Platforms>AnyCPU</Platforms>
@@ -64,7 +58,7 @@
 
     <PackageReference Include="CommunityToolkit.Maui" Version="$(CommunityToolkitMauiVersion)" />
 
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(AlternetUIPackagesBuild)' != ''">
