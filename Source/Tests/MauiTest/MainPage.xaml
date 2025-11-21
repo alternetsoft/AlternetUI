@@ -6,16 +6,8 @@
              x:Class="SpinPaint.MainPage"
              Title="Alternet.UI MauiTest">
     <Grid RowDefinitions="Auto,*,Auto">
-        <ListView x:Name="logControl" 
-                           Grid.Row="0"
-                  HeightRequest="350"
-                  >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Text}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <CollectionView x:Name="logControl"  Grid.Row="0" HeightRequest="350"/>
+
         <StackLayout x:Name="panel" Grid.Row="1">
             <alternet:ControlView x:Name="skiaContainer"/>
         </StackLayout>

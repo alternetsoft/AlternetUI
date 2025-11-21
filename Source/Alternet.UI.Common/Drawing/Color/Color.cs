@@ -101,7 +101,7 @@ namespace Alternet.Drawing
         private string? name;
 
         // Ignored, unless "state" says it is valid
-        private KnownColor knownColor;  
+        private KnownColor knownColor;
 
         private ColorStruct color;
         private StateFlags state;

@@ -24,7 +24,7 @@ public partial class ToolBarTestPage : ContentPage
             Alternet.UI.KnownSvgImages.ImgArrowDown,
             async () =>
             {
-                await DisplayAlert("Title", "Message", "OK");
+                await DisplayAlertAsync("Title", "Message", "OK");
             });
 
         var btn2 = toolbar.AddButton("Settings");

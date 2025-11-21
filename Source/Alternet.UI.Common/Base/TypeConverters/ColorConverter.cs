@@ -68,61 +68,6 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>Determines if this converter can convert an object in the given source type
-        /// to the native type of the converter.</summary>
-        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
-        /// format context. You can use this object to get additional information about
-        /// the environment from which this converter is being invoked. </param>
-        /// <param name="sourceType">The type from which you want to convert. </param>
-        /// <returns>
-        ///     <see langword="true" /> if this object can perform the conversion; otherwise,
-        ///     <see langword="false" />.</returns>
-        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type? sourceType)
-        {
-            if (sourceType == null)
-                return false;
-            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
-        }
-
-        /// <summary>Returns a value indicating whether this converter can convert an object to
-        /// the given destination type using the context.</summary>
-        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
-        /// format context. </param>
-        /// <param name="destinationType">A <see cref="System.Type" /> that represents the
-        /// type to which you want to convert. </param>
-        /// <returns>
-        ///     <see langword="true" /> if this converter can perform the operation; otherwise,
-        ///     <see langword="false" />.</returns>
-        public override bool CanConvertTo(
-            ITypeDescriptorContext? context,
-            Type? destinationType)
-        {
-            return destinationType == typeof(InstanceDescriptor) ||
-                base.CanConvertTo(context, destinationType);
-        }
-
-        /// <summary>Converts the given object to the converter's native type.</summary>
-        /// <param name="context">A <see cref="TypeDescriptor" /> that provides a format context.
-        /// You can use this object to get additional information about the environment from
-        /// which this converter is being invoked. </param>
-        /// <param name="culture">A <see cref="System.Globalization.CultureInfo" /> that
-        /// specifies the culture to represent the color. </param>
-        /// <param name="value">The object to convert. </param>
-        /// <returns>An <see cref="object" /> representing the converted
-        /// value.</returns>
-        /// <exception cref="System.ArgumentException">The conversion cannot be
-        /// performed.</exception>
-        public override object? ConvertFrom(
-            ITypeDescriptorContext? context,
-            CultureInfo? culture,
-            object value)
-        {
-            if (value is string text)
-                return ColorFromString(context, culture, text);
-            else
-                return base.ConvertFrom(context, culture, value);
-        }
-
         /// <summary>
         /// Converts the specified color to its string representation, using the provided context and culture
         /// information if available.
@@ -190,6 +135,61 @@ namespace Alternet.Drawing
             array[num++] =
                 converter.ConvertToString(context, culture, v.Blue)!;
             return string.Join(separator, array);
+        }
+
+        /// <summary>Determines if this converter can convert an object in the given source type
+        /// to the native type of the converter.</summary>
+        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
+        /// format context. You can use this object to get additional information about
+        /// the environment from which this converter is being invoked. </param>
+        /// <param name="sourceType">The type from which you want to convert. </param>
+        /// <returns>
+        ///     <see langword="true" /> if this object can perform the conversion; otherwise,
+        ///     <see langword="false" />.</returns>
+        public override bool CanConvertFrom(ITypeDescriptorContext? context, Type? sourceType)
+        {
+            if (sourceType == null)
+                return false;
+            return sourceType == typeof(string) || base.CanConvertFrom(context, sourceType);
+        }
+
+        /// <summary>Returns a value indicating whether this converter can convert an object to
+        /// the given destination type using the context.</summary>
+        /// <param name="context">An <see cref="ITypeDescriptorContext" /> that provides a
+        /// format context. </param>
+        /// <param name="destinationType">A <see cref="System.Type" /> that represents the
+        /// type to which you want to convert. </param>
+        /// <returns>
+        ///     <see langword="true" /> if this converter can perform the operation; otherwise,
+        ///     <see langword="false" />.</returns>
+        public override bool CanConvertTo(
+            ITypeDescriptorContext? context,
+            Type? destinationType)
+        {
+            return destinationType == typeof(InstanceDescriptor) ||
+                base.CanConvertTo(context, destinationType);
+        }
+
+        /// <summary>Converts the given object to the converter's native type.</summary>
+        /// <param name="context">A <see cref="TypeDescriptor" /> that provides a format context.
+        /// You can use this object to get additional information about the environment from
+        /// which this converter is being invoked. </param>
+        /// <param name="culture">A <see cref="System.Globalization.CultureInfo" /> that
+        /// specifies the culture to represent the color. </param>
+        /// <param name="value">The object to convert. </param>
+        /// <returns>An <see cref="object" /> representing the converted
+        /// value.</returns>
+        /// <exception cref="System.ArgumentException">The conversion cannot be
+        /// performed.</exception>
+        public override object? ConvertFrom(
+            ITypeDescriptorContext? context,
+            CultureInfo? culture,
+            object value)
+        {
+            if (value is string text)
+                return ColorFromString(context, culture, text);
+            else
+                return base.ConvertFrom(context, culture, value);
         }
 
         /// <summary>Converts the specified object to another type. </summary>

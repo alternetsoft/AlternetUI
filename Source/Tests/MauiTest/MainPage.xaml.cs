@@ -29,6 +29,8 @@ public partial class MainPage : ContentPage
 
         InitializeComponent();
 
+        logControl.SelectionMode = SelectionMode.Single;
+
         customDrawControl = new();
         customDrawControl.Name = "customDrawControl";
 
