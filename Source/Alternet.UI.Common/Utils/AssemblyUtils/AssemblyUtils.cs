@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,11 +19,49 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Delegate for overriding native library loading. Used in <see cref="AssemblyUtils.NativeLibraryLoadOverride"/> property.
+    /// </summary>
+    /// <param name="libraryPath">The path to the native library.</param>
+    /// <returns>The handle to the loaded native library.</returns>
+    public delegate IntPtr NativeLibraryLoadDelegate(string libraryPath);
+
+    /// <summary>
+    /// Delegate for trying to load native library.
+    /// </summary>
+    /// <param name="libraryPath">The path to the native library.</param>
+    /// <param name="handle">The handle to the loaded native library.</param>
+    /// <returns><c>true</c> if the library was loaded successfully; otherwise, <c>false</c>.</returns>
+    public delegate bool NativeLibraryTryLoadDelegate(string libraryPath, out IntPtr handle);
+
+    /// <summary>
+    /// Delegate for loading native library.
+    /// </summary>
+    public delegate IntPtr NativeLibraryLoadDelegate2(
+                string libraryName,
+                Assembly assembly,
+                DllImportSearchPath? searchPath);
+
+    /// <summary>
     /// Contains <see cref="Assembly"/>, <see cref="PropertyInfo"/> and <see cref="Type"/>
     /// related static methods.
     /// </summary>
     public static partial class AssemblyUtils
     {
+        /// <summary>
+        /// Gets or sets delegate for overriding native library loading.
+        /// </summary>
+        public static NativeLibraryLoadDelegate? NativeLibraryLoadOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets delegate for trying to load native library.
+        /// </summary>
+        public static NativeLibraryTryLoadDelegate? NativeLibraryTryLoadOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets delegate for loading native library.
+        /// </summary>
+        public static NativeLibraryLoadDelegate2? NativeLibraryLoadOverride2 { get; set; }
+
         /// <summary>
         /// Gets default binding flags.
         /// </summary>
@@ -2202,6 +2241,88 @@ namespace Alternet.UI
                 App.LogError(e);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Tries to load native library using NativeLibrary.TryLoad.
+        /// </summary>
+        /// <param name="libraryPath">The path to the library to load.</param>
+        /// <param name="handle">The handle to the loaded library.</param>
+        /// <returns><c>true</c> if the library was loaded successfully; otherwise, <c>false</c>.</returns>
+        public static bool NativeLibraryTryLoad(string libraryPath, out IntPtr handle)
+        {
+            if (NativeLibraryTryLoadOverride is not null)
+                return NativeLibraryTryLoadOverride(libraryPath, out handle);
+            return NativeLibrary.TryLoad(libraryPath, out handle);
+        }
+
+        /// <summary>
+        /// Loads native library using NativeLibrary.Load.
+        /// </summary>
+        /// <param name="libraryName">The name of the library to load.</param>
+        /// <param name="assembly">The assembly loading the native library.</param>
+        /// <param name="searchPath">The search path for the library.</param>
+        /// <returns>The handle to the loaded library.</returns>
+        public static IntPtr NativeLibraryLoad(
+            string libraryName,
+            Assembly assembly,
+            DllImportSearchPath? searchPath)
+        {
+            if (NativeLibraryLoadOverride2 is not null)
+                return NativeLibraryLoadOverride2(libraryName, assembly, searchPath);
+            return NativeLibrary.Load(libraryName, assembly, searchPath);
+        }
+
+        /// <summary>
+        /// Loads native library using NativeLibrary.Load.
+        /// </summary>
+        /// <param name="libraryPath"></param>
+        /// <returns></returns>
+        public static IntPtr NativeLibraryLoad(string libraryPath)
+        {
+            if (NativeLibraryLoadOverride is not null)
+                return NativeLibraryLoadOverride(libraryPath);
+
+            var result = NativeLibrary.TryLoad(libraryPath, out nint handle);
+            if (result)
+                return handle;
+
+            throw new DllNotFoundException($"Cannot load native library '{libraryPath}'.");
+        }
+
+        /// <summary>
+        /// Sets DllImport resolver using the specified method of the given type.
+        /// </summary>
+        /// <param name="type">The type whose method will be used as a DllImport resolver</param>
+        /// <param name="methodName">The name of the method to use as a DllImport resolver</param>
+        /// <returns></returns>
+        public static bool SetMyDllImportResolver(Type type, string methodName)
+        {
+            MethodInfo? methodNativeLibrarySetDllImportResolver = null;
+
+            var method = type.GetMethod(
+                methodName,
+                BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+            if (method is null)
+                return false;
+
+            var delegateType = KnownTypes.InteropServicesDllImportResolver.Value;
+            if (delegateType is null)
+                return false;
+
+            var func = Delegate.CreateDelegate(delegateType, method);
+
+            if (func is null)
+                return false;
+
+            AssemblyUtils.InvokeMethodWithResult(
+                        KnownTypes.InteropServicesNativeLibrary.Value,
+                        "SetDllImportResolver",
+                        ref methodNativeLibrarySetDllImportResolver,
+                        null,
+                        [type.Assembly, func]);
+
+            return true;
         }
 
         /// <summary>
