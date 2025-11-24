@@ -19,6 +19,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Binds an initializer action to execute after the specified form is first
+        /// shown and its message loop has started.
+        /// </summary>
+        /// <remarks>This method ensures that the provided action runs only once, immediately after the
+        /// form's initial display and after its message loop is active. This can be useful for initialization tasks
+        /// that require the form to be fully loaded and visible. The action is invoked via a timer to
+        /// guarantee that the form's handle and layout are ready.</remarks>
+        /// <param name="form">The form to which the initializer action will be bound. Cannot be null.</param>
+        /// <param name="action">The action to execute after the form is displayed. Cannot be null.</param>
+        public static void BindShown(Window form, Action action)
+        {
+            form.Shown += FormShown;
+
+            void FormShown(object? sender, EventArgs e)
+            {
+                form.Shown -= FormShown;
+
+                var t = new Timer { Interval = 1 };
+                t.Tick += (s, ea) =>
+                {
+                    t.Stop();
+                    t.Dispose();
+                    action();
+                };
+
+                t.Start();
+            }
+        }
+
+        /// <summary>
         /// Gets a hidden, borderless window positioned off-screen.
         /// If such a window is not already created, it creates one.
         /// </summary>

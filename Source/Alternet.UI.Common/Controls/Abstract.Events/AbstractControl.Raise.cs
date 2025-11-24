@@ -1120,9 +1120,23 @@ namespace Alternet.UI
             }
 
             if (visible)
+            {
                 AfterShow?.Invoke(this, e);
+
+                if (!shownCalled)
+                {
+                    if (VisibleOnScreen)
+                    {
+                        shownCalled = true;
+                        OnShown(e);
+                        Shown?.Invoke(this, e);
+                    }
+                }
+            }
             else
+            {
                 AfterHide?.Invoke(this, e);
+            }
 
             RaiseNotifications((n) => n.AfterVisibleChanged(this, e));
         }

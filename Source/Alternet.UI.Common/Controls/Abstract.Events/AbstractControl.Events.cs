@@ -327,6 +327,15 @@ namespace Alternet.UI
         public event EventHandler? AfterShow;
 
         /// <summary>
+        /// Occurs when the control is first displayed.
+        /// </summary>
+        /// <remarks>This event is raised after the control becomes visible to the user. Handlers can use
+        /// this event to perform initialization or actions that should occur when the control is shown. This event is
+        /// only triggered once per control instance.</remarks>
+        [Category("Appearance")]
+        public event EventHandler? Shown;
+
+        /// <summary>
         /// Occurs after control was hidden.
         /// </summary>
         [Category("Appearance")]

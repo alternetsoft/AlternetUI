@@ -656,6 +656,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the control is shown for the first time.
+        /// </summary>
+        /// <param name="e"></param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnShown(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the enabled of the <see cref="Enabled"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the

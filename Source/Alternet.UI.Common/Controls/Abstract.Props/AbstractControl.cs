@@ -59,6 +59,7 @@ namespace Alternet.UI
         private static List<IControlNotification> globalNotifications = new();
 
         private bool enabled = true;
+        private bool shownCalled;
         private bool isMouseLeftButtonDown;
         private bool parentBackgroundColor;
         private bool parentForegroundColor;
@@ -463,6 +464,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public PointD LastMouseDownPos => lastMouseDownPos;
+
+        /// <summary>
+        /// Gets a value indicating whether the form has been shown at least once.
+        /// </summary>
+        [Browsable(false)]
+        public bool ShownEventCalled => shownCalled;
 
         /// <summary>
         /// Gets or sets whether <see cref="LongTap"/> event is raised.
