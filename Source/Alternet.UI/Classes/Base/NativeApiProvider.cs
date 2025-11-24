@@ -21,7 +21,6 @@ namespace Alternet.UI.Native
 
         internal static IntPtr libHandle = default;
 
-        private static MethodInfo? methodNativeLibrarySetDllImportResolver;
         private static MethodInfo? methodNativeLibraryLoad;
         private static MethodInfo? methodNativeLibraryTryLoad;
 
@@ -50,27 +49,8 @@ namespace Alternet.UI.Native
             {
                 var myType = typeof(NativeApiProvider);
 
-                var method = myType.GetMethod(
-                    nameof(ImportResolver),
-                    BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
-                if(method is null)
+                if (!AssemblyUtils.SetMyDllImportResolver(myType, nameof(ImportResolver)))
                     return;
-
-                var delegateType = KnownTypes.InteropServicesDllImportResolver.Value;
-                if (delegateType is null)
-                    return;
-
-                var func = Delegate.CreateDelegate(delegateType, method);
-
-                if (func is null)
-                    return;
-
-                AssemblyUtils.InvokeMethodWithResult(
-                            KnownTypes.InteropServicesNativeLibrary.Value,
-                            "SetDllImportResolver",
-                            ref methodNativeLibrarySetDllImportResolver,
-                            null,
-                            [typeof(NativeApiProvider).Assembly, func]);
 
                 Debug.Assert(
                     !unhandledExceptionCallbackHandle.IsAllocated,
@@ -131,56 +111,6 @@ namespace Alternet.UI.Native
             }
         }
 
-        internal static bool NativeLibraryTryLoad(string libraryPath, out IntPtr handle)
-        {
-            IntPtr h = IntPtr.Zero;
-            object[] parameters = new object[] { libraryPath, h };
-
-            var result = (bool?)AssemblyUtils.InvokeMethodWithResult(
-                        KnownTypes.InteropServicesNativeLibrary.Value,
-                        "TryLoad",
-                        ref methodNativeLibraryTryLoad,
-                        null,
-                        parameters,
-                        [typeof(string), typeof(IntPtr).MakeByRefType()])
-                ?? default;
-
-            handle = (IntPtr)parameters[1];
-            return result;
-        }
-
-        internal static IntPtr NativeLibraryLoad(
-            string libraryName,
-            Assembly assembly,
-            DllImportSearchPath? searchPath)
-        {
-            return (IntPtr?)AssemblyUtils.InvokeMethodWithResult(
-                        KnownTypes.InteropServicesNativeLibrary.Value,
-                        "Load",
-                        ref methodNativeLibraryLoad,
-                        null,
-                        [libraryName, assembly, searchPath!],
-                        [typeof(string), typeof(Assembly), typeof(DllImportSearchPath?)])
-                ?? default;
-        }
-
-        internal static IntPtr NativeLibraryLoad(string libraryPath)
-        {
-            if (App.IsNetOrCoreApp)
-            {
-                return (IntPtr?)AssemblyUtils.InvokeMethodWithResult(
-                            KnownTypes.InteropServicesNativeLibrary.Value,
-                            "Load",
-                            ref methodNativeLibraryLoad,
-                            null,
-                            [libraryPath],
-                            [typeof(string)])
-                    ?? default;
-            }
-
-            return default;
-        }
-
         internal static IntPtr ImportResolver(
             string libraryName,
             Assembly assembly,
@@ -230,7 +160,7 @@ namespace Alternet.UI.Native
 
                         if (libraryFileName is null)
                         {
-                            libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
+                            libHandle = AssemblyUtils.NativeLibraryLoad(libraryName, assembly, searchPath);
                         }
                         else
                         {
@@ -246,7 +176,7 @@ namespace Alternet.UI.Native
 
                             if (!loaded)
                             {
-                                libHandle = NativeLibraryLoad(libraryName, assembly, searchPath);
+                                libHandle = AssemblyUtils.NativeLibraryLoad(libraryName, assembly, searchPath);
                             }
                         }
                     }
@@ -254,7 +184,7 @@ namespace Alternet.UI.Native
                     result = libHandle;
                 }
                 else
-                    result = NativeLibraryLoad(libraryName);
+                    result = AssemblyUtils.NativeLibraryLoad(libraryName);
 
                 if (debugResolver)
                 {
@@ -276,7 +206,7 @@ namespace Alternet.UI.Native
                     result = handle != default;
                 }
                 else
-                    result = NativeLibraryTryLoad(libraryPath, out handle);
+                    result = AssemblyUtils.NativeLibraryTryLoad(libraryPath, out handle);
 
                 if (App.IsLinuxOS && debugResolver)
                 {
