@@ -173,3 +173,6 @@ dotnet_diagnostic.SA1121.severity = none
 dotnet_diagnostic.IDE0306.severity = none
 
 dotnet_diagnostic.IDE0070.severity = none
+
+# CA1401: P/Invokes should not be visible
+dotnet_diagnostic.CA1401.severity = none
