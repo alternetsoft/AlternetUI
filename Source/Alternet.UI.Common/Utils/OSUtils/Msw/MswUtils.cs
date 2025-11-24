@@ -350,6 +350,22 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Specifies attributes for Desktop Window Manager (DWM) window settings.
+            /// </summary>
+            /// <param name="DirectoryFlags">The directory flags to set.</param>
+            /// <returns></returns>
+            [DllImport("kernel32", SetLastError = true)]
+            public static extern bool SetDefaultDllDirectories(uint DirectoryFlags);
+
+            /// <summary>
+            /// Adds a directory to the process DLL search path.
+            /// </summary>
+            /// <param name="NewDirectory">The directory to add.</param>
+            /// <returns>A handle to the added directory if successful; otherwise, <see cref="IntPtr.Zero"/>.</returns>
+            [DllImport("kernel32", SetLastError = true)]
+            public static extern IntPtr AddDllDirectory([MarshalAs(UnmanagedType.LPWStr)] string NewDirectory);
+
+            /// <summary>
             /// Creates a memory device context (DC) compatible with the specified device context.
             /// </summary>
             /// <remarks>The memory DC can be used for off-screen drawing and is compatible with the
