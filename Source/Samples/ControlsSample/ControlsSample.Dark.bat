@@ -1,0 +1,1 @@
+ControlsSample.exe -IsDark=true

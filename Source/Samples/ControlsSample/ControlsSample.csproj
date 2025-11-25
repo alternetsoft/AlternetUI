@@ -12,10 +12,17 @@
       <ApplicationIcon>../CommonData/Sample.ico</ApplicationIcon>
       <OutputType>WinExe</OutputType>
       <ApplicationManifest>app.manifest</ApplicationManifest>
-    </PropertyGroup>                 
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="ControlsSample.Dark.bat" />
+    </ItemGroup>                 
 
   <ItemGroup>
     <Content Include="Alternet.Demo.Run.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ControlsSample.Dark.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     </ItemGroup>
