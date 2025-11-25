@@ -21,9 +21,6 @@ namespace Alternet.UI.Native
 
         internal static IntPtr libHandle = default;
 
-        private static MethodInfo? methodNativeLibraryLoad;
-        private static MethodInfo? methodNativeLibraryTryLoad;
-
         private static bool initialized;
         private static GCHandle unhandledExceptionCallbackHandle;
         private static GCHandle caughtExceptionCallbackHandle;
