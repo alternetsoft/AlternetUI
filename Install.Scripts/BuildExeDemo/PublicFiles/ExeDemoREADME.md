@@ -12,9 +12,6 @@ and productivity tools, empowering developers to create powerful desktop applica
 ## Executable demo platforms
 
 - <b>alternet-***-demo-win10-x64-net9</b>. Demo for Windows 10 (X64) Build 1607 or newer using NET 9.0 platform.
-- <b>alternet-***-demo-win10-x86-net9</b>. Demo for Windows 10 (32 bit) Build 1607 or newer using NET 9.0 platform.
-- <b>alternet-***-demo-win7-x64-net462</b>. Demo for Windows 7 (X64) or newer using NET 4.62 platform.
-- <b>alternet-***-demo-win7-x86-net462</b>. Demo for Windows 7 (32 bit) or newer using NET 4.62 platform.
 - <b>alternet-***-demo-macos-x64-net8</b>. Demo for MacOs 10.15 (X64) or newer using NET 8.0 platform.
 - <b>alternet-***-demo-macos-arm64-net9</b>. Demo for MacOs on Arm64 using NET 9.0 platform.
 - <b>alternet-***-demo-ubuntu-x64-net8</b>. Demo for Ubuntu 24.10 (X64) or newer using NET 9.0 platform.
@@ -40,9 +37,6 @@ Read included USAGE.md for the installation details.
 
 ## NET Framework Download Links
 
+- [NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 - [NET 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
 - [NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
-- [NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
-- [NET 4.81](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net481)
-- [NET 4.8](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
-- [NET 4.62](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net462)
