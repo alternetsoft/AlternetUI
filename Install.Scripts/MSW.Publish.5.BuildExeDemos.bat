@@ -1,3 +1,3 @@
 pushd BuildExeDemo
-call build-demo-win-all.bat
+call build-demo-ui.bat
 popd
