@@ -9,6 +9,7 @@ and productivity tools, empowering developers to create powerful desktop applica
 - [Demo for Windows 10 (X64) Build 1607 or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-win10-x64-net9-0.9.800-beta.zip)
 - [Demo for MacOs on Arm64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-macos-arm64-net9-0.9.801-beta.zip)
 - [Demo for Ubuntu 25 (X64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-ubuntu-x64-net9-0.9.801-beta.zip)
+- [Demo for Ubuntu 25 (Arm64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-ubuntu-arm64-net9-0.9.801-beta.zip)
 
 ## Demo Usage
 
