@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.800.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.801.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -1126,6 +1126,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1216,6 +1217,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1295,6 +1297,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1376,6 +1379,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1457,6 +1461,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1538,6 +1543,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1619,6 +1625,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1698,6 +1705,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1779,6 +1787,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1860,6 +1869,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -1940,6 +1950,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2021,6 +2032,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2102,6 +2114,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2181,6 +2194,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2338,6 +2352,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2417,6 +2432,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2496,6 +2512,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2589,6 +2606,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2668,6 +2686,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2854,6 +2873,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -2933,6 +2953,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3013,6 +3034,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3093,6 +3115,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3175,6 +3198,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3258,6 +3282,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3340,6 +3365,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3422,6 +3448,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3503,6 +3530,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3585,6 +3613,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3673,6 +3702,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3755,6 +3785,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3838,6 +3869,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -3923,6 +3955,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4006,6 +4039,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4088,6 +4122,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4169,6 +4204,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4250,6 +4286,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4331,6 +4368,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4412,6 +4450,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4493,6 +4532,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4574,6 +4614,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4655,6 +4696,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4736,6 +4778,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4817,6 +4860,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4899,6 +4943,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -4981,6 +5026,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5063,6 +5109,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5144,6 +5191,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5225,6 +5273,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5306,6 +5355,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5387,6 +5437,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5468,6 +5519,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5549,6 +5601,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5630,6 +5683,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5723,6 +5777,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5802,6 +5857,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5882,6 +5938,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -5968,6 +6025,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6050,6 +6108,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6132,6 +6191,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6219,6 +6279,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6315,6 +6376,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6396,6 +6458,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6477,6 +6540,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6559,6 +6623,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6641,6 +6706,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6724,6 +6790,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6805,6 +6872,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6889,6 +6957,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -6971,6 +7040,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7053,6 +7123,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7135,6 +7206,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7220,6 +7292,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7305,6 +7378,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7390,6 +7464,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7475,6 +7550,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7574,6 +7650,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7667,6 +7744,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7756,6 +7834,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7847,6 +7926,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -7940,6 +8020,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8034,6 +8115,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8125,6 +8207,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8215,6 +8298,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8304,6 +8388,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8386,6 +8471,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8475,6 +8561,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8564,6 +8651,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8651,6 +8739,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8738,6 +8827,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -8929,6 +9019,7 @@
       <Event Name="MarginChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9009,6 +9100,7 @@
       <Event Name="MarginChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9100,6 +9192,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9179,6 +9272,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9260,6 +9354,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9345,6 +9440,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9435,6 +9531,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9523,6 +9620,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9607,6 +9705,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9689,6 +9788,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9772,6 +9872,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9854,6 +9955,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -9952,6 +10054,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10050,6 +10153,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10148,6 +10252,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10246,6 +10351,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10344,6 +10450,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10442,6 +10549,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10540,6 +10648,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10638,6 +10747,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10736,6 +10846,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10834,6 +10945,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -10932,6 +11044,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11014,6 +11127,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11095,6 +11209,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11176,6 +11291,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11257,6 +11373,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11338,6 +11455,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11419,6 +11537,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11519,6 +11638,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11606,6 +11726,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11687,6 +11808,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11772,6 +11894,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11858,6 +11981,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -11946,6 +12070,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12025,6 +12150,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12115,6 +12241,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12200,6 +12327,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12286,6 +12414,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12372,6 +12501,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12458,6 +12588,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12544,6 +12675,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12626,6 +12758,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12712,6 +12845,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12798,6 +12932,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12883,6 +13018,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -12968,6 +13104,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13053,6 +13190,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13139,6 +13277,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13221,6 +13360,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13319,6 +13459,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13404,6 +13545,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13501,6 +13643,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13586,6 +13729,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13667,6 +13811,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13748,6 +13893,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13830,6 +13976,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -13917,6 +14064,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14005,6 +14153,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14095,6 +14244,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14187,6 +14337,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14268,6 +14419,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14349,6 +14501,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14435,6 +14588,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14539,6 +14693,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14639,6 +14794,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14737,6 +14893,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14835,6 +14992,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -14933,6 +15091,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15035,6 +15194,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15218,6 +15378,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15316,6 +15477,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15414,6 +15576,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15512,6 +15675,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15610,6 +15774,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15708,6 +15873,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15806,6 +15972,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -15904,6 +16071,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16002,6 +16170,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16279,6 +16448,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16363,6 +16533,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16449,6 +16620,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16533,6 +16705,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16614,6 +16787,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16700,6 +16874,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16781,6 +16956,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -16822,6 +16998,9 @@
     <Type Name="Alternet.UI.AppUtils" />
     <Type Name="Alternet.UI.DebugUtils" />
     <Type Name="Alternet.UI.AssemblyMetaData" />
+    <Type Name="Alternet.UI.NativeLibraryLoadDelegate" />
+    <Type Name="Alternet.UI.NativeLibraryTryLoadDelegate" />
+    <Type Name="Alternet.UI.NativeLibraryLoadDelegate2" />
     <Type Name="Alternet.UI.AssemblyUtils" />
     <Type Name="Alternet.UI.CodeGeneratorUtils" />
     <Type Name="Alternet.UI.TypeUtils" />
@@ -16986,6 +17165,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -17184,6 +17364,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -17269,6 +17450,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />
@@ -17350,6 +17532,7 @@
       <Event Name="PaddingChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
+      <Event Name="Shown" />
       <Event Name="AfterHide" />
       <Event Name="MouseCaptureLost" />
       <Event Name="MouseCaptureChanged" />

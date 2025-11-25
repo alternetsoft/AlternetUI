@@ -1,3 +1,16 @@
+# 0.9.801 (2025 November 25)
+
+- Add Shown event for controls and form initializer utility method (FormUtils.BindShown). This is can be used if you need to run some method on first form/control show.
+- Add Visual Studio 2026 support to vsix.
+- Update to use MAUI 10.
+- SvgImage: Increase data cache size and improve reset logic.
+- ImageList: Add image export and URL-based constructor.
+- ImageList: Add methods to create horizontal image strips.
+- Support IXmlSerializable in Color.
+- Add Color to/from string conversion for xml or other serialization.
+
+---
+
 # 0.9.800 (2025 November 16)
 
 - Add Net 10 support.
