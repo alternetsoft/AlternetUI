@@ -1,8 +1,6 @@
 sudo apt -y update
 sudo apt -y upgrade 
 
-#sudo apt -y install dotnet-sdk-6.0   
-#sudo apt -y install dotnet-sdk-7.0
 sudo apt -y install dotnet-sdk-8.0
 sudo apt -y install dotnet-sdk-9.0
 sudo apt -y install git
@@ -24,6 +22,7 @@ sudo apt-get install -y gstreamer1.0-gl
 sudo apt-get install -y gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
 sudo apt-get install -y osspd mesa-utils libjpeg-dev liblzma-dev
 
+sudo apt -y install dotnet-sdk-10.0
 
 #wxWidgets Cross-platform C++ GUI toolkit
 #sudo apt-get install -y libwxgtk3.0-gtk3-dev libwxgtk-media3.0-gtk3-dev libwxgtk-webview3.0-gtk3-dev
