@@ -189,6 +189,10 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 			<DemoBuildCmd>dotnet build -c $(TARGET_CONFIG) -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DemoPlatformArg) $(DEMO_ADD_PARAMS)</DemoBuildCmd>
 		</PropertyGroup>
 		<Message Text="Run: $(DemoBuildCmd)" Importance="high"/>
+
+		<Exec WorkingDirectory="$(DEMO_HOME)"
+			Command="dotnet clean" />
+
 		<Exec WorkingDirectory="$(DEMO_HOME)"
 			Command="$(DemoBuildCmd)" />
 
