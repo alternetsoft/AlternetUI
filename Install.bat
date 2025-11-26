@@ -1,4 +1,5 @@
 SETLOCAL EnableDelayedExpansion
+cls
 
 set SCRIPT_HOME=%~dp0.
 

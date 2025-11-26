@@ -48,7 +48,9 @@
     <PathToReplaceInFilesSettings>$(Bindings_RootDirectoryPath)\Tools\Alternet.UI.RunCmd\ReplaceInFilesSettings.xml</PathToReplaceInFilesSettings>
 
     <Bindings_NativeProjectDirectoryPath>$(Bindings_RootDirectoryPath)\Alternet.UI.Pal\</Bindings_NativeProjectDirectoryPath>
+    <Bindings_NativeVcSolutionFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.slnx</Bindings_NativeVcSolutionFilePath>
     <Bindings_NativeVcProjectFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.vcxproj</Bindings_NativeVcProjectFilePath>
+
     <_Bindings_NativeUnixProjectOutputDirectoryPath>$(Bindings_NativeProjectDirectoryPath)\bin\x64\$(NativeBuildConfiguration)</_Bindings_NativeUnixProjectOutputDirectoryPath>
     <Bindings_NativeUnixProjectBuildPath>$(Bindings_NativeProjectDirectoryPath)\build</Bindings_NativeUnixProjectBuildPath>
 
