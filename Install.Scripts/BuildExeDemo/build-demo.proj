@@ -29,6 +29,7 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
   <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
   <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
   <IsWindowsArm64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == Arm64">true</IsWindowsArm64>
+  <TARGET_CONFIG Condition="$(TARGET_CONFIG)==''">Release</TARGET_CONFIG>
 </PropertyGroup>
 
 <PropertyGroup>
@@ -185,7 +186,7 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 			<DemoPlatformArg Condition="$([MSBuild]::IsOsPlatform('OSX'))"></DemoPlatformArg>
 			<DemoPlatformArg Condition="$([MSBuild]::IsOsPlatform('Linux'))"></DemoPlatformArg>
 
-			<DemoBuildCmd>dotnet build -c Release -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DemoPlatformArg) $(DEMO_ADD_PARAMS)</DemoBuildCmd>
+			<DemoBuildCmd>dotnet build -c $(TARGET_CONFIG) -o &quot;$(PUBLISH_FOLDER_SFX)&quot; --framework $(DEMO_FRAMEWORK) $(DemoPlatformArg) $(DEMO_ADD_PARAMS)</DemoBuildCmd>
 		</PropertyGroup>
 		<Message Text="Run: $(DemoBuildCmd)" Importance="high"/>
 		<Exec WorkingDirectory="$(DEMO_HOME)"
