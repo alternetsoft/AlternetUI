@@ -194,6 +194,10 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
       Command="dotnet clean"
       ContinueOnError="true" />
 
+<Exec WorkingDirectory="$(DEMO_HOME)"
+      Command="dotnet restore"
+      ContinueOnError="true" />
+
 		<Exec WorkingDirectory="$(DEMO_HOME)"
 			Command="$(DemoBuildCmd)" />
 
