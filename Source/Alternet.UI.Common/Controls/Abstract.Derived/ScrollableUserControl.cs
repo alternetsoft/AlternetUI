@@ -356,6 +356,47 @@ namespace Alternet.UI
         public override RectD GetOverlayRectangle() => GetPaintRectangle();
 
         /// <summary>
+        /// Retrieves the bounding rectangle of the vertical scroll bar, if present.
+        /// </summary>
+        /// <returns>A <see cref="RectD"/> representing the bounds of the vertical scroll bar, or <see langword="null"/> if the
+        /// scroll bar is not available.</returns>
+        protected RectD? GetVertScrollBarRectangle()
+        {
+            return GetInteriorRectangle(InteriorDrawable.HitTestResult.VertScrollBar);
+        }
+
+        /// <summary>
+        /// Retrieves the bounding rectangle of the horizontal scroll bar, if present.
+        /// </summary>
+        /// <returns>A <see cref="RectD"/> representing the bounds of the horizontal scroll bar, or <see langword="null"/> if the
+        /// scroll bar is not available.</returns>
+        protected virtual RectD? GetHorzScrollBarRectangle()
+        {
+            return GetInteriorRectangle(InteriorDrawable.HitTestResult.HorzScrollBar);
+        }
+
+        /// <summary>
+        /// Retrieves the interior rectangle corresponding to the specified hit test value, if available.
+        /// </summary>
+        /// <param name="hitTest">The hit test value that identifies which interior rectangle to retrieve.</param>
+        /// <returns>A <see cref="RectD"/> representing the interior rectangle for the given hit test result, or
+        /// <see langword="null"/> if no interior is available.</returns>
+        protected virtual RectD? GetInteriorRectangle(InteriorDrawable.HitTestResult hitTest)
+        {
+            if (interior is null)
+                return null;
+
+            var clientR = ClientRectangle;
+
+            interior.Bounds = clientR;
+
+            var rectangles = interior.GetLayoutRectangles(this);
+            var result = rectangles[hitTest];
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the rectangle that represents the paintable area of the control.
         /// </summary>
         /// <returns>
@@ -363,21 +404,8 @@ namespace Alternet.UI
         /// </returns>
         protected virtual RectD GetPaintRectangle()
         {
-            var clientR = ClientRectangle;
-
-            if (interior is null)
-                return clientR;
-
-            interior.Bounds = clientR;
-
-            var rectangles = interior.GetLayoutRectangles(this);
-            var paintRectangle = rectangles[InteriorDrawable.HitTestResult.ClientRect];
-
-            if (HasBorder)
-            {
-            }
-
-            return paintRectangle;
+            var result = GetInteriorRectangle(InteriorDrawable.HitTestResult.ClientRect) ?? ClientRectangle;
+            return result;
         }
 
         /// <inheritdoc/>
