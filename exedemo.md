@@ -4,12 +4,19 @@ AlterNET UI is a free, cross-platform .NET UI framework that provides a native e
 on Windows, macOS, and Linux. It offers a comprehensive set of components, visual controls, 
 and productivity tools, empowering developers to create powerful desktop applications with established .NET standards.
 
-## Demo Download Links
+## AlterNET UI Demo Download Links
 
 - [Demo for Windows 10 (X64) Build 1607 or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-win10-x64-net9-0.9.800-beta.zip)
 - [Demo for MacOs on Arm64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-macos-arm64-net9-0.9.801-beta.zip)
 - [Demo for Ubuntu 25 (X64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-ubuntu-x64-net9-0.9.801-beta.zip)
 - [Demo for Ubuntu 25 (Arm64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-ubuntu-arm64-net9-0.9.801-beta.zip)
+
+## AlterNET Studio on AlterNET UI Demo Download Links
+
+AlterNET Studio is an all-in-one solution for extending your .NET applications with 
+code editing, scripting, and user interface design capabilities.
+
+- [Studio Demo for Windows 10 (X64) Build 1607 or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-win10-x64-net9-10.0.5.zip)
 
 ## Demo Usage
 
