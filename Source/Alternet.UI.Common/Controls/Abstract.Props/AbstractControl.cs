@@ -29,12 +29,6 @@ namespace Alternet.UI
         IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo
     {
         /// <summary>
-        /// Indicates whether context menu is shown internally without using native context menu.
-        /// Default is false.
-        /// </summary>
-        public static bool DefaultUseInternalContextMenu = false;
-
-        /// <summary>
         /// Gets or sets default value for <see cref="ParentFont"/> property.
         /// </summary>
         public static bool DefaultUseParentFont = false;
@@ -163,6 +157,12 @@ namespace Alternet.UI
             Designer?.RaiseCreated(this, EventArgs.Empty);
             RaiseNotifications((n) => n.AfterCreate(this, EventArgs.Empty));
         }
+
+        /// <summary>
+        /// Indicates whether context menu is shown internally without using native context menu.
+        /// Default is false.
+        /// </summary>
+        public static bool DefaultUseInternalContextMenu { get; set; } = App.IsLinuxOS;
 
         /// <summary>
         /// Gets the default foreground color of the control.
