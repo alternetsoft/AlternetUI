@@ -290,40 +290,57 @@ namespace Alternet.UI
             Action? afterShow = null,
             HVDropDownAlignment? dropDownMenuPosition = null)
         {
+            if (DisposingOrDisposed)
+                return;
+            relatedControl.Value = null;
             if (Items.Count == 0)
                 return;
-            relatedControl.Value = control;
+            if (control is null)
+                return;
 
-            var hostControl = GetHostObject<PopupToolBar>();
-
-            if (hostControl is null)
+            try
             {
-                var popupWindow = new PopupToolBar();
-                hostControl = popupWindow;
-                AddHostObject(popupWindow);
-                popupWindow.MainControl.DataContext = this;
-                popupWindow.MainControl.ConfigureAsContextMenu();
+                var e = new CancelEventArgs();
+                RaiseOpening(e);
+                if (e.Cancel)
+                    return;
 
-                popupWindow.Deactivated += (s, e) =>
-                {
-                };
+                relatedControl.Value = control;
 
-                popupWindow.Activated += (s, e) =>
+                var hostControl = GetHostObject<PopupToolBar>();
+
+                if (hostControl is null)
                 {
-                    Post(() =>
+                    var popupWindow = new PopupToolBar();
+                    hostControl = popupWindow;
+                    AddHostObject(popupWindow);
+                    popupWindow.MainControl.DataContext = this;
+                    popupWindow.MainControl.ConfigureAsContextMenu();
+
+                    popupWindow.Deactivated += (s, e) =>
                     {
-                        PopupToolBar.RestoreHideOnDeactivate();
+                    };
 
-                        afterShow?.Invoke();
-                    });
-                };
+                    popupWindow.Activated += (s, e) =>
+                    {
+                        Post(() =>
+                        {
+                            PopupToolBar.RestoreHideOnDeactivate();
+
+                            afterShow?.Invoke();
+                        });
+                    };
+                }
+
+                if (hostControl is PopupToolBar popupToolBar)
+                {
+                    PopupToolBar.SuppressHideOnDeactivate();
+
+                    popupToolBar.ShowPopup(control, dropDownMenuPosition);
+                }
             }
-
-            if (hostControl is PopupToolBar popupToolBar)
+            finally
             {
-                PopupToolBar.SuppressHideOnDeactivate();
-
-                popupToolBar.ShowPopup(control, dropDownMenuPosition);
             }
         }
 
