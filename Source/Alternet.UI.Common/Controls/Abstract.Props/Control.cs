@@ -703,7 +703,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override PointD ScreenToClient(PointD point)
         {
-            return SafeHandler?.ScreenToClient(point) ?? point;
+            if(VisibleOnScreen)
+                return SafeHandler?.ScreenToClient(point) ?? base.ScreenToClient(point);
+            return base.ScreenToClient(point);
         }
 
         /// <inheritdoc/>
