@@ -20,6 +20,7 @@ You need to run this application: AllQuickStarts.AlternetUI
 
 - [Studio Demo for Windows 10 (X64) or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-win10-x64-net9-10.0.5.zip)
 - [Studio Demo for MacOs on Arm64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-macos-arm64-net9-10.0.5.zip)
+- [Studio Demo for Ubuntu 25 (X64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-ubuntu-x64-net9-10.0.5.zip)
 
 ## Demo Usage
 
