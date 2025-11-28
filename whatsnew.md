@@ -1,3 +1,12 @@
+# 0.9.802 (2025 November 28)
+
+- ScrollableUserControl: Refactor scroll bar and interior rectangle retrieval methods.
+- Fix installation scripts to support slnx format of the solution.
+- ContextMenu: Call Opening event before menu is shown in case when internal menus are used.
+- Changed DefaultUseInternalContextMenu default value to true on Linux as native menus are not working properly on Ubuntu 25.
+
+---
+
 # 0.9.801 (2025 November 25)
 
 - Add Shown event for controls and form initializer utility method (FormUtils.BindShown). This is can be used if you need to run some method on first form/control show.
