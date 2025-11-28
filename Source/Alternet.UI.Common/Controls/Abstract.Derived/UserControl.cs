@@ -89,13 +89,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether the application should
-        /// use the internal drop-down menu by default.
+        /// use the internal drop-down menus by default. Drop down menus are shown
+        /// when the user clicks on a control and <see cref="ShowDropDownMenu"/> is <see langword="true"/>.
         /// </summary>
         public static bool DefaultUseInternalDropDownMenu
         {
             get
             {
-                defaultUseInternalDropDownMenu ??= false;
+                defaultUseInternalDropDownMenu ??= DefaultUseInternalContextMenu;
                 return defaultUseInternalDropDownMenu.Value;
             }
 
@@ -787,7 +788,7 @@ namespace Alternet.UI
             if (!Enabled || DropDownMenu is null)
                 return;
 
-            if(DropDownMenuShowing is not null)
+            if (DropDownMenuShowing is not null)
             {
                 var args = new BaseCancelEventArgs();
                 DropDownMenuShowing(this, args);
