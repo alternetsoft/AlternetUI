@@ -43,7 +43,7 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 echo ====================================3
 echo SET VSIX VERSION
 
-dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.VS2022.vsix"
+dotnet run --project "%VersionToolProject%" --property WarningLevel=0 -- append-version-suffix "%PackagesPublishDirectory%\Alternet.UI.Integration.VisualStudio.vsix"
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: Publish command line templates.

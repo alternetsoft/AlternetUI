@@ -6,7 +6,7 @@ set VSIXInstaller="C:\Program Files (x86)\Microsoft Visual Studio\Installer\reso
 
 pushd "%PublishRoot%\Packages"
 
-for /f %%f in ('dir /b Alternet.UI.Integration.VisualStudio.VS2022*.vsix') do %VSIXInstaller% /q "%%f"
+for /f %%f in ('dir /b Alternet.UI.Integration.VisualStudio*.vsix') do %VSIXInstaller% /q "%%f"
 
 popd
 

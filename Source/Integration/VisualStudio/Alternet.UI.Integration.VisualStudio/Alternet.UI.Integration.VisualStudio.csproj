@@ -127,7 +127,7 @@
     <IntermediateOutputPath>obj\$(VsTargetVersion)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyName>Alternet.UI.Integration.VisualStudio.VS2022</AssemblyName>
+    <AssemblyName>Alternet.UI.Integration.VisualStudio</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">

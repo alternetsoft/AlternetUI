@@ -30,7 +30,7 @@ if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
 :: VS 2022
 
-"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -version [17.0,18.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
+"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -version [17.0,19.0) -latest -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe > tmpFile 
 set /p MSBUILD_2022= < tmpFile 
 del tmpFile 
 
