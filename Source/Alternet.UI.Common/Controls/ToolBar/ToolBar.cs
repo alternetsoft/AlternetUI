@@ -2273,6 +2273,18 @@ namespace Alternet.UI
         /// <summary>
         /// Adds text only <see cref="SpeedButton"/> to the control.
         /// </summary>
+        /// <param name="text">The button text.</param>
+        /// <param name="action">The button click action.</param>
+        /// <returns></returns>
+        public virtual ObjectUniqueId AddTextBtn(string? text = null, Action? action = null)
+        {
+            var speedButton = AddTextBtnCore(text, null, (s, e) => action?.Invoke());
+            return speedButton.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds text only <see cref="SpeedButton"/> to the control.
+        /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="action">Click action.</param>
         /// <param name="toolTip">Item tooltip.</param>
