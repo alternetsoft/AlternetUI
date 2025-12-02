@@ -80,7 +80,7 @@
     <WxWidgetsDownloadDirectory>$(ExternalComponentsDirectory)</WxWidgetsDownloadDirectory>
     <WxWidgetsDownloadFileName>WxWidgets.zip</WxWidgetsDownloadFileName>
     <WxWidgetsDownloadTargetPath>$(WxWidgetsDownloadDirectory)\$(WxWidgetsDownloadFileName)</WxWidgetsDownloadTargetPath>
-    <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
+    <VCVarsAllPath>C:\Program Files\Microsoft Visual Studio\18\Community\VC\Auxiliary\Build\vcvarsall.bat</VCVarsAllPath>
     <!-- ========================================== -->
 
     <WxWidgetsBinDownloadUrlWindows7z>https://alternetsoftware.blob.core.windows.net/alternet-ui/wxWidgets-bin-noobjpch-3.3.1.7z</WxWidgetsBinDownloadUrlWindows7z>

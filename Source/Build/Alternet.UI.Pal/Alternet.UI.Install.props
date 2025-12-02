@@ -3,7 +3,7 @@
 
     <!-- ========================================== -->
     <PropertyGroup>
-	<MSBuildDefPath>C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe</MSBuildDefPath>
+	<MSBuildDefPath>C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe</MSBuildDefPath>
         <ScriptsWorkingDirectory>"$(MSBuildProjectDirectory)\..\Scripts" </ScriptsWorkingDirectory>
 		<UI_ROOT_ARTIFACTS_PATH>$(RootDirectoryPath)\Publish\Artifacts\Build\</UI_ROOT_ARTIFACTS_PATH>
 		<UI_WINDOWS_ARTIFACTS_PATH>$(UI_ROOT_ARTIFACTS_PATH)\Windows\UI\</UI_WINDOWS_ARTIFACTS_PATH>
