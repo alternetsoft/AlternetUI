@@ -146,38 +146,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="MouseMove" /> event and <see cref="OnMouseMove"/> method.
-        /// </summary>
-        public void RaiseMouseMove(MouseEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            HoveredControl = this;
-            Mouse.RaiseMoved(this, e);
-
-            RaiseNotifications((n) => n.BeforeMouseMove(this, e));
-
-            if (e.Handled)
-            {
-                return;
-            }
-
-            MouseMove?.Invoke(this, e);
-            OnMouseMove(e);
-
-            RaiseNotifications((n) => n.AfterMouseMove(this, e));
-
-            if (dragEventArgs is not null)
-            {
-                var mousePos = Mouse.GetPosition(this);
-                var args = new DragStartEventArgs(lastMouseDownPos, mousePos, dragEventArgs, e);
-                RaiseDragStart(args);
-                if (args.DragStarted || args.Cancel)
-                    dragEventArgs = null;
-            }
-        }
-
-        /// <summary>
         /// Raises the <see cref="HelpRequested" /> event and <see cref="OnHelpRequested"/> method.
         /// </summary>
         public void RaiseHelpRequested(HelpEventArgs e)
@@ -206,45 +174,6 @@ namespace Alternet.UI
             OnParentChanged(e);
 
             RaiseNotifications((n) => n.AfterParentChanged(this, e));
-        }
-
-        /// <summary>
-        /// Raises the <see cref="MouseUp" /> event and <see cref="OnMouseUp"/> method.
-        /// </summary>
-        public void RaiseMouseUp(MouseEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e)))
-                return;
-
-            HoveredControl = this;
-            PlessMouse.CancelLongTapTimer();
-
-            RaiseNotifications((n) => n.BeforeMouseUp(this, e));
-
-            if (e.Handled)
-            {
-                return;
-            }
-
-            MouseUp?.Invoke(this, e);
-            dragEventArgs = null;
-
-            OnMouseUp(e);
-
-            RaiseNotifications((n) => n.AfterMouseUp(this, e));
-
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                RaiseMouseLeftButtonUp(e);
-            }
-            else if (e.ChangedButton == MouseButton.Right)
-            {
-                RaiseMouseRightButtonUp(e);
-            }
-
-            ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e));
         }
 
         /// <summary>
@@ -319,6 +248,77 @@ namespace Alternet.UI
         {
             OnToolTipChanged(e);
             ToolTipChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseUp" /> event and <see cref="OnMouseUp"/> method.
+        /// </summary>
+        public void RaiseMouseUp(MouseEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e)))
+                return;
+
+            HoveredControl = this;
+            PlessMouse.CancelLongTapTimer();
+
+            RaiseNotifications((n) => n.BeforeMouseUp(this, e));
+
+            if (e.Handled)
+            {
+                return;
+            }
+
+            MouseUp?.Invoke(this, e);
+            dragEventArgs = null;
+
+            OnMouseUp(e);
+
+            RaiseNotifications((n) => n.AfterMouseUp(this, e));
+
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                RaiseMouseLeftButtonUp(e);
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                RaiseMouseRightButtonUp(e);
+            }
+
+            ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e));
+        }
+
+        /// <summary>
+        /// Raises the <see cref="MouseMove" /> event and <see cref="OnMouseMove"/> method.
+        /// </summary>
+        public void RaiseMouseMove(MouseEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            HoveredControl = this;
+            Mouse.RaiseMoved(this, e);
+
+            RaiseNotifications((n) => n.BeforeMouseMove(this, e));
+
+            if (e.Handled)
+            {
+                return;
+            }
+
+            MouseMove?.Invoke(this, e);
+            OnMouseMove(e);
+
+            RaiseNotifications((n) => n.AfterMouseMove(this, e));
+
+            if (dragEventArgs is not null)
+            {
+                var mousePos = Mouse.GetPosition(this);
+                var args = new DragStartEventArgs(lastMouseDownPos, mousePos, dragEventArgs, e);
+                RaiseDragStart(args);
+                if (args.DragStarted || args.Cancel)
+                    dragEventArgs = null;
+            }
         }
 
         /// <summary>

@@ -43,15 +43,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
-            /*
-            DebugUtils.DebugCallIf(false, () =>
-            {
-                var hitTests = interior.HitTests(sender, e.Location);
-
-                App.LogIf(hitTests.ToString(), false);
-            });
-            */
-
             if (isDragging && hitTestsMouseDown is not null)
             {
                 e.Handled = true;
@@ -60,7 +51,6 @@ namespace Alternet.UI
 
                 var beforeThumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.BeforeThumb];
                 var afterThumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.AfterThumb];
-                var thumb = hitTests.ScrollRectangles[ScrollBarDrawable.HitTestResult.Thumb];
 
                 var oldValue = hitTests.ScrollPosition.Position;
                 var maxValue = hitTests.ScrollPosition.Range;
@@ -95,29 +85,6 @@ namespace Alternet.UI
             else
             {
             }
-        }
-
-        /// <inheritdoc/>
-        public override void AfterSetScrollBarInfo(
-            AbstractControl sender,
-            bool isVertical,
-            ScrollBarInfo value)
-        {
-            /*
-            DebugUtils.DebugCallIf(false, () =>
-            {
-                if (isVertical)
-                    return;
-                var prefix = isVertical ? "V: " : "H: ";
-                var s = $"{prefix}{value}";
-                LogUtils.LogAndToFile(s);
-            });
-            */
-        }
-
-        /// <inheritdoc/>
-        public override void AfterScroll(AbstractControl sender, ScrollEventArgs e)
-        {
         }
 
         /// <inheritdoc/>
