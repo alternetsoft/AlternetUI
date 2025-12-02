@@ -16,6 +16,7 @@ namespace Alternet.UI
         private int hitTestMouseDown = -1;
         private int hitTestMouseMove = -1;
         private PointD mouseDownLocation;
+        private bool isEnabled = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SelectionAnchorActivity"/> class.
@@ -86,6 +87,14 @@ namespace Alternet.UI
         /// </summary>
         public int HitTestMouseMove => hitTestMouseMove;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the activity is enabled.
+        /// </summary>
+        public bool IsEnabled
+        {
+            get => isEnabled;
+        }
+
         /// <inheritdoc/>
         public override void AfterMouseCaptureLost(AbstractControl sender, EventArgs e)
         {
@@ -96,11 +105,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
+            if (!IsEnabled)
+                return;
+
             if (isDragging && hitTestMouseDown != -1)
             {
                 if (AnchorMove is not null)
                 {
-                    AnchorMoveEventArgs args = new AnchorMoveEventArgs(e, hitTestMouseDown);
+                    AnchorMoveEventArgs args = new (e, hitTestMouseDown);
                     AnchorMove(sender, args);
                 }
 
@@ -111,15 +123,10 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override void AfterMouseLeave(AbstractControl sender, EventArgs e)
-        {
-        }
-
         /// <summary>
         /// Resets the dragging state to its default value.
         /// </summary>
-        public void ResetDragging(AbstractControl sender)
+        public virtual void ResetDragging(AbstractControl sender)
         {
             isDragging = false;
             hitTestMouseDown = -1;
@@ -141,6 +148,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseDown(AbstractControl sender, MouseEventArgs e)
         {
+            if (!IsEnabled)
+                return;
+
             ResetDragging(sender);
 
             if (e.Button != MouseButtons.Left)
@@ -173,6 +183,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseUp(AbstractControl sender, MouseEventArgs e)
         {
+            if (!IsEnabled)
+                return;
+
             sender.ReleaseMouseCapture();
             if (e.Button != MouseButtons.Left)
                 return;
@@ -217,6 +230,20 @@ namespace Alternet.UI
                 return -1;
             return HitTest(sender, clickLocation);
         }
+
+        /// <summary>
+        /// Enables or disables the activity.
+        /// </summary>
+        /// <param name="sender">The control for which this activity is being enabled or disabled.</param>
+        /// <param name="value">The new value indicating whether the activity is enabled.</param>
+        private void SetEnabled(AbstractControl sender, bool value)
+        {
+            if (isEnabled == value)
+                return;
+            isEnabled = value;
+            ResetDragging(sender);
+        }
+
 
         /// <summary>
         /// Provides data for the AnchorMove event.
