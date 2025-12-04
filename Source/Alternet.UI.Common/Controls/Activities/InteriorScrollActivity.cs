@@ -14,8 +14,9 @@ namespace Alternet.UI
         private AbstractControl? control;
         private bool subscribedClickRepeated;
         private bool isDragging = false;
-        private int? hitTestsMouseDown;
+        private int hitTestsMouseDown = -1;
         private PointD mouseDownLocation;
+        private bool raiseOnMouseMove;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InteriorScrollActivity"/> class.
@@ -62,8 +63,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
-            if (isDragging && hitTestsMouseDown is not null)
+            if (isDragging && hitTestsMouseDown >= 0)
             {
+                if (raiseOnMouseMove)
+                {
+                    RaiseScroll(sender, e.Location);
+                    raiseOnMouseMove = false;
+                }
             }
             else
             {
@@ -82,7 +88,7 @@ namespace Alternet.UI
         public void ResetDragging(AbstractControl sender)
         {
             isDragging = false;
-            hitTestsMouseDown = null;
+            hitTestsMouseDown = -1;
         }
 
         /// <inheritdoc/>
@@ -119,12 +125,11 @@ namespace Alternet.UI
                 return;
 
             mouseDownLocation = e.Location;
+            hitTestsMouseDown = HitTest?.Invoke(sender, e.Location) ?? -1;
 
-            var hitTests = HitTest?.Invoke(sender, e.Location) ?? -1;
-
-            if (hitTests >= 0)
+            if (hitTestsMouseDown >= 0)
             {
-                hitTestsMouseDown = hitTests;
+                raiseOnMouseMove = true;
                 SubscribeClickRepeated(sender);
                 isDragging = true;
             }
