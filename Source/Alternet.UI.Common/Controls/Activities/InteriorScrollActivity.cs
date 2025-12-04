@@ -26,6 +26,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Specifies the available methods for performing scroll actions in response to user input.
+        /// </summary>
+        /// <remarks>Use this enumeration to select how scrolling behavior is triggered in controls that
+        /// support user-driven scrolling. The selected method determines whether scrolling occurs automatically or only
+        /// in response to specific user actions.</remarks>
+        public enum ScrollMethodKind
+        {
+            /// <summary>
+            /// No scrolling is performed.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Scrolling is performed repeatedly while left mouse button or finger is pressed.
+            /// Direction depends on the position of the pointer from the initial touch point.
+            /// </summary>
+            RepeatWhilePressed,
+        }
+
+        /// <summary>
         /// Defines a delegate for hit testing an element to determine which part was clicked.
         /// </summary>
         /// <param name="sender">The control that is being hit tested.</param>
@@ -44,6 +64,11 @@ namespace Alternet.UI
         public event EventHandler<ScrollEventArgs>? Scroll;
 
         /// <summary>
+        /// Gets or sets the default scroll method for all instances of <see cref="InteriorScrollActivity"/>.
+        /// </summary>
+        public static ScrollMethodKind DefaultScrollMethod { get; set; } = ScrollMethodKind.RepeatWhilePressed;
+
+        /// <summary>
         /// Gets or sets the default minimum gesture distance for all instances of <see cref="InteriorScrollActivity"/>.
         /// If not set, a system-defined default value is used.
         /// </summary>
@@ -59,6 +84,12 @@ namespace Alternet.UI
         /// Gets or sets whether to send scroll events to the attached control. Default is <c>true</c>.
         /// </summary>
         public virtual bool SendScrollToControl { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the scroll method for the current instance of <see cref="InteriorScrollActivity"/>.
+        /// Default is null. If not specified, <see cref="DefaultScrollMethod"/> is used.
+        /// </summary>
+        public virtual ScrollMethodKind? ScrollMethod { get; set; }
 
         /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
@@ -184,6 +215,9 @@ namespace Alternet.UI
             int oldValue = 0,
             int newValue = 0)
         {
+            if (RealScrollMethod == ScrollMethodKind.None)
+                return;
+
             ScrollEventArgs scrollArgs = new();
 
             scrollArgs.ScrollOrientation = orientation;
@@ -238,6 +272,17 @@ namespace Alternet.UI
             if (swipeDirection.HasFlag(SwipeDirection.Right))
             {
                 RaiseScroll(sender, ScrollBarOrientation.Horizontal, ScrollEventType.SmallDecrement);
+            }
+        }
+
+        /// <summary>
+        /// Gets the effective scroll method for the current instance.
+        /// </summary>
+        protected virtual ScrollMethodKind RealScrollMethod
+        {
+            get
+            {
+                return ScrollMethod ?? DefaultScrollMethod;
             }
         }
 
