@@ -104,6 +104,17 @@ namespace Alternet.UI
         public virtual ScrollMethodKind? ScrollMethod { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the current scroll action is vertical.
+        /// This property can be used to track the orientation of the scroll gesture.
+        /// </summary>
+        public bool? IsVertical { get; set; }
+
+        /// <summary>
+        /// Gets or sets the scroll origin point.
+        /// </summary>
+        public virtual PointD? ScrollOrigin { get; set; }
+
+        /// <summary>
         /// Gets the location of the last mouse down event.
         /// </summary>
         public virtual PointD LastMouseDownLocation
@@ -149,7 +160,6 @@ namespace Alternet.UI
                         if (distance < GetMinGestureDistance(sender))
                             return;
                         RaiseDeltaScroll(sender);
-                        mouseDownLocation = e.Location;
                         break;
                     case ScrollMethodKind.RepeatWhilePressed:
                         if (raiseOnMouseMove)
@@ -219,6 +229,8 @@ namespace Alternet.UI
                 return;
 
             hitTestsMouseDown = HitTest?.Invoke(sender, e.Location) ?? -1;
+            ScrollOrigin = null;
+            IsVertical = null;
 
             if (hitTestsMouseDown >= 0)
             {
