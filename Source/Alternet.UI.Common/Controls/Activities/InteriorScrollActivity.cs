@@ -16,6 +16,7 @@ namespace Alternet.UI
         private bool isDragging = false;
         private int hitTestsMouseDown = -1;
         private PointD mouseDownLocation;
+        private PointD mouseMoveLocation;
         private bool raiseOnMouseMove;
 
         /// <summary>
@@ -43,6 +44,12 @@ namespace Alternet.UI
             /// Direction depends on the position of the pointer from the initial touch point.
             /// </summary>
             RepeatWhilePressed,
+
+            /// <summary>
+            /// Scrolling is performed using the difference between the most recent pointer-down position
+            /// (mouse click or touch) and the current pointer position.
+            /// </summary>
+            DeltaWhilePressed,
         }
 
         /// <summary>
@@ -64,9 +71,14 @@ namespace Alternet.UI
         public event EventHandler<ScrollEventArgs>? Scroll;
 
         /// <summary>
+        /// Occurs when an delta scroll action is performed.
+        /// </summary>
+        public event EventHandler? DeltaScroll;
+
+        /// <summary>
         /// Gets or sets the default scroll method for all instances of <see cref="InteriorScrollActivity"/>.
         /// </summary>
-        public static ScrollMethodKind DefaultScrollMethod { get; set; } = ScrollMethodKind.RepeatWhilePressed;
+        public static ScrollMethodKind DefaultScrollMethod { get; set; } = ScrollMethodKind.DeltaWhilePressed;
 
         /// <summary>
         /// Gets or sets the default minimum gesture distance for all instances of <see cref="InteriorScrollActivity"/>.
@@ -91,15 +103,62 @@ namespace Alternet.UI
         /// </summary>
         public virtual ScrollMethodKind? ScrollMethod { get; set; }
 
+        /// <summary>
+        /// Gets the location of the last mouse down event.
+        /// </summary>
+        public virtual PointD LastMouseDownLocation
+        {
+            get
+            {
+                return mouseDownLocation;
+            }
+
+            set
+            {
+                mouseDownLocation = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the location of the last mouse move event.
+        /// </summary>
+        public virtual PointD LastMouseMoveLocation
+        {
+            get
+            {
+                return mouseMoveLocation;
+            }
+
+            set
+            {
+                mouseMoveLocation = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override void BeforeMouseMove(AbstractControl sender, MouseEventArgs e)
         {
+            mouseMoveLocation = e.Location;
+
             if (isDragging && hitTestsMouseDown >= 0)
             {
-                if (raiseOnMouseMove)
+                switch (RealScrollMethod)
                 {
-                    RaiseScroll(sender, e.Location);
-                    raiseOnMouseMove = false;
+                    case ScrollMethodKind.DeltaWhilePressed:
+                        var distance = DrawingUtils.GetDistance(mouseDownLocation, e.Location);
+                        if (distance < GetMinGestureDistance(sender))
+                            return;
+                        RaiseDeltaScroll(sender);
+                        mouseDownLocation = e.Location;
+                        break;
+                    case ScrollMethodKind.RepeatWhilePressed:
+                        if (raiseOnMouseMove)
+                        {
+                            RaiseScroll(sender, e.Location);
+                            raiseOnMouseMove = false;
+                        }
+
+                        break;
                 }
             }
             else
@@ -110,6 +169,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void AfterMouseLeave(AbstractControl sender, EventArgs e)
         {
+            ResetDragging(sender);
             UnsubscribeClickRepeated();
         }
 
@@ -151,18 +211,28 @@ namespace Alternet.UI
         public override void BeforeMouseDown(AbstractControl sender, MouseEventArgs e)
         {
             ResetDragging(sender);
+            mouseDownLocation = e.Location;
 
             if (e.Button != MouseButtons.Left)
                 return;
+            if (RealScrollMethod == ScrollMethodKind.None)
+                return;
 
-            mouseDownLocation = e.Location;
             hitTestsMouseDown = HitTest?.Invoke(sender, e.Location) ?? -1;
 
             if (hitTestsMouseDown >= 0)
             {
                 raiseOnMouseMove = true;
-                SubscribeClickRepeated(sender);
                 isDragging = true;
+
+                switch (RealScrollMethod)
+                {
+                    case ScrollMethodKind.DeltaWhilePressed:
+                        break;
+                    case ScrollMethodKind.RepeatWhilePressed:
+                        SubscribeClickRepeated(sender);
+                        break;
+                }
             }
         }
 
@@ -198,6 +268,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises a delta scroll event for the specified control.
+        /// </summary>
+        /// <param name="sender">The control that is the source of the delta scroll event.</param>
+        public virtual void RaiseDeltaScroll(AbstractControl sender)
+        {
+            DeltaScroll?.Invoke(sender, EventArgs.Empty);
+        }
+
+        /// <summary>
         /// Raises a scroll event for the specified control with the given orientation, event type, and value changes.
         /// </summary>
         /// <remarks>If the event is not marked as handled and the SendScrollToControl property is set to
@@ -215,7 +294,7 @@ namespace Alternet.UI
             int oldValue = 0,
             int newValue = 0)
         {
-            if (RealScrollMethod == ScrollMethodKind.None)
+            if (RealScrollMethod != ScrollMethodKind.RepeatWhilePressed)
                 return;
 
             ScrollEventArgs scrollArgs = new();
@@ -246,6 +325,9 @@ namespace Alternet.UI
         /// If null, the current mouse position is used.</param>
         public virtual void RaiseScroll(AbstractControl sender, PointD? touchLocation)
         {
+            if (RealScrollMethod != ScrollMethodKind.RepeatWhilePressed)
+                return;
+
             var newLocation = touchLocation ?? Mouse.GetPosition(sender);
 
             var distance = DrawingUtils.GetDistance(mouseDownLocation, newLocation);
