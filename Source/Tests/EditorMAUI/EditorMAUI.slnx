@@ -119,7 +119,13 @@
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CallMethod.Python/CallMethod.Python.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ExpressionEvaluation.Python/ExpressionEvaluation.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ObjectReference.Python/ObjectReference.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/Threading.Python/Threading.Python.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>

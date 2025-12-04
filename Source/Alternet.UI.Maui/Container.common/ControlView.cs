@@ -261,8 +261,8 @@ namespace Alternet.UI
         /// Registers to receive swipe gestures.
         /// </summary>
         /// <param name="direction">Swipe directions to subscribe.</param>
-        public virtual void RequireSwipeGesture(SwipeDirection direction
-            = SwipeDirection.Down | SwipeDirection.Right | SwipeDirection.Left | SwipeDirection.Up)
+        public virtual void RequireSwipeGesture(Microsoft.Maui.SwipeDirection direction
+            = Microsoft.Maui.SwipeDirection.Down | Microsoft.Maui.SwipeDirection.Right | Microsoft.Maui.SwipeDirection.Left | Microsoft.Maui.SwipeDirection.Up)
         {
             if (swipeGesture is not null)
                 return;
