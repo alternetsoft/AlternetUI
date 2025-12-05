@@ -2834,6 +2834,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes all notifications of the specified type from the collection.
+        /// </summary>
+        /// <remarks>Use this method to clear all notifications of a particular type. If there are no
+        /// notifications of the specified type, the collection remains unchanged.</remarks>
+        /// <typeparam name="T">The type of notifications to remove from the collection.</typeparam>
+        public virtual void RemoveNotificationsOfType<T>()
+        {
+            if (notifications is null)
+                return;
+            notifications.RemoveAll(n => n is T);
+        }
+
+        /// <summary>
         /// Gets top-most visible child control
         /// which has <see cref="Bounds"/> that contains the specified point.
         /// Controls are queried starting
