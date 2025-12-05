@@ -1,3 +1,16 @@
+# 0.9.803 (2025 December 5)
+
+- VirtualListBox: UseScrollActivity property to control scroll activity. When this property is true, 
+users can scroll the items vertically by dragging the interior. This feature is particularly useful on tablets and mobile devices.
+- Adds InteriorScrollActivity class to manage interior scroll gestures and repeated scroll actions for controls.
+- Introduces SwipeDirection enum and helper methods for determining swipe direction and angle.
+- Adds SwipeGestureActivity class to handle swipe gestures in controls, including event handling, hit testing, and configurable minimum swipe distance.
+- Introduces the SelectionAnchorActivity class to manage selection anchors in controls with selection capabilities.
+- ToolBar: Introduces AddTextBtn overload to add a text-only SpeedButton with an optional click action.
+- Control: Introduced RemoveNotificationsOfType to allow clearing all notifications of a specified type.
+
+---
+
 # 0.9.802 (2025 November 28)
 
 - ScrollableUserControl: Refactor scroll bar and interior rectangle retrieval methods.

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.802.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.803.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -714,6 +714,8 @@
     <Type Name="Alternet.UI.SplitterPanelSplitMethod" />
     <Type Name="Alternet.UI.SplitterTargetMode" />
     <Type Name="Alternet.UI.StackPanelOrientation" />
+    <Type Name="Alternet.UI.SwipeDirection" />
+    <Type Name="Alternet.UI.SwipeDirectionHelper" />
     <Type Name="Alternet.UI.VerticalAlignment" />
     <Type Name="Alternet.UI.Border3DSide" />
     <Type Name="Alternet.UI.ButtonBorderStyle" />
@@ -2822,6 +2824,22 @@
     </Type>
     <Type Name="Alternet.UI.ControlActivities" />
     <Type Name="Alternet.UI.InteriorControlActivity">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.InteriorScrollActivity">
+      <Event Name="Scroll" />
+      <Event Name="DeltaScroll" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.SelectionAnchorActivity">
+      <Event Name="AnchorMove" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.SwipeGestureActivity">
+      <Event Name="SwipeDetected" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -17280,6 +17298,13 @@
     </Type>
     <Type Name="Alternet.UI.FontAndColor+ControlDefaultFontAndColor" />
     <Type Name="Alternet.UI.FontAndColor+ControlStaticDefaultFontAndColor" />
+    <Type Name="Alternet.UI.InteriorScrollActivity+ScrollMethodKind" />
+    <Type Name="Alternet.UI.InteriorScrollActivity+HitTestDelegate" />
+    <Type Name="Alternet.UI.SelectionAnchorActivity+HitTestDelegate" />
+    <Type Name="Alternet.UI.SelectionAnchorActivity+HitTestRectangleDelegate" />
+    <Type Name="Alternet.UI.SelectionAnchorActivity+AnchorMoveEventArgs" />
+    <Type Name="Alternet.UI.SwipeGestureActivity+HitTestDelegate" />
+    <Type Name="Alternet.UI.SwipeGestureActivity+SwipeGestureEventArgs" />
     <Type Name="Alternet.UI.TextBoxAndButton+InitAsNumericEditParams" />
     <Type Name="Alternet.UI.ControlOverlay+TimerTickAction" />
     <Type Name="Alternet.UI.Calendar+HitTestResult" />
