@@ -34,26 +34,6 @@ namespace Alternet.UI
     /// </remarks>
     public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter, IListBoxActions
     {
-        /// <summary>
-        /// Represents the default rendering flags for <see cref="VirtualListBox"/> and it's descendants.
-        /// </summary>
-        public static ControlRenderingFlags DefaultRenderingFlags;
-
-        /// <summary>
-        /// Gets or sets the default border color of the full item tooltip.
-        /// </summary>
-        public static LightDarkColor? DefaultFullItemToolTipBorderColor;
-
-        /// <summary>
-        /// Gets or sets the default foreground color of the full item tooltip text.
-        /// </summary>
-        public static LightDarkColor DefaultFullItemToolTipForeColor = new(Color.Black);
-
-        /// <summary>
-        /// Gets or sets the default background color of the full item tooltip.
-        /// </summary>
-        public static LightDarkColor DefaultFullItemToolTipBackColor = new(Color.LightYellow);
-
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
         private readonly List<ListControlItem> itemsLastPainted = new();
@@ -66,6 +46,7 @@ namespace Alternet.UI
         private int firstVisibleItem;
         private string? emptyText;
         private ObjectUniqueId? itemToolTipId;
+        private bool useScrollActivity;
 
         static VirtualListBox()
         {
@@ -102,6 +83,8 @@ namespace Alternet.UI
                 if (SystemSettings.AppearanceIsDark)
                     this.SetColorThemeToDark();
             }
+
+            UseScrollActivity = DefaultUseScrollActivity;
         }
 
         /// <summary>
@@ -160,6 +143,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Represents the default rendering flags for <see cref="VirtualListBox"/> and it's descendants.
+        /// </summary>
+        public static ControlRenderingFlags DefaultRenderingFlags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default border color of the full item tooltip.
+        /// </summary>
+        public static LightDarkColor? DefaultFullItemToolTipBorderColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default foreground color of the full item tooltip text.
+        /// </summary>
+        public static LightDarkColor DefaultFullItemToolTipForeColor { get; set; } = new(Color.Black);
+
+        /// <summary>
+        /// Gets or sets the default background color of the full item tooltip.
+        /// </summary>
+        public static LightDarkColor DefaultFullItemToolTipBackColor { get; set; } = new(Color.LightYellow);
+
+        /// <summary>
         /// Gets or sets the way how items are set when <see cref="SetItemsKind.Default"/>
         /// is specified in <see cref="SetItemsFast"/>. Default is
         /// <see cref="SetItemsKind.ChangeField"/>.
@@ -180,13 +183,80 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether scroll activity is used by default in <see cref="VirtualListBox"/>.
+        /// </summary>
+        /// <remarks>When set to <see langword="true"/>, scroll activity will be enabled by default unless
+        /// explicitly overridden. Default is <see langword="true"/>.</remarks>
+        public static bool DefaultUseScrollActivity { get; set; } = true;
+
+        /// <summary>
         /// Gets the horizontal scroll offset.
         /// </summary>
         /// <value>
         /// A <see cref="Coord"/> representing the current horizontal scroll position.
         /// </value>
         [Browsable(false)]
-        public Coord ScrollOffsetX => scrollOffsetX;
+        public Coord ScrollOffsetX
+        {
+            get
+            {
+                return scrollOffsetX;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether scroll activity should be tracked or utilized by the control.
+        /// Default value is loaded from <see cref="DefaultUseScrollActivity"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool UseScrollActivity
+        {
+            get => useScrollActivity;
+
+            set
+            {
+                if (useScrollActivity == value)
+                    return;
+                useScrollActivity = value;
+                if (useScrollActivity)
+                    EnsureScrollActivityAttached();
+                else
+                    EnsureScrollActivityDetached();
+
+                void EnsureScrollActivityAttached()
+                {
+                    var scrollActivity = new InteriorScrollActivity();
+                    scrollActivity.ScrollMethod = InteriorScrollActivity.ScrollMethodKind.RepeatWhilePressed;
+
+                    AddNotification(scrollActivity);
+
+                    scrollActivity.Scroll += (s, e) =>
+                    {
+                        if(!e.IsVertical)
+                            e.Handled = true;
+                    };
+
+                    scrollActivity.DeltaScroll += (s, e) =>
+                    {
+                    };
+
+                    scrollActivity.HitTest = (sender, hitTest) =>
+                    {
+                        var r = GetPaintRectangle();
+                        if (r.Width <= 0 || r.Height <= 0)
+                            return -1;
+                        if(r.Contains(hitTest))
+                            return 0;
+                        return -1;
+                    };
+                }
+
+                void EnsureScrollActivityDetached()
+                {
+                    RemoveNotificationsOfType<InteriorScrollActivity>();
+                }
+            }
+        }
 
         /// <summary>
         /// Gets the items that were last painted in the control.
