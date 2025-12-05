@@ -208,6 +208,10 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether scroll activity should be tracked or utilized by the control.
         /// Default value is loaded from <see cref="DefaultUseScrollActivity"/>.
         /// </summary>
+        /// <remarks>
+        /// This feature is particularly useful on tablets and mobile devices.
+        /// When this property is true, users can scroll the items vertically by dragging the interior.
+        /// </remarks>
         [Browsable(false)]
         public virtual bool UseScrollActivity
         {
