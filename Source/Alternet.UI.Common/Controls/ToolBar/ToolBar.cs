@@ -842,6 +842,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates command state for all the tools.
+        /// If a tool has a command assigned, its 'Enabled' property
+        /// is updated based on the command's state. If no command is assigned,
+        /// the tool is not updated.
+        /// </summary>
+        public virtual void UpdateCommandState()
+        {
+            foreach (var item in ToolsAsButton)
+            {
+                item.UpdateCommandState();
+            }
+        }
+
+        /// <summary>
         /// Gets 'IsClickRepeated' property of the tool.
         /// </summary>
         /// <param name="id">Item id.</param>
