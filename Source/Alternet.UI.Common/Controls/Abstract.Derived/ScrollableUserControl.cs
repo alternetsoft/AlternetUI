@@ -356,6 +356,18 @@ namespace Alternet.UI
         public override RectD GetOverlayRectangle() => GetPaintRectangle();
 
         /// <summary>
+        /// Gets the rectangle that represents the paintable area of the control.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="RectD"/> representing the bounds of the paintable area within the control.
+        /// </returns>
+        public virtual RectD GetPaintRectangle()
+        {
+            var result = GetInteriorRectangle(InteriorDrawable.HitTestResult.ClientRect) ?? ClientRectangle;
+            return result;
+        }
+
+        /// <summary>
         /// Retrieves the bounding rectangle of the vertical scroll bar, if present.
         /// </summary>
         /// <returns>A <see cref="RectD"/> representing the bounds of the vertical scroll bar, or <see langword="null"/> if the
@@ -393,18 +405,6 @@ namespace Alternet.UI
             var rectangles = interior.GetLayoutRectangles(this);
             var result = rectangles[hitTest];
 
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the rectangle that represents the paintable area of the control.
-        /// </summary>
-        /// <returns>
-        /// A <see cref="RectD"/> representing the bounds of the paintable area within the control.
-        /// </returns>
-        protected virtual RectD GetPaintRectangle()
-        {
-            var result = GetInteriorRectangle(InteriorDrawable.HitTestResult.ClientRect) ?? ClientRectangle;
             return result;
         }
 
