@@ -1898,6 +1898,17 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Updates the enabled state of the control based on the associated command.
+        /// If there is no command associated, the method exits without making any changes.
+        /// </summary>
+        public virtual void UpdateCommandState()
+        {
+            if(commandSource.Command is null)
+                return;
+            Enabled = commandSource.CanExecute;
+        }
+
         /// <inheritdoc/>
         public override void RaiseClick(EventArgs e)
         {
