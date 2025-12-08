@@ -135,6 +135,12 @@ namespace Alternet.UI
         public virtual bool SuppressKeyPress { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the popup should close
+        /// when a tool button is clicked. Default is <c>true</c>.
+        /// </summary>
+        public virtual bool CloseOnToolClick { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the source control that called the popup.
         /// </summary>
         public virtual AbstractControl? RelatedControl
@@ -235,6 +241,65 @@ namespace Alternet.UI
 
             preferredSize += Content.Padding.Size + Content.Margin.Size + Margin.Size + Padding.Size + 2;
             return preferredSize;
+        }
+
+        /// <summary>
+        /// Displays the control as a popup within the specified container at the given position and alignment.
+        /// </summary>
+        /// <remarks>If the popup is already displayed in another container, it will be removed from that
+        /// container before being shown in the new one. The popup's position and size are adjusted to ensure it remains
+        /// within the bounds of the specified container.</remarks>
+        /// <param name="container">The container control in which to display the popup. Cannot be null.</param>
+        /// <param name="position">The position, in container coordinates, where the popup should appear.
+        /// If null, the current mouse position is used.</param>
+        /// <param name="align">The alignment of the popup relative to the container. If null, the default alignment is used.</param>
+        public virtual void ShowInContainer(
+            AbstractControl container,
+            PointD? position = null,
+            HVDropDownAlignment? align = null)
+        {
+            var pos = Mouse.CoercePosition(position, container);
+
+            if (Parent is not null)
+            {
+                Parent = null;
+                Container = null;
+            }
+
+            Container = container;
+            UpdateMinimumSize();
+            UpdateMaxPopupSize();
+
+            var containerRect = GetContainerRect();
+
+            if (containerRect is not null)
+            {
+                var popupRect = new RectD(pos, Size);
+
+                popupRect.Right = Math.Min(popupRect.Right, containerRect.Value.Right);
+                popupRect.Bottom = Math.Min(popupRect.Bottom, containerRect.Value.Bottom);
+
+                pos = popupRect.Location;
+            }
+
+            Location = pos.ClampToZero();
+            Parent = container;
+
+            ClosedAction = () =>
+            {
+                Parent = null;
+                Container = null;
+            };
+
+            if (align is not null && containerRect is not null)
+            {
+                Location = AlignUtils.GetDropDownPosition(
+                        containerRect.Value.Size,
+                        Size,
+                        align);
+            }
+
+            Show();
         }
 
         /// <summary>
@@ -365,6 +430,9 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
         protected virtual void OnToolClick(object? sender, EventArgs e)
         {
+            if(!CloseOnToolClick)
+                return;
+
             if (sender is not SpeedButton speedButton)
                 return;
             if (speedButton.DropDownMenu is null)

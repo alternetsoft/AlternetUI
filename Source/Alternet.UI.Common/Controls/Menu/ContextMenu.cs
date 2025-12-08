@@ -418,50 +418,10 @@ namespace Alternet.UI
             }
 
             hostControl.RelatedControl = source;
-            var pos = Mouse.CoercePosition(position, container);
 
             if (hostControl is InnerPopupToolBar popupToolBar)
             {
-                if(popupToolBar.Parent is not null)
-                {
-                    popupToolBar.Parent = null;
-                    popupToolBar.Container = null;
-                }
-
-                popupToolBar.Container = container;
-                popupToolBar.UpdateMinimumSize();
-                popupToolBar.UpdateMaxPopupSize();
-
-                var containerRect = popupToolBar.GetContainerRect();
-
-                if (containerRect is not null)
-                {
-                    var popupRect = new RectD(pos, popupToolBar.Size);
-
-                    popupRect.Right = Math.Min(popupRect.Right, containerRect.Value.Right);
-                    popupRect.Bottom = Math.Min(popupRect.Bottom, containerRect.Value.Bottom);
-
-                    pos = popupRect.Location;
-                }
-
-                popupToolBar.Location = pos.ClampToZero();
-                popupToolBar.Parent = container;
-
-                popupToolBar.ClosedAction = () =>
-                {
-                    popupToolBar.Parent = null;
-                    popupToolBar.Container = null;
-                };
-
-                if(align is not null && containerRect is not null)
-                {
-                    popupToolBar.Location = AlignUtils.GetDropDownPosition(
-                            containerRect.Value.Size,
-                            popupToolBar.Size,
-                            align);
-                }
-
-                popupToolBar.Show();
+                popupToolBar.ShowInContainer(container, position, align);
             }
         }
 
