@@ -104,6 +104,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets device the app is running on, such as a desktop computer or a tablet.
+        /// Change this value only if you are sure that automatic detection is incorrect.
         /// </summary>
         public static GenericDeviceType DeviceType;
 
@@ -357,6 +358,11 @@ namespace Alternet.UI
         /// Gets whether device the app is running on is phone.
         /// </summary>
         public static bool IsPhoneDevice => DeviceType == GenericDeviceType.Phone;
+
+        /// <summary>
+        /// Gets a value indicating whether the current device is identified as a tablet or a phone.
+        /// </summary>
+        public static bool IsTabletOrPhoneDevice => IsTabletDevice || IsPhoneDevice;
 
         /// <summary>
         /// Gets whether current thread is the thread which was used to initialize the application.
