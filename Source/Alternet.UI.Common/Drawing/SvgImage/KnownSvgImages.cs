@@ -17,6 +17,7 @@ namespace Alternet.UI
         private static SvgImage? imgDebugRun;
         private static SvgImage? imgTrashCan;
         private static SvgImage? imgCopy;
+        private static SvgImage? imgCut;
         private static SvgImage? imgPaste;
         private static SvgImage? imgOk;
         private static SvgImage? imgBrowserBack;
@@ -225,6 +226,15 @@ namespace Alternet.UI
         {
             get => imgCopy ??= new MonoSvgImage(KnownSvgUrls.UrlImageCopy);
             set => imgCopy = value;
+        }
+
+        /// <summary>
+        /// Gets or sets 'Cut' image.
+        /// </summary>
+        public static SvgImage ImgCut
+        {
+            get => imgCut ??= new MonoSvgImage(KnownSvgUrls.UrlImageCut);
+            set => imgCut = value;
         }
 
         /// <summary>

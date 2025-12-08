@@ -216,6 +216,11 @@ namespace Alternet.UI
         public static string UrlImageCopy { get; set; } = GetImageUrl("alternet-copy");
 
         /// <summary>
+        /// Gets or sets url used to load "Cut" svg image.
+        /// </summary>
+        public static string UrlImageCut { get; set; } = GetImageUrl("alternet-scissors");
+
+        /// <summary>
         /// Gets or sets url used to load "Diamond Filled" svg image.
         /// </summary>
         public static string UrlImageDiamondFilled { get; set; }
