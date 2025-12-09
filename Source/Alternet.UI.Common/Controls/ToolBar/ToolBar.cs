@@ -2313,6 +2313,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates and adds a button representing the specified character to the interface.
+        /// </summary>
+        /// <param name="ch">The character to display on the button.</param>
+        /// <param name="action">An optional event handler that is invoked when the button is clicked. If null, no action is assigned.</param>
+        /// <returns>A SpeedButton instance representing the added character button.</returns>
+        public virtual SpeedButton AddCharBtnCore(char ch, EventHandler? action = null)
+        {
+            var result = AddTextBtnCore(ch.ToString(), null, action);
+            result.SuggestedSize = itemSize;
+            result.MinimumSize = itemSize;
+            result.MaximumSize = itemSize;
+            return result;
+        }
+
+        /// <summary>
         /// Adds text only <see cref="SpeedButton"/> to the control.
         /// </summary>
         /// <param name="text">Item text.</param>
