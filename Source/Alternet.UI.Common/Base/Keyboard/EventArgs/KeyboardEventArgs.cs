@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// </summary>
     public class KeyboardEventArgs : HandledEventArgs
     {
-        private readonly object originalTarget;
+        private object originalTarget;
         private object currentTarget;
 
         /// <summary>
@@ -31,7 +31,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets current target control for the event.
+        /// Gets or sets current target control for the event.
         /// </summary>
         public virtual object CurrentTarget
         {
@@ -40,8 +40,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets original target control for the event.
+        /// Gets or sets original target control for the event.
         /// </summary>
-        public virtual object OriginalTarget => originalTarget;
+        public virtual object OriginalTarget
+        {
+            get
+            {
+                return originalTarget;
+            }
+
+            set
+            {
+                originalTarget = value;
+            }
+        }
     }
 }
