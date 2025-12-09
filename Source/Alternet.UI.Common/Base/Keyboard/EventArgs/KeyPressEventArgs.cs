@@ -18,7 +18,16 @@ namespace Alternet.UI
         private char keyChar;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class.
+        /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class with the specified key character.
+        /// </summary>
+        public KeyPressEventArgs(char keyChar)
+        {
+            this.keyChar = keyChar;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyPressEventArgs"/> class with the specified key character
+        /// and original target.
         /// </summary>
         /// <param name="originalTarget">Original target object which received the event.</param>
         /// <param name="keyChar">The character referenced by the event.</param>
