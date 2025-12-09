@@ -224,6 +224,12 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool NeedsRemainingImages { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the minimum size of the control is updated
+        /// before it is shown on the screen.
+        /// </summary>
+        public virtual bool AllowUpdateMinimumSize { get; set; } = true;
+
         AbstractControl IContextMenuHost.ContextMenuHost => Content;
 
         /// <inheritdoc/>
@@ -337,6 +343,9 @@ namespace Alternet.UI
         /// any changes in its content or layout preferences.</remarks>
         public virtual void UpdateMinimumSize()
         {
+            if(!AllowUpdateMinimumSize)
+                return;
+
             Content.DoInsideLayout(() =>
             {
                 if (NeedsRemainingImages)
