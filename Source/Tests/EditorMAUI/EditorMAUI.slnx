@@ -108,7 +108,16 @@
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/IsolatedScript/IsolatedScript.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/MemoryAssembly/MemoryAssembly.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ObjectReference/ObjectReference.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/PackageReference/PackageReference.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ScriptHostObject/ScriptHostObject.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/Threading/Threading.csproj">
@@ -119,10 +128,25 @@
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CallMethod.Python/CallMethod.Python.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CustomAssembly.Python/CustomAssembly.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ExpressionEvaluation.Python/ExpressionEvaluation.Python.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/IsolatedScript.Python/IsolatedScript.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/MemoryAssembly.Python/MemoryAssembly.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ObjectReference.Python/ObjectReference.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/PackageReference.Python/PackageReference.Python.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ScriptHostObject.Python/ScriptHostObject.Python.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/Threading.Python/Threading.Python.csproj">
