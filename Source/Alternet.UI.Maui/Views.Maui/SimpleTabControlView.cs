@@ -26,6 +26,8 @@ namespace Alternet.Maui
         /// </summary>
         public static bool DefaultTabIsBoldWhenSelected = true;
 
+        private static Microsoft.Maui.Graphics.Color? altHeaderBackColor;
+
         private readonly SimpleToolBarView tabs = new();
         private readonly Grid grid = new();
         private readonly ContentView content = new();
@@ -58,6 +60,36 @@ namespace Alternet.Maui
         /// programmatically. Subscribers can use this event to perform
         /// actions based on the newly selected tab.</remarks>
         public event EventHandler? SelectedTabChanged;
+
+        /// <summary>
+        /// Gets or sets the alternative header background color.
+        /// </summary>
+        public static Microsoft.Maui.Graphics.Color AltHeaderBackColor
+        {
+            get
+            {
+                if(altHeaderBackColor is not null)
+                    return altHeaderBackColor;
+
+                Microsoft.Maui.Graphics.Color headerColor;
+
+                if (Alternet.UI.SystemSettings.AppearanceIsDark)
+                {
+                    headerColor = Microsoft.Maui.Graphics.Color.FromRgb(37, 37, 38);
+                }
+                else
+                {
+                    headerColor = Microsoft.Maui.Graphics.Color.FromRgb(245, 245, 245);
+                }
+
+                return headerColor;
+            }
+
+            set
+            {
+                altHeaderBackColor = value;
+            }
+        }
 
         /// <summary>
         /// Gets the header of the tab control view.
