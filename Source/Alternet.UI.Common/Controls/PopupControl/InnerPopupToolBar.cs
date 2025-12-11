@@ -32,7 +32,6 @@ namespace Alternet.UI
             SuppressParentMouse = true;
             SuppressParentKeyDown = true;
             SuppressParentKeyPress = true;
-            SuppressKeyDown = true;
             SuppressKeyPress = true;
             SuppressKeyDown = true;
             HideOnSiblingHide = true;
