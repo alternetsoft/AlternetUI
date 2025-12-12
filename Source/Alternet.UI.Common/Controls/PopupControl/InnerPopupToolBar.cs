@@ -229,6 +229,17 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool AllowUpdateMinimumSize { get; set; } = true;
 
+        /// <summary>
+        /// Gets or sets the last used alignment when showing the popup in a container.
+        /// </summary>
+        public virtual HVDropDownAlignment? LastUsedAlignment { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the popup's position should be updated
+        /// when the container is resized.
+        /// </summary>
+        public virtual bool UpdatePositionOnContainerResize { get; set; } = true;
+
         AbstractControl IContextMenuHost.ContextMenuHost => Content;
 
         /// <inheritdoc/>
@@ -263,6 +274,8 @@ namespace Alternet.UI
             PointD? position = null,
             HVDropDownAlignment? align = null)
         {
+            LastUsedAlignment = align;
+
             var pos = Mouse.CoercePosition(position, container);
 
             if (Parent is not null)
@@ -426,6 +439,27 @@ namespace Alternet.UI
         protected override bool HideWhenSiblingShown(AbstractControl sibling)
         {
             return sibling is not InnerPopupToolBar;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnAfterParentSizeChanged(object? sender, HandledEventArgs e)
+        {
+            base.OnAfterParentSizeChanged(sender, e);
+
+            var align = LastUsedAlignment;
+
+            if (!UpdatePositionOnContainerResize || align is null)
+                return;
+
+            var containerRect = GetContainerRect();
+
+            if (containerRect is not null)
+            {
+                Location = AlignUtils.GetDropDownPosition(
+                        containerRect.Value.Size,
+                        Size,
+                        align);
+            }
         }
 
         /// <summary>
