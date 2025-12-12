@@ -60,6 +60,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a predefined alignment configuration where
+        /// both horizontal and vertical alignments are set to <see cref="DropDownAlignment.BeforeEnd"/>.
+        /// </summary>
+        public static HVDropDownAlignment BeforeEnd => new (DropDownAlignment.BeforeEnd, DropDownAlignment.BeforeEnd);
+
+        /// <summary>
         /// Gets the default drop-down alignment.
         /// </summary>
         public static HVDropDownAlignment Default => new(
