@@ -39,6 +39,22 @@ namespace Alternet.UI
         private static PlatformApplication? platformApplication;
 
         /// <summary>
+        /// Gets the first window in the current application's window collection.
+        /// </summary>
+        /// <returns>The first <see cref="Microsoft.Maui.Controls.Window"/> instance in the application's window collection, or
+        /// <see langword="null"/> if the application has no windows or is not running.</returns>
+        public static Microsoft.Maui.Controls.Window? FirstWindow
+        {
+            get
+            {
+                var windows = Application.Current?.Windows;
+                if (windows is null || windows.Count == 0)
+                    return null;
+                return windows[0];
+            }
+        }
+
+        /// <summary>
         /// Gets collection of all windows in the application. This is safe property
         /// and it returns an empty collection if application is not yet created.
         /// </summary>
