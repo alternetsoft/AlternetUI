@@ -165,6 +165,8 @@ namespace Alternet.UI
                         handler.Container = this;
                         control.RaiseHandleCreated(EventArgs.Empty);
                     }
+
+                    OnSizeChanged(this, EventArgs.Empty);
                 }
 
                 InvalidateSurface();
@@ -262,7 +264,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="direction">Swipe directions to subscribe.</param>
         public virtual void RequireSwipeGesture(Microsoft.Maui.SwipeDirection direction
-            = Microsoft.Maui.SwipeDirection.Down | Microsoft.Maui.SwipeDirection.Right | Microsoft.Maui.SwipeDirection.Left | Microsoft.Maui.SwipeDirection.Up)
+            = Microsoft.Maui.SwipeDirection.Down | Microsoft.Maui.SwipeDirection.Right | Microsoft.Maui.SwipeDirection.Left
+            | Microsoft.Maui.SwipeDirection.Up)
         {
             if (swipeGesture is not null)
                 return;
@@ -508,25 +511,25 @@ namespace Alternet.UI
         /// <param name="e">Event arguments.</param>
         protected virtual void OnSwipeGesture(SwipedEventArgs e)
         {
-            if (e.Direction.HasFlag(SwipeDirection.Right))
+            if (e.Direction.HasFlag(Microsoft.Maui.SwipeDirection.Right))
             {
                 OnSwipeRight(e);
                 return;
             }
 
-            if (e.Direction.HasFlag(SwipeDirection.Left))
+            if (e.Direction.HasFlag(Microsoft.Maui.SwipeDirection.Left))
             {
                 OnSwipeLeft(e);
                 return;
             }
 
-            if (e.Direction.HasFlag(SwipeDirection.Up))
+            if (e.Direction.HasFlag(Microsoft.Maui.SwipeDirection.Up))
             {
                 OnSwipeUp(e);
                 return;
             }
 
-            if (e.Direction.HasFlag(SwipeDirection.Down))
+            if (e.Direction.HasFlag(Microsoft.Maui.SwipeDirection.Down))
             {
                 OnSwipeDown(e);
                 return;
