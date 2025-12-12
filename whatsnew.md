@@ -1,3 +1,19 @@
+# 0.9.804 (2025 December 12)
+
+- Maui: Add static AltHeaderBackColor property to SimpleTabControlView.
+- ToolBar: Add AddCharBtnCore method to create and add a button for a specified character, with optional click event handling.
+- InnerPopupToolBar: Add AllowUpdateMinimumSize to control whether the minimum size is updated before popup being shown.
+- KeyPressEventArgs: Add constructor for key character.
+- KeyboardEventArgs: Make OriginalTarget property settable.
+- CharUtils: Add comprehensive character constants.
+- App: new static property IsTabletOrPhoneDevice, allowing easy checks for whether the current device is a tablet or phone.
+- InnerPopupToolBar: Add CloseOnToolClick and ShowInContainer.
+- SpeedButton: Add UpdateCommandState method to update the control's enabled state based on the associated command.
+- Add 'Cut' SVG image resource and updated references in KnownSvgImages and KnownSvgUrls to use it.
+- ScrollableUserControl: Make GetPaintRectangle public to allow external access to the paintable area rectangle.
+
+---
+
 # 0.9.803 (2025 December 5)
 
 - VirtualListBox: UseScrollActivity property to control scroll activity. When this property is true, 
