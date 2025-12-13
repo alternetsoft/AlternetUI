@@ -446,6 +446,8 @@ namespace Alternet.UI
         {
             base.OnAfterParentSizeChanged(sender, e);
 
+            UpdateMinimumSize();
+
             var align = LastUsedAlignment;
 
             if (!UpdatePositionOnContainerResize || align is null)
