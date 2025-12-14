@@ -25,6 +25,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual bool? KeyboardPresent => null;
 
+        /// <inheritdoc/>
+        public abstract IKeyboardVisibilityService? VisibilityService { get; }
+
         /// <summary>
         /// Registers default key mappings between platform keys and <see cref="Key"/>.
         /// </summary>

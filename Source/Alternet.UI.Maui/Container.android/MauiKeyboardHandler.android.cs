@@ -31,6 +31,8 @@ namespace Alternet.UI
         /// </summary>
         public static MauiKeyboardHandler Default = new();
 
+        private IKeyboardVisibilityService? visibilityService;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MauiKeyboardHandler"/> class.
         /// </summary>
@@ -45,6 +47,15 @@ namespace Alternet.UI
         public static InputMethodManager? InputMethodManager =>
             Android.App.Application.Context
             .GetSystemService(Context.InputMethodService) as InputMethodManager;
+
+        /// <inheritdoc/>
+        public override IKeyboardVisibilityService? VisibilityService
+        {
+            get
+            {
+                return visibilityService ??= new Alternet.Maui.KeyboardVisibilityService();
+            }
+        }
 
         public virtual Alternet.UI.KeyEventArgs ToKeyEventArgs(
                     UI.AbstractControl control,
@@ -793,6 +804,13 @@ namespace Alternet.UI
             // https://developer.android.com/reference/android/view/inputmethod/InputMethodManager#showSoftInput(android.view.View,%20int)
             // Apparently there's no named value for zero in this case
             return inputMethodManager?.ShowSoftInput(platformView, 0) is true;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref visibilityService);
+            base.DisposeManaged();
         }
     }
 }

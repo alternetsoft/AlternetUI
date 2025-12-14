@@ -15,6 +15,9 @@ namespace Alternet.UI
         public bool? KeyboardPresent => null;
 
         /// <inheritdoc/>
+        public IKeyboardVisibilityService? VisibilityService { get; set; }
+
+        /// <inheritdoc/>
         public KeyStates GetKeyStatesFromSystem(Key key)
         {
             return KeyStates.None;

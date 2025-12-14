@@ -37,6 +37,7 @@ namespace Alternet.UI
         public static MauiKeyboardHandler Default = new();
 
         private static KeyboardCapabilities? keyboardCapabilities;
+        private IKeyboardVisibilityService? visibilityService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MauiKeyboardHandler"/> class.
@@ -64,6 +65,15 @@ namespace Alternet.UI
             {
                 var result = KeyboardCapabilities.KeyboardPresent != 0;
                 return result;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override IKeyboardVisibilityService? VisibilityService
+        {
+            get
+            {
+                return visibilityService ??= new Alternet.Maui.KeyboardVisibilityService();
             }
         }
 
@@ -350,6 +360,13 @@ namespace Alternet.UI
         public override bool ShowKeyboard(AbstractControl? control)
         {
             return ShowKeyboard();
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref visibilityService);
+            base.DisposeManaged();
         }
 
         private static bool HideKeyboard()

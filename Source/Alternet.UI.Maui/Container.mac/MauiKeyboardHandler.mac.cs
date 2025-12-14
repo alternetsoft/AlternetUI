@@ -25,6 +25,8 @@ namespace Alternet.UI
         /// </summary>
         public static MauiKeyboardHandler Default = new();
 
+        private IKeyboardVisibilityService? visibilityService;
+
         static MauiKeyboardHandler()
         {
         }
@@ -35,6 +37,15 @@ namespace Alternet.UI
         public MauiKeyboardHandler()
             : base(UIKeyboardHidUsage.KeyboardRightGui, Key.Max)
         {
+        }
+
+        /// <inheritdoc/>
+        public override IKeyboardVisibilityService? VisibilityService
+        {
+            get
+            {
+                return visibilityService ??= new Alternet.Maui.KeyboardVisibilityService();
+            }
         }
 
         /// <summary>
@@ -376,6 +387,13 @@ namespace Alternet.UI
 
             var result = platformView.BecomeFirstResponder();
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref visibilityService);
+            base.DisposeManaged();
         }
     }
 }

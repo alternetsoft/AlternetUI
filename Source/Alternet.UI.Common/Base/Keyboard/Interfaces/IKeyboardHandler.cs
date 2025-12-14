@@ -55,5 +55,10 @@ namespace Alternet.UI
         /// <param name="key">Key to check.</param>
         /// <returns></returns>
         bool IsValidKey(Key key);
+
+        /// <summary>
+        /// Gets the keyboard visibility service.
+        /// </summary>
+        IKeyboardVisibilityService? VisibilityService { get; }
     }
 }
