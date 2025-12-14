@@ -2345,19 +2345,38 @@ namespace Alternet.UI
         {
             get
             {
+                bool ignoreHovered = PlessMouse.IgnoreHoveredState;
+
                 if (VisualStateOverride is not null)
-                    return VisualStateOverride.Value;
+                {
+                    var result = VisualStateOverride.Value;
+
+                    if (ignoreHovered)
+                    {
+                        if (result == VisualControlState.Hovered)
+                            return VisualControlState.Normal;
+                    }
+
+                    return result;
+                }
 
                 var state = VisualStates;
 
                 if (state.HasFlag(VisualControlStates.Disabled))
                     return VisualControlState.Disabled;
+
                 if (state.HasFlag(VisualControlStates.Pressed))
                     return VisualControlState.Pressed;
-                if (state.HasFlag(VisualControlStates.Hovered))
-                    return VisualControlState.Hovered;
+
+                if (!ignoreHovered)
+                {
+                    if (state.HasFlag(VisualControlStates.Hovered))
+                        return VisualControlState.Hovered;
+                }
+
                 if (state.HasFlag(VisualControlStates.Focused))
                     return VisualControlState.Focused;
+
                 return VisualControlState.Normal;
             }
         }
@@ -2370,21 +2389,42 @@ namespace Alternet.UI
         {
             get
             {
-                if (VisualStatesOverride is not null)
-                    return VisualStatesOverride.Value;
+                bool ignoreHovered = PlessMouse.IgnoreHoveredState;
 
                 VisualControlStates result = 0;
 
+                if (VisualStatesOverride is not null)
+                {
+                    if (ignoreHovered)
+                    {
+                        result = VisualStatesOverride.Value;
+                        result &= ~VisualControlStates.Hovered;
+                        return result;
+                    }
+                    else
+                    {
+                        return VisualStatesOverride.Value;
+                    }
+                }
+
                 if (!Enabled)
                     result |= VisualControlStates.Disabled;
+
                 if (IsDummy)
                     return result;
+
                 if (IsMouseLeftButtonDown)
                     result |= VisualControlStates.Pressed;
-                if (IsMouseOver && HoveredControl == this)
-                    result |= VisualControlStates.Hovered;
+
+                if (!ignoreHovered)
+                {
+                    if (IsMouseOver && HoveredControl == this)
+                        result |= VisualControlStates.Hovered;
+                }
+
                 if (Focused)
                     result |= VisualControlStates.Focused;
+
                 return result;
             }
         }

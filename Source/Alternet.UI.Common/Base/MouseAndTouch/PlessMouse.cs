@@ -42,6 +42,7 @@ namespace Alternet.UI
 
         private static (PointD? Position, AbstractControl? Control) lastMousePosition;
 
+        private static bool? ignoreHoveredState;
         private static Timer? longTapTimer;
         private static WeakReference<AbstractControl>? longTapControl;
         private static WeakReferenceValue<AbstractControl> mouseTargetControlOverride = new();
@@ -50,6 +51,23 @@ namespace Alternet.UI
         /// Occurs when <see cref="LastMousePosition"/> property is changed.
         /// </summary>
         public static event EventHandler? LastMousePositionChanged;
+
+        /// <summary>
+        /// Gets or sets whether to ignore hovered state in the controls.
+        /// By default it returns true when application is executed on phone or tablet device.
+        /// </summary>
+        public static bool IgnoreHoveredState
+        {
+            get
+            {
+                return ignoreHoveredState ??= App.IsTabletOrPhoneDevice;
+            }
+
+            set
+            {
+                ignoreHoveredState = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the control that overrides the default mouse target for input handling.
