@@ -219,6 +219,17 @@ namespace Alternet.Maui
         public virtual void SelectFirstTab() => SelectTab(0);
 
         /// <summary>
+        /// Sets the font for the tabs.
+        /// </summary>
+        /// <param name="fontFamily">The font family to use for the tabs.</param>
+        /// <param name="fontsize">The font size to use for the tabs.</param>
+        public virtual void SetTabFont(string? fontFamily, double fontsize)
+        {
+            Header.TabFontFamily = fontFamily;
+            Header.TabFontSize = fontsize;
+        }
+
+        /// <summary>
         /// Gets the tab button at the specified index.
         /// </summary>
         /// <param name="index">The index of the tab button to get.</param>
