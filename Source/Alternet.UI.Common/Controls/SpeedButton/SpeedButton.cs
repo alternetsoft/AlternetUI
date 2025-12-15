@@ -141,6 +141,8 @@ namespace Alternet.UI
         /// </summary>
         public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
 
+        private static bool? ignoreMenuItemShortcuts;
+
         private readonly Spacer pictureSpacer = new()
         {
             Visible = false,
@@ -372,6 +374,24 @@ namespace Alternet.UI
             /// Theme <see cref="RoundBorderTheme"/> is used.
             /// </summary>
             RoundBorder,
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether menu item shortcuts should be ignored.
+        /// this property is used when <see cref="SpeedButton"/> is used for displaying a menu item.
+        /// Default value is true on phone devices, false otherwise.
+        /// </summary>
+        public static bool IgnoreMenuItemShortcuts
+        {
+            get
+            {
+                return ignoreMenuItemShortcuts ??= App.IsPhoneDevice;
+            }
+
+            set
+            {
+                ignoreMenuItemShortcuts = value;
+            }
         }
 
         /// <summary>
@@ -1877,10 +1897,17 @@ namespace Alternet.UI
                 SetContentHorizontalAlignment(HorizontalAlignment.Left);
                 Label.HorizontalAlignment = HorizontalAlignment.Fill;
 
-                if(Shortcut is not null)
-                    RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+                if (Shortcut is not null)
+                {
+                    if (IgnoreMenuItemShortcuts)
+                        RightSideElement = SpeedButton.RightSideElementKind.None;
+                    else
+                        RightSideElement = SpeedButton.RightSideElementKind.KeyGesture;
+                }
                 else
+                {
                     RightSideElement = SpeedButton.RightSideElementKind.None;
+                }
 
                 ShowDropDownMenuWhenHovered = true;
 
