@@ -194,6 +194,8 @@ namespace Alternet.Maui
         private BoxView? topBorder;
         private BoxView? bottomBorder;
         private bool isBoldWhenSticky;
+        private string? tabFontFamily;
+        private double? tabFontSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleToolBarView"/> class.
@@ -501,6 +503,38 @@ namespace Alternet.Maui
                     return null;
                 var item = Buttons[0] as IToolBarItem;
                 return item;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the font family name used for tab text rendering.
+        /// </summary>
+        public virtual string? TabFontFamily
+        {
+            get => tabFontFamily;
+
+            set
+            {
+                if (tabFontFamily == value)
+                    return;
+                tabFontFamily = value;
+                OnTabFontChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the font size used for tab text rendering.
+        /// </summary>
+        public virtual double? TabFontSize
+        {
+            get => tabFontSize;
+
+            set
+            {
+                if (tabFontSize == value)
+                    return;
+                tabFontSize = value;
+                OnTabFontChanged();
             }
         }
 
@@ -878,7 +912,26 @@ namespace Alternet.Maui
             button.StickyStyle = StickyStyle;
             button.IsBoldWhenSticky = IsBoldWhenSticky;
 
+            if (TabFontFamily is not null)
+                button.FontFamily = this.TabFontFamily;
+
+            if (TabFontSize is not null)
+                button.FontSize = this.TabFontSize.Value;
+
             button.UpdateVisualStates(true);
+        }
+
+        internal virtual void OnTabFontChanged()
+        {
+            foreach (var child in Buttons)
+            {
+                if (child is not IToolBarItem item)
+                    continue;
+                if (TabFontFamily is not null)
+                    item.FontFamily = this.TabFontFamily;
+                if (TabFontSize is not null)
+                    item.FontSize = this.TabFontSize.Value;
+            }
         }
 
         internal virtual ToolBarButton CreateToolBarButton()
