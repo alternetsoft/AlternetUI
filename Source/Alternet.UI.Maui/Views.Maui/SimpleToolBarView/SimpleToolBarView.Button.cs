@@ -62,12 +62,23 @@ namespace Alternet.Maui
                 this.toolBar = toolBar;
             }
 
+            public enum ButtonKind
+            {
+                Normal,
+
+                NextTab,
+
+                PreviousTab,
+            }
+
             /// <summary>
             /// Occurs when the sticky state of the button changes.
             /// </summary>
             public event EventHandler? StickyChanged;
 
             public virtual Action? ClickedAction { get; set; }
+
+            public ButtonKind Kind { get; set; } = ButtonKind.Normal;
 
             public virtual bool IsBoldWhenSticky { get; set; }
 
@@ -119,8 +130,7 @@ namespace Alternet.Maui
 
                 set
                 {
-                    if (Container is not null)
-                        Container.IsVisible = value;
+                    Container?.IsVisible = value;
                 }
             }
 
@@ -158,6 +168,11 @@ namespace Alternet.Maui
                 }
             }
 
+            public virtual bool CanBeSticky
+            {
+                get; set;
+            } = true;
+
             /// <inheritdoc/>
             public virtual bool IsSticky
             {
@@ -169,6 +184,8 @@ namespace Alternet.Maui
                 set
                 {
                     if (isSticky == value)
+                        return;
+                    if(!CanBeSticky && value)
                         return;
                     isSticky = value;
 
