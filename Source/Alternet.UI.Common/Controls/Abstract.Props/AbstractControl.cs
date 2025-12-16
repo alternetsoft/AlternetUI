@@ -2282,6 +2282,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets whether left mouse button is down.
+        /// This property is set by the mouse event handlers of the control.
+        /// When the left mouse button is pressed down over the control, this
+        /// property is set to <c>true</c>. When the left mouse button is released, this
+        /// property is set to <c>false</c>.
         /// </summary>
         [Browsable(false)]
         public virtual bool IsMouseLeftButtonDown
