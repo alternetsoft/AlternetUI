@@ -26,6 +26,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets the <see cref="AbstractControl.IsMouseLeftButtonDown"/> property of the specified control
+        /// and its child controls.
+        /// </summary>
+        /// <param name="control">The <see cref="AbstractControl"/> to reset.</param>
+        /// <param name="recursive"><c>true</c> to reset child controls; otherwise, <c>false</c>. Optional. Default is <c>true</c>.</param>
+        public static void ResetIsMouseLeftButtonDown(AbstractControl control, bool recursive = true)
+        {
+            control.IsMouseLeftButtonDown = false;
+            if (recursive)
+            {
+                control.ForEachChild(
+                    (child) =>
+                    {
+                        ResetIsMouseLeftButtonDown(child, true);
+                    });
+            }
+        }
+
+        /// <summary>
         /// Creates a menu item that tracks the painting time for all modes of the specified control.
         /// </summary>
         /// <remarks>After tracking the painting time, the control's overlays are cleared, and
