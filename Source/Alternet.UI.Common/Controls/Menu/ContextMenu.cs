@@ -396,7 +396,9 @@ namespace Alternet.UI
         /// <param name="align">The alignment of the context menu within the container.
         /// If <see langword="null"/>, the default alignment
         /// <see cref="HVDropDownAlignment.Center"/> is used if position is not specified.</param>
-        public virtual void ShowInsideControl(
+        /// <returns>The unique identifier of the host control displaying the context menu,
+        /// or null if the context menu is not shown.</returns>
+        public virtual ObjectUniqueId? ShowInsideControl(
             AbstractControl container,
             AbstractControl? source = null,
             PointD? position = null,
@@ -412,7 +414,7 @@ namespace Alternet.UI
             }
 
             if (Items.Count == 0)
-                return;
+                return null;
             relatedControl.Value = source;
 
             if (hostControl is null)
@@ -429,6 +431,8 @@ namespace Alternet.UI
             {
                 popupToolBar.ShowInContainer(container, position, align);
             }
+
+            return hostControl.UniqueId;
         }
 
         /// <summary>
@@ -497,11 +501,15 @@ namespace Alternet.UI
                 return;
             try
             {
+                relatedControl.Value = control;
+
                 var e = new CancelEventArgs();
                 RaiseOpening(e);
                 if (e.Cancel)
+                {
+                    relatedControl.Value = null;
                     return;
-                relatedControl.Value = control;
+                }
 
                 factory ??= MenuUtils.Factory;
 
