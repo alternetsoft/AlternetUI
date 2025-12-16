@@ -46,18 +46,19 @@ are required.
 - Windows 11 is preferred.
 - Install Visual Studio 2026 Version 18.0.0 or later, with C# Desktop development, C++ Desktop development workloads, 
 VS Extenstion Development installed. Net 10.0, 9.0, 8.0 targeting packs are required.
-- For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, maui-windows.
+- For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, maui-windows, mono-android.
 - Clone the AlterNET UI repo.
 - Use the "C:\Alternet.UI" folder or any other root folder. The folder name should not contain any spaces or non-English letters.
 
 <b>STEP 2.</b> macOS Machine Setup:
 
-- macOS 10.15 (Catalina) or newer is required.
+- macOS 10.15 (Catalina) or newer is required. For development on MAUI platform, macOs 26.2 (Tahoe) or newer is required.
 - Install appropriate XCode version (for example Xcode 12.4 for macOS 10.15). See 
-this [page](https://developer.apple.com/support/xcode/).
+this [page](https://developer.apple.com/support/xcode/). For development on MAUI platform, XCode 26.2 or newer is required.
 - Install [CMake](https://cmake.org/download/). Copy CMake.app into /Applications (or another location), double click to run it.
  Follow the "How to Install For Command Line Use" menu item.
 - Make folder with Windows Alternet.UI installation accessible for macOS Machine.
+- For development with Alternet.UI for Maui, install these dotnet workloads: android, ios, maccatalyst, macos, mono-android.
 
 <b>STEP 3.</b> Linux Machine Setup:
 
