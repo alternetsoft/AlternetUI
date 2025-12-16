@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// values using the bitwise OR operator. Use the <see cref="None"/> value
     /// to represent the absence of any options.</remarks>
     [Flags]
-    public enum OverlayToolTipFlags
+    public enum OverlayToolTipFlags : ulong
     {
         /// <summary>
         /// Represents the absence of any specific value or option.
@@ -45,5 +45,20 @@ namespace Alternet.UI
         /// <see cref="DismissAfterInterval"/> flags. It is typically used to perform both
         /// actions in a single operation.</remarks>
         ClearAndDismiss = Clear | DismissAfterInterval,
+
+        /// <summary>
+        /// Specifies that the tooltip should be positioned to fit horizontally into its container.
+        /// </summary>
+        FitIntoContainerHorz = 1 << 3,
+
+        /// <summary>
+        /// Specifies that the tooltip should be positioned to fit vertically into its container.
+        /// </summary>
+        FitIntoContainerVert = 1 << 4,
+
+        /// <summary>
+        /// Indicates that the tooltip should be positioned to fit both horizontally and vertically.
+        /// </summary>
+        FitIntoContainer = FitIntoContainerHorz | FitIntoContainerVert,
     }
 }
