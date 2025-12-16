@@ -159,6 +159,14 @@ namespace Alternet.UI.Localization
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ToolBarPreviousTabToolTip { get; set; } = "Previous Tab";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ToolBarNextTabToolTip { get; set; } = "Next Tab";
+
+        // ========================
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string WindowTitleExceptionDetails { get; set; } = "Exception Details";
 
         /// <inheritdoc cref="ButtonOk"/>
