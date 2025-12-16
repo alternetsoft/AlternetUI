@@ -61,18 +61,30 @@ namespace Alternet.UI
                 e.Suppressed();
             };
 
-            notification.AfterControlMouseMove += (s, e) =>
+            bool CloseIfSibling(AbstractControl? source)
             {
                 if (!Visible)
-                    return;
-                if (RelatedControl?.IsSibling(e.Source as AbstractControl) ?? false)
+                    return false;
+                if (RelatedControl?.IsSibling(source) ?? false)
+                {
                     CloseWhenIdle(ModalResult.Canceled);
+                    return true;
+                }
+
+                return false;
+            }
+
+            notification.AfterControlMouseMove += (s, e) =>
+            {
+                CloseIfSibling(e.Source as AbstractControl);
             };
 
             notification.BeforeControlMouseDown += (s, e) =>
             {
                 if (!Visible)
                     return;
+
+                var closed = CloseIfSibling(e.Source as AbstractControl);
 
                 var insidePopup = InsidePopup(e.Source);
 
@@ -81,7 +93,7 @@ namespace Alternet.UI
                     e.Handled = !insidePopup;
                 }
 
-                if (!insidePopup && HideOnClickOutside)
+                if (!insidePopup && HideOnClickOutside && !closed)
                 {
                     CloseWhenIdle(ModalResult.Canceled);
                 }
@@ -91,6 +103,8 @@ namespace Alternet.UI
             {
                 if (!Visible)
                     return;
+
+                CloseIfSibling(e.Source as AbstractControl);
 
                 if (SuppressParentMouseUp)
                 {
@@ -274,6 +288,8 @@ namespace Alternet.UI
             PointD? position = null,
             HVDropDownAlignment? align = null)
         {
+            Content.UpdateCommandState();
+
             LastUsedAlignment = align;
 
             var pos = Mouse.CoercePosition(position, container);
