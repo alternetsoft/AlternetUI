@@ -2492,10 +2492,17 @@ namespace Alternet.UI
                     toolTip: null,
                     (s, e) =>
                     {
-                        Post(menuItem.RaiseClick);
+                        var speedButton = s as SpeedButton;
+
+                        if (speedButton?.IsEnabled ?? false)
+                        {
+                            if(menuItem.Enabled)
+                                Post(menuItem.RaiseClick);
+                        }
                     });
                 speedButton.Label.MnemonicMarker = '_';
                 speedButton.Label.MnemonicMarkerEnabled = true;
+                speedButton.Enabled = menuItem.Enabled;
                 result = speedButton;
             }
 
