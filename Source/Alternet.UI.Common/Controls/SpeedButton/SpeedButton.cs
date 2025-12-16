@@ -1913,7 +1913,7 @@ namespace Alternet.UI
 
                 ShowDropDownMenuWhenHovered = !App.IsTabletOrPhoneDevice;
 
-                if(!App.IsMaui)
+                if (!App.IsMaui)
                     UseInternalDropDownMenu = true;
 
                 if (DropDownMenu is null)
