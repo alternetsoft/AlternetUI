@@ -136,6 +136,16 @@ namespace Alternet.Maui
         /// </summary>
         public static Color DefaultPressedBorderColorLight = Colors.DarkGray;
 
+        /// <summary>
+        /// Gets or sets the default SVG image for the 'Next Tab' button.
+        /// </summary>
+        public static Alternet.Drawing.SvgImage? DefaultNextTabImage { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default SVG image for the 'Previous Tab' button.
+        /// </summary>
+        public static Alternet.Drawing.SvgImage? DefaultPreviousTabImage { get; set; }
+
         internal static ButtonVisualStateSetters ButtonNormalState = new()
         {
             BackgroundColor = GetTransparent,
@@ -712,6 +722,207 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Adds 'Next Tab' and 'Previous Tab' buttons to the toolbar.
+        /// These buttons allow navigation between tabs which is useful on mobile devices.
+        /// </summary>
+        /// <param name="idx">The index at which to insert the buttons.
+        /// Optional. If not specified, buttons will be added at the beginning.
+        /// If negative, the buttons will be added at the end.</param>
+        /// <param name="onNextTabClick">The action to per Optionalform when the 'Next Tab' button is clicked.
+        /// Optional. If not specified, the default behavior is used.</param>
+        /// <param name="onPreviousTabClick">The action to perform when the 'Previous Tab' button is clicked.
+        /// Optional. If not specified, the default behavior is used.</param>
+        public virtual void AddNextAndPreviousTabButtons(
+            int idx = 0,
+            Action? onNextTabClick = null,
+            Action? onPreviousTabClick = null)
+        {
+            if (idx < 0 || idx > buttons.Children.Count)
+                idx = buttons.Children.Count;
+
+            var previousTabButton = InsertButton(
+                idx,
+                null,
+                Alternet.UI.Localization.CommonStrings.Default.ToolBarPreviousTabToolTip,
+                DefaultPreviousTabImage ?? Alternet.UI.KnownSvgImages.ImgAngleLeft,
+                () =>
+                {
+                    if (onPreviousTabClick is null)
+                    {
+                        LastToFirst();
+                    }
+                    else
+                        onPreviousTabClick();
+                });
+
+            var nextTabButton = InsertButton(
+                idx + 1,
+                null,
+                Alternet.UI.Localization.CommonStrings.Default.ToolBarNextTabToolTip,
+                DefaultNextTabImage ?? Alternet.UI.KnownSvgImages.ImgAngleRight,
+                () =>
+                {
+                    if (onNextTabClick is null)
+                    {
+                        FirstToLast();
+                        return;
+                    }
+                    onNextTabClick?.Invoke();
+                });
+
+            var btnPrevious = previousTabButton as ToolBarButton;
+            var btnNext = nextTabButton as ToolBarButton;
+
+            if (btnPrevious is not null)
+            {
+                btnPrevious.CanBeSticky = false;
+                btnPrevious.Kind = ToolBarButton.ButtonKind.PreviousTab;
+            }
+
+            if (btnNext is not null)
+            {
+                btnNext.CanBeSticky = false;
+                btnNext.Kind = ToolBarButton.ButtonKind.NextTab;
+            }
+        }
+
+        /// <summary>
+        /// Gets the index of the last non-special button in the toolbar.
+        /// </summary>
+        /// <returns>The index of the last non-special button, or -1 if none is found.</returns>
+        public virtual int GetLastNonSpecialButtonIndex()
+        {
+            for (int i = buttons.Children.Count - 1; i >= 0; i--)
+            {
+                var child = buttons.Children[i];
+                if (child is not ToolBarButtonContainer container)
+                    continue;
+                if (container.Button is not ToolBarButton button)
+                    continue;
+                if (button.Kind == ToolBarButton.ButtonKind.Normal)
+                    return i;
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// Returns the index of the first button in the toolbar that is not marked as special.
+        /// </summary>
+        /// <remarks>A non-special button is defined as a button whose kind is set to Normal. If no such
+        /// button exists in the toolbar, the method returns -1.</remarks>
+        /// <returns>The zero-based index of the first non-special button if found; otherwise, -1.</returns>
+        public virtual int GetFirstNonSpecialButtonIndex()
+        {
+            for (int i = 0; i < buttons.Children.Count; i++)
+            {
+                var child = buttons.Children[i];
+                if (child is not ToolBarButtonContainer container)
+                    continue;
+                if (container.Button is not ToolBarButton button)
+                    continue;
+                if (button.Kind == ToolBarButton.ButtonKind.Normal)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Moves the last button in the toolbar to the first position.
+        /// This method ignores special buttons (e.g., 'Next Tab' and 'Previous Tab' buttons).
+        /// </summary>
+        public virtual void LastToFirst()
+        {
+            if (buttons.Children.Count == 0)
+                return;
+            var lastIndex = GetLastNonSpecialButtonIndex();
+            if (lastIndex < -1)
+                return;
+
+            var firstIndex = GetFirstNonSpecialButtonIndex();
+            if(firstIndex == lastIndex)
+                return;
+
+            if (firstIndex < 0)
+                firstIndex = 0;
+
+            var last = buttons.Children[lastIndex];
+            buttons.Children.RemoveAt(lastIndex);
+            buttons.Children.Insert(firstIndex, last);
+        }
+
+        /// <summary>
+        /// Gets the index of the specified toolbar item.
+        /// </summary>
+        /// <param name="item">The toolbar item to find.</param>
+        /// <returns>The zero-based index of the toolbar item if found; otherwise, -1.</returns>
+        public virtual int GetItemIndex(IToolBarItem? item)
+        {
+            if (buttons.Children.Count == 0 || item is null)
+                return -1;
+            for (int i = 0; i < buttons.Children.Count; i++)
+            {
+                var child = buttons.Children[i];
+                if (child is not ToolBarButtonContainer container)
+                    continue;
+                if (container.Button is not ToolBarButton button)
+                    continue;
+                if (button.AttributesProvider.UniqueId == item.AttributesProvider.UniqueId)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Moves the specified toolbar item to the first position.
+        /// </summary>
+        /// <param name="item">The toolbar item to move.</param>
+        public virtual void MakeItemFirst(IToolBarItem? item)
+        {
+            int itemIndex = GetItemIndex(item);
+            if (itemIndex < 0)
+                return;
+            var firstIndex = GetFirstNonSpecialButtonIndex();
+
+            if (firstIndex == itemIndex)
+                return;
+
+            if (firstIndex < 0)
+                firstIndex = 0;
+            var targetItem = buttons.Children[itemIndex];
+            buttons.Children.RemoveAt(itemIndex);
+            buttons.Children.Insert(firstIndex, targetItem);
+        }
+
+        /// <summary>
+        /// Moves the first button in the toolbar to the last position.
+        /// This method ignores special buttons (e.g., 'Next Tab' and 'Previous Tab' buttons).
+        /// </summary>
+        public virtual void FirstToLast()
+        {
+            if (buttons.Children.Count == 0)
+                return;
+
+            var firstIndex = GetFirstNonSpecialButtonIndex();
+            if (firstIndex < 0)
+                return;
+
+            var lastIndex = GetLastNonSpecialButtonIndex();
+            if (lastIndex < 0)
+                return;
+            if (lastIndex == firstIndex)
+                return;
+
+            var first = buttons.Children[firstIndex];
+            buttons.Children.RemoveAt(firstIndex);
+
+            buttons.Children.Insert(lastIndex + 1, first);
+        }
+
+        /// <summary>
         /// Adds a button to the toolbar.
         /// </summary>
         /// <param name="text">The text to display on the button.</param>
@@ -874,6 +1085,28 @@ namespace Alternet.Maui
             return result;
         }
 
+        /// <summary>
+        /// Called when the tab font properties change.
+        /// </summary>
+        protected virtual void OnTabFontChanged()
+        {
+            foreach (var child in Buttons)
+            {
+                if (child is not IToolBarItem item)
+                    continue;
+                if (TabFontFamily is not null)
+                    item.FontFamily = this.TabFontFamily;
+                if (TabFontSize is not null)
+                    item.FontSize = this.TabFontSize.Value;
+            }
+        }
+
+        internal virtual ToolBarButton CreateToolBarButton()
+        {
+            var button = new ToolBarButton(this);
+            return button;
+        }
+
         internal virtual void InitButtonProps(
             ToolBarButton button,
             string? text,
@@ -919,25 +1152,6 @@ namespace Alternet.Maui
                 button.FontSize = this.TabFontSize.Value;
 
             button.UpdateVisualStates(true);
-        }
-
-        internal virtual void OnTabFontChanged()
-        {
-            foreach (var child in Buttons)
-            {
-                if (child is not IToolBarItem item)
-                    continue;
-                if (TabFontFamily is not null)
-                    item.FontFamily = this.TabFontFamily;
-                if (TabFontSize is not null)
-                    item.FontSize = this.TabFontSize.Value;
-            }
-        }
-
-        internal virtual ToolBarButton CreateToolBarButton()
-        {
-            var button = new ToolBarButton(this);
-            return button;
         }
 
         private static double GetButtonBorder(View control)
