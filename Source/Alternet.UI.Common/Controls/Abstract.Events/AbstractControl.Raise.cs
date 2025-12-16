@@ -872,6 +872,8 @@ namespace Alternet.UI
                     TemplateUtils.RaisePaintForNonPlatformChildren(this, () => e.Graphics);
                 }
 
+                OnAfterPaintChildren(e);
+
                 PlessMouse.DrawTestMouseRect(this, () => e.Graphics);
 
                 RaiseNotifications((n) => n.AfterPaint(this, e));

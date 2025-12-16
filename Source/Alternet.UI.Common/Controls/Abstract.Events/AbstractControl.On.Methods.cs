@@ -745,6 +745,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called after the control's child elements have been painted. Allows for additional custom painting after the
+        /// default child painting logic completes.
+        /// </summary>
+        /// <remarks>Override this method to perform custom painting operations that should occur after
+        /// all child controls have been rendered. This method is intended for advanced scenarios and is typically used
+        /// when creating custom controls.</remarks>
+        /// <param name="e">A <see cref="PaintEventArgs"/> that contains the event data for the paint operation.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnAfterPaintChildren(PaintEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Occurs during a drag-and-drop operation and enables the drag source
         /// to determine whether the drag-and-drop operation should be canceled.
         /// </summary>
