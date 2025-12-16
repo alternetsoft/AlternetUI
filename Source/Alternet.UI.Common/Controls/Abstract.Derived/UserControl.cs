@@ -107,6 +107,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets unique identifier of the last used drop-down menu popup.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ObjectUniqueId? LastUsedDropDownMenuPopup { get; set; }
+
+        /// <summary>
         /// Gets or sets the type of click trigger that determines when a click action is initiated.
         /// </summary>
         [Browsable(false)]
@@ -814,7 +820,7 @@ namespace Alternet.UI
 
             if (UseInternalDropDownMenu ?? DefaultUseInternalDropDownMenu)
             {
-                DropDownMenu.ShowInPopup(this, afterShow, DropDownMenuPosition);
+                LastUsedDropDownMenuPopup = DropDownMenu.ShowInPopup(this, afterShow, DropDownMenuPosition);
             }
             else
             {
