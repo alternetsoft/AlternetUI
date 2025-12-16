@@ -285,27 +285,31 @@ namespace Alternet.UI
         /// <param name="dropDownMenuPosition">An optional parameter specifying the alignment
         /// of the popup relative to the control. If not provided,
         /// a default alignment is used.</param>
-        public virtual void ShowInPopup(
+        /// <returns>The unique identifier of the popup window, or <c>null</c> if the popup could not be shown.</returns>
+        public virtual ObjectUniqueId? ShowInPopup(
             AbstractControl control,
             Action? afterShow = null,
             HVDropDownAlignment? dropDownMenuPosition = null)
         {
             if (DisposingOrDisposed)
-                return;
+                return null;
             relatedControl.Value = null;
             if (Items.Count == 0)
-                return;
+                return null;
             if (control is null)
-                return;
+                return null;
 
             try
             {
+                relatedControl.Value = control;
+
                 var e = new CancelEventArgs();
                 RaiseOpening(e);
                 if (e.Cancel)
-                    return;
-
-                relatedControl.Value = control;
+                {
+                    relatedControl.Value = null;
+                    return null;
+                }
 
                 var hostControl = GetHostObject<PopupToolBar>();
 
@@ -338,6 +342,8 @@ namespace Alternet.UI
 
                     popupToolBar.ShowPopup(control, dropDownMenuPosition);
                 }
+
+                return hostControl.UniqueId;
             }
             finally
             {
