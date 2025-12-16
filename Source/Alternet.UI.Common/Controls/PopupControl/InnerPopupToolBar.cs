@@ -317,6 +317,7 @@ namespace Alternet.UI
                         align);
             }
 
+            ControlUtils.ResetIsMouseLeftButtonDown(this);
             Show();
         }
 
