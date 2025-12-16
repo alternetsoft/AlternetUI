@@ -25,6 +25,59 @@ namespace Alternet.UI
         /// </summary>
         public virtual PointD Location { get; set; }
 
+        /// <summary>
+        /// Gets the width of the image in device-independent pixels (DIPs).
+        /// </summary>
+        public virtual float ImageWidthInDips
+        {
+            get
+            {
+                return Image != null ? GraphicsFactory.PixelToDip(Image.Width, Container?.ScaleFactor) : 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the height of the image in device-independent pixels (DIPs).
+        /// </summary>
+        public virtual float ImageHeightInDips
+        {
+            get
+            {
+                return Image != null ? GraphicsFactory.PixelToDip(Image.Height, Container?.ScaleFactor) : 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the x-coordinate of the right edge of the image, relative to its location.
+        /// </summary>
+        public virtual float Right
+        {
+            get
+            {
+                return Location.X + ImageWidthInDips;
+            }
+
+            set
+            {
+                Location = new PointD(value - ImageWidthInDips, Location.Y);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the Y-coordinate of the bottom edge of the image, relative to its location.
+        /// </summary>
+        public virtual float Bottom
+        {
+            get
+            {
+                return Location.Y + ImageHeightInDips;
+            }
+            set
+            {
+                Location = new PointD(Location.X, value - ImageHeightInDips);
+            }
+        }
+
         /// <inheritdoc/>
         public override void OnPaint(AbstractControl control, PaintEventArgs e)
         {
