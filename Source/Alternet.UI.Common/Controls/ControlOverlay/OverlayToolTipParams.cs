@@ -32,6 +32,11 @@ namespace Alternet.UI
         public virtual PointD? Location { get; set; }
 
         /// <summary>
+        /// Gets or sets the offset which was additionally applied to the tooltip location.
+        /// </summary>
+        public virtual PointD LocationOffset { get; set; }
+
+        /// <summary>
         /// Gets or sets the vertical alignment of the tooltip inside the control.
         /// </summary>
         public virtual VerticalAlignment? VerticalAlignment { get; set; }
