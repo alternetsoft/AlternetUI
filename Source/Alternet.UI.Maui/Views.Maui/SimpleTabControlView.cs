@@ -142,6 +142,14 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the selected tab should be made the first tab.
+        /// This property is used in <see cref="SelectTab(TabControlItem?)"/> method.
+        /// This property can be useful on mobile devices with limited screen space to ensure
+        /// that the selected tab is always visible.
+        /// </summary>
+        public virtual bool MakeSelectedTabFirst { get; set; }
+
+        /// <summary>
         /// Gets or sets the index of the selected tab.
         /// </summary>
         public virtual int SelectedIndex
@@ -193,6 +201,11 @@ namespace Alternet.Maui
             btn.IsSticky = true;
             Content = item!.PageResolver?.Invoke();
             SelectedTabChanged?.Invoke(this, EventArgs.Empty);
+
+            if (MakeSelectedTabFirst)
+            {
+                Header.MakeItemFirst(btn);
+            }
         }
 
         /// <summary>
@@ -203,7 +216,7 @@ namespace Alternet.Maui
         {
             var tab = GetTabButton(index);
 
-            if(tab is null)
+            if (tab is null)
             {
                 Content = null;
             }
