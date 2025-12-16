@@ -197,9 +197,12 @@ namespace Alternet.UI
                 OverlayToolTipFlags defaultOptions = OverlayToolTipFlags.DismissAfterInterval
                     | OverlayToolTipFlags.UseSystemColors;
 
+                var ofs = Math.Abs(OverlayToolTipOffset);
+
                 OverlayToolTipParams data = new()
                 {
-                    Location = new PointD(pos.X + OverlayToolTipOffset, pos.Y + OverlayToolTipOffset),
+                    Location = new PointD(pos.X + ofs, pos.Y + ofs),
+                    LocationOffset = new PointD(ofs, ofs),
                     Text = tooltipStr,
                     Font = font,
                     Options = defaultOptions,
