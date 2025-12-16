@@ -195,7 +195,7 @@ namespace Alternet.UI
                 var pos = Mouse.GetPosition(overlayParent);
 
                 OverlayToolTipFlags defaultOptions = OverlayToolTipFlags.DismissAfterInterval
-                    | OverlayToolTipFlags.UseSystemColors;
+                    | OverlayToolTipFlags.UseSystemColors | OverlayToolTipFlags.FitIntoContainer;
 
                 var ofs = Math.Abs(OverlayToolTipOffset);
 

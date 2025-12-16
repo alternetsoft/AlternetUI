@@ -612,9 +612,9 @@ namespace Alternet.UI
 
             data.Font ??= RealFont;
             data.ContainerBounds ??= GetOverlayRectangle();
-            var container = data.ContainerBounds.Value;
+            var containerBounds = data.ContainerBounds.Value;
 
-            data.MaxWidth ??= Math.Max(RichToolTip.DefaultMaxWidth ?? 0, container.Width);
+            data.MaxWidth ??= Math.Max(RichToolTip.DefaultMaxWidth ?? 0, containerBounds.Width);
             data.ScaleFactor = ScaleFactor;
 
             if (data.Options.HasFlag(OverlayToolTipFlags.UseSystemColors))
@@ -637,12 +637,28 @@ namespace Alternet.UI
             {
                 alignedRect = AlignUtils.AlignRectInRect(
                     alignedRect,
-                    container,
+                    containerBounds,
                     data.HorizontalAlignment,
                     data.VerticalAlignment);
             }
 
             overlay.Location = alignedRect.Location;
+
+            if (data.Options.HasFlag(OverlayToolTipFlags.FitIntoContainerHorz))
+            {
+                if (overlay.Right >= containerBounds.Right)
+                {
+                    overlay.Right = containerBounds.Right - 1;
+                }
+            }
+
+            if (data.Options.HasFlag(OverlayToolTipFlags.FitIntoContainerVert))
+            {
+                if (overlay.Bottom >= containerBounds.Bottom)
+                {
+                    overlay.Bottom = containerBounds.Bottom - 1;
+                }
+            }
 
             AddOverlay(overlay);
 
@@ -811,17 +827,31 @@ namespace Alternet.UI
         {
             DefaultPaint(e);
 
-            if(overlays is not null)
-            {
-                foreach (var overlay in overlays)
-                {
-                    overlay.OnPaint(this, e);
-                }
-            }
-
             DefaultPaintDebug(e);
 
             RaiseAfterPaint(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnAfterPaintChildren(PaintEventArgs e)
+        {
+            base.OnAfterPaintChildren(e);
+
+            PaintOverlays(e);
+        }
+
+        /// <summary>
+        /// Paints all overlays associated with the control.
+        /// </summary>
+        /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
+        protected virtual void PaintOverlays(PaintEventArgs e)
+        {
+            if (overlays is null)
+                return;
+            foreach (var overlay in overlays)
+            {
+                overlay.OnPaint(this, e);
+            }
         }
 
         /// <summary>
