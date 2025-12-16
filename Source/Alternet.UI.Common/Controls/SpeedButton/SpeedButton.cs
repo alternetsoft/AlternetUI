@@ -1890,6 +1890,8 @@ namespace Alternet.UI
         {
             DoInsideLayout(() =>
             {
+                ClickTrigger = ClickTriggerKind.MouseUp;
+                DropDownTrigger = ClickTriggerKind.MouseUp;
                 TextVisible = true;
                 HorizontalAlignment = HorizontalAlignment.Fill;
                 IsToolTipEnabled = false;
@@ -1909,7 +1911,7 @@ namespace Alternet.UI
                     RightSideElement = SpeedButton.RightSideElementKind.None;
                 }
 
-                ShowDropDownMenuWhenHovered = true;
+                ShowDropDownMenuWhenHovered = !App.IsTabletOrPhoneDevice;
 
                 if(!App.IsMaui)
                     UseInternalDropDownMenu = true;
