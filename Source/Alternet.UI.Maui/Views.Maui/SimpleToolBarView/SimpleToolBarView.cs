@@ -505,13 +505,44 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets the first item in the toolbar, or <see langword="null"/> if the toolbar is empty.
         /// </summary>
-        public IToolBarItem? FirstItem
+        public virtual IToolBarItem? FirstItem
         {
             get
             {
                 if (Buttons.Count == 0)
                     return null;
                 var item = Buttons[0] as IToolBarItem;
+                return item;
+            }
+        }
+
+        /// <summary>
+        /// Gets the last item in the toolbar, or <see langword="null"/> if the toolbar is empty.
+        /// </summary>
+        public virtual IToolBarItem? LastItem
+        {
+            get
+            {
+                if (Buttons.Count == 0)
+                    return null;
+                var item = Buttons[Buttons.Count - 1] as IToolBarItem;
+                return item;
+            }
+        }
+
+        /// <summary>
+        /// Gets the first non-special item in the toolbar, or <see langword="null"/> if none found.
+        /// </summary>
+        public virtual IToolBarItem? FirstNonSpecialItem
+        {
+            get
+            {
+                if (Buttons.Count == 0)
+                    return null;
+                int idx = GetFirstNonSpecialButtonIndex();
+                if (idx < 0)
+                    return null;
+                var item = Buttons[idx] as IToolBarItem;
                 return item;
             }
         }
@@ -722,23 +753,70 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Specifies options for adding Next and Previous tab buttons.
+        /// </summary>
+        public enum AddNextAndPreviousTabButtonsFlags
+        {
+            /// <summary>
+            /// No special behavior.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Makes the first content button sticky after 'Next Tab' or 'Previous Tab' button was clicked.
+            /// </summary>
+            MakeSticky = 1,
+        }
+
+        /// <summary>
+        /// Parameters for adding 'Next Tab' and 'Previous Tab' buttons.
+        /// </summary>
+        public struct NextAndPreviousTabButtonsParams
+        {
+            /// <summary>
+            /// The index at which to insert the buttons.
+            /// If negative, the buttons will be added at the end.
+            /// Default is 0 (buttons will be added at the beginning).
+            /// </summary>
+            public int Index { get; set; }
+
+            /// <summary>
+            /// The action to perform when the 'Next Tab' button is clicked.
+            /// If not specified, the default behavior is used.
+            /// </summary>
+            public Action? NextTabClick { get; set; }
+
+            /// <summary>
+            /// The action to perform when the 'Previous Tab' button is clicked.
+            /// If not specified, the default behavior is used.
+            /// </summary>
+            public Action? PreviousTabClick { get; set; }
+        }
+
+        /// <summary>
         /// Adds 'Next Tab' and 'Previous Tab' buttons to the toolbar.
         /// These buttons allow navigation between tabs which is useful on mobile devices.
         /// </summary>
-        /// <param name="idx">The index at which to insert the buttons.
-        /// Optional. If not specified, buttons will be added at the beginning.
-        /// If negative, the buttons will be added at the end.</param>
-        /// <param name="onNextTabClick">The action to per Optionalform when the 'Next Tab' button is clicked.
-        /// Optional. If not specified, the default behavior is used.</param>
-        /// <param name="onPreviousTabClick">The action to perform when the 'Previous Tab' button is clicked.
-        /// Optional. If not specified, the default behavior is used.</param>
+        /// <param name="flags">Flags to customize the behavior of the added buttons.</param>
+        /// <param name="prm">Parameters for adding 'Next Tab' and 'Previous Tab' buttons.</param>
         public virtual void AddNextAndPreviousTabButtons(
-            int idx = 0,
-            Action? onNextTabClick = null,
-            Action? onPreviousTabClick = null)
+            AddNextAndPreviousTabButtonsFlags flags = AddNextAndPreviousTabButtonsFlags.None,
+            NextAndPreviousTabButtonsParams? prm = null)
         {
+            var idx = prm?.Index ?? 0;
+            var onPreviousTabClick = prm?.PreviousTabClick;
+            var onNextTabClick = prm?.NextTabClick;
+
             if (idx < 0 || idx > buttons.Children.Count)
                 idx = buttons.Children.Count;
+
+            void MakeFirstItemSticky()
+            {
+                if (flags.HasFlag(AddNextAndPreviousTabButtonsFlags.MakeSticky))
+                {
+                    FirstNonSpecialItem?.IsSticky = true;
+                }
+            }
 
             var previousTabButton = InsertButton(
                 idx,
@@ -750,6 +828,7 @@ namespace Alternet.Maui
                     if (onPreviousTabClick is null)
                     {
                         LastToFirst();
+                        MakeFirstItemSticky();
                     }
                     else
                         onPreviousTabClick();
@@ -765,6 +844,7 @@ namespace Alternet.Maui
                     if (onNextTabClick is null)
                     {
                         FirstToLast();
+                        MakeFirstItemSticky();
                         return;
                     }
                     onNextTabClick?.Invoke();
@@ -919,7 +999,7 @@ namespace Alternet.Maui
             var first = buttons.Children[firstIndex];
             buttons.Children.RemoveAt(firstIndex);
 
-            buttons.Children.Insert(lastIndex + 1, first);
+            buttons.Children.Insert(lastIndex, first);
         }
 
         /// <summary>
