@@ -73,7 +73,15 @@ namespace Alternet.UI
         {
             get
             {
-                return visibilityService ??= new Alternet.Maui.KeyboardVisibilityService();
+                try
+                {
+                    return visibilityService ??= new Alternet.Maui.KeyboardVisibilityService();
+                }
+                catch
+                {
+                    visibilityService = new PlessKeyboardVisibilityService();
+                    return visibilityService;
+                }
             }
         }
 
