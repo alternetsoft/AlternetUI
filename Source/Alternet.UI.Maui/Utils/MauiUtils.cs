@@ -13,6 +13,7 @@ using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
@@ -171,6 +172,20 @@ namespace Alternet.UI
 #endif
                 return platformApplication;
             }
+        }
+
+        /// <summary>
+        /// Sets the layout flags and bounds of the specified bindable object to occupy the entire area of its parent
+        /// <see cref="AbsoluteLayout"/>.
+        /// </summary>
+        /// <remarks>This method configures the object to fill its parent <see cref="AbsoluteLayout"/> by setting its
+        /// layout flags to <see cref="AbsoluteLayoutFlags.All"/> and its bounds to cover the full area. Use this method when you want
+        /// the child to automatically size and position itself to fill the parent container.</remarks>
+        /// <param name="obj">The bindable object whose layout flags and bounds are to be set. Cannot be null.</param>
+        public static void FillAbsoluteLayout(BindableObject obj)
+        {
+            AbsoluteLayout.SetLayoutFlags(obj, AbsoluteLayoutFlags.All);
+            AbsoluteLayout.SetLayoutBounds(obj, new Rect(0, 0, 1, 1));
         }
 
         /// <summary>
