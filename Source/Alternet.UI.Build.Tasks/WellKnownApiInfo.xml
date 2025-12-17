@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.804.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.805.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -963,14 +963,18 @@
     <Type Name="Alternet.UI.IFileSystem" />
     <Type Name="Alternet.UI.CustomKeyEventArgs" />
     <Type Name="Alternet.UI.KeyboardEventArgs" />
+    <Type Name="Alternet.UI.KeyboardVisibleChangedEventArgs" />
     <Type Name="Alternet.UI.KeyEventHandler" />
     <Type Name="Alternet.UI.KeyEventArgs" />
     <Type Name="Alternet.UI.KeyPressEventHandler" />
     <Type Name="Alternet.UI.KeyPressEventArgs" />
     <Type Name="Alternet.UI.PreviewKeyDownEventHandler" />
     <Type Name="Alternet.UI.PreviewKeyDownEventArgs" />
-    <Type Name="Alternet.UI.IKeyboardHandler" />
     <Type Name="Alternet.UI.InputGesture" />
+    <Type Name="Alternet.UI.IKeyboardHandler" />
+    <Type Name="Alternet.UI.IKeyboardVisibilityService">
+      <Event Name="KeyboardVisibleChanged" />
+    </Type>
     <Type Name="Alternet.UI.Keyboard" />
     <Type Name="Alternet.UI.KeyGesture" />
     <Type Name="Alternet.UI.KeyInfo" />
@@ -988,6 +992,11 @@
     </Type>
     <Type Name="Alternet.UI.PlessKeyboard" />
     <Type Name="Alternet.UI.PlessKeyboardHandler">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.PlessKeyboardVisibilityService">
+      <Event Name="KeyboardVisibleChanged" />
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>

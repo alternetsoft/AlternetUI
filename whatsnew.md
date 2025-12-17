@@ -1,3 +1,37 @@
+# 0.9.805 (2025 December 17)
+
+- UserControl: Improve overlay tooltip alignment and painting logic.
+- SimpleToolBarView: AddNextAndPreviousTabButtons, LastItem, FirstNonSpecialItem.
+- TimerUtils: Add RunOnce to execute an action only once, optionally deferring execution using a timer.
+- TimerUtils: And RunUsingTimer to run an action using a 1ms timer.
+- MauiUtils: Add FillAbsoluteLayout method to set a BindableObject's layout flags and bounds so it occupies the entire area of its parent layout.
+- SimpleToolBarView: Add ButtonKind enum and CanBeSticky property to Button.
+- SimpleToolBarView: Introduced methods to add 'Next Tab' and 'Previous Tab' buttons, along with utilities for moving 
+and indexing toolbar items while ignoring special buttons.
+- SimpleTabControlView: Add MakeSelectedTabFirst property to control whether the selected tab is moved to the first position.
+- Respect menu item enabled state in toolbar buttons which are used to show them.
+- Update SpeedButton defaults for better compatibility with tablet or phone devices.
+- Refactor popup toolbar sibling close logic and update command state before it is shown.
+- ContextMenu: Update ShowInPopup to return popup unique identifier.
+- Reset mouse left button state before showing popup. This fixes Maui related issues when popup is shown more than once.
+- ControlUtils: Add ResetIsMouseLeftButtonDown to reset the IsMouseLeftButtonDown property for a control and optionally its child controls.
+- Add FitIntoContainerHorz, FitIntoContainerVert, and FitIntoContainer flags to OverlayToolTipFlags enum.
+- AbstractControl: Add the protected virtual method OnAfterPaintChildren.
+- ControlOverlayWithImage: Add ImageWidthInDips and ImageHeightInDips properties to provide image dimensions in device-independent pixels.
+- ControlOverlayWithImage: Add Right and Bottom properties to get or set the image's right and bottom edges relative to its location.
+- SpeedButton: Add the static property IgnoreMenuItemShortcuts to control whether shortcuts are displayed when SpeedButton is used for menu items.
+- SimpleTabControlView: Add SetTabFont method to allow setting the font family and size for tab headers.
+- SimpleToolBarView: Add TabFontFamily and TabFontSize properties to allow customization of tab text font family and size.
+- Add cross-platform keyboard visibility service and platform-specific implementations for Android, iOS/Mac Catalyst, and Windows 
+to monitor on-screen keyboard visibility and height. Updated keyboard handler interfaces and classes to expose the new service, 
+enabling event-based notification of keyboard visibility changes.
+- Add PlessMouse.IgnoreHoveredState to allow ignoring the hovered visual state, defaulting to true on tablet or phone devices. 
+Updated AbstractControl to respect this setting when determining visual states, ensuring consistent UI behavior across device types.
+- InnerPopupToolBar: Improve alignment and resize handling.
+- MauiUtils: Add static FirstWindow property.
+
+---
+
 # 0.9.804 (2025 December 12)
 
 - Maui: Add static AltHeaderBackColor property to SimpleTabControlView.
