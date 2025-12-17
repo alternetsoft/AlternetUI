@@ -130,6 +130,60 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Executes the specified action only once, ensuring it is not run again if already executed.
+        /// </summary>
+        /// <remarks>If <paramref name="useTimer"/> is set to <see langword="true"/>, the action is
+        /// invoked on the timer's tick event. This can be useful to defer execution until after the
+        /// current event loop iteration. If <paramref name="useTimer"/> is <see langword="false"/>, the action is
+        /// executed immediately. This method is not thread-safe; concurrent calls may result in the action being
+        /// executed more than once.</remarks>
+        /// <param name="alreadyExecuted">A reference to a Boolean value indicating whether
+        /// the action has already been executed. Set to <see
+        /// langword="true"/> after the action is run.</param>
+        /// <param name="action">The action to execute if it has not already been executed. Cannot be null.</param>
+        /// <param name="useTimer">true to execute the action asynchronously using a timer; otherwise,
+        /// false to execute the action immediately.</param>
+        public static void RunOnce(ref bool alreadyExecuted, Action action, bool useTimer = true)
+        {
+            if (alreadyExecuted)
+                return;
+
+            alreadyExecuted = true;
+
+            if (useTimer)
+            {
+                var t = new Timer { Interval = 1 };
+                t.Tick += (s, ea) =>
+                {
+                    t.Stop();
+                    t.Dispose();
+                    action();
+                };
+                t.Start();
+            }
+            else
+            {
+                action();
+            }
+        }
+
+        /// <summary>
+        /// Runs the specified action using a timer with a 1 millisecond interval.
+        /// </summary>
+        /// <param name="action">The action to execute.</param>
+        public static void RunUsingTimer(Action action)
+        {
+            var t = new Timer { Interval = 1 };
+            t.Tick += (s, ea) =>
+            {
+                t.Stop();
+                t.Dispose();
+                action();
+            };
+            t.Start();
+        }
+
+        /// <summary>
         /// Logs execution time of the specified action.
         /// </summary>
         /// <param name="action">Action to measure.</param>
