@@ -26,6 +26,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a "More actions" button in the specified toolbar which shows the specified context menu when clicked.
+        /// </summary>
+        /// <param name="toolBar">The <see cref="ToolBar"/> to add the button to.</param>
+        /// <param name="contextMenu">The <see cref="ContextMenu"/> to show when the button is clicked.</param>
+        public static SpeedButton CreateMoreActionsButton(ToolBar toolBar, ContextMenu contextMenu)
+        {
+            var button = toolBar.AddSpeedBtnCore(
+                null,
+                KnownSvgImages.ImgMoreActions,
+                "More actions",
+                null);
+            button.HorizontalAlignment = HorizontalAlignment.Right;
+            button.DropDownMenu = contextMenu;
+            return button;
+        }
+
+        /// <summary>
+        /// Enables showing context menu on long tap for the specified control.
+        /// This is useful for touch devices where right-click is not available.
+        /// This method can be called multiple times for the same control.
+        /// </summary>
+        /// <param name="control">The <see cref="AbstractControl"/> to enable context menu on long tap.</param>
+        /// <param name="enable"><c>true</c> to enable context menu on long tap; otherwise, <c>false</c>.</param>
+        public static void EnableContextMenuOnLongTap(AbstractControl control, bool enable = true)
+        {
+            control.CanLongTap = true;
+
+            void OnLongTap(object? s, LongTapEventArgs e)
+            {
+                control.ShowContextMenu();
+            }
+
+            control.LongTap -= OnLongTap;
+
+            if(enable)
+                control.LongTap += OnLongTap;
+        }
+
+        /// <summary>
         /// Resets the <see cref="AbstractControl.IsMouseLeftButtonDown"/> property of the specified control
         /// and its child controls.
         /// </summary>
