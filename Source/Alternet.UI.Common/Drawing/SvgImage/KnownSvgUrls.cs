@@ -466,6 +466,11 @@ namespace Alternet.UI
         public static string UrlImageBars { get; set; }
             = GetImageUrl("alternet-bars");
 
+        /// <summary>
+        /// Gets or sets url used to load "Filter" svg image.
+        /// </summary>
+        public static string UrlImageFilter { get; set; } = GetImageUrl("alternet-filter");
+
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
     }
 }

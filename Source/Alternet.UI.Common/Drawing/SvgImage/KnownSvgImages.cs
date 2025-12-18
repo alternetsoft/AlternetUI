@@ -99,6 +99,7 @@ namespace Alternet.UI
         private static SvgImage? imgSizingGripLeft;
         private static SvgImage? imgSizingGripRight;
         private static SvgImage? imgBars;
+        private static SvgImage? imgFilter;
 
         static KnownSvgImages()
         {
@@ -114,6 +115,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the SVG image with the bars.
         /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
         public static SvgImage ImgBars
         {
             get => imgBars ??= new MonoSvgImage(KnownSvgUrls.UrlImageBars);
@@ -121,8 +124,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the SVG image used for the 'filter' icon.
+        /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
+        public static SvgImage ImgFilter
+        {
+            get => imgFilter ??= new MonoSvgImage(KnownSvgUrls.UrlImageFilter);
+            set => imgFilter = value;
+        }
+
+        /// <summary>
         /// Gets or sets the SVG image used for the left sizing grip.
         /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
         public static SvgImage ImgSizingGripLeft
         {
             get => imgSizingGripLeft ??= new MonoSvgImage(KnownSvgUrls.UrlImageSizingGripLeft);
@@ -132,6 +148,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the SVG image used for the right sizing grip.
         /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
         public static SvgImage ImgSizingGripRight
         {
             get => imgSizingGripRight ??= new MonoSvgImage(KnownSvgUrls.UrlImageSizingGripRight);
@@ -141,6 +159,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets image for the regular file icon.
         /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
         public static SvgImage ImgIconFile
         {
             get => imgIconFile ??= new MonoSvgImage(KnownSvgUrls.UrlIconFile);
@@ -150,6 +170,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets image for the solid file icon.
         /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
         public static SvgImage ImgIconFileSolid
         {
             get => imgIconFileSolid ??= new MonoSvgImage(KnownSvgUrls.UrlIconFileSolid);
@@ -159,6 +181,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets image for the solid folder icon.
         /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
         public static SvgImage ImgIconFolderSolid
         {
             get => imgIconFolderSolid ??= new MonoSvgImage(KnownSvgUrls.UrlIconFolderSolid);
@@ -168,6 +192,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets image for the regular folder icon.
         /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
         public static SvgImage ImgIconFolder
         {
             get => imgIconFolder ??= new MonoSvgImage(KnownSvgUrls.UrlIconFolder);
