@@ -24,6 +24,9 @@ namespace Alternet.UI
         /// </summary>
         public InnerPopupToolBar()
         {
+            if (App.IsMaui)
+                FitParentScrollbars = false;
+
             Content.HorizontalAlignment = HorizontalAlignment.Left;
             Content.VerticalAlignment = VerticalAlignment.Top;
             Content.Margin = PopupToolBar.DefaultContentMargin;
