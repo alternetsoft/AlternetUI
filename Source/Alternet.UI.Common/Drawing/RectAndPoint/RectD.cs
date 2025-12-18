@@ -448,6 +448,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether the size has a width or height that is
+        /// empty or infinity (positive or negative).
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool SizeIsEmptyOrInfinity
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => SizeIsEmpty || SizeIsInfinity;
+        }
+
+
+        /// <summary>
         /// Tests whether this <see cref='RectD'/> has a <see cref='Width'/>
         /// or a <see cref='Height'/> less than or equal to 0.
         /// </summary>
@@ -1021,6 +1033,22 @@ namespace Alternet.Drawing
         public static RectD Parse(string source)
         {
             return ConversionUtils.ParseFourFloats(source);
+        }
+
+        /// <summary>
+        /// Indicates whether the specified rectangle is valid (not null, not empty,
+        /// and not infinity).
+        /// </summary>
+        /// <param name="rect">The <see cref="RectD"/> structure to validate.</param>
+        /// <returns></returns>
+        public static bool IsValid([NotNullWhen(true)] RectD? rect)
+        {
+            if (rect is null)
+            {
+                return false;
+            }
+
+            return !rect.Value.SizeIsEmptyOrInfinity;
         }
 
         /// <summary>
