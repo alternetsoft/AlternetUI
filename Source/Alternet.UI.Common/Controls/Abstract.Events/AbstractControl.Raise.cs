@@ -202,17 +202,7 @@ namespace Alternet.UI
                 return;
             MouseRightButtonUp?.Invoke(this, e);
 
-            if (HasContextMenu || ContextMenuShowing is not null)
-            {
-                App.AddIdleTask(() =>
-                {
-                    if (DisposingOrDisposed)
-                        return;
-
-                    // We need here to use field as we no need to auto-create the context menu.
-                    ShowPopupMenu(contextMenuStrip);
-                });
-            }
+            ShowContextMenu();
 
             OnMouseRightButtonUp(e);
 

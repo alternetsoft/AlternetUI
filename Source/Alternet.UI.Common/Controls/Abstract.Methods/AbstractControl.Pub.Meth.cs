@@ -612,6 +612,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows the context menu for the control if it has one.
+        /// </summary>
+        public virtual void ShowContextMenu()
+        {
+            if (HasContextMenu || ContextMenuShowing is not null)
+            {
+                App.AddIdleTask(() =>
+                {
+                    if (DisposingOrDisposed)
+                        return;
+
+                    // We need here to use field as we no need to auto-create the context menu.
+                    ShowPopupMenu(contextMenuStrip);
+                });
+            }
+        }
+
+        /// <summary>
         /// Increments the suppression counter to temporarily disable repaint logic.
         /// </summary>
         /// <remarks>
