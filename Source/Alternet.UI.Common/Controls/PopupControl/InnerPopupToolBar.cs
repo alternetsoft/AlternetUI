@@ -9,6 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a popup control that contains a <see cref="ToolBar"/> as its content.
+    /// This control is used to display a toolbar in a popup manner, typically for context menus or tool palettes.
     /// </summary>
     public class InnerPopupToolBar : PopupControl<ToolBar>, IContextMenuHost
     {
@@ -273,6 +274,46 @@ namespace Alternet.UI
             return preferredSize;
         }
 
+        /// <inheritdoc/>
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+
+            if (!Visible)
+                return;
+
+            App.AddIdleTask(() =>
+            {
+                SetSizeAndLocationInContainer();
+            });
+        }
+
+        /// <summary>
+        /// Sets the location of the control within its current container,
+        /// optionally using last used alignment.
+        /// </summary>
+        public virtual void SetLocationInContainer()
+        {
+            var c = GetContainer();
+
+            if (c is null)
+                return;
+            SetLocationInContainer(c, Location, LastUsedAlignment);
+        }
+
+        /// <summary>
+        /// Sets the size and location of the control within its current container,
+        /// optionally using a given position and last used alignment.
+        /// </summary>
+        public virtual void SetSizeAndLocationInContainer()
+        {
+            var c = GetContainer();
+
+            if (c is null)
+                return;
+            SetSizeAndLocationInContainer(c, Location, LastUsedAlignment);
+        }
+
         /// <summary>
         /// Displays the control as a popup within the specified container at the given position and alignment.
         /// </summary>
@@ -288,36 +329,12 @@ namespace Alternet.UI
             PointD? position = null,
             HVDropDownAlignment? align = null)
         {
-            Content.UpdateCommandState();
-
             LastUsedAlignment = align;
 
-            var pos = Mouse.CoercePosition(position, container);
-
-            if (Parent is not null)
-            {
-                Parent = null;
-                Container = null;
-            }
-
-            Container = container;
-            UpdateMinimumSize();
-            UpdateMaxPopupSize();
-
-            var containerRect = GetContainerRect();
-
-            if (containerRect is not null)
-            {
-                var popupRect = new RectD(pos, Size);
-
-                popupRect.Right = Math.Min(popupRect.Right, containerRect.Value.Right);
-                popupRect.Bottom = Math.Min(popupRect.Bottom, containerRect.Value.Bottom);
-
-                pos = popupRect.Location;
-            }
-
-            Location = pos.ClampToZero();
             Parent = container;
+            Container = container;
+
+            SetSizeAndLocationInContainer(container, position, align);
 
             ClosedAction = () =>
             {
@@ -325,16 +342,72 @@ namespace Alternet.UI
                 Container = null;
             };
 
-            if (align is not null && containerRect is not null)
+            Content.UpdateCommandState();
+            ControlUtils.ResetIsMouseLeftButtonDown(this);
+            Show();
+        }
+
+        /// <summary>
+        /// Sets the size and location of the control within the specified container,
+        /// optionally using a given position
+        /// and alignment.
+        /// </summary>
+        /// <param name="container">The container in which to position and size the control. Cannot be null.</param>
+        /// <param name="position">The position, relative to the container, where the control should be placed.
+        /// If null, a default position is used.</param>
+        /// <param name="align">The alignment to use when positioning the control within the container.
+        /// If null, the default alignment is applied.</param>
+        public virtual void SetSizeAndLocationInContainer(AbstractControl container,
+            PointD? position = null,
+            HVDropDownAlignment? align = null)
+        {
+            UpdateMinimumSize();
+            UpdateMaxPopupSize();
+            SetLocationInContainer(container, position, align);
+        }
+
+        /// <summary>
+        /// Sets the location of the control within the specified container,
+        /// optionally using a given position and alignment.
+        /// </summary>
+        /// <param name="container">The container in which to position the control. Cannot be null.</param>
+        /// <param name="position">The position, relative to the container, where the control should be placed.
+        /// If null, a default position is used.</param>
+        /// <param name="align">The alignment to use when positioning the control within the container.
+        /// If null, the default alignment is applied.</param>
+        public virtual void SetLocationInContainer(
+            AbstractControl container,
+            PointD? position = null,
+            HVDropDownAlignment? align = null)
+        {
+            var pos = Mouse.CoercePosition(position, container);
+
+            var containerRect = GetContainerRect();
+
+            if (containerRect is null)
+                return;
+
+            bool isValid = RectD.IsValid(containerRect);
+
+            if (isValid)
+            {
+                var popupRect = new RectD(pos, Size);
+
+                popupRect.Right = Math.Min(popupRect.Right, containerRect.Value.Width);
+                popupRect.Bottom = Math.Min(popupRect.Bottom, containerRect.Value.Height);
+
+                pos = popupRect.Location;
+            }
+
+            Location = pos.ClampToZero();
+
+            if (align is not null && isValid)
             {
                 Location = AlignUtils.GetDropDownPosition(
                         containerRect.Value.Size,
                         Size,
                         align);
             }
-
-            ControlUtils.ResetIsMouseLeftButtonDown(this);
-            Show();
         }
 
         /// <summary>
@@ -463,22 +536,15 @@ namespace Alternet.UI
         {
             base.OnAfterParentSizeChanged(sender, e);
 
-            UpdateMinimumSize();
+            if (UpdatePositionOnContainerResize)
+                SetSizeAndLocationInContainer();
+        }
 
-            var align = LastUsedAlignment;
-
-            if (!UpdatePositionOnContainerResize || align is null)
-                return;
-
-            var containerRect = GetContainerRect();
-
-            if (containerRect is not null)
-            {
-                Location = AlignUtils.GetDropDownPosition(
-                        containerRect.Value.Size,
-                        Size,
-                        align);
-            }
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            SetLocationInContainer();
         }
 
         /// <summary>
