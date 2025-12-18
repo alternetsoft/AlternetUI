@@ -55,6 +55,13 @@ namespace Alternet.UI
         public virtual string? AutomationId { get; set; }
 
         /// <summary>
+        /// Gets or sets the debug identifier for the element.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        [Browsable(false)]
+        public virtual string? DebugIdentifier { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="ISite"/> associated with the object.
         /// </summary>
         /// <returns>
@@ -244,7 +251,7 @@ namespace Alternet.UI
         /// an exception is thrown.</returns>
         /// <exception cref="InvalidOperationException">A element with the provided name was
         /// found.</exception>
-        public FrameworkElement FindElement(string name)
+        public virtual FrameworkElement FindElement(string name)
         {
             if (name is null)
                 throw new ArgumentNullException(nameof(name));
