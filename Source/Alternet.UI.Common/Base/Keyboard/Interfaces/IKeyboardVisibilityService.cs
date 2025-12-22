@@ -23,5 +23,11 @@ namespace Alternet.UI
         /// Gets the height of the on-screen keyboard in device-independent units (DIPs).
         /// </summary>
         double Height { get; }
+
+        /// <summary>
+        /// Raises the <see cref="KeyboardVisibleChanged"/> event.
+        /// </summary>
+        /// <param name="e">The event data.</param>
+        void RaiseKeyboardVisibleChanged(KeyboardVisibleChangedEventArgs? e);
     }
 }

@@ -23,15 +23,21 @@ namespace Alternet.Maui
 
     public partial class KeyboardVisibilityService : DisposableObject, IKeyboardVisibilityService, IDisposable
     {
+        /// <inheritdoc/>
         public event EventHandler<KeyboardVisibleChangedEventArgs>? KeyboardVisibleChanged;
 
+        /// <inheritdoc/>
         public bool IsVisible { get; private set; }
 
+        /// <inheritdoc/>
         public double Height { get; private set; }
 
         private View? rootView;
         private ViewTreeObserver.IOnGlobalLayoutListener? layoutListener;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyboardVisibilityService"/> class.
+        /// </summary>
         public KeyboardVisibilityService()
         {
             var activity = Microsoft.Maui.ApplicationModel.Platform.CurrentActivity;
@@ -45,6 +51,17 @@ namespace Alternet.Maui
             rootView?.ViewTreeObserver?.AddOnGlobalLayoutListener(layoutListener);
         }
 
+        /// <summary>
+        /// Raises the <see cref="KeyboardVisibleChanged"/> event with the specified event arguments.
+        /// </summary>
+        /// <param name="e">The event arguments. Optional. If not specified,
+        /// defaults to the current keyboard visibility state.</param>
+        public virtual void RaiseKeyboardVisibleChanged(KeyboardVisibleChangedEventArgs? e)
+        {
+            KeyboardVisibleChanged?.Invoke(this, e ?? new KeyboardVisibleChangedEventArgs(IsVisible, Height));
+        }
+
+        /// <inheritdoc/>
         protected override void DisposeManaged()
         {
             if (rootView != null && layoutListener != null)

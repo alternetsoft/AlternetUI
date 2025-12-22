@@ -41,6 +41,16 @@ namespace Alternet.Maui
             }
         }
 
+        /// <summary>
+        /// Raises the <see cref="KeyboardVisibleChanged"/> event with the specified event arguments.
+        /// </summary>
+        /// <param name="e">The event arguments. Optional. If not specified,
+        /// defaults to the current keyboard visibility state.</param>
+        public virtual void RaiseKeyboardVisibleChanged(KeyboardVisibleChangedEventArgs? e)
+        {
+            KeyboardVisibleChanged?.Invoke(this, e ?? new KeyboardVisibleChangedEventArgs(IsVisible, Height));
+        }
+
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
