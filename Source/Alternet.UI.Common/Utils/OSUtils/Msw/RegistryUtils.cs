@@ -241,6 +241,21 @@ namespace Alternet.UI
             return ReadRelativeString("UIXmlPreview", "Path", RegistryHive.CurrentUser);
         }
 
+        /// <summary>
+        /// Determines whether the current Windows user session is in tablet mode.
+        /// This method is not officially documented and may not be reliable across all Windows versions.
+        /// </summary>
+        /// <remarks>Tablet mode is a Windows feature that optimizes the user interface for touch input.
+        /// This method checks the user's registry settings to determine the current mode. The result may vary depending
+        /// on system configuration and user preferences.</remarks>
+        /// <returns>true if tablet mode is enabled for the current user session; otherwise, false.</returns>
+        public static bool IsTabletMode()
+        {
+            using var key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\ImmersiveShell");
+            var value = key?.GetValue("TabletMode");
+            return value is int intValue && intValue == 1;
+        }
+
         internal class RegistryKeyLock : IDisposable
         {
             public RegistryKeyLock(RegistryHive hive, string keyPath, bool create = false)
