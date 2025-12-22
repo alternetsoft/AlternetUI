@@ -146,7 +146,12 @@ namespace Alternet.Maui
         /// </summary>
         public static Alternet.Drawing.SvgImage? DefaultPreviousTabImage { get; set; }
 
-        internal static ButtonVisualStateSetters ButtonNormalState = new()
+        /// <summary>
+        /// Provides the default visual state setters for a button in its normal (enabled and unpressed) state.
+        /// </summary>
+        /// <remarks>Use this field to apply the standard appearance to buttons when they are not being
+        /// interacted with.</remarks>
+        public static ButtonVisualStateSetters ButtonNormalState = new()
         {
             BackgroundColor = GetTransparent,
             BorderColor = GetTransparent,
@@ -154,7 +159,11 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
-        internal static ButtonVisualStateSetters ButtonDisabledState = new()
+        /// <summary>
+        /// Provides the visual state setters for a button in the disabled state.
+        /// </summary>
+        /// <remarks>This static field defines the appearance of a button when it is disabled.</remarks>
+        public static ButtonVisualStateSetters ButtonDisabledState = new()
         {
             BackgroundColor = GetTransparent,
             BorderColor = GetTransparent,
@@ -162,7 +171,12 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
-        internal static ButtonVisualStateSetters ButtonStickyDisabledState = new()
+        /// <summary>
+        /// Provides the visual state setters for a button in the sticky disabled state.
+        /// </summary>
+        /// <remarks>This static instance defines the appearance of a button when it is both sticky and
+        /// disabled, including background color, border color, text color, and border width.</remarks>
+        public static ButtonVisualStateSetters ButtonStickyDisabledState = new()
         {
             BackgroundColor = GetTransparent,
             BorderColor = GetRealPressedBorderColor,
@@ -170,7 +184,13 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
-        internal static ButtonVisualStateSetters ButtonPressedState = new()
+        /// <summary>
+        /// Provides the set of visual state setters applied to a button when it is in the pressed state.
+        /// </summary>
+        /// <remarks>This static field defines the appearance of a button when pressed, including
+        /// background color, border color, text color, and border width. The values are determined by the associated
+        /// getter methods and may be used to customize button visuals in response to user interaction.</remarks>
+        public static ButtonVisualStateSetters ButtonPressedState = new()
         {
             BackgroundColor = GetTransparent,
             BorderColor = GetRealPressedBorderColor,
@@ -178,7 +198,13 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
-        internal static ButtonVisualStateSetters ButtonNormalStickyState = new()
+        /// <summary>
+        /// Provides the visual state setters for a button in its normal sticky state.
+        /// </summary>
+        /// <remarks>This static field defines the appearance of a button when it is in the normal sticky
+        /// state, including background color, border color, text color, and border width. Use this to apply consistent
+        /// styling for buttons that support sticky behavior.</remarks>
+        public static ButtonVisualStateSetters ButtonNormalStickyState = new()
         {
             BackgroundColor = GetTransparent,
             BorderColor = GetRealPressedBorderColor,
@@ -186,7 +212,13 @@ namespace Alternet.Maui
             BorderWidth = GetButtonBorder,
         };
 
-        internal static ButtonVisualStateSetters ButtonHotState = new()
+        /// <summary>
+        /// Provides the visual state setters for a button when it is in the hot (hovered) state.
+        /// </summary>
+        /// <remarks>This static instance defines the appearance of a button when the pointer is over it,
+        /// including background color, border color, text color, and border width. The values are typically used by UI
+        /// rendering logic to apply the appropriate visual feedback for user interaction.</remarks>
+        public static ButtonVisualStateSetters ButtonHotState = new()
         {
             BackgroundColor = GetTransparent,
             BorderColor = GetRealHotBorderColor,
@@ -643,6 +675,20 @@ namespace Alternet.Maui
             if (IsDark)
                 return DefaultSeparatorColorDark;
             return DefaultSeparatorColorLight;
+        }
+
+        /// <summary>
+        /// Determines whether the specified toolbar item is fully visible.
+        /// </summary>
+        /// <param name="item">The toolbar item to check.</param>
+        /// <returns><see langword="true"/> if the item is fully visible; otherwise, <see langword="false"/>.</returns>
+        public virtual bool IsFullyVisible(IToolBarItem? item)
+        {
+            var buttonContainer = item?.ButtonContainer;
+            if (buttonContainer is null)
+                return false;
+            var result = Alternet.UI.MauiUtils.IsFullyVisibleInParent(buttonContainer);
+            return result;
         }
 
         /// <summary>
@@ -1272,10 +1318,31 @@ namespace Alternet.Maui
             return Colors.Transparent;
         }
 
-        internal class VisualStateSetters
+        /// <summary>
+        /// Provides functionality for configuring and applying visual state setters to a view, including customization
+        /// of background color behavior.
+        /// </summary>
+        /// <remarks>This class is used in managing visual state transitions and
+        /// customizing view appearance. It allows assignment of delegates to control visual properties when a visual
+        /// state is initialized.</remarks>
+        public partial class VisualStateSetters
         {
+            /// <summary>
+            /// Gets or sets a delegate that determines the background color for a given view.
+            /// </summary>
+            /// <remarks>Assign a function to customize the background color based on the provided
+            /// view. If not set, the default background color may be used. The delegate should return the desired color
+            /// for the specified view.</remarks>
             public Func<View, Color>? BackgroundColor;
 
+            /// <summary>
+            /// Initializes the specified visual state for the given view, optionally clearing existing setters before
+            /// applying new ones.
+            /// </summary>
+            /// <param name="control">The view control for which the visual state is being initialized.</param>
+            /// <param name="state">The visual state to initialize and configure.</param>
+            /// <param name="clear">true to clear existing setters from the visual state before applying new ones; otherwise, false.
+            /// The default is true.</param>
             public virtual void InitState(View control, VisualState state, bool clear = true)
             {
                 if (clear)
@@ -1285,14 +1352,35 @@ namespace Alternet.Maui
             }
         }
 
-        internal class ButtonVisualStateSetters : VisualStateSetters
+        /// <summary>
+        /// Visual state setters for toolbar buttons.
+        /// </summary>
+        public partial class ButtonVisualStateSetters : VisualStateSetters
         {
+            /// <summary>
+            /// Gets or sets the function used to determine the border color for a given view.
+            /// </summary>
+            /// <remarks>Assign a function that takes a <see cref="View"/> and returns a
+            /// <see cref="Color"/> to customize the border color dynamically based on the view's properties or state.
+            /// If not set, a default border color may be used.</remarks>
             public Func<View, Color>? BorderColor;
 
+            /// <summary>
+            /// Gets or sets the delegate used to determine the text color for a given view.
+            /// </summary>
+            /// <remarks>Assign a function that takes a <see cref="View"/> and returns a <see
+            /// cref="Color"/> to customize the text color dynamically based on the view's state or properties. If not
+            /// set, a default color may be used.</remarks>
             public Func<View, Color>? TextColor;
 
+            /// <summary>
+            /// Gets or sets the function that determines the border width for a given view.
+            /// </summary>
+            /// <remarks>Assign a delegate to customize the border width calculation based on the
+            /// provided view. If not set, a default border width may be used.</remarks>
             public Func<View, double>? BorderWidth;
 
+            /// <inheritdoc/>
             public override void InitState(View control, VisualState state, bool clear = true)
             {
                 base.InitState(control, state);

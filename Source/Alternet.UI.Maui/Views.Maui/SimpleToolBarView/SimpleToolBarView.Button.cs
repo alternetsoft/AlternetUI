@@ -168,10 +168,10 @@ namespace Alternet.Maui
                 }
             }
 
-            public virtual bool CanBeSticky
-            {
-                get; set;
-            } = true;
+            /// <summary>
+            /// Gets or sets a value indicating whether the button can be sticky. Default is true.
+            /// </summary>
+            public virtual bool CanBeSticky { get; set; } = true;
 
             /// <inheritdoc/>
             public virtual bool IsSticky
@@ -305,7 +305,10 @@ namespace Alternet.Maui
                     VisualStateManager.GoToState(this, VisualStateUtils.NameNormal);
             }
 
-            internal void UpdateImage()
+            /// <summary>
+            /// Updates the button image based on the current state.
+            /// </summary>
+            protected virtual void UpdateImage()
             {
                 Alternet.UI.MauiUtils.SetButtonImage(
                     this,
@@ -333,7 +336,9 @@ namespace Alternet.Maui
                 base.OnHandlerChanged();
 
 #if WINDOWS
+#pragma warning disable
                 var platformView = Handler?.PlatformView as Microsoft.Maui.Platform.MauiButton;
+#pragma warning restore
 
                 if (platformView is null)
                     return;
