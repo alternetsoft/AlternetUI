@@ -152,7 +152,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets or sets a value indicating whether to move the selected tab to the first position
         /// only if it is not currently visible. This property is used in conjunction with
-        /// <see cref="MakeSelectedTabFirst"/> property.
+        /// <see cref="MakeSelectedTabFirst"/> property. Default is true.
         /// </summary>
         public virtual bool MakeFirstOnlyIfNotVisible { get; set; } = true;
 
