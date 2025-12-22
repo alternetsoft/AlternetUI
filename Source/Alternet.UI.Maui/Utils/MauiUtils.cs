@@ -1011,6 +1011,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Binds the specified panel to keyboard visibility changes.
+        /// Height and visibility of the panel is adjusted based on keyboard state.
+        /// When the keyboard is shown, the panel's height is set to the keyboard height and made visible.
+        /// When the keyboard is hidden, the panel is made invisible.
+        /// </summary>
+        /// <param name="behindKeyboardPanel">The panel to adjust based on keyboard visibility.</param>
+        public static IKeyboardVisibilityService? BindToKeyboardVisibility(View behindKeyboardPanel)
+        {
+            bool testKeyboard = Alternet.UI.DebugUtils.IsDebugDefinedAndAttached && false;
+
+            if (!testKeyboard)
+            {
+                if (!Alternet.UI.App.IsTabletOrPhoneDevice)
+                    return null;
+            }
+
+            var visibilityService = Alternet.UI.Keyboard.Handler.VisibilityService;
+            if (visibilityService != null)
+            {
+                if (visibilityService.IsVisible)
+                {
+                    behindKeyboardPanel.HeightRequest = visibilityService.Height;
+                    behindKeyboardPanel.IsVisible = true;
+                }
+
+                visibilityService.KeyboardVisibleChanged += (s, e) =>
+                {
+                    if (e.IsVisible)
+                    {
+                        Alternet.UI.App.LogIf($"Keyboard shown, height: {e.Height}", testKeyboard);
+                    }
+                    else
+                    {
+                        Alternet.UI.App.LogIf("Keyboard hidden", testKeyboard);
+                    }
+
+                    e.UpdateKeyboardPanel(behindKeyboardPanel);
+                };
+            }
+
+            return visibilityService;
+        }
+
+        /// <summary>
         /// Checks whether the specified view is fully visible within its parent.
         /// </summary>
         /// <param name="view">The view to check for visibility.</param>
