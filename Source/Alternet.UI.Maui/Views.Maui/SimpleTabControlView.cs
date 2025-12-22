@@ -150,6 +150,13 @@ namespace Alternet.Maui
         public virtual bool MakeSelectedTabFirst { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to move the selected tab to the first position
+        /// only if it is not currently visible. This property is used in conjunction with
+        /// <see cref="MakeSelectedTabFirst"/> property.
+        /// </summary>
+        public virtual bool MakeFirstOnlyIfNotVisible { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the index of the selected tab.
         /// </summary>
         public virtual int SelectedIndex
@@ -204,7 +211,20 @@ namespace Alternet.Maui
 
             if (MakeSelectedTabFirst)
             {
-                Header.MakeItemFirst(btn);
+                if (MakeFirstOnlyIfNotVisible)
+                {
+                    if (Header.IsFullyVisible(btn))
+                    {
+                    }
+                    else
+                    {
+                        Header.MakeItemFirst(btn);
+                    }
+                }
+                else
+                {
+                    Header.MakeItemFirst(btn);
+                }
             }
         }
 
