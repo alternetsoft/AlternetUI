@@ -36,8 +36,28 @@ namespace Alternet.UI
     /// </summary>
     public static partial class MauiUtils
     {
+        /// <summary>
+        /// Override value for testing or other purposes. If set, this value will be returned by
+        /// <see cref="IsTabletMode"/> property.
+        /// </summary>
+        public static bool? IsTabletModeOverride;
+
         private static Alternet.UI.GenericDeviceType? deviceType;
         private static PlatformApplication? platformApplication;
+
+        /// <summary>
+        /// Gets whether device is in tablet mode.
+        /// </summary>
+        public static bool IsTabletMode
+        {
+            get
+            {
+                if (IsTabletModeOverride.HasValue)
+                    return IsTabletModeOverride.Value;
+
+                return DeviceInfo.Current.Idiom == DeviceIdiom.Tablet;      
+            }
+        }
 
         /// <summary>
         /// Gets the first window in the current application's window collection.
