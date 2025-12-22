@@ -263,6 +263,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the value of the <see cref="IsChecked"/> property.
+        /// </summary>
+        /// <param name="isChecked">The new value.</param>
+        public void SetChecked(bool isChecked)
+        {
+            IsChecked = isChecked;
+        }
+
+        /// <summary>
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
