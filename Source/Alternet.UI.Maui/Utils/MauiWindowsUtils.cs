@@ -20,8 +20,15 @@ public static class MauiWindowsUtils
     /// <returns></returns>
     public static bool IsTabletMode()
     {
-        var uiViewSettings = UIViewSettings.GetForCurrentView();
-        return uiViewSettings.UserInteractionMode == UserInteractionMode.Touch;
+        try
+        {
+            var uiViewSettings = UIViewSettings.GetForCurrentView();
+            return uiViewSettings.UserInteractionMode == UserInteractionMode.Touch;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     /// <summary>

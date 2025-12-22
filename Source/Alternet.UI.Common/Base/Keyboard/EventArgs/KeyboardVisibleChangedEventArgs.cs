@@ -30,11 +30,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the on-screen keyboard is visible.
         /// </summary>
-        public bool IsVisible { get; set; }
+        public virtual bool IsVisible { get; set; }
 
         /// <summary>
         /// Gets or sets the height of the on-screen keyboard in device-independent units (DIPs).
         /// </summary>
-        public double Height { get; set; }
+        public virtual double Height { get; set; }
     }
 }
