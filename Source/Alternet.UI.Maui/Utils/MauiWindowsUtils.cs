@@ -7,11 +7,23 @@ using Alternet.Drawing;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Input;
 
+using Windows.UI.ViewManagement;
+
 /// <summary>
 /// Contains static methods and properties related to the Windows platform.
 /// </summary>
 public static class MauiWindowsUtils
 {
+    /// <summary>
+    /// Determines whether the device is in tablet mode.
+    /// </summary>
+    /// <returns></returns>
+    public static bool IsTabletMode()
+    {
+        var uiViewSettings = UIViewSettings.GetForCurrentView();
+        return uiViewSettings.UserInteractionMode == UserInteractionMode.Touch;
+    }
+
     /// <summary>
     /// Converts <see cref="HoldingRoutedEventArgs"/> to <see cref="LongTapEventArgs"/>.
     /// </summary>
