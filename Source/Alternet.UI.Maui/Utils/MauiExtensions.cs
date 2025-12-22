@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI;
 
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
@@ -21,6 +22,29 @@ namespace Alternet.Maui.Extensions
     /// </summary>
     public static class MauiExtensions
     {
+        /// <summary>
+        /// Updates the specified view to reflect the current visibility and height of the keyboard as indicated by the
+        /// event arguments.
+        /// </summary>
+        /// <remarks>When the keyboard is visible, the view's width is set to the keyboard's height and
+        /// the view is made visible. When the keyboard is hidden, the view is hidden. This method is intended for use
+        /// in scenarios where a UI element needs to track the keyboard's presence and size.</remarks>
+        /// <param name="e">The event arguments containing information about the keyboard's visibility and height.</param>
+        /// <param name="view">The view to update based on the keyboard's visibility state. The view's width and visibility will be
+        /// modified.</param>
+        public static void UpdateKeyboardPanel(this KeyboardVisibleChangedEventArgs e, View view)
+        {
+            if (e.IsVisible)
+            {
+                view.MinimumHeightRequest = e.Height;
+                view.IsVisible = true;
+            }
+            else
+            {
+                view.IsVisible = false;
+            }
+        }
+
         /// <summary>
         /// Converts an <see cref="Alternet.Drawing.Color"/> to a .NET MAUI color.
         /// </summary>
