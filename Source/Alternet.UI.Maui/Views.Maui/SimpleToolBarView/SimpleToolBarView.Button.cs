@@ -46,12 +46,12 @@ namespace Alternet.Maui
             : Button, Alternet.UI.IRaiseSystemColorsChanged, IToolBarItem
         {
             private readonly SimpleToolBarView toolBar;
+            private readonly StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
 
             private bool isSticky;
             private bool hasBorder = true;
             private Drawing.SvgImage? svgImage;
             private Alternet.UI.IBaseObjectWithAttr? attributesProvider;
-            private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="ToolBarButton"/> class.

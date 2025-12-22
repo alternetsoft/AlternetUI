@@ -703,16 +703,8 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public override void RaiseSystemColorsChanged()
         {
-            if(bottomBorder is not null)
-            {
-                bottomBorder.BackgroundColor = GetSeparatorColor();
-            }
-
-            if (topBorder is not null)
-            {
-                topBorder.BackgroundColor = GetSeparatorColor();
-            }
-
+            bottomBorder?.BackgroundColor = GetSeparatorColor();
+            topBorder?.BackgroundColor = GetSeparatorColor();
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
         }
 
