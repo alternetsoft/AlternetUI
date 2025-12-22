@@ -62,6 +62,14 @@ namespace Alternet.Maui
         public event EventHandler? SelectedTabChanged;
 
         /// <summary>
+        /// Occurs when the currently selected tab is clicked again by the user.
+        /// </summary>
+        /// <remarks>This event can be used to trigger actions such as refreshing the content of the
+        /// selected tab or displaying additional options. The event is raised only when the user clicks the tab that is
+        /// already selected, not when switching between tabs.</remarks>
+        public event EventHandler? SelectedTabClickedAgain;
+
+        /// <summary>
         /// Gets or sets the alternative header background color.
         /// </summary>
         public static Microsoft.Maui.Graphics.Color AltHeaderBackColor
@@ -97,6 +105,20 @@ namespace Alternet.Maui
         public SimpleToolBarView Header => tabs;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the content area is visible.
+        /// </summary>
+        public bool IsContentVisible
+        {
+            get => content.IsVisible;
+            set => content.IsVisible = value;
+        }
+
+        /// <summary>
+        /// Gets the content grid of the tab control view.
+        /// </summary>
+        public Grid ContentGrid => grid;
+
+        /// <summary>
         /// Gets the collection of tabs in the tab control view.
         /// </summary>
         public IList<IView> Tabs => Header.Buttons;
@@ -119,6 +141,7 @@ namespace Alternet.Maui
                 return content.Content;
             }
 
+            /* do not make it non-public as sometimes it is assigned */
             set
             {
                 content.Content = value;
@@ -155,6 +178,11 @@ namespace Alternet.Maui
         /// <see cref="MakeSelectedTabFirst"/> property. Default is true.
         /// </summary>
         public virtual bool MakeFirstOnlyIfNotVisible { get; set; } = true;
+
+        /// <summary>
+        /// Gets the index of the previously selected tab.
+        /// </summary>
+        public virtual int? PreviousSelectedIndex { get; private set; }
 
         /// <summary>
         /// Gets or sets the index of the selected tab.
@@ -205,6 +233,9 @@ namespace Alternet.Maui
             var btn = item?.Button;
             if (btn is null)
                 return;
+
+            PreviousSelectedIndex = SelectedIndex;
+
             btn.IsSticky = true;
             Content = item!.PageResolver?.Invoke();
             SelectedTabChanged?.Invoke(this, EventArgs.Empty);
@@ -312,6 +343,11 @@ namespace Alternet.Maui
             btn.ClickedAction = () =>
             {
                 SelectedTab = result;
+
+                if (SelectedIndex == PreviousSelectedIndex)
+                {
+                    SelectedTabClickedAgain?.Invoke(this, EventArgs.Empty);
+                }
             };
 
             if (TabCount == 1)
@@ -321,9 +357,73 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Gets the height of the header area, based on the visibility and content of the tabs.
+        /// </summary>
+        /// <returns>The height of the header area in device-independent units. Returns 0 if there are no tab buttons or if the
+        /// tabs are not visible.</returns>
+        public double GetHeaderHeight()
+        {
+            if (tabs.Buttons.Count == 0 || !tabs.IsVisible)
+                return 0;
+            return tabs.Height;
+        }
+
+        /// <summary>
+        /// Gets the height of the content area, or 0 if the content is not present or not visible.
+        /// </summary>
+        /// <returns>The height of the content area as a double. Returns 0 if the content is null or not visible.</returns>
+        public double GetContentHeight()
+        {
+            if (content.Content is null || !content.IsVisible || !content.Content.IsVisible)
+                return 0;
+
+            return content.Height;
+        }
+
+        /// <summary>
+        /// Calculates the total height by summing the header and content heights.
+        /// </summary>
+        /// <returns>The combined height of the header and content, in the same units as returned by the component methods.</returns>
+        public double GetTotalHeight()
+        {
+            return GetHeaderHeight() + GetContentHeight();
+        }
+
+        /// <summary>
+        /// Toggles the visibility state of the content and updates the minimum height
+        /// based on the specified suggested height.
+        /// </summary>
+        /// <param name="suggestedHeight">The suggested minimum height, in device-independent units (DIP),
+        /// to apply when updating the content's minimum height.</param>
+        public virtual void ToggleContentVisibility(double suggestedHeight)
+        {
+            IsContentVisible = !IsContentVisible;
+            SetMinimumHeightFromContent(suggestedHeight);
+        }
+
+        /// <summary>
+        /// Sets the minimum height of the control based on the visibility of its content and a suggested height value.
+        /// </summary>
+        /// <remarks>If the content is not visible, the minimum height is set to the height of the header
+        /// instead of the suggested value.</remarks>
+        /// <param name="suggestedHeight">The height, in device-independent units,
+        /// to use as the minimum height when the content is visible.</param>
+        public virtual void SetMinimumHeightFromContent(double suggestedHeight)
+        {
+            if (IsContentVisible)
+            {
+                MinimumHeightRequest = suggestedHeight;
+            }
+            else
+            {
+                MinimumHeightRequest = GetHeaderHeight();
+            }
+        }
+
+        /// <summary>
         /// Represents an item in the tab control view.
         /// </summary>
-        public class TabControlItem
+        public partial class TabControlItem
         {
             private const string resolverPropName = "CDF756F1-D3A3-4077-A2E4-13199C821EB9";
 
@@ -361,8 +461,10 @@ namespace Alternet.Maui
 
                 set
                 {
+#pragma warning disable
                     if (CustomAttr is not null)
                         CustomAttr[resolverPropName] = value;
+#pragma warning restore
                 }
             }
 
