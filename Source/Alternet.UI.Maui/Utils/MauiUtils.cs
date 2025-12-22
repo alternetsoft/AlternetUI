@@ -1011,6 +1011,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Checks whether the specified view is fully visible within its parent.
+        /// </summary>
+        /// <param name="view">The view to check for visibility.</param>
+        /// <returns>True if the view is fully visible within its parent; otherwise, false.</returns>
+        public static bool IsFullyVisibleInParent(IView view)
+        {
+            if (view == null || view.Parent is not IView parent)
+                return false;
+
+            // Get view bounds relative to its parent
+            var viewBounds = view.Frame;
+            var parentBounds = parent.Frame;
+
+            // For immediate parent, view.Frame is relative to parent
+            bool fullyInside =
+                viewBounds.X >= 0 &&
+                viewBounds.Y >= 0 &&
+                (viewBounds.X + viewBounds.Width) <= parentBounds.Width &&
+                (viewBounds.Y + viewBounds.Height) <= parentBounds.Height;
+
+            return fullyInside;
+        }
+
+        /// <summary>
         /// Closes the application.
         /// </summary>
         public static bool CloseApplication()
