@@ -45,6 +45,16 @@ namespace Alternet.Maui
         }
 
         /// <inheritdoc/>
+        public override void GoToBegin()
+        {
+            if (logItems.Count > 0)
+            {
+                collectionView.SelectedItem = logItems[0];
+                collectionView.ScrollTo(0);
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void AddItem(string s)
         {
             logItems.Add(new(s));

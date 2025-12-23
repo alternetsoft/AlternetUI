@@ -33,6 +33,12 @@ namespace Alternet.Maui
         }
 
         /// <inheritdoc/>
+        public override void GoToBegin()
+        {
+            editor.CursorPosition = 0;
+        }
+
+        /// <inheritdoc/>
         protected override void AddItem(string s)
         {
             builder.Append(s + Environment.NewLine);

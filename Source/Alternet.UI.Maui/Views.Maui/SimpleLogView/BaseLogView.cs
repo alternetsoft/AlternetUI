@@ -40,6 +40,11 @@ namespace Alternet.Maui
         public abstract void Clear();
 
         /// <summary>
+        /// Moves the view to the beginning of the log items.
+        /// </summary>
+        public abstract void GoToBegin();
+
+        /// <summary>
         /// Binds the application log so items will be shown in this view.
         /// </summary>
         public virtual void BindApplicationLog()
