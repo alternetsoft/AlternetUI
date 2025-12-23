@@ -850,6 +850,81 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Attaches a handler to the long tap gesture event of the specified view, invoking the provided action when a
+        /// long tap occurs.
+        /// </summary>
+        /// <remarks>If the specified view is a ContentView, the method attempts to attach the handler to
+        /// its content. Only views of type ControlView (or ContentView containing a ControlView) support long tap
+        /// gesture events.</remarks>
+        /// <param name="view">The view to which the long tap gesture handler will be attached. Must be a ControlView or a ContentView
+        /// containing a ControlView to support long tap events.</param>
+        /// <param name="action">The action to invoke when a long tap gesture is detected on the view. Cannot be null.</param>
+        /// <returns>true if the long tap gesture handler was successfully attached; otherwise, false.</returns>
+        public static bool BindLongTap(View view, Action action)
+        {
+            if (view is ContentView contentView)
+                view = contentView.Content;
+
+            if (view is Alternet.UI.ControlView controlView)
+            {
+                controlView.Control?.CanLongTap = true;
+                controlView.Control?.LongTap -= OnLongTap;
+                controlView.Control?.LongTap += OnLongTap;
+                return true;
+            }
+
+            void OnLongTap(object? s, Alternet.UI.LongTapEventArgs e) => action();
+
+            return false;
+        }
+
+        /// <summary>
+        /// Displays the context menu for the specified view, if supported.
+        /// </summary>
+        /// <remarks>If the specified view is a ContentView, the method attempts to display the context
+        /// menu for its content. Only views that are or contain a ControlView support displaying a context
+        /// menu.</remarks>
+        /// <param name="view">The view for which to display the context menu. This can be a ContentView, ControlView, or another supported
+        /// view type.</param>
+        /// <returns>true if the context menu was successfully shown for the specified view; otherwise, false.</returns>
+        public static bool ShowContextMenu(View view)
+        {
+            if (view is ContentView contentView)
+                view = contentView.Content;
+
+            if (view is Alternet.UI.ControlView controlView)
+            {
+                controlView.Control?.ShowContextMenu();
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Sets the context menu for the specified view. Context menu is converted to
+        /// <see cref="MenuFlyout"/> and assigned to the view.
+        /// </summary>
+        /// <param name="view">The <see cref="View"/> to set the context menu for.</param>
+        /// <param name="menu">The <see cref="ContextMenu"/> to set as the context menu.</param>
+        /// <returns>A <see cref="MenuFlyout"/> representing the context menu.</returns>
+        public static MenuFlyout? SetContextMenu(View view, ContextMenuStrip menu)
+        {
+            if (view is ContentView contentView)
+                view = contentView.Content;
+
+            if (view is Alternet.UI.ControlView controlView)
+            {
+                controlView.Control?.ContextMenuStrip = menu;
+                return null;
+            }
+
+            var flyoutMenu = menu.ToMenuFlyout();
+            FlyoutBase.SetContextFlyout(view, flyoutMenu);
+            return flyoutMenu;
+        }
+
+        /// <summary>
         /// Attempts to set focus on the specified object within a predefined timeout period.
         /// </summary>
         /// <remarks>This method retrieves the associated view of the specified object
