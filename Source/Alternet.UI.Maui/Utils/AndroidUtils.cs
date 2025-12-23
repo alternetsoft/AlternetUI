@@ -12,13 +12,20 @@ using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
+using Android.OS;
 using Android.Views;
 
+using Microsoft.Maui;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Platform;
 
 public static class AndroidUtils
 {
+    public static void DefaultMainActivityOnCreate(MauiAppCompatActivity activity, Bundle? savedInstanceState)
+    {
+        activity.Window?.SetSoftInputMode(SoftInput.AdjustResize);
+    }
+
     /// <summary>
     /// Gets application's private storage folder.
     /// </summary>
