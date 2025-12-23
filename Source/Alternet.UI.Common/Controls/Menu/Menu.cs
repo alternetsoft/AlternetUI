@@ -224,6 +224,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a new menu item with the specified title and command to the menu.
+        /// </summary>
+        /// <param name="title">The title of the menu item.</param>
+        /// <param name="command">The command to execute when the menu item is clicked.</param>
+        /// <returns>The created menu item.</returns>
+        public virtual MenuItem Add(string title, Command command)
+        {
+            var result = new MenuItem
+            {
+                Text = title,
+                Command = command,
+            };
+
+            Add(result);
+            return result;
+        }
+
+        /// <summary>
         /// Adds a disabled menu item with the specified text to the menu.
         /// </summary>
         /// <remarks>The added menu item will have its <see cref="MenuItem.IsEnabled"/>
