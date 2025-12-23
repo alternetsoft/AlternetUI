@@ -1032,7 +1032,7 @@ namespace Alternet.UI
             {
                 if (visibilityService.IsVisible)
                 {
-                    behindKeyboardPanel.HeightRequest = visibilityService.Height;
+                    behindKeyboardPanel.MinimumHeightRequest = visibilityService.Height;
                     behindKeyboardPanel.IsVisible = true;
                 }
 
@@ -1048,6 +1048,48 @@ namespace Alternet.UI
                     }
 
                     e.UpdateKeyboardPanel(behindKeyboardPanel);
+                };
+            }
+
+            return visibilityService;
+        }
+
+        /// <summary>
+        /// Binds the specified action to keyboard visibility changes.
+        /// </summary>
+        /// <param name="action">The action to invoke when keyboard visibility changes.</param>
+        /// <returns></returns>
+        public static IKeyboardVisibilityService? BindToKeyboardVisibility(Action<KeyboardVisibleChangedEventArgs> action)
+        {
+            bool testKeyboard = Alternet.UI.DebugUtils.IsDebugDefinedAndAttached && Alternet.UI.App.IsWindowsOS && true;
+            bool logKeyboard = Alternet.UI.DebugUtils.IsDebugDefinedAndAttached && false;
+
+            if (!testKeyboard)
+            {
+                if (!Alternet.UI.App.IsTabletOrPhoneDevice)
+                    return null;
+            }
+
+            var visibilityService = Alternet.UI.Keyboard.Handler.VisibilityService;
+            if (visibilityService != null)
+            {
+                if (visibilityService.IsVisible)
+                {
+                    action(new KeyboardVisibleChangedEventArgs(true, visibilityService.Height));
+                }
+
+                visibilityService.KeyboardVisibleChanged += (s, e) =>
+                {
+                    if (e.IsVisible)
+                    {
+                        Alternet.UI.App.LogIf($"Keyboard shown, height: {e.Height}", logKeyboard);
+                    }
+                    else
+                    {
+                        Alternet.UI.App.LogIf("Keyboard hidden", logKeyboard);
+                    }
+
+                    action(e);
                 };
             }
 
