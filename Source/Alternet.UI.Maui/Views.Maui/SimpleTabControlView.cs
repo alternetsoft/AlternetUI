@@ -110,7 +110,7 @@ namespace Alternet.Maui
         public bool IsContentVisible
         {
             get => content.IsVisible;
-            set => content.IsVisible = value;
+            internal set => content.IsVisible = value;
         }
 
         /// <summary>
@@ -398,6 +398,20 @@ namespace Alternet.Maui
         public virtual void ToggleContentVisibility(double suggestedHeight)
         {
             IsContentVisible = !IsContentVisible;
+            SetMinimumHeightFromContent(suggestedHeight);
+        }
+
+        /// <summary>
+        /// Sets the visibility of the content and updates the minimum height based on the suggested value.
+        /// </summary>
+        /// <param name="visible">A value indicating whether the content should be visible.
+        /// Set to <see langword="true"/> to make the content
+        /// visible; otherwise, <see langword="false"/>.</param>
+        /// <param name="suggestedHeight">The suggested minimum height, in device-independent units (DIPs),
+        /// to apply when the content is visible.</param>
+        public virtual void SetContentVisibility(bool visible, double suggestedHeight)
+        {
+            IsContentVisible = visible;
             SetMinimumHeightFromContent(suggestedHeight);
         }
 
