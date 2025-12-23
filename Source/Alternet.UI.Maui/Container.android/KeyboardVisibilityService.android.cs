@@ -11,6 +11,7 @@ using Android.App;
 using Android.Graphics;
 using Android.Views;
 
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui;
 using Microsoft.Maui.Platform;
 
@@ -56,7 +57,7 @@ namespace Alternet.Maui
         /// </summary>
         /// <param name="e">The event arguments. Optional. If not specified,
         /// defaults to the current keyboard visibility state.</param>
-        public virtual void RaiseKeyboardVisibleChanged(KeyboardVisibleChangedEventArgs? e)
+        public virtual void RaiseKeyboardVisibleChanged(KeyboardVisibleChangedEventArgs? e = null)
         {
             KeyboardVisibleChanged?.Invoke(this, e ?? new KeyboardVisibleChangedEventArgs(IsVisible, Height));
         }
@@ -82,7 +83,60 @@ namespace Alternet.Maui
 
             public GlobalLayoutListener(KeyboardVisibilityService owner, View? view) { this.owner = owner; this.view = view; }
 
+            public int GetKeyboardHeight()
+            {
+                var activity = Platform.CurrentActivity;
+
+                if (activity is null)
+                    return 0;
+
+                var rootView = activity.Window?.DecorView?.RootView;
+
+                if (rootView is null)
+                    return 0;
+
+                var visibleRect = new Rect();
+                rootView.GetWindowVisibleDisplayFrame(visibleRect);
+
+                int screenHeight = rootView.Height;
+                int visibleHeight = visibleRect.Height();
+
+                int heightDiff = screenHeight - visibleHeight;
+
+                // Heuristic: only treat as keyboard if diff is significant
+                // Adjust threshold as needed
+                if (heightDiff > screenHeight * 0.15)
+                {
+                    // Subtract navigation bar height if needed
+                    int navBarHeight = 0;
+                    var resourceId = activity.Resources?.GetIdentifier("navigation_bar_height", "dimen", "android");
+                    if (resourceId > 0)
+                        navBarHeight = activity.Resources?.GetDimensionPixelSize(resourceId.Value) ?? 0;
+
+                    // Only subtract if navigation bar is at bottom (portrait)
+                    if (heightDiff > navBarHeight)
+                        heightDiff -= navBarHeight;
+
+                    return heightDiff;
+                }
+
+                // Keyboard not visible
+                return 0;
+            }
+
+            public bool IsKeyboardVisible()
+            {
+                return GetKeyboardHeight() > 0;
+            }
+
             public void OnGlobalLayout()
+            {
+                owner.Height = GetKeyboardHeight();
+                owner.IsVisible = owner.Height > 0;
+                owner.RaiseKeyboardVisibleChanged();
+            }
+
+            public void OnGlobalLayoutOld()
             {
                 if (view == null) return;
                 var r = new Rect();
@@ -105,7 +159,7 @@ namespace Alternet.Maui
                         double heightDips = heightDiff / density;
                         owner.IsVisible = true;
                         owner.Height = heightDips;
-                        owner.KeyboardVisibleChanged?.Invoke(owner, new KeyboardVisibleChangedEventArgs(true, heightDips));
+                        owner.RaiseKeyboardVisibleChanged(new KeyboardVisibleChangedEventArgs(true, heightDips));
                     }
                 }
                 else
@@ -115,7 +169,7 @@ namespace Alternet.Maui
                         lastHeight = 0;
                         owner.IsVisible = false;
                         owner.Height = 0;
-                        owner.KeyboardVisibleChanged?.Invoke(owner, new KeyboardVisibleChangedEventArgs(false, 0));
+                        owner.RaiseKeyboardVisibleChanged(new KeyboardVisibleChangedEventArgs(false, 0));
                     }
                 }
             }
