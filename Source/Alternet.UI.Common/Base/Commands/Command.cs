@@ -157,6 +157,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Defines an implicit conversion from an <see cref="Action"/> delegate to a <see cref="Command"/> instance.
+        /// </summary>
+        /// <remarks>This operator allows an <see cref="Action"/> to be used directly where a <see
+        /// cref="Command"/> is expected, simplifying command creation in client code.</remarks>
+        /// <param name="execute">The action to execute when the command is invoked. Cannot be null.</param>
+        public static implicit operator Command(Action execute)
+        {
+            return new Command(execute);
+        }
+
+        /// <summary>
         /// Notifies the command manager that the ability to execute the command may have changed.
         /// </summary>
         /// <remarks>This method raises the  <see cref="CanExecuteChanged"/> event.
