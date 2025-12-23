@@ -15,8 +15,9 @@ namespace Alternet.Maui
     /// </summary>
     public partial class BaseContentView : ContentView, UI.IRaiseSystemColorsChanged
     {
+        private readonly Alternet.UI.ObjectUniqueId uniqueId = new();
+
         private bool currentIsDark;
-        private Alternet.UI.ObjectUniqueId uniqueId = new();
 
         static BaseContentView()
         {

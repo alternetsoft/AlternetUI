@@ -84,7 +84,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Gets ot sets default size of the button image on mobile platform.
         /// </summary>
-        public static int DefaultImageButtonSize = 24;
+        public static int DefaultImageButtonSize = 32;
 
         /// <summary>
         /// Gets ot sets default size of the button image on desktop platform.
@@ -637,7 +637,9 @@ namespace Alternet.Maui
                 size = DefaultImageButtonSize;
             }
 
-            return size;
+            float sizeF = size * 1f;
+
+            return (int)sizeF;
         }
 
         /// <summary>
