@@ -131,6 +131,12 @@ namespace Alternet.UI
         public static bool IsDebugDefinedAndAttached => IsDebugDefined && IsDebuggerAttached;
 
         /// <summary>
+        /// Gets a value indicating whether the application is running in debug mode inside the debugging environment
+        /// on a Windows operating system.
+        /// </summary>
+        public static bool IsDebugOnWindows => IsDebugDefinedAndAttached && App.IsWindowsOS;
+
+        /// <summary>
         /// Sets whether exceptions of the specified type are ignored in the exception logger.
         /// </summary>
         /// <typeparam name="T">Type of the exception to ignore.</typeparam>
