@@ -129,11 +129,16 @@ namespace Alternet.Maui
                 return GetKeyboardHeight() > 0;
             }
 
-            public void OnGlobalLayout()
+            public void OnGlobalLayoutNew()
             {
-                owner.Height = GetKeyboardHeight();
+                owner.Height = GetKeyboardHeight() / Alternet.UI.Display.MaxScaleFactor;
                 owner.IsVisible = owner.Height > 0;
                 owner.RaiseKeyboardVisibleChanged();
+            }
+
+            public void OnGlobalLayout()
+            {
+                OnGlobalLayoutNew();
             }
 
             public void OnGlobalLayoutOld()
