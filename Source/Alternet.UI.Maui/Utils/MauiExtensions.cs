@@ -166,6 +166,27 @@ namespace Alternet.Maui.Extensions
         }
 
         /// <summary>
+        /// Creates a new <see cref="MenuFlyout"/> that contains the items from the specified <see cref="ContextMenu"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method copies the items from the <see cref="ContextMenu"/> to the <see cref="MenuFlyout"/>. Changes to the
+        /// original <see cref="ContextMenu"/> after calling this method are not reflected in the returned <see cref="MenuFlyout"/>.
+        /// </remarks>
+        /// <param name="contextMenu">The <see cref="ContextMenu"/> whose items will be added to the new <see cref="MenuFlyout"/>.
+        /// Cannot be null.</param>
+        /// <returns>A <see cref="MenuFlyout"/> containing all items from
+        /// the specified <see cref="ContextMenu"/>, in the same order.</returns>
+        public static MenuFlyout ToMenuFlyout(this Alternet.UI.ContextMenu contextMenu)
+        {
+            var result = new MenuFlyout();
+            foreach (var item in contextMenu.Items)
+            {
+                result.Add(item.ToMenuFlyoutItem());
+            }
+            return result;
+        }
+
+        /// <summary>
         /// Converts an <see cref="Alternet.UI.MenuItem"/> to a corresponding
         /// <see cref="Microsoft.Maui.Controls.MenuFlyoutItem"/>.
         /// </summary>
