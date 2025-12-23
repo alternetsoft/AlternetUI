@@ -20,12 +20,14 @@ namespace Alternet.UI
     {
         private bool insideDisposing;
         private bool disposed;
+        private bool runOnceAlreadyExecuted;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableContentPage"/> class.
         /// </summary>
         public DisposableContentPage()
         {
+            this.SafeAreaEdges = Microsoft.Maui.SafeAreaEdges.All;
         }
 
         /// <summary>
@@ -112,6 +114,25 @@ namespace Alternet.UI
         }
 
         void IDisposableObject.CheckDisposed() => this.CheckDisposed();
+
+
+        /// <summary>
+        /// Called once when the page appears for the first time.
+        /// </summary>
+        protected virtual void OnAppearingOnce()
+        {
+        }
+
+        /// <inheritdoc/>
+        protected async override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            Alternet.UI.TimerUtils.RunOnce(ref runOnceAlreadyExecuted, () =>
+            {
+                OnAppearingOnce();
+            });
+        }
 
         /// <summary>
         /// Disposes object's resources.
