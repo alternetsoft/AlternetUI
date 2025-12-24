@@ -3,6 +3,7 @@ sudo apt -y upgrade
 
 sudo apt -y install dotnet-sdk-8.0
 sudo apt -y install dotnet-sdk-9.0
+sudo apt -y install dotnet-sdk-10.0
 sudo apt -y install git
 
 sudo apt-get -y install libgtk-3-dev 
