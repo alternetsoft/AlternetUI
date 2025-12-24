@@ -1,3 +1,36 @@
+# 0.9.806 (2025 December 24)
+
+- AbstractControl.ShowContextMenu().
+- Add implicit conversion from Action to Command.
+- Maui: Add GoToBegin method to log view classes.
+- Maui: Add ToMenuFlyout extension method for Alternet.UI.ContextMenu, allowing conversion of its items into a new MenuFlyout.
+- Menu: Introduced Add(string title, Command command) to allow adding a new menu item with a specified title and command.
+- Maui: Add OnAppearingOnce method to DisposableContentPage.
+- Maui: SimpleTabControlView: Add SetContentVisibility method.
+- Maui: Improve keyboard visibility detection on Android.
+- Maui: Add IsFullyVisibleInParent to check if view is fully visible in parent.
+- MauiUtils: Introduced BindToKeyboardVisibility to allow binding an action to keyboard visibility changes.
+- MauiUtils: Add helpers for long tap and context menu on views (BindLongTap, ShowContextMenu, SetContextMenu).
+- MauiUtils: Introduced BindToKeyboardVisibility to adjust a panel's height and visibility based on keyboard state.
+- MauiExtensions: Add UpdateKeyboardPanel extension for keyboard visibility.
+- Add RaiseKeyboardVisibleChanged to keyboard services.
+- SimpleTabControlView: Added SelectedTabClickedAgain event, PreviousSelectedIndex property, and several utility methods.
+- SimpleTabControlView: Introduces the MakeFirstOnlyIfNotVisible property.
+- SimpleToolBarView: Changed several ButtonVisualStateSetters fields from internal to public.
+- Add SetChecked method to CheckBox and RadioButton.
+- Add IsTabletMode method to MauiWindowsUtils.
+- MauiUtils: Add IsTabletMode property with override support.
+- Add MauiKeyboardUtils, a static utility class to detect hardware keyboard presence across different platforms.
+- RegistryUtils: Add method to detect Windows tablet mode.
+- Introduced CreateMoreActionsButton to add a 'More actions' button with a context menu to a toolbar.
+- Add EnableContextMenuOnLongTap to allow context menus on long tap for touch devices.
+- Add filter SVG icon and support in KnownSvgImages.
+- Refactor inner popup toolbar positioning and sizing logic. Add SetLocationInContainer and SetSizeAndLocationInContainer methods.
+- RectD: Add SizeIsEmptyOrInfinity property and IsValid method.
+- FrameworkElement: Add DebugIdentifier property to assist with debugging.
+
+---
+
 # 0.9.805 (2025 December 17)
 
 - UserControl: Improve overlay tooltip alignment and painting logic.
