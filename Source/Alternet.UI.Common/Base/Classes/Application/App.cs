@@ -144,6 +144,7 @@ namespace Alternet.UI
             ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
 
         private static bool? isMono;
+        private static EventHandler<LogMessageEventArgs>? logMessage;
 
         private static UnhandledExceptionMode unhandledExceptionMode
             = UnhandledExceptionMode.CatchWithDialog;
@@ -295,7 +296,18 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when debug message needs to be displayed.
         /// </summary>
-        public static event EventHandler<LogMessageEventArgs>? LogMessage;
+        public static event EventHandler<LogMessageEventArgs>? LogMessage
+        {
+            add
+            {
+                logMessage += value;
+            }
+
+            remove
+            {
+                logMessage -= value;
+            }
+        }
 
         /// <summary>
         /// Gets whether application is running on the desktop operating system.
@@ -422,7 +434,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether <see cref="LogMessage"/> event has any handlers.
         /// </summary>
-        public static bool HasLogMessageHandler => LogMessage is not null;
+        public static bool HasLogMessageHandler => logMessage is not null;
 
         /// <summary>
         /// Gets the location of the currently executing assembly.
@@ -1431,7 +1443,7 @@ namespace Alternet.UI
                 {
                     string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
 
-                    if (LogMessage is not null)
+                    if (HasLogMessageHandler)
                     {
                         foreach (string s2 in result)
                         {
@@ -1690,15 +1702,21 @@ namespace Alternet.UI
                 var msg = obj?.ToString();
                 if (msg is null || msg.Length == 0)
                     return;
+                
                 WriteToLogFileIfAllowed(msg);
+                
                 if (DebugWriteLine.HasKind(kind))
                     Debug.WriteLine(msg);
-                var prefixStr = prefix?.ToString() ?? msg;
 
-                var args = new LogMessageEventArgs(msg, prefixStr, true);
-                args.Kind = kind;
+                if (logMessage is not null)
+                {
+                    var prefixStr = prefix?.ToString() ?? msg;
 
-                LogMessage?.Invoke(null, args);
+                    var args = new LogMessageEventArgs(msg, prefixStr, true);
+                    args.Kind = kind;
+
+                    logMessage(null, args);
+                }
             }
             catch
             {
@@ -2481,7 +2499,7 @@ namespace Alternet.UI
 
         private static void LogToEvent(LogUtils.LogItem item)
         {
-            if (LogMessage is null)
+            if (logMessage is null)
                 return;
 
             LogMessageEventArgs? args = new();
@@ -2489,7 +2507,7 @@ namespace Alternet.UI
             args.Kind = item.Kind;
             args.Message = item.Msg;
 
-            LogMessage(null, args);
+            logMessage(null, args);
         }
 
         internal sealed class Destructor
