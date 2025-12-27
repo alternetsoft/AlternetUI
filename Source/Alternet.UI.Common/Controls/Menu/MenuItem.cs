@@ -1016,6 +1016,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the enabled state of the menu item based on the associated command.
+        /// If there is no command associated, the method does not update enabled state.
+        /// Additionally, it updates enabled state of child menu items if any.
+        /// </summary>
+        public override void UpdateCommandState()
+        {
+            base.UpdateCommandState();
+            if (commandSource.Command is null)
+                return;
+            Enabled = commandSource.CanExecute;
+        }
+
+        /// <summary>
         /// Raises the <see cref="ClickActionChanged"/> event to notify
         /// subscribers of a change in the click action.
         /// </summary>
