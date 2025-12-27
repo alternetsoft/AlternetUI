@@ -66,6 +66,12 @@ namespace Alternet.UI
         public static HVDropDownAlignment BeforeEnd => new (DropDownAlignment.BeforeEnd, DropDownAlignment.BeforeEnd);
 
         /// <summary>
+        /// Gets a predefined alignment configuration where
+        /// position is aligned to the top-right corner.
+        /// </summary>
+        public static HVDropDownAlignment TopRight => new (DropDownAlignment.BeforeEnd, DropDownAlignment.AfterStart);
+
+        /// <summary>
         /// Gets the default drop-down alignment.
         /// </summary>
         public static HVDropDownAlignment Default => new(
