@@ -753,11 +753,15 @@ namespace Alternet.Maui
             Drawing.SvgImage? image = null,
             Action? onClick = null)
         {
-            var result = AddButton(text, toolTip, image, onClick);
-            result.Clicked += (s, e) =>
+            var result = AddButton(text, toolTip, image);
+
+            void WrappedOnClick()
             {
                 result.IsSticky = !result.IsSticky;
-            };
+                onClick?.Invoke();
+            }
+
+            result.ClickedAction = WrappedOnClick;
             return result;
         }
 
@@ -1155,6 +1159,17 @@ namespace Alternet.Maui
                 null,
                 onClick);
             return result;
+        }
+
+        /// <summary>
+        /// Adds a picture to the toolbar.
+        /// </summary>
+        /// <param name="image">The image to display on the item.</param>
+        /// <param name="onClick">The action to perform when the item is clicked.</param>
+        /// <returns>The created item.</returns>
+        public virtual IToolBarItem AddPicture(Drawing.SvgImage? image, Action? onClick = null)
+        {
+            return AddLabel(null, null, image, onClick);
         }
 
         /// <summary>
