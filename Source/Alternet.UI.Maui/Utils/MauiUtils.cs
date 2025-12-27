@@ -886,15 +886,22 @@ namespace Alternet.UI
         /// menu.</remarks>
         /// <param name="view">The view for which to display the context menu. This can be a ContentView, ControlView, or another supported
         /// view type.</param>
+        /// <param name="contextMenuPosition">The position of the context menu relative to the view. Optional.
+        /// If not specified, the context menu will be displayed at the default position.</param>
         /// <returns>true if the context menu was successfully shown for the specified view; otherwise, false.</returns>
-        public static bool ShowContextMenu(View view)
+        public static bool ShowContextMenu(View view, HVDropDownAlignment? contextMenuPosition = null)
         {
             if (view is ContentView contentView)
                 view = contentView.Content;
 
             if (view is Alternet.UI.ControlView controlView)
             {
-                controlView.Control?.ShowContextMenu();
+                var c = controlView.Control;
+
+                if (c is null || !c.HasContextMenu)
+                    return false;
+
+                c.ContextMenuStrip.ShowInsideControlAligned(c, contextMenuPosition);
                 return true;
             }
 
