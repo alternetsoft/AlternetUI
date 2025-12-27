@@ -614,7 +614,7 @@ namespace Alternet.UI
         /// <summary>
         /// Shows the context menu for the control if it has one.
         /// </summary>
-        public virtual void ShowContextMenu()
+        public virtual void ShowContextMenu(HVDropDownAlignment? contextMenuPosition = null)
         {
             if (HasContextMenu || ContextMenuShowing is not null)
             {
@@ -623,8 +623,16 @@ namespace Alternet.UI
                     if (DisposingOrDisposed)
                         return;
 
+                    var savedPosition = ContextMenuPosition;
+
+                    if (contextMenuPosition.HasValue)
+                        ContextMenuPosition = contextMenuPosition.Value;
+
                     // We need here to use field as we no need to auto-create the context menu.
                     ShowPopupMenu(contextMenuStrip);
+
+                    if (contextMenuPosition.HasValue)
+                        ContextMenuPosition = savedPosition;
                 });
             }
         }
@@ -2716,11 +2724,14 @@ namespace Alternet.UI
             if (menu is null)
                 return;
 
+            menu.UpdateCommandState();
+
             var point = Mouse.CoercePosition(new(x, y), this);
+            var position = ContextMenuPosition ?? new(point);
 
             if (UseInternalContextMenu ?? DefaultUseInternalContextMenu)
             {
-                menu.ShowInPopup(this, null, ContextMenuPosition ?? new(point));
+                menu.ShowInPopup(this, null, position);
             }
             else
             {
