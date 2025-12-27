@@ -257,6 +257,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the enabled state of the child menu items based on their associated command.
+        /// If there is no command associated with the menu item, its state is not updated.
+        /// </summary>
+        public virtual void UpdateCommandState()
+        {
+            if (!HasItems)
+                return;
+            foreach (var child in Items)
+            {
+                child.UpdateCommandState();
+            }
+        }
+
+        /// <summary>
         /// Begins an update block, incrementing the update counter.
         /// </summary>
         public virtual void BeginUpdate()
