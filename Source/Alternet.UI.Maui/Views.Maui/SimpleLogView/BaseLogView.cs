@@ -10,7 +10,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents an abstract log view.
     /// </summary>
-    public abstract partial class BaseLogView : BaseContentView
+    public partial class BaseLogView : BaseContentView
     {
         /// <summary>
         /// Delegate to create a log view.
@@ -37,12 +37,16 @@ namespace Alternet.Maui
         /// <summary>
         /// Clears all log items.
         /// </summary>
-        public abstract void Clear();
+        public virtual void Clear()
+        {
+        }
 
         /// <summary>
         /// Moves the view to the beginning of the log items.
         /// </summary>
-        public abstract void GoToBegin();
+        public virtual void GoToBegin()
+        {
+        }
 
         /// <summary>
         /// Binds the application log so items will be shown in this view.
@@ -88,7 +92,9 @@ namespace Alternet.Maui
         /// add a log item to the view.
         /// </summary>
         /// <param name="s">The log message to add.</param>
-        protected abstract void AddItem(string s);
+        protected virtual void AddItem(string s)
+        {
+        }
 
         /// <summary>
         /// Handles the application log message event.
