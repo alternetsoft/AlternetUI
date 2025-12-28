@@ -69,6 +69,10 @@ namespace Alternet.UI
             {
                 if (!Visible)
                     return false;
+
+                if (source is InnerPopupToolBar)
+                    return false;
+
                 if (RelatedControl?.IsSibling(source) ?? false)
                 {
                     CloseWhenIdle(ModalResult.Canceled);
@@ -219,6 +223,27 @@ namespace Alternet.UI
         /// will be used.
         /// </summary>
         public virtual bool NeedsRemainingLabelImages { get; set; } = true;
+
+        /// <inheritdoc/>
+        public override bool Visible
+        {
+            get => base.Visible;
+
+            set
+            {
+                if (value == Visible)
+                    return;
+
+                if (value)
+                {
+                }
+                else
+                {
+                }
+
+                base.Visible = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the label text width is maximized.
