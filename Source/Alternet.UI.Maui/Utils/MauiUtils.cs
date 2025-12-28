@@ -860,10 +860,9 @@ namespace Alternet.UI
         /// containing a ControlView to support long tap events.</param>
         /// <param name="action">The action to invoke when a long tap gesture is detected on the view. Cannot be null.</param>
         /// <returns>true if the long tap gesture handler was successfully attached; otherwise, false.</returns>
-        public static bool BindLongTap(View view, Action action)
+        public static bool BindLongTap(View? view, Action action)
         {
-            if (view is ContentView contentView)
-                view = contentView.Content;
+            view = GetControlView(view);
 
             if (view is Alternet.UI.ControlView controlView)
             {
@@ -879,6 +878,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the innermost <see cref="ControlView"/> from the specified view.
+        /// </summary>
+        /// <param name="view">The view to search for the innermost <see cref="ControlView"/>.</param>
+        /// <returns>The innermost <see cref="ControlView"/> if found; otherwise, null.</returns>
+        public static ControlView? GetControlView(View? view)
+        {
+            while (view is ContentView contentView)
+                view = contentView.Content;
+            if (view is Alternet.UI.ControlView controlView)
+                return controlView;
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the background color of the control associated with the specified view, if available.
+        /// </summary>
+        /// <param name="view">The view to retrieve the background color from.</param>
+        /// <returns>The background color of the control associated with the specified view, if available; otherwise, null.</returns>
+        public static Alternet.Drawing.Color? GetControlViewBackColor(View? view)
+        {
+            view = GetControlView(view);
+
+            if (view is Alternet.UI.ControlView controlView)
+            {
+                var c = controlView.Control;
+
+                if (c is null)
+                    return null;
+
+                return c.RealBackgroundColor;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Displays the context menu for the specified view, if supported.
         /// </summary>
         /// <remarks>If the specified view is a ContentView, the method attempts to display the context
@@ -889,10 +924,9 @@ namespace Alternet.UI
         /// <param name="contextMenuPosition">The position of the context menu relative to the view. Optional.
         /// If not specified, the context menu will be displayed at the default position.</param>
         /// <returns>true if the context menu was successfully shown for the specified view; otherwise, false.</returns>
-        public static bool ShowContextMenu(View view, HVDropDownAlignment? contextMenuPosition = null)
+        public static bool ShowContextMenu(View? view, HVDropDownAlignment? contextMenuPosition = null)
         {
-            if (view is ContentView contentView)
-                view = contentView.Content;
+            view = GetControlView(view);
 
             if (view is Alternet.UI.ControlView controlView)
             {
@@ -909,16 +943,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a grid layout with a toolbar at the top and content below it.
+        /// </summary>
+        /// <remarks>The toolbar is placed in a row with automatic height, while the content occupies the
+        /// remaining available space. Both views are added as direct children of the returned grid.</remarks>
+        /// <param name="toolBar">The view to display as the toolbar in the first row of the grid. Cannot be null.</param>
+        /// <param name="content">The view to display as the main content in the second row of the grid. Cannot be null.</param>
+        /// <returns>A Grid containing the specified toolbar in the first row and the content in the second row.</returns>
+        public static Microsoft.Maui.Controls.Grid CreateGridWithToolBarAndContent(View toolBar, View content)
+        {
+            var mainGrid = new Microsoft.Maui.Controls.Grid
+            {
+                RowDefinitions =
+                {
+                    new Microsoft.Maui.Controls.RowDefinition
+                    {
+                        Height = Microsoft.Maui.GridLength.Auto,
+                    },
+                    new Microsoft.Maui.Controls.RowDefinition
+                    {
+                        Height = new Microsoft.Maui.GridLength(1, Microsoft.Maui.GridUnitType.Star),
+                    },
+                }
+            };
+
+            Microsoft.Maui.Controls.Grid.SetRow(toolBar, 0);
+            Microsoft.Maui.Controls.Grid.SetRow(content, 1);
+
+            mainGrid.Children.Add(toolBar);
+            mainGrid.Children.Add(content);
+            return mainGrid;
+        }
+
+        /// <summary>
         /// Sets the context menu for the specified view. Context menu is converted to
         /// <see cref="MenuFlyout"/> and assigned to the view.
         /// </summary>
         /// <param name="view">The <see cref="View"/> to set the context menu for.</param>
         /// <param name="menu">The <see cref="ContextMenu"/> to set as the context menu.</param>
         /// <returns>A <see cref="MenuFlyout"/> representing the context menu.</returns>
-        public static MenuFlyout? SetContextMenu(View view, ContextMenuStrip menu)
+        public static MenuFlyout? SetContextMenu(View? view, ContextMenuStrip menu)
         {
-            if (view is ContentView contentView)
-                view = contentView.Content;
+            view = GetControlView(view);
 
             if (view is Alternet.UI.ControlView controlView)
             {
