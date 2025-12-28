@@ -154,6 +154,9 @@ namespace Alternet.UI.Localization
         public string ButtonIgnore { get; set; } = "Ignore";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonMoreActions { get; set; } = "More Actions";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonHelp { get; set; } = "Help";
 
         /// <inheritdoc cref="ButtonOk"/>

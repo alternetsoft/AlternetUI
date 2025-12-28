@@ -112,7 +112,7 @@ namespace Alternet.UI
             logListBoxToolBar.SetToolAlignRight(btnClear);
 
             var btnLogListBoxSettings = logListBoxToolBar.AddSpeedBtn(
-                "More actions", KnownSvgImages.ImgMoreActions);
+                UI.Localization.CommonStrings.Default.ButtonMoreActions, KnownSvgImages.ImgMoreActions);
             logListBoxToolBar.SetToolDropDownMenu(btnLogListBoxSettings, logListBox.ContextMenu);
             logListBoxToolBar.SetToolAlignRight(btnLogListBoxSettings);
 
@@ -133,7 +133,7 @@ namespace Alternet.UI
             actionsListBoxToolBar.SetToolAlignRight(btnRunAction);
 
             var btnActionsListBoxSettings = actionsListBoxToolBar.AddSpeedBtn(
-                "More actions", KnownSvgImages.ImgMoreActions);
+                UI.Localization.CommonStrings.Default.ButtonMoreActions, KnownSvgImages.ImgMoreActions);
             actionsListBoxToolBar.SetToolDropDownMenu(
                 btnActionsListBoxSettings, null);
             actionsListBoxToolBar.SetToolAlignRight(btnActionsListBoxSettings);
