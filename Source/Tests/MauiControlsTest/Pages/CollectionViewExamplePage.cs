@@ -193,10 +193,7 @@ namespace AllQuickStarts
             toolbar.IsTopBorderVisible = true;
             toolbar.IsBottomBorderVisible = true;
 
-            toolbar.AddButton(
-                null,
-                "More actions",
-                Alternet.UI.KnownSvgImages.ImgMoreActions,
+            toolbar.AddMoreActionsButton(
                 () =>
                 {
                 });

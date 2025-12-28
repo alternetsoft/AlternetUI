@@ -1047,6 +1047,28 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Adds a "More Actions" button to the toolbar, optionally specifying a callback to invoke when the button is
+        /// clicked.
+        /// </summary>
+        /// <param name="onClick">An optional action to execute when the "More Actions" button is clicked.
+        /// If null, no action is performed on click.</param>
+        /// <returns>An <see cref="IToolBarItem"/> representing the newly added "More Actions" button.</returns>
+        /// <remarks>The "More Actions" button is typically used to provide access to additional options or
+        /// features related to the toolbar's context. Call <see cref="AddExpandingSpace"/> before adding "More Actions"
+        /// button in order to align it to the right side of the toolbar.
+        /// </remarks>
+        public virtual IToolBarItem AddMoreActionsButton(Action? onClick = null)
+        {
+            var moreActionsButton = AddButton(
+                null,
+                UI.Localization.CommonStrings.Default.ButtonMoreActions,
+                Alternet.UI.KnownSvgImages.ImgMoreActions,
+                onClick);
+
+            return moreActionsButton;
+        }
+
+        /// <summary>
         /// Adds a button to the toolbar.
         /// </summary>
         /// <param name="text">The text to display on the button.</param>
