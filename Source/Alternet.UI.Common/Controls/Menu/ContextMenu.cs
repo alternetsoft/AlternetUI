@@ -405,16 +405,29 @@ namespace Alternet.UI
             Action? onClose = null,
             HVDropDownAlignment? align = null)
         {
-            var hostControl = GetHostObject<InnerPopupToolBar>();
+            if (DisposingOrDisposed)
+                return null;
+
             relatedControl.Value = null;
+
+            if (Items.Count == 0)
+                return null;
+
+            var e = new CancelEventArgs();
+            RaiseOpening(e);
+            if (e.Cancel)
+            {
+                relatedControl.Value = null;
+                return null;
+            }
+
+            var hostControl = GetHostObject<InnerPopupToolBar>();
 
             if (hostControl is not null)
             {
                 hostControl.RelatedControl = null;
             }
 
-            if (Items.Count == 0)
-                return null;
             relatedControl.Value = source;
 
             if (hostControl is null)
