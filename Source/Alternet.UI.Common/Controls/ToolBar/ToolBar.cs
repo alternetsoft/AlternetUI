@@ -24,6 +24,7 @@ namespace Alternet.UI
         private ImageToText imageToText = ImageToText.Horizontal;
         private Type? customButtonType;
         private MenuChangeRouter? menuChangeRouter;
+        private bool isButtonToolTipsEnabled = true;
 
         static ToolBar()
         {
@@ -231,6 +232,22 @@ namespace Alternet.UI
         public virtual int? ImageSize { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether button tooltips are enabled.
+        /// Default is true.
+        /// </summary>
+        public virtual bool IsButtonToolTipsEnabled
+        {
+            get => isButtonToolTipsEnabled;
+            set
+            {
+                if(isButtonToolTipsEnabled == value)
+                    return;
+                isButtonToolTipsEnabled = value;
+                UpdateButtonToolTipsVisibility();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the toolbar is vertical.
         /// </summary>
         public virtual bool IsVertical
@@ -257,6 +274,8 @@ namespace Alternet.UI
                 });
             }
         }
+
+
 
         /// <summary>
         /// Gets or sets a value which specifies display modes for
@@ -2559,6 +2578,7 @@ namespace Alternet.UI
             speedButton.ImageToText = imageToText;
             speedButton.Text = text;
             speedButton.ImageSet = imageSet;
+            speedButton.IsToolTipEnabled = IsButtonToolTipsEnabled;
             speedButton.ToolTip = toolTip ?? text;
             speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
             speedButton.Margin = DefaultSpeedBtnMargin;
@@ -2800,6 +2820,19 @@ namespace Alternet.UI
             {
                 newProperties.Notification.CollectionChanged += OnMenuItemsCollectionChanged;
                 MenuChangeHandler.OnCollectionReset(newProperties);
+            }
+        }
+
+        /// <summary>
+        /// Updates the visibility of tooltips for all buttons in the toolbar.
+        /// Visibility is determined by the value of the <see cref="IsButtonToolTipsEnabled"/> property.
+        /// This method is called automatically whenever the property changes.
+        /// </summary>
+        protected virtual void UpdateButtonToolTipsVisibility()
+        {
+            foreach (var control in ToolsAsButton)
+            {
+                control.IsToolTipEnabled = IsButtonToolTipsEnabled;
             }
         }
 
