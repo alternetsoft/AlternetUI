@@ -142,6 +142,7 @@ namespace Alternet.UI
         public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
 
         private static bool? ignoreMenuItemShortcuts;
+        private static int toolTipSuppressCount = 0;
 
         private readonly Spacer pictureSpacer = new()
         {
@@ -395,6 +396,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Indicates whether tooltips in all <see cref="SpeedButton"/> controls are suppressed throughout the application.
+        /// </summary>
+        /// <remarks>When set to <see langword="true"/>, no tooltips will be displayed, regardless of
+        /// individual control settings. This can be useful in scenarios where tooltips may interfere with user
+        /// experience or accessibility requirements.</remarks>
+        public static bool AllToolTipsSuppressed
+        {
+            get
+            {
+                return toolTipSuppressCount > 0;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets default template for the shortcut when it is shown in the tooltip.
         /// </summary>
         /// <remarks>
@@ -414,7 +429,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsToolTipEnabled
         {
-            get => isToolTipEnabled;
+            get => isToolTipEnabled && !AllToolTipsSuppressed;
 
             set
             {
@@ -1436,6 +1451,31 @@ namespace Alternet.UI
             theme.Borders = CreateBorders((204, 232, 255));
             theme.Colors = colors.AllStates;
             theme.Backgrounds = theme.Colors;
+        }
+
+        /// <summary>
+        /// Suppresses all tooltips in <see cref="SpeedButton"/> controls globally by incrementing the suppression count.
+        /// In order to resume tooltips, a corresponding call to <see cref="AllToolTipsResume"/> must be made.
+        /// </summary>
+        /// <remarks>Call this method to prevent tooltips from being displayed until suppression is
+        /// lifted. This is typically used when performing operations where tooltips would be distracting or
+        /// undesirable. To re-enable tooltips, ensure that the corresponding method to decrease the suppression count
+        /// is called.</remarks>
+        public static void AllToolTipsSuppress()
+        {
+            toolTipSuppressCount++;
+        }
+
+        /// <summary>
+        /// Resumes all tooltips in <see cref="SpeedButton"/> controls globally by decrementing the suppression count.
+        /// This method should be called after a corresponding call to <see cref="AllToolTipsSuppress"/> to re-enable tooltips.
+        /// </summary>
+        public static void AllToolTipsResume()
+        {
+            if (toolTipSuppressCount > 0)
+                toolTipSuppressCount--;
+            else
+                throw new InvalidOperationException("ToolTip suppression count is already zero.");
         }
 
         /// <summary>
