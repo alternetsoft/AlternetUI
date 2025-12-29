@@ -32,6 +32,8 @@ namespace Alternet.Maui
         private readonly Grid grid = new();
         private readonly ContentView content = new();
 
+        private Alternet.UI.ControlView? emptyPanel;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleTabControlView"/> class.
         /// </summary>
@@ -50,6 +52,7 @@ namespace Alternet.Maui
             grid.Add(tabs, 0, 0);
             grid.Add(content, 0, 1);
             base.Content = grid;
+            Content = EmptyPanel;
         }
 
         /// <summary>
@@ -96,6 +99,28 @@ namespace Alternet.Maui
             set
             {
                 altHeaderBackColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the empty panel displayed when no tab is selected.
+        /// </summary>
+        public virtual Alternet.UI.ControlView EmptyPanel
+        {
+            get
+            {
+                if (emptyPanel is null)
+                {
+                    emptyPanel = new Alternet.UI.ControlView();
+                    emptyPanel.Control = new Alternet.UI.Panel();
+                }
+
+                return emptyPanel;
+            }
+
+            set
+            {
+                emptyPanel = value;
             }
         }
 
@@ -269,7 +294,7 @@ namespace Alternet.Maui
 
             if (tab is null)
             {
-                Content = null;
+                Content = EmptyPanel;
             }
             else
             {
@@ -280,7 +305,10 @@ namespace Alternet.Maui
         /// <summary>
         /// Selects the first tab.
         /// </summary>
-        public virtual void SelectFirstTab() => SelectTab(0);
+        public virtual void SelectFirstTab()
+        {
+            SelectTab(Header.GetFirstNonSpecialButtonIndex());
+        }
 
         /// <summary>
         /// Sets the font for the tabs.
@@ -350,7 +378,7 @@ namespace Alternet.Maui
                 }
             };
 
-            if (TabCount == 1)
+            if (Header.GetNonSpecialButtonsCount() == 1)
                 SelectFirstTab();
 
             return result;
