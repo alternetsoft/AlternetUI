@@ -213,6 +213,46 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Opens the specified folder in the system's default file explorer application.
+        /// </summary>
+        /// <remarks>This method supports Windows, macOS, and Linux platforms. On unsupported platforms or
+        /// if an error occurs, the method returns false. No exception is thrown if the operation fails.</remarks>
+        /// <param name="path">The full path of the folder to open. Must refer to an existing directory.</param>
+        /// <returns>true if the folder was successfully opened in the file explorer; otherwise, false.</returns>
+        public static bool OpenFolderInExplorer(string path)
+        {
+            try
+            {
+                var p = $"\"{path}\"";
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    Process.Start("explorer.exe", p);
+                    return true;
+                }
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", p);
+                    return true;
+                }
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", p);
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error opening folder in explorer: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Opens terminal and runs command there.
         /// </summary>
         /// <param name="command">Command to run.</param>
