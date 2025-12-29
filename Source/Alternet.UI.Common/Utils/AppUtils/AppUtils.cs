@@ -225,19 +225,19 @@ namespace Alternet.UI
             {
                 var p = $"\"{path}\"";
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                if (App.IsWindowsOS)
                 {
                     Process.Start("explorer.exe", p);
                     return true;
                 }
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                if (App.IsMacOS)
                 {
                     Process.Start("open", p);
                     return true;
                 }
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (App.IsLinuxOS)
                 {
                     Process.Start("xdg-open", p);
                     return true;
