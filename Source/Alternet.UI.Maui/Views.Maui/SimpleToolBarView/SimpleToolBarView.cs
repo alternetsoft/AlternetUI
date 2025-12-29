@@ -930,6 +930,27 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Returns the number of toolbar buttons that are classified as normal (non-special) buttons.
+        /// </summary>
+        /// <returns>The number of normal toolbar buttons contained within the toolbar.
+        /// Returns 0 if no such buttons are present.</returns>
+        public virtual int GetNonSpecialButtonsCount()
+        {
+            int count = 0;
+            for (int i = 0; i < buttons.Children.Count; i++)
+            {
+                var child = buttons.Children[i];
+                if (child is not ToolBarButtonContainer container)
+                    continue;
+                if (container.Button is not ToolBarButton button)
+                    continue;
+                if (button.Kind == ToolBarButton.ButtonKind.Normal)
+                    count++;
+            }
+            return count;
+        }
+
+        /// <summary>
         /// Returns the index of the first button in the toolbar that is not marked as special.
         /// </summary>
         /// <remarks>A non-special button is defined as a button whose kind is set to Normal. If no such
