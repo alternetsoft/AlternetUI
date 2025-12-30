@@ -762,7 +762,11 @@ namespace Alternet.UI
         public override bool IsBold
         {
             get => base.IsBold;
-            set => base.IsBold = value;
+
+            set
+            {
+                base.IsBold = value;
+            }
         }
 
         /// <summary>
@@ -2020,6 +2024,26 @@ namespace Alternet.UI
             Visible = menuItem.Visible;
             Enabled = menuItem.Enabled;
             Shortcut = menuItem.Shortcut;
+
+            var isBold = menuItem.CustomAttr["IsBold"];
+            if (isBold is bool b)
+            {
+                IsBold = b;
+            }
+            else
+            {
+                IsBold = false;
+            }
+
+            var isUnderline = menuItem.CustomAttr["IsUnderline"];
+            if (isUnderline is bool u)
+            {
+                IsUnderline = u;
+            }
+            else
+            {
+                IsUnderline = false;
+            }
 
             if (menuItem.Count == 0)
             {
