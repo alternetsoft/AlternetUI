@@ -921,25 +921,98 @@ namespace Alternet.UI
         /// menu.</remarks>
         /// <param name="view">The view for which to display the context menu. This can be a ContentView, ControlView, or another supported
         /// view type.</param>
+        /// <param name="menu">The context menu to display. If null, the method will attempt to use the context menu
+        /// associated with the view.</param>
         /// <param name="contextMenuPosition">The position of the context menu relative to the view. Optional.
         /// If not specified, the context menu will be displayed at the default position.</param>
         /// <returns>true if the context menu was successfully shown for the specified view; otherwise, false.</returns>
-        public static bool ShowContextMenu(View? view, HVDropDownAlignment? contextMenuPosition = null)
+        public static bool ShowContextMenu(
+            Alternet.UI.ContextMenu? menu,
+            View? view,
+            HVDropDownAlignment? contextMenuPosition = null)
         {
-            view = GetControlView(view);
-
-            if (view is Alternet.UI.ControlView controlView)
+            bool ShowMenu(ControlView controlView, HVDropDownAlignment? contextMenuPosition)
             {
                 var c = controlView.Control;
 
-                if (c is null || !c.HasContextMenu)
+                if (c is null)
                     return false;
 
-                c.ContextMenuStrip.ShowInsideControlAligned(c, contextMenuPosition);
+                menu ??= c.ContextMenuStrip;
+
+                if (menu is null)
+                    return false;
+
+                if (c.HasChildren)
+                {
+                    foreach (var child in c.Children)
+                    {
+                        if (child is Alternet.UI.InnerPopupToolBar)
+                            child.Visible = false;
+                    }
+                }
+
+                menu.ShowInsideControlAligned(c, contextMenuPosition);
                 return true;
             }
 
-            return false;
+            var controlView = GetControlView(view);
+
+            if (controlView is not null)
+            {
+                return ShowMenu(controlView, contextMenuPosition);
+            }
+            else
+            {
+                var layout = GetParentAbsoluteLayout(view);
+                if (layout is null) return false;
+
+                controlView = GetChildViewOfType<ControlView>(layout);
+                if (controlView is null)
+                    return false;
+                return ShowMenu(controlView, contextMenuPosition);
+            }
+        }
+
+        /// <summary>
+        /// Searches the visual tree of the specified parent view and returns the first child view of the specified
+        /// type, if found.
+        /// </summary>
+        /// <remarks>The search is performed recursively through the visual tree, including nested layouts
+        /// and content views. Only the first matching child view is returned. If no child of the specified type is
+        /// found, the method returns null.</remarks>
+        /// <typeparam name="T">The type of view to search for. Must be a subclass of View.</typeparam>
+        /// <param name="parent">The root view whose visual tree will be searched for a child of type T.</param>
+        /// <returns>An instance of type T if a matching child view is found; otherwise, null.</returns>
+        public static T? GetChildViewOfType<T>(IView parent) where T : View
+        {
+            if (parent is T found)
+                return found;
+
+            if (parent is Layout layout)
+            {
+                foreach (var child in layout.Children)
+                {
+                    var result = GetChildViewOfType<T>(child);
+                    if (result != null)
+                        return result;
+                }
+            }
+            else if (parent is ContentView contentView && contentView.Content != null)
+            {
+                var result = GetChildViewOfType<T>(contentView.Content);
+                if (result != null)
+                    return result;
+            }
+            // Optionally handle other controls with a single child here (e.g., ScrollView)
+            else if (parent is ScrollView scrollView && scrollView.Content != null)
+            {
+                var result = GetChildViewOfType<T>(scrollView.Content);
+                if (result != null)
+                    return result;
+            }
+
+            return null;
         }
 
         /// <summary>
