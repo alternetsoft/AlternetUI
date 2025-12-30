@@ -224,6 +224,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Inserts a separator item at the beginning of the menu item collection.
+        /// </summary>
+        /// <remarks>Use this method to visually separate groups of menu items at the start of the menu.
+        /// The separator is typically rendered as a horizontal line in most user interfaces.</remarks>
+        /// <returns>A <see cref="MenuItem"/> representing the inserted separator.</returns>
+        public virtual MenuItem PrependSeparator()
+        {
+            MenuItem item = new("-");
+            Items.Prepend(item);
+            return item;
+        }
+
+        /// <summary>
         /// Adds a new menu item with the specified title and command to the menu.
         /// </summary>
         /// <param name="title">The title of the menu item.</param>
@@ -252,6 +265,18 @@ namespace Alternet.UI
         public virtual MenuItem AddDisabledText(string text)
         {
             var result = Add(new(text));
+            result.IsEnabled = false;
+            return result;
+        }
+
+        /// <summary>
+        /// Prepends a disabled menu item with the specified text to the beginning of the menu.
+        /// </summary>
+        /// <param name="text">The text to display for the disabled menu item.</param>
+        /// <returns>The <see cref="MenuItem"/> instance representing the disabled menu item.</returns>
+        public virtual MenuItem PrependDisabledText(string text)
+        {
+            var result = Prepend(new(text));
             result.IsEnabled = false;
             return result;
         }
