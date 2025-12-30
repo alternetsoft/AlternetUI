@@ -271,6 +271,17 @@ namespace Alternet.UI
             return item;
         }
 
+        /// <summary>
+        /// Inserts the specified item at the beginning of the collection.
+        /// </summary>
+        /// <param name="item">The item to insert.</param>
+        /// <returns>The inserted item.</returns>
+        public virtual T Prepend(T item)
+        {
+            Items.Prepend(item);
+            return item;
+        }
+
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
