@@ -1,3 +1,24 @@
+# 0.9.807 (2025 December 30)
+
+- SimpleToolBarView: Add GetNonSpecialButtonsCount() to return the number of toolbar buttons classified as normal (non-special).
+- SimpleToolBarView: Add AddPicture method to allow adding an image-only toolbar item with an optional click action.
+- SimpleTabControlView: Add EmptyPanel property to display a default panel when no tab is selected.
+- SimpleToolBarView: Add AddMoreActionsButton method to insert 'More Actions' button to the toolbar with an optional click callback.
+- AppUtils: Add OpenFolderInExplorer method to open folder in system file explorer.
+- InnerPopupToolBar: Fix wrong popup closing on mouse move in some cases.
+- ContextMenu: Call Opening event in ShowInsideControl.
+- MauiUtils: Add GetControlView and GetControlViewBackColor methods to simplify retrieval of ControlView and its background color from a View.
+- MauiUtils: Refactor BindLongTap, ShowContextMenu, and SetContextMenu to use GetControlView for improved code clarity. 
+- MauiUtils: Adds CreateGridWithToolBarAndContent to facilitate grid layout creation with a toolbar and content.
+- ToolBar: Add IsButtonToolTipsEnabled property to enable or disable button tooltips.
+- SpeedButton: Add static methods and a property to suppress or resume all tooltips in SpeedButton controls. 
+- MauiUtils: ShowContextMenu now accepts an optional contextMenuPosition parameter to specify the alignment of the context menu.
+- Menu and MenuItem: Add UpdateCommandState override to update the enabled state based on the associated command and its CanExecute property.
+- AbstractControl: Add optional context menu position to ShowContextMenu.
+- Add a new static property 'TopRight' to HVDropDownAlignment, providing a predefined configuration for aligning position to the top-right corner.
+
+---
+
 # 0.9.806 (2025 December 24)
 
 - AbstractControl.ShowContextMenu().
