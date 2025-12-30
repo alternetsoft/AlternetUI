@@ -22,6 +22,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the initial tooltip value.
+        /// </summary>
+        public virtual object? ToolTip { get; set; }
+
+        /// <summary>
+        /// Gets or sets the control for which tooltip is shown.
+        /// </summary>
+        public virtual AbstractControl? AssociatedControl { get; set; }
+
+        /// <summary>
         /// Gets or sets the bounds of the container for the tooltip.
         /// </summary>
         public virtual RectD? ContainerBounds { get; set; }

@@ -666,6 +666,8 @@ namespace Alternet.UI
                 }
             }
 
+            /* here we need to check whether it overlaps AssociatedControl */
+
             AddOverlay(overlay);
 
             if(data.DismissAfterInterval)

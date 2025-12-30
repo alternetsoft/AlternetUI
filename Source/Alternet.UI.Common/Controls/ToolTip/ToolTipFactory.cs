@@ -206,6 +206,8 @@ namespace Alternet.UI
                     Text = tooltipStr,
                     Font = font,
                     Options = defaultOptions,
+                    AssociatedControl = control,
+                    ToolTip = tooltip,
                 };
 
                 return data;
