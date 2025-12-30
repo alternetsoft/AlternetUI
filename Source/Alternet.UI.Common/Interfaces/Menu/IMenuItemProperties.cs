@@ -26,6 +26,12 @@ namespace Alternet.UI
         KeyGesture? Shortcut { get; }
 
         /// <summary>
+        /// Gets the collection of custom attributes associated with the object.
+        /// </summary>
+        /// <remarks>Use this property to access or enumerate custom attributes by their string keys.</remarks>
+        ICustomAttributes<string, object> CustomAttr {get;}
+
+        /// <summary>
         /// Gets the image displayed for the menu item.
         /// </summary>
         ImageSet? Image { get; }
