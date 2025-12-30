@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
@@ -16,6 +17,7 @@ namespace Alternet.UI
     public class ToolBarSeparatorItem : Border
     {
         private bool isVertical;
+        private bool hasMargin = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolBarSeparatorItem"/> class.
@@ -23,6 +25,23 @@ namespace Alternet.UI
         public ToolBarSeparatorItem()
         {
             VerticalChanged();
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the separator has margin.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasMargin
+        {
+            get => hasMargin;
+
+            set
+            {
+                if (hasMargin == value)
+                    return;
+                hasMargin = value;
+                VerticalChanged();
+            }
         }
 
         /// <summary>
@@ -64,14 +83,17 @@ namespace Alternet.UI
             {
                 BorderWidth = (0, ToolBar.DefaultSeparatorWidth, 0, 0);
                 SuggestedSize = (ToolBar.DefaultSeparatorWidth, ToolBar.DefaultSeparatorWidth);
-                Margin = ToolBar.DefaultSeparatorMargin;
             }
             else
             {
                 BorderWidth = (ToolBar.DefaultSeparatorWidth, 0, 0, 0);
                 SuggestedSize = (ToolBar.DefaultSeparatorWidth, ToolBar.DefaultSeparatorWidth);
-                Margin = ToolBar.DefaultSeparatorMargin;
             }
+
+            if (HasMargin)
+                Margin = ToolBar.DefaultSeparatorMargin;
+            else
+                Margin = Thickness.Empty;
         }
 
         /// <inheritdoc/>
