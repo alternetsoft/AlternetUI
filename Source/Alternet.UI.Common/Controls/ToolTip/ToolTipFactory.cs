@@ -201,8 +201,8 @@ namespace Alternet.UI
 
                 OverlayToolTipParams data = new()
                 {
-                    Location = new PointD(pos.X + ofs, pos.Y + ofs),
                     LocationOffset = new PointD(ofs, ofs),
+                    LocationWithoutOffset = pos,
                     Text = tooltipStr,
                     Font = font,
                     Options = defaultOptions,
