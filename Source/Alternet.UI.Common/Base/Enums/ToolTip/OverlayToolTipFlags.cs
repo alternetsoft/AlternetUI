@@ -47,18 +47,8 @@ namespace Alternet.UI
         ClearAndDismiss = Clear | DismissAfterInterval,
 
         /// <summary>
-        /// Specifies that the tooltip should be positioned to fit horizontally into its container.
+        /// Specifies that the tooltip should be positioned to fit into its container.
         /// </summary>
-        FitIntoContainerHorz = 1 << 3,
-
-        /// <summary>
-        /// Specifies that the tooltip should be positioned to fit vertically into its container.
-        /// </summary>
-        FitIntoContainerVert = 1 << 4,
-
-        /// <summary>
-        /// Indicates that the tooltip should be positioned to fit both horizontally and vertically.
-        /// </summary>
-        FitIntoContainer = FitIntoContainerHorz | FitIntoContainerVert,
+        FitIntoContainer = 1 << 3,
     }
 }
