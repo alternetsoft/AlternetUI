@@ -51,6 +51,68 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Defines parts of the <see cref="NineRects"/> structure.
+        /// </summary>
+        [Flags]
+        public enum NineRectsParts
+        {
+            /// <summary>
+            /// The top-left corner rectangle.
+            /// </summary>
+            TopLeft = 1 << 0,
+
+            /// <summary>
+            /// The top-center rectangle.
+            /// </summary>
+            TopCenter = 1 << 1,
+
+            /// <summary>
+            /// The top-right corner rectangle.
+            /// </summary>
+            TopRight = 1 << 2,
+
+            /// <summary>
+            /// The center-left rectangle.
+            /// </summary>
+            CenterLeft = 1 << 3,
+
+            /// <summary>
+            /// The center rectangle (patch area).
+            /// </summary>
+            Center = 1 << 4,
+
+            /// <summary>
+            /// The center-right rectangle.
+            /// </summary>
+            CenterRight = 1 << 5,
+
+            /// <summary>
+            /// The bottom-left corner rectangle.
+            /// </summary>
+            BottomLeft = 1 << 6,
+
+            /// <summary>
+            /// The bottom-center rectangle.
+            /// </summary>
+            BottomCenter = 1 << 7,
+
+            /// <summary>
+            /// The bottom-right corner rectangle.
+            /// </summary>
+            BottomRight = 1 << 8,
+
+            /// <summary>
+            /// All nine rectangles.
+            /// </summary>
+            All = TopLeft | TopCenter | TopRight | CenterLeft | Center | CenterRight | BottomLeft | BottomCenter | BottomRight,
+
+            /// <summary>
+            /// All rectangles except the center rectangle.
+            /// </summary>
+            Outer = TopLeft | TopCenter | TopRight | CenterLeft | CenterRight | BottomLeft | BottomCenter | BottomRight,
+        }
+
+        /// <summary>
         /// Rectangle which is sliced.
         /// </summary>
         public readonly RectI Container => container;
@@ -224,6 +286,127 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets all rectangles except the center rectangle.
+        /// </summary>
+        public readonly RectI[] OuterRects
+        {
+            get
+            {
+                return new RectI[]
+                {
+                        TopLeft, TopCenter, TopRight,
+                        CenterLeft, CenterRight,
+                        BottomLeft, BottomCenter, BottomRight,
+                };
+            }
+        }
+
+        /// <summary>
+        /// Returns an array of rectangular regions corresponding to the specified parts of the nine-part grid.
+        /// </summary>
+        /// <remarks>The order of rectangles in the returned array matches the order of the
+        /// <see cref="NineRectsParts"/> flags as defined in the grid: top-left, top-center, top-right, center-left, center,
+        /// center-right, bottom-left, bottom-center, and bottom-right. Duplicate flags are ignored.</remarks>
+        /// <param name="part">A bitwise combination of <see cref="NineRectsParts"/> values
+        /// that specifies which parts of the grid to include.</param>
+        /// <returns>An array of <see cref="RectI"/> objects representing the requested parts. The array is empty if no matching
+        /// parts are specified.</returns>
+        public readonly RectI[] GetParts(NineRectsParts part)
+        {
+            var rects = new List<RectI>();
+            if (part.HasFlag(NineRectsParts.TopLeft))
+                rects.Add(TopLeft);
+            if (part.HasFlag(NineRectsParts.TopCenter))
+                rects.Add(TopCenter);
+            if (part.HasFlag(NineRectsParts.TopRight))
+                rects.Add(TopRight);
+            if (part.HasFlag(NineRectsParts.CenterLeft))
+                rects.Add(CenterLeft);
+            if (part.HasFlag(NineRectsParts.Center))
+                rects.Add(Center);
+            if (part.HasFlag(NineRectsParts.CenterRight))
+                rects.Add(CenterRight);
+            if (part.HasFlag(NineRectsParts.BottomLeft))
+                rects.Add(BottomLeft);
+            if (part.HasFlag(NineRectsParts.BottomCenter))
+                rects.Add(BottomCenter);
+            if (part.HasFlag(NineRectsParts.BottomRight))
+                rects.Add(BottomRight);
+            return rects.ToArray();
+        }
+
+        /// <summary>
+        /// Retrieves the rectangle corresponding to the specified part of the nine-part grid.
+        /// </summary>
+        /// <param name="part">The part of the nine-part grid for which to retrieve the rectangle.</param>
+        /// <returns>The rectangle associated with the specified part. Returns <see cref="RectI.Empty"/> if the part is not
+        /// recognized.</returns>
+        public readonly RectI GetPart(NineRectsParts part)
+        {
+            return part switch
+            {
+                NineRectsParts.TopLeft => TopLeft,
+                NineRectsParts.TopCenter => TopCenter,
+                NineRectsParts.TopRight => TopRight,
+                NineRectsParts.CenterLeft => CenterLeft,
+                NineRectsParts.Center => Center,
+                NineRectsParts.CenterRight => CenterRight,
+                NineRectsParts.BottomLeft => BottomLeft,
+                NineRectsParts.BottomCenter => BottomCenter,
+                NineRectsParts.BottomRight => BottomRight,
+                _ => RectI.Empty,
+            };
+        }
+
+        /// <summary>
+        /// Returns an array of outer rectangles that are fully contained within the specified container rectangle.
+        /// </summary>
+        /// <param name="container">The rectangle that defines the container area.
+        /// Only outer rectangles entirely within this area are included
+        /// in the result.</param>
+        /// <param name="parts">A bitwise combination of values that specifies which outer parts to consider.
+        /// Defaults to <see cref="NineRectsParts.Outer"/>.</param>
+        /// <returns>An array of RectI values representing the outer rectangles that are fully contained within the container.
+        /// The array is empty if no such rectangles are found.</returns>
+        public readonly RectI[] OuterRectsInsideContainer(
+            RectI container,
+            NineRectsParts parts = NineRectsParts.Outer)
+        {
+            var rects = GetParts(parts);
+
+            var foundRects = rects.Select(r =>
+            {
+                return container.Contains(r) ? r : RectI.Empty;
+            }).Where(r => !r.IsEmpty).ToArray();
+
+            return foundRects;
+        }
+
+        /// <summary>
+        /// Returns the first outer rectangle that is fully contained within the specified container rectangle.
+        /// </summary>
+        /// <param name="container">The rectangle that defines the container area.</param>
+        /// <param name="parts">The parts of the nine-part grid to consider for containment checking.
+        /// Optional. Default is <see cref="NineRectsParts.All"/>.</param>
+        /// <returns>The first rectangle that is fully contained within the container, or null if no such rectangle is found.</returns>
+        public readonly RectI? OuterRectInsideContainer(
+            RectI container,
+            NineRectsParts parts = NineRectsParts.Outer)
+        {
+            var rects = GetParts(parts);
+
+            var foundRect = Array.Find(rects, r =>
+            {
+                return container.Contains(r);
+            });
+
+            if (foundRect.IsEmpty)
+                return null;
+            else
+                return foundRect;
+        }
+
+        /// <summary>
         /// Suggests the vertical alignment for a tooltip based on the relative sizes
         /// and positions of a container rectangle and an item rectangle.
         /// </summary>
@@ -238,7 +421,7 @@ namespace Alternet.Drawing
             RectD containerRect,
             RectD itemRect)
         {
-            NineRects rects = new(containerRect, itemRect, 1);
+            NineRects rects = new(containerRect, itemRect, scaleFactor: 1);
             var result = rects.IsTopRectLarger ? VerticalAlignment.Top : VerticalAlignment.Bottom;
             return result;
         }
