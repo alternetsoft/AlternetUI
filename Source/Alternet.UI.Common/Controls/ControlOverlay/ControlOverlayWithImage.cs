@@ -26,6 +26,39 @@ namespace Alternet.UI
         public virtual PointD Location { get; set; }
 
         /// <summary>
+        /// Gets the width of the image in pixels.
+        /// </summary>
+        public int ImageWidthInPixels
+        {
+            get
+            {
+                return Image != null ? Image.Width : 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the height of the image in pixels.
+        /// </summary>
+        public int ImageHeightInPixels
+        {
+            get
+            {
+                return Image != null ? Image.Height : 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets the size of the image in pixels.
+        /// </summary>
+        public SizeI ImageSizeInPixels
+        {
+            get
+            {
+                return new SizeI(ImageWidthInPixels, ImageHeightInPixels);
+            }
+        }
+
+        /// <summary>
         /// Gets the width of the image in device-independent pixels (DIPs).
         /// </summary>
         public virtual float ImageWidthInDips
@@ -48,7 +81,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the size of the image in device-independent pixels (DIPs).
+        /// </summary>
+        public SizeD ImageSizeInDips
+        {
+            get
+            {
+                return new SizeD(ImageWidthInDips, ImageHeightInDips);
+            }
+        }
+
+        /// <summary>
+        /// Gets the bounds of the image as a rectangle in device-independent pixels (DIPs).
+        /// </summary>
+        public RectD Bounds
+        {
+            get
+            {
+                return new RectD(Location, ImageSizeInDips);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the x-coordinate of the right edge of the image, relative to its location.
+        /// Value is calculated as Location.X + ImageWidthInDips. Result is in device-independent pixels (DIPs).
         /// </summary>
         public virtual float Right
         {
@@ -65,6 +121,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the Y-coordinate of the bottom edge of the image, relative to its location.
+        /// Value is calculated as Location.Y + ImageHeightInDips. Result is in device-independent pixels (DIPs).
         /// </summary>
         public virtual float Bottom
         {
