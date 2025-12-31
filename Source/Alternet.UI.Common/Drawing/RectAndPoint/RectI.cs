@@ -110,28 +110,40 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the SkiaSharp location (<see cref="SKPointI"/>) of this rectangle.
+        /// Gets or sets the SkiaSharp location (<see cref="SKPointI"/>) of this rectangle.
         /// </summary>
         [Browsable(false)]
-        public readonly SKPointI SkiaLocation
+        public SKPointI SkiaLocation
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
+            readonly get
             {
                 return skiaLocation;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                skiaLocation = value;
             }
         }
 
         /// <summary>
-        /// Gets the SkiaSharp size (<see cref="SKSizeI"/>) of this rectangle.
+        /// Gets or sets the SkiaSharp size (<see cref="SKSizeI"/>) of this rectangle.
         /// </summary>
         [Browsable(false)]
-        public readonly SKSizeI SkiaSize
+        public SKSizeI SkiaSize
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get
+            readonly get
             {
                 return skiaSize;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                skiaSize = value;
             }
         }
 
@@ -141,6 +153,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly PointI TopLineCenter
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return (x + (width / 2), y);
@@ -153,6 +166,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly PointI BottomLineCenter
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return (x + (width / 2), Bottom);
@@ -166,7 +180,10 @@ namespace Alternet.Drawing
         /// </summary>
         public int X
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => x;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => x = value;
         }
 
@@ -176,7 +193,10 @@ namespace Alternet.Drawing
         /// </summary>
         public int Y
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => y;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => y = value;
         }
 
@@ -186,7 +206,10 @@ namespace Alternet.Drawing
         /// </summary>
         public int Width
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => width;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => width = value;
         }
 
@@ -196,7 +219,10 @@ namespace Alternet.Drawing
         /// </summary>
         public int Height
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             readonly get => height;
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set => height = value;
         }
 
@@ -204,85 +230,173 @@ namespace Alternet.Drawing
         /// Gets number of pixels (Width * Height).
         /// </summary>
         [Browsable(false)]
-        public readonly int PixelCount => width * height;
-
-        /// <summary>
-        /// Gets the x-coordinate of the upper-left corner of the rectangular
-        /// region defined by this
-        /// <see cref='Drawing.RectI'/>.
-        /// </summary>
-        [Browsable(false)]
-        public readonly int Left => x;
-
-        /// <summary>
-        /// Gets the y-coordinate of the upper-left corner of the rectangular
-        /// region defined by this
-        /// <see cref='Drawing.RectI'/>.
-        /// </summary>
-        [Browsable(false)]
-        public readonly int Top => y;
-
-        /// <summary>
-        /// Gets the x-coordinate of the lower-right corner of the rectangular
-        /// region defined by this <see cref='RectI'/>.
-        /// </summary>
-        [Browsable(false)]
-        public readonly int Right => unchecked(x + width);
-
-        /// <summary>
-        /// This is a read-only alias for the point which is at (X, Y).
-        /// </summary>
-        [Browsable(false)]
-        public readonly PointI TopLeft
+        public readonly int PixelCount
         {
-            get
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => width * height;
+        }
+
+        /// <summary>
+        /// Gets or sets the x-coordinate of the upper-left corner of the rectangular
+        /// region defined by this
+        /// <see cref='Drawing.RectI'/>.
+        /// </summary>
+        [Browsable(false)]
+        public int Left
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
+            {
+                return x;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                x = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the y-coordinate of the upper-left corner of the rectangular
+        /// region defined by this <see cref='Drawing.RectI'/>.
+        /// </summary>
+        [Browsable(false)]
+        public int Top
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
+            {
+                return y;
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                y = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the x-coordinate of the lower-right corner of the rectangle.
+        /// When this property is set, size of the rectangle remains the same and rectangle location is changed.
+        /// </summary>
+        [Browsable(false)]
+        public int Right
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
+            {
+                return unchecked(x + width);
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                x = unchecked(value - width);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the top-left corner point of the rectangle.
+        /// When this property is set, size of the rectangle remains the same and rectangle location is changed.
+        /// </summary>
+        [Browsable(false)]
+        public PointI TopLeft
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
             {
                 return location;
             }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                location = value;
+            }
         }
 
         /// <summary>
-        /// Gets the point which is at (X + Width, Y).
+        /// Gets or sets the top-right corner point of the rectangle.
+        /// When this property is set, size of the rectangle remains the same and rectangle location is changed.
         /// </summary>
         [Browsable(false)]
-        public readonly PointI TopRight
+        public PointI TopRight
         {
-            get
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
             {
                 return new(Right, y);
             }
+
+            set
+            {
+                Right = value.X;
+                Y = value.Y;
+            }
         }
 
         /// <summary>
-        /// Gets the point which is at (X, Y + Height).
+        /// Gets or sets the bottom-left corner of the rectangle.
+        /// When this property is set, size of the rectangle remains the same and rectangle location is changed.
         /// </summary>
         [Browsable(false)]
-        public readonly PointI BottomLeft
+        public PointI BottomLeft
         {
-            get
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
             {
                 return new(x, Bottom);
             }
-        }
 
-        /// <summary>
-        /// Gets the point which is at (X + Width, Y + Height).
-        /// </summary>
-        [Browsable(false)]
-        public readonly PointI BottomRight
-        {
-            get
+            set
             {
-                return new(Right, Bottom);
+                X = value.X;
+                Bottom = value.Y;
             }
         }
 
         /// <summary>
-        /// Gets the y-coordinate of the lower-right corner of the rectangular
-        /// region defined by this <see cref='RectI'/>.
+        /// Gets or sets the bottom-right corner of the rectangle.
+        /// When this property is set, size of the rectangle remains the same and rectangle location is changed.
         /// </summary>
         [Browsable(false)]
-        public readonly int Bottom => unchecked(y + height);
+        public PointI BottomRight
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
+            {
+                return new(Right, Bottom);
+            }
+
+            set
+            {
+                Right = value.X;
+                Bottom = value.Y;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the y-coordinate of the lower-right corner of the rectangular
+        /// region defined by this <see cref='RectI'/>.
+        /// When this property is set, size of the rectangle remains the same and rectangle location is changed.
+        /// </summary>
+        [Browsable(false)]
+        public int Bottom
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            readonly get
+            {
+                return unchecked(y + height);
+            }
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                y = unchecked(value - height);
+            }
+        }
 
         /// <summary>
         /// Tests whether this <see cref='RectI'/> has all properties equal to 0.
