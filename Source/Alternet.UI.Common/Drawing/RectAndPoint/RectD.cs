@@ -903,6 +903,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates bounding rectangle for the ellipse specified using radii and its center location.
+        /// </summary>
+        /// <param name="center">The ellipse center location.</param>
+        /// <param name="radiusX">The ellipse X radius.</param>
+        /// <param name="radiusY">The ellipse Y radius.</param>
+        /// <returns></returns>
+        public static RectD GetEllipseBoundingBox(PointD center, Coord radiusX, Coord radiusY)
+        {
+            RectD rect = (center.X - radiusX, center.Y - radiusY, radiusX * CoordD.Two, radiusY * CoordD.Two);
+            return rect;
+        }
+
+        /// <summary>
         /// Creates new rectangle with the specified width and height.
         /// </summary>
         /// <param name="width">Rectangle width.</param>
@@ -1769,6 +1782,32 @@ namespace Alternet.Drawing
             var r = this;
             r.Offset((PointD)offset);
             return r;
+        }
+
+        /// <summary>
+        /// Gets the point which is located at the top-right corner of the rectangle with the applied offset.
+        /// </summary>
+        /// <param name="offsetX">The horizontal offset to apply.</param>
+        /// <param name="offsetY">The vertical offset to apply.</param>
+        /// <returns>A <see cref="PointD"/> representing the top-right corner of the rectangle after applying the specified
+        /// offset.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD TopRightWithOffset(Coord offsetX, Coord offsetY)
+        {
+            return new(Right + offsetX, y + offsetY);
+        }
+
+        /// <summary>
+        /// Returns the coordinates of the top-right corner of the rectangle, offset by the specified amount.
+        /// </summary>
+        /// <param name="offset">The amount to offset the top-right corner.
+        /// The same offset is applied to both the X and Y coordinates.</param>
+        /// <returns>A <see cref="PointD"/> representing the top-right corner of the rectangle after applying the specified
+        /// offset.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD TopRightWithOffset(Coord offset)
+        {
+            return new(Right + offset, y + offset);
         }
 
         /// <summary>
