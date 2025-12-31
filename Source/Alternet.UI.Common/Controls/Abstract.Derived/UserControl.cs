@@ -551,7 +551,7 @@ namespace Alternet.UI
             }
             else
             {
-                data.Location = location.Value;
+                data.LocationWithoutOffset = location.Value;
             }
 
             return ShowOverlayToolTip(data);
@@ -637,36 +637,49 @@ namespace Alternet.UI
 
             var imageSize = overlay.Image?.SizeDip(this) ?? SizeD.Empty;
 
-            var alignedRect = new RectD(data.Location ?? PointD.Empty, imageSize);
+            var notAlignedRect = new RectD(data.LocationWithOffset ?? PointD.Empty, imageSize);
 
             if (imageSize.IsPositive && data.HasAlignment)
             {
-                alignedRect = AlignUtils.AlignRectInRect(
-                    alignedRect,
+                var alignedRect = AlignUtils.AlignRectInRect(
+                    notAlignedRect,
                     containerBounds,
                     data.HorizontalAlignment,
                     data.VerticalAlignment);
+                overlay.Location = alignedRect.Location;
+            }
+            else
+            {
+                overlay.Location = notAlignedRect.Location;
             }
 
-            overlay.Location = alignedRect.Location;
-
-            if (data.Options.HasFlag(OverlayToolTipFlags.FitIntoContainerHorz))
+            if (data.Options.HasFlag(OverlayToolTipFlags.FitIntoContainer))
             {
-                if (overlay.Right >= containerBounds.Right)
+                if (containerBounds.Contains(overlay.Bounds))
                 {
-                    overlay.Right = containerBounds.Right - 1;
+                }
+                else
+                {
+                    var patchLocation = data.LocationWithoutOffset ?? overlay.Location;
+                    RectD patchRect = RectD.GetEllipseBoundingBox(
+                        patchLocation,
+                        Math.Max(data.LocationOffset.X, 1),
+                        Math.Max(data.LocationOffset.Y, 1));
+
+                    var patchContainer = patchRect.Inflated(overlay.ImageSizeInDips);
+
+                    NineRects nineRects = new(patchContainer, patchRect, ScaleFactor);
+
+                    var containerRectI = containerBounds.PixelFromDip(ScaleFactor);
+
+                    var bestRect = nineRects.OuterRectInsideContainer(containerRectI);
+
+                    if (bestRect is not null)
+                    {
+                        overlay.Location = bestRect.Value.PixelToDip(ScaleFactor).Location;
+                    }
                 }
             }
-
-            if (data.Options.HasFlag(OverlayToolTipFlags.FitIntoContainerVert))
-            {
-                if (overlay.Bottom >= containerBounds.Bottom)
-                {
-                    overlay.Bottom = containerBounds.Bottom - 1;
-                }
-            }
-
-            /* here we need to check whether it overlaps AssociatedControl */
 
             AddOverlay(overlay);
 
