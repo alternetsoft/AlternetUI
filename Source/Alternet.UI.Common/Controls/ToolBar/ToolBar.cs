@@ -2499,6 +2499,7 @@ namespace Alternet.UI
             if (menuItem.Text == "-")
             {
                 result = InsertSeparatorCore(index);
+                result.Visible = menuItem.Visible;
             }
             else
             {
