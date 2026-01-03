@@ -380,6 +380,12 @@ namespace Alternet.UI
         public PopupCloseReason? Reason { get; set; }
 
         /// <summary>
+        /// Gets or sets an override value for the container size. When assigned, it is used
+        /// for the align purposes instead of the container's client size.
+        /// </summary>
+        public SizeD? ContainerSizeOverride { get; set; }
+
+        /// <summary>
         /// Closes popup window and raises <see cref="Closed"/> event.
         /// This is equivalent to calling <see cref="Close(PopupCloseReason?)"/> with null reason.
         /// </summary>
@@ -613,6 +619,9 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual SizeD? GetMaxPopupSize()
         {
+            if (ContainerSizeOverride is not null)
+                return ContainerSizeOverride;
+
             if (!fitIntoParent)
                 return null;
 
