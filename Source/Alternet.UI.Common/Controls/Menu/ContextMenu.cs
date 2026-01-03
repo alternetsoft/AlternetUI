@@ -356,24 +356,29 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="container">The container control in which the context menu
         /// will be displayed.</param>
+        /// <param name="source">The control that triggered the context menu.</param>
         /// <param name="align">The alignment of the context menu within the container.
         /// If <see langword="null"/>, the default alignment
         /// <see cref="HVDropDownAlignment.Center"/> is used.</param>
-        public virtual void ShowInsideControlAligned(
+        public virtual ObjectUniqueId? ShowInsideControlAligned(
             AbstractControl? container,
+            AbstractControl? source = null,
             HVDropDownAlignment? align = null)
         {
             if(container is null)
-                return;
+                return null;
+
+            source ??= container;
 
             align ??= Alternet.UI.HVDropDownAlignment.Center;
 
-            ShowInsideControl(
+            var result = ShowInsideControl(
                 container,
-                container,
+                source,
                 (0, 0),
                 onClose: null,
                 align: align);
+            return result;
         }
 
         /// <summary>
@@ -421,6 +426,23 @@ namespace Alternet.UI
                 return null;
             }
 
+            var hostControl = EnsureHasInnerPopupToolBarHost(source);
+
+            if (hostControl is InnerPopupToolBar popupToolBar)
+            {
+                popupToolBar.ShowInContainer(container, position, align);
+            }
+
+            return hostControl.UniqueId;
+        }
+
+        /// <summary>
+        /// Ensures that the context menu has an associated <see cref="InnerPopupToolBar"/> host control.
+        /// </summary>
+        /// <param name="source">The control that triggered the context menu.</param>
+        /// <returns>The <see cref="InnerPopupToolBar"/> host control.</returns>
+        public virtual InnerPopupToolBar EnsureHasInnerPopupToolBarHost(AbstractControl? source = null)
+        {
             var hostControl = GetHostObject<InnerPopupToolBar>();
 
             if (hostControl is not null)
@@ -439,13 +461,9 @@ namespace Alternet.UI
             }
 
             hostControl.RelatedControl = source;
+            hostControl.ContainerSizeOverride = null;
 
-            if (hostControl is InnerPopupToolBar popupToolBar)
-            {
-                popupToolBar.ShowInContainer(container, position, align);
-            }
-
-            return hostControl.UniqueId;
+            return hostControl;
         }
 
         /// <summary>
