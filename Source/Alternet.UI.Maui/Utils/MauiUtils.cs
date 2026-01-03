@@ -37,6 +37,22 @@ namespace Alternet.UI
     public static partial class MauiUtils
     {
         /// <summary>
+        /// Gets or sets color used as an overlay fill color when context menu is shown.
+        /// This value is used when dark color mode is enabled.
+        /// In order to make overlay transparent, set <see cref="Alternet.Drawing.Color.Transparent"/>
+        /// to this property.
+        /// </summary>
+        public static Alternet.Drawing.Color ContextMenuUnderlayColorDark = new(55, 0, 0, 0);
+
+        /// <summary>
+        /// Gets or sets color used as an overlay fill color when context menu is shown.
+        /// This value is used when light color mode is enabled.
+        /// In order to make overlay transparent, set <see cref="Alternet.Drawing.Color.Transparent"/>
+        /// to this property.
+        /// </summary>
+        public static Alternet.Drawing.Color ContextMenuUnderlayColorLight = new(55, 255, 255, 255);
+
+        /// <summary>
         /// Override value for testing or other purposes. If set, this value will be returned by
         /// <see cref="IsTabletMode"/> property.
         /// </summary>
@@ -206,6 +222,26 @@ namespace Alternet.UI
         {
             AbsoluteLayout.SetLayoutFlags(obj, AbsoluteLayoutFlags.All);
             AbsoluteLayout.SetLayoutBounds(obj, new Rect(0, 0, 1, 1));
+        }
+
+        /// <summary>
+        /// Sets the layout bounds and flags for a child element within an AbsoluteLayout.
+        /// </summary>
+        /// <remarks>This method is a convenience for setting both the layout bounds and layout flags of a
+        /// child element in an AbsoluteLayout. It is equivalent to calling AbsoluteLayout.SetLayoutFlags and
+        /// AbsoluteLayout.SetLayoutBounds separately.</remarks>
+        /// <param name="obj">The child element whose layout bounds and flags are to be set. Cannot be null.</param>
+        /// <param name="bounds">The rectangle that defines the position and size of the child element within the AbsoluteLayout, in
+        /// device-independent units.</param>
+        /// <param name="flags">The layout flags that specify how the bounds are interpreted.
+        /// The default is AbsoluteLayoutFlags.None.</param>
+        public static void SetChildBoundsAbsoluteLayout(
+            BindableObject obj,
+            Rect bounds,
+            AbsoluteLayoutFlags flags = AbsoluteLayoutFlags.None)
+        {
+            AbsoluteLayout.SetLayoutFlags(obj, flags);
+            AbsoluteLayout.SetLayoutBounds(obj, bounds);
         }
 
         /// <summary>
@@ -593,19 +629,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the nearest parent <see cref="AbsoluteLayout"/>
-        /// that contains the specified view.
-        /// </summary>
-        /// <param name="view">The view whose parent <see cref="AbsoluteLayout"/>
-        /// is to be found.</param>
-        /// <returns>The closest parent <see cref="AbsoluteLayout"/>,
-        /// or <c>null</c> if none is found.</returns>
-        public static AbsoluteLayout? GetParentAbsoluteLayout(Element? view)
-        {
-            return GetSpecialParent<AbsoluteLayout>(view);
-        }
-
-        /// <summary>
         /// Searches for the closest parent of type <typeparamref name="T"/> in the view hierarchy.
         /// </summary>
         /// <typeparam name="T">The type of the parent view to find.</typeparam>
@@ -636,6 +659,19 @@ namespace Alternet.UI
         public static AbsoluteLayout? GetTopAbsoluteLayout(Element? view)
         {
             return GetTopSpecialParent<AbsoluteLayout>(view);
+        }
+
+        /// <summary>
+        /// Retrieves the nearest parent <see cref="AbsoluteLayout"/>
+        /// that contains the specified view.
+        /// </summary>
+        /// <param name="view">The view whose parent <see cref="AbsoluteLayout"/>
+        /// is to be found.</param>
+        /// <returns>The closest parent <see cref="AbsoluteLayout"/>,
+        /// or <c>null</c> if none is found.</returns>
+        public static AbsoluteLayout? GetParentAbsoluteLayout(Element? view)
+        {
+            return GetSpecialParent<AbsoluteLayout>(view);
         }
 
         /// <summary>
@@ -948,28 +984,177 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts rectangle specified in client coordinates to coordinates in one of the indirect parent views.
+        /// </summary>
+        /// <param name="rect">The rectangle to convert.</param>
+        /// <param name="control">The control which client coordinates are used.</param>
+        /// <param name="indirectParent">The indirect parent view of the control.</param>
+        /// <returns></returns>
+        public static RectD GetAbsoluteRectInParent(RectD rect, AbstractControl? control, VisualElement indirectParent)
+        {
+            var pos = GetAbsolutePositionInParent(rect.Location, control, indirectParent);
+            rect.Location = pos;
+            return rect;
+        }
+
+        /// <summary>
+        /// Converts client coordinates to coordinates in one of the indirect parent views.
+        /// </summary>
+        /// <param name="position">The point in client coordinates.</param>
+        /// <param name="control">The control.</param>
+        /// <param name="indirectParent">The indirect parent view of the control.</param>
+        /// <returns></returns>
+        public static PointD GetAbsolutePositionInParent(PointD position, AbstractControl? control, VisualElement indirectParent)
+        {
+            PointD absolutePos = PointD.Empty;
+            PointD containerPos;
+
+            ControlView? container = null;
+
+            while (control is not null)
+            {
+                container = ControlView.GetContainer(control);
+
+                if (container is null)
+                {
+                    absolutePos += control.Location;
+                    control = control.Parent;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            if (container is null)
+            {
+                containerPos = PointD.MinValue;
+            }
+            else
+            {
+                containerPos = MauiUtils.GetAbsolutePositionInParent(container, indirectParent);
+            }
+
+            var x = absolutePos.X + position.X + containerPos.X;
+            var y = absolutePos.Y + position.Y + containerPos.Y;
+
+            return (x, y);
+        }
+
+        /// <summary>
+        /// Converts position in client coordinates to position in absolute coordinates
+        /// for the specified indirect parent of the view.
+        /// </summary>
+        /// <param name="visualElement"></param>
+        /// <param name="indirectParent"></param>
+        /// <returns></returns>
+        public static PointD GetAbsolutePositionInParent(VisualElement visualElement, VisualElement indirectParent)
+        {
+            var ancestors = AllParents(visualElement);
+
+            var x = visualElement.X;
+            var y = visualElement.Y;
+
+            foreach (var item in ancestors)
+            {
+                if(item == indirectParent)
+                    break;
+
+                if (item is VisualElement visualItem)
+                {
+                    x += visualItem.X;
+                    y += visualItem.Y;
+                }
+            }
+
+            return new((Coord)x, (Coord)y);
+        }
+
+        /// <summary>
         /// Displays the context menu for the specified view, if supported.
         /// </summary>
         /// <remarks>If the specified view is a ContentView, the method attempts to display the context
         /// menu for its content. Only views that are or contain a ControlView support displaying a context
         /// menu.</remarks>
+        /// <param name="align">The alignment of the context menu inside the container.</param>
         /// <param name="view">The view for which to display the context menu. This can be a ContentView,
         /// ControlView, or another supported view type.</param>
         /// <param name="menu">The context menu to display. If null, the method will attempt to use the context menu
         /// associated with the view.</param>
-        /// <param name="contextMenuPosition">The position of the context menu relative to the view. Optional.
-        /// If not specified, the context menu will be displayed at the default position.</param>
         /// <returns>true if the context menu was successfully shown for the specified view; otherwise, false.</returns>
-        public static bool ShowContextMenu(
-            Alternet.UI.ContextMenu? menu,
-            View? view,
-            HVDropDownAlignment? contextMenuPosition = null)
+        public static bool ShowContextMenu(Alternet.UI.ContextMenu? menu, View? view, HVDropDownAlignment? align = null)
         {
-            bool ShowMenu(ControlView controlView, HVDropDownAlignment? contextMenuPosition)
+            if (menu is null)
+                return false;
+
+            align ??= HVDropDownAlignment.Center;
+
+            var controlView = GetControlView(view);
+
+            var absLayout = GetTopAbsoluteLayout(view);
+
+            if (absLayout is not null)
             {
+                var child = GetChildViewOfType<Alternet.Maui.InnerPopupToolBarContainerView>(absLayout);
+
+                if (child is null)
+                {
+                    var cc = ControlView.IsDark ? ContextMenuUnderlayColorDark : ContextMenuUnderlayColorLight;
+
+                    child = new Alternet.Maui.InnerPopupToolBarContainerView();
+                    child.BackgroundColor = cc.ToMaui();
+                    child.IsVisible = false;
+                    child.Control = new Alternet.UI.Panel();
+                    child.Control.BackColor = cc;
+                    FillAbsoluteLayout(child);
+                    child.ZIndex = int.MaxValue;
+                    absLayout.Children.Add(child);
+
+                    void ClosePopup()
+                    {
+                        child.IsVisible = false;
+                    }
+
+                    child.Control.MouseUp += (s, e) =>
+                    {
+                        ClosePopup();
+                    };
+
+                    child.Control.MouseDown += (s, e) =>
+                    {
+                        ClosePopup();
+                    };
+
+                    child.Control.AfterHide += (s, e) =>
+                    {
+                        ClosePopup();
+                    };
+
+                    child.Control.ChildVisibleChanged += (s, e) =>
+                    {
+                        var firstChild = child.Control?.FirstChild;
+
+                        if (firstChild is not null && firstChild.IsVisible == false )
+                            ClosePopup();
+                    };
+                }
+
+                var hostControl = menu.EnsureHasInnerPopupToolBarHost();
+                hostControl.ContainerSizeOverride = child.Control?.Size;
+
+                ShowMenu(controlView, child, align);
+
+                child.IsVisible = true;
+                return true;
+            }
+
+            bool ShowMenu(ControlView? controlView, ControlView? containerView, HVDropDownAlignment? contextMenuPosition)
+            {
+                containerView ??= controlView;
+
                 HideContextMenus(view);
 
-                var c = controlView.Control;
+                var c = controlView?.Control;
 
                 if (c is null)
                     return false;
@@ -979,22 +1164,17 @@ namespace Alternet.UI
                 if (menu is null)
                     return false;
 
-                menu.ShowInsideControlAligned(c, contextMenuPosition);
+                menu.ShowInsideControlAligned(containerView?.Control ?? c, c, contextMenuPosition);
                 return true;
             }
 
-            var controlView = GetControlView(view);
-
             if (controlView is not null)
             {
-                return ShowMenu(controlView, contextMenuPosition);
+                return ShowMenu(controlView, null, align);
             }
             else
             {
-                controlView = GetControlViewViaAbsoluteLayout(view);
-                if (controlView is null)
-                    return false;
-                return ShowMenu(controlView, contextMenuPosition);
+                return false;
             }
         }
 
@@ -1089,7 +1269,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets the context menu for the specified view. Context menu is converted to
+        /// Sets the context menu for the specified view.
+        /// If the view is a <see cref="ControlView"/>, its context menu is assigned directly.
+        /// Otherwise, the <see cref="ContextMenuStrip"/> is converted to
         /// <see cref="MenuFlyout"/> and assigned to the view.
         /// </summary>
         /// <param name="view">The <see cref="View"/> to set the context menu for.</param>
@@ -1386,9 +1568,9 @@ namespace Alternet.UI
         /// </summary>
         public static bool CloseApplication()
         {
-            /*
-                Environment.Exit(0);
-                Microsoft.Maui.Controls.Application.Current?.Quit();
+            /*  This did not work properly on all platforms:
+                - Environment.Exit(0);
+                - Microsoft.Maui.Controls.Application.Current?.Quit();
             */
 
             try
