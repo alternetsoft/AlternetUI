@@ -914,13 +914,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides any visible context menus associated with the specified view.
+        /// </summary>
+        /// <param name="view">The view for which to hide context menus.</param>
+        public static void HideContextMenus(View? view)
+        {
+            HideContextMenusInControlView(GetControlView(view));
+            HideContextMenusInControlView(GetControlViewViaAbsoluteLayout(view));
+        }
+
+        /// <summary>
+        /// Hides context menus in the specified <see cref="ControlView"/>, if any are present.
+        /// </summary>
+        /// <param name="controlView">The <see cref="ControlView"/> to hide context menus in.</param>
+        public static void HideContextMenusInControlView(Alternet.UI.ControlView? controlView)
+        {
+            if (controlView is null)
+                return;
+
+            var c = controlView.Control;
+
+            if (c is null)
+                return;
+
+            if (c.HasChildren)
+            {
+                foreach (var child in c.Children)
+                {
+                    if (child is Alternet.UI.InnerPopupToolBar)
+                        child.Visible = false;
+                }
+            }
+        }
+
+        /// <summary>
         /// Displays the context menu for the specified view, if supported.
         /// </summary>
         /// <remarks>If the specified view is a ContentView, the method attempts to display the context
         /// menu for its content. Only views that are or contain a ControlView support displaying a context
         /// menu.</remarks>
-        /// <param name="view">The view for which to display the context menu. This can be a ContentView, ControlView, or another supported
-        /// view type.</param>
+        /// <param name="view">The view for which to display the context menu. This can be a ContentView,
+        /// ControlView, or another supported view type.</param>
         /// <param name="menu">The context menu to display. If null, the method will attempt to use the context menu
         /// associated with the view.</param>
         /// <param name="contextMenuPosition">The position of the context menu relative to the view. Optional.
@@ -933,6 +967,8 @@ namespace Alternet.UI
         {
             bool ShowMenu(ControlView controlView, HVDropDownAlignment? contextMenuPosition)
             {
+                HideContextMenus(view);
+
                 var c = controlView.Control;
 
                 if (c is null)
@@ -942,15 +978,6 @@ namespace Alternet.UI
 
                 if (menu is null)
                     return false;
-
-                if (c.HasChildren)
-                {
-                    foreach (var child in c.Children)
-                    {
-                        if (child is Alternet.UI.InnerPopupToolBar)
-                            child.Visible = false;
-                    }
-                }
 
                 menu.ShowInsideControlAligned(c, contextMenuPosition);
                 return true;
@@ -964,14 +991,27 @@ namespace Alternet.UI
             }
             else
             {
-                var layout = GetParentAbsoluteLayout(view);
-                if (layout is null) return false;
-
-                controlView = GetChildViewOfType<ControlView>(layout);
+                controlView = GetControlViewViaAbsoluteLayout(view);
                 if (controlView is null)
                     return false;
                 return ShowMenu(controlView, contextMenuPosition);
             }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ControlView"/> associated with the nearest parent <see cref="AbsoluteLayout"/>.
+        /// </summary>
+        /// <param name="view">The view to search for the associated <see cref="ControlView"/>.</param>
+        /// <returns>The associated <see cref="ControlView"/> if found; otherwise, null.</returns>
+        public static ControlView? GetControlViewViaAbsoluteLayout(View? view)
+        {
+            var layout = GetParentAbsoluteLayout(view);
+            if (layout is null) return null;
+
+            var controlView = GetChildViewOfType<ControlView>(layout);
+            if (controlView is null)
+                return null;
+            return controlView;
         }
 
         /// <summary>
