@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public class InnerPopupToolBar : PopupControl<ToolBar>, IContextMenuHost
     {
+        /// <summary>
+        /// Gets or sets default minimal popup toolbar width.
+        /// </summary>
+        public static float DefaultMinPopupWidth = 200;
+
         private static InnerPopupToolBar? defaultPopup;
 
         private readonly ControlSubscriber notification = new ();
@@ -498,6 +503,9 @@ namespace Alternet.UI
             Content.SetSizeToContent();
 
             var preferredSize = GetPreferredSize();
+
+            preferredSize.Width = Math.Max(preferredSize.Width, DefaultMinPopupWidth);
+
             ClientSize = preferredSize;
             MinimumSize = MinimumSize.ClampTo(Size);
         }
