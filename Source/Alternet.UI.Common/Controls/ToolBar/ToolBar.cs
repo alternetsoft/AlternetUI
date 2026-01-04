@@ -19,6 +19,11 @@ namespace Alternet.UI
     [ControlCategory("MenusAndToolbars")]
     public partial class ToolBar : HiddenBorder
     {
+        /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static new bool ShowDebugCorners = false;
+
         private Coord itemSize;
         private bool textVisible = false;
         private bool imageVisible = true;
@@ -2584,6 +2589,8 @@ namespace Alternet.UI
             speedButton.ToolTip = toolTip ?? text;
             speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
             speedButton.Margin = DefaultSpeedBtnMargin;
+            speedButton.ParentBackColor = true;
+            speedButton.ParentForeColor = true;
 
             speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
             speedButton.MinimumSize = itemSize;
@@ -2905,6 +2912,13 @@ namespace Alternet.UI
         {
             ToolBarSeparatorItem border = new();
             return border;
+        }
+
+        /// <inheritdoc/>
+        protected override void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
         }
 
         /// <summary>
