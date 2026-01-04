@@ -35,6 +35,20 @@ namespace Alternet.UI
             /// Specifies that both background and border should be drawn.
             /// </summary>
             DrawBorderAndBackground = DrawBackground | DrawBorder,
+
+#if DEBUG
+            /// <summary>
+            /// Specifies that background should be red.
+            /// This option is available only when application is compiled in DEBUG mode and
+            /// can be used to test whether background is drawn correctly.
+            /// </summary>
+            BackgroundIsRed = 4,
+#endif
+
+            /// <summary>
+            /// Specifies that parent color should be used for background.
+            /// </summary>
+            UseParentBackColor = 8,
         }
 
         /// <summary>
@@ -704,7 +718,21 @@ namespace Alternet.UI
                 var action = GetBackgroundAction(state);
 
                 if(action is null)
-                    brush = GetBackground(state);
+                {
+                    if (flags.HasFlag(DrawDefaultBackgroundFlags.UseParentBackColor))
+                    {
+                        brush = Parent?.BackColor.AsBrush ?? GetBackground(state);
+                    }
+                    else
+                    {
+                        brush = GetBackground(state);
+                    }
+
+#if DEBUG
+                    if (flags.HasFlag(DrawDefaultBackgroundFlags.BackgroundIsRed))
+                        brush = Brushes.Red;
+#endif
+                }
                 else
                 {
                     brush = null;
