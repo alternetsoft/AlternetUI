@@ -354,6 +354,7 @@ namespace Alternet.UI
         /// Displays the context menu inside the specified container,
         /// aligned according to the specified alignment.
         /// </summary>
+        /// <param name="onClose">The action to be invoked when the context menu is closed.</param>
         /// <param name="container">The container control in which the context menu
         /// will be displayed.</param>
         /// <param name="source">The control that triggered the context menu.</param>
@@ -363,7 +364,8 @@ namespace Alternet.UI
         public virtual ObjectUniqueId? ShowInsideControlAligned(
             AbstractControl? container,
             AbstractControl? source = null,
-            HVDropDownAlignment? align = null)
+            HVDropDownAlignment? align = null,
+            Action? onClose = null)
         {
             if(container is null)
                 return null;
@@ -376,7 +378,7 @@ namespace Alternet.UI
                 container,
                 source,
                 (0, 0),
-                onClose: null,
+                onClose: onClose,
                 align: align);
             return result;
         }
