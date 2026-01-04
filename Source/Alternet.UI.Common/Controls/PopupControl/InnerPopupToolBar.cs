@@ -14,6 +14,11 @@ namespace Alternet.UI
     public class InnerPopupToolBar : PopupControl<ToolBar>, IContextMenuHost
     {
         /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static new bool ShowDebugCorners = false;
+
+        /// <summary>
         /// Gets or sets default minimal popup toolbar width.
         /// </summary>
         public static float DefaultMinPopupWidth = 200;
@@ -125,6 +130,11 @@ namespace Alternet.UI
                     e.Handled = !insidePopup;
                 }
             };
+
+            Content.ParentBackColor = true;
+            Content.ParentForeColor = true;
+            BackColor = DefaultColors.GetWindowBackColor(SystemSettings.AppearanceIsDark);
+            ForeColor = DefaultColors.GetWindowForeColor(SystemSettings.AppearanceIsDark);
         }
 
         /// <summary>
@@ -145,6 +155,26 @@ namespace Alternet.UI
             set
             {
                 defaultPopup = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool ParentBackColor
+        {
+            get => false;
+
+            set
+            {
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool ParentForeColor
+        {
+            get => false;
+
+            set
+            {
             }
         }
 
@@ -562,9 +592,22 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override bool GetDefaultParentBackColor() => false;
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultParentForeColor() => false;
+
+        /// <inheritdoc/>
         protected override bool HideWhenSiblingShown(AbstractControl sibling)
         {
             return sibling is not InnerPopupToolBar;
+        }
+
+        /// <inheritdoc/>
+        protected override void DefaultPaintDebug(PaintEventArgs e)
+        {
+            if (ShowDebugCorners)
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
         }
 
         /// <inheritdoc/>
