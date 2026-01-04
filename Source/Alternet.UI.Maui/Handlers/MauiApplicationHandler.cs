@@ -359,7 +359,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual IMenuFactory? CreateMenuFactory()
         {
-            return new InnerMenuFactory();
+            return new Alternet.Maui.MauiMenuFactory();
         }
 
         private static void OnMainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
