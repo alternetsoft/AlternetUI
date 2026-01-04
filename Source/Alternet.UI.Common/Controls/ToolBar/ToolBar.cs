@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 using Alternet.UI.Localization;
@@ -240,7 +241,7 @@ namespace Alternet.UI
             get => isButtonToolTipsEnabled;
             set
             {
-                if(isButtonToolTipsEnabled == value)
+                if (isButtonToolTipsEnabled == value)
                     return;
                 isButtonToolTipsEnabled = value;
                 UpdateButtonToolTipsVisibility();
@@ -361,7 +362,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(!HasChildren)
+                if (!HasChildren)
                     yield break;
                 foreach (var item in Children)
                 {
@@ -1597,7 +1598,7 @@ namespace Alternet.UI
                 }
             });
 
-            SetDropDownMenuPosition(new (DropDownAlignment.AfterEnd, DropDownAlignment.AfterStart));
+            SetDropDownMenuPosition(new(DropDownAlignment.AfterEnd, DropDownAlignment.AfterStart));
         }
 
         /// <summary>
@@ -2493,7 +2494,7 @@ namespace Alternet.UI
         {
             AbstractControl result;
 
-            if(index < 0 || index > Children.Count)
+            if (index < 0 || index > Children.Count)
                 index = Children.Count;
 
             if (menuItem.Text == "-")
@@ -2516,7 +2517,7 @@ namespace Alternet.UI
 
                         if (speedButton?.IsEnabled ?? false)
                         {
-                            if(menuItem.Enabled)
+                            if (menuItem.Enabled)
                                 Post(menuItem.RaiseClick);
                         }
                     });
@@ -2662,6 +2663,39 @@ namespace Alternet.UI
             });
 
             return result!;
+        }
+
+        /// <summary>
+        /// Adds all items from the specified menu to the tool bar.
+        /// </summary>
+        /// <param name="menu">An object that provides access to the menu items to add. Cannot be null.</param>
+        public virtual void AddItems(IMenuProperties menu)
+        {
+            DoInsideLayout(() =>
+            {
+                for (int i = 0; i < menu.Count; i++)
+                {
+                    var menuItem = menu.GetItem(i);
+                    if (menuItem is not IMenuItemProperties item)
+                        continue;
+                    InsertMenuItemCore(-1, item);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Replaces all existing items with the items defined in the specified menu.
+        /// </summary>
+        /// <remarks>This method removes all current items before adding the new items from the specified
+        /// menu. The operation is performed within a layout update to ensure consistency.</remarks>
+        /// <param name="menu">An object that provides the menu items to be set. Cannot be null.</param>
+        public virtual void SetItems(IMenuProperties menu)
+        {
+            DoInsideLayout(() =>
+            {
+                DeleteAll(true);
+                AddItems(menu);
+            });
         }
 
         /// <summary>
@@ -2960,21 +2994,13 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public virtual void OnCollectionReset(object? sender)
             {
-                owner.DeleteAll(true);
-
                 if (sender is not IMenuProperties menuProperties)
-                    return;
-
-                owner.DoInsideLayout(() =>
                 {
-                    for (int i = 0; i < menuProperties.Count; i++)
-                    {
-                        var menuItem = menuProperties.GetItem(i);
-                        if (menuItem is not IMenuItemProperties item)
-                            continue;
-                        InsertItem(-1, item);
-                    }
-                });
+                    owner.DeleteAll(true);
+                    return;
+                }
+
+                owner.SetItems(menuProperties);
             }
         }
     }
