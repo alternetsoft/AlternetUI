@@ -184,6 +184,17 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool AutoPadding { get; set; } = true;
 
+        /// <inheritdoc/>
+        public override Color? BackgroundColor {
+            
+            get => base.BackgroundColor;
+
+            set
+            {
+                base.BackgroundColor = value;
+            }
+        }
+
         /// <inheritdoc cref="AbstractControl.Background"/>
         [Browsable(true)]
         public override Brush? Background

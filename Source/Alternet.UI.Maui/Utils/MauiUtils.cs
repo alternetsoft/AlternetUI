@@ -1097,15 +1097,17 @@ namespace Alternet.UI
             {
                 var child = GetChildViewOfType<Alternet.Maui.InnerPopupToolBarContainerView>(absLayout);
 
+                var cc = ControlView.IsDark ? ContextMenuUnderlayColorDark : ContextMenuUnderlayColorLight;
+
                 if (child is null)
                 {
-                    var cc = ControlView.IsDark ? ContextMenuUnderlayColorDark : ContextMenuUnderlayColorLight;
-
                     child = new Alternet.Maui.InnerPopupToolBarContainerView();
                     child.BackgroundColor = cc.ToMaui();
                     child.IsVisible = false;
                     child.Control = new Alternet.UI.Panel();
+                    child.Control.DebugIdentifier = "OverlayPanelForInnerPopupToolBar";
                     child.Control.BackColor = cc;
+                    child.Control.ParentBackColor = false;
                     FillAbsoluteLayout(child);
                     child.ZIndex = int.MaxValue;
                     absLayout.Children.Add(child);
