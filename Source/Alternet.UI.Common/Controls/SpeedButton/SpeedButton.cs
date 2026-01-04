@@ -2061,23 +2061,40 @@ namespace Alternet.UI
             ConfigureAsMenuItem();
         }
 
+        /// <summary>
+        /// Retrieves the foreground color for the label based on the specified visual state.
+        /// </summary>
+        /// <param name="state"></param>
+        /// <returns></returns>
+        public virtual Color? GetLabelTextColor(VisualControlState state)
+        {
+            var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+            if (foreColor is null)
+            {
+                var theme = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
+                foreColor ??= theme?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
+            }
+
+            return foreColor;
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
             var state = VisualState;
+            var flags = DrawDefaultBackgroundFlags.DrawBackground;
 
-            DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
+            var isNormalOrDisabled = state == VisualControlState.Normal || state == VisualControlState.Disabled;
+
+            if (isNormalOrDisabled && ParentBackColor)
+                flags |= DrawDefaultBackgroundFlags.UseParentBackColor;
+
+            DrawDefaultBackground(e, flags);
 
             if (TextVisible)
             {
-                var foreColor = StateObjects?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
-                if (foreColor is null)
-                {
-                    var theme = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
-                    foreColor ??= theme?.Colors?.GetObjectOrNull(state)?.ForegroundColor;
-                }
 
-                Label.ForegroundColor = foreColor;
+                Label.ForegroundColor = GetLabelTextColor(state);
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
             }
 
