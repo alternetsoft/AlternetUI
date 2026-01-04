@@ -33,15 +33,9 @@ namespace Alternet.UI
             PointD? position = null,
             Action? onClose = null)
         {
-            var pos = Mouse.CoercePosition(position, control);
-
-            while (!control.IsPlatformControl)
-            {
-                if (control.Parent == null)
-                    return;
-                pos += control.Location;
-                control = control.Parent;
-            }
+            var pos = CoercePosition(position, ref control);
+            if (pos is null)
+                return;
 
             menu?.ShowInsideControl(control, menu.RelatedControl, pos, onClose);
         }
@@ -49,6 +43,32 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void SetMainMenu(Window window, MainMenu? menu)
         {
+        }
+
+        /// <summary>
+        /// Calculates the position of a point relative to the platform control, adjusting for nested control locations
+        /// as necessary. Control references are updated to point to the platform control.
+        /// </summary>
+        /// <remarks>This method traverses the control hierarchy to adjust the position for nested
+        /// controls. Override this method to customize how positions are coerced in derived classes.</remarks>
+        /// <param name="position">The initial position to be coerced, relative to the specified control.
+        /// Can be null to indicate an undefined position.</param>
+        /// <param name="control">The control relative to which the position is specified. Must not be null.</param>
+        /// <returns>A <see cref="PointD"/> representing the position relative to the platform control, or null if the position
+        /// cannot be determined.</returns>
+        protected virtual PointD? CoercePosition(PointD? position, ref AbstractControl control)
+        {
+            var pos = Mouse.CoercePosition(position, control);
+
+            while (!control.IsPlatformControl)
+            {
+                if (control.Parent == null)
+                    return null;
+                pos += control.Location;
+                control = control.Parent;
+            }
+
+            return pos;
         }
 
         /// <summary>
