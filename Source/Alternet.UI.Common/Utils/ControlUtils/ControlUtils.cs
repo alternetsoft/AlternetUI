@@ -301,6 +301,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates all visible controls of type <typeparamref name="T"/> from the most recently activated window.
+        /// </summary>
+        /// <remarks>Only controls from the most recently activated window are included. If no visible
+        /// controls of the specified type are found, the returned collection will be empty.</remarks>
+        /// <typeparam name="T">The type of control to enumerate. Must derive from <see cref="AbstractControl"/>.</typeparam>
+        /// <returns>An enumerable collection of controls of type <typeparamref name="T"/> that are currently visible in the last
+        /// activated window. The collection will be empty if no matching controls are found.</returns>
+        public static IEnumerable<T> EnumVisibleControls<T>()
+            where T : AbstractControl
+        {
+            var windows = App.Current.LastActivatedWindows;
+
+            List<T> list = new();
+
+            foreach (var window in windows)
+            {
+                window.ForEachVisibleChild(
+                    (control) =>
+                    {
+                        if (control is T tt)
+                            list.Add(tt);
+                    },
+                    true);
+
+                if (list.Count > 0)
+                    break;
+            }
+
+            return list;
+        }
+
+        /// <summary>
         /// Gets control for measure purposes in a safe way. Do not change
         /// any properties of the returned control.
         /// </summary>
