@@ -93,6 +93,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the number of log sections which were opened using <see cref="App.LogBeginSection(string?, LogItemKind)"/>
+        /// and not yet closed with <see cref="App.LogEndSection(LogItemKind)"/>.
+        /// </summary>
+        public static int OpenedSectionsCount
+        {
+            get;
+            internal set;
+        }
+
+        /// <summary>
         /// Gets or sets max property value length for the <see cref="LogPropLimitLength"/>
         /// </summary>
         public static int LogPropMaxLength { get; set; } = 80;

@@ -1439,6 +1439,11 @@ namespace Alternet.UI
                 if (msg is null)
                     return;
 
+                if (LogUtils.OpenedSectionsCount > 0)
+                {
+                    msg = new string(' ', LogUtils.OpenedSectionsCount * 2) + msg;
+                }
+
                 void Internal()
                 {
                     string[] result = LogUtils.LogToExternalIfAllowed(msg, kind);
@@ -1867,6 +1872,8 @@ namespace Alternet.UI
                 Log(title, kind);
                 Log(LogUtils.SectionSeparator, kind);
             }
+
+            LogUtils.OpenedSectionsCount++;
         }
 
         /// <summary>
@@ -1884,6 +1891,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LogEndSection(LogItemKind kind = LogItemKind.Information)
         {
+            LogUtils.OpenedSectionsCount--;
             Log(LogUtils.SectionSeparator, kind);
         }
 
