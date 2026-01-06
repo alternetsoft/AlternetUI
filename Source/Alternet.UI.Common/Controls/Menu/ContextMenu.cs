@@ -374,10 +374,18 @@ namespace Alternet.UI
 
             align ??= Alternet.UI.HVDropDownAlignment.Center;
 
+            var position = new PointD(0, 0);
+
+            if (align is not null && align.Value.IsPositionUsed)
+            {
+                position = align.Value.Position;
+                align = null;
+            }
+
             var result = ShowInsideControl(
                 container,
                 source,
-                (0, 0),
+                position,
                 onClose: onClose,
                 align: align);
             return result;

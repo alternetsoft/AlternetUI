@@ -1144,15 +1144,20 @@ namespace Alternet.UI
                 var hostControl = menu.EnsureHasInnerPopupToolBarHost();
                 hostControl.ContainerSizeOverride = child.Control?.Size;
 
-                ShowMenu(controlView, child, align);
+                ShowMenu(controlView ?? child, child, align.Value);
 
                 child.IsVisible = true;
                 return true;
             }
 
-            bool ShowMenu(ControlView? controlView, ControlView? containerView, HVDropDownAlignment? contextMenuPosition)
+            bool ShowMenu(ControlView? controlView, ControlView? containerView, HVDropDownAlignment contextMenuPosition)
             {
+                if (controlView is null)
+                    return false;
+
                 containerView ??= controlView;
+
+                var selfContained = controlView == containerView;
 
                 HideContextMenus(view);
 
@@ -1166,13 +1171,21 @@ namespace Alternet.UI
                 if (menu is null)
                     return false;
 
-                menu.ShowInsideControlAligned(containerView?.Control ?? c, c, contextMenuPosition);
+                var container = containerView?.Control ?? c;
+
+                if (contextMenuPosition.IsPositionUsed && !selfContained && absLayout is not null)
+                {
+                    var pos = GetAbsolutePositionInParent(visualElement: controlView!, indirectParent: absLayout);
+                    contextMenuPosition = contextMenuPosition.Position.OffsetBy(pos);
+                }
+
+                menu.ShowInsideControlAligned(container: container, source: c, contextMenuPosition);
                 return true;
             }
 
             if (controlView is not null)
             {
-                return ShowMenu(controlView, null, align);
+                return ShowMenu(controlView, null, align.Value);
             }
             else
             {

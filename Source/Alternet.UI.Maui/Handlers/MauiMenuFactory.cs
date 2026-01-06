@@ -31,11 +31,23 @@ namespace Alternet.Maui
             Drawing.PointD? position = null,
             Action? onClose = null)
         {
+            if (menu is null)
+                return;
+
             var pos = CoercePosition(position, ref control);
             if (pos is null)
                 return;
 
-            menu?.ShowInsideControl(control, menu.RelatedControl, pos, onClose);
+            var view = UI.ControlView.GetContainer(control);
+
+            if (view is null)
+            {
+                menu.ShowInsideControl(container: control, source: menu.RelatedControl, pos, onClose);
+            }
+            else
+            {
+                UI.MauiUtils.ShowContextMenu(menu, view, new(pos.Value));
+            }
         }
     }
 }
