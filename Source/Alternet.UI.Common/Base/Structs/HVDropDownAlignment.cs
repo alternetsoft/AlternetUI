@@ -30,9 +30,10 @@ namespace Alternet.UI
             Horizontal = horizontal;
             Vertical = vertical;
         }
-
+        
         /// <summary>
-        /// Represents the alignment settings for a dropdown positioned at a specific point.
+        /// Initializes a new instance of the <see cref="HVDropDownAlignment"/> struct
+        /// with the specified position.
         /// </summary>
         /// <param name="point">The position of the dropdown as a <see cref="PointD"/>.</param>
         public HVDropDownAlignment(PointD point)
@@ -40,6 +41,19 @@ namespace Alternet.UI
             Horizontal = DropDownAlignment.Position;
             Vertical = DropDownAlignment.Position;
             Position = point;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HVDropDownAlignment"/> struct
+        /// with the specified horizontal and vertical position.
+        /// </summary>
+        /// <param name="x">The horizontal position of the dropdown.</param>
+        /// <param name="y">The vertical position of the dropdown.</param>
+        public HVDropDownAlignment(Coord x, Coord y)
+        {
+            Horizontal = DropDownAlignment.Position;
+            Vertical = DropDownAlignment.Position;
+            Position = (x, y);
         }
 
         /// <summary>
@@ -145,6 +159,15 @@ namespace Alternet.UI
         /// Gets the vertical drop-down alignment.
         /// </summary>
         public DropDownAlignment Vertical { get; } = DropDownAlignment.AfterEnd;
+
+        /// <summary>
+        /// Defines an implicit conversion from <see cref="PointD"/> to <see cref="HVDropDownAlignment"/>.
+        /// </summary>
+        /// <param name="point">The point to convert.</param>
+        public static implicit operator HVDropDownAlignment(PointD point)
+        {
+            return new HVDropDownAlignment(point);
+        }
 
         /// <summary>
         /// Returns a string that represents the current object.
