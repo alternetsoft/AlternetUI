@@ -179,6 +179,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to use default minimal popup toolbar width.
+        /// </summary>
+        public virtual bool UseDefaultMinPopupWidth { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets a value indicating whether key down event for the controls which
         /// are not children of the popup control should be suppressed.
         /// </summary>
@@ -534,7 +539,8 @@ namespace Alternet.UI
 
             var preferredSize = GetPreferredSize();
 
-            preferredSize.Width = Math.Max(preferredSize.Width, DefaultMinPopupWidth);
+            if (UseDefaultMinPopupWidth)
+                preferredSize.Width = Math.Max(preferredSize.Width, DefaultMinPopupWidth);
 
             ClientSize = preferredSize;
             MinimumSize = MinimumSize.ClampTo(Size);
