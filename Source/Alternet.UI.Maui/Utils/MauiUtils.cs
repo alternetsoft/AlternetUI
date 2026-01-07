@@ -675,6 +675,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether any parent of the specified element uses an absolute layout.
+        /// </summary>
+        /// <param name="view">The element for which to check the parent hierarchy. Can be null.</param>
+        /// <returns>true if an absolute layout is found in the parent chain of the specified element; otherwise, false.</returns>
+        public static bool HasAbsoluteLayoutInParents(Element? view)
+        {
+            return GetParentAbsoluteLayout(view) is not null;
+        }
+
+        /// <summary>
         /// Searches for the highest-level parent of type
         /// <typeparamref name="T"/> in the element hierarchy.
         /// </summary>
