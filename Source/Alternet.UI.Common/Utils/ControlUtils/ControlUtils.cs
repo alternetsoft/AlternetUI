@@ -301,6 +301,59 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Schedules an action to be performed on a test control of the specified type after setting focus and
+        /// processing pending events.
+        /// </summary>
+        /// <remarks>This method retrieves a test instance of the specified control type and schedules the
+        /// provided action to run on it during the application's idle time. The control is focused before the action is
+        /// invoked. If the control cannot be found, the method logs a message and does not invoke the action.</remarks>
+        /// <typeparam name="T">The type of control to retrieve and operate on. Must inherit from AbstractControl.</typeparam>
+        /// <param name="name">The name of the action to be logged for diagnostic purposes.</param>
+        /// <param name="action">The action to perform on the retrieved control. If null, no action is performed.</param>
+        public static void RunTestControlAction<T>(string name, Action<T>? action)
+            where T : AbstractControl
+        {
+            var result = ControlUtils.GetControlForTests<T>();
+            if (result is null)
+            {
+                App.Log($"RunTestControlAction: {typeof(T).FullName} not found");
+                return;
+            }
+
+            App.AddIdleTask(() =>
+            {
+                App.Log($"RunTestControlAction: {nameof(T)}.{name}");
+                result.SetFocusIfPossible();
+                App.DoEvents();
+                action?.Invoke(result);
+            });
+        }
+
+        /// <summary>
+        /// Retrieves the first visible control of type <typeparamref name="T"/>
+        /// that is not marked to be hidden from tests.
+        /// </summary>
+        /// <remarks>This method is intended for use in test scenarios to locate a control that is not
+        /// explicitly excluded from testing by the "HideFromTests" attribute.</remarks>
+        /// <typeparam name="T">The type of control to search for. Must inherit from AbstractControl.</typeparam>
+        /// <returns>A control of type <typeparamref name="T"/> that is visible and not marked as hidden from tests; otherwise,
+        /// <see langword="null"/> if no such control is found.</returns>
+        public static T? GetControlForTests<T>()
+            where T : AbstractControl
+        {
+            var results = ControlUtils.EnumVisibleControls<T>();
+
+            foreach (var panel in results)
+            {
+                var hideFromTests = panel.CustomAttr["HideFromTests"];
+                if (hideFromTests is null || !(bool)hideFromTests)
+                    return panel;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Enumerates all visible controls of type <typeparamref name="T"/> from the most recently activated window.
         /// </summary>
         /// <remarks>Only controls from the most recently activated window are included. If no visible
