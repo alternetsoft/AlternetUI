@@ -241,7 +241,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(columns is null)
+                if (columns is null)
                 {
                     Columns = new NotNullCollection<ListControlColumn>();
                 }
@@ -253,7 +253,7 @@ namespace Alternet.UI
             {
                 if (columns == value)
                     return;
-                if(columns is not null)
+                if (columns is not null)
                 {
                     columns.ItemInserted -= OnColumnsItemInserted;
                     columns.ItemRemoved -= OnColumnsItemRemoved;
