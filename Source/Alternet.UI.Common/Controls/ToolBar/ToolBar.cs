@@ -809,6 +809,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets whether text is visible for the item.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        public virtual void SetTextVisible(ObjectUniqueId id, bool value)
+        {
+            var item = FindTool(id);
+            if (item is null)
+                return;
+            item.TextVisible = value;
+        }
+
+        /// <summary>
         /// Sets image of the item for the normal state.
         /// </summary>
         /// <param name="id">Item id.</param>
