@@ -37,20 +37,16 @@ namespace Alternet.UI
         /// <param name="rect">The <see cref="RectD" /> bounds to draw within.</param>
         /// <param name="index">The index value of the item that is being drawn.</param>
         /// <param name="state">The control's <see cref="DrawItemState" /> information.</param>
+#pragma warning disable
         public DrawItemEventArgs(
             Graphics graphics,
             Font? font = null,
             RectD? rect = null,
             int index = 0,
             DrawItemState state = 0)
+#pragma warning restore
         {
-            this.graphics = graphics;
-            this.font = font ?? Control.DefaultFont;
-            this.rect = rect ?? RectD.Empty;
-            this.index = index;
-            this.state = state;
-            foreColor = SystemColors.WindowText;
-            backColor = SystemColors.Window;
+            Assign(graphics, font, rect, index, state);
         }
 
         /// <summary>Initializes a new instance of the <see cref="DrawItemEventArgs" />
@@ -210,6 +206,29 @@ namespace Alternet.UI
             Brush brush = new SolidBrush(BackColor);
             Graphics.FillRectangle(brush, rect);
             brush.Dispose();
+        }
+
+        /// <summary>
+        /// Assigns the drawing context with the specified graphics, font, drawing bounds, item index, and item state.
+        /// </summary>
+        /// <param name="graphics">The graphics surface on which drawing operations will be performed. Cannot be null.</param>
+        /// <param name="font">The font to use for text rendering. If null, the default control font is used.</param>
+        /// <param name="rect">The bounding rectangle that defines the area for drawing. If null, an empty rectangle is used.</param>
+        /// <param name="index">The zero-based index of the item to be drawn.</param>
+        /// <param name="state">The state flags that describe the visual state of the item being drawn.</param>
+        public void Assign(Graphics graphics,
+            Font? font = null,
+            RectD? rect = null,
+            int index = 0,
+            DrawItemState state = 0)
+        {
+            this.graphics = graphics;
+            this.font = font ?? Control.DefaultFont;
+            this.rect = rect ?? RectD.Empty;
+            this.index = index;
+            this.state = state;
+            foreColor = SystemColors.WindowText;
+            backColor = SystemColors.Window;
         }
     }
 }
