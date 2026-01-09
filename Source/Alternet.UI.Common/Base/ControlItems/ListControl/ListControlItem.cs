@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Custom item for <see cref="StdListBox"/>, <see cref="ComboBox"/> and other
     /// list controls. This class has <see cref="Text"/>,
-    /// <see cref="Value"/> and other properties which allow to customize look of the item.
+    /// <see cref="Value"/> and other properties which allow to customize look and behavior of the item.
     /// </summary>
     public partial class ListControlItem : BaseControlItem, IComparable<ListControlItem>
     {
@@ -84,6 +84,7 @@ namespace Alternet.UI
         private ObjectUniqueId? group;
         private Graphics.DrawElementParams[]? prefixElements;
         private Graphics.DrawElementParams[]? suffixElements;
+        private BaseCollection<ListControlItem>? cells;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -125,6 +126,42 @@ namespace Alternet.UI
         {
             Text = text;
             Action = action;
+        }
+
+        /// <summary>
+        /// Gets whether the item has column cells.
+        /// </summary>
+        public bool HasCells => cells is not null && cells.Count > 0;
+
+        /// <summary>
+        /// Gets or sets a collection containing all column cells of the item.
+        /// Cells are created when this property is accessed for the first time.
+        /// If you do not need column cells, do not access this property.
+        /// When this property is set, no repaint of the container is performed automatically.
+        /// </summary>
+        /// <remarks>
+        /// This collection is used when item has multiple columns.
+        /// If you need to use only single-column item, use <see cref="Text"/> or other properties of the item.
+        /// In order to know whether item has column cells, use <see cref="HasCells"/> property.
+        /// Using the <see cref="Cells"/> property, you can add column cells,
+        /// remove column cells, and obtain a count of column cells.
+        /// </remarks>
+        public BaseCollection<ListControlItem> Cells
+        {
+            get
+            {
+                if (cells is null)
+                {
+                    cells = new(CollectionSecurityFlags.None);
+                }
+
+                return cells;
+            }
+
+            set
+            {
+                cells = value;
+            }
         }
 
         /// <summary>
