@@ -161,6 +161,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the control has columns defined.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if the control has one or more columns; otherwise, <c>false</c>.
+        /// </value>
+        [Browsable(false)]
+        public bool HasColumns => ListBox.HasColumns;
+
+        /// <summary>
+        /// Gets or sets the collection of columns displayed in the list control.
+        /// </summary>
+        /// <remarks>Use this property to configure the columns that appear in the list control. Modifying
+        /// the collection allows customization of the column layout, order, and properties.</remarks>
+        public BaseCollection<ListControlColumn> Columns
+        {
+            get => ListBox.Columns;
+
+            set => ListBox.Columns = value;
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether to track changes of
         /// <see cref="TreeViewItem"/> properties. Default is <c>true</c>.
         /// </summary>
