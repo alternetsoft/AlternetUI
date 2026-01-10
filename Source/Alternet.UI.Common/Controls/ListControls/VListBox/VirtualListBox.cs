@@ -155,12 +155,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default foreground color of the full item tooltip text.
         /// </summary>
-        public static LightDarkColor DefaultFullItemToolTipForeColor { get; set; } = new(Color.Black);
+        public static LightDarkColor DefaultFullItemToolTipForeColor { get; set; }
+            = new(light: Color.Black, dark: (224, 224, 224));
 
         /// <summary>
         /// Gets or sets the default background color of the full item tooltip.
         /// </summary>
-        public static LightDarkColor DefaultFullItemToolTipBackColor { get; set; } = new(Color.LightYellow);
+        public static LightDarkColor DefaultFullItemToolTipBackColor { get; set; }
+            = new(light: (240, 240, 240), dark: (51, 51, 51));
 
         /// <summary>
         /// Gets or sets the way how items are set when <see cref="SetItemsKind.Default"/>
