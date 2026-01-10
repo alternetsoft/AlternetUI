@@ -10,6 +10,7 @@ namespace Alternet.UI
     {
         private Color? emptyTextForeColor;
         private DrawItemEventArgs? drawItemArgs;
+        private MeasureItemEventArgs? measureItemArgs;
 
         /// <summary>
         /// Represents the default foreground color used for empty text elements.
@@ -178,6 +179,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Measures the sizes of rows within the specified index range and returns their dimensions.
+        /// </summary>
+        /// <remarks>The method measures rows in the range [fromIndex, toIndex), where fromIndex is
+        /// inclusive and toIndex is exclusive. If fromIndex or toIndex is not specified, the method uses the visible
+        /// row range as determined by GetVisibleBegin() and GetVisibleEnd(). The returned array contains the sizes in
+        /// the order corresponding to the measured rows.</remarks>
+        /// <param name="dc">The graphics context used to perform the measurement. Cannot be null.</param>
+        /// <param name="fromIndex">The zero-based index of the first row to measure.
+        /// If null, measurement starts from the first visible row.</param>
+        /// <param name="toIndex">The zero-based index after the last row to measure.
+        /// If null, measurement continues to the last visible row.</param>
+        /// <returns>An array of <see cref="SizeD"/> values representing the measured size of each row in the specified range.
+        /// The length of the array equals the number of rows measured.</returns>
+        public virtual SizeD[] MeasureRows(Graphics dc, int? fromIndex = null, int? toIndex = null)
+        {
+            int lineMax = toIndex ?? GetVisibleEnd();
+            int lineMin = fromIndex ?? GetVisibleBegin();
+            int count = lineMax - lineMin;
+
+            var sizes = new SizeD[count];
+
+            MeasureItemEventArgs.EnsureCreated(ref measureItemArgs, dc);
+
+            for (int i = 0, line = lineMin; line < lineMax; i++, line++)
+            {
+                measureItemArgs.Index = line;
+                MeasureItemSize(measureItemArgs);
+                sizes[i] = measureItemArgs.ItemSize;
+            }
+
+            return sizes;
+        }
+
+        /// <summary>
         /// Paints the visible rows within the specified rectangle using the provided graphics context, applying an
         /// optional width increment to the painting area.
         /// </summary>
@@ -204,21 +239,18 @@ namespace Alternet.UI
             int lineMin = fromIndex ?? GetVisibleBegin();
 
             var r = paintRectangle;
-
             r.Width += widthIncrement;
-
             var rectRow = r;
 
-            MeasureItemEventArgs measureItemArgs = new(dc, 0);
+            MeasureItemEventArgs.EnsureCreated(ref measureItemArgs, dc);
 
             itemsLastPainted.Clear();
 
+            var rowSizes = MeasureRows(dc, fromIndex, toIndex);
+
             for (int line = lineMin; line < lineMax; line++)
             {
-                measureItemArgs.Index = line;
-                MeasureItemSize(measureItemArgs);
-
-                var hRow = measureItemArgs.ItemHeight;
+                var hRow = rowSizes[line - lineMin].Height;
 
                 rectRow.Height = hRow;
 
