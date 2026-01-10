@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -925,6 +926,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets column separator width for the specified <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container">The item container. Can be null, in this case
+        /// <c>ListControlColumn.DefaultColumnSeparatorWidth</c> is returned.</param>
+        /// <returns></returns>
+        public static Coord GetColumnSeparatorWidth(IListControlItemContainer? container)
+        {
+            return container?.ColumnSeparatorWidth ?? ListControlColumn.DefaultColumnSeparatorWidth;
+        }
+
+        /// <summary>
         /// Default method which measures item size.
         /// </summary>
         /// <param name="container">Item container.</param>
@@ -937,7 +949,152 @@ namespace Alternet.UI
         {
             var item = container.SafeItem(itemIndex);
 
-            var s = container.GetItemText(itemIndex, true);
+            if (container.HasColumns && item is not null && item.HasCells)
+                return InternalMultiColumn();
+            else
+                return MeasureSingleColumnItemSize(container, dc, itemIndex, item);
+
+            SizeD InternalMultiColumn()
+            {
+                /*
+                SizeD result = SizeD.Empty;
+
+                var columnSeparatorWidth = GetColumnSeparatorWidth(container);
+
+                for (int i = 0; i < container.Columns.Count; i++)
+                {
+                    var cell = item.SafeCell(i);
+                    var cellSize = SizeD.Empty;
+
+                    if (cell is null)
+                    {
+                        cellSize = 
+                    }
+                    else
+                    {
+
+                    }
+                }
+                */
+
+                return MeasureSingleColumnItemSize(container, dc, itemIndex, item);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the display text for a list control item, using either the item index or the item instance.
+        /// </summary>
+        /// <param name="container">The container that provides access to item text retrieval methods.</param>
+        /// <param name="formatProvider">An object that supplies culture-specific formatting information,
+        /// or null to use the current culture. If container is specified, it's format provider is used.</param>
+        /// <param name="itemIndex">The zero-based index of the item whose text to retrieve,
+        /// or null to use the specified item instance.</param>
+        /// <param name="item">The item instance whose text to retrieve if itemIndex is null.
+        /// If both itemIndex and item are null, an empty
+        /// string is returned.</param>
+        /// <param name="forDisplay">true to retrieve the text formatted for display; otherwise,
+        /// false to retrieve the raw value.</param>
+        /// <returns>A string containing the item's text. Returns an empty string
+        /// if both itemIndex and item are null.</returns>
+        public static string GetItemText(
+            IListControlItemContainer? container,
+            int? itemIndex,
+            ListControlItem? item,
+            bool forDisplay,
+            IFormatProvider? formatProvider = null)
+        {
+            string s;
+
+            if (itemIndex is null)
+            {
+                if (item is null)
+                    return string.Empty;
+                s = container?.GetItemText(item, forDisplay) ?? DefaultGetItemText(item, forDisplay, formatProvider);
+            }
+            else
+            {
+                s = container?.GetItemText(itemIndex.Value, forDisplay) ?? DefaultGetItemText(item, forDisplay, formatProvider);
+            }
+
+            return s;
+        }
+
+        /// <summary>
+        /// Returns a string representation of the specified item, using display or value text as appropriate.
+        /// </summary>
+        /// <remarks>If the item is a ListControlItem, the method returns the DisplayText, Text, or Value
+        /// property, depending on the forDisplay parameter and property availability. For other types, the method uses
+        /// the item's ToString implementation with the specified format provider.</remarks>
+        /// <param name="item">The item to convert to a string. Can be null.</param>
+        /// <param name="forDisplay">true to use display text if available; otherwise, false to use value text.</param>
+        /// <param name="formatProvider">An object that supplies culture-specific formatting information,
+        /// or null to use the current culture.</param>
+        /// <returns>A string representation of the item. Returns an empty string if the item is null.</returns>
+        public static string DefaultGetItemText(object? item, bool forDisplay, IFormatProvider? formatProvider = null)
+        {
+            if (item is null)
+                return string.Empty;
+            if (item is string s)
+                return s;
+
+            if (item is ListControlItem listItem)
+            {
+                object result;
+
+                if (forDisplay)
+                {
+                    result = listItem.DisplayText ?? listItem.Text ?? listItem.Value ?? string.Empty;
+                }
+                else
+                {
+                    result = listItem.Text ?? listItem.Value ?? string.Empty;
+                }
+
+                return Cnv(result);
+            }
+            else
+            {
+                return Cnv(item);
+            }
+
+            string Cnv(object v)
+            {
+                var result = Convert.ToString(v, formatProvider ?? CultureInfo.CurrentCulture);
+                return result ?? string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Measures the size required to display a single item in a single-column list control, including text, images,
+        /// and margins.
+        /// </summary>
+        /// <remarks>If both itemIndex and item are null, the method returns SizeD.Empty. The measurement
+        /// accounts for images, checkboxes, text (including multi-line text), and control-specific margins. The
+        /// returned size ensures that all visual elements of the item are fully accommodated.</remarks>
+        /// <param name="container">The item container that provides access to item data, text, and layout defaults.</param>
+        /// <param name="dc">The graphics context used for measuring text and images.</param>
+        /// <param name="itemIndex">The zero-based index of the item to measure, or null to use the provided item directly.</param>
+        /// <param name="item">The item to measure, or null to resolve the item using the specified index.</param>
+        /// <returns>A SizeD structure representing the width and height required to display the item, including any images and
+        /// margins.</returns>
+        public static SizeD MeasureSingleColumnItemSize(
+            IListControlItemContainer container,
+            Graphics dc,
+            int? itemIndex,
+            ListControlItem? item = null)
+        {
+            string s = GetItemText(container, itemIndex, item, forDisplay: true);
+
+            if (itemIndex is null)
+            {
+                if (item is null)
+                    return SizeD.Empty;
+            }
+            else
+            {
+                item ??= container.SafeItem(itemIndex.Value);
+            }
+
             if (string.IsNullOrEmpty(s))
                 s = "Wy";
 
@@ -1893,6 +2050,19 @@ namespace Alternet.UI
             Text = assignFrom.Text;
             Value = assignFrom.Value;
             Group = assignFrom.Group;
+        }
+
+        /// <summary>
+        /// Retrieves the cell at the specified index if it exists; otherwise, returns null.
+        /// It is safe method which does not throw exceptions.
+        /// </summary>
+        /// <param name="cellIndex">The zero-based index of the cell to retrieve.</param>
+        /// <returns>The cell at the specified index if it exists; otherwise, null.</returns>
+        public ListControlItem? SafeCell(int cellIndex)
+        {
+            if (cells is null || cellIndex < 0 || cellIndex >= cells.Count)
+                return null;
+            return cells[cellIndex];
         }
 
         /// <summary>
