@@ -1375,6 +1375,7 @@ namespace Alternet.UI
             {
                 if (ItemPainter is null)
                     return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
+
                 var result = ItemPainter.GetSize(this, itemIndex);
                 if (result == SizeD.MinusOne)
                     return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
