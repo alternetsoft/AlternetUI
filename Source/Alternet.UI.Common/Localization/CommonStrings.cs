@@ -316,6 +316,17 @@ namespace Alternet.UI.Localization
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string FileListBoxColumnName { get; set; } = "Name";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FileListBoxColumnDateModified { get; set; } = "Date modified";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string FileListBoxColumnSize { get; set; } = "Size";
+
+        // ========================
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string EnterValue { get; set; } = "Enter value";
     }
 }

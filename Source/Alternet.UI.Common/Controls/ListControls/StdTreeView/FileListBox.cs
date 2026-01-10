@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -519,17 +520,17 @@ namespace Alternet.UI
             {
                 Header.DeleteColumns();
 
-                Header.AddColumn("Name", null, () =>
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnName, null, () =>
                 {
                     Sort(FileListBoxColumn.Name, ColumnSortDirection.Flip);
                 });
 
-                Header.AddColumn("Date modified", null, () =>
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnDateModified, null, () =>
                 {
                     Sort(FileListBoxColumn.DateModified, ColumnSortDirection.Flip);
                 });
 
-                Header.AddColumn("Size", null, () =>
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnSize, null, () =>
                 {
                     Sort(FileListBoxColumn.Size, ColumnSortDirection.Flip);
                 });
