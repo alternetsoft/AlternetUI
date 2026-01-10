@@ -466,36 +466,7 @@ namespace Alternet.UI
         /// for display purposes or the real value.</param>
         public virtual string GetItemText(TItem? item, bool forDisplay)
         {
-            if (item is null)
-                return string.Empty;
-            if (item is string s)
-                return s;
-
-            if (item is ListControlItem listItem)
-            {
-                object result;
-
-                if (forDisplay)
-                {
-                    result = listItem.DisplayText ?? listItem.Text ?? listItem.Value ?? string.Empty;
-                }
-                else
-                {
-                    result = listItem.Text ?? listItem.Value ?? string.Empty;
-                }
-
-                return Cnv(result);
-            }
-            else
-            {
-                return Cnv(item);
-            }
-
-            string Cnv(object v)
-            {
-                var result = Convert.ToString(v, FormatProvider ?? CultureInfo.CurrentCulture);
-                return result ?? string.Empty;
-            }
+            return ListControlItem.DefaultGetItemText(item, forDisplay, FormatProvider);
         }
 
         /// <summary>
