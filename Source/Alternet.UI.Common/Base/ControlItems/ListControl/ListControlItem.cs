@@ -956,28 +956,37 @@ namespace Alternet.UI
 
             SizeD InternalMultiColumn()
             {
-                /*
                 SizeD result = SizeD.Empty;
 
                 var columnSeparatorWidth = GetColumnSeparatorWidth(container);
+                var columnCount = container.Columns.Count;
 
-                for (int i = 0; i < container.Columns.Count; i++)
+                for (int i = 0; i < columnCount; i++)
                 {
                     var cell = item.SafeCell(i);
-                    var cellSize = SizeD.Empty;
+                    var suggestedWidth = container.Columns[i].SuggestedWidth;
+                    SizeD cellSize;
 
                     if (cell is null)
                     {
-                        cellSize = 
+                        cellSize = new SizeD(suggestedWidth, 0);
                     }
                     else
                     {
-
+                        cellSize = MeasureSingleColumnItemSize(container, dc, null, cell);
+                        cellSize.Width = suggestedWidth;
                     }
-                }
-                */
 
-                return MeasureSingleColumnItemSize(container, dc, itemIndex, item);
+                    result.Width += cellSize.Width;
+                    result.Height = Math.Max(result.Height, cellSize.Height);
+                }
+
+                if (columnCount > 1)
+                {
+                    result.Width += columnSeparatorWidth * (columnCount - 1);
+                }
+
+                return result;
             }
         }
 
@@ -1071,6 +1080,8 @@ namespace Alternet.UI
         /// <remarks>If both itemIndex and item are null, the method returns SizeD.Empty. The measurement
         /// accounts for images, checkboxes, text (including multi-line text), and control-specific margins. The
         /// returned size ensures that all visual elements of the item are fully accommodated.</remarks>
+        /// <param name="formatProvider">An object that supplies culture-specific formatting information,
+        /// or null to use the current culture. If container is specified, it's format provider is used. Optional.</param>
         /// <param name="container">The item container that provides access to item data, text, and layout defaults.</param>
         /// <param name="dc">The graphics context used for measuring text and images.</param>
         /// <param name="itemIndex">The zero-based index of the item to measure, or null to use the provided item directly.</param>
@@ -1081,9 +1092,10 @@ namespace Alternet.UI
             IListControlItemContainer container,
             Graphics dc,
             int? itemIndex,
-            ListControlItem? item = null)
+            ListControlItem? item = null,
+            IFormatProvider? formatProvider = null)
         {
-            string s = GetItemText(container, itemIndex, item, forDisplay: true);
+            string s = GetItemText(container, itemIndex, item, forDisplay: true, formatProvider);
 
             if (itemIndex is null)
             {
