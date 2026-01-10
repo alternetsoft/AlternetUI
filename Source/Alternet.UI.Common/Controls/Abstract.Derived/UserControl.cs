@@ -309,6 +309,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes the overlay with the specified identifier from the collection.
+        /// After removal, sets the identifier to null.
+        /// </summary>
+        /// <param name="overlayId">A reference to the unique identifier of the overlay to remove.
+        /// The value is set to null if the overlay is
+        /// successfully removed.</param>
+        /// <param name="invalidate">true to invalidate the display after removing the overlay;
+        /// otherwise, false. The default is true.</param>
+        /// <returns>true if the overlay was found and removed; otherwise, false.</returns>
+        public bool RemoveOverlay(ref ObjectUniqueId? overlayId, bool invalidate = true)
+        {
+            if (overlays is null || overlayId is null)
+                return false;
+            var result = RemoveOverlay(overlayId, invalidate);
+            overlayId = null;
+            return result;
+        }
+
+        /// <summary>
         /// Removes an overlay with the specified unique identifier from the overlays collection.
         /// </summary>
         /// <param name="overlayId">The unique identifier of the overlay to remove.</param>
