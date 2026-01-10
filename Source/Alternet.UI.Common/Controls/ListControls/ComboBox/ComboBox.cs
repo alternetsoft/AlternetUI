@@ -664,6 +664,12 @@ namespace Alternet.UI
             }
         }
 
+        bool IListControlItemContainer.HasColumns => false;
+
+        IReadOnlyList<ListControlColumn> IListControlItemContainer.Columns => Array.Empty<ListControlColumn>();
+
+        float? IListControlItemContainer.ColumnSeparatorWidth { get; }
+
         /// <summary>
         /// Selects a range of text in the editable portion of the ComboBox.
         /// </summary>
@@ -741,6 +747,11 @@ namespace Alternet.UI
             droppedDown = false;
             OnDropDownClosed(EventArgs.Empty);
             DropDownClosed?.Invoke(this, EventArgs.Empty);
+        }
+
+        string IListControlItemContainer.GetItemText(ListControlItem? item, bool forDisplay)
+        {
+            return ListControlItem.DefaultGetItemText(item, forDisplay);
         }
 
         /// <summary>

@@ -772,6 +772,12 @@ namespace Alternet.UI
             }
         }
 
+        float? IListControlItemContainer.ColumnSeparatorWidth { get; }
+
+        bool IListControlItemContainer.HasColumns => false;
+
+        IReadOnlyList<ListControlColumn> IListControlItemContainer.Columns => Array.Empty<ListControlColumn>();
+
         IListControlItemContainer ITreeViewItemContainer.ListContainer => this;
 
         TreeViewButtonsKind ITreeViewItemContainer.TreeButtons { get; }
@@ -1111,6 +1117,11 @@ namespace Alternet.UI
         string IListControlItemContainer.GetItemText(int index, bool forDisplay)
         {
             return Items[index].Text;
+        }
+
+        string IListControlItemContainer.GetItemText(ListControlItem? item, bool forDisplay)
+        {
+            return ListControlItem.DefaultGetItemText(item, forDisplay);
         }
 
         int IListControlItemContainer.GetItemCount()

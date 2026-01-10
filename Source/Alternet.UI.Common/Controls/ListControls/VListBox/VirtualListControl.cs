@@ -229,6 +229,15 @@ namespace Alternet.UI
             }
         }
 
+        IReadOnlyList<ListControlColumn> IListControlItemContainer.Columns => Columns;
+
+        /// <summary>
+        /// Gets or sets the width of the column separator. Default is <c>null</c>.
+        /// If not specified, it is suggested to use the default width, which is specified in
+        /// <see cref="ListControlColumn.DefaultColumnSeparatorWidth"/>.
+        /// </summary>
+        public virtual Coord? ColumnSeparatorWidth { get; set; }
+
         /// <summary>
         /// Gets or sets the collection of list control columns.
         /// </summary>
