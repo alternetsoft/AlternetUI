@@ -86,6 +86,7 @@ namespace Alternet.UI
         private Graphics.DrawElementParams[]? prefixElements;
         private Graphics.DrawElementParams[]? suffixElements;
         private BaseCollection<ListControlItem>? cells;
+        private object? toolTip;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -163,6 +164,24 @@ namespace Alternet.UI
             {
                 cells = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the tooltip is currently visible.
+        /// </summary>
+        public bool? IsToolTipVisible
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the content to display as a tooltip for this element.
+        /// </summary>
+        public virtual object? ToolTip
+        {
+            get => toolTip;
+            set => toolTip = value;
         }
 
         /// <summary>
