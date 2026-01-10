@@ -79,6 +79,8 @@ namespace PropertyGridSample
             item.FontStyle = FontStyle.Underline;
             item.CheckState = CheckState.Checked;
             item.Text = "Underlined item";
+            item.ToolTip = "Custom tooltip for item";
+            item.IsToolTipVisible = true;
             addAction(item);
 
             item = new();

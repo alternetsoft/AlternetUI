@@ -1647,44 +1647,80 @@ namespace Alternet.UI
             base.OnMouseDoubleClick(e);
         }
 
-        /// <inheritdoc/>
-        protected override void OnMouseHover(EventArgs e)
+        /// <summary>
+        /// Resolves the foreground, background, and border colors to be used for an overlay tooltip, based on current
+        /// theme and customization settings.
+        /// </summary>
+        /// <remarks>This method selects appropriate colors for overlay tooltips by considering
+        /// user-defined color properties and the current background theme. Override this method to customize tooltip
+        /// color resolution logic in derived classes.</remarks>
+        /// <param name="foreColor">When this method returns, contains the resolved foreground color for the tooltip text.</param>
+        /// <param name="backColor">When this method returns, contains the resolved background color for the tooltip.</param>
+        /// <param name="borderColor">When this method returns, contains the resolved border color for the tooltip.</param>
+        protected virtual void ResolveOverlayToolTipColors(out Color foreColor, out Color backColor, out Color borderColor)
         {
-            if(DisposingOrDisposed || !NeedsFullItemToolTip)
-                return;
+            backColor = (FullItemToolTipBackColor ?? DefaultFullItemToolTipBackColor)
+                .LightOrDark(IsDarkBackground);
+            foreColor = (FullItemToolTipForeColor ?? DefaultFullItemToolTipForeColor)
+                .LightOrDark(IsDarkBackground);
+            borderColor = (FullItemToolTipBorderColor ?? DefaultFullItemToolTipBorderColor
+                ?? DefaultColors.BorderColor)
+                .LightOrDark(IsDarkBackground);
+        }
 
-            var mousePos = Mouse.GetPosition(this);
-            var itemIndex = HitTest(mousePos);
-            if(itemIndex is null)
-                return;
+        /// <summary>
+        /// Retrieves the tooltip text associated with the item at the specified index.
+        /// </summary>
+        /// <param name="index">The zero-based index of the item for which to retrieve the tooltip text.</param>
+        /// <returns>A string containing the tooltip text for the specified item, or the item's display text if no tooltip is
+        /// set.</returns>
+        protected virtual string GetItemToolTip(int index)
+        {
+            var item = GetItem(index);
 
-            var s = GetItemText(itemIndex.Value, true);
+            return item?.ToolTip?.ToString() ?? GetItemText(index, forDisplay: true);
+        }
+
+        /// <summary>
+        /// Displays an overlay tooltip for the specified item if the item is eligible for tooltip display.
+        /// </summary>
+        /// <remarks>The method does not display a tooltip if the item index is null, the item text is
+        /// empty, the item rectangle cannot be determined, or the item is fully visible without horizontal scrolling.
+        /// Override this method to customize tooltip display behavior for items.</remarks>
+        /// <param name="itemIndex">The zero-based index of the item for which to show the overlay tooltip,
+        /// or null to indicate no item.</param>
+        /// <returns>true if the overlay tooltip was shown for the specified item; otherwise, false.</returns>
+        protected virtual bool ShowOverlayToolTipForItem(int? itemIndex)
+        {
+            if (itemIndex is null)
+                return false;
+
+            var s = GetItemToolTip(itemIndex.Value);
 
             if (s is null || s.Length == 0)
-                return;
+                return false;
 
             var rect = GetItemRect(itemIndex);
             if (rect is null)
-                return;
+                return false;
 
             var itemSize = MeasureItemSize(itemIndex.Value);
 
             var container = GetPaintRectangle();
-            if (container.Width > itemSize.Width && scrollOffsetX == 0)
-                return;
+
+            var item = GetItem(itemIndex.Value);
+            var noToolTipNeeded = container.Width > itemSize.Width && scrollOffsetX == 0;
+
+            var showToolTip = item?.IsToolTipVisible ?? !noToolTipNeeded;
+
+            if (!showToolTip)
+                return false;
 
             var vertAlignment = NineRects.SuggestVertAlignmentForToolTip(container, rect.Value);
 
-            RemoveOverlay(itemToolTipId, false);
-            itemToolTipId = null;
+            RemoveOverlay(ref itemToolTipId, false);
 
-            var bColor = (FullItemToolTipBackColor ?? DefaultFullItemToolTipBackColor)
-                .LightOrDark(IsDarkBackground);
-            var fColor = (FullItemToolTipForeColor ?? DefaultFullItemToolTipForeColor)
-                .LightOrDark(IsDarkBackground);
-            var borderColor = (FullItemToolTipBorderColor ?? DefaultFullItemToolTipBorderColor
-                ?? DefaultColors.BorderColor)
-                .LightOrDark(IsDarkBackground);
+            ResolveOverlayToolTipColors(out var fColor, out var bColor, out var borderColor);
 
             OverlayToolTipParams data = new()
             {
@@ -1700,14 +1736,36 @@ namespace Alternet.UI
             data.SetBorder(borderColor);
 
             itemToolTipId = ShowOverlayToolTip(data);
+            return true;
+        }
+
+        /// <summary>
+        /// Displays an overlay tooltip for the item located at the current mouse position.
+        /// </summary>
+        /// <remarks>Override this method to customize how overlay tooltips are displayed for items at the
+        /// mouse position. The method determines the item under the mouse and attempts to show its tooltip.</remarks>
+        /// <returns>true if a tooltip was shown for the item under the mouse pointer; otherwise, false.</returns>
+        protected virtual bool ShowOverlayToolTipForItemAtMousePos()
+        {
+            var mousePos = Mouse.GetPosition(this);
+            var itemIndex = HitTest(mousePos);
+            return ShowOverlayToolTipForItem(itemIndex);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseHover(EventArgs e)
+        {
+            base.OnMouseHover(e);
+            if (DisposingOrDisposed || !NeedsFullItemToolTip)
+                return;
+            ShowOverlayToolTipForItemAtMousePos();
         }
 
         /// <inheritdoc/>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            RemoveOverlay(itemToolTipId, true);
-            itemToolTipId = null;
+            RemoveOverlay(ref itemToolTipId, invalidate: true);
         }
 
         /// <inheritdoc/>
