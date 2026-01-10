@@ -1687,10 +1687,13 @@ namespace Alternet.UI
         /// <remarks>The method does not display a tooltip if the item index is null, the item text is
         /// empty, the item rectangle cannot be determined, or the item is fully visible without horizontal scrolling.
         /// Override this method to customize tooltip display behavior for items.</remarks>
+        /// <param name="horzAlignment">The horizontal alignment for the tooltip relative to the container.</param>
         /// <param name="itemIndex">The zero-based index of the item for which to show the overlay tooltip,
         /// or null to indicate no item.</param>
         /// <returns>true if the overlay tooltip was shown for the specified item; otherwise, false.</returns>
-        protected virtual bool ShowOverlayToolTipForItem(int? itemIndex)
+        protected virtual bool ShowOverlayToolTipForItem(
+            int? itemIndex,
+            HorizontalAlignment horzAlignment = HorizontalAlignment.Left)
         {
             if (itemIndex is null)
                 return false;
@@ -1726,7 +1729,7 @@ namespace Alternet.UI
             {
                 Text = s,
                 Options = OverlayToolTipFlags.DismissAfterInterval,
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = horzAlignment,
                 VerticalAlignment = vertAlignment,
                 BackgroundColor = bColor,
                 ForegroundColor = fColor,
@@ -1749,7 +1752,12 @@ namespace Alternet.UI
         {
             var mousePos = Mouse.GetPosition(this);
             var itemIndex = HitTest(mousePos);
-            return ShowOverlayToolTipForItem(itemIndex);
+
+            var mouseLeft = mousePos.X < GetPaintRectangle().Width / 2;
+
+            HorizontalAlignment align = mouseLeft ? HorizontalAlignment.Right : HorizontalAlignment.Left;
+
+            return ShowOverlayToolTipForItem(itemIndex, align);
         }
 
         /// <inheritdoc/>
