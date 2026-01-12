@@ -136,6 +136,11 @@ namespace Alternet.UI
         public bool HasCells => cells is not null && cells.Count > 0;
 
         /// <summary>
+        /// Gets or sets the unique identifier of the column in the header control to which this item belongs.
+        /// </summary>
+        public virtual ObjectUniqueId? ColumnId { get; set; }
+
+        /// <summary>
         /// Gets or sets a collection containing all column cells of the item.
         /// Cells are created when this property is accessed for the first time.
         /// If you do not need column cells, do not access this property.
@@ -169,7 +174,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the tooltip is currently visible.
         /// </summary>
-        public bool? IsToolTipVisible
+        public virtual bool? IsToolTipVisible
         {
             get;
             set;
@@ -1974,6 +1979,45 @@ namespace Alternet.UI
             {
                 DrawForegroundAction(container, e);
             }
+        }
+
+        /// <summary>
+        /// Gets the cell for the specified column identifier.
+        /// If the cell does not exist, it is created and added to the <see cref="Cells"/> collection.
+        /// </summary>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <returns></returns>
+        public virtual ListControlItem SafeCell(ObjectUniqueId columnId)
+        {
+            var result = GetCell(columnId);
+
+            if (result is null)
+            {
+                result = new ListControlItem();
+                result.ColumnId = columnId;
+                Cells.Add(result);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the cell for the specified column identifier.
+        /// </summary>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <returns></returns>
+        public virtual ListControlItem? GetCell(ObjectUniqueId columnId)
+        {
+            if (!HasCells)
+                return null;
+
+            foreach (var cell in Cells)
+            {
+                if (cell.ColumnId == columnId)
+                    return cell;
+            }
+
+            return null;
         }
 
         /// <summary>
