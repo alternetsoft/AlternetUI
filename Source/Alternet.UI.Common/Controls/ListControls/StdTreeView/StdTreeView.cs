@@ -205,7 +205,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(header is null)
+                if (header is null)
                 {
                     header = CreateHeader();
                     header.ParentForeColor = true;
@@ -213,6 +213,11 @@ namespace Alternet.UI
                     header.OnlyBottomBorder();
                     header.VerticalAlignment = VerticalAlignment.Top;
                     header.Visible = false;
+
+                    header.ColumnDeleted += OnHeaderColumnDeleted;
+                    header.ColumnInserted += OnHeaderColumnInserted;
+                    header.ColumnSizeChanged += OnHeaderColumnSizeChanged;
+
                     this.Children.Prepend(header);
                 }
 
@@ -1777,6 +1782,40 @@ namespace Alternet.UI
             {
                 ListBox.Invalidate();
             }
+        }
+
+        /// <summary>
+        /// Handles the event that occurs when the size of a header column changes.
+        /// </summary>
+        /// <remarks>Override this method to provide custom handling when a header column's size is
+        /// modified. This method is called when the column size change event is raised.</remarks>
+        /// <param name="sender">The source of the event, typically the header control whose column size has changed.</param>
+        /// <param name="e">A <see cref="ListBoxHeader.ColumnEventArgs"/> that contains the event data for the column size change.</param>
+        protected virtual void OnHeaderColumnSizeChanged(object? sender, ListBoxHeader.ColumnEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raises the event that occurs when a column is inserted into the header.
+        /// </summary>
+        /// <remarks>Override this method to provide custom handling when a column is inserted into the
+        /// header. This method is called after a column has been added and can be used to perform additional processing
+        /// or to raise related events.</remarks>
+        /// <param name="sender">The source of the event, typically the control that raised the event.</param>
+        /// <param name="e">A <see cref="ListBoxHeader.ColumnEventArgs"/> that contains the event data for the inserted column.</param>
+        protected virtual void OnHeaderColumnInserted(object? sender, ListBoxHeader.ColumnEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Raises the event that occurs when a header column is deleted from the list box.
+        /// </summary>
+        /// <remarks>Override this method to provide custom handling when a header column is deleted. This
+        /// method is called after a column has been removed from the header.</remarks>
+        /// <param name="sender">The source of the event, typically the list box control.</param>
+        /// <param name="e">A <see cref="ListBoxHeader.ColumnEventArgs"/> that contains the event data for the deleted column.</param>
+        protected virtual void OnHeaderColumnDeleted(object? sender, ListBoxHeader.ColumnEventArgs e)
+        {
         }
 
         /// <inheritdoc/>
