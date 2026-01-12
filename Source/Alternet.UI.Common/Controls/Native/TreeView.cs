@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using Alternet.Base.Collections;
 using Alternet.Drawing;
@@ -229,6 +230,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets format provider used to get text representation of the item
+        /// for the display and other purposes. Default is <c>null</c>.
+        /// If not specified, <see cref="CultureInfo.CurrentCulture"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IFormatProvider? FormatProvider { get; set; }
+
+        /// <summary>
         /// Gets first root item in the control or <c>null</c> if there are no items.
         /// </summary>
         [Browsable(false)]
@@ -270,7 +279,14 @@ namespace Alternet.UI
                         return null;
                     if (!item.HasItems)
                         return item;
-                    var child = item.Items.Last();
+
+                    var items = item.Items;
+                    var count = items.Count;
+                    if (count == 0)
+                        return item;
+
+                    var child = items[count - 1];
+
                     return GetLastItem(child);
                 }
 

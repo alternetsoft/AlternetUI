@@ -18,6 +18,11 @@ namespace Alternet.UI
         SvgImage? CheckImageUnchecked { get; }
 
         /// <summary>
+        /// Gets the format provider to use for culture-specific formatting operations.
+        /// </summary>
+        IFormatProvider? FormatProvider { get; }
+
+        /// <summary>
         /// Gets the checked state image for the checkbox.
         /// </summary>
         SvgImage? CheckImageChecked { get; }
