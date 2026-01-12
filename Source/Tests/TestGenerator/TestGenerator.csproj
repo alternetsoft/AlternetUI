@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PathToGenerator>..\..\Alternet.UI.Generator\bin\Debug\netstandard2.0\Alternet.UI.Generator.dll</PathToGenerator>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug' and Exists('$(PathToGenerator)')">
+    <Analyzer Include="$(PathToGenerator)" />
+  </ItemGroup>
+
+
+</Project>
