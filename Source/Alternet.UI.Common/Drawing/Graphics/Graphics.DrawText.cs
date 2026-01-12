@@ -33,8 +33,10 @@ namespace Alternet.Drawing
         /// </returns>
         public SizeD CharSize(char ch, Font font)
         {
+#pragma warning disable
             Span<char> buffer = stackalloc char[1];
             buffer[0] = ch;
+#pragma warning restore
             return GetTextExtent(buffer, font);
         }
 
@@ -48,9 +50,11 @@ namespace Alternet.Drawing
         /// </returns>
         public SizeD CharPairSize(char ch, Font font)
         {
+#pragma warning disable
             Span<char> buffer = stackalloc char[2];
             buffer[0] = ch;
             buffer[1] = ch;
+#pragma warning restore
             return GetTextExtent(buffer, font);
         }
 
@@ -410,7 +414,7 @@ namespace Alternet.Drawing
 
             DrawElementsParams drawParams = new();
 
-            if(prm.PrefixElements is not null || prm.SuffixElements is not null)
+            if (prm.PrefixElements is not null || prm.SuffixElements is not null)
             {
                 if (image is null)
                 {

@@ -314,7 +314,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the zero-based index of the currently checked item
-        /// in a <see cref="StdListBox"/>.
+        /// in a control.
         /// </summary>
         /// <value>A zero-based index of the currently checked item. A value
         /// of <c>null</c> is returned if no item is checked.</value>
@@ -325,7 +325,11 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return default;
-                return CheckedIndices.FirstOrDefault();
+
+                var indexes = CheckedIndices;
+                if (indexes.Count > 0)
+                    return indexes[0];
+                return null;
             }
 
             set
