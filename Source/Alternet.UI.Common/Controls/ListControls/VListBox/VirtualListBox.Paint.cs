@@ -85,96 +85,73 @@ namespace Alternet.UI
         /// <param name="rectRow">The bounding rectangle, in client coordinates, that defines the area of the row to paint.</param>
         public virtual void PaintRow(Graphics dc, int rowIndex, ListControlItem? item, RectD rectRow)
         {
-            if (item is null)
+            if (drawItemArgs is null)
             {
-                PaintWithoutColumns();
+                drawItemArgs = new(dc);
             }
             else
             {
-                if (HasColumns)
-                {
-                    PaintWithColumns();
-                }
-                else
-                {
-                    PaintWithoutColumns();
-                }
+                drawItemArgs.Assign(dc);
             }
 
-            void PaintWithColumns()
+            var isCurrentItem = IsCurrent(rowIndex);
+            var isSelectedItem = IsSelected(rowIndex);
+
+            if (drawMode != DrawMode.Normal)
             {
-                PaintWithoutColumns();
+                drawItemArgs.Bounds = rectRow;
+                drawItemArgs.Index = rowIndex;
+
+                DrawItemState state = 0;
+                if (isCurrentItem)
+                    state |= DrawItemState.Focus;
+                if (isSelectedItem)
+                    state |= DrawItemState.Selected;
+
+                drawItemArgs.Font = ListControlItem.GetFont(item, this, isSelectedItem);
+
+                drawItemArgs.State = state;
+
+                if (isSelectedItem)
+                {
+                    drawItemArgs.BackColor
+                        = ListControlItem.GetSelectedItemBackColor(item, this)
+                        ?? RealBackgroundColor;
+                    drawItemArgs.ForeColor
+                        = ListControlItem.GetSelectedTextColor(item, this)
+                        ?? RealForegroundColor;
+                }
+                else
+                {
+                    drawItemArgs.BackColor = RealBackgroundColor;
+                    drawItemArgs.ForeColor
+                        = ListControlItem.GetItemTextColor(item, this)
+                        ?? RealForegroundColor;
+                }
+
+                RaiseDrawItem(drawItemArgs);
             }
-
-            void PaintWithoutColumns()
+            else
             {
-                if (drawItemArgs is null)
+                if (itemPaintArgs is null)
                 {
-                    drawItemArgs = new(dc);
+                    itemPaintArgs = new(this, dc, rectRow, rowIndex);
                 }
                 else
                 {
-                    drawItemArgs.Assign(dc);
+                    itemPaintArgs.Graphics = dc;
+                    itemPaintArgs.ClientRectangle = rectRow;
+                    itemPaintArgs.ItemIndex = rowIndex;
                 }
 
-                var isCurrentItem = IsCurrent(rowIndex);
-                var isSelectedItem = IsSelected(rowIndex);
+                itemPaintArgs.LabelMetrics = new();
+                itemPaintArgs.IsCurrent = isCurrentItem;
+                itemPaintArgs.IsSelected = isSelectedItem;
+                itemPaintArgs.Visible = true;
+                itemPaintArgs.UseColumns = HasColumns;
 
-                if (drawMode != DrawMode.Normal)
-                {
-                    drawItemArgs.Bounds = rectRow;
-                    drawItemArgs.Index = rowIndex;
-
-                    DrawItemState state = 0;
-                    if (isCurrentItem)
-                        state |= DrawItemState.Focus;
-                    if (isSelectedItem)
-                        state |= DrawItemState.Selected;
-
-                    drawItemArgs.Font = ListControlItem.GetFont(item, this, isSelectedItem);
-
-                    drawItemArgs.State = state;
-
-                    if (isSelectedItem)
-                    {
-                        drawItemArgs.BackColor
-                            = ListControlItem.GetSelectedItemBackColor(item, this)
-                            ?? RealBackgroundColor;
-                        drawItemArgs.ForeColor
-                            = ListControlItem.GetSelectedTextColor(item, this)
-                            ?? RealForegroundColor;
-                    }
-                    else
-                    {
-                        drawItemArgs.BackColor = RealBackgroundColor;
-                        drawItemArgs.ForeColor
-                            = ListControlItem.GetItemTextColor(item, this)
-                            ?? RealForegroundColor;
-                    }
-
-                    RaiseDrawItem(drawItemArgs);
-                }
-                else
-                {
-                    if (itemPaintArgs is null)
-                    {
-                        itemPaintArgs = new(this, dc, rectRow, rowIndex);
-                    }
-                    else
-                    {
-                        itemPaintArgs.Graphics = dc;
-                        itemPaintArgs.ClientRectangle = rectRow;
-                        itemPaintArgs.ItemIndex = rowIndex;
-                    }
-
-                    itemPaintArgs.LabelMetrics = new();
-                    itemPaintArgs.IsCurrent = isCurrentItem;
-                    itemPaintArgs.IsSelected = isSelectedItem;
-                    itemPaintArgs.Visible = true;
-
-                    DrawItemBackground(itemPaintArgs);
-                    DrawItemForeground(itemPaintArgs);
-                }
+                DrawItemBackground(itemPaintArgs);
+                DrawItemForeground(itemPaintArgs);
             }
         }
 

@@ -1793,6 +1793,27 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="ListBoxHeader.ColumnEventArgs"/> that contains the event data for the column size change.</param>
         protected virtual void OnHeaderColumnSizeChanged(object? sender, ListBoxHeader.ColumnEventArgs e)
         {
+            if (!HasColumns)
+                return;
+
+            var newWidth = e.Column.Width;
+            var id = e.Column.UniqueId;
+
+            foreach (var col in ListBox.Columns)
+            {
+                if (col.ColumnKey == id)
+                {
+                    var oldWidth = col.SuggestedWidth;
+                    col.SuggestedWidth = newWidth;
+
+                    if (oldWidth != newWidth)                    
+                    {
+                        ListBox.Invalidate();
+                    }
+
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -1816,6 +1837,8 @@ namespace Alternet.UI
         /// <param name="e">A <see cref="ListBoxHeader.ColumnEventArgs"/> that contains the event data for the deleted column.</param>
         protected virtual void OnHeaderColumnDeleted(object? sender, ListBoxHeader.ColumnEventArgs e)
         {
+            if (!HasColumns)
+                return;
         }
 
         /// <inheritdoc/>

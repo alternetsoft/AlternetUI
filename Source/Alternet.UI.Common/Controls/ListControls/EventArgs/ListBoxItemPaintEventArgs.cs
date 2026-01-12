@@ -136,6 +136,11 @@ namespace Alternet.UI
         public virtual bool Visible { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets whether to use columns for item painting.
+        /// </summary>
+        public virtual bool UseColumns { get; set; } = false;
+
+        /// <summary>
         /// Gets draw label result returned after painting of the label is performed.
         /// </summary>
         public virtual Graphics.DrawLabelParams LabelMetrics { get; set; }

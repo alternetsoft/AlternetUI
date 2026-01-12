@@ -1703,6 +1703,7 @@ namespace Alternet.UI
             ListBoxItemPaintEventArgs e)
         {
             var item = e.Item;
+
             Thickness padding;
 
             if (item is null)
@@ -1730,7 +1731,7 @@ namespace Alternet.UI
                     info.SvgState = IsContainerEnabled(container)
                         ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
                         : VisualControlState.Disabled;
-                    if(info.SvgState == VisualControlState.Selected)
+                    if (info.SvgState == VisualControlState.Selected)
                         info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
                     info.IsRadioButton = item.IsRadioButton;
                     DefaultDrawCheckBox(e.Graphics, ControlUtils.SafeControl(container), info);
@@ -1738,7 +1739,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    if(info.KeepTextPaddingWithoutCheckBox)
+                    if (info.KeepTextPaddingWithoutCheckBox)
                         paintRectangle = info.TextRect;
                 }
             }
@@ -1768,7 +1769,7 @@ namespace Alternet.UI
 
             prm.Visible = e.Visible;
 
-            if(item is not null)
+            if (item is not null)
             {
                 prm.SuffixElements = item.SuffixElements;
                 prm.PrefixElements = item.PrefixElements;
@@ -1779,8 +1780,81 @@ namespace Alternet.UI
 
             DefaultDebugDrawForeground(container, e, prm);
 
-            e.Graphics.DrawLabel(ref prm);
-            e.LabelMetrics = prm;
+            var useColumns = item is not null && e.UseColumns && container is not null;
+
+            if (useColumns)
+            {
+                if (image is not null)
+                {
+                    prm.Text = string.Empty;
+                    prm.SuffixElements = null;
+                    prm.PrefixElements = null;
+
+                    e.Graphics.DrawLabel(ref prm);
+                    e.LabelMetrics = prm;
+
+                    var leftDelta = (prm.ImageLabelDistance ?? SpeedButton.DefaultImageLabelDistance)
+                        + image.SizeDip(e.Graphics.ScaleFactor).Width;
+
+                    paintRectangle.Left += leftDelta;
+                    paintRectangle.Width -= leftDelta;
+                }
+                else
+                {
+                    e.LabelMetrics = new ();
+                }
+
+                PaintWithColumns();
+            }
+            else
+            {
+                e.Graphics.DrawLabel(ref prm);
+                e.LabelMetrics = prm;
+            }
+
+
+            void PaintWithColumns()
+            {
+                var columnSeparatorWidth = GetColumnSeparatorWidth(container);
+                var columns = container!.Columns;
+
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    var column = columns[i];
+                    var width = column.SuggestedWidth;
+                    var cell = item?.GetCell(column.UniqueId);
+
+                    if (cell is null)
+                        continue;
+
+                    s = DefaultGetItemText(cell, forDisplay: true, container?.FormatProvider);
+
+                    var r = paintRectangle;
+                    r.Width = width;
+
+                    prm = new(
+                        s,
+                        e.ItemFont,
+                        itemColor,
+                        Color.Empty,
+                        image: null,
+                        paintRectangle,
+                        e.ItemAlignment);
+
+                    prm.SuffixElements = cell.SuffixElements;
+                    prm.PrefixElements = cell.PrefixElements;
+                    prm.Flags = cell.LabelFlags;
+                    prm.TextHorizontalAlignment = cell.TextLineAlignment ?? TextHorizontalAlignment.Left;
+                    prm.LineDistance = cell.TextLineDistance ?? 0;
+
+                    e.Graphics.DrawLabel(ref prm);
+
+                    var leftIncrement = width + columnSeparatorWidth;
+
+                    paintRectangle.Left += leftIncrement;
+                    paintRectangle.Width -= leftIncrement;
+                }
+            }
         }
 
         /// <summary>
