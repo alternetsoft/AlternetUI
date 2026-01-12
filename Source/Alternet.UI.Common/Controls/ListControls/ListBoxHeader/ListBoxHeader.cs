@@ -27,6 +27,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when a column is deleted from the header.
+        /// </summary>
+        public event EventHandler<ColumnEventArgs>? ColumnDeleted;
+
+        /// <summary>
+        /// Occurs when a column is inserted into the header.
+        /// </summary>
+        public event EventHandler<ColumnEventArgs>? ColumnInserted;
+
+        /// <summary>
+        /// Occurs when the width of a column changes.
+        /// </summary>
+        /// <remarks>Subscribe to this event to be notified when a column's width is modified, such as by
+        /// user interaction or programmatic adjustment. The event provides information about the affected column
+        /// through the <see cref="ColumnEventArgs"/> parameter.</remarks>
+        public event EventHandler<ColumnEventArgs>? ColumnSizeChanged;
+
+        /// <summary>
         /// Gets or sets the background color of the column splitters.
         /// </summary>
         public virtual LightDarkColor? SplitterBackColor { get; set; }
@@ -203,6 +221,8 @@ namespace Alternet.UI
                 column.Dispose();
             });
 
+            ColumnDeleted?.Invoke(this, new ColumnEventArgs(column));
+
             return true;
         }
 
@@ -292,6 +312,11 @@ namespace Alternet.UI
                 ClickAction = onClick,
             };
 
+            label.SizeChanged += (s, e) =>
+            {
+                ColumnSizeChanged?.Invoke(this, new ColumnEventArgs(label));
+            };
+
             if (width is null)
             {
                 var preferredSize = label.GetPreferredSize();
@@ -342,6 +367,8 @@ namespace Alternet.UI
                 }
             });
 
+            ColumnInserted?.Invoke(this, new ColumnEventArgs(label));
+
             return label;
         }
 
@@ -368,6 +395,28 @@ namespace Alternet.UI
         protected virtual void SetIsColumnControl(SpeedButton control, bool isColumn)
         {
             control.CustomAttr.SetAttribute("IsColumn", isColumn);
+        }
+
+        /// <summary>
+        /// Provides data for events that are associated with a specific column.
+        /// </summary>
+        /// <remarks>Use this class as the event data when handling events that relate to a particular
+        /// column. The associated column is accessible through the <see cref="Column"/> property.</remarks>
+        public class ColumnEventArgs : BaseEventArgs
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ColumnEventArgs"/> class.
+            /// </summary>
+            /// <param name="column">The <see cref="AbstractControl"/> representing the column.</param>
+            public ColumnEventArgs(AbstractControl column)
+            {
+                Column = column;
+            }
+
+            /// <summary>
+            /// Gets or sets the column associated with the event.
+            /// </summary>
+            public AbstractControl Column { get; set; }
         }
     }
 }
