@@ -231,6 +231,7 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
     <Project Path="../../Alternet.UI.Common/Alternet.UI.Common.csproj" />
+    <Project Path="../../Alternet.UI.Generator/Alternet.UI.Generator.csproj" />
     <Project Path="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" Id="79f2529c-c711-457a-9087-325c333cde60" />
     <Project Path="../../Alternet.UI/Alternet.UI.csproj">
       <BuildDependency Project="../../Alternet.UI.Pal/Alternet.UI.Pal.vcxproj" />
