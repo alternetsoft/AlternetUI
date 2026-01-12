@@ -70,4 +70,14 @@
 
   <Import Project="$(MSBuildThisFileDirectory)\SignDll.proj" />
 
+
+  <PropertyGroup>
+    <PathToGenerator>..\Alternet.UI.Generator\bin\Debug\netstandard2.0\Alternet.UI.Generator.dll</PathToGenerator>
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(Configuration)' == 'Debug' and Exists('$(PathToGenerator)')">
+    <Analyzer Include="$(PathToGenerator)" />
+  </ItemGroup>
+
 </Project>
