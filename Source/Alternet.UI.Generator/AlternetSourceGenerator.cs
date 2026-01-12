@@ -19,15 +19,14 @@ public class SampleIncrementalGenerator : IIncrementalGenerator
             // Register a source output step
             context.RegisterSourceOutput(provider, (spc, compilation) =>
             {
-                // Emit a diagnostic during code generation
                 spc.ReportDiagnostic(
                     Diagnostic.Create(
                         new DiagnosticDescriptor(
                             id: "GEN001",
-                            title: "Info from incremental generator",
+                            title: "Incremental Generator Warning",
                             messageFormat: "Source generator executed at {0}",
                             category: "MyGenerator",
-                            DiagnosticSeverity.Info,
+                            DiagnosticSeverity.Warning,   // <-- Use Warning or Error!
                             isEnabledByDefault: true),
                         Location.None,
                         DateTime.Now.ToString("T")));
