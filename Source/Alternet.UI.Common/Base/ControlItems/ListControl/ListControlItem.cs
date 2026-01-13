@@ -1696,6 +1696,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the padding to apply to the specified list control item.
+        /// </summary>
+        /// <param name="item">The list control item for which to retrieve the padding.
+        /// If null, an empty padding is returned.</param>
+        /// <param name="container">The container that holds the list control item.
+        /// This parameter is reserved for future use and is not
+        /// currently utilized.</param>
+        /// <returns>A Thickness value representing the padding for the specified item. Returns Thickness.Empty if <paramref
+        /// name="item"/> is null.</returns>
+        public static Thickness GetPadding(
+            ListControlItem? item,
+            IListControlItemContainer? container)
+        {
+            if (item is null)
+            {
+                return Thickness.Empty;
+            }
+            else
+            {
+                return item.ForegroundMargin;
+            }
+        }
+
+        /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
         public static void DefaultDrawForeground(
@@ -1703,115 +1727,55 @@ namespace Alternet.UI
             ListBoxItemPaintEventArgs e)
         {
             var item = e.Item;
-
-            Thickness padding;
-
-            if (item is null)
-            {
-                padding = Thickness.Empty;
-            }
-            else
-            {
-                padding = item.ForegroundMargin;
-            }
-
-            var paintRectangle = e.ClientRectangle;
-            paintRectangle.ApplyMargin(padding);
-
-            var isSelected = e.IsSelected;
-            var hideSelection = item?.HideSelection ?? false;
-            if (hideSelection)
-                isSelected = false;
-
-            if (item is not null)
-            {
-                var info = item.GetCheckBoxInfo(container, paintRectangle);
-                if (info.IsCheckBoxVisible)
-                {
-                    info.SvgState = IsContainerEnabled(container)
-                        ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
-                        : VisualControlState.Disabled;
-                    if (info.SvgState == VisualControlState.Selected)
-                        info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
-                    info.IsRadioButton = item.IsRadioButton;
-                    DefaultDrawCheckBox(e.Graphics, ControlUtils.SafeControl(container), info);
-                    paintRectangle = info.TextRect;
-                }
-                else
-                {
-                    if (info.KeepTextPaddingWithoutCheckBox)
-                        paintRectangle = info.TextRect;
-                }
-            }
-
-            var itemImages = e.ItemImages;
-            var normalImage = itemImages[VisualControlState.Normal];
-            var disabledImage = itemImages[VisualControlState.Disabled];
-            var selectedImage = itemImages[VisualControlState.Selected];
-
-            var image = IsContainerEnabled(container)
-                ? (isSelected ? selectedImage : normalImage) : disabledImage;
-
-            var textVisible = container?.Defaults.TextVisible ?? true;
-
-            var s = textVisible ? e.ItemTextForDisplay : string.Empty;
-
+            var isSelected = e.HasSelection;
+            var paintRectangle = e.PaintRectangle;
+            var image = e.GetImage(isSelected);
+            var s = e.VisibleTextForDisplay;
             var itemColor = e.GetTextColor(isSelected) ?? SystemColors.WindowText;
-
-            Graphics.DrawLabelParams prm = new(
-                s,
-                e.ItemFont,
-                itemColor,
-                Color.Empty,
-                image,
-                paintRectangle,
-                e.ItemAlignment);
-
-            prm.Visible = e.Visible;
-
-            if (item is not null)
-            {
-                prm.SuffixElements = item.SuffixElements;
-                prm.PrefixElements = item.PrefixElements;
-                prm.Flags = item.LabelFlags;
-                prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
-                prm.LineDistance = item.TextLineDistance ?? 0;
-            }
-
-            DefaultDebugDrawForeground(container, e, prm);
-
             var useColumns = item is not null && e.UseColumns && container is not null;
 
             if (useColumns)
             {
-                if (image is not null)
-                {
-                    prm.Text = string.Empty;
-                    prm.SuffixElements = null;
-                    prm.PrefixElements = null;
-
-                    e.Graphics.DrawLabel(ref prm);
-                    e.LabelMetrics = prm;
-
-                    var leftDelta = (prm.ImageLabelDistance ?? SpeedButton.DefaultImageLabelDistance)
-                        + image.SizeDip(e.Graphics.ScaleFactor).Width;
-
-                    paintRectangle.Left += leftDelta;
-                    paintRectangle.Width -= leftDelta;
-                }
-                else
-                {
-                    e.LabelMetrics = new ();
-                }
-
                 PaintWithColumns();
+                e.LabelMetrics = new();
             }
             else
             {
+                if (item is not null)
+                {
+                    paintRectangle = item.DrawCheckBox(
+                                e.Graphics,
+                                item,
+                                container,
+                                paintRectangle,
+                                isSelected);
+                }
+
+                Graphics.DrawLabelParams prm = new(
+                    s,
+                    e.ItemFont,
+                    itemColor,
+                    backColor: Color.Empty,
+                    image,
+                    paintRectangle,
+                    e.ItemAlignment);
+
+                prm.Visible = e.Visible;
+
+                if (item is not null)
+                {
+                    prm.SuffixElements = item.SuffixElements;
+                    prm.PrefixElements = item.PrefixElements;
+                    prm.Flags = item.LabelFlags;
+                    prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
+                    prm.LineDistance = item.TextLineDistance ?? 0;
+                }
+
+                DefaultDebugDrawForeground(container, e, prm);
+
                 e.Graphics.DrawLabel(ref prm);
                 e.LabelMetrics = prm;
             }
-
 
             void PaintWithColumns()
             {
@@ -1832,13 +1796,15 @@ namespace Alternet.UI
                     var r = paintRectangle;
                     r.Width = width;
 
-                    prm = new(
+                    var cellImage = e.GetImage(cell, container, isSelected);
+
+                    Graphics.DrawLabelParams prm = new(
                         s,
                         e.ItemFont,
                         itemColor,
-                        Color.Empty,
-                        image: null,
-                        paintRectangle,
+                        backColor: Color.Empty,
+                        image: cellImage,
+                        r,
                         e.ItemAlignment);
 
                     prm.SuffixElements = cell.SuffixElements;
@@ -1846,6 +1812,7 @@ namespace Alternet.UI
                     prm.Flags = cell.LabelFlags;
                     prm.TextHorizontalAlignment = cell.TextLineAlignment ?? TextHorizontalAlignment.Left;
                     prm.LineDistance = cell.TextLineDistance ?? 0;
+                    prm.DrawDebugCorners = false;
 
                     e.Graphics.DrawLabel(ref prm);
 
@@ -2154,6 +2121,54 @@ namespace Alternet.UI
         {
             SetImage(state, image, isDark: false);
             SetImage(state, image, isDark: true);
+        }
+
+        /// <summary>
+        /// Draws a check box or radio button for the specified list control item within the given rectangle, updating
+        /// the drawing area as needed.
+        /// </summary>
+        /// <remarks>If the item does not display a check box or radio button, the method may still adjust
+        /// the drawing area to maintain consistent text alignment and padding. Override this method to customize the
+        /// appearance or behavior of check box or radio button rendering for list items.</remarks>
+        /// <param name="dc">The graphics context used to render the check box or radio button.</param>
+        /// <param name="item">The list control item for which the check box or radio button is drawn.</param>
+        /// <param name="container">The container that hosts the list control item, or null if the item is not
+        /// associated with a container.</param>
+        /// <param name="paintRectangle">The rectangle, in device-independent coordinates, that defines the area
+        /// available for drawing the check box
+        /// or radio button.</param>
+        /// <param name="isSelected">true if the item is selected and the check box or radio button should
+        /// be rendered in the selected state;
+        /// otherwise, false.</param>
+        /// <returns>A RectD structure representing the updated area available for drawing the item's
+        /// text after the check box or
+        /// radio button is rendered.</returns>
+        public virtual RectD DrawCheckBox(
+            Graphics dc,
+            ListControlItem item,
+            IListControlItemContainer? container,
+            RectD paintRectangle,
+            bool isSelected)
+        {
+            var info = item.GetCheckBoxInfo(container, paintRectangle);
+            if (info.IsCheckBoxVisible)
+            {
+                info.SvgState = IsContainerEnabled(container)
+                    ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
+                    : VisualControlState.Disabled;
+                if (info.SvgState == VisualControlState.Selected)
+                    info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
+                info.IsRadioButton = item.IsRadioButton;
+                DefaultDrawCheckBox(dc, ControlUtils.SafeControl(container), info);
+                paintRectangle = info.TextRect;
+            }
+            else
+            {
+                if (info.KeepTextPaddingWithoutCheckBox)
+                    paintRectangle = info.TextRect;
+            }
+
+            return paintRectangle;
         }
 
         /// <summary>
