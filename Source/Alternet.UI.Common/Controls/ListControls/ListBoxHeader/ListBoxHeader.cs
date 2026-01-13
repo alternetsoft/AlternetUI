@@ -198,6 +198,23 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Retrieves the splitter control attached to the specified column, if one exists.
+        /// </summary>
+        /// <param name="column">The column control for which to retrieve the attached splitter. Can be null.</param>
+        /// <returns>The splitter control attached to the specified column, or null if no splitter is attached or if the column
+        /// is null.</returns>
+        public virtual AbstractControl? GetColumnSplitter(AbstractControl? column)
+        {
+            if (column == null)
+                return null;
+
+            var splitterId = column.CustomAttr.GetAttribute<ObjectUniqueId>("AttachedSplitter");
+
+            var splitter = FindChild(splitterId);
+            return splitter;
+        }
+
         /// <inheritdoc/>
         public virtual bool DeleteColumn(ObjectUniqueId? columnId)
         {
@@ -205,9 +222,7 @@ namespace Alternet.UI
             if (column == null)
                 return false;
 
-            var splitterId = column.CustomAttr.GetAttribute<ObjectUniqueId>("AttachedSplitter");
-
-            var splitter = FindChild(splitterId);
+            var splitter = GetColumnSplitter(column);
 
             DoInsideLayout(() =>
             {
@@ -295,6 +310,15 @@ namespace Alternet.UI
             return InsertColumnCore(index, title, width, onClick).UniqueId;
         }
 
+        /// <summary>
+        /// Gets the width of the splitter between columns.
+        /// </summary>
+        /// <returns>The width of the splitter between columns.</returns>
+        public virtual Coord GetSplitterWidth()
+        {
+            return Splitter.DefaultWidth;
+        }
+
         /// <inheritdoc/>
         public virtual SpeedButton InsertColumnCore(
             int index,
@@ -338,6 +362,7 @@ namespace Alternet.UI
                 ParentForeColor = false,
                 ForeColor = DefaultColors.BorderColor,
                 ResolveSplitterColorsOverride = ResolveSplitterColors,
+                Width = GetSplitterWidth(),
             };
 
             label.CustomAttr.SetAttribute("AttachedSplitter", splitter.UniqueId);
