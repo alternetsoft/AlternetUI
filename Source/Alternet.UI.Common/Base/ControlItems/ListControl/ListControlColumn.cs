@@ -13,10 +13,7 @@ namespace Alternet.UI
     /// </remarks>
     public class ListControlColumn : BaseControlItem
     {
-        /// <summary>
-        /// Specifies the default width, in columns, used to separate columns in a grid or table layout.
-        /// </summary>
-        public static Coord DefaultColumnSeparatorWidth = 1;
+        private static float? defaultColumnSeparatorWidth;
 
         private Coord suggestedWidth;
         private string? title;
@@ -26,6 +23,16 @@ namespace Alternet.UI
         /// </summary>
         public ListControlColumn()
         {
+        }
+
+        /// <summary>
+        /// Specifies the default width, in columns, used to separate columns in a grid or table layout.
+        /// </summary>
+        public static Coord DefaultColumnSeparatorWidth
+        {
+            get => defaultColumnSeparatorWidth ?? Splitter.DefaultWidth;
+        
+            set => defaultColumnSeparatorWidth = value;
         }
 
         /// <summary>
