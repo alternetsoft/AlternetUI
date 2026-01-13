@@ -409,38 +409,23 @@ namespace Alternet.Drawing
         {
             var image = prm.Image;
 
-            DrawElementParams imageElement = DrawElementParams.CreateImageElement(ref prm);
-            DrawElementParams textElement = DrawElementParams.CreateTextElement(ref prm);
-
             DrawElementsParams drawParams = new();
 
-            if (prm.PrefixElements is not null || prm.SuffixElements is not null)
+            if (image is null)
             {
-                if (image is null)
-                {
-                    drawParams.Elements = ArrayUtils.CombineArrays<DrawElementParams>(
-                        prm.PrefixElements,
-                        [textElement],
-                        prm.SuffixElements);
-                }
-                else
-                {
-                    drawParams.Elements = ArrayUtils.CombineArrays<DrawElementParams>(
-                        prm.PrefixElements,
-                        [imageElement, textElement],
-                        prm.SuffixElements);
-                }
+                drawParams.Elements = [DrawElementParams.CreateTextElement(ref prm)];
             }
             else
             {
-                if (image is null)
-                {
-                    drawParams.Elements = [textElement];
-                }
-                else
-                {
-                    drawParams.Elements = [imageElement, textElement];
-                }
+                drawParams.Elements = [DrawElementParams.CreateImageElement(ref prm), DrawElementParams.CreateTextElement(ref prm)];
+            }
+
+            if (prm.PrefixElements is not null || prm.SuffixElements is not null)
+            {
+                drawParams.Elements = ArrayUtils.CombineArrays<DrawElementParams>(
+                    prm.PrefixElements,
+                    drawParams.Elements,
+                    prm.SuffixElements);
             }
 
             drawParams.IsVertical = prm.IsVertical;
