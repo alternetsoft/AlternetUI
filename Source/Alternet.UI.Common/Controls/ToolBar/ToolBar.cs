@@ -51,8 +51,7 @@ namespace Alternet.UI
         /// </summary>
         public ToolBar()
         {
-            ParentBackColor = true;
-            ParentForeColor = true;
+            AssignDefaultColors();
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
             IsGraphicControl = true;
@@ -2889,6 +2888,40 @@ namespace Alternet.UI
             {
                 control.IsToolTipEnabled = IsButtonToolTipsEnabled;
             }
+        }
+
+        /// <summary>
+        /// Assigns default background and foreground color values based on the current application platform and
+        /// appearance settings.
+        /// </summary>
+        /// <remarks>On MAUI platforms, this method sets the background and foreground colors according to
+        /// the system's light or dark appearance. On other platforms, it configures the control to inherit colors from
+        /// its parent. Override this method to customize default color assignment behavior for derived
+        /// controls.</remarks>
+        protected virtual void AssignDefaultColors()
+        {
+            if (App.IsMaui)
+            {
+                ParentBackColor = false;
+                ParentForeColor = false;
+                bool isDark = SystemSettings.AppearanceIsDark;
+                BackColor = DefaultColors.MauiToolBar.BackColor(isDark);
+                ForeColor = DefaultColors.MauiToolBar.TextColor(isDark);
+            }
+            else
+            {
+                ParentBackColor = true;
+                ParentForeColor = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            if (AutoUpdateColors)
+                AssignDefaultColors();
+
+            base.OnSystemColorsChanged(e);
         }
 
         /// <summary>
