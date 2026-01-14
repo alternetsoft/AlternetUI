@@ -39,10 +39,10 @@ namespace Alternet.UI
         /// Initializes a new instance of the ListControlColumn class with the specified column title.
         /// </summary>
         /// <param name="title">The display title for the column. Cannot be null.</param>
-        public ListControlColumn(string title)
+        public ListControlColumn(string? title)
             : this()
         {
-            Title = title;
+            this.title = title;
         }
 
         /// <summary>
