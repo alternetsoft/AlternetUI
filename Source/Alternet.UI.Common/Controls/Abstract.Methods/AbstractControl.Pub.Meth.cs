@@ -230,6 +230,7 @@ namespace Alternet.UI
             switch (layout)
             {
                 case LayoutStyle.Dock:
+                    return GetPreferredSizeDockLayout(container, context);
                 case LayoutStyle.None:
                 default:
                     return GetPreferredSizeDefaultLayout(container, context);

@@ -196,6 +196,30 @@ namespace Alternet.UI
         public virtual bool TrackItemSelectedChanges { get; set; } = true;
 
         /// <summary>
+        /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual VirtualListBox ListBox
+        {
+            get
+            {
+                if (listBox is null)
+                {
+                    listBox = CreateListBox();
+                    listBox.VerticalAlignment = VerticalAlignment.Fill;
+                    listBox.ParentFont = true;
+                    listBox.HasBorder = false;
+                    listBox.SelectionUnderImage = true;
+                    listBox.CheckBoxVisible = true;
+                    listBox.CheckOnClick = false;
+                    listBox.Parent = this;
+                }
+
+                return listBox;
+            }
+        }
+
+        /// <summary>
         /// Gets the header with columns associated with the control.
         /// </summary>
         /// <remarks>The header is automatically created when accessed for the first time.
@@ -213,12 +237,14 @@ namespace Alternet.UI
                     header.OnlyBottomBorder();
                     header.VerticalAlignment = VerticalAlignment.Top;
                     header.Visible = false;
+                    // header.MinHeight = 32;
+                    // header.Height = 32;
 
                     header.ColumnDeleted += OnHeaderColumnDeleted;
                     header.ColumnInserted += OnHeaderColumnInserted;
                     header.ColumnSizeChanged += OnHeaderColumnSizeChanged;
 
-                    this.Children.Prepend(header);
+                    Children.Prepend(header);
                 }
 
                 return header;
@@ -402,30 +428,6 @@ namespace Alternet.UI
             set
             {
                 ListBox.SelectedItems = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets the underlying <see cref="VirtualListBox"/> used by this tree control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual VirtualListBox ListBox
-        {
-            get
-            {
-                if(listBox is null)
-                {
-                    listBox = CreateListBox();
-                    listBox.VerticalAlignment = VerticalAlignment.Fill;
-                    listBox.ParentFont = true;
-                    listBox.HasBorder = false;
-                    listBox.SelectionUnderImage = true;
-                    listBox.CheckBoxVisible = true;
-                    listBox.CheckOnClick = false;
-                    listBox.Parent = this;
-                }
-
-                return listBox;
             }
         }
 
@@ -633,11 +635,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public IReadOnlyList<ListControlItem> VisibleItems => ListBox.Items;
 
+        /// <inheritdoc/>
         [Browsable(false)]
-        internal new LayoutStyle? Layout
+        public override LayoutStyle? Layout
         {
             get => base.Layout;
-            set => base.Layout = value;
+
+            set
+            {
+            }
         }
 
         [Browsable(false)]

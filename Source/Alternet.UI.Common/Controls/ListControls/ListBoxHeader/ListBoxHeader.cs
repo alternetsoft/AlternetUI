@@ -310,6 +310,28 @@ namespace Alternet.UI
             return InsertColumnCore(index, title, width, onClick).UniqueId;
         }
 
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        {
+            if (HasBorder)
+            {
+                var width = NormalBorder.Width;
+                return Internal() + width.Size;
+            }
+            else
+            {
+                return Internal();
+            }
+
+            SizeD Internal()
+            {
+                var children = ColumnControls.ToArray();
+                var result = AbstractControl.GetPreferredSizeWhenStack(this, context, isVert: false, children, ignoreDocked: false);
+                result.Width = context.AvailableSize.Width;
+                return result;
+            }
+        }
+
         /// <summary>
         /// Gets the width of the splitter between columns.
         /// </summary>

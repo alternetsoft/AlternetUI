@@ -255,6 +255,15 @@ namespace Alternet.UI
             return result;
         }
 
+        internal static SizeD GetPreferredSizeDockLayout(
+            AbstractControl container,
+            PreferredSizeContext context)
+        {
+            if (container.HasChildren)
+                return container.GetBestSizeWithChildren(context);
+            return container.GetBestSizeWithPadding(context);
+        }
+
         internal static SizeD GetPreferredSizeWhenHorizontal(
             AbstractControl container,
             PreferredSizeContext context)
@@ -335,7 +344,9 @@ namespace Alternet.UI
         internal static SizeD GetPreferredSizeWhenStack(
             AbstractControl container,
             PreferredSizeContext context,
-            bool isVert)
+            bool isVert,
+            IReadOnlyList<AbstractControl>? children = null,
+            bool ignoreDocked = true)
         {
             if (context.AvailableSize.AnyIsEmptyOrNegative)
                 return SizeD.Empty;
@@ -344,7 +355,7 @@ namespace Alternet.UI
             if (!containerSuggestedSize.IsNanWidthOrHeight)
                 return containerSuggestedSize;
 
-            var children = container.AllChildrenInLayout;
+            children ??= container.AllChildrenInLayout;
 
             var isNanWidth = containerSuggestedSize.IsNanWidth;
             var isNanHeight = containerSuggestedSize.IsNanHeight;
@@ -354,8 +365,11 @@ namespace Alternet.UI
 
             foreach (var child in children)
             {
-                if (child.Dock != DockStyle.None)
-                    continue;
+                if (ignoreDocked)
+                {
+                    if (child.Dock != DockStyle.None)
+                        continue;
+                }
 
                 var childMargin = child.Margin;
 
