@@ -127,10 +127,7 @@ namespace Alternet.UI
 
                         var scrollBar = interior.VertScrollBar;
 
-                        if (scrollBar is not null)
-                        {
-                            scrollBar.AfterPaint = null;
-                        }
+                        scrollBar?.AfterPaint = null;
                     }
 
                     var handler = (control as Control)?.Handler as MauiControlHandler;
@@ -762,7 +759,7 @@ namespace Alternet.UI
 
             if (interior is null)
             {
-                control.Bounds = newBounds;
+                SetControlBounds(newBounds);
             }
             else
             {
@@ -771,7 +768,12 @@ namespace Alternet.UI
                 var rectangles = interior.GetLayoutRectangles(control);
                 var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
-                control.Bounds = (0, 0, clientRect.Width, clientRect.Height);
+                SetControlBounds((0, 0, clientRect.Width, clientRect.Height));
+            }
+
+            void SetControlBounds(RectD newBounds)
+            {
+                control!.Bounds = newBounds;
             }
         }
     }

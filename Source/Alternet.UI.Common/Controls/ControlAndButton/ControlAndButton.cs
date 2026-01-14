@@ -811,10 +811,10 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            base.OnSystemColorsChanged(e);
-
-            if(AutoUpdateColors)
+            if (AutoUpdateColors)
                 RaiseAutoBackColorChanged();
+
+            base.OnSystemColorsChanged(e);
         }
 
         /// <summary>

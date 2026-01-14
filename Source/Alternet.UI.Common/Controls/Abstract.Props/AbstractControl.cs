@@ -3589,7 +3589,7 @@ namespace Alternet.UI
 
                 verticalAlignment = value;
                 VerticalAlignmentChanged?.Invoke(this, EventArgs.Empty);
-                if(Parent is not null && !IgnoreLayout)
+                if (Parent is not null && !IgnoreLayout)
                     PerformLayout();
             }
         }

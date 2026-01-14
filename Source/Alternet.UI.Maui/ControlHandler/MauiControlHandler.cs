@@ -293,13 +293,17 @@ namespace Alternet.UI
         public virtual void OnChildInserted(AbstractControl childControl)
         {
             if (childControl.Visible)
+            {
                 InvalidateContainer();
+            }
         }
 
         public virtual void OnChildRemoved(AbstractControl childControl)
         {
             if (childControl.Visible)
+            {
                 InvalidateContainer();
+            }
         }
 
         public virtual Graphics OpenPaintDrawingContext()
@@ -341,8 +345,7 @@ namespace Alternet.UI
 
         public virtual void SetEnabled(bool value)
         {
-            if (container is not null)
-                container.IsEnabled = value;
+            container?.IsEnabled = value;
         }
 
         public virtual void SetToolTip(object? value)
