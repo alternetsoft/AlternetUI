@@ -36,14 +36,12 @@ namespace Alternet.UI
             /// </summary>
             DrawBorderAndBackground = DrawBackground | DrawBorder,
 
-#if DEBUG
             /// <summary>
             /// Specifies that background should be red.
-            /// This option is available only when application is compiled in DEBUG mode and
+            /// This option has sense only when application is compiled in DEBUG mode and
             /// can be used to test whether background is drawn correctly.
             /// </summary>
             BackgroundIsRed = 4,
-#endif
 
             /// <summary>
             /// Specifies that parent color should be used for background.
@@ -162,13 +160,16 @@ namespace Alternet.UI
             Func<RectD> getBounds,
             IReadOnlyList<AbstractControl> items)
         {
+            var space = getBounds();
+
+            if (space.SizeIsEmpty)
+                return;
+
             if (layout == LayoutStyle.Scroll)
             {
                 OldLayout.LayoutWhenScroll(container, getBounds, items, true);
                 return;
             }
-
-            var space = getBounds();
 
             var number = LayoutWhenDocked(container, ref space, items);
 
@@ -184,6 +185,10 @@ namespace Alternet.UI
                 }
 
                 items = newItems;
+            }
+
+            if (container.DebugIdentifier is not null)
+            {
             }
 
             switch (layout)
