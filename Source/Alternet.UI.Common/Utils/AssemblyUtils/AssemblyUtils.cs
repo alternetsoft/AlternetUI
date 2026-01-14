@@ -380,10 +380,60 @@ namespace Alternet.UI
         {
             try
             {
-                if (asm is null || asm.IsDynamic)
+                if (asm is null)
                     return [];
                 var types = asm.GetExportedTypes();
                 return types;
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                return CommonUtils.GetNotNull<Type>(e.Types);
+            }
+            catch
+            {
+                return [];
+            }
+        }
+
+        /// <summary>
+        /// Returns the types defined in the specified assembly, optionally including only the exported types.
+        /// </summary>
+        /// <param name="asm">The assembly from which to retrieve types. Can be null.</param>
+        /// <param name="onlyExported">true to return only types that are exported from the assembly; otherwise,
+        /// false to return all types.</param>
+        /// <returns>An array of Type objects representing the types defined in the assembly. Returns an empty array if the
+        /// assembly is null or contains no matching types.</returns>
+        public static Type[] GetTypesSafe(Assembly? asm, bool onlyExported)
+        {
+            if (onlyExported)
+                return GetExportedTypesSafe(asm);
+            else
+                return GetTypesSafe(asm);
+        }
+
+        /// <summary>
+        /// Safely retrieves all types defined in the specified assembly.
+        /// </summary>
+        /// <param name="asm">The assembly to retrieve types from.</param>
+        /// <returns>
+        /// An array of <see cref="Type"/> objects representing the types defined in the assembly.
+        /// Returns an empty array if the assembly is null or an error occurs while retrieving the types.
+        /// </returns>
+        public static Type[] GetTypesSafe(Assembly? asm)
+        {
+            try
+            {
+                if (asm is null)
+                {
+                    return [];
+                }
+
+                var types = asm.GetTypes();
+                return types;
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                return CommonUtils.GetNotNull<Type>(e.Types);
             }
             catch
             {
