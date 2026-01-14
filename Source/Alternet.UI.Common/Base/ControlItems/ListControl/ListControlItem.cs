@@ -2023,6 +2023,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the cell associated with the specified column in the current row, ensuring that a valid cell is
+        /// always returned.
+        /// </summary>
+        /// <param name="column">The column for which to retrieve the corresponding cell. Cannot be null.</param>
+        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column. If the cell does not exist,
+        /// a default or placeholder cell is returned.</returns>
+        public virtual ListControlItem SafeCell(ListControlColumn column)
+        {
+            return SafeCell(column.UniqueId);
+        }
+
+        /// <summary>
         /// Gets the cell for the specified column identifier.
         /// If the cell does not exist, it is created and added to the <see cref="Cells"/> collection.
         /// </summary>
@@ -2040,6 +2052,16 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the cell associated with the specified column in the list control.
+        /// </summary>
+        /// <param name="column">The column for which to retrieve the corresponding cell. Cannot be null.</param>
+        /// <returns>The cell associated with the specified column, or null if no cell exists for the column.</returns>
+        public ListControlItem? GetCell(ListControlColumn column)
+        {
+            return GetCell(column.UniqueId);
         }
 
         /// <summary>
