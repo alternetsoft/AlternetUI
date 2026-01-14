@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
+using Alternet.Maui.Extensions;
+
 namespace Alternet.Maui
 {
     public partial class SimpleToolBarView
@@ -135,9 +137,9 @@ namespace Alternet.Maui
                 if (ToolBar is null)
                 {
                     if (IsDark)
-                        color = DefaultSeparatorColorDark;
+                        color = Alternet.Drawing.DefaultColors.MauiToolBar.SeparatorColorDark.ToMaui();
                     else
-                        color = DefaultSeparatorColorLight;
+                        color = Alternet.Drawing.DefaultColors.MauiToolBar.SeparatorColorLight.ToMaui();
                 }
                 else
                     color = ToolBar.GetSeparatorColor();

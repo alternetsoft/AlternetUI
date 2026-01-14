@@ -14,14 +14,34 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the default border color for user controls when dark theme is used.
         /// </summary>
-        public static readonly Color DefaultBorderColorDark = Color.FromRgb(123, 123, 123);
+        public static readonly Color DefaultBorderColorDark;
 
         /// <summary>
         /// Gets the default border color for user controls when light theme is used.
         /// </summary>
         // This is also used to get default disabled svg image color for light theme.
         // So please do not change this value unless you completely sure.
-        public static readonly Color DefaultBorderColorLight = Color.FromRgb(204, 206, 219);
+        public static readonly Color DefaultBorderColorLight;
+
+        /// <summary>
+        /// Gets the default background color for controls when dark theme is used.
+        /// </summary>
+        public static readonly Color DefaultControlBackColorDark;
+
+        /// <summary>
+        /// Gets the default foreground color for controls when dark theme is used.
+        /// </summary>
+        public static readonly Color DefaultControlForeColorDark;
+
+        /// <summary>
+        /// Gets the default background color for windows when dark theme is used.
+        /// </summary>
+        public static readonly Color DefaultWindowBackColorDark;
+
+        /// <summary>
+        /// Gets the default foreground color for windows when dark theme is used.
+        /// </summary>
+        public static readonly Color DefaultWindowForeColorDark;
 
         private static LightDarkColor? borderColor;
         private static LightDarkColor windowBackColor;
@@ -31,12 +51,28 @@ namespace Alternet.Drawing
         private static LightDarkColor? svgDisabledColor;
         private static LightDarkColor? svgNormalColor;
 
-#pragma warning disable CS8618
+#pragma warning disable
         static DefaultColors()
+#pragma warning restore
         {
+            if (App.IsMaui)
+            {
+                DefaultBorderColorDark = Color.FromRgb(61, 61, 61);
+            }
+            else
+            {
+                DefaultBorderColorDark = Color.FromRgb(123, 123, 123);
+            }
+
+            DefaultBorderColorLight = Color.FromRgb(204, 206, 219);
+
+            DefaultControlBackColorDark = SystemColors.Control;
+            DefaultControlForeColorDark = SystemColors.ControlText;
+            DefaultWindowBackColorDark = SystemColors.Window;
+            DefaultWindowForeColorDark = SystemColors.WindowText;
+
             Initialize();
         }
-#pragma warning restore CS8618
 
         /// <summary>
         /// Gets or sets the default color of a checkbox in its normal state.
@@ -220,8 +256,8 @@ namespace Alternet.Drawing
 
             if (SystemColors.Control.IsDark())
             {
-                darkBackColor = SystemColors.Control;
-                darkForeColor = SystemColors.ControlText;
+                darkBackColor = DefaultControlBackColorDark;
+                darkForeColor = DefaultControlForeColorDark;
             }
             else
             {
@@ -234,8 +270,8 @@ namespace Alternet.Drawing
 
             if (SystemColors.Window.IsDark())
             {
-                darkBackColor = SystemColors.Window;
-                darkForeColor = SystemColors.WindowText;
+                darkBackColor = DefaultWindowBackColorDark;
+                darkForeColor = DefaultWindowForeColorDark;
             }
             else
             {
@@ -245,6 +281,107 @@ namespace Alternet.Drawing
 
             controlBackColor = new(light: Color.White, dark: darkBackColor);
             controlForeColor = new(light: Color.Black, dark: darkForeColor);
+        }
+
+        /// <summary>
+        /// Provides predefined color values for styling toolbar elements in .NET MAUI applications.
+        /// </summary>
+        /// <remarks>This static class contains color definitions for various toolbar states and themes,
+        /// including light and dark modes. The colors can be used to ensure consistent appearance across toolbars in
+        /// MAUI-based user interfaces.</remarks>
+        public static class MauiToolBar
+        {
+            /// <summary>
+            /// Gets or sets the background color for toolbars in dark theme.
+            /// </summary>
+            public static Color BackColorDark = (31, 31, 31);
+
+            /// <summary>
+            /// Gets or sets the background color for toolbars in light theme.
+            /// </summary>
+            public static Color BackColorLight = Color.White;
+
+            /// <summary>
+            /// Gets or sets the text color for toolbars in dark theme.
+            /// </summary>
+            public static Color TextColorDark = (214, 214, 214);
+
+            /// <summary>
+            /// Gets or sets the separator color for toolbars in dark theme.
+            /// </summary>
+            public static Color SeparatorColorDark = Color.FromRgb(61, 61, 61);
+
+            /// <summary>
+            /// Gets or sets the separator color for toolbars in light theme.
+            /// </summary>
+            public static Color SeparatorColorLight = Color.FromRgb(204, 206, 219);
+
+            /// <summary>
+            /// Gets or sets the sticky underline color for toolbars in dark theme.
+            /// </summary>
+            public static Color StickyUnderlineColorDark = Color.FromRgb(76, 194, 255);
+
+            /// <summary>
+            /// Gets or sets the sticky underline color for toolbars in light theme.
+            /// </summary>
+            public static Color StickyUnderlineColorLight = Color.FromRgb(0, 120, 212);
+
+            /// <summary>
+            /// Gets or sets the disabled text color for toolbars in dark theme.
+            /// </summary>
+            public static Color DisabledTextColorDark = Color.Gray;
+
+            /// <summary>
+            /// Gets or sets the disabled text color for toolbars in light theme.
+            /// </summary>
+            public static Color DisabledTextColorLight = Color.Gray;
+
+            /// <summary>
+            /// Gets or sets the hot (hover) border color for toolbars in dark theme.
+            /// </summary>
+            public static Color HotBorderColorDark = Color.DarkGray;
+
+            /// <summary>
+            /// Gets or sets the pressed border color for toolbars in dark theme.
+            /// </summary>
+            public static Color PressedBorderColorDark = Color.FromRgb(61, 61, 61);
+
+            /// <summary>
+            /// Gets or sets the hot (hover) border color for toolbars in light theme.
+            /// </summary>
+            public static Color HotBorderColorLight = Color.FromRgb(0, 108, 190);
+
+            /// <summary>
+            /// Gets or sets the text color for toolbars in light theme.
+            /// </summary>
+            public static Color TextColorLight = Color.Black;
+
+            /// <summary>
+            /// Gets or sets the pressed border color for toolbars in light theme.
+            /// </summary>
+            public static Color PressedBorderColorLight = Color.DarkGray;
+
+            /// <summary>
+            /// Gets the background color for toolbars based on the specified theme.
+            /// </summary>
+            /// <param name="isDark">Indicates whether the background is dark. If <see langword="true"/>, a color suitable for dark
+            /// backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
+            /// <returns>A <see cref="Color"/> value representing the appropriate text color for the specified background type.</returns>
+            public static Color BackColor(bool isDark)
+            {
+                return isDark ? BackColorDark : BackColorLight;
+            }
+
+            /// <summary>
+            /// Returns the recommended text color for either dark or light backgrounds.
+            /// </summary>
+            /// <param name="isDark">Indicates whether the background is dark. If <see langword="true"/>, a color suitable for dark
+            /// backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
+            /// <returns>A <see cref="Color"/> value representing the appropriate text color for the specified background type.</returns>
+            public static Color TextColor(bool isDark)
+            {
+                return isDark ? TextColorDark : TextColorLight;
+            }
         }
     }
 }

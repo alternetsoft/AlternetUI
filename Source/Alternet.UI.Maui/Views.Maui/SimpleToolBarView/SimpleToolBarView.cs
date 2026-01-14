@@ -10,6 +10,9 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
+using Alternet.UI.Extensions;
+using Alternet.Maui.Extensions;
+
 namespace Alternet.Maui
 {
     /// <summary>
@@ -47,26 +50,6 @@ namespace Alternet.Maui
         public static Thickness DefaultSeparatorMargin = new(2, 4);
 
         /// <summary>
-        /// Gets or sets the default toolbar separator color in dark theme.
-        /// </summary>
-        public static Color DefaultSeparatorColorDark = Color.FromRgb(61, 61, 61);
-
-        /// <summary>
-        /// Gets or sets the default toolbar separator color in light theme.
-        /// </summary>
-        public static Color DefaultSeparatorColorLight = Color.FromRgb(204, 206, 219);
-
-        /// <summary>
-        /// Gets or sets the default underline color for sticky buttons in dark theme.
-        /// </summary>
-        public static Color DefaultStickyUnderlineColorDark = Color.FromRgb(76, 194, 255);
-
-        /// <summary>
-        /// Gets or sets the default underline color for sticky buttons in light theme.
-        /// </summary>
-        public static Color DefaultStickyUnderlineColorLight = Color.FromRgb(0, 120, 212);
-
-        /// <summary>
         /// Gets or sets the default size of the sticky button underline.
         /// </summary>
         public static Size DefaultStickyUnderlineSize = new(16, 3);
@@ -92,49 +75,9 @@ namespace Alternet.Maui
         public static int DefaultImageButtonSizeDesktop = 16;
 
         /// <summary>
-        /// Gets ot sets default text color for dark theme.
-        /// </summary>
-        public static Color DefaultTextColorDark = Color.FromRgb(214, 214, 214);
-
-        /// <summary>
-        /// Gets ot sets default disabled text color for dark theme.
-        /// </summary>
-        public static Color DefaultDisabledTextColorDark = Colors.Gray;
-
-        /// <summary>
-        /// Gets ot sets default disabled text color for light theme.
-        /// </summary>
-        public static Color DefaultDisabledTextColorLight = Colors.Gray;
-
-        /// <summary>
-        /// Gets ot sets default hot border color for dark theme.
-        /// </summary>
-        public static Color DefaultHotBorderColorDark = Colors.DarkGray;
-
-        /// <summary>
-        /// Gets ot sets default pressed border color for dark theme.
-        /// </summary>
-        public static Color DefaultPressedBorderColorDark = Color.FromRgb(61, 61, 61);
-
-        /// <summary>
         /// Gets ot sets default button border width.
         /// </summary>
         public static double DefaultButtonBorderWidth = 1;
-
-        /// <summary>
-        /// Gets ot sets default hot border color for light theme.
-        /// </summary>
-        public static Color DefaultHotBorderColorLight = Color.FromRgb(0, 108, 190);
-
-        /// <summary>
-        /// Gets ot sets default text color for light theme.
-        /// </summary>
-        public static Color DefaultTextColorLight = Colors.Black;
-
-        /// <summary>
-        /// Gets ot sets default pressed border color for light theme.
-        /// </summary>
-        public static Color DefaultPressedBorderColorLight = Colors.DarkGray;
 
         /// <summary>
         /// Gets or sets the default SVG image for the 'Next Tab' button.
@@ -675,8 +618,8 @@ namespace Alternet.Maui
         public virtual Color GetSeparatorColor()
         {
             if (IsDark)
-                return DefaultSeparatorColorDark;
-            return DefaultSeparatorColorLight;
+                return Alternet.Drawing.DefaultColors.MauiToolBar.SeparatorColorDark.ToMaui();
+            return Alternet.Drawing.DefaultColors.MauiToolBar.SeparatorColorLight.ToMaui();
         }
 
         /// <summary>
@@ -1340,29 +1283,29 @@ namespace Alternet.Maui
         private static Color GetRealHotBorderColor(View control)
         {
             if (IsDark)
-                return DefaultHotBorderColorDark;
-            return DefaultHotBorderColorLight;
+                return Alternet.Drawing.DefaultColors.MauiToolBar.HotBorderColorDark.ToMaui();
+            return Alternet.Drawing.DefaultColors.MauiToolBar.HotBorderColorLight.ToMaui();
         }
 
         private static Color GetRealPressedBorderColor(View control)
         {
             if (IsDark)
-                return DefaultPressedBorderColorDark;
-            return DefaultPressedBorderColorLight;
+                return Alternet.Drawing.DefaultColors.MauiToolBar.PressedBorderColorDark.ToMaui();
+            return Alternet.Drawing.DefaultColors.MauiToolBar.PressedBorderColorLight.ToMaui();
         }
 
         private static Color GetRealDisabledTextColor(View control)
         {
             if (IsDark)
-                return DefaultDisabledTextColorDark;
-            return DefaultDisabledTextColorLight;
+                return Alternet.Drawing.DefaultColors.MauiToolBar.DisabledTextColorDark.ToMaui();
+            return Alternet.Drawing.DefaultColors.MauiToolBar.DisabledTextColorLight.ToMaui();
         }
 
         private static Color GetRealTextColor(View control)
         {
             if (IsDark)
-                return DefaultTextColorDark;
-            return DefaultTextColorLight;
+                return Alternet.Drawing.DefaultColors.MauiToolBar.TextColorDark.ToMaui();
+            return Alternet.Drawing.DefaultColors.MauiToolBar.TextColorLight.ToMaui();
         }
 
         private static Color GetTransparent(View control)

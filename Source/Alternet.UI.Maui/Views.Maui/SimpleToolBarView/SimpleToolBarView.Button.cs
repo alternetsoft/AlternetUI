@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 
+using Alternet.Maui.Extensions;
+
 namespace Alternet.Maui
 {
     public partial class SimpleToolBarView
@@ -476,9 +478,9 @@ namespace Alternet.Maui
                 Color color;
 
                 if (IsDark)
-                    color = DefaultStickyUnderlineColorDark;
+                    color = Alternet.Drawing.DefaultColors.MauiToolBar.StickyUnderlineColorDark.ToMaui();
                 else
-                    color = DefaultStickyUnderlineColorLight;
+                    color = Alternet.Drawing.DefaultColors.MauiToolBar.StickyUnderlineColorLight.ToMaui();
 
                 underline.IsVisible = IsSticky && (StickyStyle == StickyButtonStyle.UnderlineFull ||
                     StickyStyle == StickyButtonStyle.UnderlinePartial);
