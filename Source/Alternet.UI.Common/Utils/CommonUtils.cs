@@ -14,10 +14,66 @@ using Alternet.UI.Extensions;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods common to Alternet.UI and Alternet.UI.CommonUtils
+    /// Contains common static methods.
     /// </summary>
     public static class CommonUtils
     {
+        /// <summary>
+        /// Returns a new array containing all non-null elements from the specified array of nullable values.
+        /// </summary>
+        /// <remarks>The returned array will not contain any null elements. If the input array contains no
+        /// non-null values, the result is an empty array. The method preserves the order of non-null elements from the
+        /// input array.</remarks>
+        /// <typeparam name="T">The type of the elements in the input and result arrays.
+        /// Must be a non-nullable value or reference type.</typeparam>
+        /// <param name="values">An array of nullable values to filter. May be null or empty.</param>
+        /// <returns>An array containing all non-null elements from the input array, in their original order. Returns an empty
+        /// array if the input is null, empty, or contains only null elements.</returns>
+        public static T[] GetNotNull<T>(T?[]? values)
+            where T : class
+        {
+            if (!HasNulls<T>(values))
+                return values!;
+
+#pragma warning disable
+            if (values == null || values.Length == 0)
+                return Array.Empty<T>();
+#pragma warning restore
+
+            List<T> result = new(values.Length);
+
+            foreach (var type in values)
+            {
+                if (type != null)
+                    result.Add(type);
+            }
+
+#pragma warning disable
+            return result.ToArray();
+#pragma warning restore
+        }
+
+        /// <summary>
+        /// Determines whether the specified array contains any null elements.
+        /// </summary>
+        /// <typeparam name="T">The type of the elements in the array. Must be a nullable value type or a reference type.</typeparam>
+        /// <param name="array">The array to check for null elements. Cannot be null.</param>
+        /// <returns>true if the array contains at least one null element; otherwise, false.</returns>
+        public static bool HasNulls<T>(T?[]? array)
+            where T : class
+        {
+            if (array is null || array.Length == 0)
+                return false;
+
+            foreach (var item in array)
+            {
+                if (item == null)
+                    return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Calls the specified action if condition is <c>true</c>.
         /// </summary>
