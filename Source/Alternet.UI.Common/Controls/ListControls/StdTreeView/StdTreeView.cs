@@ -241,6 +241,7 @@ namespace Alternet.UI
                     header.ColumnDeleted += OnHeaderColumnDeleted;
                     header.ColumnInserted += OnHeaderColumnInserted;
                     header.ColumnSizeChanged += OnHeaderColumnSizeChanged;
+                    header.ColumnVisibleChanged += OnHeaderColumnVisibleChanged;
 
                     Children.Prepend(header);
                 }
@@ -974,9 +975,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the visibility of the specified column in the control.
+        /// </summary>
+        /// <param name="column">The column whose visibility is to be changed. Can be null.</param>
+        /// <param name="visible">true to make the column visible; false to hide the column.</param>
+        /// <returns>true if the column visibility was successfully changed; otherwise, false.</returns>
+        public virtual bool SetColumnVisible(ListControlColumn? column, bool visible)
+        {
+            if (column is null || header is null)
+                return false;
+            var result = Header.SetColumnVisible(column, visible);
+            return result;
+        }
+
+        /// <summary>
         /// Adds a new column to the list control with the specified title, optional width, and optional click handler.
         /// This method adds a new column to <see cref="Columns"/> and also to the <see cref="Header"/>.
-        /// Both the column in the collection and the header column are linked via the <see cref="ListControlColumn.ColumnKey"/> property.
+        /// Both the column in the collection and the header column are linked via the
+        /// <see cref="ListControlColumn.ColumnKey"/> property.
         /// </summary>
         /// <remarks>The returned column is immediately added to the control and can be further customized
         /// after creation. If a width is specified, it is used as the column's suggested width. The click handler, if
@@ -1821,6 +1837,36 @@ namespace Alternet.UI
             if(InvalidateWhenItemPropertyChanged(item, propertyName))
             {
                 ListBox.Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Raises the event that occurs when the visibility of a header column changes.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the control whose header column visibility has changed.</param>
+        /// <param name="e">An object containing data related to the header column visibility change.</param>
+        protected virtual void OnHeaderColumnVisibleChanged(object? sender, ListBoxHeader.ColumnEventArgs e)
+        {
+            if (!HasColumns)
+                return;
+
+            var newVisible = e.Column.Visible;
+            var id = e.Column.UniqueId;
+
+            foreach (var col in ListBox.Columns)
+            {
+                if (col.ColumnKey == id)
+                {
+                    var oldVisible = col.IsVisible;
+                    col.IsVisible = newVisible;
+
+                    if (oldVisible != newVisible)
+                    {
+                        ListBox.Invalidate();
+                    }
+
+                    break;
+                }
             }
         }
 

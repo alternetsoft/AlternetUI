@@ -1785,6 +1785,10 @@ namespace Alternet.UI
                 for (int i = 0; i < columns.Count; i++)
                 {
                     var column = columns[i];
+
+                    if(!column.IsVisible)
+                        continue;
+
                     var width = column.SuggestedWidth;
                     var cell = item?.GetCell(column.UniqueId);
 
