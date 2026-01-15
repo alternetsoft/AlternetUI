@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.808.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.809.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -7632,6 +7632,10 @@
     </Type>
     <Type Name="Alternet.UI.IListBoxHeader" />
     <Type Name="Alternet.UI.ListBoxHeader">
+      <Event Name="ColumnDeleted" />
+      <Event Name="ColumnInserted" />
+      <Event Name="ColumnSizeChanged" />
+      <Event Name="ColumnVisibleChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutUpdated" />
@@ -17130,6 +17134,7 @@
     <Type Name="Alternet.Drawing.Color+StateFlags" />
     <Type Name="Alternet.Drawing.Color+ColorNameLocalizedComparer" />
     <Type Name="Alternet.Drawing.Color+ColorNameComparer" />
+    <Type Name="Alternet.Drawing.DefaultColors+MauiToolBar" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsDark" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsLight" />
     <Type Name="Alternet.Drawing.KnownOSColorConsts+WindowsLightOrDark" />
@@ -17322,6 +17327,7 @@
     <Type Name="Alternet.UI.ColorComboBox+DefaultColorItemPainter" />
     <Type Name="Alternet.UI.ComboBox+OwnerDrawFlags" />
     <Type Name="Alternet.UI.ComboBox+DefaultItemPainter" />
+    <Type Name="Alternet.UI.ListBoxHeader+ColumnEventArgs" />
     <Type Name="Alternet.UI.FileListBox+FolderAdditionFlags" />
     <Type Name="Alternet.UI.FileListBox+FolderInfoItem" />
     <Type Name="Alternet.UI.FileListBox+NewItemInfo" />

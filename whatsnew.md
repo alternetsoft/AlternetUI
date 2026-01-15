@@ -1,3 +1,22 @@
+# 0.9.809 (2026 January 15)
+
+- Support multiple columns in StdTreeView and VirtualListBox.
+- Add column visibility support to ListBoxHeader.
+- Add ColumnDeleted, ColumnInserted, and ColumnSizeChanged events to ListBoxHeader.
+- ListBox: Update default tooltip colors for dark mode support.
+- Refactor and enhance overlay tooltip logic in VirtualListBox.
+- ListControlItem: Introduced ToolTip and IsToolTipVisible properties, allowing items to display tooltips and track their visibility state.
+- ListControlItem: Add GetItemText and DefaultGetItemText for flexible item text retrieval with culture support.
+- ListControlItem: SafeCell for safe cell access in multi-column items.
+- Add MeasureRows method to VirtualListBox.
+- VirtualListBox: Extracted and refactored row and empty text painting methods for improved readability and maintainability.
+- VirtualListBox: Added properties for empty text foreground color.
+- Indent log messages based on opened log sections.
+- Maui: Improve context menu handling.
+- InnerPopupToolBar: Add option to toggle default min popup width constraint.
+
+---
+
 # 0.9.808 (2026 January 6)
 
 - UserControl: Improve overlay tooltip positioning and fitting logic.
