@@ -51,6 +51,12 @@ namespace Alternet.UI
         public virtual ObjectUniqueId? ColumnKey { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the column is visible in the list control.
+        /// Default is true. No invalidate of container control is done when this property is changed.
+        /// </summary>
+        public virtual bool IsVisible { get; internal set; } = true;
+
+        /// <summary>
         /// Gets or sets the title of the column.
         /// </summary>
         public virtual string? Title
@@ -81,6 +87,20 @@ namespace Alternet.UI
                 {
                 });
             }
+        }
+
+        /// <summary>
+        /// Retrieves the header column control associated with this instance from the specified header.
+        /// </summary>
+        /// <param name="header">The header from which to retrieve the column control. Cannot be null.</param>
+        /// <returns>The control representing the header column if found; otherwise, null.</returns>
+        public virtual AbstractControl? HeaderColumn(ListBoxHeader? header)
+        {
+            if (ColumnKey is null || header is null)
+                return null;
+
+            var child = header.FindChild(ColumnKey);
+            return child;
         }
     }
 }
