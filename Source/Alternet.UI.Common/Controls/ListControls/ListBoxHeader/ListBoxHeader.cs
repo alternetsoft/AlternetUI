@@ -45,6 +45,13 @@ namespace Alternet.UI
         public event EventHandler<ColumnEventArgs>? ColumnSizeChanged;
 
         /// <summary>
+        /// Occurs when the visibility of a column changes.
+        /// </summary>
+        /// <remarks>Subscribe to this event to be notified when a column is shown or hidden. The event
+        /// provides details about the affected column through the <see cref="ColumnEventArgs"/> parameter.</remarks>
+        public event EventHandler<ColumnEventArgs>? ColumnVisibleChanged;
+
+        /// <summary>
         /// Gets or sets the background color of the column splitters.
         /// </summary>
         public virtual LightDarkColor? SplitterBackColor { get; set; }
@@ -341,6 +348,29 @@ namespace Alternet.UI
             return Splitter.DefaultWidth;
         }
 
+        /// <summary>
+        /// Sets the visibility of the specified column in the control.
+        /// </summary>
+        /// <param name="column">The column whose visibility is to be changed. Can be null.</param>
+        /// <param name="visible">A value indicating whether the column should be visible.
+        /// Set to <see langword="true"/> to make the column
+        /// visible; otherwise, <see langword="false"/>.</param>
+        /// <returns>true if the column's visibility was successfully set; otherwise, false.</returns>
+        public virtual bool SetColumnVisible(ListControlColumn? column, bool visible)
+        {
+            if (column == null)
+                return false;
+            var headerColumn = column.HeaderColumn(this);
+
+            if (headerColumn == null)
+                return false;
+
+            headerColumn.Visible = visible;
+            column.IsVisible = visible;
+
+            return true;
+        }
+
         /// <inheritdoc/>
         public virtual SpeedButton InsertColumnCore(
             int index,
@@ -360,7 +390,7 @@ namespace Alternet.UI
 
             label.SizeChanged += (s, e) =>
             {
-                ColumnSizeChanged?.Invoke(this, new ColumnEventArgs(label));
+                OnColumnSizeChanged(label);
             };
 
             if (width is null)
@@ -388,6 +418,12 @@ namespace Alternet.UI
             };
 
             label.CustomAttr.SetAttribute("AttachedSplitter", splitter.UniqueId);
+
+            label.VisibleChanged += (s, e) =>
+            {
+                OnColumnVisibleChanged(label);
+                splitter.Visible = label.Visible;
+            };
 
             DoInsideLayout(() =>
             {
@@ -417,6 +453,28 @@ namespace Alternet.UI
             ColumnInserted?.Invoke(this, new ColumnEventArgs(label));
 
             return label;
+        }
+
+        /// <summary>
+        /// Raises the event that notifies subscribers when the size of a column associated with the specified label
+        /// control has changed.
+        /// </summary>
+        /// <remarks>Override this method in a derived class to provide custom handling when a column size
+        /// changes. This method invokes the ColumnSizeChanged event with the provided label control.</remarks>
+        /// <param name="label">The label control representing the column whose size has changed. Cannot be null.</param>
+        protected virtual void OnColumnSizeChanged(AbstractControl label)
+        {
+            ColumnSizeChanged?.Invoke(this, new ColumnEventArgs(label));
+        }
+
+        /// <summary>
+        /// Raises the event that notifies subscribers when the visibility of a column associated with the specified label
+        /// control has changed.
+        /// </summary>
+        /// <param name="label"></param>
+        protected virtual void OnColumnVisibleChanged(AbstractControl label)
+        {
+            ColumnVisibleChanged?.Invoke(this, new ColumnEventArgs(label));
         }
 
         /// <summary>
