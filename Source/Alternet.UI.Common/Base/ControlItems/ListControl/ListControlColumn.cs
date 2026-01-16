@@ -57,6 +57,11 @@ namespace Alternet.UI
         public virtual bool IsVisible { get; internal set; } = true;
 
         /// <summary>
+        /// Gets or sets the name of the column.
+        /// </summary>
+        public virtual string? Name { get; set; }
+
+        /// <summary>
         /// Gets or sets the title of the column.
         /// </summary>
         public virtual string? Title
