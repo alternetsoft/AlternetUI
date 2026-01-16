@@ -1473,7 +1473,7 @@ namespace Alternet.UI
         /// <param name="item">The <see cref="ListControlColumn"/> that was inserted.</param>
         protected virtual void OnColumnsItemInserted(object? sender, int index, ListControlColumn item)
         {
-            if (HeaderControl is not null)
+            if (item.ColumnKey is null && HeaderControl is not null)
             {
                 var id = HeaderControl.AddColumn(item.Title, item.SuggestedWidth);
                 item.ColumnKey = id;

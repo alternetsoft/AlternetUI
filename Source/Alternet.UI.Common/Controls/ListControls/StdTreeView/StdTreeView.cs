@@ -244,6 +244,8 @@ namespace Alternet.UI
                     header.ColumnVisibleChanged += OnHeaderColumnVisibleChanged;
 
                     Children.Prepend(header);
+
+                    ListBox.HeaderControl = header;
                 }
 
                 return header;
@@ -975,6 +977,88 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the first column with the specified name from the collection of columns.
+        /// </summary>
+        /// <param name="name">The name of the column to locate.
+        /// The comparison is case-sensitive and uses ordinal string comparison.</param>
+        /// <returns>The first <see cref="ListControlColumn"/> with the specified name, or <see langword="null"/> if no matching
+        /// column is found.</returns>
+        public virtual ListControlColumn? ColumnByName(string name)
+        {
+            if(!HasColumns)
+                return null;
+
+            foreach (var column in Columns)
+            {
+                if (string.Equals(column.Name, name, StringComparison.Ordinal))
+                    return column;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Retrieves the columns that match the specified names.
+        /// </summary>
+        /// <remarks>The order of the returned columns matches the order of the provided names for columns
+        /// that are found. If a name does not correspond to an existing column, it is skipped and not included in the
+        /// result.</remarks>
+        /// <param name="names">An array of column names to search for. Each name is matched against available columns.</param>
+        /// <returns>An array of <see cref="ListControlColumn"/> objects corresponding to the specified names. The array contains
+        /// only columns that were found; columns with names not found are omitted.</returns>
+        public virtual ListControlColumn[] ColumnsByNames(string[] names)
+        {
+            List<ListControlColumn> result = new();
+            foreach (var name in names)
+            {
+                var column = ColumnByName(name);
+                if (column is not null)
+                    result.Add(column);
+            }
+
+            return result.ToArray();
+        }
+
+
+        /// <summary>
+        /// Reorders the columns in the control to match the specified sequence.
+        /// </summary>
+        /// <remarks>If the control does not contain any columns, or if <paramref name="columns"/> is null
+        /// or empty, this method has no effect. Columns specified that are not present in the control are
+        /// ignored.</remarks>
+        /// <param name="columns">An array of <see cref="ListControlColumn"/>
+        /// objects that defines the desired order of columns. Only columns
+        /// currently present in the control are affected. Columns not included
+        /// in the array retain their relative order
+        /// after the reordered columns.</param>
+        public virtual void SetColumnsOrder(params ListControlColumn[] columns)
+        {
+            if(!HasColumns || columns is null || columns.Length == 0)
+                return;
+
+            for (int i = 0; i < columns.Length; i++)
+            {
+                var column = columns[i];
+
+                if (column is not null && Columns.Contains(column))
+                {
+                    Columns.Remove(column);
+                    Columns.Insert(i, column);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the display order of columns based on the specified array of column names.
+        /// </summary>
+        /// <param name="columnNames">An array of column names that defines the desired display order.
+        /// Each name should correspond to an existing column. Cannot be null.</param>
+        public virtual void SetColumnsOrder(params string[] columnNames)
+        {
+            SetColumnsOrder(ColumnsByNames(columnNames));
+        }
+
+        /// <summary>
         /// Sets the visibility of the specified column in the control.
         /// </summary>
         /// <param name="column">The column whose visibility is to be changed. Can be null.</param>
@@ -1004,7 +1088,7 @@ namespace Alternet.UI
         /// <returns>A ListControlColumn instance representing the newly added column.</returns>
         public virtual ListControlColumn AddColumn(
             string? title,
-            Coord? width = null,
+            Coord width,
             Action? onClick = null)
         {
             var columnId = Header.AddColumn(
@@ -1014,11 +1098,7 @@ namespace Alternet.UI
 
             ListControlColumn column = new(title);
             column.ColumnKey = columnId;
-
-            if (width is not null)
-            {
-                column.SuggestedWidth = width.Value;
-            }
+            column.SuggestedWidth = width;
 
             Columns.Add(column);
 
