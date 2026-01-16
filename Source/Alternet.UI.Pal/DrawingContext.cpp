@@ -599,8 +599,8 @@ namespace Alternet::UI
         
         height = std::ceil(height);
 
-        width = toDip(width, wxw);
-        height = toDip(height, wxw);
+        width = toDipF(width, wxw);
+        height = toDipF(height, wxw);
 
         return Size(width, height);
     }    
