@@ -108,6 +108,11 @@ namespace Alternet.UI
         public event EventHandler<UI.TreeViewEventArgs>? ItemAdded;
 
         /// <summary>
+        /// Occurs when tree structure changes.
+        /// </summary>
+        public event EventHandler? Changed;
+
+        /// <summary>
         /// Occurs when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
@@ -1561,6 +1566,8 @@ namespace Alternet.UI
                 {
                     needTreeChanged = false;
                 }
+
+                Changed?.Invoke(this, EventArgs.Empty);
 
                 RefreshTree();
             }
