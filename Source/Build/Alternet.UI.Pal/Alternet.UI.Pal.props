@@ -4,20 +4,37 @@
   <Import Project="../Alternet.UI.Common/Alternet.UI.Common.props"/>
 
     <PropertyGroup>
+  <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
+  <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsOsx Condition="$([MSBuild]::IsOsPlatform('OSX'))">true</IsOsx>
+  <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
+  <IsLinux Condition="$([MSBuild]::IsOsPlatform('Linux'))">true</IsLinux>
+  <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
+  <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
+  <IsWindows Condition="$([MSBuild]::IsOsPlatform('Windows'))">true</IsWindows>
+
 	    <DotNetRunSuffix>net8.0</DotNetRunSuffix>
 	<DevenvPath>C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\devenv.com</DevenvPath>	
     </PropertyGroup>
- 
-    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
-	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework $(DotNetRunSuffix)</DotNetRunCmd>
+
+    <PropertyGroup>
+	    <DotNetRunCmd>dotnet run -c Debug --nologo --property WarningLevel=0 --framework net9.0</DotNetRunCmd>
     </PropertyGroup>
 
+  <PropertyGroup Condition="$(IsOsxX64)=='true'">
+	    <DotNetRunCmd>dotnet run -c Debug --nologo --property WarningLevel=0 --framework net8.0</DotNetRunCmd>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(IsOsxArm64)=='true'">
+	    <DotNetRunCmd>dotnet run -c Debug --nologo --property WarningLevel=0 --framework net9.0</DotNetRunCmd>
+  </PropertyGroup>
+ 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework $(DotNetRunSuffix)</DotNetRunCmd>
+	    <DotNetRunCmd>dotnet run -c Debug --nologo --property WarningLevel=0 --framework net9.0</DotNetRunCmd>
     </PropertyGroup>
 
     <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-	    <DotNetRunCmd>dotnet run --nologo --property WarningLevel=0 --framework $(DotNetRunSuffix)</DotNetRunCmd>
+	    <DotNetRunCmd>dotnet run -c Debug --nologo --property WarningLevel=0 --framework net9.0</DotNetRunCmd>
     </PropertyGroup>
 
   <PropertyGroup>
