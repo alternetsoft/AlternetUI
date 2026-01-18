@@ -77,10 +77,12 @@ namespace Alternet.UI
         /// </summary>
         public Splitter()
         {
-            splitterThickness = GetDefaultWidth();
+            var defaultWidth = GetDefaultWidth();
+
+            splitterThickness = defaultWidth;
             TabStop = false;
             CanSelect = false;
-            Size = (GetDefaultWidth(), GetDefaultWidth());
+            Size = (defaultWidth, defaultWidth);
             Dock = DockStyle.Left;
             ParentBackColor = DefaultParentBackColor;
 
