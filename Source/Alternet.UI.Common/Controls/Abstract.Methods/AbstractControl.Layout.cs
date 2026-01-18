@@ -255,15 +255,6 @@ namespace Alternet.UI
             return result;
         }
 
-        internal static SizeD GetPreferredSizeDockLayout(
-            AbstractControl container,
-            PreferredSizeContext context)
-        {
-            if (container.HasChildren)
-                return container.GetBestSizeWithChildren(context);
-            return container.GetBestSizeWithPadding(context);
-        }
-
         internal static SizeD GetPreferredSizeWhenHorizontal(
             AbstractControl container,
             PreferredSizeContext context)

@@ -507,8 +507,18 @@ namespace Alternet.UI
             }
         }
 
-        // On return, 'bounds' has an empty space left after docking the controls to sides
-        // of the container (fill controls are not counted).
+        /// <summary>
+        /// Arranges the child controls of a container according to their docking styles, updating the available bounds
+        /// to reflect the remaining space after docking.
+        /// </summary>
+        /// <remarks>Fill-docked controls are not counted when updating the remaining bounds. The method
+        /// processes children in either forward or reverse order depending on the container's layout flags, which may
+        /// affect the visual stacking of docked controls.</remarks>
+        /// <param name="container">The container control whose child controls are to be arranged based on their docking styles.</param>
+        /// <param name="bounds">The bounding rectangle representing the available layout space. On return, this value is updated to reflect
+        /// the remaining space after docking non-fill child controls.</param>
+        /// <param name="children">A read-only list of child controls to be arranged within the container.</param>
+        /// <returns>The number of child controls that were docked during the layout operation.</returns>
         internal static int LayoutWhenDocked(
             AbstractControl container,
             ref RectD bounds,
