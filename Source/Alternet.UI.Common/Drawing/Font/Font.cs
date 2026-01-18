@@ -837,8 +837,8 @@ namespace Alternet.Drawing
         {
             if (emSize <= 0 || FontScalar.IsInfinity(emSize) || FontScalar.IsNaN(emSize))
             {
-                App.LogError("Invalid font size {emSize}, using default font size.");
-                return Font.Default.Size;
+                App.LogError($"Invalid font size '{emSize}', using default font size.");
+                return 10;
             }
 
             return emSize;

@@ -160,16 +160,16 @@ namespace Alternet.UI
             Func<RectD> getBounds,
             IReadOnlyList<AbstractControl> items)
         {
-            var space = getBounds();
-
-            if (space.SizeIsEmpty)
-                return;
-
             if (layout == LayoutStyle.Scroll)
             {
                 OldLayout.LayoutWhenScroll(container, getBounds, items, true);
                 return;
             }
+
+            var space = getBounds();
+
+            if (space.SizeIsEmpty)
+                return;
 
             var number = LayoutWhenDocked(container, ref space, items);
 

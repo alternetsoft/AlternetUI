@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     public static partial class SkiaUtils
@@ -10,7 +12,7 @@ namespace Alternet.Drawing
         /// Represents a cached bitmap canvas, including its graphics context, size,
         /// scale factor, and transparency.
         /// </summary>
-        public class BitmapCanvasCached : IDisposable
+        public class BitmapCanvasCached : DisposableObject
         {
             /// <summary>
             /// Gets or sets the <see cref="SkiaGraphics"/> instance used for drawing on the bitmap.
@@ -80,12 +82,14 @@ namespace Alternet.Drawing
             /// Releases resources used by the <see cref="BitmapCanvasCached"/> class,
             /// optionally disposing the <see cref="Graphics"/> instance.
             /// </summary>
-            public void Dispose()
+            protected override void DisposeManaged()
             {
-                if (!DisposeGraphics)
-                    return;
-                Graphics?.Dispose();
-                Graphics = null;
+                if (DisposeGraphics)
+                {
+                    SafeDispose(ref Graphics);
+                }
+
+                base.DisposeManaged();
             }
         }
     }
