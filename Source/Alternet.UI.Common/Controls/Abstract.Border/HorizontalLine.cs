@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="HorizontalLine"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public HorizontalLine(Control parent)
+        public HorizontalLine(AbstractControl parent)
             : this()
         {
             Parent = parent;

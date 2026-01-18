@@ -16,7 +16,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(wrappedText is null)
+                if (wrappedText is null)
                 {
                     wrappedText = new(this);
                     wrappedText.VerticalAlignment = Alternet.UI.VerticalAlignment.Top;
