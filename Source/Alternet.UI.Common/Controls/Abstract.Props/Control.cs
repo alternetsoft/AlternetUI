@@ -466,6 +466,20 @@ namespace Alternet.UI
             {
                 return SafeHandler?.IsMouseCaptured ?? false;
             }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+
+                if (value == IsMouseCaptured)
+                    return;
+
+                if (value)
+                    Handler.CaptureMouse();
+                else
+                    Handler.ReleaseMouseCapture();
+            }
         }
 
         internal bool ProcessUIUpdates
