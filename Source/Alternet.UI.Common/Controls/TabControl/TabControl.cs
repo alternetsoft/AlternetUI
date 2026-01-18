@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="TabControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public TabControl(Control parent)
+        public TabControl(AbstractControl parent)
             : this()
         {
             Parent = parent;

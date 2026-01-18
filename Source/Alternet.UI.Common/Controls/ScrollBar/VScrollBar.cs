@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="VScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public VScrollBar(Control parent)
+        public VScrollBar(AbstractControl parent)
             : this()
         {
             Parent = parent;

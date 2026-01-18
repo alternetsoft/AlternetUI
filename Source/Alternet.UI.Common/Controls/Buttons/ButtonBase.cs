@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ButtonBase"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ButtonBase(Control parent)
+        public ButtonBase(AbstractControl parent)
             : this()
         {
             Parent = parent;

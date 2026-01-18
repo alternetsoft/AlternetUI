@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="SpeedEnumButton"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public SpeedEnumButton(Control parent)
+        public SpeedEnumButton(AbstractControl parent)
             : this()
         {
             Parent = parent;

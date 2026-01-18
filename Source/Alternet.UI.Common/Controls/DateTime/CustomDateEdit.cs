@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CustomDateEdit"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CustomDateEdit(Control parent)
+        public CustomDateEdit(AbstractControl parent)
             : this()
         {
             Parent = parent;

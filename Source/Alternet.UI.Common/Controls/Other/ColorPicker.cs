@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ColorPicker"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ColorPicker(Control parent)
+        public ColorPicker(AbstractControl parent)
             : this()
         {
             Parent = parent;

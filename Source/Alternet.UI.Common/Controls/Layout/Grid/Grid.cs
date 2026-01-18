@@ -63,7 +63,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Grid"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Grid(Control parent)
+        public Grid(AbstractControl parent)
             : this()
         {
             Parent = parent;

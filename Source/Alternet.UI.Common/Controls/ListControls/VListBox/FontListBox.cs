@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="FontListBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public FontListBox(Control parent)
+        public FontListBox(AbstractControl parent)
             : this()
         {
             Parent = parent;

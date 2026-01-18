@@ -66,7 +66,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Slider"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Slider(Control parent)
+        public Slider(AbstractControl parent)
             : this()
         {
             Parent = parent;

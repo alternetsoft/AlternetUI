@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="FontComboBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public FontComboBox(Control parent)
+        public FontComboBox(AbstractControl parent)
             : this()
         {
             Parent = parent;

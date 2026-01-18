@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PanelListBoxAndCards"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PanelListBoxAndCards(Control parent)
+        public PanelListBoxAndCards(AbstractControl parent)
             : this()
         {
             Parent = parent;

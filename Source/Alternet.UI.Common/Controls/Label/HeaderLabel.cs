@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements label control that looks like header.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class HeaderLabel : HiddenBorder, ITextProperty
+    public partial class HeaderLabel : HiddenBorderedGraphicControl, ITextProperty
     {
         /// <summary>
         /// Gets or sets function which creates inner label.
@@ -27,7 +27,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="HeaderLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public HeaderLabel(Control parent)
+        public HeaderLabel(AbstractControl parent)
             : this()
         {
             Parent = parent;

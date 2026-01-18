@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="StackPanel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StackPanel(Control parent)
+        public StackPanel(AbstractControl parent)
             : this()
         {
             Parent = parent;

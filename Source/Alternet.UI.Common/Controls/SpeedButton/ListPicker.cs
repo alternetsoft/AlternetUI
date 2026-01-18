@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ListPicker"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ListPicker(Control parent)
+        public ListPicker(AbstractControl parent)
             : this()
         {
             Parent = parent;

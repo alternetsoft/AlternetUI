@@ -25,7 +25,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="DatePicker"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public DatePicker(Control parent)
+        public DatePicker(AbstractControl parent)
             : this()
         {
             Parent = parent;

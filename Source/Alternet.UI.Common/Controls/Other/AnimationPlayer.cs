@@ -45,7 +45,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public AnimationPlayer(Control parent)
+        public AnimationPlayer(AbstractControl parent)
             : this()
         {
             Parent = parent;

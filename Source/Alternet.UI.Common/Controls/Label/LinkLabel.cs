@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="LinkLabel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public LinkLabel(Control parent)
+        public LinkLabel(AbstractControl parent)
             : this()
         {
             Parent = parent;

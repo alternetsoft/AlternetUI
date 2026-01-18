@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ValueEditorCustom"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ValueEditorCustom(Control parent)
+        public ValueEditorCustom(AbstractControl parent)
             : this()
         {
             Parent = parent;

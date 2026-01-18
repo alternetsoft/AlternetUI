@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ProgressBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ProgressBar(Control parent)
+        public ProgressBar(AbstractControl parent)
             : this()
         {
             Parent = parent;

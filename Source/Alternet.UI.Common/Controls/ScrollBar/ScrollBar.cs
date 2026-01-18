@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ScrollBar(Control parent)
+        public ScrollBar(AbstractControl parent)
             : this()
         {
             Parent = parent;

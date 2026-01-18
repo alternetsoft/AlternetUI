@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="HScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public HScrollBar(Control parent)
+        public HScrollBar(AbstractControl parent)
             : this()
         {
             Parent = parent;

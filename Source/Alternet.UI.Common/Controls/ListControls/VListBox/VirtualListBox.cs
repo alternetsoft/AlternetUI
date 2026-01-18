@@ -57,7 +57,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="VirtualListBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public VirtualListBox(Control parent)
+        public VirtualListBox(AbstractControl parent)
             : this()
         {
             Parent = parent;

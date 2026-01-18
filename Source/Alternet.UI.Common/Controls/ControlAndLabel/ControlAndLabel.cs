@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ControlAndLabel(Control parent)
+        public ControlAndLabel(AbstractControl parent)
             : this()
         {
             Parent = parent;

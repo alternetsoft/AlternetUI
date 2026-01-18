@@ -23,7 +23,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="EnumPicker"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public EnumPicker(Control parent)
+        public EnumPicker(AbstractControl parent)
             : this()
         {
             Parent = parent;

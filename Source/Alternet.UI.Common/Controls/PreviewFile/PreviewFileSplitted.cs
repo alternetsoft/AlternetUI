@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PreviewFileSplitted(Control parent)
+        public PreviewFileSplitted(AbstractControl parent)
             : this()
         {
             Parent = parent;

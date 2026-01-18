@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="MultilineTextBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public MultilineTextBox(Control parent)
+        public MultilineTextBox(AbstractControl parent)
             : this()
         {
             Parent = parent;

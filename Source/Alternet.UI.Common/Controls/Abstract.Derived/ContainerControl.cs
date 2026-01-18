@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ContainerControl"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ContainerControl(Control parent)
+        public ContainerControl(AbstractControl parent)
             : this()
         {
             Parent = parent;

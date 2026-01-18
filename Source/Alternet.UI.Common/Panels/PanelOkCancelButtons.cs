@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// This constructor creates a panel with 'Ok' and 'Cancel' buttons.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PanelOkCancelButtons(Control parent)
+        public PanelOkCancelButtons(AbstractControl parent)
             : this(CreateParameters.Default)
         {
             Parent = parent;

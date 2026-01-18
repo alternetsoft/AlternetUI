@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CheckedListBox(Control parent)
+        public CheckedListBox(AbstractControl parent)
             : this()
         {
             Parent = parent;

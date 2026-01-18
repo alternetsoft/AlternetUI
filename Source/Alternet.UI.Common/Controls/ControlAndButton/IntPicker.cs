@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="IntPicker"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public IntPicker(Control parent)
+        public IntPicker(AbstractControl parent)
             : this()
         {
             Parent = parent;

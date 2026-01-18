@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="LogListBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public LogListBox(Control parent)
+        public LogListBox(AbstractControl parent)
             : this()
         {
             Parent = parent;

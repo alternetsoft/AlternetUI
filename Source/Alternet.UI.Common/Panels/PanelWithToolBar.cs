@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PanelWithToolBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PanelWithToolBar(Control parent)
+        public PanelWithToolBar(AbstractControl parent)
             : this()
         {
             Parent = parent;

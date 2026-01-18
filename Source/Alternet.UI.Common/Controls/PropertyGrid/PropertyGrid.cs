@@ -58,7 +58,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PropertyGrid"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PropertyGrid(Control parent)
+        public PropertyGrid(AbstractControl parent)
             : this()
         {
             Parent = parent;

@@ -70,7 +70,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CardPanelHeader(Control parent)
+        public CardPanelHeader(AbstractControl parent)
             : this()
         {
             Parent = parent;

@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="SplittedPanel"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public SplittedPanel(Control parent)
+        public SplittedPanel(AbstractControl parent)
             : this()
         {
             Parent = parent;

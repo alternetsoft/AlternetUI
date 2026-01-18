@@ -28,7 +28,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="CheckBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public CheckBox(Control parent)
+        public CheckBox(AbstractControl parent)
             : this()
         {
             Parent = parent;

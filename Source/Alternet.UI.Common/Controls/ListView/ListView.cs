@@ -38,7 +38,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ListView"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ListView(Control parent)
+        public ListView(AbstractControl parent)
             : this()
         {
             Parent = parent;

@@ -30,7 +30,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PanelRichTextBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public PanelRichTextBox(Control parent)
+        public PanelRichTextBox(AbstractControl parent)
             : this()
         {
             Parent = parent;
