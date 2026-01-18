@@ -25,8 +25,14 @@ namespace Alternet.UI
     /// </summary>
     [DefaultEvent("SplitterMoved")]
     [DefaultProperty("Dock")]
-    public partial class Splitter : HiddenBorder
+    public partial class Splitter : HiddenBorderedGraphicControl
     {
+        /// <summary>
+        /// Specifies the default amount by which the size is adjusted in resizing operations.
+        /// This value is used to initialize the <see cref="SizeDelta"/> property of <see cref="Splitter"/> class.
+        /// </summary>
+        public static int DefaultSizeDelta = 10;
+
         /// <summary>
         /// Gets or sets a default value of the
         /// <see cref="AbstractControl.ParentBackColor"/> property.
@@ -108,7 +114,7 @@ namespace Alternet.UI
         /// <remarks>This enumeration is used to indicate the stage of the split
         /// bar drawing process, such
         /// as starting, moving, or ending the drawing operation.</remarks>
-        protected enum DrawSplitBarKind
+        public enum DrawSplitBarKind
         {
             /// <summary>
             /// Splitter is starting to move.
@@ -226,9 +232,9 @@ namespace Alternet.UI
         /// update attached control size.
         /// </summary>
         /// <remarks>
-        /// Default value is 10.
+        /// Default value is stored in <see cref="DefaultSizeDelta"/> static field.
         /// </remarks>
-        public virtual int SizeDelta { get; set; } = 10;
+        public virtual int SizeDelta { get; set; } = DefaultSizeDelta;
 
         /// <summary>
         /// Gets whether the splitter is horizontal.
