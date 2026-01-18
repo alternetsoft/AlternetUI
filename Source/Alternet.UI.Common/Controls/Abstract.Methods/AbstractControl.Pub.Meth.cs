@@ -794,6 +794,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void CaptureMouse()
         {
+            PlessMouse.MouseTargetControlOverride = this;
         }
 
         /// <summary>
@@ -802,6 +803,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void ReleaseMouseCapture()
         {
+            if (PlessMouse.MouseTargetControlOverride == this)
+                PlessMouse.MouseTargetControlOverride = null;
         }
 
         /// <summary>

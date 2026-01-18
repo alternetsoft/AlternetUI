@@ -1205,9 +1205,21 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual bool IsMouseCaptured
         {
-            get
+            get => PlessMouse.MouseTargetControlOverride == this;
+
+            set
             {
-                return false;
+                if (value == IsMouseCaptured)
+                    return;
+
+                if (value)
+                {
+                    CaptureMouse();
+                }
+                else
+                {
+                    ReleaseMouseCapture();
+                }
             }
         }
 
