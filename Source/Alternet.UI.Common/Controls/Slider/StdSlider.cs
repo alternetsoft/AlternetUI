@@ -30,7 +30,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class StdSlider : Border, ISliderScaleContainer
+    public partial class StdSlider : BorderedGraphicControl, ISliderScaleContainer
     {
         /// <summary>
         /// Specifies the default corner radius to apply to the slider thumb.
