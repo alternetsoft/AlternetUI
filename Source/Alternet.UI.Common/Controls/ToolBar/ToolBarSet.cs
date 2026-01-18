@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Implements multiple <see cref="ToolBar"/> controls.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class ToolBarSet : HiddenBorder
+    public partial class ToolBarSet : HiddenBorderedGraphicControl
     {
         /// <summary>
         /// Gets or sets default distance (in dips) between toolbars.
@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ToolBarSet"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ToolBarSet(Control parent)
+        public ToolBarSet(AbstractControl parent)
             : this()
         {
             Parent = parent;
