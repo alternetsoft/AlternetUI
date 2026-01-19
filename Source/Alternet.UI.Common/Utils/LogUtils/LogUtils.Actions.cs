@@ -849,6 +849,11 @@ namespace Alternet.UI
             }
 
             App.LogNameValue("CommonUtils.GetAppExePath()", CommonUtils.GetAppExePath());
+
+            if (App.IsWindowsOS)
+            {
+                MswNativeVersionInfo.LogVersionInfo(PathUtils.GetAppFolder(), "Alternet.UI.Pal.dll", recursive: true);
+            }
         }
 
         internal static void LogCulture(string sectionName, CultureInfo culture)
