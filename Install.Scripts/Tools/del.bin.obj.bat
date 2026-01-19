@@ -1,0 +1,1 @@
+powershell -ExecutionPolicy Bypass -File .\del.bin.obj.ps1
