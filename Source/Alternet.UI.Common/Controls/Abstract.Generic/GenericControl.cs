@@ -15,12 +15,14 @@ namespace Alternet.UI
     {
         private bool isClipped = false;
         private bool showDropDownMenuWhenClicked;
+        private bool hasBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericControl"/> class.
         /// </summary>
         public GenericControl()
         {
+            hasBorder = GetDefaultHasBorder();
             UserPaint = true;
         }
 
@@ -113,6 +115,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control has a border.
+        /// </summary>
+        [Browsable(true)]
+        public override bool HasBorder
+        {
+            get
+            {
+                return hasBorder;
+            }
+
+            set
+            {
+                if (hasBorder == value)
+                    return;
+                hasBorder = value;
+                Refresh();
+            }
+        }
+
+        /// <summary>
         /// Invalidates the control and causes a paint message to be sent to
         /// the control.
         /// </summary>
@@ -181,6 +203,12 @@ namespace Alternet.UI
             DropDownMenu?.ShowAsDropDown(this);
         }
 
+        /// <summary>
+        /// Gets default value for <see cref="HasBorder"/>.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual bool GetDefaultHasBorder() => true;
+
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
@@ -207,7 +235,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected sealed override void OnPaint(PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.DoInsideClipped(
                 e.ClientRectangle,

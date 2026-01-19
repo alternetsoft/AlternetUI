@@ -5,14 +5,14 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This is the <see cref="BorderedGraphicControl"/> descendant which is initialized with the hidden border.
+    /// This is the <see cref="GenericBorder"/> descendant which is initialized with the hidden border.
     /// </summary>
-    public partial class HiddenBorderedGraphicControl : Border
+    public partial class HiddenGenericBorder : GenericBorder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="HiddenBorder"/> class.
         /// </summary>
-        public HiddenBorderedGraphicControl()
+        public HiddenGenericBorder()
         {
         }
 

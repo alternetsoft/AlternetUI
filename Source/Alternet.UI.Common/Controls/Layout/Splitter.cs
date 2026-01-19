@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// </summary>
     [DefaultEvent("SplitterMoved")]
     [DefaultProperty("Dock")]
-    public partial class Splitter : HiddenBorderedGraphicControl
+    public partial class Splitter : HiddenBorder
     {
         /// <summary>
         /// Specifies the default amount by which the size is adjusted in resizing operations.

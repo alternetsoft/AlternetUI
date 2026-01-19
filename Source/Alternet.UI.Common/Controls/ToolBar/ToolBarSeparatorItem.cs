@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// vertically or horizontally,
     /// depending on the value of the <see cref="IsVertical"/> property.
     /// The orientation affects the appearance and layout of the separator.</remarks>
-    public class ToolBarSeparatorItem : BorderedGraphicControl
+    public class ToolBarSeparatorItem : GenericBorder
     {
         private bool isVertical;
         private bool hasMargin = true;

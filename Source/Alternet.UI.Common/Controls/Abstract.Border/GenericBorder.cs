@@ -13,9 +13,9 @@ namespace Alternet.UI
     /// <remarks>Use this control to display content with visually distinct borders. Border properties such as
     /// width, color, and margin can be set individually or uniformly for all sides. The control provides methods to
     /// configure which borders are visible and to reset border settings to their defaults. Padding can be automatically
-    /// adjusted to accommodate border changes. Inherits from GraphicControl and extends its appearance customization
+    /// adjusted to accommodate border changes. Inherits from GenericControl and extends its appearance customization
     /// capabilities.</remarks>
-    public partial class BorderedGraphicControl : GraphicControl
+    public partial class GenericBorder : GenericControl
     {
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
@@ -25,19 +25,19 @@ namespace Alternet.UI
         private Thickness borderMargin;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BorderedGraphicControl"/> class.
+        /// Initializes a new instance of the <see cref="GenericBorder"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public BorderedGraphicControl(AbstractControl parent)
+        public GenericBorder(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BorderedGraphicControl"/> class.
+        /// Initializes a new instance of the <see cref="GenericBorder"/> class.
         /// </summary>
-        public BorderedGraphicControl()
+        public GenericBorder()
         {
             TabStop = false;
             CanSelect = false;
@@ -50,7 +50,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the default border width for
-        /// the <see cref="BorderedGraphicControl"/> control.
+        /// the <see cref="GenericBorder"/> control.
         /// </summary>
         /// <remarks>
         /// You can specify different widths for the left, top, bottom and right
@@ -84,7 +84,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the border width for the <see cref="BorderedGraphicControl"/> control.
+        /// Gets or sets the border width for the <see cref="GenericBorder"/> control.
         /// </summary>
         /// <remarks>
         /// You can specify different widths for the left, top, bottom and right
@@ -156,7 +156,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the uniform border width for the <see cref="BorderedGraphicControl"/> control.
+        /// Gets or sets the uniform border width for the <see cref="GenericBorder"/> control.
         /// </summary>
         /// <remarks>
         /// This value is applied to all the sides. If returned value is not null,
@@ -239,7 +239,7 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Border;
 
         /// <summary>
-        /// Gets or sets the border color for the <see cref="BorderedGraphicControl"/> control.
+        /// Gets or sets the border color for the <see cref="GenericBorder"/> control.
         /// </summary>
         /// <remarks>
         /// If this property is null, <see cref="BorderSettings.DefaultColor"/> is used
@@ -566,7 +566,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void DefaultPaintDebug(PaintEventArgs e)
+        protected virtual void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
                 BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);

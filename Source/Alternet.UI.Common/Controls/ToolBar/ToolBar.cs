@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// Implements generic toolbar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class ToolBar : HiddenBorderedGraphicControl
+    public partial class ToolBar : HiddenBorder
     {
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.

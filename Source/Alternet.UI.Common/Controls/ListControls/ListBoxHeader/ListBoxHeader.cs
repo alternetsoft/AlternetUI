@@ -15,13 +15,17 @@ namespace Alternet.UI
     /// and management of columns within a list box header.
     /// It provides properties to customize the appearance of column splitters and
     /// methods to manipulate columns.</remarks>
-    public partial class ListBoxHeader : Panel, IListBoxHeader
+    public partial class ListBoxHeader : HiddenBorder, IListBoxHeader
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxHeader"/> class.
         /// </summary>
         public ListBoxHeader()
         {
+            TabStop = false;
+            CanSelect = false;
+            ParentBackColor = true;
+            ParentForeColor = true;
             Layout = LayoutStyle.Dock;
             LayoutFlags = LayoutFlags.IterateBackward;
         }
