@@ -348,6 +348,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs the contents of the specified dictionary as a named section, writing each key-value pair using the
+        /// application's logging mechanism.
+        /// </summary>
+        /// <remarks>The method writes a begin section log entry with the specified section name, logs
+        /// each key-value pair in the dictionary, and then writes an end section log entry. If a key is null, the
+        /// string "null" is used as the key name in the log output.</remarks>
+        /// <typeparam name="T1">The type of the keys in the dictionary.</typeparam>
+        /// <typeparam name="T2">The type of the values in the dictionary.</typeparam>
+        /// <param name="sectionName">The name of the section under which the dictionary entries will be logged.</param>
+        /// <param name="info">The dictionary containing the key-value pairs to log. Keys may be null.</param>
+        public static void LogDictionary<T1, T2>(string sectionName, IDictionary<T1, T2> info)
+        {
+            App.LogBeginSection(sectionName);
+
+            try
+            {
+                foreach (var kvp in info)
+                {
+                    var value = kvp.Value;
+                    var key = kvp.Key;
+                    if (key == null)
+                        App.LogNameValue("null", value);
+                    else
+                        App.LogNameValue(key, value);
+                }
+            }
+            finally
+            {
+                App.LogEndSection();
+            }
+        }
+
+        /// <summary>
         /// Creates a <see cref="TreeViewItem"/> for logging an exception.
         /// </summary>
         /// <param name="e">The exception to log.</param>
