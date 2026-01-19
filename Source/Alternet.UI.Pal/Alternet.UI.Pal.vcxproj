@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
@@ -45,9 +45,7 @@
     <Company>AlterNET Software</Company>
     <Product>AlterNET UI PAL Library</Product>
     <Copyright>Copyright (c) 2021-2026 AlterNET Software</Copyright>
-  <MyAssemblyVersion>0.9.809.0</MyAssemblyVersion>
-  <MyFileVersion>0.9.809.0</MyFileVersion>
-  <MyInformationalVersion>0.9.809 (0.9 Beta build 809)</MyInformationalVersion>
+    <MyFileVersion>0.9.810.0</MyFileVersion>
 
   <MyFileVersionReplaceComma>$([System.Text.RegularExpressions.Regex]::Replace('$(MyFileVersion)', '\.', ','))</MyFileVersionReplaceComma>
 
@@ -67,7 +65,6 @@ VS_VERSION_INFO VERSIONINFO
       VALUE "FileVersion", "$(MyFileVersion)\0"
       VALUE "ProductVersion", "$(MyFileVersion)\0"
       VALUE "CompanyName", "$(Company)\0"
-      VALUE "Comments", "$(MyInformationalVersion)\0"
       VALUE "LegalCopyright", "$(Copyright)\0"
     END
   END
@@ -83,11 +80,7 @@ VS_VERSION_INFO VERSIONINFO
   <MakeDir Directories="$(IntermediateOutputPath)" />
 
   <!-- WriteLinesToFile with Lines attribute referencing the property -->
-  <WriteLinesToFile
-    File="$(IntermediateOutputPath)GeneratedVersion.rc"
-    Lines="$(MyRcContent)"
-    Overwrite="true"
-    Encoding="UTF-8" />
+  <WriteLinesToFile File="$(IntermediateOutputPath)GeneratedVersion.rc" Lines="$(MyRcContent)" Overwrite="true" Encoding="UTF-8" />
 
   <ItemGroup>
     <ResourceCompile Include="$(IntermediateOutputPath)GeneratedVersion.rc" />

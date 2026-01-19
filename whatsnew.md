@@ -1,3 +1,19 @@
+# 0.9.810 (2026 January 19)
+
+- Fix measure text issue in Graphics.
+- Add GenericBorder, HiddenGenericBorder controls. They are similar to Border and HiddenBorder but are inherited from GenericControl.
+- Add automatic version resource generation to vcxproj.
+- Add Windows native version info utility class (MswNativeVersionInfo).
+- Control: Add setter for IsMouseCaptured property.
+- Add mouse capture override logic to AbstractControl.
+- AbstractControl: The IsMouseCaptured property now reflects and controls the override state, ensuring consistent mouse capture behavior.
+- Updated constructors in different controls to accept AbstractControl instead of Control as the parent parameter.
+- Add Changed event to StdTreeView.
+- StdTreeView: Add methods to retrieve columns by name, get multiple columns by names, and set the order of columns by column objects or names.
+- Add Name property to ListControlColumn
+
+---
+
 # 0.9.809 (2026 January 15)
 
 - Support multiple columns in StdTreeView and VirtualListBox.
