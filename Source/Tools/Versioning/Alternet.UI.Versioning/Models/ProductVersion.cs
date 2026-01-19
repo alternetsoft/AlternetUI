@@ -19,6 +19,12 @@ namespace Alternet.UI.Versioning
         public string GetInformationalVersion() =>
             $"{Major}.{Minor}.0 ({Major}.{Minor} {Type} build 0)";
 
+        public string GetMajorMinorAndBuild(int buildNumber = 0)
+        {
+            var v = $"{Major}.{Minor}.{buildNumber}.0";
+            return v;
+        }
+
         public string GetPackageVersion(int buildNumber = 0)
         {
             var v = $"{Major}.{Minor}.{buildNumber}";

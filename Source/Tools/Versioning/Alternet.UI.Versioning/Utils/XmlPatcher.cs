@@ -18,6 +18,42 @@ namespace Alternet.UI.Versioning
             this.omitXmlDeclaration = omitXmlDeclaration;
         }
 
+        public void PatchValue(
+            string filePath,
+            string elementSelector,
+            string newValue)
+        {
+            XDocument document;
+            XmlReader reader;
+
+            using (var stream = File.OpenRead(filePath))
+            {
+                reader = new XmlTextReader(stream);
+                document = XDocument.Load(reader);
+            }
+
+            // Bind the MSBuild namespace to the "msb" prefix
+            var nsmgr = new XmlNamespaceManager(new NameTable());
+            nsmgr.AddNamespace("msb", "http://schemas.microsoft.com/developer/msbuild/2003");
+
+            var element = document.XPathSelectElement(elementSelector, nsmgr);
+
+            if (element == null)
+                return;
+
+            element.SetValue(newValue);
+                
+            using var writer = XmlWriter.Create(
+                filePath,
+                new XmlWriterSettings
+                {
+                    OmitXmlDeclaration = omitXmlDeclaration,
+                    Encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: !omitXmlDeclaration),
+                    Indent = true
+                });
+            document.Save(writer);
+        }
+
         public void PatchAttribute(
             string filePath,
             string elementSelector,

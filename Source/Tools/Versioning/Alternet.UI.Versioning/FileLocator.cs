@@ -39,12 +39,22 @@ namespace Alternet.UI.Versioning
             return path;
         }
 
-        public IEnumerable<string> GetTemplateProjectFiles()
+        public IEnumerable<string> GetPalProjectFiles()
+        {
+            var files = new[]
+            {
+                "Source/Alternet.UI.Pal/Alternet.UI.Pal.vcxproj",
+            };
+
+            return files.Select(file => GetValidFullFilePath(file));
+        }
+
+        public IEnumerable<string> GetProjectFiles()
         {
             var files = new[]
             {
                 "Source/Integration/VisualStudio/Templates/AlternetUIAppTemplate/ProjectTemplate.csproj",
-                "Source/Integration/Templates/CSharp/Application/Alternet.UI.Templates.Application.CSharp.csproj"
+                "Source/Integration/Templates/CSharp/Application/Alternet.UI.Templates.Application.CSharp.csproj",
             };
 
             return files.Select(file => GetValidFullFilePath(file));

@@ -2,11 +2,11 @@
   "profiles": {
     "silent": {
       "commandName": "Project",
-	"dotnetRunMessages": "false",
+      "dotnetRunMessages": "false"
     },
     "set-build-number": {
       "commandName": "Project",
-      "commandLineArgs": "set-build-number 22"
+      "commandLineArgs": "set-build-number 810"
     },
     "append-version-suffix": {
       "commandName": "Project",

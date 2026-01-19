@@ -17,18 +17,39 @@ namespace Alternet.UI.Versioning
 
             MasterVersionFileService.SetVersion(locator.GetMasterVersionFile(), productVersion);
 
-            PatchTemplateProjectFiles(productVersion, buildNumber, locator);
+            PatchProjectFiles(productVersion, buildNumber, locator);
             PatchVSPackageManifests(productVersion, locator);
             PatchDocumentationExamplesProjectFiles(productVersion, locator);
         }
 
-        internal static void PatchTemplateProjectFiles(
+        internal static void PatchPalProjectFile(
+            ProductVersion productVersion,
+            int buildNumber,
+            FileLocator locator)
+        {
+            PatchVersionInPalFiles(
+                locator.GetPalProjectFiles(),
+                productVersion,
+                buildNumber);
+        }
+
+        static void PatchVersionInPalFiles(IEnumerable<string> files, ProductVersion productVersion, int buildNumber)
+        {
+            var patcher = new XmlPatcher(omitXmlDeclaration: false);
+            foreach (var file in files)
+                patcher.PatchValue(
+                    file,
+                    "/msb:Project/msb:PropertyGroup/msb:MyFileVersion",
+                    productVersion.GetMajorMinorAndBuild(buildNumber));
+        }
+
+        internal static void PatchProjectFiles(
             ProductVersion productVersion,
             int buildNumber,
             FileLocator locator)
         {
             PatchVersionInProjectFiles(
-                locator.GetTemplateProjectFiles(),
+                locator.GetProjectFiles(),
                 productVersion.GetPackageVersion(buildNumber));
         }
 

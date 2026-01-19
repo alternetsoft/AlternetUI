@@ -12,7 +12,8 @@ namespace Alternet.UI.Versioning
             var fileLocator = new FileLocator(repository);
 
             PatchVSPackageManifests(buildNumber, fileLocator);
-            VersionService.PatchTemplateProjectFiles(VersionService.GetVersion(repository), buildNumber, fileLocator);
+            VersionService.PatchProjectFiles(VersionService.GetVersion(repository), buildNumber, fileLocator);
+            VersionService.PatchPalProjectFile(VersionService.GetVersion(repository), buildNumber, fileLocator);
         }
 
         private static void PatchVSPackageManifests(int buildNumber, FileLocator locator)

@@ -4,6 +4,7 @@ using System;
 using System.IO;
 
 using Alternet.UI;
+using System.Diagnostics;
 
 namespace VersionTool.Cli
 {
@@ -20,19 +21,31 @@ namespace VersionTool.Cli
                     PublicCommitMessageGenerator.Options,
                     VersionStdoutWriter.Options>(args)
                   .MapResult(
-                    (BuildNumberSetter.Options o)
-                        => { BuildNumberSetter.SetBuildNumber(repository, o); return 0; },
-                    (VersionFileSuffixAppender.Options o)
-                        => { VersionFileSuffixAppender.AppendVersionSuffix(repository, o); return 0; },
-                    (PublicCommitMessageGenerator.Options o)
-                        => { PublicCommitMessageGenerator.Generate(repository, o); return 0; },
-                    (VersionStdoutWriter.Options o)
-                        => { VersionStdoutWriter.Write(repository); return 0; },
+                    (BuildNumberSetter.Options o) =>
+                    {
+                        BuildNumberSetter.SetBuildNumber(repository, o);
+                        return 0;
+                    },
+                    (VersionFileSuffixAppender.Options o) =>
+                    {
+                        VersionFileSuffixAppender.AppendVersionSuffix(repository, o);
+                        return 0;
+                    },
+                    (PublicCommitMessageGenerator.Options o) =>
+                    {
+                        PublicCommitMessageGenerator.Generate(repository, o); return 0;
+                    },
+                    (VersionStdoutWriter.Options o) => {
+                        VersionStdoutWriter.Write(repository);
+                        return 0;
+                    },
                     errors => 0);
             }
             catch (Exception e)
             {
-                Console.Write(e.ToString());
+                Console.WriteLine(e.ToString());
+                Debug.WriteLine(e.ToString());
+
                 // throw; // !! Uncomment this in order to debug
                 return 1;
             }
