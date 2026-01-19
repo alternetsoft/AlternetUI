@@ -40,6 +40,60 @@
     <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+
+<PropertyGroup>
+    <Company>AlterNET Software</Company>
+    <Product>AlterNET UI PAL Library</Product>
+    <Copyright>Copyright (c) 2021-2026 AlterNET Software</Copyright>
+  <MyAssemblyVersion>0.9.809.0</MyAssemblyVersion>
+  <MyFileVersion>0.9.809.0</MyFileVersion>
+  <MyInformationalVersion>0.9.809 (0.9 Beta build 809)</MyInformationalVersion>
+
+  <MyFileVersionReplaceComma>$([System.Text.RegularExpressions.Regex]::Replace('$(MyFileVersion)', '\.', ','))</MyFileVersionReplaceComma>
+
+ <!-- RC contents in a property using CDATA so < and > are safe -->
+  <MyRcContent><![CDATA[
+#include <windows.h>
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION $(MyFileVersionReplaceComma)
+ PRODUCTVERSION $(MyFileVersionReplaceComma)
+ BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040904b0"
+    BEGIN
+      VALUE "FileDescription", "$(Product)\0"
+      VALUE "FileVersion", "$(MyFileVersion)\0"
+      VALUE "ProductVersion", "$(MyFileVersion)\0"
+      VALUE "CompanyName", "$(Company)\0"
+      VALUE "Comments", "$(MyInformationalVersion)\0"
+      VALUE "LegalCopyright", "$(Copyright)\0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x0409, 1200
+  END
+ END
+]]></MyRcContent>
+</PropertyGroup>
+
+<Target Name="GenerateVersionResource" BeforeTargets="ResourceCompile">
+  <MakeDir Directories="$(IntermediateOutputPath)" />
+
+  <!-- WriteLinesToFile with Lines attribute referencing the property -->
+  <WriteLinesToFile
+    File="$(IntermediateOutputPath)GeneratedVersion.rc"
+    Lines="$(MyRcContent)"
+    Overwrite="true"
+    Encoding="UTF-8" />
+
+  <ItemGroup>
+    <ResourceCompile Include="$(IntermediateOutputPath)GeneratedVersion.rc" />
+  </ItemGroup>
+</Target>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
