@@ -35,6 +35,11 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the log view should scroll to the end when its size changes.
+        /// </summary>
+        public virtual bool ScrollToEndOnSizeChanged { get; set; } = true;
+
+        /// <summary>
         /// Clears all log items.
         /// </summary>
         public virtual void Clear()
