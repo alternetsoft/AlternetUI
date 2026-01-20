@@ -100,6 +100,7 @@ namespace Alternet.UI
         private static SvgImage? imgSizingGripRight;
         private static SvgImage? imgBars;
         private static SvgImage? imgFilter;
+        private static SvgImage? imgCheck;
 
         static KnownSvgImages()
         {
@@ -132,6 +133,15 @@ namespace Alternet.UI
         {
             get => imgFilter ??= new MonoSvgImage(KnownSvgUrls.UrlImageFilter);
             set => imgFilter = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image used to represent a check mark icon.
+        /// </summary>
+        public static SvgImage ImgCheck
+        {
+            get => imgCheck ??= new MonoSvgImage(KnownSvgUrls.UrlImageCheck);
+            set => imgCheck = value;
         }
 
         /// <summary>

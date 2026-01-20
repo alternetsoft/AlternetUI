@@ -14,7 +14,15 @@ namespace Alternet.UI
     public static class KnownSvgUrls
     {
         /// <summary>
-        /// Gets template for the svg resource URLs.
+        /// Gets or sets a delegate that provides a custom image URL for a given input string.
+        /// </summary>
+        /// <remarks>If set, this delegate is invoked to determine the image URL based on the input. If
+        /// null, the default image URL resolution is used. This can be used to override or customize image sourcing
+        /// logic at runtime.</remarks>
+        public static Func<string, string>? ImageUrlOverride;
+
+        /// <summary>
+        /// Gets template for the svg resource URLs used by <see cref="GetImageUrl(string)"/>.
         /// </summary>
         public static string ResTemplate { get; } =
             "embres:Alternet.UI.Common.Resources.Svg.{0}.svg?assembly=Alternet.UI.Common";
@@ -471,6 +479,25 @@ namespace Alternet.UI
         /// </summary>
         public static string UrlImageFilter { get; set; } = GetImageUrl("alternet-filter");
 
-        private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
+        /// <summary>
+        /// Gets or sets the URL of the image used to represent a check mark icon.
+        /// </summary>
+        public static string UrlImageCheck { get; set; } = GetImageUrl("alternet-check");
+
+        /// <summary>
+        /// Returns the URL of the image resource associated with the specified name.
+        /// </summary>
+        /// <remarks>If an image URL override is configured, this method uses the override to generate the
+        /// URL; otherwise, it constructs the URL using a predefined template. This method does not validate whether the
+        /// resulting URL points to an existing resource.</remarks>
+        /// <param name="name">The name of the image resource for which to retrieve the URL. Cannot be null.</param>
+        /// <returns>A string containing the URL of the image resource. If no override is set, the URL is generated using a
+        /// default template.</returns>
+        public static string GetImageUrl(string name)
+        {
+            if (ImageUrlOverride != null)
+                return ImageUrlOverride(name);
+            return string.Format(ResTemplate, name);
+        }
     }
 }
