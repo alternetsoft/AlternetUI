@@ -2007,18 +2007,31 @@ namespace Alternet.UI
         /// Cannot be <see langword="null"/>.</param>
         public virtual void Assign(IMenuItemProperties menuItem)
         {
-            Text = menuItem.Text;
-
-            if (menuItem.SvgImage is not null)
+            void InternalSetSvgImage(SvgImage image)
             {
                 ImageSet = null;
                 DisabledImageSet = null;
-                SetSvgImage(menuItem.SvgImage, null);
+                SetSvgImage(image, btn: null);
+            }
+
+            Text = menuItem.Text;
+
+            if (menuItem.Checked)
+            {
+                InternalSetSvgImage(KnownSvgImages.ImgCheck);
             }
             else
             {
-                ImageSet = menuItem.Image;
-                DisabledImageSet = menuItem.DisabledImage;
+                if (menuItem.SvgImage is not null)
+                {
+                    InternalSetSvgImage(menuItem.SvgImage);
+                }
+                else
+                {
+                    SvgImage = null;
+                    ImageSet = menuItem.Image;
+                    DisabledImageSet = menuItem.DisabledImage;
+                }
             }
 
             Visible = menuItem.Visible;
