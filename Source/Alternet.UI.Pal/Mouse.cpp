@@ -46,9 +46,20 @@ namespace Alternet::UI
         return targetControl;
     }
 
+    void OnMouseNop()
+    {
+    }
+
     void Mouse::OnMouse(int eventKind, wxMouseEvent& e, bool& handled)
     {
-        MouseEventData data { eventKind, e.GetTimestamp(), GetEventTargetControl(e), e.GetWheelRotation()};
+        auto clickCount = e.GetClickCount();
+
+        if (clickCount > 1)
+        {
+            OnMouseNop();
+        }
+
+        MouseEventData data { eventKind, e.GetTimestamp(), GetEventTargetControl(e), e.GetWheelRotation(), clickCount};
         handled = RaiseStaticEvent(MouseEvent::MouseChanged, &data);
     }
 }

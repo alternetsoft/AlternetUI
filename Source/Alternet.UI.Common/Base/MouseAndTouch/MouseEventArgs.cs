@@ -23,6 +23,9 @@ namespace Alternet.UI
         private object currentTarget;
         private object originalTarget;
         private PointD location;
+        private int clickCount;
+        private MouseButton changedButton;
+        private MouseButtons buttons;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseEventArgs"/> class
@@ -37,7 +40,7 @@ namespace Alternet.UI
             : this(currentTarget, originalTarget, timestamp, location)
         {
             ChangedButton = button;
-            ClickCount = 1;
+            clickCount = 1;
         }
 
         /// <summary>
@@ -107,8 +110,32 @@ namespace Alternet.UI
         /// </summary>
         public MouseButton ChangedButton
         {
-            get;
-            set;
+            get => changedButton;
+
+            set
+            {
+                changedButton = value;
+                buttons = ToButtons();
+
+                MouseButtons ToButtons()
+                {
+                    switch (ChangedButton)
+                    {
+                        case MouseButton.Left:
+                            return MouseButtons.Left;
+                        case MouseButton.Middle:
+                            return MouseButtons.Middle;
+                        case MouseButton.Right:
+                            return MouseButtons.Right;
+                        case MouseButton.XButton1:
+                            return MouseButtons.XButton1;
+                        case MouseButton.XButton2:
+                            return MouseButtons.XButton2;
+                        default:
+                            return MouseButtons.None;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -119,21 +146,7 @@ namespace Alternet.UI
         {
             get
             {
-                switch (ChangedButton)
-                {
-                    case MouseButton.Left:
-                        return MouseButtons.Left;
-                    case MouseButton.Middle:
-                        return MouseButtons.Middle;
-                    case MouseButton.Right:
-                        return MouseButtons.Right;
-                    case MouseButton.XButton1:
-                        return MouseButtons.XButton1;
-                    case MouseButton.XButton2:
-                        return MouseButtons.XButton2;
-                    default:
-                        return MouseButtons.None;
-                }
+                return buttons;
             }
         }
 
@@ -189,8 +202,12 @@ namespace Alternet.UI
         /// </summary>
         public int ClickCount
         {
-            get;
-            set;
+            get => clickCount;
+
+            set
+            {
+                clickCount = value;
+            }
         }
 
         /// <summary>

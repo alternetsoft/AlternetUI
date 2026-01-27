@@ -11,5 +11,6 @@ namespace NativeApi.Api
         public long timestamp;
         public IntPtr targetControl;
         public int delta;
+        public int numClicks;
     }
 }

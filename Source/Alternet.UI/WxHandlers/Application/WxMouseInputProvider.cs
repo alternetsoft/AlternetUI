@@ -18,7 +18,7 @@ namespace Alternet.UI
             this.nativeMouse = nativeMouse;
             Native.Mouse.GlobalObject = nativeMouse;
 
-            nativeMouse.MouseChanged += NativeMouse_MouseChanged;
+            nativeMouse.MouseChanged += OnNativeMouseMouseChanged;
 
             events[(int)WxEventIdentifiers.SetCursor] = () =>
             {
@@ -64,7 +64,7 @@ namespace Alternet.UI
                 = () => { ReportMouseUp(MouseButton.XButton2); };
         }
 
-        private void NativeMouse_MouseChanged(object? sender, NativeEventArgs<MouseEventData> e)
+        private void OnNativeMouseMouseChanged(object? sender, NativeEventArgs<MouseEventData> e)
         {
             var mappedEvent = WxApplicationHandler.MapToEventIdentifier(e.Data.mouseEventKind);
 
@@ -85,7 +85,7 @@ namespace Alternet.UI
 
         protected override void DisposeManaged()
         {
-            nativeMouse.MouseChanged -= NativeMouse_MouseChanged;
+            nativeMouse.MouseChanged -= OnNativeMouseMouseChanged;
             Native.Mouse.GlobalObject = null;
         }
 
