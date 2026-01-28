@@ -941,6 +941,8 @@ namespace Alternet.UI
             App.LogNameValue("Vector.IsHardwareAccelerated", Vector.IsHardwareAccelerated);
 
             App.LogEndSection();
+
+            SystemInformation.Log();
         }
 
         /// <summary>

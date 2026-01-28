@@ -77,7 +77,7 @@ namespace PropertyGridSample
             };
             control.MouseDown += (s, e) =>
             {
-                App.Log($"{s}.MouseDown");
+                App.Log($"{s}.MouseDown, Clicks: {e.ClickCount}, Location: {e.Location}");
             };
             control.MouseMove += (s, e) =>
             {
