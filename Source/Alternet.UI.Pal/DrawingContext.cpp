@@ -5,13 +5,20 @@
 
 namespace Alternet::UI
 {
-    DrawingContext::DrawingContext(wxDC* dc) : _dc(dc)
+    DrawingContext::DrawingContext(wxDC* dc, bool useDirectDraw) : _dc(dc)
     {
         assert(_dc);
 
 #ifdef  __WXMSW__
-        wxGraphicsRenderer* renderer = wxGraphicsRenderer::GetDirect2DRenderer();
-        _graphicsContext = renderer->CreateContextFromUnknownDC(*_dc);
+        if (useDirectDraw)
+        {
+            wxGraphicsRenderer* renderer = wxGraphicsRenderer::GetDirect2DRenderer();
+            _graphicsContext = renderer->CreateContextFromUnknownDC(*_dc);
+        }
+        else
+        {
+            _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
+        }
 #else
         _graphicsContext = wxGraphicsContext::CreateFromUnknownDC(*_dc);
 #endif

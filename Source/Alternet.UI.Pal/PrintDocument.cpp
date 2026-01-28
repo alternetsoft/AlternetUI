@@ -217,7 +217,7 @@ namespace Alternet::UI
             throwExInvalidOp;
 
         //return new DrawingContext(_printout->GetDC(), [&]() { _printout->SetDCMapping(); });
-        auto dc = new DrawingContext(_printout->GetDC());
+        auto dc = new DrawingContext(_printout->GetDC(), false);
         dc->SetDoNotDeleteDC(true); // wxPrintout deletes the wxDC.
         return dc;
     }

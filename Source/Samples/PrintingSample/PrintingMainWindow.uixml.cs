@@ -54,9 +54,9 @@ namespace PrintingSample
             DrawFirstPage(dc, bounds);
         }
 
-        public static void DrawFirstPage(Graphics dc, RectD bounds, bool forScreen = true)
+        public static void DrawFirstPage(Graphics dc, RectD bounds, bool forScreen = true, int pageIndex = 1)
         {
-            const string TextToDraw = "The brown fox jumps over the lazy dog.";
+            string TextToDraw = $"The brown fox jumps over the lazy dog. Page {pageIndex}";
 
             dc.DrawRectangle(Pens.Blue, bounds);
 
@@ -196,14 +196,18 @@ namespace PrintingSample
             var bounds = new RectD(new PointD(), originAtMarginCheckBox.IsChecked
                 ? e.MarginBounds.Size : e.PrintablePageBounds.Size);
 
-            if (pageNumber == 1)
+            e.DrawingContext.Save();
+
+            if (pageNumber <= 2)
             {
-                DrawFirstPage(e.DrawingContext, bounds, false);
+                DrawFirstPage(e.DrawingContext, bounds, false, pageNumber);
             }
             else
             {
                 DrawAdditionalPage(e.DrawingContext, pageNumber, bounds);
             }
+
+            e.DrawingContext.Restore();
 
             var v = additionalPagesCountNumericUpDown.Value;
 
