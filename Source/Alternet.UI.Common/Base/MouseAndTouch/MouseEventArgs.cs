@@ -26,6 +26,8 @@ namespace Alternet.UI
         private int clickCount;
         private MouseButton changedButton;
         private MouseButtons buttons;
+        private long timestamp;
+        private int delta;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseEventArgs"/> class
@@ -103,7 +105,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets timestamp of the event.
         /// </summary>
-        public long Timestamp { get; set; }
+        public long Timestamp
+        {
+            get => timestamp;
+            set => timestamp = value;
+        }
 
         /// <summary>
         /// Gets or sets changed button.
@@ -217,8 +223,8 @@ namespace Alternet.UI
         /// </returns>
         public int Delta
         {
-            get;
-            set;
+            get => delta;
+            set => delta = value;
         }
 
         /// <summary>
