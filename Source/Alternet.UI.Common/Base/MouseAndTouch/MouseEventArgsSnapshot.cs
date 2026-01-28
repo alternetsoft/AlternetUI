@@ -56,6 +56,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the provided mouse event snapshot to reflect the state of the specified mouse event, including click
+        /// count tracking for double-click detection.
+        /// </summary>
+        /// <remarks>If the current mouse event is determined to be a continuation of a previous
+        /// double-click sequence, the click count in the snapshot is incremented. This method is typically used to
+        /// maintain accurate click count state across mouse events for controls that support double-click or
+        /// multi-click interactions.</remarks>
+        /// <param name="e">The mouse event arguments containing the details of the current mouse event. Cannot be null.</param>
+        /// <param name="snapshot">A reference to the snapshot to update with the latest mouse event information.</param>
+        /// <returns><see langword="true"/> if the current event is a continuation of a double-click sequence;
+        /// otherwise, <see langword="false"/>.</returns>
+        public static bool SetLastUsedMouseEventSnapshot(MouseEventArgs e, ref MouseEventArgsSnapshot snapshot)
+        {
+            if (e.CurrentTarget is not AbstractControl control)
+                return false;
+
+            var newSnapshot = new MouseEventArgsSnapshot(e);
+
+            var isContinuation = newSnapshot.IsDoubleClickContinuationOf(in snapshot, control);
+
+            var oldClickCount = snapshot.ClickCount;
+
+            snapshot = newSnapshot;
+
+            if (isContinuation)
+            {
+                snapshot.ClickCount = oldClickCount + 1;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Determines whether the current mouse event is a continuation of a double-click sequence that began with the
         /// specified previous mouse event on the given control.
         /// </summary>

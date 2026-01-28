@@ -11,6 +11,11 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+/*
+        private static MouseEventArgsSnapshot lastUsedMouseDownArgsSnapshot = new();
+        private static MouseEventArgsSnapshot lastUsedMouseUpArgsSnapshot = new();
+*/
+
         /// <summary>
         /// Notifies all windows and their child controls about changed dpi.
         /// </summary>
@@ -198,6 +203,15 @@ namespace Alternet.UI
                 position.Value);
             eventArgs.DeviceType = deviceType;
 
+            /*
+            var isContinuation = SetLastUsedMouseEventSnapshot(eventArgs, ref lastUsedMouseDownArgsSnapshot);
+
+            if (isContinuation)
+            {
+                eventArgs.ClickCount = lastUsedMouseDownArgsSnapshot.ClickCount;
+            }
+            */
+
             currentTarget.RaiseMouseDown(eventArgs);
         }
 
@@ -230,6 +244,7 @@ namespace Alternet.UI
                     changedButton,
                     timestamp,
                     position.Value);
+            eventArgs.ClickCount = 2;
             currentTarget.RaiseMouseDoubleClick(eventArgs);
         }
 
@@ -267,6 +282,15 @@ namespace Alternet.UI
                     timestamp,
                     position.Value);
             eventArgs.DeviceType = deviceType;
+
+            /*
+            var isContinuation = SetLastUsedMouseEventSnapshot(eventArgs, ref lastUsedMouseUpArgsSnapshot);
+
+            if (isContinuation)
+            {
+                eventArgs.ClickCount = lastUsedMouseUpArgsSnapshot.ClickCount;
+            }
+            */
 
             currentTarget.RaiseMouseUp(eventArgs);
         }
