@@ -860,7 +860,7 @@ namespace Alternet.UI
                         case TouchAction.Pressed:
                             AbstractControl.BubbleMouseDown(
                                 this,
-                                DateTime.Now.Ticks,
+                                DateUtils.GetCurrentTimestamp(),
                                 e.MouseButton,
                                 e.Location,
                                 out _,
@@ -869,14 +869,14 @@ namespace Alternet.UI
                         case TouchAction.Moved:
                             AbstractControl.BubbleMouseMove(
                                 this,
-                                DateTime.Now.Ticks,
+                                DateUtils.GetCurrentTimestamp(),
                                 e.Location,
                                 out _);
                             break;
                         case TouchAction.Released:
                             AbstractControl.BubbleMouseUp(
                                 this,
-                                DateTime.Now.Ticks,
+                                DateUtils.GetCurrentTimestamp(),
                                 e.MouseButton,
                                 e.Location,
                                 out _,
@@ -893,7 +893,7 @@ namespace Alternet.UI
                         case TouchAction.WheelChanged:
                             AbstractControl.BubbleMouseWheel(
                                         this,
-                                        DateTime.Now.Ticks,
+                                        DateUtils.GetCurrentTimestamp(),
                                         e.WheelDelta,
                                         e.Location,
                                         out _);

@@ -72,7 +72,7 @@ namespace Alternet.UI
                 return;
 
             targetControl = GetTargetControl(e.Data.targetControl);
-            timestamp = e.Data.timestamp;
+            timestamp = DateUtils.GetCurrentTimestamp();
             delta = e.Data.delta;
 
             if ((int)mappedEvent >= events.Length)

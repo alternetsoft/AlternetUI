@@ -495,7 +495,7 @@ namespace Alternet.UI
 
             AbstractControl.BubbleMouseDoubleClick(
                         control,
-                        DateTime.Now.Ticks,
+                        DateUtils.GetCurrentTimestamp(),
                         MouseButton.Left,
                         pt,
                         out _,

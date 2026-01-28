@@ -14,6 +14,15 @@ namespace Alternet.UI
     public static class DateUtils
     {
         /// <summary>
+        /// Gets the current timestamp in ticks.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long GetCurrentTimestamp()
+        {
+            return DateTime.Now.Ticks;
+        }
+
+        /// <summary>
         /// Gets <see cref="DateTime"/> format used in Java Script
         /// or in other situations.
         /// </summary>
@@ -80,7 +89,7 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetAbsDistanceWithNow(long timestamp)
         {
-            return Math.Abs(DateTime.Now.Ticks - timestamp);
+            return Math.Abs(DateUtils.GetCurrentTimestamp() - timestamp);
         }
 
         /// <summary>
@@ -111,7 +120,7 @@ namespace Alternet.UI
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetNowInMilliseconds()
-            => DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
+            => DateUtils.GetCurrentTimestamp() / TimeSpan.TicksPerMillisecond;
 
         /// <summary>
         /// Gets current time in milliseconds using

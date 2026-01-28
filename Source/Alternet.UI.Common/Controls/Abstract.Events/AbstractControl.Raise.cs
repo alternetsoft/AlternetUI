@@ -1312,7 +1312,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            LastClickedTimestamp = DateTime.Now.Ticks;
+            LastClickedTimestamp = DateUtils.GetCurrentTimestamp();
 
             OnClick(e);
             Click?.Invoke(this, e);
