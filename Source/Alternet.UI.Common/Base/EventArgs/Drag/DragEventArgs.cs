@@ -30,12 +30,12 @@ namespace Alternet.UI
         /// Gets the <see cref="IDataObject"/> that contains the data associated
         /// with this event.
         /// </summary>
-        public IDataObject Data { get; }
+        public IDataObject Data { get; set; }
 
         /// <summary>
         /// Gets the client coordinates of the mouse pointer in device-independent units.
         /// </summary>
-        public PointD MouseClientLocation { get; }
+        public PointD MouseClientLocation { get; set; }
 
         /// <summary>
         /// Gets or sets the target drop effect in a drag-and-drop operation.
