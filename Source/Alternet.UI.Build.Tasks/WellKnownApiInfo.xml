@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=0.9.810.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=0.9.811.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -715,7 +715,6 @@
     <Type Name="Alternet.UI.SplitterTargetMode" />
     <Type Name="Alternet.UI.StackPanelOrientation" />
     <Type Name="Alternet.UI.SwipeDirection" />
-    <Type Name="Alternet.UI.SwipeDirectionHelper" />
     <Type Name="Alternet.UI.VerticalAlignment" />
     <Type Name="Alternet.UI.Border3DSide" />
     <Type Name="Alternet.UI.ButtonBorderStyle" />
@@ -1010,6 +1009,7 @@
     <Type Name="Alternet.UI.Mouse" />
     <Type Name="Alternet.UI.MouseEventHandler" />
     <Type Name="Alternet.UI.MouseEventArgs" />
+    <Type Name="Alternet.UI.MouseEventArgsSnapshot" />
     <Type Name="Alternet.UI.PlessMouse" />
     <Type Name="Alternet.UI.PlessMouseHandler">
       <Event Name="Disposed" />
@@ -15491,6 +15491,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.SwipeDirectionHelper" />
     <Type Name="Alternet.UI.Thickness" />
     <Type Name="Alternet.UI.SkiaGraphicsFactoryHandler">
       <Event Name="Disposed" />

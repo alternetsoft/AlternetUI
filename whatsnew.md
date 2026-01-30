@@ -1,3 +1,14 @@
+# 0.9.811 (2026 January 30)
+
+- Fix exeption in PrintPreview dialog.
+- Add double-click settings and utility methods to SystemInformation.
+- Add MouseEventArgsSnapshot struct for mouse event data.
+- SpeedButton: Refactored the Assign method to set a checkmark SVG image when the menu item is checked.
+- SpeedButton: Improved image assignment logic to handle SVG and bitmap images more consistently.
+- Add ImgCheck property in KnownSvgImages for a check mark icon and UrlImageCheck in KnownSvgUrls.
+
+---
+
 # 0.9.810 (2026 January 19)
 
 - Fix measure text issue in Graphics.
