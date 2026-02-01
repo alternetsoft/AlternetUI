@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -18,6 +19,18 @@ namespace Alternet.UI
     /// that can be shared across different log writer implementations.</remarks>
     public static class LogWriter
     {
+        /// <summary>
+        /// Represents the default character used to separate values in formatted output.
+        /// This is used in <see cref="WriteSeparator(ILogWriter)"/>.
+        /// </summary>
+        public static char SeparatorChar = '-';
+
+        /// <summary>
+        /// Specifies the default length, in characters, for a separator line.
+        /// This is used in <see cref="WriteSeparator(ILogWriter)"/>.
+        /// </summary>
+        public static int SeparatorLength = 40;
+
         /// <summary>
         /// Represents a no-op implementation of the <see cref="ILogWriter"/> interface.
         /// </summary>
@@ -134,6 +147,190 @@ namespace Alternet.UI
                 else
                     console = value;
             }
+        }
+
+        /// <summary>
+        /// Writes a separator line to the log using the specified log writer.
+        /// </summary>
+        /// <remarks>The separator line consists of a repeated character defined by the log writer
+        /// implementation. This method is typically used to visually separate sections in the log output.</remarks>
+        /// <param name="writer">The log writer to which the separator line will be written. Cannot be null.</param>
+        public static ILogWriter WriteSeparator(this ILogWriter writer)
+        {
+            writer.WriteLine(new string(LogWriter.SeparatorChar, LogWriter.SeparatorLength));
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes an empty line to the log output using the specified log writer.
+        /// </summary>
+        /// <param name="writer">The log writer to which the empty line will be written. Cannot be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter WriteLine(this ILogWriter writer)
+        {
+            writer.WriteLine(string.Empty);
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes each string in the specified collection to the log, appending a new line after each entry.
+        /// </summary>
+        /// <remarks>This method writes each string in <paramref name="lines"/> to the log by calling <see
+        /// cref="ILogWriter.WriteLine(string)"/> for each element. The order of the lines is preserved.</remarks>
+        /// <param name="writer">The log writer to which the lines will be written. Cannot be null.</param>
+        /// <param name="lines">The collection of strings to write to the log. Cannot be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter WriteLines(this ILogWriter writer, IEnumerable<string> lines)
+        {
+            foreach (var line in lines)
+                writer.WriteLine(line);
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes each item in the specified collection to the log as a separate line.
+        /// </summary>
+        /// <remarks>If an item in <paramref name="lines"/> is null, an empty line is written for that
+        /// item. This method enables fluent-style logging by returning the original writer.</remarks>
+        /// <param name="writer">The log writer to which the lines will be written. Cannot be null.</param>
+        /// <param name="lines">The collection of items to write. Each item is converted to a string and written as a separate line. Cannot
+        /// be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter WriteLines(this ILogWriter writer, IEnumerable lines)
+        {
+            foreach (var line in lines)
+                writer.WriteLine(line?.ToString() ?? string.Empty);
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes each string in the specified collection to the log as a separate line.
+        /// </summary>
+        /// <remarks>This method is an extension method for <see cref="ILogWriter"/> and allows writing
+        /// multiple lines in a single call. If the <paramref name="lines"/> array is empty, no lines are
+        /// written.</remarks>
+        /// <param name="writer">The log writer to which the lines will be written. Cannot be null.</param>
+        /// <param name="lines">An array of strings to write to the log. Each string is written as a separate line. Cannot be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter WriteLines(this ILogWriter writer, params string[] lines)
+        {
+            foreach (var line in lines)
+                writer.WriteLine(line);
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes each specified line to the log using the provided writer.
+        /// </summary>
+        /// <remarks>This method is an extension method that allows writing multiple lines to the log in a
+        /// single call. It is useful for fluent logging scenarios.</remarks>
+        /// <param name="writer">The log writer to which the lines will be written. Cannot be null.</param>
+        /// <param name="lines">An array of objects to write as individual lines. Each object is converted to its string representation.
+        /// Null values are written as empty lines.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter WriteLines(this ILogWriter writer, params object?[] lines)
+        {
+            foreach (var line in lines)
+                writer.WriteLine(line?.ToString() ?? string.Empty);
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes a key-value pair to the log in the format "key: value".
+        /// </summary>
+        /// <remarks>This method is an extension method for <see cref="ILogWriter"/> and enables fluent
+        /// logging of key-value pairs. The output format is intended for human-readable logs and may not be suitable
+        /// for structured logging scenarios.</remarks>
+        /// <param name="writer">The log writer to which the key-value pair will be written. Cannot be null.</param>
+        /// <param name="key">The key to write. Typically identifies the value being logged. Cannot be null.</param>
+        /// <param name="value">The value associated with the key. If null, the string "null" is written.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance, to support method chaining.</returns>
+        public static ILogWriter WriteKeyValue(this ILogWriter writer, object key, object? value)
+        {
+            writer.WriteLine($"{key}: {value?.ToString() ?? "null"}");
+            return writer;
+        }
+
+        /// <summary>
+        /// Begins a new indented log section, optionally with a title, and returns the log writer for further logging
+        /// within the section.
+        /// </summary>
+        /// <remarks>A separator line is written before and after the section title, if provided. The log
+        /// writer's indentation level is increased for all subsequent log entries until the indentation is changed or
+        /// reset.</remarks>
+        /// <param name="writer">The log writer to which the section will be written. Cannot be null.</param>
+        /// <param name="sectionTitle">The optional title for the log section. If specified, the title
+        /// is written at the start of the section.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance, allowing for method chaining within the new section.</returns>
+        public static ILogWriter BeginSection(this ILogWriter writer, string? sectionTitle = null)
+        {
+            writer.WriteSeparator();
+
+            if (sectionTitle != null)
+            {
+                writer.WriteLine(sectionTitle);
+                writer.WriteSeparator();
+            }
+
+            writer.Indent();
+            return writer;
+        }
+
+        /// <summary>
+        /// Ends the current log section by decreasing the indentation level and writing a section separator.
+        /// </summary>
+        /// <remarks>Call this method to mark the end of a logical section in the log output. This is
+        /// typically used in conjunction with methods that begin a section to maintain structured and readable
+        /// logs.</remarks>
+        /// <param name="writer">The log writer to operate on. Cannot be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance, enabling method chaining.</returns>
+        public static ILogWriter EndSection(this ILogWriter writer)
+        {
+            writer.Unindent();
+            writer.WriteSeparator();
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes detailed information about the specified exception to the log,
+        /// including its type, message, and stack trace.
+        /// </summary>
+        /// <remarks>This method writes the exception details within a dedicated section in the log. If
+        /// the exception's stack trace is null, an empty string is written in its place.</remarks>
+        /// <param name="writer">The log writer to which the exception details will be written. Cannot be null.</param>
+        /// <param name="ex">The exception whose details are to be logged. Cannot be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter WriteException(this ILogWriter writer, Exception ex)
+        {
+            writer.BeginSection("Exception occurred");
+            writer.WriteLine($"Type: {ex.GetType().FullName}");
+            writer.WriteLine($"Message: {ex.Message}");
+            writer.WriteLine("Stack Trace:");
+            writer.WriteLine(ex.StackTrace ?? string.Empty);
+            writer.EndSection();
+            return writer;
+        }
+
+        /// <summary>
+        /// Writes detailed information about an exception, including its type, message, and stack trace, to the log
+        /// writer as a formatted section.
+        /// </summary>
+        /// <remarks>The exception details are written as a distinct section in the log output. This
+        /// method is intended to standardize exception logging and improve log readability.</remarks>
+        /// <param name="writer">The log writer to which the exception details are written. Cannot be null.</param>
+        /// <param name="message">A descriptive message providing context for the exception.</param>
+        /// <param name="ex">The exception to log. Cannot be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter WriteException(this ILogWriter writer, string message, Exception ex)
+        {
+            writer.BeginSection("Exception occurred");
+            writer.WriteLine(message);
+            writer.WriteLine($"Type: {ex.GetType().FullName}");
+            writer.WriteLine($"Message: {ex.Message}");
+            writer.WriteLine("Stack Trace:");
+            writer.WriteLine(ex.StackTrace ?? string.Empty);
+            writer.EndSection();
+            return writer;
         }
 
         /// <summary>
@@ -284,7 +481,7 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void Indent()
+            public override ILogWriter Indent()
             {
                 foreach (var writer in writers)
                 {
@@ -296,10 +493,12 @@ namespace Alternet.UI
                     {
                     }
                 }
+
+                return this;
             }
 
             /// <inheritdoc/>
-            public override void Unindent()
+            public override ILogWriter Unindent()
             {
                 foreach (var writer in writers)
                 {
@@ -311,10 +510,12 @@ namespace Alternet.UI
                     {
                     }
                 }
+
+                return this;
             }
 
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
                 foreach (var writer in writers)
                 {
@@ -326,6 +527,8 @@ namespace Alternet.UI
                     {
                     }
                 }
+
+                return this;
             }
         }
 
@@ -339,18 +542,21 @@ namespace Alternet.UI
         public class NullLogWriter : BaseLogWriter
         {
             /// <inheritdoc/>
-            public override void Indent()
+            public override ILogWriter Indent()
             {
+                return this;
             }
 
             /// <inheritdoc/>
-            public override void Unindent()
+            public override ILogWriter Unindent()
             {
+                return this;
             }
 
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
+                return this;
             }
         }
 
@@ -364,21 +570,24 @@ namespace Alternet.UI
         public class DebugLogWriter : BaseLogWriter
         {
             /// <inheritdoc/>
-            public override void Indent()
+            public override ILogWriter Indent()
             {
                 System.Diagnostics.Debug.Indent();
+                return this;
             }
 
             /// <inheritdoc/>
-            public override void Unindent()
+            public override ILogWriter Unindent()
             {
                 System.Diagnostics.Debug.Unindent();
+                return this;
             }
 
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
                 System.Diagnostics.Debug.WriteLine(message);
+                return this;
             }
         }
 
@@ -394,13 +603,13 @@ namespace Alternet.UI
         public abstract class BaseLogWriter : DisposableObject, ILogWriter
         {
             /// <inheritdoc/>
-            public abstract void Indent();
+            public abstract ILogWriter Indent();
 
             /// <inheritdoc/>
-            public abstract void Unindent();
+            public abstract ILogWriter Unindent();
 
             /// <inheritdoc/>
-            public abstract void WriteLine(string message);
+            public abstract ILogWriter WriteLine(string message);
         }
 
         /// <summary>
@@ -420,13 +629,14 @@ namespace Alternet.UI
             public int IndentLevel => indentLevel;
 
             /// <inheritdoc/>
-            public override void Indent()
+            public override ILogWriter Indent()
             {
                 indentLevel++;
+                return this;
             }
 
             /// <inheritdoc/>
-            public override void Unindent()
+            public override ILogWriter Unindent()
             {
                 if (indentLevel > 0)
                     indentLevel--;
@@ -437,6 +647,8 @@ namespace Alternet.UI
                         throw new InvalidOperationException("Indent level cannot be less than zero.");
                     }
                 }
+
+                return this;
             }
 
             /// <summary>
@@ -482,9 +694,10 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
                 logAction(FormatMessage(message));
+                return this;
             }
         }
 
@@ -500,9 +713,10 @@ namespace Alternet.UI
         public class ApplicationLogWriter : CustomLogWriter
         {
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
                 App.Log(FormatMessage(message));
+                return this;
             }
         }
 
@@ -532,9 +746,10 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
                 textWriter.WriteLine(FormatMessage(message));
+                return this;
             }
         }
 
@@ -592,9 +807,10 @@ namespace Alternet.UI
             }
 
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
                 stringBuilder.AppendLine(FormatMessage(message));
+                return this;
             }
         }
 
@@ -607,9 +823,10 @@ namespace Alternet.UI
         public class ConsoleLogWriter : CustomLogWriter
         {
             /// <inheritdoc/>
-            public override void WriteLine(string message)
+            public override ILogWriter WriteLine(string message)
             {
                 Console.WriteLine(FormatMessage(message));
+                return this;
             }
         }
     }
