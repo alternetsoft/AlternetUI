@@ -151,6 +151,26 @@ namespace Alternet.Drawing.Printing
             }
         }
 
+        /// <summary>
+        /// Writes the current page settings to the specified log writer.
+        /// </summary>
+        /// <remarks>This method outputs the values of the Color, Landscape, Margins, PaperSize, and
+        /// PrinterResolution properties. The output is grouped within a section labeled "PageSettings". This method is
+        /// typically used for diagnostic or debugging purposes.</remarks>
+        /// <param name="log">The log writer to which the page settings are written. If null, a debug log writer is used.</param>
+        public virtual void Log(ILogWriter? log = null)
+        {
+            log ??= LogWriter.Debug;
+
+            log.BeginSection("PageSettings");
+            log.WriteKeyValue("Color", Color);
+            log.WriteKeyValue("Landscape", Landscape);
+            log.WriteKeyValue("Margins", Margins);
+            log.WriteKeyValue("PaperSize", PaperSize);
+            log.WriteKeyValue("PrinterResolution", PrinterResolution);
+            log.EndSection();
+        }
+
         /// <inheritdoc/>
         protected override IPageSettingsHandler CreateHandler()
         {
