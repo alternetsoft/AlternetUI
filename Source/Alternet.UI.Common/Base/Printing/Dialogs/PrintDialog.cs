@@ -86,6 +86,26 @@ namespace Alternet.UI
         public new IPrintDialogHandler Handler => (IPrintDialogHandler)base.Handler;
 
         /// <summary>
+        /// Writes the current print dialog settings to the specified log writer.
+        /// </summary>
+        /// <param name="logWriter">The log writer to which the print dialog settings are written.
+        /// If null, a default debug log writer is used.</param>
+        public virtual void Log(ILogWriter? logWriter = null)
+        {
+            logWriter ??= LogWriter.Debug;
+
+            logWriter.BeginSection("PrintDialog");
+
+            logWriter.WriteKeyValue("AllowSomePages", AllowSomePages);
+            logWriter.WriteKeyValue("AllowSelection", AllowSelection);
+            logWriter.WriteKeyValue("AllowPrintToFile", AllowPrintToFile);
+
+            Document?.Log(logWriter);
+
+            logWriter.EndSection();
+        }
+
+        /// <summary>
         /// Creates <see cref="IDialogHandler"/> object used in this dialog.
         /// </summary>
         /// <returns></returns>
