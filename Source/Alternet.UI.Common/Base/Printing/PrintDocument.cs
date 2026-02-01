@@ -174,6 +174,46 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
+        /// Gets a value indicating whether a print operation is currently in progress.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsCurrentPrinting
+        {
+            get
+            {
+                return currentDrawingContext != null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current graphics drawing context used for printing operations.
+        /// </summary>
+        /// <remarks>The returned <see cref="Graphics"/> instance may be <see langword="null"/> if no
+        /// drawing context is currently available. This property is typically used to perform custom drawing within the
+        /// rendering surface.</remarks>
+        [Browsable(false)]
+        public Graphics? CurrentDrawingContext
+        {
+            get
+            {
+                return currentDrawingContext;
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if a printing operation is currently in progress.
+        /// </summary>
+        /// <remarks>Call this method before starting a new printing operation to ensure that no other
+        /// printing process is currently running. This helps prevent conflicts or resource contention caused by
+        /// overlapping print jobs.</remarks>
+        /// <exception cref="InvalidOperationException">Thrown if a printing operation is active when this method is called.</exception>
+        public virtual void ThrowIfPrintingInProgress()
+        {
+            if (IsCurrentPrinting)
+                throw new InvalidOperationException("A printing operation is in progress.");
+        }
+
+        /// <summary>
         /// Starts the document's printing process.
         /// </summary>
         /// <remarks>
@@ -184,10 +224,29 @@ namespace Alternet.Drawing.Printing
         /// </remarks>
         public virtual void Print()
         {
-            if (currentDrawingContext != null)
-                throw new InvalidOperationException("Another printing operation is in progress.");
-
+            ThrowIfPrintingInProgress();
             Handler.Print();
+        }
+
+        /// <summary>
+        /// Logs the document, page and printer settings using the specified log writer.
+        /// </summary>
+        /// <param name="log">The log writer to which settings information will be written.
+        /// If not specified, debug output will be used.
+        /// </param>
+        public virtual void Log(ILogWriter? log = null)
+        {
+            log ??= LogWriter.Debug;
+
+            log.BeginSection("PrintDocument");
+
+            log.WriteKeyValue("DocumentName", DocumentName);
+            log.WriteKeyValue("OriginAtMargins", OriginAtMargins);
+
+            PageSettings.Log(log);
+            PrinterSettings.Log(log);
+
+            log.EndSection();
         }
 
         /// <summary>
@@ -243,9 +302,9 @@ namespace Alternet.Drawing.Printing
             if (!IsHandlerCreated)
                 return;
 
-            Handler.PrintPage -= NativePrintDocument_PrintPage;
-            Handler.BeginPrint -= NativePrintDocument_BeginPrint;
-            Handler.EndPrint -= NativePrintDocument_EndPrint;
+            Handler.PrintPage -= OnNativePrintDocumentPrintPage;
+            Handler.BeginPrint -= OnNativePrintDocumentBeginPrint;
+            Handler.EndPrint -= OnNativePrintDocumentEndPrint;
 
             base.DisposeManaged();
         }
@@ -255,14 +314,24 @@ namespace Alternet.Drawing.Printing
         {
             var result = PrintingFactory.Handler.CreatePrintDocumentHandler();
 
-            result.PrintPage += NativePrintDocument_PrintPage;
-            result.BeginPrint += NativePrintDocument_BeginPrint;
-            result.EndPrint += NativePrintDocument_EndPrint;
+            result.PrintPage += OnNativePrintDocumentPrintPage;
+            result.BeginPrint += OnNativePrintDocumentBeginPrint;
+            result.EndPrint += OnNativePrintDocumentEndPrint;
 
             return result;
         }
 
-        private void NativePrintDocument_EndPrint(object? sender, CancelEventArgs e)
+        /// <summary>
+        /// Handles the completion of a native print document operation and updates the cancellation status based on the
+        /// print event arguments.
+        /// </summary>
+        /// <remarks>Override this method to customize behavior when a native print document finishes
+        /// printing. The cancellation status in <paramref name="e"/> will be updated according to the result of the
+        /// print event.</remarks>
+        /// <param name="sender">The source of the event, typically the print document or related component.</param>
+        /// <param name="e">A <see cref="CancelEventArgs"/> that contains the event data, including the cancellation status for the
+        /// print operation.</param>
+        protected virtual void OnNativePrintDocumentEndPrint(object? sender, CancelEventArgs e)
         {
             var ea = new PrintEventArgs();
             OnEndPrint(ea);
@@ -271,10 +340,17 @@ namespace Alternet.Drawing.Printing
             currentDrawingContext = null;
         }
 
-        private void NativePrintDocument_BeginPrint(object? sender, CancelEventArgs e)
+        /// <summary>
+        /// Raises the event signaling the start of a native print document operation.
+        /// </summary>
+        /// <remarks>Override this method to perform custom actions when a native print document begins
+        /// printing. Setting <paramref name="e"/>.Cancel to <see langword="true"/> will abort the print
+        /// operation.</remarks>
+        /// <param name="sender">The source of the event, typically the print document initiating the operation.</param>
+        /// <param name="e">A <see cref="CancelEventArgs"/> instance that can be used to cancel the print operation.</param>
+        protected virtual void OnNativePrintDocumentBeginPrint(object? sender, CancelEventArgs e)
         {
-            if (currentDrawingContext != null)
-                throw new InvalidOperationException();
+            ThrowIfPrintingInProgress();
 
             currentDrawingContext = Handler.DrawingContext;
 
@@ -283,7 +359,17 @@ namespace Alternet.Drawing.Printing
             e.Cancel = ea.Cancel;
         }
 
-        private void NativePrintDocument_PrintPage(object? sender, CancelEventArgs e)
+        /// <summary>
+        /// Handles the print page event for the native print document, raising the print page logic and updating the
+        /// cancellation status as needed.
+        /// </summary>
+        /// <remarks>Override this method to customize how print pages are processed during native
+        /// printing. The cancellation status of the event is updated based on the print page logic.</remarks>
+        /// <param name="sender">The source of the event, typically the print document object that initiated the print page request.</param>
+        /// <param name="e">A <see cref="CancelEventArgs"/> that contains the event data, including the cancellation flag that can be
+        /// set to abort printing.</param>
+        /// <exception cref="InvalidOperationException">Thrown if the drawing context required for printing is not available.</exception>
+        protected virtual void OnNativePrintDocumentPrintPage(object? sender, CancelEventArgs e)
         {
             if (currentDrawingContext == null)
                 throw new InvalidOperationException();
