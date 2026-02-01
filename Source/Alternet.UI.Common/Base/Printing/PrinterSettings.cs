@@ -347,6 +347,37 @@ namespace Alternet.Drawing.Printing
             }
         }
 
+        /// <summary>
+        /// Writes the current printer settings and related properties to the specified log writer for diagnostic or
+        /// informational purposes.
+        /// </summary>
+        /// <remarks>This method outputs a summary of key printer settings, including printer name,
+        /// validity, default status, file printing options, page ranges, duplex mode, collation, and copy count. It is
+        /// useful for troubleshooting or auditing printer configuration. The output format and destination depend on
+        /// the implementation of <see cref="ILogWriter"/>.</remarks>
+        /// <param name="log">The log writer to which the printer settings will be written. If <paramref name="log"/> is <see
+        /// langword="null"/>, the default debug log writer is used.</param>
+        public virtual void Log(ILogWriter? log = null)
+        {
+            if (log == null)
+                log = LogWriter.Debug;
+            log.BeginSection("PrinterSettings");
+            log.WriteKeyValue("PrinterName", PrinterName);
+            log.WriteKeyValue("IsValid", IsValid);
+            log.WriteKeyValue("IsDefaultPrinter", IsDefaultPrinter);
+            log.WriteKeyValue("PrintToFile", PrintToFile);
+            log.WriteKeyValue("PrintFileName", PrintFileName);
+            log.WriteKeyValue("Duplex", Duplex);
+            log.WriteKeyValue("FromPage", FromPage);
+            log.WriteKeyValue("ToPage", ToPage);
+            log.WriteKeyValue("MinimumPage", MinimumPage);
+            log.WriteKeyValue("MaximumPage", MaximumPage);
+            log.WriteKeyValue("PrintRange", PrintRange);
+            log.WriteKeyValue("Collate", Collate);
+            log.WriteKeyValue("Copies", Copies);
+            log.EndSection();
+        }
+
         /// <inheritdoc/>
         protected override IPrinterSettingsHandler CreateHandler()
         {
