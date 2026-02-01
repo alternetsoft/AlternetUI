@@ -12,17 +12,17 @@ namespace Alternet.UI
         /// <summary>
         /// Increases the indentation level for subsequent log messages.
         /// </summary>
-        void Indent();
+        ILogWriter Indent();
 
         /// <summary>
         /// Decreases the indentation level for subsequent log messages.
         /// </summary>
-        void Unindent();
+        ILogWriter Unindent();
 
         /// <summary>
         /// Writes a message to the log, followed by a line terminator.
         /// </summary>
         /// <param name="message">The message to write.</param>
-        void WriteLine(string message);
+        ILogWriter WriteLine(string message);
     }
 }
