@@ -37,6 +37,7 @@ namespace PrintingSample
 
             // This is important if OS style is BlackOnWhite.
             DrawingArea.BackgroundColor = Color.White;
+            DrawingArea.ParentBackColor = false;
         }
 
         private void DrawingArea_Paint(object? sender, PaintEventArgs e)
@@ -150,6 +151,8 @@ namespace PrintingSample
             dialog.AllowSomePages = false;
 
             document.PrintPage += Document_PrintPage;
+
+            document.Log();
 
             dialog.ShowAsync(() =>
             {
