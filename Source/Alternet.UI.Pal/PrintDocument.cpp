@@ -294,20 +294,31 @@ namespace Alternet::UI
     wxPrintDialogData PrintDocument::GetPrintDialogData()
     {
         wxPrintDialogData data(GetPrintData());
-        
+
         auto printerSettings = GetPrinterSettingsCore();
 
-        data.SetFromPage(printerSettings->GetFromPage());
-        data.SetToPage(printerSettings->GetToPage());
+		auto fromPage = printerSettings->GetFromPage();
+		auto toPage = printerSettings->GetToPage();
+		auto minPage = printerSettings->GetMinimumPage();
+		auto maxPage = printerSettings->GetMaximumPage();
 
-        data.SetMinPage(printerSettings->GetMinimumPage());
-        data.SetMaxPage(printerSettings->GetMaximumPage());
+        data.SetFromPage(fromPage);
+        data.SetToPage(toPage);
 
-        SetPrintRange(data, printerSettings->GetPrintRange());
+        data.SetMinPage(minPage);
+        data.SetMaxPage(maxPage);
 
-        data.SetCollate(printerSettings->GetCollate());
-        data.SetNoCopies(printerSettings->GetCopies());
-        data.SetPrintToFile(printerSettings->GetPrintToFile());
+		auto printRange = printerSettings->GetPrintRange();
+
+        SetPrintRange(data, printRange);
+
+		auto collate = printerSettings->GetCollate();
+		auto printToFile = printerSettings->GetPrintToFile();
+		auto copies = printerSettings->GetCopies();
+
+        data.SetCollate(collate);
+        data.SetNoCopies(copies);
+        data.SetPrintToFile(printToFile);
 
         auto isOk = data.IsOk();
 

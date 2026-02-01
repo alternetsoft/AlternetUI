@@ -75,7 +75,9 @@ namespace Alternet::UI
         data.EnablePageNumbers(_allowSomePages);
         data.EnableSelection(_allowSelection);
         data.EnablePrintToFile(_allowPrintToFile);
-        data.EnableHelp(_showHelp);
+
+        /* This is disabled as in Windows 11 dialog fails with this enabled */
+        /* data.EnableHelp(_showHelp);*/
     }
 
     ModalResult PrintDialog::ShowModal(Window* owner)

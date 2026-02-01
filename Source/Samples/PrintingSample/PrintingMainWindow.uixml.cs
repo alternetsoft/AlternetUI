@@ -147,14 +147,14 @@ namespace PrintingSample
             var document = CreatePrintDocument();
 
             dialog.Document = document;
-            dialog.AllowSelection = true;
-            dialog.AllowSomePages = false;
+            dialog.AllowSelection = false;
+            dialog.AllowSomePages = true;
 
             document.PrintPage += Document_PrintPage;
 
             dialog.Log();
 
-            dialog.ShowAsync(() =>
+            dialog.ShowAsync(this, () =>
             {
                 document.Print();
             });
@@ -166,12 +166,13 @@ namespace PrintingSample
             var document = CreatePrintDocument();
 
             pageSetupDialog.Document = document;
-            //setupDlg.AllowMargins = false;
-            //setupDlg.AllowOrientation = false;
-            //setupDlg.AllowPaper = false;
-            //setupDlg.AllowPrinter = false;
+            
+            pageSetupDialog.AllowMargins = true;
+            pageSetupDialog.AllowOrientation = true;
+            pageSetupDialog.AllowPaper = true;
+            pageSetupDialog.AllowPrinter = true;
 
-            pageSetupDialog.ShowAsync(() =>
+            pageSetupDialog.ShowAsync(this, () =>
             {
                 //document.DefaultPageSettings = pageSetupDialog.PageSettings;
                 //document.PrinterSettings = pageSetupDialog.PrinterSettings;
