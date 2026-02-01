@@ -7,7 +7,7 @@ namespace Alternet.Drawing.Printing
     /// <summary>
     /// Defines paper sizes.
     /// </summary>
-    public class PaperSizes
+    public partial class PaperSizes
     {
         private static PaperSizes? sizeMillimeters;
         private static PaperSizes? sizeInches;
@@ -19,7 +19,7 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                sizeMillimeters ??= GetSizeMillimeters();
+                sizeMillimeters ??= CreateSizeMillimeters();
                 return sizeMillimeters;
             }
 
@@ -51,7 +51,7 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                sizeInches ??= GetSizeInches();
+                sizeInches ??= CreateSizeInches();
                 return sizeInches;
             }
 
@@ -271,7 +271,15 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         public SizeD C0 { get; set; }
 
-        private static PaperSizes GetSizeInches()
+        /// <summary>
+        /// Creates a new instance of the PaperSizes class with standard ISO and US paper sizes defined in inches.
+        /// </summary>
+        /// <remarks>Use this method when you require paper size definitions in inches for printing,
+        /// layout, or document formatting tasks. The returned object includes both international and US standard sizes
+        /// for convenience.</remarks>
+        /// <returns>A PaperSizes object containing predefined dimensions for common ISO (A, B, C series) and US (Letter, Legal,
+        /// Tabloid, etc.) paper sizes, with all measurements specified in inches.</returns>
+        public static PaperSizes CreateSizeInches()
         {
             PaperSizes result = new()
             {
@@ -322,7 +330,15 @@ namespace Alternet.Drawing.Printing
             return result;
         }
 
-        private static PaperSizes GetSizeMillimeters()
+        /// <summary>
+        /// Creates a new instance of the PaperSizes class with standard international and North American paper sizes defined in
+        /// millimeters.
+        /// </summary>
+        /// <remarks>The returned PaperSizes instance includes common ISO A, B, and C series sizes, as well as North
+        /// American formats such as Letter, Legal, and Tabloid. This method is useful for applications that require accurate
+        /// paper size measurements in millimeters for layout, printing, or conversion purposes.</remarks>
+        /// <returns>A PaperSizes object containing predefined paper size dimensions, where each size is specified in millimeters.</returns>
+        public static PaperSizes CreateSizeMillimeters()
         {
             // Source of the data: https://www.papersizes.org/a-paper-sizes.htm#finder
             PaperSizes result = new()
