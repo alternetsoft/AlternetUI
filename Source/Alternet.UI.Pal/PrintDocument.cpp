@@ -309,6 +309,8 @@ namespace Alternet::UI
         data.SetNoCopies(printerSettings->GetCopies());
         data.SetPrintToFile(printerSettings->GetPrintToFile());
 
+        auto isOk = data.IsOk();
+
         return data;
     }
 
@@ -317,30 +319,58 @@ namespace Alternet::UI
         wxPrintData data;
 
         auto printerSettings = GetPrinterSettingsCore();
-        data.SetPrinterName(wxStr(printerSettings->GetPrinterName().value_or(u"")));
+
+        auto printerName = wxStr(printerSettings->GetPrinterName().value_or(u""));
+
+        data.SetPrinterName(printerName);
 
         auto pageSettings = GetPageSettingsCore();
 
         if (printerSettings->GetPrintFileName() != nullopt)
-            data.SetFilename(wxStr(printerSettings->GetPrintFileName().value()));
+        {
+            auto printFileName = wxStr(printerSettings->GetPrintFileName().value());
+            data.SetFilename(printFileName);
+        }
 
-        data.SetDuplex(GetWxDuplexMode(printerSettings->GetDuplex()));
-        data.SetColour(pageSettings->GetColor());
-        data.SetOrientation(pageSettings->GetLandscape()
-            ? wxPrintOrientation::wxLANDSCAPE : wxPrintOrientation::wxPORTRAIT);
-        
+        auto duplexMode = GetWxDuplexMode(printerSettings->GetDuplex());
+
+        data.SetDuplex(duplexMode);
+
+		auto isColor = pageSettings->GetColor();
+
+        data.SetColour(isColor);
+
+        auto orientation = pageSettings->GetLandscape()
+            ? wxPrintOrientation::wxLANDSCAPE
+			: wxPrintOrientation::wxPORTRAIT;
+
+        data.SetOrientation(orientation);
+
         if (pageSettings->GetUseCustomPaperSize())
         {
             data.SetPaperId(wxPaperSize::wxPAPER_NONE);
+
             auto customPaperSize = pageSettings->GetCustomPaperSize();
-            data.SetPaperSize(wxSize((int)customPaperSize.Width, (int)customPaperSize.Height));
+
+            auto paperWidth = (int)customPaperSize.Width;
+			auto paperHeight = (int)customPaperSize.Height;
+
+            data.SetPaperSize(wxSize(paperWidth, paperHeight));
         }
         else
         {
-            data.SetPaperId(GetWxPaperSize(pageSettings->GetPaperSize()));
+            auto paperSize = pageSettings->GetPaperSize();
+            auto wxPaperSize = GetWxPaperSize(paperSize);
+
+            data.SetPaperId(wxPaperSize);
         }
 
-        data.SetQuality(GetWxPrintQuality(pageSettings->GetPrinterResolution()));
+		auto quality = pageSettings->GetPrinterResolution();
+		auto wxQuality = GetWxPrintQuality(quality);
+
+        data.SetQuality(wxQuality);
+
+		auto isOk = data.IsOk();
 
         return data;
     }
@@ -358,7 +388,7 @@ namespace Alternet::UI
         case PrinterResolutionKind::High:
             return wxPRINT_QUALITY_HIGH;
         default:
-            throwExNoInfo;
+            return wxPRINT_QUALITY_DRAFT;
         }
     }
 
@@ -390,7 +420,7 @@ namespace Alternet::UI
         case Duplex::Vertical:
             return wxDUPLEX_VERTICAL;
         default:
-            throwExNoInfo;
+            return wxDUPLEX_SIMPLEX;
         }
     }
 
@@ -405,7 +435,7 @@ namespace Alternet::UI
         case wxDUPLEX_VERTICAL:
             return Duplex::Vertical;
         default:
-            throwExNoInfo;
+            return Duplex::Simplex;
         }
     }
 
@@ -425,8 +455,6 @@ namespace Alternet::UI
             data.SetAllPages(false);
             data.SetSelection(false);
             break;
-        default:
-            throwExNoInfo;
         }
     }
 

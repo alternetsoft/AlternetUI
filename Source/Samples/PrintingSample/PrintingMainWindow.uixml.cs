@@ -152,7 +152,7 @@ namespace PrintingSample
 
             document.PrintPage += Document_PrintPage;
 
-            document.Log();
+            dialog.Log();
 
             dialog.ShowAsync(() =>
             {
