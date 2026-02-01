@@ -27,5 +27,11 @@ namespace Alternet.Drawing.Printing
             get => printerResolutionKind;
             set => printerResolutionKind = value;
         }
+
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            return $"{printerResolutionKind}";
+        }
     }
 }
