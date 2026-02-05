@@ -764,6 +764,30 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Scales each specified image by the given scale factor.
+        /// </summary>
+        /// <remarks>If the scale factor is (1, 1) or close to this value, no scaling is performed.
+        /// This method modifies the provided images in place.</remarks>
+        /// <param name="scaleFactor">The factor by which to scale each image.
+        /// A value close to (1, 1) leaves images unchanged; other values apply
+        /// proportional scaling along each axis.</param>
+        /// <param name="images">The images to be scaled.</param>
+        public static void ScaleImages(Coord scaleFactor, params Image?[] images)
+        {
+            var isScaled = !ControlUtils.IsScaleFactorCloseToOne(scaleFactor);
+
+            if (isScaled)
+            {
+                foreach (var image in images)
+                {
+                    if (image is null)
+                        continue;
+                    image.Scale(scaleFactor);
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="BitmapType"/> from the extension of the <paramref name="fileName"/>.
         /// </summary>
         /// <param name="fileName">Path to file.</param>
@@ -984,6 +1008,24 @@ namespace Alternet.Drawing
             if (Immutable)
                 return false;
             return Handler.Rescale(sizeNeeded);
+        }
+
+        /// <summary>
+        /// Scales the current size of the image by the specified scale factor.
+        /// If scale factor is less than 1, the image will be scaled down; if it is greater than 1, the image will be scaled up.
+        /// </summary>
+        /// <remarks>If the object is immutable, the size will not be changed and the method returns
+        /// false.</remarks>
+        /// <param name="scaleFactor">The factor by which to scale the width and height. Must be a positive value.</param>
+        /// <returns>true if the size was successfully scaled; otherwise, false.</returns>
+        public virtual bool Scale(float scaleFactor)
+        {
+            if (Immutable)
+                return false;
+            var scaledSize = Size;
+            scaledSize.Width = (int)(scaledSize.Width * scaleFactor);
+            scaledSize.Height = (int)(scaledSize.Height * scaleFactor);
+            return Rescale(scaledSize);
         }
 
         /// <summary>
