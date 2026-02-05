@@ -175,6 +175,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified DPI scale factor is effectively equal to 1.0 within a small tolerance.
+        /// </summary>
+        /// <remarks>This method is useful for checking if DPI scaling is effectively disabled or
+        /// negligible, accounting for minor floating-point inaccuracies.</remarks>
+        /// <param name="dpiScale">The DPI scale factor to evaluate. Typically, a value of 1.0 indicates no scaling.</param>
+        /// <returns>true if the scale factor is within 0.001 of 1.0; otherwise, false.</returns>
+        public static bool IsScaleFactorCloseToOne(float dpiScale)
+        {
+            return Math.Abs(dpiScale - 1) < 0.001;
+        }
+
+        /// <summary>
         /// Configures the rendering mode for the specified control.
         /// </summary>
         /// <remarks>This method updates the rendering flags of the specified control based
