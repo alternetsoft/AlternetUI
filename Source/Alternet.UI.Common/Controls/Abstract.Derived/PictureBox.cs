@@ -16,7 +16,7 @@ namespace Alternet.UI
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
     [ControlCategory("Common")]
-    public partial class PictureBox : GenericControl, IValidatorReporter
+    public partial class PictureBox : HiddenGenericBorder, IValidatorReporter
     {
         /// <summary>
         /// Gets or sets default value of the <see cref="AbstractControl.ParentBackColor"/>
@@ -522,7 +522,7 @@ namespace Alternet.UI
             var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
                 : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
 
-            DrawDefaultBackground(e, flags);
+            DrawBorderAndBackground(e, flags);
 
             if (TextVisible)
             {
