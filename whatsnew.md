@@ -1,3 +1,15 @@
+# 0.9.812 (2026 February 6)
+
+- Image: Add ScaleImages and Scale methods.
+- Fix print dialog was not shown on Windows 11.
+- Make ILogWriter methods return ILogWriter for chaining.
+- Introduces IsCurrentPrinting and CurrentDrawingContext properties to expose print operation status and context.
+- Refactor PaperSizes to use Create methods and add docs. Enhance PaperSize with custom size support and ToString
+- Add Log methods to different print related objects for diagnostics.
+- Add extension methods and fluent API to LogWriter (WriteSeparator, WriteLines, WriteKeyValue, BeginSection, EndSection, and WriteException).
+
+---
+
 # 0.9.811 (2026 January 30)
 
 - Fix exeption in PrintPreview dialog.
