@@ -413,22 +413,40 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override void DefaultPaint(PaintEventArgs e)
+        /// <summary>
+        /// Draws the border and background for the control using the specified paint event arguments.
+        /// </summary>
+        /// <remarks>If the border margin is positive, the method draws the background and border
+        /// separately, adjusting the client rectangle as needed. Otherwise, it draws only the background. This method
+        /// is typically called during the control's paint cycle and can be overridden to customize border and
+        /// background rendering.</remarks>
+        /// <param name="flags">Flags that specify what to draw. Optional. If not specified, both bprder and background are painted.</param>
+        /// <param name="e">The paint event arguments containing the graphics context
+        /// and client rectangle information used for drawing.</param>
+        public virtual void DrawBorderAndBackground(
+            PaintEventArgs e,
+            DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
         {
             if (BorderMargin.IsAnyPositive)
             {
-                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
+                if (flags.HasFlag(DrawDefaultBackgroundFlags.DrawBackground))
+                    DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
                 var saved = e.ClientRectangle;
                 e.ClientRectangle = saved.DeflatedWithPadding(BorderMargin);
-                DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+                if (flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder))
+                    DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
                 e.ClientRectangle = saved;
             }
             else
             {
-                DrawDefaultBackground(e);
+                DrawDefaultBackground(e, flags);
             }
+        }
 
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            DrawBorderAndBackground(e);
             DefaultPaintDebug(e);
         }
 
