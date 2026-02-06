@@ -20,6 +20,14 @@ namespace Alternet.Drawing
     public partial class Image : HandledObject<IImageHandler>, IImageSource
     {
         /// <summary>
+        /// Gets or sets a delegate that applies custom recoloring to an image for dark mode scenarios.
+        /// </summary>
+        /// <remarks>If set, this delegate overrides the default dark mode recoloring logic. The delegate
+        /// should accept an input image and return a recolored image suitable for display in dark mode. If the value is
+        /// null, the default recoloring behavior is used.</remarks>
+        public static Func<Image, Image>? RecolorForDarkModeOverride;
+
+        /// <summary>
         /// Gets or sets a value indicating whether to use SkiaSharp for loading images.
         /// Default is True. If this value is False, platform specific image loading will be used.
         /// </summary>
@@ -1150,6 +1158,55 @@ namespace Alternet.Drawing
             quality ??= DefaultSaveQuality;
 
             return Handler.SaveToStream(stream, format.AsBitmapType(), quality.Value);
+        }
+
+        /// <summary>
+        /// Returns a version of the image recolored for dark mode if required.
+        /// Returns original image if dark mode is not required.
+        /// </summary>
+        /// <param name="isDark">A value indicating whether dark mode is enabled.
+        /// If <see langword="true"/>, the image will be recolored for
+        /// dark mode; otherwise, the original image is returned.</param>
+        /// <returns>An image recolored for dark mode if <paramref name="isDark"/> is <see langword="true"/>; otherwise, the
+        /// original image.</returns>
+        public Image RecolorForDarkModeIfRequired(bool isDark)
+        {
+            if(!isDark)
+                return this;
+            return RecolorForDarkMode();
+        }
+
+        /// <summary>
+        /// Creates a version of the image optimized for display in dark mode environments by adjusting its colors for
+        /// improved visibility and aesthetics.
+        /// </summary>
+        /// <remarks>This method applies lighter color transformations to enhance the image's appearance
+        /// against dark backgrounds. If a custom recoloring override is provided, it will be used instead of the
+        /// default transformation.</remarks>
+        /// <returns>An Image instance representing the recolored image suitable for dark mode.
+        /// The returned image preserves the original transparency.</returns>
+        public virtual Image RecolorForDarkMode()
+        {
+            if (RecolorForDarkModeOverride != null)
+                return RecolorForDarkModeOverride(this);
+
+            GenericImage image = this.AsGeneric;
+
+            ColorStruct ConvertPixel(ColorStruct color)
+            {
+                var a = color.A;
+
+                var newColor = ControlPaint.LightLight(color);
+                var newColor2 = ControlPaint.Light(newColor);
+
+                newColor2.A = a;
+
+                return newColor2;
+            }
+
+            image.ConvertColors(ConvertPixel);
+
+            return (Bitmap)image;
         }
 
         /// <summary>
