@@ -308,8 +308,15 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Invalidate()
         {
-            if(GetPlatformView() is not null)
-                InvalidateSurface();
+            try
+            {
+                if (GetPlatformView() is not null)
+                    InvalidateSurface();
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine($"Exception in {this.GetType()}.Invalidate: {ex}");
+            }
         }
 
         /// <summary>
