@@ -336,6 +336,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds the specified item to the collection and returns the index at which it was added.
+        /// </summary>
+        /// <remarks>If the collection allows duplicate items, the returned index corresponds to the newly
+        /// added instance. If the item is not added at the end, the method returns the index of the new item as found
+        /// in the collection.</remarks>
+        /// <param name="item">The item to add to the collection. Can be any object supported by the collection.</param>
+        /// <returns>The zero-based index of the added item within the collection.</returns>
+        public virtual int AddAndReturnIndex(object item)
+        {
+            var listItem = Add(item);
+
+            var index = Items.Count - 1;
+
+            if (Items[index] == listItem)
+                return index;
+
+            return Items.IndexOf(listItem);
+        }
+
+        /// <summary>
         /// Adds an item to the list control shown in the popup.
         /// </summary>
         /// <param name="item">Item to add.</param>
