@@ -381,6 +381,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Writes detailed information about the specified exception to the debug output.
+        /// </summary>
+        /// <remarks>This method is intended for use during development and debugging. The output includes
+        /// exception details such as the message and stack trace, which can assist in diagnosing issues.</remarks>
+        /// <param name="e">The exception to log. Cannot be null.</param>
+        public static void DebugWriteLine(Exception e)
+        {
+            var s = GetExceptionLogText(e);
+            Debug.WriteLine(s);
+        }
+
+        /// <summary>
+        /// Writes the specified exception to the debug output if the given condition is true.
+        /// </summary>
+        /// <param name="condition">true to write the exception to the debug output; otherwise, false.</param>
+        /// <param name="e">The exception to write to the debug output. Can be null.</param>
+        public static void DebugWriteLineIf(bool condition, Exception e)
+        {
+            if (!condition)
+                return;
+           DebugWriteLine(e);
+        }
+
+        /// <summary>
+        /// Formats the specified exception and its additional information for logging purposes.
+        /// </summary>
+        /// <remarks>The returned string includes section separators before and after the exception
+        /// details. If the exception is not a BaseException or does not contain additional information, only the
+        /// standard exception details are included.</remarks>
+        /// <param name="e">The exception to format. If the exception is a BaseException and contains additional information, that
+        /// information is included in the output.</param>
+        /// <returns>A string containing the formatted exception details, including any additional information, separated by
+        /// section markers.</returns>
+        public static string GetExceptionLogText(Exception e)
+        {
+            var asString = e.ToString();
+
+            if (e is BaseException baseException)
+            {
+                if (baseException.AdditionalInformation is not null)
+                    asString += Environment.NewLine + baseException.AdditionalInformation;
+            }
+
+            var separator = $"{SectionSeparator}";
+            var exceptionText = $"{separator}{Environment.NewLine}{asString}{Environment.NewLine}{separator}";
+            return exceptionText;
+        }
+
+        /// <summary>
         /// Creates a <see cref="TreeViewItem"/> for logging an exception.
         /// </summary>
         /// <param name="e">The exception to log.</param>
@@ -393,18 +442,8 @@ namespace Alternet.UI
             LogItemKind kind = LogItemKind.Error,
             bool allowReplace = false)
         {
-            var asString = e.ToString();
-
-            if (e is BaseException baseException)
-            {
-                if (baseException.AdditionalInformation is not null)
-                    asString += Environment.NewLine + baseException.AdditionalInformation;
-            }
-
-            var separator = $"{SectionSeparator}";
-            LogToExternalIfAllowed(
-                $"{separator}{Environment.NewLine}{asString}{Environment.NewLine}{separator}",
-                kind);
+            var exceptionText = GetExceptionLogText(e);
+            LogToExternalIfAllowed(exceptionText, kind);
 
             var prefix = "Error";
             if (kind != LogItemKind.Error)
@@ -414,7 +453,7 @@ namespace Alternet.UI
 
             TreeViewItem item = new(s);
             item.TextHasBold = true;
-            item.Tag = asString;
+            item.Tag = e.ToString();
             item.DoubleClickAction = () =>
             {
                 App.AddIdleTask(() =>
