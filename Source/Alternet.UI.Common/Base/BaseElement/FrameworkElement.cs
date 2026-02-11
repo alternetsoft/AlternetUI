@@ -242,6 +242,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves all child elements that have a name, including those nested within other named elements.
+        /// </summary>
+        /// <remarks>This method performs a recursive search through the logical children of the current
+        /// element, yielding each child that has a non-empty name. It is useful for scenarios where you need to access
+        /// named elements in a hierarchical structure.</remarks>
+        /// <returns>An enumerable collection of <see cref="FrameworkElement"/> instances that represent the named child elements
+        /// found in the logical tree.</returns>
+        public virtual IEnumerable<FrameworkElement> GetNamedElementsRecursively()
+        {
+            foreach (var child in LogicalChildrenCollection)
+            {
+                if (!string.IsNullOrEmpty(child.Name))
+                    yield return child;
+                foreach (var element in child.GetNamedElementsRecursively())
+                {
+                    yield return element;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Retrieves all child elements of the current element and its descendants in a recursive manner.
+        /// </summary>
+        /// <remarks>This method traverses the logical tree of elements, yielding each child element
+        /// before recursively retrieving elements from each child. It is useful for scenarios where a complete list of
+        /// child elements is needed, such as for layout or rendering purposes.</remarks>
+        /// <returns>An enumerable collection of <see cref="FrameworkElement"/> instances representing all child elements found
+        /// within the current element and its descendants.</returns>
+        public virtual IEnumerable<FrameworkElement> GetElementsRecursively()
+        {
+            foreach (var child in LogicalChildrenCollection)
+            {
+                yield return child;
+
+                foreach (var element in child.GetElementsRecursively())
+                {
+                    yield return element;
+                }
+            }
+        }
+
+        /// <summary>
         /// Recursively searches all child elements for an element
         /// with the specified name,
         /// and throws an exception if the requested element is not found.
@@ -277,6 +319,26 @@ namespace Alternet.UI
             NameChanged?.Invoke(this, EventArgs.Empty);
             RaisePropertyChanged(nameof(Name));
             StaticControlEvents.RaiseNameChanged(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Assigns values to fields of the current instance based on named elements retrieved recursively.
+        /// </summary>
+        /// <remarks>This method iterates through named elements and assigns them to corresponding fields
+        /// if the field names match and the types are compatible. It is intended for use in scenarios where dynamic
+        /// assignment of fields is required based on external data sources.</remarks>
+        protected virtual void AssignNamedElementsToFields()
+        {
+            foreach (var namedElement in GetNamedElementsRecursively())
+            {
+                var fieldName = namedElement.Name;
+                if (fieldName is null)
+                    continue;
+                var field = GetType().GetField(fieldName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                if (field is null || !field.FieldType.IsAssignableFrom(namedElement.GetType()))
+                    continue;
+                field.SetValue(this, namedElement);
+            }
         }
 
         /// <summary>
