@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Control handled by the operating system.
     /// It is not suggested to create <see cref="Control"/> directly.
+    /// Use <see cref="Panel"/> for container controls and <see cref="UserControl"/> for user controls.
     /// </summary>
     public partial class Control : AbstractControl
     {
