@@ -87,7 +87,7 @@ namespace Alternet.UI
         /// </summary>
         public static void LoadExisting(string resName, object existingObject)
         {
-            if(LoadFromResName is not null)
+            if (LoadFromResName is not null)
             {
                 var result = LoadFromResName(resName, existingObject, DefaultFlags);
                 if (result)
@@ -97,6 +97,20 @@ namespace Alternet.UI
             var uixmlStream = existingObject.GetType().Assembly.GetManifestResourceStream(resName)
                 ?? throw new InvalidOperationException();
             LoadExistingEx(uixmlStream, existingObject, DefaultFlags, resName);
+        }
+
+        /// <summary>
+        /// Loads property values from a XAML string into an existing object instance.
+        /// </summary>
+        /// <remarks>This method updates the specified object with property values defined in the provided
+        /// XAML string. The existing object must be of a type compatible with the XAML content.</remarks>
+        /// <param name="xaml">A string containing the XAML markup that defines the property values to apply.</param>
+        /// <param name="existingObject">The object instance whose properties will be updated based on the XAML content.
+        /// Must be compatible with the XAML definition.</param>
+        /// <param name="resName">An optional resource name used to report errors.</param>
+        public static void LoadExistingFromString(string xaml, object existingObject, string? resName = null)
+        {
+            LoadExistingEx(xaml, existingObject, DefaultFlags, resName);
         }
 
         /// <summary>
@@ -132,7 +146,7 @@ namespace Alternet.UI
             Flags flags = 0,
             string? resName = default)
         {
-            if(LoadFromStream is not null)
+            if (LoadFromStream is not null)
             {
                 var result = LoadFromStream(xamlStream, existingObject, resName, flags);
                 if (result)
@@ -143,6 +157,42 @@ namespace Alternet.UI
             {
                 Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
                     xamlStream,
+                    existingObject.GetType().Assembly,
+                    existingObject,
+                    null,
+                    IsDesignMode);
+                return existingObject;
+            }
+            catch (Exception e)
+            {
+                DefaultReportLoadException(e, resName, flags);
+                return existingObject;
+            }
+        }
+
+        /// <summary>
+        /// Loads XAML markup into an existing object, updating its properties and state according
+        /// to the provided XAML definition.
+        /// </summary>
+        /// <remarks>If an exception occurs during the loading process, it is reported using the
+        /// DefaultReportLoadException method. The method always returns the existing object, even if an error
+        /// occurs.</remarks>
+        /// <param name="xaml">The XAML markup string that defines the properties and structure to apply to the existing object. Cannot be
+        /// null.</param>
+        /// <param name="existingObject">The object instance to be updated with values from the XAML markup. Cannot be null.</param>
+        /// <param name="flags">Optional flags that control aspects of the loading behavior. The default is 0.</param>
+        /// <param name="resName">An optional resource name used for reporting load exceptions. May be null.</param>
+        /// <returns>The existing object after it has been updated with the values from the XAML markup.</returns>
+        public static object LoadExistingEx(
+            string xaml,
+            object existingObject,
+            Flags flags = 0,
+            string? resName = default)
+        {
+            try
+            {
+                Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
+                    xaml,
                     existingObject.GetType().Assembly,
                     existingObject,
                     null,

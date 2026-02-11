@@ -305,6 +305,20 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
         }
 
         public static object Load(
+            string xaml,
+            Assembly localAssembly,
+            object rootInstance,
+            Uri uri,
+            bool isDesignMode)
+        {
+#if RUNTIME_XAML_CECIL
+            return LoadCecil(xaml, localAssembly, rootInstance, uri);
+#else
+            return LoadSre(xaml, localAssembly, rootInstance, uri, isDesignMode);
+#endif
+        }
+
+        public static object Load(
             Stream stream,
             Assembly localAssembly,
             object rootInstance,
