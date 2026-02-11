@@ -18,6 +18,23 @@ namespace Alternet.UI
         private ISite? site;
 
         /// <summary>
+        /// Occurs when the <see cref="Name"/> property changes.
+        /// This is a static event that is raised for all instances
+        /// of <see cref="FrameworkElement"/> when their <see cref="Name"/> property changes.
+        /// </summary>
+        public static event EventHandler? InstanceNameChanged;
+
+        /// <summary>
+        /// Occurs when the logical parent of an instance changes.
+        /// This is a static event that is raised for all instances
+        /// of <see cref="FrameworkElement"/> when their <see cref="LogicalParent"/> property changes.
+        /// </summary>
+        /// <remarks>Subscribe to this event to be notified when the logical parent of an instance is
+        /// modified. This can be useful for responding to changes in the element hierarchy, such as updating bindings
+        /// or handling resource lookups that depend on the parent relationship.</remarks>
+        public static event EventHandler? InstanceLogicalParentChanged;
+
+        /// <summary>
         /// Occurs when the <see cref="DataContext"/> property changes.
         /// </summary>
         public event EventHandler<ValueChangedEventArgs>? DataContextChanged;
@@ -180,7 +197,10 @@ namespace Alternet.UI
 
             internal set
             {
+                if (logicalParent == value)
+                    return;
                 logicalParent = value;
+                InstanceLogicalParentChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
@@ -317,28 +337,9 @@ namespace Alternet.UI
         {
             OnNameChanged();
             NameChanged?.Invoke(this, EventArgs.Empty);
+            InstanceNameChanged?.Invoke(this, EventArgs.Empty);
             RaisePropertyChanged(nameof(Name));
             StaticControlEvents.RaiseNameChanged(this, EventArgs.Empty);
-        }
-
-        /// <summary>
-        /// Assigns values to non-public fields of the current instance based on named elements retrieved recursively.
-        /// </summary>
-        /// <remarks>This method iterates through named elements and assigns them to corresponding fields
-        /// if the field names match and the types are compatible. It is intended for use in scenarios where dynamic
-        /// assignment of fields is required based on external data sources.</remarks>
-        protected virtual void AssignNamedElementsToFields()
-        {
-            foreach (var namedElement in GetNamedElementsRecursively())
-            {
-                var fieldName = namedElement.Name;
-                if (fieldName is null)
-                    continue;
-                var field = GetType().GetField(fieldName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-                if (field is null || !field.FieldType.IsAssignableFrom(namedElement.GetType()))
-                    continue;
-                field.SetValue(this, namedElement);
-            }
         }
 
         /// <summary>
@@ -368,6 +369,26 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnDataContextChanged(object? oldValue, object? newValue)
         {
+        }
+
+        /// <summary>
+        /// Assigns values to non-public fields of the current instance based on named elements retrieved recursively.
+        /// </summary>
+        /// <remarks>This method iterates through named elements and assigns them to corresponding fields
+        /// if the field names match and the types are compatible. It is intended for use in scenarios where dynamic
+        /// assignment of fields is required based on external data sources.</remarks>
+        private void AssignNamedElementsToFields()
+        {
+            foreach (var namedElement in GetNamedElementsRecursively())
+            {
+                var fieldName = namedElement.Name;
+                if (fieldName is null)
+                    continue;
+                var field = GetType().GetField(fieldName, System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+                if (field is null || !field.FieldType.IsAssignableFrom(namedElement.GetType()))
+                    continue;
+                field.SetValue(this, namedElement);
+            }
         }
     }
 }
