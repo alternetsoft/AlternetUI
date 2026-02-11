@@ -1,6 +1,7 @@
 #pragma warning disable
 #nullable disable
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using XamlX.Ast;
 using XamlX.Emit;
@@ -34,10 +35,17 @@ namespace XamlX.IL.Emitters
             return lst;
         }
 
-        public XamlILNodeEmitResult Emit(IXamlAstNode node, XamlEmitContextWithLocals<IXamlILEmitter, XamlILNodeEmitResult> context, IXamlILEmitter codeGen)
+        public XamlILNodeEmitResult Emit(
+            IXamlAstNode node,
+            XamlEmitContextWithLocals<IXamlILEmitter, XamlILNodeEmitResult> context,
+            IXamlILEmitter codeGen)
         {
             if (!(node is XamlPropertyAssignmentNode an))
                 return null;
+
+            Debug.WriteLineIf(
+                false,
+                $"Emit assign property: {an.Property.Name} = {string.Join(", ", an.Values.Select(v => v.Type.GetClrType().GetFqn()))}");
 
             var setters = ValidateAndGetSetters(an);
             for (var c = 0; c < an.Values.Count - 1; c++)

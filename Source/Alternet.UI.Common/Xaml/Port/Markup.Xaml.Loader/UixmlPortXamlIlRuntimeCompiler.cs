@@ -217,7 +217,7 @@ namespace Alternet.UI.Markup.Xaml.XamlIl
                 _sreEmitMappings,
                 _sreContextType)
             {
-                EnableIlVerification = true,
+                EnableIlVerification = XamlCompiler.DefaultEnableIlVerification,
             };
 
             IXamlType overrideType = null;

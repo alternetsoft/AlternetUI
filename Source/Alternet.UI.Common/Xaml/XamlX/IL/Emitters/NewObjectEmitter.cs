@@ -1,5 +1,6 @@
 #pragma warning disable
 #nullable disable
+using System.Diagnostics;
 using System.Reflection.Emit;
 using XamlX.Ast;
 using XamlX.Emit;
@@ -21,6 +22,9 @@ namespace XamlX.IL.Emitters
                 return null;
 
             var type = n.Type.GetClrType();
+
+            Debug.WriteLineIf(false, $"Emit new object: {type.Type.FullName}");
+
             var ctor = n.Constructor ?? type.FindConstructor();
             if (ctor == null)
             {

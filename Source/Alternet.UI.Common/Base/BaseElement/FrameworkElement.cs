@@ -322,7 +322,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Assigns values to fields of the current instance based on named elements retrieved recursively.
+        /// Assigns values to non-public fields of the current instance based on named elements retrieved recursively.
         /// </summary>
         /// <remarks>This method iterates through named elements and assigns them to corresponding fields
         /// if the field names match and the types are compatible. It is intended for use in scenarios where dynamic

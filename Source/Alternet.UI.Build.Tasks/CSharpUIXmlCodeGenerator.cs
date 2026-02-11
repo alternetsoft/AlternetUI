@@ -89,9 +89,11 @@ using System;
                 foreach (var namedObject in namedObjects)
                     w.WriteLine($"{namedObject.Name} ??= ({namedObject.TypeFullName})FindElement(\"{namedObject.Name}\");");
 
+                /*
                 w.WriteLine();
                 foreach (var eventBinding in document.EventBindings)
                     WriteEventBinding(w, eventBinding, task, taskItem);
+                */
             }
 
             w.WriteLine();
@@ -189,14 +191,17 @@ using System;
             switch (eventBinding)
             {
                 case UIXmlDocument.NamedObjectEventBinding x:
-                    w.WriteLine($"{x.ObjectName}.{x.EventName} += {x.HandlerName};");
+
+                    var s1 = $"{x.ObjectName}.{x.EventName} += {x.HandlerName};";
+                    
+                    s1 = $"TryAttachEventHandler({x.ObjectName}, \"{x.EventName}\", \"{x.HandlerName}\");";
+
+                    w.WriteLine(s1);
                     break;
                 case UIXmlDocument.IndexedObjectEventBinding x:
                     w.WriteLine(
                         $"{GetIndexedObjectRetrievalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
                     break;
-                default:
-                    throw new InvalidOperationException();
             }
         }
 

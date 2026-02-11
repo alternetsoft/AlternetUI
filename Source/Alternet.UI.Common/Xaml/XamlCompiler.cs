@@ -14,6 +14,8 @@ namespace Alternet.UI
 {
     internal class XamlCompiler
     {
+        internal static bool DefaultEnableIlVerification = false;
+
         private readonly IXamlTypeSystem _typeSystem;
 
         public TransformerConfiguration Configuration { get; }
@@ -106,7 +108,7 @@ namespace Alternet.UI
                 new XamlLanguageEmitMappings<IXamlILEmitter, XamlILNodeEmitResult>(),
                 true)
             {
-                EnableIlVerification = true,
+                EnableIlVerification = DefaultEnableIlVerification,
             };
             compiler.Transform(parsed);
             compiler.Compile(

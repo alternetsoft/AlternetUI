@@ -1315,7 +1315,7 @@ namespace Alternet.UI
             LastClickedTimestamp = DateUtils.GetCurrentTimestamp();
 
             OnClick(e);
-            Click?.Invoke(this, e);
+            click?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterClick(this, e));
         }

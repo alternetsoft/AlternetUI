@@ -1,6 +1,7 @@
 #pragma warning disable
 #nullable disable
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Reflection.Emit;
 using XamlX.Ast;
 using XamlX.Emit;
@@ -18,6 +19,9 @@ namespace XamlX.IL.Emitters
         {
             if (!(node is XamlObjectInitializationNode init))
                 return null;
+
+            Debug.WriteLineIf(false, $"Emit object init: {init.Type.FullName}");
+
             var supportInitType = context.Configuration.TypeMappings.SupportInitialize;
             var supportsInitialize = supportInitType != null
                                      && context.Configuration.TypeMappings.SupportInitialize
@@ -25,7 +29,6 @@ namespace XamlX.IL.Emitters
 
             if (supportsInitialize)
             {
-
                 codeGen
                     // We need a copy for/EndInit
                     .Emit(OpCodes.Dup);
@@ -34,7 +37,6 @@ namespace XamlX.IL.Emitters
                         .Emit(OpCodes.Dup)
                         .EmitCall(supportInitType.FindMethod(m => m.Name == "BeginInit"));
             }
-
 
             var addToParentStack = context.RuntimeContext.ParentListField != null
                                    && !init.Type.IsValueType

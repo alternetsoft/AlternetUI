@@ -86,33 +86,38 @@ namespace Alternet.UI.Build.Tasks
         public record IndexAccessorInfo(int Index, string CollectionName) : AccessorInfo;
         public record MemberAccessorInfo(string Name) : AccessorInfo;
 
+        private static EventBinding? TryGetEventBinding(
+            ApiInfoProvider apiInfoProvider,
+            XElement element,
+            string? objectName,
+            Stack<AccessorInfo> accessors,
+            XAttribute attribute)
+        {
+            var assemblyName = GetTypeAssemblyName(element.Name);
+            var typeFullName = GetTypeFullName(element.Name);
+            string eventName = attribute.Name.LocalName;
+
+            var isEvent = apiInfoProvider.IsEvent(assemblyName, typeFullName, eventName);
+
+            if (!isEvent)
+                return null;
+
+            var handlerName = attribute.Value;
+
+            if (objectName != null)
+                return new NamedObjectEventBinding(eventName, handlerName, typeFullName, objectName);
+
+            return new IndexedObjectEventBinding(
+                eventName,
+                handlerName,
+                typeFullName,
+                accessors.Reverse().ToArray());
+        }
+
         private static IEnumerable<(EventBinding Binding, XAttribute Attribute)> GetEventBindings(
             ApiInfoProvider apiInfoProvider,
             XDocument document)
         {
-            EventBinding? TryGetEventBinding(
-                XElement element,
-                string? objectName,
-                Stack<AccessorInfo> accessors,
-                XAttribute attribute)
-            {
-                var assemblyName = GetTypeAssemblyName(element.Name);
-                var typeFullName = GetTypeFullName(element.Name);
-                string eventName = attribute.Name.LocalName;
-                if (!apiInfoProvider.IsEvent(assemblyName, typeFullName, eventName))
-                    return null;
-
-                var handlerName = attribute.Value;
-
-                if (objectName != null)
-                    return new NamedObjectEventBinding(eventName, handlerName, typeFullName, objectName);
-
-                return new IndexedObjectEventBinding(
-                    eventName,
-                    handlerName,
-                    typeFullName,
-                    accessors.Reverse().ToArray());
-            }
 
             var accessors = new Stack<AccessorInfo>();
             var results = new List<(EventBinding, XAttribute)>();
@@ -142,7 +147,7 @@ namespace Alternet.UI.Build.Tasks
 
                     foreach (var attribute in element.Attributes())
                     {
-                        var binding = TryGetEventBinding(element, objectName, accessors, attribute);
+                        var binding = TryGetEventBinding(apiInfoProvider, element, objectName, accessors, attribute);
                         if (binding != null)
                             results.Add(new(binding, attribute));
                     }

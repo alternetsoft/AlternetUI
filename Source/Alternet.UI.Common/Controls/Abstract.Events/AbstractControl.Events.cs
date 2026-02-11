@@ -11,6 +11,8 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        private EventHandler? click;
+
         /// <summary>
         /// Occurs when the layout of the various visual elements changes.
         /// </summary>
@@ -283,7 +285,15 @@ namespace Alternet.UI
         /// Occurs when the control is clicked.
         /// </summary>
         [Category("Action")]
-        public virtual event EventHandler? Click;
+        public virtual event EventHandler? Click
+        {
+            add
+            {
+                click += value;
+            }
+
+            remove => click -= value;
+        }
 
         /// <summary>
         /// Occurs when <see cref="Parent"/> is changed.
