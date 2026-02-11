@@ -459,6 +459,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Binds the SizeChanged events of all items in the ControlSet
+        /// to automatically update the suggested width based on the current
+        /// maximum width value.
+        /// </summary>
+        /// <remarks>This method ensures that the suggested width is updated whenever the control's size
+        /// changes. If the MaxWidth property is less than or equal to zero, the suggested width is set to NaN,
+        /// effectively removing any width constraint.</remarks>
+        /// <returns>The current instance of the ControlSet, enabling method chaining.</returns>
+        public virtual ControlSet MaxWidthOnSizeChanged()
+        {
+            SizeChanged((s, e) =>
+            {
+                var maxWidth = MaxWidth;
+                SuggestedWidth(maxWidth > 0 ? maxWidth : float.NaN);
+            });
+
+            return this;
+        }
+
+        /// <summary>
+        /// Registers an event handler to be invoked when the size of any item in the control set changes.
+        /// </summary>
+        /// <remarks>This method attaches the specified event handler to the SizeChanged event of every
+        /// control contained in the set. Use this to respond to dynamic layout changes or to update related UI elements
+        /// when the size of any contained control changes.</remarks>
+        /// <param name="value">The event handler to associate with the SizeChanged event of each item in the control set.
+        /// Cannot be null.</param>
+        /// <returns>The current instance of the ControlSet, enabling method chaining.</returns>
+        public virtual ControlSet SizeChanged(EventHandler value)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.SizeChanged += value;
+            });
+        }
+
+        /// <summary>
         /// Sets <see cref="AbstractControl.Margin"/> property for all the controls in the set.
         /// </summary>
         /// <param name="value">An outer margin of a control.</param>

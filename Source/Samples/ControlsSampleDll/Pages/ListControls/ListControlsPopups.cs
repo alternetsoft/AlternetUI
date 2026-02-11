@@ -56,12 +56,11 @@ namespace ControlsSample
             Padding = 5;
             panel.Parent = this;
 
-            Group(
+            var group = Group(
                 showPopupVListBoxButton,
                 showPopupListBoxButton,
                 showPopupCheckListBoxButton,
-                showPopupColorListBoxButton)
-            .Parent(panel).SuggestedWidthToMax().Margin(10);
+                showPopupColorListBoxButton).Parent(panel).Margin(10).MaxWidthOnSizeChanged();
 
             showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
             showPopupCheckListBoxButton.Click += ShowPopupCheckListBoxButton_Click;
