@@ -17,6 +17,7 @@ namespace Alternet.UI.Build.Tasks
         private const string NameAttributeName = "Name";
         private static readonly XName classAttributeName = (XNamespace)UIXmlNamespace + "Class";
         private readonly Stream xmlContent;
+        private readonly string xmlContentAsString;
         private readonly ApiInfoProvider apiInfoProvider;
         private readonly XDocument document;
 
@@ -36,8 +37,11 @@ namespace Alternet.UI.Build.Tasks
         {
             ResourceName = resourceName;
             this.xmlContent = xmlContent;
+
+            xmlContentAsString = new StreamReader(xmlContent, System.Text.Encoding.UTF8).ReadToEnd();
+
             this.apiInfoProvider = apiInfoProvider;
-            document = XDocument.Load(xmlContent);
+            document = XDocument.Parse(xmlContentAsString);
 
             xmlContent.Position = 0;
         }
@@ -51,6 +55,14 @@ namespace Alternet.UI.Build.Tasks
         public string ClassNamespaceName => classNamespaceName ??= GetClassNamespaceName();
 
         public string ResourceName { get; }
+
+        public string XmlContentAsString
+        {
+            get
+            {
+                return xmlContentAsString;
+            }
+        }
 
         public IReadOnlyList<NamedObject> NamedObjects => namedObjects ??= GetNamedObjects().ToArray();
 

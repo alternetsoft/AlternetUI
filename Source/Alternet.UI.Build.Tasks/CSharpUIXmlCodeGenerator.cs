@@ -62,6 +62,8 @@ using System;
             GenerateUIXmlCodeTask task,
             ITaskItem taskItem)
         {
+            var fieldName = "xml9FBD47B0178D4085BBE279FC109E6465";
+
             w.WriteLine();
             w.WriteLine("private bool contentLoaded;");
             w.WriteLine();
@@ -73,7 +75,12 @@ using System;
                 w.WriteLine("if (contentLoaded)");
                     w.WriteLineIndented("return;");
                 w.WriteLine("contentLoaded = true;");
-                w.WriteLine($"Alternet.UI.UixmlLoader.LoadExisting(\"{document.ResourceName}\", this);");
+
+                var resName = document.ResourceName;
+
+                /* w.WriteLine($"Alternet.UI.UixmlLoader.LoadExisting(\"{resName}\", this);");*/
+
+                w.WriteLine($"Alternet.UI.UixmlLoader.LoadExistingFromString({fieldName}, this, \"{resName}\");");
 
                 w.WriteLine();
                 foreach (var namedObject in namedObjects)
@@ -83,6 +90,69 @@ using System;
                 foreach (var eventBinding in document.EventBindings)
                     WriteEventBinding(w, eventBinding, task, taskItem);
             }
+
+            w.WriteLine();
+
+            var s = document.XmlContentAsString;
+            var literal = CreateStringLiteral(s, useRaw: true);
+
+            w.WriteLine($"private static readonly string {fieldName} = {literal};");
+        }
+
+        /// <summary>
+        /// Create a verbatim string literal (@"...") safe for multiline text.
+        /// </summary>
+        private static string CreateVerbatimLiteral(string s)
+        {
+            // Replace " with "" for verbatim string and prefix with @"
+            // Verbatim strings support multiline content.
+            string doubledQuotes = s.Replace("\"", "\"\"");
+            return $"@\"{doubledQuotes}\"";
+        }
+
+        /// <summary>
+        /// Create a C# 11+ raw string literal. It chooses the number of double-quotes
+        /// needed so the literal is safe even if the content contains sequences of quotes.
+        /// Produces syntax like: """...""" or """"..."""" etc.
+        /// </summary>
+        private static string CreateRawStringLiteral(string s)
+        {
+            // Find the longest run of consecutive double quotes in the content
+            int maxRun = 0;
+            int currentRun = 0;
+            foreach (char c in s)
+            {
+                if (c == '\"')
+                {
+                    currentRun++;
+                    if (currentRun > maxRun) maxRun = currentRun;
+                }
+                else
+                {
+                    currentRun = 0;
+                }
+            }
+
+            // Need at least one more quote than the longest run inside content
+            int quoteCount = Math.Max(3, maxRun + 1);
+
+            // Opening/closing quote sequence
+            string quotes = new string('\"', quoteCount);
+
+            // For raw string literals, if the content starts or ends with a newline,
+            // the indentation rules may matter; here we emit it simply with newlines preserved.
+            return $"{quotes}\n{s}\n{quotes}";
+        }
+
+        /// <summary>
+        /// Choose literal form: if useRaw is true, returns a C#11 raw literal; otherwise a verbatim literal.
+        /// </summary>
+        private static string CreateStringLiteral(string s, bool useRaw = false)
+        {
+            if (useRaw)
+                return CreateRawStringLiteral(s);
+            else
+                return CreateVerbatimLiteral(s);
         }
 
         private static void WriteUIXmlPreviewerConstructor(UIXmlDocument document, IndentedTextWriter w)

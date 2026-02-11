@@ -109,7 +109,8 @@ namespace Alternet.UI.Build.Tasks
             LogDebug($"{inputFile.ItemSpec}: Generated code.");
         }
 
-        public void LogDebug(string message) =>
+        public void LogDebug(string message)
+        {
             Log.LogMessage(
                 LogSubcategory,
                 null,
@@ -121,16 +122,20 @@ namespace Alternet.UI.Build.Tasks
                 0,
                 MessageImportance.Low,
                 message, null);
+        }
 
-        public void LogDebugHigh(string message) =>
+        public void LogDebugHigh(string message)
+        {
             Log.LogMessage(
                 LogSubcategory, null, null, null, 0, 0, 0, 0, MessageImportance.High, message, null);
+        }
 
         public void LogError(
             ITaskItem? inputFile,
             string message,
             int lineNumber = 0,
-            int columnNumber = 0) =>
+            int columnNumber = 0)
+        {
             Log.LogError(
                 LogSubcategory,
                 null,
@@ -142,5 +147,6 @@ namespace Alternet.UI.Build.Tasks
                 columnNumber,
                 message,
                 null);
+        }
     }
 }
