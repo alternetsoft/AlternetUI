@@ -27,14 +27,15 @@ namespace Alternet.UI
         public DisposableObject(bool disposeHandle)
         {
             this.disposeHandle = disposeHandle;
+            InstanceCreated?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisposableObject"/> class.
         /// </summary>
         public DisposableObject()
+            : this(disposeHandle: true)
         {
-            this.disposeHandle = true;
         }
 
         /// <summary>
@@ -55,7 +56,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when control is disposed.
+        /// Occurs when a new instance of the object is created.
+        /// </summary>
+        /// <remarks>Subscribe to this event to perform custom actions when an instance is instantiated.
+        /// To prevent memory leaks, ensure that event handlers are unsubscribed when they are no longer
+        /// needed.</remarks>
+        public static event EventHandler<EventArgs>? InstanceCreated;
+
+        /// <summary>
+        /// Occurs when object is disposed.
+        /// This is static event, so it is raised for all instances of this class and its derived classes.
+        /// </summary>
+        public static event EventHandler? InstanceDisposed;
+
+        /// <summary>
+        /// Occurs when object is disposed.
         /// </summary>
         public event EventHandler? Disposed;
 
@@ -175,6 +190,7 @@ namespace Alternet.UI
             try
             {
                 Disposed?.Invoke(this, EventArgs.Empty);
+                InstanceDisposed?.Invoke(this, EventArgs.Empty);
 
                 if (disposing)
                     DisposeManaged();
