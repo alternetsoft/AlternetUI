@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
@@ -20,14 +22,14 @@ namespace Alternet.UI
             = Flags.ReportError | Flags.LogError | Flags.ShowErrorDialog;
 
         /// <summary>
-        /// Custom method for loading Uixml from resource. Overrides default behavior.
-        /// </summary>
-        public static Func<string, object, Flags, bool>? LoadFromResName;
-
-        /// <summary>
         /// Custom method for loading Uixml from stream. Overrides default behavior.
         /// </summary>
         public static Func<Stream, object, string?, Flags, bool>? LoadFromStream;
+
+        /// <summary>
+        /// Custom method for loading Uixml from string. Overrides default behavior.
+        /// </summary>
+        public static Func<string, object, string?, Flags, bool>? LoadFromString;
 
         /// <summary>
         /// Custom method for showing errors occurred during load process. Overrides default behavior.
@@ -87,13 +89,6 @@ namespace Alternet.UI
         /// </summary>
         public static void LoadExisting(string resName, object existingObject)
         {
-            if (LoadFromResName is not null)
-            {
-                var result = LoadFromResName(resName, existingObject, DefaultFlags);
-                if (result)
-                    return;
-            }
-
             var uixmlStream = existingObject.GetType().Assembly.GetManifestResourceStream(resName)
                 ?? throw new InvalidOperationException();
             LoadExistingEx(uixmlStream, existingObject, DefaultFlags, resName);
@@ -146,6 +141,8 @@ namespace Alternet.UI
             Flags flags = 0,
             string? resName = default)
         {
+            using var nameChangeHandler = new NameChangeHandler(existingObject);
+
             if (LoadFromStream is not null)
             {
                 var result = LoadFromStream(xamlStream, existingObject, resName, flags);
@@ -189,6 +186,15 @@ namespace Alternet.UI
             Flags flags = 0,
             string? resName = default)
         {
+            using var nameChangeHandler = new NameChangeHandler(existingObject);
+
+            if (LoadFromString is not null)
+            {
+                var result = LoadFromString(xaml, existingObject, resName, flags);
+                if (result)
+                    return existingObject;
+            }
+
             try
             {
                 Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(
@@ -336,6 +342,70 @@ namespace Alternet.UI
         public object Load(Stream xamlStream, Assembly localAssembly)
         {
             return Markup.Xaml.UixmlPortRuntimeXamlLoader.Load(xamlStream, localAssembly);
+        }
+
+        private class NameChangeHandler : IDisposable
+        {
+            private readonly static ConcurrentStack<NameChangeHandler> stack = new();
+
+            private readonly object root;
+            private readonly List<FrameworkElement> elements = new();
+
+            public NameChangeHandler(object root)
+            {
+                this.root = root;
+                FrameworkElement.InstanceNameChanged += OnElementNameChanged;
+                FrameworkElement.InstanceLogicalParentChanged += OnElementParentChanged;
+                stack.Push(this);
+            }
+
+            public void Dispose()
+            {
+                stack.TryPop(out _);
+                UpdateElementNames();
+                FrameworkElement.InstanceNameChanged -= OnElementNameChanged;
+                FrameworkElement.InstanceLogicalParentChanged -= OnElementParentChanged;
+            }
+
+            public bool IsLastHandler => stack.TryPeek(out var handler) && handler == this;
+
+            public void UpdateElementNames()
+            {
+                foreach (var element in elements)
+                {
+                    if (element.LogicalTopParent == root)
+                    {
+                        var name = element.Name;
+                        if (name == null)
+                            continue;
+                        var field = root.GetType().GetField(name, BindingFlags.Instance | BindingFlags.NonPublic);
+                        if (field == null)
+                            continue;
+                        try
+                        {
+                            field.SetValue(root, element);
+                        }
+                        catch
+                        {
+                        }
+                    }
+                }
+            }
+
+            private void OnElementParentChanged(object? sender, EventArgs e)
+            {
+            }
+
+            private void OnElementNameChanged(object? sender, EventArgs e)
+            {
+                if (sender is not FrameworkElement element)
+                    return;
+                if(!IsLastHandler)
+                    return;
+                if (string.IsNullOrEmpty(element.Name))
+                    return;
+                elements.Add(element);
+            }
         }
     }
 }

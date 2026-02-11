@@ -21,7 +21,6 @@ namespace Alternet.UI
 
         static CustomDemoWindow()
         {
-            UixmlLoader.LoadFromResName = FormLoadFromResName;
             UixmlLoader.LoadFromStream = FormLoadFromStream;
             UixmlLoader.ReportLoadException = ReportFormLoadException;
 
@@ -99,11 +98,6 @@ namespace Alternet.UI
             {
                 pageContainer!.SelectedIndex = 0;
             });
-        }
-
-        public static bool FormLoadFromResName(string resName, object obj, UixmlLoader.Flags flags)
-        {
-            return false;
         }
 
         public static bool FormLoadFromStream(

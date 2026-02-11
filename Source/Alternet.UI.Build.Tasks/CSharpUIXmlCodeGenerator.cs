@@ -62,7 +62,7 @@ using System;
             GenerateUIXmlCodeTask task,
             ITaskItem taskItem)
         {
-            var fieldName = "xml9FBD47B0178D4085BBE279FC109E6465";
+            var fieldName = "contentXml";
 
             w.WriteLine();
             w.WriteLine("private bool contentLoaded;");
@@ -82,8 +82,6 @@ using System;
 
                 w.WriteLine($"Alternet.UI.UixmlLoader.LoadExistingFromString({fieldName}, this, \"{resName}\");");
 
-                w.WriteLine();
-                w.WriteLine("AssignNamedElementsToFields();");
                 w.WriteLine();
 
                 foreach (var namedObject in namedObjects)
