@@ -45,7 +45,7 @@
     <Company>AlterNET Software</Company>
     <Product>AlterNET UI PAL Library</Product>
     <Copyright>Copyright (c) 2021-2026 AlterNET Software</Copyright>
-    <MyFileVersion>0.9.812.0</MyFileVersion>
+    <MyFileVersion>0.9.813.0</MyFileVersion>
 
   <MyFileVersionReplaceComma>$([System.Text.RegularExpressions.Regex]::Replace('$(MyFileVersion)', '\.', ','))</MyFileVersionReplaceComma>
 

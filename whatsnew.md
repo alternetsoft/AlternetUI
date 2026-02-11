@@ -1,3 +1,10 @@
+# 0.9.813 (2026 February 11)
+
+- Image: Add dark-mode image recoloring support (RecolorForDarkModeIfRequired and RecolorForDarkMode methods).
+- Derive PictureBox from HiddenGenericBorder. This allows PictureBox to paint optional border around the image if needed.
+
+---
+
 # 0.9.812 (2026 February 6)
 
 - Image: Add ScaleImages and Scale methods.
