@@ -416,6 +416,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Attempts to attach a specified method as an event handler for a given event on a target object.
+        /// Only instance and public events are considered. The method to be attached can be either public or non-public.
+        /// </summary>
+        /// <remarks>Returns false if the target is null, if the event does not exist, if the handler
+        /// method cannot be found, or if the event handler type is null. The handler method must be accessible and
+        /// compatible with the event's delegate type.</remarks>
+        /// <param name="target">The object on which the event is defined. Cannot be null.</param>
+        /// <param name="eventName">The name of the event to which the handler method will be attached.
+        /// Must match the event's name exactly, including case.</param>
+        /// <param name="handlerMethodName">The name of the method to attach as the event handler.
+        /// The method must match the event's delegate signature.</param>
+        /// <returns>true if the method was successfully attached as an event handler; otherwise, false.</returns>
+        public virtual bool TryAttachEventHandler(object? target, string eventName, string handlerMethodName)
+        {
+            try
+            {
+                if (target == null)
+                    return false;
+
+                var eventInfo = target.GetType().GetEvent(eventName, BindingFlags.Instance | BindingFlags.Public);
+                if (eventInfo == null)
+                    return false;
+
+                var methodInfo = this.GetType().GetMethod(
+                    handlerMethodName,
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                if (methodInfo == null)
+                    return false;
+
+                var eventHandlerType = eventInfo.EventHandlerType;
+                if (eventHandlerType == null)
+                    return false;
+
+                var handler = Delegate.CreateDelegate(eventHandlerType, this, methodInfo);
+                eventInfo.AddEventHandler(target, handler);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Wraps exception for the debug purposes.
         /// </summary>
         /// <param name="e">Exception.</param>
