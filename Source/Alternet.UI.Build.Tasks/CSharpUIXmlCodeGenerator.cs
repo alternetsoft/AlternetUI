@@ -89,9 +89,10 @@ using System;
 
                 /*
                 w.WriteLine();
+                */
+
                 foreach (var eventBinding in document.EventBindings)
                     WriteEventBinding(w, eventBinding, task, taskItem);
-                */
             }
 
             w.WriteLine();
@@ -178,7 +179,7 @@ using System;
             GenerateUIXmlCodeTask task,
             ITaskItem taskItem)
         {
-            if(eventBinding is UIXmlDocument.IndexedObjectEventBinding bind
+            if (eventBinding is UIXmlDocument.IndexedObjectEventBinding bind
                 /*&& bind.Accessors.Count > 1*/)
             {
                 var s = $"Bad binding '{bind.HandlerName}' to '{bind.EventName}' event for the element with an empty Name property.";
@@ -186,6 +187,7 @@ using System;
                 return;
             }
 
+            /*
             switch (eventBinding)
             {
                 case UIXmlDocument.NamedObjectEventBinding x:
@@ -201,6 +203,7 @@ using System;
                         $"{GetIndexedObjectRetrievalExpression(x.ObjectTypeFullName, x.Accessors)}.{x.EventName} += {x.HandlerName};");
                     break;
             }
+            */
         }
 
         private static string GetIndexedObjectRetrievalExpression(
