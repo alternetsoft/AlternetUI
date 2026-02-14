@@ -262,5 +262,21 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static explicit operator Bitmap(GenericImage image) => new(image);
-     }
+
+        /// <summary>
+        /// Returns a version of the image recolored for dark mode if required.
+        /// Returns original image if dark mode is not required.
+        /// </summary>
+        /// <param name="isDark">A value indicating whether dark mode is enabled.
+        /// If <see langword="true"/>, the image will be recolored for
+        /// dark mode; otherwise, the original image is returned.</param>
+        /// <returns>An image recolored for dark mode if <paramref name="isDark"/> is <see langword="true"/>; otherwise, the
+        /// original image.</returns>
+        public Bitmap RecolorForDarkModeIfRequired(bool isDark)
+        {
+            if (!isDark)
+                return this;
+            return RecolorForDarkMode();
+        }
+    }
 }

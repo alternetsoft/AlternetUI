@@ -25,7 +25,7 @@ namespace Alternet.Drawing
         /// <remarks>If set, this delegate overrides the default dark mode recoloring logic. The delegate
         /// should accept an input image and return a recolored image suitable for display in dark mode. If the value is
         /// null, the default recoloring behavior is used.</remarks>
-        public static Func<Image, Image>? RecolorForDarkModeOverride;
+        public static Func<Image, Bitmap>? RecolorForDarkModeOverride;
 
         /// <summary>
         /// Gets or sets a value indicating whether to use SkiaSharp for loading images.
@@ -590,7 +590,7 @@ namespace Alternet.Drawing
         /// A <see cref="Stream" /> that contains the data for this <see cref="Image" />.</param>
         /// <returns>The <see cref="Image" /> this method creates.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Image FromStream(Stream stream)
+        public static Bitmap FromStream(Stream stream)
         {
             return new Bitmap(stream);
         }
@@ -1161,22 +1161,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns a version of the image recolored for dark mode if required.
-        /// Returns original image if dark mode is not required.
-        /// </summary>
-        /// <param name="isDark">A value indicating whether dark mode is enabled.
-        /// If <see langword="true"/>, the image will be recolored for
-        /// dark mode; otherwise, the original image is returned.</param>
-        /// <returns>An image recolored for dark mode if <paramref name="isDark"/> is <see langword="true"/>; otherwise, the
-        /// original image.</returns>
-        public Image RecolorForDarkModeIfRequired(bool isDark)
-        {
-            if(!isDark)
-                return this;
-            return RecolorForDarkMode();
-        }
-
-        /// <summary>
         /// Creates a version of the image optimized for display in dark mode environments by adjusting its colors for
         /// improved visibility and aesthetics.
         /// </summary>
@@ -1185,7 +1169,7 @@ namespace Alternet.Drawing
         /// default transformation.</remarks>
         /// <returns>An Image instance representing the recolored image suitable for dark mode.
         /// The returned image preserves the original transparency.</returns>
-        public virtual Image RecolorForDarkMode()
+        public virtual Bitmap RecolorForDarkMode()
         {
             if (RecolorForDarkModeOverride != null)
                 return RecolorForDarkModeOverride(this);
