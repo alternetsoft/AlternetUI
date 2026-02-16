@@ -39,7 +39,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         /// <remarks>
         /// There is no decent way (that I can find) to wait until all projects in a solution
         /// (including their references) are full loaded, so this method uses a series of hacks
-        /// to try and do this. It may or may not be sucessful...
+        /// to try and do this. It may or may not be successful...
         /// </remarks>
         /// <returns>A collection of <see cref="ProjectInfo"/> objects.</returns>
         public async Task<IReadOnlyList<ProjectInfo>> GetProjectsAsync()

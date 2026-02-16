@@ -137,6 +137,7 @@ namespace Alternet.UI.Integration
                 hostAppPath = newHostAppPath;
             }
 
+            /*
             newHostAppPath
                 = @"E:\DIMA\AlternetUI\Source\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net8.0\Alternet.UI.Integration.UIXmlHostApp.exe";
 
@@ -144,6 +145,7 @@ namespace Alternet.UI.Integration
             {
                 hostAppPath = newHostAppPath;
             }
+            */
 
             if (string.IsNullOrWhiteSpace(hostAppPath))
             {
