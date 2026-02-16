@@ -65,6 +65,7 @@
     <PathToReplaceInFilesSettings>$(Bindings_RootDirectoryPath)\Tools\Alternet.UI.RunCmd\ReplaceInFilesSettings.xml</PathToReplaceInFilesSettings>
 
     <Bindings_NativeProjectDirectoryPath>$(Bindings_RootDirectoryPath)\Alternet.UI.Pal\</Bindings_NativeProjectDirectoryPath>
+
     <Bindings_NativeVcSolutionFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.slnx</Bindings_NativeVcSolutionFilePath>
     <Bindings_NativeVcProjectFilePath>$(Bindings_NativeProjectDirectoryPath)\Alternet.UI.Pal.vcxproj</Bindings_NativeVcProjectFilePath>
 
@@ -73,6 +74,11 @@
 
     <Bindings_NativeUnixProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Release</Bindings_NativeUnixProjectOutputDirectoryPath_Release>
     <Bindings_NativeUnixProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Debug</Bindings_NativeUnixProjectOutputDirectoryPath_Debug>
+
+    <Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\x86\Release</Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Release>
+    <Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Release</Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release>
+    <Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x86\Debug</Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Debug>
+    <Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Debug</Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Debug>
   </PropertyGroup>
 
   <ItemGroup>

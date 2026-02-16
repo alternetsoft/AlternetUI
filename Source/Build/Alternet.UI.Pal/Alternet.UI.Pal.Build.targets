@@ -8,28 +8,50 @@
     <!-- ========================================== -->
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
         <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.dylib"/>
-    </ItemGroup>
-    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-        <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.so"/>
-    </ItemGroup>
-    <!-- ========================================== -->
-    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
         <NativeBuildResultFilesDebug Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.dylib"/>
-    </ItemGroup>
-    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
-        <NativeBuildResultFilesDebug Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.so"/>
-    </ItemGroup>
-    <!-- ========================================== -->
-    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX'))">
         <NativeBuildResultFilesRelease Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.dylib"/>
     </ItemGroup>
+
+    <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+        <NativeBuildResultFilesDebugX86 Include="$(Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.dll"/>
+        <NativeBuildResultFilesDebugX86 Include="$(Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.exp"/>
+        <NativeBuildResultFilesDebugX86 Include="$(Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.lib"/>
+
+        <NativeBuildResultFilesDebugX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.dll"/>
+        <NativeBuildResultFilesDebugX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.exp"/>
+        <NativeBuildResultFilesDebugX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.lib"/>
+
+        <NativeBuildResultFilesReleaseX86 Include="$(Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.dll"/>
+        <NativeBuildResultFilesReleaseX86 Include="$(Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.exp"/>
+        <NativeBuildResultFilesReleaseX86 Include="$(Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.lib"/>
+
+        <NativeBuildResultFilesReleaseX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.dll"/>
+        <NativeBuildResultFilesReleaseX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.exp"/>
+        <NativeBuildResultFilesReleaseX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.lib"/>
+    </ItemGroup>
+
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
+        <NativeBuildResultFiles Include="$(Bindings_NativeUnixProjectOutputDirectoryPath)/Alternet.UI.Pal.so"/>
+        <NativeBuildResultFilesDebug Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.so"/>
         <NativeBuildResultFilesRelease Include="$(Bindings_NativeUnixProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.so"/>
     </ItemGroup>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
         <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Debug|x86&quot;" />
         <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Release|x86&quot;" />
+
+        <CallTarget Targets="Zip_Pal_32" />
+    </Target>
+
+    <Target Name="Zip_Pal">
+        <CallTarget Targets="Zip_Pal_32" />
+        <CallTarget Targets="Zip_Pal_64" />
+    </Target>
+
+    <Target Name="Zip_Pal_32">
+        <Copy SourceFiles="@(NativeBuildResultFilesDebugX86)" DestinationFolder="$(OutputDirectoryPath_X86_Debug)" />
+        <Copy SourceFiles="@(NativeBuildResultFilesReleaseX86)" DestinationFolder="$(OutputDirectoryPath_X86_Release)" 
+		Condition="'$(OnlyDebug)' != 'true'"/>
 
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
@@ -38,10 +60,13 @@
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Debug)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitectureX86_-debug.zip&quot;" />
-
     </Target>
 
     <Target Name="Zip_Pal_64">
+        <Copy SourceFiles="@(NativeBuildResultFilesDebugX64)" DestinationFolder="$(OutputDirectoryPath_X64_Debug)" />
+        <Copy SourceFiles="@(NativeBuildResultFilesReleaseX64)" DestinationFolder="$(OutputDirectoryPath_X64_Release)" 
+		Condition="'$(OnlyDebug)' != 'true'"/>
+
         <Exec
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
 	    Condition="'$(OnlyDebug)' != 'true'"
@@ -134,8 +159,10 @@
 
         <Copy SourceFiles="@(NativeBuildResultFilesDebug)" DestinationFolder="$(OutputDirectoryPath_X64_Debug)" />
 		<Message Text="--------------------------------------------------------" Importance="high" />
+
          <Exec Command="&quot;$(Bindings_NativeUnixProjectBuildPath)/release.sh&quot;"
               WorkingDirectory="$(Bindings_NativeUnixProjectBuildPath)" Condition="'$(OnlyDebug)' != 'true'"/>
+
         <Copy SourceFiles="@(NativeBuildResultFilesRelease)" DestinationFolder="$(OutputDirectoryPath_X64_Release)" 
 		Condition="'$(OnlyDebug)' != 'true'"/>
         <CallTarget Targets="Zip_Pal_64" />
