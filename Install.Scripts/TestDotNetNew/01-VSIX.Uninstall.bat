@@ -1,5 +1,6 @@
 echo ================
-pushd "C:\Program Files (x86)\Microsoft Visual Studio\Installer\resources\app\ServiceHub\Services\Microsoft.VisualStudio.Setup.Service\"
+
+pushd "C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\"
 vsixinstaller /q /u:AlternetUIForVS2022
 popd
 echo ================
