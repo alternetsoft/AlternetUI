@@ -8,7 +8,7 @@ set VSIXInstaller="C:\Program Files\Microsoft Visual Studio\18\Community\Common7
 
 pushd "%PublishRoot%\Packages"
 
-for /f %%f in ('dir /b Alternet.UI.Integration.VisualStudio*.vsix') do %VSIXInstaller% "%%f"
+for /f %%f in ('dir /b Alternet.UI.Integration.VisualStudio*.vsix') do "%%f"
 
 popd
 
