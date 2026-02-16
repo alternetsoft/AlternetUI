@@ -74,23 +74,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         public static readonly DependencyProperty TargetsProperty =
             TargetsPropertyKey.DependencyProperty;
 
-        //public static readonly DependencyProperty ZoomLevelProperty =
-        //    DependencyProperty.Register(
-        //        nameof(ZoomLevel),
-        //        typeof(string),
-        //        typeof(AlternetUIDesigner),
-        //        new PropertyMetadata("100%", HandleZoomLevelChanged));
-
-        //public static string FmtZoomLevel(double v) => $"{v.ToString(CultureInfo.InvariantCulture)}%";
-
-        //public static string[] ZoomLevels { get; } = new string[]
-        //{
-        //    FmtZoomLevel(800), FmtZoomLevel(400), FmtZoomLevel(200), FmtZoomLevel(150), FmtZoomLevel(100),
-        //    FmtZoomLevel(66.67), FmtZoomLevel(50), FmtZoomLevel(33.33), FmtZoomLevel(25), FmtZoomLevel(12.5),
-        //    "Fit All"
-        //};
-
-
         private static readonly GridLength ZeroStar = new GridLength(0, System.Windows.GridUnitType.Star);
         private static readonly GridLength OneStar = new GridLength(1, System.Windows.GridUnitType.Star);
         private readonly Throttle<string> _throttle;
@@ -202,15 +185,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             set => SetValue(ViewProperty, value);
         }
 
-        ///// <summary>
-        ///// Gets or sets the zoom level as a string.
-        ///// </summary>
-        //public string ZoomLevel
-        //{
-        //    get => (string)GetValue(ZoomLevelProperty);
-        //    set => SetValue(ZoomLevelProperty, value);
-        //}
-
         /// <summary>
         /// Starts the designer.
         /// </summary>
@@ -317,64 +291,73 @@ namespace Alternet.UI.Integration.VisualStudio.Views
 
         private async Task LoadTargetsAsync()
         {
+            bool IsValidOutput(ProjectOutputInfo output)
+            {
+                return true;
+            }
+
+            string GetXamlAssembly(ProjectOutputInfo output, IReadOnlyList<ProjectInfo> projects)
+            {
+                var project = projects.FirstOrDefault(x => x.Project == _project);
+                return project?.Outputs.FirstOrDefault(x => x.TargetFramework == output.TargetFramework)?.TargetAssembly;
+            }
+
+            bool IsValidTarget(ProjectInfo project)
+            {
+                return (project.Project == _project || project.ProjectReferences.Contains(_project)) &&
+                    project.IsExecutable &&
+                    project.References.Contains("Alternet.UI") || project.References.Contains("Alternet.UI.Common") ||
+                    ProjectReferencesAlternetUISourceProject(project);
+
+                static bool ProjectReferencesAlternetUISourceProject(ProjectInfo project)
+                {
+                    // For the IntelliSense to show up in the sample projects
+                    // when developing AlterNET UI and referencing the project
+                    // instead of the NuGet package.
+                    return project.ProjectReferences.Any(
+                        x => Path.GetFileName(x.FullName)
+                        .Equals("Alternet.UI.csproj", StringComparison.OrdinalIgnoreCase));
+                }
+            }
+
+
             Log.Verbose("Started AlternetUIDesigner.LoadTargetsAsync()");
 
             _loadingTargets = true;
 
             try
             {
-                var projects = await AlternetUIPackage.SolutionService.GetProjectsAsync();
-
-                bool IsValidTarget(ProjectInfo project)
+                try
                 {
-                    return (project.Project == _project || project.ProjectReferences.Contains(_project)) &&
-                        project.IsExecutable &&
-                        project.References.Contains("Alternet.UI") ||
-                        ProjectReferencesAlternetUISourceProject(project);
+                    var projects = await AlternetUIPackage.SolutionService.GetProjectsAsync();
 
-                    static bool ProjectReferencesAlternetUISourceProject(ProjectInfo project)
-                    {
-                        // For the IntelliSense to show up in the sample projects
-                        // when developing AlterNET UI and referencing the project
-                        // instead of the NuGet package.
-                        return project.ProjectReferences.Any(
-                            x => Path.GetFileName(x.FullName)
-                            .Equals("Alternet.UI.csproj", StringComparison.OrdinalIgnoreCase));
-                    }
+                    var oldSelectedTarget = SelectedTarget;
+
+                    Targets = (from project in projects
+                               where IsValidTarget(project)
+                               orderby project.Project != project, !project.IsStartupProject, project.Name
+                               from output in project.Outputs
+                               where IsValidOutput(output)
+                               select new DesignerRunTarget
+                               {
+                                   Name = $"{project.Name} [{output.TargetFramework}]",
+                                   ExecutableAssembly = output.TargetAssembly,
+                                   XamlAssembly = GetXamlAssembly(output, projects),
+                                   HostApp = output.HostApp,
+                               }).ToList();
+
+                    SelectedTarget = Targets.FirstOrDefault(t => t.Name == oldSelectedTarget?.Name)
+                        ?? Targets.FirstOrDefault();
+                }
+                finally
+                {
+                    _loadingTargets = false;
                 }
 
-                bool IsValidOutput(ProjectOutputInfo output)
-                {
-                    return true;
-                }
-
-                string GetXamlAssembly(ProjectOutputInfo output)
-                {
-                    var project = projects.FirstOrDefault(x => x.Project == _project);
-                    return project?.Outputs.FirstOrDefault(x => x.TargetFramework == output.TargetFramework)?.TargetAssembly;
-                }
-
-                var oldSelectedTarget = SelectedTarget;
-
-                Targets = (from project in projects
-                           where IsValidTarget(project)
-                           orderby project.Project != project, !project.IsStartupProject, project.Name
-                           from output in project.Outputs
-                           where IsValidOutput(output)
-                           select new DesignerRunTarget
-                           {
-                               Name = $"{project.Name} [{output.TargetFramework}]",
-                               ExecutableAssembly = output.TargetAssembly,
-                               XamlAssembly = GetXamlAssembly(output),
-                               HostApp = output.HostApp,
-                           }).ToList();
-
-                SelectedTarget = Targets.FirstOrDefault(t => t.Name == oldSelectedTarget?.Name)
-                    ?? Targets.FirstOrDefault();
             }
-            finally
+            catch(Exception ex)
             {
-                _loadingTargets = false;
+                Log.Verbose($"AlternetUIDesigner.LoadTargetsAsync() exception: {ex}");
             }
 
             Log.Verbose("Finished AlternetUIDesigner.LoadTargetsAsync()");
@@ -414,39 +397,6 @@ namespace Alternet.UI.Integration.VisualStudio.Views
                 Process.Stop();
             }
         }
-
-        //public bool TryProcessZoomLevelValue(out double scaling)
-        //{
-        //    scaling = 1;
-
-        //    if (string.IsNullOrEmpty(ZoomLevel))
-        //        return false;
-
-        //    if (ZoomLevel.Equals("Fit All", StringComparison.OrdinalIgnoreCase))
-        //    {
-        //        if (Process.IsReady && Process.Bitmap != null)
-        //        {
-        //            double x = previewer.ActualWidth / (Process.Bitmap.Width / Process.Scaling);
-        //            double y = previewer.ActualHeight / (Process.Bitmap.Height / Process.Scaling);
-
-        //            ZoomLevel = string.Format(CultureInfo.InvariantCulture, "{0}%", Math.Round(Math.Min(x, y), 2, MidpointRounding.ToEven) * 100);
-        //        }
-        //        else
-        //        {
-        //            ZoomLevel = "100%";
-        //        }
-
-        //        return false;
-        //    }
-        //    else if (double.TryParse(ZoomLevel.TrimEnd('%'), NumberStyles.Number, CultureInfo.InvariantCulture, out double zoomPercent)
-        //             && zoomPercent > 0 && zoomPercent <= 1000)
-        //    {
-        //        scaling = zoomPercent / 100;
-        //        return true;
-        //    }
-
-        //    return false;
-        //}
 
         private async Task StartProcessAsync()
         {

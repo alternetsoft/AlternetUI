@@ -55,6 +55,11 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             {
                 if (project.Object is VSProject vsProject)
                 {
+                    if (!IsSupportedProj(project))
+                    {
+                        continue;
+                    }
+
                     var projectInfo = new ProjectInfo
                     {
                         IsStartupProject = startupProjects?.Contains(project.UniqueName) ?? false,
@@ -69,7 +74,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
                     // If the project is a .csproj and it has no references then we assume its
                     // references are not yet loaded. We might want to handle e.g. F# and VB
                     // projects here too.
-                    if (IsCsproj(projectInfo) && projectInfo.References.Count == 0)
+                    if (IsCsProj(projectInfo.Project) && projectInfo.References.Count == 0)
                     {
                         uninitialized.Add(vsProject, projectInfo);
                     }
@@ -122,29 +127,54 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             return result.Values.ToList();
         }
 
-        private bool IsCsproj(ProjectInfo projectInfo)
+        public static bool ProjectHasExtrension(Project projectInfo, string ext)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (!string.IsNullOrWhiteSpace(projectInfo.Project.FullName))
+            if (!string.IsNullOrWhiteSpace(projectInfo.FullName))
             {
                 return string.Equals(
-                    Path.GetExtension(projectInfo.Project.FullName),
-                    ".csproj",
+                    Path.GetExtension(projectInfo.FullName),
+                    ext,
                     StringComparison.OrdinalIgnoreCase);
             }
 
             return false;
         }
 
+        public static bool IsSupportedProj(Project projectInfo)
+        {
+            return IsCsProj(projectInfo);
+        }
+
+        public static bool IsVbProj(Project projectInfo)
+        {
+            return ProjectHasExtrension(projectInfo, ".vbproj");
+        }
+
+        public static bool IsCsProj(Project projectInfo)
+        {
+            return ProjectHasExtrension(projectInfo, ".csproj");
+        }
+
         private static IEnumerable<Project> FlattenProjects(IEnumerable projects)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            foreach (Project project in projects)
+            if (projects == null)
+                yield break;
+
+            object[] array = projects.Cast<object>().ToArray();
+
+            foreach (Project project in array)
             {
                 if (project.Object is VSProject)
                 {
+                    if (!IsSupportedProj(project))
+                    {
+                        continue;
+                    }
+
                     yield return project;
                 }
                 else if (project.Object is SolutionFolder)
@@ -161,12 +191,20 @@ namespace Alternet.UI.Integration.VisualStudio.Services
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
+            if (items == null)
+                yield break;
+
             foreach (ProjectItem item in items)
             {
                 var project = item.SubProject;
 
                 if (project?.Object is VSProject)
                 {
+                    if (!IsSupportedProj(project))
+                    {
+                        continue;
+                    }
+
                     yield return project;
                 }
                 else if (project?.Object is SolutionFolder)
@@ -237,19 +275,21 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             static string GetDotNetCoreHostAppPath(string hostAppDirectory, string frameworkMoniker)
             {
-                static string TryPath(string hostAppDirectory, string frameworkMoniker)
+                static bool TryPath(string hostAppDirectory, string frameworkMoniker, out string path)
                 {
-                    var path = Path.Combine(hostAppDirectory, frameworkMoniker.Replace("-windows", ""), "Alternet.UI.Integration.UIXmlHostApp.dll");
+                    path = Path.Combine(hostAppDirectory, frameworkMoniker.Replace("-windows", ""), "Alternet.UI.Integration.UIXmlHostApp.dll");
                     if (!File.Exists(path))
-                        return null;
-                    return path;
+                        return false;
+                    return true;
                 }
 
-                var path = TryPath(hostAppDirectory, frameworkMoniker);
-                if (path == null)
-                    return TryPath(hostAppDirectory, "net8.0") ?? throw new Exception();
+                var pathExists = TryPath(hostAppDirectory, frameworkMoniker, out var result);
+                if (!pathExists)
+                {
+                    pathExists = TryPath(hostAppDirectory, "net8.0", out result);
+                }
 
-                return path;
+                return result;
             }
         }
 

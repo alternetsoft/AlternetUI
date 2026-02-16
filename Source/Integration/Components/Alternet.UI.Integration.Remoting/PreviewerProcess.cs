@@ -114,21 +114,20 @@ namespace Alternet.UI.Integration
 
             if (_listener != null)
             {
-                throw new InvalidOperationException("Previewer process already started.");
+                Log.Error("Previewer process already started.");
+                return;
             }
 
             if (string.IsNullOrWhiteSpace(assemblyPath))
             {
-                throw new ArgumentException(
-                    "Assembly path may not be null or an empty string.",
-                    nameof(assemblyPath));
+                Log.Error("Assembly path may not be null or an empty string.");
+                return;
             }
 
             if (string.IsNullOrWhiteSpace(executablePath))
             {
-                throw new ArgumentException(
-                    "Executable path may not be null or an empty string.",
-                    nameof(executablePath));
+                Log.Error("Executable path may not be null or an empty string.");
+                return;
             }
 
             var newHostAppPath = @"C:\AlternetUI\UIXmlHostApp\Alternet.UI.Integration.UIXmlHostApp.exe";
@@ -137,20 +136,19 @@ namespace Alternet.UI.Integration
             {
                 hostAppPath = newHostAppPath;
             }
-            /*
+
             newHostAppPath
                 = @"E:\DIMA\AlternetUI\Source\Integration\Components\Alternet.UI.Integration.UIXmlHostApp\bin\Debug\net8.0\Alternet.UI.Integration.UIXmlHostApp.exe";
 
             if (File.Exists(newHostAppPath))
             {
                 hostAppPath = newHostAppPath;
-            }*/
+            }
 
             if (string.IsNullOrWhiteSpace(hostAppPath))
             {
-                throw new ArgumentException(
-                    "HostAppPath path may not be null or an empty string.",
-                    nameof(hostAppPath));
+                Log.Error("HostAppPath path may not be null or an empty string.");
+                return;
             }
 
             if (!File.Exists(hostAppPath))
@@ -161,23 +159,25 @@ namespace Alternet.UI.Integration
 
             if (!File.Exists(assemblyPath))
             {
-                throw new FileNotFoundException(
+                Log.Error($"Could not find '{assemblyPath}'. " +
                     $"Could not find '{assemblyPath}'. " +
                     "Please build your project to enable previewing and intellisense.");
+                return;
             }
 
             if (!File.Exists(executablePath))
             {
-                throw new FileNotFoundException(
-                    $"Could not find executable '{executablePath}'. " + 
+                Log.Error($"Could not find executable '{executablePath}'. " + 
                     "Please build your project to enable previewing and intellisense.");
+                return;
             }
 
             if (!File.Exists(hostAppPath))
             {
-                throw new FileNotFoundException(
+                Log.Error($"Could not find executable '{hostAppPath}'. " +
                     $"Could not find executable '{hostAppPath}'. " +
                     "Please build your project to enable previewing and intellisense.");
+                return;
             }
 
             Log.Information($"AssemblyPath: {assemblyPath}");
