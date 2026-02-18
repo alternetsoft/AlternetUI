@@ -105,11 +105,11 @@
 
   <ItemGroup Condition="$([MSBuild]::IsOsPlatform('OSX')) AND '$(IsSampleProject)'=='true'">
     <None Include="$(PalBinFolder)\x64\Debug\Alternet.UI.Pal.dylib"
-          Link="Alternet.UI.Pal.dylib" Condition="'$(Configuration)'=='Debug'">
+          Link="Alternet.UI.Pal.dylib" Condition="'$(Configuration)'=='Debug' AND Exists('$(PalBinFolder)\x64\Debug\Alternet.UI.Pal.dylib')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="$(PalBinFolder)\x64\Release\Alternet.UI.Pal.dylib"
-          Link="Alternet.UI.Pal.dylib" Condition="'$(Configuration)'=='Release'">
+          Link="Alternet.UI.Pal.dylib" Condition="'$(Configuration)'=='Release' AND Exists('$(PalBinFolder)\x64\Release\Alternet.UI.Pal.dylib')">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
