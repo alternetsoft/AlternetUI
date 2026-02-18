@@ -37,7 +37,7 @@ namespace Alternet.Drawing
 
         public bool IsOpenGLAvailable
         {
-            get => UI.Native.GLControl.IsOpenGLAvailable();
+            get => false;
         }
 
         private static ImageBitsFormat GetImageBitsFormat(ImageStaticObjectId objectId)

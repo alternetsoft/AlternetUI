@@ -362,7 +362,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FontDialog.cpp" />
     <ClCompile Include="GenericImage.cpp" />
-    <ClCompile Include="GLControl.cpp" />
     <ClCompile Include="GraphicsPath.cpp" />
     <ClCompile Include="GroupBox.cpp" />
     <ClCompile Include="HatchBrush.cpp" />
@@ -439,7 +438,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="Api\Font.Api.h" />
     <ClInclude Include="Api\FontDialog.Api.h" />
     <ClInclude Include="Api\GenericImage.Api.h" />
-    <ClInclude Include="Api\GLControl.Api.h" />
     <ClInclude Include="Api\GraphicsPath.Api.h" />
     <ClInclude Include="Api\GroupBox.Api.h" />
     <ClInclude Include="Api\HatchBrush.Api.h" />
@@ -519,7 +517,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="Font.h" />
     <ClInclude Include="FontDialog.h" />
     <ClInclude Include="GenericImage.h" />
-    <ClInclude Include="GLControl.h" />
     <ClInclude Include="GraphicsPath.h" />
     <ClInclude Include="GroupBox.h" />
     <ClInclude Include="HatchBrush.h" />
@@ -601,7 +598,6 @@ VS_VERSION_INFO VERSIONINFO
     <None Include="Api\Font.inc" />
     <None Include="Api\FontDialog.inc" />
     <None Include="Api\GenericImage.inc" />
-    <None Include="Api\GLControl.inc" />
     <None Include="Api\GraphicsPath.inc" />
     <None Include="Api\GroupBox.inc" />
     <None Include="Api\HatchBrush.inc" />

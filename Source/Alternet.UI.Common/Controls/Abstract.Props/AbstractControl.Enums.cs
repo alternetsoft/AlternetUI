@@ -36,11 +36,6 @@ namespace Alternet.UI
             /// Generic handler. Creates handler suitable for owner drawn controls.
             /// </summary>
             Generic,
-
-            /// <summary>
-            /// OpenGL handler. Creates handler suitable for controls painted with OpenGL.
-            /// </summary>
-            OpenGL,
         }
 
         /// <summary>

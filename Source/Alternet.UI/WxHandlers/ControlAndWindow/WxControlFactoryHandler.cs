@@ -146,11 +146,6 @@ namespace Alternet.UI
             return new WxSliderHandler();
         }
 
-        public IControlHandler CreateOpenGLControlHandler(AbstractControl control)
-        {
-            return new WxOpenGLControlHandler();
-        }
-
         public IControlHandler CreateListBoxHandler(ListBox control)
         {
             return new WxListBoxHandler();

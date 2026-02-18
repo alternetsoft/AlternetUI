@@ -210,9 +210,7 @@ namespace Alternet.UI
             switch (mode)
             {
                 case ControlRenderingMode.SkiaSharpWithOpenGL:
-                    renderingFlags |= ControlRenderingFlags.UseSkiaSharpWithOpenGL;
-                    control.RenderingFlags = renderingFlags;
-                    return true;
+                    return false;
                 case ControlRenderingMode.SkiaSharp:
                     renderingFlags |= ControlRenderingFlags.UseSkiaSharp;
                     renderingFlags &= ~ControlRenderingFlags.UseOpenGL;

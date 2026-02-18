@@ -982,9 +982,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override HandlerType GetRequiredHandlerType()
         {
-            if(RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharpWithOpenGL))
-                return HandlerType.OpenGL;
-
             return base.GetRequiredHandlerType();
         }
     }

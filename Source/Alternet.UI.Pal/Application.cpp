@@ -12,7 +12,6 @@ extern "C" void gdk_set_allowed_backends(const char*);
 #include "Image.h"
 #include "GenericImage.h"
 #include "Exceptions.h"
-#include "GLControl.h"
 
 #include <wx/platform.h>
 #include <wx/sysopt.h>

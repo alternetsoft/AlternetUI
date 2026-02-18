@@ -188,27 +188,6 @@ namespace Alternet.UI
             set => nativeApplication.InUixmlPreviewerMode = value;
         }
 
-        /// <summary>
-        /// Creates a dummy OpenGL canvas to initialize OpenGL context.
-        /// </summary>
-        internal static void CreateDummyOpenGlCanvas()
-        {
-            try
-            {
-                Native.GLControl.CreateDummyOpenGlCanvas();
-
-                var glInterface = GRGlInterface.Create();
-                if (glInterface == null || !glInterface.Validate())
-                    Debug.WriteLine("Failed to create OpenGL interface");
-                var grContext = GRContext.CreateGl(glInterface);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Failed to create OpenGL canvas: {ex.Message}");
-                throw;
-            }
-        }
-
         internal static Native.Clipboard NativeClipboard => nativeApplication.Clipboard;
 
         internal static Native.Keyboard NativeKeyboard => nativeApplication.Keyboard;

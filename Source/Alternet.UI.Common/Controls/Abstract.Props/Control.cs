@@ -856,9 +856,6 @@ namespace Alternet.UI
                     case HandlerType.Generic:
                         handler = ControlFactory.Handler.CreateControlHandler(this);
                         break;
-                    case HandlerType.OpenGL:
-                        handler = ControlFactory.Handler.CreateOpenGLControlHandler(this);
-                        break;
                 }
 
                 handler.Attach(this);
