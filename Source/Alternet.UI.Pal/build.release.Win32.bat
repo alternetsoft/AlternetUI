@@ -1,0 +1,1 @@
+"C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\devenv.com" "Alternet.UI.Pal.vcxproj" /Rebuild "Release|Win32"

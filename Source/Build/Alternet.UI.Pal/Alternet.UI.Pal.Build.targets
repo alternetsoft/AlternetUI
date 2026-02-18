@@ -39,10 +39,10 @@
     </ItemGroup>
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X86" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-        <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Debug|x86&quot;" />
+        <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Debug|Win32&quot;" />
 
         <Exec Condition="'$(OnlyDebug)' != 'true'"
-	Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Release|x86&quot;" />
+	Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Release|Win32&quot;" />
 
         <CallTarget Targets="Zip_Pal_32" />
     </Target>
@@ -57,11 +57,11 @@
         <Copy SourceFiles="@(NativeBuildResultFilesReleaseX86)" DestinationFolder="$(OutputDirectoryPath_X86_Release)" 
 		Condition="'$(OnlyDebug)' != 'true'"/>
 
-        <Exec
+        <Exec Condition="'$(OnlyDebug)' != 'true'"
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Release)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitectureX86_-release.zip&quot;" />
 
-        <Exec Condition="'$(OnlyDebug)' != 'true'"
+        <Exec 
             WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
             Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X86_Debug)/Alternet.UI.Pal.dll&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitectureX86_-debug.zip&quot;" />
     </Target>

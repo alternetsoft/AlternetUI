@@ -1,0 +1,1 @@
+call runps killdotnet.ps1

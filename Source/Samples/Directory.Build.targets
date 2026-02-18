@@ -67,6 +67,9 @@
     <None Include="$(PALx86Debug)" Link="x86\Alternet.UI.Pal.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup Condition="Exists($(PALx86DebugPDB)) AND '$(CPW)'=='Debug|AnyCPU|true' AND '$(IsSampleProject)'=='true'">
     <None Include="$(PALx86DebugPDB)" Link="x86\Alternet.UI.Pal.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
