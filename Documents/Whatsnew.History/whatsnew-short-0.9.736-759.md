@@ -23,6 +23,3 @@ Major improvements:
 - Add StdSlider — slider control fully implemented in C# inside the library.
 - Add automatic painting of child generic controls.
 
----
-
-Detailed list of changes can be found [here](whatsnew.md)
