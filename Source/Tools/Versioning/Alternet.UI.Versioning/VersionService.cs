@@ -86,8 +86,14 @@ namespace Alternet.UI.Versioning
         }
 
         public static ProductVersion GetVersion(Repository repository)
-            => MasterVersionFileService.GetVersion(new FileLocator(repository).GetMasterVersionFile());
+        {
+            var vers = new FileLocator(repository).GetMasterVersionFile();
+            return MasterVersionFileService.GetVersion(vers);
+        }
+
         public static int GetBuildNumber(Repository repository)
-            => MasterVersionFileService.GetBuildNumber(new FileLocator(repository).GetMasterVersionFile());
+        {
+            return MasterVersionFileService.GetBuildNumber(new FileLocator(repository).GetMasterVersionFile());
+        }
     }
 }

@@ -6,7 +6,7 @@
     },
     "set-build-number": {
       "commandName": "Project",
-      "commandLineArgs": "set-build-number 810"
+      "commandLineArgs": "set-build-number 0"
     },
     "append-version-suffix": {
       "commandName": "Project",

@@ -1,3 +1,14 @@
+# 1.0.0 (2026 February 20)
+
+- Remove openGL usage as it is not supported on macOs anymore.
+- DisposableObject: Add static InstanceDisposed event.
+- FrameworkElement: Add two static events (InstanceNameChanged and InstanceLogicalParentChanged).
+- The generator now embeds the UI XML content directly into generated C# by emitting a private static readonly string. This speeds up form loading.
+- UixmlLoader: Add LoadExistingFromString and LoadExistingEx.
+- ControlSet: Add MaxWidthOnSizeChanged and SizeChanged.
+
+---
+
 # 0.9.813 (2026 February 11)
 
 - Image: Add dark-mode image recoloring support (RecolorForDarkModeIfRequired and RecolorForDarkMode methods).
