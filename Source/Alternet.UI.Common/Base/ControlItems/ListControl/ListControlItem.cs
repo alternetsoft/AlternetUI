@@ -2240,6 +2240,7 @@ namespace Alternet.UI
             Text = assignFrom.Text;
             Value = assignFrom.Value;
             Group = assignFrom.Group;
+            DoubleClickAction = assignFrom.DoubleClickAction;
         }
 
         /// <summary>
