@@ -445,11 +445,13 @@ namespace Alternet.UI
             var exceptionText = GetExceptionLogText(e);
             LogToExternalIfAllowed(exceptionText, kind);
 
-            var prefix = "Error";
+            var prefix = ErrorMessages.Default.ErrorPrefix;
             if (kind != LogItemKind.Error)
-                prefix = "Warning";
+                prefix = ErrorMessages.Default.WarningPrefix;
 
-            var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [Double click...]";
+            var doubleClickStr = Localization.CommonStrings.Default.DoubleClick;
+
+            var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [{doubleClickStr}...]";
 
             TreeViewItem item = new(s);
             item.TextHasBold = true;

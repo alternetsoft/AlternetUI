@@ -328,5 +328,8 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string EnterValue { get; set; } = "Enter value";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string DoubleClick { get; set; } = "Double click";
     }
 }

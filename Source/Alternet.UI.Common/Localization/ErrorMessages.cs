@@ -14,6 +14,16 @@ namespace Alternet.UI.Localization
         public static ErrorMessages Default = new();
 
         /// <summary>
+        /// Specifies the prefix that is used for error messages.
+        /// </summary>
+        public string ErrorPrefix = "Error";
+        
+        /// <summary>
+        /// Gets or sets the prefix used for warning messages.
+        /// </summary>
+        public string WarningPrefix = "Warning";
+
+        /// <summary>
         /// Gets or sets error message localization.
         /// </summary>
         public string CurrentApplicationIsNotSet =
