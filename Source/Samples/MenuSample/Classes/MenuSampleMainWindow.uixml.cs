@@ -547,7 +547,7 @@ namespace MenuSample
 
         private void VerticalCheckBox_Changed(object? sender, EventArgs e)
         {
-            if (toolbar == null)
+            if (toolbar == null || verticalCheckBox is null)
                 return;
 
                 var isVertical = verticalCheckBox.IsChecked;
