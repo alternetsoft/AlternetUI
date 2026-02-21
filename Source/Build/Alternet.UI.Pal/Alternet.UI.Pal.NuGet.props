@@ -26,6 +26,7 @@
 
     <PropertyGroup>
         <NugetNativeDllFileName>Alternet.UI.Pal.*</NugetNativeDllFileName>
+        <NugetNativeDllFileNameWindows>Alternet.UI.Pal.dll</NugetNativeDllFileNameWindows>
 
         <NugetPayloadDirectoryPath_Windows_X86>$(BinDirectoryPath)\$(PlatformName_Windows)\x86\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Windows_X86>
         <NugetPayloadDirectoryPath_Windows_X64>$(BinDirectoryPath)\$(PlatformName_Windows)\x64\$(ManagedBuildConfiguration)\</NugetPayloadDirectoryPath_Windows_X64>
