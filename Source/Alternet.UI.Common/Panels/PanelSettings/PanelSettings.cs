@@ -660,8 +660,8 @@ namespace Alternet.UI
             colorEditor.ButtonClick -= ButtonClick;
             colorEditor.ButtonClick += ButtonClick;
 
-            if (item.Value is not null)
-                colorEditor.ColorPicker.Value = (Color)item.Value;
+            if (item.Value is Color colorValue)
+                colorEditor.ColorPicker.Value = colorValue;
 
             colorEditor.ColorPicker.ValueChanged -= SelectorChanged;
             colorEditor.ColorPicker.ValueChanged += SelectorChanged;

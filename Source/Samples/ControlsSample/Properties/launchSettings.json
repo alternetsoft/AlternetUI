@@ -21,6 +21,12 @@
       "commandLineArgs": "-IsDark=true",
       "requireExactSource": false,
       "nativeDebugging": true
+    },
+    "IsLight": {
+      "commandName": "Project",
+      "commandLineArgs": "-IsDark=false",
+      "requireExactSource": false,
+      "nativeDebugging": true
     }
   }
 }

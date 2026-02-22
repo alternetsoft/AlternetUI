@@ -83,7 +83,16 @@ namespace ControlsSample
 
             var testBadFont = false;
 
-            AppUtils.SetSystemAppearanceIfDebug();
+            var isDark = CommandLineArgs.ParseAndGetIsDarkOrNull();
+
+            if (isDark.HasValue)
+            {
+                App.SetAppearance(isDark.Value ? ApplicationAppearance.Dark : ApplicationAppearance.Light);
+            }
+            else
+            {
+                AppUtils.SetSystemAppearanceIfDebug();
+            }
 
             var application = new Application();
 
