@@ -225,7 +225,7 @@ namespace Alternet.UI
             {
                 if (color == value)
                     return;
-                color = value;
+                color = ListBox.CoerceColor(value);
                 base.Text = GetColorAsString() ?? string.Empty;
                 ValueChanged?.Invoke(this, EventArgs.Empty);
                 OnColorImageChanged();
