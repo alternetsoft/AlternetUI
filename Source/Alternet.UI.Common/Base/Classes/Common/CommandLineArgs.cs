@@ -51,6 +51,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Parses the command line arguments to determine the '-IsDark' option value.
+        /// If the '-IsDark' argument is present and can be parsed as a boolean, its value is returned; otherwise, null is returned.
+        /// </summary>
+        /// <returns>The nullable boolean value of the '-IsDark' argument, or null
+        /// if the argument is not present or cannot be parsed.</returns>
+        public static bool? ParseAndGetIsDarkOrNull()
+        {
+            return ParseAndGetBoolOrNull("-IsDark");
+        }
+
+        /// <summary>
         /// Parses command line args of the application and checks if the specified argument exists.
         /// </summary>
         /// <param name="prmName">Command line argument name. Example: -IsDark.</param>
@@ -72,6 +83,23 @@ namespace Alternet.UI
         {
             Default.Parse();
             var result = Default.AsBool(prmName);
+            return result;
+        }
+
+        /// <summary>
+        /// Parses the specified parameter name and returns its boolean value if available; otherwise, returns null.
+        /// </summary>
+        /// <remarks>This method relies on the Default class to perform the parsing operation. Ensure that
+        /// the Default.Parse() method is called prior to invoking this method to initialize any necessary
+        /// state.</remarks>
+        /// <param name="prmName">The name of the parameter to parse and evaluate as a boolean value.</param>
+        /// <returns>Returns a nullable boolean value: <see langword="true"/> if the parameter is set to <see langword="true"/>,
+        /// <see langword="false"/> if set to <see langword="false"/>, or <see langword="null"/> if the parameter is not
+        /// found or cannot be parsed.</returns>
+        public static bool? ParseAndGetBoolOrNull(string prmName)
+        {
+            Default.Parse();
+            var result = Default.AsBoolOrNull(prmName);
             return result;
         }
 
@@ -98,6 +126,42 @@ namespace Alternet.UI
             var value = AsString(argName);
             var result = value.Split(';');
             return result;
+        }
+
+        /// <summary>
+        /// Converts the value of the specified command-line argument to a nullable Boolean based on its string
+        /// representation.
+        /// </summary>
+        /// <remarks>If the argument is not present or its value does not match a valid Boolean
+        /// representation, the method returns <see langword="null"/>. Any exceptions encountered during conversion are
+        /// handled by invoking the OnError method.</remarks>
+        /// <param name="argName">The name of the command-line argument whose value is to be converted.
+        /// The argument's value is expected to be
+        /// 'true' or 'false', case-insensitive.</param>
+        /// <returns>A nullable Boolean value: <see langword="true"/> if the argument value is 'true';
+        /// <see langword="false"/> if the argument value is 'false';
+        /// otherwise, <see langword="null"/> if the argument is not found or cannot be
+        /// converted.</returns>
+        public virtual bool? AsBoolOrNull(string argName)
+        {
+            try
+            {
+                if (args.TryGetValue(argName, out string? value))
+                {
+                    value = value.ToLower().Trim();
+                    if (value == "true")
+                        return true;
+                    if (value == "false")
+                        return false;
+                }
+
+                return null;
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+                return null;
+            }
         }
 
         /// <summary>
