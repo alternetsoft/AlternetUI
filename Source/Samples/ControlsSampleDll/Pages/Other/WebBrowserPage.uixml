@@ -1,51 +1,37 @@
 ﻿<Panel x:Class="ControlsSample.WebBrowserPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
+        xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Layout="Vertical">
 
-  <Grid Visible="true" Margin="5,5,5,5" Name="mainGrid">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition/>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition />
-        <RowDefinition />
-        <RowDefinition Height="100*"/>
-        <RowDefinition />
-      </Grid.RowDefinitions>
 
-      <!-- ==================================== -->
-      <Label  Grid.Row="0" Grid.Column="0" 
-        Text="Web Browser" Margin="0,0,5,0" IsTextLocalized="true"
-              VerticalAlignment="Center" Name="HeaderLabel"/>
+  <Label Text="Web Browser" Margin="0,0,5,0" IsTextLocalized="true" WordWrap="true" Name="HeaderLabel"/>
 
-      <!-- ==================================== -->
-      <StackPanel  Grid.Row="1" Grid.Column="0"  Orientation="Horizontal">
 
-        <Button Name="BackButton" Text="&#60;"
-                Margin="0,10,0,5" Click="BackButton_Click"/>
-        <Button Name="ForwardButton" Text="&#62;"
-                Margin="0,10,0,5" Click="ForwardButton_Click"/>
-        <Button Name="ZoomInButton" Text="+"
-                Margin="0,10,0,5" Click="ZoomInButton_Click" />
-        <Button Name="ZoomOutButton" Text="-"
-                Margin="0,10,0,5" Click="ZoomOutButton_Click" />
-        <TextBox SuggestedWidth="300" Margin="0,10,0,5" Name="UrlTextBox"
-               KeyDown="UrlTextBox_KeyDown" HorizontalAlignment="Fill"/>
-        <Button Name="GoButton" Text="&#x25B7;" HorizontalAlignment="Right"
-                Margin="0,10,0,5" Click="GoButton_Click" />
-        <SpeedButtonWithListPopup Name="openButton" HorizontalAlignment="Right"
-                                  VerticalAlignment="Center" Margin="0,10,0,5"/>
-      </StackPanel>
-      <!-- ==================================== -->
+  <StackPanel  Orientation="Horizontal">
 
-    <!-- ==================================== -->    
-    <StackPanel  Grid.Row="3" Grid.Column="0"  Orientation="Horizontal">
-        <TextBox SuggestedWidth="300" Margin="0,10,0,5" Name="FindTextBox" Text="panda"/>
-        <Button Text="Find" Margin="0,10,0,5" Name="findButton" Click="FindButton_Click"/>
-      </StackPanel>
-    <!-- ==================================== -->
-  </Grid>
+    <SpeedButton Name="BackButton"
+            Margin="0,10,0,5" Click="BackButton_Click"/>
+    <SpeedButton Name="ForwardButton"
+            Margin="0,10,0,5" Click="ForwardButton_Click"/>
+    <SpeedButton Name="ZoomInButton"
+            Margin="0,10,0,5" Click="ZoomInButton_Click" />
+    <SpeedButton Name="ZoomOutButton"
+            Margin="0,10,0,5" Click="ZoomOutButton_Click" />
+    <TextBox Margin="0,10,0,5" Name="UrlTextBox"
+           KeyDown="UrlTextBox_KeyDown" HorizontalAlignment="Fill"/>
+    <SpeedButton Name="GoButton" HorizontalAlignment="Right"
+            Margin="0,10,0,5" Click="GoButton_Click" />
+    <SpeedButtonWithListPopup Name="openButton" HorizontalAlignment="Right"
+                              VerticalAlignment="Center" Margin="0,10,0,5"/>
+  </StackPanel>
+
+  <Panel Name="mainPanel" VerticalAlignment="Fill"/>
+
+  <StackPanel  Orientation="Horizontal" VerticalAlignment="Bottom">
+    <TextBox SuggestedWidth="300" Margin="0,10,0,5" Name="FindTextBox" Text="panda"/>
+    <Button Text="Find" Margin="0,10,0,5" Name="findButton" Click="FindButton_Click"/>
+  </StackPanel>
+
 
 </Panel>
 

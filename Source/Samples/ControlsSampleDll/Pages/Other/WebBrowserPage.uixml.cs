@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+
 using Alternet.UI;
 
 namespace ControlsSample
@@ -48,13 +49,11 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            var width = BackButton.Height * 1.5f;
-
-            BackButton.SuggestedWidth = width;
-            ForwardButton.SuggestedWidth = width;
-            ZoomInButton.SuggestedWidth = width;
-            ZoomOutButton.SuggestedWidth = width;
-            GoButton.SuggestedWidth = width;
+            BackButton.Image = KnownSvgImages.ImgArrowLeft.AsNormalImage(this);
+            ForwardButton.Image = KnownSvgImages.ImgArrowRight.AsNormalImage(this);
+            ZoomInButton.Image = KnownSvgImages.ImgZoomIn.AsNormalImage(this);
+            ZoomOutButton.Image = KnownSvgImages.ImgZoomOut.AsNormalImage(this);
+            GoButton.Image = KnownSvgImages.ImgTriangleArrowRight.AsNormalImage(this);
 
             webBrowser = new(GetPandaUrl())
             {
@@ -64,12 +63,12 @@ namespace ControlsSample
             webBrowser.Loaded += WebBrowser1_Loaded;
             webBrowser.NewWindow += WebBrowser1_NewWindow;
             webBrowser.DocumentTitleChanged += WebBrowser1_TitleChanged;
-            Grid.SetRowColumn(webBrowser, 2, 0);
-            mainGrid.Children.Add(webBrowser);
+
+            mainPanel.Children.Add(webBrowser);
 
             headerText = HeaderLabel.Text;
             webBrowser.ZoomType = WebBrowserZoomType.Layout;
-            
+
             List<string> items = new()
             {
                 SItemPanda,
@@ -85,13 +84,14 @@ namespace ControlsSample
                 items.Add(SItemPDF);
 
             openButton.Image = KnownSvgImages.ImgFileOpen.AsNormalImage(this);
-            openButton.ListBox.AddRange(items);
+            openButton.AddRange(items);
             openButton.ValueChanged += OpenButton_ValueChanged;
             openButton.ImageVisible = true;
             openButton.TextVisible = false;
-            openButton.UseTheme = SpeedButton.KnownTheme.StaticBorder;
 
             HeaderLabel.WordWrap = true;
+
+            PerformLayout();
         }
 
         private static string GetPandaFileName()
