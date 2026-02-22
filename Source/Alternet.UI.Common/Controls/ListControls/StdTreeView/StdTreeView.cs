@@ -886,20 +886,22 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RemoveSelected()
         {
-            BeginUpdate();
-            try
+            var visibleBegin = ListBox.TopIndex;
+
+            ListBox.DoInsideUpdate(() =>
             {
-                var items = ListBox.SelectedItems;
-                ListBox.ClearSelected();
-                foreach (var item in items)
+                DoInsideUpdate(() =>
                 {
-                    (item as TreeViewItem)?.Remove();
-                }
-            }
-            finally
-            {
-                EndUpdate();
-            }
+                    var items = ListBox.SelectedItems;
+                    ListBox.ClearSelected();
+                    foreach (var item in items)
+                    {
+                        (item as TreeViewItem)?.Remove();
+                    }
+                });
+
+                ListBox.ScrollToRow(visibleBegin, false);
+            });
         }
 
         /// <summary>
