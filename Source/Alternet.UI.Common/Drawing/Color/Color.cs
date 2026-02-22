@@ -2028,7 +2028,7 @@ namespace Alternet.Drawing
         /// You can handle <see cref="ColorToDisplayString"/> in order to provide custom
         /// color to display string conversion.
         /// </remarks>
-        public string? ToDisplayString()
+        public virtual string? ToDisplayString()
         {
             if (ColorToDisplayString is not null)
             {
@@ -2179,7 +2179,7 @@ namespace Alternet.Drawing
         /// Body of this function doesn't use logical not of <see cref="IsLight"/>,
         /// it implements completely different approach.
         /// </remarks>
-        public bool IsDark()
+        public virtual bool IsDark()
         {
             if (IsBlack)
                 return true;
@@ -2210,7 +2210,7 @@ namespace Alternet.Drawing
         /// <see href="https://learn.microsoft.com/en-us/uwp/api/windows.ui.color.b?view=winrt-26100"/>
         /// and it's implementation doesn't use logical not of <see cref="IsDark"/>.
         /// </remarks>
-        public bool IsLight()
+        public virtual bool IsLight()
         {
             RequireArgb();
             var r = color.R;
