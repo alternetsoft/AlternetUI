@@ -312,6 +312,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Attempts to resolve the specified color value to a corresponding item,
+        /// returning a coerced color if available.
+        /// </summary>
+        /// <remarks>This method searches for an item matching the provided color value. If no match is
+        /// found, the input value is returned unchanged.</remarks>
+        /// <param name="value">The color value to coerce. If the value does not correspond to an item,
+        /// the original value is used.</param>
+        /// <returns>The coerced color value if a corresponding item is found; otherwise, the original value.</returns>
+        public virtual Color? CoerceColor(Color? value)
+        {
+            var item = Find(value);
+            var result = GetItemValue(item) ?? value;
+            return result;
+        }
+
+        /// <summary>
         /// Creates item for the specified color and title.
         /// </summary>
         /// <param name="title">Color title. Optional. If not specified,
