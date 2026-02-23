@@ -506,7 +506,7 @@ namespace Alternet.UI
         {
             if (HourFormat == TimePickerHourFormat.Hour24)
                 return null;
-            var result = time.ToString("tt");
+            var result = DateUtils.GetAmOrPmDesignator(time, FormatProvider);
             if (string.IsNullOrWhiteSpace(result))
                 return null;
             return result;

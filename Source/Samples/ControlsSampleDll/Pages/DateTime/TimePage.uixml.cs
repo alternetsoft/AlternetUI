@@ -7,6 +7,17 @@ namespace ControlsSample
 {
     internal partial class TimePage : Panel
     {
+        static TimePage()
+        {
+            var setAmPmDesignators = false;
+
+            if (setAmPmDesignators)
+            {
+                DateUtils.AmDesignatorOverride = "AM";
+                DateUtils.PmDesignatorOverride = "PM";
+            }
+        }
+
         public TimePage()
         {
             InitializeComponent();
