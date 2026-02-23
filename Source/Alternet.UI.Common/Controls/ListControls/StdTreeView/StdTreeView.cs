@@ -1066,7 +1066,7 @@ namespace Alternet.UI
         /// after the reordered columns.</param>
         public virtual void SetColumnsOrder(params ListControlColumn[] columns)
         {
-            if(!HasColumns || columns is null || columns.Length == 0)
+            if (!HasColumns || columns is null || columns.Length == 0)
                 return;
 
             for (int i = 0; i < columns.Length; i++)
