@@ -689,7 +689,7 @@ namespace Alternet.Drawing
         /// <see cref="ColorUtils.GetColorInfo(KnownColor)"/> and uses
         /// <see cref="IKnownColorInfo.LabelLocalized"/> property.
         /// </remarks>
-        public string NameLocalized
+        public virtual string NameLocalized
         {
             get
             {
@@ -2028,14 +2028,14 @@ namespace Alternet.Drawing
         /// You can handle <see cref="ColorToDisplayString"/> in order to provide custom
         /// color to display string conversion.
         /// </remarks>
-        public virtual string? ToDisplayString()
+        public virtual string ToDisplayString()
         {
             if (ColorToDisplayString is not null)
             {
                 var e = new ValueConvertEventArgs<Color?, string?>(this);
                 ColorToDisplayString(null, e);
                 if (e.Handled)
-                    return e.Result;
+                    return e.Result ?? NameLocalized;
             }
 
             if (IsNamedColor)
