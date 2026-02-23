@@ -179,6 +179,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this property to configure the columns that appear in the list control. Modifying
         /// the collection allows customization of the column layout, order, and properties.</remarks>
+        [Browsable(false)]
         public BaseCollection<ListControlColumn> Columns
         {
             get => ListBox.Columns;
@@ -317,6 +318,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of root items contained within the tree control.
         /// </summary>
+        [Browsable(false)]
         public IReadOnlyList<TreeViewItem> Items
         {
             get => RootItem.Items;
@@ -671,6 +673,30 @@ namespace Alternet.UI
         {
             get => base.Text;
             set => base.Text = value;
+        }
+
+        internal new float PaddingTop
+        {
+            get => base.PaddingTop;
+            set => base.PaddingTop = value;
+        }
+
+        internal new float PaddingBottom
+        {
+            get => base.PaddingBottom;
+            set => base.PaddingBottom = value;
+        }
+
+        internal new float PaddingLeft
+        {
+            get => base.PaddingLeft;
+            set => base.PaddingLeft = value;
+        }
+
+        internal new float PaddingRight
+        {
+            get => base.PaddingRight;
+            set => base.PaddingRight = value;
         }
 
         /// <inheritdoc/>

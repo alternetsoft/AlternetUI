@@ -840,6 +840,30 @@ namespace Alternet.UI
             set => base.Text = value;
         }
 
+        internal new float PaddingTop
+        {
+            get => base.PaddingTop;
+            set => base.PaddingTop = value;
+        }
+
+        internal new float PaddingBottom
+        {
+            get => base.PaddingBottom;
+            set => base.PaddingBottom = value;
+        }
+
+        internal new float PaddingLeft
+        {
+            get => base.PaddingLeft;
+            set => base.PaddingLeft = value;
+        }
+
+        internal new float PaddingRight
+        {
+            get => base.PaddingRight;
+            set => base.PaddingRight = value;
+        }
+
         /// <summary>
         /// Gets item font. It must not be <c>null</c>.
         /// </summary>

@@ -75,6 +75,42 @@ namespace Alternet.UI
             }
         }
 
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        internal new Thickness? MinChildMargin
+        {
+            get => base.MinChildMargin;
+            set => base.MinChildMargin = value;
+        }
+
+        internal new float PaddingTop
+        {
+            get => base.PaddingTop;
+            set => base.PaddingTop = value;
+        }
+
+        internal new float PaddingBottom
+        {
+            get => base.PaddingBottom;
+            set => base.PaddingBottom = value;
+        }
+
+        internal new float PaddingLeft
+        {
+            get => base.PaddingLeft;
+            set => base.PaddingLeft = value;
+        }
+
+        internal new float PaddingRight
+        {
+            get => base.PaddingRight;
+            set => base.PaddingRight = value;
+        }
+
         internal IListBoxHandler PlatformControl
         {
             get
