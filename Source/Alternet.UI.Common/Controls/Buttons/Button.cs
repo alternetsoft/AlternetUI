@@ -313,12 +313,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the drop down menu
         /// is shown when the control is clicked. Default is <see langword="true"/>.
+        /// Use <see cref="DropDownMenu"/> to specify the menu to be shown.
         /// </summary>
         [Browsable(true)]
         public virtual bool ShowDropDownMenuWhenClicked { get; set; } = true;
 
         /// <summary>
         /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
+        /// Use <see cref="ShowDropDownMenuWhenClicked"/> to specify whether the menu should be shown when the control is clicked.
         /// </summary>
         [Browsable(false)]
         public virtual ContextMenu? DropDownMenu { get; set; }
@@ -352,10 +354,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the position at which the text is displayed.
         /// </summary>
-        /// <remarks>
-        /// Valid positions are left, top, right, bottom, default.
-        /// </remarks>
-        public virtual GenericDirection TextAlign
+        public virtual ElementContentAlign TextAlign
         {
             get
             {
@@ -395,16 +394,15 @@ namespace Alternet.UI
         /// Sets the position at which the image is displayed.
         /// </summary>
         /// <remarks>
-        /// This method should only be called if the button does have
-        /// an associated image.
+        /// This method should only be called if the button has an associated image.
         /// </remarks>
         /// <param name="dir">New image position (left, top, right, bottom).</param>
-        public virtual void SetImagePosition(GenericDirection dir)
+        public virtual void SetImagePosition(ElementContentAlign dir)
         {
             if (DisposingOrDisposed)
                 return;
-            if (dir == GenericDirection.Left || dir == GenericDirection.Right ||
-                dir == GenericDirection.Top || dir == GenericDirection.Bottom)
+            if (dir == ElementContentAlign.Left || dir == ElementContentAlign.Right ||
+                dir == ElementContentAlign.Top || dir == ElementContentAlign.Bottom)
                 Handler.SetImagePosition(dir);
         }
 

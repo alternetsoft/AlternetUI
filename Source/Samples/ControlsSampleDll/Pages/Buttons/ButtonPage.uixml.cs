@@ -42,15 +42,6 @@ namespace ControlsSample
 
         private int imageMargins = 5;
 
-        public enum ButtonAlign
-        {
-            Default,
-            Left,
-            Top,
-            Right,
-            Bottom,
-        }
-
         private ControlStateImages? buttonImages;
 
         static ButtonPage()
@@ -77,11 +68,11 @@ namespace ControlsSample
 
                 button.Padding = 5;
 
-                textAlignComboBox.EnumType = typeof(ButtonAlign);
-                textAlignComboBox.Value = ButtonAlign.Default;
+                textAlignComboBox.EnumType = typeof(ElementContentAlign);
+                textAlignComboBox.Value = ElementContentAlign.Default;
 
-                imageAlignComboBox.EnumType = typeof(ButtonAlign);
-                imageAlignComboBox.Value = ButtonAlign.Default;
+                imageAlignComboBox.EnumType = typeof(ElementContentAlign);
+                imageAlignComboBox.Value = ElementContentAlign.Default;
 
                 if (!Button.ImagesEnabled)
                 {
@@ -174,49 +165,22 @@ namespace ControlsSample
             button.Refresh();
         }
 
-        private GenericDirection? ButtonAlignToDirection(ButtonAlign buttonAlign)
-        {
-            switch (buttonAlign)
-            {
-                case ButtonAlign.Default:
-                    return GenericDirection.Default;
-                case ButtonAlign.Left:
-                    return GenericDirection.Left;
-                case ButtonAlign.Top:
-                    return GenericDirection.Top;
-                case ButtonAlign.Right:
-                    return GenericDirection.Top;
-                case ButtonAlign.Bottom:
-                    return GenericDirection.Bottom;
-                default:
-                    return null;
-            }
-        }
-
         private void ApplyAll()
         {
             void ApplyTextAlign()
             {
-                if (textAlignComboBox.Value is not ButtonAlign buttonAlign)
+                if (textAlignComboBox.Value is not ElementContentAlign buttonAlign)
                     return;
-
-                var direction = ButtonAlignToDirection(buttonAlign);
-
-                if (direction is not null)
-                    button.TextAlign = direction.Value;
+                button.TextAlign = buttonAlign;
             }
 
             void ApplyImageAlign()
             {
                 if (!imageAlignComboBox.Enabled)
                     return;
-                if (imageAlignComboBox.Value is not ButtonAlign buttonAlign)
+                if (imageAlignComboBox.Value is not ElementContentAlign buttonAlign)
                     return;
-
-                var direction = ButtonAlignToDirection(buttonAlign);
-
-                if (direction is not null)
-                    button.SetImagePosition(direction.Value);
+                button.SetImagePosition(buttonAlign);
             }
 
             void ApplyFont()

@@ -64,13 +64,13 @@ namespace Alternet.UI
             set => NativeControl.TextVisible = value;
         }
 
-        public GenericDirection TextAlign
+        public ElementContentAlign TextAlign
         {
-            get => (GenericDirection)NativeControl.TextAlign;
+            get => (ElementContentAlign)NativeControl.TextAlign;
             set => NativeControl.TextAlign = (int)value;
         }
 
-        public void SetImagePosition(GenericDirection dir)
+        public void SetImagePosition(ElementContentAlign dir)
         {
             if(Control?.Image != null)
                 NativeControl.SetImagePosition((int)dir);

@@ -62,7 +62,7 @@ namespace Alternet.UI
 
         public bool TextVisible { get; set; }
 
-        public GenericDirection TextAlign { get; set; }
+        public ElementContentAlign TextAlign { get; set; }
 
         public bool SundayFirst { get; set; }
 
@@ -1659,7 +1659,7 @@ namespace Alternet.UI
         {
         }
 
-        public void SetImagePosition(GenericDirection dir)
+        public void SetImagePosition(ElementContentAlign dir)
         {
         }
 

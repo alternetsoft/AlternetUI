@@ -45,10 +45,10 @@ namespace Alternet.UI
         bool TextVisible { get; set; }
 
         /// <inheritdoc cref="Button.TextAlign"/>
-        GenericDirection TextAlign { get; set; }
+        ElementContentAlign TextAlign { get; set; }
 
         /// <inheritdoc cref="Button.SetImagePosition"/>
-        void SetImagePosition(GenericDirection dir);
+        void SetImagePosition(ElementContentAlign dir);
 
         /// <inheritdoc cref="Button.SetImageMargins"/>
         void SetImageMargins(Coord x, Coord y);
