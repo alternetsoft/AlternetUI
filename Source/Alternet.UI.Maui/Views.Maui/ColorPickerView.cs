@@ -144,7 +144,7 @@ namespace Alternet.Maui
 
             public override string? ToString()
             {
-                return Color.NameLocalized;
+                return Color.ToDisplayString();
             }
         }
     }

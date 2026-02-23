@@ -72,7 +72,7 @@ public partial class MainPage : ContentPage
         colorPicker.SelectedColor = Alternet.Drawing.Color.LightBlue;
         colorPicker.SelectedIndexChanged += (s, e) =>
         {
-            Log($"Color changed: {colorPicker.SelectedColor?.NameLocalized}, {colorPicker.SelectedColor}");
+            Log($"Color changed: {colorPicker.SelectedColor?.ToDisplayString()}, {colorPicker.SelectedColor}");
         };
 
         /*

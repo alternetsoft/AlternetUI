@@ -215,12 +215,12 @@ namespace Alternet.UI
         /// Default method of the item creation for the specified color and title.
         /// </summary>
         /// <param name="title">Color title. Optional. If not specified,
-        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <see cref="Color.ToDisplayString"/> will be used.</param>
         /// <param name="value">Color value.</param>
         /// <returns></returns>
         public static ListControlItem DefaultCreateItem(Color? value, string? title = null)
         {
-            title ??= value?.NameLocalized ?? string.Empty;
+            title ??= value?.ToDisplayString() ?? string.Empty;
             ListControlItem controlItem = new(title, value);
             return controlItem;
         }
@@ -331,7 +331,7 @@ namespace Alternet.UI
         /// Creates item for the specified color and title.
         /// </summary>
         /// <param name="title">Color title. Optional. If not specified,
-        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <see cref="Color.ToDisplayString"/> will be used.</param>
         /// <param name="value">Color value.</param>
         /// <returns></returns>
         public virtual ListControlItem CreateItem(Color? value, string? title = null)
@@ -343,7 +343,7 @@ namespace Alternet.UI
         /// Adds color to the list of colors.
         /// </summary>
         /// <param name="title">Color title. Optional. If not specified,
-        /// <see cref="Color.NameLocalized"/> will be used.</param>
+        /// <see cref="Color.ToDisplayString"/> will be used.</param>
         /// <param name="value">Color value.</param>
         public virtual ListControlItem AddColor(Color? value, string? title = null)
         {

@@ -168,13 +168,13 @@ namespace Alternet.UI
 
             void AddColor(Color c)
             {
-                ListControlItem controlItem = new(c.NameLocalized, c);
+                ListControlItem controlItem = new(c.ToDisplayString(), c);
                 control.Add(controlItem);
             }
 
             if (select && defaultValue is not null)
             {
-                var found = control.FindStringExact(defaultValue.NameLocalized);
+                var found = control.FindStringExact(defaultValue.ToDisplayString());
                 if (found != null)
                     control.SelectedIndex = found.Value;
             }
