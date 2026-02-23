@@ -14,6 +14,63 @@ namespace Alternet.UI
     public static class DateUtils
     {
         /// <summary>
+        /// Gets or sets the designator override for AM/PM formatting in time representations.
+        /// </summary>
+        /// <remarks>This property allows customization of the AM designator used in date and time
+        /// formatting. If set to null (default value), the default designator will be used based on the current culture
+        /// settings.</remarks>
+        public static string? AmDesignatorOverride;
+
+        /// <summary>
+        /// Gets or sets the designator override for PM formatting in time representations.
+        /// </summary>
+        /// <remarks>This property allows customization of the PM designator used in date and time
+        /// formatting. If set to null (default value), the default designator will be used based on the current culture
+        /// settings.</remarks>
+        public static string? PmDesignatorOverride;
+
+        /// <summary>
+        /// Gets <see cref="DateTime"/> format used in JavaScript
+        /// or in other situations.
+        /// </summary>
+        public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
+
+        /// <summary>
+        /// Returns the culture-specific AM or PM designator for the specified date and time value.
+        /// </summary>
+        /// <remarks>If a user-defined override for the AM or PM designator is set, it is used in
+        /// preference to the culture-specific value. If the resulting designator is null, empty, or consists only of
+        /// white space, the method defaults to "AM" or "PM" based on the time of day. The returned designator is
+        /// trimmed of any leading or trailing white space.</remarks>
+        /// <param name="dt">The date and time value for which to determine the AM or PM designator.</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns>A string containing the AM or PM designator appropriate for the specified date and time, using any
+        /// user-defined overrides if present.</returns>
+        public static string GetAmOrPmDesignator(DateTime dt, IFormatProvider? formatProvider = null)
+        {
+            string result;
+
+            if (IsAM(dt))
+            {
+                result = AmDesignatorOverride ?? dt.ToString("tt") ?? GetAmPmDesignators(formatProvider).AM;
+            }
+            else
+            {
+                result = PmDesignatorOverride ?? dt.ToString("tt") ?? GetAmPmDesignators(formatProvider).PM;
+            }
+
+            result = result.Trim();
+
+            if (string.IsNullOrEmpty(result))
+            {
+                result = IsAM(dt) ? "AM" : "PM";
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the current timestamp in ticks.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -21,12 +78,6 @@ namespace Alternet.UI
         {
             return DateTime.Now.Ticks;
         }
-
-        /// <summary>
-        /// Gets <see cref="DateTime"/> format used in Java Script
-        /// or in other situations.
-        /// </summary>
-        public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
 
         /// <summary>
         /// Gets the <see cref="DateTimeFormatInfo"/> from the specified format provider,
@@ -37,7 +88,7 @@ namespace Alternet.UI
         /// culture will be used.</param>
         /// <returns>The <see cref="DateTimeFormatInfo"/> associated with
         /// the specified format provider.</returns>
-        public static DateTimeFormatInfo GetFormatInfo(IFormatProvider? formatProvider)
+        public static DateTimeFormatInfo GetFormatInfo(IFormatProvider? formatProvider = null)
         {
             return DateTimeFormatInfo.GetInstance(formatProvider ?? CultureInfo.CurrentCulture);
         }
@@ -46,7 +97,7 @@ namespace Alternet.UI
         /// Returns <c>true</c> if the specified format provider has AM or PM designators
         /// and 12 hour time format can be used.
         /// </summary>
-        public static bool HasAmPmDesignators(IFormatProvider? formatProvider)
+        public static bool HasAmPmDesignators(IFormatProvider? formatProvider = null)
         {
             var info = GetFormatInfo(formatProvider);
             return !string.IsNullOrEmpty(info.AMDesignator)
@@ -62,10 +113,30 @@ namespace Alternet.UI
         /// culture will be used.</param>
         /// <returns>The time separator character as a string.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string GetTimeSeparator(IFormatProvider? formatProvider)
+        public static string GetTimeSeparator(IFormatProvider? formatProvider = null)
         {
             var info = GetFormatInfo(formatProvider);
             return info.TimeSeparator;
+        }
+
+        /// <summary>
+        /// Determines whether the specified time is in the morning (ante meridiem, AM).
+        /// </summary>
+        /// <remarks>This method checks the hour component of the provided DateTime to determine if it
+        /// falls within the AM period, which is from 12:00 midnight to 11:59 AM.</remarks>
+        /// <param name="dt">The date and time value to evaluate.</param>
+        /// <returns>true if the hour component of the specified date and time is less than 12;
+        /// otherwise, false.</returns>
+        public static bool IsAM(DateTime dt)
+        {
+            if (dt.Hour < 12)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -73,7 +144,7 @@ namespace Alternet.UI
         /// or uses the current culture if the provider is <c>null</c>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static (string AM, string PM) GetAmPmDesignators(IFormatProvider? formatProvider)
+        public static (string AM, string PM) GetAmPmDesignators(IFormatProvider? formatProvider = null)
         {
             var info = GetFormatInfo(formatProvider);
             return (info.AMDesignator, info.PMDesignator);
@@ -85,7 +156,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="timestamp">Value to subtract from the <see cref="DateTime.Now"/>.
         /// Specified in ticks.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// The absolute difference in ticks between the current time and the specified timestamp.
+        /// </returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetAbsDistanceWithNow(long timestamp)
         {
@@ -96,7 +169,7 @@ namespace Alternet.UI
         /// Converts milliseconds to ticks.
         /// </summary>
         /// <param name="msec">Value to convert.</param>
-        /// <returns></returns>
+        /// <returns>The equivalent value in ticks.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long TicksFromMilliseconds(long msec)
         {
@@ -107,7 +180,7 @@ namespace Alternet.UI
         /// Converts ticks to milliseconds.
         /// </summary>
         /// <param name="ticks">Value to convert.</param>
-        /// <returns></returns>
+        /// <returns>The equivalent value in milliseconds.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long TicksToMilliseconds(long ticks)
         {
@@ -117,7 +190,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets current time in milliseconds.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The current time in milliseconds.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetNowInMilliseconds()
             => DateUtils.GetCurrentTimestamp() / TimeSpan.TicksPerMillisecond;
@@ -126,7 +199,7 @@ namespace Alternet.UI
         /// Gets current time in milliseconds using
         /// <see cref="DateTimeOffset.ToUnixTimeMilliseconds()"/>.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The current time in Unix milliseconds.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetNowInUnixMilliseconds() => DateTimeOffset.Now.ToUnixTimeMilliseconds();
     }
