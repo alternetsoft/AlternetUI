@@ -13,8 +13,6 @@ The framework includes a platform-independent graphic device interface for rende
 
 For increased developer productivity, [AlterNET UI extension for Visual Studio](https://marketplace.visualstudio.com/items?itemName=AlternetSoftwarePTYLTD.AlternetUIForVS2022) is available.
 
-AlterNET UI 0.9.x - final betas of AlterNET UI before we wrap things up and announce the first public release.
-
 For more info, see [alternet-ui.com](https://alternet-ui.com).
 
 An example of an application made with AlterNET UI running on different operating systems:
