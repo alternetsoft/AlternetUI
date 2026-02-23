@@ -17,6 +17,46 @@ namespace Alternet.UI
     public partial class FileListBox : StdTreeView
     {
         /// <summary>
+        /// Represents the identifier for the file name column.
+        /// </summary>
+        public const string ColumnIdentifierName = "Name";
+
+        /// <summary>
+        /// Represents the identifier for the 'Date Modified' column.
+        /// </summary>
+        public const string ColumnIdentifierDateModified = "Date modified";
+
+        /// <summary>
+        /// Represents the identifier for the file size column.
+        /// </summary>
+        public const string ColumnIdentifierSize = "Size";
+
+        /// <summary>
+        /// Specifies the default width, in dips, for the name column in the user interface.
+        /// </summary>
+        public static float DefaultColumnWidthName = 350;
+
+        /// <summary>
+        /// Specifies the default width, in dips, for the 'Date Modified' column in the user interface.
+        /// </summary>
+        public static float DefaultColumnWidthDateModified = 200;
+
+        /// <summary>
+        /// Specifies the default width, in dips, for the file size column in the user interface.
+        /// </summary>
+        public static float DefaultColumnWidthSize = 200;
+
+        /// <summary>
+        /// Specifies the default order of columns.
+        /// </summary>
+        public static string[] ColumnsOrder =
+        [
+            ColumnIdentifierName,
+            ColumnIdentifierSize,
+            ColumnIdentifierDateModified,
+        ];
+
+        /// <summary>
         /// Gets or sets global <see cref="FolderInfoItem"/> for the file or folder.
         /// <see cref="FolderInfoItem"/> allows to specify icon, custom title
         /// and some other information.
@@ -105,6 +145,10 @@ namespace Alternet.UI
             return LightDarkColors.Yellow;
         };
 
+        private ListControlColumn? columnName;
+        private ListControlColumn? columnDateModified;
+        private ListControlColumn? columnSize;
+
         private string? selectedFolder;
         private string searchPattern = "*";
         private int reloading;
@@ -172,6 +216,21 @@ namespace Alternet.UI
             /// </summary>
             LookupAll = LookupTitle | LookupImage,
         }
+
+        /// <summary>
+        /// Gets the column used to display file names.
+        /// </summary>
+        public ListControlColumn? ColumnName => columnName;
+
+        /// <summary>
+        /// Gets the column used to display file modification dates.
+        /// </summary>
+        public ListControlColumn? ColumnDateModified => columnDateModified;
+
+        /// <summary>
+        /// Gets the column used to display file sizes.
+        /// </summary>
+        public ListControlColumn? ColumnSize => columnSize;
 
         /// <summary>
         /// Gets or sets whether folder and file names are sorted. Default value is <c>true</c>.
@@ -293,17 +352,17 @@ namespace Alternet.UI
             {
                 if (SelectedItemPath == value)
                     return;
-                if(value is null)
+                if (value is null)
                 {
                     SelectedItem = null;
                     return;
                 }
 
-                foreach(var item in VisibleItems)
+                foreach (var item in VisibleItems)
                 {
                     if (item is not FileListBoxItem item2)
                         continue;
-                    if(item2.Path == value)
+                    if (item2.Path == value)
                     {
                         SelectedItem = item2;
                         return;
@@ -422,7 +481,7 @@ namespace Alternet.UI
             switch (column)
             {
                 case FileListBoxColumn.Name:
-                    if(isAscending)
+                    if (isAscending)
                         return FileListBoxItem.ComparisonByText;
                     else
                         return FileListBoxItem.ComparisonByTextDescending;
@@ -519,21 +578,89 @@ namespace Alternet.UI
             () =>
             {
                 Header.DeleteColumns();
+                Columns.Clear();
 
-                Header.AddColumn(CommonStrings.Default.FileListBoxColumnName, null, () =>
-                {
-                    Sort(FileListBoxColumn.Name, ColumnSortDirection.Flip);
-                });
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnName, width: null, OnNameColumnClick);
 
-                Header.AddColumn(CommonStrings.Default.FileListBoxColumnDateModified, null, () =>
-                {
-                    Sort(FileListBoxColumn.DateModified, ColumnSortDirection.Flip);
-                });
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnDateModified, width: null, OnDateModifiedColumnClick);
 
-                Header.AddColumn(CommonStrings.Default.FileListBoxColumnSize, null, () =>
-                {
-                    Sort(FileListBoxColumn.Size, ColumnSortDirection.Flip);
-                });
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnSize, width: null, OnSizeColumnClick);
+
+                Header.Visible = true;
+            },
+            false);
+        }
+
+        /// <summary>
+        /// Handles a click event on the size column header and initiates sorting of items by their size.
+        /// </summary>
+        /// <remarks>Call this method when the user interacts with the size column header to sort the
+        /// items in the list by size. Repeated calls typically toggle the sort direction.</remarks>
+        public virtual void OnSizeColumnClick()
+        {
+            Sort(FileListBoxColumn.Size, ColumnSortDirection.Flip);
+        }
+
+        /// <summary>
+        /// Handles a click event on the Date Modified column header and initiates sorting of the items by the date
+        /// modified value.
+        /// </summary>
+        /// <remarks>Each invocation toggles the sort direction between ascending and descending order for
+        /// the Date Modified column. Override this method to customize the sorting behavior when the Date Modified
+        /// column is clicked.</remarks>
+        public virtual void OnDateModifiedColumnClick()
+        {
+            Sort(FileListBoxColumn.DateModified, ColumnSortDirection.Flip);
+        }
+
+        /// <summary>
+        /// Sorts the items in the file list by the name column when the name column header is clicked.
+        /// </summary>
+        /// <remarks>This method triggers a sort operation on the file list, flipping the current sort
+        /// direction each time it is invoked. Ensure that the file list is populated before invoking this method to
+        /// avoid unexpected behavior.</remarks>
+        public virtual void OnNameColumnClick()
+        {
+            Sort(FileListBoxColumn.Name, ColumnSortDirection.Flip);
+        }
+
+        /// <summary>
+        /// Initializes the default columns for the file list box, including columns for file name, date modified, and
+        /// file size, with predefined widths and identifiers.
+        /// </summary>
+        /// <remarks>Call this method to ensure that the file list box contains the standard set of
+        /// columns in the order specified by the ColumnsOrder property. This is typically used to reset or configure
+        /// the default column layout before displaying file information.</remarks>
+        public virtual void RequireDefaultColumns()
+        {
+            Header.Required();
+
+            DoInsideLayout(
+            () =>
+            {
+                Header.DeleteColumns();
+                Columns.Clear();
+
+                columnName = AddColumn(
+                    CommonStrings.Default.FileListBoxColumnName,
+                    width: DefaultColumnWidthName,
+                    OnNameColumnClick);
+
+                columnDateModified = AddColumn(
+                    CommonStrings.Default.FileListBoxColumnDateModified,
+                    width: DefaultColumnWidthDateModified,
+                    OnDateModifiedColumnClick);
+
+                columnSize = AddColumn(
+                    CommonStrings.Default.FileListBoxColumnSize,
+                    width: DefaultColumnWidthSize,
+                    OnSizeColumnClick);
+
+                columnName.Name = ColumnIdentifierName;
+                columnDateModified.Name = ColumnIdentifierName;
+                columnSize.Name = ColumnIdentifierName;
+
+             //   SetColumnsOrder(ColumnsOrder);
 
                 Header.Visible = true;
             },
@@ -601,7 +728,7 @@ namespace Alternet.UI
 
                 if (AddRootFolderItem)
                 {
-                    var rootFolderItem = new FileListBoxItem("/", null);
+                    var rootFolderItem = new FileListBoxItem(this, "/", null);
                     rootFolderItem.DoubleClickAction = NavigateToRootFolder;
                     rootFolderItem.SvgImage = GetFolderImage();
                     Add(rootFolderItem);
@@ -609,7 +736,7 @@ namespace Alternet.UI
 
                 if (AddUpperFolderItem)
                 {
-                    var upperFolderItem = new FileListBoxItem("..", null);
+                    var upperFolderItem = new FileListBoxItem(this, "..", null);
                     upperFolderItem.DoubleClickAction = NavigateToParentFolder;
                     upperFolderItem.SvgImage = GetFolderImage();
                     Add(upperFolderItem);
@@ -632,7 +759,7 @@ namespace Alternet.UI
 
                 var files = GetFileSystem().GetFiles(selectedFolder, searchPattern);
 
-                if(FileFilterPredicate is not null)
+                if (FileFilterPredicate is not null)
                 {
                     files = files.Where(f => FileFilterPredicate(f)).ToArray();
                 }
@@ -706,7 +833,7 @@ namespace Alternet.UI
                 return false;
             image ??= GetFileImage();
             title ??= Path.GetFileName(path);
-            var item = new FileListBoxItem(title, path);
+            var item = new FileListBoxItem(this, title, path);
             item.SvgImage = image;
             Add(item);
             return true;
@@ -745,7 +872,7 @@ namespace Alternet.UI
                 return false;
             image ??= GetFolderImage();
             title ??= Path.GetFileName(path);
-            var item = new FileListBoxItem(title, path);
+            var item = new FileListBoxItem(this, title, path);
             item.DoubleClickAction = FolderAction;
             item.SvgImage = image;
 
@@ -773,7 +900,7 @@ namespace Alternet.UI
         {
             try
             {
-                if(HiddenSpecialFolders is not null)
+                if (HiddenSpecialFolders is not null)
                 {
                     if (HiddenSpecialFolders.IndexOf(folder) >= 0)
                         return false;
@@ -784,7 +911,7 @@ namespace Alternet.UI
                 string? title = defaultTitle;
                 SvgImage? image = null;
 
-                if(FolderInfo is not null)
+                if (FolderInfo is not null)
                 {
                     if (FolderInfo.TryGetValue(path, out var folderInfo))
                     {
@@ -835,7 +962,7 @@ namespace Alternet.UI
             {
                 if (FolderInfo.TryGetValue(path, out var folderInfo))
                 {
-                    if(flags.HasFlag(FolderAdditionFlags.LookupTitle))
+                    if (flags.HasFlag(FolderAdditionFlags.LookupTitle))
                         title ??= folderInfo?.Title;
                     if (flags.HasFlag(FolderAdditionFlags.LookupImage))
                         image ??= folderInfo?.Image;
@@ -852,7 +979,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void AddSpecialFolders()
         {
-            if(AddRootFolder is not null)
+            if (AddRootFolder is not null)
             {
                 AddRootFolder(this, EventArgs.Empty);
                 return;
@@ -860,7 +987,7 @@ namespace Alternet.UI
 
             if (VisibleSpecialFolders is not null)
             {
-                foreach(var item in VisibleSpecialFolders)
+                foreach (var item in VisibleSpecialFolders)
                     AddSpecialFolder(item);
                 return;
             }
@@ -952,7 +1079,7 @@ namespace Alternet.UI
         {
             try
             {
-                if(selectedFolder == null)
+                if (selectedFolder == null)
                     return;
 
                 var upperFolder = Path.Combine(selectedFolder, "..");
@@ -972,7 +1099,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if(e.KeyData == Keys.F5)
+            if (e.KeyData == Keys.F5)
             {
                 e.Handled = true;
                 Reload();

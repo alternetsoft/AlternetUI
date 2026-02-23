@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -14,6 +16,7 @@ namespace Alternet.UI
         private bool? isFolder;
         private bool? isFile;
         private FileSystemInfo? info;
+        private FileListBox? owner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileListBoxItem"/> class.
@@ -21,11 +24,61 @@ namespace Alternet.UI
         /// <param name="title">Title of the item.</param>
         /// <param name="path">Path to file or folder.</param>
         /// <param name="doubleClick">Double click action.</param>
+        [Obsolete("This constructor is obsolete. Use the constructor with the owner parameter.")]
         public FileListBoxItem(string? title, string? path, Action? doubleClick = null)
         {
             Text = title ?? System.IO.Path.GetFileName(path) ?? string.Empty;
             Path = path;
             DoubleClickAction = doubleClick;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FileListBoxItem"/> class.
+        /// </summary>
+        /// <param name="title">Title of the item.</param>
+        /// <param name="path">Path to file or folder.</param>
+        /// <param name="doubleClick">Double click action.</param>
+        /// <param name="owner">The <see cref="FileListBox"/> that owns this item.</param>
+        public FileListBoxItem(FileListBox owner, string? title, string? path, Action? doubleClick = null)
+#pragma warning disable
+            : this(title, path, doubleClick)
+#pragma warning restore
+        {
+            this.owner = owner;
+            SetColumnValues(owner);
+        }
+
+        /// <inheritdoc/>
+        public override SvgImage? SvgImage
+        {
+            get
+            {
+                return base.SvgImage;
+            }
+
+            set
+            {
+                base.SvgImage = value;
+                NameColumnCell?.SetSvgImage(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets the cell associated with the name column, if available.
+        /// </summary>
+        /// <remarks>Returns null if the owner does not have a valid column name. This property is useful
+        /// for retrieving the cell data based on the current column context.</remarks>
+        public ListControlItem? NameColumnCell
+        {
+            get
+            {
+                if (owner?.ColumnName is not null)
+                {
+                    return SafeCell(owner.ColumnName);
+                }
+
+                return null;
+            }
         }
 
         /// <summary>
@@ -120,7 +173,7 @@ namespace Alternet.UI
         /// <remarks>This property returns <see langword="null"/> if the instance does not
         /// represent a file or if an error occurs
         /// while attempting to retrieve the file size.</remarks>
-        public long? Size
+        public virtual long? Size
         {
             get
             {
@@ -394,6 +447,32 @@ namespace Alternet.UI
 
             var result = xSize.CompareTo(ySize);
             return result;
+        }
+
+        /// <summary>
+        /// Sets the values of the columns for this item based on its properties and the specified
+        /// <see cref="FileListBox"/> owner.
+        /// </summary>
+        /// <param name="owner">The <see cref="FileListBox"/> that owns this item.</param>
+        private void SetColumnValues(FileListBox owner)
+        {
+            if (owner.ColumnName is not null)
+            {
+                var cell = SafeCell(owner.ColumnName);
+                cell.Text = Text;
+            }
+
+            if (owner.ColumnSize is not null && IsFile)
+            {
+                var sizeText = Size.HasValue ? Size.Value.ToString() : string.Empty;
+                SafeCell(owner.ColumnSize).Text = sizeText;
+            }
+
+            if (owner.ColumnDateModified is not null && IsFile)
+            {
+                var dateText = Info?.LastWriteTime.ToString() ?? string.Empty;
+                SafeCell(owner.ColumnDateModified).Text = dateText;
+            }
         }
     }
 }
