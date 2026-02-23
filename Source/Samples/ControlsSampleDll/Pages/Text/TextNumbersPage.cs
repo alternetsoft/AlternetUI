@@ -67,6 +67,11 @@ namespace ControlsSample
 
             BackgroundColor = Color.Gainsboro;
             ForegroundColor = Color.Black;
+
+            shortEdit.ErrorPicture.Click += (s, e) =>
+            {
+                App.Log("Error image clicked");
+            };
         }
 
         private void SetDoubleMinMMButton_Click(object? sender, EventArgs e)
