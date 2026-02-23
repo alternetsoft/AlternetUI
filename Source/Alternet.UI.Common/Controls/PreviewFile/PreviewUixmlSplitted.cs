@@ -13,6 +13,18 @@ namespace Alternet.UI
     public partial class PreviewUixmlSplitted : PreviewFileSplitted
     {
         /// <summary>
+        /// Specifies the default alignment for the content of the second preview element.
+        /// </summary>
+        /// <remarks>The default value is set to left alignment. This field can be used to ensure
+        /// consistent alignment behavior for the second element's content across the application.</remarks>
+        public static new ElementContentAlign DefaultSecondAlignment = ElementContentAlign.Left;
+
+        /// <summary>
+        /// Specifies the default width for the source code panel in the <see cref="PreviewUixmlSplitted"/> control.
+        /// </summary>
+        public static float DefaultSourceCodePanelWidth = 700;
+
+        /// <summary>
         /// Gets or sets callback function which is fired when
         /// <see cref="PreviewUixmlSplitted"/> needs to create
         /// sub-control which is used to preview uixml as text.
@@ -33,8 +45,10 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PreviewUixmlSplitted"/> class.
         /// </summary>
         public PreviewUixmlSplitted()
-            : base(new PreviewUixml(), DefaultCreateTextPreview(), false)
+            : base(new PreviewUixml(), DefaultCreateTextPreview(), DefaultSecondAlignment)
         {
+            MainPanel.LeftPanel.Width = DefaultSourceCodePanelWidth;
+            MainPanel.RightPanel.Width = DefaultSourceCodePanelWidth;
         }
 
         /// <summary>
