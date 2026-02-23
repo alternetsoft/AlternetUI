@@ -3,6 +3,8 @@
 :: Calls MSW.Publish.Build.Integration.bat
 :: =========================================
 
+cls
+
 SETLOCAL EnableDelayedExpansion
 
 set SCRIPT_HOME=%~dp0.
