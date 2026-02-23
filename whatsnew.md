@@ -1,3 +1,17 @@
+# 1.0.1 (2026 February 23)
+
+- Color: Use ToDisplayString() instead of NameLocalized in list controls, speed button, list utilities, and other places.
+- Color: ToDisplayString() now returns a non-nullable string.
+- Use ElementContentAlign in Button.
+- StdTreeView: Restore scroll position after removing selected items.
+- Demo: Fix WebBrowser sample.
+- Coerce color before assigning in SpeedColorButton so it will be synced with popup list box colors.
+- CommandLineArgs: Add nullable bool parsing.
+- Copy DoubleClickAction in ListControlItem Assign.
+- Fixed exception in menu sample.
+
+---
+
 # 1.0.0 (2026 February 20)
 
 - Remove openGL usage as it is not supported on macOs anymore.
