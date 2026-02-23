@@ -19,8 +19,9 @@ namespace Alternet.UI
 
         private readonly SplittedPanel panel = new()
         {
-            TopVisible = false,
+            TopVisible = true,
             RightVisible = false,
+            LeftVisible = false,
         };
 
         private readonly FileListBox fileListBox = new()
@@ -71,12 +72,13 @@ namespace Alternet.UI
             Size = (900, 700);
             StartLocation = WindowStartLocation.CenterScreen;
 
-            panel.LeftPanel.Width = 400;
+            panel.TopPanel.Height = 400;
             panel.BottomPanel.Height = 200;
             panel.VerticalAlignment = VerticalAlignment.Fill;
             panel.Parent = rootPanel;
 
-            fileListBox.Parent = panel.LeftPanel;
+            fileListBox.Parent = panel.TopPanel;
+            fileListBox.RequireDefaultColumns();
 
             preview.Visible = false;
             preview.Parent = panel.FillPanel;
@@ -106,8 +108,6 @@ namespace Alternet.UI
             };
 
             rootPanel.Parent = this;
-
-            fileListBox.RequireDefaultHeader();
         }
 
         internal static new WindowFilePreview Default
