@@ -1,3 +1,5 @@
+using System;
+
 using Alternet.UI;
 
 namespace $rootnamespace$

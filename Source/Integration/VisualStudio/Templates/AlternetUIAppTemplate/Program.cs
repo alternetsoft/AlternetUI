@@ -1,4 +1,5 @@
 using System;
+
 using Alternet.UI;
 
 namespace $safeprojectname$
