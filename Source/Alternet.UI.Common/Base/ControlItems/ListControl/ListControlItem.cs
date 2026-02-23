@@ -2199,10 +2199,24 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets <see cref="Value"/> property.
+        /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="Value"/> property.
         /// </summary>
-        public void SetValue(object? value)
+        /// <param name="value">The value to set.</param>
+        public ListControlItem SetValue(object? value)
         {
             Value = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="SvgImage"/> property.
+        /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="SvgImage"/> property.
+        /// </summary>
+        /// <param name="svgImage">The SVG image to set.</param>
+        public ListControlItem SetSvgImage(SvgImage? svgImage)
+        {
+            SvgImage = svgImage;
+            return this;
         }
 
         /// <summary>
