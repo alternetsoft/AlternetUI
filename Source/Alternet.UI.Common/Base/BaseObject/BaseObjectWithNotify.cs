@@ -9,8 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a base object with notification capabilities.
     /// </summary>
-    public partial class BaseObjectWithNotify
-        : BaseObjectWithAttr, INotifyPropertyChanged
+    public partial class BaseObjectWithNotify : BaseObjectWithAttr, INotifyPropertyChanged
     {
         private int suspendCounter;
 

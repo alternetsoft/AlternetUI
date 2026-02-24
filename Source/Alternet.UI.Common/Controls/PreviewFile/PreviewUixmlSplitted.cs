@@ -62,7 +62,6 @@ namespace Alternet.UI
         {
         }
 
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class with the specified alignment.
         /// </summary>
