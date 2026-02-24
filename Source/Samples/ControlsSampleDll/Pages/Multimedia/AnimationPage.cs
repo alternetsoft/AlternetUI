@@ -24,12 +24,21 @@ namespace ControlsSample
         internal static readonly string AnimationCustom = "Open animation file (*.gif; *.ani)...";
 
         private readonly AnimationPlayer animation = new();
-        private readonly PopupPictureBox popup = new();
+
+        private readonly PopupPictureBox popup = new()
+        {
+            Size = (200, 200),
+        };
         
         private readonly EnumPicker selectComboBox = new()
         {
             Margin = 5,
         };
+
+        Button playButton;
+        Button stopButton;
+        Button infoButton;
+        Button showFrameButton;
 
         static AnimationPage()
         {
@@ -74,21 +83,21 @@ namespace ControlsSample
 
             var stackPanel = new VerticalStackPanel(this);
 
-            var playButton = new Button("Play", () => { animation.Play(); });
-            var stopButton = new Button("Stop", animation.Stop);
-            var infoButton = new Button("Info", ShowInfo);
-            var showFrameButton = new Button("Show frame 0", ShowFrame);
+            playButton = new Button("Play", () => { animation.Play(); });
+            stopButton = new Button("Stop", animation.Stop);
+            infoButton = new Button("Info", ShowInfo);
+            showFrameButton = new Button("Show frame 0", ShowFrame);
 
             new ControlSet(playButton, stopButton, infoButton, showFrameButton)
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left)
-            .Parent(stackPanel).SuggestedWidthToMax();
+            .Parent(stackPanel).MaxWidthOnSizeChanged();
         }
 
         private void ShowFrame()
         {
             var image = animation.GetFrame(0);
             popup.MainControl.Image = (Image)image;
-            popup.ShowPopup(animation);
+            popup.ShowPopup(showFrameButton, new(DropDownAlignment.AfterStart, DropDownAlignment.AfterEnd));
         }
 
         private void ShowInfo()
