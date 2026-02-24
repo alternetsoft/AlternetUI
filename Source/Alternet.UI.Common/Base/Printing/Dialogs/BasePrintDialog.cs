@@ -45,6 +45,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override bool IsValidShowDialog()
         {
+            if (PrinterUtils.HasPrinters() == false)
+            {
+                App.Alert("No printers are installed on the system.");
+                return false;
+            }
+
             if (Document == null)
             {
                 App.Alert("Cannot show the dialog when the Document is null.");
