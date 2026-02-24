@@ -42,10 +42,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the PreviewUixmlSplitted class,
+        /// aligning the content either to the right or to the bottom based on the provided alignment flag.
+        /// </summary>
+        /// <remarks>This constructor is obsolete. Use the constructor that accepts an ElementContentAlign
+        /// parameter for more precise alignment control.</remarks>
+        /// <param name="isRight">true to align the content to the right; false to align the content to the bottom.</param>
+        [Obsolete("Use the constructor with ElementContentAlign parameter instead.")]
+        public PreviewUixmlSplitted(bool isRight)
+            : this(isRight ? ElementContentAlign.Right : ElementContentAlign.Bottom)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PreviewUixmlSplitted"/> class.
         /// </summary>
         public PreviewUixmlSplitted()
-            : base(new PreviewUixml(), DefaultCreateTextPreview(), DefaultSecondAlignment)
+            : this(DefaultSecondAlignment)
+        {
+        }
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class with the specified alignment.
+        /// </summary>
+        /// <param name="alignment">Specifies the alignment of the second panel.</param>
+        public PreviewUixmlSplitted(ElementContentAlign alignment)
+            : base(new PreviewUixml(), DefaultCreateTextPreview(), alignment)
         {
             MainPanel.LeftPanel.Width = DefaultSourceCodePanelWidth;
             MainPanel.RightPanel.Width = DefaultSourceCodePanelWidth;

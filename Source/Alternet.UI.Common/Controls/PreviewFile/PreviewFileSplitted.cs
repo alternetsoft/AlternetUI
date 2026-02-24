@@ -46,6 +46,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the PreviewFileSplitted class with the specified file preview panels and
+        /// alignment option.
+        /// </summary>
+        /// <remarks>Use this constructor to configure the layout of file preview panels, allowing for
+        /// either a side-by-side or stacked arrangement based on the alignment option.</remarks>
+        /// <param name="centerPanel">The primary file preview panel to display on the left side.</param>
+        /// <param name="secondPanel">The secondary file preview panel to display on the right side.</param>
+        /// <param name="isRight">A value indicating whether the secondary panel should be aligned to the right. If <see langword="true"/>,
+        /// aligns to the right; otherwise, aligns to the bottom.</param>
+        [Obsolete("Use the constructor with ElementContentAlign parameter instead.")]
+        public PreviewFileSplitted(IFilePreview centerPanel, IFilePreview secondPanel, bool isRight)
+            : this(centerPanel, secondPanel, isRight ? ElementContentAlign.Right : ElementContentAlign.Bottom)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PreviewFileSplitted"/> class.
         /// </summary>
         /// <param name="centerPanel">Preview control which is docked in the center.</param>
