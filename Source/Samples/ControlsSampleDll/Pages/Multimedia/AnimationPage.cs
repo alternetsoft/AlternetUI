@@ -65,7 +65,8 @@ namespace ControlsSample
                 AnimationPlant,
                 AnimationSpinner,
                 AnimationAlternet,
-                AnimationCustom
+                KnownAnimatedImageUrls.DualRing64,
+                AnimationCustom,
             };
 
             selectComboBox.AddRange(animationUrls);
@@ -113,7 +114,7 @@ namespace ControlsSample
             {
                 var dialog = OpenFileDialog.Default;
                 dialog.FileMustExist = true;
-                dialog.Filter = FileMaskUtils.FileDialogFilterAllFiles;
+                dialog.Filter = FileMaskUtils.GetFileDialogFilter("GIF files", "*.gif");
                 dialog.ShowAsync(this.ParentWindow, () =>
                 {
                     if (File.Exists(dialog.FileName))
@@ -123,6 +124,11 @@ namespace ControlsSample
                         {
                             App.Log($"Error loading file: {dialog.FileName}");
                         }
+                        else
+                        {
+                            selectComboBox.Value = dialog.FileName;
+                        }
+
                         animation.Play();
                     }
                     else
