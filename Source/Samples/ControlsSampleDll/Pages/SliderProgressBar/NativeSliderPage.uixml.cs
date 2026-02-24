@@ -111,9 +111,9 @@ namespace ControlsSample
             return parents.SelectMany(x => x.Children.OfType<T>());
         }
 
-        private IEnumerable<StdSlider> GetAllSliders()
+        private IEnumerable<Slider> GetAllSliders()
         {
-            return GetAllChildrenOfType<StdSlider>(horizontalSlidersPanel, verticalSlidersGrid);
+            return GetAllChildrenOfType<Slider>(horizontalSlidersPanel, verticalSlidersGrid);
         }
     }
 }
