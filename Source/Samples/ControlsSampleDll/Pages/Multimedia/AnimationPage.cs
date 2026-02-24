@@ -28,6 +28,7 @@ namespace ControlsSample
         private readonly PopupPictureBox popup = new()
         {
             Size = (200, 200),
+            Title = "Frame 0",
         };
         
         private readonly EnumPicker selectComboBox = new()
