@@ -20,13 +20,15 @@ namespace PrintingSample
             toolBar.SetVisibleBorders(false, false, false, true);
             toolBar.Padding = 10;
 
-            toolBar.AddTextBtn("Print Immediately", null, PrintImmediatelyMenuItem_Click);
+            var buttonPrintImmediately = toolBar.AddTextBtnCore("Print Immediately", null, PrintImmediatelyMenuItem_Click);
             toolBar.AddSpacer();
-            toolBar.AddTextBtn("Print...", null, PrintMenuItem_Click);
+            var buttonPrint = toolBar.AddTextBtnCore("Print...", null, PrintMenuItem_Click);
             toolBar.AddSpacer();
-            toolBar.AddTextBtn("Page Setup...", null, PageSetupMenuItem_Click);
+            var buttonPageSetup = toolBar.AddTextBtnCore("Page Setup...", null, PageSetupMenuItem_Click);
             toolBar.AddSpacer();
-            toolBar.AddTextBtn("Print Preview...", null, PrintPreviewMenuItem_Click);
+            var buttonPrintPreview = toolBar.AddTextBtnCore("Print Preview...", null, PrintPreviewMenuItem_Click);
+
+            Group(buttonPrint, buttonPrintPreview, buttonPageSetup, buttonPrintImmediately).Enabled(PrinterUtils.HasPrinters() != false);
 
             toolBar.SpeedButtons.SetUseTheme(SpeedButton.KnownTheme.RoundBorder);
 
