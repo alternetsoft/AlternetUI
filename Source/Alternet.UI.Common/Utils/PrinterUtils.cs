@@ -10,6 +10,33 @@ namespace Alternet.UI
     public static class PrinterUtils
     {
         /// <summary>
+        /// Gets or sets a function that returns a list of available printer names.
+        /// </summary>
+        /// <remarks>Set this property to provide a custom method for retrieving printer names. The
+        /// assigned function should return a read-only list of printer names, or null if it is
+        /// not possible to determine the printer names. If
+        /// not set, the default printer name retrieval mechanism is used.</remarks>
+        public static Func<IReadOnlyList<string>?>? GetPrinterNamesOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets a function that returns the name of the default printer, or null if no default printer is set.
+        /// </summary>
+        /// <remarks>Assign this property to customize how the default printer name is determined. If not
+        /// set, the default printer name will not be available through this mechanism.</remarks>
+        public static Func<string?>? GetDefaultPrinterNameOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets an override function that determines whether printers are available on the system.
+        /// The function should return a nullable boolean value: true if printers are available, false if not,
+        /// or null to indicate that it is not possible to determine the printer availability.
+        /// </summary>
+        /// <remarks>Assign a delegate to this property to provide custom logic for evaluating printer
+        /// override status at runtime. This can be useful in scenarios where printer configuration may change based on
+        /// user preferences, application state, or other dynamic conditions. If the function returns <see
+        /// langword="null"/>, the default printer behavior is used.</remarks>
+        public static Func<bool?>? HasPrintersOverride { get; set; }
+
+        /// <summary>
         /// Determines whether any printers are installed on the system.
         /// </summary>
         /// <remarks>This method checks for the presence of printers. If an error occurs
@@ -21,6 +48,9 @@ namespace Alternet.UI
         {
             try
             {
+                if (HasPrintersOverride != null)
+                    return HasPrintersOverride();
+
                 if (App.IsWindowsOS)
                 {
                     return MswPrinterUtils.HasPrinters();
@@ -46,6 +76,9 @@ namespace Alternet.UI
         {
             try
             {
+                if (GetDefaultPrinterNameOverride != null)
+                    return GetDefaultPrinterNameOverride();
+
                 if (App.IsWindowsOS)
                 {
                     return MswPrinterUtils.GetDefaultPrinterName();
@@ -69,6 +102,9 @@ namespace Alternet.UI
         {
             try
             {
+                if (GetPrinterNamesOverride != null)
+                    return GetPrinterNamesOverride();
+
                 if (App.IsWindowsOS)
                 {
                     return MswPrinterUtils.GetPrinterNames();
