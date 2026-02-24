@@ -129,7 +129,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BaseCollection<ListControlItem> GetItems()
         {
-            if(enumType is null)
+            if (enumType is null)
                 return new BaseCollection<ListControlItem>();
 
             var collection = EnumUtils.GetEnumItemsAsListItems(
@@ -137,7 +137,7 @@ namespace Alternet.UI
                 GetValueAsString,
                 (item) =>
                 {
-                    if(IncludeValuePredicate is not null)
+                    if (IncludeValuePredicate is not null)
                     {
                         var isIncluded = IncludeValuePredicate(item);
                         if (!isIncluded)

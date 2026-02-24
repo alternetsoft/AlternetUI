@@ -58,7 +58,7 @@ namespace Alternet.UI
         public virtual bool IsPopupWindowCreated => popupWindow is not null;
 
         /// <summary>
-        /// Gets or sets selected color.
+        /// Gets or sets selected value.
         /// </summary>
         public virtual object? Value
         {
