@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
     <StackPanel Orientation="Vertical" Margin="5">
         <Label Text="Interpolation Mode:" Margin="0,5,0,5" IsTextLocalized="true"/>
-        <EnumPicker Name="interpolationModeComboBox"
+        <ListPicker Name="interpolationModeComboBox"
                   ValueChanged="InterpolationModeComboBox_Changed"/>
     </StackPanel>
 </Panel>
