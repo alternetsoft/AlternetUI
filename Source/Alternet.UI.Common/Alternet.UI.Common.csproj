@@ -45,12 +45,14 @@
     <None Remove="Resources\Svg\*.svg" />
     <None Remove="Resources\Svg\TriangleArrow\*.svg" />
     <None Remove="Resources\Svg\ForwardAndBackward\*.svg" />
+    <None Remove="Resources\Animation\*.gif" />
 
     <EmbeddedResource Include="Resources\ColorSvg\*.svg" />
     <EmbeddedResource Include="Resources\Png\*.png" />
     <EmbeddedResource Include="Resources\Svg\*.svg" />
     <EmbeddedResource Include="Resources\Svg\TriangleArrow\*.svg" />
     <EmbeddedResource Include="Resources\Svg\ForwardAndBackward\*.svg" />
+    <EmbeddedResource Include="Resources\Animation\*.gif" />
 
   </ItemGroup>
 
