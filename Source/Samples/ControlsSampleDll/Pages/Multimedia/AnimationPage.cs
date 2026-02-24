@@ -86,7 +86,7 @@ namespace ControlsSample
             playButton = new Button("Play", () => { animation.Play(); });
             stopButton = new Button("Stop", animation.Stop);
             infoButton = new Button("Info", ShowInfo);
-            showFrameButton = new Button("Show frame 0", ShowFrame);
+            showFrameButton = new Button("Frame 0", ShowFrame);
 
             new ControlSet(playButton, stopButton, infoButton, showFrameButton)
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left)
