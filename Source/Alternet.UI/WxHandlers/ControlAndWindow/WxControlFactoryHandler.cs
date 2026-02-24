@@ -87,17 +87,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public IControlHandler CreateAnimationPlayerHandler(AnimationPlayer control)
         {
-            switch (AnimationPlayer.DefaultHandlerKind)
-            {
-                case AnimationPlayer.KnownHandler.Native:
-                    return new WxAnimationPlayerHandler(false);
-                case AnimationPlayer.KnownHandler.Generic:
-                default:
-                    return new WxAnimationPlayerHandler(true);
-                case AnimationPlayer.KnownHandler.WebBrowser:
-                    throw new NotImplementedException(
-                        "KnownDriver.WebBrowser is not currently supported.");
-            }
+            return new WxAnimationPlayerHandler(useGeneric: true);
         }
 
         /// <inheritdoc/>

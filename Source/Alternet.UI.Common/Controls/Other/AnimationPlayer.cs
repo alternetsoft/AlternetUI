@@ -27,21 +27,6 @@ namespace Alternet.UI
     public partial class AnimationPlayer : Control
     {
         /// <summary>
-        /// Gets or sets type of the default driver used inside the <see cref="AnimationPlayer"/>.
-        /// </summary>
-        public static KnownHandler DefaultHandlerKind = KnownHandler.Generic;
-
-        /// <summary>
-        /// Gets or sets function which creates animation player driver used in
-        /// the <see cref="AnimationPlayer"/>.
-        /// </summary>
-        /// <remarks>
-        /// If this field is <c>null</c>, <see cref="CreateHandler"/>
-        /// is used to create animation player handler.
-        /// </remarks>
-        public static Func<AnimationPlayer, IControlHandler>? CreateHandlerOverride;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -61,26 +46,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Enumerates known <see cref="AnimationPlayer"/> drivers.
+        /// Gets the URL of the animation currently loaded in the control, or <c>null</c>
+        /// if the animation was loaded from a stream.
         /// </summary>
-        public enum KnownHandler
-        {
-            /// <summary>
-            /// Native control is used inside the <see cref="AnimationPlayer"/>.
-            /// </summary>
-            Native,
-
-            /// <summary>
-            /// Generic control is used inside the <see cref="AnimationPlayer"/>.
-            /// </summary>
-            Generic,
-
-            /// <summary>
-            /// <see cref="WebBrowser"/> control is used inside the <see cref="AnimationPlayer"/>.
-            /// Currently is not implemented.
-            /// </summary>
-            WebBrowser,
-        }
+        public virtual string? AnimationUrl { get; protected set; }
 
         /// <summary>
         /// Gets the number of frames for this animation.
@@ -194,11 +163,15 @@ namespace Alternet.UI
                 return false;
             if(PathUtils.HasExtension(filename, ".gif"))
                 type = AnimationType.Gif;
-            else
-            if (PathUtils.HasExtension(filename, ".ani"))
-                type = AnimationType.Ani;
 
-            return Handler.LoadFile(filename, type);
+            var result = Handler.LoadFile(filename, type);
+
+            if (result)
+                AnimationUrl = CommonUtils.PrepareFileUrl(filename);
+            else
+                AnimationUrl = null;
+
+                return result;
         }
 
         /// <summary>
@@ -215,6 +188,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         public virtual bool Load(Stream stream, AnimationType type = AnimationType.Any)
         {
+            AnimationUrl = null;
             if (DisposingOrDisposed)
                 return default;
             return Handler.Load(stream, type);
@@ -233,15 +207,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns the specified frame as a <see cref="GenericImage"/>.
+        /// Returns the specified frame as a <see cref="Image"/>.
         /// </summary>
         /// <param name="i">Frame index.</param>
         /// <returns></returns>
-        public virtual GenericImage GetFrame(uint i)
+        public virtual Image? GetFrame(uint i)
         {
             if (DisposingOrDisposed)
-                return GenericImage.Empty;
-            return Handler.GetFrame(i);
+                return null;
+            return (Image)Handler.GetFrame(i);
         }
 
         /// <summary>
@@ -268,7 +242,13 @@ namespace Alternet.UI
             using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             if (stream is null)
                 return false;
-            return Handler.Load(stream, type);
+            var result = Handler.Load(stream, type);
+            
+            if (result)
+                AnimationUrl = url;
+            else
+                AnimationUrl = null;
+            return result;
         }
 
         /// <summary>
@@ -312,11 +292,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            if(CreateHandlerOverride is not null)
-            {
-                return CreateHandlerOverride(this);
-            }
-
             return ControlFactory.Handler.CreateAnimationPlayerHandler(this);
         }
     }

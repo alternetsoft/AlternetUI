@@ -3,14 +3,6 @@ using System.IO;
 using System.Linq;
 using Alternet.UI;
 
-
-/*
-
-2023-11-25: Thanks to @neoxeo! He added new gif animation and open animation file feature.
-We approved his changes with little modifications.
- 
-*/
-
 namespace ControlsSample
 {
     internal partial class AnimationPage : VerticalStackPanel
@@ -21,7 +13,7 @@ namespace ControlsSample
         internal static readonly string AnimationHourGlass = $"{ResPrefix}HourGlass.gif";
         internal static readonly string AnimationSpinner = $"{ResPrefix}Spinner.gif";
         internal static readonly string AnimationAlternet = $"{ResPrefix}Alternet.gif";
-        internal static readonly string AnimationCustom = "Open animation file (*.gif; *.ani)...";
+        internal static readonly string AnimationCustom = "Open animation file (*.gif)...";
 
         private readonly AnimationPlayer animation = new();
 
@@ -36,14 +28,13 @@ namespace ControlsSample
             Margin = 5,
         };
 
-        Button playButton;
-        Button stopButton;
-        Button infoButton;
-        Button showFrameButton;
+        private readonly Button playButton;
+        private readonly Button stopButton;
+        private readonly Button infoButton;
+        private readonly Button showFrameButton;
 
         static AnimationPage()
         {
-            AnimationPlayer.DefaultHandlerKind = AnimationPlayer.KnownHandler.Generic;
         }
 
         public AnimationPage()
@@ -96,9 +87,14 @@ namespace ControlsSample
 
         private void ShowFrame()
         {
-            var image = animation.GetFrame(0);
-            popup.MainControl.Image = (Image)image;
-            popup.ShowPopup(showFrameButton, new(DropDownAlignment.AfterStart, DropDownAlignment.AfterEnd));
+            var url = animation.AnimationUrl;
+            var bitmap = AnimatedImageExtractor.GetFrame(url, 0);
+
+            if (bitmap != null)
+            {
+                popup.MainControl.Image = (Image)bitmap;
+                popup.ShowPopup(showFrameButton, new(DropDownAlignment.AfterStart, DropDownAlignment.AfterEnd));
+            }
         }
 
         private void ShowInfo()

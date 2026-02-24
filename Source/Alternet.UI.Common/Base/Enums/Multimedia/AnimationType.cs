@@ -22,11 +22,6 @@ namespace Alternet.UI
         Gif,
 
         /// <summary>
-        /// Ani animation.
-        /// </summary>
-        Ani,
-
-        /// <summary>
         /// Any animation.
         /// </summary>
         Any,
