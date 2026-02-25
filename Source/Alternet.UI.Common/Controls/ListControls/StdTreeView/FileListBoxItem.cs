@@ -13,13 +13,16 @@ namespace Alternet.UI
     /// </summary>
     public class FileListBoxItem : TreeViewItem
     {
+        private readonly FileListBox? owner;
+
         private bool? isFolder;
         private bool? isFile;
         private FileSystemInfo? info;
-        private FileListBox? owner;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FileListBoxItem"/> class.
+        /// This is an obsolete constructor. Use the constructor that includes the owner parameter
+        /// instead to ensure proper initialization of the item within a FileListBox context.
         /// </summary>
         /// <param name="title">Title of the item.</param>
         /// <param name="path">Path to file or folder.</param>
@@ -45,7 +48,7 @@ namespace Alternet.UI
 #pragma warning restore
         {
             this.owner = owner;
-            SetColumnValues(owner);
+            SetColumnValues();
         }
 
         /// <inheritdoc/>
@@ -80,6 +83,64 @@ namespace Alternet.UI
                 return null;
             }
         }
+
+        /// <summary>
+        /// Gets the cell that displays the date and time when the item was last modified, if available.
+        /// </summary>
+        /// <remarks>Returns null if the owner does not define a date modified column. Use this property
+        /// to access the last modification date for the associated item, if such information is presented in the
+        /// control.</remarks>
+        public ListControlItem? DateModifiedColumnCell
+        {
+            get
+            {
+                if (owner?.ColumnDateModified is not null)
+                {
+                    return SafeCell(owner.ColumnDateModified);
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the cell that represents the size column for the current item, if available.
+        /// </summary>
+        /// <remarks>This property returns a <see cref="ListControlItem"/> corresponding to the size
+        /// column of the owner item. If the owner does not define a size column, the property returns <see
+        /// langword="null"/>.</remarks>
+        public ListControlItem? SizeColumnCell
+        {
+            get
+            {
+                if (owner?.ColumnSize is not null)
+                {
+                    return SafeCell(owner.ColumnSize);
+                }
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the string representation of the size if it is available; otherwise, returns an empty string.
+        /// </summary>
+        /// <remarks>Use this property to obtain a user-friendly display of the size value. If the size
+        /// has not been set, this property returns an empty string.</remarks>
+        public virtual string SizeText
+        {
+            get
+            {
+                return FileUtils.SizeToExplorerString(Size, FormatProvider);
+            }
+        }
+
+        /// <summary>
+        /// Gets the instance of the associated FileListBox, if one is set.
+        /// </summary>
+        /// <remarks>This property returns the FileListBox instance that is owned by the current object.
+        /// If the owner is not set, this property returns null.</remarks>
+        public FileListBox? FileListBox => owner;
 
         /// <summary>
         /// Gets or sets path to the file.
@@ -199,6 +260,63 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual string ExtensionLower => PathUtils.GetExtensionLower(Path);
+
+        /// <summary>
+        /// Gets the time format string used for displaying the last modified time of files and other date-time values.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string TimeFormat
+        {
+            get
+            {
+                var format = owner?.TimeFormat ?? FileListBox.DefaultTimeFormat;
+
+                if (string.IsNullOrEmpty(format))
+                    format = "t";
+                return format;
+            }
+        }
+
+        /// <summary>
+        /// Gets the format provider used to control formatting operations for this item.
+        /// </summary>
+        /// <remarks>If the owner is not set, the current culture is used as the format
+        /// provider. This property enables culture-specific formatting for display and parsing operations associated
+        /// with the item.</remarks>
+        [Browsable(false)]
+        public virtual IFormatProvider FormatProvider => owner?.ListBox.FormatProvider ?? System.Globalization.CultureInfo.CurrentCulture;
+
+        /// <summary>
+        /// Gets the date format string used for displaying the last modified date of files and other date-time values.
+        /// </summary>
+        [Browsable(false)]
+        public virtual string DateFormat
+        {
+            get
+            {
+                var format = owner?.DateFormat ?? FileListBox.DefaultDateFormat;
+
+                if (string.IsNullOrEmpty(format))
+                    format = "d";
+                return format;
+            }
+        }
+
+        /// <summary>
+        /// Gets the last write time of the associated file or item as a formatted string. Returns an empty string if
+        /// the last write time is not available.
+        /// </summary>
+        /// <remarks>The format of the returned date and time string is determined by the value of the
+        /// DateTimeFormat property. This property is useful for displaying the last modification time in a
+        /// user-friendly format.</remarks>
+        [Browsable(false)]
+        public virtual string LastWriteTimeText
+        {
+            get
+            {
+                return DateTimeToString(Info?.LastWriteTime);
+            }
+        }
 
         /// <summary>
         /// Compares two <see cref="FileListBoxItem"/> objects based on whether
@@ -388,6 +506,46 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Converts a nullable <see cref="DateTime"/> value to its string representation, including both date and time
+        /// components.
+        /// </summary>
+        /// <remarks>The formatting of the date and time components is determined by the <c>DateFormat</c>
+        /// and <c>TimeFormat</c> properties, respectively. The resulting string combines both formatted values
+        /// separated by a space.</remarks>
+        /// <param name="dt">The nullable date and time value to convert. If <see langword="null"/>,
+        /// the method returns an empty string.</param>
+        /// <returns>A string that represents the formatted date and time. Returns an empty string if <paramref name="dt"/> is
+        /// <see langword="null"/>.</returns>
+        public virtual string DateTimeToString(DateTime? dt)
+        {
+            if (dt is null)
+                return string.Empty;
+
+            var dateResult = dt.Value.ToString(DateFormat, FormatProvider).Trim();
+            var timeResult = dt.Value.ToString(TimeFormat, FormatProvider).Trim();
+
+            return $"{dateResult} {timeResult}";
+        }
+
+        /// <summary>
+        /// Sets the values of the columns for this item based on its properties and the specified
+        /// <see cref="FileListBox"/> owner.
+        /// </summary>
+        protected virtual void SetColumnValues()
+        {
+            if (owner is null)
+                return;
+
+            NameColumnCell?.SetText(Text);
+
+            if (IsFile)
+            {
+                DateModifiedColumnCell?.SetText(LastWriteTimeText);
+                SizeColumnCell?.SetText(SizeText);
+            }
+        }
+
         private static int GetTextRank(FileListBoxItem item)
         {
             if (item.Text == "/")
@@ -449,30 +607,5 @@ namespace Alternet.UI
             return result;
         }
 
-        /// <summary>
-        /// Sets the values of the columns for this item based on its properties and the specified
-        /// <see cref="FileListBox"/> owner.
-        /// </summary>
-        /// <param name="owner">The <see cref="FileListBox"/> that owns this item.</param>
-        private void SetColumnValues(FileListBox owner)
-        {
-            if (owner.ColumnName is not null)
-            {
-                var cell = SafeCell(owner.ColumnName);
-                cell.Text = Text;
-            }
-
-            if (owner.ColumnSize is not null && IsFile)
-            {
-                var sizeText = Size.HasValue ? Size.Value.ToString() : string.Empty;
-                SafeCell(owner.ColumnSize).Text = sizeText;
-            }
-
-            if (owner.ColumnDateModified is not null && IsFile)
-            {
-                var dateText = Info?.LastWriteTime.ToString() ?? string.Empty;
-                SafeCell(owner.ColumnDateModified).Text = dateText;
-            }
-        }
     }
 }
