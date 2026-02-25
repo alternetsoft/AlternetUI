@@ -44,12 +44,12 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory("Common")]
-    public partial class Label : GenericControl
+    public partial class Label : HiddenGenericBorder
     {
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
-        public static bool ShowDebugCorners = false;
+        public static new bool ShowDebugCorners = false;
 
         /// <summary>
         /// Gets or sets the mnemonic marker character. Default is '&amp;'.
@@ -805,7 +805,7 @@ namespace Alternet.UI
             var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
                 : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
 
-            DrawDefaultBackground(e, flags);
+            DrawBorderAndBackground(e, flags);
 
             var state = VisualState;
             var border = GetBorderSettings(state);
@@ -1064,7 +1064,7 @@ namespace Alternet.UI
         }
 
         [Conditional("DEBUG")]
-        private void DefaultPaintDebug(PaintEventArgs e)
+        private new void DefaultPaintDebug(PaintEventArgs e)
         {
             if (ShowDebugCorners)
                 BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
