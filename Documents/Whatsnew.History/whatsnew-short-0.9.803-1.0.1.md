@@ -7,7 +7,7 @@ Main Improvements:
 - The generator now embeds the UI XML content directly into generated C# by emitting a private static readonly string. This speeds up form loading.
 - Derive PictureBox from HiddenGenericBorder. This allows PictureBox to paint optional border around the image if needed.
 - Fix print dialog was not shown on Windows 11.
-- Fix exeption in PrintPreview dialog.
+- Fix exception in PrintPreview dialog.
 - Maui: improve checked menu items support.
 - Fix measure text issue in Graphics.
 - Fixed OpenGL issue on macOs 26.
