@@ -94,6 +94,26 @@ namespace Alternet.UI
         public static string DriveItemTemplate = "{0}";
 
         /// <summary>
+        /// Gets or sets the default format string used for displaying date values.
+        /// This format string is used in the file list to represent date information,
+        /// such as file modification dates.
+        /// </summary>
+        /// <remarks>The format string follows standard .NET date and time format conventions. This value
+        /// determines how date values are converted to their string representation when no explicit format is
+        /// specified.</remarks>
+        public static string DefaultDateFormat = "d";
+        
+        /// <summary>
+        /// Gets or sets the default format string used for displaying time values.
+        /// This format string is used in the file list to represent time information,
+        /// such as file modification times.
+        /// </summary>
+        /// <remarks>The format string follows standard .NET date and time format conventions. This value
+        /// determines how time values are converted to their string representation when no explicit format is
+        /// specified.</remarks>
+        public static string DefaultTimeFormat = "t";
+
+        /// <summary>
         /// Gets or sets a value indicating whether to use solid default images
         /// for folder items when <see cref="DefaultFolderImage"/> not specified.
         /// </summary>
@@ -216,6 +236,24 @@ namespace Alternet.UI
             /// </summary>
             LookupAll = LookupTitle | LookupImage,
         }
+
+        /// <summary>
+        /// Gets or sets the format string used to display date values.
+        /// This format string is used in the file list to represent date information,
+        /// such as file modification dates.
+        /// If set to null (default value), the default format <see cref="DefaultDateFormat"/> is used.
+        /// </summary>
+        /// <remarks>The format string can include standard or custom date format specifiers.</remarks>
+        public virtual string? DateFormat {  get; set; }
+
+        /// <summary>
+        /// Gets or sets the format string used to display time values.
+        /// This format string is used in the file list to represent time information,
+        /// such as file modification times.
+        /// </summary>
+        /// <remarks>The format should be specified using standard time format strings as defined
+        /// by .NET. If set to null, the default time format <see cref="DefaultTimeFormat"/> is used.</remarks>
+        public virtual string? TimeFormat { get; set; }
 
         /// <summary>
         /// Gets the column used to display file names.
