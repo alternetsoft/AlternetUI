@@ -11,11 +11,21 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class Button : ButtonBase, IControlStateObjectChanged
     {
+        internal static bool UseGeneric;
+
         private static bool imagesEnabled = true;
 
         private ControlStateImages? stateImages;
         private bool isDefault;
         private bool isCancel;
+        private bool textVisible = true;
+        private ElementContentAlign textAlign = ElementContentAlign.Default;
+        private bool exactFit = false;
+
+        static Button()
+        {
+            UseGeneric = false;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Button"/> class
@@ -236,6 +246,23 @@ namespace Alternet.UI
         public virtual bool UseVisualStyleBackColor { get; set; } = true;
 
         /// <summary>
+        /// Determines whether the current instance represents a generic button type rather than a platform-specific
+        /// implementation.
+        /// </summary>
+        /// <remarks>Use this method to distinguish between generic button instances and those that are
+        /// bound to a specific platform handler. This distinction may affect how the button behaves or is rendered in
+        /// different environments.</remarks>
+        /// <returns>true if the button is not associated with an IButtonHandler; otherwise, false.</returns>
+        [Browsable(false)]
+        public bool IsGeneric
+        {
+            get
+            {
+                return Handler is not IButtonHandler;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value that indicates whether a <see cref="Button"/> is
         /// the default button. In a modal dialog,
         /// a user invokes the default button by pressing the ENTER key.
@@ -275,15 +302,21 @@ namespace Alternet.UI
             get
             {
                 if (DisposingOrDisposed)
-                    return default;
-                return Handler.ExactFit;
+                    return exactFit;
+                if (Handler is IButtonHandler buttonHandler)
+                    return buttonHandler.ExactFit;
+                return exactFit;
             }
 
             set
             {
+                if (exactFit == value)
+                    return;
+                exactFit = value;
                 if (DisposingOrDisposed)
                     return;
-                Handler.ExactFit = value;
+                if (Handler is IButtonHandler buttonHandler)
+                    buttonHandler.ExactFit = value;
             }
         }
 
@@ -317,24 +350,20 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.TextVisible;
+                return textVisible;
             }
 
             set
             {
+                if (textVisible == value)
+                    return;
+                textVisible = value;
                 if (DisposingOrDisposed)
                     return;
-                Handler.TextVisible = value;
+                if (Handler is IButtonHandler buttonHandler)
+                    buttonHandler.TextVisible = value;
             }
         }
-
-        /// <summary>
-        /// Gets a <see cref="IButtonHandler"/> associated with this class.
-        /// </summary>
-        [Browsable(false)]
-        public new IButtonHandler Handler => (IButtonHandler)base.Handler;
 
         /// <summary>
         /// Sets the position at which the text is displayed.
@@ -343,16 +372,18 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.TextAlign;
+                return textAlign;
             }
 
             set
             {
+                if (textAlign == value)
+                    return;
+                textAlign = value;
                 if (DisposingOrDisposed)
                     return;
-                Handler.TextAlign = value;
+                if (Handler is IButtonHandler buttonHandler)
+                    buttonHandler.TextAlign = value;
             }
         }
 
@@ -388,7 +419,10 @@ namespace Alternet.UI
                 return;
             if (dir == ElementContentAlign.Left || dir == ElementContentAlign.Right ||
                 dir == ElementContentAlign.Top || dir == ElementContentAlign.Bottom)
-                Handler.SetImagePosition(dir);
+            {
+                if (Handler is IButtonHandler buttonHandler)
+                    buttonHandler.SetImagePosition(dir);
+            }
         }
 
         /// <summary>
@@ -406,14 +440,16 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             y ??= x;
-            Handler.SetImageMargins(x, y.Value);
+            if (Handler is IButtonHandler buttonHandler)
+                buttonHandler.SetImageMargins(x, y.Value);
         }
 
         void IControlStateObjectChanged.DisabledChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.DisabledImage = stateImages?.Disabled;
+            if (Handler is IButtonHandler buttonHandler)
+                buttonHandler.DisabledImage = stateImages?.Disabled;
             PerformLayoutAndInvalidate();
         }
 
@@ -421,7 +457,8 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.NormalImage = stateImages?.Normal;
+            if (Handler is IButtonHandler buttonHandler)
+                buttonHandler.NormalImage = stateImages?.Normal;
             PerformLayoutAndInvalidate();
         }
 
@@ -429,7 +466,8 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.FocusedImage = stateImages?.Focused;
+            if (Handler is IButtonHandler buttonHandler)
+                buttonHandler.FocusedImage = stateImages?.Focused;
             PerformLayoutAndInvalidate();
         }
 
@@ -437,7 +475,8 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.HoveredImage = stateImages?.Hovered;
+            if (Handler is IButtonHandler buttonHandler)
+                buttonHandler.HoveredImage = stateImages?.Hovered;
             PerformLayoutAndInvalidate();
         }
 
@@ -445,7 +484,8 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Handler.PressedImage = stateImages?.Pressed;
+            if (Handler is IButtonHandler buttonHandler)
+                buttonHandler.PressedImage = stateImages?.Pressed;
             PerformLayoutAndInvalidate();
         }
 
@@ -472,9 +512,57 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        {
+            var result = base.GetPreferredSize(context);
+            return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+        }
+
+        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateButtonHandler(this);
+            if (UseGeneric)
+                return CreateGenericHandler();
+
+            var result = ControlFactory.Handler.CreateButtonHandler(this);
+            result ??= CreateGenericHandler();
+            return result;
+
+            IControlHandler CreateGenericHandler()
+            {
+                var result = base.CreateHandler();
+                return result;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisualStateChanged(EventArgs e)
+        {
+            base.OnVisualStateChanged(e);
         }
     }
 }

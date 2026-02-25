@@ -37,7 +37,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Owner.</param>
         /// <returns></returns>
-        IControlHandler CreateButtonHandler(Button control);
+        IControlHandler? CreateButtonHandler(Button control);
 
         /// <summary>
         /// Creates <see cref="IControlHandler"/> interface provider.

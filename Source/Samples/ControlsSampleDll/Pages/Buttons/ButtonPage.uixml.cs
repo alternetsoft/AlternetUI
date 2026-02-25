@@ -53,6 +53,8 @@ namespace ControlsSample
         {
             InitializeComponent();
 
+            exactFitCheckBox.Checked = button.ExactFit;
+
             DoInsideLayout(Fn);
 
             void Fn()

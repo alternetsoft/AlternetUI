@@ -79,7 +79,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateButtonHandler(Button control)
+        public IControlHandler? CreateButtonHandler(Button control)
         {
             return new WxButtonHandler();
         }

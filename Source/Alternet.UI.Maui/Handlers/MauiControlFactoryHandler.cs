@@ -28,9 +28,9 @@ namespace Alternet.UI
             return new HandlerForDisposed();
         }
 
-        IControlHandler IControlFactoryHandler.CreateButtonHandler(Button control)
+        IControlHandler? IControlFactoryHandler.CreateButtonHandler(Button control)
         {
-            return new HandlerForDisposed();
+            return null;
         }
 
         IControlHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
