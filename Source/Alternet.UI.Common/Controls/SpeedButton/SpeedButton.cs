@@ -2322,12 +2322,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            base.OnMouseUp(e);
-        }
-
-        /// <inheritdoc/>
         protected override IReadOnlyList<ShortcutAndAction>? GetShortcuts()
         {
             if (shortcut is null)
