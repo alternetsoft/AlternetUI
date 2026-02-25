@@ -6,10 +6,11 @@ and productivity tools, empowering developers to create powerful desktop applica
 
 ## AlterNET UI Demo Download Links
 
-- [Demo for Windows 10 (X64) or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-win10-x64-net9-0.9.800-beta.zip)
-- [Demo for MacOs on Arm64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-macos-arm64-net9-0.9.801-beta.zip)
-- [Demo for Ubuntu 25 (X64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-ubuntu-x64-net9-0.9.801-beta.zip)
-- [Demo for Ubuntu 25 (Arm64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-ui-demo-ubuntu-arm64-net9-0.9.801-beta.zip)
+- [Demo for Windows 10 (X64) or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-win10-x64-net9-1.0.1.zip)
+- [Demo for MacOs on Arm64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-macos-arm64-net9-1.0.1.zip)
+- [Demo for MacOs on X64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-macos-x64-net8-1.0.1.zip)
+- [Demo for Ubuntu 25 (X64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-ubuntu-x64-net9-1.0.1.zip)
+- [Demo for Ubuntu 25 (Arm64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-ubuntu-arm64-net9-1.0.1.zip)
 
 ## AlterNET Studio on AlterNET UI Demo Download Links
 
@@ -52,6 +53,7 @@ For example: ```chmod +x yourfile```. Replace ```yourfile``` with the name of th
 - [NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 
 ## Links AlterNET UI
+
 - [Home page](https://www.alternet-ui.com/)
 - [Releases](https://github.com/alternetsoft/AlternetUI/releases)
 - [Issues](https://github.com/alternetsoft/AlternetUI/issues)
