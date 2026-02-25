@@ -151,6 +151,9 @@
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/CallMethod.TypeScript/CallMethod.TypeScript.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/Mini.TypeScript/Mini.TypeScript.csproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="../../../../AlternetStudio/Demo/Scripter.AlternetUI/QuickStarts/ObjectReference.TypeScript/ObjectReference.TypeScript.csproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
