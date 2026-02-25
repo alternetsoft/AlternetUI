@@ -659,7 +659,13 @@ namespace Alternet.UI
             return result;
         }
 
-        private void UpdatePrimitiveImage(VisualControlState state)
+        /// <summary>
+        /// Updates the internal graphic primitive's image and image set based on the specified visual control state.
+        /// </summary>
+        /// <remarks>If the specified state does not have an associated image, the default image is used.
+        /// The method also updates the image set for the primitive if one is available for the given state.</remarks>
+        /// <param name="state">The visual control state that determines which image and image set to apply to the primitive.</param>
+        protected virtual void UpdatePrimitiveImage(VisualControlState state)
         {
             var image = StateObjects?.Images?.GetObjectOrNull(state);
             image ??= Image;
