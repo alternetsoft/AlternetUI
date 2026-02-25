@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,104 @@ namespace Alternet.UI
     /// </summary>
     public static class FileUtils
     {
+        /// <summary>
+        /// The "KB" (kilobyte) unit string used in file size formatting.
+        /// </summary>
+        public const string FileSizeKB = "KB";
+
+        /// <summary>
+        /// The "MB" (megabyte) unit string used in file size formatting.
+        /// </summary>
+        public const string FileSizeMB = "MB";
+
+        /// <summary>
+        /// The "GB" (gigabyte) unit string used in file size formatting.
+        /// </summary>
+        public const string FileSizeGB = "GB";
+
+        /// <summary>
+        /// The "TB" (terabyte) unit string used in file size formatting.
+        /// </summary>
+        public const string FileSizeTB = "TB";
+
+        /// <summary>
+        /// The "PB" (petabyte) unit string used in file size formatting.
+        /// </summary>
+        public const string FileSizePB = "PB";
+
+        /// <summary>
+        /// The "EB" (exabyte) unit string used in file size formatting.
+        /// </summary>
+        public const string FileSizeEB = "EB";
+
+        /// <summary>
+        /// Gets an array of strings representing the units used to express file sizes, ranging from bytes to exabytes.
+        /// Do not change number of elements and their order, because they are used in <see cref="SizeToExplorerString"/> method.
+        /// </summary>
+        /// <remarks>This array can be used to format file sizes in a human-readable form by selecting the
+        /// appropriate unit based on the file size value. The first element is an empty string, which typically
+        /// represents bytes, followed by units for kilobytes (KB), megabytes (MB), gigabytes (GB), terabytes (TB),
+        /// petabytes (PB), and exabytes (EB).</remarks>
+        public static string[] FileSizeUnits =
+        {
+            string.Empty,
+            FileSizeKB,
+            FileSizeMB,
+            FileSizeGB,
+            FileSizeTB,
+            FileSizePB,
+            FileSizeEB,
+        };
+
+        /// <summary>
+        /// Specifies the format string used to display file sizes, where the first placeholder represents the size
+        /// value and the second represents the unit.
+        /// </summary>
+        /// <remarks>This format string can be customized to control how file sizes are presented in
+        /// output, allowing for localization or changes in unit representation (such as bytes, kilobytes, or
+        /// megabytes). The default format displays the size with one decimal place followed by the unit.</remarks>
+        public static string FileSizeFormat = "{0:0.#} {1}";
+
+        /// <summary>
+        /// Returns the text representation of a file size in the style used by Windows File Explorer, with localizable unit strings.
+        /// </summary>
+        /// <param name="bytes">The file size in bytes.</param>
+        /// <param name="formatProvider">The format provider to use for formatting the file size.
+        /// If null, the current culture is used.</param>
+        /// <returns>File size string, e.g. "1.2 MB"</returns>
+        public static string SizeToExplorerString(long? bytes, IFormatProvider? formatProvider = null)
+        {
+            const double KILO = 1024.0;
+
+            if (bytes == null)
+                return string.Empty;
+
+            if (bytes <= 0)
+            {
+                return $"0 {FileSizeKB}";
+            }
+
+            if (bytes < KILO)
+            {
+                return $"1 {FileSizeKB}";
+            }
+
+            double size = bytes.Value;
+            int unit;
+
+            size /= KILO;
+            unit = 1;
+            while (size >= KILO && unit < FileSizeUnits.Length - 1)
+            {
+                size /= KILO;
+                unit++;
+            }
+
+            string format = FileSizeFormat;
+
+            return string.Format(formatProvider ?? CultureInfo.CurrentCulture, format, size, FileSizeUnits[unit]);
+        }
+
         /// <summary>
         /// Checks whether executable with the specified name exists on path.
         /// Uses 'where' or similar command.
