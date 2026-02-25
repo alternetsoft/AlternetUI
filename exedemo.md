@@ -7,8 +7,8 @@ and productivity tools, empowering developers to create powerful desktop applica
 ## AlterNET UI Demo Download Links
 
 - [Demo for Windows 10 (X64) or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-win10-x64-net9-1.0.1.zip)
-- [Demo for MacOs on Arm64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-macos-arm64-net9-1.0.1.zip)
-- [Demo for MacOs on X64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-macos-x64-net8-1.0.1.zip)
+- [Demo for MacOs (Arm64) using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-macos-arm64-net9-1.0.1.zip)
+- [Demo for MacOs (X64) using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-macos-x64-net8-1.0.1.zip)
 - [Demo for Ubuntu 25 (X64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-ubuntu-x64-net9-1.0.1.zip)
 - [Demo for Ubuntu 25 (Arm64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/1.0.1/alternet-ui-demo-ubuntu-arm64-net9-1.0.1.zip)
 
@@ -20,7 +20,7 @@ code editing, scripting, and user interface design capabilities.
 You need to run this application: AllQuickStarts.AlternetUI
 
 - [Studio Demo for Windows 10 (X64) or newer using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-win10-x64-net9-10.0.5.zip)
-- [Studio Demo for MacOs on Arm64 using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-macos-arm64-net9-10.0.5.zip)
+- [Studio Demo for MacOs (Arm64) using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-macos-arm64-net9-10.0.5.zip)
 - [Studio Demo for Ubuntu 25 (X64) or compatible Linux using NET 9.0](https://github.com/alternetsoft/AlternetUI/releases/download/0.9.759-beta/alternet-studio-ui-demo-ubuntu-x64-net9-10.0.5.zip)
 
 ## Demo Usage
