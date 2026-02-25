@@ -2202,9 +2202,37 @@ namespace Alternet.UI
         /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="Value"/> property.
         /// </summary>
         /// <param name="value">The value to set.</param>
+        /// <returns>The current instance of <see cref="ListControlItem"/>, enabling method chaining.</returns>
         public ListControlItem SetValue(object? value)
         {
             Value = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the text content of the item to the specified value.
+        /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="Text"/> property.
+        /// </summary>
+        /// <param name="value">The value to set as the text. If <paramref name="value"/> is <see langword="null"/>,
+        /// the text is set to an empty string.</param>
+        /// <returns>The current instance of <see cref="ListControlItem"/>, enabling method chaining.</returns>
+        public ListControlItem SetText(object? value)
+        {
+            Text = value?.ToString() ?? string.Empty;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the horizontal alignment of the item.
+        /// </summary>
+        /// <remarks>This method supports method chaining by returning the same instance after updating
+        /// the alignment.</remarks>
+        /// <param name="value">The horizontal alignment to apply to the item. This value must be a valid member
+        /// of the <see cref="HorizontalAlignment"/> enumeration.</param>
+        /// <returns>The current <see cref="ListControlItem"/> instance with the updated horizontal alignment.</returns>
+        public ListControlItem SetHorizontalAlignment(HorizontalAlignment value)
+        {
+            HorizontalAlignment = value;
             return this;
         }
 
@@ -2213,6 +2241,7 @@ namespace Alternet.UI
         /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="SvgImage"/> property.
         /// </summary>
         /// <param name="svgImage">The SVG image to set.</param>
+        /// <returns>The current instance of <see cref="ListControlItem"/>, enabling method chaining.</returns>
         public ListControlItem SetSvgImage(SvgImage? svgImage)
         {
             SvgImage = svgImage;
