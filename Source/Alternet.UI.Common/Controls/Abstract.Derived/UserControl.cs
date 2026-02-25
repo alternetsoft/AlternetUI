@@ -16,13 +16,9 @@ namespace Alternet.UI
     [ControlCategory("Other")]
     public partial class UserControl : Control
     {
-        private static bool? defaultUseInternalDropDownMenu;
-
         private bool hasBorder;
         private RichTextBoxScrollBars scrollBars = RichTextBoxScrollBars.None;
-        private bool showDropDownMenuWhenClicked = true;
         private List<IControlOverlay>? overlays;
-        private HVDropDownAlignment? dropDownMenuPosition;
 
         static UserControl()
         {
@@ -49,101 +45,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Occurs when a drop-down menu is about to be displayed,
-        /// allowing the event handler to cancel the operation.
-        /// </summary>
-        /// <remarks>This event is raised before the drop-down menu is shown.
-        /// Handlers can inspect the event arguments to determine the context of the menu
-        /// and set the <see cref="CancelEventArgs.Cancel"/>
-        /// property to <see langword="true"/> to prevent the menu from being displayed.</remarks>
-        public event EventHandler<BaseCancelEventArgs>? DropDownMenuShowing;
-
-        /// <summary>
         /// Occurs after the control has finished its painting operation.
         /// </summary>
         /// <remarks>This event is raised after the control's painting logic has been completed.
         /// It can be used to perform additional custom drawing or to respond to the completion
         /// of the painting process.</remarks>
         public event PaintEventHandler? AfterPaint;
-
-        /// <summary>
-        /// Specifies the mouse event that triggers the click action of a control.
-        /// </summary>
-        public enum ClickTriggerKind
-        {
-            /// <summary>
-            /// The click method is called during the MouseUp event.
-            /// </summary>
-            MouseUp,
-
-            /// <summary>
-            /// The click method is called during the MouseDown event.
-            /// </summary>
-            MouseDown,
-
-            /// <summary>
-            /// The click method is not called automatically.
-            /// </summary>
-            None,
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the application should
-        /// use the internal drop-down menus by default. Drop down menus are shown
-        /// when the user clicks on a control and <see cref="ShowDropDownMenu"/> is <see langword="true"/>.
-        /// </summary>
-        public static bool DefaultUseInternalDropDownMenu
-        {
-            get
-            {
-                defaultUseInternalDropDownMenu ??= DefaultUseInternalContextMenu;
-                return defaultUseInternalDropDownMenu.Value;
-            }
-
-            set
-            {
-                defaultUseInternalDropDownMenu = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets unique identifier of the last used drop-down menu popup.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ObjectUniqueId? LastUsedDropDownMenuPopup { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of click trigger that determines when a click action is initiated.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ClickTriggerKind ClickTrigger { get; set; } = ClickTriggerKind.MouseUp;
-
-        /// <summary>
-        /// Gets or sets the type of click trigger that determines when a drop-down menu is shown.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ClickTriggerKind DropDownTrigger { get; set; } = ClickTriggerKind.MouseDown;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether an internal drop-down menu should be used.
-        /// Default is <see langword="null"/>.
-        /// If not set, the value of <see cref="DefaultUseInternalDropDownMenu"/> is used.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool? UseInternalDropDownMenu { get; set; }
-
-        /// <summary>
-        /// Gets or sets the alignment position of the drop-down menu.
-        /// Based on this property, the menu will be aligned horizontally and vertically
-        /// relative to the control bounds. If not set, the menu will be aligned
-        /// to the control's bottom-left corner. Default is <see langword="null"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual HVDropDownAlignment? DropDownMenuPosition
-        {
-            get => dropDownMenuPosition;
-            set => dropDownMenuPosition = value;
-        }
 
         /// <summary>
         /// Gets or sets different behavior and visualization options.
@@ -153,14 +60,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.UserPaintControl;
-
-        /// <summary>
-        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked
-        /// with left mouse button. Do not mix this with <see cref="ContextMenu"/> which is
-        /// shown when right mouse button is clicked.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ContextMenu? DropDownMenu { get; set; }
 
         /// <summary>
         /// Gets or sets the type of scroll bars displayed in the control.
@@ -227,21 +126,6 @@ namespace Alternet.UI
                     return;
                 hasBorder = value;
                 Refresh();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the drop down menu
-        /// is shown when the control is clicked. Default is <see langword="true"/>.
-        /// </summary>
-        [Browsable(true)]
-        public virtual bool ShowDropDownMenuWhenClicked
-        {
-            get => showDropDownMenuWhenClicked;
-
-            set
-            {
-                showDropDownMenuWhenClicked = value;
             }
         }
 
@@ -807,59 +691,11 @@ namespace Alternet.UI
             Invalidate();
         }
 
-        /// <summary>
-        /// Handles a click trigger event and performs the appropriate action based
-        /// on the specified trigger kind.
-        /// </summary>
-        /// <remarks>This method checks the current state of the control and performs
-        /// actions such as raising a click event or displaying a drop-down menu,
-        /// depending on the specified trigger kind and the
-        /// control's configuration. Override this method in a derived class to customize
-        /// the behavior for handling
-        /// click triggers.</remarks>
-        /// <param name="triggerKind">The type of click trigger that occurred.</param>
-        /// <param name="e">The mouse event arguments associated with the click event.</param>
-        protected virtual void HandleClickTrigger(ClickTriggerKind triggerKind, MouseEventArgs e)
-        {
-            if (!Enabled)
-                return;
-            if (ClickTrigger == triggerKind)
-                RaiseClick(e);
-            if (ShowDropDownMenuWhenClicked && DropDownTrigger == triggerKind)
-                ShowDropDownMenu();
-        }
-
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonUp(MouseEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
             HandleClickTrigger(ClickTriggerKind.MouseUp, e);
-        }
-
-        /// <summary>
-        /// Shows attached drop down menu.
-        /// </summary>
-        protected virtual void ShowDropDownMenu(Action? afterShow = null)
-        {
-            if (!Enabled || DropDownMenu is null)
-                return;
-
-            if (DropDownMenuShowing is not null)
-            {
-                var args = new BaseCancelEventArgs();
-                DropDownMenuShowing(this, args);
-                if (args.Cancel)
-                    return;
-            }
-
-            if (UseInternalDropDownMenu ?? DefaultUseInternalDropDownMenu)
-            {
-                LastUsedDropDownMenuPopup = DropDownMenu.ShowInPopup(this, afterShow, DropDownMenuPosition);
-            }
-            else
-            {
-                DropDownMenu.ShowAsDropDown(this, afterShow, DropDownMenuPosition);
-            }
         }
 
         /// <inheritdoc/>

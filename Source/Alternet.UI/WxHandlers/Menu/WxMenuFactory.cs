@@ -422,7 +422,7 @@ namespace Alternet.UI
 
             Native.Menu.Show(
                 menuPtr,
-                (UI.Native.Control)control.NativeControl ?? throw new Exception(),
+                (UI.Native.Control)control.NativeControl ?? throw new Exception("Native control is required when context menu is shown."),
                 position.Value);
 
             control.Cursor = savedCursor;

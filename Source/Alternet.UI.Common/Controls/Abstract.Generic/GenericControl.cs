@@ -14,7 +14,6 @@ namespace Alternet.UI
     public partial class GenericControl : AbstractControl
     {
         private bool isClipped = false;
-        private bool showDropDownMenuWhenClicked;
         private bool hasBorder;
 
         /// <summary>
@@ -31,21 +30,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual ControlRefreshOptions RefreshOptions { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the drop down menu
-        /// is shown when the control is clicked. Default is <see langword="true"/>.
-        /// </summary>
-        [Browsable(true)]
-        public virtual bool ShowDropDownMenuWhenClicked
-        {
-            get => showDropDownMenuWhenClicked;
-
-            set
-            {
-                showDropDownMenuWhenClicked = value;
-            }
-        }
 
         /// <inheritdoc/>
         public override bool IsHandleCreated => true;
@@ -85,14 +69,6 @@ namespace Alternet.UI
                 base.Cursor = value;
             }
         }
-
-        /// <summary>
-        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked
-        /// with left mouse button. Do not mix this with <see cref="ContextMenu"/> which is
-        /// shown when right mouse button is clicked.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ContextMenu? DropDownMenu { get; set; }
 
         /// <summary>
         /// Gets or sets whether control contents is clipped and is not painted outside it's bounds.
@@ -215,9 +191,7 @@ namespace Alternet.UI
             base.OnMouseLeftButtonDown(e);
             if (!Enabled)
                 return;
-            RaiseClick(e);
-            if (ShowDropDownMenuWhenClicked)
-                ShowDropDownMenu();
+            HandleClickTrigger(ClickTriggerKind.MouseDown, e);
             Invalidate();
         }
 
@@ -253,6 +227,13 @@ namespace Alternet.UI
             if(!VisibleOnScreen)
                 return;
             Parent?.Invalidate();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
+        {
+            base.OnMouseLeftButtonUp(e);
+            HandleClickTrigger(ClickTriggerKind.MouseUp, e);
         }
     }
 }

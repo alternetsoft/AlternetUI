@@ -132,7 +132,7 @@ namespace Alternet.UI
 
             set
             {
-                if (ShowDialog = value)
+                if (ShowDialog == value)
                     return;
                 actionKind = ClickActionKind.ShowDialog;
             }
@@ -176,7 +176,7 @@ namespace Alternet.UI
 
             set
             {
-                if (ShowPopupWindow = value)
+                if (ShowPopupWindow == value)
                     return;
                 actionKind = ClickActionKind.ShowPopup;
             }

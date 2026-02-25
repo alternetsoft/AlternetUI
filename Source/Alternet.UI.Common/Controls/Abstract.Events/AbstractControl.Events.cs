@@ -14,6 +14,16 @@ namespace Alternet.UI
         private EventHandler? click;
 
         /// <summary>
+        /// Occurs when a drop-down menu is about to be displayed,
+        /// allowing the event handler to cancel the operation.
+        /// </summary>
+        /// <remarks>This event is raised before the drop-down menu is shown.
+        /// Handlers can inspect the event arguments to determine the context of the menu
+        /// and set the <see cref="CancelEventArgs.Cancel"/>
+        /// property to <see langword="true"/> to prevent the menu from being displayed.</remarks>
+        public event EventHandler<BaseCancelEventArgs>? DropDownMenuShowing;
+
+        /// <summary>
         /// Occurs when the layout of the various visual elements changes.
         /// </summary>
         [Category("Layout")]

@@ -494,6 +494,54 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Handles a click trigger event and performs the appropriate action based
+        /// on the specified trigger kind.
+        /// </summary>
+        /// <remarks>This method checks the current state of the control and performs
+        /// actions such as raising a click event or displaying a drop-down menu,
+        /// depending on the specified trigger kind and the
+        /// control's configuration. Override this method in a derived class to customize
+        /// the behavior for handling
+        /// click triggers.</remarks>
+        /// <param name="triggerKind">The type of click trigger that occurred.</param>
+        /// <param name="e">The mouse event arguments associated with the click event.</param>
+        protected virtual void HandleClickTrigger(ClickTriggerKind triggerKind, MouseEventArgs e)
+        {
+            if (!Enabled)
+                return;
+            if (ClickTrigger == triggerKind)
+                RaiseClick(e);
+            if (ShowDropDownMenuWhenClicked && DropDownTrigger == triggerKind)
+                ShowDropDownMenu();
+        }
+
+        /// <summary>
+        /// Shows attached drop down menu.
+        /// </summary>
+        protected virtual void ShowDropDownMenu(Action? afterShow = null)
+        {
+            if (!Enabled || DropDownMenu is null)
+                return;
+
+            if (DropDownMenuShowing is not null)
+            {
+                var args = new BaseCancelEventArgs();
+                DropDownMenuShowing(this, args);
+                if (args.Cancel)
+                    return;
+            }
+
+            if (UseInternalDropDownMenu ?? DefaultUseInternalDropDownMenu)
+            {
+                LastUsedDropDownMenuPopup = DropDownMenu.ShowInPopup(this, afterShow, DropDownMenuPosition);
+            }
+            else
+            {
+                DropDownMenu.ShowAsDropDown(this, afterShow, DropDownMenuPosition);
+            }
+        }
+
+        /// <summary>
         /// Called when the control is removed from its parent control.
         /// </summary>
         /// <remarks>This method provides an opportunity to perform cleanup or respond to the removal of

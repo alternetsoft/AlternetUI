@@ -51,7 +51,9 @@ namespace Alternet.UI
         private static Font? defaultMonoFont;
         private static WeakReferenceValue<AbstractControl> weakHoveredControl = new();
         private static List<IControlNotification> globalNotifications = new();
+        private static bool? defaultUseInternalDropDownMenu;
 
+        private bool showDropDownMenuWhenClicked = true;
         private bool enabled = true;
         private bool shownCalled;
         private bool isMouseLeftButtonDown;
@@ -141,6 +143,7 @@ namespace Alternet.UI
         private bool wantTab;
         private bool canLongTap;
         private bool bubbleKeys;
+        private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
         private ControlRenderingFlags renderingFlags;
 
@@ -156,6 +159,27 @@ namespace Alternet.UI
             OnCreateControl();
             Designer?.RaiseCreated(this, EventArgs.Empty);
             RaiseNotifications((n) => n.AfterCreate(this, EventArgs.Empty));
+        }
+
+        /// <summary>
+        /// Specifies the mouse event that triggers the click action of a control.
+        /// </summary>
+        public enum ClickTriggerKind
+        {
+            /// <summary>
+            /// The click method is called during the MouseUp event.
+            /// </summary>
+            MouseUp,
+
+            /// <summary>
+            /// The click method is called during the MouseDown event.
+            /// </summary>
+            MouseDown,
+
+            /// <summary>
+            /// The click method is not called automatically.
+            /// </summary>
+            None,
         }
 
         /// <summary>
@@ -265,6 +289,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the application should
+        /// use the internal drop-down menus by default. Drop down menus are shown
+        /// when the user clicks on a control and <see cref="ShowDropDownMenu"/> is <see langword="true"/>.
+        /// </summary>
+        public static bool DefaultUseInternalDropDownMenu
+        {
+            get
+            {
+                defaultUseInternalDropDownMenu ??= DefaultUseInternalContextMenu;
+                return defaultUseInternalDropDownMenu.Value;
+            }
+
+            set
+            {
+                defaultUseInternalDropDownMenu = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the default fixed width font used for controls.
         /// </summary>
         /// <value>
@@ -281,6 +324,45 @@ namespace Alternet.UI
                 defaultMonoFont = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the type of click trigger that determines when a click action is initiated.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ClickTriggerKind ClickTrigger { get; set; } = ClickTriggerKind.MouseUp;
+
+        /// <summary>
+        /// Gets or sets the type of click trigger that determines when a drop-down menu is shown.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ClickTriggerKind DropDownTrigger { get; set; } = ClickTriggerKind.MouseDown;
+
+        /// <summary>
+        /// Gets or sets the alignment position of the drop-down menu.
+        /// Based on this property, the menu will be aligned horizontally and vertically
+        /// relative to the control bounds. If not set, the menu will be aligned
+        /// to the control's bottom-left corner. Default is <see langword="null"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual HVDropDownAlignment? DropDownMenuPosition
+        {
+            get => dropDownMenuPosition;
+            set => dropDownMenuPosition = value;
+        }
+
+        /// <summary>
+        /// Gets or sets unique identifier of the last used drop-down menu popup.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ObjectUniqueId? LastUsedDropDownMenuPopup { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether an internal drop-down menu should be used.
+        /// Default is <see langword="null"/>.
+        /// If not set, the value of <see cref="DefaultUseInternalDropDownMenu"/> is used.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool? UseInternalDropDownMenu { get; set; }
 
         /// <summary>
         /// Gets the reported bounds of the control.
@@ -329,6 +411,21 @@ namespace Alternet.UI
             set
             {
                 renderingFlags = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the drop down menu
+        /// is shown when the control is clicked. Default is <see langword="true"/>.
+        /// </summary>
+        [Browsable(true)]
+        public virtual bool ShowDropDownMenuWhenClicked
+        {
+            get => showDropDownMenuWhenClicked;
+
+            set
+            {
+                showDropDownMenuWhenClicked = value;
             }
         }
 
@@ -545,6 +642,14 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public virtual bool InputTransparent { get; set; }
+
+        /// <summary>
+        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked
+        /// with left mouse button. Do not mix this with <see cref="ContextMenu"/> which is
+        /// shown when right mouse button is clicked.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ContextMenu? DropDownMenu { get; set; }
 
         /// <summary>
         /// Gets or sets whether layout rules are ignored for this control.

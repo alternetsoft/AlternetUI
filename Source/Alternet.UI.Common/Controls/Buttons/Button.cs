@@ -311,21 +311,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the drop down menu
-        /// is shown when the control is clicked. Default is <see langword="true"/>.
-        /// Use <see cref="DropDownMenu"/> to specify the menu to be shown.
-        /// </summary>
-        [Browsable(true)]
-        public virtual bool ShowDropDownMenuWhenClicked { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets <see cref="ContextMenu"/> which is shown when control is clicked.
-        /// Use <see cref="ShowDropDownMenuWhenClicked"/> to specify whether the menu should be shown when the control is clicked.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ContextMenu? DropDownMenu { get; set; }
-
-        /// <summary>
         /// Gets or sets visibility of the text in the bitmap.
         /// </summary>
         public virtual bool TextVisible
