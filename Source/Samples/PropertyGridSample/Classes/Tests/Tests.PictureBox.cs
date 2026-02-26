@@ -22,7 +22,31 @@ namespace PropertyGridSample
                 TestPictureBoxSetMessageBoxIconError);
             AddControlAction<PictureBox>("Set ToolTip image", TestPictureBoxSetToolTipImage);
 
-            AddControlAction<PictureBox>("Load ErrorPngICCP", TestPictureBoxErrorPngICCP);            
+            AddControlAction<PictureBox>("Load ErrorPngICCP", TestPictureBoxErrorPngICCP);
+
+            AddControlAction<PictureBox>("Set border and parent background", TestPictureBoxSetBorderAndParentBack);
+        }
+
+        void TestPictureBoxSetBorderAndParentBack(PictureBox control)
+        {
+            control.BorderWidth = 3;
+            control.UniformBorderCornerRadius = 10;
+            control.UniformBorderRadiusIsPercent = true;
+            control.HasBorder = true;
+
+            var parent = control.Parent;
+            if (parent == null)
+                return;
+            parent.UserPaint = true;
+            parent.Paint -= ParentPaint;
+            parent.Paint += ParentPaint;
+            parent.Refresh();
+
+            void ParentPaint(object? sender, PaintEventArgs e)
+            {
+                e.Graphics.FillRectangle(Color.SandyBrown.AsBrush, e.ClipRectangle);
+                FancyBackgroundDrawer.DrawFancyBackground(e.Graphics, e.ClipRectangle);
+            }
         }
 
         void TestPictureBoxErrorPngICCP(PictureBox control)
