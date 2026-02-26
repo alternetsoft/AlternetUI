@@ -1727,6 +1727,7 @@ namespace Alternet.UI
             ListBoxItemPaintEventArgs e)
         {
             var item = e.Item;
+            var itemMargin = item?.ForegroundMargin ?? 0;
             var isSelected = e.HasSelection;
             var paintRectangle = e.PaintRectangle;
             var image = e.GetImage(isSelected);
@@ -1786,6 +1787,13 @@ namespace Alternet.UI
                 {
                     var column = columns[i];
 
+                    var levelOffset = 0f;
+
+                    if (i > 0)
+                    {
+                        levelOffset = -itemMargin.Left;
+                    }
+
                     if(!column.IsVisible)
                         continue;
 
@@ -1798,9 +1806,12 @@ namespace Alternet.UI
                     s = DefaultGetItemText(cell, forDisplay: true, container?.FormatProvider);
 
                     var r = paintRectangle;
+                    r.Left += levelOffset;
                     r.Width = width;
 
                     var cellImage = e.GetImage(cell, container, isSelected);
+
+                    var itemAlignment = cell.Alignment;
 
                     Graphics.DrawLabelParams prm = new(
                         s,
@@ -1809,7 +1820,7 @@ namespace Alternet.UI
                         backColor: Color.Empty,
                         image: cellImage,
                         r,
-                        e.ItemAlignment);
+                        itemAlignment);
 
                     prm.SuffixElements = cell.SuffixElements;
                     prm.PrefixElements = cell.PrefixElements;
