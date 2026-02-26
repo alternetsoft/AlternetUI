@@ -82,9 +82,6 @@ namespace ControlsSample
                     = ListControlItem.CheckBoxSizeOverride.Value + incValue;
                 }
 
-#if DEBUG
-                /*Graphics.DebugElementId = treeView.RootItem.FirstChild?.UniqueId;*/
-#endif
                 FormUtils.InvalidateAll();
             });
 
@@ -104,6 +101,8 @@ namespace ControlsSample
             treeView.ContextMenu.Add("Change RootItem", () =>
             {
                 TreeViewRootItem item = new();
+                treeView.Columns.Clear();
+                treeView.Header.Visible = false;
                 ListControlUtils.AddTestItems(item, 10, ItemInitialize);
 
                 void ItemInitialize(TreeViewItem item)
@@ -112,6 +111,11 @@ namespace ControlsSample
                 }
 
                 treeView.RootItem = item;
+            });
+
+            treeView.ContextMenu.Add("Multiple Columns", () =>
+            {
+                ListControlUtils.SetTestItemsWithColumns(treeView, count: 10);
             });
 
             treeView.ContextMenu.Add("Toggle vertical scroll bar visibility", () =>
@@ -169,6 +173,13 @@ namespace ControlsSample
             var item = new Alternet.UI.TreeViewItem();
             item.Text = "Item " + Alternet.UI.LogUtils.GenNewId();
             item.SvgImage = Alternet.UI.KnownColorSvgImages.ImgLogo;
+
+            if (treeView.HasColumns)
+            {
+                item.SafeCell(0)?.SetText(item.Text).SetSvgImage(item.SvgImage);
+                item.SafeCell(1)?.SetText("Data" + Alternet.UI.LogUtils.GenNewId());
+            }
+
             treeView.AddChild(root, item, true);
         }
 
