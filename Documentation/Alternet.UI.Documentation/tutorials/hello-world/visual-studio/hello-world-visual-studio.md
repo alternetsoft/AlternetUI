@@ -31,7 +31,7 @@ To develop on macOS or Linux, see ["Hello, World" with Command-Line and VS Code]
 1. Press `Ctrl+F5` to build and run the application and see its window title has changed accordingly.
 
 > [!NOTE]
-> By default, the created project will use .NET 6.0 as a target framework. If .NET 6.0 runtime is not installed on your machine, you
+> By default, the created project will use .NET 8.0 as a target framework. If .NET 8.0 runtime is not installed on your machine, you
 > will be prompted to do so on the first application run.
 
 ### Add Button to the Window

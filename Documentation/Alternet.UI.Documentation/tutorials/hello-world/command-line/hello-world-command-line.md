@@ -5,7 +5,7 @@ The application will display a message box in response to a button click.
 
 ### Prerequisites
 
-1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). The minimum supported SDK version is .NET 6.0.
+1. Download and install [.NET SDK](https://dotnet.microsoft.com/download/dotnet). The minimum supported SDK version is .NET 8.0.
 1. Install AlterNET UI project templates by running
     ```dos
     dotnet new install Alternet.UI.Templates
@@ -43,7 +43,7 @@ The application will start and display its window:
 ![Created Application Window](images/created-application-window-macos-window.png)
 
 > [!NOTE]
-> By default, the created project will use .NET 6.0 as a target framework. If .NET 6.0 runtime is not installed on your machine, you
+> By default, the created project will use .NET 8.0 as a target framework. If .NET 8.0 runtime is not installed on your machine, you
 > will be prompted to do so on the first application run.
 
 > [!NOTE]

@@ -8,7 +8,7 @@ However, [AlterNET UI Nuget Packages](https://www.nuget.org/packages/Alternet.UI
 To reference AlterNET UI framework in your project, add the following lines to your `.csproj` file:
 ```xml
 <ItemGroup>
-    <PackageReference Include="Alternet.UI" Version="0.9.200-beta" />
+    <PackageReference Include="Alternet.UI" Version="1.0.1" />
 </ItemGroup>
 ```
 The `Version` value can be set to one of the published versions of the AlterNET UI packages.
