@@ -542,7 +542,7 @@ namespace Alternet.UI
             if (IsFile)
             {
                 DateModifiedColumnCell?.SetText(LastWriteTimeText);
-                SizeColumnCell?.SetText(SizeText);
+                SizeColumnCell?.SetText(SizeText).SetHorizontalAlignment(HorizontalAlignment.Right);
             }
         }
 
