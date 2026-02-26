@@ -420,7 +420,8 @@ namespace Alternet.UI
         /// separately, adjusting the client rectangle as needed. Otherwise, it draws only the background. This method
         /// is typically called during the control's paint cycle and can be overridden to customize border and
         /// background rendering.</remarks>
-        /// <param name="flags">Flags that specify what to draw. Optional. If not specified, both bprder and background are painted.</param>
+        /// <param name="flags">Flags that specify what to draw. Optional. If not specified,
+        /// both border and background are painted.</param>
         /// <param name="e">The paint event arguments containing the graphics context
         /// and client rectangle information used for drawing.</param>
         public virtual void DrawBorderAndBackground(

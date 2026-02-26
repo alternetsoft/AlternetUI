@@ -148,6 +148,7 @@ namespace Alternet.UI
         /// </summary>
         public Label()
         {
+            AutoPadding = false;
             HorizontalAlignment = HorizontalAlignment.Left;
             ParentBackColor = true;
             ParentForeColor = true;
@@ -807,14 +808,14 @@ namespace Alternet.UI
 
             DrawBorderAndBackground(e, flags);
 
-            var state = VisualState;
-            var border = GetBorderSettings(state);
-
             var rect = e.ClientRectangle;
             var dc = e.Graphics;
 
-            if(border is not null)
-                rect = rect.DeflatedWithPadding(border.Width);
+            if (HasBorder)
+            {
+                var borderwidth = BorderWidth;
+                rect = rect.DeflatedWithPadding(borderwidth);
+            }
 
             DrawDefaultText(dc, rect);
             DefaultPaintDebug(e);
@@ -937,41 +938,54 @@ namespace Alternet.UI
             bool withPadding,
             Func<SizeD, SizeD> func)
         {
-            var suggested = SuggestedSize;
-
-            var isNanSuggestedWidth = suggested.IsNanWidth;
-            var isNanSuggestedHeight = suggested.IsNanHeight;
-
-            var containerSize = suggested;
-
-            if (!isNanSuggestedWidth && !isNanSuggestedHeight)
+            if (HasBorder)
             {
-                return containerSize;
+                var width = NormalBorder.Width;
+                return InternalGetPreferredSize() + width.Size;
+            }
+            else
+            {
+                return InternalGetPreferredSize();
             }
 
-            if (isNanSuggestedWidth)
-                containerSize.Width = availableSize.Width;
+            SizeD InternalGetPreferredSize()
+            {
+                var suggested = SuggestedSize;
 
-            if (isNanSuggestedHeight)
-                containerSize.Height = availableSize.Height;
+                var isNanSuggestedWidth = suggested.IsNanWidth;
+                var isNanSuggestedHeight = suggested.IsNanHeight;
 
-            var paddingSize = Padding.Size;
+                var containerSize = suggested;
 
-            containerSize -= paddingSize;
+                if (!isNanSuggestedWidth && !isNanSuggestedHeight)
+                {
+                    return containerSize;
+                }
 
-            var measured = func(containerSize);
+                if (isNanSuggestedWidth)
+                    containerSize.Width = availableSize.Width;
 
-            if (!isNanSuggestedWidth)
-                measured.Width = suggested.Width;
-            else
-                measured.Width += paddingSize.Width;
+                if (isNanSuggestedHeight)
+                    containerSize.Height = availableSize.Height;
 
-            if (!isNanSuggestedHeight)
-                measured.Height = suggested.Height;
-            else
-                measured.Height += paddingSize.Height;
+                var paddingSize = Padding.Size;
 
-            return measured;
+                containerSize -= paddingSize;
+
+                var measured = func(containerSize);
+
+                if (!isNanSuggestedWidth)
+                    measured.Width = suggested.Width;
+                else
+                    measured.Width += paddingSize.Width;
+
+                if (!isNanSuggestedHeight)
+                    measured.Height = suggested.Height;
+                else
+                    measured.Height += paddingSize.Height;
+
+                return measured;
+            }
         }
 
         /// <summary>
