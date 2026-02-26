@@ -1,3 +1,26 @@
+# 1.0.2 (2026 February 26)
+
+- ListControlItem: Take into account ItemAlignment when cell is painted.
+- ListControlItem: Do not offset cells except first for child items of the tree.
+- FileListBox: Align size column to the right.
+- Change Label to inherit from HiddenGenericBorder to use its border behavior. Now it is possible to draw border around the label.
+- FileListBoxItem: Add file metadata columns and formatting.
+- Add date/time format properties to FileListBox.
+- ListControlItem: Add SetValue, SetSvgImage, SetText, SetHorizontalAlignment and other fluent methods.
+- Create AnimatedImageFrameInfo and AnimatedImageExtractor which allow to work with animated gif and webp images.
+- Validate printers before opening print dialog.
+- Add PrinterUtilities class which exposes HasPrinters, GetDefaultPrinterName and GetPrinterNames.
+- Fix several minor issues in demo projects.
+- PreviewUixmlSplitted: Add default alignment and source panel width.
+- PreviewFileSplitted: Add alignment API for second preview panel.
+- WindowFilePreview: add columns to file list.
+- Add column definitions and handlers to FileListBox.
+- TimePicker: Use DateUtils for AM/PM designator.
+- DateUtils: Add AM/PM overrides and helper methods.
+- Add System using to Visual Studio templates.
+
+---
+
 # 1.0.1 (2026 February 23)
 
 - Color: Use ToDisplayString() instead of NameLocalized in list controls, speed button, list utilities, and other places.
