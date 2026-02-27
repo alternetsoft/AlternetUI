@@ -14,7 +14,191 @@ namespace Alternet.UI
     /// </summary>
     public static class PathUtils
     {
+        /// <summary>
+        /// Gets or sets the override path for the temporary folder
+        /// returned by <see cref="GetTempPath"/>.
+        /// </summary>
+        public static string? TempPathOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application should use a subfolder
+        /// within the application folder as the temporary path.
+        /// </summary>
+        public static bool UseAppSubFolderAsTempPath { get; set; }
+
         private static ConcurrentStack<string>? pushedFolders;
+        private static string? tempPathSubFolder;
+
+        /// <summary>
+        /// Flags used to specify options for generating a temporary file name.
+        /// </summary>
+        [Flags]
+        public enum GenTempFileNameFlags
+        {
+            /// <summary>
+            /// No special options are applied.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Deletes the file if it already exists.
+            /// </summary>
+            DeleteIfExists = 1,
+
+            /// <summary>
+            /// Creates an empty file with the generated name.
+            /// </summary>
+            CreateEmptyFile = 2,
+        }
+
+        private static bool UseWindowsDefaultTempPath
+        {
+            get
+            {
+                return App.IsWindowsOS && !UseAppSubFolderAsTempPath && TempPathOverride is null;
+            }
+        }
+
+        /// <summary>
+        /// Resets the temporary path configuration to use a unique subfolder for the current application.
+        /// </summary>
+        /// <remarks>Call this method to clear any previously set temporary path subfolder, ensuring that
+        /// subsequent operations will generate a new unique subfolder for the application's temporary files. This can
+        /// be useful when isolating temporary data after configuration changes.</remarks>
+        public static void ResetTempPathUniquePerApp()
+        {
+            tempPathSubFolder = null;
+        }
+
+        /// <summary>
+        /// Generates a unique temporary path for the application.
+        /// </summary>
+        /// <returns>
+        /// A string containing the full path to a unique temporary directory
+        /// for the application. The directory is created within the temporary
+        /// folder returned by <see cref="GetTempPath"/>.
+        /// </returns>
+        public static string GetTempPathUniquePerApp(string? prefix = null)
+        {
+            var tempPath = GetTempPath();
+            tempPathSubFolder ??= Guid.NewGuid().ToString("N");
+            var result = Path.Combine(tempPath, $"{prefix}{tempPathSubFolder}");
+            return result;
+        }
+
+        /// <summary>
+        /// Returns a subfolder path inside the system temporary directory.
+        /// </summary>
+        /// <param name="subFolder">
+        /// Optional subfolder name to append to the temporary path.
+        /// If <c>null</c>, the base temporary path is returned.
+        /// </param>
+        /// <returns>
+        /// The full path to the specified subfolder within the temporary directory,
+        /// or the base temporary path if no subfolder is provided.
+        /// </returns>
+        public static string GetTempPathSubFolder(string? subFolder = null)
+        {
+            var tempPath = GetTempPath();
+            if (subFolder is null)
+                return tempPath;
+            var result = Path.Combine(tempPath, subFolder);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the full path to a temporary subdirectory named 'Alternet' within the system's temporary folder.
+        /// </summary>
+        /// <remarks>Use this method to obtain a dedicated temporary directory for storing files related
+        /// to the Alternet application. The returned path is not guaranteed to exist; callers may need to create the
+        /// directory before using it.</remarks>
+        /// <returns>A string containing the full path to the 'Alternet' subdirectory
+        /// inside the system's temporary directory.</returns>
+        public static string GetTempPathWithAlternet()
+        {
+            var tempPath = GetTempPath();
+            var result = Path.Combine(tempPath, "Alternet");
+            return result;
+        }
+
+        /// <summary>
+        /// Returns the path to the temporary folder.
+        /// </summary>
+        /// <returns>
+        /// A string containing the path to the temporary folder.
+        /// On Windows, it returns the path specified by the "TEMP" environment variable.
+        /// On other operating systems, it returns a path within the application folder.
+        /// </returns>
+        public static string GetTempPath()
+        {
+            static string InternalGetTempPath()
+            {
+                if (TempPathOverride is not null)
+                    return TempPathOverride;
+
+                if (UseWindowsDefaultTempPath)
+                {
+                    var result = Environment.GetEnvironmentVariable("TEMP");
+
+                    try
+                    {
+                        if (string.IsNullOrWhiteSpace(result) || !Directory.Exists(result))
+                            result = Path.GetTempPath();
+
+                        return result;
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                if (App.IsMaui)
+                {
+                    var nullableResult = AssemblyUtils.MauiCacheDirectory.Value;
+                    if (nullableResult is not null)
+                        return nullableResult;
+                }
+
+                var tempPath = Path.Combine(GetAppFolder(), "Temp-2D0F8A068AEF46768911E8F58E6B424B");
+                return tempPath;
+            }
+
+            try
+            {
+                var result = InternalGetTempPath();
+                if (!Directory.Exists(result))
+                    Directory.CreateDirectory(result);
+                return result;
+            }
+            catch (Exception e)
+            {
+                BaseObject.Nop(e);
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Generates a temporary file name in the temporary directory returned
+        /// by <see cref="GetTempPath"/>.
+        /// </summary>
+        /// <returns>
+        /// A string containing the full path of the temporary file name.
+        /// The file is created as a zero-byte file on disk.
+        /// </returns>
+        public static string GetTempFileName()
+        {
+            if (UseWindowsDefaultTempPath)
+            {
+                return Path.GetTempFileName();
+            }
+            else
+            {
+                var path = GenTempFileName(
+                    ".tmp",
+                    GenTempFileNameFlags.DeleteIfExists | GenTempFileNameFlags.CreateEmptyFile);
+                return path;
+            }
+        }
 
         /// <summary>
         /// Gets whether directory is empty (contains no files or sub-folders).
@@ -369,6 +553,38 @@ namespace Alternet.UI
             if (EndsWithDirectorySeparator(path))
                 return path;
             return path + ExtractDirectorySeparatorChar(path);
+        }
+
+        /// <summary>
+        /// Generates a temporary file name with the specified extension.
+        /// </summary>
+        /// <param name="extension">The file extension to use for the temporary file.</param>
+        /// <param name="flags">Flags used to specify options for generating a temporary file name.</param>
+        /// <returns>A string containing the full path of the generated temporary file name.</returns>
+        public static string GenTempFileName(
+            string extension = ".tmp",
+            GenTempFileNameFlags flags = GenTempFileNameFlags.DeleteIfExists)
+        {
+            var tempPath = GetTempPath();
+            var tempName = Guid.NewGuid().ToString("N");
+            tempName = Path.ChangeExtension(tempName, extension);
+
+            var result = Path.Combine(tempPath, tempName);
+
+            if (flags.HasFlag(GenTempFileNameFlags.DeleteIfExists))
+            {
+                if (File.Exists(result))
+                    File.Delete(result);
+            }
+
+            if (flags.HasFlag(GenTempFileNameFlags.CreateEmptyFile))
+            {
+                using FileStream fs = File.Create(result);
+                fs.Flush();
+                fs.Close();
+            }
+
+            return result;
         }
     }
 }
