@@ -228,6 +228,26 @@ Environment.NewLine + Environment.NewLine +
 
             });
 
+            Actions.Add(typeof(StdProgressBar), (c) =>
+            {
+                StdProgressBar control = (c as StdProgressBar)!;
+                control.OrientationChanged += OrientationChanged;
+                control.Value = 50;
+                control.SuggestedWidth = 200;
+
+                static void OrientationChanged(object? sender, EventArgs e)
+                {
+                    if (sender is not ProgressBar control)
+                        return;
+                    if (control.Orientation == ProgressBarOrientation.Vertical)
+                        control.SuggestedSize = (Coord.NaN, 250);
+                    else
+                        control.SuggestedSize = (250, Coord.NaN);
+                    control.PerformLayout();
+                }
+
+            });
+
             Actions.Add(typeof(PanelOkCancelButtons), (c) =>
             {
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
@@ -379,6 +399,8 @@ Environment.NewLine + Environment.NewLine +
 
         public static void InitGenericSlider(StdSlider control)
         {
+            control.Value = 4;
+
             control.ValueChanged += (s,e) =>
             {
                 App.Invoke(() =>

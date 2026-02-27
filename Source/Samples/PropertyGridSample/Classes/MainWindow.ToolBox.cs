@@ -74,6 +74,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<RichTextBox>();
                 ToolBoxAdd<FindReplaceControl>();
                 ToolBoxAdd<StdSlider>();
+                ToolBoxAdd<StdProgressBar>();
                 ToolBoxAdd<ScrollBar>();
                 ToolBoxAdd<StackPanel>();
                 ToolBoxAdd<TextBox>();
