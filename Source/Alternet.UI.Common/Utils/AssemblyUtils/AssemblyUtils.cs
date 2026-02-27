@@ -97,6 +97,56 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the 'Microsoft.Maui.Essentials' assembly if it is loaded
+        /// in the current application domain.
+        /// </summary>
+        /// <remarks>
+        /// Returns <c>null</c> if the 'Microsoft.Maui.Essentials' assembly
+        /// is not loaded or cannot be found.
+        /// </remarks>
+        public static readonly Lazy<Assembly?> LibraryMicrosoftMauiEssentials = new(() =>
+        {
+            return GetOrLoadAssemblyByName("Microsoft.Maui.Essentials");
+        });
+
+        /// <summary>
+        /// Gets the type for 'Microsoft.Maui.Storage.FileSystem' if the
+        /// 'Microsoft.Maui.Essentials' assembly is loaded.
+        /// </summary>
+        /// <remarks>
+        /// Returns <c>null</c> if the 'Microsoft.Maui.Essentials' assembly is not
+        /// loaded or the type cannot be found.
+        /// </remarks>
+        public static readonly Lazy<Type?> TypeMauiStorageFileSystem = new(() =>
+        {
+            var essentials = LibraryMicrosoftMauiEssentials.Value;
+            if (essentials is null)
+            {
+                return null;
+            }
+
+            var fileSystem = essentials.GetType("Microsoft.Maui.Storage.FileSystem");
+            return fileSystem;
+        });
+
+        /// <summary>
+        /// Gets the cache directory path for the current application if the
+        /// 'Microsoft.Maui.Essentials' assembly is loaded.
+        /// </summary>
+        /// <remarks>
+        /// Returns <c>null</c> if the 'Microsoft.Maui.Essentials' assembly is not loaded,
+        /// the type 'Microsoft.Maui.Storage.FileSystem' cannot be found, or the property
+        /// 'CacheDirectory' is not accessible.
+        /// </remarks>
+        public static readonly Lazy<string?> MauiCacheDirectory = new(() =>
+        {
+            var fileSystemType = TypeMauiStorageFileSystem?.Value;
+            var cacheDirectory =
+                fileSystemType?.GetProperty("CacheDirectory")?.GetValue(null) as string;
+            return cacheDirectory;
+        });
+
+        /// <summary>
         /// Gets or sets list of events for all <see cref="AbstractControl"/>
         /// descendants.
         /// </summary>
