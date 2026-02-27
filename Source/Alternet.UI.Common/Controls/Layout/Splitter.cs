@@ -67,6 +67,8 @@ namespace Alternet.UI
         private SplitterTargetMode targetMode = SplitterTargetMode.Auto;
         private bool isBackgroundPainted = true;
         private bool isForegroundPainted = true;
+        private bool isMouseEnabled = true;
+        private bool splitEndOnEscape = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Splitter"/> class.
@@ -139,6 +141,29 @@ namespace Alternet.UI
         public ResolveSplitterColorsDelegate? ResolveSplitterColorsOverride { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the split operation should terminate when an escape character is
+        /// encountered. Default is true.
+        /// </summary>
+        /// <remarks>Set this property to <see langword="true"/> to ensure that the split operation ends
+        /// upon encountering an escape character. This can be useful in scenarios where escape sequences are
+        /// significant and should not be processed as part of the split result.</remarks>
+        [Browsable(false)]
+        public virtual bool SplitEndOnEscape
+        {
+            get
+            {
+                return splitEndOnEscape;
+            }
+
+            set
+            {
+                if (splitEndOnEscape == value)
+                    return;
+                splitEndOnEscape = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the background is painted.
         /// Default is true.
         /// </summary>
@@ -152,6 +177,28 @@ namespace Alternet.UI
                     return;
                 isBackgroundPainted = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether mouse input is enabled.
+        /// </summary>
+        /// <remarks>When set to <see langword="true"/>, mouse interactions are processed by the control;
+        /// otherwise, mouse input is ignored. Changing this property may affect the behavior of user interface elements
+        /// that rely on mouse input.</remarks>
+        [Browsable(false)]
+        public virtual bool IsMouseEnabled
+        {
+            get
+            {
+                return isMouseEnabled;
+            }
+
+            set
+            {
+                if (isMouseEnabled == value)
+                    return;
+                isMouseEnabled = value;
             }
         }
 
@@ -552,7 +599,7 @@ namespace Alternet.UI
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if (splitTarget != null && e.KeyCode == Keys.Escape)
+            if (splitTarget != null && e.KeyCode == Keys.Escape && SplitEndOnEscape)
             {
                 SplitEnd(false);
                 e.Handled = true;
@@ -562,6 +609,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseDown(MouseEventArgs e)
         {
+            if (!IsMouseEnabled)
+                return;
             base.OnMouseDown(e);
             if (e.Button == MouseButtons.Left && e.Clicks == 1)
             {
@@ -573,6 +622,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            if (!IsMouseEnabled)
+                return;
             base.OnMouseMove(e);
 
             if (splitTarget != null)
@@ -590,6 +641,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseUp(MouseEventArgs e)
         {
+            if (!IsMouseEnabled)
+                return;
             base.OnMouseUp(e);
             if (splitTarget != null)
                 SplitEnd(true);
