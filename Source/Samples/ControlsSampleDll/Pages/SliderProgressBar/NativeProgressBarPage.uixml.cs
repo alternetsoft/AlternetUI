@@ -5,13 +5,18 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ProgressBarPage : Panel
+    internal partial class NativeProgressBarPage : Panel
     {
-        public ProgressBarPage()
+        public NativeProgressBarPage()
         {
             InitializeComponent();
 
             mainTabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
+
+            if (App.IsMacOS)
+            {
+                verticalProgressBarsGrid.Parent = null;
+            }
         }
 
         private void IncreaseAllButton_Click(object? sender, EventArgs e)
@@ -23,13 +28,13 @@ namespace ControlsSample
             }
         }
 
-        private IEnumerable<StdProgressBar> GetAllProgressBars()
+        private IEnumerable<ProgressBar> GetAllProgressBars()
         {
             return new AbstractControl[]
             {
                 verticalProgressBarsGrid,
                 horizontalProgressBarsPanel
-            }.SelectMany(x => x.Children.OfType<StdProgressBar>());
+            }.SelectMany(x => x.Children.OfType<ProgressBar>());
         }
 
         private void IndeterminateCheckBox_CheckedChanged(object sender, System.EventArgs e)

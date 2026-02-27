@@ -9,7 +9,7 @@
         <StdSlider Name="progressBarControlSlider"
                 VerticalAlignment="Center"
             SuggestedWidth="200"/>
-        <ProgressBar Maximum="10" Margin="10,0,0,0" Name="progressBar"
+        <StdProgressBar Maximum="10" Margin="10,0,0,0" Name="progressBar"
                      SuggestedWidth="200"  VerticalAlignment="Center"/>
       </StackPanel>
     </Border>

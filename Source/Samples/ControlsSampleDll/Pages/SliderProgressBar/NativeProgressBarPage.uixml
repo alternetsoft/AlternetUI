@@ -1,4 +1,4 @@
-﻿<Panel x:Class="ControlsSample.ProgressBarPage"
+﻿<Panel x:Class="ControlsSample.NativeProgressBarPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
@@ -13,19 +13,19 @@
         <StackPanel Title="Horizontal"
           Orientation="Vertical" Margin="5" Name="horizontalProgressBarsPanel">
           <Label Text="H1 [0-100]" Margin="0,0,0,5" />
-          <StdProgressBar Value="0" Margin="0,0,0,5" />
+          <ProgressBar Value="0" Margin="0,0,0,5" />
 
           <Label Text="H2 [0-100]" Margin="0,0,0,5" />
-          <StdProgressBar Value="50" Margin="0,0,0,5" />
+          <ProgressBar Value="50" Margin="0,0,0,5" />
 
           <Label Text="H3 [0-100]" Margin="0,0,0,5" />
-          <StdProgressBar Value="100" Margin="0,0,0,5" />
+          <ProgressBar Value="100" Margin="0,0,0,5" />
 
           <Label Text="H4 [50-200]" Margin="0,10,0,5" />
-          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" />
+          <ProgressBar Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" />
 
           <Label Text="H5 [-20-30]" Margin="0,10,0,5" />
-          <StdProgressBar Value="15" Margin="0,0,0,5" Height="25" Minimum="-20" Maximum="30"/>
+          <ProgressBar Value="15" Margin="0,0,0,5" Height="25" Minimum="-20" Maximum="30"/>
 
         </StackPanel>
 
@@ -47,14 +47,14 @@
                  Grid.Column="0" Grid.Row="0"/>
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="0" Grid.Row="1"/>
-          <StdProgressBar Value="0" Margin="5" Orientation="Vertical" HorizontalAlignment="Center"
+          <ProgressBar Value="0" Margin="5" Orientation="Vertical" HorizontalAlignment="Center"
                          Grid.Column="0" Grid.Row="2"/>
 
           <Label Text="V2" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="1" Grid.Row="0"/>
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="1" Grid.Row="1"/>
-          <StdProgressBar Value="50" Margin="5" Orientation="Vertical"
+          <ProgressBar Value="50" Margin="5" Orientation="Vertical"
                        HorizontalAlignment="Center"
                          Grid.Column="1" Grid.Row="2"/>
 
@@ -62,7 +62,7 @@
                  Grid.Column="2" Grid.Row="0"/>
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="2" Grid.Row="1"/>
-          <StdProgressBar Value="100" Margin="5" Orientation="Vertical"
+          <ProgressBar Value="100" Margin="5" Orientation="Vertical"
                        HorizontalAlignment="Center"
                          Grid.Column="2" Grid.Row="2"/>
 
@@ -70,7 +70,7 @@
                  Grid.Column="3" Grid.Row="0"/>
           <Label Text="[50-200]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="3" Grid.Row="1"/>
-          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="5"
+          <ProgressBar Minimum="50" Maximum="200" Value="125" Margin="5"
                        Orientation="Vertical" HorizontalAlignment="Center"
                          Grid.Column="3" Grid.Row="2"/>
 
@@ -78,7 +78,7 @@
                  Grid.Column="4" Grid.Row="0"/>
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="4" Grid.Row="1"/>
-          <StdProgressBar Value="50" Margin="0,0,0,5" Width="25" Orientation="Vertical"
+          <ProgressBar Value="50" Margin="0,0,0,5" Width="25" Orientation="Vertical"
                        HorizontalAlignment="Center"
                          Grid.Column="4" Grid.Row="2"/>
 

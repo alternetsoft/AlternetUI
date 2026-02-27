@@ -7,63 +7,16 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a generic slider control (also known as track bar).
-    /// This control is implemented inside the library and doesn't use native slider control.
+    /// Represents a standard progress bar control that visually indicates the progress of a task.
     /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This is a scrollable control similar to the scroll bar control.
-    /// You can configure ranges through which the value of the <see cref="Value"/> property of a
-    /// slider scrolls by setting the <see cref="Minimum"/> property to specify the lower end
-    /// of the range and the <see cref="Maximum"/> property to specify the upper end of the range.
-    /// </para>
-    /// <para>
-    /// The slider can be displayed horizontally or vertically.
-    /// </para>
-    /// <para>
-    /// You can use this control to input numeric data obtained through the
-    /// <see cref="Value"/> property.
-    /// You can display this numeric data in a control or use it in code.
-    /// </para>
-    /// </remarks>
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class StdSlider : Border, ISliderScaleContainer
+    public partial class StdProgressBar : Border
     {
         /// <summary>
-        /// Specifies the default corner radius to apply to the slider thumb.
-        /// </summary>
-        /// <remarks>
-        /// The value is expressed in either absolute units or as a percentage, depending on
-        /// the value of <see cref="DefaultThumbCornerRadiusIsPercent"/>.
-        /// A <c>null</c> value indicates no corner radius.
-        /// </remarks>
-        public static Coord? DefaultThumbCornerRadius = 25;
-
-        /// <summary>
-        /// Indicates whether the default thumb corner radius is expressed as a percentage.
-        /// </summary>
-        /// <remarks>
-        /// If <c>true</c>, the value of <see cref="DefaultThumbCornerRadius"/> is treated
-        /// as a percentage of the thumb's bounding dimensions.
-        /// If <c>false</c>, the value is interpreted as an absolute coordinate unit.
-        /// </remarks>
-        public static bool DefaultThumbCornerRadiusIsPercent = true;
-
-        /// <summary>
-        /// Gets or sets whether to use default spacer color.
-        /// </summary>
-        public static bool DefaultUseSpacerColor = true;
-
-        /// <summary>
-        /// Gets or sets whether slider thumb has border by default.
-        /// </summary>
-        public static bool DefaultThumbHasBorder = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the slider control uses the
+        /// Gets or sets a value indicating whether the progress bar control uses the
         /// <see cref="DefaultColors.ControlBackColor"/> and
         /// <see cref="DefaultColors.ControlForeColor"/>. Default is <c>true</c>.
         /// </summary>
@@ -100,45 +53,36 @@ namespace Alternet.UI
         public static Coord DefaultScaleSize = 7;
 
         /// <summary>
-        /// Represents the default minimum size for a slider control.
+        /// Represents the default minimum size for a control.
         /// </summary>
-        /// <remarks>This value is used to define the smallest allowable size for a slider.
+        /// <remarks>This value is used to define the smallest allowable size for a control.
         /// It can be used
         /// as a baseline for UI layout calculations or constraints.</remarks>
-        public static Coord DefaultSliderMinimumSize = 20;
+        public static Coord DefaultControlMinimumSize = 20;
 
         /// <summary>
-        /// Represents the default width of the slider's thumb.
+        /// Specifies the default interval, in milliseconds, used for animation timer updates.
         /// </summary>
-        public static Coord DefaultSliderThumbWidth = 15;
+        /// <remarks>This value determines how frequently animation updates occur when no custom interval
+        /// is set. Adjusting this value can affect the smoothness and performance of animations that rely on
+        /// timer-based updates.</remarks>
+        public static int DefaultAnimationTimerInterval = 30;
 
         /// <summary>
-        /// Represents the default size of the space, as a percentage of the thumb size.
-        /// </summary>
-        /// <remarks>The default value is 30%.</remarks>
-        public static int DefaultSpaceSizeInPercentOfThumb = 30;
-
-        /// <summary>
-        /// Represents the default tick style for a slider control.
+        /// Represents the default tick style for a progress bar control.
         /// </summary>
         public static SliderTickStyle DefaultTickStyle = SliderTickStyle.None;
 
         private static Color? defaultSpacerColor;
         private static Color? defaultSecondarySpacerColor;
-        private static Color? defaultThumbBorderColor;
-        private static Color? defaultThumbBackColor;
 
-        private readonly Spacer leftTopSpacer;
-        private readonly Spacer rightBottomSpacer;
         private readonly SliderScale leftTopScale;
         private readonly SliderScale rightBottomScale;
-        private readonly SliderThumb thumb;
 
-        private int maximum = 10;
+        private Timer? timer;
+        private int maximum = 100;
         private int minimum = 0;
         private int val = 0;
-        private int smallChange = 1;
-        private int largeChange = 5;
         private int tickFrequency = 1;
         private SliderOrientation orientation;
         private SliderTickStyle tickStyle;
@@ -148,27 +92,27 @@ namespace Alternet.UI
         private bool isFirstTickVisible = true;
         private bool isLastTickVisible = true;
         private bool autoSize = true;
-        private bool useSpacerColor;
-        private int spaceSizeInPercentOfThumb;
+        private Color? spacerColor;
+        private Color? secondarySpacerColor;
+        private bool goingForward = true;
+        private bool isIndeterminate;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdSlider"/> class.
+        /// Initializes a new instance of the <see cref="StdProgressBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StdSlider(AbstractControl parent)
+        public StdProgressBar(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdSlider"/> class.
+        /// Initializes a new instance of the <see cref="StdProgressBar"/> class.
         /// </summary>
-        public StdSlider()
+        public StdProgressBar()
         {
             AutoPadding = false;
-            useSpacerColor = DefaultUseSpacerColor;
-            spaceSizeInPercentOfThumb = DefaultSpaceSizeInPercentOfThumb;
 
             leftTopScale = CreateScale(isLeftTop: true);
             leftTopScale.Dock = DockStyle.Top;
@@ -184,53 +128,14 @@ namespace Alternet.UI
             rightBottomScale.Padding = 0;
             rightBottomScale.Margin = 0;
 
-            leftTopSpacer = CreateSpacer();
-            leftTopSpacer.ParentBackColor = true;
-            leftTopSpacer.Dock = DockStyle.Left;
-            leftTopSpacer.BackgroundPadding = 4;
-            leftTopSpacer.HasBackground = false;
-
-            thumb = CreateSliderThumb();
-
-            rightBottomSpacer = CreateSpacer();
-            rightBottomSpacer.ParentBackColor = true;
-            rightBottomSpacer.Dock = DockStyle.Fill;
-            rightBottomSpacer.Margin = 1;
-            rightBottomSpacer.BackgroundPadding = 4;
-            rightBottomSpacer.HasBackground = false;
-
-            SuggestedSize = 150;
-
             tickStyle = DefaultTickStyle;
             Padding = 1;
 
-            thumb.Margin = (0, 0, 1, 1);
-            thumb.MinSize = 0;
-            thumb.MinExtra = 0;
-            thumb.SizeDelta = 0;
-
-            MinimumSize = DefaultSliderMinimumSize;
+            MinimumSize = DefaultControlMinimumSize;
 
             UseControlColors(DefaultUseControlColors);
 
             Layout = LayoutStyle.Dock;
-            leftTopSpacer.Width = 0;
-
-            rightBottomSpacer.Parent = this;
-            thumb.Parent = this;
-            leftTopSpacer.Parent = this;
-
-            thumb.SplitterMoved += OnThumbSplitterMoved;
-            thumb.SplitterMoving += OnThumbSplitterMoving;
-
-            leftTopSpacer.MouseLeftButtonDown += OnLeftTopSpacerMouseDown;
-            leftTopSpacer.MouseDoubleClick += OnLeftTopSpacerMouseDown;
-            rightBottomSpacer.MouseLeftButtonDown += OnRightBottomSpacerMouseDown;
-            rightBottomSpacer.MouseDoubleClick += OnRightBottomSpacerMouseDown;
-
-            UpdateDefaultSpacerColors();
-
-            thumb.Bounds = thumb.Bounds;
 
             SetVisibleBorders(
                 DefaultLeftBorderVisible,
@@ -288,51 +193,21 @@ namespace Alternet.UI
         public event EventHandler? MaximumChanged;
 
         /// <summary>
-        /// Occurs when the value of the <see cref="SmallChange"/> property changes.
-        /// </summary>
-        public event EventHandler? SmallChangeChanged;
-
-        /// <summary>
-        /// Occurs when the value of the <see cref="LargeChange"/> property changes.
-        /// </summary>
-        public event EventHandler? LargeChangeChanged;
-
-        /// <summary>
         /// Occurs when the value of the <see cref="TickFrequency"/> property changes.
         /// </summary>
         public event EventHandler? TickFrequencyChanged;
 
         /// <summary>
-        /// Gets default spacer color of the slider.
-        /// This value is used when <see cref="UseSpacerColor"/> is True.
+        /// Gets default spacer color of the control.
         /// </summary>
         public static Color DefaultSpacerColor
         {
-            get => defaultSpacerColor ?? DefaultColors.DefaultCheckBoxColor;
+            get => defaultSpacerColor ?? LightDarkColors.Green;
             set => defaultSpacerColor = value;
         }
 
         /// <summary>
-        /// Gets or sets default slider thumb border color.
-        /// </summary>
-        public static Color DefaultThumbBorderColor
-        {
-            get => defaultThumbBorderColor ?? DefaultColors.DefaultCheckBoxColor;
-            set => defaultThumbBorderColor = value;
-        }
-
-        /// <summary>
-        /// Gets or sets default slider thumb background color.
-        /// </summary>
-        public static Color DefaultThumbBackColor
-        {
-            get => defaultThumbBackColor ?? DefaultColors.DefaultCheckBoxColor;
-            set => defaultThumbBackColor = value;
-        }
-
-        /// <summary>
-        /// Gets default secondary spacer color of the slider.
-        /// This value is used when <see cref="UseSpacerColor"/> is True.
+        /// Gets default secondary spacer color of the control.
         /// </summary>
         public static Color DefaultSecondarySpacerColor
         {
@@ -344,25 +219,41 @@ namespace Alternet.UI
             set => defaultSecondarySpacerColor = value;
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Slider;
-
         /// <summary>
-        /// Gets or sets whether spacer background colors are automatically updated
-        /// with the default spacer colors.
+        /// Gets or sets a value indicating whether the progress bar operates in an indeterminate state.
         /// </summary>
-        public virtual bool UseSpacerColor
+        /// <remarks>When set to <see langword="true"/>, the progress bar displays a continuous animation
+        /// to indicate ongoing activity without specifying the amount of progress completed. Setting this property to
+        /// <see langword="false"/> returns the progress bar to its normal, determinate mode. Use the indeterminate
+        /// state when the duration or progress of an operation cannot be determined.</remarks>
+        public virtual bool IsIndeterminate
         {
-            get => useSpacerColor;
+            get
+            {
+                return isIndeterminate;
+            }
 
             set
             {
-                if (useSpacerColor == value)
+                if (isIndeterminate == value)
                     return;
-                useSpacerColor = value;
-                UpdateDefaultSpacerColors();
+                isIndeterminate = value;
+                if (isIndeterminate)
+                {
+                    goingForward = true;
+                    Timer.Start();
+                }
+                else
+                {
+                    Timer.Stop();
+                    Value = Minimum;
+                    Invalidate();
+                }
             }
         }
+
+        /// <inheritdoc/>
+        public override ControlTypeId ControlKind => ControlTypeId.ProgressBar;
 
         /// <summary>
         /// Gets or sets a value indicating whether the slider control automatically sizes itself.
@@ -382,6 +273,48 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the color of the top or left spacer element of the slider control.
+        /// If not specified, default spacer color is used, which is defined by the
+        /// <see cref="DefaultSpacerColor"/> property.
+        /// </summary>
+        public virtual Color? SpacerColor
+        {
+            get
+            {
+                return spacerColor;
+            }
+
+            set
+            {
+                if (spacerColor == value)
+                    return;
+                spacerColor = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the secondary spacer element.
+        /// If not specified, default secondary spacer color is used, which is defined by the
+        /// <see cref="DefaultSecondarySpacerColor"/> property.
+        /// </summary>
+        public virtual Color? SecondarySpacerColor
+        {
+            get
+            {
+                return secondarySpacerColor;
+            }
+
+            set
+            {
+                if (secondarySpacerColor == value)
+                    return;
+                secondarySpacerColor = value;
+                Invalidate();
+            }
+        }
+
         /// <inheritdoc/>
         public override bool HasBorder
         {
@@ -393,7 +326,6 @@ namespace Alternet.UI
             set
             {
                 base.HasBorder = value;
-                thumb.Bounds = thumb.Bounds;
             }
         }
 
@@ -455,29 +387,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the size of the spacer, as a percentage of the thumb size.
-        /// </summary>
-        /// <remarks>Setting a value outside the range of 0 to 100 will automatically clamp
-        /// the value to the nearest valid boundary.
-        /// For example, setting a value of -10 will result in 0, and setting a value of
-        /// 150 will result in 100.</remarks>
-        public virtual int SpaceSizeInPercentOfThumb
-        {
-            get => spaceSizeInPercentOfThumb;
-            set
-            {
-                if (value < 0)
-                    value = 0;
-                if (value > 100)
-                    value = 100;
-                if (spaceSizeInPercentOfThumb == value)
-                    return;
-                spaceSizeInPercentOfThumb = value;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the format string used to display the value of the slider.
         /// </summary>
         public virtual string? ValueFormat
@@ -508,18 +417,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the thumb control of the slider.
-        /// </summary>
-        [Browsable(false)]
-        public SliderThumb ThumbControl => thumb;
-
-        /// <summary>
-        /// Gets the size of the thumb control.
-        /// </summary>
-        [Browsable(false)]
-        public SizeD ThumbSize => thumb.Size;
-
-        /// <summary>
         /// Gets the left/top scale control of the slider.
         /// </summary>
         [Browsable(false)]
@@ -530,18 +427,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public SliderScale RightBottomScale => rightBottomScale;
-
-        /// <summary>
-        /// Gets the left/top spacer control of the slider.
-        /// </summary>
-        [Browsable(false)]
-        public AbstractControl LeftTopSpacer => leftTopSpacer;
-
-        /// <summary>
-        /// Gets the right/bottom spacer control of the slider.
-        /// </summary>
-        [Browsable(false)]
-        public AbstractControl RightBottomSpacer => rightBottomSpacer;
 
         /// <inheritdoc/>
         public override HorizontalAlignment HorizontalAlignment
@@ -584,40 +469,13 @@ namespace Alternet.UI
                 if (IsHorizontal)
                 {
                     result = ClientSize.Width - Padding.Horizontal;
-                    if (ThumbControl.Parent is not null)
-                        result = result - ThumbControl.Width - ThumbControl.Margin.Horizontal;
                 }
                 else
                 {
                     result = ClientSize.Height - Padding.Vertical;
-                    if (ThumbControl.Parent is not null)
-                        result = result - ThumbControl.Height - ThumbControl.Margin.Vertical;
                 }
 
                 return result;
-            }
-        }
-
-        /// <summary>
-        /// Gets the current size of the left/top spacer control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Coord LeftTopSpacerSize
-        {
-            get
-            {
-                if (IsHorizontal)
-                    return LeftTopSpacer.Width;
-                else
-                    return LeftTopSpacer.Height;
-            }
-
-            set
-            {
-                if (IsHorizontal)
-                    LeftTopSpacer.Width = value;
-                else
-                    LeftTopSpacer.Height = value;
             }
         }
 
@@ -647,7 +505,6 @@ namespace Alternet.UI
                 {
                     SuppressInvalidate();
                     this.val = value;
-                    UpdateThumbPositionFromValue();
                     RaiseValueChanged();
                 }
                 finally
@@ -703,9 +560,6 @@ namespace Alternet.UI
                     var isHorizontal = value == SliderOrientation.Horizontal;
                     var dockStyle = isHorizontal ? DockStyle.Left : DockStyle.Top;
 
-                    LeftTopSpacer.Dock = dockStyle;
-                    ThumbControl.Dock = dockStyle;
-
                     if (isHorizontal)
                     {
                         leftTopScale.Dock = DockStyle.Top;
@@ -719,12 +573,7 @@ namespace Alternet.UI
 
                     leftTopScale.Size = 0;
                     rightBottomScale.Size = 0;
-                    leftTopSpacer.Size = 0;
-                    thumb.Size = 0;
                     Size = GetPreferredSize(Size);
-                    UpdateThumbPositionFromValue();
-
-                    UpdateDefaultSpacerColors();
                 });
 
                 OrientationChanged?.Invoke(this, EventArgs.Empty);
@@ -850,57 +699,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the value added to or subtracted from the <see cref="Value"/> property
-        /// when the thumb is moved a small distance.
-        /// </summary>
-        /// <value>A numeric value. The default value is 1.</value>
-        public virtual int SmallChange
-        {
-            get
-            {
-                return smallChange;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (value < 0)
-                    value = 0;
-                if (smallChange == value)
-                    return;
-                smallChange = value;
-
-                SmallChangeChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value to be added to or subtracted from the <see cref="Value"/> property
-        /// when the thumb is moved a large distance.
-        /// </summary>
-        /// <value>A numeric value. The default is 5.</value>
-        public virtual int LargeChange
-        {
-            get
-            {
-                return largeChange;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (value < 0)
-                    value = 0;
-                if (largeChange == value)
-                    return;
-                largeChange = value;
-                LargeChangeChanged?.Invoke(this, EventArgs.Empty);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value that specifies the delta between ticks drawn on the control.
         /// </summary>
         /// <value>The numeric value representing the delta between ticks. The default is 1.</value>
@@ -989,6 +787,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the timer used for the animation.
+        /// </summary>
+        protected Timer Timer
+        {
+            get
+            {
+                if (timer == null)
+                {
+                    timer = new Timer();
+                    timer.Interval = DefaultAnimationTimerInterval;
+                    timer.Tick += OnTimerTick;
+                }
+
+                return timer;
+            }
+        }
+
+        /// <summary>
         /// Clears the ticks.
         /// </summary>
         public virtual void ClearTicks()
@@ -1009,73 +825,72 @@ namespace Alternet.UI
             MinimumChanged?.Invoke(this, e);
         }
 
-        /// <summary>
-        /// Calculates and retrieves the bounding rectangles for the left-top
-        /// and right-bottom spacer elements based on
-        /// the current thumb bounds and orientation.
-        /// </summary>
-        /// <remarks>The method adjusts the spacer rectangles' dimensions and positions depending on
-        /// whether the layout is horizontal or vertical. The spacers'
-        /// sizes are determined as a percentage of the
-        /// thumb's dimensions, and their positions are aligned relative
-        /// to the thumb's center.</remarks>
-        /// <param name="leftTop">When this method returns, contains
-        /// the bounding rectangle for the left-top spacer element. The dimensions
-        /// and position are calculated based on the thumb's bounds and
-        /// the current orientation.</param>
-        /// <param name="rightBottom">When this method returns,
-        /// contains the bounding rectangle for the right-bottom spacer element. The
-        /// dimensions and position are calculated based on the thumb's
-        /// bounds and the current orientation.</param>
-        public virtual void GetSpacerRectangles(out RectD leftTop, out RectD rightBottom)
-        {
-            var thumbRect = thumb.Bounds;
-            var spacerHeight = thumbRect.PercentOfHeight(SpaceSizeInPercentOfThumb);
-            var spacerWidth = thumbRect.PercentOfWidth(SpaceSizeInPercentOfThumb);
-            var center = thumbRect.Center;
-
-            var leftTopSpacerRect = leftTopSpacer.Bounds;
-            var rightBottomSpacerRect = rightBottomSpacer.Bounds;
-
-            if (IsHorizontal)
-            {
-                leftTopSpacerRect.Width = center.X - leftTopSpacerRect.X;
-                leftTopSpacerRect.Height = spacerHeight;
-                leftTopSpacerRect.CenterVert = center.Y;
-
-                rightBottomSpacerRect.Width = rightBottomSpacerRect.Right - center.X;
-                rightBottomSpacerRect.Left = center.X;
-                rightBottomSpacerRect.Height = spacerHeight;
-                rightBottomSpacerRect.CenterVert = center.Y;
-            }
-            else
-            {
-                leftTopSpacerRect.Width = spacerWidth;
-                leftTopSpacerRect.Height = center.Y - leftTopSpacerRect.Y;
-                leftTopSpacerRect.CenterHorz = center.X;
-
-                rightBottomSpacerRect.Width = spacerWidth;
-                rightBottomSpacerRect.Height = rightBottomSpacerRect.Bottom - center.Y;
-                rightBottomSpacerRect.CenterHorz = center.X;
-            }
-
-            leftTop = leftTopSpacerRect;
-            rightBottom = rightBottomSpacerRect;
-        }
-
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
+            const float defaultBarSize = 15;
+
             base.DefaultPaint(e);
+
+            var sc1 = (spacerColor ?? DefaultSpacerColor).AsBrush;
+            var sc2 = (secondarySpacerColor ?? DefaultSecondarySpacerColor).AsBrush;
+
+            var r = e.ClipRectangle;
+            r = r.DeflatedWithPadding(Padding);
+
+            if (r.SizeIsEmpty)
+                return;
 
             var g = e.Graphics;
 
-            GetSpacerRectangles(out var leftTopSpacerRect, out var rightBottomSpacerRect);
+            if (IsHorizontal)
+            {
+                r.Height = defaultBarSize;
+                r.CenterVert = e.ClipRectangle.CenterVert;
+            }
+            else
+            {
+                r.Width = defaultBarSize;
+                r.CenterHorz = e.ClipRectangle.CenterHorz;
+            }
 
-            if(!leftTopSpacerRect.SizeIsEmpty)
-                g.FillRectangle(leftTopSpacer.BackColor.AsBrush, leftTopSpacerRect);
-            if(!rightBottomSpacerRect.SizeIsEmpty)
-                g.FillRectangle(rightBottomSpacer.BackColor.AsBrush, rightBottomSpacerRect);
+            if (Value <= Minimum)
+            {
+                g.FillRectangle(sc2, r);
+            }
+            else
+            if(Value >= Maximum)
+            {
+                g.FillRectangle(sc1, r);
+            }
+            else
+            {
+                var pos = ScaleValueToPosition(Value);
+
+                RectD leftTop = new();
+                RectD rightBottom = new();
+
+                if (IsHorizontal)
+                {
+                    leftTop.Left = r.Left;
+                    leftTop.Width = r.Left + pos;
+                    leftTop.Top = r.Top;
+                    leftTop.Height = r.Height;
+
+                    rightBottom.Left = leftTop.Right;
+                    rightBottom.Width = r.Right - rightBottom.Left;
+                    rightBottom.Top = r.Top;
+                    rightBottom.Height = r.Height;
+                }
+                else
+                {
+                }
+
+                if (!leftTop.SizeIsEmpty)
+                    g.FillRectangle(sc1, leftTop);
+                if (!rightBottom.SizeIsEmpty)
+                    g.FillRectangle(sc2, rightBottom);
+            }
         }
 
         /// <summary>
@@ -1089,46 +904,6 @@ namespace Alternet.UI
                 return;
             OnMaximumChanged(e);
             MaximumChanged?.Invoke(this, e);
-        }
-
-        /// <summary>
-        /// Decreases the <see cref="Value"/> property by the <see cref="LargeChange"/> value.
-        /// </summary>
-        public virtual void DecValueLarge()
-        {
-            if (DisposingOrDisposed)
-                return;
-            Value -= LargeChange;
-        }
-
-        /// <summary>
-        /// Decreases the <see cref="Value"/> property by the <see cref="SmallChange"/> value.
-        /// </summary>
-        public virtual void DecValue()
-        {
-            if (DisposingOrDisposed)
-                return;
-            Value -= SmallChange;
-        }
-
-        /// <summary>
-        /// Increases the <see cref="Value"/> property by the <see cref="LargeChange"/> value.
-        /// </summary>
-        public virtual void IncValueLarge()
-        {
-            if (DisposingOrDisposed)
-                return;
-            Value += LargeChange;
-        }
-
-        /// <summary>
-        /// Increases the <see cref="Value"/> property by the <see cref="SmallChange"/> value.
-        /// </summary>
-        public virtual void IncValue()
-        {
-            if (DisposingOrDisposed)
-                return;
-            Value += SmallChange;
         }
 
         /// <summary>
@@ -1179,7 +954,7 @@ namespace Alternet.UI
                     {
                         specifiedHeight = MathUtils.Max(
                             MinimumSize.Height,
-                            DefaultSliderMinimumSize);
+                            DefaultControlMinimumSize);
                         specifiedHeight = MathUtils.Ceiling(specifiedHeight);
 
                         if (leftTopScale.Parent is not null)
@@ -1201,9 +976,7 @@ namespace Alternet.UI
                 {
                     if (Coord.IsNaN(specifiedWidth) || AutoSize)
                     {
-                        specifiedWidth = MathUtils.Max(
-                            MinimumSize.Width,
-                            DefaultSliderMinimumSize);
+                        specifiedWidth = MathUtils.Max(MinimumSize.Width, DefaultControlMinimumSize);
 
                         if (leftTopScale.Parent is not null)
                         {
@@ -1240,61 +1013,18 @@ namespace Alternet.UI
             if (val <= Minimum)
                 return 0;
             else
-            if (val >= Maximum)
-                return MaxLeftTopSpacerSize;
-            else
-            {
-                var v = val - Minimum;
-                var maxV = Maximum - Minimum;
+                if (val >= Maximum)
+                    return MaxLeftTopSpacerSize;
+                else
+                {
+                    var v = val - Minimum;
+                    var maxV = Maximum - Minimum;
 
-                var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
+                    var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
 
-                var result = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
-                return result;
-            }
-        }
-
-        /// <summary>
-        /// Sets left/top spacer color to default.
-        /// </summary>
-        public virtual void SetSpacerColorToDefault()
-        {
-            SetSpacerColor(DefaultSpacerColor);
-        }
-
-        /// <summary>
-        /// Sets the colors of the left/top spacer.
-        /// </summary>
-        /// <param name="leftTopSpacerColor">The color of the left/top spacer.
-        /// If <c>null</c>, the left/top spacer will use the parent's background color.</param>
-        public virtual void SetSpacerColor(Color? leftTopSpacerColor)
-        {
-            leftTopSpacer.ParentBackColor = leftTopSpacerColor is null;
-            leftTopSpacer.BackgroundColor = leftTopSpacerColor;
-        }
-
-        /// <summary>
-        /// Sets the colors of the right/bottom spacer.
-        /// </summary>
-        /// <param name="spacerColor">The color of the right/bottom spacer.
-        /// If <c>null</c>, the right/bottom spacer will use the parent's background color.</param>
-        public virtual void SetFarSpacerColor(Color? spacerColor)
-        {
-            rightBottomSpacer.ParentBackColor = spacerColor is null;
-            rightBottomSpacer.BackgroundColor = spacerColor;
-        }
-
-        /// <summary>
-        /// Sets right/bottom spacer color to default.
-        /// </summary>
-        public virtual void SetFarSpacerColorToDefault()
-        {
-            SetFarSpacerColor(DefaultSpacerColor);
-        }
-
-        internal void SetDebugColors()
-        {
-            SetSpacerColor(LightDarkColors.Green);
+                    var result = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
+                    return result;
+                }
         }
 
         /// <summary>
@@ -1321,51 +1051,11 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>
-        /// Updates the <see cref="Value"/> property based on the current
-        /// position of the thumb control.
-        /// </summary>
-        protected virtual void UpdateValueFromThumbPosition()
-        {
-            DoInsideLayout(() =>
-            {
-                if (LeftTopSpacerSize <= 0)
-                {
-                    Value = Minimum;
-                    return;
-                }
-
-                if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
-                {
-                    Value = Maximum;
-                    return;
-                }
-
-                var computedValue = ((Maximum - Minimum) * LeftTopSpacerSize) / MaxLeftTopSpacerSize;
-                var asInt = Convert.ToInt32(computedValue);
-                Value = Minimum + asInt;
-            });
-        }
-
         /// <inheritdoc/>
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            UpdateThumbPositionFromValue();
-        }
-
-        /// <summary>
-        /// Updates the position of the thumb control based on the current
-        /// state of the control.
-        /// </summary>
-        protected virtual void UpdateThumbPositionFromValue()
-        {
-            if (DisposingOrDisposed)
-                return;
-            DoInsideLayout(() =>
-            {
-                LeftTopSpacerSize = ScaleValueToPosition(Value);
-            });
+            Invalidate();
         }
 
         /// <summary>
@@ -1379,68 +1069,6 @@ namespace Alternet.UI
             if (value < min)
                 return min;
             return value;
-        }
-
-        /// <summary>
-        /// Handles the mouse down event on the left/top spacer.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The mouse event data.</param>
-        protected virtual void OnLeftTopSpacerMouseDown(object? sender, MouseEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (IsHorizontal)
-                Value -= LargeChange;
-            else
-                Value -= LargeChange;
-        }
-
-        /// <summary>
-        /// Handles the mouse down event on the right/bottom spacer.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The mouse event data.</param>
-        protected virtual void OnRightBottomSpacerMouseDown(object? sender, MouseEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (IsHorizontal)
-                Value += LargeChange;
-            else
-                Value += LargeChange;
-        }
-
-        /// <summary>
-        /// Handles the event triggered when the thumb splitter is moved.
-        /// </summary>
-        /// <remarks>This method is intended to be overridden in derived classes
-        /// to provide custom
-        /// handling for the thumb splitter movement event.</remarks>
-        /// <param name="sender">The source of the event, typically the control
-        /// that raised the event. Can be <see langword="null"/>.</param>
-        /// <param name="e">An instance of <see cref="SplitterEventArgs"/> containing
-        /// event data related to the splitter movement.</param>
-        protected virtual void OnThumbSplitterMoved(object? sender, SplitterEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-        }
-
-        /// <summary>
-        /// Handles the event triggered when the thumb splitter is moving.
-        /// </summary>
-        /// <remarks>This method is intended to be overridden in derived classes
-        /// to provide custom
-        /// handling for the thumb splitter movement event.</remarks>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">An instance of <see cref="SplitterEventArgs"/> containing event
-        /// data related to the splitter movement.</param>
-        protected virtual void OnThumbSplitterMoving(object? sender, SplitterEventArgs e)
-        {
-            if (DisposingOrDisposed)
-                return;
-            UpdateValueFromThumbPosition();
         }
 
         /// <summary>
@@ -1478,24 +1106,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a spacer control for the slider.
-        /// </summary>
-        /// <returns>A new spacer control instance.</returns>
-        protected virtual Spacer CreateSpacer()
-        {
-            return new Spacer();
-        }
-
-        /// <summary>
-        /// Creates slider thumb control.
-        /// </summary>
-        /// <returns>New instance of <see cref="SliderThumb"/> or its descendant.</returns>
-        protected virtual SliderThumb CreateSliderThumb()
-        {
-            return new SliderThumb();
-        }
-
-        /// <summary>
         /// Updates the display of the current value in the
         /// <see cref="ValueDisplay"/> control.
         /// </summary>
@@ -1506,7 +1116,7 @@ namespace Alternet.UI
             if (ValueDisplay is null || ValueDisplay.DisposingOrDisposed)
                 return;
 
-            if(formatValueForDisplay is not null)
+            if (formatValueForDisplay is not null)
             {
                 var formatEventArgs = new FormatValueEventArgs<int>(Value);
                 formatValueForDisplay(this, formatEventArgs);
@@ -1518,7 +1128,7 @@ namespace Alternet.UI
 
             string DefaultValueToString()
             {
-                if(ValueFormat is not null)
+                if (ValueFormat is not null)
                 {
                     return string.Format(ValueFormat, Value);
                 }
@@ -1531,26 +1141,6 @@ namespace Alternet.UI
         protected override bool GetDefaultHasBorder()
         {
             return DefaultHasBorder;
-        }
-
-        /// <summary>
-        /// Updates default spacer colors.
-        /// </summary>
-        protected virtual void UpdateDefaultSpacerColors()
-        {
-            if (UseSpacerColor)
-            {
-                if (IsHorizontal)
-                {
-                    SetSpacerColor(DefaultSpacerColor);
-                    SetFarSpacerColor(DefaultSecondarySpacerColor);
-                }
-                else
-                {
-                    SetSpacerColor(DefaultSecondarySpacerColor);
-                    SetFarSpacerColor(DefaultSpacerColor);
-                }
-            }
         }
 
         /// <summary>
@@ -1583,6 +1173,37 @@ namespace Alternet.UI
             });
         }
 
+        /// <summary>
+        /// Invoked when the timer interval elapses to allow implementation of animated value changes.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the timer that raised the event.</param>
+        /// <param name="e">An object that contains the event data.</param>
+        protected virtual void OnTimerTick(object? sender, EventArgs e)
+        {
+            if (goingForward)
+            {
+                if (Value < Maximum)
+                    Value++;
+                else
+                    goingForward = false;
+            }
+            else
+            {
+                if (Value > Minimum)
+                    Value--;
+                else
+                    goingForward = true;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            timer?.Stop();
+            SafeDispose(ref timer);
+            base.DisposeManaged();
+        }
+
         private void InvalidateScales()
         {
             if (TickStyle != SliderTickStyle.None)
@@ -1592,219 +1213,5 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Represents the slider thumb control.
-        /// </summary>
-        public class SliderThumb : Splitter
-        {
-            /// <summary>
-            /// Represents the default shape type used when to initialize <see cref="Shape"/> property.
-            /// </summary>
-            public static ShapeType DefaultShape = ShapeType.Circle;
-
-            private ShapeType shape = ShapeType.Circle;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="SliderThumb"/> class.
-            /// </summary>
-            public SliderThumb()
-            {
-                DefaultCursor = Cursors.Default;
-                HasBorder = DefaultThumbHasBorder;
-                BorderColor = DefaultThumbBorderColor;
-                BackgroundColor = DefaultThumbBackColor;
-                UniformBorderRadiusIsPercent = DefaultThumbCornerRadiusIsPercent;
-                UniformBorderCornerRadius = DefaultThumbCornerRadius;
-                shape = DefaultShape;
-            }
-
-            /// <summary>
-            /// Represents the type of a geometric shape used to paint the slider thumb.
-            /// </summary>
-            /// <remarks>This enumeration defines the supported shape types,
-            /// such as <see cref="Circle"/> and <see cref="Rectangle"/>.</remarks>
-            public enum ShapeType
-            {
-                /// <summary>
-                /// Represents a geometric circle defined by its radius.
-                /// </summary>
-                Circle,
-
-                /// <summary>
-                /// Represents a rectangle defined by its width and height.
-                /// </summary>
-                Rectangle,
-            }
-
-            /// <summary>
-            /// Gets or sets the shape type of the thumb.
-            /// </summary>
-            public virtual ShapeType Shape
-            {
-                get => shape;
-                set
-                {
-                    if (shape == value) return;
-                    shape = value;
-                    Invalidate();
-                }
-            }
-
-            /// <inheritdoc/>
-            public override PointD? MinimumLocation
-            {
-                get
-                {
-                    var baseLocation = base.MinimumLocation;
-
-                    if(baseLocation is null)
-                    {
-                        if (Parent is not null && Parent.HasBorder)
-                            return (2, 2);
-                        return (1, 1);
-                    }
-
-                    return baseLocation;
-                }
-
-                set => base.MinimumLocation = value;
-            }
-
-            /// <summary>
-            /// Gets the container that holds the thumb.
-            /// </summary>
-            [Browsable(false)]
-            public virtual StdSlider? Container
-            {
-                get
-                {
-                    return Parent as StdSlider;
-                }
-            }
-
-            /// <summary>
-            /// Gets a value indicating whether the slider's orientation is horizontal.
-            /// </summary>
-            public bool IsHorizontal
-            {
-                get
-                {
-                    return Orientation == SliderOrientation.Horizontal;
-                }
-            }
-
-            /// <summary>
-            /// Gets the orientation of the slider.
-            /// </summary>
-            [Browsable(false)]
-            public SliderOrientation Orientation
-            {
-                get
-                {
-                    return Container?.Orientation ?? SliderOrientation.Horizontal;
-                }
-            }
-
-            /// <inheritdoc/>
-            public override RectD Bounds
-            {
-                get
-                {
-                    return base.Bounds;
-                }
-
-                set
-                {
-                    base.Bounds = value;
-                }
-            }
-
-            /// <inheritdoc/>
-            public override void DrawSplitterForeground(PaintEventArgs e, Color? color)
-            {
-                if (Shape == ShapeType.Circle)
-                    return;
-                base.DrawSplitterForeground(e, color);
-            }
-
-            /// <inheritdoc/>
-            public override void DrawSplitterBackground(PaintEventArgs e, Color? color)
-            {
-                color ??= DefaultThumbBackColor;
-                var parentBackBrush = (Parent?.BackColor ?? color).AsBrush;
-
-                var leftTopColor = Container?.LeftTopSpacer.BackColor ?? DefaultSpacerColor;
-                var rightBottomColor = Container?.RightBottomSpacer.BackColor ?? DefaultSecondarySpacerColor;
-
-                var r = ClientRectangle;
-                var center = r.Center;
-                var dc = e.Graphics;
-                dc.FillRectangle(parentBackBrush, r);
-
-                if(Container is not null)
-                {
-                    Container.GetSpacerRectangles(out var leftTop, out var rightBottom);
-
-                    if (IsHorizontal)
-                    {
-                        leftTop.CenterVert = center.Y;
-                        leftTop.Width = center.X;
-                        leftTop.X = 0;
-                        rightBottom.CenterVert = center.Y;
-                        rightBottom.X = center.X;
-                        rightBottom.Width = Container.Width - center.X;
-                    }
-                    else
-                    {
-                        leftTop.CenterHorz = center.X;
-                        leftTop.Height = center.Y;
-                        leftTop.Y = 0;
-                        rightBottom.CenterHorz = center.X;
-                        rightBottom.Y = center.Y;
-                        rightBottom.Height = Container.Height - center.Y;
-                    }
-
-                    dc.FillRectangle(leftTopColor.AsBrush, leftTop);
-                    dc.FillRectangle(rightBottomColor.AsBrush, rightBottom);
-                }
-
-                if (Shape == ShapeType.Circle)
-                {
-                    dc.FillCircle(color.AsBrush, center, r.CircleRadius);
-                }
-                else
-                {
-                    dc.FillRectangle(color.AsBrush, r);
-                }
-            }
-
-            /// <inheritdoc/>
-            public override void DefaultPaint(PaintEventArgs e)
-            {
-                base.DefaultPaint(e);
-            }
-
-            /// <inheritdoc/>
-            public override void DrawSplitterBorder(PaintEventArgs e)
-            {
-                if (Shape == ShapeType.Circle)
-                    return;
-                base.DrawSplitterBorder(e);
-            }
-
-            /// <inheritdoc/>
-            public override void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
-            {
-                base.ResolveSplitterColors(out backColor, out foreColor);
-                if (BackgroundColor is not null)
-                    backColor = BackgroundColor;
-            }
-
-            /// <inheritdoc/>
-            protected override Coord GetDefaultWidth()
-            {
-                return DefaultSliderThumbWidth;
-            }
-        }
     }
 }

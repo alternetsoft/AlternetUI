@@ -43,10 +43,15 @@ namespace ControlsSample
 
             CreateWebBrowserPages();
 
-            AddPage<NativeSliderPage>("Native Slider");
-            AddPage<NativeTreeViewPage>("Native TreeView");
-            AddPage<PopupToolBarPage>("Popup ToolBar");
+            if (!App.IsMaui)
+            {
+                AddPage<NativeSliderPage>("Native Slider");
+                AddPage<NativeTreeViewPage>("Native TreeView");
+                AddPage<PopupToolBarPage>("Popup ToolBar");
+                AddPage<NativeProgressBarPage>("Native ProgressBar");
+            }
 
+            /*
             if (App.IsMacOS)
             {
                 AddPage<SkiaDirectPaintMacOsPage>("SkiaSharp macOs Direct Paint Sample");
@@ -56,6 +61,7 @@ namespace ControlsSample
             {
                 AddPage<SkiaDirectPaintGtkPage>("SkiaSharp Gtk3 Direct Paint Sample");
             }
+            */
 
             mainPanel.LeftListBox.SelectFirstItem();
 
