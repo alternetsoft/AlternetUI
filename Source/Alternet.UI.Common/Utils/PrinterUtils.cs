@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+using Alternet.Drawing.Printing;
+
+using SkiaSharp;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -116,6 +121,30 @@ namespace Alternet.UI
             {
                 return [];
             }
+        }
+
+        /// <summary>
+        /// Calculates the pixel dimensions of a specified paper size for use with Skia documents,
+        /// based on the given paper kind and optional raster DPI.
+        /// </summary>
+        /// <remarks>The calculated pixel dimensions are rounded to the nearest integer values. Use this
+        /// method to obtain the appropriate pixel size for rendering or printing documents with Skia at a specific
+        /// resolution.</remarks>
+        /// <param name="paperSize">A value that specifies the standard paper size to use,
+        /// as defined by the KnownPaperKind enumeration.</param>
+        /// <param name="rasterDpi">The rasterization resolution, in dots per inch (DPI), to use for the calculation.
+        /// If null, the default DPI for Skia documents is used.</param>
+        /// <returns>A SizeI structure representing the width and height of the paper in pixels, calculated according to the
+        /// specified paper size and DPI.</returns>
+        public static SizeI GetPaperSizeForSkiaDocument(KnownPaperKind paperSize, float? rasterDpi = null)
+        {
+            rasterDpi ??= SKDocument.DefaultRasterDpi;
+
+            var size = PaperSizes.SizeInchesRounded.GetSize(paperSize);
+            var width = MathF.Round(size.Width * rasterDpi.Value);
+            var height = MathF.Round(size.Height * rasterDpi.Value);
+
+            return new SizeI((int)width, (int)height);
         }
     }
 }
