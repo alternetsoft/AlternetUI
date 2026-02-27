@@ -39,6 +39,7 @@ namespace PrintingSample
             var buttonPDF = toolBar.AddTextBtnCore("Create PDF...", null, (s, e) =>
             {
                 var fileName = PathUtils.GenTempFileName(".pdf", PathUtils.GenTempFileNameFlags.DeleteIfExists);
+                App.Log($"Creating PDF file: {fileName}");
                 CreateSamplePdf(fileName);
                 AppUtils.OpenPdf(fileName);
             });
@@ -59,32 +60,50 @@ namespace PrintingSample
             DrawingArea.ParentBackColor = false;
         }
 
-        public static void CreateSamplePdf(string outputPath)
+        public void CreateSamplePdf(string outputPath)
         {
-            // Create the PDF document
             using var stream = File.OpenWrite(outputPath);
 
             using var document = SKDocument.CreatePdf(stream);
 
+            // A4 size in points (72 DPI) -> 595, 842
+            var dpi = SKDocument.DefaultRasterDpi;
+            var size = PrinterUtils.GetPaperSizeForSkiaDocument(KnownPaperKind.A4, dpi);
 
-            // Start a new page
-            // A4 size in points (72 DPI)
-            SKCanvas canvas = document.BeginPage(595, 842);
+            var numPages = additionalPagesCountNumericUpDown.Value + 1;
 
-            using var paint = new SKPaint();
+            for (int page = 1; page <= numPages; page++)
+            {
+                var bounds = new RectD(new PointD(), size);
 
-            paint.Color = SKColors.Black;
+                if (originAtMarginCheckBox.IsChecked)
+                {
+                    var margins = TryGetPageMargins();
+                    if (margins != null)
+                    {
+                        bounds = bounds.DeflatedWithPadding(margins.Value);
+                    }
+                }
 
-            canvas.DrawText("Hello, SkiaSharp PDF!", new(100, 100), Font.Default.IncSize(10).SkiaFont, paint);
+                SKCanvas canvas = document.BeginPage(size.Width, size.Height);
 
-            paint.Color = SKColors.Red;
-            canvas.DrawRect(new SKRect(100, 120, 300, 200), paint);
+                var dc = SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, 1.0f);
 
-            paint.Color = SKColors.Blue;
+                dc.Save();
 
-            canvas.DrawText("This is a rectangle.", new(100, 240), Font.Default.SkiaFont, paint);
+                if (page <= 2)
+                {
+                    DrawFirstPage(dc, bounds, false, page);
+                }
+                else
+                {
+                    DrawAdditionalPage(dc, page, bounds);
+                }
 
-            document.EndPage();
+                dc.Restore();
+
+                document.EndPage();
+            }
 
             document.Close();
         }
@@ -122,17 +141,20 @@ namespace PrintingSample
 
             var dtbWidth = drawTextBounds.Width;
 
-            var wrappedText = DrawingUtils.WrapTextToMultipleLines(
+            var wrappedText = DrawingUtils.WrapTextToList(
                 TextToDraw,
                 dtbWidth,
                 font,
-                dc);
+                dc).ToArray();
 
-            dc.DrawText(
-                wrappedText,
-                font,
-                Brushes.Black,
-                drawTextBounds.Location);
+            if (forScreen)
+            {
+            }
+            else
+            {
+            }
+
+            dc.DrawStrings(new(drawTextBounds.Location, SizeD.Empty), font, wrappedText, foreColor: Color.Black);
 
             dc.FillEllipse(Brushes.Gold, cornerRectLeft.InflatedBy(-5, -5));
             dc.FillEllipse(Brushes.Gold, cornerRectRight.InflatedBy(-5, -5));
