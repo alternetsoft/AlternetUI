@@ -393,13 +393,27 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation is successful; <c> false</c> otherwise.</returns>
         public static bool OpenUrl(string? url)
         {
-            if(OpenUrlOverride is not null)
+            if (OpenUrlOverride is not null)
             {
                 return OpenUrlOverride(url);
             }
 
             var result = ShellExecute(url);
             return result;
+        }
+
+        /// <summary>
+        /// Opens the specified PDF file using the default PDF viewer.
+        /// </summary>
+        /// <remarks>This method utilizes the system's default application for opening PDF files. Ensure
+        /// that the provided file path is valid and points to an existing PDF file.</remarks>
+        /// <param name="filePath">The path to the PDF file to be opened. Must not be null; if null,
+        /// the method does nothing.</param>
+        public static void OpenPdf(string? filePath)
+        {
+            if (filePath == null)
+                return;
+            ShellExecute(filePath);
         }
 
         /// <remarks>
@@ -411,7 +425,7 @@ namespace Alternet.UI
         /// <param name="folder">Initial directory.</param>
         public static bool ShellExecute(string? filePath, string? args = null, string? folder = null)
         {
-            if(filePath == null)
+            if (filePath == null)
                 return false;
 
             using Process process = new();
