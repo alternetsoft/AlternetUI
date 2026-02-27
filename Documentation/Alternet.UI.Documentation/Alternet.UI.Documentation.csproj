@@ -25,7 +25,7 @@
 	<UseLatestDocFx>false</UseLatestDocFx>
 	<UseLatestDocFx Condition="'$(LatestDocFx)'!=''">$(LatestDocFx)</UseLatestDocFx>
 
-        <TargetFramework>net9.0-windows10.0.19041.00</TargetFramework>
+        <TargetFramework>net10.0-windows10.0.19041.00</TargetFramework>
 
 	<BuildDocumentationTN>BuildDocumentation2</BuildDocumentationTN>
     </PropertyGroup>
