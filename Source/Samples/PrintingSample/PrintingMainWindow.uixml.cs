@@ -1,7 +1,11 @@
 using System;
+using System.IO;
+
 using Alternet.Drawing;
 using Alternet.Drawing.Printing;
 using Alternet.UI;
+
+using SkiaSharp;
 
 namespace PrintingSample
 {
@@ -13,6 +17,10 @@ namespace PrintingSample
         private readonly ToolBar toolBar = new()
         {
         };
+
+        static PrintingMainWindow()
+        {
+        }
 
         public PrintingMainWindow()
         {
@@ -28,6 +36,15 @@ namespace PrintingSample
             toolBar.AddSpacer();
             var buttonPrintPreview = toolBar.AddTextBtnCore("Print Preview...", null, PrintPreviewMenuItem_Click);
 
+            var buttonPDF = toolBar.AddTextBtnCore("Create PDF...", null, (s, e) =>
+            {
+                var fileName = PathUtils.GenTempFileName(".pdf", PathUtils.GenTempFileNameFlags.DeleteIfExists);
+                CreateSamplePdf(fileName);
+                AppUtils.OpenPdf(fileName);
+            });
+
+            buttonPDF.Enabled = true;
+
             Group(buttonPrint, buttonPrintPreview, buttonPageSetup, buttonPrintImmediately).Enabled(PrinterUtils.HasPrinters() != false);
 
             toolBar.SpeedButtons.SetUseTheme(SpeedButton.KnownTheme.RoundBorder);
@@ -40,6 +57,36 @@ namespace PrintingSample
             // This is important if OS style is BlackOnWhite.
             DrawingArea.BackgroundColor = Color.White;
             DrawingArea.ParentBackColor = false;
+        }
+
+        public static void CreateSamplePdf(string outputPath)
+        {
+            // Create the PDF document
+            using var stream = File.OpenWrite(outputPath);
+
+            using var document = SKDocument.CreatePdf(stream);
+
+
+            // Start a new page
+            // A4 size in points (72 DPI)
+            SKCanvas canvas = document.BeginPage(595, 842);
+
+            using var paint = new SKPaint();
+
+            paint.Color = SKColors.Black;
+
+            canvas.DrawText("Hello, SkiaSharp PDF!", new(100, 100), Font.Default.IncSize(10).SkiaFont, paint);
+
+            paint.Color = SKColors.Red;
+            canvas.DrawRect(new SKRect(100, 120, 300, 200), paint);
+
+            paint.Color = SKColors.Blue;
+
+            canvas.DrawText("This is a rectangle.", new(100, 240), Font.Default.SkiaFont, paint);
+
+            document.EndPage();
+
+            document.Close();
         }
 
         private void DrawingArea_Paint(object? sender, PaintEventArgs e)
@@ -132,7 +179,7 @@ namespace PrintingSample
 
             document.PrinterSettings.FromPage = 1;
             document.PrinterSettings.MinimumPage = 1;
-            
+
             var maxPage = additionalPagesCountNumericUpDown.Value + 1;
             document.PrinterSettings.MaximumPage = maxPage;
             document.PrinterSettings.ToPage = maxPage;
@@ -168,7 +215,7 @@ namespace PrintingSample
             var document = CreatePrintDocument();
 
             pageSetupDialog.Document = document;
-            
+
             pageSetupDialog.AllowMargins = true;
             pageSetupDialog.AllowOrientation = true;
             pageSetupDialog.AllowPaper = true;
@@ -190,7 +237,7 @@ namespace PrintingSample
             var document = CreatePrintDocument();
 
             document.PrintPage += Document_PrintPage;
-            
+
             dialog.Document = document;
             dialog.ShowAsync();
         }
