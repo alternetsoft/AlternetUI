@@ -1735,22 +1735,27 @@ namespace Alternet.UI
             var itemColor = e.GetTextColor(isSelected) ?? SystemColors.WindowText;
             var useColumns = item is not null && e.UseColumns && container is not null;
 
+            void InternalDrawCheckBox()
+            {
+                if (item is null)
+                    return;
+                paintRectangle = item.DrawCheckBox(
+                            e.Graphics,
+                            item,
+                            container,
+                            paintRectangle,
+                            isSelected);
+            }
+
             if (useColumns)
             {
+                InternalDrawCheckBox();
                 PaintWithColumns();
                 e.LabelMetrics = new();
             }
             else
             {
-                if (item is not null)
-                {
-                    paintRectangle = item.DrawCheckBox(
-                                e.Graphics,
-                                item,
-                                container,
-                                paintRectangle,
-                                isSelected);
-                }
+                InternalDrawCheckBox();
 
                 Graphics.DrawLabelParams prm = new(
                     s,
