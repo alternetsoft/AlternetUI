@@ -5,7 +5,7 @@ In this article you can find short instructions on how to install MAUI on macOs 
 
 ## Installation
 
-- Install Net 8.0 from this [url](https://dotnet.microsoft.com/en-us/download/dotnet/8.0). 
+- Install Net 10.0 SDK from this [url](https://dotnet.microsoft.com/en-us/download/dotnet/10.0). 
 You need to install version that is compatible with processor architecture of your pc (arm64 or x64).
 - Install Xcode.
 - Install Xcode Command Line Tools, using terminal command ```xcode-select --install```.
@@ -17,9 +17,5 @@ You need to install version that is compatible with processor architecture of yo
 
 - In order to build the application, use terminal command ```dotnet build```.
 
-- In order to run the application, use terminal command ```dotnet run -f net8.0-maccatalyst```.
+- In order to run the application, use terminal command ```dotnet run -f net10.0-maccatalyst```.
 
-## Problems
-
-- Net compiler sometimes shows errors during the compilation that some files are blocked. Just build or run the project
-more times. One of the next builds will be successful.
