@@ -68,7 +68,7 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// A4 small sheet, 210 by 297 millimeters.
         /// </summary>
-        A4mall,
+        A4Small,
 
         /// <summary>
         /// A5 sheet, 148 by 210 millimeters.
@@ -203,7 +203,7 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// German Stanard Fanfold, 8 1/2 by 12 inches.
         /// </summary>
-        FanfoldStanardGerman,
+        FanfoldStandardGerman,
 
         /// <summary>
         /// German Legal Fanfold, 8 1/2 by 13 inches.
@@ -468,7 +468,7 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// PRC 32K(Big) 97 x 151 mm.
         /// </summary>
-        P32kbig,
+        P32kBig,
 
         /// <summary>
         /// PRC Envelope #1 102 x 165 mm.
@@ -533,7 +533,7 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// PRC 32K(Big) Rotated.
         /// </summary>
-        P32kbigRotated,
+        P32kBigRotated,
 
         /// <summary>
         /// PRC Envelope #1 Rotated 165 x 102 mm.
@@ -581,7 +581,7 @@ namespace Alternet.Drawing.Printing
         PrcEnvelope9Rotated,
 
         /// <summary>
-        /// PRC Envelope #10 Rotated 458 x 324 m.
+        /// PRC Envelope #10 Rotated 458 x 324 mm.
         /// </summary>
         PrcEnvelope10Rotated,
 
