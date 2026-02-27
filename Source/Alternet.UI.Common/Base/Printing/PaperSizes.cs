@@ -2,15 +2,51 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing.Printing
 {
     /// <summary>
-    /// Defines paper sizes.
+    /// Provides a collection of predefined paper sizes for standard international (ISO) and North American formats,
+    /// supporting both millimeter and inch units.
     /// </summary>
+    /// <remarks>The PaperSizes class offers convenient access to a wide range of commonly used paper sizes,
+    /// including A, B, and C series, as well as US-specific formats such as Letter, Legal, and Tabloid. It enables
+    /// applications to retrieve, customize, and transform paper size definitions for use in printing, layout, or
+    /// document formatting scenarios. Static properties are available for accessing standard sets of sizes in
+    /// millimeters or inches, and instance members allow for further customization or extension as needed.</remarks>
     public partial class PaperSizes
     {
         private static PaperSizes? sizeMillimeters;
         private static PaperSizes? sizeInches;
+        private static PaperSizes? sizeInchesRounded;
+        private static int defaultInchesDecimals = 2;
+
+        static PaperSizes()
+        {
+        }
+
+        /// <summary>
+        /// Gets or sets the default number of decimal places used when representing inch measurements.
+        /// This value is used in methods that convert millimeters to inches or when formatting inch-based sizes for display.
+        /// Adjusting this value allows you to control the precision of inch measurements across the application,
+        /// ensuring that they are displayed with the desired number of decimal places for clarity and consistency.
+        /// </summary>
+        /// <remarks>This value determines the precision applied to inch-based measurements in
+        /// applications that require decimal formatting. Adjust this value to control the number of digits displayed
+        /// after the decimal point for inch values.</remarks>
+        public static int DefaultInchesDecimals
+        {
+            get => defaultInchesDecimals;
+
+            set
+            {
+                if (value == defaultInchesDecimals)
+                    return;
+                defaultInchesDecimals = value;
+                sizeInchesRounded = null;
+            }
+        }
 
         /// <summary>
         /// Gets or sets paper sizes (millimeters).
@@ -58,6 +94,24 @@ namespace Alternet.Drawing.Printing
             set
             {
                 sizeInches = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the paper sizes with dimensions rounded to the specific number of decimal places
+        /// which is determined by the <see cref="DefaultInchesDecimals"/> property.
+        /// </summary>
+        public static PaperSizes SizeInchesRounded
+        {
+            get
+            {
+                sizeInchesRounded ??= CreateSizeInchesRounded();
+                return sizeInchesRounded;
+            }
+
+            set
+            {
+                sizeInchesRounded = value;
             }
         }
 
@@ -272,61 +326,63 @@ namespace Alternet.Drawing.Printing
         public SizeD C0 { get; set; }
 
         /// <summary>
+        /// Converts a measurement from millimeters to inches and rounds
+        /// the result to the specified number of decimal places.
+        /// </summary>
+        /// <remarks>Uses a conversion factor of 25.4 millimeters per inch.</remarks>
+        /// <param name="mm">The measurement in millimeters to convert.</param>
+        /// <param name="decimals">The number of decimal places to which the result is rounded.
+        /// Defaults to 2 if not specified.</param>
+        /// <returns>The equivalent measurement in inches, rounded to the specified number of decimal places.</returns>
+        public static float MmToInches(float mm, int decimals)
+        {
+            const float mmPerInch = 25.4f;
+            return MathF.Round(mm / mmPerInch, decimals);
+        }
+
+        /// <summary>
+        /// Converts a measurement from millimeters to the equivalent value in inches.
+        /// </summary>
+        /// <remarks>This method uses a conversion factor of 25.4 millimeters per inch. Supplying a
+        /// negative value for the parameter may result in an invalid conversion.</remarks>
+        /// <param name="mm">The length in millimeters to convert. Must be a non-negative value.</param>
+        /// <returns>The corresponding length in inches as a single-precision floating-point number.</returns>
+        public static float MmToInches(float mm)
+        {
+            const float mmPerInch = 25.4f;
+            return mm / mmPerInch;
+        }
+
+        /// <summary>
         /// Creates a new instance of the PaperSizes class with standard ISO and US paper sizes defined in inches.
+        /// This method converts the standard millimeter sizes to inches using the (<see cref="MmToInches(float, int)"/>) method,
+        /// applying rounding to the specified number of decimal places for inch measurements <see cref="DefaultInchesDecimals"/> .
         /// </summary>
         /// <remarks>Use this method when you require paper size definitions in inches for printing,
         /// layout, or document formatting tasks. The returned object includes both international and US standard sizes
         /// for convenience.</remarks>
         /// <returns>A PaperSizes object containing predefined dimensions for common ISO (A, B, C series) and US (Letter, Legal,
         /// Tabloid, etc.) paper sizes, with all measurements specified in inches.</returns>
+        public static PaperSizes CreateSizeInchesRounded()
+        {
+            var result = CreateSizeMillimeters();
+            SizeD Transforms(SizeD s) => (MmToInches(s.Width, DefaultInchesDecimals), MmToInches(s.Height, DefaultInchesDecimals));
+            result.Transform(Transforms);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a new instance of the PaperSizes class with dimensions specified in inches.
+        /// </summary>
+        /// <remarks>Use this method when you require paper size measurements in inches rather than
+        /// millimeters. The returned object represents the same paper size as CreateSizeMillimeters, but with
+        /// dimensions converted to inches.</remarks>
+        /// <returns>A PaperSizes object whose width and height are expressed in inches.</returns>
         public static PaperSizes CreateSizeInches()
         {
-            PaperSizes result = new()
-            {
-                A0x4 = (66.2f, 93.6f),
-                A0x2 = (46.8f, 66.2f),
-                A0 = (33.1f, 46.8f),
-                A1 = (23.4f, 33.1f),
-                A2 = (16.5f, 23.4f),
-                A3 = (11.7f, 16.5f),
-                A4 = (8.3f, 11.7f),
-                A5 = (5.8f, 8.3f),
-                A6 = (4.1f, 5.8f),
-                A7 = (2.9f, 4.1f),
-                A8 = (2.0f, 2.9f),
-                A9 = (1.5f, 2.0f),
-                A10 = (1.0f, 1.5f),
-                B0 = (39.4f, 55.7f),
-                B1 = (27.8f, 39.4f),
-                B2 = (19.7f, 27.8f),
-                B3 = (13.9f, 19.7f),
-                B4 = (9.8f, 13.9f),
-                B5 = (6.9f, 9.8f),
-                B6 = (4.9f, 6.9f),
-                B7 = (3.5f, 4.9f),
-                B8 = (2.4f, 3.5f),
-                B9 = (1.7f, 2.4f),
-                B10 = (1.2f, 1.7f),
-                C0 = (36.1f, 51.5f),
-                C1 = (25.5f, 36.1f),
-                C2 = (18.0f, 25.5f),
-                C3 = (12.8f, 18.0f),
-                C4 = (9.0f, 12.8f),
-                C5 = (6.4f, 9.0f),
-                C6 = (4.5f, 6.4f),
-                C7 = (3.2f, 4.5f),
-                C8 = (2.2f, 3.2f),
-                C9 = (1.6f, 2.2f),
-                C10 = (1.1f, 1.6f),
-                HalfLetter = (5.5f, 8.5f),
-                GovernmentLetter = (8.0f, 10.0f),
-                Letter = (8.5f, 11.0f),
-                JuniorLegal = (5.0f, 8.0f),
-                GovernmentLegal = (8.5f, 13.0f),
-                Legal = (8.5f, 14.0f),
-                Tabloid = (11.0f, 17.0f),
-            };
-
+            var result = CreateSizeMillimeters();
+            SizeD Transforms(SizeD s) => (MmToInches(s.Width), MmToInches(s.Height));
+            result.Transform(Transforms);
             return result;
         }
 
@@ -389,5 +445,209 @@ namespace Alternet.Drawing.Printing
 
             return result;
         }
+
+        /// <summary>
+        /// Logs the available paper sizes in both millimeters and inches.
+        /// </summary>
+        /// <remarks>This method calls the Log method on two different size creators, one for millimeters
+        /// and one for inches, to output the respective paper sizes.</remarks>
+        public static void Log()
+        {
+            CreateSizeMillimeters().Log("PaperSizes (mm)");
+            CreateSizeInches().Log("PaperSizes (inches)");
+        }
+
+        /// <summary>
+        /// Logs the sizes of all known paper kinds to the specified log writer.
+        /// </summary>
+        /// <remarks>This method begins a logging section labeled "PaperSizes", writes the size of each
+        /// known paper kind, and then ends the section. The log writer must support sectioned logging and line
+        /// writing.</remarks>
+        /// <param name="log">The log writer to which the paper sizes are written. If null, the default debug log writer is used.</param>
+        /// <param name="title">An optional title for the logging section. If null, "PaperSizes" is used.</param>
+        public virtual void Log(string? title = null, ILogWriter? log = null)
+        {
+            log ??= LogWriter.Debug;
+            log.BeginSection(title ?? "PaperSizes");
+
+            foreach (KnownPaperKind kind in Enum.GetValues<KnownPaperKind>())
+            {
+                log.WriteLine($"{kind}: {GetSize(kind)}");
+            }
+
+            log.EndSection();
+        }
+
+        /// <summary>
+        /// Copies all paper sizes from the specified instance, optionally applying a transformation to each size before
+        /// assignment.
+        /// </summary>
+        /// <remarks>This method iterates through all known paper kinds and assigns their sizes from the
+        /// specified instance. Use the <paramref name="transform"/> parameter to modify each size during assignment,
+        /// such as for unit conversion or scaling.</remarks>
+        /// <param name="other">The source <see cref="PaperSizes"/> instance from which to copy paper sizes. Cannot
+        /// be <see langword="null"/>.</param>
+        /// <param name="transform">An optional function that transforms each <see cref="SizeD"/> value before it is assigned.
+        /// If <see langword="null"/>, sizes are assigned directly.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="other"/> is <see langword="null"/>.</exception>
+        public virtual void Assign(PaperSizes other, Func<SizeD, SizeD>? transform = null)
+        {
+            if (other is null)
+                throw new ArgumentNullException(nameof(other));
+
+            foreach (KnownPaperKind kind in Enum.GetValues<KnownPaperKind>())
+            {
+                SetSize(kind, other.GetSize(kind), transform);
+            }
+        }
+
+        /// <summary>
+        /// Applies a transformation function to the sizes of all known paper kinds.
+        /// </summary>
+        /// <remarks>This method iterates through all known paper kinds and applies the specified
+        /// transformation to their sizes. Use this method to uniformly adjust or modify paper sizes according to custom
+        /// logic.</remarks>
+        /// <param name="transform">A function that defines the transformation to apply to each paper size.
+        /// The function takes the current size
+        /// as input and returns the transformed size.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="transform"/> is <see langword="null"/>.</exception>
+        public virtual void Transform(Func<SizeD, SizeD> transform)
+        {
+            if (transform is null)
+                throw new ArgumentNullException(nameof(transform));
+            foreach (KnownPaperKind kind in Enum.GetValues<KnownPaperKind>())
+            {
+                SetSize(kind, GetSize(kind), transform);
+            }
+        }
+
+        /// <summary>
+        /// Sets the size for the specified known paper kind.
+        /// </summary>
+        /// <remarks>Use this method to customize the dimensions of predefined paper types at runtime.
+        /// Ensure that the provided size is appropriate for the intended paper kind.</remarks>
+        /// <param name="kind">The paper type for which to assign a new size. Must be a valid value
+        /// from the KnownPaperKind enumeration.</param>
+        /// <param name="size">The dimensions to assign to the specified paper kind. Represents the
+        /// width and height in device-independent units.</param>
+        /// <param name="transform">An optional function to transform the size before assignment. If provided,
+        /// this function will be applied to the size before setting it.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if the specified kind is not
+        /// a valid value in the KnownPaperKind enumeration.</exception>
+        public virtual void SetSize(KnownPaperKind kind, SizeD size, Func<SizeD, SizeD>? transform = null)
+        {
+            SizeD Transform(SizeD s)
+            {
+                return transform is not null ? transform(s) : s;
+            }
+
+            switch (kind)
+            {
+                case KnownPaperKind.A0x4: A0x4 = Transform(size); break;
+                case KnownPaperKind.A0x2: A0x2 = Transform(size); break;
+                case KnownPaperKind.A0: A0 = Transform(size); break;
+                case KnownPaperKind.A1: A1 = Transform(size); break;
+                case KnownPaperKind.A2: A2 = Transform(size); break;
+                case KnownPaperKind.A3: A3 = Transform(size); break;
+                case KnownPaperKind.A4: A4 = Transform(size); break;
+                case KnownPaperKind.A5: A5 = Transform(size); break;
+                case KnownPaperKind.A6: A6 = Transform(size); break;
+                case KnownPaperKind.A7: A7 = Transform(size); break;
+                case KnownPaperKind.A8: A8 = Transform(size); break;
+                case KnownPaperKind.A9: A9 = Transform(size); break;
+                case KnownPaperKind.A10: A10 = Transform(size); break;
+                case KnownPaperKind.B0: B0 = Transform(size); break;
+                case KnownPaperKind.B1: B1 = Transform(size); break;
+                case KnownPaperKind.B2: B2 = Transform(size); break;
+                case KnownPaperKind.B3: B3 = Transform(size); break;
+                case KnownPaperKind.B4: B4 = Transform(size); break;
+                case KnownPaperKind.B5: B5 = Transform(size); break;
+                case KnownPaperKind.B6: B6 = Transform(size); break;
+                case KnownPaperKind.B7: B7 = Transform(size); break;
+                case KnownPaperKind.B8: B8 = Transform(size); break;
+                case KnownPaperKind.B9: B9 = Transform(size); break;
+                case KnownPaperKind.B10: B10 = Transform(size); break;
+                case KnownPaperKind.C0: C0 = Transform(size); break;
+                case KnownPaperKind.C1: C1 = Transform(size); break;
+                case KnownPaperKind.C2: C2 = Transform(size); break;
+                case KnownPaperKind.C3: C3 = Transform(size); break;
+                case KnownPaperKind.C4: C4 = Transform(size); break;
+                case KnownPaperKind.C5: C5 = Transform(size); break;
+                case KnownPaperKind.C6: C6 = Transform(size); break;
+                case KnownPaperKind.C7: C7 = Transform(size); break;
+                case KnownPaperKind.C8: C8 = Transform(size); break;
+                case KnownPaperKind.C9: C9 = Transform(size); break;
+                case KnownPaperKind.C10: C10 = Transform(size); break;
+                case KnownPaperKind.HalfLetter: HalfLetter = Transform(size); break;
+                case KnownPaperKind.GovernmentLetter: GovernmentLetter = Transform(size); break;
+                case KnownPaperKind.Letter: Letter = Transform(size); break;
+                case KnownPaperKind.JuniorLegal: JuniorLegal = Transform(size); break;
+                case KnownPaperKind.GovernmentLegal: GovernmentLegal = Transform(size); break;
+                case KnownPaperKind.Legal: Legal = Transform(size); break;
+                case KnownPaperKind.Tabloid: Tabloid = Transform(size); break;
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+        }
+
+        /// <summary>
+        /// Returns the dimensions of the specified standard paper type.
+        /// </summary>
+        /// <remarks>Use this method to obtain the standard dimensions for a variety of common paper
+        /// sizes. Supplying an invalid or unsupported paper kind will result in an exception.</remarks>
+        /// <param name="kind">A value from the KnownPaperKind enumeration that specifies the paper type
+        /// for which to retrieve the size.</param>
+        /// <returns>A SizeD structure representing the width and height of the specified paper type,
+        /// in the appropriate units.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the specified kind is
+        /// not a valid value of the KnownPaperKind enumeration.</exception>
+        public virtual SizeD GetSize(KnownPaperKind kind)
+        {
+            switch (kind)
+            {
+                case KnownPaperKind.A0x4: return A0x4;
+                case KnownPaperKind.A0x2: return A0x2;
+                case KnownPaperKind.A0: return A0;
+                case KnownPaperKind.A1: return A1;
+                case KnownPaperKind.A2: return A2;
+                case KnownPaperKind.A3: return A3;
+                case KnownPaperKind.A4: return A4;
+                case KnownPaperKind.A5: return A5;
+                case KnownPaperKind.A6: return A6;
+                case KnownPaperKind.A7: return A7;
+                case KnownPaperKind.A8: return A8;
+                case KnownPaperKind.A9: return A9;
+                case KnownPaperKind.A10: return A10;
+                case KnownPaperKind.B0: return B0;
+                case KnownPaperKind.B1: return B1;
+                case KnownPaperKind.B2: return B2;
+                case KnownPaperKind.B3: return B3;
+                case KnownPaperKind.B4: return B4;
+                case KnownPaperKind.B5: return B5;
+                case KnownPaperKind.B6: return B6;
+                case KnownPaperKind.B7: return B7;
+                case KnownPaperKind.B8: return B8;
+                case KnownPaperKind.B9: return B9;
+                case KnownPaperKind.B10: return B10;
+                case KnownPaperKind.C0: return C0;
+                case KnownPaperKind.C1: return C1;
+                case KnownPaperKind.C2: return C2;
+                case KnownPaperKind.C3: return C3;
+                case KnownPaperKind.C4: return C4;
+                case KnownPaperKind.C5: return C5;
+                case KnownPaperKind.C6: return C6;
+                case KnownPaperKind.C7: return C7;
+                case KnownPaperKind.C8: return C8;
+                case KnownPaperKind.C9: return C9;
+                case KnownPaperKind.C10: return C10;
+                case KnownPaperKind.HalfLetter: return HalfLetter;
+                case KnownPaperKind.GovernmentLetter: return GovernmentLetter;
+                case KnownPaperKind.Letter: return Letter;
+                case KnownPaperKind.JuniorLegal: return JuniorLegal;
+                case KnownPaperKind.GovernmentLegal: return GovernmentLegal;
+                case KnownPaperKind.Legal: return Legal;
+                case KnownPaperKind.Tabloid: return Tabloid;
+                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
+            }
+    }
     }
 }
