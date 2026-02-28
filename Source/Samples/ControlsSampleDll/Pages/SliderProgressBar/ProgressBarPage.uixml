@@ -10,22 +10,37 @@
       </Grid.ColumnDefinitions>
 
       <TabControl Name="mainTabControl">
-        <StackPanel Title="Horizontal"
-          Orientation="Vertical" Margin="5" Name="horizontalProgressBarsPanel">
-          <Label Text="H1 [0-100]" Margin="0,0,0,5" />
-          <StdProgressBar Value="0" Margin="0,0,0,5" />
+        <StackPanel Title="Horizontal" Orientation="Vertical" Margin="5" Name="horizontalProgressBarsPanel">
 
-          <Label Text="H2 [0-100]" Margin="0,0,0,5" />
-          <StdProgressBar Value="50" Margin="0,0,0,5" />
+          <StackPanel Orientation="Horizontal">
+            <Label Text="H1 [0-100] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
+            <Label Text="0" Margin="0,0,0,5" Name="displayH1" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StdProgressBar Value="0" Margin="0,0,0,5" Name="progressH1"/>
 
-          <Label Text="H3 [0-100]" Margin="0,0,0,5" />
-          <StdProgressBar Value="100" Margin="0,0,0,5" />
+          <StackPanel Orientation="Horizontal">
+            <Label Text="H2 [0-100] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
+            <Label Text="0" Margin="0,0,0,5" Name="displayH2" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StdProgressBar Value="50" Margin="0,0,0,5" Name="progressH2"/>
 
-          <Label Text="H4 [50-200]" Margin="0,10,0,5" />
-          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" />
+          <StackPanel Orientation="Horizontal">
+            <Label Text="H3 [0-100] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
+            <Label Text="0" Margin="0,0,0,5" Name="displayH3" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StdProgressBar Value="100" Margin="0,0,0,5" Name="progressH3"/>
 
-          <Label Text="H5 [-20-30]" Margin="0,10,0,5" />
-          <StdProgressBar Value="15" Margin="0,0,0,5" Height="25" Minimum="-20" Maximum="30"/>
+          <StackPanel Orientation="Horizontal">
+            <Label Text="H4 [50-200] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
+            <Label Text="0" Margin="0,0,0,5" Name="displayH4" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" Name="progressH4"/>
+
+          <StackPanel Orientation="Horizontal">
+            <Label Text="H5 [-20-30] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
+            <Label Text="0" Margin="0,0,0,5" Name="displayH5" VerticalAlignment="Center"/>
+          </StackPanel>
+          <StdProgressBar Value="15" Margin="0,0,0,5" Height="25" Minimum="-20" Maximum="30" Name="progressH5"/>
 
         </StackPanel>
 
@@ -41,6 +56,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
           </Grid.RowDefinitions>
 
           <Label Text="V1" Margin="5" HorizontalAlignment="Center"
@@ -48,47 +64,50 @@
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="0" Grid.Row="1"/>
           <StdProgressBar Value="0" Margin="5" Orientation="Vertical" HorizontalAlignment="Center"
-                         Grid.Column="0" Grid.Row="2"/>
+                         Grid.Column="0" Grid.Row="2" Name="progressV1"/>
+          <Label Name="displayV1" Margin="5" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="3"/>
 
           <Label Text="V2" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="1" Grid.Row="0"/>
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="1" Grid.Row="1"/>
-          <StdProgressBar Value="50" Margin="5" Orientation="Vertical"
-                       HorizontalAlignment="Center"
-                         Grid.Column="1" Grid.Row="2"/>
+          <StdProgressBar Value="50" Margin="5" Orientation="Vertical" HorizontalAlignment="Center"
+                         Grid.Column="1" Grid.Row="2" Name="progressV2"/>
+          <Label Name="displayV2" Margin="5" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="3"/>
 
           <Label Text="V3" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="2" Grid.Row="0"/>
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="2" Grid.Row="1"/>
-          <StdProgressBar Value="100" Margin="5" Orientation="Vertical"
-                       HorizontalAlignment="Center"
-                         Grid.Column="2" Grid.Row="2"/>
+          <StdProgressBar Value="100" Margin="5" Orientation="Vertical" HorizontalAlignment="Center"
+                         Grid.Column="2" Grid.Row="2" Name="progressV3"/>
+          <Label Name="displayV3" Margin="5" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="3"/>
 
           <Label Text="V4" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="3" Grid.Row="0"/>
           <Label Text="[50-200]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="3" Grid.Row="1"/>
-          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="5"
-                       Orientation="Vertical" HorizontalAlignment="Center"
-                         Grid.Column="3" Grid.Row="2"/>
+          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="5" Orientation="Vertical" HorizontalAlignment="Center"
+                  Grid.Column="3" Grid.Row="2" Name="progressV4"/>
+          <Label Name="displayV4" Margin="5" HorizontalAlignment="Left" Grid.Column="3" Grid.Row="3"/>
 
           <Label Text="V5" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="4" Grid.Row="0"/>
           <Label Text="[0-100]" Margin="5" HorizontalAlignment="Center"
                  Grid.Column="4" Grid.Row="1"/>
-          <StdProgressBar Value="50" Margin="0,0,0,5" Width="25" Orientation="Vertical"
-                       HorizontalAlignment="Center"
-                         Grid.Column="4" Grid.Row="2"/>
+          <StdProgressBar Value="50" Margin="0,0,0,5" Width="25" Orientation="Vertical" HorizontalAlignment="Center"
+                         Grid.Column="4" Grid.Row="2" Name="progressV5"/>
+          <Label Name="displayV5" Margin="5" HorizontalAlignment="Left" Grid.Column="4" Grid.Row="3"/>
 
         </Grid>
       </TabControl>
     </Grid>
 
     <HorizontalStackPanel>
-      <Button Text="Increase All" Margin="0,5,5,5" Name="increaseAllButton"
+      <Button Text="+" Margin="0,5,5,5" Name="increaseAllButton"
               Click="IncreaseAllButton_Click"  IsTextLocalized="true"/>
+      <Button Text="-" Margin="0,5,5,5" Name="decreaseAllButton"
+              Click="DecreaseAllButton_Click"  IsTextLocalized="true"/>
       <CheckBox Text="Indeterminate" Margin="20,5,5,5" Name="indeterminateCheckBox"
                 IsTextLocalized="true" CheckedChanged="IndeterminateCheckBox_CheckedChanged" />
     </HorizontalStackPanel>

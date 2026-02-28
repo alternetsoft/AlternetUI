@@ -859,38 +859,49 @@ namespace Alternet.UI
                 g.FillRectangle(sc2, r);
             }
             else
-            if(Value >= Maximum)
-            {
-                g.FillRectangle(sc1, r);
-            }
-            else
-            {
-                var pos = ScaleValueToPosition(Value);
-
-                RectD leftTop = new();
-                RectD rightBottom = new();
-
-                if (IsHorizontal)
+                if (Value >= Maximum)
                 {
-                    leftTop.Left = r.Left;
-                    leftTop.Width = r.Left + pos;
-                    leftTop.Top = r.Top;
-                    leftTop.Height = r.Height;
-
-                    rightBottom.Left = leftTop.Right;
-                    rightBottom.Width = r.Right - rightBottom.Left;
-                    rightBottom.Top = r.Top;
-                    rightBottom.Height = r.Height;
+                    g.FillRectangle(sc1, r);
                 }
                 else
                 {
-                }
+                    var pos = ScaleValueToPosition(Value);
 
-                if (!leftTop.SizeIsEmpty)
-                    g.FillRectangle(sc1, leftTop);
-                if (!rightBottom.SizeIsEmpty)
-                    g.FillRectangle(sc2, rightBottom);
-            }
+                    RectD leftTop = new();
+                    RectD rightBottom = new();
+
+                    if (IsHorizontal)
+                    {
+                        leftTop.Left = r.Left;
+                        leftTop.Width = r.Left + pos;
+                        leftTop.Top = r.Top;
+                        leftTop.Height = r.Height;
+
+                        rightBottom.Left = leftTop.Right;
+                        rightBottom.Width = r.Right - rightBottom.Left;
+                        rightBottom.Top = r.Top;
+                        rightBottom.Height = r.Height;
+                    }
+                    else
+                    {
+                        leftTop.Left = r.Left;
+                        leftTop.Width = r.Width;
+                        leftTop.Top = r.Top;
+                        leftTop.Height = r.Top + pos;
+
+                        rightBottom.Left = r.Left;
+                        rightBottom.Width = r.Width;
+                        rightBottom.Top = leftTop.Bottom;
+                        rightBottom.Height = r.Bottom - rightBottom.Top;
+
+                        CommonUtils.Swap(ref sc1, ref sc2);
+                    }
+
+                    if (!leftTop.SizeIsEmpty)
+                        g.FillRectangle(sc1, leftTop);
+                    if (!rightBottom.SizeIsEmpty)
+                        g.FillRectangle(sc2, rightBottom);
+                }
         }
 
         /// <summary>
@@ -1010,11 +1021,15 @@ namespace Alternet.UI
         /// <returns>The position on the slider corresponding to the specified value.</returns>
         public virtual Coord ScaleValueToPosition(int val)
         {
-            if (val <= Minimum)
-                return 0;
+            val = Math.Max(Minimum, Math.Min(Maximum, val));
+
+            Coord result;
+
+            if (val == Minimum)
+                result = 0;
             else
-                if (val >= Maximum)
-                    return MaxLeftTopSpacerSize;
+                if (val == Maximum)
+                    result = MaxLeftTopSpacerSize;
                 else
                 {
                     var v = val - Minimum;
@@ -1022,9 +1037,18 @@ namespace Alternet.UI
 
                     var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
 
-                    var result = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
-                    return result;
+                    result = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
                 }
+
+            if (IsHorizontal)
+            {
+            }
+            else
+            {
+                result = MaxLeftTopSpacerSize - result;
+            }
+
+            return result;
         }
 
         /// <summary>
