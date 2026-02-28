@@ -125,6 +125,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Exchanges the values of two variables of the same type.
+        /// </summary>
+        /// <remarks>Both parameters must be of the same type. This method is useful for swapping values
+        /// in place without requiring an additional temporary variable outside the method.</remarks>
+        /// <typeparam name="T">The type of the variables to swap.</typeparam>
+        /// <param name="a">A reference to the first variable whose value will be exchanged.</param>
+        /// <param name="b">A reference to the second variable whose value will be exchanged.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Swap<T>(ref T a, ref T b)
+        {
+            T temp = a;
+            a = b;
+            b = temp;
+        }
+
+        /// <summary>
         /// Prepends filename with "file" url protocol prefix.
         /// </summary>
         /// <param name="filename">Path to the file.</param>
@@ -154,7 +170,7 @@ namespace Alternet.UI
         /// <param name="schemeName">Name of the theme, any string.</param>
         /// <param name="arcPath">Path to archive file.</param>
         /// <param name="fileInArchivePath">Path to file in archive.</param>
-        /// <returns></returns>
+        /// <returns><see cref="string"/> containing the prepared zip URL.</returns>
         public static string PrepareZipUrl(string schemeName, string arcPath, string fileInArchivePath)
         {
             static string PrepareUrl(string s)
