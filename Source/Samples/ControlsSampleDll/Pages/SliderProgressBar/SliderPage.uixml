@@ -50,12 +50,13 @@
       </Panel>
 
       <Panel Grid.Column="1" Padding="5" Title="Vertical">
-        <Grid Name="verticalSlidersGrid" ColumnCount="4" RowCount="2" MinChildMargin="5">
+        <Grid Name="verticalSlidersGrid" ColumnCount="4" RowCount="3" MinChildMargin="5">
           <Label Text="V1 [0..10]" Margin="0,0,10,5"
                   Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center"/>
           <StdSlider Value="4" Margin="0,0,0,5" Name="sliderv1"
                   Orientation="Vertical" HorizontalAlignment="Center"
                   Grid.Column="0" Grid.Row="1" SuggestedHeight="150"/>
+          <Label Name="displayV1" Margin="0,0,10,5" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left"/>
 
           <Label Text="V2 [0..100]" Margin="0,0,10,5"
               Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
@@ -63,6 +64,7 @@
                   HorizontalAlignment="Center"
               Orientation="Vertical" SuggestedHeight="150"
               Grid.Column="1" Grid.Row="1"/>
+          <Label Name="displayV2" Margin="0,0,10,5" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left"/>
 
           <Label Text="V3 [50..200]" Margin="0,0,5,5"
               Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"/>
@@ -70,6 +72,7 @@
               Orientation="Vertical" Name="sliderv3"
                   HorizontalAlignment="Center" SuggestedHeight="150"
               Grid.Column="2" Grid.Row="1"/>
+          <Label Name="displayV3" Margin="0,0,10,5" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Left"/>
 
           <Label Text="V4 [-15..25]" Margin="0,0,5,5"
               Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"/>
@@ -77,6 +80,8 @@
               Orientation="Vertical" Name="sliderv4"
                   HorizontalAlignment="Center" SuggestedHeight="150"
               Grid.Column="3" Grid.Row="1"/>
+          <Label Name="displayV4" Margin="0,0,10,5" Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left"/>
+
         </Grid>
       </Panel>
     </TabControl>

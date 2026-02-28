@@ -28,15 +28,24 @@ namespace ControlsSample
             sliderv3.TickStyle = SliderTickStyle.BottomRight;
             sliderv4.TickStyle = SliderTickStyle.Both;
 
+            sliderv4.ThumbControl.Shape = StdSlider.SliderThumb.ShapeType.Rectangle;
+
             sliderh1.TickStyle = SliderTickStyle.None;
             sliderh2.TickStyle = SliderTickStyle.TopLeft;
             sliderh3.TickStyle = SliderTickStyle.BottomRight;
             sliderh4.TickStyle = SliderTickStyle.Both;
 
+            sliderh4.ThumbControl.Shape = StdSlider.SliderThumb.ShapeType.Rectangle;
+
             sliderh1.ValueDisplay = displayH1;
             sliderh2.ValueDisplay = displayH2;
             sliderh3.ValueDisplay = displayH3;
             sliderh4.ValueDisplay = displayH4;
+
+            sliderv1.ValueDisplay = displayV1;
+            sliderv2.ValueDisplay = displayV2;
+            sliderv3.ValueDisplay = displayV3;
+            sliderv4.ValueDisplay = displayV4;
 
             sliderh3.TickFrequency = 10;
             sliderh4.TickFrequency = 10;

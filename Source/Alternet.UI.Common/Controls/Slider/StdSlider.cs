@@ -195,16 +195,16 @@ namespace Alternet.UI
             rightBottomSpacer = CreateSpacer();
             rightBottomSpacer.ParentBackColor = true;
             rightBottomSpacer.Dock = DockStyle.Fill;
-            rightBottomSpacer.Margin = 1;
+            rightBottomSpacer.Margin = (0, 0, 0, 0);
             rightBottomSpacer.BackgroundPadding = 4;
             rightBottomSpacer.HasBackground = false;
 
             SuggestedSize = 150;
 
             tickStyle = DefaultTickStyle;
-            Padding = 1;
+            Padding = (0, 0, 0, 0);
 
-            thumb.Margin = (0, 0, 1, 1);
+            thumb.Margin = (0, 0, 0, 0);
             thumb.MinSize = 0;
             thumb.MinExtra = 0;
             thumb.SizeDelta = 0;
@@ -1055,8 +1055,8 @@ namespace Alternet.UI
                 leftTopSpacerRect.CenterHorz = center.X;
 
                 rightBottomSpacerRect.Width = spacerWidth;
-                rightBottomSpacerRect.Height = rightBottomSpacerRect.Bottom - center.Y;
                 rightBottomSpacerRect.CenterHorz = center.X;
+                // rightBottomSpacerRect.Height = rightBottomSpacerRect.Bottom - center.Y;
             }
 
             leftTop = leftTopSpacerRect;
@@ -1072,10 +1072,25 @@ namespace Alternet.UI
 
             GetSpacerRectangles(out var leftTopSpacerRect, out var rightBottomSpacerRect);
 
-            if(!leftTopSpacerRect.SizeIsEmpty)
-                g.FillRectangle(leftTopSpacer.BackColor.AsBrush, leftTopSpacerRect);
-            if(!rightBottomSpacerRect.SizeIsEmpty)
-                g.FillRectangle(rightBottomSpacer.BackColor.AsBrush, rightBottomSpacerRect);
+            var ltb = leftTopSpacer.BackColor.AsBrush;
+            var rbb = rightBottomSpacer.BackColor.AsBrush;
+
+            if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
+            {
+            }
+
+            if (IsHorizontal)
+            {
+
+            }
+            else
+            {
+            }
+
+            if (!leftTopSpacerRect.SizeIsEmpty)
+                g.FillRectangle(ltb, leftTopSpacerRect);
+            if (!rightBottomSpacerRect.SizeIsEmpty)
+                g.FillRectangle(rbb, rightBottomSpacerRect);
         }
 
         /// <summary>
@@ -1237,21 +1252,34 @@ namespace Alternet.UI
         /// <returns>The position on the slider corresponding to the specified value.</returns>
         public virtual Coord ScaleValueToPosition(int val)
         {
-            if (val <= Minimum)
-                return 0;
+            val = Math.Max(Minimum, Math.Min(Maximum, val));
+
+            Coord result;
+
+            if (val == Minimum)
+                result = 0;
             else
-            if (val >= Maximum)
-                return MaxLeftTopSpacerSize;
+                if (val == Maximum)
+                    result = MaxLeftTopSpacerSize;
+                else
+                {
+                    var v = val - Minimum;
+                    var maxV = Maximum - Minimum;
+
+                    var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
+
+                    result = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
+                }
+
+            if (IsHorizontal)
+            {
+            }
             else
             {
-                var v = val - Minimum;
-                var maxV = Maximum - Minimum;
-
-                var newSpacerSize = (v * MaxLeftTopSpacerSize) / maxV;
-
-                var result = Math.Min(Math.Max(0, newSpacerSize), MaxLeftTopSpacerSize);
-                return result;
+                result = MaxLeftTopSpacerSize - result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -1329,21 +1357,44 @@ namespace Alternet.UI
         {
             DoInsideLayout(() =>
             {
-                if (LeftTopSpacerSize <= 0)
+                if (IsHorizontal)
                 {
-                    Value = Minimum;
-                    return;
-                }
+                    if (LeftTopSpacerSize <= 0)
+                    {
+                        Value = Minimum;
+                        return;
+                    }
 
-                if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
+                    if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
+                    {
+                        Value = Maximum;
+                        return;
+                    }
+
+                    var computedValue = ((Maximum - Minimum) * LeftTopSpacerSize) / MaxLeftTopSpacerSize;
+                    var asInt = Convert.ToInt32(computedValue);
+                    Value = Minimum + asInt;
+                }
+                else
                 {
-                    Value = Maximum;
-                    return;
-                }
+                    if (LeftTopSpacerSize <= 0)
+                    {
+                        Value = Maximum;
+                        return;
+                    }
 
-                var computedValue = ((Maximum - Minimum) * LeftTopSpacerSize) / MaxLeftTopSpacerSize;
-                var asInt = Convert.ToInt32(computedValue);
-                Value = Minimum + asInt;
+                    if (LeftTopSpacerSize >= MaxLeftTopSpacerSize)
+                    {
+                        Value = Minimum;
+                        return;
+                    }
+
+                    var invertedSpacerSize = MaxLeftTopSpacerSize - LeftTopSpacerSize;
+
+                    var computedValue = ((Maximum - Minimum) * invertedSpacerSize) / MaxLeftTopSpacerSize;
+                    var asInt = Convert.ToInt32(computedValue);
+                    Value = Minimum + asInt;
+                }
             });
         }
 
@@ -1393,7 +1444,7 @@ namespace Alternet.UI
             if (IsHorizontal)
                 Value -= LargeChange;
             else
-                Value -= LargeChange;
+                Value += LargeChange;
         }
 
         /// <summary>
@@ -1408,7 +1459,7 @@ namespace Alternet.UI
             if (IsHorizontal)
                 Value += LargeChange;
             else
-                Value += LargeChange;
+                Value -= LargeChange;
         }
 
         /// <summary>
@@ -1506,7 +1557,7 @@ namespace Alternet.UI
             if (ValueDisplay is null || ValueDisplay.DisposingOrDisposed)
                 return;
 
-            if(formatValueForDisplay is not null)
+            if (formatValueForDisplay is not null)
             {
                 var formatEventArgs = new FormatValueEventArgs<int>(Value);
                 formatValueForDisplay(this, formatEventArgs);
@@ -1518,7 +1569,7 @@ namespace Alternet.UI
 
             string DefaultValueToString()
             {
-                if(ValueFormat is not null)
+                if (ValueFormat is not null)
                 {
                     return string.Format(ValueFormat, Value);
                 }
@@ -1616,6 +1667,7 @@ namespace Alternet.UI
                 UniformBorderRadiusIsPercent = DefaultThumbCornerRadiusIsPercent;
                 UniformBorderCornerRadius = DefaultThumbCornerRadius;
                 shape = DefaultShape;
+                SizeDelta = 1;
             }
 
             /// <summary>
@@ -1657,7 +1709,7 @@ namespace Alternet.UI
                 {
                     var baseLocation = base.MinimumLocation;
 
-                    if(baseLocation is null)
+                    if (baseLocation is null)
                     {
                         if (Parent is not null && Parent.HasBorder)
                             return (2, 2);
@@ -1741,7 +1793,7 @@ namespace Alternet.UI
                 var dc = e.Graphics;
                 dc.FillRectangle(parentBackBrush, r);
 
-                if(Container is not null)
+                if (Container is not null)
                 {
                     Container.GetSpacerRectangles(out var leftTop, out var rightBottom);
 
@@ -1762,6 +1814,14 @@ namespace Alternet.UI
                         rightBottom.CenterHorz = center.X;
                         rightBottom.Y = center.Y;
                         rightBottom.Height = Container.Height - center.Y;
+                    }
+
+                    if (IsHorizontal)
+                    {
+
+                    }
+                    else
+                    {
                     }
 
                     dc.FillRectangle(leftTopColor.AsBrush, leftTop);
