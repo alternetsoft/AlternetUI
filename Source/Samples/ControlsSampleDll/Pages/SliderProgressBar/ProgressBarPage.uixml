@@ -17,31 +17,31 @@
             <Label Text="H1 [0-100] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
             <Label Text="0" Margin="0,0,0,5" Name="displayH1" VerticalAlignment="Center"/>
           </StackPanel>
-          <StdProgressBar Value="0" Margin="0,0,0,5" Name="progressH1"/>
+          <StdProgressBar Value="0" Margin="0,0,0,5" Name="progressH1" SuggestedWidth="250"/>
 
           <StackPanel Orientation="Horizontal">
             <Label Text="H2 [0-100] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
             <Label Text="0" Margin="0,0,0,5" Name="displayH2" VerticalAlignment="Center"/>
           </StackPanel>
-          <StdProgressBar Value="50" Margin="0,0,0,5" Name="progressH2"/>
+          <StdProgressBar Value="50" Margin="0,0,0,5" Name="progressH2" SuggestedWidth="250"/>
 
           <StackPanel Orientation="Horizontal">
             <Label Text="H3 [0-100] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
             <Label Text="0" Margin="0,0,0,5" Name="displayH3" VerticalAlignment="Center"/>
           </StackPanel>
-          <StdProgressBar Value="100" Margin="0,0,0,5" Name="progressH3"/>
+          <StdProgressBar Value="100" Margin="0,0,0,5" Name="progressH3" SuggestedWidth="250"/>
 
           <StackPanel Orientation="Horizontal">
             <Label Text="H4 [50-200] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
             <Label Text="0" Margin="0,0,0,5" Name="displayH4" VerticalAlignment="Center"/>
           </StackPanel>
-          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" Name="progressH4"/>
+          <StdProgressBar Minimum="50" Maximum="200" Value="125" Margin="0,0,0,5" Name="progressH4" SuggestedWidth="250"/>
 
           <StackPanel Orientation="Horizontal">
             <Label Text="H5 [-20-30] = " Margin="0,0,0,5" VerticalAlignment="Center"/>
             <Label Text="0" Margin="0,0,0,5" Name="displayH5" VerticalAlignment="Center"/>
           </StackPanel>
-          <StdProgressBar Value="15" Margin="0,0,0,5" Height="25" Minimum="-20" Maximum="30" Name="progressH5"/>
+          <StdProgressBar Value="15" Margin="0,0,0,5" Height="25" Minimum="-20" Maximum="30" Name="progressH5" SuggestedWidth="250"/>
 
         </StackPanel>
 

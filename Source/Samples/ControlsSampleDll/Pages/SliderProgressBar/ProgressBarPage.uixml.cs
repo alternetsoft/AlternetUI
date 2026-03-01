@@ -44,6 +44,17 @@ namespace ControlsSample
             }
         }
 
+        private IEnumerable<StdProgressBar> GetFirstProgressBars()
+        {
+            var c1 = verticalProgressBarsGrid.FirstChildOfType<StdProgressBar>();
+            var c2 = horizontalProgressBarsPanel.FirstChildOfType<StdProgressBar>();
+
+            if (c1 is not null)
+                yield return c1;
+            if (c2 is not null)
+                yield return c2;
+        }
+
         private IEnumerable<StdProgressBar> GetAllProgressBars()
         {
             return new AbstractControl[]
@@ -55,7 +66,7 @@ namespace ControlsSample
 
         private void IndeterminateCheckBox_CheckedChanged(object sender, System.EventArgs e)
         {
-            foreach (var progressBar in GetAllProgressBars())
+            foreach (var progressBar in GetFirstProgressBars())
                 progressBar.IsIndeterminate = indeterminateCheckBox.IsChecked;
         }
     }

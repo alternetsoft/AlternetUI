@@ -16,6 +16,13 @@ namespace Alternet.UI
     public partial class StdProgressBar : Border
     {
         /// <summary>
+        /// Represents the proportion of the animated chunk size as a floating-point value.
+        /// </summary>
+        /// <remarks>This field determines the relative size of animated chunks compared to the total size
+        /// in progress bar animations.</remarks>
+        public static float AnimatedChunkSizeProportion = 0.3f;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the progress bar control uses the
         /// <see cref="DefaultColors.ControlBackColor"/> and
         /// <see cref="DefaultColors.ControlForeColor"/>. Default is <c>true</c>.
@@ -66,7 +73,16 @@ namespace Alternet.UI
         /// <remarks>This value determines how frequently animation updates occur when no custom interval
         /// is set. Adjusting this value can affect the smoothness and performance of animations that rely on
         /// timer-based updates.</remarks>
-        public static int DefaultAnimationTimerInterval = 30;
+        public static int DefaultAnimationTimerInterval = 100;
+
+        /// <summary>
+        /// Specifies the default increment factor applied to animation values, determining the rate at which animated
+        /// properties change.
+        /// </summary>
+        /// <remarks>Adjusting this value influences the speed of animations throughout the application.
+        /// Increasing the factor results in faster transitions, while decreasing it slows them down. This field is
+        /// intended for use when customizing animation behavior globally.</remarks>
+        public static float DefaultAnimationValueIncrementFactor = 0.1f;
 
         /// <summary>
         /// Represents the default tick style for a progress bar control.
@@ -94,7 +110,6 @@ namespace Alternet.UI
         private bool autoSize = true;
         private Color? spacerColor;
         private Color? secondarySpacerColor;
-        private bool goingForward = true;
         private bool isIndeterminate;
 
         /// <summary>
@@ -242,7 +257,7 @@ namespace Alternet.UI
                 isIndeterminate = value;
                 if (isIndeterminate)
                 {
-                    goingForward = true;
+                    Value = Minimum;
                     Timer.Start();
                 }
                 else
@@ -701,6 +716,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the interval, in milliseconds, for the animation timer.
+        /// When <see cref="IsIndeterminate"/> is set to <see langword="true"/>, the progress bar uses a timer
+        /// to update the animation of the indeterminate state. When this value is null (by default), the timer uses the
+        /// <see cref="DefaultAnimationTimerInterval"/>.
+        /// Setting this property allows you to customize the frequency of animation updates,
+        /// which can affect the smoothness and performance of the indeterminate animation.
+        /// </summary>
+        /// <remarks>Setting a lower interval value increases the frequency of animation updates, which
+        /// may impact performance. Higher values may result in less smooth animations. Choose an interval that balances
+        /// responsiveness and resource usage for your application's needs. It is not recommended to set this value below 30.</remarks>
+        public virtual int? AnimationTimerInterval { get; set; }
+
+        /// <summary>
         /// Gets or sets a value that specifies the delta between ticks drawn on the control.
         /// </summary>
         /// <value>The numeric value representing the delta between ticks. The default is 1.</value>
@@ -729,6 +757,15 @@ namespace Alternet.UI
                 TickFrequencyChanged?.Invoke(this, EventArgs.Empty);
             }
         }
+
+        /// <summary>
+        /// Gets or sets the increment factor applied to animation values, which determines the rate of change during animations.
+        /// </summary>
+        /// <remarks>Adjusting this property allows fine-tuning of animation speed. Higher values result
+        /// in faster transitions, while lower values slow down the animation. Set this value according to the desired
+        /// animation effect for optimal user experience.</remarks>
+        public virtual float? AnimationValueIncrementFactor { get; set; }
+
 
         [Browsable(false)]
         internal new string Title
@@ -789,6 +826,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the effective interval, in milliseconds, used for the animation timer. This value is determined by the
+        /// specified animation timer interval or defaults to the standard interval if not set.
+        /// </summary>
+        /// <remarks>This property ensures that a valid timer interval is always available for animation
+        /// operations. If the animation timer interval has not been explicitly set, the default interval will be used
+        /// as a fallback.</remarks>
+        protected virtual int EffectiveAnimationTimerInterval
+        {
+            get
+            {
+                var result = AnimationTimerInterval ?? DefaultAnimationTimerInterval;
+                result = Math.Max(30, result);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets the timer used for the animation.
         /// </summary>
         protected Timer Timer
@@ -798,12 +852,25 @@ namespace Alternet.UI
                 if (timer == null)
                 {
                     timer = new Timer();
-                    timer.Interval = DefaultAnimationTimerInterval;
+                    timer.Interval = EffectiveAnimationTimerInterval;
                     timer.Tick += OnTimerTick;
                 }
 
                 return timer;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the animated chunk size. It is used when <see cref="IsIndeterminate"/>
+        /// is set to <see langword="true"/> and represents the size of animated part of progress bar in indeterminate mode.
+        /// The actual size of animated part will be determined by this property and the current orientation.
+        /// </summary>
+        public virtual SizeD GetAnimatedChunkSize(float width, float height)
+        {
+            var chunkWidth = Math.Max(1, width * AnimatedChunkSizeProportion);
+            var chunkHeight = Math.Max(1, height * AnimatedChunkSizeProportion);
+
+            return new SizeD(chunkWidth, chunkHeight);
         }
 
         /// <summary>
@@ -827,6 +894,51 @@ namespace Alternet.UI
             MinimumChanged?.Invoke(this, e);
         }
 
+        /// <summary>
+        /// Calculates and returns an array of three rectangles representing the animated chunks of the progress bar.
+        /// </summary>
+        /// <param name="r">The rectangle that defines the area to be animated. The dimensions and position of this rectangle determine
+        /// the scope and placement of the animated segments.</param>
+        /// <returns>An array of <see cref="RectD"/> objects representing the animated rectangles. The contents and arrangement of the array
+        /// depend on the current animation direction (horizontal or vertical).</returns>
+        public virtual RectD[] GetAnimatedChunks(RectD r)
+        {
+            var chunkSize = GetAnimatedChunkSize(r.Width, r.Height);
+            var pos1 = ScaleValueToPosition(Value) - chunkSize.Width / 2;
+
+            RectD patch;
+
+            if (IsHorizontal)
+            {
+                patch = (r.Location, (chunkSize.Width, r.Height));
+                patch.Left += pos1;
+            }
+            else
+            {
+                patch = (r.Location, (r.Width, chunkSize.Height));
+                patch.Top += pos1;
+            }
+
+            NineRects nineRects = new(r, patch, ScaleFactor);
+
+            RectD[] result;
+
+            if (IsHorizontal)
+            {
+                result = new[] { nineRects.LeftRectScaled, nineRects.CenterScaled, nineRects.RightRectScaled };
+            }
+            else
+            {
+                result = new[] { nineRects.TopRectScaled, nineRects.CenterScaled, nineRects.BottomRectScaled };
+            }
+
+            result[0].Intersect(r);
+            result[1].Intersect(r);
+            result[2].Intersect(r);
+
+            return result;
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
@@ -843,54 +955,78 @@ namespace Alternet.UI
 
             var g = e.Graphics;
 
-            if (Value <= Minimum)
+            if (IsIndeterminate)
             {
-                g.FillRectangle(sc2, r);
+                InternalPaintIndeterminate();
             }
             else
-                if (Value >= Maximum)
+            {
+                InternalPaint();
+            }
+
+            void InternalPaintIndeterminate()
+            {
+                var chunks = GetAnimatedChunks(r);
+
+                if (!chunks[0].SizeIsEmpty)
+                    g.FillRectangle(sc2, chunks[0]);
+                if (!chunks[1].SizeIsEmpty)
+                    g.FillRectangle(sc1, chunks[1]);
+                if (!chunks[2].SizeIsEmpty)
+                    g.FillRectangle(sc2, chunks[2]);
+            }
+
+            void InternalPaint()
+            {
+                if (Value <= Minimum)
                 {
-                    g.FillRectangle(sc1, r);
+                    g.FillRectangle(sc2, r);
                 }
                 else
-                {
-                    var pos = ScaleValueToPosition(Value);
-
-                    RectD leftTop = new();
-                    RectD rightBottom = new();
-
-                    if (IsHorizontal)
+                    if (Value >= Maximum)
                     {
-                        leftTop.Left = r.Left;
-                        leftTop.Width = r.Left + pos;
-                        leftTop.Top = r.Top;
-                        leftTop.Height = r.Height;
-
-                        rightBottom.Left = leftTop.Right;
-                        rightBottom.Width = r.Right - rightBottom.Left;
-                        rightBottom.Top = r.Top;
-                        rightBottom.Height = r.Height;
+                        g.FillRectangle(sc1, r);
                     }
                     else
                     {
-                        leftTop.Left = r.Left;
-                        leftTop.Width = r.Width;
-                        leftTop.Top = r.Top;
-                        leftTop.Height = r.Top + pos;
+                        var pos = ScaleValueToPosition(Value);
 
-                        rightBottom.Left = r.Left;
-                        rightBottom.Width = r.Width;
-                        rightBottom.Top = leftTop.Bottom;
-                        rightBottom.Height = r.Bottom - rightBottom.Top;
+                        RectD leftTop = new();
+                        RectD rightBottom = new();
 
-                        CommonUtils.Swap(ref sc1, ref sc2);
+                        if (IsHorizontal)
+                        {
+                            leftTop.Left = r.Left;
+                            leftTop.Width = r.Left + pos;
+                            leftTop.Top = r.Top;
+                            leftTop.Height = r.Height;
+
+                            rightBottom.Left = leftTop.Right;
+                            rightBottom.Width = r.Right - rightBottom.Left;
+                            rightBottom.Top = r.Top;
+                            rightBottom.Height = r.Height;
+                        }
+                        else
+                        {
+                            leftTop.Left = r.Left;
+                            leftTop.Width = r.Width;
+                            leftTop.Top = r.Top;
+                            leftTop.Height = r.Top + pos;
+
+                            rightBottom.Left = r.Left;
+                            rightBottom.Width = r.Width;
+                            rightBottom.Top = leftTop.Bottom;
+                            rightBottom.Height = r.Bottom - rightBottom.Top;
+
+                            CommonUtils.Swap(ref sc1, ref sc2);
+                        }
+
+                        if (!leftTop.SizeIsEmpty)
+                            g.FillRectangle(sc1, leftTop);
+                        if (!rightBottom.SizeIsEmpty)
+                            g.FillRectangle(sc2, rightBottom);
                     }
-
-                    if (!leftTop.SizeIsEmpty)
-                        g.FillRectangle(sc1, leftTop);
-                    if (!rightBottom.SizeIsEmpty)
-                        g.FillRectangle(sc2, rightBottom);
-                }
+            }
         }
 
         /// <summary>
@@ -1187,26 +1323,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the effective increment factor used for animation values, determined by either a user-specified value
+        /// or a default value if none is set.
+        /// </summary>
+        /// <remarks>This property ensures that a valid increment factor is always available for
+        /// animations, providing a fallback to the default value when a custom value is not specified.</remarks>
+        protected virtual float EffectiveAnimationValueIncrementFactor
+        {
+            get
+            {
+                var result = AnimationValueIncrementFactor ?? DefaultAnimationValueIncrementFactor;
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Calculates the increment value used for animating progress changes based on the current range between the
+        /// minimum and maximum values.
+        /// </summary>
+        /// <remarks>The increment is determined by multiplying the difference between the maximum and
+        /// minimum values by a predefined factor. This ensures smooth and consistent animation transitions regardless
+        /// of the progress bar's range.</remarks>
+        /// <returns>An integer representing the calculated increment for animation. The value is always at least 1.</returns>
+        protected virtual int GetAnimationValueIncrement()
+        {
+            var increment = (int)((Maximum - Minimum) * EffectiveAnimationValueIncrementFactor);
+            increment = Math.Max(1, increment);
+            return increment;
+        }
+
+        /// <summary>
         /// Invoked when the timer interval elapses to allow implementation of animated value changes.
         /// </summary>
         /// <param name="sender">The source of the event, typically the timer that raised the event.</param>
         /// <param name="e">An object that contains the event data.</param>
         protected virtual void OnTimerTick(object? sender, EventArgs e)
         {
-            if (goingForward)
-            {
-                if (Value < Maximum)
-                    Value++;
-                else
-                    goingForward = false;
-            }
+            var increment = GetAnimationValueIncrement();
+
+            if (Value < Maximum)
+                Value += increment;
             else
-            {
-                if (Value > Minimum)
-                    Value--;
-                else
-                    goingForward = true;
-            }
+                Value = Minimum;
         }
 
         /// <inheritdoc/>
