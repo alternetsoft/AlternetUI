@@ -466,6 +466,44 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts array of <see cref="RectI"/> to device-independent units.
+        /// </summary>
+        /// <param name="rects">Array of <see cref="RectI"/> in pixels.</param>
+        /// <returns></returns>
+        /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
+        /// If not specified, default value is used.</param>
+        /// <returns>Converted value.</returns>
+        public static RectD[] PixelToDip(RectI[] rects, Coord? scaleFactor = null)
+        {
+            var length = rects.Length;
+            var result = new RectD[length];
+            for (int i = 0; i < length; i++)
+                result[i] = rects[i].PixelToDip(scaleFactor);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts an array of rectangles from device-independent pixels (DIPs) to pixels using the specified scale
+        /// factor.
+        /// </summary>
+        /// <remarks>This method is useful for scenarios where pixel-accurate rendering is required, such
+        /// as adapting graphics to different display resolutions. The conversion ensures that the rectangles are
+        /// appropriately scaled for the target device.</remarks>
+        /// <param name="value">An array of rectangles defined in device-independent pixels (DIPs) to be converted to pixel units.</param>
+        /// <param name="scaleFactor">An optional scale factor that determines the conversion from DIPs to pixels. If not specified, a default
+        /// scale factor is used.</param>
+        /// <returns>An array of rectangles in pixel units corresponding to the input rectangles in DIPs.</returns>
+        public static RectI[] PixelFromDip(RectD[] value, Coord? scaleFactor = null)
+        {
+            var length = value.Length;
+            var result = new RectI[length];
+            for (int i = 0; i < length; i++)
+                result[i] = PixelFromDip(value[i], scaleFactor);
+            return result;
+        }
+
+
+        /// <summary>
         /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>
@@ -545,23 +583,6 @@ namespace Alternet.Drawing
         public static Coord ScaleFactorOrDefault(Coord? scaleFactor = null)
         {
             return scaleFactor ?? Display.MaxScaleFactor;
-        }
-
-        /// <summary>
-        /// Converts array of <see cref="RectI"/> to device-independent units.
-        /// </summary>
-        /// <param name="rects">Array of <see cref="RectI"/> in pixels.</param>
-        /// <returns></returns>
-        /// <param name="scaleFactor">Scale factor used for the conversion. Optional.
-        /// If not specified, default value is used.</param>
-        /// <returns>Converted value.</returns>
-        public static RectD[] PixelToDip(RectI[] rects, Coord? scaleFactor = null)
-        {
-            var length = rects.Length;
-            var result = new RectD[length];
-            for (int i = 0; i < length; i++)
-                result[i] = rects[i].PixelToDip(scaleFactor);
-            return result;
         }
 
         /// <summary>
