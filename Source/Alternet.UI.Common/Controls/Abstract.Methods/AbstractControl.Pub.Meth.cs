@@ -517,6 +517,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the first child control of the specified type from the collection of children.
+        /// </summary>
+        /// <remarks>This method searches the immediate children and returns the first control that
+        /// matches the specified type. If there are no children or no matching child is found, the method returns
+        /// null.</remarks>
+        /// <typeparam name="T">The type of child control to retrieve. Must inherit from AbstractControl.</typeparam>
+        /// <returns>An instance of type T if a matching child control exists; otherwise, null.</returns>
+        public virtual T? FirstChildOfType<T>() where T : AbstractControl
+        {
+            if (HasChildren)
+            {
+                foreach (var child in Children)
+                {
+                    if (child is T t)
+                        return t;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Sets back and fore colors to <see cref="AbstractControl.BackColor"/>
         /// and <see cref="AbstractControl.ForeColor"/>.
         /// </summary>
