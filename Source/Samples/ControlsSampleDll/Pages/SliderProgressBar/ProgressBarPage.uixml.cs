@@ -11,7 +11,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            mainTabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
+            mainTabControl.MinSizeGrowMode = WindowSizeToContentMode.WidthAndHeight;
 
             progressH1.ValueDisplay = displayH1;
             progressH2.ValueDisplay = displayH2;

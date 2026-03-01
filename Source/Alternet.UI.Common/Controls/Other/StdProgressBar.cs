@@ -58,7 +58,7 @@ namespace Alternet.UI
         /// <remarks>This value is used to define the smallest allowable size for a control.
         /// It can be used
         /// as a baseline for UI layout calculations or constraints.</remarks>
-        public static Coord DefaultControlMinimumSize = 20;
+        public static Coord DefaultControlMinimumSize = 16;
 
         /// <summary>
         /// Specifies the default interval, in milliseconds, used for animation timer updates.
@@ -132,6 +132,8 @@ namespace Alternet.UI
             Padding = 1;
 
             MinimumSize = DefaultControlMinimumSize;
+
+            SuggestedSize = 150;
 
             UseControlColors(DefaultUseControlColors);
 
@@ -828,8 +830,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            const float defaultBarSize = 15;
-
             base.DefaultPaint(e);
 
             var sc1 = (spacerColor ?? DefaultSpacerColor).AsBrush;
@@ -842,17 +842,6 @@ namespace Alternet.UI
                 return;
 
             var g = e.Graphics;
-
-            if (IsHorizontal)
-            {
-                r.Height = defaultBarSize;
-                r.CenterVert = e.ClipRectangle.CenterVert;
-            }
-            else
-            {
-                r.Width = defaultBarSize;
-                r.CenterHorz = e.ClipRectangle.CenterHorz;
-            }
 
             if (Value <= Minimum)
             {
@@ -955,7 +944,7 @@ namespace Alternet.UI
                         if (MathUtils.IsInfinityOrNanOrMax(context.AvailableSize.Width))
                             specifiedWidth = defaultAutoWidth;
                         else
-                            specifiedWidth = Math.Min(defaultAutoWidth, context.AvailableSize.Width);
+                            specifiedWidth = context.AvailableSize.Width;
                     }
                     else
                     {
@@ -1006,7 +995,7 @@ namespace Alternet.UI
                         if (MathUtils.IsInfinityOrNanOrMax(context.AvailableSize.Height))
                             specifiedHeight = defaultAutoWidth;
                         else
-                            specifiedHeight = Math.Min(defaultAutoWidth, context.AvailableSize.Height);
+                            specifiedHeight = context.AvailableSize.Height;
                     }
                 }
 
