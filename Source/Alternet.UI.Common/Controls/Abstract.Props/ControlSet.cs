@@ -150,6 +150,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the largest size among all items in the collection.
+        /// </summary>
+        /// <remarks>If the collection contains no items, the default value of <see cref="SizeD"/> is
+        /// returned. This property is useful for determining layout constraints or rendering bounds based on the
+        /// maximum item size.</remarks>
+        public virtual SizeD MaxSize
+        {
+            get
+            {
+                SizeD result = SizeD.Empty;
+                foreach (var item in items)
+                    result = SizeD.Max(result, item.Size);
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the element at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element
@@ -445,6 +462,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the suggested size for each item in the control set to the specified value.
+        /// </summary>
+        /// <remarks>This method updates the suggested size of all items in the control set, which may
+        /// affect the layout and rendering of the controls.</remarks>
+        /// <param name="size">The size to suggest for each item in the control set.</param>
+        /// <returns>A ControlSet instance representing the updated state after applying the suggested sizes.</returns>
+        public virtual ControlSet SuggestedSize(SizeD size)
+        {
+            return DoInsideLayout(() =>
+            {
+                foreach (var item in items)
+                    item.SuggestedSize = size;
+            });
+        }
+
+        /// <summary>
         /// Sets horizontal alignment for all the controls in the set.
         /// </summary>
         /// <param name="value">A horizontal alignment setting.</param>
@@ -477,6 +510,47 @@ namespace Alternet.UI
 
             return this;
         }
+
+        /// <summary>
+        /// Binds the SizeChanged events of all items in the ControlSet
+        /// to automatically update the suggested height based on the current
+        /// maximum height value.
+        /// </summary>
+        /// <returns>The current instance of the ControlSet, enabling method chaining.</returns>
+        public virtual ControlSet MaxHeightOnSizeChanged()
+        {
+            SizeChanged((s, e) =>
+            {
+                var maxHeight = MaxHeight;
+                SuggestedHeight(maxHeight > 0 ? maxHeight : float.NaN);
+            });
+
+            return this;
+        }
+
+        /// <summary>
+        /// Registers a handler for the control's size change event to update the suggested size according to the
+        /// maximum size constraints.
+        /// </summary>
+        /// <remarks>This method ensures that the control's suggested size is adjusted whenever its size
+        /// changes, respecting the maximum width and height specified by the <see cref="MaxSize"/> property. If either
+        /// dimension of <see cref="MaxSize"/> is less than or equal to zero, that dimension is considered unbounded and
+        /// will not restrict the suggested size.</remarks>
+        /// <returns>The current instance of the <see cref="ControlSet"/> to allow for method chaining.</returns>
+        public virtual ControlSet MaxSizeOnChanged()
+        {
+            SizeChanged((s, e) =>
+            {
+                var maxSize = MaxSize;
+                SizeD size = new SizeD(
+                    maxSize.Width > 0 ? maxSize.Width : float.NaN,
+                    maxSize.Height > 0 ? maxSize.Height : float.NaN);
+                SuggestedSize(size);
+            });
+
+            return this;
+        }
+
 
         /// <summary>
         /// Registers an event handler to be invoked when the size of any item in the control set changes.
