@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory("Common")]
-    public partial class StdProgressBar : Border
+    public partial class StdProgressBar : GenericBorder
     {
         /// <summary>
         /// Represents the proportion of the animated chunk size as a floating-point value.
