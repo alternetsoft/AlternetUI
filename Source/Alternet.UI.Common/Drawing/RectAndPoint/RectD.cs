@@ -967,8 +967,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Creates a rectangle that represents the intersection between a and b. If there
-        /// is no intersection, an
-        /// empty rectangle is returned.
+        /// is no intersection, an empty rectangle is returned.
         /// </summary>
         public static RectD Intersect(RectD a, RectD b)
         {
