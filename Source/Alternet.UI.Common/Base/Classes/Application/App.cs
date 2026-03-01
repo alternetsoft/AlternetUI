@@ -1479,7 +1479,7 @@ namespace Alternet.UI
         /// <param name="kind">Message kind.</param>
         public static void Log(object? obj, LogItemKind kind = LogItemKind.Information)
         {
-            LogAndWait(obj, kind, false);
+            LogAndWait(obj, kind, wait: false);
         }
 
         /// <summary>

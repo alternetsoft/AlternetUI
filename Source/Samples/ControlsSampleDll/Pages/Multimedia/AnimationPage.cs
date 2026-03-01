@@ -100,9 +100,11 @@ namespace ControlsSample
 
         private void ShowInfo()
         {
+            var url = animation.AnimationUrl;
+
             App.Log($"Animation.IsOk: {animation.IsOk}");
-            App.Log($"Animation.FrameCount: {animation.FrameCount}");
-            App.Log($"Animation.FrameDelay[0]: {animation.GetDelay(0)}");
+
+            AnimatedImageExtractor.LogFrames(url, 10, LogWriter.Application);
         }
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)

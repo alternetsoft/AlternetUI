@@ -16,6 +16,69 @@ namespace Alternet.Drawing;
 public static class AnimatedImageExtractor
 {
     /// <summary>
+    /// Logs information about each frame extracted from a GIF located at the specified URL using the provided log
+    /// writer.
+    /// </summary>
+    /// <remarks>If no frames are available for the specified URL, a message is logged indicating the absence
+    /// of frames. Each frame is logged in a separate section for clarity.</remarks>
+    /// <param name="url">The URL of the GIF from which to extract frames. This parameter can be null, in which case no frames will be
+    /// logged.</param>
+    /// <param name="logWriter">An optional log writer used to output frame information. If not specified,
+    /// a default debug log writer is used.</param>
+    /// <param name="maxFrames">The maximum number of frames to log. If the number of frames exceeds this value,
+    /// only the specified number of frames will be logged.</param>
+    public static void LogFrames(string? url, int maxFrames, ILogWriter? logWriter = null)
+    {
+        logWriter ??= LogWriter.Debug;
+
+        var frames = ExtractFramesFromGif(url);
+        if (frames == null || frames.Length == 0)
+        {
+            logWriter?.WriteLine($"No frames available for URL: {url}");
+            return;
+        }
+
+        var effective = Math.Min(frames.Length, maxFrames);
+
+        logWriter.BeginSection($"Logging {effective} of {frames.Length} frames for URL: {url}");
+
+        for (int i = 0; i < effective; i++)
+        {
+            var frame = frames[i];
+
+            logWriter.BeginSection($"Logging {i} frame");
+            LogFrame(frame, logWriter);
+            logWriter.EndSection();
+        }
+
+        logWriter.EndSection();
+    }
+
+    /// <summary>
+    /// Logs detailed information about a specific animation frame identified by the specified URL and frame index.
+    /// </summary>
+    /// <remarks>If no frame information is available for the given URL and frame index, a message indicating
+    /// the absence of information is logged instead.</remarks>
+    /// <param name="logWriter">An optional log writer used to output the frame information. If not specified,
+    /// the default debug log writer is used.</param>
+    /// <param name="info">Frame information.</param>
+    public static void LogFrame(AnimatedImageFrameInfo? info, ILogWriter? logWriter = null)
+    {
+        logWriter ??= LogWriter.Debug;
+
+        if (info == null)
+        {
+            return;
+        }
+
+        logWriter.WriteLine($"Duration: {info.Duration} ms");
+        logWriter.WriteLine($"Required Frame Index: {info.RequiredFrame}");
+        logWriter.WriteLine($"Alpha Type: {info.AlphaType}");
+        logWriter.WriteLine($"Original Bitmap Size: {(info.OriginalBitmap != null ? $"{info.OriginalBitmap.Width}x{info.OriginalBitmap.Height}" : "null")}");
+        logWriter.WriteLine($"Combined Bitmap Size: {(info.CombinedBitmap != null ? $"{info.CombinedBitmap.Width}x{info.CombinedBitmap.Height}" : "null")}");
+    }
+
+    /// <summary>
     /// Retrieves a bitmap representing a specific frame from a GIF image located at the specified URL.
     /// </summary>
     /// <remarks>This method extracts all frames from the GIF and returns the bitmap for the specified frame
@@ -26,13 +89,28 @@ public static class AnimatedImageExtractor
     /// <returns>An SKBitmap containing the image data for the specified frame, or null if the frame cannot be retrieved.</returns>
     public static SKBitmap? GetFrame(string? url, int frameIndex = 0)
     {
+        var frame = GetFrameInfo(url, frameIndex);
+        return frame?.CombinedBitmap;
+    }
+
+    /// <summary>
+    /// Retrieves information about a specific frame from an animated image at the specified URL.
+    /// </summary>
+    /// <remarks>If the URL is null or the frame index is invalid, the method returns null. This method is
+    /// useful for accessing individual frames in animated images, such as GIFs.</remarks>
+    /// <param name="url">The URL of the animated image from which to extract frame information. This parameter cannot be null.</param>
+    /// <param name="frameIndex">The zero-based index of the frame to retrieve. Must be within the range of available frames.</param>
+    /// <returns>An instance of AnimatedImageFrameInfo containing details of the specified frame, or null if the URL is null or
+    /// the frame index is out of range.</returns>
+    public static AnimatedImageFrameInfo? GetFrameInfo(string? url, int frameIndex = 0)
+    {
         if (url == null)
             return null;
         var frames = ExtractFramesFromGif(url);
         if (frameIndex < 0 || frameIndex >= frames.Length)
             return null;
         var frame = frames[frameIndex];
-        return frame.CombinedBitmap;
+        return frame;
     }
 
     /// <summary>
@@ -43,7 +121,7 @@ public static class AnimatedImageExtractor
     /// a valid GIF format.</remarks>
     /// <param name="url">The resource URL or path to the GIF file to extract frames from. The file must exist and be accessible.</param>
     /// <returns>An array of AnimatedImageFrameInfo objects, each representing a frame extracted from the GIF image.</returns>
-    public static AnimatedImageFrameInfo[] ExtractFramesFromGif(string url)
+    public static AnimatedImageFrameInfo[] ExtractFramesFromGif(string? url)
     {
         using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
         if (stream is null)
