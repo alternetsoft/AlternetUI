@@ -13,6 +13,11 @@ namespace Alternet.UI
     public class FileMaskUtils
     {
         /// <summary>
+        /// Gets or sets localization for "Files" string.
+        /// </summary>
+        public static string StrFiles = "Files";
+
+        /// <summary>
         /// Gets or sets localization for "All Files" string.
         /// </summary>
         public static string StrAllFiles = "All Files";
@@ -23,7 +28,12 @@ namespace Alternet.UI
         public static string StrImageFiles = "Image Files";
 
         /// <summary>
-        /// Gets or sets localization for "Image Files" string.
+        /// Gets or sets localization for "Animation Files" string.
+        /// </summary>
+        public static string StrAnimationFiles = "Animation Files";
+
+        /// <summary>
+        /// Gets or sets localization for "Library Files" string.
         /// </summary>
         public static string StrLibraryFiles = "Library Files";
 
