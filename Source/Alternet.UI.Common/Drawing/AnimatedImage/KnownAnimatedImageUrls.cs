@@ -35,6 +35,11 @@ namespace Alternet.UI
         public static string DualRing32 { get; set; } = GetImageUrl("DualRing32.gif");
 
         /// <summary>
+        /// Gets or sets url used to load "HourGlass" image.
+        /// </summary>
+        public static string HourGlass { get; set; } = GetImageUrl("HourGlass.gif");
+
+        /// <summary>
         /// Gets or sets url used to load "DualRing64" image.
         /// </summary>
         public static string DualRing64 { get; set; } = GetImageUrl("DualRing64.gif");
