@@ -947,7 +947,7 @@ namespace Alternet.UI
             var sc1 = (spacerColor ?? DefaultSpacerColor).AsBrush;
             var sc2 = (secondarySpacerColor ?? DefaultSecondarySpacerColor).AsBrush;
 
-            var r = e.ClipRectangle;
+            var r = e.ClientRectangle;
             r = r.DeflatedWithPadding(Padding);
 
             if (r.SizeIsEmpty)
