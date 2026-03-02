@@ -125,6 +125,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Replaces URL-encoded representations of colons and spaces in the specified string with their corresponding literal characters.
+        /// This is an opposite operation to <see cref="ReplaceNonUrlChars(string)"/> and is intended to restore colons
+        /// and spaces that have been URL-encoded in a string. Specifically, it replaces all occurrences of '%3A' with ':'
+        /// and all occurrences of '%20' with a space character.
+        /// Note that this method only decodes these specific URL-encoded characters and does not perform a full URL decoding of the string.
+        /// </summary>
+        /// <param name="s">The string containing URL-encoded characters to decode. If null, the method will throw an exception.</param>
+        /// <returns>A new string in which all occurrences of '%3A' are replaced with ':' and all occurrences of '%20' are
+        /// replaced with a space character.</returns>
+        public static string ReplaceNonUrlCharsBack(string s)
+        {
+            s = s.Replace("%3A", ":").Replace("%20", " ");
+            return s;
+        }
+
+        /// <summary>
         /// Exchanges the values of two variables of the same type.
         /// </summary>
         /// <remarks>Both parameters must be of the same type. This method is useful for swapping values
