@@ -82,6 +82,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a custom scale factor for animations. This property is used when <see cref="IsAnimationScaled"/> is set
+        /// to <see langword="true"/>. If not specified (default value), scale factor of the control is used.
+        /// </summary>
+        public virtual float? CustomAnimationScaleFactor { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control is transparent. Default is true.
         /// When true, the control's background is not drawn, allowing the parent control's
         /// background to show through. When false, the control's background
@@ -458,7 +464,8 @@ namespace Alternet.UI
         /// animations are scaled; otherwise, returns 1.</returns>
         public virtual float GetEffectiveAnimationScaleFactor()
         {
-            return IsAnimationScaled ? ScaleFactor : 1f;
+            var sf = CustomAnimationScaleFactor ?? ScaleFactor;
+            return IsAnimationScaled ? sf : 1f;
         }
 
         /// <inheritdoc/>

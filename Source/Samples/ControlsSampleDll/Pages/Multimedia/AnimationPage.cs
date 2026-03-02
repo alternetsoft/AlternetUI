@@ -11,7 +11,6 @@ namespace ControlsSample
         private static readonly string ResPrefix = $"embres:ControlsSampleDll.Resources.Animation.";
 
         internal static readonly string AnimationPlant = $"{ResPrefix}Plant.gif";
-        internal static readonly string AnimationHourGlass = $"{ResPrefix}HourGlass.gif";
         internal static readonly string AnimationSpinner = $"{ResPrefix}Spinner.gif";
         internal static readonly string AnimationAlternet = $"{ResPrefix}Alternet.gif";
         internal static readonly string AnimationCustom = "Open animation file (*.gif, *.webp)...";
@@ -49,22 +48,29 @@ namespace ControlsSample
             public AnimatedImageItem(string name, AnimatedImageSet image)
             {
                 Text = name;
+                AnimatedImageSet = image;
+            }
+
+            public AnimatedImageItem(string name, AnimatedImage image)
+            {
+                Text = name;
                 AnimatedImage = image;
             }
 
             public string? Url { get; set; }
 
-            public AnimatedImageSet? AnimatedImage { get; set; }
+            public AnimatedImageSet? AnimatedImageSet { get; set; }
+
+            public AnimatedImage? AnimatedImage { get; set; }
         }
 
         public AnimationPage()
         {
             Padding = 10;
-            var defaultAnimationUrl = AnimationHourGlass;
 
             animation.Parent = this;
             animation.IsAnimationScaled = true;
-            animation.LoadFromUrl(defaultAnimationUrl);
+            animation.AnimatedImage = KnownAnimatedImages.HourGlass;
             animation.Play();
 
             new HorizontalLine
@@ -80,7 +86,7 @@ namespace ControlsSample
                 Margin = 5,
             }.Parent = this;
 
-            AnimatedImageItem defaultItem = new("Hour Glass", AnimationHourGlass);
+            AnimatedImageItem defaultItem = new("Hour Glass", KnownAnimatedImages.HourGlass);
 
             List<AnimatedImageItem> animationUrls = new()
             {
@@ -186,16 +192,22 @@ namespace ControlsSample
                     }
                 }
                 else
-                    if (item.AnimatedImage is not null)
+                    if (item.AnimatedImageSet is not null)
                     {
                         animation.IsAnimationScaled = false;
 
-                        animation.AnimatedImage = item.AnimatedImage.GetImage(ScaleFactor);
+                        animation.AnimatedImage = item.AnimatedImageSet.GetImage(ScaleFactor);
                     }
                     else
-                    {
-                        App.Log($"No animation source for item: {item.Text}");
-                    }
+                        if (item.AnimatedImage is not null)
+                        {
+                            animation.IsAnimationScaled = true;
+                            animation.AnimatedImage = item.AnimatedImage;
+                        }
+                        else
+                        {
+                            App.Log($"No animation source for item: {item.Text}");
+                        }
 
                 animation.Play();
             }
