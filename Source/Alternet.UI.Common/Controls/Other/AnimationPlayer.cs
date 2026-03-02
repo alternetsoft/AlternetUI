@@ -35,6 +35,8 @@ namespace Alternet.UI
         private HorizontalAlignment imageHorizontalAlignment = HorizontalAlignment.Center;
         private VerticalAlignment imageVerticalAlignment = VerticalAlignment.Center;
         private bool isTransparent = true;
+        private bool disposeAnimatedImage;
+        private bool isAnimationScaled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.
@@ -54,6 +56,29 @@ namespace Alternet.UI
             AutoPadding = false;
             ParentBackColor = true;
             ParentForeColor = true;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether animations are scaled according to the current settings.
+        /// Default is false.
+        /// </summary>
+        /// <remarks>When this property is set to <see langword="true"/>, animations are adjusted based on
+        /// the defined scaling parameters. Changing the value triggers a layout update and invalidates the current
+        /// layout, which may affect rendering performance.</remarks>
+        public virtual bool IsAnimationScaled
+        {
+            get
+            {
+                return isAnimationScaled;
+            }
+
+            set
+            {
+                if (isAnimationScaled == value)
+                    return;
+                isAnimationScaled = value;
+                PerformLayoutAndInvalidate();
+            }
         }
 
         /// <summary>
@@ -93,6 +118,7 @@ namespace Alternet.UI
                 var playing = IsPlaying();
                 Stop();
                 animatedImage = value;
+                disposeAnimatedImage = false;
                 currentFrame = 0;
                 PerformLayoutAndInvalidate();
                 if (playing)
@@ -277,6 +303,7 @@ namespace Alternet.UI
                 var url = CommonUtils.PrepareFileUrl(filename);
 
                 AnimatedImage = new AnimatedImage(url, delayLoading: false);
+                disposeAnimatedImage = true;
                 return true;
             }
             catch (Exception ex)
@@ -306,6 +333,7 @@ namespace Alternet.UI
             try
             {
                 AnimatedImage = new AnimatedImage(stream);
+                disposeAnimatedImage = true;
                 return true;
             }
             catch (Exception ex)
@@ -341,6 +369,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves a frame from the animated image at the specified index and returns a scaled version of that frame.
+        /// </summary>
+        /// <remarks>This method returns null if the object is currently disposing or has already been
+        /// disposed. Ensure that the index is valid and the scale factor is appropriate for the intended use.</remarks>
+        /// <param name="i">The zero-based index of the frame to retrieve from the animated image. Must be within the valid range of
+        /// available frames.</param>
+        /// <param name="scaleFactor">The factor by which to scale the dimensions of the retrieved frame. Must be greater than zero.</param>
+        /// <returns>An Image object representing the scaled frame at the specified index, or null if the object is disposing or
+        /// has been disposed.</returns>
+        public virtual Image? GetScaledFrame(int i, float scaleFactor)
+        {
+            if (DisposingOrDisposed)
+                return null;
+            return animatedImage?.GetScaledFrame(i, scaleFactor);
+        }
+
+        /// <summary>
         /// Loads the animation from the given file or resource url.
         /// </summary>
         /// <param name="url">Url with the animation.</param>
@@ -365,6 +410,7 @@ namespace Alternet.UI
             try
             {
                 AnimatedImage = new AnimatedImage(url, delayLoading: false);
+                disposeAnimatedImage = true;
                 return true;
             }
             catch (Exception ex)
@@ -402,6 +448,19 @@ namespace Alternet.UI
                 PerformLayoutAndInvalidate();
         }
 
+        /// <summary>
+        /// Gets the effective scale factor applied to animations, reflecting whether animation scaling
+        /// is currently enabled.
+        /// </summary>
+        /// <remarks>Use this method to determine the current scaling applied to animations, which may
+        /// affect animation speed or appearance depending on the application's settings.</remarks>
+        /// <returns>A floating-point value representing the effective animation scale factor. Returns the scale factor if
+        /// animations are scaled; otherwise, returns 1.</returns>
+        public virtual float GetEffectiveAnimationScaleFactor()
+        {
+            return IsAnimationScaled ? ScaleFactor : 1f;
+        }
+
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
@@ -423,9 +482,13 @@ namespace Alternet.UI
 
             Image? frameImage;
 
+            var animationScaleFactor = GetEffectiveAnimationScaleFactor();
+            var animationSizeScaled = SizeI.Multiply(AnimationSize, animationScaleFactor);
+            var animationSizeScaledI = animationSizeScaled.ToSize();
+
             if (Enabled && IsPlaying())
             {
-                frameImage = GetFrame(currentFrame);
+                frameImage = GetScaledFrame(currentFrame, animationScaleFactor);
             }
             else
             {
@@ -433,8 +496,8 @@ namespace Alternet.UI
 
                 if (frameImage is null && animatedImage is not null && animatedImage.IsOk)
                 {
-                    frameImage ??= animatedImage.InactiveBitmap?.AsImage(AnimationSize);
-                    frameImage ??= animatedImage.GetFrame(animatedImage.InactiveFrameIndex);
+                    frameImage ??= animatedImage.InactiveBitmap?.AsImage(animationSizeScaledI);
+                    frameImage ??= GetScaledFrame(animatedImage.InactiveFrameIndex, animationScaleFactor);
                 }
 
                 if (!Enabled)
@@ -481,8 +544,11 @@ namespace Alternet.UI
 
             if (IsOk)
             {
-                var size = AnimationSize;
-                var sizeDips = PixelToDip(size);
+                var animationScaleFactor = GetEffectiveAnimationScaleFactor();
+                var animationSizeScaled = SizeI.Multiply(AnimationSize, animationScaleFactor);
+                var animationSizeScaledI = animationSizeScaled.ToSize();
+
+                var sizeDips = PixelToDip(animationSizeScaledI);
                 return sizeDips + Padding.Size;
             }
 
@@ -493,7 +559,12 @@ namespace Alternet.UI
         protected override void DisposeManaged()
         {
             SafeDispose(ref timer);
-            SafeDispose(ref animatedImage);
+
+            if (disposeAnimatedImage)
+                SafeDispose(ref animatedImage);
+            else
+                animatedImage = null;
+
             SafeDispose(ref inactiveBitmap);
 
             base.DisposeManaged();

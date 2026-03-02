@@ -251,6 +251,21 @@ public partial class AnimatedImage : DisposableObject
     }
 
     /// <summary>
+    /// Retrieves a scaled image of the specified animation frame using the provided scale factor.
+    /// </summary>
+    /// <remarks>If the frame index is invalid, this method returns null. The scaling operation is applied to
+    /// the frame image after retrieval.</remarks>
+    /// <param name="i">The zero-based index of the frame to retrieve. Must be within the range of available frames.</param>
+    /// <param name="scaleFactor">The factor by which to scale the frame image. Values greater than 1 enlarge the image; values less than 1 reduce
+    /// its size.</param>
+    /// <returns>An image representing the scaled frame, or null if the specified frame does not exist.</returns>
+    public virtual Image? GetScaledFrame(int i, float scaleFactor)
+    {
+        var frame = GetFrameInfo(i);
+        return frame?.GetScaledImage(scaleFactor);
+    }
+
+    /// <summary>
     /// Returns the specified frame as a <see cref="Image"/>.
     /// </summary>
     /// <param name="i">The zero-based index of the frame to retrieve. Must be within the range of available frames.</param>

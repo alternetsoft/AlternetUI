@@ -123,6 +123,10 @@ public static class AnimatedImageExtractor
     /// <returns>An array of AnimatedImageFrameInfo objects, each representing a frame extracted from the GIF image.</returns>
     public static AnimatedImageFrameInfo[] ExtractFramesFromGif(string? url)
     {
+        if (url == null)
+            return [];
+
+        url = CommonUtils.ReplaceNonUrlCharsBack(url);
         using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
         if (stream is null)
             return [];

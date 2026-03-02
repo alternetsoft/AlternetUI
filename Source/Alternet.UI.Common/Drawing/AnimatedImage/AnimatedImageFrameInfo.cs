@@ -3,6 +3,7 @@ using System.IO;
 using SkiaSharp;
 
 using Alternet.UI;
+using System.Collections.Generic;
 
 namespace Alternet.Drawing;
 
@@ -19,6 +20,7 @@ public class AnimatedImageFrameInfo : DisposableObject
     private SKBitmap? originalBitmap;
     private SKBitmap? combinedBitmap;
     private Image? image;
+    private List<ScaledImageData>? scaledImages;
 
     /// <summary>
     /// Gets or sets the original bitmap data as stored in the GIF frame. The bitmap may represent a partial or 'dirty'
@@ -92,13 +94,77 @@ public class AnimatedImageFrameInfo : DisposableObject
     /// Setting the correct alpha type is important for accurate color blending and transparency effects.</remarks>
     public SKAlphaType AlphaType { get; set; }
 
+    /// <summary>
+    /// Returns an image scaled by the specified scale factor.
+    /// </summary>
+    /// <remarks>If the scale factor is approximately 1.0, the original image is returned without
+    /// modification. Scaled images are cached to improve performance for repeated requests with the same scale factor.</remarks>
+    /// <param name="scaleFactor">The factor by which to scale the image. A value of 1.0 returns the original image. Must be greater than 0.</param>
+    /// <returns>A new image scaled by the specified factor, or null if the original image is not set.</returns>
+    public virtual Image? GetScaledImage(float scaleFactor)
+    {
+        if (Image is null)
+            return null;
+
+        if (MathUtils.AreClose(scaleFactor, 1.0f))
+            return Image;
+
+        scaledImages ??= new ();
+
+        for (int i = 0; i < scaledImages.Count; i++)
+        {
+            if (MathUtils.AreClose(scaledImages[i].ScaleFactor, scaleFactor))
+                return scaledImages[i].ScaledImage;
+        }
+
+        var newSize = SizeI.Multiply(Image.Size, scaleFactor).ToSize();
+
+        var scaledImage = new Bitmap(Image, newSize);
+
+        scaledImages.Add(new ScaledImageData(scaleFactor, scaledImage));
+
+        return scaledImage;
+    }
+
     /// <inheritdoc/>
     protected override void DisposeManaged()
     {
+        if (scaledImages is not null)
+        {
+            foreach (var scaledImageData in scaledImages)
+            {
+                scaledImageData.Dispose();
+            }
+
+            scaledImages.Clear();
+            scaledImages = null;
+        }
+
         SafeDispose(ref originalBitmap);
         SafeDispose(ref combinedBitmap);
         SafeDispose(ref image);
         base.DisposeManaged();
+    }
+
+    private class ScaledImageData : DisposableObject
+    {
+        private Image? scaledImage;
+
+        public ScaledImageData(float scaleFactor, Image image)
+        {
+            ScaleFactor = scaleFactor;
+            ScaledImage = image;
+        }
+
+        public float ScaleFactor { get; set; }
+
+        public Image? ScaledImage { get => scaledImage; set => scaledImage = value; }
+
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref scaledImage);
+            base.DisposeManaged();
+        }
     }
 }
 

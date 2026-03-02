@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+
 using Alternet.UI;
 
 namespace ControlsSample
@@ -22,8 +23,8 @@ namespace ControlsSample
             Size = (200, 200),
             Title = "Frame 0",
         };
-        
-        private readonly EnumPicker selectComboBox = new()
+
+        private readonly ListPicker selectComboBox = new()
         {
             Margin = 5,
         };
@@ -37,13 +38,36 @@ namespace ControlsSample
         {
         }
 
+        public class AnimatedImageItem : ListControlItem
+        {
+            public AnimatedImageItem(string name, string url)
+            {
+                Text = name;
+                Url = url;
+            }
+
+            public AnimatedImageItem(string name, AnimatedImage? animatedImageSmall, AnimatedImage? animatedImageLarge)
+            {
+                Text = name;
+                AnimatedImageSmall = animatedImageSmall;
+                AnimatedImageLarge = animatedImageLarge;
+            }
+
+            public string? Url { get; set; }
+
+            public AnimatedImage? AnimatedImageSmall { get; set; }
+
+            public AnimatedImage? AnimatedImageLarge { get; set; }
+        }
+
         public AnimationPage()
         {
             Padding = 10;
             var defaultAnimationUrl = AnimationHourGlass;
 
             animation.Parent = this;
-            animation.LoadFromUrl(defaultAnimationUrl, AnimationType.Gif);
+            animation.IsAnimationScaled = true;
+            animation.LoadFromUrl(defaultAnimationUrl);
             animation.Play();
 
             new HorizontalLine
@@ -59,18 +83,20 @@ namespace ControlsSample
                 Margin = 5,
             }.Parent = this;
 
-            List<string> animationUrls = new()
+            AnimatedImageItem defaultItem = new("Hour Glass", AnimationHourGlass);
+
+            List<AnimatedImageItem> animationUrls = new()
             {
-                AnimationHourGlass,
-                AnimationPlant,
-                AnimationSpinner,
-                AnimationAlternet,
-                KnownAnimatedImageUrls.DualRing64,
-                AnimationCustom,
+                defaultItem,
+                new ("Plant", AnimationPlant),
+                new ("Spinner", AnimationSpinner),
+                new ("Alternet", AnimationAlternet),
+                new ("Dual Ring", KnownAnimatedImages.DualRing32, KnownAnimatedImages.DualRing64),
+                new (AnimationCustom, AnimationCustom),
             };
 
             selectComboBox.AddRange(animationUrls);
-            selectComboBox.Value = defaultAnimationUrl;
+            selectComboBox.Value = defaultItem;
             selectComboBox.Parent = this;
             selectComboBox.ValueChanged += SelectComboBox_SelectedItemChanged;
 
@@ -109,15 +135,19 @@ namespace ControlsSample
 
         private void SelectComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if (selectComboBox.Value is not string url)
+            if (selectComboBox.Value is not AnimatedImageItem item)
                 return;
 
-            if (url == AnimationCustom)
+            if (item.Text == AnimationCustom)
             {
                 var dialog = OpenFileDialog.Default;
                 dialog.FileMustExist = true;
 
-                var filter = FileMaskUtils.ToFileDialogFilter(new("Animation files", ".gif", ".webp"), new("GIF files", ".gif"), new("WEBP files", ".webp"));
+                var filter = FileMaskUtils.ToFileDialogFilter(
+                    new(FileDialogFilterItem.Kind.AnimationFiles),
+                    new(".gif"),
+                    new(".webp"));
+
                 dialog.Filter = filter;
 
                 dialog.ShowAsync(this.ParentWindow, () =>
@@ -125,7 +155,8 @@ namespace ControlsSample
                     if (File.Exists(dialog.FileName))
                     {
                         animation.Stop();
-                        if (!animation.LoadFile(dialog.FileName!, AnimationType.Any))
+                        animation.IsAnimationScaled = true;
+                        if (!animation.LoadFile(dialog.FileName))
                         {
                             App.Log($"Error loading file: {dialog.FileName}");
                         }
@@ -143,7 +174,39 @@ namespace ControlsSample
             else
             {
                 animation.Stop();
-                animation.LoadFromUrl(url, AnimationType.Gif);
+
+                if (item.Url is not null)
+                {
+                    var result = animation.LoadFromUrl(item.Url);
+                    animation.IsAnimationScaled = true;
+                    if (!result)
+                    {
+                        App.Log($"Error loading animation from url: {item.Url}");
+                    }
+                    else
+                    {
+
+                    }
+                }
+                else
+                    if (item.AnimatedImageSmall is not null)
+                    {
+                        animation.IsAnimationScaled = false;
+
+                        if (ScaleFactor > 1)
+                        {
+                            animation.AnimatedImage = item.AnimatedImageLarge ?? item.AnimatedImageSmall;
+                        }
+                        else
+                        {
+                            animation.AnimatedImage = item.AnimatedImageSmall;
+                        }
+                    }
+                    else
+                    {
+                        App.Log($"No animation source for item: {item.Text}");
+                    }
+
                 animation.Play();
             }
         }
