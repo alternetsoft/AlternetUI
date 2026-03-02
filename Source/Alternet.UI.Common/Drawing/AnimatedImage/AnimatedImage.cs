@@ -20,6 +20,8 @@ public partial class AnimatedImage : DisposableObject
 
     private AnimatedImageFrameInfo[]? frames;
     private string? sourceUrl;
+    private ImageSet? inactiveBitmap;
+    private int inactiveFrameIndex;
 
     /// <summary>
     /// Initializes a new instance of the AnimatedImage class using the specified image source URL and an option to
@@ -69,6 +71,21 @@ public partial class AnimatedImage : DisposableObject
     }
 
     /// <summary>
+    /// Occurs when the inactive bitmap is updated, allowing subscribers to respond to changes in the bitmap's state.
+    /// </summary>
+    /// <remarks>Subscribers can use this event to refresh the display or perform actions when the inactive
+    /// bitmap changes. Handling this event efficiently is recommended to avoid performance issues, especially in
+    /// scenarios where frequent updates may occur.</remarks>
+    public event EventHandler? InactiveBitmapChanged;
+
+    /// <summary>
+    /// Occurs when the index of the inactive frame changes.
+    /// </summary>
+    /// <remarks>This event is typically used to respond to changes in the inactive frame index, allowing
+    /// subscribers to update their state or UI accordingly.</remarks>
+    public event EventHandler? InactiveFrameIndexChanged;
+
+    /// <summary>
     /// Gets the number of frames for this animation.
     /// </summary>
     /// <returns></returns>
@@ -100,6 +117,58 @@ public partial class AnimatedImage : DisposableObject
                 return default;
             var image = frames[0].Image;
             return image?.Size ?? default;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the bitmap to show in the animation player when it's not playing this animation.
+    /// </summary>
+    /// <remarks>
+    /// If you set the inactive bitmap to <c>null</c> (default value), then the first
+    /// frame of the animation is shown when the animation player is inactive. 
+    /// </remarks>
+    /// <remarks>
+    /// If the animation player is not playing the animation, the given bitmap will be
+    /// immediately shown; otherwise, it will be shown as soon as the animation is stopped.
+    /// </remarks>
+    /// <remarks>
+    /// Note that the inactive bitmap, if smaller than the control's size, will be
+    /// centered in the control; if bigger, it will be stretched to fit it.
+    /// </remarks>
+    public virtual ImageSet? InactiveBitmap
+    {
+        get
+        {
+            return inactiveBitmap;
+        }
+
+        set
+        {
+            SetProperty(ref inactiveBitmap, value, nameof(InactiveBitmap), () =>
+            {
+                InactiveBitmapChanged?.Invoke(this, EventArgs.Empty);
+            });
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the index of the frame which is shown when animation is stopped or disabled.
+    /// Default is 0, which means that the first frame of the animation is shown when the animation player is inactive.
+    /// </summary>
+    /// <remarks>The index must be a valid frame index within the range of available frames.</remarks>
+    public virtual int InactiveFrameIndex
+    { 
+        get
+        {
+            return inactiveFrameIndex;
+        }
+
+        set
+        {
+            SetProperty(ref inactiveFrameIndex, value, nameof(InactiveBitmap), () =>
+            {
+                InactiveFrameIndexChanged?.Invoke(this, EventArgs.Empty);
+            });
         }
     }
 

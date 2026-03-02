@@ -12,7 +12,6 @@ namespace Alternet.UI
     /// This is dummy handler used for the disposed controls in some cases.
     /// </summary>
     public class HandlerForDisposed : PlessControlHandler,
-        IAnimationPlayerHandler,
         IButtonHandler,
         ICalendarHandler,
         ICheckBoxHandler,
@@ -33,10 +32,6 @@ namespace Alternet.UI
 #pragma warning disable
         public event EventHandler? CurrentPositionChanged;
 #pragma warning enable
-
-        public uint FrameCount { get; }
-
-        public SizeI AnimationSize { get; }
 
         public bool IsOk { get; }
 

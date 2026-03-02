@@ -172,7 +172,7 @@ public static class AnimatedImageExtractor
             {
                 // Copy required frame's bitmap to canvas
                 canvas.Clear(SKColors.Transparent);
-                using var requiredFrameBmp = finalFrames[frameInfo.RequiredFrame].CombinedBitmap;
+                var requiredFrameBmp = finalFrames[frameInfo.RequiredFrame].CombinedBitmap;
                 canvas.DrawBitmap(requiredFrameBmp, 0, 0);
             }
 

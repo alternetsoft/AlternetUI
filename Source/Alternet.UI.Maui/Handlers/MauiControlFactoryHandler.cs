@@ -23,11 +23,6 @@ namespace Alternet.UI
             return new MauiControlHandler();
         }
 
-        IControlHandler IControlFactoryHandler.CreateAnimationPlayerHandler(AnimationPlayer control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IControlHandler? IControlFactoryHandler.CreateButtonHandler(Button control)
         {
             return null;

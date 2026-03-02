@@ -13,7 +13,7 @@ namespace ControlsSample
         internal static readonly string AnimationHourGlass = $"{ResPrefix}HourGlass.gif";
         internal static readonly string AnimationSpinner = $"{ResPrefix}Spinner.gif";
         internal static readonly string AnimationAlternet = $"{ResPrefix}Alternet.gif";
-        internal static readonly string AnimationCustom = "Open animation file (*.gif)...";
+        internal static readonly string AnimationCustom = "Open animation file (*.gif, *.webp)...";
 
         private readonly AnimationPlayer animation = new();
 
@@ -40,7 +40,7 @@ namespace ControlsSample
         public AnimationPage()
         {
             Padding = 10;
-            var defaultAnimationUrl = AnimationHourGlass;;
+            var defaultAnimationUrl = AnimationHourGlass;
 
             animation.Parent = this;
             animation.LoadFromUrl(defaultAnimationUrl, AnimationType.Gif);
@@ -116,7 +116,10 @@ namespace ControlsSample
             {
                 var dialog = OpenFileDialog.Default;
                 dialog.FileMustExist = true;
-                dialog.Filter = FileMaskUtils.GetFileDialogFilter("GIF files", "*.gif");
+
+                var filter = FileMaskUtils.ToFileDialogFilter(new("Animation files", ".gif", ".webp"), new("GIF files", ".gif"), new("WEBP files", ".webp"));
+                dialog.Filter = filter;
+
                 dialog.ShowAsync(this.ParentWindow, () =>
                 {
                     if (File.Exists(dialog.FileName))

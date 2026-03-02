@@ -22,7 +22,12 @@ namespace Alternet.UI
         Gif,
 
         /// <summary>
-        /// Any animation.
+        /// Represents the WebP animation.
+        /// </summary>
+        Webp,
+
+        /// <summary>
+        /// Any animation type. This value can be used when the specific animation type is not known or when any supported animation type is acceptable.
         /// </summary>
         Any,
     }

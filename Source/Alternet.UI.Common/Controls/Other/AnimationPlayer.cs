@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -24,8 +25,17 @@ namespace Alternet.UI
     /// support all of them.
     /// </remarks>
     [ControlCategory("Other")]
-    public partial class AnimationPlayer : Control
+    public partial class AnimationPlayer : HiddenGenericBorder
     {
+        private AnimatedImage? animatedImage;
+        private int currentFrame;
+        private ImageSet? inactiveBitmap;
+        private Timer? timer;
+        private bool isPlaying;
+        private HorizontalAlignment imageHorizontalAlignment = HorizontalAlignment.Center;
+        private VerticalAlignment imageVerticalAlignment = VerticalAlignment.Center;
+        private bool isTransparent = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AnimationPlayer"/> class.
         /// </summary>
@@ -41,28 +51,106 @@ namespace Alternet.UI
         /// </summary>
         public AnimationPlayer()
         {
+            AutoPadding = false;
             ParentBackColor = true;
             ParentForeColor = true;
         }
 
         /// <summary>
-        /// Gets the URL of the animation currently loaded in the control, or <c>null</c>
-        /// if the animation was loaded from a stream.
+        /// Gets or sets a value indicating whether the control is transparent. Default is true.
+        /// When true, the control's background is not drawn, allowing the parent control's
+        /// background to show through. When false, the control's background
+        /// is drawn normally. In both states, the control's border is drawn if applicable.
         /// </summary>
-        public virtual string? AnimationUrl { get; protected set; }
+        /// <remarks>Setting this property to a new value will trigger a redraw of the object.</remarks>
+        public virtual bool IsTransparent
+        {
+            get
+            {
+                return isTransparent;
+            }
+
+            set
+            {
+                if (isTransparent == value)
+                    return;
+                isTransparent = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="AnimatedImage"/> object associated with this control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual AnimatedImage? AnimatedImage
+        {
+            get => animatedImage;
+            set
+            {
+                if (animatedImage == value)
+                    return;
+                var playing = IsPlaying();
+                Stop();
+                animatedImage = value;
+                currentFrame = 0;
+                PerformLayoutAndInvalidate();
+                if (playing)
+                    Play();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal alignment of the animated image within the control.
+        /// </summary>
+        public virtual HorizontalAlignment ImageHorizontalAlignment
+        {
+            get => imageHorizontalAlignment;
+            set
+            {
+                if (imageHorizontalAlignment == value)
+                    return;
+                imageHorizontalAlignment = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the vertical alignment of the animated image within the control.
+        /// </summary>
+        public virtual VerticalAlignment ImageVerticalAlignment
+        {
+            get => imageVerticalAlignment;
+            set
+            {
+                if (imageVerticalAlignment == value)
+                    return;
+                imageVerticalAlignment = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets the URL of the animation currently loaded in the control, or <c>null</c> if no url is available.
+        /// </summary>
+        public virtual string? AnimationUrl
+        {
+            get
+            {
+                return animatedImage?.SourceUrl;
+            }
+        }
 
         /// <summary>
         /// Gets the number of frames for this animation.
         /// </summary>
         /// <returns></returns>
         [Browsable(false)]
-        public virtual uint FrameCount
+        public virtual int FrameCount
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.FrameCount;
+                return animatedImage?.FrameCount ?? 0;
             }
         }
 
@@ -75,9 +163,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.AnimationSize;
+                return animatedImage?.AnimationSize ?? SizeI.Empty;
             }
         }
 
@@ -90,17 +176,9 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.IsOk;
+                return animatedImage?.IsOk ?? false;
             }
         }
-
-        /// <summary>
-        /// Gets control handler.
-        /// </summary>
-        [Browsable(false)]
-        public new IAnimationPlayerHandler Handler => (IAnimationPlayerHandler)base.Handler;
 
         /// <summary>
         /// Starts playing the animation.
@@ -113,9 +191,39 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool Play()
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || animatedImage is null || !animatedImage.IsOk || isPlaying || !Enabled)
                 return default;
-            return Handler.Play();
+
+            timer ??= new Timer();
+
+            if (currentFrame >= animatedImage.FrameCount)
+            {
+                currentFrame = 0;
+            }
+
+            isPlaying = true;
+            timer.Interval = animatedImage.GetDuration(currentFrame);
+            timer.TickAction = () =>
+            {
+                if (DisposingOrDisposed || animatedImage is null || !animatedImage.IsOk)
+                    return;
+                currentFrame++;
+
+                if (currentFrame >= animatedImage.FrameCount)
+                {
+                    currentFrame = 0;
+                }
+
+                timer.Interval = animatedImage.GetDuration(currentFrame);
+                Refresh();
+                timer.StartOnce();
+            };
+
+            Refresh();
+
+            timer.StartOnce();
+
+            return true;
         }
 
         /// <summary>
@@ -128,9 +236,12 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void Stop()
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || !isPlaying)
                 return;
-            Handler.Stop();
+            timer?.Stop();
+            isPlaying = false;
+            currentFrame = 0;
+            Invalidate();
         }
 
         /// <summary>
@@ -141,19 +252,18 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.IsPlaying();
+            return isPlaying;
         }
 
         /// <summary>
         /// Loads an animation from a file.
         /// </summary>
-        /// <param name="filename">A filename.</param>
+        /// <param name="filename">The path to the animation file.</param>
         /// <param name="type">One of the <see cref="AnimationType"/> values;
-        /// <see cref="AnimationType.Any"/>
-        /// means that the function should try to autodetect the animation type.
-        /// </param>
+        /// <see cref="AnimationType.Any"/> means that the function should try to autodetect the animation type. </param>
+        /// <param name="delayLoading">Whether to delay loading of the animation until it's played for the first time. Default is false.</param>
         /// <returns></returns>
-        public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any)
+        public virtual bool LoadFile(string filename, AnimationType type = AnimationType.Any, bool delayLoading = false)
         {
             if (DisposingOrDisposed)
                 return default;
@@ -161,17 +271,20 @@ namespace Alternet.UI
                 return false;
             if (!File.Exists(filename))
                 return false;
-            if(PathUtils.HasExtension(filename, ".gif"))
-                type = AnimationType.Gif;
 
-            var result = Handler.LoadFile(filename, type);
+            try
+            {
+                var url = CommonUtils.PrepareFileUrl(filename);
 
-            if (result)
-                AnimationUrl = CommonUtils.PrepareFileUrl(filename);
-            else
-                AnimationUrl = null;
-
-                return result;
+                AnimatedImage = new AnimatedImage(url, delayLoading: false);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex, $"Failed to load animation from file '{filename}'");
+                animatedImage = null;
+                return false;
+            }
         }
 
         /// <summary>
@@ -188,10 +301,19 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the operation succeeded, <c>false</c> otherwise.</returns>
         public virtual bool Load(Stream stream, AnimationType type = AnimationType.Any)
         {
-            AnimationUrl = null;
             if (DisposingOrDisposed)
                 return default;
-            return Handler.Load(stream, type);
+            try
+            {
+                AnimatedImage = new AnimatedImage(stream);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex, $"Failed to load animation from stream");
+                animatedImage = null;
+                return false;
+            }
         }
 
         /// <summary>
@@ -199,11 +321,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="i">Frame index.</param>
         /// <returns></returns>
-        public virtual int GetDelay(uint i)
+        public virtual int GetDelay(int i)
         {
             if (DisposingOrDisposed)
                 return default;
-            return Handler.GetDelay(i);
+            return animatedImage?.GetDuration(i) ?? 0;
         }
 
         /// <summary>
@@ -211,11 +333,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="i">Frame index.</param>
         /// <returns></returns>
-        public virtual Image? GetFrame(uint i)
+        public virtual Image? GetFrame(int i)
         {
             if (DisposingOrDisposed)
                 return null;
-            return (Image)Handler.GetFrame(i);
+            return animatedImage?.GetFrame(i);
         }
 
         /// <summary>
@@ -239,16 +361,18 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return default;
-            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
-            if (stream is null)
+
+            try
+            {
+                AnimatedImage = new AnimatedImage(url, delayLoading: false);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex, $"Failed to load animation from url: {url}");
+                animatedImage = null;
                 return false;
-            var result = Handler.Load(stream, type);
-            
-            if (result)
-                AnimationUrl = url;
-            else
-                AnimationUrl = null;
-            return result;
+            }
         }
 
         /// <summary>
@@ -271,28 +395,108 @@ namespace Alternet.UI
         /// <param name="bitmap"></param>
         public virtual void SetInactiveBitmap(ImageSet? bitmap)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || inactiveBitmap == bitmap)
                 return;
-            Handler.SetInactiveBitmap(bitmap);
+            inactiveBitmap = bitmap;
+            if (!IsPlaying() || !Enabled)
+                PerformLayoutAndInvalidate();
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
+                : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
+
+            DrawBorderAndBackground(e, flags);
+
+            var r = e.ClientRectangle;
+
+            if (HasBorder)
+            {
+                var borderwidth = BorderWidth;
+                r = r.DeflatedWithPadding(borderwidth);
+            }
+
+            r = r.DeflatedWithPadding(Padding);
+            var dc = e.Graphics;
+
+            Image? frameImage;
+
+            if (Enabled && IsPlaying())
+            {
+                frameImage = GetFrame(currentFrame);
+            }
+            else
+            {
+                frameImage = inactiveBitmap?.AsImage(AnimationSize);
+
+                if (frameImage is null && animatedImage is not null && animatedImage.IsOk)
+                {
+                    frameImage ??= animatedImage.InactiveBitmap?.AsImage(AnimationSize);
+                    frameImage ??= animatedImage.GetFrame(animatedImage.InactiveFrameIndex);
+                }
+
+                if (!Enabled)
+                    frameImage = frameImage?.ToGrayScaleCached();
+            }
+
+            var frameSizePixels = frameImage?.Size ?? SizeI.Empty;
+            var frameSizeDips = PixelToDip(frameSizePixels);
+            var frameRect = new RectD(r.Location, frameSizeDips);
+
+            if (frameImage != null && frameSizeDips.IsPositive)
+            {
+                var alignedFrameRect = AlignUtils.AlignRectInRect(
+                    frameRect,
+                    r,
+                    ImageHorizontalAlignment,
+                    ImageVerticalAlignment,
+                    shrinkSize: false);
+                dc.DrawImage(frameImage, alignedFrameRect.Location);
+            }
+
+            DefaultPaintDebug(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            Stop();
+            Invalidate();
         }
 
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
+            var specifiedWidth = SuggestedWidth;
+            var specifiedHeight = SuggestedHeight;
+            var validWidth = !Coord.IsNaN(specifiedWidth);
+            var validHeight = !Coord.IsNaN(specifiedHeight);
+            var validSize = validWidth && validHeight;
+
+            if (validSize)
+                return new SizeD(specifiedWidth, specifiedHeight);
+
             if (IsOk)
             {
                 var size = AnimationSize;
                 var sizeDips = PixelToDip(size);
-                return sizeDips;
+                return sizeDips + Padding.Size;
             }
 
             return base.GetPreferredSize(context);
         }
 
         /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
+        protected override void DisposeManaged()
         {
-            return ControlFactory.Handler.CreateAnimationPlayerHandler(this);
+            SafeDispose(ref timer);
+            SafeDispose(ref animatedImage);
+            SafeDispose(ref inactiveBitmap);
+
+            base.DisposeManaged();
         }
     }
 }

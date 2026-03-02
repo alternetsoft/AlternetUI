@@ -85,12 +85,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public IControlHandler CreateAnimationPlayerHandler(AnimationPlayer control)
-        {
-            return new WxAnimationPlayerHandler(useGeneric: true);
-        }
-
-        /// <inheritdoc/>
         public IControlHandler CreateGroupBoxHandler(GroupBox control)
         {
             return new WxControlHandler<GroupBox, Native.GroupBox>();
