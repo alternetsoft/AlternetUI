@@ -46,18 +46,15 @@ namespace ControlsSample
                 Url = url;
             }
 
-            public AnimatedImageItem(string name, AnimatedImage? animatedImageSmall, AnimatedImage? animatedImageLarge)
+            public AnimatedImageItem(string name, AnimatedImageSet image)
             {
                 Text = name;
-                AnimatedImageSmall = animatedImageSmall;
-                AnimatedImageLarge = animatedImageLarge;
+                AnimatedImage = image;
             }
 
             public string? Url { get; set; }
 
-            public AnimatedImage? AnimatedImageSmall { get; set; }
-
-            public AnimatedImage? AnimatedImageLarge { get; set; }
+            public AnimatedImageSet? AnimatedImage { get; set; }
         }
 
         public AnimationPage()
@@ -91,7 +88,7 @@ namespace ControlsSample
                 new ("Plant", AnimationPlant),
                 new ("Spinner", AnimationSpinner),
                 new ("Alternet", AnimationAlternet),
-                new ("Dual Ring", KnownAnimatedImages.DualRing32, KnownAnimatedImages.DualRing64),
+                new ("Dual Ring", KnownAnimatedImages.DualRingSet),
                 new (AnimationCustom, AnimationCustom),
             };
 
@@ -189,18 +186,11 @@ namespace ControlsSample
                     }
                 }
                 else
-                    if (item.AnimatedImageSmall is not null)
+                    if (item.AnimatedImage is not null)
                     {
                         animation.IsAnimationScaled = false;
 
-                        if (ScaleFactor > 1)
-                        {
-                            animation.AnimatedImage = item.AnimatedImageLarge ?? item.AnimatedImageSmall;
-                        }
-                        else
-                        {
-                            animation.AnimatedImage = item.AnimatedImageSmall;
-                        }
+                        animation.AnimatedImage = item.AnimatedImage.GetImage(ScaleFactor);
                     }
                     else
                     {
