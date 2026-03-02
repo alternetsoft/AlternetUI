@@ -16,8 +16,17 @@ namespace Alternet.UI
         /// <param name="extensions">The array of file extensions (with or without ".").</param>
         public FileDialogFilterItem(string title, params string[] extensions)
         {
-            Title = title;
-            Extensions = extensions;
+            if (extensions.Length == 0)
+            {
+                Title = $"{title.TrimStart('.').ToUpper()} {FileMaskUtils.StrFiles}";
+                Extensions = [title];
+            }
+            else
+            {
+                Title = title;
+                Extensions = extensions;
+            }
+
             ItemKind = Kind.Custom;
         }
 
@@ -63,6 +72,11 @@ namespace Alternet.UI
             LibraryFiles,
 
             /// <summary>
+            /// Item is for opening animation files (e.g., GIF, WebP).
+            /// </summary>
+            AnimationFiles,
+
+            /// <summary>
             /// Item is for opening images.
             /// </summary>
             ImageOpen,
@@ -93,6 +107,8 @@ namespace Alternet.UI
         {
             switch (ItemKind)
             {
+                case Kind.AnimationFiles:
+                    return FileMaskUtils.GetFileDialogFilter(FileMaskUtils.StrAnimationFiles, [".gif", ".webp"]);
                 case Kind.Custom:
                     if (Extensions.Length == 1)
                         return FileMaskUtils.GetFileDialogFilter(Title, Extensions[0]);
