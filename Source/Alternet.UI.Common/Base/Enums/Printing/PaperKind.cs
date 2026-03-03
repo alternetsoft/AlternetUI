@@ -458,17 +458,17 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// PRC 16K 146 x 215 mm.
         /// </summary>
-        P16k,
+        Prc16k,
 
         /// <summary>
         /// PRC 32K 97 x 151 mm.
         /// </summary>
-        P32k,
+        Prc32k,
 
         /// <summary>
         /// PRC 32K(Big) 97 x 151 mm.
         /// </summary>
-        P32kBig,
+        Prc32kBig,
 
         /// <summary>
         /// PRC Envelope #1 102 x 165 mm.
@@ -523,17 +523,17 @@ namespace Alternet.Drawing.Printing
         /// <summary>
         /// PRC 16K Rotated.
         /// </summary>
-        P16kRotated,
+        Prc16kRotated,
 
         /// <summary>
         /// PRC 32K Rotated.
         /// </summary>
-        P32kRotated,
+        Prc32kRotated,
 
         /// <summary>
         /// PRC 32K(Big) Rotated.
         /// </summary>
-        P32kBigRotated,
+        Prc32kBigRotated,
 
         /// <summary>
         /// PRC Envelope #1 Rotated 165 x 102 mm.
