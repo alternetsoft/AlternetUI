@@ -68,7 +68,7 @@ namespace PrintingSample
 
             // A4 size in points (72 DPI) -> 595, 842
             var dpi = SKDocument.DefaultRasterDpi;
-            var size = PrinterUtils.GetPaperSizeForSkiaDocument(KnownPaperKind.A4, dpi);
+            var size = PrinterUtils.GetPaperSizeForSkiaDocument(PaperKind.A4, dpi);
 
             var numPages = additionalPagesCountNumericUpDown.Value + 1;
 
