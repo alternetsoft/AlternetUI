@@ -136,7 +136,7 @@ namespace Alternet.UI
         /// If null, the default DPI for Skia documents is used.</param>
         /// <returns>A SizeI structure representing the width and height of the paper in pixels, calculated according to the
         /// specified paper size and DPI.</returns>
-        public static SizeI GetPaperSizeForSkiaDocument(KnownPaperKind paperSize, float? rasterDpi = null)
+        public static SizeI GetPaperSizeForSkiaDocument(PaperKind paperSize, float? rasterDpi = null)
         {
             rasterDpi ??= SKDocument.DefaultRasterDpi;
 

@@ -9,6 +9,8 @@ namespace Alternet.Drawing.Printing
     /// <summary>
     /// Provides a collection of predefined paper sizes for standard international (ISO) and North American formats,
     /// supporting both millimeter and inch units.
+    /// Use properties <see cref="SizeMillimeters"/>, <see cref="SizeInches"/>, and <see cref="SizeInchesRounded"/>
+    /// to access standard paper sizes in the desired units and precision.
     /// </summary>
     /// <remarks>The PaperSizes class offers convenient access to a wide range of commonly used paper sizes,
     /// including A, B, and C series, as well as US-specific formats such as Letter, Legal, and Tabloid. It enables
@@ -27,303 +29,17 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Gets or sets the default number of decimal places used when representing inch measurements.
-        /// This value is used in methods that convert millimeters to inches or when formatting inch-based sizes for display.
-        /// Adjusting this value allows you to control the precision of inch measurements across the application,
-        /// ensuring that they are displayed with the desired number of decimal places for clarity and consistency.
+        /// Initializes a new instance of the PaperSizes class with default values.
+        /// Use the static properties <see cref="SizeMillimeters"/>, <see cref="SizeInches"/>, and <see cref="SizeInchesRounded"/>
+        /// to access predefined sets of paper sizes.
+        /// These properties are initialized lazily, meaning that the actual paper size data is created only when it is first accessed,
+        /// allowing for efficient resource usage. The constructor can be used by derived classes to create custom paper size collections if needed.
+        /// By default properties with paper sizes are initialized with standard dimensions in millimeters,
+        /// and the inch-based properties are created by converting these millimeter sizes using the appropriate conversion methods.
         /// </summary>
-        /// <remarks>This value determines the precision applied to inch-based measurements in
-        /// applications that require decimal formatting. Adjust this value to control the number of digits displayed
-        /// after the decimal point for inch values.</remarks>
-        public static int DefaultInchesDecimals
+        public PaperSizes()
         {
-            get => defaultInchesDecimals;
-
-            set
-            {
-                if (value == defaultInchesDecimals)
-                    return;
-                defaultInchesDecimals = value;
-                sizeInchesRounded = null;
-            }
         }
-
-        /// <summary>
-        /// Gets or sets paper sizes (millimeters).
-        /// </summary>
-        public static PaperSizes SizeMillimeters
-        {
-            get
-            {
-                sizeMillimeters ??= CreateSizeMillimeters();
-                return sizeMillimeters;
-            }
-
-            set
-            {
-                sizeMillimeters = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets A6 paper size in device-independent units.
-        /// </summary>
-        public static SizeD A6InDips => PaperSizes.SizeInches.A6.InchesToDips();
-
-        /// <summary>
-        /// Gets A5 paper size in device-independent units.
-        /// </summary>
-        public static SizeD A5InDips => PaperSizes.SizeInches.A5.InchesToDips();
-
-        /// <summary>
-        /// Gets A4 paper size in device-independent units.
-        /// </summary>
-        public static SizeD A4InDips => PaperSizes.SizeInches.A4.InchesToDips();
-
-        /// <summary>
-        /// Gets or sets paper sizes (inches).
-        /// </summary>
-        public static PaperSizes SizeInches
-        {
-            get
-            {
-                sizeInches ??= CreateSizeInches();
-                return sizeInches;
-            }
-
-            set
-            {
-                sizeInches = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the paper sizes with dimensions rounded to the specific number of decimal places
-        /// which is determined by the <see cref="DefaultInchesDecimals"/> property.
-        /// </summary>
-        public static PaperSizes SizeInchesRounded
-        {
-            get
-            {
-                sizeInchesRounded ??= CreateSizeInchesRounded();
-                return sizeInchesRounded;
-            }
-
-            set
-            {
-                sizeInchesRounded = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets paper size for the "4A0" format.
-        /// </summary>
-        public SizeD A0x4 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "2A0" format.
-        /// </summary>
-        public SizeD A0x2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A0" format.
-        /// </summary>
-        public SizeD A0 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A1" format.
-        /// </summary>
-        public SizeD A1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A2" format.
-        /// </summary>
-        public SizeD A2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A3" format.
-        /// </summary>
-        public SizeD A3 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A4" format.
-        /// </summary>
-        public SizeD A4 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A5" format.
-        /// </summary>
-        public SizeD A5 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A6" format.
-        /// </summary>
-        public SizeD A6 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A7" format.
-        /// </summary>
-        public SizeD A7 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A8" format.
-        /// </summary>
-        public SizeD A8 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A9" format.
-        /// </summary>
-        public SizeD A9 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "A10" format.
-        /// </summary>
-        public SizeD A10 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "Half Letter" format.
-        /// </summary>
-        public SizeD HalfLetter { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "Government Letter" format.
-        /// </summary>
-        public SizeD GovernmentLetter { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "Letter" format.
-        /// </summary>
-        public SizeD Letter { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "Junior Legal" format.
-        /// </summary>
-        public SizeD JuniorLegal { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "Government Legal" format.
-        /// </summary>
-        public SizeD GovernmentLegal { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "Legal" format.
-        /// </summary>
-        public SizeD Legal { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "Tabloid" format.
-        /// </summary>
-        public SizeD Tabloid { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B10" format.
-        /// </summary>
-        public SizeD B10 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B9" format.
-        /// </summary>
-        public SizeD B9 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B8" format.
-        /// </summary>
-        public SizeD B8 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B7" format.
-        /// </summary>
-        public SizeD B7 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B6" format.
-        /// </summary>
-        public SizeD B6 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B5" format.
-        /// </summary>
-        public SizeD B5 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B4" format.
-        /// </summary>
-        public SizeD B4 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B3" format.
-        /// </summary>
-        public SizeD B3 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B2" format.
-        /// </summary>
-        public SizeD B2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B1" format.
-        /// </summary>
-        public SizeD B1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "B0" format.
-        /// </summary>
-        public SizeD B0 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C10" format.
-        /// </summary>
-        public SizeD C10 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C9" format.
-        /// </summary>
-        public SizeD C9 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C8" format.
-        /// </summary>
-        public SizeD C8 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C7" format.
-        /// </summary>
-        public SizeD C7 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C6" format.
-        /// </summary>
-        public SizeD C6 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C5" format.
-        /// </summary>
-        public SizeD C5 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C4" format.
-        /// </summary>
-        public SizeD C4 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C3" format.
-        /// </summary>
-        public SizeD C3 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C2" format.
-        /// </summary>
-        public SizeD C2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C1" format.
-        /// </summary>
-        public SizeD C1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets paper size for the "C0" format.
-        /// </summary>
-        public SizeD C0 { get; set; }
 
         /// <summary>
         /// Converts a measurement from millimeters to inches and rounds
@@ -396,54 +112,7 @@ namespace Alternet.Drawing.Printing
         /// <returns>A PaperSizes object containing predefined paper size dimensions, where each size is specified in millimeters.</returns>
         public static PaperSizes CreateSizeMillimeters()
         {
-            // Source of the data: https://www.papersizes.org/a-paper-sizes.htm#finder
-            PaperSizes result = new()
-            {
-                A0x4 = (1682, 2378),
-                A0x2 = (1189, 1682),
-                A0 = (841, 1189),
-                A1 = (594, 841),
-                A2 = (420, 594),
-                A3 = (297, 420),
-                A4 = (210, 297),
-                A5 = (148, 210),
-                A6 = (105, 148),
-                A7 = (74, 105),
-                A8 = (52, 74),
-                A9 = (37, 52),
-                A10 = (26, 37),
-                B0 = (1000, 1414),
-                B1 = (707, 1000),
-                B2 = (500, 707),
-                B3 = (353, 500),
-                B4 = (250, 353),
-                B5 = (176, 250),
-                B6 = (125, 176),
-                B7 = (88, 125),
-                B8 = (62, 88),
-                B9 = (44, 62),
-                B10 = (31, 44),
-                C0 = (917, 1297),
-                C1 = (648, 917),
-                C2 = (458, 648),
-                C3 = (324, 458),
-                C4 = (229, 324),
-                C5 = (162, 229),
-                C6 = (114, 162),
-                C7 = (81, 114),
-                C8 = (57, 81),
-                C9 = (40, 57),
-                C10 = (28, 40),
-                HalfLetter = (140, 216),
-                GovernmentLetter = (203, 254),
-                Letter = (216, 279),
-                JuniorLegal = (127, 203),
-                GovernmentLegal = (216, 330),
-                Legal = (216, 356),
-                Tabloid = (279, 432),
-            };
-
-            return result;
+            return new ();
         }
 
         /// <summary>
@@ -470,7 +139,7 @@ namespace Alternet.Drawing.Printing
             log ??= LogWriter.Debug;
             log.BeginSection(title ?? "PaperSizes");
 
-            foreach (KnownPaperKind kind in Enum.GetValues<KnownPaperKind>())
+            foreach (PaperKind kind in Enum.GetValues<PaperKind>())
             {
                 log.WriteLine($"{kind}: {GetSize(kind)}");
             }
@@ -495,7 +164,7 @@ namespace Alternet.Drawing.Printing
             if (other is null)
                 throw new ArgumentNullException(nameof(other));
 
-            foreach (KnownPaperKind kind in Enum.GetValues<KnownPaperKind>())
+            foreach (PaperKind kind in Enum.GetValues<PaperKind>())
             {
                 SetSize(kind, other.GetSize(kind), transform);
             }
@@ -515,7 +184,7 @@ namespace Alternet.Drawing.Printing
         {
             if (transform is null)
                 throw new ArgumentNullException(nameof(transform));
-            foreach (KnownPaperKind kind in Enum.GetValues<KnownPaperKind>())
+            foreach (PaperKind kind in Enum.GetValues<PaperKind>())
             {
                 SetSize(kind, GetSize(kind), transform);
             }
@@ -533,8 +202,8 @@ namespace Alternet.Drawing.Printing
         /// <param name="transform">An optional function to transform the size before assignment. If provided,
         /// this function will be applied to the size before setting it.</param>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if the specified kind is not
-        /// a valid value in the KnownPaperKind enumeration.</exception>
-        public virtual void SetSize(KnownPaperKind kind, SizeD size, Func<SizeD, SizeD>? transform = null)
+        /// a valid value in the PaperKind enumeration.</exception>
+        public virtual void SetSize(PaperKind kind, SizeD size, Func<SizeD, SizeD>? transform = null)
         {
             SizeD Transform(SizeD s)
             {
@@ -543,48 +212,125 @@ namespace Alternet.Drawing.Printing
 
             switch (kind)
             {
-                case KnownPaperKind.A0x4: A0x4 = Transform(size); break;
-                case KnownPaperKind.A0x2: A0x2 = Transform(size); break;
-                case KnownPaperKind.A0: A0 = Transform(size); break;
-                case KnownPaperKind.A1: A1 = Transform(size); break;
-                case KnownPaperKind.A2: A2 = Transform(size); break;
-                case KnownPaperKind.A3: A3 = Transform(size); break;
-                case KnownPaperKind.A4: A4 = Transform(size); break;
-                case KnownPaperKind.A5: A5 = Transform(size); break;
-                case KnownPaperKind.A6: A6 = Transform(size); break;
-                case KnownPaperKind.A7: A7 = Transform(size); break;
-                case KnownPaperKind.A8: A8 = Transform(size); break;
-                case KnownPaperKind.A9: A9 = Transform(size); break;
-                case KnownPaperKind.A10: A10 = Transform(size); break;
-                case KnownPaperKind.B0: B0 = Transform(size); break;
-                case KnownPaperKind.B1: B1 = Transform(size); break;
-                case KnownPaperKind.B2: B2 = Transform(size); break;
-                case KnownPaperKind.B3: B3 = Transform(size); break;
-                case KnownPaperKind.B4: B4 = Transform(size); break;
-                case KnownPaperKind.B5: B5 = Transform(size); break;
-                case KnownPaperKind.B6: B6 = Transform(size); break;
-                case KnownPaperKind.B7: B7 = Transform(size); break;
-                case KnownPaperKind.B8: B8 = Transform(size); break;
-                case KnownPaperKind.B9: B9 = Transform(size); break;
-                case KnownPaperKind.B10: B10 = Transform(size); break;
-                case KnownPaperKind.C0: C0 = Transform(size); break;
-                case KnownPaperKind.C1: C1 = Transform(size); break;
-                case KnownPaperKind.C2: C2 = Transform(size); break;
-                case KnownPaperKind.C3: C3 = Transform(size); break;
-                case KnownPaperKind.C4: C4 = Transform(size); break;
-                case KnownPaperKind.C5: C5 = Transform(size); break;
-                case KnownPaperKind.C6: C6 = Transform(size); break;
-                case KnownPaperKind.C7: C7 = Transform(size); break;
-                case KnownPaperKind.C8: C8 = Transform(size); break;
-                case KnownPaperKind.C9: C9 = Transform(size); break;
-                case KnownPaperKind.C10: C10 = Transform(size); break;
-                case KnownPaperKind.HalfLetter: HalfLetter = Transform(size); break;
-                case KnownPaperKind.GovernmentLetter: GovernmentLetter = Transform(size); break;
-                case KnownPaperKind.Letter: Letter = Transform(size); break;
-                case KnownPaperKind.JuniorLegal: JuniorLegal = Transform(size); break;
-                case KnownPaperKind.GovernmentLegal: GovernmentLegal = Transform(size); break;
-                case KnownPaperKind.Legal: Legal = Transform(size); break;
-                case KnownPaperKind.Tabloid: Tabloid = Transform(size); break;
+                case PaperKind.Letter: Letter = Transform(size); break;
+                case PaperKind.Legal: Legal = Transform(size); break;
+                case PaperKind.A4: A4 = Transform(size); break;
+                case PaperKind.C: C = Transform(size); break;
+                case PaperKind.D: D = Transform(size); break;
+                case PaperKind.E: E = Transform(size); break;
+                case PaperKind.LetterSmall: LetterSmall = Transform(size); break;
+                case PaperKind.Tabloid: Tabloid = Transform(size); break;
+                case PaperKind.Ledger: Ledger = Transform(size); break;
+                case PaperKind.Statement: Statement = Transform(size); break;
+                case PaperKind.Executive: Executive = Transform(size); break;
+                case PaperKind.A3: A3 = Transform(size); break;
+                case PaperKind.A4Small: A4Small = Transform(size); break;
+                case PaperKind.A5: A5 = Transform(size); break;
+                case PaperKind.B4: B4 = Transform(size); break;
+                case PaperKind.B5: B5 = Transform(size); break;
+                case PaperKind.Folio: Folio = Transform(size); break;
+                case PaperKind.Quarto: Quarto = Transform(size); break;
+                case PaperKind.Sheet10X14: Sheet10X14 = Transform(size); break;
+                case PaperKind.Sheet11X17: Sheet11X17 = Transform(size); break;
+                case PaperKind.Note: Note = Transform(size); break;
+                case PaperKind.Envelope9: Envelope9 = Transform(size); break;
+                case PaperKind.Envelope10: Envelope10 = Transform(size); break;
+                case PaperKind.Envelope11: Envelope11 = Transform(size); break;
+                case PaperKind.Envelope12: Envelope12 = Transform(size); break;
+                case PaperKind.Envelope14: Envelope14 = Transform(size); break;
+                case PaperKind.EnvelopeDl: EnvelopeDl = Transform(size); break;
+                case PaperKind.EnvelopeC5: EnvelopeC5 = Transform(size); break;
+                case PaperKind.EnvelopeC3: EnvelopeC3 = Transform(size); break;
+                case PaperKind.EnvelopeC4: EnvelopeC4 = Transform(size); break;
+                case PaperKind.EnvelopeC6: EnvelopeC6 = Transform(size); break;
+                case PaperKind.EnvelopeC65: EnvelopeC65 = Transform(size); break;
+                case PaperKind.EnvelopeB4: EnvelopeB4 = Transform(size); break;
+                case PaperKind.EnvelopeB5: EnvelopeB5 = Transform(size); break;
+                case PaperKind.EnvelopeB6: EnvelopeB6 = Transform(size); break;
+                case PaperKind.EnvelopeItaly: EnvelopeItaly = Transform(size); break;
+                case PaperKind.EnvelopeMonarch: EnvelopeMonarch = Transform(size); break;
+                case PaperKind.EnvelopePersonal: EnvelopePersonal = Transform(size); break;
+                case PaperKind.FanfoldUs: FanfoldUs = Transform(size); break;
+                case PaperKind.FanfoldStandardGerman: FanfoldStandardGerman = Transform(size); break;
+                case PaperKind.FanfoldLegalGerman: FanfoldLegalGerman = Transform(size); break;
+                case PaperKind.IsoB4: IsoB4 = Transform(size); break;
+                case PaperKind.JapanesePostcard: JapanesePostcard = Transform(size); break;
+                case PaperKind.Sheet9X11: Sheet9X11 = Transform(size); break;
+                case PaperKind.Sheet10X11: Sheet10X11 = Transform(size); break;
+                case PaperKind.Sheet15X11: Sheet15X11 = Transform(size); break;
+                case PaperKind.EnvelopeInvite: EnvelopeInvite = Transform(size); break;
+                case PaperKind.LetterExtra: LetterExtra = Transform(size); break;
+                case PaperKind.LegalExtra: LegalExtra = Transform(size); break;
+                case PaperKind.TabloidExtra: TabloidExtra = Transform(size); break;
+                case PaperKind.A4Extra: A4Extra = Transform(size); break;
+                case PaperKind.LetterTransverse: LetterTransverse = Transform(size); break;
+                case PaperKind.A4Transverse: A4Transverse = Transform(size); break;
+                case PaperKind.LetterExtraTransverse: LetterExtraTransverse = Transform(size); break;
+                case PaperKind.APlus: APlus = Transform(size); break;
+                case PaperKind.BPlus: BPlus = Transform(size); break;
+                case PaperKind.LetterPlus: LetterPlus = Transform(size); break;
+                case PaperKind.A4Plus: A4Plus = Transform(size); break;
+                case PaperKind.A5Transverse: A5Transverse = Transform(size); break;
+                case PaperKind.B5Transverse: B5Transverse = Transform(size); break;
+                case PaperKind.A3Extra: A3Extra = Transform(size); break;
+                case PaperKind.A5Extra: A5Extra = Transform(size); break;
+                case PaperKind.B5Extra: B5Extra = Transform(size); break;
+                case PaperKind.A2: A2 = Transform(size); break;
+                case PaperKind.A3Transverse: A3Transverse = Transform(size); break;
+                case PaperKind.A3ExtraTransverse: A3ExtraTransverse = Transform(size); break;
+                case PaperKind.DblJapanesePostcard: DblJapanesePostcard = Transform(size); break;
+                case PaperKind.A6: A6 = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeKaku2: JapaneseEnvelopeKaku2 = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeKaku3: JapaneseEnvelopeKaku3 = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeChou3: JapaneseEnvelopeChou3 = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeChou4: JapaneseEnvelopeChou4 = Transform(size); break;
+                case PaperKind.LetterRotated: LetterRotated = Transform(size); break;
+                case PaperKind.A3Rotated: A3Rotated = Transform(size); break;
+                case PaperKind.A4Rotated: A4Rotated = Transform(size); break;
+                case PaperKind.A5Rotated: A5Rotated = Transform(size); break;
+                case PaperKind.B4JisRotated: B4JisRotated = Transform(size); break;
+                case PaperKind.B5JisRotated: B5JisRotated = Transform(size); break;
+                case PaperKind.JapanesePostcardRotated: JapanesePostcardRotated = Transform(size); break;
+                case PaperKind.DblJapanesePostcardRotated: DblJapanesePostcardRotated = Transform(size); break;
+                case PaperKind.A6Rotated: A6Rotated = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeKaku2Rotated: JapaneseEnvelopeKaku2Rotated = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeKaku3Rotated: JapaneseEnvelopeKaku3Rotated = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeChou3Rotated: JapaneseEnvelopeChou3Rotated = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeChou4Rotated: JapaneseEnvelopeChou4Rotated = Transform(size); break;
+                case PaperKind.B6Jis: B6Jis = Transform(size); break;
+                case PaperKind.B6JisRotated: B6JisRotated = Transform(size); break;
+                case PaperKind.Sheet12X11: Sheet12X11 = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeYou4: JapaneseEnvelopeYou4 = Transform(size); break;
+                case PaperKind.JapaneseEnvelopeYou4Rotated: JapaneseEnvelopeYou4Rotated = Transform(size); break;
+                case PaperKind.Prc16k: Prc16k = Transform(size); break;
+                case PaperKind.Prc32k: Prc32k = Transform(size); break;
+                case PaperKind.Prc32kBig: Prc32kBig = Transform(size); break;
+                case PaperKind.PrcEnvelope1: PrcEnvelope1 = Transform(size); break;
+                case PaperKind.PrcEnvelope2: PrcEnvelope2 = Transform(size); break;
+                case PaperKind.PrcEnvelope3: PrcEnvelope3 = Transform(size); break;
+                case PaperKind.PrcEnvelope4: PrcEnvelope4 = Transform(size); break;
+                case PaperKind.PrcEnvelope5: PrcEnvelope5 = Transform(size); break;
+                case PaperKind.PrcEnvelope6: PrcEnvelope6 = Transform(size); break;
+                case PaperKind.PrcEnvelope7: PrcEnvelope7 = Transform(size); break;
+                case PaperKind.PrcEnvelope8: PrcEnvelope8 = Transform(size); break;
+                case PaperKind.PrcEnvelope9: PrcEnvelope9 = Transform(size); break;
+                case PaperKind.PrcEnvelope10: PrcEnvelope10 = Transform(size); break;
+                case PaperKind.Prc16kRotated: Prc16kRotated = Transform(size); break;
+                case PaperKind.Prc32kRotated: Prc32kRotated = Transform(size); break;
+                case PaperKind.Prc32kBigRotated: Prc32kBigRotated = Transform(size); break;
+                case PaperKind.PrcEnvelope1Rotated: PrcEnvelope1Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope2Rotated: PrcEnvelope2Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope3Rotated: PrcEnvelope3Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope4Rotated: PrcEnvelope4Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope5Rotated: PrcEnvelope5Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope6Rotated: PrcEnvelope6Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope7Rotated: PrcEnvelope7Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope8Rotated: PrcEnvelope8Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope9Rotated: PrcEnvelope9Rotated = Transform(size); break;
+                case PaperKind.PrcEnvelope10Rotated: PrcEnvelope10Rotated = Transform(size); break;
+                case PaperKind.A0: A0 = Transform(size); break;
+                case PaperKind.A1: A1 = Transform(size); break;
+
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
@@ -594,60 +340,136 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <remarks>Use this method to obtain the standard dimensions for a variety of common paper
         /// sizes. Supplying an invalid or unsupported paper kind will result in an exception.</remarks>
-        /// <param name="kind">A value from the KnownPaperKind enumeration that specifies the paper type
+        /// <param name="kind">A value from the PaperKind enumeration that specifies the paper type
         /// for which to retrieve the size.</param>
         /// <returns>A SizeD structure representing the width and height of the specified paper type,
         /// in the appropriate units.</returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when the specified kind is
-        /// not a valid value of the KnownPaperKind enumeration.</exception>
-        public virtual SizeD GetSize(KnownPaperKind kind)
+        /// not a valid value of the PaperKind enumeration.</exception>
+        public virtual SizeD GetSize(PaperKind kind)
         {
             switch (kind)
             {
-                case KnownPaperKind.A0x4: return A0x4;
-                case KnownPaperKind.A0x2: return A0x2;
-                case KnownPaperKind.A0: return A0;
-                case KnownPaperKind.A1: return A1;
-                case KnownPaperKind.A2: return A2;
-                case KnownPaperKind.A3: return A3;
-                case KnownPaperKind.A4: return A4;
-                case KnownPaperKind.A5: return A5;
-                case KnownPaperKind.A6: return A6;
-                case KnownPaperKind.A7: return A7;
-                case KnownPaperKind.A8: return A8;
-                case KnownPaperKind.A9: return A9;
-                case KnownPaperKind.A10: return A10;
-                case KnownPaperKind.B0: return B0;
-                case KnownPaperKind.B1: return B1;
-                case KnownPaperKind.B2: return B2;
-                case KnownPaperKind.B3: return B3;
-                case KnownPaperKind.B4: return B4;
-                case KnownPaperKind.B5: return B5;
-                case KnownPaperKind.B6: return B6;
-                case KnownPaperKind.B7: return B7;
-                case KnownPaperKind.B8: return B8;
-                case KnownPaperKind.B9: return B9;
-                case KnownPaperKind.B10: return B10;
-                case KnownPaperKind.C0: return C0;
-                case KnownPaperKind.C1: return C1;
-                case KnownPaperKind.C2: return C2;
-                case KnownPaperKind.C3: return C3;
-                case KnownPaperKind.C4: return C4;
-                case KnownPaperKind.C5: return C5;
-                case KnownPaperKind.C6: return C6;
-                case KnownPaperKind.C7: return C7;
-                case KnownPaperKind.C8: return C8;
-                case KnownPaperKind.C9: return C9;
-                case KnownPaperKind.C10: return C10;
-                case KnownPaperKind.HalfLetter: return HalfLetter;
-                case KnownPaperKind.GovernmentLetter: return GovernmentLetter;
-                case KnownPaperKind.Letter: return Letter;
-                case KnownPaperKind.JuniorLegal: return JuniorLegal;
-                case KnownPaperKind.GovernmentLegal: return GovernmentLegal;
-                case KnownPaperKind.Legal: return Legal;
-                case KnownPaperKind.Tabloid: return Tabloid;
+                case PaperKind.Letter: return Letter;
+                case PaperKind.Legal: return Legal;
+                case PaperKind.A4: return A4;
+                case PaperKind.C: return C;
+                case PaperKind.D: return D;
+                case PaperKind.E: return E;
+                case PaperKind.LetterSmall: return LetterSmall;
+                case PaperKind.Tabloid: return Tabloid;
+                case PaperKind.Ledger: return Ledger;
+                case PaperKind.Statement: return Statement;
+                case PaperKind.Executive: return Executive;
+                case PaperKind.A3: return A3;
+                case PaperKind.A4Small: return A4Small;
+                case PaperKind.A5: return A5;
+                case PaperKind.B4: return B4;
+                case PaperKind.B5: return B5;
+                case PaperKind.Folio: return Folio;
+                case PaperKind.Quarto: return Quarto;
+                case PaperKind.Sheet10X14: return Sheet10X14;
+                case PaperKind.Sheet11X17: return Sheet11X17;
+                case PaperKind.Note: return Note;
+                case PaperKind.Envelope9: return Envelope9;
+                case PaperKind.Envelope10: return Envelope10;
+                case PaperKind.Envelope11: return Envelope11;
+                case PaperKind.Envelope12: return Envelope12;
+                case PaperKind.Envelope14: return Envelope14;
+                case PaperKind.EnvelopeDl: return EnvelopeDl;
+                case PaperKind.EnvelopeC5: return EnvelopeC5;
+                case PaperKind.EnvelopeC3: return EnvelopeC3;
+                case PaperKind.EnvelopeC4: return EnvelopeC4;
+                case PaperKind.EnvelopeC6: return EnvelopeC6;
+                case PaperKind.EnvelopeC65: return EnvelopeC65;
+                case PaperKind.EnvelopeB4: return EnvelopeB4;
+                case PaperKind.EnvelopeB5: return EnvelopeB5;
+                case PaperKind.EnvelopeB6: return EnvelopeB6;
+                case PaperKind.EnvelopeItaly: return EnvelopeItaly;
+                case PaperKind.EnvelopeMonarch: return EnvelopeMonarch;
+                case PaperKind.EnvelopePersonal: return EnvelopePersonal;
+                case PaperKind.FanfoldUs: return FanfoldUs;
+                case PaperKind.FanfoldStandardGerman: return FanfoldStandardGerman;
+                case PaperKind.FanfoldLegalGerman: return FanfoldLegalGerman;
+                case PaperKind.IsoB4: return IsoB4;
+                case PaperKind.JapanesePostcard: return JapanesePostcard;
+                case PaperKind.Sheet9X11: return Sheet9X11;
+                case PaperKind.Sheet10X11: return Sheet10X11;
+                case PaperKind.Sheet15X11: return Sheet15X11;
+                case PaperKind.EnvelopeInvite: return EnvelopeInvite;
+                case PaperKind.LetterExtra: return LetterExtra;
+                case PaperKind.LegalExtra: return LegalExtra;
+                case PaperKind.TabloidExtra: return TabloidExtra;
+                case PaperKind.A4Extra: return A4Extra;
+                case PaperKind.LetterTransverse: return LetterTransverse;
+                case PaperKind.A4Transverse: return A4Transverse;
+                case PaperKind.LetterExtraTransverse: return LetterExtraTransverse;
+                case PaperKind.APlus: return APlus;
+                case PaperKind.BPlus: return BPlus;
+                case PaperKind.LetterPlus: return LetterPlus;
+                case PaperKind.A4Plus: return A4Plus;
+                case PaperKind.A5Transverse: return A5Transverse;
+                case PaperKind.B5Transverse: return B5Transverse;
+                case PaperKind.A3Extra: return A3Extra;
+                case PaperKind.A5Extra: return A5Extra;
+                case PaperKind.B5Extra: return B5Extra;
+                case PaperKind.A2: return A2;
+                case PaperKind.A3Transverse: return A3Transverse;
+                case PaperKind.A3ExtraTransverse: return A3ExtraTransverse;
+                case PaperKind.DblJapanesePostcard: return DblJapanesePostcard;
+                case PaperKind.A6: return A6;
+                case PaperKind.JapaneseEnvelopeKaku2: return JapaneseEnvelopeKaku2;
+                case PaperKind.JapaneseEnvelopeKaku3: return JapaneseEnvelopeKaku3;
+                case PaperKind.JapaneseEnvelopeChou3: return JapaneseEnvelopeChou3;
+                case PaperKind.JapaneseEnvelopeChou4: return JapaneseEnvelopeChou4;
+                case PaperKind.LetterRotated: return LetterRotated;
+                case PaperKind.A3Rotated: return A3Rotated;
+                case PaperKind.A4Rotated: return A4Rotated;
+                case PaperKind.A5Rotated: return A5Rotated;
+                case PaperKind.B4JisRotated: return B4JisRotated;
+                case PaperKind.B5JisRotated: return B5JisRotated;
+                case PaperKind.JapanesePostcardRotated: return JapanesePostcardRotated;
+                case PaperKind.DblJapanesePostcardRotated: return DblJapanesePostcardRotated;
+                case PaperKind.A6Rotated: return A6Rotated;
+                case PaperKind.JapaneseEnvelopeKaku2Rotated: return JapaneseEnvelopeKaku2Rotated;
+                case PaperKind.JapaneseEnvelopeKaku3Rotated: return JapaneseEnvelopeKaku3Rotated;
+                case PaperKind.JapaneseEnvelopeChou3Rotated: return JapaneseEnvelopeChou3Rotated;
+                case PaperKind.JapaneseEnvelopeChou4Rotated: return JapaneseEnvelopeChou4Rotated;
+                case PaperKind.B6Jis: return B6Jis;
+                case PaperKind.B6JisRotated: return B6JisRotated;
+                case PaperKind.Sheet12X11: return Sheet12X11;
+                case PaperKind.JapaneseEnvelopeYou4: return JapaneseEnvelopeYou4;
+                case PaperKind.JapaneseEnvelopeYou4Rotated: return JapaneseEnvelopeYou4Rotated;
+                case PaperKind.Prc16k: return Prc16k;
+                case PaperKind.Prc32k: return Prc32k;
+                case PaperKind.Prc32kBig: return Prc32kBig;
+                case PaperKind.PrcEnvelope1: return PrcEnvelope1;
+                case PaperKind.PrcEnvelope2: return PrcEnvelope2;
+                case PaperKind.PrcEnvelope3: return PrcEnvelope3;
+                case PaperKind.PrcEnvelope4: return PrcEnvelope4;
+                case PaperKind.PrcEnvelope5: return PrcEnvelope5;
+                case PaperKind.PrcEnvelope6: return PrcEnvelope6;
+                case PaperKind.PrcEnvelope7: return PrcEnvelope7;
+                case PaperKind.PrcEnvelope8: return PrcEnvelope8;
+                case PaperKind.PrcEnvelope9: return PrcEnvelope9;
+                case PaperKind.PrcEnvelope10: return PrcEnvelope10;
+                case PaperKind.Prc16kRotated: return Prc16kRotated;
+                case PaperKind.Prc32kRotated: return Prc32kRotated;
+                case PaperKind.Prc32kBigRotated: return Prc32kBigRotated;
+                case PaperKind.PrcEnvelope1Rotated: return PrcEnvelope1Rotated;
+                case PaperKind.PrcEnvelope2Rotated: return PrcEnvelope2Rotated;
+                case PaperKind.PrcEnvelope3Rotated: return PrcEnvelope3Rotated;
+                case PaperKind.PrcEnvelope4Rotated: return PrcEnvelope4Rotated;
+                case PaperKind.PrcEnvelope5Rotated: return PrcEnvelope5Rotated;
+                case PaperKind.PrcEnvelope6Rotated: return PrcEnvelope6Rotated;
+                case PaperKind.PrcEnvelope7Rotated: return PrcEnvelope7Rotated;
+                case PaperKind.PrcEnvelope8Rotated: return PrcEnvelope8Rotated;
+                case PaperKind.PrcEnvelope9Rotated: return PrcEnvelope9Rotated;
+                case PaperKind.PrcEnvelope10Rotated: return PrcEnvelope10Rotated;
+                case PaperKind.A0: return A0;
+                case PaperKind.A1: return A1;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
-    }
+        }
     }
 }
