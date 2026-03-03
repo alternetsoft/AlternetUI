@@ -1,3 +1,26 @@
+# 1.0.3 (2026 March 3)
+
+- Create the `StdProgressBar` control. This is similar to the native `ProgressBar`, but is implemented within the library.
+- Redo `AnimationPlayer` so it is now implemented internally in the library.
+- Add `AnimationPlayer.CustomAnimationScaleFactor`.
+- Add HourGlass animated image and loading API.
+- Create `AnimatedImageSet`, `KnownAnimatedImages`, and `AnimatedImage`.
+- `AnimationPlayer`: Support animation scaling.
+- Add DPI scaling and scaled accessors to `NineRects`.
+- `GraphicsFactory`: Add rectangle array pixel/DIP conversions.
+- `ControlSet`: Add `MaxSize`, `SuggestedSize`, `MaxHeightOnSizeChanged`, and `MaxSizeOnChanged`.
+- `StdSlider`: Fix painting and behavior when vertical.
+- `Splitter`: Add `IsMouseEnabled` and `SplitEndOnEscape`.
+- `ListControlItem`: Add checkbox and tree level image drawing for multi-column items.
+- Fix `PaperKind` enum names.
+- `PaperSizes`: Add inches conversion, rounding, and helpers.
+- Demo: Add 'Create PDF' button in `PrintingSample`.
+- Update documentation.
+- `Label`: Account for border in sizing and painting. This fixes a regression introduced in the previous version.
+- `PathUtils`: Add temporary path utilities and `GenTempFileName`.
+
+---
+
 # 1.0.2 (2026 February 26)
 
 - ListControlItem: Take into account ItemAlignment when cell is painted.
