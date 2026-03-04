@@ -10,10 +10,12 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
-    public partial class GenericListItemControl : GenericControl, IListControlItemContainer
+    public partial class GenericListItemControl : HiddenGenericBorder, IListControlItemContainer
     {
-        private ListControlItemDefaults itemDefaults = new();
-        private ListItemDrawable itemDrawable = new();
+        private readonly ListItemDrawable itemDrawable;
+
+        private bool isTransparent = true;
+        private ListControlItemDefaults itemDefaults;
         private ListControlItem? item;
         private IFormatProvider? formatProvider;
         private SvgImage? checkImageUnchecked;
@@ -27,8 +29,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Establishing a parent-child relationship between controls can be useful for managing
         /// layout, event routing, and resource ownership within a user interface.</remarks>
-        /// <param name="parent">The parent control to associate with this item. This parameter can be null if the item does not have a
-        /// parent control.</param>
+        /// <param name="parent">The parent control to associate with this item. This parameter can be null
+        /// if the item does not have a parent control.</param>
         public GenericListItemControl(AbstractControl? parent)
             : this()
         {
@@ -40,6 +42,10 @@ namespace Alternet.UI
         /// </summary>
         public GenericListItemControl()
         {
+            itemDrawable = CreateItemDrawable();
+            itemDrawable.Container = this;
+
+            itemDefaults = CreateItemDefaults();
         }
 
         /// <summary>
@@ -64,6 +70,29 @@ namespace Alternet.UI
                 item = value;
                 OnItemCreatedOrAssigned(item);
                 PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is transparent. Default is true.
+        /// When true, the control's background is not drawn, allowing the parent control's
+        /// background to show through. When false, the control's background
+        /// is drawn normally. In both states, the control's border is drawn if applicable.
+        /// </summary>
+        /// <remarks>Setting this property to a new value will trigger a redraw of the object.</remarks>
+        public virtual bool IsTransparent
+        {
+            get
+            {
+                return isTransparent;
+            }
+
+            set
+            {
+                if (isTransparent == value)
+                    return;
+                isTransparent = value;
+                Invalidate();
             }
         }
 
@@ -255,24 +284,55 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            Invalidate();
         }
 
         /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
+        public override void DefaultPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
+            var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
+                : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
+
+            DrawBorderAndBackground(e, flags);
+
+            var rect = e.ClientRectangle;
+            var dc = e.Graphics;
+
+            itemDrawable.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
+            itemDrawable.Draw(this, dc);
         }
 
         /// <inheritdoc/>
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
+            PerformLayoutAndInvalidate();
         }
 
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
+        }
+
+        /// <summary>
+        /// Creates and returns a drawable object which is responsible for rendering the visual representation of the item within the control.
+        /// Derived classes can override this method to provide a custom drawable implementation
+        /// that defines how the item should be drawn on the screen.
+        /// </summary>
+        /// <returns>A <see cref="ListItemDrawable"/> instance which is responsible for rendering the visual representation of the item.</returns>
+        protected virtual ListItemDrawable CreateItemDrawable()
+        { 
+            return new ();
+        }
+
+        /// <summary>
+        /// Creates and initializes a new instance of the ListControlItemDefaults class.
+        /// </summary>
+        /// <returns>A new instance of ListControlItemDefaults, which contains settings for items.</returns>
+        protected virtual ListControlItemDefaults CreateItemDefaults()
+        {
+            return new ();
         }
 
         /// <summary>
