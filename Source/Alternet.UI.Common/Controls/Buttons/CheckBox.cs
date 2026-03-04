@@ -206,8 +206,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Same as <see cref="IsChecked"/>. This property is added for the compatibility
-        /// with legacy code.
+        /// Same as <see cref="IsChecked"/>. This property is added for the compatibility with legacy code.
         /// </summary>
         [Browsable(false)]
         public bool Checked
