@@ -29,6 +29,23 @@ namespace Alternet.Drawing
         public virtual int ItemIndex { get; set; }
 
         /// <summary>
+        /// Gets or sets whether the item is current in the container.
+        /// This property is used to determine the state of the item and to select the appropriate colors for painting.
+        /// </summary>
+        public virtual bool IsCurrentItem { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether item's columns are used when item is painted.
+        /// </summary>
+        public virtual bool UseColumns { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the item is selected in the container.
+        /// This property is used to determine the state of the item and to select the appropriate colors for painting.
+        /// </summary>
+        public virtual bool IsSelectedItem { get; set; }
+            
+        /// <summary>
         /// Gets or sets container of the item.
         /// </summary>
         public virtual IListControlItemContainer? Container { get; set; }
@@ -39,7 +56,7 @@ namespace Alternet.Drawing
             if (item is null || Container is null || !Visible)
                 return;
 
-            if(paintArguments is null)
+            if (paintArguments is null)
             {
                 paintArguments = new(Container, dc, Bounds, ItemIndex);
             }
@@ -51,7 +68,14 @@ namespace Alternet.Drawing
                 paintArguments.ItemIndex = ItemIndex;
             }
 
+            paintArguments.LabelMetrics = new();
+            paintArguments.IsCurrent = IsCurrentItem;
+            paintArguments.IsSelected = IsSelectedItem;
+            paintArguments.Visible = true;
+            paintArguments.UseColumns = UseColumns;
+
             item.DrawBackground(Container, paintArguments);
+            item.DrawForeground(Container, paintArguments);
         }
     }
 }
