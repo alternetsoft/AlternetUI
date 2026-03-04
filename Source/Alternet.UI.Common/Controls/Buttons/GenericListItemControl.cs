@@ -218,6 +218,63 @@ namespace Alternet.UI
             return new();
         }
 
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        {
+            var result = base.GetPreferredSize(context);
+            return result;
+        }
+
+        /// <inheritdoc/>
+        int IListControlItemContainer.GetItemCount()
+        {
+            return 1;
+        }
+
+        /// <inheritdoc/>
+        string IListControlItemContainer.GetItemText(int index, bool forDisplay)
+        {
+            if (index == 0)
+                return GetItemText(Item, forDisplay);
+            return string.Empty;
+        }
+
+        /// <inheritdoc/>
+        public virtual string GetItemText(ListControlItem? item, bool forDisplay)
+        {
+            return ListControlItem.DefaultGetItemText(item, forDisplay, FormatProvider);
+        }
+
+        /// <inheritdoc/>
+        ListControlItem? IListControlItemContainer.SafeItem(int index)
+        {
+            return index == 0 ? Item : null;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+        }
+
         /// <summary>
         /// Invoked when a list item is created or assigned, allowing derived classes to perform custom processing or
         /// initialization for the item.
@@ -229,26 +286,6 @@ namespace Alternet.UI
         protected virtual void OnItemCreatedOrAssigned(ListControlItem item)
         {
             itemDrawable.Item = item;
-        }
-
-        ListControlItem? IListControlItemContainer.SafeItem(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IListControlItemContainer.GetItemText(int index, bool forDisplay)
-        {
-            throw new NotImplementedException();
-        }
-
-        string IListControlItemContainer.GetItemText(ListControlItem? item, bool forDisplay)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IListControlItemContainer.GetItemCount()
-        {
-            throw new NotImplementedException();
         }
     }
 }
