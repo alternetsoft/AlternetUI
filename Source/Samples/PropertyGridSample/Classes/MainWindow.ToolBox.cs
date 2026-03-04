@@ -110,6 +110,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<CheckedListBox>();
                 ToolBoxAdd<FileListBox>();
                 ToolBoxAdd<FontListBox>();
+                ToolBoxAdd<GenericListItemControl>();
 
                 void ToolBoxAdd<T>()
                 {

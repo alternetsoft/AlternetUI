@@ -38,6 +38,7 @@ Environment.NewLine + Environment.NewLine +
 
         static ObjectInit()
         {
+            AddAction<GenericListItemControl>(InitGenericListItemControl);
             AddAction<CardPanelHeader>(InitCardPanelHeader);
             AddAction<RichToolTip>(InitRichToolTip);
             AddAction<DatePicker>(InitDatePicker);

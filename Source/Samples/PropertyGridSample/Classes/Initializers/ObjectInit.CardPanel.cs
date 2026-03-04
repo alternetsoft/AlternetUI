@@ -9,6 +9,12 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
+        public static void InitGenericListItemControl(GenericListItemControl control)
+        {
+            control.Item = CreateGreenBoldItem();
+            control.SuggestedSize = (250, 200);
+        }
+
         public static void InitCardPanelHeader(CardPanelHeader control)
         {
             control.Add("Item 1");

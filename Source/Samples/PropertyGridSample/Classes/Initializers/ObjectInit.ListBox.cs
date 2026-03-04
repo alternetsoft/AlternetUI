@@ -9,6 +9,25 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
+        public static string ResPrefix2 = $"{UrlResPrefix}ToolBarPng.Large.";
+        public static string CalendarUrl = $"{ResPrefix2}Calendar32.png";
+        public static string PencilUrl = $"{ResPrefix2}Pencil32.png";
+        public static string PhotoUrl = $"{ResPrefix2}Photo32.png";
+
+        public static TreeViewItem CreateGreenBoldItem()
+        {
+            TreeViewItem item = new();
+            item.Alignment = HVAlignment.Center;
+            item.Image = Image.FromUrlCached(CalendarUrl);
+            item.CheckState = CheckState.Indeterminate;
+            item.DisabledImage = item.Image?.ToGrayScale();
+            item.ForegroundColor = Color.White;
+            item.BackgroundColor = Color.ForestGreen;
+            item.Text = "Green <b>item</b> at center";
+            item.LabelFlags = DrawLabelFlags.TextHasBold;
+            return item;
+        }
+
         public static void SetDefaultOwnerDrawItems(
             VirtualListBox control,
             bool addLong = true)
@@ -31,11 +50,6 @@ namespace PropertyGridSample
             Action<TreeViewItem> addAction,
             bool addLong = true)
         {
-            string ResPrefix2 = $"{UrlResPrefix}ToolBarPng.Large.";
-            string CalendarUrl = $"{ResPrefix2}Calendar32.png";
-            string PencilUrl = $"{ResPrefix2}Pencil32.png";
-            string PhotoUrl = $"{ResPrefix2}Photo32.png";
-
             var svgImageSize = 24; /* image sizes are always in pixels */
 
             TreeViewItem item = new();
@@ -53,16 +67,7 @@ namespace PropertyGridSample
             item.SvgImageSize = svgImageSize;
             addAction(item);
 
-            item = new();
-            item.Alignment = HVAlignment.Center;
-            item.Image = Image.FromUrlCached(CalendarUrl);
-            item.CheckState = CheckState.Indeterminate;
-            item.DisabledImage = item.Image?.ToGrayScale();
-            item.ForegroundColor = Color.White;
-            item.BackgroundColor = Color.ForestGreen;
-            item.Text = "Green <b>item</b> at center";
-            item.LabelFlags = DrawLabelFlags.TextHasBold;
-            addAction(item);
+            addAction(CreateGreenBoldItem());
 
             item = new();
             item.Text = "H = 60 (bottom, center)";
