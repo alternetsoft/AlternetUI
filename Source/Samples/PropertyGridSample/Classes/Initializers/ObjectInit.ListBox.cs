@@ -14,6 +14,11 @@ namespace PropertyGridSample
         public static string PencilUrl = $"{ResPrefix2}Pencil32.png";
         public static string PhotoUrl = $"{ResPrefix2}Photo32.png";
 
+        public static void InitGenericListItemControl(GenericListItemControl control)
+        {
+            control.Item = CreateGreenBoldItem();
+        }
+
         public static TreeViewItem CreateGreenBoldItem()
         {
             TreeViewItem item = new();

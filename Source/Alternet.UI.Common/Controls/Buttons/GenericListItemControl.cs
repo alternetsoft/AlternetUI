@@ -250,8 +250,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
-            var result = base.GetPreferredSize(context);
-            return result;
+            var specifiedWidth = SuggestedWidth;
+            var specifiedHeight = SuggestedHeight;
+            if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
+                return new SizeD(specifiedWidth, specifiedHeight);
+
+            var result = itemDrawable.GetPreferredSize(this);
+            if (result != SizeD.Empty)
+                return result + Padding.Size;
+
+            return base.GetPreferredSize(context);
         }
 
         /// <inheritdoc/>

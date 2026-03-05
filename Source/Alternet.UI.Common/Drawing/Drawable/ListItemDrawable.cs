@@ -44,11 +44,26 @@ namespace Alternet.Drawing
         /// This property is used to determine the state of the item and to select the appropriate colors for painting.
         /// </summary>
         public virtual bool IsSelectedItem { get; set; }
-            
+
         /// <summary>
         /// Gets or sets container of the item.
         /// </summary>
         public virtual IListControlItemContainer? Container { get; set; }
+
+        /// <summary>
+        /// Gets preferred size in device-independent units.
+        /// </summary>
+        /// <param name="container">Container in which this object is painted.</param>
+        /// <returns></returns>
+        public virtual SizeD GetPreferredSize(IListControlItemContainer container)
+        {
+            if (container.Control is null)
+                return SizeD.Empty;
+
+            var result = ListControlItem.DefaultMeasureItemSize(container, container.Control.MeasureCanvas, 0);
+
+            return result;
+        }
 
         /// <inheritdoc/>
         protected override void OnDraw(AbstractControl control, Graphics dc)
