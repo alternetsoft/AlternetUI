@@ -38,7 +38,7 @@ Environment.NewLine + Environment.NewLine +
 
         static ObjectInit()
         {
-            AddAction<GenericListItemControl>(InitGenericListItemControl);
+            AddAction<GenericItemControl>(InitGenericListItemControl);
             AddAction<CardPanelHeader>(InitCardPanelHeader);
             AddAction<RichToolTip>(InitRichToolTip);
             AddAction<DatePicker>(InitDatePicker);
@@ -79,6 +79,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(GenericWrappedTextControl), InitGenericWrappedTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
             Actions.Add(typeof(Button), InitButton);
+            Actions.Add(typeof(StdButton), InitStdButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);

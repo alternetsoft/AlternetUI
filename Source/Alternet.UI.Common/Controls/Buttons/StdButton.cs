@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 
 using Alternet.Drawing;
@@ -9,56 +9,57 @@ namespace Alternet.UI
     /// Represents a button control.
     /// </summary>
     [ControlCategory("Common")]
-    public partial class Button : ButtonBase, IControlStateObjectChanged
+    public partial class StdButton : GenericItemControl, IControlStateObjectChanged
     {
-        internal static bool UseGeneric;
-
-        private static bool imagesEnabled = true;
-
         private ControlStateImages? stateImages;
         private bool isDefault;
         private bool isCancel;
         private bool textVisible = true;
         private ElementContentAlign textAlign = ElementContentAlign.Default;
+        private ElementContentAlign imageAlign = ElementContentAlign.Default;
+        private Thickness? imageMargins;
         private bool exactFit = false;
 
-        static Button()
+        static StdButton()
         {
-            UseGeneric = false;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Button"/> class
+        /// Initializes a new instance of the <see cref="StdButton"/> class
         /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public Button(AbstractControl parent)
+        public StdButton(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new <see cref="Button"/> instance.
+        /// Initializes a new <see cref="StdButton"/> instance.
         /// </summary>
-        public Button()
+        public StdButton()
         {
+            Item.HorizontalAlignment = HorizontalAlignment.Center;
+            RefreshOptions = ControlRefreshOptions.RefreshOnBorder | ControlRefreshOptions.RefreshOnImage |
+                ControlRefreshOptions.RefreshOnBackground | ControlRefreshOptions.RefreshOnColor |
+                ControlRefreshOptions.RefreshOnState;
         }
 
         /// <summary>
-        /// Initializes a new <see cref="Button"/> instance with the specified text.
+        /// Initializes a new <see cref="StdButton"/> instance with the specified text.
         /// </summary>
-        public Button(string text)
+        public StdButton(string text)
             : this()
         {
             Text = text;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Button"/> class
+        /// Initializes a new instance of the <see cref="StdButton"/> class
         /// with the specified text, click action and parent control.
         /// </summary>
-        public Button(Control parent, string text, Action? clickAction = null)
+        public StdButton(Control parent, string text, Action? clickAction = null)
             : this()
         {
             Text = text;
@@ -70,32 +71,11 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Button"/> class
         /// with the specified text and click action.
         /// </summary>
-        public Button(string text, Action clickAction)
+        public StdButton(string text, Action clickAction)
             : this()
         {
             Text = text;
             ClickAction = clickAction;
-        }
-
-        /// <summary>
-        /// Gets or sets whether images in buttons are available.
-        /// </summary>
-        /// <remarks>
-        /// By default images in buttons are not available under macOs due to not correct
-        /// implementation in WxWidget native button control. On all other platforms
-        /// images in buttons are available.
-        /// </remarks>
-        public static bool ImagesEnabled
-        {
-            get
-            {
-                return imagesEnabled;
-            }
-
-            set
-            {
-                imagesEnabled = value;
-            }
         }
 
         /// <summary>
@@ -106,7 +86,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(stateImages is null)
+                if (stateImages is null)
                 {
                     stateImages = new();
                     stateImages.ChangedHandler = this;
@@ -117,7 +97,7 @@ namespace Alternet.UI
 
             set
             {
-                if (!imagesEnabled || stateImages == value)
+                if (stateImages == value)
                     return;
                 PerformLayoutAndInvalidate(() =>
                 {
@@ -128,27 +108,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Button;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control has a border.
-        /// </summary>
-        [Browsable(true)]
-        public override bool HasBorder
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return default;
-                return base.Handler.HasBorder;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                base.Handler.HasBorder = value;
-            }
-        }
 
         /// <summary>
         /// Gets or sets the image that is displayed on a button control.
@@ -166,8 +125,6 @@ namespace Alternet.UI
 
             set
             {
-                if (!imagesEnabled)
-                    return;
                 StateImages.Normal = value;
             }
         }
@@ -181,8 +138,6 @@ namespace Alternet.UI
 
             set
             {
-                if (!imagesEnabled)
-                    return;
                 StateImages.Hovered = value;
             }
         }
@@ -196,8 +151,6 @@ namespace Alternet.UI
 
             set
             {
-                if (!imagesEnabled)
-                    return;
                 StateImages.Focused = value;
             }
         }
@@ -211,8 +164,6 @@ namespace Alternet.UI
 
             set
             {
-                if (!imagesEnabled)
-                    return;
                 StateImages.Pressed = value;
             }
         }
@@ -226,8 +177,6 @@ namespace Alternet.UI
 
             set
             {
-                if (!imagesEnabled)
-                    return;
                 StateImages.Disabled = value;
             }
         }
@@ -244,23 +193,6 @@ namespace Alternet.UI
         [Category("Appearance")]
         [Browsable(false)]
         public virtual bool UseVisualStyleBackColor { get; set; } = true;
-
-        /// <summary>
-        /// Determines whether the current instance represents a generic button type rather than a platform-specific
-        /// implementation.
-        /// </summary>
-        /// <remarks>Use this method to distinguish between generic button instances and those that are
-        /// bound to a specific platform handler. This distinction may affect how the button behaves or is rendered in
-        /// different environments.</remarks>
-        /// <returns>true if the button is not associated with an IButtonHandler; otherwise, false.</returns>
-        [Browsable(false)]
-        public bool IsGeneric
-        {
-            get
-            {
-                return Handler is not IButtonHandler;
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value that indicates whether a <see cref="Button"/> is
@@ -281,13 +213,19 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
+                if (isDefault == value)
+                    return;
                 isDefault = value;
+                Invalidate();
             }
         }
 
         /// <summary>
         /// Gets or sets whether buttons are made of at least the standard button size, even
         /// if their contents is small enough to fit into a smaller size.
+        /// Currently this property doesn't do anything and is added for compatibility.
         /// </summary>
         /// <remarks>
         /// Standard button size is used
@@ -301,22 +239,17 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return exactFit;
-                if (Handler is IButtonHandler buttonHandler)
-                    return buttonHandler.ExactFit;
                 return exactFit;
             }
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (exactFit == value)
                     return;
                 exactFit = value;
-                if (DisposingOrDisposed)
-                    return;
-                if (Handler is IButtonHandler buttonHandler)
-                    buttonHandler.ExactFit = value;
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -339,7 +272,12 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
+                if (isCancel == value)
+                    return;
                 isCancel = value;
+                Invalidate();
             }
         }
 
@@ -355,13 +293,12 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (textVisible == value)
                     return;
                 textVisible = value;
-                if (DisposingOrDisposed)
-                    return;
-                if (Handler is IButtonHandler buttonHandler)
-                    buttonHandler.TextVisible = value;
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -377,52 +314,29 @@ namespace Alternet.UI
 
             set
             {
+                if (DisposingOrDisposed)
+                    return;
                 if (textAlign == value)
                     return;
                 textAlign = value;
-                if (DisposingOrDisposed)
-                    return;
-                if (Handler is IButtonHandler buttonHandler)
-                    buttonHandler.TextAlign = value;
+                if (TextVisible)
+                    PerformLayoutAndInvalidate();
             }
-        }
-
-        [Browsable(false)]
-        internal new LayoutStyle? Layout
-        {
-            get => base.Layout;
-        }
-
-        [Browsable(false)]
-        internal new string Title
-        {
-            get => base.Title;
-            set => base.Title = value;
-        }
-
-        [Browsable(false)]
-        internal new Thickness Padding
-        {
-            get => base.Padding;
         }
 
         /// <summary>
         /// Sets the position at which the image is displayed.
         /// </summary>
-        /// <remarks>
-        /// This method should only be called if the button has an associated image.
-        /// </remarks>
         /// <param name="dir">New image position (left, top, right, bottom).</param>
         public virtual void SetImagePosition(ElementContentAlign dir)
         {
             if (DisposingOrDisposed)
                 return;
-            if (dir == ElementContentAlign.Left || dir == ElementContentAlign.Right ||
-                dir == ElementContentAlign.Top || dir == ElementContentAlign.Bottom)
-            {
-                if (Handler is IButtonHandler buttonHandler)
-                    buttonHandler.SetImagePosition(dir);
-            }
+            if (imageAlign == dir)
+                return;
+            imageAlign = dir;
+            if (Item.HasImageOrSvg)
+                PerformLayoutAndInvalidate();
         }
 
         /// <summary>
@@ -430,8 +344,7 @@ namespace Alternet.UI
         /// Value is in device-independent units.
         /// </summary>
         /// <remarks>
-        /// This method is currently only implemented under Windows.
-        /// If it is not called, default margin is used around the image.
+        /// If this method was not called, default margin is used around the image.
         /// </remarks>
         /// <param name="x">New horizontal margin.</param>
         /// <param name="y">New vertical margin.</param>
@@ -440,129 +353,82 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             y ??= x;
-            if (Handler is IButtonHandler buttonHandler)
-                buttonHandler.SetImageMargins(x, y.Value);
+
+            var newMargins = new Thickness(x, y.Value);
+
+            if (imageMargins == newMargins)
+                return;
+            imageMargins = newMargins;
+
+            if (Item.HasImageOrSvg)
+                PerformLayoutAndInvalidate();
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            var state = VisualState;
+            var image = StateImages.GetObjectOrNormal(state);
+
+            Item.Image = image;
+
+            base.DefaultPaint(e);
         }
 
         void IControlStateObjectChanged.DisabledChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (Handler is IButtonHandler buttonHandler)
-                buttonHandler.DisabledImage = stateImages?.Disabled;
-            PerformLayoutAndInvalidate();
+            if (!Enabled)
+                PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.NormalChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (Handler is IButtonHandler buttonHandler)
-                buttonHandler.NormalImage = stateImages?.Normal;
-            PerformLayoutAndInvalidate();
+            if (VisualState == VisualControlState.Normal)
+                PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.FocusedChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (Handler is IButtonHandler buttonHandler)
-                buttonHandler.FocusedImage = stateImages?.Focused;
-            PerformLayoutAndInvalidate();
+            if (VisualState == VisualControlState.Focused)
+                PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.HoveredChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (Handler is IButtonHandler buttonHandler)
-                buttonHandler.HoveredImage = stateImages?.Hovered;
-            PerformLayoutAndInvalidate();
+            if (VisualState == VisualControlState.Hovered)
+                PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.PressedChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (Handler is IButtonHandler buttonHandler)
-                buttonHandler.PressedImage = stateImages?.Pressed;
-            PerformLayoutAndInvalidate();
+            if (VisualState == VisualControlState.Pressed)
+                PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.SelectedChanged(object? sender)
         {
         }
 
-        /// <summary>
-        /// Shows attached drop down menu.
-        /// </summary>
-        protected virtual void ShowDropDownMenu()
-        {
-            DropDownMenu?.ShowAsDropDown(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnMouseLeftButtonUp(MouseEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
-            if (!Enabled)
-                return;
-            if (ShowDropDownMenuWhenClicked)
-                ShowDropDownMenu();
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
-        {
-            var result = base.GetPreferredSize(context);
-            return result;
-        }
-
-        /// <inheritdoc/>
-        protected override void OnSizeChanged(EventArgs e)
-        {
-            base.OnSizeChanged(e);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnTextChanged(EventArgs e)
-        {
-            base.OnTextChanged(e);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnSystemColorsChanged(EventArgs e)
-        {
-            base.OnSystemColorsChanged(e);
-        }
-
-        /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            if (UseGeneric)
-                return CreateGenericHandler();
-
-            var result = ControlFactory.Handler.CreateButtonHandler(this);
-            result ??= CreateGenericHandler();
-            return result;
-
-            IControlHandler CreateGenericHandler()
-            {
-                var result = base.CreateHandler();
-                return result;
-            }
-        }
-
         /// <inheritdoc/>
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultHasBorder()
+        {
+            return true;
         }
     }
 }

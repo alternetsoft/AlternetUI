@@ -81,7 +81,7 @@ namespace Alternet.UI
         /// image for that state is not specified.
         /// </summary>
         /// <param name="state">Control state.</param>
-        [Obsolete("'GetImage' is deprecated, please use 'GetObject' instead.")]
+        [Obsolete("'GetImage' is deprecated, please use 'GetObjectOrNormal' instead.")]
         public Image? GetImage(VisualControlState state) => GetObjectOrNormal(state);
 
         /// <summary>
