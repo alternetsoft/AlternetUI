@@ -288,11 +288,42 @@ namespace Alternet.UI
             return index == 0 ? Item : null;
         }
 
-        /// <inheritdoc/>
-        protected override void OnSizeChanged(EventArgs e)
+        /// <summary>
+        /// Returns the zero-based index of the item, if specified coordinates are over checkbox;
+        /// otherwise returns <c>null</c>.
+        /// </summary>
+        /// <param name="position">A <see cref="PointD"/> object containing
+        /// the coordinates used to obtain the item
+        /// index.</param>
+        public virtual bool HitTestCheckBox(PointD position)
         {
-            base.OnSizeChanged(e);
-            Invalidate();
+            var rect = ClientRectangle;
+            rect = rect.DeflatedWithPadding(Padding);
+            rect = rect.DeflatedWithPadding(Item.ForegroundMargin);
+
+            var info = Item.GetCheckBoxInfo(this, rect);
+            if (info is null || !info.IsCheckBoxVisible)
+                return false;
+            var checkRect = info.CheckRect;
+            checkRect.Inflate(2);
+            var isOverCheck = checkRect.Contains(position);
+            return isOverCheck;
+        }
+
+        /// <summary>
+        /// Toggles checked state of the item clicked at the specified coordinates.
+        /// </summary>
+        /// <param name="location">A <see cref="PointD"/> object containing
+        /// the coordinates where the item was clicked.</param>
+        /// <param name="hitTestCheckBox">A boolean value indicating whether to perform a hit test on the checkbox.
+        /// If true, the method will only toggle the check state if the click occurred on the checkbox.
+        /// If false, the method will toggle the check state regardless of the click location.
+        /// This allows to change checked state when item is clicked on the item text.</param>
+        public virtual bool ToggleItemCheckState(PointD location, bool hitTestCheckBox)
+        {
+            if (hitTestCheckBox && !HitTestCheckBox(location))
+                return false;
+            return Item.ToggleCheckState(this);
         }
 
         /// <inheritdoc/>
@@ -311,9 +342,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            Invalidate();
+        }
+
+        /// <inheritdoc/>
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
+            Item.Text = Text;
             PerformLayoutAndInvalidate();
         }
 
@@ -332,6 +371,22 @@ namespace Alternet.UI
         protected virtual ListItemDrawable CreateItemDrawable()
         { 
             return new ();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            if (ItemDefaults.CheckBoxVisible)
+            {
+                if (ToggleItemCheckState(e.Location, hitTestCheckBox: false))
+                {
+                    e.Handled = true;
+                    return;
+                }
+            }
         }
 
         /// <summary>
