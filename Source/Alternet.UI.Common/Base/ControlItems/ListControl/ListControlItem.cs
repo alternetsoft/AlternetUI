@@ -2437,6 +2437,69 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Determines whether the checkbox for the specified item container allows all possible states for the current user.
+        /// </summary>
+        /// <remarks>If the container's default setting for the checkbox is not specified, the method
+        /// returns false. If the CheckBoxAllowAllStatesForUser property is set, its value overrides the container's
+        /// default setting.</remarks>
+        /// <param name="container">The item container whose checkbox state settings are to be evaluated. This parameter can be null, in which
+        /// case the default behavior is applied.</param>
+        /// <returns>true if the checkbox allows all states for the user; otherwise, false.</returns>
+        public virtual bool GetCheckBoxAllowAllStatesForUser(IListControlItemContainer? container)
+        {
+            bool result = container?.Defaults.CheckBoxThreeState ?? false;
+            if (result && CheckBoxAllowAllStatesForUser is not null)
+                result = CheckBoxAllowAllStatesForUser.Value;
+            return result;
+        }
+
+        /// <summary>
+        /// Changes item <see cref="CheckState"/> to the next value.
+        /// </summary>
+        public virtual bool ToggleCheckState(IListControlItemContainer? container)
+        {
+            var checkState = GetCheckState(container);
+
+            if (IsRadioButton)
+            {
+                if (checkState == CheckState.Checked)
+                {
+                    return false;
+                }
+            }
+
+            var allowThreeState = GetAllowThreeState(container);
+            var allowAllStatesForUser = GetCheckBoxAllowAllStatesForUser(container);
+
+            allowThreeState = allowThreeState && allowAllStatesForUser;
+
+            if (allowThreeState)
+            {
+                switch (checkState)
+                {
+                    case CheckState.Unchecked:
+                        CheckState = CheckState.Checked;
+                        break;
+                    case CheckState.Checked:
+                        CheckState = CheckState.Indeterminate;
+                        break;
+                    case CheckState.Indeterminate:
+                        CheckState = CheckState.Unchecked;
+                        break;
+                }
+            }
+            else
+            {
+                if (checkState == CheckState.Checked)
+                    CheckState = CheckState.Unchecked;
+                else
+                    CheckState = CheckState.Checked;
+            }
+
+            return true;
+        }
+
         /// <inheritdoc/>
         public virtual int CompareTo(ListControlItem? other)
         {
