@@ -53,6 +53,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="RadioButton"/> class with the specified text.
+        /// </summary>
+        /// <param name="text"></param>
+        public RadioButton(string text)
+            : this()
+        {
+            Text = text;
+        }
+
+        /// <summary>
         /// Occurs when the value of the <see cref="IsChecked"/> property changes.
         /// </summary>
         public event EventHandler? CheckedChanged;

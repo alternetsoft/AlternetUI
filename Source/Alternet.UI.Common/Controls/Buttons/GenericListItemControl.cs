@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
-    public partial class GenericListItemControl : HiddenGenericBorder, IListControlItemContainer
+    public partial class GenericListItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource
     {
         private readonly ListItemDrawable itemDrawable;
 
@@ -22,6 +22,9 @@ namespace Alternet.UI
         private SvgImage? checkImageChecked;
         private SvgImage? checkImageIndeterminate;
         private ImageList? imageList;
+        private bool? reportedChecked;
+        private Action? clickAction;
+        private CommandSourceStruct commandSource;
 
         /// <summary>
         /// Initializes a new instance of the GenericListItemControl class and associates it with the specified parent
@@ -42,6 +45,12 @@ namespace Alternet.UI
         /// </summary>
         public GenericListItemControl()
         {
+            commandSource = new(this);
+            commandSource.Changed = () =>
+            {
+                Enabled = commandSource.CanExecute;
+            };
+
             itemDrawable = CreateItemDrawable();
             itemDrawable.Container = this;
 
@@ -50,6 +59,49 @@ namespace Alternet.UI
             ParentBackColor = true;
             ParentForeColor = true;
             HorizontalAlignment = HorizontalAlignment.Left;
+        }
+
+        /// <inheritdoc/>
+        public virtual ICommand? Command
+        {
+            get
+            {
+                return commandSource.Command;
+            }
+
+            set
+            {
+                commandSource.Command = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public virtual object? CommandParameter
+        {
+            get
+            {
+                return commandSource.CommandParameter;
+            }
+
+            set
+            {
+                commandSource.CommandParameter = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public virtual object? CommandTarget
+        {
+            get
+            {
+                return commandSource.CommandParameter;
+            }
+
+            set
+            {
+                commandSource.CommandParameter = value;
+            }
         }
 
         /// <summary>
@@ -257,6 +309,20 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         float? IListControlItemContainer.ColumnSeparatorWidth => null;
+
+        /// <summary>
+        /// Gets or sets <see cref="Action"/> which will be executed when
+        /// this control is clicked by the user.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action? ClickAction
+        {
+            get => clickAction;
+            set
+            {
+                clickAction = value;
+            }
+        }
 
         /// <inheritdoc/>
         bool IListControlItemContainer.Focused => Focused;
@@ -535,10 +601,15 @@ namespace Alternet.UI
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
-        public void RaiseCheckedChanged()
+        public virtual void RaiseCheckedChanged()
         {
             if (DisposingOrDisposed)
                 return;
+            var newChecked = IsChecked;
+
+            if (reportedChecked == newChecked)
+                return;
+            reportedChecked = newChecked;
             OnCheckedChanged(EventArgs.Empty);
             CheckedChanged?.Invoke(this, EventArgs.Empty);
         }
@@ -550,6 +621,23 @@ namespace Alternet.UI
         public void SetChecked(bool isChecked)
         {
             IsChecked = isChecked;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            commandSource.Changed = null;
+            base.DisposeManaged();
+        }
+
+        /// <inheritdoc />
+        protected override void OnClick(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            base.OnClick(e);
+            clickAction?.Invoke();
+            commandSource.Execute();
         }
 
         /// <summary>
