@@ -154,8 +154,8 @@ namespace ControlsSample
             NameValue<Func<AbstractControl>>[] pages =
             {
                 new("Button", () => new ButtonPage()),
-                new("Check", () => new CheckBoxesPage()),
-                new("Radio", () => new RadioButtonsPage()),
+                new("StdCheckBox", () => new CheckBoxesPage()),
+                new("StdRadioButton", () => new RadioButtonsPage()),
             };
 
             return CreateCustomPage(pages);
@@ -165,8 +165,8 @@ namespace ControlsSample
         {
             NameValue<Func<AbstractControl>>[] pages =
             {
-                new("Slider", () => new SliderPage()),
-                new("Progress", () => new ProgressBarPage()),
+                new("StdSlider", () => new SliderPage()),
+                new("StdProgressBar", () => new ProgressBarPage()),
             };
 
             return CreateCustomPage(pages);

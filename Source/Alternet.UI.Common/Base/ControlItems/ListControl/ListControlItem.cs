@@ -799,8 +799,7 @@ namespace Alternet.UI
         /// When this action is specified, default background painting is not performed.
         /// </summary>
         [Browsable(false)]
-        public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>?
-            DrawBackgroundAction
+        public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? DrawBackgroundAction
         {
             get => drawBackgroundAction;
             set => drawBackgroundAction = value;
@@ -811,8 +810,7 @@ namespace Alternet.UI
         /// When this action is specified, default foreground painting is not performed.
         /// </summary>
         [Browsable(false)]
-        public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>?
-            DrawForegroundAction
+        public virtual Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? DrawForegroundAction
         {
             get => drawForegroundAction;
             set => drawForegroundAction = value;
@@ -1505,10 +1503,7 @@ namespace Alternet.UI
         /// <param name="canvas">The graphics context used to draw the checkbox.</param>
         /// <param name="control">The control associated with the checkbox.</param>
         /// <param name="info">Information about the checkbox to be drawn.</param>
-        public static void DefaultDrawCheckBox(
-            Graphics canvas,
-            AbstractControl control,
-            ItemCheckBoxInfo info)
+        public static void DefaultDrawCheckBox(Graphics canvas, AbstractControl control, ItemCheckBoxInfo info)
         {
             var useSvg = info.ImageChecked is not null && info.ImageUnchecked is not null;
 
@@ -1936,8 +1931,7 @@ namespace Alternet.UI
         /// <param name="imageSize">Image size. Optional. If not specified, calculated
         /// using height of the item.</param>
         /// <returns></returns>
-        public static (RectD ImageRect, RectD TextRect) GetItemImageRect(
-            RectD rect, SizeD? imageSize = null)
+        public static (RectD ImageRect, RectD TextRect) GetItemImageRect(RectD rect, SizeD? imageSize = null)
         {
             Thickness textMargin = GetAdditionalTextMargin();
 
@@ -2421,8 +2415,9 @@ namespace Alternet.UI
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);
             result.CheckSize = GetCheckBoxSize(container, result.CheckState, result.PartState);
+            result.CheckImageSize = result.CheckSize;
 
-            if(container is not null)
+            if (container is not null)
             {
                 result.ImageChecked = container.CheckImageChecked;
                 result.ImageUnchecked = container.CheckImageUnchecked;
@@ -2648,6 +2643,11 @@ namespace Alternet.UI
             /// Gets or sets the size of the checkbox.
             /// </summary>
             public SizeD CheckSize;
+
+            /// <summary>
+            /// Represents the dimensions of the check image as a <see cref="SizeD"/> structure.
+            /// </summary>
+            public SizeD CheckImageSize;
 
             /// <summary>
             /// Gets or sets the rectangle that defines the position and size of the checkbox.

@@ -64,7 +64,9 @@ namespace ControlsSample
         private void CheckStateIndeterminateButton_Click(object? sender, EventArgs e)
         {
             if (checkBox.ThreeState)
+            {
                 checkBox.CheckState = CheckState.Indeterminate;
+            }
             else
                 App.Log($"CheckBox.ThreeState = {GenericStrings.BoolFalse}. {GenericStrings.IndeterminateStateIsNotSet}.");
         }
@@ -77,16 +79,19 @@ namespace ControlsSample
         private void AllowAllStatesForUserCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             checkBox.AllowAllStatesForUser = allowAllStatesForUserCheckBox.IsChecked;
+            App.Log($"CheckBox.AllowAllStatesForUser = {checkBox.AllowAllStatesForUser}");
         }
 
         private void AlignRightCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             checkBox.AlignRight = alignRightCheckBox.IsChecked;
+            App.Log($"CheckBox.AlignRight = {checkBox.AlignRight}");
         }
 
         private void ThreeStatesCheckBox_CheckedChanged(object? sender, EventArgs e)
         {
             checkBox.ThreeState = threeStatesCheckBox.IsChecked;
+            App.Log($"CheckBox.ThreeState = {checkBox.ThreeState}");
         }
     }
 }

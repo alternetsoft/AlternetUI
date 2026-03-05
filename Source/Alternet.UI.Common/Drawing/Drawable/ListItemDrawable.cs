@@ -53,14 +53,18 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets preferred size in device-independent units.
         /// </summary>
-        /// <param name="container">Container in which this object is painted.</param>
-        /// <returns></returns>
-        public virtual SizeD GetPreferredSize(IListControlItemContainer container)
+        /// <returns>Preferred size of the item.</returns>
+        public virtual SizeD GetPreferredSize()
         {
-            if (container.Control is null)
+            if (Container?.Control is null)
                 return SizeD.Empty;
 
-            var result = ListControlItem.DefaultMeasureItemSize(container, container.Control.MeasureCanvas, 0);
+            var result = ListControlItem.DefaultMeasureItemSize(Container, Container.Control.MeasureCanvas, 0);
+            result += Item.ForegroundMargin.Size;
+
+            var checkBoxInfo = Item.GetCheckBoxInfo(Container, (PointD.Empty, result));
+
+            result.Width += checkBoxInfo.IsCheckBoxVisible ? checkBoxInfo.TextRect.X : 0;
 
             return result;
         }

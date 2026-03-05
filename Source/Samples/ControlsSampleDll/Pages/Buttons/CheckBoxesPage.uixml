@@ -4,17 +4,17 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample">
   <StackPanel Orientation="Vertical" Padding="10" >
 
-        <CheckBox Text="This is CheckBox" Margin="5" IsChecked="true"
+        <StdCheckBox Text="This is StdCheckBox" Margin="5" IsChecked="true"
                   Name="checkBox"/>
     
     <TabControl  Margin="5,10,5,5">
       <VerticalStackPanel Title="Options" Padding="5">
         <StackPanel Orientation="Horizontal" Margin="5">
-          <CheckBox Text="Three States" Margin="0,0,0,0" IsChecked="false"
+          <StdCheckBox Text="Three States" Margin="0,0,0,0" IsChecked="false"
                     Name="threeStatesCheckBox"  IsTextLocalized="true"/>
-          <CheckBox Text="Align Right" Margin="5,0,0,0" IsChecked="false" IsTextLocalized="true"
+          <StdCheckBox Text="Align Right" Margin="5,0,0,0" IsChecked="false" IsTextLocalized="true"
                     Name="alignRightCheckBox"/>
-          <CheckBox Text="Allow All States For User" Margin="5,0,0,0" IsChecked="false"
+          <StdCheckBox Text="Allow All States For User" Margin="5,0,0,0" IsChecked="false"
                     Name="allowAllStatesForUserCheckBox" IsTextLocalized="true"/>
         </StackPanel>
         <HorizontalStackPanel>

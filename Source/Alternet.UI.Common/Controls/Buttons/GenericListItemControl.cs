@@ -46,7 +46,68 @@ namespace Alternet.UI
             itemDrawable.Container = this;
 
             itemDefaults = CreateItemDefaults();
+
+            ParentBackColor = true;
+            ParentForeColor = true;
+            HorizontalAlignment = HorizontalAlignment.Left;
         }
+
+        /// <summary>
+        /// Gets or sets whether user can set the checkbox to
+        /// the third state by clicking.
+        /// </summary>
+        /// <remarks>
+        /// By default a user can't set a 3-state checkbox to the third state. It can only
+        /// be done from code. Using this flags allows the user to set the checkbox to
+        /// the third state by clicking.
+        /// </remarks>
+        [DefaultValue(false)]
+        public virtual bool AllowAllStatesForUser
+        {
+            get
+            {
+                return ItemDefaults.CheckBoxAllowAllStatesForUser;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (AllowAllStatesForUser == value)
+                    return;
+                ItemDefaults.CheckBoxAllowAllStatesForUser = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or set a value indicating whether the control is in the checked state.
+        /// </summary>
+        /// <value><c>true</c> if the control is in the checked
+        /// state; otherwise, <c>false</c>.
+        /// The default value is <c>false</c>.</value>
+        /// <remarks>When the value is <c>true</c>, the control
+        /// portion of the control displays a check mark.</remarks>
+        [DefaultValue(false)]
+        public virtual bool IsChecked
+        {
+            get
+            {
+                return CheckState == CheckState.Checked;
+            }
+
+            set
+            {
+                if (value)
+                    CheckState = CheckState.Checked;
+                else
+                    CheckState = CheckState.Unchecked;
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the value of the <see cref="IsChecked"/> property changes.
+        /// </summary>
+        public event EventHandler? CheckedChanged;
 
         /// <summary>
         /// Gets or sets the item associated with the control.
@@ -58,8 +119,12 @@ namespace Alternet.UI
         {
             get
             {
-                item ??= CreateItem();
-                OnItemCreatedOrAssigned(item);
+                if (item is null)
+                {
+                    item = CreateItem();
+                    OnItemCreatedOrAssigned(item);
+                }
+
                 return item;
             }
 
@@ -93,6 +158,70 @@ namespace Alternet.UI
                     return;
                 isTransparent = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control will
+        /// allow three check states rather than two.
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if the control is able to display
+        /// three check states; otherwise, <see langword="false" />. The default value
+        /// is <see langword="false"/>.
+        /// </returns>
+        [DefaultValue(false)]
+        public virtual bool ThreeState
+        {
+            get
+            {
+                return ItemDefaults.CheckBoxThreeState;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (ThreeState == value)
+                    return;
+                if (!value && CheckState == CheckState.Indeterminate)
+                {
+                    CheckState = CheckState.Unchecked;
+                }
+
+                ItemDefaults.CheckBoxThreeState = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the state of the control.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="UI.CheckState"/> enumeration values. The default value
+        /// is <see cref="CheckState.Unchecked"/>.
+        /// </returns>
+        [DefaultValue(CheckState.Unchecked)]
+        [RefreshProperties(RefreshProperties.All)]
+        public virtual CheckState CheckState
+        {
+            get
+            {
+                if (DisposingOrDisposed)
+                    return default;
+                return Item.CheckState;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (!ThreeState && value == CheckState.Indeterminate)
+                    value = CheckState.Unchecked;
+                if (CheckState == value)
+                    return;
+                Item.CheckState = value;
+                Invalidate();
+                RaiseCheckedChanged();
             }
         }
 
@@ -156,6 +285,8 @@ namespace Alternet.UI
 
             set
             {
+                if (formatProvider == value)
+                    return;
                 formatProvider = value;
                 PerformLayoutAndInvalidate();
             }
@@ -238,6 +369,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Same as <see cref="IsChecked"/>. This property is added for the compatibility with legacy code.
+        /// </summary>
+        [Browsable(false)]
+        public bool Checked
+        {
+            get => IsChecked;
+            set => IsChecked = value;
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        [Browsable(false)]
+        internal new string Title
+        {
+            get => base.Title;
+            set => base.Title = value;
+        }
+
+        /// <summary>
         /// Creates a new instance of a ListControlItem. Derived classes can override
         /// this method to provide custom item creation logic.
         /// </summary>
@@ -255,7 +410,7 @@ namespace Alternet.UI
             if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
                 return new SizeD(specifiedWidth, specifiedHeight);
 
-            var result = itemDrawable.GetPreferredSize(this);
+            var result = itemDrawable.GetPreferredSize();
             if (result != SizeD.Empty)
                 return result + Padding.Size;
 
@@ -323,7 +478,14 @@ namespace Alternet.UI
         {
             if (hitTestCheckBox && !HitTestCheckBox(location))
                 return false;
-            return Item.ToggleCheckState(this);
+            var result = Item.ToggleCheckState(this);
+            if (result)
+            {
+                Invalidate();
+                RaiseCheckedChanged();
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
@@ -339,6 +501,64 @@ namespace Alternet.UI
 
             itemDrawable.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             itemDrawable.Draw(this, dc);
+        }
+
+        /// <summary>
+        /// Binds property specified with <paramref name="instance"/> and
+        /// <paramref name="propName"/> to the control.
+        /// After binding control will edit the specified property.
+        /// </summary>
+        /// <param name="instance">Object.</param>
+        /// <param name="propName">Property name.</param>
+        /// <remarks>Property must have the <see cref="bool"/> type. Value of the bound
+        /// property will be changed automatically after
+        /// <see cref="IsChecked"/> is changed.</remarks>
+        public virtual GenericListItemControl BindBoolProp(object instance, string propName)
+        {
+            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
+            if (propInfo is null)
+                return this;
+            object? result = propInfo?.GetValue(instance, null);
+            IsChecked = result is true;
+
+            CheckedChanged += Editor_CheckedChanged;
+
+            void Editor_CheckedChanged(object? sender, EventArgs e)
+            {
+                propInfo?.SetValue(instance, IsChecked);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Raises the <see cref="CheckedChanged"/> event and calls
+        /// <see cref="OnCheckedChanged(EventArgs)"/>.
+        /// </summary>
+        public void RaiseCheckedChanged()
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnCheckedChanged(EventArgs.Empty);
+            CheckedChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Sets the value of the <see cref="IsChecked"/> property.
+        /// </summary>
+        /// <param name="isChecked">The new value.</param>
+        public void SetChecked(bool isChecked)
+        {
+            IsChecked = isChecked;
+        }
+
+        /// <summary>
+        /// Called when the value of the <see cref="IsChecked"/> property changes.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the
+        /// event data.</param>
+        protected virtual void OnCheckedChanged(EventArgs e)
+        {
         }
 
         /// <inheritdoc/>
