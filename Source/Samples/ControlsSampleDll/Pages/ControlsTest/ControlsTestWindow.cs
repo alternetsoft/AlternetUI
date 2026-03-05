@@ -49,6 +49,10 @@ namespace ControlsSample
                 AddPage<NativeTreeViewPage>("Native TreeView");
                 AddPage<PopupToolBarPage>("Popup ToolBar");
                 AddPage<NativeProgressBarPage>("Native ProgressBar");
+
+                AddPage<NativeButtonPage>("Native Button");
+                AddPage<NativeCheckBoxesPage>("Native CheckBox");
+                AddPage<NativeRadioButtonsPage>("Native RadioButton");
             }
 
             /*

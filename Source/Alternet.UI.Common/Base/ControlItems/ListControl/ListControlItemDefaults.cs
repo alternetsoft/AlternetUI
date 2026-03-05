@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Contains defaults used when <see cref="ListControlItem"/> is painted.
     /// Implements <see cref="IListControlItemDefaults"/>.
     /// </summary>
-    public class ListControlItemDefaults : BaseObjectWithNotify, IListControlItemDefaults
+    public partial class ListControlItemDefaults : BaseObjectWithNotify, IListControlItemDefaults
     {
         private Thickness itemMargin = VirtualListBox.DefaultItemMargin;
         private bool selectionUnderImage = true;
