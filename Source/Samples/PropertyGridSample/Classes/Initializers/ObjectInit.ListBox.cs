@@ -16,12 +16,30 @@ namespace PropertyGridSample
 
         public static void InitGenericListItemControl(GenericListItemControl control)
         {
-            control.Item = CreateGreenBoldItem();
+            ListControlItem item = new();
+
+            item.Alignment = HVAlignment.Center;
+            item.Image = Image.FromUrlCached(CalendarUrl);
+            item.CheckState = CheckState.Checked;
+            item.DisabledImage = item.Image?.ToGrayScale();
+            item.ForegroundColor = Color.Black;
+            item.BackgroundColor = Color.BlanchedAlmond;
+            item.Text = "Sample <b>item</b> at center";
+            item.LabelFlags = DrawLabelFlags.TextHasBold;
+
+            control.ItemDefaults.CheckBoxVisible = true;
+            control.Item = item;
         }
 
         public static TreeViewItem CreateGreenBoldItem()
         {
             TreeViewItem item = new();
+            InitGreenBoldItem(item);
+            return item;
+        }
+
+        public static void InitGreenBoldItem(ListControlItem item)
+        {
             item.Alignment = HVAlignment.Center;
             item.Image = Image.FromUrlCached(CalendarUrl);
             item.CheckState = CheckState.Indeterminate;
@@ -30,7 +48,6 @@ namespace PropertyGridSample
             item.BackgroundColor = Color.ForestGreen;
             item.Text = "Green <b>item</b> at center";
             item.LabelFlags = DrawLabelFlags.TextHasBold;
-            return item;
         }
 
         public static void SetDefaultOwnerDrawItems(

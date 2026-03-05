@@ -70,7 +70,7 @@ namespace Alternet.UI
 
             set
             {
-                if(IsSelected == value)
+                if (IsSelected == value)
                     return;
                 SetSelected(Owner?.ListContainer, value);
                 Owner?.Invalidate();
@@ -197,7 +197,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(base.CheckBoxVisible is null)
+                if (base.CheckBoxVisible is null)
                 {
                     return HasItems;
                 }
@@ -644,7 +644,7 @@ namespace Alternet.UI
 
             var result = items?.Remove(item) ?? false;
 
-            if(HasItems != hasItems)
+            if (HasItems != hasItems)
                 RaisePropertyChanged(nameof(HasItems));
 
             Owner?.RaiseItemRemoved(item);
@@ -977,7 +977,7 @@ namespace Alternet.UI
                 try
                 {
                     action();
-                    if(treeChanged)
+                    if (treeChanged)
                         Owner?.TreeChanged();
                 }
                 finally
@@ -1032,7 +1032,7 @@ namespace Alternet.UI
                 Owner?.BeginUpdate();
                 try
                 {
-                    for(int i = items.Count - 1; i >= 0; i--)
+                    for (int i = items.Count - 1; i >= 0; i--)
                     {
                         items[i].InternalSetParent(null);
                     }
@@ -1071,7 +1071,7 @@ namespace Alternet.UI
 
             DoInsideUpdate(() =>
             {
-                foreach(var item in Items)
+                foreach (var item in Items)
                 {
                     if (onlyVisible && !item.IsVisible)
                         continue;
@@ -1235,7 +1235,7 @@ namespace Alternet.UI
 
                 var subItems = item.EnumExpandedItems(prm);
 
-                foreach(var subItem in subItems)
+                foreach (var subItem in subItems)
                 {
                     if (Condition(subItem))
                         yield return subItem;
@@ -1250,7 +1250,7 @@ namespace Alternet.UI
                         return false;
                 }
 
-                if(prm.Condition is not null)
+                if (prm.Condition is not null)
                 {
                     return prm.Condition(itm);
                 }

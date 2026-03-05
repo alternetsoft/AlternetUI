@@ -1150,47 +1150,15 @@ namespace Alternet.UI
             if (item is null)
                 return false;
 
-            var checkState = item.GetCheckState(this);
+            var result = item.ToggleCheckState(this);
 
-            if (item.IsRadioButton)
+            if (result)
             {
-                if(checkState == CheckState.Checked)
-                {
-                    return false;
-                }
+                RaiseCheckedChanged(EventArgs.Empty);
+                RefreshRow(itemIndex);
             }
 
-            var allowThreeState = item.GetAllowThreeState(this);
-            var allowAllStatesForUser = GetItemCheckBoxAllowAllStatesForUser(item);
-
-            allowThreeState = allowThreeState && allowAllStatesForUser;
-
-            if (allowThreeState)
-            {
-                switch (checkState)
-                {
-                    case CheckState.Unchecked:
-                        item.CheckState = CheckState.Checked;
-                        break;
-                    case CheckState.Checked:
-                        item.CheckState = CheckState.Indeterminate;
-                        break;
-                    case CheckState.Indeterminate:
-                        item.CheckState = CheckState.Unchecked;
-                        break;
-                }
-            }
-            else
-            {
-                if (checkState == CheckState.Checked)
-                    item.CheckState = CheckState.Unchecked;
-                else
-                    item.CheckState = CheckState.Checked;
-            }
-
-            RaiseCheckedChanged(EventArgs.Empty);
-            RefreshRow(itemIndex);
-            return true;
+            return result;
         }
 
         /// <summary>
