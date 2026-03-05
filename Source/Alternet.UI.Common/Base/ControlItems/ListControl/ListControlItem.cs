@@ -71,6 +71,7 @@ namespace Alternet.UI
         private bool hideSelection;
         private bool hideFocusRect;
         private bool isRadioButton;
+        private bool isCheckRightAligned;
 
         private Color? foregroundColor;
         private Color? backgroundColor;
@@ -87,7 +88,8 @@ namespace Alternet.UI
         private Graphics.DrawElementParams[]? suffixElements;
         private BaseCollection<ListControlItem>? cells;
         private object? toolTip;
-        private bool isCheckRightAligned;
+        private ObjectUniqueId? columnId;
+        private bool? isToolTipVisible;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -139,7 +141,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the unique identifier of the column in the header control to which this item belongs.
         /// </summary>
-        public virtual ObjectUniqueId? ColumnId { get; set; }
+        public virtual ObjectUniqueId? ColumnId
+        {
+            get => columnId;
+            set => columnId = value;
+        }
 
         /// <summary>
         /// Gets or sets a collection containing all column cells of the item.
@@ -177,8 +183,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool? IsToolTipVisible
         {
-            get;
-            set;
+            get => isToolTipVisible;
+            set => isToolTipVisible = value;
         }
 
         /// <summary>
@@ -202,7 +208,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets group id of the item.
         /// </summary>
-        public virtual ObjectUniqueId? Group { get => group; set => group = value; }
+        public virtual ObjectUniqueId? Group
+        {
+            get => group;
+            set => group = value;
+        }
 
         /// <summary>
         /// Gets or sets distance between lines of the text.

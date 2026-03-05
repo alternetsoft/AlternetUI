@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
-    public partial class GenericListItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource
+    public partial class GenericItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource
     {
         private readonly ListItemDrawable itemDrawable;
 
@@ -34,7 +34,7 @@ namespace Alternet.UI
         /// layout, event routing, and resource ownership within a user interface.</remarks>
         /// <param name="parent">The parent control to associate with this item. This parameter can be null
         /// if the item does not have a parent control.</param>
-        public GenericListItemControl(AbstractControl? parent)
+        public GenericItemControl(AbstractControl? parent)
             : this()
         {
             Parent = parent;
@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the GenericListItemControl class.
         /// </summary>
-        public GenericListItemControl()
+        public GenericItemControl()
         {
             commandSource = new(this);
             commandSource.Changed = () =>
@@ -579,7 +579,7 @@ namespace Alternet.UI
         /// <remarks>Property must have the <see cref="bool"/> type. Value of the bound
         /// property will be changed automatically after
         /// <see cref="IsChecked"/> is changed.</remarks>
-        public virtual GenericListItemControl BindBoolProp(object instance, string propName)
+        public virtual GenericItemControl BindBoolProp(object instance, string propName)
         {
             var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
             if (propInfo is null)
@@ -684,7 +684,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || !Enabled)
                 return;
 
             if (ItemDefaults.CheckBoxVisible)

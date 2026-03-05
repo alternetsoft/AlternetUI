@@ -1816,14 +1816,6 @@ namespace Alternet.UI
                         rightBottom.Height = Container.Height - center.Y;
                     }
 
-                    if (IsHorizontal)
-                    {
-
-                    }
-                    else
-                    {
-                    }
-
                     dc.FillRectangle(leftTopColor.AsBrush, leftTop);
                     dc.FillRectangle(rightBottomColor.AsBrush, rightBottom);
                 }

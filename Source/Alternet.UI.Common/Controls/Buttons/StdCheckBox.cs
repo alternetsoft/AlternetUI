@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// The <see cref="StdCheckBox"/> control can display an image or text or both.
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class StdCheckBox : GenericListItemControl
+    public partial class StdCheckBox : GenericItemControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StdCheckBox"/> class.

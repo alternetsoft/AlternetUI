@@ -30,7 +30,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class StdRadioButton : GenericListItemControl
+    public partial class StdRadioButton : GenericItemControl
     {
         private static int suppressSiblingNotifyCounter;
 
