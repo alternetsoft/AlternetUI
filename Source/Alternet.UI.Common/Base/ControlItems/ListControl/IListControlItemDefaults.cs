@@ -53,6 +53,14 @@ namespace Alternet.UI
         bool CheckBoxThreeState { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the user is allowed to select all available states of the checkbox.
+        /// </summary>
+        /// <remarks>When this property is set to <see langword="true"/>, the checkbox supports all
+        /// possible states for user interaction, such as checked, unchecked, and indeterminate. This may affect the
+        /// behavior and appearance of the checkbox in the user interface.</remarks>
+        bool CheckBoxAllowAllStatesForUser { get; set; }
+
+        /// <summary>
         /// Gets or sets default size of the svg images.
         /// </summary>
         /// <remarks>
