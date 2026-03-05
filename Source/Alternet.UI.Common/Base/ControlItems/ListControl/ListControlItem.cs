@@ -87,6 +87,7 @@ namespace Alternet.UI
         private Graphics.DrawElementParams[]? suffixElements;
         private BaseCollection<ListControlItem>? cells;
         private object? toolTip;
+        private bool isCheckRightAligned;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -264,6 +265,18 @@ namespace Alternet.UI
             set
             {
                 checkState = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to align check box on the right side of the text.
+        /// </summary>
+        public virtual bool IsCheckRightAligned
+        {
+            get => isCheckRightAligned;
+            set
+            {
+                isCheckRightAligned = value;
             }
         }
 
@@ -1930,8 +1943,9 @@ namespace Alternet.UI
         /// <param name="rect">Item rectangle.</param>
         /// <param name="imageSize">Image size. Optional. If not specified, calculated
         /// using height of the item.</param>
+        /// <param name="isRight">Indicates whether the image should be aligned to the right.</param>
         /// <returns></returns>
-        public static (RectD ImageRect, RectD TextRect) GetItemImageRect(RectD rect, SizeD? imageSize = null)
+        public static (RectD ImageRect, RectD TextRect) GetItemImageRect(RectD rect, SizeD? imageSize = null, bool isRight = false)
         {
             Thickness textMargin = GetAdditionalTextMargin();
 
@@ -1955,6 +1969,12 @@ namespace Alternet.UI
 
             itemRect.X += offsetWidth;
             itemRect.Width -= offsetWidth;
+
+            if (isRight)
+            {
+                itemRect.X = centeredImageRect.X;
+                centeredImageRect.X = itemRect.Right + ComboBox.DefaultImageTextDistance;
+            }
 
             return (centeredImageRect, itemRect);
         }
@@ -2424,7 +2444,7 @@ namespace Alternet.UI
                 result.ImageIndeterminate = container.CheckImageIndeterminate;
             }
 
-            var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize);
+            var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize, isRight: IsCheckRightAligned);
             result.CheckRect = checkRect;
             result.CheckSize = checkRect.Size;
             result.TextRect = textRect;

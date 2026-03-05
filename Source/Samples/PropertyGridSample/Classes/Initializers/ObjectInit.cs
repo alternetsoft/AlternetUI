@@ -49,6 +49,8 @@ Environment.NewLine + Environment.NewLine +
             AddAction<FontNamePicker>(InitFontNamePicker);
             AddAction<TextBoxWithListPopup>(InitTextBoxWithListPopup);
             AddAction<StdSlider>(InitGenericSlider);
+            AddAction<StdCheckBox>(InitStdCheckBox);
+            AddAction<StdRadioButton>(InitStdRadioButton);
 
             Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
             Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
@@ -254,6 +256,16 @@ Environment.NewLine + Environment.NewLine +
                 PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
                 control.HasBorder = true;
             });
+        }
+
+        public static void InitStdCheckBox(StdCheckBox control)
+        {
+            control.Text = "StdCheckBox";
+        }
+
+        public static void InitStdRadioButton(StdRadioButton control)
+        {
+            control.Text = "StdRadioButton";
         }
 
         public static ImageLists LoadImageLists()

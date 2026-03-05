@@ -111,6 +111,8 @@ namespace PropertyGridSample
                 ToolBoxAdd<FileListBox>();
                 ToolBoxAdd<FontListBox>();
                 ToolBoxAdd<GenericListItemControl>();
+                ToolBoxAdd<StdCheckBox>();
+                ToolBoxAdd<StdRadioButton>();
 
                 void ToolBoxAdd<T>()
                 {

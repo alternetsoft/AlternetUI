@@ -16,8 +16,6 @@ namespace Alternet.UI
     [ControlCategory("Common")]
     public partial class StdCheckBox : GenericListItemControl
     {
-        private bool alignRight;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StdCheckBox"/> class.
         /// </summary>
@@ -54,16 +52,16 @@ namespace Alternet.UI
         {
             get
             {
-                return alignRight;
+                return Item.IsCheckRightAligned;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                if (alignRight == value)
+                if (Item.IsCheckRightAligned == value)
                     return;
-                alignRight = value;
+                Item.IsCheckRightAligned = value;
                 Invalidate();
             }
         }
