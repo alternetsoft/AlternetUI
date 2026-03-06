@@ -21,14 +21,29 @@ namespace Alternet.UI
         /// to ensure consistent spacing across components.</remarks>
         public static Thickness DefaultPadding = 3;
 
+        /// <summary>
+        /// Represents the default minimum size for the component, expressed as a SizeD structure.
+        /// </summary>
+        public static SizeD DefaultMinSize = 32;
+
+        private static LightDarkColor? defaultHotBorderColor;
+        private static LightDarkColor? defaultBorderColor;
+        private static LightDarkColor? defaultBorderColorIsd;
+        private static LightDarkColor? defaultHoveredBorderColorIsd;
+        private static LightDarkColor? defaultBackColorIsd;
+        private static LightDarkColor? defaultForeColorIsd;
+        private static LightDarkColor? defaultBackColor;
+        private static LightDarkColor? defaultForeColor;
+
         private ControlStateImages? stateImages;
+        private ControlStateSvgImages? stateSvgImages;
         private bool isDefault;
         private bool isCancel;
-        private bool textVisible = true;
         private ElementContentAlign textAlign = ElementContentAlign.Default;
         private ElementContentAlign imageAlign = ElementContentAlign.Default;
         private Thickness? imageMargins;
         private bool exactFit = false;
+        private int? svgSize;
 
         static StdButton()
         {
@@ -50,12 +65,32 @@ namespace Alternet.UI
         /// </summary>
         public StdButton()
         {
-            UniformBorderCornerRadius = MaterialDesign.CornerRadius.Button;
+            WantTab = true;
+            IsGraphicControl = false;
+            IsTransparent = false;
+
+            var radius = MaterialDesign.CornerRadius.Button;
+
+            UniformBorderCornerRadius = radius;
+
+            if (Borders is not null)
+            {
+                Borders.Hovered = Borders.Normal?.Clone();
+                Borders.Selected = Borders.Normal?.Clone();
+                Borders.Pressed = Borders.Normal?.Clone();
+                Borders.Disabled = Borders.Normal?.Clone();
+            }
+
+            UseControlColors(true);
+
+            MinimumSize = DefaultMinSize;
             Padding = DefaultPadding;
             Item.HorizontalAlignment = HorizontalAlignment.Center;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder | ControlRefreshOptions.RefreshOnImage |
                 ControlRefreshOptions.RefreshOnBackground | ControlRefreshOptions.RefreshOnColor |
                 ControlRefreshOptions.RefreshOnState;
+
+            SetColorTheme();
         }
 
         /// <summary>
@@ -80,7 +115,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Button"/> class
+        /// Initializes a new instance of the <see cref="StdButton"/> class
         /// with the specified text and click action.
         /// </summary>
         public StdButton(string text, Action clickAction)
@@ -91,7 +126,113 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Specifies a set of images for different <see cref="Button"/> states.
+        /// Gets or sets the default background color used for <see cref="StdButton"/> control when
+        /// it's <see cref="IsDefault"/> property is set to true.
+        /// </summary>
+        public static LightDarkColor DefaultBackColorIsd
+        {
+            get => defaultBackColorIsd ?? DefaultBackColor;
+            set => defaultBackColorIsd = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the default foreground color used for <see cref="StdButton"/> control when
+        /// it's <see cref="IsDefault"/> property is set to true.
+        /// </summary>
+        public static LightDarkColor DefaultForeColorIsd
+        {
+            get => defaultForeColorIsd ?? DefaultForeColor;
+            set => defaultForeColorIsd = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the default background color used for <see cref="StdButton"/> control.
+        /// </summary>
+        public static new LightDarkColor DefaultBackColor
+        {
+            get => defaultBackColor ?? DefaultColors.ControlBackColor;
+            set => defaultBackColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the default foreground color used for <see cref="StdButton"/> control.
+        /// </summary>
+        public static new LightDarkColor DefaultForeColor
+        {
+            get => defaultForeColor ?? DefaultColors.ControlForeColor;
+            set => defaultForeColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the default border color used for <see cref="StdButton"/> elements in a hot (hovered or active) state.
+        /// </summary>
+        /// <remarks>The default value is initialized to <see cref="LightDarkColors.Blue"/> if not previously set.</remarks>
+        public static LightDarkColor DefaultHoveredBorderColor
+        {
+            get
+            {
+                return defaultHotBorderColor ?? DefaultColors.DefaultCheckBoxColor;
+            }
+
+            set
+            {
+                defaultHotBorderColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the application.
+        /// </summary>
+        /// <remarks>If not explicitly set, the default border color is initialized to <see cref="DefaultColors.BorderColor"/>.</remarks>
+        public static LightDarkColor DefaultBorderColor
+        {
+            get
+            {
+                return defaultBorderColor ?? DefaultColors.BorderColor;
+            }
+
+            set
+            {
+                defaultBorderColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the application
+        /// when <see cref="IsDefault"/> property of the control is set to true.
+        /// </summary>
+        public static LightDarkColor DefaultBorderColorIsd
+        {
+            get
+            {
+                return defaultBorderColorIsd ?? DefaultColors.DefaultCheckBoxColor;
+            }
+
+            set
+            {
+                defaultBorderColorIsd = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the default hovered border color used for <see cref="StdButton"/> controls in the application
+        /// when <see cref="IsDefault"/> property of the control is set to true.
+        /// </summary>
+        public static LightDarkColor DefaultHoveredBorderColorIsd
+        {
+            get
+            {
+                return defaultHoveredBorderColorIsd ?? DefaultColors.DefaultCheckBoxColor;
+            }
+
+            set
+            {
+                defaultHoveredBorderColorIsd = value;
+            }
+        }
+
+        /// <summary>
+        /// Specifies a set of images for different control states.
         /// </summary>
         [Browsable(false)]
         public virtual ControlStateImages StateImages
@@ -114,6 +255,58 @@ namespace Alternet.UI
                 PerformLayoutAndInvalidate(() =>
                 {
                     StateImages.Assign(value);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Specifies a set of svg images for different control states.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlStateSvgImages StateSvgImages
+        {
+            get
+            {
+                if (stateSvgImages is null)
+                {
+                    stateSvgImages = new();
+                    stateSvgImages.ChangedHandler = this;
+                }
+
+                return stateSvgImages;
+            }
+
+            set
+            {
+                if (stateSvgImages == value)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    StateSvgImages.Assign(value);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the svg image size.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual int? SvgSize
+        {
+            get
+            {
+                return svgSize;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (svgSize == value)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    svgSize = value;
                 });
             }
         }
@@ -142,8 +335,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the alignment of the image within the control.
+        /// </summary>
+        /// <remarks>The alignment determines how the image is positioned relative to the element's content.
+        /// Changing this property affects the visual layout of the image in relation to other content.</remarks>
+        public ElementContentAlign ImageAlign
+        {
+            get
+            {
+                return imageAlign;
+            }
+
+            set
+            {
+                SetImagePosition(value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets an <see cref="Image"/> for hovered control state.
         /// </summary>
+        [Browsable(false)]
         public virtual Image? HoveredImage
         {
             get => StateImages.Hovered;
@@ -157,6 +369,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for focused control state.
         /// </summary>
+        [Browsable(false)]
         public virtual Image? FocusedImage
         {
             get => StateImages.Focused;
@@ -170,6 +383,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for pressed control state.
         /// </summary>
+        [Browsable(false)]
         public virtual Image? PressedImage
         {
             get => StateImages.Pressed;
@@ -183,6 +397,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets an <see cref="Image"/> for disabled control state.
         /// </summary>
+        [Browsable(false)]
         public virtual Image? DisabledImage
         {
             get => StateImages.Disabled;
@@ -230,7 +445,35 @@ namespace Alternet.UI
                 if (isDefault == value)
                     return;
                 isDefault = value;
+
+                if (AutoUpdateColors)
+                {
+                    SetColorTheme();
+                }
+
                 Invalidate();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? BackgroundColor
+        {
+            get => base.BackgroundColor;
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (BackgroundColor == value)
+                    return;
+                if (value is null)
+                {
+                    if (SystemSettings.AppearanceIsDark)
+                        value = DefaultColors.ControlBackColor.Dark;
+                    else
+                        value = DefaultColors.ControlBackColor.Light;
+                }
+
+                base.BackgroundColor = value;
             }
         }
 
@@ -247,6 +490,7 @@ namespace Alternet.UI
         /// the button will still have at least the standard height, even with this style,
         /// if it has a non-empty label.
         /// </remarks>
+        [Browsable(false)]
         public virtual bool ExactFit
         {
             get
@@ -294,27 +538,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets visibility of the text.
-        /// </summary>
-        public virtual bool TextVisible
-        {
-            get
-            {
-                return textVisible;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (textVisible == value)
-                    return;
-                textVisible = value;
-                PerformLayoutAndInvalidate();
-            }
-        }
-
-        /// <summary>
         /// Sets the position at which the text is displayed.
         /// </summary>
         public virtual ElementContentAlign TextAlign
@@ -331,6 +554,7 @@ namespace Alternet.UI
                 if (textAlign == value)
                     return;
                 textAlign = value;
+                UpdateTextAndImageAlignment();
                 if (TextVisible)
                     PerformLayoutAndInvalidate();
             }
@@ -339,7 +563,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the position at which the image is displayed.
         /// </summary>
-        /// <param name="dir">New image position (left, top, right, bottom).</param>
+        /// <param name="dir">New image position.</param>
         public virtual void SetImagePosition(ElementContentAlign dir)
         {
             if (DisposingOrDisposed)
@@ -347,6 +571,7 @@ namespace Alternet.UI
             if (imageAlign == dir)
                 return;
             imageAlign = dir;
+            UpdateTextAndImageAlignment();
             if (Item.HasImageOrSvg)
                 PerformLayoutAndInvalidate();
         }
@@ -377,6 +602,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void DrawBorderAndBackground(
+            PaintEventArgs e,
+            DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
+        {
+            if (IsDefault)
+            {
+            }
+
+            base.DrawBorderAndBackground(e, flags);
+        }
+
+        /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
             UpdateItemImage();
@@ -394,44 +631,108 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (!Enabled)
-                PerformLayoutAndInvalidate();
+            PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.NormalChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (VisualState == VisualControlState.Normal)
-                PerformLayoutAndInvalidate();
+            PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.FocusedChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (VisualState == VisualControlState.Focused)
-                PerformLayoutAndInvalidate();
+            PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.HoveredChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (VisualState == VisualControlState.Hovered)
-                PerformLayoutAndInvalidate();
+            PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.PressedChanged(object? sender)
         {
             if (DisposingOrDisposed)
                 return;
-            if (VisualState == VisualControlState.Pressed)
-                PerformLayoutAndInvalidate();
+            PerformLayoutAndInvalidate();
         }
 
         void IControlStateObjectChanged.SelectedChanged(object? sender)
         {
+        }
+
+        /// <summary>
+        /// Sets the application's color theme to match the current system appearance setting.
+        /// </summary>
+        /// <remarks>This method applies either a dark or light color theme based on the system's appearance preference. </remarks>
+        public virtual void SetColorTheme()
+        {
+            if (SystemSettings.AppearanceIsDark)
+                SetColorThemeToDark();
+            else
+                SetColorThemeToLight();
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the dark theme.
+        /// </summary>
+        public virtual void SetColorThemeToDark()
+        {
+            DoInsideUpdate(() =>
+            {
+                if (IsDefault)
+                {
+                    BackColor = DefaultBackColorIsd.Dark;
+                    ForeColor = DefaultForeColorIsd.Dark;
+                    this.Borders?.Normal?.SetColor(DefaultBorderColorIsd.Dark);
+                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColorIsd.Dark);
+                }
+                else
+                {
+                    BackColor = DefaultBackColor.Dark;
+                    ForeColor = DefaultForeColor.Dark;
+                    this.Borders?.Normal?.SetColor(DefaultBorderColor.Dark);
+                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColor.Dark);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the light theme.
+        /// </summary>
+        public virtual void SetColorThemeToLight()
+        {
+            DoInsideUpdate(() =>
+            {
+                if (IsDefault)
+                {
+                    BackColor = DefaultBackColorIsd.Light;
+                    ForeColor = DefaultForeColorIsd.Light;
+                    this.Borders?.Normal?.SetColor(DefaultBorderColorIsd.Light);
+                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColorIsd.Light);
+                }
+                else
+                {
+                    BackColor = DefaultBackColor.Light;
+                    ForeColor = DefaultForeColor.Light;
+                    this.Borders?.Normal?.SetColor(DefaultBorderColor.Light);
+                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColor.Light);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Recalculates the alignment of text and image elements within the control based on the current settings.
+        /// </summary>
+        /// <remarks>Override this method in a derived class to implement custom alignment logic for text and images. </remarks>
+        protected virtual void UpdateTextAndImageAlignment()
+        {
+            Item.SetContentAlignment(TextAlign, ImageAlign);
         }
 
         /// <summary>
@@ -443,13 +744,34 @@ namespace Alternet.UI
                 return;
             var state = VisualState;
 
-            if(state != VisualControlState.Normal)
+            Image? image = null;
+
+            var svgImage = StateSvgImages.GetObjectOrNull(state);
+
+            if (svgImage is not null)
             {
+                var imageSize = SvgSize ?? PixelFromDip(16);
+
+                if(IsEnabled)
+                    image = svgImage.AsNormal(imageSize, IsDarkBackground)?.AsImage();
+                else
+                    image = svgImage.AsDisabled(imageSize, IsDarkBackground)?.AsImage();
             }
 
-            var image = StateImages.GetObjectOrNormal(state);
+            image ??= StateImages.GetObjectOrNormal(state);
 
             Item.Image = image;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            if (AutoUpdateColors)
+            {
+                SetColorTheme();
+            }
+
+            base.OnSystemColorsChanged(e);
         }
 
         /// <inheritdoc/>
