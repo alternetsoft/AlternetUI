@@ -32,9 +32,24 @@ namespace Alternet.Drawing
         public static readonly PointD MinValue = new(Coord.MinValue);
 
         /// <summary>
+        /// Gets the point whose coordinates are equal to half of the minimum value allowed in the coordinate system.
+        /// </summary>
+        /// <remarks>This static, read-only field can be used as a reference point in calculations that
+        /// require a value midway between zero and the minimum coordinate value. It is useful for scenarios where a
+        /// boundary or offset based on half of the minimum value is needed.</remarks>
+        public static readonly PointD HalfOfMinValue = new(Coord.MinValue / 2);
+
+        /// <summary>
         /// Gets maximal possible value.
         /// </summary>
         public static readonly PointD MaxValue = new(Coord.MaxValue);
+
+        /// <summary>
+        /// Represents a point whose coordinates are set to half of the maximum value allowed in the coordinate system.
+        /// </summary>
+        /// <remarks>This field is useful for scenarios that require a midpoint value, such as graphical
+        /// calculations or determining boundaries within the coordinate space.</remarks>
+        public static readonly PointD HalfOfMaxValue = new(Coord.MaxValue / 2);
 
         /// <summary>
         /// Gets an empty point with (0, 0) coordinates.
