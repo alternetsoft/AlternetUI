@@ -11,6 +11,13 @@ namespace Alternet.UI
     /// </summary>
     public static class AlignUtils
     {
+#if DEBUG
+        /// <summary>
+        /// Gets or sets an optional identifier for debugging purposes. This can be used to track alignment operations in debug builds.
+        /// </summary>
+        public static string? DebugIdentifier;
+#endif
+
         /// <summary>
         /// Calculates the position of a dropdown relative to a specified <see cref="SizeD"/>.
         /// </summary>
@@ -39,7 +46,7 @@ namespace Alternet.UI
             Coord x = 0;
             Coord y = ownerSize.Height;
 
-            switch(position.Value.Horizontal)
+            switch (position.Value.Horizontal)
             {
                 case DropDownAlignment.BeforeStart:
                     x = -popupSize.Width;
@@ -216,14 +223,14 @@ namespace Alternet.UI
             if (shrinkSize)
                 rect.Size = rect.Size.Shrink(container.Width, container.Height);
 
-            if(horz is not null)
+            if (horz is not null)
             {
-                rect = AlignRectInRect(false, rect, container, (CoordAlignment)horz, false);
+                rect = AlignRectInRect(false, rect, container, (CoordAlignment)horz, shrinkSize: false);
             }
 
             if (vert is not null)
             {
-                rect = AlignRectInRect(true, rect, container, (CoordAlignment)vert, false);
+                rect = AlignRectInRect(true, rect, container, (CoordAlignment)vert, shrinkSize: false);
             }
 
             return rect;

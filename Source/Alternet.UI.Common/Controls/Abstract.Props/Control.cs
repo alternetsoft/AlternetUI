@@ -628,7 +628,7 @@ namespace Alternet.UI
                 ResetBackgroundColor(ResetColorType.Auto);
             else
             {
-                if(!DisposingOrDisposed)
+                if (!DisposingOrDisposed)
                     Handler.BackgroundColor = BackgroundColor;
             }
 
@@ -656,7 +656,7 @@ namespace Alternet.UI
         {
             if (CanSkipInvalidate())
                 return;
-            if(!DisposingOrDisposed)
+            if (!DisposingOrDisposed)
                 Handler.Invalidate();
             base.Invalidate();
         }
@@ -718,7 +718,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override PointD ScreenToClient(PointD point)
         {
-            if(VisibleOnScreen)
+            if (VisibleOnScreen)
                 return SafeHandler?.ScreenToClient(point) ?? base.ScreenToClient(point);
             return base.ScreenToClient(point);
         }
@@ -807,7 +807,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void UpdateCursor(Cursor? overrideCursor = null)
         {
-            if(overrideCursor is null)
+            if (overrideCursor is null)
                 SafeHandler?.SetCursor(Cursor);
             else
                 SafeHandler?.SetCursor(overrideCursor);

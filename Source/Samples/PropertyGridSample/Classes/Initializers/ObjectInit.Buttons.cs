@@ -37,9 +37,31 @@ namespace PropertyGridSample
             button.Click += LogClick;
             button.StateImages = GetButtonImages(button);
             button.SetImageMargins(5);
-            button.SuggestedHeight = 100;
             button.HorizontalAlignment = HorizontalAlignment.Left;
             button.MouseWheel += Button_MouseWheel;
+
+            var logMouseOver = false;
+            var logVisualState = false;
+
+            if (logMouseOver)
+            {
+                button.IsMouseOverChanged += (s, e) =>
+                {
+                    App.LogReplace(
+                        $"StdButton.IsMouseOver changed to [{button.IsMouseOver}]",
+                        $"StdButton.IsMouseOver");
+                };
+            }
+
+            if (logVisualState)
+            {
+                button.VisualStateChanged += (s, e) =>
+                {
+                    App.LogReplace(
+                        $"StdButton.VisualState changed to [{button.VisualState}]",
+                        $"StdButton.VisualState");
+                };
+            }
         }
 
         private static void Button_MouseWheel(object sender, MouseEventArgs e)

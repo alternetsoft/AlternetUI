@@ -614,8 +614,13 @@ namespace Alternet.Drawing
             for (int i = 0; i < length; i++)
             {
                 var element = prm.Elements[i];
+
                 var elementSize = elementSizes[i];
                 RectD elementBeforeAlign = (rect.Location, elementSize);
+
+#if DEBUG
+                AlignUtils.DebugIdentifier = element.DebugIdentifier;
+#endif
 
                 if (prm.IsVertical)
                 {
@@ -789,6 +794,11 @@ namespace Alternet.Drawing
             public Coord MinWidth;
 
             /// <summary>
+            /// Gets or sets a debug identifier for the element.
+            /// </summary>
+            public string? DebugIdentifier;
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="DrawElementParams"/> struct.
             /// </summary>
             public DrawElementParams()
@@ -915,6 +925,9 @@ namespace Alternet.Drawing
                     Alignment = prm.GetImageAlignment(),
                 };
 
+#if DEBUG
+                imageElement.DebugIdentifier = $"Image{prm.Text}";
+#endif
                 return imageElement;
             }
 
@@ -975,8 +988,6 @@ namespace Alternet.Drawing
                 var isVertical = prm.IsVertical;
                 var isVerticalText = prm.IsVerticalText;
                 var drawDebugCorners = prm.DrawDebugCorners || Graphics.DrawDebugCorners;
-                var imageVerticalAlignment = prm.ImageVerticalAlignment;
-                var imageHorizontalAlignment = prm.ImageHorizontalAlignment;
 
                 var textHorizontalAlignment = prm.TextHorizontalAlignment;
                 var lineDistance = prm.LineDistance;
@@ -997,7 +1008,7 @@ namespace Alternet.Drawing
 
                 TextAndFontStyle[]? parsed = prm.TextAndFontStyle;
 
-                if(textOverride is null)
+                if (textOverride is null)
                 {
                     if (parsed is null)
                     {
@@ -1006,13 +1017,13 @@ namespace Alternet.Drawing
                             parsed = RegexUtils.GetBoldTagSplitted(s);
                         }
                         else
-                        if (indexAccel >= 0)
-                        {
-                            parsed = StringUtils.ParseTextWithIndexAccel(
-                                s,
-                                indexAccel,
-                                FontStyle.Underline);
-                        }
+                            if (indexAccel >= 0)
+                            {
+                                parsed = StringUtils.ParseTextWithIndexAccel(
+                                    s,
+                                    indexAccel,
+                                    FontStyle.Underline);
+                            }
                     }
                 }
                 else
@@ -1026,7 +1037,7 @@ namespace Alternet.Drawing
                     {
                         var result = Internal();
 
-                        if(minTextWidth is not null)
+                        if (minTextWidth is not null)
                         {
                             result.Width = Math.Max(minTextWidth.Value, result.Width);
                         }
@@ -1125,6 +1136,9 @@ namespace Alternet.Drawing
                     Alignment = prm.GetTextAlignment(),
                 };
 
+#if DEBUG
+                textElement.DebugIdentifier = s;
+#endif
                 return textElement;
             }
 

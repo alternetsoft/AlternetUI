@@ -11,7 +11,7 @@ namespace Alternet.UI
     {
         private Timer? timer;
         private TimerTickAction timerActionType = TimerTickAction.None;
-        private WeakReferenceValue<UserControl> controlContainer = new();
+        private WeakReferenceValue<AbstractControl> controlContainer = new();
         private ControlOverlayFlags flags;
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="UserControl"/> that serves as the container for overlay.
+        /// Gets or sets the <see cref="AbstractControl"/> that serves as the container for overlay.
         /// </summary>
-        public virtual UserControl? Container
+        public virtual AbstractControl? Container
         {
             get => controlContainer.Value;
             set => controlContainer.Value = value;
@@ -83,7 +83,7 @@ namespace Alternet.UI
         /// <see cref="TimerUtils.DefaultToolTipTimeout"/> is used as the interval.</param>
         /// <param name="container">The control container from
         /// which the overlay will be removed.</param>
-        public virtual void SetRemovalTimer(int? milliseconds, UserControl container)
+        public virtual void SetRemovalTimer(int? milliseconds, AbstractControl container)
         {
             if (milliseconds <= 0 || milliseconds is null)
                 milliseconds = TimerUtils.DefaultToolTipTimeout;

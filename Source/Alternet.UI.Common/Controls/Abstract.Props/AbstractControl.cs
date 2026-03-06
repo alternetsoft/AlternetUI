@@ -260,6 +260,9 @@ namespace Alternet.UI
                 oldHoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
 
                 weakHoveredControl.Value = value;
+
+                UpdateMouseEventTarget(value);
+
                 StaticControlEvents.RaiseHoveredChanged(value, EventArgs.Empty);
                 value?.RaiseVisualStateChanged(EventArgs.Empty);
 
@@ -388,7 +391,7 @@ namespace Alternet.UI
 
                 var newScaleFactor = RequestScaleFactor();
 
-                if(newScaleFactor is not null)
+                if (newScaleFactor is not null)
                 {
                     scaleFactor ??= newScaleFactor;
                 }
@@ -1495,7 +1498,7 @@ namespace Alternet.UI
             {
                 if (!HasChildren)
                     return null;
-                foreach(var child in Children)
+                foreach (var child in Children)
                 {
                     if (child.Visible)
                         return child;
@@ -1629,7 +1632,7 @@ namespace Alternet.UI
 
             set
             {
-                if(ToolTip == value)
+                if (ToolTip == value)
                     return;
                 ToolTipObject = value;
             }
@@ -1926,7 +1929,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(components != null)
+                if (components != null)
                 {
                     foreach (var component in components)
                     {
@@ -2053,7 +2056,7 @@ namespace Alternet.UI
                 if (!HasChildren)
                     return false;
 
-                foreach(var child in Children)
+                foreach (var child in Children)
                 {
                     if (child.Visible)
                         return true;
@@ -2075,9 +2078,9 @@ namespace Alternet.UI
                 if (parent == value)
                     return;
 
-                if(parent is not null)
+                if (parent is not null)
                 {
-                    if(parent.HasChildren)
+                    if (parent.HasChildren)
                         parent.Children.Remove(this);
                 }
 
@@ -2594,7 +2597,7 @@ namespace Alternet.UI
                 if (minChildMargin == value)
                     return;
                 minChildMargin = value;
-                if(HasChildren)
+                if (HasChildren)
                     PerformLayout();
             }
         }
@@ -2676,7 +2679,7 @@ namespace Alternet.UI
                 OnMarginChanged(EventArgs.Empty);
                 MarginChanged?.Invoke(this, EventArgs.Empty);
 
-                if(Parent is not null)
+                if (Parent is not null)
                     PerformLayout();
             }
         }
@@ -3338,7 +3341,7 @@ namespace Alternet.UI
         {
             get
             {
-                return new (RowIndex, ColumnIndex);
+                return new(RowIndex, ColumnIndex);
             }
 
             set
@@ -3856,7 +3859,7 @@ namespace Alternet.UI
                 PointD origin;
 
                 if (ParentWindow == null)
-                    origin = PointD.MinValue;
+                    origin = PointD.HalfOfMinValue;
                 else
                     origin = PointD.Empty;
 
@@ -3864,7 +3867,7 @@ namespace Alternet.UI
 
                 var result = Location;
 
-                foreach(var item in ancestors)
+                foreach (var item in ancestors)
                 {
                     result += item.Location;
                 }

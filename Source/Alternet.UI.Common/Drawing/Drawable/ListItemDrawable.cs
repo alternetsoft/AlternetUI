@@ -69,12 +69,18 @@ namespace Alternet.Drawing
             return result;
         }
 
-        /// <inheritdoc/>
-        protected override void OnDraw(AbstractControl control, Graphics dc)
+        /// <summary>
+        /// Prepares the arguments required for painting the item using the specified graphics context.
+        /// </summary>
+        /// <remarks>Call this method before performing any custom drawing operations to ensure that the
+        /// paint arguments reflect the current state of the item and its container. Returns false if the container is
+        /// not set, in which case painting should not proceed.</remarks>
+        /// <param name="dc">The graphics context to use for rendering the item.</param>
+        /// <returns>true if the paint arguments were successfully prepared; otherwise, false.</returns>
+        protected virtual bool PreparePaintArguments(Graphics dc)
         {
-            if (item is null || Container is null || !Visible)
-                return;
-
+            if (Container is null)
+                return false;
             if (paintArguments is null)
             {
                 paintArguments = new(Container, dc, Bounds, ItemIndex);
@@ -93,8 +99,17 @@ namespace Alternet.Drawing
             paintArguments.Visible = true;
             paintArguments.UseColumns = UseColumns;
 
-            item.DrawBackground(Container, paintArguments);
-            item.DrawForeground(Container, paintArguments);
+            return true;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDraw(AbstractControl control, Graphics dc)
+        {
+            if (item is null || Container is null || !Visible)
+                return;
+            PreparePaintArguments(dc);
+            item.DrawBackground(Container, paintArguments!);
+            item.DrawForeground(Container, paintArguments!);
         }
     }
 }
