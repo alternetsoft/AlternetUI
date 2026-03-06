@@ -153,7 +153,7 @@ namespace ControlsSample
         {
             NameValue<Func<AbstractControl>>[] pages =
             {
-                new("Button", () => new ButtonPage()),
+                new("StdButton", () => new ButtonPage()),
                 new("StdCheckBox", () => new CheckBoxesPage()),
                 new("StdRadioButton", () => new RadioButtonsPage()),
             };
