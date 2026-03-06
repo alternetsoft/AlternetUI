@@ -14,6 +14,8 @@ namespace Alternet.UI
         private static
             (VisualControlStates ControlState, ObjectUniqueId ControlId)? reportedVisualStates;
 
+        private static WeakReferenceValue<AbstractControl> lastMouseEventTarget = new();
+
         private DelayedEvent<EventArgs> delayedTextChanged = new();
 
         /// <summary>
@@ -40,6 +42,29 @@ namespace Alternet.UI
             set
             {
                 reportedVisualStates = value;
+            }
+        }
+
+        /// <summary>
+        /// Updates the current target control for mouse events to the specified control if it differs from the previous target.
+        /// </summary>
+        public static void UpdateMouseEventTarget(AbstractControl? control)
+        {
+            var previousTarget = lastMouseEventTarget.Value;
+
+            if (previousTarget == control)
+                return;
+
+            if (previousTarget is GenericControl)
+            {
+                previousTarget.RaiseMouseLeave(EventArgs.Empty);
+            }
+
+            lastMouseEventTarget.Value = control;
+
+            if (control is GenericControl)
+            {
+                control.RaiseMouseEnter(EventArgs.Empty);
             }
         }
 
@@ -184,6 +209,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             IsMouseLeftButtonDown = false;
             RaiseVisualStateChanged(e);
             MouseLeftButtonUp?.Invoke(this, e);
@@ -200,6 +226,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             MouseRightButtonUp?.Invoke(this, e);
 
             ShowContextMenu();
@@ -217,6 +244,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             OnMouseHover(e);
             MouseHover?.Invoke(this, e);
 
@@ -247,6 +275,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e)))
                 return;
 
@@ -286,6 +315,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             HoveredControl = this;
             Mouse.RaiseMoved(this, e);
 
@@ -318,6 +348,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
 
             RaiseNotifications((n) => n.BeforeMouseDown(this, e));
 
@@ -695,6 +726,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             OnIsMouseOverChanged(e);
             IsMouseOverChanged?.Invoke(this, e);
             RaiseVisualStateChanged(e);
@@ -1141,6 +1173,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             IsMouseLeftButtonDown = true;
             RaiseVisualStateChanged(e);
             Designer?.RaiseMouseLeftButtonDown(this, e);
@@ -1158,6 +1191,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             MouseRightButtonDown?.Invoke(this, e);
             OnMouseRightButtonDown(e);
 
@@ -1266,6 +1300,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             HoveredControl = this;
             OnMouseWheel(e);
 
@@ -1289,6 +1324,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             LastDoubleClickTimestamp = e.Timestamp;
             OnMouseDoubleClick(e);
             MouseDoubleClick?.Invoke(this, e);
@@ -1312,6 +1348,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             LastClickedTimestamp = DateUtils.GetCurrentTimestamp();
 
             OnClick(e);
@@ -1330,6 +1367,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             OnTouch(e);
             Touch?.Invoke(this, e);
             if (!e.Handled && TouchEventsAsMouse)
@@ -1398,6 +1436,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateMouseEventTarget(this);
             OnLongTap(e);
             LongTap?.Invoke(this, e);
             RaiseNotifications((n) => n.AfterLongTap(this, e));
