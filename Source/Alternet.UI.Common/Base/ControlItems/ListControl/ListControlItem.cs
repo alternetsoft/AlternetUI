@@ -90,6 +90,8 @@ namespace Alternet.UI
         private object? toolTip;
         private ObjectUniqueId? columnId;
         private bool? isToolTipVisible;
+        private bool isImageAfterText;
+        private bool isVerticalOrientation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -145,6 +147,21 @@ namespace Alternet.UI
         {
             get => columnId;
             set => columnId = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value which specifies whether image to text are aligned vertically or horizontally.
+        /// </summary>
+        public virtual bool IsVerticalOrientation
+        { 
+            get
+            {
+                return isVerticalOrientation;
+            }
+            set
+            {
+                isVerticalOrientation = value;
+            }
         }
 
         /// <summary>
@@ -763,6 +780,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the image is displayed after the text.
+        /// </summary>
+        /// <remarks>Setting this property to <see langword="true"/> positions the image after the text in
+        /// the control's layout; setting it to <see langword="false"/> positions the image before the text. This
+        /// property affects the visual arrangement of items that display both text and images.</remarks>
+        public virtual bool IsImageAfterText
+        {
+            get => isImageAfterText;
+            set => isImageAfterText = value;
+        }
+
+        /// <summary>
         /// Gets or sets draw label flags.
         /// </summary>
         public virtual DrawLabelFlags LabelFlags
@@ -1201,21 +1230,35 @@ namespace Alternet.UI
                 size = dc.GetTextExtent(s, font);
             }
 
-            size.Height = Math.Max(size.Height, maxImageHeightD);
-
             var itemMargin = container.Defaults.ItemMargin;
+            var isVerticalOrientation = item?.IsVerticalOrientation ?? false;
+            var imageToTextDistance = GetAdditionalImageMargin() + SpeedButton.DefaultImageLabelDistance;
+
+            if (isVerticalOrientation)
+            {
+                size.Width = Math.Max(size.Width, maxImageWidthD);
+
+                if (maxImageHeightD > 0)
+                {
+                    size.Height += maxImageHeightD + imageToTextDistance;
+                }
+            }
+            else
+            {
+                size.Height = Math.Max(size.Height, maxImageHeightD);
+
+                if (maxImageWidthD > 0)
+                {
+                    size.Width += maxImageWidthD + imageToTextDistance;
+                }
+            }
 
             size.Width += itemMargin.Horizontal;
             size.Height += itemMargin.Vertical;
 
-            if (maxImageWidthD > 0)
-            {
-                size.Width += maxImageWidthD + GetAdditionalImageMargin() + SpeedButton.DefaultImageLabelDistance;
-            }
-
             var minItemHeight = ListControlItem.GetMinHeight(item, container);
-
             size.Height = MathUtils.RoundUpAndIncrementIfOdd(Math.Max(size.Height, minItemHeight));
+
             return size;
         }
 
@@ -1800,6 +1843,8 @@ namespace Alternet.UI
                     prm.Flags = item.LabelFlags;
                     prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
                     prm.LineDistance = item.TextLineDistance ?? 0;
+                    prm.IsImageAfterText = item.IsImageAfterText;
+                    prm.IsVertical = item.IsVerticalOrientation;
                 }
 
                 DefaultDebugDrawForeground(container, e, prm);
@@ -2542,6 +2587,67 @@ namespace Alternet.UI
                 ?? other.Value?.ToString() ?? string.Empty;
 
             return string.Compare(thisItemText, otherItemText, StringComparison.CurrentCulture);
+        }
+
+        /// <summary>
+        /// Sets the alignment of the content and the image within the element.
+        /// </summary>
+        /// <remarks>Use this method to customize both the content and image alignment for the element.
+        /// The default alignment centers both content and image, while other options allow for specific positioning to
+        /// suit layout requirements.</remarks>
+        /// <param name="align">The alignment of the content within the element. Specifies the horizontal and vertical positioning of the
+        /// content, such as centering or aligning to the left, right, top, or bottom.</param>
+        /// <param name="imageAlign">The alignment of the image relative to the content. Determines whether the image appears before or after the
+        /// text, and whether it is oriented horizontally or vertically.</param>
+        public virtual void SetContentAlignment(ElementContentAlign align, ElementContentAlign imageAlign)
+        {
+            switch (align)
+            {
+                case ElementContentAlign.Default:
+                    HorizontalAlignment = HorizontalAlignment.Center;
+                    VerticalAlignment = VerticalAlignment.Center;
+                    break;
+                case ElementContentAlign.Left:
+                    HorizontalAlignment = HorizontalAlignment.Left;
+                    VerticalAlignment = VerticalAlignment.Center;
+                    break;
+                case ElementContentAlign.Right:
+                    HorizontalAlignment = HorizontalAlignment.Right;
+                    VerticalAlignment = VerticalAlignment.Center;
+                    break;
+                case ElementContentAlign.Top:
+                    HorizontalAlignment = HorizontalAlignment.Center;
+                    VerticalAlignment = VerticalAlignment.Top;
+                    break;
+                case ElementContentAlign.Bottom:
+                    HorizontalAlignment = HorizontalAlignment.Center;
+                    VerticalAlignment = VerticalAlignment.Bottom;
+                    break;
+            }
+
+            switch (imageAlign)
+            {
+                case ElementContentAlign.Default:
+                    IsImageAfterText = false;
+                    IsVerticalOrientation = false;
+                    break;
+                case ElementContentAlign.Left:
+                    IsImageAfterText = false;
+                    IsVerticalOrientation = false;
+                    break;
+                case ElementContentAlign.Right:
+                    IsImageAfterText = true;
+                    IsVerticalOrientation = false;
+                    break;
+                case ElementContentAlign.Top:
+                    IsImageAfterText = false;
+                    IsVerticalOrientation = true;
+                    break;
+                case ElementContentAlign.Bottom:
+                    IsImageAfterText = true;
+                    IsVerticalOrientation = true;
+                    break;
+            }
         }
 
         /// <summary>
