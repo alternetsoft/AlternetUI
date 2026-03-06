@@ -1162,21 +1162,23 @@ namespace Alternet.UI
                 onlyNormal: !AllowDifferentSizeForDisabledImage);
 
             var normal = itemImages[VisualControlState.Normal];
-            var maxHeightI = normal?.Size.Height ?? 0;
+            var maxImageHeightI = normal?.Size.Height ?? 0;
+            var maxImageWidthI = normal?.Size.Width ?? 0;
 
             if (AllowDifferentSizeForDisabledImage)
             {
                 var disabled = itemImages[VisualControlState.Disabled];
                 var selected = itemImages[VisualControlState.Selected];
-                maxHeightI = MathUtils.Max(maxHeightI, disabled?.Size.Height, selected?.Size.Height);
+                maxImageHeightI = MathUtils.Max(maxImageHeightI, disabled?.Size.Height, selected?.Size.Height);
+                maxImageWidthI = MathUtils.Max(maxImageWidthI, disabled?.Size.Width, selected?.Size.Width);
             }
 
-            var maxHeightD = GraphicsFactory.PixelToDip(maxHeightI, dc.ScaleFactor);
+            var maxImageHeightD = GraphicsFactory.PixelToDip(maxImageHeightI, dc.ScaleFactor);
+            var maxImageWidthD = GraphicsFactory.PixelToDip(maxImageWidthI, dc.ScaleFactor);
+            var checkBoxSize = GetCheckBoxSize(container).Height;
 
-            var checkBoxSize = GetCheckBoxSize(container).Height + GetAdditionalImageMargin()
-                + GetAdditionalTextMargin().Vertical;
-
-            maxHeightD = Math.Max(checkBoxSize, maxHeightD);
+            maxImageHeightD = Math.Max(checkBoxSize, maxImageHeightD);
+            maxImageHeightD += GetAdditionalImageMargin() + GetAdditionalTextMargin().Vertical;
 
             var font = ListControlItem.GetFont(item, container, true).AsBold;
 
@@ -1199,12 +1201,17 @@ namespace Alternet.UI
                 size = dc.GetTextExtent(s, font);
             }
 
-            size.Height = Math.Max(size.Height, maxHeightD);
+            size.Height = Math.Max(size.Height, maxImageHeightD);
 
             var itemMargin = container.Defaults.ItemMargin;
 
             size.Width += itemMargin.Horizontal;
             size.Height += itemMargin.Vertical;
+
+            if (maxImageWidthD > 0)
+            {
+                size.Width += maxImageWidthD + GetAdditionalImageMargin() + SpeedButton.DefaultImageLabelDistance;
+            }
 
             var minItemHeight = ListControlItem.GetMinHeight(item, container);
 
@@ -1265,7 +1272,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsContainerEnabled(IListControlItemContainer? container)
         {
-            var enabled = container is not Control control || control.Enabled;
+            var enabled = container is not AbstractControl control || control.Enabled;
             return enabled;
         }
 
