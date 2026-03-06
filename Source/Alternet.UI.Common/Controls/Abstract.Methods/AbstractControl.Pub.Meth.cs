@@ -312,7 +312,7 @@ namespace Alternet.UI
         /// order of the child controls.</param>
         public virtual void SortChildren(Comparison<AbstractControl> comparison)
         {
-            if(!HasChildren)
+            if (!HasChildren)
                 return;
 
             DoInsideLayout(() =>
@@ -745,7 +745,7 @@ namespace Alternet.UI
             {
                 var action = GetBackgroundAction(state);
 
-                if(action is null)
+                if (action is null)
                 {
                     if (flags.HasFlag(DrawDefaultBackgroundFlags.UseParentBackColor))
                     {
@@ -1128,7 +1128,7 @@ namespace Alternet.UI
             foreach (var groupIndex in groupIndexes)
             {
                 var isMember = MemberOfGroup(groupIndex);
-                if(isMember)
+                if (isMember)
                     return true;
             }
 
@@ -2128,10 +2128,10 @@ namespace Alternet.UI
             if (recursive)
                 result = GetChildrenRecursive();
             else
-            if (HasChildren)
-                result = ControlSet.New(Children);
-            else
-                result = ControlSet.Empty;
+                if (HasChildren)
+                    result = ControlSet.New(Children);
+                else
+                    result = ControlSet.Empty;
 
             var limitedResult = new List<AbstractControl>();
 
@@ -2740,7 +2740,7 @@ namespace Alternet.UI
             if (sizeChanged)
                 RaiseSizeChanged(EventArgs.Empty);
 
-            if(sizeChanged || locationChanged)
+            if (sizeChanged || locationChanged)
             {
                 RaiseBoundsChanged(EventArgs.Empty);
             }

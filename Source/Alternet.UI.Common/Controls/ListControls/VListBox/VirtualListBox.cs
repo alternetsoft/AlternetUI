@@ -469,6 +469,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override Color? BackgroundColor
+        {
+            get => base.BackgroundColor;
+            set
+            {
+                base.BackgroundColor = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public override IScrollEventRouter ScrollEventRouter => this;
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>

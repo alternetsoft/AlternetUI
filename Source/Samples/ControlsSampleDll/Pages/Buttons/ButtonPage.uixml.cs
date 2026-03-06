@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Collections.Generic;
 using System.Linq;
+
 using Alternet.Drawing;
 using Alternet.UI;
 
@@ -42,11 +43,10 @@ namespace ControlsSample
 
         private int imageMargins = 5;
 
-        private ControlStateImages? buttonImages;
+        private ControlStateSvgImages? buttonImages;
 
         static ButtonPage()
         {
-            Button.ImagesEnabled = true;
         }
 
         public ButtonPage()
@@ -116,6 +116,9 @@ namespace ControlsSample
 
             button.PreviewKeyDown += Button_PreviewKeyDown;
             button.KeyDown += Button_KeyDown;
+
+            button.GotFocus += (s, e) => App.Log("Button: GotFocus");
+            button.LostFocus += (s, e) => App.Log("Button: LostFocus");
         }
 
         private void Button_KeyDown(object? sender, KeyEventArgs e)
@@ -207,25 +210,31 @@ namespace ControlsSample
 
             DoInside(() =>
             {
-                if(App.IsLinuxOS)
-                    button.RecreateWindow();
                 button.TextVisible = showTextCheckBox.IsChecked;
                 button.ExactFit = exactFitCheckBox.IsChecked;
                 button.HasBorder = hasBorderCheckBox.IsChecked;
                 ApplyTextAlign();
                 button.TabStop = tabStopCheckBox.IsChecked;
+                button.IsDefault = false;
                 button.IsDefault = defaultCheckBox.IsChecked;
                 button.Text = textTextBox.Text;
                 ApplyFont();
+
                 var color = GetColor(comboBoxTextColor);
-                button.ForegroundColor = color;
-                color = GetColor(comboBoxBackColor);
-                button.BackgroundColor = color;
+                var backColor = GetColor(comboBoxBackColor);
+
+                if (!button.IsDefault)
+                {
+                    button.ForegroundColor = color;
+                    button.BackgroundColor = backColor;
+                }
+
                 button.StateImages.Assign(null);
+                button.StateSvgImages.Assign(null);
                 if (imageCheckBox.IsChecked)
                 {
-                    buttonImages ??= DemoResourceLoader.LoadButtonImages(button);
-                    button.StateImages = buttonImages;
+                    buttonImages ??= DemoResourceLoader.LoadButtonSvgImages();
+                    button.StateSvgImages = buttonImages;
                 }
 
                 ApplyImageAlign();
@@ -266,8 +275,6 @@ namespace ControlsSample
 
         private void Back_Changed(object? sender, EventArgs e)
         {
-            buttonImages = null;
-
             ApplyAll();
         }
 

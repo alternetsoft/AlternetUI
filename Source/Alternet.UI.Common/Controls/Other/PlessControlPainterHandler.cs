@@ -218,7 +218,7 @@ namespace Alternet.Drawing
 
             var color = CheckBoxStateColors[controlState];
 
-            if(color is null)
+            if (color is null)
             {
                 switch (controlState)
                 {

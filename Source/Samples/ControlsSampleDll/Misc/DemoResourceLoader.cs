@@ -40,7 +40,9 @@ namespace ControlsSample
 
                 var formattedUrl = string.Format(url, stateName);
 
-                size ??= 16;
+                var scaleFactor = control?.ScaleFactor ?? Display.MaxScaleFactor;
+
+                size ??= (int)(16 * scaleFactor);
 
                 return Image.FromSvgUrl(formattedUrl, size.Value.Width, size.Value.Height, color);
             }
@@ -55,6 +57,27 @@ namespace ControlsSample
                 Pressed = LoadImage("Pressed"),
                 Disabled = disabledImage,
 				Focused = LoadImage("Focused"),
+            };
+        }
+
+        internal static ControlStateSvgImages LoadButtonSvgImages(string? url = null)
+        {
+            url ??= "embres:ControlsSampleDll.Resources.ButtonImages.ButtonImage{0}.svg";
+
+            SvgImage LoadImage(string stateName)
+            {
+                var formattedUrl = string.Format(url, stateName);
+
+                return new MonoSvgImage(formattedUrl);
+            }
+
+            return new ControlStateSvgImages
+            {
+                Normal = LoadImage("Normal"),
+                Hovered = LoadImage("Hovered"),
+                Pressed = LoadImage("Pressed"),
+                Disabled = LoadImage("Normal"),
+                Focused = LoadImage("Focused"),
             };
         }
 
