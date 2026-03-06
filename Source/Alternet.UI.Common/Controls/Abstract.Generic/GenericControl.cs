@@ -196,9 +196,35 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnAfterPaintChildren(PaintEventArgs e)
+        {
+            base.OnAfterPaintChildren(e);
+
+            PaintOverlays(e);
+        }
+
+        /// <inheritdoc/>
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnIsMouseOverChanged(EventArgs e)
+        {
+            base.OnIsMouseOverChanged(e);
+
+            if (RefreshOptions.HasFlag(ControlRefreshOptions.RefreshOnState))
+            {
+                Refresh();
+                return;
+            }
         }
 
         /// <inheritdoc/>
@@ -206,6 +232,13 @@ namespace Alternet.UI
         {
             base.OnVisualStateChanged(e);
             UserControl.HandleOnVisualStateChanged(this, RefreshOptions);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            Invalidate();
         }
 
         /// <inheritdoc/>
