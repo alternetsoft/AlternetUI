@@ -1693,7 +1693,9 @@ namespace Alternet.UI
         /// <returns>The converted coordinates.</returns>
         public virtual PointD ScreenToClient(PointD point)
         {
-            return PlessUtils.ScreenToClient(point, this);
+            var result = Parent?.ScreenToClient(point) ?? PointD.HalfOfMinValue + point;
+            result -= Location;
+            return result;
         }
 
         /// <summary>
@@ -1705,7 +1707,8 @@ namespace Alternet.UI
         /// <returns>The converted coordinates.</returns>
         public virtual PointD ClientToScreen(PointD point)
         {
-            return PlessUtils.ClientToScreen(point, this);
+            point += Location;
+            return Parent?.ClientToScreen(point) ?? PointD.HalfOfMinValue + point;
         }
 
         /// <summary>
