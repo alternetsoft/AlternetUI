@@ -657,6 +657,18 @@ namespace Alternet.UI
             bottomLeftRadius = value.bottomLeftRadius;
         }
 
+        /// <summary>
+        /// Sets a uniform corner radius for all corners of the element.
+        /// </summary>
+        /// <remarks>Use this method to ensure consistent rounding on all corners of the element. Passing
+        /// <see langword="null"/> will clear any previously set corner radius.</remarks>
+        /// <param name="value">The corner radius to apply to all corners, specified as a <see langword="Coord"/>. Specify <see
+        /// langword="null"/> to remove any applied corner radius and revert to the default.</param>
+        public void SetUniformCornerRadius(Coord? value)
+        {
+            UniformCornerRadius = value;
+        }
+
         private void OnLeftPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             RaisePropertyChanged(nameof(Left));
