@@ -362,7 +362,10 @@ namespace Alternet.UI
 
             if (radius is not null && prm.Brush is not null)
             {
-                var color = prm.Border?.Color;
+                var defaultColor = ColorUtils.GetDefaultBorderColor(prm.Control);
+
+                var color = prm.Border?.Color ?? defaultColor;
+
                 if (prm.Border is null || color is null || !prm.HasBorder)
                 {
                     canvas.FillRoundedRectangle(prm.Brush, prm.Rect.InflatedBy(-1, -1), radius.Value);
