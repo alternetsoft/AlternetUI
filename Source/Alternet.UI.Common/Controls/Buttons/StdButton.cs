@@ -6,11 +6,21 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a button control.
+    /// Represents a generic button control. This control is implemented inside the library and can be used in the
+    /// same way as a regular native <see cref="Button"/> control. <see cref="StdButton"/> is used when you need
+    /// to have the same code for all platforms. <see cref="StdButton"/> provides many additional features,
+    /// which are not available in the native <see cref="Button"/> control.
     /// </summary>
     [ControlCategory("Common")]
     public partial class StdButton : GenericItemControl, IControlStateObjectChanged
     {
+        /// <summary>
+        /// Represents the default padding value which is applied to <see cref="StdButton"/> controls in the constructor.
+        /// </summary>
+        /// <remarks>This static field provides a standard padding size that is applied to <see cref="StdButton"/> controls
+        /// to ensure consistent spacing across components.</remarks>
+        public static Thickness DefaultPadding = 3;
+
         private ControlStateImages? stateImages;
         private bool isDefault;
         private bool isCancel;
@@ -40,6 +50,8 @@ namespace Alternet.UI
         /// </summary>
         public StdButton()
         {
+            UniformBorderCornerRadius = MaterialDesign.CornerRadius.Button;
+            Padding = DefaultPadding;
             Item.HorizontalAlignment = HorizontalAlignment.Center;
             RefreshOptions = ControlRefreshOptions.RefreshOnBorder | ControlRefreshOptions.RefreshOnImage |
                 ControlRefreshOptions.RefreshOnBackground | ControlRefreshOptions.RefreshOnColor |
@@ -367,12 +379,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            var state = VisualState;
-            var image = StateImages.GetObjectOrNormal(state);
-
-            Item.Image = image;
-
+            UpdateItemImage();
             base.DefaultPaint(e);
+        }
+
+        /// <inheritdoc/>
+        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        {
+            UpdateItemImage();
+            return base.GetPreferredSize(context);
         }
 
         void IControlStateObjectChanged.DisabledChanged(object? sender)
@@ -417,6 +432,24 @@ namespace Alternet.UI
 
         void IControlStateObjectChanged.SelectedChanged(object? sender)
         {
+        }
+
+        /// <summary>
+        /// Updates the button image according to the current visual state and images specified.
+        /// </summary>
+        protected virtual void UpdateItemImage()
+        {
+            if (DisposingOrDisposed)
+                return;
+            var state = VisualState;
+
+            if(state != VisualControlState.Normal)
+            {
+            }
+
+            var image = StateImages.GetObjectOrNormal(state);
+
+            Item.Image = image;
         }
 
         /// <inheritdoc/>
