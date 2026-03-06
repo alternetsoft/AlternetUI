@@ -566,20 +566,27 @@ namespace Alternet.UI
             var dc = e.Graphics;
 
             itemDrawable.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
+            itemDrawable.VisualState = VisualState;
+
+            if (itemDrawable.VisualState != VisualControlState.Normal)
+            {
+            }
+
             itemDrawable.Draw(this, dc);
         }
 
         /// <summary>
         /// Binds property specified with <paramref name="instance"/> and
-        /// <paramref name="propName"/> to the control.
-        /// After binding control will edit the specified property.
+        /// <paramref name="propName"/> to the <see cref="Checked"/> property of the control.
+        /// After binding is set up, changes to the <see cref="Checked"/> property will automatically update the value
+        /// of the bound property on the specified instance.
         /// </summary>
         /// <param name="instance">Object.</param>
         /// <param name="propName">Property name.</param>
         /// <remarks>Property must have the <see cref="bool"/> type. Value of the bound
         /// property will be changed automatically after
         /// <see cref="IsChecked"/> is changed.</remarks>
-        public virtual GenericItemControl BindBoolProp(object instance, string propName)
+        public virtual GenericItemControl BindChecked(object instance, string propName)
         {
             var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
             if (propInfo is null)
@@ -587,9 +594,9 @@ namespace Alternet.UI
             object? result = propInfo?.GetValue(instance, null);
             IsChecked = result is true;
 
-            CheckedChanged += Editor_CheckedChanged;
+            CheckedChanged += InternalCheckedChanged;
 
-            void Editor_CheckedChanged(object? sender, EventArgs e)
+            void InternalCheckedChanged(object? sender, EventArgs e)
             {
                 propInfo?.SetValue(instance, IsChecked);
             }
@@ -664,12 +671,6 @@ namespace Alternet.UI
             PerformLayoutAndInvalidate();
         }
 
-        /// <inheritdoc/>
-        protected override void OnSystemColorsChanged(EventArgs e)
-        {
-            base.OnSystemColorsChanged(e);
-        }
-
         /// <summary>
         /// Creates and returns a drawable object which is responsible for rendering the visual representation of the item within the control.
         /// Derived classes can override this method to provide a custom drawable implementation
@@ -677,8 +678,8 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A <see cref="ListItemDrawable"/> instance which is responsible for rendering the visual representation of the item.</returns>
         protected virtual ListItemDrawable CreateItemDrawable()
-        { 
-            return new ();
+        {
+            return new();
         }
 
         /// <inheritdoc/>
@@ -703,7 +704,7 @@ namespace Alternet.UI
         /// <returns>A new instance of ListControlItemDefaults, which contains settings for items.</returns>
         protected virtual ListControlItemDefaults CreateItemDefaults()
         {
-            return new ();
+            return new();
         }
 
         /// <summary>
