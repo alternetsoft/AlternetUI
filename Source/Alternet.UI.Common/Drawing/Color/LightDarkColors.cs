@@ -16,6 +16,8 @@ namespace Alternet.Drawing
         private static LightDarkColor? red;
         private static LightDarkColor? green;
         private static LightDarkColor? blue;
+        private static LightDarkColor? blueDarker;
+        private static LightDarkColor? blueLighter;
 
         /// <summary>
         /// Gets default red colors pair.
@@ -68,5 +70,33 @@ namespace Alternet.Drawing
 
             set => blue = value;
         }
+
+        /// <summary>
+        /// Gets default blue darker colors pair.
+        /// </summary>
+        public static LightDarkColor BlueDarker
+        {
+            get
+            {
+                return blueDarker ??= new(Blue.Light.Darker(), Blue.Dark.Darker());
+            }
+
+            set => blueDarker = value;
+        }
+
+        /// <summary>
+        /// Gets default blue lighter colors pair.
+        /// </summary>
+        public static LightDarkColor BlueLighter
+        {
+            get
+            {
+                return blueLighter ??= new(Blue.Light.Lighter(), Blue.Dark.Lighter());
+            }
+
+            set => blueLighter = value;
+        }
+
+        internal static LightDarkColor White { get; } = new (Color.White);
     }
 }
