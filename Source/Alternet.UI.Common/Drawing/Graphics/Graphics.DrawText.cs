@@ -417,7 +417,10 @@ namespace Alternet.Drawing
             }
             else
             {
-                drawParams.Elements = [DrawElementParams.CreateImageElement(ref prm), DrawElementParams.CreateTextElement(ref prm)];
+                var imageElement = DrawElementParams.CreateImageElement(ref prm);
+                var textElement = DrawElementParams.CreateTextElement(ref prm);
+
+                drawParams.Elements = prm.IsImageAfterText ? [textElement, imageElement] : [imageElement, textElement];
             }
 
             if (prm.PrefixElements is not null || prm.SuffixElements is not null)
@@ -1215,10 +1218,14 @@ namespace Alternet.Drawing
             public ObjectUniqueId? DebugId;
 
             /// <summary>
-            /// Gets or sets a value which specifies whether image to text are aligned vertically
-            /// or horizontally.
+            /// Gets or sets a value which specifies whether image to text are aligned vertically or horizontally.
             /// </summary>
-            public bool IsVertical = false;
+            public bool IsVertical;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the image is displayed after the text.
+            /// </summary>
+            public bool IsImageAfterText;
 
             /// <summary>
             /// Gets or sets distance between image and label. If Null,
