@@ -191,6 +191,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets visibility of the text.
+        /// </summary>
+        public virtual bool TextVisible
+        {
+            get
+            {
+                return ItemDefaults.TextVisible;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (ItemDefaults.TextVisible == value)
+                    return;
+                ItemDefaults.TextVisible = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the control is transparent. Default is true.
         /// When true, the control's background is not drawn, allowing the parent control's
         /// background to show through. When false, the control's background
