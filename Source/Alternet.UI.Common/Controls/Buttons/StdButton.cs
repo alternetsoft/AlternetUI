@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// which are not available in the native <see cref="Button"/> control.
     /// </summary>
     [ControlCategory("Common")]
-    public partial class StdButton : GenericItemControl, IControlStateObjectChanged
+    public partial class StdButton : GenericItemControl, INotifyPropertyChanged, IDialogButtonRoles
     {
         /// <summary>
         /// Represents the default padding value which is applied to <see cref="StdButton"/> controls in the constructor.
@@ -35,15 +35,9 @@ namespace Alternet.UI
         private static LightDarkColor? defaultBackColor;
         private static LightDarkColor? defaultForeColor;
 
-        private ControlStateImages? stateImages;
-        private ControlStateSvgImages? stateSvgImages;
         private bool isDefault;
         private bool isCancel;
-        private ElementContentAlign textAlign = ElementContentAlign.Default;
-        private ElementContentAlign imageAlign = ElementContentAlign.Default;
-        private Thickness? imageMargins;
         private bool exactFit = false;
-        private int? svgSize;
 
         static StdButton()
         {
@@ -86,9 +80,6 @@ namespace Alternet.UI
             MinimumSize = DefaultMinSize;
             Padding = DefaultPadding;
             Item.HorizontalAlignment = HorizontalAlignment.Center;
-            RefreshOptions = ControlRefreshOptions.RefreshOnBorder | ControlRefreshOptions.RefreshOnImage |
-                ControlRefreshOptions.RefreshOnBackground | ControlRefreshOptions.RefreshOnColor |
-                ControlRefreshOptions.RefreshOnState;
 
             SetColorTheme();
         }
@@ -231,182 +222,8 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Specifies a set of images for different control states.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlStateImages StateImages
-        {
-            get
-            {
-                if (stateImages is null)
-                {
-                    stateImages = new();
-                    stateImages.ChangedHandler = this;
-                }
-
-                return stateImages;
-            }
-
-            set
-            {
-                if (stateImages == value)
-                    return;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    StateImages.Assign(value);
-                });
-            }
-        }
-
-        /// <summary>
-        /// Specifies a set of svg images for different control states.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlStateSvgImages StateSvgImages
-        {
-            get
-            {
-                if (stateSvgImages is null)
-                {
-                    stateSvgImages = new();
-                    stateSvgImages.ChangedHandler = this;
-                }
-
-                return stateSvgImages;
-            }
-
-            set
-            {
-                if (stateSvgImages == value)
-                    return;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    StateSvgImages.Assign(value);
-                });
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the svg image size.
-        /// </summary>
-        [DefaultValue(null)]
-        public virtual int? SvgSize
-        {
-            get
-            {
-                return svgSize;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (svgSize == value)
-                    return;
-                PerformLayoutAndInvalidate(() =>
-                {
-                    svgSize = value;
-                });
-            }
-        }
-
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Button;
-
-        /// <summary>
-        /// Gets or sets the image that is displayed on a button control.
-        /// </summary>
-        /// <value>
-        /// The <see cref="Image"/> displayed on the button control. The default
-        /// value is <see langword="null"/>.
-        /// </value>
-        public virtual Image? Image
-        {
-            get
-            {
-                return StateImages.Normal;
-            }
-
-            set
-            {
-                StateImages.Normal = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the alignment of the image within the control.
-        /// </summary>
-        /// <remarks>The alignment determines how the image is positioned relative to the element's content.
-        /// Changing this property affects the visual layout of the image in relation to other content.</remarks>
-        public ElementContentAlign ImageAlign
-        {
-            get
-            {
-                return imageAlign;
-            }
-
-            set
-            {
-                SetImagePosition(value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets an <see cref="Image"/> for hovered control state.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Image? HoveredImage
-        {
-            get => StateImages.Hovered;
-
-            set
-            {
-                StateImages.Hovered = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets an <see cref="Image"/> for focused control state.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Image? FocusedImage
-        {
-            get => StateImages.Focused;
-
-            set
-            {
-                StateImages.Focused = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets an <see cref="Image"/> for pressed control state.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Image? PressedImage
-        {
-            get => StateImages.Pressed;
-
-            set
-            {
-                StateImages.Pressed = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets an <see cref="Image"/> for disabled control state.
-        /// </summary>
-        [Browsable(false)]
-        public virtual Image? DisabledImage
-        {
-            get => StateImages.Disabled;
-
-            set
-            {
-                StateImages.Disabled = value;
-            }
-        }
 
         /// <summary>
         /// Gets or sets a value that determines if the background is drawn using visual styles,
@@ -537,133 +354,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <summary>
-        /// Sets the position at which the text is displayed.
-        /// </summary>
-        public virtual ElementContentAlign TextAlign
-        {
-            get
-            {
-                return textAlign;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (textAlign == value)
-                    return;
-                textAlign = value;
-                UpdateTextAndImageAlignment();
-                if (TextVisible)
-                    PerformLayoutAndInvalidate();
-            }
-        }
-
-        /// <summary>
-        /// Sets the position at which the image is displayed.
-        /// </summary>
-        /// <param name="dir">New image position.</param>
-        public virtual void SetImagePosition(ElementContentAlign dir)
-        {
-            if (DisposingOrDisposed)
-                return;
-            if (imageAlign == dir)
-                return;
-            imageAlign = dir;
-            UpdateTextAndImageAlignment();
-            if (Item.HasImageOrSvg)
-                PerformLayoutAndInvalidate();
-        }
-
-        /// <summary>
-        /// Sets the margins between the image and the text of the button.
-        /// Value is in device-independent units.
-        /// </summary>
-        /// <remarks>
-        /// If this method was not called, default margin is used around the image.
-        /// </remarks>
-        /// <param name="x">New horizontal margin.</param>
-        /// <param name="y">New vertical margin.</param>
-        public virtual void SetImageMargins(Coord x, Coord? y = null)
-        {
-            if (DisposingOrDisposed)
-                return;
-            y ??= x;
-
-            var newMargins = new Thickness(x, y.Value);
-
-            if (imageMargins == newMargins)
-                return;
-            imageMargins = newMargins;
-
-            if (Item.HasImageOrSvg)
-                PerformLayoutAndInvalidate();
-        }
-
         /// <inheritdoc/>
         public override void DrawBorderAndBackground(
             PaintEventArgs e,
             DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
         {
-            if (IsDefault)
-            {
-            }
-
             base.DrawBorderAndBackground(e, flags);
-        }
-
-        /// <inheritdoc/>
-        public override void DefaultPaint(PaintEventArgs e)
-        {
-            UpdateItemImage();
-            base.DefaultPaint(e);
-        }
-
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
-        {
-            UpdateItemImage();
-            return base.GetPreferredSize(context);
-        }
-
-        void IControlStateObjectChanged.DisabledChanged(object? sender)
-        {
-            if (DisposingOrDisposed)
-                return;
-            PerformLayoutAndInvalidate();
-        }
-
-        void IControlStateObjectChanged.NormalChanged(object? sender)
-        {
-            if (DisposingOrDisposed)
-                return;
-            PerformLayoutAndInvalidate();
-        }
-
-        void IControlStateObjectChanged.FocusedChanged(object? sender)
-        {
-            if (DisposingOrDisposed)
-                return;
-            PerformLayoutAndInvalidate();
-        }
-
-        void IControlStateObjectChanged.HoveredChanged(object? sender)
-        {
-            if (DisposingOrDisposed)
-                return;
-            PerformLayoutAndInvalidate();
-        }
-
-        void IControlStateObjectChanged.PressedChanged(object? sender)
-        {
-            if (DisposingOrDisposed)
-                return;
-            PerformLayoutAndInvalidate();
-        }
-
-        void IControlStateObjectChanged.SelectedChanged(object? sender)
-        {
         }
 
         /// <summary>
@@ -726,43 +422,6 @@ namespace Alternet.UI
             });
         }
 
-        /// <summary>
-        /// Recalculates the alignment of text and image elements within the control based on the current settings.
-        /// </summary>
-        /// <remarks>Override this method in a derived class to implement custom alignment logic for text and images. </remarks>
-        protected virtual void UpdateTextAndImageAlignment()
-        {
-            Item.SetContentAlignment(TextAlign, ImageAlign);
-        }
-
-        /// <summary>
-        /// Updates the button image according to the current visual state and images specified.
-        /// </summary>
-        protected virtual void UpdateItemImage()
-        {
-            if (DisposingOrDisposed)
-                return;
-            var state = VisualState;
-
-            Image? image = null;
-
-            var svgImage = StateSvgImages.GetObjectOrNull(state);
-
-            if (svgImage is not null)
-            {
-                var imageSize = SvgSize ?? PixelFromDip(16);
-
-                if(IsEnabled)
-                    image = svgImage.AsNormal(imageSize, IsDarkBackground)?.AsImage();
-                else
-                    image = svgImage.AsDisabled(imageSize, IsDarkBackground)?.AsImage();
-            }
-
-            image ??= StateImages.GetObjectOrNormal(state);
-
-            Item.Image = image;
-        }
-
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
@@ -772,12 +431,6 @@ namespace Alternet.UI
             }
 
             base.OnSystemColorsChanged(e);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnVisualStateChanged(EventArgs e)
-        {
-            base.OnVisualStateChanged(e);
         }
 
         /// <inheritdoc/>

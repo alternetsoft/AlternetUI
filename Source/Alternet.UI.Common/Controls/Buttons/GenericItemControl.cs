@@ -10,10 +10,20 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
-    public partial class GenericItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource
+    public partial class GenericItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource, IControlStateObjectChanged
     {
+        /// <summary>
+        /// Gets the default margin applied to images.
+        /// </summary>
+        /// <remarks>This static field provides a standard margin value for images used in the
+        /// application. It can be adjusted to change the default spacing around images throughout the UI.</remarks>
+        public static Thickness DefaultImageMargin = 0;
+
         private readonly ListItemDrawable itemDrawable;
 
+        private ControlStateImages? stateImages;
+        private ControlStateSvgImages? stateSvgImages;
+        private int? svgSize;
         private MnemonicMarkerHelper mnemonicMarkerHelper = new();
         private bool isTransparent = true;
         private ListControlItemDefaults itemDefaults;
@@ -25,6 +35,8 @@ namespace Alternet.UI
         private ImageList? imageList;
         private bool? reportedChecked;
         private Action? clickAction;
+        private ElementContentAlign textAlign = ElementContentAlign.Default;
+        private ElementContentAlign imageAlign = ElementContentAlign.Default;
         private CommandSourceStruct commandSource;
 
         /// <summary>
@@ -60,6 +72,11 @@ namespace Alternet.UI
             ParentBackColor = true;
             ParentForeColor = true;
             HorizontalAlignment = HorizontalAlignment.Left;
+            Item.ImageMargin = DefaultImageMargin;
+
+            RefreshOptions = ControlRefreshOptions.RefreshOnBorder | ControlRefreshOptions.RefreshOnImage |
+                ControlRefreshOptions.RefreshOnBackground | ControlRefreshOptions.RefreshOnColor |
+                ControlRefreshOptions.RefreshOnState;
         }
 
         /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarker"/>
@@ -73,6 +90,100 @@ namespace Alternet.UI
                 mnemonicMarkerHelper.MnemonicMarker = value;
                 if (MnemonicMarkerEnabled is true)
                     PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the image that is displayed on a button control.
+        /// </summary>
+        /// <value>
+        /// The <see cref="Image"/> displayed on the button control. The default
+        /// value is <see langword="null"/>.
+        /// </value>
+        public virtual Image? Image
+        {
+            get
+            {
+                return StateImages.Normal;
+            }
+
+            set
+            {
+                StateImages.Normal = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the alignment of the image within the control.
+        /// </summary>
+        /// <remarks>The alignment determines how the image is positioned relative to the element's content.
+        /// Changing this property affects the visual layout of the image in relation to other content.</remarks>
+        public ElementContentAlign ImageAlign
+        {
+            get
+            {
+                return imageAlign;
+            }
+
+            set
+            {
+                SetImagePosition(value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for hovered control state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? HoveredImage
+        {
+            get => StateImages.Hovered;
+
+            set
+            {
+                StateImages.Hovered = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for focused control state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? FocusedImage
+        {
+            get => StateImages.Focused;
+
+            set
+            {
+                StateImages.Focused = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for pressed control state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? PressedImage
+        {
+            get => StateImages.Pressed;
+
+            set
+            {
+                StateImages.Pressed = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an <see cref="Image"/> for disabled control state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? DisabledImage
+        {
+            get => StateImages.Disabled;
+
+            set
+            {
+                StateImages.Disabled = value;
             }
         }
 
@@ -105,6 +216,112 @@ namespace Alternet.UI
                     return;
                 mnemonicMarkerHelper.MnemonicCharIndex = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Specifies a set of images for different control states.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlStateImages StateImages
+        {
+            get
+            {
+                if (stateImages is null)
+                {
+                    stateImages = new();
+                    stateImages.ChangedHandler = this;
+                }
+
+                return stateImages;
+            }
+
+            set
+            {
+                if (stateImages == value)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    StateImages.Assign(value);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the control contains images, either state images or SVG images.
+        /// </summary>
+        /// <remarks>This property returns <see langword="true"/> if either state images or state SVG
+        /// images are present; otherwise, it returns <see langword="false"/>.</remarks>
+        [Browsable(false)]
+        public bool HasAnyImages => HasStateImages || HasStateSvgImages;
+
+        /// <summary>
+        /// Indicates whether the control has state svg images specified.
+        /// </summary>
+        /// <remarks>State images are used to represent different states of the control visually. This
+        /// property returns <see langword="true"/> if state images are set; otherwise, it returns <see
+        /// langword="false"/>.</remarks>
+        [Browsable(false)]
+        public bool HasStateSvgImages => stateSvgImages != null && stateSvgImages.HasAny;
+
+        /// <summary>
+        /// Gets a value indicating whether state images are available for the control.
+        /// </summary>
+        /// <remarks>State images are used to represent different states of the control visually. This
+        /// property returns <see langword="true"/> if state images are set; otherwise, it returns <see
+        /// langword="false"/>.</remarks>
+        [Browsable(false)]
+        public bool HasStateImages => stateImages != null && stateImages.HasAny;
+
+        /// <summary>
+        /// Specifies a set of svg images for different control states.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ControlStateSvgImages StateSvgImages
+        {
+            get
+            {
+                if (stateSvgImages is null)
+                {
+                    stateSvgImages = new();
+                    stateSvgImages.ChangedHandler = this;
+                }
+
+                return stateSvgImages;
+            }
+
+            set
+            {
+                if (stateSvgImages == value)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    StateSvgImages.Assign(value);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the svg image size.
+        /// </summary>
+        [DefaultValue(null)]
+        public virtual int? SvgSize
+        {
+            get
+            {
+                return svgSize;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (svgSize == value)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    svgSize = value;
+                });
             }
         }
 
@@ -402,6 +619,29 @@ namespace Alternet.UI
         IReadOnlyList<ListControlColumn> IListControlItemContainer.Columns => Array.Empty<ListControlColumn>();
 
         /// <summary>
+        /// Sets the position at which the text is displayed.
+        /// </summary>
+        public virtual ElementContentAlign TextAlign
+        {
+            get
+            {
+                return textAlign;
+            }
+
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (textAlign == value)
+                    return;
+                textAlign = value;
+                UpdateTextAndImageAlignment();
+                if (TextVisible)
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the format provider used to control formatting operations for this control.
         /// When this property is set, the control will use the specified format provider for any culture-specific formatting operations,
         /// such as displaying dates, numbers, or other formatted values. If the format provider is null, the control will use
@@ -539,6 +779,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override SizeD GetPreferredSize(PreferredSizeContext context)
         {
+            UpdateItemImage();
+
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
             if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
@@ -600,6 +842,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the margins between the image and the text of the button.
+        /// Value is in device-independent units.
+        /// </summary>
+        /// <remarks>
+        /// If this method was not called, default margin is used around the image.
+        /// </remarks>
+        /// <param name="x">New horizontal margin.</param>
+        /// <param name="y">New vertical margin.</param>
+        public virtual void SetImageMargins(Coord x, Coord? y = null)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var newMargins = new Thickness(x, y ?? x);
+
+            if (Item.ImageMargin == newMargins)
+                return;
+            Item.ImageMargin = newMargins;
+
+            if (Item.HasImageOrSvg)
+                PerformLayoutAndInvalidate();
+        }
+
+        /// <summary>
         /// Toggles checked state of the item clicked at the specified coordinates.
         /// </summary>
         /// <param name="location">A <see cref="PointD"/> object containing
@@ -625,6 +891,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
+            UpdateItemImage();
+
             var flags = IsTransparent ? DrawDefaultBackgroundFlags.DrawBorder
                 : DrawDefaultBackgroundFlags.DrawBorderAndBackground;
 
@@ -673,6 +941,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the position at which the image is displayed.
+        /// </summary>
+        /// <param name="dir">New image position.</param>
+        public virtual void SetImagePosition(ElementContentAlign dir)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (imageAlign == dir)
+                return;
+            imageAlign = dir;
+            UpdateTextAndImageAlignment();
+            if (Item.HasImageOrSvg)
+                PerformLayoutAndInvalidate();
+        }
+
+        /// <summary>
         /// Raises the <see cref="CheckedChanged"/> event and calls
         /// <see cref="OnCheckedChanged(EventArgs)"/>.
         /// </summary>
@@ -696,6 +980,45 @@ namespace Alternet.UI
         public void SetChecked(bool isChecked)
         {
             IsChecked = isChecked;
+        }
+
+        void IControlStateObjectChanged.DisabledChanged(object? sender)
+        {
+            if (DisposingOrDisposed)
+                return;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.NormalChanged(object? sender)
+        {
+            if (DisposingOrDisposed)
+                return;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.FocusedChanged(object? sender)
+        {
+            if (DisposingOrDisposed)
+                return;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.HoveredChanged(object? sender)
+        {
+            if (DisposingOrDisposed)
+                return;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.PressedChanged(object? sender)
+        {
+            if (DisposingOrDisposed)
+                return;
+            PerformLayoutAndInvalidate();
+        }
+
+        void IControlStateObjectChanged.SelectedChanged(object? sender)
+        {
         }
 
         /// <inheritdoc/>
@@ -779,10 +1102,64 @@ namespace Alternet.UI
             return new();
         }
 
+        /// <summary>
+        /// Updates the button image according to the current visual state and images specified.
+        /// </summary>
+        protected virtual void UpdateItemImage()
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var hasStateImages = HasStateImages;
+            var hasStateSvgImages = HasStateSvgImages;
+            var hasImages = hasStateImages || hasStateSvgImages;
+
+            if (!hasImages)
+            {
+                Item.Image = null;
+                return;
+            }
+
+            var state = VisualState;
+
+            Image? image = null;
+
+            if (HasStateSvgImages)
+            {
+                var svgImage = StateSvgImages.GetObjectOrNull(state);
+
+                if (svgImage is not null)
+                {
+                    var imageSize = SvgSize ?? PixelFromDip(16);
+
+                    if (IsEnabled)
+                        image = svgImage.AsNormal(imageSize, IsDarkBackground)?.AsImage();
+                    else
+                        image = svgImage.AsDisabled(imageSize, IsDarkBackground)?.AsImage();
+                }
+            }
+
+            if (HasStateImages)
+            {
+                image ??= StateImages.GetObjectOrNormal(state);
+            }
+
+            Item.Image = image;
+        }
+
         /// <inheritdoc cref="MnemonicMarkerHelper.GetWithoutMnemonicMarkers"/>
         protected virtual string GetWithoutMnemonicMarkers(string s, out int mnemonicCharIndex)
         {
             return mnemonicMarkerHelper.GetWithoutMnemonicMarkers(s, out mnemonicCharIndex);
+        }
+
+        /// <summary>
+        /// Recalculates the alignment of text and image elements within the control based on the current settings.
+        /// </summary>
+        /// <remarks>Override this method in a derived class to implement custom alignment logic for text and images. </remarks>
+        protected virtual void UpdateTextAndImageAlignment()
+        {
+            Item.SetContentAlignment(TextAlign, ImageAlign);
         }
 
         /// <summary>
