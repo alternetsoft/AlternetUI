@@ -41,7 +41,7 @@ namespace ControlsSample
             RowIndex = 2,
         };
 
-        private int imageMargins = 5;
+        private int imageMargins;
 
         private ControlStateSvgImages? buttonImages;
 
@@ -53,7 +53,16 @@ namespace ControlsSample
         {
             InitializeComponent();
 
+            debugCornersCheckBox.Visible = DebugUtils.IsDebugDefinedAndAttached;
+
+            debugCornersCheckBox.CheckedChanged += (s,e) =>
+            {
+                Graphics.DrawDebugCorners = debugCornersCheckBox.IsChecked;
+                button.Refresh();
+            };
+
             exactFitCheckBox.Checked = button.ExactFit;
+            imageMargins = (int)button.Item.ImageMargin.Left;
 
             DoInsideLayout(Fn);
 
@@ -65,23 +74,13 @@ namespace ControlsSample
                 labelTextColor.Parent = propsContainer2;
                 comboBoxTextColor.Parent = propsContainer2;
 
-                imageMarginsButton.Enabled = App.IsWindowsOS;
                 imageMarginsButton.Click += ImageMarginsButton_Click;
-
-                button.Padding = 5;
 
                 textAlignComboBox.EnumType = typeof(ElementContentAlign);
                 textAlignComboBox.Value = ElementContentAlign.Default;
 
                 imageAlignComboBox.EnumType = typeof(ElementContentAlign);
                 imageAlignComboBox.Value = ElementContentAlign.Default;
-
-                if (!Button.ImagesEnabled)
-                {
-                    imageAlignComboBox.Enabled = false;
-                    imageCheckBox.Enabled = false;
-                    showTextCheckBox.Enabled = false;
-                }
 
                 comboBoxTextColor.Select(Color.Empty, GenericStrings.Default);
                 comboBoxBackColor.Select(Color.Empty, GenericStrings.Default);

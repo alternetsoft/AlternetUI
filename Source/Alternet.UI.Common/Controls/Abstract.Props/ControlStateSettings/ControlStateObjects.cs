@@ -83,6 +83,11 @@ namespace Alternet.UI
         public bool HasSelected => selected != null;
 
         /// <summary>
+        /// Gets a value indicating whether any of the control states have an assigned object.
+        /// </summary>
+        public bool HasAny => HasNormal || HasHovered || HasPressed || HasDisabled || HasFocused || HasSelected;
+
+        /// <summary>
         /// Gets or sets an object for normal control state.
         /// </summary>
         public virtual T? Normal
