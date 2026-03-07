@@ -51,31 +51,18 @@ namespace Alternet.UI
         /// </summary>
         public static new bool ShowDebugCorners = false;
 
-        /// <summary>
-        /// Gets or sets the mnemonic marker character. Default is '&amp;'.
-        /// </summary>
-        public static char DefaultMnemonicMarker = '&';
-
-        /// <summary>
-        /// Gets or sets whether to show mnemonic markers in the text.
-        /// </summary>
-        public static bool DefaultMnemonicMarkerEnabled = false;
-
         private bool imageVisible = true;
-        private int? mnemonicCharIndex = null;
         private HVAlignment alignment;
         private string? textPrefix;
         private string? textSuffix;
         private string? textFormat;
         private Graphics.DrawLabelParams prm;
         private bool isVerticalText;
-        private bool? mnemonicMarkerEnabled;
         private Coord? maxTextWidth;
         private bool wordWrap;
         private VerticalAlignment? imageVerticalAlignment;
         private HorizontalAlignment? imageHorizontalAlignment;
         private Coord? minTextWidth;
-        private char? mnemonicMarker;
         private bool isTransparent = true;
 
         /// <summary>
@@ -262,43 +249,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the character used as the mnemonic marker.
-        /// </summary>
-        /// <remarks>When <see cref="MnemonicMarkerEnabled"/> is <see langword="true"/>, setting this
-        /// property triggers a layout update and invalidates the control.</remarks>
-        public virtual char? MnemonicMarker
-        {
-            get => mnemonicMarker;
-            set
-            {
-                if(mnemonicMarker == value)
-                    return;
-                mnemonicMarker = value;
-                if (MnemonicMarkerEnabled is true)
-                    PerformLayoutAndInvalidate();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether to process mnemonic markers in the text.
-        /// If this property is not specified (default),
-        /// <see cref="DefaultMnemonicMarkerEnabled"/> is used
-        /// to determine whether mnemonic markers are processed.
-        /// </summary>
-        public virtual bool? MnemonicMarkerEnabled
-        {
-            get => mnemonicMarkerEnabled;
-
-            set
-            {
-                if (mnemonicMarkerEnabled == value)
-                    return;
-                mnemonicMarkerEnabled = value;
-                PerformLayoutAndInvalidate();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets text prefix.
         /// </summary>
         /// <remarks>
@@ -477,29 +427,6 @@ namespace Alternet.UI
                     return;
                 minTextWidth = value;
                 PerformLayoutAndInvalidate();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets underlined character index.
-        /// </summary>
-        /// <remarks>
-        /// By default equals -1.
-        /// </remarks>
-        [DefaultValue(null)]
-        public virtual int? MnemonicCharIndex
-        {
-            get
-            {
-                return mnemonicCharIndex;
-            }
-
-            set
-            {
-                if (mnemonicCharIndex == value)
-                    return;
-                mnemonicCharIndex = value;
-                Invalidate();
             }
         }
 
@@ -1033,48 +960,6 @@ namespace Alternet.UI
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
-        }
-
-        /// <summary>
-        /// Removes mnemonic markers from a string and returns the index of the
-        /// mnemonic character, if present.
-        /// </summary>
-        /// <param name="s">The input string containing mnemonic markers.</param>
-        /// <param name="mnemonicCharIndex">
-        /// The output index of the mnemonic character in the returned string.
-        /// Returns -1 if no mnemonic marker is found.
-        /// </param>
-        /// <returns>
-        /// The input string with mnemonic markers removed.
-        /// Double markers are converted to a single literal character.
-        /// </returns>
-        /// <remarks>
-        /// If <see cref="MnemonicCharIndex"/> is not null, it is assigned to
-        /// <paramref name="mnemonicCharIndex"/>.
-        /// In this case text is not processed and is used as is.
-        /// </remarks>
-        protected virtual string GetWithoutMnemonicMarkers(string s, out int mnemonicCharIndex)
-        {
-            if (MnemonicCharIndex.HasValue)
-            {
-                mnemonicCharIndex = MnemonicCharIndex.Value;
-                return s;
-            }
-
-            var checkMnemonic = MnemonicMarkerEnabled ?? DefaultMnemonicMarkerEnabled;
-            if (checkMnemonic)
-            {
-                var result = StringUtils.GetWithoutMnemonicMarkers(
-                            s,
-                            out mnemonicCharIndex,
-                            MnemonicMarker ?? DefaultMnemonicMarker);
-                return result;
-            }
-            else
-            {
-                mnemonicCharIndex = -1;
-                return s;
-            }
         }
 
         [Conditional("DEBUG")]
