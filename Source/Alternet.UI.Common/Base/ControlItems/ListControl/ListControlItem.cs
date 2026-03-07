@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -77,6 +78,7 @@ namespace Alternet.UI
         private Color? backgroundColor;
         private BorderSettings? border;
         private Thickness foregroundMargin;
+        private Thickness imageMargin;
         private DrawLabelFlags labelFlags;
         private object? value;
         private Action? action;
@@ -167,7 +169,7 @@ namespace Alternet.UI
         /// Gets or sets a value which specifies whether image to text are aligned vertically or horizontally.
         /// </summary>
         public virtual bool IsVerticalOrientation
-        { 
+        {
             get
             {
                 return isVerticalOrientation;
@@ -601,7 +603,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value is null)
+                if (value is null)
                 {
                     SvgImageSize = null;
                 }
@@ -798,6 +800,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets margin of the image when it is painted.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Thickness ImageMargin
+        {
+            get => imageMargin;
+            set => imageMargin = value;
+        }
+
+        /// <summary>
         /// Gets or sets left margin of the item when foreground is painted.
         /// </summary>
         [Browsable(false)]
@@ -961,7 +973,7 @@ namespace Alternet.UI
 
                 /* ============================= */
 
-                if(!item.HasImage(VisualControlState.Normal, isDark))
+                if (!item.HasImage(VisualControlState.Normal, isDark))
                 {
                     item.SetImage(
                         VisualControlState.Normal,
@@ -984,7 +996,7 @@ namespace Alternet.UI
                         if (!item.HasImage(VisualControlState.Selected, isDark))
                         {
                             var colorOverride = svgImage.GetSvgColor(KnownSvgColor.Selected, isDark);
-                            if(colorOverride is not null)
+                            if (colorOverride is not null)
                                 svgColor = colorOverride;
 
                             item.SetImage(
@@ -1236,6 +1248,16 @@ namespace Alternet.UI
 
             var maxImageHeightD = GraphicsFactory.PixelToDip(maxImageHeightI, dc.ScaleFactor);
             var maxImageWidthD = GraphicsFactory.PixelToDip(maxImageWidthI, dc.ScaleFactor);
+
+            var hasImage = maxImageHeightD > 0 && maxImageWidthD > 0;
+
+            if (hasImage)
+            {
+                var imageMargin = item?.ImageMargin ?? Thickness.Empty;
+                maxImageHeightD += imageMargin.Vertical;
+                maxImageWidthD += imageMargin.Horizontal;
+            }
+
             var checkBoxSize = GetCheckBoxSize(container).Height;
 
             maxImageHeightD = Math.Max(checkBoxSize, maxImageHeightD);
@@ -1356,7 +1378,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool IsContainerDark(IListControlItemContainer? container)
         {
-            if(LightDarkColor.IsDarkOverride is null)
+            if (LightDarkColor.IsDarkOverride is null)
             {
                 var control = container?.Control;
 
@@ -1878,6 +1900,7 @@ namespace Alternet.UI
                     prm.LineDistance = item.TextLineDistance ?? 0;
                     prm.IsImageAfterText = item.IsImageAfterText;
                     prm.IsVertical = item.IsVerticalOrientation;
+                    prm.ImageMargin = item.ImageMargin;
 
                     item.BeforeDrawLabel?.Invoke(item, ref prm);
                 }
@@ -1904,7 +1927,7 @@ namespace Alternet.UI
                         levelOffset = -itemMargin.Left;
                     }
 
-                    if(!column.IsVisible)
+                    if (!column.IsVisible)
                         continue;
 
                     var width = column.SuggestedWidth;
@@ -2130,7 +2153,7 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
         {
-            if(DrawBackgroundAction is null)
+            if (DrawBackgroundAction is null)
                 DefaultDrawBackground(container, e);
             else
                 DrawBackgroundAction(container, e);
@@ -2455,7 +2478,7 @@ namespace Alternet.UI
             var item = GetContainerRelated(container);
             var data = item.Value;
 
-            if(data.IsSelected != value)
+            if (data.IsSelected != value)
             {
                 data.IsSelected = value;
                 item.Value = data;
@@ -2615,7 +2638,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual int CompareTo(ListControlItem? other)
         {
-            if(other == null) return 1;
+            if (other == null) return 1;
 
             var thisItemText = DisplayText ?? Text ?? Value?.ToString() ?? string.Empty;
             var otherItemText = other.DisplayText ?? other.Text
@@ -2700,9 +2723,7 @@ namespace Alternet.UI
         }
 
         [Conditional("DEBUG")]
-        private static void DefaultDrawBackgroundDebug(
-                   IListControlItemContainer? container,
-                   ListBoxItemPaintEventArgs e)
+        private static void DefaultDrawBackgroundDebug(IListControlItemContainer? container, ListBoxItemPaintEventArgs e)
         {
             if (ContainerControl.ShowDebugFocusRect && e.IsCurrent)
             {
