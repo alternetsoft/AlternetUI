@@ -1361,6 +1361,268 @@ namespace Alternet.Drawing
             }
 
             /// <summary>
+            /// Sets value of the <see cref="MinTextWidth"/> property.
+            /// </summary>
+            /// <param name="value">The minimum text width.</param>
+            public void SetMinTextWidth(Coord? value)
+            {
+                MinTextWidth = value;
+            }
+
+            /// <summary>
+            /// Sets the collection of prefix elements to be used in subsequent drawing operations.
+            /// This is the same as setting the <see cref="PrefixElements"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <remarks>Setting prefix elements affects how future drawing operations are rendered,
+            /// as these elements will be applied before the main drawing content. If <paramref name="value"/> is <see
+            /// langword="null"/>, any existing prefix elements are removed.</remarks>
+            /// <param name="value">An array of <see cref="DrawElementParams"/> objects that represent the prefix elements to set. This
+            /// parameter can be <see langword="null"/> to clear the current prefix elements.</param>
+            public void SetPrefixElements(DrawElementParams[]? value)
+            {
+                PrefixElements = value;
+            }
+
+            /// <summary>
+            /// Sets the collection of suffix elements used for drawing operations.
+            /// This is the same as setting the <see cref="SuffixElements"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <remarks>Setting this value to <see langword="null"/> clears any previously assigned
+            /// suffix elements. The provided array is used to update the internal state for subsequent drawing
+            /// operations.</remarks>
+            /// <param name="value">An array of <see cref="DrawElementParams"/> objects that represent the suffix elements to assign.
+            /// Specify <see langword="null"/> to remove all existing suffix elements.</param>
+            public void SetSuffixElements(DrawElementParams[]? value)
+            {
+                SuffixElements = value;
+            }
+
+            /// <summary>
+            /// Sets the vertical alignment for the image associated with the label.
+            /// This is the same as setting the <see cref="ImageVerticalAlignment"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The vertical alignment to set for the image.</param>
+            public void SetImageVerticalAlignment(VerticalAlignment? value)
+            {
+                ImageVerticalAlignment = value;
+            }
+
+            /// <summary>
+            /// Sets the horizontal alignment for the image associated with the label.
+            /// This is the same as setting the <see cref="ImageHorizontalAlignment"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The horizontal alignment to set for the image.</param>
+            public void SetImageHorizontalAlignment(HorizontalAlignment? value)
+            {
+                ImageHorizontalAlignment = value;
+            }
+
+            /// <summary>
+            /// Sets the distance between lines of the text.
+            /// This is the same as setting the <see cref="LineDistance"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The coordinate value representing the desired line distance.</param>
+            public void SetLineDistance(Coord value)
+            {
+                LineDistance = value;
+            }
+
+            /// <summary>
+            /// Sets a value indicating whether the text is displayed vertically.
+            /// This is the same as setting the <see cref="IsVerticalText"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">A boolean value that determines if the text is vertical. Set to <see langword="true"/> to display text
+            /// vertically; otherwise, set to <see langword="false"/>.</param>
+            public void SetIsVerticalText(bool value)
+            {
+                IsVertical = value;
+            }
+
+            /// <summary>
+            /// Sets the horizontal alignment of the text line within the text block.
+            /// This is the same as setting the <see cref="TextHorizontalAlignment"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">the horizontal alignment of the text line within the text block.</param>
+            public void SetTextHorizontalAlignment(TextHorizontalAlignment value)
+            {
+                TextHorizontalAlignment = value;
+            }
+
+            /// <summary>
+            /// Sets a value which specifies whether image to text are aligned vertically or horizontally.
+            /// This is the same as setting the <see cref="IsVertical"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            public void SetIsVertical(bool value)
+            {
+                IsVertical = value;
+            }
+
+            /// <summary>
+            /// Sets a value indicating whether the image is displayed after the text.
+            /// This is the same as setting the <see cref="IsImageAfterText"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">A boolean value that determines if the image is displayed after the text.
+            /// Set to <see langword="true"/> to display the image
+            /// after the text; otherwise, set to <see langword="false"/>.</param>
+            public void SetIsImageAfterText(bool value)
+            {
+                IsImageAfterText = value;
+            }
+
+            /// <summary>
+            /// Sets the distance between the image and its label.
+            /// If value is <see langword="null"/>, <see cref="SpeedButton.DefaultImageLabelDistance"/> is used as the default distance.
+            /// This is the same as setting the <see cref="ImageLabelDistance"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <remarks>Use this method to adjust the spacing between the image and its label to meet
+            /// specific layout requirements. Passing <see langword="null"/> removes any previously set
+            /// distance.</remarks>
+            /// <param name="value">The distance to set between the image and its label.
+            /// Specify <see langword="null"/> to indicate that the
+            /// default distance should be used.</param>
+            public void SetImageLabelDistance(Coord? value)
+            {
+                ImageLabelDistance = value;
+            }
+
+            /// <summary>
+            /// Sets a value indicating whether the label should be drawn.
+            /// This is the same as setting the <see cref="Visible"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">A boolean value that determines if the label should be drawn.
+            /// Set to <see langword="true"/> to draw the label; otherwise, set to <see langword="false"/>.</param>
+            public void SetVisible(bool value)
+            {
+                Visible = value;
+            }
+
+            /// <summary>
+            /// Sets the text content to the specified value.
+            /// This is the same as setting the <see cref="Text"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The text to set as the content. This value cannot be null.</param>
+            public void SetText(string value)
+            {
+                Text = value;
+            }
+
+            /// <summary>
+            /// Sets the collection of text and font styles to be used instead of <see cref="Text"/>.
+            /// This is the same as setting the <see cref="TextAndFontStyle"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <remarks>If <paramref name="value"/> is <see langword="null"/>, any previously set
+            /// text and font styles are removed.</remarks>
+            /// <param name="value">An array of <see cref="TextAndFontStyle"/> objects that specify the text and font styles to use. This
+            /// parameter can be <see langword="null"/> to clear the current styles.</param>
+            public void SetTextAndFontStyle(TextAndFontStyle[]? value)
+            {
+                TextAndFontStyle = value;
+            }
+
+            /// <summary>
+            /// Sets the font used to render text.
+            /// This is the same as setting the <see cref="Font"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The font to apply for text rendering. Cannot be null.</param>
+            public void SetFont(Font value)
+            {
+                Font = value;
+            }
+
+            /// <summary>
+            /// Sets the foreground color for the element.
+            /// This is the same as setting the <see cref="ForegroundColor"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The color to set as the foreground color. This value cannot be null.</param>
+            public void SetForegroundColor(Color value)
+            {
+                ForegroundColor = value;
+            }
+
+            /// <summary>
+            /// Sets the background color of the control.
+            /// If parameter value equals to <see cref="Color.Empty"/>, background will not be painted.
+            /// This is the same as setting the <see cref="BackgroundColor"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The color to set as the background. This value cannot be null.</param>
+            public void SetBackgroundColor(Color value)
+            {
+                BackgroundColor = value;
+            }
+
+            /// <summary>
+            /// Sets the image to be displayed.
+            /// This is the same as setting the <see cref="Image"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The image to set. Can be null to clear the current image.</param>
+            public void SetImage(Image? value)
+            {
+                Image = value;
+            }
+
+            /// <summary>
+            /// Sets the rectangle in which drawing is performed to the specified value.
+            /// This is the same as setting the <see cref="Rect"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The new rectangle value to assign. This value must be a valid instance of <see cref="RectD"/>.</param>
+            public void SetRect(RectD value)
+            {
+                Rect = value;
+            }
+
+            /// <summary>
+            /// Sets the horizontal and vertical alignment of the label to the specified value.
+            /// This aligment determines how the whole text and image block is positioned within the drawing rectangle.
+            /// This is the same as setting the <see cref="Alignment"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The alignment value to apply. Specifies how the element is positioned horizontally and vertically.</param>
+            public void SetAlignment(HVAlignment value)
+            {
+                Alignment = value;
+            }
+
+            /// <summary>
+            /// Sets the index of the underlined mnemonic character.
+            /// This is the same as setting the <see cref="IndexAccel"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The index of the underlined mnemonic character to set. Must be a non-negative integer.</param>
+            public void SetIndexAccel(int value)
+            {
+                IndexAccel = value;
+            }
+
+            /// <summary>
+            /// Sets the flags that determine the drawing behavior of the label.
+            /// This is the same as setting the <see cref="Flags"/> property,
+            /// but provided as a method for convenience and potential future extensibility.
+            /// </summary>
+            /// <param name="value">The flags that specify how the label is drawn. This value cannot be null.</param>
+            public void SetFlags(DrawLabelFlags value)
+            {
+                Flags = value;
+            }
+
+            /// <summary>
             /// Determines the image alignment based on the current orientation.
             /// </summary>
             /// <returns>A tuple containing the horizontal and vertical alignment.</returns>
