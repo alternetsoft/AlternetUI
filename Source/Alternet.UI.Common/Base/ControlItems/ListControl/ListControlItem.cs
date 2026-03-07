@@ -92,6 +92,7 @@ namespace Alternet.UI
         private bool? isToolTipVisible;
         private bool isImageAfterText;
         private bool isVerticalOrientation;
+        private int indexAccel = -1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -134,6 +135,19 @@ namespace Alternet.UI
             Text = text;
             Action = action;
         }
+
+        /// <summary>
+        /// Represents the method that handles the event occurring before the text of a ListControlItem is drawn, allowing
+        /// customization of the text rendering parameters.
+        /// </summary>
+        /// <remarks>Use this delegate to modify text appearance, such as font, color, or formatting, before the
+        /// item is rendered in the list control. Changes to the prm parameter will affect how the item's text is
+        /// displayed.</remarks>
+        /// <param name="item">The <see cref="ListControlItem"/> that is about to have its text drawn.</param>
+        /// <param name="prm">A reference to the <see cref="Graphics.DrawLabelParams"/> structure containing
+        /// the parameters used for drawing the label. This
+        /// parameter can be modified to customize the appearance of the text.</param>
+        public delegate void BeforeDrawLabelDelegate(ListControlItem item, ref Graphics.DrawLabelParams prm);
 
         /// <summary>
         /// Gets whether the item has column cells.
@@ -505,6 +519,24 @@ namespace Alternet.UI
         {
             get => suffixElements;
             set => suffixElements = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the delegate that is invoked before the item's text is drawn.
+        /// </summary>
+        /// <remarks>Use this delegate to customize the appearance or behavior of item text before it is
+        /// rendered. This is useful for scenarios where dynamic formatting, conditional styling, or other modifications
+        /// to the text are required prior to display.</remarks>
+        public BeforeDrawLabelDelegate? BeforeDrawLabel { get; set; }
+
+        /// <summary>
+        /// Gets or sets index of underlined mnemonic character.
+        /// Default is -1, which means that mnemonic character is not underlined.
+        /// </summary>
+        public virtual int IndexAccel
+        {
+            get => indexAccel;
+            set => indexAccel = value;
         }
 
         /// <summary>
@@ -1838,6 +1870,7 @@ namespace Alternet.UI
 
                 if (item is not null)
                 {
+                    prm.IndexAccel = item.IndexAccel;
                     prm.SuffixElements = item.SuffixElements;
                     prm.PrefixElements = item.PrefixElements;
                     prm.Flags = item.LabelFlags;
@@ -1845,6 +1878,8 @@ namespace Alternet.UI
                     prm.LineDistance = item.TextLineDistance ?? 0;
                     prm.IsImageAfterText = item.IsImageAfterText;
                     prm.IsVertical = item.IsVerticalOrientation;
+
+                    item.BeforeDrawLabel?.Invoke(item, ref prm);
                 }
 
                 DefaultDebugDrawForeground(container, e, prm);
