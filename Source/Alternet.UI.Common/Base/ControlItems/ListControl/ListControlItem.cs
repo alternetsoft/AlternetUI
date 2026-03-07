@@ -230,6 +230,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets vertical alignment of the image inside the item.
+        /// </summary>
+        public virtual VerticalAlignment? ImageVerticalAlignment { get; set; }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the image inside the item.
+        /// </summary>
+        public virtual HorizontalAlignment? ImageHorizontalAlignment { get; set; }
+
+        /// <summary>
         /// Gets or sets horizontal alignment of the text line within text block.
         /// </summary>
         public virtual TextHorizontalAlignment? TextLineAlignment
@@ -1263,30 +1273,42 @@ namespace Alternet.UI
             maxImageHeightD = Math.Max(checkBoxSize, maxImageHeightD);
             maxImageHeightD += GetAdditionalImageMargin() + GetAdditionalTextMargin().Vertical;
 
-            var font = ListControlItem.GetFont(item, container, true).AsBold;
-
-            var hasNewLineChars = item?.LabelFlags.HasFlag(DrawLabelFlags.TextHasNewLineChars) ?? false;
+            var textVisible = container.Defaults.TextVisible;
 
             SizeD size;
+            float imageLabelDistance;
 
-            if (hasNewLineChars && StringUtils.ContainsNewLineChars(s))
+            if (textVisible)
             {
-                var splitText = StringUtils.Split(s, false);
-                size = dc.DrawStrings(
-                    RectD.Empty,
-                    font,
-                    splitText,
-                    item?.TextLineAlignment ?? TextHorizontalAlignment.Left,
-                    item?.TextLineDistance ?? 0);
+                imageLabelDistance = SpeedButton.DefaultImageLabelDistance;
+
+                var font = ListControlItem.GetFont(item, container, true).AsBold;
+                var hasNewLineChars = item?.LabelFlags.HasFlag(DrawLabelFlags.TextHasNewLineChars) ?? false;
+
+                if (hasNewLineChars && StringUtils.ContainsNewLineChars(s))
+                {
+                    var splitText = StringUtils.Split(s, false);
+                    size = dc.DrawStrings(
+                        RectD.Empty,
+                        font,
+                        splitText,
+                        item?.TextLineAlignment ?? TextHorizontalAlignment.Left,
+                        item?.TextLineDistance ?? 0);
+                }
+                else
+                {
+                    size = dc.GetTextExtent(s, font);
+                }
             }
             else
             {
-                size = dc.GetTextExtent(s, font);
+                size = SizeD.Empty;
+                imageLabelDistance = 0;
             }
 
             var itemMargin = container.Defaults.ItemMargin;
             var isVerticalOrientation = item?.IsVerticalOrientation ?? false;
-            var imageToTextDistance = GetAdditionalImageMargin() + SpeedButton.DefaultImageLabelDistance;
+            float imageToTextDistance = GetAdditionalImageMargin() + imageLabelDistance;
 
             if (isVerticalOrientation)
             {
@@ -1901,6 +1923,9 @@ namespace Alternet.UI
                     prm.IsImageAfterText = item.IsImageAfterText;
                     prm.IsVertical = item.IsVerticalOrientation;
                     prm.ImageMargin = item.ImageMargin;
+                    prm.ImageHorizontalAlignment = item.ImageHorizontalAlignment;
+                    prm.ImageVerticalAlignment = item.ImageVerticalAlignment;
+                    prm.TextVisible = container?.Defaults.TextVisible ?? true;
 
                     item.BeforeDrawLabel?.Invoke(item, ref prm);
                 }
