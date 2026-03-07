@@ -413,14 +413,23 @@ namespace Alternet.Drawing
 
             if (image is null)
             {
-                drawParams.Elements = [DrawElementParams.CreateTextElement(ref prm)];
+                if (prm.TextVisible)
+                    drawParams.Elements = [DrawElementParams.CreateTextElement(ref prm)];
             }
             else
             {
                 var imageElement = DrawElementParams.CreateImageElement(ref prm);
-                var textElement = DrawElementParams.CreateTextElement(ref prm);
 
-                drawParams.Elements = prm.IsImageAfterText ? [textElement, imageElement] : [imageElement, textElement];
+                if (prm.TextVisible)
+                {
+                    var textElement = DrawElementParams.CreateTextElement(ref prm);
+
+                    drawParams.Elements = prm.IsImageAfterText ? [textElement, imageElement] : [imageElement, textElement];
+                }
+                else
+                {
+                    drawParams.Elements = [imageElement];
+                }
             }
 
             if (prm.PrefixElements is not null || prm.SuffixElements is not null)
@@ -1323,6 +1332,14 @@ namespace Alternet.Drawing
             /// Gets or sets whether to draw debug corners around elements.
             /// </summary>
             public bool DrawDebugCorners;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the text is visible. If set to <see langword="false"/>,
+            /// the text will not be drawn. Default value is <see langword="true"/>. This property can be used
+            /// to control the visibility of the text independently from other elements, such as images
+            /// or prefixes/suffixes, allowing for flexible rendering options based on the specific requirements of the drawing operation.
+            /// </summary>
+            public bool TextVisible = true;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="DrawLabelParams"/> struct.
