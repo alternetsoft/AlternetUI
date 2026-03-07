@@ -899,6 +899,8 @@ namespace Alternet.Drawing
                 if (image is null)
                     return DrawElementParams.Default;
 
+                var imageMargin = prm.ImageMargin;
+
 #if DEBUG
                 var drawDebugCorners = prm.DrawDebugCorners || Graphics.DrawDebugCorners;
 #endif
@@ -909,11 +911,14 @@ namespace Alternet.Drawing
                     GetSize = (dc) =>
                     {
                         var result = image.SizeDip(dc.ScaleFactor);
+                        result += imageMargin.Size;
                         return result;
                     },
                     Draw = (dc, rect) =>
                     {
-                        dc.DrawImage(image, rect.Location);
+                        var deflated = rect.DeflatedWithPadding(imageMargin);
+
+                        dc.DrawImage(image, deflated.Location);
 
 #if DEBUG
                         if (drawDebugCorners)
@@ -1221,6 +1226,11 @@ namespace Alternet.Drawing
             /// Gets or sets a value which specifies whether image to text are aligned vertically or horizontally.
             /// </summary>
             public bool IsVertical;
+
+            /// <summary>
+            /// Gets or sets margin around the image. This is used when image is drawn.
+            /// </summary>
+            public Thickness ImageMargin;
 
             /// <summary>
             /// Gets or sets a value indicating whether the image is displayed after the text.
