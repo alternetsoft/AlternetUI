@@ -14,6 +14,7 @@ namespace Alternet.UI
     {
         private readonly ListItemDrawable itemDrawable;
 
+        private MnemonicMarkerHelper mnemonicMarkerHelper = new();
         private bool isTransparent = true;
         private ListControlItemDefaults itemDefaults;
         private ListControlItem? item;
@@ -59,6 +60,52 @@ namespace Alternet.UI
             ParentBackColor = true;
             ParentForeColor = true;
             HorizontalAlignment = HorizontalAlignment.Left;
+        }
+
+        /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarker"/>
+        public virtual char? MnemonicMarker
+        {
+            get => mnemonicMarkerHelper.MnemonicMarker;
+            set
+            {
+                if (mnemonicMarkerHelper.MnemonicMarker == value)
+                    return;
+                mnemonicMarkerHelper.MnemonicMarker = value;
+                if (MnemonicMarkerEnabled is true)
+                    PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarkerEnabled"/>
+        public virtual bool? MnemonicMarkerEnabled
+        {
+            get => mnemonicMarkerHelper.MnemonicMarkerEnabled;
+
+            set
+            {
+                if (mnemonicMarkerHelper.MnemonicMarkerEnabled == value)
+                    return;
+                mnemonicMarkerHelper.MnemonicMarkerEnabled = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicCharIndex"/>
+        [DefaultValue(null)]
+        public virtual int? MnemonicCharIndex
+        {
+            get
+            {
+                return mnemonicMarkerHelper.MnemonicCharIndex;
+            }
+
+            set
+            {
+                if (mnemonicMarkerHelper.MnemonicCharIndex == value)
+                    return;
+                mnemonicMarkerHelper.MnemonicCharIndex = value;
+                Invalidate();
+            }
         }
 
         /// <inheritdoc/>
@@ -688,7 +735,11 @@ namespace Alternet.UI
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);
-            Item.Text = Text;
+
+            var s = GetWithoutMnemonicMarkers(Text, out int mnemonicCharIndex);
+
+            Item.Text = s;
+            Item.IndexAccel = mnemonicCharIndex;
             PerformLayoutAndInvalidate();
         }
 
@@ -726,6 +777,12 @@ namespace Alternet.UI
         protected virtual ListControlItemDefaults CreateItemDefaults()
         {
             return new();
+        }
+
+        /// <inheritdoc cref="MnemonicMarkerHelper.GetWithoutMnemonicMarkers"/>
+        protected virtual string GetWithoutMnemonicMarkers(string s, out int mnemonicCharIndex)
+        {
+            return mnemonicMarkerHelper.GetWithoutMnemonicMarkers(s, out mnemonicCharIndex);
         }
 
         /// <summary>
