@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents a button control.
     /// </summary>
     [ControlCategory("Common")]
-    public partial class Button : ButtonBase, IControlStateObjectChanged
+    public partial class Button : ButtonBase, IControlStateObjectChanged, IDialogButtonRoles
     {
         internal static bool UseGeneric;
 

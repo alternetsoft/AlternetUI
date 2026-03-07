@@ -1740,17 +1740,17 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool EscapeOrEnterToDefaultButtonClick(KeyEventArgs e)
         {
-            bool ClickDefaultButton(Func<Button, bool> func)
+            bool ClickDefaultButton(Func<IDialogButtonRoles, bool> func)
             {
                 var child = FindChild(
                 (c) =>
                 {
-                    if (!c.Visible || c is not Button button)
+                    if (!c.Visible || c is not IDialogButtonRoles button)
                         return false;
                     return func(button);
                 },
                 true);
-                if (child is Button button)
+                if (child is IDialogButtonRoles button)
                 {
                     button.RaiseClick();
                     e.Suppressed();
