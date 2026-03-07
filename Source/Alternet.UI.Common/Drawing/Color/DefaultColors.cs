@@ -44,12 +44,17 @@ namespace Alternet.Drawing
         public static readonly Color DefaultWindowForeColorDark;
 
         private static LightDarkColor? borderColor;
+        
         private static LightDarkColor windowBackColor;
         private static LightDarkColor windowForeColor;
+        
         private static LightDarkColor controlBackColor;
         private static LightDarkColor controlForeColor;
+        
         private static LightDarkColor? svgDisabledColor;
         private static LightDarkColor? svgNormalColor;
+        
+        private static LightDarkColor? defaultCheckBoxColor;
 
 #pragma warning disable
         static DefaultColors()
@@ -75,10 +80,26 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the accent color used for UI elements, adapting to light and dark themes.
+        /// This color can be used to style various controls and components in the application,
+        /// providing a consistent look and feel across different themes.
+        /// </summary>
+        /// <remarks>The accent color is represented as a LightDarkColor object, which allows for
+        /// different colors in light and dark modes. This property can be used to customize the appearance of the
+        /// application based on user preferences or system settings.</remarks>
+        public static LightDarkColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new(76, 194, 255));
+
+        /// <summary>
         /// Gets or sets the default color of a checkbox in its normal state.
         /// </summary>
-        public static LightDarkColor DefaultCheckBoxColor { get; set; }
-            = new(light: (0, 103, 192), dark: new(76, 194, 255));
+        public static LightDarkColor DefaultCheckBoxColor
+        {
+            get => defaultCheckBoxColor ?? AccentColor;
+            set
+            {
+                defaultCheckBoxColor = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets default border color of the user control.
@@ -137,9 +158,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static LightDarkColor SvgNormalColor
         {
-            get => svgNormalColor ??= new LightDarkColor(
-                light: Color.Black,
-                dark: Color.White);
+            get => svgNormalColor ??= new LightDarkColor(light: Color.Black, dark: Color.White);
             set => svgNormalColor = value;
         }
 
