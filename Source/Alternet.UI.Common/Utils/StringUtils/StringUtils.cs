@@ -1313,25 +1313,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Splits text into three parts using the specified position of the accelerator
-        /// character. Returns an array of three <see cref="TextAndFontStyle"/> elements.
+        /// Splits text into parts using the specified position of the accelerator
+        /// character. Returns an array of <see cref="TextAndFontStyle"/> elements with the specified style for the
+        /// accelerator character and regular style for the rest of the text. Length of the returned array is 1, 2 or 3,
+        /// depending on the position of the accelerator character.
         /// </summary>
-        /// <param name="text">String to split into three parts.</param>
-        /// <param name="accelStyle">Style of the char on the
-        /// <paramref name="indexAccel"/> position.</param>
+        /// <param name="text">String to split into parts.</param>
+        /// <param name="accelStyle">Style of the char on the <paramref name="indexAccel"/> position.</param>
         /// <param name="indexAccel">Position of the accelerator character.</param>
-        /// <returns></returns>
+        /// <returns>Array of <see cref="TextAndFontStyle"/> elements representing the parts of the text.</returns>
         public static TextAndFontStyle[] ParseTextWithIndexAccel(
             string text,
             int indexAccel,
             FontStyle accelStyle = FontStyle.Underline)
         {
-            if (indexAccel < 0)
+            if (indexAccel < 0 || string.IsNullOrEmpty(text) || indexAccel >= text.Length)
                 return [text];
 
-            TextAndFontStyle prefixElement = new(text.Substring(0, indexAccel));
             TextAndFontStyle accelElement = new(text.Substring(indexAccel, 1), accelStyle);
-            TextAndFontStyle suffixElement = new(text.Substring(indexAccel + 1));
+
+            TextAndFontStyle prefixElement = new (text.Substring(0, indexAccel));
+
+            if (indexAccel == text.Length - 1)
+                return [prefixElement, accelElement];
+
+            TextAndFontStyle suffixElement = new (text.Substring(indexAccel + 1));
 
             TextAndFontStyle[] result = [prefixElement, accelElement, suffixElement];
             return result;
