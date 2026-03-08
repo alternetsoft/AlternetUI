@@ -82,9 +82,11 @@
 
     </VerticalStackPanel>
 
-    <Panel Grid.Row="1" Margin="10">
+    <Panel Grid.Row="1" Margin="10" Layout="Horizontal">
       <StdButton Name="button" VerticalAlignment="Center"  IsTextLocalized="true"
               HorizontalAlignment="Center" Click="Button_Click"/>
+      <StdButton Name="button2" VerticalAlignment="Center" Text="Secondary Button"
+              HorizontalAlignment="Center"/>
     </Panel>
   </Grid>
 </Panel>

@@ -118,6 +118,9 @@ namespace ControlsSample
 
             button.GotFocus += (s, e) => App.Log("Button: GotFocus");
             button.LostFocus += (s, e) => App.Log("Button: LostFocus");
+
+            button.Borders?.Normal?.InnerBorders.Add(BorderSettings.DebugBorder);
+            button.Borders?.Normal?.SetInnerBorderVisible(true);
         }
 
         private void Button_KeyDown(object? sender, KeyEventArgs e)

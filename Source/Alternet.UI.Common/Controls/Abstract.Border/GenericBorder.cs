@@ -74,7 +74,7 @@ namespace Alternet.UI
 
             set
             {
-                if(borderMargin == value)
+                if (borderMargin == value)
                     return;
                 borderMargin = value;
                 UpdatePadding();
@@ -190,8 +190,9 @@ namespace Alternet.UI
         public virtual bool AutoPadding { get; set; } = true;
 
         /// <inheritdoc/>
-        public override Color? BackgroundColor {
-            
+        public override Color? BackgroundColor
+        {
+
             get => base.BackgroundColor;
 
             set
@@ -552,7 +553,7 @@ namespace Alternet.UI
             }
             else
             {
-                if(Padding == NormalBorder.Width)
+                if (Padding == NormalBorder.Width)
                     Padding = 0;
             }
         }
