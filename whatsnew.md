@@ -1,3 +1,34 @@
+# 1.0.4 (2026 March 8)
+
+- Add `StdRadioButton`, `StdCheckBox`, `StdButton`, and `GenericItemControl` controls.
+- **Graphics:** Add `TextVisible` flag and honor it in `DrawLabel`.
+- **Graphics:** Respect `ImageMargin` in `DrawLabel`.
+- **Graphics:** Add setter methods for text drawing parameters.
+- **Graphics:** Support image-after-text ordering in `DrawLabel`.
+- **LightDarkColor:** Add `BlueDarker` and `BlueLighter` colors.
+- Add `DefaultColors.AccentColor`.
+- Use the `IDialogButtonRoles` interface instead of `Button` in `Window`.
+- **StringUtils:** Fix accelerator index bounds and suffix handling. Improve `ParseTextWithIndexAccel`.
+- Introduce `MnemonicMarkerHelper` struct to manage mnemonic marker behavior for label-like controls.
+- **ListControlItem:** Add image alignment and text visibility support.
+- **ListControlItem:** Add `ImageMargin`, `IsImageAfterText`, `IsVerticalOrientation`, `SetContentAlignment`, `BeforeDrawLabel`, and `IndexAccel` properties.
+- **ListControlItem:** Fix getting enabled state from the container.
+- **ListControlItem:** Support right-aligned checkboxes.
+- **ListControlItem:** Add checkbox state helpers and toggle logic.
+- Create `ControlStateSvgImages`.
+- **DrawingUtils:** Fix border painting in some situations.
+- **AbstractControl:** Fix `ClientToScreen` and `ScreenToClient`.
+- **PointD:** Add `HalfOfMinValue` and `HalfOfMaxValue`.
+- **GenericControl:** Implement overlay painting and handling.
+- Move overlay logic from `UserControl` to `AbstractControl`.
+- Convert `ListControlItemDefaults` to notify on change.
+- **ListItemDrawable:** Fix painting and add more properties.
+- **PaperSizes:** Add more known paper sizes.
+- Use `PaperKind` instead of `KnownPaperKind`.
+- Fix `PaperKind` element names.
+
+---
+
 # 1.0.3 (2026 March 3)
 
 - Create the `StdProgressBar` control. This is similar to the native `ProgressBar`, but is implemented within the library.
