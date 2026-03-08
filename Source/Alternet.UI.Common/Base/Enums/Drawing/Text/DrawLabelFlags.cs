@@ -11,6 +11,11 @@ namespace Alternet.Drawing
     public enum DrawLabelFlags
     {
         /// <summary>
+        /// Represents a value indicating that no specific option is selected.
+        /// </summary>
+        None = 0,
+
+        /// <summary>
         /// Text may contain html bold tags.
         /// </summary>
         TextHasBold = 1,
@@ -21,5 +26,10 @@ namespace Alternet.Drawing
         /// and it is split into the lines.
         /// </summary>
         TextHasNewLineChars = 2,
+
+        /// <summary>
+        /// Specifies that the text should be measured as bold.
+        /// </summary>
+        MeasureTextAsBold = 4,
     }
 }

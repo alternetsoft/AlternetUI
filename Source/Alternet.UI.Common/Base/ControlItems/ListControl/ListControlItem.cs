@@ -1235,6 +1235,8 @@ namespace Alternet.UI
                 item ??= container.SafeItem(itemIndex.Value);
             }
 
+            var flags = item?.LabelFlags ?? DrawLabelFlags.None;
+
             if (string.IsNullOrEmpty(s))
                 s = "Wy";
 
@@ -1283,7 +1285,11 @@ namespace Alternet.UI
                 imageLabelDistance = SpeedButton.DefaultImageLabelDistance;
 
                 var font = ListControlItem.GetFont(item, container, true);
-                var hasNewLineChars = item?.LabelFlags.HasFlag(DrawLabelFlags.TextHasNewLineChars) ?? false;
+
+                if (flags.HasFlag(DrawLabelFlags.MeasureTextAsBold))
+                    font = font.AsBold;
+
+                var hasNewLineChars = flags.HasFlag(DrawLabelFlags.TextHasNewLineChars);
 
                 if (hasNewLineChars && StringUtils.ContainsNewLineChars(s))
                 {
