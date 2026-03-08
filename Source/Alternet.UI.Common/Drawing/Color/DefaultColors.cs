@@ -156,7 +156,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static LightDarkColor SvgNormalColor
         {
-            get => svgNormalColor ??= new LightDarkColor(light: Color.Black, dark: Color.White);
+            get => svgNormalColor ??= new LightDarkColor(light: (33, 33, 33), dark: (230, 230, 230));
             set => svgNormalColor = value;
         }
 
