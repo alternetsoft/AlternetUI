@@ -15,16 +15,35 @@ namespace Alternet.UI
     public partial class StdButton : GenericItemControl, INotifyPropertyChanged, IDialogButtonRoles
     {
         /// <summary>
+        /// Gets or sets default value of the <see cref="IsBoldWhenIsd"/> property. It indicates whether the
+        /// text is displayed in bold when <see cref="IsDefault"/> property of the control is set to true.
+        /// </summary>
+        public static bool DefaultIsBoldWhenIsd = true;
+
+        /// <summary>
         /// Represents the default padding value which is applied to <see cref="StdButton"/> controls in the constructor.
         /// </summary>
         /// <remarks>This static field provides a standard padding size that is applied to <see cref="StdButton"/> controls
         /// to ensure consistent spacing across components.</remarks>
-        public static Thickness DefaultPadding = 3;
+        public static Thickness DefaultPadding = 4;
 
         /// <summary>
         /// Represents the default minimum size for the component, expressed as a SizeD structure.
         /// </summary>
         public static SizeD DefaultMinSize = 32;
+
+        /// <summary>
+        /// Specifies the default corner radius,
+        /// in device-independent pixels or in percentage, used for rendering the corners of button elements.
+        /// Use of percentage is determined by the value of <see cref="DefaultCornerRadiusIsPercent"/> field.
+        /// If percentage is used, the actual corner radius will be calculated as a percentage of the control's size.
+        /// </summary>
+        public static float DefaultCornerRadius = 35;
+
+        /// <summary>
+        /// Indicates whether the default corner radius is specified as a percentage of the element's dimensions.
+        /// </summary>
+        public static bool DefaultCornerRadiusIsPercent = true;
 
         private static LightDarkColor? defaultHotBorderColor;
         private static LightDarkColor? defaultBorderColor;
@@ -62,20 +81,13 @@ namespace Alternet.UI
             WantTab = true;
             IsGraphicControl = false;
             IsTransparent = false;
+            ParentBackColor = false;
+            ParentForeColor = false;
 
-            var radius = MaterialDesign.CornerRadius.Button;
+            UniformBorderCornerRadius = DefaultCornerRadius;
+            UniformBorderRadiusIsPercent = DefaultCornerRadiusIsPercent;
 
-            UniformBorderCornerRadius = radius;
-
-            if (Borders is not null)
-            {
-                Borders.Hovered = Borders.Normal?.Clone();
-                Borders.Selected = Borders.Normal?.Clone();
-                Borders.Pressed = Borders.Normal?.Clone();
-                Borders.Disabled = Borders.Normal?.Clone();
-            }
-
-            UseControlColors(true);
+            Borders?.SetAllExceptNormal(() => Borders.Normal?.Clone());
 
             MinimumSize = DefaultMinSize;
             Padding = DefaultPadding;
@@ -117,6 +129,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Specifies options for applying a color theme, allowing control over which aspects of the theme are modified.
+        /// </summary>
+        /// <remarks>This enumeration supports a bitwise combination of its member values to enable
+        /// multiple options when applying a color theme. The default value is Default, which applies no specific
+        /// options.</remarks>
+        [Flags]
+        public enum ColorThemeApplyOptions
+        {
+            /// <summary>
+            /// No specific options are applied when this option is used. This is the default value.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// When this option is used, the background color of the control is updated to match the color theme being applied.
+            /// </summary>
+            BackColor = 1,
+
+            /// <summary>
+            /// When this option is used, the foreground color of the control is updated to match the color theme being applied.
+            /// </summary>
+            ForeColor = 2,
+            
+            /// <summary>
+            /// When this option is used, the border color of the control is updated to match the color theme being applied.
+            /// </summary>
+            BorderColor = 4,
+
+            /// <summary>
+            /// All parts of the color theme are applied when this option is used.
+            /// </summary>
+            All = BackColor | ForeColor | BorderColor,
+        }
+
+        /// <summary>
         /// Gets or sets the default background color used for <see cref="StdButton"/> control when
         /// it's <see cref="IsDefault"/> property is set to true.
         /// </summary>
@@ -141,7 +188,7 @@ namespace Alternet.UI
         /// </summary>
         public static new LightDarkColor DefaultBackColor
         {
-            get => defaultBackColor ?? DefaultColors.ControlBackColor;
+            get => defaultBackColor ??= new (light: (245, 245, 245), dark: (63, 63, 63));
             set => defaultBackColor = value;
         }
 
@@ -162,7 +209,7 @@ namespace Alternet.UI
         {
             get
             {
-                return defaultHotBorderColor ?? DefaultColors.DefaultCheckBoxColor;
+                return defaultHotBorderColor ?? DefaultColors.AccentColor;
             }
 
             set
@@ -196,7 +243,7 @@ namespace Alternet.UI
         {
             get
             {
-                return defaultBorderColorIsd ?? DefaultColors.DefaultCheckBoxColor;
+                return defaultBorderColorIsd ?? DefaultColors.BorderColor;
             }
 
             set
@@ -213,7 +260,7 @@ namespace Alternet.UI
         {
             get
             {
-                return defaultHoveredBorderColorIsd ?? DefaultColors.DefaultCheckBoxColor;
+                return defaultHoveredBorderColorIsd ?? DefaultColors.AccentColor;
             }
 
             set
@@ -268,9 +315,26 @@ namespace Alternet.UI
                     SetColorTheme();
                 }
 
+                if (value)
+                {
+                    Item.IsBold = RealFont.IsBold || (IsBoldWhenIsd ?? DefaultIsBoldWhenIsd);
+                }
+                else
+                {
+                    Item.IsBold = RealFont.IsBold;
+                }
+
                 Invalidate();
             }
         }
+
+        /// <summary>
+        /// Gets or sets whether the text is displayed in bold when <see cref="IsDefault"/> property of the control is set to true.
+        /// If not set, the value of <see cref="DefaultIsBoldWhenIsd"/> static field is used. This property allows you to specify
+        /// whether the button's text should be rendered in bold font style when the button is marked as the default action in a dialog or form.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool? IsBoldWhenIsd { get; set; }
 
         /// <inheritdoc/>
         public override Color? BackgroundColor
@@ -282,15 +346,23 @@ namespace Alternet.UI
                     return;
                 if (BackgroundColor == value)
                     return;
-                if (value is null)
-                {
-                    if (SystemSettings.AppearanceIsDark)
-                        value = DefaultColors.ControlBackColor.Dark;
-                    else
-                        value = DefaultColors.ControlBackColor.Light;
-                }
-
+                value ??= GetEffectiveBackColor();
                 base.BackgroundColor = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override Color? ForegroundColor
+        {
+            get => base.ForegroundColor;
+            set
+            {
+                if (DisposingOrDisposed)
+                    return;
+                if (ForegroundColor == value)
+                    return;
+                value ??= GetEffectiveForeColor();
+                base.ForegroundColor = value;
             }
         }
 
@@ -366,60 +438,106 @@ namespace Alternet.UI
         /// Sets the application's color theme to match the current system appearance setting.
         /// </summary>
         /// <remarks>This method applies either a dark or light color theme based on the system's appearance preference. </remarks>
-        public virtual void SetColorTheme()
+        public virtual void SetColorTheme(ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
         {
-            if (SystemSettings.AppearanceIsDark)
-                SetColorThemeToDark();
+            SetColorThemeToLightOrDark(SystemSettings.AppearanceIsDark, opt);
+        }
+
+        /// <summary>
+        /// Applies a light or dark color theme to the control based on the specified parameters.
+        /// </summary>
+        /// <remarks>This method updates the control's color properties according to the selected theme
+        /// and the specified options. Only the color aspects indicated by the <paramref name="opt"/> parameter are
+        /// affected, allowing for selective theme application. The method respects the control's default or custom
+        /// color settings as appropriate.</remarks>
+        /// <param name="isDark">A value indicating whether to apply the dark theme (<see langword="true"/>) or the light theme (<see
+        /// langword="false"/>).</param>
+        /// <param name="opt">A set of options that specifies which color properties (such as background, foreground, and border colors)
+        /// the theme should be applied to.</param>
+        public virtual void SetColorThemeToLightOrDark(bool isDark, ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
+        {
+            DoInsideUpdate(() =>
+            {
+                if (opt.HasFlag(ColorThemeApplyOptions.BackColor))
+                    BackColor = GetEffectiveBackColor(isDark);
+                if (opt.HasFlag(ColorThemeApplyOptions.ForeColor))
+                    ForeColor = GetEffectiveForeColor(isDark);
+
+                if (IsDefault)
+                {
+                    if (opt.HasFlag(ColorThemeApplyOptions.BorderColor))
+                    {
+                        this.Borders?.Normal?.SetColor(DefaultBorderColorIsd.LightOrDark(isDark));
+                        this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColorIsd.LightOrDark(isDark));
+                    }
+                }
+                else
+                {
+                    if (opt.HasFlag(ColorThemeApplyOptions.BorderColor))
+                    {
+                        this.Borders?.Normal?.SetColor(DefaultBorderColor.LightOrDark(isDark));
+                        this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColor.LightOrDark(isDark));
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// Gets the effective foreground color based on the specified dark mode and other settings.
+        /// </summary>
+        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
+        /// <returns>A <see cref="Color"/> representing the effective foreground color, determined by the current 
+        /// settings and the dark mode parameter.</returns>
+        public virtual Color GetEffectiveForeColor(bool? isDark = null)
+        {
+            var isd = isDark ?? SystemSettings.AppearanceIsDark;
+
+            if (IsDefault)
+            {
+                return DefaultForeColorIsd.LightOrDark(isd);
+            }
             else
-                SetColorThemeToLight();
+            {
+                return DefaultForeColor.LightOrDark(isd);
+            }
+        }
+
+        /// <summary>
+        /// Gets the effective background color based on the specified dark mode and other settings.
+        /// </summary>
+        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
+        /// <returns>A <see cref="Color"/> representing the effective background color, determined by the current default
+        /// settings and the dark mode parameter.</returns>
+        public virtual Color GetEffectiveBackColor(bool? isDark = null)
+        {
+            var isd = isDark ?? SystemSettings.AppearanceIsDark;
+
+            if (IsDefault)
+            {
+                return DefaultBackColorIsd.LightOrDark(isd);
+            }
+            else
+            {
+                return DefaultBackColor.LightOrDark(isd);
+            }
         }
 
         /// <summary>
         /// Sets colors used in the control to the dark theme.
         /// </summary>
-        public virtual void SetColorThemeToDark()
+        public virtual void SetColorThemeToDark(ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
         {
-            DoInsideUpdate(() =>
-            {
-                if (IsDefault)
-                {
-                    BackColor = DefaultBackColorIsd.Dark;
-                    ForeColor = DefaultForeColorIsd.Dark;
-                    this.Borders?.Normal?.SetColor(DefaultBorderColorIsd.Dark);
-                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColorIsd.Dark);
-                }
-                else
-                {
-                    BackColor = DefaultBackColor.Dark;
-                    ForeColor = DefaultForeColor.Dark;
-                    this.Borders?.Normal?.SetColor(DefaultBorderColor.Dark);
-                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColor.Dark);
-                }
-            });
+            SetColorThemeToLightOrDark(isDark: true, opt);
         }
 
         /// <summary>
         /// Sets colors used in the control to the light theme.
         /// </summary>
-        public virtual void SetColorThemeToLight()
+        public virtual void SetColorThemeToLight(ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
         {
-            DoInsideUpdate(() =>
-            {
-                if (IsDefault)
-                {
-                    BackColor = DefaultBackColorIsd.Light;
-                    ForeColor = DefaultForeColorIsd.Light;
-                    this.Borders?.Normal?.SetColor(DefaultBorderColorIsd.Light);
-                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColorIsd.Light);
-                }
-                else
-                {
-                    BackColor = DefaultBackColor.Light;
-                    ForeColor = DefaultForeColor.Light;
-                    this.Borders?.Normal?.SetColor(DefaultBorderColor.Light);
-                    this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColor.Light);
-                }
-            });
+            SetColorThemeToLightOrDark(isDark: false, opt);
         }
 
         /// <inheritdoc/>
