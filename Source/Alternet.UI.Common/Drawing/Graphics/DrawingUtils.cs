@@ -418,6 +418,7 @@ namespace Alternet.UI
                         innerBorder,
                         hasBorder: true,
                         control: prm.Control);
+                    FillBorderRectangle(canvas, ref innerParams);
                     deflatedRect = deflatedRect.DeflatedWithPadding(margin);
                 }
             }

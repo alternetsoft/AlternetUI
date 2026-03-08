@@ -56,6 +56,7 @@ namespace Alternet.UI
         private static LightDarkColor? defaultHoveredBackColorIsd;
         private static LightDarkColor? defaultHoveredBackColor;
         private static LightDarkColor? defaultPressedBackColor;
+        private static LightDarkColor? defaultFocusedBorderColor;
 
         private bool isDefault;
         private bool isCancel;
@@ -154,7 +155,7 @@ namespace Alternet.UI
             /// When this option is used, the foreground color of the control is updated to match the color theme being applied.
             /// </summary>
             ForeColor = 2,
-            
+
             /// <summary>
             /// When this option is used, the border color of the control is updated to match the color theme being applied.
             /// </summary>
@@ -201,7 +202,7 @@ namespace Alternet.UI
         /// </summary>
         public static LightDarkColor DefaultNormalBackColor
         {
-            get => defaultBackColor ??= new (light: (245, 245, 245), dark: (63, 63, 63));
+            get => defaultBackColor ??= new(light: (245, 245, 245), dark: (63, 63, 63));
             set => defaultBackColor = value;
         }
 
@@ -251,9 +252,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the application.
+        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the normal state.
         /// </summary>
-        /// <remarks>If not explicitly set, the default border color is initialized to <see cref="DefaultColors.BorderColor"/>.</remarks>
         public static LightDarkColor DefaultBorderColor
         {
             get
@@ -264,6 +264,22 @@ namespace Alternet.UI
             set
             {
                 defaultBorderColor = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the focused state.
+        /// </summary>
+        public static LightDarkColor DefaultFocusedBorderColor
+        {
+            get
+            {
+                return defaultFocusedBorderColor ?? DefaultColors.AccentColor;
+            }
+
+            set
+            {
+                defaultFocusedBorderColor = value;
             }
         }
 
@@ -495,21 +511,20 @@ namespace Alternet.UI
                 if (opt.HasFlag(ColorThemeApplyOptions.ForeColor))
                     ForeColor = GetEffectiveForeColor(isDark);
 
-                if (IsDefault)
+                if (opt.HasFlag(ColorThemeApplyOptions.BorderColor))
                 {
-                    if (opt.HasFlag(ColorThemeApplyOptions.BorderColor))
+                    if (IsDefault)
                     {
                         this.Borders?.Normal?.SetColor(DefaultBorderColorIsd.LightOrDark(isDark));
                         this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColorIsd.LightOrDark(isDark));
                     }
-                }
-                else
-                {
-                    if (opt.HasFlag(ColorThemeApplyOptions.BorderColor))
+                    else
                     {
                         this.Borders?.Normal?.SetColor(DefaultBorderColor.LightOrDark(isDark));
                         this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColor.LightOrDark(isDark));
                     }
+
+                    this.Borders?.Focused?.SetColor(DefaultFocusedBorderColor.LightOrDark(isDark));
                 }
             });
         }
@@ -618,14 +633,14 @@ namespace Alternet.UI
                 color = GetEffectiveHoveredBackColor();
             }
             else
-            if (state == VisualControlState.Pressed)
-            {
-                color = GetEffectivePressedBackColor();
-            }
-            else
-            {
-                color = GetEffectiveBackColor();
-            }
+                if (state == VisualControlState.Pressed)
+                {
+                    color = GetEffectivePressedBackColor();
+                }
+                else
+                {
+                    color = GetEffectiveBackColor();
+                }
 
             return color.AsBrush;
         }
@@ -634,6 +649,12 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             base.DefaultPaint(e);
+        }
+
+        /// <inheritdoc/>
+        public override BorderSettings? GetBorderSettings(VisualControlState state)
+        {
+            return Borders?.GetObjectOrNormal(state);
         }
 
         /// <inheritdoc/>
