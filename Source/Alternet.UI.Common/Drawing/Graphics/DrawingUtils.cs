@@ -355,41 +355,71 @@ namespace Alternet.UI
         /// the border settings, and the canvas.</param>
         public static void FillBorderRectangle(Graphics canvas, ref DrawBorderParams prm)
         {
-            if (prm.Brush is null && (prm.Border is null || !prm.HasBorder))
+            var borderColor = prm.GetEffectiveBorderColor();
+            var hasBorder = borderColor is not null;
+            var hasBrush = prm.Brush is not null;
+
+            if (!hasBrush && !hasBorder)
                 return;
 
             var radius = GetCornerRadius(ref prm);
+            var rect = prm.Rect;
 
-            if (radius is not null && prm.Brush is not null)
+            if (radius is null)
             {
-                var defaultColor = ColorUtils.GetDefaultBorderColor(prm.Control);
-
-                var color = prm.Border?.Color ?? defaultColor;
-
-                if (prm.Border is null || color is null || !prm.HasBorder)
+                if (hasBrush)
                 {
-                    canvas.FillRoundedRectangle(prm.Brush, prm.Rect.InflatedBy(-1, -1), radius.Value);
+                    canvas.FillRectangle(prm.Brush!, rect);
+                }
+
+                if (hasBorder)
+                {
+                    DrawBorder(canvas, ref prm);
+                }
+            }
+            else
+            {
+                var inflatedRect = rect.InflatedBy(-1, -1);
+
+                if (hasBrush)
+                {
+                    if (borderColor is null)
+                    {
+                        canvas.FillRoundedRectangle(prm.Brush!, inflatedRect, radius.Value);
+                    }
+                    else
+                    {
+                        canvas.RoundedRectangle(borderColor.AsPen, prm.Brush!, inflatedRect, radius.Value);
+                    }
                 }
                 else
                 {
-                    canvas.RoundedRectangle(
-                        color.AsPen,
-                        prm.Brush,
-                        prm.Rect.InflatedBy(-1, -1),
-                        radius.Value);
+                    if (borderColor is not null)
+                    {
+                        canvas.DrawRoundedRectangle(borderColor.AsPen, inflatedRect, radius.Value);
+                    }
+                    else
+                    {
+                        // Do nothing here
+                    }
                 }
-
-                return;
             }
 
-            if (prm.Brush != null)
+            if (prm.InnerBorderVisible)
             {
-                canvas.FillRectangle(prm.Brush, prm.Rect);
-            }
+                var margin = prm.InnerBorderMargin;
+                var deflatedRect = rect.DeflatedWithPadding(margin);
 
-            if (prm.HasBorder && prm.Border is not null)
-            {
-                DrawBorder(canvas, ref prm);
+                foreach (var innerBorder in prm.InnerBorders)
+                {
+                    DrawBorderParams innerParams = new(
+                        deflatedRect,
+                        null,
+                        innerBorder,
+                        hasBorder: true,
+                        control: prm.Control);
+                    deflatedRect = deflatedRect.DeflatedWithPadding(margin);
+                }
             }
         }
 
@@ -1353,6 +1383,57 @@ namespace Alternet.UI
                 Border = border;
                 HasBorder = hasBorder;
                 Control = control;
+            }
+
+            /// <summary>
+            /// Gets a value indicating whether the inner border is visible.
+            /// </summary>
+            /// <remarks>The inner border is only visible if the outer border is present and both the
+            /// inner border visibility and presence are set to true.</remarks>
+            public readonly bool InnerBorderVisible
+            {
+                get
+                {
+                    if (!HasBorder)
+                        return false;
+                    if (Border == null)
+                        return false;
+                    if (!Border.InnerBorderVisible)
+                        return false;
+                    if (!Border.HasInnerBorders)
+                        return false;
+
+                    return true;
+                }
+            }
+
+            /// <summary>
+            /// Gets the margin thickness between the inner edge of the border and the content of the control.
+            /// </summary>
+            /// <remarks>If the control does not have a border, this property returns <see cref="Thickness.Empty"/>.
+            /// The value is determined by the associated border's inner margin settings.</remarks>
+            public readonly Thickness InnerBorderMargin => Border?.InnerBorderMargin ?? Thickness.Empty;
+
+            /// <summary>
+            /// Gets the collection of inner border settings associated with the current border.
+            /// Before accessing this property, ensure that the inner border is visible by checking
+            /// the <see cref="InnerBorderVisible"/> property.
+            /// </summary>
+            /// <remarks>If the current border is not defined, this property returns an empty
+            /// collection. This allows callers to safely enumerate the result without checking for null
+            /// values.</remarks>
+            public readonly IEnumerable<BorderSettings> InnerBorders => Border?.InnerBorders ?? Enumerable.Empty<BorderSettings>();
+
+            /// <summary>
+            /// Gets the effective border color, or null if the border is hidden.
+            /// </summary>
+            public readonly Color? GetEffectiveBorderColor()
+            {
+                if (!HasBorder)
+                    return null;
+
+                var borderColor = Border?.Color ?? ColorUtils.GetDefaultBorderColor(Control);
+                return borderColor;
             }
         }
     }
