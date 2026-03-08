@@ -42,6 +42,8 @@ namespace Alternet.UI
         public StdCheckBox()
         {
             ItemDefaults.CheckBoxVisible = true;
+            WantTab = true;
+            IsGraphicControl = false;
         }
 
         /// <summary>

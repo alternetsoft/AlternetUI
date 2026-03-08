@@ -59,6 +59,8 @@ namespace Alternet.UI
         /// </summary>
         public StdRadioButton()
         {
+            WantTab = true;
+            IsGraphicControl = false;
             ItemDefaults.CheckBoxVisible = true;
             Item.IsRadioButton = true;
         }
