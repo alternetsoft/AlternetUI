@@ -266,6 +266,38 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the values of the Hovered, Pressed, Disabled, and Focused states to the specified value,
+        /// excluding the Normal state.
+        /// </summary>
+        /// <remarks>Use this method to update multiple control states at once, ensuring consistency
+        /// across all states except for Normal, which remains unchanged.</remarks>
+        /// <param name="value">The value to assign to the Hovered, Pressed, Disabled, and Focused states. If null, these states are reset
+        /// to their default values.</param>
+        public virtual void SetAllExceptNormal(T? value)
+        {
+            Hovered = value;
+            Pressed = value;
+            Disabled = value;
+            Focused = value;
+        }
+
+        /// <summary>
+        /// Sets the values of the Hovered, Pressed, Disabled, and Focused states by invoking the specified function for
+        /// each state. The Normal state is not modified.
+        /// </summary>
+        /// <remarks>Use this method to update multiple control states in a consistent manner, excluding
+        /// the Normal state. This is useful when you want to apply the same logic to several states at once.</remarks>
+        /// <param name="func">A function that returns a nullable value of type T. This function is called separately for each state to
+        /// determine the value to assign.</param>
+        public virtual void SetAllExceptNormal(Func<T?> func)
+        {
+            Hovered = func();
+            Pressed = func();
+            Disabled = func();
+            Focused = func();
+        }
+
+        /// <summary>
         /// Gets an object for the specified state or calls an <paramref name="action"/>
         /// if object for that state is not specified.
         /// </summary>
