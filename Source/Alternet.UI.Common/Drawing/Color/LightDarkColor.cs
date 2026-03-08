@@ -178,6 +178,58 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calculates and returns a new color pair with the light and dark colors adjusted
+        /// according to the specified operations.
+        /// </summary>
+        /// <param name="lightOp">The color adjustment operation to apply to the light color. Determines how the light color is modified.</param>
+        /// <param name="darkOp">The color adjustment operation to apply to the dark color. Determines how the dark color is modified.</param>
+        /// <returns>A new LightDarkColor instance containing the adjusted light and dark colors after applying the specified
+        /// operations.</returns>
+        public LightDarkColor GetAdjustedColorPair(ColorAdjustmentOperation lightOp, ColorAdjustmentOperation darkOp)
+        {
+            return new LightDarkColor(Light.GetAdjustedColor(lightOp), Dark.GetAdjustedColor(darkOp));
+        }
+
+        /// <summary>
+        /// Gets a <see cref="LightDarkColor"/> with light and dark colors that are lighter
+        /// than the current colors.
+        /// </summary>
+        /// <returns>A new <see cref="LightDarkColor"/> instance with lighter colors.</returns>
+        public LightDarkColor LighterPair()
+        {
+            return new LightDarkColor(Light.Lighter(), Dark.Lighter());
+        }
+
+        /// <summary>
+        /// Creates a new LightDarkColor instance with both the light and dark colors set to their 2x lighter variants.
+        /// </summary>
+        /// <returns>A LightDarkColor object whose Light and Dark properties are the 2x lighter versions of the current Light and
+        /// Dark colors.</returns>
+        public LightDarkColor LighterLighterPair()
+        {
+            return new LightDarkColor(Light.LighterLighter(), Dark.LighterLighter());
+        }
+
+        /// <summary>
+        /// Creates a new LightDarkColor instance with both the light and dark colors set to their 2x darker variants.
+        /// </summary>
+        /// <returns>A LightDarkColor object whose Light and Dark properties are the 2x darker versions of the current Light and
+        /// Dark colors.</returns>
+        public LightDarkColor DarkerDarkerPair()
+        {
+            return new LightDarkColor(Light.DarkerDarker(), Dark.DarkerDarker());
+        }
+
+        /// <summary>
+        /// Creates a new LightDarkColor instance that represents a darker version of the current color.
+        /// </summary>
+        /// <returns>A LightDarkColor object whose light and dark components are each darkened compared to the current instance.</returns>
+        public LightDarkColor DarkerPair()
+        {
+            return new LightDarkColor(Light.Darker(), Dark.Darker());
+        }
+
+        /// <summary>
         /// Gets <see cref="Dark"/> or <see cref="Light"/> color depending on
         /// <paramref name="isDark"/> parameter value.
         /// </summary>

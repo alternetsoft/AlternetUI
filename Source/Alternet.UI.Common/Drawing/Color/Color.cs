@@ -1218,7 +1218,7 @@ namespace Alternet.Drawing
         {
             List<Color> colors = new();
 
-            foreach (KnownColor knownColor in Enum.GetValues(typeof(KnownColor)))
+            foreach (KnownColor knownColor in Enum.GetValues<KnownColor>())
             {
                 colors.Add(new Color(knownColor));
             }
@@ -1681,6 +1681,25 @@ namespace Alternet.Drawing
             GenericImage image = new(size.Width, size.Height);
             image.SetRGBRect(this);
             return image;
+        }
+
+        /// <summary>
+        /// Adjusts the color according to the specified color adjustment operation.
+        /// </summary>
+        /// <remarks>Use this method to dynamically modify color RGB values. The adjustment is determined by the provided operation.</remarks>
+        /// <param name="op">The color adjustment operation to apply.</param>
+        /// <returns>A new <see cref="Color"/> instance representing the adjusted color. If the operation is not recognized, returns the
+        /// original color.</returns>
+        public Color GetAdjustedColor(ColorAdjustmentOperation op)
+        {
+            return op switch
+            {
+                ColorAdjustmentOperation.Lighten => Lighter(),
+                ColorAdjustmentOperation.LightenHigh => LighterLighter(),
+                ColorAdjustmentOperation.Darken => Darker(),
+                ColorAdjustmentOperation.DarkenHigh => DarkerDarker(),
+                _ => this,
+            };
         }
 
         /// <summary>
