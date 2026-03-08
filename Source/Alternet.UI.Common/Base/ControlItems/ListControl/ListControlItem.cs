@@ -1282,7 +1282,7 @@ namespace Alternet.UI
             {
                 imageLabelDistance = SpeedButton.DefaultImageLabelDistance;
 
-                var font = ListControlItem.GetFont(item, container, true).AsBold;
+                var font = ListControlItem.GetFont(item, container, true);
                 var hasNewLineChars = item?.LabelFlags.HasFlag(DrawLabelFlags.TextHasNewLineChars) ?? false;
 
                 if (hasNewLineChars && StringUtils.ContainsNewLineChars(s))
