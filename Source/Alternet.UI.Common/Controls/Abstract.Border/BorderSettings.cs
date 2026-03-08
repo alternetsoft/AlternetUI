@@ -55,12 +55,17 @@ namespace Alternet.UI
         private readonly BorderSideSettings top = new();
         private readonly BorderSideSettings right = new();
         private readonly BorderSideSettings bottom = new();
+
         private Coord? uniformCornerRadius;
         private bool? uniformRadiusIsPercent = false;
         private BorderCornerRadius? topLeftRadius;
         private BorderCornerRadius? topRightRadius;
         private BorderCornerRadius? bottomRightRadius;
         private BorderCornerRadius? bottomLeftRadius;
+
+        private BaseCollection<BorderSettings>? innerBorders;
+        private Thickness innerBorderMargin = Thickness.One;
+        private bool innerBorderVisible;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BorderSettings"/> class.
@@ -169,6 +174,59 @@ namespace Alternet.UI
                     return;
                 uniformRadiusIsPercent = value;
                 RaisePropertyChanged(nameof(UniformCornerRadius));
+            }
+        }
+
+        /// <summary>
+        /// Gets whether this border has inner borders. Inner border is drawn inside the main border
+        /// and can be used to create layered border effects.
+        /// </summary>
+        public virtual bool HasInnerBorders => innerBorders != null && innerBorders.Count > 0;
+
+        /// <summary>
+        /// Gets the collection of inner border settings.
+        /// </summary>
+        /// <remarks>The collection is initialized on first access. Use this property to configure
+        /// multiple inner borders for advanced styling or layout scenarios. Modifying the collection affects the
+        /// appearance of the element's inner borders.</remarks>
+        public virtual BaseCollection<BorderSettings> InnerBorders
+        {
+            get
+            {
+                return innerBorders ??= new ();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the inner borders are visible.
+        /// </summary>
+        public virtual bool InnerBorderVisible
+        {
+            get => innerBorderVisible;
+            set
+            {
+                if (innerBorderVisible == value || Immutable)
+                    return;
+                innerBorderVisible = value;
+                RaisePropertyChanged(nameof(InnerBorderVisible));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the inner border margin. It determines the spacing between this border and the
+        /// first inner border.
+        /// </summary>
+        /// <remarks>Changing this property raises the PropertyChanged event, allowing the user interface
+        /// to update in response to margin changes. </remarks>
+        public virtual Thickness InnerBorderMargin
+        {
+            get => innerBorderMargin;
+            set
+            {
+                if (innerBorderMargin == value || Immutable)
+                    return;
+                innerBorderMargin = value;
+                RaisePropertyChanged(nameof(InnerBorderMargin));
             }
         }
 
@@ -447,6 +505,16 @@ namespace Alternet.UI
         public void SetWidth(Thickness value)
         {
             Width = value;
+        }
+
+        /// <summary>
+        /// Sets the visibility of the inner border.
+        /// </summary>
+        /// <param name="value">A boolean value indicating whether the inner border should be visible. Pass <see langword="true"/> to show
+        /// the inner border; otherwise, pass <see langword="false"/> to hide it.</param>
+        public void SetInnerBorderVisible(bool value)
+        {
+            InnerBorderVisible = value;
         }
 
         /// <summary>
