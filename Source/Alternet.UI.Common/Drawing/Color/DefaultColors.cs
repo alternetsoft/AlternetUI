@@ -19,8 +19,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the default border color for user controls when light theme is used.
         /// </summary>
-        // This is also used to get default disabled svg image color for light theme.
-        // So please do not change this value unless you completely sure.
         public static readonly Color DefaultBorderColorLight;
 
         /// <summary>
@@ -169,7 +167,7 @@ namespace Alternet.Drawing
         {
             get => svgDisabledColor ??= new LightDarkColor(
                 light: SystemColors.GrayText,
-                dark: DefaultColors.GetBorderColor(isDark: false));
+                dark: (86, 86, 86));
             set => svgDisabledColor = value;
         }
 
