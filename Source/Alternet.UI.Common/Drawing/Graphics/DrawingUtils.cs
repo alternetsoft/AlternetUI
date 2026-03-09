@@ -735,7 +735,7 @@ namespace Alternet.UI
             RectD rect,
             BorderSettings? border)
         {
-            var prm = new DrawBorderParams(rect, null, border, true, control);
+            var prm = new DrawBorderParams(rect, null, border, hasBorder: true, control);
             DrawBorder(dc, ref prm);
         }
 

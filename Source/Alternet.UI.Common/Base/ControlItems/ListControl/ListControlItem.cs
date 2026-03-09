@@ -1564,7 +1564,7 @@ namespace Alternet.UI
                     rect,
                     item?.BackgroundColor?.AsBrush,
                     item?.Border,
-                    true,
+                    hasBorder: true,
                     control);
 
                 var selectionVisible = container?.Defaults.SelectionVisible ?? true;
