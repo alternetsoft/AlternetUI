@@ -1434,6 +1434,10 @@ namespace Alternet.UI
                     return null;
 
                 var borderColor = Border?.Color ?? ColorUtils.GetDefaultBorderColor(Control);
+
+                if (borderColor.IsEmptyOrTransparent)
+                    return null;
+
                 return borderColor;
             }
         }
