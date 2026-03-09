@@ -30,7 +30,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory("Common")]
-    public partial class StdRadioButton : GenericItemControl
+    public partial class StdRadioButton : StdCheckBox
     {
         private static int suppressSiblingNotifyCounter;
 
@@ -59,9 +59,6 @@ namespace Alternet.UI
         /// </summary>
         public StdRadioButton()
         {
-            WantTab = true;
-            IsGraphicControl = false;
-            ItemDefaults.CheckBoxVisible = true;
             Item.IsRadioButton = true;
         }
 

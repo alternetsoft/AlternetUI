@@ -17,6 +17,11 @@ namespace Alternet.UI
     public partial class StdCheckBox : GenericItemControl
     {
         /// <summary>
+        /// Gets or sets a default value of the check box margin. This margin is used when check box mark is painted.
+        /// </summary>
+        public static Thickness DefaultCheckBoxMargin = (3, 0, 0, 0);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="StdCheckBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
@@ -44,6 +49,18 @@ namespace Alternet.UI
             ItemDefaults.CheckBoxVisible = true;
             WantTab = true;
             IsGraphicControl = false;
+            Item.CheckBoxMargin = DefaultCheckBoxMargin;
+            
+            HasBorder = true;
+
+            Borders ??= new();
+            Borders.Normal = BorderSettings.TransparentBorder.Clone();
+
+            Borders.SetAllExceptNormal(
+                (state) => Borders.Normal?.Clone(),
+                VisualControlStates.Hovered | VisualControlStates.Pressed | VisualControlStates.Disabled);
+
+            Borders.Focused = BorderSettings.AccentBorder.Clone();
         }
 
         /// <summary>
