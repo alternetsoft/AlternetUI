@@ -31,6 +31,20 @@ namespace ControlsSample
             checkStateCheckedButton.Click += CheckStateCheckedButton_Click;
             checkStateIndeterminateButton.Click += CheckStateIndeterminateButton_Click;
             textEmptyButton.Click += TextEmptyButton_Click;
+
+            checkBox.Parent?.ContextMenuStrip.Add("Toggle accent border", () =>
+            {
+                if(checkBox.Item.Border == BorderSettings.AccentBorder)
+                {
+                    checkBox.Item.Border = BorderSettings.TransparentBorder;
+                }
+                else
+                {
+                    checkBox.Item.Border = BorderSettings.AccentBorder;
+                }
+
+                checkBox.Invalidate();
+            });
         }
 
         private void TextEmptyButton_Click(object? sender, EventArgs e)

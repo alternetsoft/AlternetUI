@@ -119,19 +119,26 @@ namespace ControlsSample
             button.GotFocus += (s, e) => App.Log("Button: GotFocus");
             button.LostFocus += (s, e) => App.Log("Button: LostFocus");
 
-            var testInnerBorder = false;
-
-            if (testInnerBorder)
+            button.Parent?.ContextMenuStrip.Add("Toggle inner border", () =>
             {
-                var innerBorder = button.Borders?.Normal?.Clone();
-                innerBorder?.SetColor(LightDarkColors.Red);
-
-                if (innerBorder is not null)
+                if (button.Borders?.Normal?.HasInnerBorders ?? false)
                 {
-                    button.Borders?.Normal?.InnerBorders.Add(innerBorder);
-                    button.Borders?.Normal?.SetInnerBorderVisible(true);
+                    button.Borders?.Normal?.InnerBorders.Clear();
                 }
-            }
+                else
+                {                     
+                    var innerBorder = button.Borders?.Normal?.Clone();
+                    innerBorder?.SetColor(LightDarkColors.Red);
+
+                    if (innerBorder is not null)
+                    {
+                        button.Borders?.Normal?.InnerBorders.Add(innerBorder);
+                        button.Borders?.Normal?.SetInnerBorderVisible(true);
+                    }
+                }
+
+                button.Invalidate();
+            });
         }
 
         private void Button_KeyDown(object? sender, KeyEventArgs e)
