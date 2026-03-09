@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -52,6 +53,9 @@ namespace Alternet.UI
         private static BorderSettings? debugBorder;
         private static BorderSettings? debugBorderBlue;
         private static BorderSettings? debugBorderGreen;
+        private static BorderSettings? accentBorder;
+        private static BorderSettings? transparentBorder;
+        private static BorderSettings? emptyBorder;
 
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();
@@ -105,10 +109,65 @@ namespace Alternet.UI
             {
                 return debugBorder ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
             }
+
+            set
+            {
+                debugBorder = value;
+            }
         }
 
         /// <summary>
-        /// Get border settings for the green debug border.
+        /// Gets a border settings instance configured with a transparent color.
+        /// </summary>
+        /// <remarks>Use this property when a border is required but should not be visible, allowing the
+        /// underlying background to show through. The returned instance can be used in scenarios where a non-intrusive
+        /// or invisible border is desired.</remarks>
+        public static BorderSettings TransparentBorder
+        {
+            get
+            {
+                var result = transparentBorder ??= Default.WithColor(Color.Transparent);
+                result.SetImmutable();
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets a static instance of border settings configured with an empty color value.
+        /// </summary>
+        /// <remarks>This property returns a shared, read-only instance of the BorderSettings class with
+        /// its color set to <see cref="Color.Empty"/>. The same instance is reused throughout the application, which
+        /// can help reduce memory usage when a border with no color is needed.</remarks>
+        public static BorderSettings EmptyColorBorder
+        {
+            get
+            {
+                var result = emptyBorder ??= Default.WithColor(Color.Empty);
+                result.SetImmutable();
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets border settings for the accent border. Accent border is used to indicate active or focused elements.
+        /// It uses <see cref="DefaultColors.AccentColor"/> as default color. If you want to have the same accent border on all platforms,
+        /// set <see cref="DefaultColors.AccentColor"/> to the desired color.
+        /// </summary>
+        public static BorderSettings AccentBorder
+        {
+            get
+            {
+                return accentBorder ??= Default.WithColor(DefaultColors.AccentColor);
+            }
+
+            set
+            {
+                accentBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets border settings for the green debug border.
         /// </summary>
         public static BorderSettings DebugBorderGreen
         {
@@ -116,16 +175,26 @@ namespace Alternet.UI
             {
                 return debugBorderGreen ??= Default.WithColor(LightDarkColors.Green);
             }
+
+            set
+            {
+                debugBorderGreen = value;
+            }
         }
 
         /// <summary>
-        /// Get border settings for the blue debug border.
+        /// Gets or sets border settings for the blue debug border.
         /// </summary>
         public static BorderSettings DebugBorderBlue
         {
             get
             {
                 return debugBorderBlue ??= Default.WithColor(LightDarkColors.Blue);
+            }
+
+            set
+            {
+                debugBorderBlue = value;
             }
         }
 
@@ -192,7 +261,7 @@ namespace Alternet.UI
         {
             get
             {
-                return innerBorders ??= new ();
+                return innerBorders ??= new();
             }
         }
 
