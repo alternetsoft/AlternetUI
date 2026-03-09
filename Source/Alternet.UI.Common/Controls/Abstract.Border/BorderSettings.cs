@@ -40,12 +40,14 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default border color.
         /// </summary>
-        public static Color? DefaultColor;
+        [Obsolete("Use DefaultColors.BorderColor instead.")]
+        public static readonly Color? DefaultColor;
 
         /// <summary>
         /// Default border color.
         /// </summary>
-        public static Color DefaultCommonBorderColor = SystemColors.GrayText;
+        [Obsolete("Use DefaultColors.BorderColor instead.")]
+        public static readonly Color DefaultCommonBorderColor = SystemColors.GrayText;
 
         private static BorderSettings? debugBorder;
         private static BorderSettings? debugBorderBlue;
@@ -101,8 +103,7 @@ namespace Alternet.UI
         {
             get
             {
-                return debugBorder
-                    ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
+                return debugBorder ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Red);
             }
         }
 
@@ -113,8 +114,7 @@ namespace Alternet.UI
         {
             get
             {
-                return debugBorderGreen
-                    ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Green);
+                return debugBorderGreen ??= Default.WithColor(LightDarkColors.Green);
             }
         }
 
@@ -125,8 +125,7 @@ namespace Alternet.UI
         {
             get
             {
-                return debugBorderBlue
-                    ??= Default.WithColor(DefaultDebugBorderColor ?? LightDarkColors.Blue);
+                return debugBorderBlue ??= Default.WithColor(LightDarkColors.Blue);
             }
         }
 
@@ -472,7 +471,7 @@ namespace Alternet.UI
                 dc.FillRectangle(brush, rect2);
             }
 
-            var defaultColor = DefaultCommonBorderColor;
+            var defaultColor = SystemColors.GrayText;
 
             if (border.Top.Width > 0)
             {

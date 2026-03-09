@@ -237,7 +237,7 @@ namespace Alternet.UI
         /// Gets or sets the border color for the <see cref="Border"/> control.
         /// </summary>
         /// <remarks>
-        /// If this property is null, <see cref="BorderSettings.DefaultColor"/> is used
+        /// If this property is null, <see cref="ColorUtils.GetDefaultBorderColor(bool)"/> is used
         /// for the border color.
         /// </remarks>
         public virtual Color? BorderColor

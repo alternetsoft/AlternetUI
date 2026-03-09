@@ -28,8 +28,18 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static Color GetDefaultBorderColor(bool isDarkBackground)
         {
-            return BorderSettings.DefaultColor
-                ?? ColorUtils.GetTabControlInteriorBorderColor(isDarkBackground);
+            return DefaultColors.GetBorderColor(isDarkBackground);
+        }
+
+        /// <summary>
+        /// Gets default border color for the control if no colors are specified for the border.
+        /// </summary>
+        /// <param name="control">Control which background color is checked to get whether it is dark.</param>
+        /// <returns></returns>
+        public static Color GetDefaultBorderColor(AbstractControl? control)
+        {
+            var isDark = control?.IsDarkBackground ?? SystemSettings.AppearanceIsDark;
+            return GetDefaultBorderColor(isDark);
         }
 
         /// <summary>
@@ -64,21 +74,6 @@ namespace Alternet.Drawing
                 if (color.Category == category)
                     color.Visible = visible;
             }
-        }
-
-        /// <summary>
-        /// Gets default border color if no colors are specified for the border.
-        /// </summary>
-        /// <param name="control">Control which background color is checked to get whether
-        /// it is dark.</param>
-        /// <returns></returns>
-        public static Color GetDefaultBorderColor(AbstractControl? control)
-        {
-            if (control is null)
-                return BorderSettings.DefaultCommonBorderColor;
-            var isDark = control.IsDarkBackground;
-            return BorderSettings.DefaultColor
-                ?? ColorUtils.GetTabControlInteriorBorderColor(isDark);
         }
 
         /// <summary>
