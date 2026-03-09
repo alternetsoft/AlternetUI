@@ -156,19 +156,19 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override BorderSettings? GetBorderSettings(VisualControlState state)
         {
-            return UserControl.HandleGetBorderSettings(this, state);
+            return UserControlHelper.GetBorderSettings(this, state);
         }
 
         /// <inheritdoc/>
         public override PaintEventHandler? GetBackgroundAction(VisualControlState state)
         {
-            return UserControl.HandleGetBackgroundActions(this, state);
+            return UserControlHelper.GetBackgroundActions(this, state);
         }
 
         /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {
-            return UserControl.HandleGetBackground(this, state);
+            return UserControlHelper.GetBackground(this, state);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Alternet.UI
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
-            UserControl.HandleOnVisualStateChanged(this, RefreshOptions);
+            UserControlHelper.OnVisualStateChanged(this, RefreshOptions);
         }
 
         /// <inheritdoc/>

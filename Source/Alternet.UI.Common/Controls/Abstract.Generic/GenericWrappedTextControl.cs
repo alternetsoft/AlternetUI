@@ -289,13 +289,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnVisualStateChanged(EventArgs e)
-        {
-            base.OnVisualStateChanged(e);
-            UserControl.HandleOnVisualStateChanged(this, RefreshOptions);
-        }
-
-        /// <inheritdoc/>
         protected override void OnTextChanged(EventArgs e)
         {
             base.OnTextChanged(e);

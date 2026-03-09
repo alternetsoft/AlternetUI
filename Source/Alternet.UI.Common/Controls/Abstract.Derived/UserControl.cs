@@ -153,13 +153,13 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {
-            return HandleGetBackground(this, state);
+            return UserControlHelper.GetBackground(this, state);
         }
 
         /// <inheritdoc/>
         public override PaintEventHandler? GetBackgroundAction(VisualControlState state)
         {
-            return HandleGetBackgroundActions(this, state);
+            return UserControlHelper.GetBackgroundActions(this, state);
         }
 
         /// <summary>
@@ -174,76 +174,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override BorderSettings? GetBorderSettings(VisualControlState state)
         {
-            return HandleGetBorderSettings(this, state);
-        }
-
-        internal static Brush? HandleGetBackground(
-            AbstractControl control,
-            VisualControlState state)
-        {
-            var overrideValue = control.Backgrounds?.GetObjectOrNormal(state);
-            if (overrideValue is not null)
-                return overrideValue;
-
-            var result = control.GetDefaultTheme()?.DarkOrLight(control.IsDarkBackground);
-            var brush = result?.Backgrounds?.GetObjectOrNormal(state);
-            brush ??= control.BackgroundColor?.AsBrush;
-            return brush;
-        }
-
-        internal static PaintEventHandler? HandleGetBackgroundActions(
-            AbstractControl control,
-            VisualControlState state)
-        {
-            var overrideValue = control.BackgroundActions?.GetObjectOrNormal(state);
-            if (overrideValue is not null)
-                return overrideValue;
-
-            var theme = control.GetDefaultTheme()?.DarkOrLight(control.IsDarkBackground);
-            var result = theme?.BackgroundActions?.GetObjectOrNormal(state);
-            return result;
-        }
-
-        internal static BorderSettings? HandleGetBorderSettings(
-            AbstractControl control,
-            VisualControlState state)
-        {
-            var overrideValue = control.Borders?.GetObjectOrNull(state);
-            if (overrideValue is not null)
-                return overrideValue;
-
-            var result = control.GetDefaultTheme()?.DarkOrLight(control.IsDarkBackground);
-            return result?.Borders?.GetObjectOrNull(state);
-        }
-
-        internal static void HandleOnVisualStateChanged(
-            AbstractControl control,
-            ControlRefreshOptions refreshOptions)
-        {
-            var options = refreshOptions;
-
-            if (options.HasFlag(ControlRefreshOptions.RefreshOnState))
-            {
-                control.Refresh();
-                return;
-            }
-
-            var data = control.StateObjects;
-            if (data is null)
-                return;
-
-            bool RefreshOnBorder() => options.HasFlag(ControlRefreshOptions.RefreshOnBorder) &&
-                data.HasOtherBorders;
-            bool RefreshOnImage() => options.HasFlag(ControlRefreshOptions.RefreshOnImage) &&
-                data.HasOtherImages;
-            bool RefreshOnColor() => options.HasFlag(ControlRefreshOptions.RefreshOnColor) &&
-                data.HasOtherColors;
-            bool RefreshOnBackground() => options.HasFlag(ControlRefreshOptions.RefreshOnBackground) &&
-                data.HasOtherBackgrounds;
-
-            if (RefreshOnBorder() || RefreshOnImage() || RefreshOnBackground()
-                || RefreshOnColor())
-                control.Refresh();
+            return UserControlHelper.GetBorderSettings(this, state);
         }
 
         /// <inheritdoc/>
@@ -327,7 +258,7 @@ namespace Alternet.UI
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
-            HandleOnVisualStateChanged(this, RefreshOptions);
+            UserControlHelper.OnVisualStateChanged(this, RefreshOptions);
         }
 
         /// <summary>
