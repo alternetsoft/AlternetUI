@@ -446,6 +446,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets margin around the check box. This property is used only if check box is visible for the item.
+        /// </summary>
+        public virtual Thickness CheckBoxMargin { get; set; }
+
+        /// <summary>
         /// Gets or sets whether to paint check box as radio button.
         /// </summary>
         public virtual bool IsRadioButton
@@ -2585,7 +2590,9 @@ namespace Alternet.UI
             result.PartState = IsContainerEnabled(container)
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);
+            
             result.CheckSize = GetCheckBoxSize(container, result.CheckState, result.PartState);
+            result.CheckSize += CheckBoxMargin.Size;
             result.CheckImageSize = result.CheckSize;
 
             if (container is not null)
@@ -2596,6 +2603,9 @@ namespace Alternet.UI
             }
 
             var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize, isRight: IsCheckRightAligned);
+
+            checkRect = checkRect.DeflatedWithPadding(CheckBoxMargin);
+
             result.CheckRect = checkRect;
             result.CheckSize = checkRect.Size;
             result.TextRect = textRect;
