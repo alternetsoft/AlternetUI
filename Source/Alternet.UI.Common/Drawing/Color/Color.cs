@@ -407,6 +407,23 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets whether this <see cref="Color"/> structure is either uninitialized or fully transparent.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsEmptyOrTransparent
+        {
+            get
+            {
+                if (state == 0)
+                    return true;
+
+                RequireArgb();
+
+                return color.A == 0;
+            }
+        }
+
+        /// <summary>
         /// Specifies whether this <see cref="Color"/> structure is uninitialized.
         /// </summary>
         /// <value>This property returns <c>true</c> if this color is uninitialized;
