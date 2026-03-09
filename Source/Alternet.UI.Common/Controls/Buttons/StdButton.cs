@@ -91,7 +91,9 @@ namespace Alternet.UI
             UniformBorderCornerRadius = DefaultCornerRadius;
             UniformBorderRadiusIsPercent = DefaultCornerRadiusIsPercent;
 
-            Borders?.SetAllExceptNormal(() => Borders.Normal?.Clone());
+            Borders?.SetAllExceptNormal(
+                (state) => Borders.Normal?.Clone(),
+                VisualControlStates.Hovered | VisualControlStates.Pressed | VisualControlStates.Disabled | VisualControlStates.Focused);
 
             MinimumSize = DefaultMinSize;
             Padding = DefaultPadding;
@@ -513,20 +515,53 @@ namespace Alternet.UI
 
                 if (opt.HasFlag(ColorThemeApplyOptions.BorderColor))
                 {
-                    if (IsDefault)
-                    {
-                        this.Borders?.Normal?.SetColor(DefaultBorderColorIsd.LightOrDark(isDark));
-                        this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColorIsd.LightOrDark(isDark));
-                    }
-                    else
-                    {
-                        this.Borders?.Normal?.SetColor(DefaultBorderColor.LightOrDark(isDark));
-                        this.Borders?.Hovered?.SetColor(DefaultHoveredBorderColor.LightOrDark(isDark));
-                    }
-
+                    this.Borders?.Hovered?.SetColor(GetEffectiveHoveredBorderColor(isDark));
+                    this.Borders?.Normal?.SetColor(GetEffectiveBorderColor(isDark));
                     this.Borders?.Focused?.SetColor(DefaultFocusedBorderColor.LightOrDark(isDark));
                 }
             });
+        }
+
+        /// <summary>
+        /// Gets the effective border color based on the specified dark mode and other settings.
+        /// </summary>
+        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
+        /// <returns>A <see cref="Color"/> representing the effective border color, determined by the current 
+        /// settings and the dark mode parameter.</returns>
+        public virtual Color GetEffectiveBorderColor(bool? isDark = null)
+        {
+            var isd = isDark ?? SystemSettings.AppearanceIsDark;
+
+            if (IsDefault)
+            {
+                return DefaultBorderColorIsd.LightOrDark(isd);
+            }
+            else
+            {
+                return DefaultBorderColor.LightOrDark(isd);
+            }
+        }
+
+        /// <summary>
+        /// Gets the effective hovered border color based on the specified dark mode and other settings.
+        /// </summary>
+        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
+        /// <returns>A <see cref="Color"/> representing the effective hovered border color, determined by the current 
+        /// settings and the dark mode parameter.</returns>
+        public virtual Color GetEffectiveHoveredBorderColor(bool? isDark = null)
+        {
+            var isd = isDark ?? SystemSettings.AppearanceIsDark;
+
+            if (IsDefault)
+            {
+                return DefaultHoveredBorderColorIsd.LightOrDark(isd);
+            }
+            else
+            {
+                return DefaultHoveredBorderColor.LightOrDark(isd);
+            }
         }
 
         /// <summary>
