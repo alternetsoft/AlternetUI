@@ -7,23 +7,29 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Specifies sets of objects (images, colors, borders, pens, brushes)
-    /// for different control states.
+    /// Represents a collection of visual state settings for a control, including background, foreground, images,
+    /// colors, and borders for different control states. It is up to control to decide on how to use these settings when it paints itself
+    /// in different states. This class provides a structured way to manage and apply these settings consistently.
     /// </summary>
-    public class ControlStateSettings
+    /// <remarks>Use this class to customize the appearance of a control based on its visual state, such as
+    /// normal, hovered, or disabled. The settings allow for fine-grained control over how a control is rendered in each
+    /// state. Methods are provided to clone the settings and to adjust border configurations for specific states. This
+    /// class is typically used in scenarios where consistent and state-aware visual customization is required across
+    /// controls.</remarks>
+    public partial class ControlStateSettings
     {
         /// <summary>
-        /// Gets or sets <see cref="ControlStatePaintActions"/>.
+        /// Gets or sets background paint actions.
         /// </summary>
         public ControlStatePaintActions? BackgroundActions { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="ControlStateBrushes"/>.
+        /// Gets or sets background brushes.
         /// </summary>
         public ControlStateBrushes? Backgrounds { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="ControlStateBrushes"/>.
+        /// Gets or sets foreground brushes.
         /// </summary>
         public ControlStateBrushes? Foregrounds { get; set; }
 
@@ -33,7 +39,7 @@ namespace Alternet.UI
         public ControlStatePens? Pens { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="ControlStateImages"/>.
+        /// Gets or sets foreground images.
         /// </summary>
         public ControlStateImages? Images { get; set; }
 
@@ -43,7 +49,17 @@ namespace Alternet.UI
         public ControlStateImages? BackgroundImages { get; set; }
 
         /// <summary>
-        /// Gets or sets <see cref="ControlStateImageSets"/>.
+        /// Gets or sets foregound svg images.
+        /// </summary>
+        public ControlStateSvgImages? SvgImages { get; set; }
+
+        /// <summary>
+        /// Gets or sets background SVG images associated with the control.
+        /// </summary>
+        public ControlStateSvgImages? BackgroundSvgImages { get; set; }
+
+        /// <summary>
+        /// Gets or sets foreground image sets.
         /// </summary>
         public ControlStateImageSets? ImageSets { get; set; }
 
@@ -70,6 +86,12 @@ namespace Alternet.UI
         public bool HasOtherImages => Images?.HasOtherStates ?? false;
 
         /// <summary>
+        /// Gets whether <see cref="SvgImages"/> has settings not only for
+        /// <see cref="VisualControlState.Normal"/> control state.
+        /// </summary>
+        public bool HasOtherSvgImages => SvgImages?.HasOtherStates ?? false;
+
+        /// <summary>
         /// Gets whether <see cref="Colors"/> has settings not only for
         /// <see cref="VisualControlState.Normal"/> control state.
         /// </summary>
@@ -80,6 +102,12 @@ namespace Alternet.UI
         /// <see cref="VisualControlState.Normal"/> control state.
         /// </summary>
         public bool HasOtherBackgrounds => Backgrounds?.HasOtherStates ?? false;
+
+        /// <summary>
+        /// Gets whether <see cref="BackgroundSvgImages"/> has settings not only for
+        /// <see cref="VisualControlState.Normal"/> control state.
+        /// </summary>
+        public bool HasOtherSvgBackgrounds => BackgroundSvgImages?.HasOtherStates ?? false;
 
         /// <summary>
         /// Creates clone of this object.
@@ -98,6 +126,8 @@ namespace Alternet.UI
             result.ImageSets = ImageSets?.Clone();
             result.Colors = Colors?.Clone();
             result.Borders = Borders?.Clone();
+            result.SvgImages = SvgImages?.Clone();
+            result.BackgroundSvgImages = BackgroundSvgImages?.Clone();
 
             return result;
         }
