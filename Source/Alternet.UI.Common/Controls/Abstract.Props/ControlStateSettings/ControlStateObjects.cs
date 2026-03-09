@@ -266,6 +266,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the values for all specified visual control states except the normal state, using the provided function
+        /// to determine each value.
+        /// </summary>
+        /// <remarks>Use this method to efficiently update multiple visual control states in a single
+        /// operation. The normal state is not affected by this method.</remarks>
+        /// <param name="value">A function that takes a VisualControlState and returns a value of type T? to assign to the corresponding
+        /// state.</param>
+        /// <param name="states">A bitwise combination of VisualControlStates indicating which states should be updated.</param>
+        public virtual void SetAllExceptNormal(Func<VisualControlState, T?> value, VisualControlStates states)
+        {
+            if (states.HasFlag(VisualControlStates.Hovered))
+                Hovered = value(VisualControlState.Hovered);
+            if (states.HasFlag(VisualControlStates.Pressed))
+                Pressed = value(VisualControlState.Pressed);
+            if (states.HasFlag(VisualControlStates.Disabled))
+                Disabled = value(VisualControlState.Disabled);
+            if (states.HasFlag(VisualControlStates.Focused))
+                Focused = value(VisualControlState.Focused);
+            if (states.HasFlag(VisualControlStates.Selected))
+                Selected = value(VisualControlState.Selected);
+        }
+
+        /// <summary>
         /// Sets the values of the Hovered, Pressed, Disabled, and Focused states to the specified value,
         /// excluding the Normal state.
         /// </summary>
