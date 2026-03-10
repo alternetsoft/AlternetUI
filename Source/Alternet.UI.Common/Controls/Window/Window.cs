@@ -1649,6 +1649,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Configures the window to display as a tool window without a title bar, disabling minimize, maximize, close,
+        /// and system menu features, and making the window topmost.
+        /// </summary>
+        /// <remarks>Use this method when a window should function as a floating tool window without
+        /// standard window controls or a title bar. The window will not appear in the taskbar and cannot be resized,
+        /// minimized, maximized, or closed by the user. This is typically used for auxiliary panels or tool palettes in
+        /// an application.</remarks>
+        public virtual void MakeToolWindowWithoutTitleBar()
+        {
+            ShowInTaskbar = false;
+            Resizable = false;
+            HasTitleBar = false;
+            MaximizeEnabled = false;
+            MinimizeEnabled = false;
+            HasSystemMenu = false;
+            CloseEnabled = false;
+            TopMost = true;
+            IsToolWindow = true;
+        }
+
+        /// <summary>
         /// Sets the menu for the control and optionally performs a layout update.
         /// </summary>
         /// <remarks>If the control is in a disposing or disposed state, this method does nothing.

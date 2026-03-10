@@ -50,14 +50,7 @@ namespace Alternet.UI
                 }
             };
 
-            ShowInTaskbar = false;
-            Resizable = false;
-            HasTitleBar = false;
-            MaximizeEnabled = false;
-            MinimizeEnabled = false;
-            HasSystemMenu = false;
-            CloseEnabled = false;
-            TopMost = true;
+            MakeToolWindowWithoutTitleBar();
             StartLocation = WindowStartLocation.Manual;
 
             toolTip.Parent = this;
