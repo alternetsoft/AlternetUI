@@ -40,17 +40,28 @@ namespace Alternet.UI
         /// <summary>
         /// Gets tooltip background color.
         /// </summary>
-        public Color? ToolTipBackgroundColor { get; set; }
+        Color? ToolTipBackgroundColor { get; set; }
 
         /// <summary>
         /// Gets tooltip foreground color.
         /// </summary>
-        public Color? ToolTipForegroundColor { get; set; }
+        Color? ToolTipForegroundColor { get; set; }
 
         /// <summary>
         /// Gets tooltip border.
         /// </summary>
-        public BorderSettings? ToolTipBorder { get; set; }
+        BorderSettings? ToolTipBorder { get; set; }
+
+        /// <summary>
+        /// Gets tooltip location in client coordinates of the tooltip owner. If null, tooltip is shown at the default location.
+        /// </summary>
+        PointD? ToolTipLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the owner of the tooltip. This can be any object, but if it is a <see cref="AbstractControl"/>,
+        /// the tooltip location is relative to it.
+        /// </summary>
+        object? ToolTipOwner { get; set; }
 
         /// <summary>
         /// Gets Tooltip icon.

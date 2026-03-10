@@ -63,15 +63,17 @@ namespace Alternet.UI
         private readonly TemplateControls.RichToolTipTemplate template = new();
         private readonly ImageDrawable drawable = new();
 
+#pragma warning disable
+        private RichToolTipParams data = new();
+#pragma warning restore
+
         private int? timeoutInMilliseconds;
         private int showDelayInMilliseconds;
         private Timer? showTimer;
         private Timer? hideTimer;
         private HVAlignment toolTipAlignment;
-
-#pragma warning disable
-        private RichToolTipParams data = new();
-#pragma warning restore
+        private object? toolTipOwner;
+        private PointD? toolTipLocation;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
@@ -324,20 +326,32 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public virtual object? ToolTipOwner
+        {
+            get => toolTipOwner;
+            set
+            {
+                if (toolTipOwner == value)
+                    return;
+                toolTipOwner = value;
+            }
+        }
+
         /// <summary>
-        /// Gets or sets tooltip location inside in client coordinated of this control.
+        /// Gets or sets tooltip location relative to the tooltip owner if it is a <see cref="AbstractControl"/>.
         /// This value is measured in device-independent units.
         /// </summary>
-        public virtual PointD ToolTipLocation
+        public virtual PointD? ToolTipLocation
         {
             get
             {
-                return (Padding.Left, Padding.Top);
+                return toolTipLocation;
             }
 
             set
             {
-                Padding = Padding.WithLeft(value.X).WithTop(value.Y);
+                toolTipLocation = value;
             }
         }
 
@@ -778,7 +792,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows the tooltip at the specified location inside the.
+        /// Shows the tooltip at the specified location.
         /// Location coordinates are in device-independent units.
         /// </summary>
         public virtual IRichToolTip ShowToolTip(PointD? location = null)
@@ -789,6 +803,8 @@ namespace Alternet.UI
 
             if (location is not null)
                 ToolTipLocation = location.Value;
+            else
+                ToolTipLocation = null;
 
             drawable.Image = image;
 
@@ -963,6 +979,7 @@ namespace Alternet.UI
 
         IRichToolTip? IToolTipProvider.Get(object? sender)
         {
+            ToolTipOwner = sender;
             return this;
         }
 
