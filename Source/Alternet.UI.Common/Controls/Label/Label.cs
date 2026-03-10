@@ -858,6 +858,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the word wrap property of the label and returns the label instance.
+        /// This method is a convenient alias for setting the <see cref="WordWrap"/> property.
+        /// This method is useful for chaining calls when you want to set the word wrap property
+        /// and perform other operations on the label in a fluent manner.
+        /// </summary>
+        /// <param name="value">A value indicating whether word wrap should be enabled.</param>
+        /// <returns>The current label instance.</returns>
+        public Label SetWordWrap(bool value)
+        {
+            WordWrap = value;
+            return this;
+        }
+
+        /// <summary>
         /// Default method for calculating preferred size.
         /// </summary>
         public virtual SizeD GetDefaultPreferredSize(
