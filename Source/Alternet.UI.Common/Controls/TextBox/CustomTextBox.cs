@@ -760,9 +760,9 @@ namespace Alternet.UI
 
                 ToolTipFactory.ShowToolTip(
                     pictureBox,
-                    null,
-                    pictureBox.ToolTip,
-                    MessageBoxIcon.Error);
+                    title: null,
+                    message: pictureBox.ToolTip,
+                    icon: MessageBoxIcon.Error);
             }
         }
 

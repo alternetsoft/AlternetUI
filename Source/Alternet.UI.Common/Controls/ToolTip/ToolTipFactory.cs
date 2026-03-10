@@ -118,7 +118,7 @@ namespace Alternet.UI
         /// overlay is hidden.</remarks>
         public static void BindOverlayToolTips()
         {
-            if(notification != null)
+            if (notification != null)
                 return;
 
             var subscriber = new ControlSubscriber();
