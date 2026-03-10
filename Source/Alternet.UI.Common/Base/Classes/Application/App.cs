@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// Provides methods and properties to manage an application.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public class App : DisposableObject
+    public partial class App : DisposableObject
     {
         /// <summary>
         /// Gets id of the application thread.
@@ -152,6 +152,10 @@ namespace Alternet.UI
         private static UnhandledExceptionMode unhandledExceptionModeDebug
             = UnhandledExceptionMode.CatchWithDialogAndThrow;
 
+        private static Exception? lastUnhandledException;
+        private static bool lastUnhandledExceptionThrown;
+        private static IToolTipProvider? toolTipProvider;
+        private static bool toolTipProviderAssigned;
         private static ApplicationAppearance? appearance;
         private static bool? isMaui;
         private static bool inOnThreadException;
@@ -166,6 +170,7 @@ namespace Alternet.UI
         private static string? previousNativeMessage;
 
         private readonly List<Window> windows = new();
+        private bool inUixmlPreviewerMode;
 
         static App()
         {
@@ -263,7 +268,7 @@ namespace Alternet.UI
 
             Initialized = true;
 
-            if(appearance is not null)
+            if (appearance is not null)
                 Handler.SetAppearance(appearance.Value);
 
             Window.UpdateDefaultFont();
@@ -615,10 +620,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets root tooltip provider.
+        /// Gets or sets root tooltip provider. This provider is used when control and its parents don't have their own tooltip provider or
+        /// when a global tooltip provider is needed.
         /// </summary>
         [Browsable(false)]
-        public static IToolTipProvider? ToolTipProvider { get; set; }
+        public static IToolTipProvider? ToolTipProvider
+        {
+            get
+            {
+                if (toolTipProviderAssigned)
+                    return toolTipProvider;
+                return toolTipProvider ??= ToolTipWindow.Instance;
+            }
+
+            set
+            {
+                toolTipProviderAssigned = true;
+                toolTipProvider = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to write all log messages to file.
@@ -749,7 +769,7 @@ namespace Alternet.UI
                     null,
                     new object[] { 10, 0, 22000, 0 });
 
-                if(result is null)
+                if (result is null)
                 {
                     Version version = Environment.OSVersion.Version;
                     return version.Major >= 10 && version.Build >= 22000;
@@ -1707,9 +1727,9 @@ namespace Alternet.UI
                 var msg = obj?.ToString();
                 if (msg is null || msg.Length == 0)
                     return;
-                
+
                 WriteToLogFileIfAllowed(msg);
-                
+
                 if (DebugWriteLine.HasKind(kind))
                     Debug.WriteLine(msg);
 
@@ -2532,9 +2552,6 @@ namespace Alternet.UI
         /// </summary>
 #pragma warning disable
         public static int BuildCounter = 6;
-        private static Exception? lastUnhandledException;
-        private static bool lastUnhandledExceptionThrown;
-        private bool inUixmlPreviewerMode;
 #pragma warning restore
     }
 }
