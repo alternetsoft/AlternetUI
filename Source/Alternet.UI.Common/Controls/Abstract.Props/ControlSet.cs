@@ -587,6 +587,19 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="AbstractControl.Padding"/> property for all the controls in the set.
         /// </summary>
+        /// <param name="left">The left padding of the control.</param>
+        /// <param name="top">The top padding of the control.</param>
+        /// <param name="right">The right padding of the control.</param>
+        /// <param name="bottom">The bottom padding of the control.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public ControlSet Padding(float left, float top, float right, float bottom)
+        {
+            return Padding(new Thickness(left, top, right, bottom));
+        }
+
+        /// <summary>
+        /// Sets <see cref="AbstractControl.Padding"/> property for all the controls in the set.
+        /// </summary>
         /// <param name="value">A padding of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet Padding(Thickness value)
