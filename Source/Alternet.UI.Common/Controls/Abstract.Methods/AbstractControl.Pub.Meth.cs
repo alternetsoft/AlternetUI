@@ -1924,6 +1924,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the parent control of this control. This is the same as setting the <see cref="Parent"/> property but implemented as method.
+        /// This method is useful for chaining calls when you want to set the parent control and perform other operations on the control in a fluent manner.
+        /// </summary>
+        /// <param name="value">The new parent control.</param>
+        /// <returns>The current control instance.</returns>
+        public AbstractControl SetParent(AbstractControl? value)
+        {
+            Parent = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the margin of the control using the specified values for each side.
+        /// This is the same as setting the <see cref="Margin"/> property but implemented as method.
+        /// This method is useful for chaining calls when you want to set the margin and perform other operations on the control in a fluent manner.
+        /// </summary>
+        /// <remarks>Use this method to customize the spacing around the control by specifying individual
+        /// margin values for each side. This can affect the layout and positioning of the control within its parent
+        /// container.</remarks>
+        /// <param name="left">The margin value to apply to the left side of the control.</param>
+        /// <param name="top">The margin value to apply to the top side of the control.</param>
+        /// <param name="right">The margin value to apply to the right side of the control.</param>
+        /// <param name="bottom">The margin value to apply to the bottom side of the control.</param>
+        /// <returns>The current instance of the control with the updated margin applied.</returns>
+        public AbstractControl SetMargin(Coord left, Coord top, Coord right, Coord bottom)
+        {
+            Margin = new Thickness(left, top, right, bottom);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the margin for the control, defining the space around it.
+        /// This is the same as setting the <see cref="Margin"/> property but implemented as method.
+        /// This method is useful for chaining calls when you want to set the margin and perform other operations on the control in a fluent manner.
+        /// </summary>
+        /// <param name="margin">The margin to apply, represented as a Thickness
+        /// structure that specifies the left, top, right, and bottom margins.</param>
+        /// <returns>Returns the current instance of the AbstractControl, allowing for method chaining.</returns>
+        public AbstractControl SetMargin(Thickness margin)
+        {
+            Margin = margin;
+            return this;
+        }
+
+        /// <summary>
         /// Forces the control to apply layout logic to child controls.
         /// </summary>
         /// <remarks>
