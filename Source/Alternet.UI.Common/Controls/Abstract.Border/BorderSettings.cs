@@ -56,6 +56,7 @@ namespace Alternet.UI
         private static BorderSettings? accentBorder;
         private static BorderSettings? transparentBorder;
         private static BorderSettings? emptyBorder;
+        private static BorderSettings? bottomLineBorder;
 
         private readonly BorderSideSettings left = new();
         private readonly BorderSideSettings top = new();
@@ -82,6 +83,33 @@ namespace Alternet.UI
             right.PropertyChanged += OnRightPropertyChanged;
             top.PropertyChanged += OnTopPropertyChanged;
             bottom.PropertyChanged += OnBottomPropertyChanged;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the BorderSettings class with the specified border width and color.
+        /// </summary>
+        /// <param name="width">The thickness of the border to apply. Specifies the width for each side.</param>
+        /// <param name="color">The color of the border. If null, the default color is used.</param>
+        public BorderSettings(Thickness width, Color? color = null)
+            : this()
+        {
+            Width = width;
+
+            if (color != null)
+                Color = color;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the BorderSettings class with the specified border thickness and optional color.
+        /// </summary>
+        /// <param name="left">The thickness of the left border, in device-independent units.</param>
+        /// <param name="top">The thickness of the top border, in device-independent units.</param>
+        /// <param name="right">The thickness of the right border, in device-independent units.</param>
+        /// <param name="bottom">The thickness of the bottom border, in device-independent units.</param>
+        /// <param name="color">The color of the border. If null, the default border color is used.</param>
+        public BorderSettings(float left, float top, float right, float bottom, Color? color = null)
+            : this(new Thickness(left, top, right, bottom), color)
+        {
         }
 
         /// <summary>
@@ -113,6 +141,28 @@ namespace Alternet.UI
             set
             {
                 debugBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the border settings for the bottom line.
+        /// </summary>
+        /// <remarks>The default border has a width of 1 on the bottom edge and 0 on the other sides.</remarks>
+        public static BorderSettings BottomLineBorder
+        {
+            get
+            {
+                if (bottomLineBorder == null)
+                {
+                    bottomLineBorder = new();
+                    bottomLineBorder.Width = new Thickness(0, 0, 0, 1);
+                }
+
+                return bottomLineBorder;
+            }
+            set
+            {
+                bottomLineBorder = value;
             }
         }
 
@@ -619,6 +669,19 @@ namespace Alternet.UI
         public virtual RectD GetRightRectangle(RectD rect)
         {
             return DrawingUtils.GetRightLineRect(rect, Right.Width);
+        }
+
+        /// <summary>
+        /// Gets the first non-null pen from the left, top, right, or bottom sides.
+        /// This method uses <see cref="BorderSideSettings.Pen"/> properties of each side.
+        /// </summary>
+        /// <remarks>The order of precedence is left, then top, then right, then bottom. This method is
+        /// useful when a default pen is needed from any side.</remarks>
+        /// <returns>A <see cref="Pen"/> instance from the first non-null side, or <see langword="null"/> if all sides have null
+        /// pens.</returns>
+        public virtual Pen? GetPen()
+        {
+            return Left.Pen ?? Top.Pen ?? Right.Pen ?? Bottom.Pen;
         }
 
         /// <summary>
