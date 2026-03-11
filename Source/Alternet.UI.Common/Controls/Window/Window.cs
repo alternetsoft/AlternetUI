@@ -1661,6 +1661,7 @@ namespace Alternet.UI
             ShowInTaskbar = false;
             Resizable = false;
             HasTitleBar = false;
+            HasBorder = false;
             MaximizeEnabled = false;
             MinimizeEnabled = false;
             HasSystemMenu = false;
