@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// Gets or sets default value of the <see cref="IsBoldWhenIsd"/> property. It indicates whether the
         /// text is displayed in bold when <see cref="IsDefault"/> property of the control is set to true.
         /// </summary>
-        public static bool DefaultIsBoldWhenIsd = true;
+        public static bool DefaultIsBoldWhenIsd = false;
 
         /// <summary>
         /// Represents the default padding value which is applied to <see cref="StdButton"/> controls in the constructor.
@@ -44,19 +44,6 @@ namespace Alternet.UI
         /// Indicates whether the default corner radius is specified as a percentage of the element's dimensions.
         /// </summary>
         public static bool DefaultCornerRadiusIsPercent = true;
-
-        private static LightDarkColor? defaultHoveredBorderColor;
-        private static LightDarkColor? defaultBorderColor;
-        private static LightDarkColor? defaultBorderColorIsd;
-        private static LightDarkColor? defaultHoveredBorderColorIsd;
-        private static LightDarkColor? defaultBackColorIsd;
-        private static LightDarkColor? defaultForeColorIsd;
-        private static LightDarkColor? defaultBackColor;
-        private static LightDarkColor? defaultForeColor;
-        private static LightDarkColor? defaultHoveredBackColorIsd;
-        private static LightDarkColor? defaultHoveredBackColor;
-        private static LightDarkColor? defaultPressedBackColor;
-        private static LightDarkColor? defaultFocusedBorderColor;
 
         private bool isDefault;
         private bool isCancel;
@@ -169,156 +156,6 @@ namespace Alternet.UI
             All = BackColor | ForeColor | BorderColor,
         }
 
-        /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control when
-        /// it is in hovered state and its <see cref="IsDefault"/> property is set to true.
-        /// </summary>
-        public static LightDarkColor DefaultHoveredBackColorIsd
-        {
-            get => defaultHoveredBackColorIsd ?? DefaultHoveredBackColor;
-            set => defaultHoveredBackColorIsd = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control when
-        /// its <see cref="IsDefault"/> property is set to true.
-        /// </summary>
-        public static LightDarkColor DefaultNormalBackColorIsd
-        {
-            get => defaultBackColorIsd ?? DefaultNormalBackColor;
-            set => defaultBackColorIsd = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the default foreground color used for <see cref="StdButton"/> control when
-        /// it's <see cref="IsDefault"/> property is set to true.
-        /// </summary>
-        public static LightDarkColor DefaultForeColorIsd
-        {
-            get => defaultForeColorIsd ?? DefaultNormalForeColor;
-            set => defaultForeColorIsd = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control.
-        /// </summary>
-        public static LightDarkColor DefaultNormalBackColor
-        {
-            get => defaultBackColor ??= new(light: (245, 245, 245), dark: (63, 63, 63));
-            set => defaultBackColor = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the default background color used for the pressed state of buttons.
-        /// </summary>
-        public static LightDarkColor DefaultPressedBackColor
-        {
-            get => defaultPressedBackColor ?? DefaultColors.ControlBackColor;
-            set => defaultPressedBackColor = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control when it is in a hovered state.
-        /// </summary>
-        public static LightDarkColor DefaultHoveredBackColor
-        {
-            get => defaultHoveredBackColor ??= new(light: (235, 235, 235), dark: (69, 69, 69));
-            set => defaultHoveredBackColor = value;
-        }
-
-
-        /// <summary>
-        /// Gets or sets the default foreground color used for <see cref="StdButton"/> control.
-        /// </summary>
-        public static LightDarkColor DefaultNormalForeColor
-        {
-            get => defaultForeColor ?? DefaultColors.ControlForeColor;
-            set => defaultForeColor = value;
-        }
-
-        /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> elements in a hot (hovered or active) state.
-        /// </summary>
-        /// <remarks>The default value is initialized to <see cref="LightDarkColors.Blue"/> if not previously set.</remarks>
-        public static LightDarkColor DefaultHoveredBorderColor
-        {
-            get
-            {
-                return defaultHoveredBorderColor ?? DefaultBorderColor;
-            }
-
-            set
-            {
-                defaultHoveredBorderColor = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the normal state.
-        /// </summary>
-        public static LightDarkColor DefaultBorderColor
-        {
-            get
-            {
-                return defaultBorderColor ?? DefaultColors.BorderColor;
-            }
-
-            set
-            {
-                defaultBorderColor = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the focused state.
-        /// </summary>
-        public static LightDarkColor DefaultFocusedBorderColor
-        {
-            get
-            {
-                return defaultFocusedBorderColor ?? DefaultColors.AccentColor;
-            }
-
-            set
-            {
-                defaultFocusedBorderColor = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the application
-        /// when <see cref="IsDefault"/> property of the control is set to true.
-        /// </summary>
-        public static LightDarkColor DefaultBorderColorIsd
-        {
-            get
-            {
-                return defaultBorderColorIsd ?? DefaultColors.BorderColor;
-            }
-
-            set
-            {
-                defaultBorderColorIsd = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the default hovered border color used for <see cref="StdButton"/> controls in the application
-        /// when <see cref="IsDefault"/> property of the control is set to true.
-        /// </summary>
-        public static LightDarkColor DefaultHoveredBorderColorIsd
-        {
-            get
-            {
-                return defaultHoveredBorderColorIsd ?? DefaultBorderColor;
-            }
-
-            set
-            {
-                defaultHoveredBorderColorIsd = value;
-            }
-        }
-
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.Button;
 
@@ -372,6 +209,7 @@ namespace Alternet.UI
                 else
                 {
                     Item.IsBold = RealFont.IsBold;
+                    Item.Border = null;
                 }
 
                 Invalidate();
@@ -484,202 +322,6 @@ namespace Alternet.UI
             base.DrawBorderAndBackground(e, flags);
         }
 
-        /// <summary>
-        /// Sets the application's color theme to match the current system appearance setting.
-        /// </summary>
-        /// <remarks>This method applies either a dark or light color theme based on the system's appearance preference. </remarks>
-        public virtual void SetColorTheme(ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
-        {
-            SetColorThemeToLightOrDark(SystemSettings.AppearanceIsDark, opt);
-        }
-
-        /// <summary>
-        /// Applies a light or dark color theme to the control based on the specified parameters.
-        /// </summary>
-        /// <remarks>This method updates the control's color properties according to the selected theme
-        /// and the specified options. Only the color aspects indicated by the <paramref name="opt"/> parameter are
-        /// affected, allowing for selective theme application. The method respects the control's default or custom
-        /// color settings as appropriate.</remarks>
-        /// <param name="isDark">A value indicating whether to apply the dark theme (<see langword="true"/>) or the light theme (<see
-        /// langword="false"/>).</param>
-        /// <param name="opt">A set of options that specifies which color properties (such as background, foreground, and border colors)
-        /// the theme should be applied to.</param>
-        public virtual void SetColorThemeToLightOrDark(bool isDark, ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
-        {
-            DoInsideUpdate(() =>
-            {
-                if (opt.HasFlag(ColorThemeApplyOptions.BackColor))
-                    BackColor = GetEffectiveBackColor(isDark);
-                if (opt.HasFlag(ColorThemeApplyOptions.ForeColor))
-                    ForeColor = GetEffectiveForeColor(isDark);
-
-                if (opt.HasFlag(ColorThemeApplyOptions.BorderColor))
-                {
-                    this.Borders?.Hovered?.SetColor(GetEffectiveHoveredBorderColor(isDark));
-                    this.Borders?.Normal?.SetColor(GetEffectiveBorderColor(isDark));
-                    this.Borders?.Focused?.SetColor(DefaultFocusedBorderColor.LightOrDark(isDark));
-                }
-            });
-        }
-
-        /// <summary>
-        /// Gets the effective border color based on the specified dark mode and other settings.
-        /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
-        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-        /// <returns>A <see cref="Color"/> representing the effective border color, determined by the current 
-        /// settings and the dark mode parameter.</returns>
-        public virtual Color GetEffectiveBorderColor(bool? isDark = null)
-        {
-            var isd = isDark ?? SystemSettings.AppearanceIsDark;
-
-            if (IsDefault)
-            {
-                return DefaultBorderColorIsd.LightOrDark(isd);
-            }
-            else
-            {
-                return DefaultBorderColor.LightOrDark(isd);
-            }
-        }
-
-        /// <summary>
-        /// Gets the effective hovered border color based on the specified dark mode and other settings.
-        /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
-        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-        /// <returns>A <see cref="Color"/> representing the effective hovered border color, determined by the current 
-        /// settings and the dark mode parameter.</returns>
-        public virtual Color GetEffectiveHoveredBorderColor(bool? isDark = null)
-        {
-            var isd = isDark ?? SystemSettings.AppearanceIsDark;
-
-            if (IsDefault)
-            {
-                return DefaultHoveredBorderColorIsd.LightOrDark(isd);
-            }
-            else
-            {
-                return DefaultHoveredBorderColor.LightOrDark(isd);
-            }
-        }
-
-        /// <summary>
-        /// Gets the effective foreground color based on the specified dark mode and other settings.
-        /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
-        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-        /// <returns>A <see cref="Color"/> representing the effective foreground color, determined by the current 
-        /// settings and the dark mode parameter.</returns>
-        public virtual Color GetEffectiveForeColor(bool? isDark = null)
-        {
-            var isd = isDark ?? SystemSettings.AppearanceIsDark;
-
-            if (IsDefault)
-            {
-                return DefaultForeColorIsd.LightOrDark(isd);
-            }
-            else
-            {
-                return DefaultNormalForeColor.LightOrDark(isd);
-            }
-        }
-
-        /// <summary>
-        /// Gets the effective background color based on the specified dark mode and other settings.
-        /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
-        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-        /// <returns>A <see cref="Color"/> representing the effective background color, determined by the current default
-        /// settings and the dark mode parameter.</returns>
-        public virtual Color GetEffectiveBackColor(bool? isDark = null)
-        {
-            var isd = isDark ?? SystemSettings.AppearanceIsDark;
-
-            if (IsDefault)
-            {
-                return DefaultNormalBackColorIsd.LightOrDark(isd);
-            }
-            else
-            {
-                return DefaultNormalBackColor.LightOrDark(isd);
-            }
-        }
-
-        /// <summary>
-        /// Gets the effective background color for the pressed state, adjusted for the specified or current appearance setting.
-        /// </summary>
-        /// <remarks>Use this method to obtain the appropriate pressed background color for a button,
-        /// ensuring consistency with the application's light or dark mode.</remarks>
-        /// <param name="isDark">An optional value indicating whether to use dark appearance. If null, the method uses the system's current
-        /// appearance setting.</param>
-        /// <returns>A Color representing the background color to use when the button is pressed, based on the effective
-        /// appearance.</returns>
-        public virtual Color GetEffectivePressedBackColor(bool? isDark = null)
-        {
-            var isd = isDark ?? SystemSettings.AppearanceIsDark;
-            return DefaultPressedBackColor.LightOrDark(isd);
-        }
-
-        /// <summary>
-        /// Gets the effective background color for the hovered state based on the specified dark mode and other settings.
-        /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
-        /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-        /// <returns>A <see cref="Color"/> representing the effective background color for the hovered state, determined by the current default
-        /// settings and the dark mode parameter.</returns>
-        public virtual Color GetEffectiveHoveredBackColor(bool? isDark = null)
-        {
-            var isd = isDark ?? SystemSettings.AppearanceIsDark;
-
-            if (IsDefault)
-            {
-                return DefaultHoveredBackColorIsd.LightOrDark(isd);
-            }
-            else
-            {
-                return DefaultHoveredBackColor.LightOrDark(isd);
-            }
-        }
-
-        /// <summary>
-        /// Sets colors used in the control to the dark theme.
-        /// </summary>
-        public virtual void SetColorThemeToDark(ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
-        {
-            SetColorThemeToLightOrDark(isDark: true, opt);
-        }
-
-        /// <summary>
-        /// Sets colors used in the control to the light theme.
-        /// </summary>
-        public virtual void SetColorThemeToLight(ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
-        {
-            SetColorThemeToLightOrDark(isDark: false, opt);
-        }
-
-        /// <inheritdoc/>
-        public override Brush? GetBackground(VisualControlState state)
-        {
-            Color color;
-
-            if (state == VisualControlState.Hovered)
-            {
-                color = GetEffectiveHoveredBackColor();
-            }
-            else
-                if (state == VisualControlState.Pressed)
-                {
-                    color = GetEffectivePressedBackColor();
-                }
-                else
-                {
-                    color = GetEffectiveBackColor();
-                }
-
-            return color.AsBrush;
-        }
-
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
@@ -690,6 +332,25 @@ namespace Alternet.UI
         public override BorderSettings? GetBorderSettings(VisualControlState state)
         {
             return Borders?.GetObjectOrNormal(state);
+        }
+
+        /// <inheritdoc/>
+        protected override bool IsDarkSvgImageRequired(VisualControlState state)
+        {
+            if (IsDefault)
+            {
+                var result = GetBackgroundColor(state)?.IsDark();
+                result ??= IsDarkBackground;
+                return result.Value;
+            }
+
+            return IsDarkBackground;
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateItemImage()
+        {
+            base.UpdateItemImage();
         }
 
         /// <inheritdoc/>
