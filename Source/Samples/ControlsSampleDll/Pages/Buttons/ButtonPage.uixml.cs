@@ -139,6 +139,18 @@ namespace ControlsSample
 
                 button.Invalidate();
             });
+
+            button.Parent?.ContextMenuStrip.Add("Set custom border pen", () =>
+            {
+
+                var leftSide = button.Borders?.Normal?.Left;
+
+                if (leftSide is not null)
+                {
+                    leftSide.Pen = new Pen(Color.Red, 1, DashStyle.Dash);
+                    button.Invalidate();
+                }
+            });
         }
 
         private void Button_KeyDown(object? sender, KeyEventArgs e)

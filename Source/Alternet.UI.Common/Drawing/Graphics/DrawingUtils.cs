@@ -355,8 +355,8 @@ namespace Alternet.UI
         /// the border settings, and the canvas.</param>
         public static void FillBorderRectangle(Graphics canvas, ref DrawBorderParams prm)
         {
-            var borderColor = prm.GetEffectiveBorderColor();
-            var hasBorder = borderColor is not null;
+            var borderPen = prm.GetEffectiveBorderPen();
+            var hasBorder = borderPen is not null;
             var hasBrush = prm.Brush is not null;
 
             if (!hasBrush && !hasBorder)
@@ -383,20 +383,20 @@ namespace Alternet.UI
 
                 if (hasBrush)
                 {
-                    if (borderColor is null)
+                    if (borderPen is null)
                     {
                         canvas.FillRoundedRectangle(prm.Brush!, inflatedRect, radius.Value);
                     }
                     else
                     {
-                        canvas.RoundedRectangle(borderColor.AsPen, prm.Brush!, inflatedRect, radius.Value);
+                        canvas.RoundedRectangle(borderPen, prm.Brush!, inflatedRect, radius.Value);
                     }
                 }
                 else
                 {
-                    if (borderColor is not null)
+                    if (borderPen is not null)
                     {
-                        canvas.DrawRoundedRectangle(borderColor.AsPen, inflatedRect, radius.Value);
+                        canvas.DrawRoundedRectangle(borderPen, inflatedRect, radius.Value);
                     }
                     else
                     {
@@ -1439,6 +1439,23 @@ namespace Alternet.UI
                     return null;
 
                 return borderColor;
+            }
+
+            /// <summary>
+            /// Gets the effective border pen, or null if the border is hidden.
+            /// </summary>
+            /// <returns></returns>
+            public readonly Pen? GetEffectiveBorderPen()
+            {
+                var pen = Border?.GetPen();
+
+                if (pen is not null)
+                    return pen;
+
+                var color = GetEffectiveBorderColor();
+                if (color == null)
+                    return null;
+                return color.AsPen;
             }
         }
     }
