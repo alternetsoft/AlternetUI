@@ -157,6 +157,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the LightDarkColor class with the specified light and dark color values.
+        /// </summary>
+        /// <param name="light">The color value to use for the light theme variant.</param>
+        /// <param name="dark">The color value to use for the dark theme variant.</param>
+        public static LightDarkColor FromColorStruct(ColorStruct light, ColorStruct dark)
+        {
+            return new(new Color(light), new Color(dark));
+        }
+
+        /// <summary>
         /// Calls the specified action inside the block which temporary changes
         /// value of the <see cref="IsDarkOverride"/> property.
         /// </summary>
