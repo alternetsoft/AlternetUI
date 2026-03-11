@@ -19,6 +19,13 @@ namespace Alternet.UI
         /// application. It can be adjusted to change the default spacing around images throughout the UI.</remarks>
         public static Thickness DefaultImageMargin = 0;
 
+        /// <summary>
+        /// Represents the default size, in device-independent pixels (DIP), for SVG images.
+        /// This is used when the <see cref="SvgSize"/> property is not explicitly set. Adjusting this value will change the default
+        /// size of SVG images across all buttons that rely on it, providing a consistent appearance for vector graphics in the user interface.
+        /// </summary>
+        public static int DefaultSvgSize = 16;
+
         private readonly ListItemDrawable itemDrawable;
 
         private ControlStateImages? stateImages;
@@ -100,7 +107,7 @@ namespace Alternet.UI
         /// The <see cref="Image"/> displayed on the button control. The default
         /// value is <see langword="null"/>.
         /// </value>
-        public virtual Image? Image
+        public Image? Image
         {
             get
             {
@@ -135,7 +142,7 @@ namespace Alternet.UI
         /// Gets or sets an <see cref="Image"/> for hovered control state.
         /// </summary>
         [Browsable(false)]
-        public virtual Image? HoveredImage
+        public Image? HoveredImage
         {
             get => StateImages.Hovered;
 
@@ -149,7 +156,7 @@ namespace Alternet.UI
         /// Gets or sets an <see cref="Image"/> for focused control state.
         /// </summary>
         [Browsable(false)]
-        public virtual Image? FocusedImage
+        public Image? FocusedImage
         {
             get => StateImages.Focused;
 
@@ -163,7 +170,7 @@ namespace Alternet.UI
         /// Gets or sets an <see cref="Image"/> for pressed control state.
         /// </summary>
         [Browsable(false)]
-        public virtual Image? PressedImage
+        public Image? PressedImage
         {
             get => StateImages.Pressed;
 
@@ -177,7 +184,7 @@ namespace Alternet.UI
         /// Gets or sets an <see cref="Image"/> for disabled control state.
         /// </summary>
         [Browsable(false)]
-        public virtual Image? DisabledImage
+        public Image? DisabledImage
         {
             get => StateImages.Disabled;
 
@@ -1103,6 +1110,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether a dark-themed SVG image is required based on the current background.
+        /// </summary>
+        /// <remarks>Override this method in a derived class to customize the logic for selecting a dark
+        /// SVG image, such as considering additional theme or accessibility settings.</remarks>
+        /// <returns>true if a dark SVG image should be used; otherwise, false.</returns>
+        protected virtual bool IsDarkSvgImageRequired(VisualControlState state)
+        {
+            return IsDarkBackground;
+        }
+
+        /// <summary>
         /// Updates the button image according to the current visual state and images specified.
         /// </summary>
         protected virtual void UpdateItemImage()
@@ -1124,22 +1142,24 @@ namespace Alternet.UI
 
             Image? image = null;
 
-            if (HasStateSvgImages)
+            if (hasStateSvgImages)
             {
-                var svgImage = StateSvgImages.GetObjectOrNull(state);
+                var svgImage = StateSvgImages.GetObjectOrNormal(state);
 
                 if (svgImage is not null)
                 {
-                    var imageSize = SvgSize ?? PixelFromDip(16);
+                    var imageSize = SvgSize ?? PixelFromDip(DefaultSvgSize);
+
+                    var isDarkSvgImageRequired = IsDarkSvgImageRequired(state);
 
                     if (IsEnabled)
-                        image = svgImage.AsNormal(imageSize, IsDarkBackground)?.AsImage();
+                        image = svgImage.AsNormalImage(imageSize, isDarkSvgImageRequired);
                     else
-                        image = svgImage.AsDisabled(imageSize, IsDarkBackground)?.AsImage();
+                        image = svgImage.AsDisabledImage(imageSize, isDarkSvgImageRequired);
                 }
             }
 
-            if (HasStateImages)
+            if (hasStateImages)
             {
                 image ??= StateImages.GetObjectOrNormal(state);
             }
