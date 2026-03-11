@@ -45,6 +45,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the brush used to paint the border.
+        /// </summary>
+        public virtual Brush? Brush
+        {
+            get
+            {
+                return brush;
+            }
+            set
+            {
+                if (brush == value)
+                    return;
+                brush = value;
+                RaisePropertyChanged(nameof(Brush));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the pen used to draw the border.
+        /// </summary>
+        /// <remarks>Changing this property raises a property changed notification. The pen determines the
+        /// color, width, and style of the outline when rendering the element.</remarks>
+        public virtual Pen? Pen
+        {
+            get
+            {
+                return pen;
+            }
+
+            set
+            {
+                if (pen == value)
+                    return;
+                pen = value;
+                RaisePropertyChanged(nameof(Pen));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether to draw border with full length.
         /// </summary>
         public virtual bool DecLength
@@ -109,10 +148,12 @@ namespace Alternet.UI
         /// </summary>
         public virtual Brush GetBrush(Color defaultColor)
         {
-            var c = color ?? defaultColor;
+            if (brush is not null)
+                return brush;
 
-            brush ??= c.AsBrush;
-            return brush;
+            var c = color ?? defaultColor;
+            var result = c.AsBrush;
+            return result;
         }
 
         /// <summary>
@@ -120,10 +161,12 @@ namespace Alternet.UI
         /// </summary>
         public virtual Pen GetPen(Color defaultColor)
         {
-            var c = color ?? defaultColor;
+            if (pen is not null)
+                return pen;
 
-            pen ??= c.GetAsPen(Math.Max(1, width));
-            return pen;
+            var c = color ?? defaultColor;
+            var result = c.GetAsPen(Math.Max(1, width));
+            return result;
         }
 
         /// <summary>
