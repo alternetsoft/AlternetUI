@@ -732,6 +732,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void HideToolTip()
         {
+            base.HideToolTip();
             SafeHandler?.UnsetToolTip();
             SafeHandler?.SetToolTip(GetRealToolTip());
         }

@@ -826,7 +826,7 @@ namespace Alternet.UI
                 drawable.Visible = true;
                 LayoutMaxSize = drawable.GetPreferredSize(this);
                 RaiseToolTipVisibleChanged(EventArgs.Empty);
-                Invalidate();
+                Refresh();
 
                 var timer = TimerForHide;
                 timer.Stop();

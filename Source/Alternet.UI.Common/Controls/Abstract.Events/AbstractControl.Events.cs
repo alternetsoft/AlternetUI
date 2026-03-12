@@ -14,6 +14,11 @@ namespace Alternet.UI
         private EventHandler? click;
 
         /// <summary>
+        /// Occurs when the <see cref="LayoutMaxSize"/> property has changed.
+        /// </summary>
+        public event EventHandler? LayoutMaxSizeChanged;
+
+        /// <summary>
         /// Occurs when a drop-down menu is about to be displayed,
         /// allowing the event handler to cancel the operation.
         /// </summary>

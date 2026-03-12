@@ -274,6 +274,8 @@ namespace Alternet.UI
             Window.UpdateDefaultFont();
 
             Invoke(ProcessIdleTasks);
+
+            ToolTipWindow.ProvideToolTipsForGenericControls = true;
         }
 
         /// <summary>

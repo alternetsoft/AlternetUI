@@ -1059,6 +1059,7 @@ namespace Alternet.UI
                 if (layoutMaxSize == value)
                     return;
                 layoutMaxSize = value;
+                LayoutMaxSizeChanged?.Invoke(this, EventArgs.Empty);
                 PerformLayout(false);
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 using Alternet.Drawing;
@@ -16,10 +17,15 @@ namespace Alternet.UI
     /// guaranteed unless the underlying assignment operation is thread-safe.</remarks>
     public partial class ToolTipWindow : Window, IToolTipProvider
     {
-        private static ToolTipWindow? instance;
-
         private readonly RichToolTip toolTip = new();
         private readonly ControlSubscriber subscriber = new();
+
+        private static ToolTipWindow? instance;
+        private static bool provideToolTipsForGenericControls;
+
+        static ToolTipWindow()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the ToolTipWindow class.
@@ -28,9 +34,22 @@ namespace Alternet.UI
         {
             toolTip.ToolTipVisibleChanged += (s, e) =>
             {
+                Hide();
+
                 if (toolTip.ToolTipVisible)
                 {
-                    ClientSize = toolTip.LayoutMaxSize ?? SizeD.Empty;
+                    var size = toolTip.LayoutMaxSize ?? SizeD.Empty;
+
+                    if (size == SizeD.Empty)
+                    {
+                        return;
+                    }
+
+                    size += toolTip.Margin.Size;
+
+                    ClientSize = size;
+
+                    toolTip.SuggestedSize = size;
 
                     var location = toolTip.ToolTipLocation;
 
@@ -45,11 +64,11 @@ namespace Alternet.UI
                         Location = locationOwner.PointToScreen(location.Value);
                     }
 
+                    PerformLayoutAndInvalidate();
                     Show();
                 }
                 else
                 {
-                    Hide();
                     toolTip.ToolTipOwner = null;
                     toolTip.ToolTipLocation = null;
                 }
@@ -58,38 +77,54 @@ namespace Alternet.UI
             MakeToolWindowWithoutTitleBar();
             StartLocation = WindowStartLocation.Manual;
 
+            toolTip.IsScrollable = false;
             toolTip.Parent = this;
 
-            this.Deactivated += (s, e) =>
-            {
-                Hide();
-            };
-
-            toolTip.MouseDown += (s, e) =>
-            {
-                toolTip.ToolTipVisible = false;
-            };
-
-            subscriber.AfterControlKeyDown += (s, e) =>
-            {
-                if (!Visible)
-                    return;
-                Hide();
-            };
-
-            subscriber.AfterControlMouseLeave += (s, e) =>
-            {
-                if (!Visible)
-                    return;
-                Hide();
-            };
+            this.Deactivated += HideToolTip;
+            toolTip.MouseDown += HideToolTip;
+            subscriber.AfterControlKeyDown += HideToolTip;
+            subscriber.AfterControlMouseLeave += HideToolTip;
 
             subscriber.AfterControlMouseEnter += (s, e) =>
             {
-                if (!Visible || s == toolTip.ToolTipOwner)
+                if (s == toolTip.ToolTipOwner)
                     return;
-                Hide();
+                HideToolTip(s, e);
             };
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether <see cref="ToolTipWindow"/> provides tooltips for generic controls.
+        /// </summary>
+        /// <remarks>When enabled, tooltips will be shown for supported generic controls unless the
+        /// application is running in a MAUI environment. Disabling this property removes global tooltip support for
+        /// these controls.</remarks>
+        public static bool ProvideToolTipsForGenericControls
+        {
+            get
+            {
+                return provideToolTipsForGenericControls;
+            }
+
+            set
+            {
+                if (provideToolTipsForGenericControls == value)
+                    return;
+
+                provideToolTipsForGenericControls = value;
+
+                if (value)
+                {
+                    if (!App.IsMaui)
+                    {
+                        StaticControlEvents.MouseHover += OnGlobalMouseHover;
+                    }
+                }
+                else
+                {
+                    StaticControlEvents.MouseHover -= OnGlobalMouseHover;
+                }
+            }
         }
 
         /// <summary>
@@ -112,10 +147,29 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the rich tooltip associated with this control.
+        /// </summary>
+        public RichToolTip RichToolTip => toolTip;
+
+        /// <summary>
+        /// Hides the currently displayed tooltip, if any is visible.
+        /// </summary>
+        /// <remarks>Call this method to programmatically dismiss any tooltip that is currently shown. If
+        /// no tooltip is visible, this method has no effect.</remarks>
+        public static void HideGlobalToolTip()
+        {
+            instance?.HideToolTip(null, EventArgs.Empty);
+        }
+
         /// <inheritdoc/>
         IRichToolTip? IToolTipProvider.Get(object? sender)
         {
+            if (App.IsMaui)
+                return null;
+            Hide();
             toolTip.ToolTipOwner = sender;
+            toolTip.ToolTipLocation = null;
             return toolTip;
         }
 
@@ -173,6 +227,53 @@ namespace Alternet.UI
         {
             UnbindGlobalEvents();
             base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Raises the global mouse hover event.
+        /// </summary>
+        /// <remarks>Override this method to provide custom handling when a global mouse hover event
+        /// occurs. This method is called when the mouse pointer hovers over a relevant UI element.</remarks>
+        /// <param name="sender">The source of the event, typically the object that raised the event.</param>
+        /// <param name="e">An object that contains the event data.</param>
+        private static void OnGlobalMouseHover(object? sender, EventArgs e)
+        {
+            try
+            {
+                if (sender is not GenericControl control)
+                    return;
+                Instance.Hide();
+
+                var toolTipObject = control.GetRealToolTip();
+
+                if (toolTipObject is null)
+                    return;
+
+                var toolTipStr = toolTipObject.ToString();
+
+                if (string.IsNullOrEmpty(toolTipStr))
+                    return;
+
+                var toolTip = Instance.RichToolTip;
+                toolTip.ToolTipOwner = control;
+                toolTip.ToolTipLocation = null;
+                toolTip.ShowToolTip(toolTipStr);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Exception in {nameof(ToolTipWindow.OnGlobalMouseHover)}: {ex}");
+            }
+        }
+
+        private void HideToolTip<T>(object? sender, T e)
+        {
+            if (!Visible || DisposingOrDisposed)
+                return;
+            InsideTryCatch(() =>
+            {
+                toolTip.ToolTipVisible = false;
+                Hide();
+            });
         }
     }
 }
