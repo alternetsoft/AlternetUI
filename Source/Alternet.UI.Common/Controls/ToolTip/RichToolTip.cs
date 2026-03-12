@@ -541,6 +541,13 @@ namespace Alternet.UI
             return this;
         }
 
+        /// <inheritdoc/>
+        public IRichToolTip PostShowToolTip(PointD? location = null)
+        {
+            Post(() => ShowToolTip(location));
+            return this;
+        }
+
         /// <summary>
         /// Sets simple tooltip contents.
         /// </summary>
@@ -701,6 +708,20 @@ namespace Alternet.UI
         public virtual IRichToolTip SetIcon(ImageSet? bitmap)
         {
             ToolTipImage = bitmap;
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public virtual IRichToolTip SetParams(RichToolTipParams prm)
+        {
+            HideToolTip();
+
+            data = prm;
+            Title = data.Title;
+            Text = data.Text;
+            data.Font ??= RealFont;
+            data.MaxWidth ??= DefaultMaxWidth;
+            data.ScaleFactor = ScaleFactor;
             return this;
         }
 

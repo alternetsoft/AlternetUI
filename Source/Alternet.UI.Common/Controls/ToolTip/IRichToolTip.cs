@@ -93,7 +93,7 @@ namespace Alternet.UI
         /// <param name="message">Tooltip message. Text in this parameter can have line breaks.</param>
         /// <param name="systemColors">Whether to use system colors for the
         /// foreground and background.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetToolTip(object message, bool systemColors = true);
 
         /// <summary>
@@ -103,9 +103,8 @@ namespace Alternet.UI
         /// <param name="message">Tooltip message. Text in this parameter can have line breaks.</param>
         /// <param name="systemColors">Whether to use system colors for the
         /// foreground and background.</param>
-        /// <returns></returns>
         /// <param name="location">Location of the tooltip.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip ShowToolTip(
             object message,
             bool systemColors = true,
@@ -114,7 +113,7 @@ namespace Alternet.UI
         /// <summary>
         /// Hides tooltip.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip HideToolTip();
 
         /// <summary>
@@ -123,9 +122,10 @@ namespace Alternet.UI
         /// <param name="title">Tooltip title. If null is specified, tooltip will have no title.</param>
         /// <param name="message">ToolTip message. If null is specified,
         /// tooltip will have no message. Text in this parameter can have line breaks.</param>
-        /// <param name="icon"></param>
-        /// <param name="timeoutMilliseconds"></param>
-        /// <returns></returns>
+        /// <param name="icon">Tooltip icon. If null is specified, no icon will be shown.</param>
+        /// <param name="timeoutMilliseconds">Timeout in milliseconds after which tooltip will be hidden.
+        /// Optional. If not specified, default timeout value is used.</param>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetToolTip(
             object? title,
             object? message,
@@ -143,6 +143,7 @@ namespace Alternet.UI
         /// default timeout value is used. If 0 is specified, tooltip will not be hidden after timeout.
         /// </param>
         /// <param name="location">Location where tooltip will be shown.</param>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip ShowToolTip(
             object? title,
             object? message,
@@ -154,12 +155,14 @@ namespace Alternet.UI
         /// Sets tool tip background color.
         /// </summary>
         /// <param name="color">Background color.</param>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetToolTipBackgroundColor(Color? color);
 
         /// <summary>
         /// Sets the background brush.
         /// </summary>
         /// <param name="brush">Background brush.</param>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetToolTipBackgroundBrush(Brush? brush);
 
         /// <summary>
@@ -167,7 +170,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">The foreground color of the message text. If null is specified,
         /// default value is used.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetToolTipForegroundColor(Color? color);
 
         /// <summary>
@@ -175,7 +178,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="color">The foreground color of the title. If null is specified,
         /// default value is used.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetTitleForegroundColor(Color? color);
 
         /// <summary>
@@ -192,6 +195,7 @@ namespace Alternet.UI
         /// <param name="milliseconds">Timeout value. If null,
         /// <see cref="TimerUtils.DefaultToolTipTimeout"/> will be used.</param>
         /// <param name="millisecondsShowdelay">Show delay value. Optional. Default is 0.</param>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetTimeout(uint? milliseconds, uint millisecondsShowdelay = 0);
 
         /// <summary>
@@ -199,14 +203,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="bitmap">The tooltip image specified
         /// using <see cref="ImageSet"/>.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetIcon(ImageSet? bitmap);
 
         /// <summary>
         /// Sets font of the title.
         /// </summary>
         /// <param name="font">Title font.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetTitleFont(Font? font);
 
         /// <summary>
@@ -214,7 +218,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="template">Control template.</param>
         /// <param name="backColor">Background color. Optional.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetToolTipFromTemplate(
             TemplateControl template,
             Color? backColor = null);
@@ -227,7 +231,7 @@ namespace Alternet.UI
         /// <param name="template">Control template.</param>
         /// <param name="location">Location of the tooltip.</param>
         /// <param name="backColor">Background color. Optional.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip ShowToolTipFromTemplate(
             TemplateControl template,
             Color? backColor = null,
@@ -236,20 +240,27 @@ namespace Alternet.UI
         /// <summary>
         /// Clears text of the tooltip.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip ResetText();
+
+        /// <summary>
+        /// Configures the tooltip with the specified parameters.
+        /// </summary>
+        /// <param name="prm">An object containing the parameters to apply to the tooltip. Cannot be null.</param>
+        /// <returns>The current instance of the tooltip, allowing for method chaining.</returns>
+        IRichToolTip SetParams(RichToolTipParams prm);
 
         /// <summary>
         /// Clears title of the tooltip.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip ResetTitle();
 
         /// <summary>
         /// Configures tooltip to show only the specified image.
         /// </summary>
         /// <param name="image">Tooltip image.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip OnlyImage(ImageSet? image);
 
         /// <summary>
@@ -257,15 +268,25 @@ namespace Alternet.UI
         /// of the tooltip container.
         /// </summary>
         /// <param name="location">Location of the tooltip. Optional.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip ShowToolTip(PointD? location = null);
+
+        /// <summary>
+        /// Posts an show tooltip action to the application message loop.
+        /// When this method is called, the tooltip will be shown after the current event is processed.
+        /// The tooltip will be shown at the specified screen location or at a default position if no location is provided.
+        /// </summary>
+        /// <param name="location">The screen coordinates where the tooltip should be displayed. If null, the tooltip is shown at a default
+        /// location determined by the implementation.</param>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
+        IRichToolTip PostShowToolTip(PointD? location = null);
 
         /// <summary>
         /// Sets tooltip image using <see cref="MessageBoxIcon"/> enum.
         /// </summary>
         /// <param name="icon">The tooltip image specified
         /// using <see cref="MessageBoxIcon"/> enum.</param>
-        /// <returns></returns>
+        /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip SetIcon(MessageBoxIcon? icon);
     }
 }
