@@ -583,5 +583,13 @@ namespace Alternet.UI
         {
             AfterHide = null;
         }
+
+        /// <summary>
+        /// Resets the <see cref="MouseHover"/> event handler.
+        /// </summary>
+        public void ResetMouseHoverEvent()
+        {
+            MouseHover = null;
+        }
     }
 }
