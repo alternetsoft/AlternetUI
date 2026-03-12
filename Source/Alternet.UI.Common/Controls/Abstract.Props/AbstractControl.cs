@@ -1600,6 +1600,8 @@ namespace Alternet.UI
         /// Gets or sets the tool-tip that is displayed for this element
         /// in the user interface. This property allows to access the tool-tip as object.
         /// In order to set/get tool-tip as string, use <see cref="ToolTip"/> property.
+        /// You can set this property to any object. The control and its parent can decide on how to use it.
+        /// Currently library supports using <see cref="string"/> and <see cref="RichToolTipParams"/> as tool-tip objects.
         /// </summary>
         [Browsable(false)]
         public virtual object? ToolTipObject

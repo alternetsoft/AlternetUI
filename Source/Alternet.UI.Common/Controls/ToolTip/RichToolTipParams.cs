@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// of a tooltip's visual style, including colors, fonts, borders, and icons.
     /// Each property is nullable, enabling selective
     /// customization while falling back to default values for unspecified properties.</remarks>
-    public class RichToolTipParams : BaseObjectWithAttr
+    public partial class RichToolTipParams : BaseObjectWithAttr
     {
         /// <summary>
         /// Gets or sets the title associated with this instance.
