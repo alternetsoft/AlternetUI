@@ -162,6 +162,16 @@ namespace Alternet.UI
             instance?.HideToolTip(null, EventArgs.Empty);
         }
 
+        /// <summary>
+        /// Determines whether the specified object is a rich tooltip.
+        /// </summary>
+        /// <param name="value">The object to check.</param>
+        /// <returns><see langword="true"/> if the object is a rich tooltip; otherwise, <see langword="false"/>.</returns>
+        public static bool IsRichToolTip(object? value)
+        {
+            return value is RichToolTipParams;
+        }
+
         /// <inheritdoc/>
         IRichToolTip? IToolTipProvider.Get(object? sender)
         {
@@ -240,24 +250,39 @@ namespace Alternet.UI
         {
             try
             {
-                if (sender is not GenericControl control)
-                    return;
                 Instance.Hide();
+
+                if (sender is not AbstractControl control)
+                    return;
 
                 var toolTipObject = control.GetRealToolTip();
 
                 if (toolTipObject is null)
                     return;
 
-                var toolTipStr = toolTipObject.ToString();
-
-                if (string.IsNullOrEmpty(toolTipStr))
-                    return;
+                if (!IsRichToolTip(toolTipObject))
+                {
+                    if (control is not GenericControl)
+                        return;
+                }
 
                 var toolTip = Instance.RichToolTip;
                 toolTip.ToolTipOwner = control;
                 toolTip.ToolTipLocation = null;
-                toolTip.ShowToolTip(toolTipStr);
+
+                if (toolTipObject is string toolTipStr)
+                {
+                    if (string.IsNullOrEmpty(toolTipStr))
+                        return;
+
+                    Post(() => toolTip.ShowToolTip(toolTipStr));
+                    return;
+                }
+
+                if (toolTipObject is RichToolTipParams prm)
+                {
+                    toolTip.SetParams(prm).PostShowToolTip();
+                }
             }
             catch (Exception ex)
             {

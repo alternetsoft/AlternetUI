@@ -251,6 +251,8 @@ namespace Alternet.UI
 
         public void SetToolTip(object? value)
         {
+            if (ToolTipWindow.IsRichToolTip(value))
+                return;
             NativeControl.ToolTip = value?.ToString();
         }
 

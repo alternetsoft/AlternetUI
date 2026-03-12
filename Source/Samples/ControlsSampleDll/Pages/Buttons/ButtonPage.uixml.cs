@@ -161,6 +161,53 @@ namespace ControlsSample
             {
                 button.SvgSize = button.GetEffectiveSvgSize() + 10;
             });
+
+            MenuItem setTooltipWithBoldText = new("Set tooltip with bold text");
+            setTooltipWithBoldText.ClickAction = SetTooltipWithBoldTextClick;
+
+            void SetTooltipWithBoldTextClick()
+            {
+                button.ResetMouseHoverEvent();
+                button.MouseHover += (s, e) =>
+                {
+                    var provider = App.ToolTipProvider?.Get(button);
+                    ToolTipPage.ShowWithBoldText(provider, this);
+                };
+            }
+
+            button.Parent?.ContextMenuStrip.Add(setTooltipWithBoldText);
+
+            MenuItem setTooltipWithImage = new("Set tooltip with image");
+            setTooltipWithImage.ClickAction = SetTooltipWithImageClick;
+
+            void SetTooltipWithImageClick()
+            {
+                button.ResetMouseHoverEvent();
+                button.MouseHover += (s, e) =>
+                {
+                    var provider = App.ToolTipProvider?.Get(button);
+                    ToolTipPage.ShowWithLargeImage(provider);
+                };
+            }
+
+            button.Parent?.ContextMenuStrip.Add(setTooltipWithImage);
+
+            button.Parent?.ContextMenuStrip.Add("Set ToolTipObject", () =>
+            {
+                button.ResetMouseHoverEvent();
+                ButtonPage.SetComplexToolTip(button);
+            });
+        }
+
+        public static void SetComplexToolTip(AbstractControl? control)
+        {
+            if (control == null)
+                return;
+            RichToolTipParams prm = new();
+            prm.Title = "Tooltip title";
+            prm.Text = TextMemoPage.LoremIpsumSmall;
+            prm.Image = ToolTipPage.LargeImage;
+            control.ToolTipObject = prm;
         }
 
         private void Button_KeyDown(object? sender, KeyEventArgs e)

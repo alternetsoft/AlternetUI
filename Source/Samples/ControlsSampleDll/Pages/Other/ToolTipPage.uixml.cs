@@ -8,11 +8,12 @@ namespace ControlsSample
 {
     internal partial class ToolTipPage : Panel
     {
+        private static ImageSet? customImage;
+        private static ImageSet? largeImage;
+
         private readonly RichToolTip toolTip = new();
 
         private Action<object?, EventArgs>? showMethod;
-        private ImageSet? customImage;
-        private ImageSet? largeImage;
         private MessageBoxIcon toolTipIcon = MessageBoxIcon.Warning;
         private readonly TemplateControl controlTemplate;
 
@@ -20,17 +21,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            controlTemplate = TemplateUtils.CreateTemplateWithBoldText(
-                "This text has ",
-                "bold",
-                " fragment",
-                new FontAndColor(
-                    Color.Red,
-                    Color.LightGoldenrodYellow,
-                    Control.DefaultFont.Scaled(1.5f)));
-
-            controlTemplate.Parent = this;
-            controlTemplate.SetSizeToContent();
+            controlTemplate = CreateTemplateWithBoldText(this);
 
             tabControl.MinSizeGrowMode = WindowSizeToContentMode.Height;
 
@@ -195,6 +186,59 @@ namespace ControlsSample
             };
         }
 
+        public static ImageSet? CustomImage
+        {
+            get
+            {
+                if (customImage is null)
+                    LoadImages();
+                return customImage;
+            }
+        }
+
+        public static ImageSet? LargeImage
+        {
+            get
+            {
+                if (largeImage is null)
+                    LoadImages();
+                return largeImage;
+            }
+        }
+
+        public static void ShowWithLargeImage(IRichToolTip? toolTip)
+        {
+            if (toolTip is null)
+                return;
+            toolTip.OnlyImage(LargeImage).SetToolTipBackgroundColor(Color.ForestGreen).PostShowToolTip();
+        }
+
+        public static void ShowWithBoldText(IRichToolTip? toolTip, AbstractControl? templateParent)
+        {
+            if (toolTip is null)
+                return;
+
+            var template = CreateTemplateWithBoldText(templateParent);
+            toolTip.SetToolTipFromTemplate(template).PostShowToolTip();
+        }
+
+        public static TemplateControls.BoldText<Label> CreateTemplateWithBoldText(AbstractControl? parent)
+        {
+            var controlTemplate = TemplateUtils.CreateTemplateWithBoldText(
+                "This text has ",
+                "bold",
+                " fragment",
+                new FontAndColor(
+                    Color.Red,
+                    Color.LightGoldenrodYellow,
+                    Control.DefaultFont.Scaled(1.5f)));
+
+            controlTemplate.Parent = parent;
+            controlTemplate.SetSizeToContent();
+
+            return controlTemplate;
+        }
+
         private void ToolTipLabel_Click(object? sender, EventArgs e)
         {
             App.Log("ToolTipLabel_Click");
@@ -255,7 +299,7 @@ namespace ControlsSample
             toolTip.OnlyImage(largeImage).SetToolTipBackgroundColor(Color.ForestGreen).ShowToolTip();
         }
 
-        private void LoadImages()
+        private static void LoadImages()
         {
             ImageSet? GetImage(string resName, int backupColorImageSize)
             {

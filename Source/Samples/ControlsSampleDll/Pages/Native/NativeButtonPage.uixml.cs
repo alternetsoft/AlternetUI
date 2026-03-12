@@ -116,6 +116,12 @@ namespace ControlsSample
 
             button.PreviewKeyDown += Button_PreviewKeyDown;
             button.KeyDown += Button_KeyDown;
+
+            button.Parent?.ContextMenuStrip.Add("Set ToolTipObject", () =>
+            {
+                button.ResetMouseHoverEvent();
+                ButtonPage.SetComplexToolTip(button);
+            });
         }
 
         private void Button_KeyDown(object? sender, KeyEventArgs e)
