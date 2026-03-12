@@ -45,6 +45,7 @@ namespace Alternet.UI
         private ElementContentAlign textAlign = ElementContentAlign.Default;
         private ElementContentAlign imageAlign = ElementContentAlign.Default;
         private CommandSourceStruct commandSource;
+        private ControlColorAndStyle? theme;
 
         /// <summary>
         /// Initializes a new instance of the GenericListItemControl class and associates it with the specified parent
@@ -359,6 +360,28 @@ namespace Alternet.UI
             set
             {
                 commandSource.CommandParameter = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the custom color and style theme applied to the control.
+        /// </summary>
+        /// <remarks>When set, the control uses the specified theme for its appearance instead of the
+        /// default styling. Setting this property to null reverts the control to its default theme.</remarks>
+        [Browsable(false)]
+        public virtual ControlColorAndStyle? Theme
+        {
+            get
+            {
+                return theme;
+            }
+
+            set
+            {
+                if (theme == value)
+                    return;
+                theme = value;
+                Invalidate();
             }
         }
 
@@ -918,6 +941,12 @@ namespace Alternet.UI
             }
 
             itemDrawable.Draw(this, dc);
+        }
+
+        /// <inheritdoc/>
+        public override ControlColorAndStyle? GetDefaultTheme()
+        {
+            return Theme;
         }
 
         /// <summary>
