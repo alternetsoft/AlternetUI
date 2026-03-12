@@ -440,6 +440,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override Brush? GetBackground(VisualControlState state)
         {
+            if (!UseVisualStyleBackColor)
+            {
+                var result = base.GetBackground(state);
+
+                if (result != null)
+                    return result;
+            }
+
             Color color = GetBackgroundColor(state) ?? DefaultColors.ControlBackColor;
 
             return color.AsBrush;

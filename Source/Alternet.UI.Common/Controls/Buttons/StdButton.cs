@@ -48,6 +48,7 @@ namespace Alternet.UI
         private bool isDefault;
         private bool isCancel;
         private bool exactFit = false;
+        private bool useVisualStyleBackColor = true;
 
         static StdButton()
         {
@@ -160,17 +161,23 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Button;
 
         /// <summary>
-        /// Gets or sets a value that determines if the background is drawn using visual styles,
-        /// if supported.</summary>
+        /// Gets or sets a value that determines if the background is drawn using visual styles, if supported.</summary>
+        /// Default is True.
         /// <returns>
         /// <see langword="true" /> if the background is drawn using visual styles;
         /// otherwise, <see langword="false" />.</returns>
-        /// <remarks>
-        /// Currently this property doesn't do anything and is added for compatibility.
-        /// </remarks>
         [Category("Appearance")]
-        [Browsable(false)]
-        public virtual bool UseVisualStyleBackColor { get; set; } = true;
+        public virtual bool UseVisualStyleBackColor
+        {
+            get => useVisualStyleBackColor;
+            set
+            {
+                if (value == useVisualStyleBackColor)
+                    return;
+                useVisualStyleBackColor = value;
+                Invalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value that indicates whether a <see cref="Button"/> is

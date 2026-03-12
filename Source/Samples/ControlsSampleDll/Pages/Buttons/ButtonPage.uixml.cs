@@ -269,6 +269,8 @@ namespace ControlsSample
                 {
                     button.ForegroundColor = color;
                     button.BackgroundColor = backColor;
+
+                    button.UseVisualStyleBackColor = backColor is null;
                 }
 
                 button.StateImages.Assign(null);
