@@ -151,6 +151,16 @@ namespace ControlsSample
                     button.Invalidate();
                 }
             });
+
+            button.Parent?.ContextMenuStrip.Add("Inc min button size", () =>
+            {
+                button.MinimumSize += new SizeD(10, 10);
+            });
+
+            button.Parent?.ContextMenuStrip.Add("Inc svg size", () =>
+            {
+                button.SvgSize = button.GetEffectiveSvgSize() + 10;
+            });
         }
 
         private void Button_KeyDown(object? sender, KeyEventArgs e)

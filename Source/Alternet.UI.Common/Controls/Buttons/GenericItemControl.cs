@@ -309,7 +309,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the svg image size.
+        /// Gets or sets the svg image size in pixels.
+        /// This property determines the size at which SVG images are rendered within the control.
+        /// If not specified, <see cref="DefaultSvgSize"/> is used.
         /// </summary>
         [DefaultValue(null)]
         public virtual int? SvgSize
@@ -989,6 +991,18 @@ namespace Alternet.UI
             IsChecked = isChecked;
         }
 
+        /// <summary>
+        /// Calculates the effective size, in pixels, to use for rendering an SVG image.
+        /// </summary>
+        /// <remarks>Override this method to customize how the effective SVG size is determined in derived
+        /// classes.</remarks>
+        /// <returns>The size in pixels to use for the SVG image. Returns the value of the SvgSize property if set; otherwise,
+        /// returns the default size converted from device-independent pixels.</returns>
+        public virtual int GetEffectiveSvgSize()
+        {
+            return SvgSize ?? PixelFromDip(DefaultSvgSize);
+        }
+
         void IControlStateObjectChanged.DisabledChanged(object? sender)
         {
             if (DisposingOrDisposed)
@@ -1148,7 +1162,7 @@ namespace Alternet.UI
 
                 if (svgImage is not null)
                 {
-                    var imageSize = SvgSize ?? PixelFromDip(DefaultSvgSize);
+                    var imageSize = GetEffectiveSvgSize();
 
                     var isDarkSvgImageRequired = IsDarkSvgImageRequired(state);
 
