@@ -1,3 +1,29 @@
+# 1.0.5 (2026 March 12)
+
+- Create ToolTipWindow.
+- App: ToolTipProvider is now auto-created.
+- Improve border painting to allow using of custom pens/brushes.
+- BorderSideSettings: Add Brush and Pen props, optimizations.
+- BorderSettings: Add BottomLineBorder, constructors and GetPen.
+- Add MakeToolWindowWithoutTitleBar to Window.
+- RichToolTip: Add tooltip owner and nullable location.
+- DrawingUtils: fix empty and transpernt color border paint.
+- Color.IsEmptyOrTransparent.
+- StdButton: add get effective border color methods.
+- StdButton: Improve color theme.
+- Add fluent methods Label.SetWordWrap, ControlSet.Padding, AbstractoControl.SetParent, AbstractoControl.SetMargin.
+- Inherit StdRadioButton from StdCheckBox.
+- ListControlItem.CheckBoxMargin.
+- BorderSettings: Add accent, transparent and empty border presets
+- Mark BorderSettings.DefaultColor, BorderSettings.DefaultCommonBorderColor as obsolete. You can use DefaultColors.BorderColor for getting default border colors instead of these properties.
+- Add SVG image support to ControlStateSettings.
+- Add inner border support to BorderSettings.
+- ListControlItem: Do not measure text as bold by default. If old behavior is required, specify DrawLabelFlags.MeasureTextAsBold in item flags.
+- Fix DrawingUtils.FillBorderRectangle.
+- DefaultColors: Change disabled svg color in light theme
+
+---
+
 # 1.0.4 (2026 March 8)
 
 - Add `StdRadioButton`, `StdCheckBox`, `StdButton`, and `GenericItemControl` controls.
