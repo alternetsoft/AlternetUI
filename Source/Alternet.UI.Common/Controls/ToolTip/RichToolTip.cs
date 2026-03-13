@@ -59,13 +59,11 @@ namespace Alternet.UI
         public static Coord DefaultMinImageSize = 24;
 
         private static BorderSettings? defaultToolTipBorder;
+        private static TemplateControls.RichToolTipTemplate? defaultTemplate;
 
-        private readonly TemplateControls.RichToolTipTemplate template = new();
+        private readonly TemplateControls.RichToolTipTemplate template;
         private readonly ImageDrawable drawable = new();
-
-#pragma warning disable
         private RichToolTipParams data = new();
-#pragma warning restore
 
         private int? timeoutInMilliseconds;
         private int showDelayInMilliseconds;
@@ -80,6 +78,7 @@ namespace Alternet.UI
         /// </summary>
         public RichToolTip()
         {
+            template = new();
             drawable.Visible = false;
             ParentBackColor = true;
             ParentForeColor = true;
@@ -161,6 +160,22 @@ namespace Alternet.UI
         /// </summary>
         public static LightDarkColor DefaultToolTipTitleForegroundColor { get; set; }
             = Color.LightDark(light: (0, 51, 153), dark: (156, 220, 254));
+
+        /// <summary>
+        /// Gets or sets the default template used for rich tooltips.
+        /// </summary>
+        internal static TemplateControls.RichToolTipTemplate DefaultTemplate
+        {
+            get
+            {
+                return defaultTemplate ??= new();
+            }
+
+            set
+            {
+                defaultTemplate = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to draw point at center under the debug environment.
@@ -440,6 +455,8 @@ namespace Alternet.UI
             TemplateControls.RichToolTipTemplate template,
             RichToolTipParams data)
         {
+            template ??= DefaultTemplate;
+
             var rect = template.Bounds;
 
             if (rect.HasEmptyWidth)

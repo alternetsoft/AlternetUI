@@ -1614,6 +1614,7 @@ namespace Alternet.UI
         /// In order to set/get tool-tip as string, use <see cref="ToolTip"/> property.
         /// You can set this property to any object. The control and its parent can decide on how to use it.
         /// Currently library supports using <see cref="string"/> and <see cref="RichToolTipParams"/> as tool-tip objects.
+        /// If other object is assigned, <see cref="object.ToString()"/> method will be used to get string representation of the tool-tip.
         /// </summary>
         [Browsable(false)]
         public virtual object? ToolTipObject
