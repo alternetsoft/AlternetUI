@@ -52,17 +52,29 @@ namespace Alternet.UI
                     toolTip.SuggestedSize = size;
 
                     var location = toolTip.ToolTipLocation;
+                    PointD windowLcation;
+
+                    var toolTipOffset = ToolTipFactory.OverlayToolTipOffset;
 
                     if (location is null || toolTip.ToolTipOwner is not AbstractControl locationOwner)
                     {
                         var mousePos = Mouse.GetPosition(this.ScaleFactor);
 
-                        Location = mousePos + new PointD(ToolTipFactory.OverlayToolTipOffset);
+                        windowLcation = mousePos + new PointD(toolTipOffset);
                     }
                     else
                     {
-                        Location = locationOwner.PointToScreen(location.Value);
+                        windowLcation = locationOwner.PointToScreen(location.Value);
                     }
+
+                    RectD windowRect = new(windowLcation, Size);
+
+                    var display = Instance.GetDisplay();
+                    var containerRect = display.ClientAreaDip;
+
+                    var alignedLocation = AlignUtils.FitToolTipIntoContainer(containerRect, windowRect, new(toolTipOffset), ScaleFactor);
+
+                    Location = alignedLocation;
 
                     PerformLayoutAndInvalidate();
                     Show();
@@ -250,7 +262,7 @@ namespace Alternet.UI
         {
             try
             {
-                Instance.Hide();
+                HideGlobalToolTip();
 
                 if (sender is not AbstractControl control)
                     return;
@@ -269,6 +281,10 @@ namespace Alternet.UI
                 var toolTip = Instance.RichToolTip;
                 toolTip.ToolTipOwner = control;
                 toolTip.ToolTipLocation = null;
+
+                var display = Instance.GetDisplay();
+                var containerRect = display.ClientAreaDip;
+                toolTip.MaxTextWidth = Math.Max(RichToolTip.DefaultMaxWidth ?? 0f, containerRect.Width * 0.7f);
 
                 if (toolTipObject is string toolTipStr)
                 {
