@@ -22,6 +22,8 @@ namespace PropertyGridSample
 "Each step made a peculiar sound—like libraries whispering to mushrooms. " +
 "Trees bent inward to eavesdrop, their leaves rustling riddles only crickets could decipher.";
 
+        public static string LoremIpsumVerySmall = "I see a sky with clouds.";
+
         public static string LoremIpsum = LoremIpsumSmall +
 Environment.NewLine + Environment.NewLine +
 "The map she carried was drawn entirely in nonsense, but somehow it felt correct. " +
@@ -284,7 +286,9 @@ Environment.NewLine + Environment.NewLine +
             = AssemblyUtils.GetImageUrlInAssembly(typeof(ObjectInit).Assembly, "Resources.");
         internal static string ResPrefixImage = $"{UrlResPrefix}logo128x128.png";
 
-        internal static readonly Image DefaultImage = Image.FromUrl(ResPrefixImage);
+        public static Image DefaultImage { get; } = Image.FromUrl(ResPrefixImage);
+
+        public static ImageSet DefaultImageSet { get; } = ImageSet.FromUrl(ResPrefixImage);
 
         private static int newItemIndex = 0;
 

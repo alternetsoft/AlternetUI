@@ -33,6 +33,7 @@ namespace Alternet.UI
         private readonly ImageDrawable primitive = new();
         private bool textVisible = false;
         private bool isTransparent = true;
+        private TemplateControls.RichToolTipTemplate? toolTipTemplate;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
@@ -453,8 +454,7 @@ namespace Alternet.UI
 
             DoInsideLayout(() =>
             {
-                if(StateObjects != null)
-                    StateObjects.Images = null;
+                ClearImage();
                 var svg = MessageBoxSvg.GetImage(icon);
                 var iconImage = svg?.AsNormal(size, IsDarkBackground);
                 ImageSet = iconImage;
@@ -462,6 +462,85 @@ namespace Alternet.UI
             });
 
             return hasImage;
+        }
+
+        /// <summary>
+        /// Sets the image for the tooltip using the specified tooltip parameters.
+        /// </summary>
+        /// <param name="toolTip">The parameters that define the content and appearance of the tooltip image. Cannot be null.</param>
+        public virtual PictureBox SetImageFrom(RichToolTipParams toolTip)
+        {
+            DoInsideLayout(() =>
+            {
+                ClearImage();
+
+                if (toolTipTemplate == null)
+                {
+                    toolTipTemplate = new ();
+                    toolTipTemplate.Parent = this;
+                }
+
+                var asImage = RichToolTip.CreateToolTipImage(toolTipTemplate, toolTip);
+                Image = asImage;
+            });
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the image of the PictureBox from the specified template, optionally using a custom background color.
+        /// </summary>
+        /// <remarks>If a background color is provided, it overrides the template's default background
+        /// color for both the image and the PictureBox background. This method clears any existing image before setting
+        /// the new one.</remarks>
+        /// <param name="template">The template control from which to generate the image. Cannot be null.</param>
+        /// <param name="backColor">An optional background color to use when rendering the template. If null, the template's default background
+        /// color is used.</param>
+        /// <returns>The current PictureBox instance with the updated image.</returns>
+        public virtual PictureBox SetImageFrom(TemplateControl template, Color? backColor = null)
+        {
+            template.Visible = false;
+            template.Parent = this;
+
+            try
+            {
+                DoInsideLayout(() =>
+                {
+                    ClearImage();
+
+                    backColor ??= template.BackgroundColor;
+
+                    var asImage = TemplateUtils.GetTemplateAsImage(template, backColor);
+
+                    Image = asImage;
+
+                    if (backColor is not null)
+                    {
+                        BackgroundColor = backColor;
+                    }
+                });
+            }
+            finally
+            {
+                template.Parent = null;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Clears the current image and image set from the control, resetting it to a state with no visual content.
+        /// </summary>
+        public virtual void ClearImage()
+        {
+            if (StateObjects != null)
+            {
+                StateObjects.Images = null;
+                StateObjects.ImageSets = null;
+                StateObjects.SvgImages = null;
+            }
+
+            primitive.SvgImage = null;
         }
 
         /// <summary>
