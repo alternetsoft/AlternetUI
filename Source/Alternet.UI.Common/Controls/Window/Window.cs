@@ -1474,6 +1474,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a display object on which this window is located.
+        /// </summary>
+        /// <returns>A <see cref="Display"/> object representing the display for this instance. Returns <see
+        /// cref="Display.Primary"/> if the instance is disposing or has been disposed.</returns>
+        public virtual Display GetDisplay()
+        {
+            if (DisposingOrDisposed)
+                return Display.Primary;
+            return new Display(this);
+        }
+
+        /// <summary>
         /// Sets relative location of this window on the specified display.
         /// </summary>
         /// <param name="relativePosition">New location of the window in pixels. This value is relative
