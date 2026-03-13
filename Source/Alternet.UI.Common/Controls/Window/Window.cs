@@ -804,6 +804,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override bool IsWindow => true;
+
         /// <summary>
         /// Gets or sets the window that owns this window.
         /// </summary>
@@ -1071,7 +1074,7 @@ namespace Alternet.UI
                     ApplyStartLocationOnce(null);
                     RaiseLoadedOnce();
 
-                    if(App.IsLinuxOS)
+                    if (App.IsLinuxOS)
                         Refresh();
                 }
 
@@ -1504,11 +1507,11 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RaiseChildInserted(int index, AbstractControl childControl)
         {
-            if(childControl is GenericControl)
+            if (childControl is GenericControl)
             {
-                throw new ArgumentException(
+                LogUtils.LogException(new ArgumentException(
                     $"Generic control '{childControl.GetType()}' cannot be added to Window. Use Panel or other container as it's parent.",
-                    nameof(childControl));
+                    nameof(childControl)));
             }
 
             base.RaiseChildInserted(index, childControl);
@@ -1796,17 +1799,17 @@ namespace Alternet.UI
                     return ClickDefaultButton((button) => button.IsCancel);
                 }
                 else
-                if (e.IsEnter)
-                {
-                    if (EnterModalResult != ModalResult.None)
+                    if (e.IsEnter)
                     {
-                        ModalResult = EnterModalResult;
-                        e.Suppressed();
-                        return true;
-                    }
+                        if (EnterModalResult != ModalResult.None)
+                        {
+                            ModalResult = EnterModalResult;
+                            e.Suppressed();
+                            return true;
+                        }
 
-                    return ClickDefaultButton((button) => button.IsDefault);
-                }
+                        return ClickDefaultButton((button) => button.IsDefault);
+                    }
             }
 
             return false;

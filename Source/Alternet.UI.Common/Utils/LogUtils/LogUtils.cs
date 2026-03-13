@@ -24,6 +24,12 @@ namespace Alternet.UI
     public static partial class LogUtils
     {
         /// <summary>
+        /// Gets or sets a value indicating whether <see cref="LogException"/> method logs exceptions to the debug output
+        /// using <see cref="Debug.WriteLine(object?)"/> method.
+        /// </summary>
+        public static bool LogExceptionToDebugOutput = true;
+
+        /// <summary>
         /// Represents the time format used for logging timestamps to a file.
         /// </summary>
         /// <remarks>By default this format ensures that log entries include precise timestamps down to the
@@ -442,9 +448,6 @@ namespace Alternet.UI
             LogItemKind kind = LogItemKind.Error,
             bool allowReplace = false)
         {
-            var exceptionText = GetExceptionLogText(e);
-            LogToExternalIfAllowed(exceptionText, kind);
-
             var prefix = ErrorMessages.Default.ErrorPrefix;
             if (kind != LogItemKind.Error)
                 prefix = ErrorMessages.Default.WarningPrefix;
@@ -493,6 +496,14 @@ namespace Alternet.UI
                 }
 
                 App.AddLogItem(item, kind);
+
+                if (LogExceptionToDebugOutput)
+                {
+                    var exceptionToReport = e.InnerException ?? e;
+                    var exceptionText = GetExceptionLogText(exceptionToReport);
+
+                    Debug.WriteLine($"Exception: {exceptionToReport}");
+                }
             }
             catch (Exception exception)
             {

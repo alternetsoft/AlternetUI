@@ -83,7 +83,7 @@ namespace ControlsSample
             toolTemplate.HasBorder = true;
             toolTemplate.BorderColor = Color.Red;
 
-            toolTemplate.Parent = this;
+            toolTemplate.Parent = mainPanel;
             interiorDrawable = CreateInteriorDrawable(false);
 
             Size = (900, 700);
