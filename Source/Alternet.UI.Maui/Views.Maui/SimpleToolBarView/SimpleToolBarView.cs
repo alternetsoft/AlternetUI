@@ -1243,7 +1243,7 @@ namespace Alternet.Maui
 
             button.Clicked += (s, e) => button.RaiseClickedAction();
 
-            if (toolTip is not null)
+            if (!string.IsNullOrWhiteSpace(toolTip))
                 ToolTipProperties.SetText(button, toolTip);
 
             try
