@@ -414,30 +414,8 @@ namespace Alternet.UI
 
             if (data.Options.HasFlag(OverlayToolTipFlags.FitIntoContainer))
             {
-                if (containerBounds.Contains(overlay.Bounds))
-                {
-                }
-                else
-                {
-                    var patchLocation = data.LocationWithoutOffset ?? overlay.Location;
-                    RectD patchRect = RectD.GetEllipseBoundingBox(
-                        patchLocation,
-                        Math.Max(data.LocationOffset.X, 1),
-                        Math.Max(data.LocationOffset.Y, 1));
-
-                    var patchContainer = patchRect.Inflated(overlay.ImageSizeInDips);
-
-                    NineRects nineRects = new(patchContainer, patchRect, ScaleFactor);
-
-                    var containerRectI = containerBounds.PixelFromDip(ScaleFactor);
-
-                    var bestRect = nineRects.OuterRectInsideContainer(containerRectI);
-
-                    if (bestRect is not null)
-                    {
-                        overlay.Location = bestRect.Value.PixelToDip(ScaleFactor).Location;
-                    }
-                }
+                var newLocation = AlignUtils.FitToolTipIntoContainer(containerBounds, overlay.Bounds, data.LocationOffset, ScaleFactor);
+                overlay.Location = newLocation;
             }
 
             AddOverlay(overlay);

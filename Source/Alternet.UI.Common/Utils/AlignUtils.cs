@@ -19,6 +19,54 @@ namespace Alternet.UI
 #endif
 
         /// <summary>
+        /// Calculates a location for a tooltip so that it fits within the specified container rectangle, adjusting its
+        /// position if necessary to prevent it from overflowing.
+        /// </summary>
+        /// <remarks>If the tooltip does not fit within the container at its initial location, the method
+        /// attempts to reposition it using a set of candidate locations around the original point. The adjustment takes
+        /// into account the specified offset and scale factor to ensure proper placement across different display
+        /// settings.</remarks>
+        /// <param name="containerRect">The bounding rectangle that defines the area within which the tooltip must be fully contained.</param>
+        /// <param name="innerRect">The initial rectangle representing the desired position and size of the tooltip before adjustment.</param>
+        /// <param name="offset">The minimum distance, in device-independent pixels, to offset the tooltip from its original location. Must
+        /// be at least 1.</param>
+        /// <param name="scaleFactor">The scale factor used to convert between device-independent pixels and physical pixels.</param>
+        /// <returns>A point representing the adjusted location for the tooltip that ensures it remains fully within the
+        /// container. If the tooltip already fits, returns its original location.</returns>
+        public static PointD FitToolTipIntoContainer(RectD containerRect, RectD innerRect, PointD offset, float scaleFactor)
+        {
+            var location = innerRect.Location;
+            offset.X = Math.Max(offset.X, 1);
+            offset.Y = Math.Max(offset.Y, 1);
+
+            if (containerRect.Contains(innerRect))
+            {
+                return location;
+            }
+            else
+            {
+                var patchLocation = location - offset;
+                RectD patchRect = RectD.GetEllipseBoundingBox(patchLocation, offset.X, offset.Y);
+
+                var patchContainer = patchRect.Inflated(innerRect.Size);
+
+                NineRects nineRects = new(patchContainer, patchRect, scaleFactor);
+
+                var containerRectI = containerRect.PixelFromDip(scaleFactor);
+
+                var bestRect = nineRects.OuterRectInsideContainer(containerRectI);
+
+                if (bestRect is not null)
+                {
+                    var result = bestRect.Value.PixelToDip(scaleFactor).Location;
+                    return result;
+                }
+            }
+
+            return location;
+        }
+
+        /// <summary>
         /// Calculates the position of a dropdown relative to a specified <see cref="SizeD"/>.
         /// </summary>
         /// <remarks>The <paramref name="position"/> parameter allows fine-grained
