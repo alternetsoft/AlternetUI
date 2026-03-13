@@ -72,6 +72,7 @@ namespace Alternet.UI
         private HVAlignment toolTipAlignment;
         private object? toolTipOwner;
         private PointD? toolTipLocation;
+        private float? maxTextWidth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
@@ -202,6 +203,28 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public AbstractControl ToolTipTemplate => template;
+
+        /// <summary>
+        /// Gets or sets the maximum width, in device-independent units (DIPs), that text can occupy before it is
+        /// truncated or wrapped.
+        /// </summary>
+        /// <remarks>Set this property to limit the width of displayed title and message text. If the value is null, 
+        /// <see cref="DefaultMaxWidth"/> is used.</remarks>
+        public virtual float? MaxTextWidth
+        {
+            get
+            {
+                return maxTextWidth;
+            }
+
+            set
+            {
+                if (maxTextWidth == value)
+                    return;
+                maxTextWidth = value;
+                HideToolTip();
+            }
+        }
 
         /// <inheritdoc/>
         public virtual Color? ToolTipBackgroundColor
@@ -822,7 +845,7 @@ namespace Alternet.UI
             data.Title = Title;
             data.Text = Text;
             data.Font = RealFont;
-            data.MaxWidth = DefaultMaxWidth;
+            data.MaxWidth = MaxTextWidth ?? DefaultMaxWidth;
             data.ScaleFactor = ScaleFactor;
 
             var result = CreateToolTipImage(template, data);

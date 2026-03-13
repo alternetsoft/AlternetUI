@@ -22,6 +22,14 @@ namespace Alternet.UI
         Font? ToolTipTitleFont { get; set; }
 
         /// <summary>
+        /// Gets or sets the maximum width, in device-independent units (DIPs), that text can occupy before it is
+        /// truncated or wrapped.
+        /// </summary>
+        /// <remarks>Set this property to limit the width of displayed title and message text. If the value is null, 
+        /// <see cref="RichToolTip.DefaultMaxWidth"/> is used.</remarks>
+        float? MaxTextWidth { get; set; }
+
+        /// <summary>
         /// Gets tooltip show timeout in milliseconds. If null,
         /// <see cref="TimerUtils.DefaultToolTipTimeout"/> is used.
         /// </summary>
