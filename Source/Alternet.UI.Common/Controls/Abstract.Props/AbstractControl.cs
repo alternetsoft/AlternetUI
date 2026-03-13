@@ -1597,6 +1597,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether this is a <see cref="GenericControl"/> or its derived type.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsGenericControl => false;
+
+        /// <summary>
+        /// Gets a value indicating whether this is a <see cref="Window"/> or its derived type.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsWindow => false;
+
+        /// <summary>
         /// Gets or sets the tool-tip that is displayed for this element
         /// in the user interface. This property allows to access the tool-tip as object.
         /// In order to set/get tool-tip as string, use <see cref="ToolTip"/> property.

@@ -34,6 +34,9 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool IsHandleCreated => true;
 
+        /// <inheritdoc/>
+        public override bool IsGenericControl => true;
+
         /// <summary>
         /// Gets the first parent control in the parent chain which
         /// is not <see cref="GenericControl"/>.
