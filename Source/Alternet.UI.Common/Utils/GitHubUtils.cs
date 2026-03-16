@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -150,6 +151,45 @@ namespace Alternet.UI
 
             WindowWithMemoAndButton.ShowDialog(
                 $"AlternetUI Commits in the Last {days} Days", s);
+        }
+
+        /// <summary>
+        /// Retrieves a formatted string containing commit information for the AlternetUI repository from the past
+        /// specified number of days.
+        /// </summary>
+        /// <param name="days">The number of days in the past to include commits. Must be a positive integer.</param>
+        /// <param name="branch">The name of the branch to filter commits by. If null, the default branch is used.</param>
+        /// <returns>A string containing the commit details for the specified time period and branch. The string will be empty if
+        /// no commits are found.</returns>
+        public static async Task<string> GetCommitsForAlternetUI(int days, string? branch = null)
+        {
+            var commits = await GetCommitsAsync(
+                "alternetsoft",
+                "AlternetUI",
+                DateTime.UtcNow.AddDays(-days),
+                token: null,
+                branch: branch);
+
+            var s = CommitsToString(commits);
+
+            return s;
+        }
+
+        /// <summary>
+        /// Saves the commit history for the AlternetUI repository from the past specified number of days to a
+        /// timestamped text file in the current folder.
+        /// </summary>
+        /// <remarks>The file will be overwritten if a file with the same name already exists.</remarks>
+        /// <param name="days">The number of days in the past from which to retrieve commit history. Must be a positive integer.</param>
+        /// <param name="branch">The name of the branch to retrieve commits from. If null, the default branch is used.</param>
+        /// <returns>The file path of the saved commit history text file. The file will be created in the current folder
+        /// with a name in the format "AlternetUI_Commits_yyyyMMdd_HHmmss.txt".</returns>
+        public static string SaveAlternetUICommitsToFile(int days, string? branch = null)
+        {
+            var s = GetCommitsForAlternetUI(days, branch).Result;
+            var fileName = PathUtils.GetFilePathInCurrentFolder($"AlternetUI_Commits_{DateTime.UtcNow:yyyyMMdd_HHmmss}.txt");
+            System.IO.File.WriteAllText(fileName, s);
+            return fileName;
         }
 
         /// <summary>
