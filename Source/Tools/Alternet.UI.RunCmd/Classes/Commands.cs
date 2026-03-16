@@ -131,6 +131,14 @@ namespace Alternet.UI
             Console.ReadKey();
         }
 
+        public static void CmdSaveCommits(CommandLineArgs args)
+        {
+            byte days = args.AsByte("Days", 7);
+            string? branch = args.AsString("Branch");
+            var s = GitHubUtils.SaveAlternetUICommitsToFile(days, branch);
+            Console.WriteLine($"Commits saved to file: {s}");
+        }
+
         public static void CmdUnzip(CommandLineArgs args)
         {
             string filePath = args.AsString("Path");
@@ -804,6 +812,11 @@ namespace Alternet.UI
                 "unzip",
                 CmdUnzip,
                 "-r=unzip Path=\"e:/file.zip\" ExtractTo=\"e:/ExtractedZip\"");
+
+            RegisterCommand(
+                "saveCommits",
+                CmdSaveCommits,
+                "-r=saveCommits Days=7 Branch=\"master\"");
 
             RegisterCommand(
                 "runControlsSample",

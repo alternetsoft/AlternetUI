@@ -38,6 +38,10 @@
     "svgToPngProject": {
       "commandName": "Project",
       "commandLineArgs": "-r=svgToPng Config=\"..\\..\\..\\..\\..\\..\\..\\AlternetStudio\\NewImages\\ProjectExplorerImages\\ProjectExplorerSvgToPng.xml\""
+    },
+    "saveCommits": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=saveCommits Days=7 Branch=\"master\""
     }
   }
 }
