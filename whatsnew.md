@@ -1,3 +1,21 @@
+# 1.0.6 (2026 March 16)
+
+- Fit internal tooltips into screen desktop area.
+- Window.GetDisplay, AlignUtils.FitToolTipIntoContainer, PictureBox.ClearImage().
+- RichToolTip.MaxTextWidth.
+- MAUI: Fix empty tooltips in SimpleToolBarView.
+- Add two PictureBox.SetImageFrom overloads: one to create an image from RichToolTipParams and another to render a TemplateControl to an image.
+- TemplateControl is now derived from HiddenGenericBorder.
+- AbstractControl: Add IsWindow and IsGenericControl.
+- Add rich tooltip support in AbstractControl.ToolTipObject. Assign RichToolTipParams in order to show complex tooltips with title, image, template and advanced formatting.
+- Add SetParams and PostShowToolTip to IRichToolTip
+- AbstractControl: Add ResetMouseHoverEvent to clear MouseHover.
+- Implement tooltips for GenericControl
+- Add Theme property to GenericItemControl.
+- Fix StdButton.UseVisualStyleBackColor.
+
+---
+
 # 1.0.5 (2026 March 12)
 
 - Create ToolTipWindow.
