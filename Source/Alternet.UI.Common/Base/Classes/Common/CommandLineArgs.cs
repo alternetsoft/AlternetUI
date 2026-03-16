@@ -233,6 +233,53 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the value associated with the specified argument name and converts it to an integer.
+        /// </summary>
+        /// <remarks>If the argument is not present or cannot be converted to an integer, the method
+        /// returns the provided default value. Errors encountered during conversion are handled internally and do not
+        /// propagate to the caller.</remarks>
+        /// <param name="argName">The name of the argument to retrieve and convert to an integer. Cannot be null.</param>
+        /// <param name="defaultValue">The value to return if the argument is not found or cannot be converted to an integer. The default is 0.</param>
+        /// <returns>The integer value of the specified argument if found and convertible; otherwise, the specified default
+        /// value.</returns>
+        public virtual int AsInt(string argName, int defaultValue = default)
+        {
+            try
+            {
+                if (args.TryGetValue(argName, out string? value))
+                    return Convert.ToInt32(value);
+                return defaultValue;
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+                return defaultValue;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the value associated with the specified argument name as a byte, or returns the specified default
+        /// value if the argument is not found or cannot be converted.
+        /// </summary>
+        /// <param name="argName">The name of the argument to retrieve from the argument collection.</param>
+        /// <param name="defaultValue">The value to return if the argument is not found or cannot be converted to a byte. The default is 0.</param>
+        /// <returns>The byte value of the specified argument if found and convertible; otherwise, the specified default value.</returns>
+        public virtual byte AsByte(string argName, byte defaultValue = default)
+        {
+            try
+            {
+                if (args.TryGetValue(argName, out string? value))
+                    return Convert.ToByte(value);
+                return defaultValue;
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+                return defaultValue;
+            }
+        }
+
+        /// <summary>
         /// Gets command line argument as <see cref="double"/>.
         /// </summary>
         /// <param name="argName">Argument name.</param>
@@ -245,6 +292,29 @@ namespace Alternet.UI
             {
                 if (args.TryGetValue(argName, out string? value))
                     return Convert.ToDouble(value);
+                return defaultValue;
+            }
+            catch (Exception e)
+            {
+                OnError(e);
+                return defaultValue;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the value associated with the specified argument name as a single-precision floating-point number.
+        /// </summary>
+        /// <remarks>If the argument is present but cannot be converted to a float, the method returns the
+        /// specified default value and may trigger error handling logic.</remarks>
+        /// <param name="argName">The name of the argument to retrieve. Cannot be null.</param>
+        /// <param name="defaultValue">The value to return if the argument is not found or cannot be converted to a float. The default is 0.</param>
+        /// <returns>The argument value converted to a float if found and convertible; otherwise, the specified default value.</returns>
+        public virtual float AsFloat(string argName, float defaultValue = default)
+        {
+            try
+            {
+                if (args.TryGetValue(argName, out string? value))
+                    return Convert.ToSingle(value);
                 return defaultValue;
             }
             catch (Exception e)
