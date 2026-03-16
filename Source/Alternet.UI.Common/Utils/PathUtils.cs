@@ -87,6 +87,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Combines the application's folder path with a specified relative file name to create a full file path.
+        /// </summary>
+        /// <remarks>Use this method to construct file paths for files stored within the application's
+        /// designated folder. The returned path is platform-specific and depends on the application's folder
+        /// location.</remarks>
+        /// <param name="relativeFileName">The relative file name to append to the application's folder path. Cannot be null or contain invalid path
+        /// characters.</param>
+        /// <returns>A string containing the full file path that combines the application's folder and the specified relative
+        /// file name.</returns>
+        public static string GetFilePathInAppFolder(string relativeFileName)
+        {
+            string appFolder = GetAppFolder();
+            string result = Path.Combine(appFolder, relativeFileName);
+            return result;
+        }
+
+        /// <summary>
+        /// Combines the current working directory with a specified relative file name to produce an absolute file path.
+        /// </summary>
+        /// <param name="relativeFileName">The name of the file, relative to the current working directory. Cannot be null or contain invalid path
+        /// characters.</param>
+        /// <returns>A string containing the absolute path to the specified file in the current working directory.</returns>
+        public static string GetFilePathInCurrentFolder(string relativeFileName)
+        {
+            string currentFolder = Directory.GetCurrentDirectory();
+            string result = Path.Combine(currentFolder, relativeFileName);
+            return result;
+        }
+
+        /// <summary>
         /// Returns a subfolder path inside the system temporary directory.
         /// </summary>
         /// <param name="subFolder">
