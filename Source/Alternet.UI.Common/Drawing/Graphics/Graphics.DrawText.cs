@@ -298,7 +298,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws an array of text elements with font styles.
+        /// Draws an array of text elements with custom font styles and colors.
         /// </summary>
         public virtual SizeD DrawTextWithFontStyle(
             TextAndFontStyle[] text,
@@ -317,8 +317,15 @@ namespace Alternet.Drawing
             {
                 var itemFont = font.WithStyle(item.FontStyle);
                 var measure = GetTextExtent(item.Text, itemFont);
+                
                 if (visible)
-                    DrawText(item.Text, location, itemFont, foreColor, backColor ?? Color.Empty);
+                {
+                    var myForeColor = item.ForeColor ?? foreColor;
+                    var myBackColor = item.BackColor ?? backColor ?? Color.Empty;
+
+                    DrawText(item.Text, location, itemFont, myForeColor, myBackColor);
+                }
+
                 location.X += measure.Width;
                 result.Width += measure.Width;
                 result.Height = Math.Max(result.Height, measure.Height);
