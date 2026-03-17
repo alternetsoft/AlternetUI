@@ -42,6 +42,11 @@ namespace Alternet.Drawing
         public object? Tag;
 
         /// <summary>
+        /// Gets bounds of the item after painting. This property is used to store the measured bounds of the text after it has been rendered.
+        /// </summary>
+        public RectD? MeasuredBounds;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TextAndFontStyle"/> struct
         /// with the specified text.
         /// </summary>
