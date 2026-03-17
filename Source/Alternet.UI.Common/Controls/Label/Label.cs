@@ -51,19 +51,24 @@ namespace Alternet.UI
         /// </summary>
         public static new bool ShowDebugCorners = false;
 
-        private bool imageVisible = true;
-        private HVAlignment alignment;
         private string? textPrefix;
         private string? textSuffix;
         private string? textFormat;
-        private Graphics.DrawLabelParams prm;
-        private bool isVerticalText;
+
         private Coord? maxTextWidth;
-        private bool wordWrap;
+        private Coord? minTextWidth;
+
+        private Graphics.DrawLabelParams prm;
+
+        private HVAlignment alignment;
         private VerticalAlignment? imageVerticalAlignment;
         private HorizontalAlignment? imageHorizontalAlignment;
-        private Coord? minTextWidth;
+
+        private bool isVerticalText;
+        private bool wordWrap;
+        private bool imageVisible = true;
         private bool isTransparent = true;
+        private bool measureTextWithBold;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -149,6 +154,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Specifies flags that control the default text rendering behavior.
+        /// </summary>
+        /// <remarks>This enumeration supports bitwise combination of its member values to enable multiple
+        /// text rendering options simultaneously.</remarks>
+        [Flags]
+        public enum DrawLabelTextFlags
+        {
+            /// <summary>
+            /// Indicates that no options are set.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Specifies that text should be displayed using a bold font style.
+            /// </summary>
+            UseBoldFont = 1 << 0,
+        }
+
+        /// <summary>
         /// Occurs before the text is drawn.
         /// </summary>
         public event EventHandler? BeforeDrawText;
@@ -157,6 +181,24 @@ namespace Alternet.UI
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
         public event EventHandler? ImageChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether text measurement operations use a bold font style.
+        /// </summary>
+        /// <remarks>When enabled, text measurements will reflect the dimensions of bold text, which may
+        /// affect layout calculations. Changing this property triggers a layout update.</remarks>
+        [Browsable(false)]
+        public virtual bool MeasureTextWithBold
+        {
+            get => measureTextWithBold;
+            set
+            {
+                if (measureTextWithBold == value)
+                    return;
+                measureTextWithBold = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the control is transparent. Default is true.
@@ -601,12 +643,14 @@ namespace Alternet.UI
         /// <param name="font">Text font.</param>
         /// <param name="backColor">Background color of the text.</param>
         /// <param name="rect">Rectangle to draw in.</param>
+        /// <param name="flags">Flags to control text drawing.</param>
         public virtual RectD DrawDefaultText(
             Graphics dc,
             RectD rect,
             Color? foreColor = null,
             Color? backColor = null,
-            Font? font = null)
+            Font? font = null,
+            DrawLabelTextFlags flags = DrawLabelTextFlags.None)
         {
             var state = VisualState;
             RectD paddedRect = (
@@ -620,6 +664,10 @@ namespace Alternet.UI
                 return RectD.Empty;
 
             var labelFont = font ?? GetLabelFont(state);
+
+            if (flags.HasFlag(DrawLabelTextFlags.UseBoldFont))
+                labelFont = labelFont.AsBold;
+
             var labelForeColor = foreColor ?? GetLabelForeColor(state);
             var labelBackColor = backColor ?? GetLabelBackColor(state);
 
@@ -802,6 +850,11 @@ namespace Alternet.UI
             if (context.AvailableSize.AnyIsEmptyOrNegative)
                 return SizeD.Empty;
 
+            DrawLabelTextFlags flags = DrawLabelTextFlags.None;
+
+            if (MeasureTextWithBold)
+                flags |= DrawLabelTextFlags.UseBoldFont;
+
             var result = GetDefaultPreferredSize(
                         context.AvailableSize,
                         withPadding: true,
@@ -810,7 +863,10 @@ namespace Alternet.UI
                             var measured = DrawDefaultText(
                                 MeasureCanvas,
                                 (PointD.Empty, size),
-                                Color.Empty);
+                                foreColor: Color.Empty,
+                                backColor: null,
+                                font: null,
+                                flags);
                             return measured.Size;
                         });
 
