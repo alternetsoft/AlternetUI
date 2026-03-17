@@ -1540,21 +1540,26 @@ namespace Alternet.UI
             if (!IsToolTipEnabled)
                 return null;
 
-            var s = ToolTip;
+            var result = base.GetRealToolTip();
 
-            if (string.IsNullOrWhiteSpace(s))
+            if (result is string s)
             {
-                return null;
+                if (string.IsNullOrWhiteSpace(s))
+                {
+                    return null;
+                }
+
+                var shortcutText = GetShortcutText(true);
+
+                if (shortcutText is not null)
+                {
+                    s += " " + shortcutText;
+                }
+
+                return s;
             }
 
-            var shortcutText = GetShortcutText(true);
-
-            if (shortcutText is not null)
-            {
-                s += " " + shortcutText;
-            }
-
-            return s;
+            return result;
         }
 
         /// <summary>
