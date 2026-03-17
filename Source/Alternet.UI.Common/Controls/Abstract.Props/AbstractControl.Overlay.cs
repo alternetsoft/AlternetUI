@@ -351,14 +351,15 @@ namespace Alternet.UI
         {
             OverlayToolTipParams data = new()
             {
-                Title = title?.ToString() ?? string.Empty,
                 Text = message?.ToString() ?? string.Empty,
-                Icon = icon,
                 HorizontalAlignment = alignment?.Horizontal ?? HorizontalAlignment.Center,
                 VerticalAlignment = alignment?.Vertical ?? VerticalAlignment.Center,
                 Options = options,
                 DismissInterval = dismissIntervalMilliseconds,
             };
+
+            data.ToolTipParams.Title = title?.ToString() ?? string.Empty;
+            data.ToolTipParams.Icon = icon;
 
             return ShowOverlayToolTip(data);
         }
@@ -379,17 +380,17 @@ namespace Alternet.UI
             data.ContainerBounds ??= GetOverlayRectangle();
             var containerBounds = data.ContainerBounds.Value;
 
-            data.MaxWidth ??= Math.Max(RichToolTip.DefaultMaxWidth ?? 0, containerBounds.Width);
-            data.ScaleFactor = ScaleFactor;
+            data.ToolTipParams.MaxWidth ??= Math.Max(RichToolTip.DefaultMaxWidth ?? 0, containerBounds.Width);
+            data.ToolTipParams.ScaleFactor = ScaleFactor;
 
             if (data.Options.HasFlag(OverlayToolTipFlags.UseSystemColors))
             {
-                data.UsesSystemColors();
+                data.ToolTipParams.UsesSystemColors();
             }
 
             var overlay = new ControlOverlayWithToolTip()
             {
-                ToolTip = data,
+                ToolTip = data.ToolTipParams,
             };
 
             overlay.UpdateImage();

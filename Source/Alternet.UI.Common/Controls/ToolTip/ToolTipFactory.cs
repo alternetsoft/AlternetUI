@@ -185,11 +185,17 @@ namespace Alternet.UI
             HideLastShownInOverlay();
             if (control is null || tooltip is null)
                 return false;
-            var tooltipStr = tooltip.ToString()?.Trim() ?? string.Empty;
-            if (tooltipStr.Length == 0)
-                return false;
 
-            OverlayToolTipParams CreateData()
+            string? tooltipStr = null;
+
+            if (tooltip is not RichToolTipParams)
+            {
+                tooltipStr = tooltip.ToString()?.Trim() ?? string.Empty;
+                if (string.IsNullOrEmpty(tooltipStr))
+                    return false;
+            }
+
+            OverlayToolTipParams CreateData(RichToolTipParams? prm)
             {
                 var font = OverlayToolTipFont ?? AbstractControl.DefaultFont;
                 var pos = Mouse.GetPosition(overlayParent);
@@ -199,21 +205,29 @@ namespace Alternet.UI
 
                 var ofs = Math.Abs(OverlayToolTipOffset);
 
-                OverlayToolTipParams data = new()
+                OverlayToolTipParams data = new(prm)
                 {
                     LocationOffset = new PointD(ofs, ofs),
                     LocationWithoutOffset = pos,
-                    Text = tooltipStr,
-                    Font = font,
                     Options = defaultOptions,
                     AssociatedControl = control,
-                    ToolTip = tooltip,
+                    InitialToolTip = tooltip,
                 };
+
+                if (prm is null)
+                {
+                    data.Text = tooltipStr ?? string.Empty;
+                }
+                else
+                {
+                }
+
+                data.Font ??= font;
 
                 return data;
             }
 
-            var data = CreateData();
+            var data = CreateData(tooltip as RichToolTipParams);
 
             if (OverlayToolTipShowing is not null)
             {
