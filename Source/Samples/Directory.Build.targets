@@ -19,6 +19,11 @@
     <PALx64DebugPDB>$(PalBinFolder)\x64\Debug\Alternet.UI.Pal.pdb</PALx64DebugPDB>
     <PALx64Debug>$(PalBinFolder)\x64\Debug\Alternet.UI.Pal.dll</PALx64Debug>
     <PALx64Release>$(PalBinFolder)\x64\Release\Alternet.UI.Pal.dll</PALx64Release>
+
+    <PALArm64DebugPDB>$(PalBinFolder)\Arm64\Debug\Alternet.UI.Pal.pdb</PALArm64DebugPDB>
+    <PALArm64Debug>$(PalBinFolder)\Arm64\Debug\Alternet.UI.Pal.dll</PALArm64Debug>
+    <PALArm64Release>$(PalBinFolder)\Arm64\Release\Alternet.UI.Pal.dll</PALArm64Release>
+
   </PropertyGroup>
 
   <!-- ====================================================== -->
@@ -90,7 +95,24 @@
 
   <!-- ====================================================== -->
 
+  <ItemGroup Condition="'$(CPW)'=='Debug|AnyCPU|true' AND '$(IsSampleProject)'=='true'">
+    <None Include="$(PalBinFolder)\arm64\Debug\Alternet.UI.Pal.dll" Link="arm64\Alternet.UI.Pal.dll"
+	Condition="Exists($(PALArm64Debug))">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(PalBinFolder)\arm64\Debug\Alternet.UI.Pal.pdb" Link="arm64\Alternet.UI.Pal.pdb"
+	Condition="Exists($(PALArm64DebugPDB))">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <!-- ====================================================== -->
+
   <ItemGroup Condition="'$(CPW)'=='Release|AnyCPU|true' AND '$(IsSampleProject)'=='true'">
+    <None Include="$(PalBinFolder)\Arm64\Release\Alternet.UI.Pal.dll"
+          Link="arm64\Alternet.UI.Pal.dll" Condition="Exists($(PALArm64Release))">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="$(PalBinFolder)\x64\Release\Alternet.UI.Pal.dll"
           Link="x64\Alternet.UI.Pal.dll" Condition="Exists($(PALx64Release))">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
