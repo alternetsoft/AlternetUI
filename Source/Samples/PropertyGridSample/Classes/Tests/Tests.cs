@@ -90,6 +90,38 @@ namespace PropertyGridSample
                     c.WordWrap = true;
                 });
 
+                AddControlAction<Label>("Set bold for text part", (c) =>
+                {
+                    c.DrawLabelFlags = DrawLabelFlags.TextHasBold;
+                    c.Text = "Label with <b>bold</b> text";
+                });
+
+                AddControlAction<Label>("Toggle complex formatted text", (c) =>
+                {
+                    if (c.UpdateDrawParamsAction is null)
+                    {
+                        c.UpdateDrawParamsAction = UpdateDrawParams;
+                        c.PerformLayoutAndInvalidate();
+
+                        void UpdateDrawParams(ref Graphics.DrawLabelParams prm)
+                        {
+                            prm.TextAndFontStyle = new TextAndFontStyle[]
+                            {
+                                new ("Complex", FontStyle.Regular, Color.Black, Color.Gray),
+                                new (" ", FontStyle.Regular),
+                                new ("formatted ", FontStyle.Bold, LightDarkColors.Red),
+                                new ("label", FontStyle.Underline, LightDarkColors.Green),
+                            };
+                        }
+                    }
+                    else
+                    {
+                        c.UpdateDrawParamsAction = null;
+                        c.Text = "Simple text";
+                    }
+
+                });
+
                 AddControlAction<GenericWrappedTextControl>("Set LoremIpsum", (c) =>
                 {
                     c.Text = ObjectInit.LoremIpsum;
