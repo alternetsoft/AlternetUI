@@ -159,6 +159,11 @@ namespace Alternet.UI
         public event EventHandler? BeforeDrawText;
 
         /// <summary>
+        /// Occurs after the text is drawn.
+        /// </summary>
+        public event EventHandler? AfterDrawText;
+
+        /// <summary>
         /// Occurs when the <see cref="Image"/> property changes.
         /// </summary>
         public event EventHandler? ImageChanged;
@@ -190,6 +195,19 @@ namespace Alternet.UI
                 drawLabelFlags = value;
                 PerformLayoutAndInvalidate();
             }
+        }
+
+        /// <summary>
+        /// Gets the parameters used to control label drawing behavior for the graphics context.
+        /// This is a read-only property that provides access to the current label drawing parameters, which include
+        /// information such as text alignment, word wrap settings, and other rendering options. Do not modify the returned
+        /// object directly; instead, use the <see cref="UpdateDrawLabelParams(UpdateDrawLabelParamsDelegate)"/> method
+        /// to update the drawing parameters safely.
+        /// </summary>
+        [Browsable(false)]
+        public Graphics.DrawLabelParams DrawParameters
+        {
+            get => prm;
         }
 
         /// <summary>
@@ -767,6 +785,7 @@ namespace Alternet.UI
             BeforeDrawText?.Invoke(this, EventArgs.Empty);
             UpdateDrawParamsAction?.Invoke(ref prm);
             var result = dc.DrawLabel(ref prm);
+            AfterDrawText?.Invoke(this, EventArgs.Empty);
             return result;
         }
 
