@@ -610,13 +610,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="image">Item image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddRightSpeedBtn(
             string? text,
             SvgImage? image,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var result = AddSpeedBtnCore(
@@ -633,13 +633,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="image">Item image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSpeedBtn(
             string? text,
             SvgImage? image,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var result = AddSpeedBtnCore(
@@ -655,13 +655,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="image">Item image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual SpeedButton AddSpeedBtnCore(
             string? text,
             SvgImage? image = null,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var result = AddSpeedBtnCore(
@@ -681,14 +681,14 @@ namespace Alternet.UI
         /// <param name="text">Item text.</param>
         /// <param name="imageSet">Item image.</param>
         /// <param name="imageSetDisabled">Item disabled image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSpeedBtn(
             string? text,
             ImageSet? imageSet,
             ImageSet? imageSetDisabled = null,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var result = AddSpeedBtnCore(
@@ -706,13 +706,13 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="image">Item image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddStickyBtn(
             string? text,
             SvgImage? image,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var result = AddStickyBtnCore(
@@ -739,7 +739,7 @@ namespace Alternet.UI
         /// <param name="imageSetDisabled">The set of images to use for the button's disabled state.
         /// Can be <see langword="null"/> if no image is required.</param>
         /// <param name="toolTip">The tooltip text to display when the user hovers over the button.
-        /// Can be <see langword="null"/> if no tooltip is required.</param>
+        /// Can be <see langword="null"/> if no tooltip is required. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">The event handler to invoke when the button is clicked.
         /// Can be <see langword="null"/> if no action is required.</param>
         /// <returns>A <see cref="SpeedButton"/> instance representing the sticky button.
@@ -750,7 +750,7 @@ namespace Alternet.UI
             string? text,
             ImageSet? imageSet,
             ImageSet? imageSetDisabled,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var result = AddSpeedBtnCore(
@@ -788,14 +788,14 @@ namespace Alternet.UI
         /// <param name="text">Item text.</param>
         /// <param name="imageSet">Item image.</param>
         /// <param name="imageSetDisabled">Item disabled image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddStickyBtn(
             string? text,
             ImageSet? imageSet,
             ImageSet? imageSetDisabled,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var result = AddStickyBtnCore(
@@ -1081,11 +1081,11 @@ namespace Alternet.UI
         /// Adds <see cref="PictureBox"/> to the control.
         /// </summary>
         /// <param name="image">Svg image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddPicture(
             SvgImage? image = null,
-            string? toolTip = default)
+            object? toolTip = default)
         {
             var result = AddPictureCore(null, null, toolTip);
             result.SvgImage = image;
@@ -1099,12 +1099,12 @@ namespace Alternet.UI
         /// <param name="template">Template which is used to get picture pixels.</param>
         /// <param name="needDisabled">Whether to get pixels
         /// for disabled state of the template.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <returns></returns>
         public virtual ObjectUniqueId AddPicture(
             TemplateControl template,
             bool needDisabled = false,
-            string? toolTip = default)
+            object? toolTip = default)
         {
             template.Enabled = true;
             ImageSet? image = TemplateUtils.GetTemplateAsImageSet(template);
@@ -1145,7 +1145,7 @@ namespace Alternet.UI
         /// langword="null"/>.</param>
         /// <param name="toolTip">The tooltip text to display when the user
         /// hovers over the <see cref="PictureBox"/>. Defaults to an empty
-        /// string if <see langword="null"/>.</param>
+        /// string if <see langword="null"/>. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="ignoreSuggestedSize">A value indicating whether to
         /// ignore the suggested size for the <see cref="PictureBox"/>.
         /// If <see langword="true"/>, the control will not use the suggested size;
@@ -1157,14 +1157,14 @@ namespace Alternet.UI
         public virtual PictureBox AddPictureCore(
             ImageSet? image = null,
             ImageSet? imageDisabled = null,
-            string? toolTip = default,
+            object? toolTip = default,
             bool ignoreSuggestedSize = false)
         {
             PictureBox picture = new()
             {
                 IsGraphicControl = true,
                 ImageStretch = false,
-                ToolTip = toolTip ?? string.Empty,
+                ToolTipObject = toolTip,
                 VerticalAlignment = UI.VerticalAlignment.Center,
             };
 
@@ -1199,14 +1199,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="image">Normal image.</param>
         /// <param name="imageDisabled">Disable image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="ignoreSuggestedSize">Whether to ignore suggested
         /// size of the item's control.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddPicture(
             ImageSet? image = null,
             ImageSet? imageDisabled = null,
-            string? toolTip = default,
+            object? toolTip = default,
             bool ignoreSuggestedSize = false)
         {
             var picture = AddPictureCore(
@@ -1955,7 +1955,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets item 'ToolTip' property value.
+        /// Sets item 'ToolTip' property value. For complex tooltips, use <see cref="RichToolTipParams"/>.
         /// </summary>
         /// <param name="id">Item id.</param>
         /// <param name="value">New property value.</param>
@@ -1964,7 +1964,7 @@ namespace Alternet.UI
             var item = GetToolControl(id);
             if (item is null)
                 return;
-            item.ToolTip = value.SafeToString();
+            item.ToolTipObject = value;
         }
 
         /// <summary>
@@ -2338,11 +2338,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="action">Click action.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddTextBtn(
             string? text = null,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var speedButton = AddTextBtnCore(text, toolTip, action);
@@ -2369,10 +2369,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">Item text.</param>
         /// <param name="action">Click action.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         public virtual SpeedButton AddTextBtnCore(
             string? text = null,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             text ??= string.Empty;
@@ -2380,7 +2380,7 @@ namespace Alternet.UI
             var speedButton = CreateToolSpeedTextButton();
 
             speedButton.Padding = DefaultItemPadding;
-            speedButton.ToolTip = toolTip ?? string.Empty;
+            speedButton.ToolTipObject = toolTip;
             speedButton.Text = text;
             speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
             speedButton.Margin = DefaultTextBtnMargin;
@@ -2474,14 +2474,14 @@ namespace Alternet.UI
         /// <param name="itemKind">Item kind.</param>
         /// <param name="imageSet">Item image.</param>
         /// <param name="imageSetDisabled">Item disabled image.</param>
-        /// <param name="toolTip">Item tooltip.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">Click action.</param>
         public virtual SpeedButton AddSpeedBtnCore(
             ItemKind itemKind,
             string? text,
             ImageSet? imageSet,
             ImageSet? imageSetDisabled,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             var speedButton = InsertSpeedBtnCore(
@@ -2568,7 +2568,7 @@ namespace Alternet.UI
         /// is disabled. Can be null.</param>
         /// <param name="toolTip">The tooltip text to display when the user hovers
         /// over the <see cref="SpeedButton"/>. If null, the value of
-        /// <paramref name="text"/> is used.</param>
+        /// <paramref name="text"/> is used. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="action">An optional event handler to invoke when
         /// the <see cref="SpeedButton"/> is clicked or double-clicked. Can be null.</param>
         /// <returns>The newly created <see cref="SpeedButton"/> instance that
@@ -2579,7 +2579,7 @@ namespace Alternet.UI
             string? text,
             ImageSet? imageSet,
             ImageSet? imageSetDisabled,
-            string? toolTip = null,
+            object? toolTip = null,
             EventHandler? action = null)
         {
             text ??= string.Empty;
@@ -2598,7 +2598,7 @@ namespace Alternet.UI
             speedButton.Text = text;
             speedButton.ImageSet = imageSet;
             speedButton.IsToolTipEnabled = IsButtonToolTipsEnabled;
-            speedButton.ToolTip = toolTip ?? text;
+            speedButton.ToolTipObject = toolTip;
             speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
             speedButton.Margin = DefaultSpeedBtnMargin;
             speedButton.ParentBackColor = true;
