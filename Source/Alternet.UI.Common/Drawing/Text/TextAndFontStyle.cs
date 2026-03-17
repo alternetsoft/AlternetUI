@@ -23,6 +23,13 @@ namespace Alternet.Drawing
         public FontStyle FontStyle;
 
         /// <summary>
+        /// Gets or sets an object that contains an additional data.
+        /// </summary>
+        /// <remarks>This property can be used to associate custom data with the object. The value can be
+        /// any object, or null if no data is associated.</remarks>
+        public object? Tag;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TextAndFontStyle"/> struct
         /// with the specified text.
         /// </summary>
