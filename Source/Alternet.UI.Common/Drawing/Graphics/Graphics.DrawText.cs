@@ -313,8 +313,10 @@ namespace Alternet.Drawing
 
             bool visible = foreColor.IsOk && (foreColor != Color.Empty);
 
-            foreach (var item in text)
+            for (int i = 0; i < text.Length; i++)
             {
+                var item = text[i];
+
                 var itemFont = font.WithStyle(item.FontStyle);
                 var measure = GetTextExtent(item.Text, itemFont);
                 
@@ -325,6 +327,8 @@ namespace Alternet.Drawing
 
                     DrawText(item.Text, location, itemFont, myForeColor, myBackColor);
                 }
+
+                text[i].MeasuredBounds = new RectD(location, measure);
 
                 location.X += measure.Width;
                 result.Width += measure.Width;
