@@ -127,5 +127,13 @@ namespace Alternet.UI
                 return (T2)result!;
             return defaultValue;
         }
+
+        /// <inheritdoc/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T2 GetAttributeOrAdd<T2>(TKey id, Func<T2> defaultValueFactory) where T2 : TValue
+        {
+            var result = GetOrCreate(id, () => defaultValueFactory());
+            return (T2)result!;
+        }
     }
 }

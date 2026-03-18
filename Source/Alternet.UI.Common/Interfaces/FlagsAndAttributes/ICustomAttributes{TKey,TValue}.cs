@@ -40,5 +40,19 @@ namespace Alternet.UI
         /// <param name="value">Attribute value.</param>
         void SetAttribute<T2>(TKey id, T2 value)
             where T2 : TValue;
+
+        /// <summary>
+        /// Gets the attribute associated with the specified identifier, or adds a new attribute using the provided
+        /// factory if none exists.
+        /// </summary>
+        /// <remarks>If an attribute does not exist for the given identifier, the method invokes the
+        /// factory to create and add a new value. Subsequent calls with the same identifier will return the stored
+        /// value.</remarks>
+        /// <typeparam name="T2">The type of the attribute value. Must inherit from TValue.</typeparam>
+        /// <param name="id">The identifier used to locate the attribute.</param>
+        /// <param name="defaultValueFactory">A function that creates a new attribute value if one does not exist for the specified identifier.</param>
+        /// <returns>The existing attribute value associated with the identifier, or the newly created value if none was found.</returns>
+        T2 GetAttributeOrAdd<T2>(TKey id, Func<T2> defaultValueFactory)
+            where T2 : TValue;
     }
 }
