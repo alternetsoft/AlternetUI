@@ -162,6 +162,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Writes the specified message to the log, followed by a line terminator.
+        /// </summary>
+        /// <param name="log">The log writer to which the message will be written. Cannot be null.</param>
+        /// <param name="message">The message to write to the log. If null, an empty line is written.</param>
+        public static void WriteLineStr(this ILogWriter log, string message)
+        {
+            log.WriteLine(message);
+        }
+
+        /// <summary>
         /// Writes an empty line to the log output using the specified log writer.
         /// </summary>
         /// <param name="writer">The log writer to which the empty line will be written. Cannot be null.</param>
@@ -658,7 +668,7 @@ namespace Alternet.UI
             /// <returns>The formatted message with the appropriate indentation applied.</returns>
             public virtual string FormatMessage(string message)
             {
-                if(indentLevel == 0)
+                if (indentLevel == 0)
                 {
                     return message;
                 }
@@ -772,7 +782,7 @@ namespace Alternet.UI
             /// <see cref="StringBuilder"/>.</remarks>
             public StringBuilderLogWriter()
             {
-                this.stringBuilder = new ();
+                this.stringBuilder = new();
             }
 
             /// <summary>
@@ -825,7 +835,7 @@ namespace Alternet.UI
             /// <inheritdoc/>
             public override ILogWriter WriteLine(string message)
             {
-                Console.WriteLine(FormatMessage(message));
+                System.Console.WriteLine(FormatMessage(message));
                 return this;
             }
         }
