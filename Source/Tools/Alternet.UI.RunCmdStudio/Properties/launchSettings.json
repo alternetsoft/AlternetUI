@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "Alternet.UI.RunCmdStudio": {
+      "commandName": "Project"
+    },
+    "logLicense": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=logLicense"
+    }
+  }
+}

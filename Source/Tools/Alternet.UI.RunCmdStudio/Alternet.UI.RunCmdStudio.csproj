@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>10.0</LangVersion>
+    <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\</AlternetUIPath>
+  </PropertyGroup>
+
+  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\AlternetStudio\Source\Common\Alternet.Common.csproj" />
+    <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
+    <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+    <ProjectReference Include="..\Alternet.UI.RunCmd\Alternet.UI.RunCmd.csproj" />
+  </ItemGroup>
+
+</Project>
