@@ -17,7 +17,7 @@ namespace Alternet.Drawing
     /// displayed in a UI control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
-    public partial class Image : HandledObject<IImageHandler>, IImageSource
+    public partial class Image : HandledObject<IImageHandler>, IImageSource, IGetAsToolTip
     {
         /// <summary>
         /// Gets or sets a delegate that applies custom recoloring to an image for dark mode scenarios.
@@ -1279,6 +1279,21 @@ namespace Alternet.Drawing
                 throw new Exception($"LockSurface({lockMode}) failed on the immutable image.");
 
             return GraphicsFactory.CreateSkiaSurface(this, lockMode);
+        }
+
+        /// <inheritdoc/>
+        public virtual RichToolTipParams? GetAsToolTip()
+        {
+            var result = KnownObjectAttributes.GetOrAddRichToolTipParams(
+                this,
+                () =>
+                {
+                    RichToolTipParams prm = new();
+                    prm.Image = new ImageSet(this);
+                    return prm;
+                });
+
+            return result;
         }
 
         /// <summary>
