@@ -186,7 +186,7 @@ namespace ControlsSample
             };
         }
 
-        public static ImageSet? CustomImage
+        public static ImageSet? CustomImageSet
         {
             get
             {
@@ -196,7 +196,7 @@ namespace ControlsSample
             }
         }
 
-        public static ImageSet? LargeImage
+        public static ImageSet? LargeImageSet
         {
             get
             {
@@ -210,7 +210,7 @@ namespace ControlsSample
         {
             if (toolTip is null)
                 return;
-            toolTip.OnlyImage(LargeImage).SetToolTipBackgroundColor(Color.ForestGreen).PostShowToolTip();
+            toolTip.OnlyImage(LargeImageSet).SetToolTipBackgroundColor(Color.ForestGreen).PostShowToolTip();
         }
 
         public static void ShowWithBoldText(IRichToolTip? toolTip, AbstractControl? templateParent)

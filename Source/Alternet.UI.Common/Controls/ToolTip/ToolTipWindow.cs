@@ -267,7 +267,7 @@ namespace Alternet.UI
                 if (sender is not AbstractControl control)
                     return;
 
-                var toolTipObject = control.GetRealToolTip();
+                var toolTipObject = ToolTipFactory.GetControlToolTip(control);
 
                 if (toolTipObject is null)
                     return;

@@ -734,7 +734,9 @@ namespace Alternet.UI
         {
             base.HideToolTip();
             SafeHandler?.UnsetToolTip();
-            SafeHandler?.SetToolTip(GetRealToolTip());
+
+            var toolTip = ToolTipFactory.GetControlToolTip(this);
+            SafeHandler?.SetToolTip(toolTip);
         }
 
         /// <inheritdoc/>
@@ -1017,7 +1019,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnToolTipChanged(EventArgs e)
         {
-            SafeHandler?.SetToolTip(GetRealToolTip());
+            var toolTip = ToolTipFactory.GetControlToolTip(this);
+            SafeHandler?.SetToolTip(toolTip);
         }
 
         /// <inheritdoc/>

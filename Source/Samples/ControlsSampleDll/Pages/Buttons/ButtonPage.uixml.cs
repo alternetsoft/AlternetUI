@@ -55,7 +55,7 @@ namespace ControlsSample
 
             debugCornersCheckBox.Visible = DebugUtils.IsDebugDefinedAndAttached;
 
-            debugCornersCheckBox.CheckedChanged += (s,e) =>
+            debugCornersCheckBox.CheckedChanged += (s, e) =>
             {
                 Graphics.DrawDebugCorners = debugCornersCheckBox.IsChecked;
                 button.Refresh();
@@ -126,7 +126,7 @@ namespace ControlsSample
                     button.Borders?.Normal?.InnerBorders.Clear();
                 }
                 else
-                {                     
+                {
                     var innerBorder = button.Borders?.Normal?.Clone();
                     innerBorder?.SetColor(LightDarkColors.Red);
 
@@ -197,6 +197,8 @@ namespace ControlsSample
                 button.ResetMouseHoverEvent();
                 ButtonPage.SetComplexToolTip(button);
             });
+
+            button2.ToolTipObject = ToolTipPage.LargeImageSet;
         }
 
         public static void SetComplexToolTip(AbstractControl? control)
@@ -206,7 +208,7 @@ namespace ControlsSample
             RichToolTipParams prm = new();
             prm.Title = "Tooltip title";
             prm.Text = TextMemoPage.LoremIpsumSmall;
-            prm.Image = ToolTipPage.LargeImage;
+            prm.Image = ToolTipPage.LargeImageSet;
             control.ToolTipObject = prm;
         }
 

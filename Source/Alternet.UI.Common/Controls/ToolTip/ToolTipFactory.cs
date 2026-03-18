@@ -9,10 +9,26 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
+    /// Represents a method that retrieves the tooltip content for a specified control.
+    /// </summary>
+    /// <param name="control">The control for which to obtain the tooltip content. Can be null to indicate no control is specified.</param>
+    /// <param name="defaultToolTip">The default tooltip content to use if no custom tooltip is provided.</param>
+    /// <returns>An object representing the tooltip content for the specified control, or null if no tooltip is available.</returns>
+    public delegate object? GetControlToolTipDelegate(AbstractControl control, object? defaultToolTip);
+
+    /// <summary>
     /// Contains static methods and properties which allow to change tooltips behavior.
     /// </summary>
     public static class ToolTipFactory
     {
+        /// <summary>
+        /// Gets or sets the delegate used to provide a custom tooltip for controls.
+        /// </summary>
+        /// <remarks>Assign this property to override the default tooltip behavior for controls. If not
+        /// set, the standard tooltip logic is used. This property is typically used to supply context-specific or
+        /// dynamic tooltip content at runtime.</remarks>
+        public static GetControlToolTipDelegate? GetControlToolTipOverride { get; set; }
+
         private static IToolTipFactoryHandler? handler;
         private static WeakReferenceValue<UserControl> lastContainerWithToolTip = new();
         private static WeakReferenceValue<AbstractControl> lastControlWithToolTip = new();
@@ -144,7 +160,8 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    ShowInOverlay(control, overlayParent, control.GetRealToolTip());
+                    var toolTip = ToolTipFactory.GetControlToolTip(control);
+                    ShowInOverlay(control, overlayParent, toolTip);
                 }
             };
 
@@ -329,6 +346,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the tooltip content associated with the specified control.
+        /// </summary>
+        /// <param name="control">The control for which to obtain the tooltip. Can be null.</param>
+        /// <returns>An object representing the tooltip content for the specified control, or null if no tooltip is set or if the
+        /// control is null.</returns>
+        public static object? GetControlToolTip(AbstractControl? control)
+        {
+            if (control == null)
+                return null;
+
+            var result = control.GetRealToolTip();
+
+            if (GetControlToolTipOverride != null)
+            {
+                return GetControlToolTipOverride(control, result);
+            }
+
+            if (result is IGetAsToolTip asToolTip)
+            {
+                return asToolTip.GetAsToolTip();
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Shows tooltip with the specified parameters using <see cref="IToolTipProvider"/>
         /// specified in the control or in one of its parents.
         /// </summary>
@@ -384,7 +427,7 @@ namespace Alternet.UI
             public UserControl OverlayParent { get; }
 
             /// <summary>
-            /// Gets or sets the text to display as a tooltip for the control.
+            /// Gets or sets the text or object to display as a tooltip for the control.
             /// Can be <see langword="null"/> or empty if no tooltip is needed.
             /// </summary>
             public object? Text { get; }
