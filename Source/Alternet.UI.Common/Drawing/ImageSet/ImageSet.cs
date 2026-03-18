@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <see cref="ImageSet"/> contains the same <see cref="Image"/> with different sizes.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : ImageContainer<IImageSetHandler>, IImageSource
+    public class ImageSet : ImageContainer<IImageSetHandler>, IImageSource, IGetAsToolTip
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
@@ -373,6 +373,21 @@ namespace Alternet.UI
             var result = new Bitmap(this, control);
             if (Immutable)
                 result.SetImmutable();
+            return result;
+        }
+
+        /// <inheritdoc/>
+        public virtual RichToolTipParams? GetAsToolTip()
+        {
+            var result = KnownObjectAttributes.GetOrAddRichToolTipParams(
+                this,
+                () =>
+                {
+                    RichToolTipParams prm = new();
+                    prm.Image = this;
+                    return prm;
+                });
+
             return result;
         }
 
