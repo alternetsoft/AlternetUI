@@ -175,11 +175,13 @@ namespace ControlsSample
 
         public static void SetRichToolTip(AbstractControl? control)
         {
+            bool testSingleLine = true;
+
             if (control == null)
                 return;
             RichToolTipParams prm = new();
             prm.Title = "Tooltip title";
-            prm.Text = TextMemoPage.LoremIpsumSmallThreeLines;
+            prm.Text = testSingleLine ? TextMemoPage.LoremIpsumSmallSingleLine : TextMemoPage.LoremIpsumSmallThreeLines;
             prm.Image = ToolTipPage.LargeImageSet;
             prm.MaxWidth = 300;
             control.ToolTipObject = prm;

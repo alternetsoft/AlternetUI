@@ -284,7 +284,15 @@ namespace Alternet.UI
 
                 var display = Instance.GetDisplay();
                 var containerRect = display.ClientAreaDip;
-                toolTip.MaxTextWidth = Math.Max(RichToolTip.DefaultMaxWidth ?? 0f, containerRect.Width * 0.7f);
+
+                var maxWidth = containerRect.Width * 0.7f;
+
+                if (RichToolTip.DefaultMaxWidth is not null)
+                {
+                    maxWidth = Math.Min(maxWidth, RichToolTip.DefaultMaxWidth.Value);
+                }
+
+                toolTip.MaxTextWidth = maxWidth;
 
                 if (toolTipObject is string toolTipStr)
                 {
@@ -297,6 +305,11 @@ namespace Alternet.UI
 
                 if (toolTipObject is RichToolTipParams prm)
                 {
+                    if (prm.MaxWidth is not null)
+                    {
+                        toolTip.MaxTextWidth = Math.Min(maxWidth, prm.MaxWidth.Value);
+                    }
+
                     toolTip.SetParams(prm).PostShowToolTip();
                 }
             }
