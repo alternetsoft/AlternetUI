@@ -177,26 +177,13 @@ namespace ControlsSample
 
             button.Parent?.ContextMenuStrip.Add(setTooltipWithBoldText);
 
-            MenuItem setTooltipWithImage = new("Set tooltip with image");
-            setTooltipWithImage.ClickAction = SetTooltipWithImageClick;
-
-            void SetTooltipWithImageClick()
-            {
-                button.ResetMouseHoverEvent();
-                button.MouseHover += (s, e) =>
-                {
-                    var provider = App.ToolTipProvider?.Get(button);
-                    ToolTipPage.ShowWithLargeImage(provider);
-                };
-            }
-
-            button.Parent?.ContextMenuStrip.Add(setTooltipWithImage);
-
             button.Parent?.ContextMenuStrip.Add("Set ToolTipObject", () =>
             {
                 button.ResetMouseHoverEvent();
                 ButtonPage.SetComplexToolTip(button);
             });
+
+            ButtonPage.SetComplexToolTip(button);
 
             button2.ToolTipObject = ToolTipPage.LargeImageSet;
         }
@@ -207,8 +194,9 @@ namespace ControlsSample
                 return;
             RichToolTipParams prm = new();
             prm.Title = "Tooltip title";
-            prm.Text = TextMemoPage.LoremIpsumSmall;
+            prm.Text = TextMemoPage.LoremIpsumSmallThreeLines;
             prm.Image = ToolTipPage.LargeImageSet;
+            prm.MaxWidth = 300;
             control.ToolTipObject = prm;
         }
 

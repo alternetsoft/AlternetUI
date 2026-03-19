@@ -517,7 +517,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender"><see cref="BorderSettings"/> instance.</param>
         /// <param name="args">Event arguments.</param>
-        public static void DrawDesignCorners(object? sender, PaintEventArgs args)
+        public static void DrawDesignCornersHandler(object? sender, PaintEventArgs args)
         {
             if (sender is not BorderSettings border)
                 return;

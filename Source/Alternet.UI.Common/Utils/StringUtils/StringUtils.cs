@@ -549,6 +549,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes all trailing CR ('\r') and LF ('\n') characters from the end of the input string.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static string TrimEndLineBreaks(string input)
+        {
+            return input.TrimEnd('\r', '\n');
+        }
+
+        /// <summary>
         /// Calls <see cref="sbyte.TryParse(string, NumberStyles, IFormatProvider, out sbyte)"/>
         /// </summary>
         /// <param name="s">The string to parse.</param>
@@ -1351,6 +1360,7 @@ namespace Alternet.UI
         /// <param name="comparison"><see cref="StringComparison"/> used to specify how text
         /// will be compared.</param>
         /// <returns>Changed text with html bold tags around found substring.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string InsertBoldTags(
             string s,
             string textToFind,
@@ -1407,6 +1417,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">The string to wrap in a CDATA section.</param>
         /// <returns>A string wrapped in a CDATA section.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static string WithCDATA(string? s)
         {
             return $"{PrefixCDATA}{s}{SuffixCDATA}";

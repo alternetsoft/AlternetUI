@@ -29,6 +29,16 @@ Environment.NewLine + Environment.NewLine +
             "Suspendisse tincidunt orci vitae arcu congue commodo. " +
             "Proin fermentum rhoncus dictum.\n";
 
+        public const string LoremIpsumSmallSingleLine =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+            "Suspendisse tincidunt orci vitae arcu congue commodo. " +
+            "Proin fermentum rhoncus dictum.";
+
+        public const string LoremIpsumSmallThreeLines =
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n" +
+            "Suspendisse tincidunt orci vitae arcu congue commodo.\n" +
+            "Proin fermentum rhoncus dictum.";
+
         private readonly PanelMultilineTextBox memoPanel = new();
         private Timer timer = new(100);
 
