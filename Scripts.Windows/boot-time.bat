@@ -1,0 +1,1 @@
+@for /f "tokens=2,*" %%a in ('systeminfo ^| find "System Boot Time"') do @echo %%b
