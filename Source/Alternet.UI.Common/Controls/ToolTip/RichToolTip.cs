@@ -761,7 +761,7 @@ namespace Alternet.UI
         {
             HideToolTip();
 
-            data = prm;
+            data = prm.Clone();
             Title = data.Title;
             Text = data.Text;
             data.Font ??= RealFont;
