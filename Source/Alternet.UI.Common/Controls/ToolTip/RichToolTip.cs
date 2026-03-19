@@ -19,6 +19,11 @@ namespace Alternet.UI
     public partial class RichToolTip : ScrollViewer, IRichToolTip, IToolTipProvider
     {
         /// <summary>
+        /// Gets or sets whether to show debug corners when control is painted.
+        /// </summary>
+        public static new bool ShowDebugCorners = false;
+
+        /// <summary>
         /// Gets or sets default tooltip border color.
         /// This is used when <see cref="DefaultToolTipBorder"/>
         /// is created.
@@ -1091,10 +1096,12 @@ namespace Alternet.UI
         {
             if (ShowDebugRectangleAtCenter)
             {
-                e.Graphics.FillRectangleAtCenter(
-                    LightDarkColors.Red.AsBrush,
-                    ClientRectangle,
-                    3);
+                e.Graphics.FillRectangleAtCenter(LightDarkColors.Red.AsBrush, ClientRectangle, 3);
+            }
+
+            if (ShowDebugCorners)
+            {
+                BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
             }
         }
     }
