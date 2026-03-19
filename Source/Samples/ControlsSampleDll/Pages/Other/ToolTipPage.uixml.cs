@@ -232,7 +232,9 @@ namespace ControlsSample
                     Color.Red,
                     Color.LightGoldenrodYellow,
                     Control.DefaultFont.Scaled(1.5f)));
-
+            
+            controlTemplate.ParentBackColor = false;
+            controlTemplate.BackColor = Color.Transparent;
             controlTemplate.Parent = parent;
             controlTemplate.SetSizeToContent();
 

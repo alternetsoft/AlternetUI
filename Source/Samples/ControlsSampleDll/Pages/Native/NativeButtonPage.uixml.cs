@@ -120,7 +120,7 @@ namespace ControlsSample
             button.Parent?.ContextMenuStrip.Add("Set ToolTipObject", () =>
             {
                 button.ResetMouseHoverEvent();
-                ButtonPage.SetComplexToolTip(button);
+                ButtonPage.SetRichToolTip(button);
             });
         }
 

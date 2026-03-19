@@ -162,33 +162,18 @@ namespace ControlsSample
                 button.SvgSize = button.GetEffectiveSvgSize() + 10;
             });
 
-            MenuItem setTooltipWithBoldText = new("Set tooltip with bold text");
-            setTooltipWithBoldText.ClickAction = SetTooltipWithBoldTextClick;
+            var template = ToolTipPage.CreateTemplateWithBoldText(this);
+            var imageWithBoldText = TemplateUtils.GetTemplateAsImage(template);
 
-            void SetTooltipWithBoldTextClick()
-            {
-                button.ResetMouseHoverEvent();
-                button.MouseHover += (s, e) =>
-                {
-                    var provider = App.ToolTipProvider?.Get(button);
-                    ToolTipPage.ShowWithBoldText(provider, this);
-                };
-            }
+            button.Parent?.ContextMenuStrip.Add("Set tooltip with bold text", () => { button.ToolTipObject = imageWithBoldText; });
+            button.Parent?.ContextMenuStrip.Add("Set rich tooltip", () => ButtonPage.SetRichToolTip(button));
 
-            button.Parent?.ContextMenuStrip.Add(setTooltipWithBoldText);
-
-            button.Parent?.ContextMenuStrip.Add("Set ToolTipObject", () =>
-            {
-                button.ResetMouseHoverEvent();
-                ButtonPage.SetComplexToolTip(button);
-            });
-
-            ButtonPage.SetComplexToolTip(button);
+            ButtonPage.SetRichToolTip(button);
 
             button2.ToolTipObject = ToolTipPage.LargeImageSet;
         }
 
-        public static void SetComplexToolTip(AbstractControl? control)
+        public static void SetRichToolTip(AbstractControl? control)
         {
             if (control == null)
                 return;
