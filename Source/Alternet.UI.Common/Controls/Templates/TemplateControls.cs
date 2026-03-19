@@ -14,7 +14,7 @@ namespace Alternet.UI
         /// </summary>
         public class RichToolTipTemplate : TemplateControl
         {
-            private readonly VerticalStackPanel labels = new();
+            private readonly HiddenGenericBorder labels = new();
 
             private readonly Label titleLabel = new();
             private readonly Label messageLabel = new();
@@ -36,6 +36,7 @@ namespace Alternet.UI
                     pictureBox.Margin = RichToolTip.DefaultImageMargin;
                     pictureBox.Parent = this;
 
+                    labels.Layout = LayoutStyle.Vertical;
                     labels.HorizontalAlignment = HorizontalAlignment.Fill;
                     labels.VerticalAlignment = VerticalAlignment.Fill;
                     labels.Parent = this;
@@ -70,6 +71,25 @@ namespace Alternet.UI
             /// Gets control which contains image.
             /// </summary>
             public PictureBox PictureBox => pictureBox;
+        }
+
+        /// <summary>
+        /// Represents a text element that displays a bolded middle section with optional prefix and suffix, and can
+        /// include a border.
+        /// </summary>
+        public class BoldText : BoldText<Label>
+        {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="BoldText"/> class.
+            /// </summary>
+            /// <param name="prefix">First part of the text.</param>
+            /// <param name="boldText">Middle part of the text with bold attribute.</param>
+            /// <param name="suffix">Last part of the text.</param>
+            /// <param name="hasBorder">Whether to draw default border around the text.</param>
+            public BoldText(string prefix, string boldText, string suffix, bool hasBorder)
+                : base(prefix, boldText, suffix, hasBorder)
+            {
+            }
         }
 
         /// <summary>
