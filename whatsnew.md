@@ -1,3 +1,24 @@
+# 1.0.7 (2026 March 19)
+
+- Respect MaxWidth for ToolTipWindow.
+- RichToolTipParams: Add Reset, Clone and Assign methods to manage and copy state.
+- RichToolTipTemplate is now a fully generic control.
+- ToolTipFactory: Add overridable tooltip retrieval.
+- Add IGetAsToolTip implementation to ImageSet and Image. Not it is possible to assign them to ToolTipObject property of Control.
+- Add GetAttributeOrAdd to attributes interfaces and classes.
+- Fix console ILogWriter implementation.
+- Add support for complex tooltips in ToolBar and SpeedButton.
+- Support RichToolTipParams in overlay tooltips.
+- Label: Add AfterDrawText event and DrawParameters.
+- Add MeasuredBounds to TextAndFontStyle.
+- Support element colors in Graphics.DrawTextWithFontStyle.
+- Add sample of complex formatting in Label.
+- Add ForeColor and BackColor to TextAndFontStyle.
+- Label: Introduce DrawLabelFlags and update draw params.
+- Add Tag property to TextAndFontStyle.
+
+---
+
 # 1.0.6 (2026 March 16)
 
 - Fit internal tooltips into screen desktop area.
