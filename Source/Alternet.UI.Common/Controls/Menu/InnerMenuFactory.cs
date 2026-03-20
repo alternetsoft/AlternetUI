@@ -58,17 +58,7 @@ namespace Alternet.UI
         /// cannot be determined.</returns>
         protected virtual PointD? CoercePosition(PointD? position, ref AbstractControl control)
         {
-            var pos = Mouse.CoercePosition(position, control);
-
-            while (!control.IsPlatformControl)
-            {
-                if (control.Parent == null)
-                    return null;
-                pos += control.Location;
-                control = control.Parent;
-            }
-
-            return pos;
+            return ControlUtils.CoercePositionToPlatform(position, ref control);
         }
 
         /// <summary>

@@ -26,6 +26,62 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the position of a point relative to the platform control, adjusting for nested control locations
+        /// as necessary. Control references are updated to point to the platform control.
+        /// </summary>
+        /// <remarks>This method traverses the control hierarchy to adjust the position for nested
+        /// controls. Override this method to customize how positions are coerced in derived classes.</remarks>
+        /// <param name="position">The initial position to be coerced, relative to the specified control.
+        /// Can be null to indicate an undefined position.</param>
+        /// <param name="control">The control relative to which the position is specified. Must not be null.</param>
+        /// <returns>A <see cref="PointD"/> representing the position relative to the platform control, or null if the position
+        /// cannot be determined.</returns>
+        public static PointD? CoercePositionToPlatform(PointD? position, ref AbstractControl control)
+        {
+            var pos = Mouse.CoercePosition(position, control);
+
+            while (!control.IsPlatformControl)
+            {
+                if (control.Parent == null)
+                    return null;
+                pos += control.Location;
+                control = control.Parent;
+            }
+
+            return pos;
+        }
+
+        /// <summary>
+        /// Adjusts the specified control and rectangle so that the rectangle's position is coerced to a
+        /// platform-specific value based on the control.
+        /// </summary>
+        /// <remarks>Use this method to ensure that the rectangle's position aligns with platform-specific
+        /// requirements for the given control. The method may update both the control and the rectangle in
+        /// place.</remarks>
+        /// <param name="control">A reference to the control used to determine the platform-specific position. The control may be modified if
+        /// required by the coercion logic.</param>
+        /// <param name="rect">A reference to the rectangle whose X and Y coordinates will be updated to the coerced position, if
+        /// applicable.</param>
+        public static void CoerceRectToPlatform(ref AbstractControl control, ref RectD rect)
+        {
+            var pos = CoercePositionToPlatform(rect.Location, ref control);
+            if (pos.HasValue)
+            {
+                rect.X = pos.Value.X;
+                rect.Y = pos.Value.Y;
+            }
+        }
+
+        /// <summary>
+        /// Adjusts the specified control to conform to platform-specific requirements.
+        /// </summary>
+        /// <param name="control">A reference to the control to be coerced to platform conventions. The control will be modified in place.</param>
+        public static void CoerceControlToPlatform(ref AbstractControl control)
+        {
+            CoercePositionToPlatform(PointD.Empty, ref control);
+        }
+
+        /// <summary>
         /// Creates a "More actions" button in the specified toolbar which shows the specified context menu when clicked.
         /// </summary>
         /// <param name="toolBar">The <see cref="ToolBar"/> to add the button to.</param>
