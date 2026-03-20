@@ -349,6 +349,7 @@ namespace Alternet.Drawing
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
             HeaderButtonParams? headerButtonParams = null)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButton(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -386,6 +387,7 @@ namespace Alternet.Drawing
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
             HeaderButtonParams? headerButtonParams = null)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButtonContents(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -409,6 +411,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawTreeItemButton(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -431,6 +434,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawSplitterBorder(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -456,6 +460,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawComboBoxDropButton(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -481,6 +486,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawDropArrow(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -507,6 +513,8 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
+
             rect.Offset(dc.TransformDXDY);
 
             Alternet.UI.Native.WxOtherFactory.RendererDrawCheckBox(
@@ -534,6 +542,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawCheckMark(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -560,6 +569,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawPushButton(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -586,6 +596,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawCollapseButton(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -615,6 +626,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawItemSelectionRect(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -639,6 +651,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawFocusRect(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -660,6 +673,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawChoice(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -681,6 +695,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawComboBox(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -702,6 +717,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawTextCtrl(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -723,6 +739,7 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawRadioBitmap(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -751,6 +768,7 @@ namespace Alternet.Drawing
             int max,
             DrawFlags flags = 0)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawGauge(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -780,6 +798,7 @@ namespace Alternet.Drawing
             DrawFlags flags = 0,
             TextEllipsisType ellipsizeMode = TextEllipsisType.End)
         {
+            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
             Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -804,6 +823,7 @@ namespace Alternet.Drawing
         /// </remarks>
         public SizeD GetCheckBoxSize(AbstractControl control, DrawFlags flags = 0)
         {
+            ControlUtils.CoerceControlToPlatform(ref control);
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckBoxSize(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -814,6 +834,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public SizeD GetCheckMarkSize(AbstractControl control)
         {
+            ControlUtils.CoerceControlToPlatform(ref control);
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCheckMarkSize(
                 default,
                 WxApplicationHandler.WxWidget(control));
@@ -823,6 +844,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public SizeD GetExpanderSize(AbstractControl control)
         {
+            ControlUtils.CoerceControlToPlatform(ref control);
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetExpanderSize(
                 default,
                 WxApplicationHandler.WxWidget(control));
@@ -832,6 +854,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public Coord GetHeaderButtonHeight(AbstractControl control)
         {
+            ControlUtils.CoerceControlToPlatform(ref control);
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonHeight(
                 default,
                 WxApplicationHandler.WxWidget(control));
@@ -841,6 +864,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public Coord GetHeaderButtonMargin(AbstractControl control)
         {
+            ControlUtils.CoerceControlToPlatform(ref control);
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetHeaderButtonMargin(
                 default,
                 WxApplicationHandler.WxWidget(control));
@@ -850,6 +874,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public SizeD GetCollapseButtonSize(AbstractControl control, Graphics dc)
         {
+            ControlUtils.CoerceControlToPlatform(ref control);
             var result = Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -875,6 +900,9 @@ namespace Alternet.Drawing
             GenericOrientation orientation,
             DrawFlags flags = 0)
         {
+            var p = ControlUtils.CoercePositionToPlatform(new(position), ref control);
+            position = p?.X ?? position;
+
             Alternet.UI.Native.WxOtherFactory.RendererDrawSplitterSash(
                 default,
                 WxApplicationHandler.WxWidget(control),
