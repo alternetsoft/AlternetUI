@@ -13,7 +13,7 @@ namespace PropertyGridSample
         public static void LogClick(object? sender, EventArgs e)
         {
             var s = $"{sender?.GetType()} Click";
-            App.LogReplace(s, s);
+            App.Log(s);
         }
 
         public static void InitButton(object control)
@@ -47,9 +47,7 @@ namespace PropertyGridSample
             {
                 button.IsMouseOverChanged += (s, e) =>
                 {
-                    App.LogReplace(
-                        $"StdButton.IsMouseOver changed to [{button.IsMouseOver}]",
-                        $"StdButton.IsMouseOver");
+                    App.Log($"StdButton.IsMouseOver changed to [{button.IsMouseOver}]");
                 };
             }
 
@@ -57,9 +55,7 @@ namespace PropertyGridSample
             {
                 button.VisualStateChanged += (s, e) =>
                 {
-                    App.LogReplace(
-                        $"StdButton.VisualState changed to [{button.VisualState}]",
-                        $"StdButton.VisualState");
+                    App.Log($"StdButton.VisualState changed to [{button.VisualState}]");
                 };
             }
         }
@@ -94,12 +90,17 @@ namespace PropertyGridSample
             button.Text = "speedButton";
             button.TextVisible = true;
             button.Click += LogClick;
+
+            button.ContextMenuStrip.Add("Menu Item 1", () => App.Log("Menu Item 1 Click"));
+            button.ContextMenuStrip.Add("Menu Item 2", () => App.Log("Menu Item 2 Click"));
+
             button.LoadSvg(KnownSvgUrls.UrlImageOk, 32);
 
             button.StickyChanged += (s, e) =>
             {
+                var stickyValue = button.Sticky;
                 App.LogReplace(
-                    $"SpeedButton.Sticky changed to [{button.Sticky}]",
+                    $"SpeedButton.Sticky changed to [{stickyValue}]",
                     $"SpeedButton.Sticky");
             };
         }

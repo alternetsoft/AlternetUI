@@ -213,10 +213,7 @@ namespace Alternet.UI
             ControlColorAndStyle CreateBordered(LightDarkColor? color)
             {
                 var result = DefaultTheme.Clone();
-                result
-                    .SetBorderFromBorder(
-                    stateToChange: VisualControlState.Normal,
-                    assignFromState: VisualControlState.Hovered);
+                result.SetBorderFromBorder(stateToChange: VisualControlState.Normal, assignFromState: VisualControlState.Hovered);
                 result.SetBorderWidth(DefaultStickyBorderWidth);
                 result.SetBorderColor(color);
                 return result;
@@ -1150,11 +1147,8 @@ namespace Alternet.UI
         public virtual string? ShortcutToolTipTemplate { get; set; }
 
         /// <summary>
-        /// Gets or sets whether control is sticky.
+        /// Gets or sets whether control is sticky. This is similar to the "checked" state of a checkbox.
         /// </summary>
-        /// <remarks>
-        /// When this property is true, control painted as pressed if it is not disabled.
-        /// </remarks>
         public virtual bool Sticky
         {
             get

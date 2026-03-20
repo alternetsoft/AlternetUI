@@ -10,7 +10,7 @@ using Alternet.Drawing;
 namespace PropertyGridSample
 {
     [ControlCategory("Tests")]
-    public class ControlPainterPreview : Panel
+    public class ControlPainterPreview : GenericControl
     {
         private static readonly WxControlPainterHandler Painter = new();
 
@@ -58,14 +58,10 @@ namespace PropertyGridSample
 
         public override void DefaultPaint(PaintEventArgs e)
         {
-            base.DefaultPaint(e);
-
             var dc = e.Graphics;
             var bounds = e.ClientRectangle;
 
-            var brush = this.Background;
-            if (brush != null)
-                dc.FillRectangle(brush, bounds);
+            dc.FillRectangle(BackColor.AsBrush, bounds);
 
             bounds = bounds.DeflatedWithPadding(Padding);
 
@@ -80,6 +76,7 @@ namespace PropertyGridSample
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            Invalidate();
         }
     }
 }
