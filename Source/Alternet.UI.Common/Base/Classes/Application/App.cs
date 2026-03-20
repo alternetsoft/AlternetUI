@@ -1724,29 +1724,34 @@ namespace Alternet.UI
             if (Terminating)
                 return;
 
-            try
+            Internal();
+
+            void Internal()
             {
-                var msg = obj?.ToString();
-                if (msg is null || msg.Length == 0)
-                    return;
-
-                WriteToLogFileIfAllowed(msg);
-
-                if (DebugWriteLine.HasKind(kind))
-                    Debug.WriteLine(msg);
-
-                if (logMessage is not null)
+                try
                 {
-                    var prefixStr = prefix?.ToString() ?? msg;
+                    var msg = obj?.ToString();
+                    if (msg is null || msg.Length == 0)
+                        return;
 
-                    var args = new LogMessageEventArgs(msg, prefixStr, true);
-                    args.Kind = kind;
+                    WriteToLogFileIfAllowed(msg);
 
-                    logMessage(null, args);
+                    if (DebugWriteLine.HasKind(kind))
+                        Debug.WriteLine(msg);
+
+                    if (logMessage is not null)
+                    {
+                        var prefixStr = prefix?.ToString() ?? msg;
+
+                        var args = new LogMessageEventArgs(msg, prefixStr, true);
+                        args.Kind = kind;
+
+                        Post(() => logMessage(null, args));
+                    }
                 }
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
         }
 
@@ -1776,23 +1781,6 @@ namespace Alternet.UI
             }
 
             return false;
-
-            /*
-            try
-            {
-            }
-            catch (Exception e)
-            {
-                TryCatchSilent(() => App.LogError(e));
-
-                if (DebugUtils.IsDebugDefined)
-                {
-                    throw;
-                }
-
-                return false;
-            }
-            */
         }
 
         /// <summary>
@@ -1800,17 +1788,6 @@ namespace Alternet.UI
         /// </summary>
         public static void ProcessIdleTasks()
         {
-            /*
-                        int count = 0;
-
-                        while (count < 10)
-                        {
-                            count++;
-                            if (!ProcessIdleTask())
-                                break;
-                        }
-            */
-
             if (App.Terminating)
                 return;
 
@@ -2170,7 +2147,7 @@ namespace Alternet.UI
                 return false;
             }
 
-            void HandleWithDialog(Action<bool>? onResult = null)
+            void HandleWithDialog(UnhandledExceptionMode mode, Action<bool>? onResult = null)
             {
                 ShowExceptionWindow(exception, (result) =>
                 {
@@ -2214,7 +2191,7 @@ namespace Alternet.UI
                         if (ThreadExceptionAssigned)
                             HandleWithEvent();
                         else
-                            HandleWithDialog();
+                            HandleWithDialog(mode);
                         break;
                     case UnhandledExceptionMode.ThrowException:
                         LastUnhandledExceptionThrown = true;
@@ -2223,17 +2200,19 @@ namespace Alternet.UI
                     case UnhandledExceptionMode.CatchWithDialog:
                         if (HandleWithEvent())
                             return;
-                        HandleWithDialog();
+                        HandleWithDialog(mode);
                         break;
                     case UnhandledExceptionMode.CatchWithDialogAndThrow:
                         if (HandleWithEvent())
                             return;
-                        HandleWithDialog((result) =>
+
+                        LastUnhandledExceptionThrown = true;
+                        ExceptionUtils.Rethrow(exception);
+
+                        HandleWithDialog(mode, (result) =>
                         {
                             if (result)
                             {
-                                LastUnhandledExceptionThrown = true;
-                                ExceptionUtils.Rethrow(exception);
                             }
                         });
 
