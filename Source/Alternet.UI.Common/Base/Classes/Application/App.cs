@@ -143,25 +143,22 @@ namespace Alternet.UI
         private static readonly
             ConcurrentQueue<(Action<object?> Action, object? Data)> IdleTasks = new();
 
-        private static bool? isMono;
         private static EventHandler<LogMessageEventArgs>? logMessage;
+        private static UnhandledExceptionMode unhandledExceptionMode;
+        private static UnhandledExceptionMode unhandledExceptionModeDebug;
 
-        private static UnhandledExceptionMode unhandledExceptionMode
-            = UnhandledExceptionMode.CatchWithDialog;
-
-        private static UnhandledExceptionMode unhandledExceptionModeDebug
-            = UnhandledExceptionMode.CatchWithDialogAndThrow;
-
-        private static Exception? lastUnhandledException;
         private static bool lastUnhandledExceptionThrown;
-        private static IToolTipProvider? toolTipProvider;
         private static bool toolTipProviderAssigned;
-        private static ApplicationAppearance? appearance;
         private static bool? isMaui;
         private static bool inOnThreadException;
-        private static IconSet? icon;
         private static bool terminating = false;
         private static bool logFileIsEnabled;
+        private static bool? isMono;
+
+        private static Exception? lastUnhandledException;
+        private static IToolTipProvider? toolTipProvider;
+        private static ApplicationAppearance? appearance;
+        private static IconSet? icon;
         private static App? current;
         private static string? logFilePath;
         private static Window? mainWindow;
@@ -174,6 +171,9 @@ namespace Alternet.UI
 
         static App()
         {
+            unhandledExceptionMode = UnhandledExceptionMode.CatchWithDialog;
+            unhandledExceptionModeDebug = UnhandledExceptionMode.CatchWithDialogAndThrow;
+
             Is64BitOS = Environment.Is64BitOperatingSystem;
             Is64BitProcess = Environment.Is64BitProcess;
 
@@ -2109,9 +2109,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="onClose">Action to call when dialog is closed.</param>
         /// <param name="exception">Exception information.</param>
-        public static void ShowExceptionWindow(
-            Exception exception,
-            Action<bool>? onClose)
+        public static void ShowExceptionWindow(Exception exception, Action<bool>? onClose)
         {
             ShowExceptionWindow(
                 exception,
@@ -2176,12 +2174,15 @@ namespace Alternet.UI
             {
                 ShowExceptionWindow(exception, (result) =>
                 {
-                    if (!result)
+                    onResult?.Invoke(result);
+
+                    var quitApplication = !result;
+
+                    if (quitApplication)
                     {
                         AddIdleTask(() =>
                         {
                             ExitAndTerminate(ThreadExceptionExitCode);
-                            onResult?.Invoke(true);
                         });
                     }
                 });
@@ -2229,7 +2230,7 @@ namespace Alternet.UI
                             return;
                         HandleWithDialog((result) =>
                         {
-                            if (!result)
+                            if (result)
                             {
                                 LastUnhandledExceptionThrown = true;
                                 ExceptionUtils.Rethrow(exception);

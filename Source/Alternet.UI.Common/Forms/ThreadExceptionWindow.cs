@@ -13,7 +13,9 @@ namespace Alternet.UI
 {
     /// <summary>
     ///  Implements a window that is displayed when an exception occurs in
-    ///  the application.
+    ///  the application. When 'Continue' button is clicked, the window is closed with 'Accepted' result
+    ///  and the application continues running. When 'Quit' button is clicked, the window is closed with 'Canceled' result
+    ///  and the application is closed.
     /// </summary>
     public partial class ThreadExceptionWindow : DialogWindow
     {
