@@ -10,7 +10,10 @@ namespace Alternet::UI
         assert(_dc);
 
 #ifdef  __WXMSW__
-        if (useDirectDraw)
+
+		// Do not use Direct2D renderer for now, as it causes some issues when ControlPainter draws system PushButton and other control parts.
+
+        if (false)
         {
             wxGraphicsRenderer* renderer = wxGraphicsRenderer::GetDirect2DRenderer();
             _graphicsContext = renderer->CreateContextFromUnknownDC(*_dc);
