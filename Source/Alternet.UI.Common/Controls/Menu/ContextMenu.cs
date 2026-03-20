@@ -540,6 +540,29 @@ namespace Alternet.UI
                 return;
             if (control is null)
                 return;
+
+            var platformControl = control;
+            var platformPosition = position;
+
+            if (!control.IsPlatformControl)
+            {
+                if (platformPosition == null)
+                {
+                    var window = control.ParentWindow;
+                    if (window == null)
+                        return;
+
+                    if (control.Parent == null)
+                        return;
+
+                    var toolRect = control.Bounds;
+                    var pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
+                    platformPosition = window.ScreenToClient(pt);
+                }
+
+                platformPosition = ControlUtils.CoercePositionToPlatform(platformPosition, ref platformControl);
+            }
+
             try
             {
                 relatedControl.Value = control;
@@ -556,8 +579,8 @@ namespace Alternet.UI
 
                 factory?.Show(
                         this,
-                        control,
-                        position,
+                        platformControl,
+                        platformPosition,
                         () =>
                         {
                             RaiseClosing(EventArgs.Empty);
