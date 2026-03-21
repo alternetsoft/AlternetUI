@@ -166,5 +166,16 @@ namespace Alternet.UI
             var result = Enum.GetValues(typeof(T)).Cast<int>().Max();
             return result;
         }
+
+        /// <summary>
+        /// Returns the next value of an enum, cycling to the first value if at the end.
+        /// </summary>
+        public static TEnum NextValue<TEnum>(TEnum value) where TEnum : struct, Enum
+        {
+            var values = (TEnum[])Enum.GetValues(typeof(TEnum));
+            int index = Array.IndexOf(values, value);
+            int nextIndex = (index + 1) % values.Length;
+            return values[nextIndex];
+        }
     }
 }
