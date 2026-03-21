@@ -94,6 +94,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the horizontal scroll offset is changed, for example, when the user scrolls horizontally
+        /// or when the offset is changed programmatically.
+        /// </summary>
+        public event EventHandler? ScrollOffsetXChanged;
+
+        /// <summary>
         /// Occurs when a visual aspect of an owner-drawn control is changed.
         /// </summary>
         [Category("Behavior")]
@@ -230,6 +236,11 @@ namespace Alternet.UI
             get
             {
                 return scrollOffsetX;
+            }
+
+            set
+            {
+                DoActionScrollToHorzPos((int)value);
             }
         }
 
@@ -1451,6 +1462,7 @@ namespace Alternet.UI
             {
                 scrollOffsetX = newOffset;
                 UpdateScrollBars(true);
+                ScrollOffsetXChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
