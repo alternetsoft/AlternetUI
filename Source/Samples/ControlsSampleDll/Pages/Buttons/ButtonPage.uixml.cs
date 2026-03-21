@@ -173,17 +173,23 @@ namespace ControlsSample
             button2.ToolTipObject = ToolTipPage.LargeImageSet;
         }
 
-        public static void SetRichToolTip(AbstractControl? control)
+        public static RichToolTipParams CreateRichToolTipParams()
         {
             bool testSingleLine = true;
 
-            if (control == null)
-                return;
             RichToolTipParams prm = new();
             prm.Title = "Tooltip title";
             prm.Text = testSingleLine ? TextMemoPage.LoremIpsumSmallSingleLine : TextMemoPage.LoremIpsumSmallThreeLines;
             prm.Image = ToolTipPage.LargeImageSet;
             prm.MaxWidth = 300;
+            return prm;
+        }
+
+        public static void SetRichToolTip(AbstractControl? control)
+        {
+            if (control == null)
+                return;
+            RichToolTipParams prm = CreateRichToolTipParams();
             control.ToolTipObject = prm;
         }
 

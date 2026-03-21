@@ -1685,13 +1685,33 @@ namespace Alternet.UI
         /// Retrieves the tooltip text associated with the item at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the item for which to retrieve the tooltip text.</param>
-        /// <returns>A string containing the tooltip text for the specified item, or the item's display text if no tooltip is
+        /// <returns>An object containing the tooltip for the specified item, or the item's display text if no tooltip is
         /// set.</returns>
-        protected virtual string GetItemToolTip(int index)
+        protected virtual object? GetItemToolTip(int index)
         {
             var item = GetItem(index);
 
-            return item?.ToolTip?.ToString() ?? GetItemText(index, forDisplay: true);
+            if (item is null)
+                return null;
+
+            var toolTip = item.ToolTip;
+
+            if (toolTip is RichToolTipParams prm)
+            {
+                return prm;
+            }
+
+            if (toolTip is IGetAsToolTip asToolTip)
+            {
+                return asToolTip.GetAsToolTip();
+            }
+
+            var asString = toolTip?.ToString() ?? GetItemText(index, forDisplay: true);
+
+            if (string.IsNullOrWhiteSpace(asString))
+                return null;
+
+            return asString;
         }
 
         /// <summary>
@@ -1717,9 +1737,9 @@ namespace Alternet.UI
 
             if (provider == ItemToolTipProviderType.None) return false;
 
-            var s = GetItemToolTip(itemIndex.Value);
+            var tooltip = GetItemToolTip(itemIndex.Value);
 
-            if (s is null || s.Length == 0)
+            if (tooltip is null)
                 return false;
 
             var rect = GetItemRect(itemIndex);
@@ -1746,14 +1766,20 @@ namespace Alternet.UI
 
             OverlayToolTipParams data = new()
             {
-                Text = s,
                 Options = OverlayToolTipFlags.DismissAfterInterval,
                 HorizontalAlignment = horzAlignment,
                 VerticalAlignment = vertAlignment,
                 BackgroundColor = bColor,
                 ForegroundColor = fColor,
-                MaxWidth = container.Width - 20,
             };
+
+            if (tooltip is string s)
+                data.Text = s;
+            else
+                if(tooltip is RichToolTipParams content)
+                    data.ToolTipParams = content;
+                else
+                    data.Text = tooltip.ToString() ?? string.Empty;
 
             data.SetBorder(borderColor);
 
@@ -1768,6 +1794,7 @@ namespace Alternet.UI
                 }
             }
 
+            data.MaxWidth = container.Width - 20;
             itemToolTipId = ShowOverlayToolTip(data);
             return true;
         }

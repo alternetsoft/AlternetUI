@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// of a tooltip's visual style, including colors, fonts, borders, and icons.
     /// Each property is nullable, enabling selective
     /// customization while falling back to default values for unspecified properties.</remarks>
-    public partial class RichToolTipParams : BaseObjectWithAttr, IRichToolTipParams
+    public partial class RichToolTipParams : BaseObjectWithAttr, IRichToolTipParams, IGetAsToolTip
     {
         private Record record;
 
@@ -161,6 +161,12 @@ namespace Alternet.UI
                 Reset();
             else
                 record = source.record;
+        }
+
+        /// <inheritdoc/>
+        public RichToolTipParams? GetAsToolTip()
+        {
+            return this;
         }
 
         internal struct Record

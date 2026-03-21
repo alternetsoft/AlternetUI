@@ -76,8 +76,7 @@ namespace ControlsSample
                 listBox.Invalidate();
             };
 
-            var contextMenu = new ContextMenuStrip();
-            vertPanel2.ContextMenuStrip = contextMenu;
+            var contextMenu = vertPanel2.ContextMenuStrip;
 
             contextMenu.Add("Toggle items fast", () =>
             {
@@ -112,11 +111,23 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
+            contextMenu.Add("Toggle long item tooltip provider", () =>
+            {
+                listBox.ItemToolTipProvider ??= VirtualListBox.DefaultItemToolTipProvider;
+                var nextValue = EnumUtils.NextValue(listBox.ItemToolTipProvider.Value);
+                listBox.ItemToolTipProvider = nextValue;
+            });
+
+
             contextMenu.AddSeparator();
             contextMenu.Add(ControlUtils.CreateMenuItemRenderingModeSelector(listBox));
             contextMenu.Add(ControlUtils.CreateMenuItemTrackPaintingTime(listBox));
 
             listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars || App.IsWindowsOS;
+
+            var item = listBox.Items[1];
+            item.ToolTip = ButtonPage.CreateRichToolTipParams();
+            item.IsToolTipVisible = true;
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)
