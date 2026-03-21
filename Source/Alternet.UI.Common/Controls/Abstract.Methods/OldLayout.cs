@@ -528,6 +528,9 @@ namespace Alternet.UI
 
             var space = bounds;
 
+            var layoutOffset = container.LayoutOffset;
+            space.Offset(-layoutOffset.X, -layoutOffset.Y);
+
             if (container.LayoutFlags.HasFlag(LayoutFlags.IterateBackward))
             {
                 for (int i = 0; i < children.Count; i++)
