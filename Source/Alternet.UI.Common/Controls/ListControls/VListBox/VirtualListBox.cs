@@ -34,6 +34,12 @@ namespace Alternet.UI
     /// </remarks>
     public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter, IListBoxActions
     {
+        /// <summary>
+        /// Gets or sets the default provider used to generate tooltips for items.
+        /// </summary>
+        /// <remarks>Changing this property affects how item tooltips are displayed. The default value is set to use the factory provider.</remarks>
+        public static ItemToolTipProviderType DefaultItemToolTipProvider { get; set; } = ItemToolTipProviderType.Factory;
+
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
         private readonly List<ListControlItem> itemsLastPainted = new();
@@ -98,6 +104,27 @@ namespace Alternet.UI
         /// </summary>
         [Category("Behavior")]
         public event MeasureItemEventHandler? MeasureItem;
+
+        /// <summary>
+        /// Specifies the way how item tooltip is provided for items that don't fit in the control's view or when mouse is over the item for some time.
+        /// </summary>
+        public enum ItemToolTipProviderType
+        {
+            /// <summary>
+            /// Indicates that no item tooltip is displayed.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Indicates that the item tooltip is displayed as an overlay.
+            /// </summary>
+            Overlay = 1,
+
+            /// <summary>
+            /// Indicates that the item tooltip is displayed via tooltip factory in the separate window.
+            /// </summary>
+            Factory = 2,
+        }
 
         /// <summary>
         /// Enumerates known flags for the item click method.
@@ -269,6 +296,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public IReadOnlyList<ListControlItem> ItemsLastPainted => itemsLastPainted;
+
+        /// <summary>
+        /// Gets or sets the provider used to display tooltips for items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ItemToolTipProviderType? ItemToolTipProvider { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether partially visible rows are painted.
@@ -1668,15 +1701,21 @@ namespace Alternet.UI
         /// empty, the item rectangle cannot be determined, or the item is fully visible without horizontal scrolling.
         /// Override this method to customize tooltip display behavior for items.</remarks>
         /// <param name="horzAlignment">The horizontal alignment for the tooltip relative to the container.</param>
+        /// <param name="provider">The type of tooltip provider to use for displaying the tooltip. If null, the default provider is used.</param>
         /// <param name="itemIndex">The zero-based index of the item for which to show the overlay tooltip,
         /// or null to indicate no item.</param>
         /// <returns>true if the overlay tooltip was shown for the specified item; otherwise, false.</returns>
         protected virtual bool ShowOverlayToolTipForItem(
             int? itemIndex,
-            HorizontalAlignment horzAlignment = HorizontalAlignment.Left)
+            HorizontalAlignment horzAlignment = HorizontalAlignment.Left,
+            ItemToolTipProviderType? provider = null)
         {
             if (itemIndex is null)
                 return false;
+
+            provider ??= ItemToolTipProvider ?? DefaultItemToolTipProvider;
+
+            if (provider == ItemToolTipProviderType.None) return false;
 
             var s = GetItemToolTip(itemIndex.Value);
 
@@ -1717,6 +1756,17 @@ namespace Alternet.UI
             };
 
             data.SetBorder(borderColor);
+
+            if (provider == ItemToolTipProviderType.Factory && !App.IsMaui)
+            {
+                var toolTip = ToolTipFactory.GetToolTip(this);
+
+                if (toolTip != null)
+                {
+                    toolTip.SetParams(data.ToolTipParams).PostShowToolTip();
+                    return true;
+                }
+            }
 
             itemToolTipId = ShowOverlayToolTip(data);
             return true;
