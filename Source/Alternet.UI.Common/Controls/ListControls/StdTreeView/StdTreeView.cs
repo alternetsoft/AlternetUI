@@ -64,6 +64,7 @@ namespace Alternet.UI
             ListBox.MouseDown += OnListBoxMouseDown;
             ListBox.DoubleClick += OnListBoxDoubleClick;
             ListBox.KeyDown += OnListBoxKeyDown;
+            ListBox.ScrollOffsetXChanged += OnListBoxScrollOffsetXChanged;
 
             TreeButtons = DefaultTreeButtons;
         }
@@ -255,6 +256,41 @@ namespace Alternet.UI
                 }
 
                 return header;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the header has been allocated.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsHeaderAllocated
+        {
+            get
+            {
+                return header != null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the header is visible.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsHeaderVisible
+        {
+            get => header is not null && header.Visible;
+            set
+            {
+                if (value)
+                {
+                    Header.Visible = true;
+                }
+                else
+                {
+                    if (header is not null)
+                    {
+                        Header.Visible = false;
+                    }
+                }
             }
         }
 
@@ -2091,6 +2127,19 @@ namespace Alternet.UI
         {
             ResetCachedImagesInItems();
             base.OnSystemColorsChanged(e);
+        }
+
+        /// <summary>
+        /// Handles the event that occurs when the horizontal scroll offset of the internal list box changes.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the list box whose scroll offset has changed.</param>
+        /// <param name="e">An object that contains the event data.</param>
+        protected virtual void OnListBoxScrollOffsetXChanged(object? sender, EventArgs e)
+        {
+            if (!HasColumns || !IsHeaderVisible)
+                return;
+            var offsetX = ListBox.ScrollOffsetX;
+            Header.LayoutOffset = Header.LayoutOffset.WithX(offsetX);
         }
     }
 }
