@@ -690,5 +690,27 @@ namespace Alternet.Drawing
                 X,
                 Y);
         }
+
+        /// <summary>
+        /// Returns a new PointD instance with the specified Y coordinate and the current X coordinate.
+        /// </summary>
+        /// <param name="newY">The new Y coordinate value to use for the returned PointD.</param>
+        /// <returns>A new PointD with the Y coordinate set to newY and the X coordinate unchanged.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD WithY(Coord newY)
+        {
+            return new PointD(x, newY);
+        }
+
+        /// <summary>
+        /// Returns a new PointD instance with the specified X coordinate and the current Y coordinate.
+        /// </summary>
+        /// <param name="newX">The new X coordinate value to use for the returned PointD.</param>
+        /// <returns>A new PointD with the X coordinate set to newX and the Y coordinate unchanged.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD WithX(Coord newX)
+        {
+            return new PointD(newX, y);
+        }
     }
 }
