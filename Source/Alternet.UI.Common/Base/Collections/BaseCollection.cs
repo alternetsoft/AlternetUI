@@ -314,6 +314,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Reduces the number of elements in the collection to the specified count, removing items from the end if
+        /// necessary.
+        /// </summary>
+        /// <param name="newCount">The maximum number of elements to retain in the collection. Must be non-negative.</param>
+        public virtual void TrimCount(int newCount)
+        {
+            ListUtils.TrimCount(this, newCount);
+        }
+
+        /// <summary>
         /// Sets the index of the specified item in the collection.
         /// </summary>
         /// <param name="item">The item to search for.</param>
