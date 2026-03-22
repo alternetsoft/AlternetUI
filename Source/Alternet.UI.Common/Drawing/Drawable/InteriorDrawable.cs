@@ -819,7 +819,7 @@ namespace Alternet.Drawing
                 string[] names = { nameof(Interior), nameof(ScrollBar) };
                 object[] values = { Interior, ScrollBar };
 
-                return StringUtils.ToString(names, values);
+                return StringUtils.ToStringWithNames(names, values);
             }
         }
     }

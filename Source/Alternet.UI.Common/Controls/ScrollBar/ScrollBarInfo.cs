@@ -297,7 +297,7 @@ namespace Alternet.UI
 
             object[] values = { Position, Range, PageSize, Visibility };
 
-            return StringUtils.ToString(names, values);
+            return StringUtils.ToStringWithNames(names, values);
         }
 
         internal static ScrollBarInfo CreateImmutable(HiddenOrVisible value)

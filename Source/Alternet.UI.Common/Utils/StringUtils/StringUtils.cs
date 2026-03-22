@@ -379,7 +379,7 @@ namespace Alternet.UI
         /// <param name="values">Values.</param>
         /// <typeparam name="T">Type of values array.</typeparam>
         /// <returns></returns>
-        public static string ToString<T>(string[]? names, T[] values)
+        public static string ToStringWithNames<T>(string[]? names, T[] values)
         {
             var result = new StringBuilder();
             result.Append('{');
@@ -387,7 +387,16 @@ namespace Alternet.UI
             for (int i = 0; i < values.Length; i++)
             {
                 var name = names?[i];
+
+                bool isString = values[i] is string;
+
                 var value = values[i]?.ToString();
+
+                if (isString)
+                {
+                    value = $"\"{value}\"";
+                }
+
                 if (i > 0)
                     result.Append(", ");
                 if (name is null)
@@ -410,12 +419,13 @@ namespace Alternet.UI
         /// <typeparam name="T">Type of values array.</typeparam>
         /// <param name="names">Names.</param>
         /// <param name="values">Values.</param>
+        /// <param name="useNames">Whether to use names in the resulting string. If not specified, <see cref="BaseObject.UseNamesInToString"/> is used.</param>
         /// <returns></returns>
-        public static string ToStringWithOrWithoutNames<T>(string[] names, T[] values)
+        public static string ToStringWithOrWithoutNames<T>(string[] names, T[] values, bool? useNames = null)
         {
-            if (BaseObject.UseNamesInToString)
-                return ToString<T>(names, values);
-            return ToString<T>(null, values);
+            if (useNames ?? BaseObject.UseNamesInToString)
+                return ToStringWithNames<T>(names, values);
+            return ToStringWithNames<T>(null, values);
         }
 
         /// <summary>
