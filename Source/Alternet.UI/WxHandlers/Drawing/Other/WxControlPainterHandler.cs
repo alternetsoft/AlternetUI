@@ -174,11 +174,6 @@ namespace Alternet.Drawing
             TreeItemButton,
 
             /// <summary>
-            /// Item is 'SplitterBorder'.
-            /// </summary>
-            SplitterBorder,
-
-            /// <summary>
             /// Item is 'ComboBoxDropButton'.
             /// </summary>
             ComboBoxDropButton,
@@ -257,11 +252,6 @@ namespace Alternet.Drawing
             /// Item is 'ItemText'.
             /// </summary>
             ItemText,
-
-            /// <summary>
-            /// Item is 'SplitterSash'.
-            /// </summary>
-            SplitterSash,
         }
 
         /// <inheritdoc/>
@@ -349,7 +339,7 @@ namespace Alternet.Drawing
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
             HeaderButtonParams? headerButtonParams = null)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
+            ControlUtils.CoerceControlToPlatform(ref control);
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButton(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -387,7 +377,7 @@ namespace Alternet.Drawing
             HeaderSortIconType sortArrow = HeaderSortIconType.None,
             HeaderButtonParams? headerButtonParams = null)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
+            ControlUtils.CoerceControlToPlatform(ref control);
             return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButtonContents(
                 default,
                 WxApplicationHandler.WxWidget(control),
@@ -396,159 +386,6 @@ namespace Alternet.Drawing
                 (int)flags,
                 (int)sortArrow,
                 default);
-        }
-
-        /// <summary>
-        /// Draws the expanded/collapsed icon for a tree control item.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        public void DrawTreeItemButton(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0)
-        {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawTreeItemButton(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
-        }
-
-        /// <summary>
-        /// Draws the border for sash window: this border must be such that the sash
-        /// drawn by <see cref="DrawSplitterSash"/> blends into it well.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        public void DrawSplitterBorder(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0)
-        {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawSplitterBorder(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
-        }
-
-        /// <summary>
-        /// Draws a combo box dropdown button.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        /// <remarks>
-        /// The flags parameter may support the
-        /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
-        /// </remarks>
-        public void DrawComboBoxDropButton(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0)
-        {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawComboBoxDropButton(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
-        }
-
-        /// <summary>
-        /// Draws a dropdown arrow.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        /// <remarks>
-        /// The flags parameter may support the
-        /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
-        /// </remarks>
-        public void DrawDropArrow(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0)
-        {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawDropArrow(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
-        }
-
-        /// <summary>
-        /// Draws check button.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        /// <remarks>
-        /// The flags parameter may support the
-        /// <see cref="DrawFlags.Checked"/>, <see cref="DrawFlags.Undetermined"/>
-        /// and <see cref="DrawFlags.Current"/>.
-        /// </remarks>
-        public void DrawCheckBox(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0)
-        {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-
-            rect.Offset(dc.TransformDXDY);
-
-            Alternet.UI.Native.WxOtherFactory.RendererDrawCheckBox(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
-        }
-
-        /// <summary>
-        /// Draws check mark.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        /// <remarks>
-        /// The flags parameter may support the
-        /// <see cref="DrawFlags.Disabled"/>.
-        /// </remarks>
-        public void DrawCheckMark(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0)
-        {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawCheckMark(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
         }
 
         /// <summary>
@@ -569,13 +406,191 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawPushButton(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawPushButton(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
+        }
+
+        private void DoDrawing(AbstractControl control, Graphics dc, RectD rect, Action<Graphics, RectI> drawAction)
+        {
+            DynamicBitmap? bitmap = null;
+
+            var pixelRect = control.PixelFromDip(rect).WithEmptyLocation();
+
+            DynamicBitmap.CreateOrUpdate(ref bitmap, pixelRect.Size, 1, true);
+
+            var bitmapDc = bitmap.Bitmap.Canvas;
+
+            bitmapDc.FillRectangle(Color.Transparent.AsBrush, pixelRect);
+
+            drawAction(bitmapDc, pixelRect);
+
+            dc.DrawImage(bitmap.Bitmap, rect.Location);
+
+            bitmapDc.Dispose();
+            bitmap.Dispose();
+        }
+
+        /// <summary>
+        /// Draws the expanded/collapsed icon for a tree control item.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        public void DrawTreeItemButton(
+            AbstractControl control,
+            Graphics dc,
+            RectD rect,
+            DrawFlags flags = 0)
+        {
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawTreeItemButton(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
+        }
+
+        /// <summary>
+        /// Draws a combo box dropdown button.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
+        public void DrawComboBoxDropButton(
+            AbstractControl control,
+            Graphics dc,
+            RectD rect,
+            DrawFlags flags = 0)
+        {
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawComboBoxDropButton(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
+        }
+
+        /// <summary>
+        /// Draws a dropdown arrow.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Pressed"/> and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
+        public void DrawDropArrow(
+            AbstractControl control,
+            Graphics dc,
+            RectD rect,
+            DrawFlags flags = 0)
+        {
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawDropArrow(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
+        }
+
+        /// <summary>
+        /// Draws check button.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Checked"/>, <see cref="DrawFlags.Undetermined"/>
+        /// and <see cref="DrawFlags.Current"/>.
+        /// </remarks>
+        public void DrawCheckBox(
+            AbstractControl control,
+            Graphics dc,
+            RectD rect,
+            DrawFlags flags = 0)
+        {
+            ControlUtils.CoerceControlToPlatform(ref control);
+
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawCheckBox(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
+        }
+
+        /// <summary>
+        /// Draws check mark.
+        /// </summary>
+        /// <param name="control">Control in which drawing will be performed.</param>
+        /// <param name="dc">Drawing context.</param>
+        /// <param name="rect">Rectangle in which control is painted.</param>
+        /// <param name="flags">Drawing flags.</param>
+        /// <remarks>
+        /// The flags parameter may support the
+        /// <see cref="DrawFlags.Disabled"/>.
+        /// </remarks>
+        public void DrawCheckMark(
+            AbstractControl control,
+            Graphics dc,
+            RectD rect,
+            DrawFlags flags = 0)
+        {
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawCheckMark(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -596,13 +611,18 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawCollapseButton(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawCollapseButton(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -626,13 +646,18 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawItemSelectionRect(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawItemSelectionRect(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -651,13 +676,18 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawFocusRect(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawFocusRect(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -673,13 +703,18 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawChoice(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawChoice(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -695,13 +730,18 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawComboBox(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawComboBox(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -717,13 +757,18 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawTextCtrl(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawTextCtrl(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -739,13 +784,18 @@ namespace Alternet.Drawing
             RectD rect,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawRadioBitmap(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawRadioBitmap(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -768,15 +818,20 @@ namespace Alternet.Drawing
             int max,
             DrawFlags flags = 0)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawGauge(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                value,
-                max,
-                (int)flags);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawGauge(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempRect,
+                    value,
+                    max,
+                    (int)flags);
+            }
         }
 
         /// <summary>
@@ -798,16 +853,21 @@ namespace Alternet.Drawing
             DrawFlags flags = 0,
             TextEllipsisType ellipsizeMode = TextEllipsisType.End)
         {
-            ControlUtils.CoerceRectToPlatform(ref control, ref rect);
-            Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                text,
-                control.PixelFromDip(rect),
-                (int)align,
-                (int)flags,
-                (int)ellipsizeMode);
+            ControlUtils.CoerceControlToPlatform(ref control);
+            DoDrawing(control, dc, rect, InternalDraw);
+
+            void InternalDraw(Graphics tempDc, RectI tempRect)
+            {
+                Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
+                    default,
+                    WxApplicationHandler.WxWidget(control),
+                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    text,
+                    tempRect,
+                    (int)align,
+                    (int)flags,
+                    (int)ellipsizeMode);
+            }
         }
 
         /// <summary>
@@ -883,37 +943,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draw a (vertical) splitter sash.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="flags">Drawing flags.</param>
-        /// <param name="size">Splitter sash size.</param>
-        /// <param name="position">Splitter position.</param>
-        /// <param name="orientation">Defines whether the sash should be vertical or
-        /// horizontal and how the position should be interpreted</param>
-        public void DrawSplitterSash(
-            AbstractControl control,
-            Graphics dc,
-            SizeD size,
-            Coord position,
-            GenericOrientation orientation,
-            DrawFlags flags = 0)
-        {
-            var p = ControlUtils.CoercePositionToPlatform(new(position), ref control);
-            position = p?.X ?? position;
-
-            Alternet.UI.Native.WxOtherFactory.RendererDrawSplitterSash(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(size),
-                control.PixelFromDip(position),
-                (int)orientation,
-                (int)flags);
-        }
-
-        /// <summary>
         /// Gets version of the renderer.
         /// </summary>
         public string GetVersion()
@@ -942,9 +971,6 @@ namespace Alternet.Drawing
             {
                 case ControlPartKind.TreeItemButton:
                     DrawTreeItemButton(control, dc, rect, flags);
-                    return 0;
-                case ControlPartKind.SplitterBorder:
-                    DrawSplitterBorder(control, dc, rect, flags);
                     return 0;
                 case ControlPartKind.ComboBoxDropButton:
                     DrawComboBoxDropButton(control, dc, rect, flags);
@@ -1017,15 +1043,6 @@ namespace Alternet.Drawing
                         flags,
                         prm?.TextEllipsizeMode ?? TextEllipsisType.End);
                     return 0;
-                case ControlPartKind.SplitterSash:
-                    DrawSplitterSash(
-                        control,
-                        dc,
-                        prm?.SashSize ?? 0,
-                        prm?.SashPosition ?? 0,
-                        prm?.SashOrientation ?? GenericOrientation.Vertical,
-                        flags);
-                    return 0;
                 default:
                     return 0;
             }
@@ -1052,6 +1069,12 @@ namespace Alternet.Drawing
             CheckState state = isChecked ? CheckState.Checked : CheckState.Unchecked;
             var flags = Convert(state, controlState);
             DrawRadioBitmap(control, canvas, rect, flags);
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
         }
 
         /// <summary>
@@ -1134,21 +1157,6 @@ namespace Alternet.Drawing
             /// Gets or sets sort arrow for the <see cref="DrawHeaderButton"/>.
             /// </summary>
             public HeaderSortIconType SortArrow = HeaderSortIconType.None;
-
-            /// <summary>
-            /// Gets or sets sash size for the <see cref="DrawSplitterSash"/>.
-            /// </summary>
-            public SizeD SashSize;
-
-            /// <summary>
-            /// Gets or sets sash position for the <see cref="DrawSplitterSash"/>.
-            /// </summary>
-            public Coord SashPosition;
-
-            /// <summary>
-            /// Gets or sets sash orientation for the <see cref="DrawSplitterSash"/>.
-            /// </summary>
-            public GenericOrientation SashOrientation;
         }
     }
 }
