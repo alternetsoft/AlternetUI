@@ -107,5 +107,23 @@ namespace Alternet.UI
             var child = header.FindChild(ColumnKey);
             return child;
         }
+        
+        /// <inheritdoc/>
+        public override string ToString()
+        {
+            string[] names =
+            {
+                "Name",
+                "Title"
+            };
+
+            string[] values =
+            {
+                Name ?? "<null>",
+                Title ?? "<null>"
+            };
+
+            return StringUtils.ToStringWithNames(names, values);
+        }
     }
 }
