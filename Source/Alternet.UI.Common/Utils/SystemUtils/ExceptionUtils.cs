@@ -13,6 +13,28 @@ namespace Alternet.UI
     public static class ExceptionUtils
     {
         /// <summary>
+        /// Gets the currently visible thread exception window, if one exists.
+        /// </summary>
+        public static ThreadExceptionWindow? ExceptionWindow
+        {
+            get
+            {
+                return App.FindVisibleWindow<ThreadExceptionWindow>();
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the exception window is currently visible.
+        /// </summary>
+        public static bool IsExceptionWindowVisible
+        {
+            get
+            {
+                return App.IsWindowVisible<ThreadExceptionWindow>();
+            }
+        }
+
+        /// <summary>
         /// Throws an <see cref="ArgumentException"/> if the specified value
         /// is outside the valid range for a byte.
         /// </summary>
