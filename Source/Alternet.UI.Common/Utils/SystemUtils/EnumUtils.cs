@@ -172,10 +172,41 @@ namespace Alternet.UI
         /// </summary>
         public static TEnum NextValue<TEnum>(TEnum value) where TEnum : struct, Enum
         {
-            var values = (TEnum[])Enum.GetValues(typeof(TEnum));
+            var values = Enum.GetValues<TEnum>();
             int index = Array.IndexOf(values, value);
             int nextIndex = (index + 1) % values.Length;
             return values[nextIndex];
+        }
+
+        /// <summary>
+        /// Returns either the next or previous value in the enumeration, relative to the specified value.
+        /// </summary>
+        /// <typeparam name="TEnum">The enumeration type to operate on. Must be a value type that implements Enum.</typeparam>
+        /// <param name="value">The enumeration value from which to determine the next or previous value.</param>
+        /// <param name="next">If <see langword="true"/>, returns the next value; if <see langword="false"/>, returns the previous value.</param>
+        /// <returns>The next or previous value in the enumeration, depending on the value of <paramref name="next"/>.</returns>
+        public static TEnum NextOrPreviousValue<TEnum>(TEnum value, bool next) where TEnum : struct, Enum
+        {
+            return next ? NextValue(value) : PreviousValue(value);
+        }
+
+        /// <summary>
+        /// Returns the previous value in the specified enumeration, cycling to the last value if the input is the first
+        /// value.
+        /// </summary>
+        /// <remarks>This method treats the enumeration as circular, so calling it with the first value
+        /// returns the last value. The order of values is determined by the order in which they are defined in the
+        /// enumeration.</remarks>
+        /// <typeparam name="TEnum">The enumeration type for which to retrieve the previous value. Must be an enum.</typeparam>
+        /// <param name="value">The current enumeration value for which to find the previous value.</param>
+        /// <returns>The previous value in the enumeration of type TEnum. If the input value is the first defined value, returns
+        /// the last value in the enumeration.</returns>
+        public static TEnum PreviousValue<TEnum>(TEnum value) where TEnum : struct, Enum
+        {
+            var values = Enum.GetValues<TEnum>();
+            int index = Array.IndexOf(values, value);
+            int prevIndex = (index - 1 + values.Length) % values.Length;
+            return values[prevIndex];
         }
     }
 }
