@@ -1124,7 +1124,8 @@ namespace Alternet.UI
         /// Each name should correspond to an existing column. Cannot be null.</param>
         public virtual void SetColumnsOrder(params string[] columnNames)
         {
-            SetColumnsOrder(ColumnsByNames(columnNames));
+            var columns = ColumnsByNames(columnNames);
+            SetColumnsOrder(columns);
         }
 
         /// <summary>
