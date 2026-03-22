@@ -1646,6 +1646,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Checks if a window of the specified type is currently visible in the application.
+        /// </summary>
+        /// <typeparam name="T">The type of the window to check for visibility.</typeparam>
+        /// <returns>true if a window of the specified type is visible; otherwise, false.</returns>
+        public static bool IsWindowVisible<T>()
+            where T : Window
+        {
+            var window = App.FindVisibleWindow<T>();
+            return window != null;
+        }
+
+        /// <summary>
         /// Finds first visible window of the specified type. If no window is found, returns Null.
         /// </summary>
         /// <typeparam name="T">Type of the window to find.</typeparam>
@@ -2042,28 +2054,44 @@ namespace Alternet.UI
             bool canQuit = true,
             Action<bool>? onClose = null)
         {
-            var errorWindow =
-                new ThreadExceptionWindow(exception, additionalInfo, canContinue, canQuit);
-            if (App.IsRunning)
+            try
             {
-                errorWindow.ShowDialogAsync(null, (result) =>
+                var exceptionWindow = ExceptionUtils.ExceptionWindow;
+
+                if (exceptionWindow is not null)
                 {
-                    App.AddIdleTask(() =>
-                    {
-                        errorWindow.Dispose();
-                    });
-
-                    onClose?.Invoke(result);
-                });
-            }
-            else
-            {
-                if (App.current is null)
+                    LogWriter.Debug.LogException(exception, additionalInfo);
+                    exceptionWindow.ShowAnotherException(exception, additionalInfo);
                     return;
+                }
 
-                errorWindow.CanContinue = false;
-                errorWindow.CanQuit = true;
-                App.Current.Run(errorWindow);
+                var errorWindow =
+                    new ThreadExceptionWindow(exception, additionalInfo, canContinue, canQuit);
+                if (App.IsRunning)
+                {
+                    errorWindow.ShowDialogAsync(null, (result) =>
+                    {
+                        App.AddIdleTask(() =>
+                        {
+                            errorWindow.Dispose();
+                        });
+
+                        onClose?.Invoke(result);
+                    });
+                }
+                else
+                {
+                    if (App.current is null)
+                        return;
+
+                    errorWindow.CanContinue = false;
+                    errorWindow.CanQuit = true;
+                    App.Current.Run(errorWindow);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogWriter.Debug.LogException(ex);
             }
         }
 
@@ -2206,13 +2234,15 @@ namespace Alternet.UI
                         if (HandleWithEvent())
                             return;
 
-                        LastUnhandledExceptionThrown = true;
-                        ExceptionUtils.Rethrow(exception);
-
                         HandleWithDialog(mode, (result) =>
                         {
                             if (result)
                             {
+                                Post(() =>
+                                {
+                                    LastUnhandledExceptionThrown = true;
+                                    ExceptionUtils.Rethrow(exception);
+                                });
                             }
                         });
 

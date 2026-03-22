@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -24,17 +25,13 @@ namespace Alternet.UI
         /// </summary>
         public static int DefaultErrorImageSize = 32;
 
-        /// <summary>
-        /// Indicates whether details should be displayed in a separate dialog.
-        /// </summary>
-        public static bool ShowDetailsInSeparateDialog = false;
+        private readonly BaseCollection<ExceptionInfoItem> exceptions = new();
 
-        private Exception? exception;
         private bool canContinue = true;
         private bool canQuit = true;
         private TextBox? messageTextBox;
-        private string? additionalInfo;
         private Button? detailsButton;
+        private bool isDetailed;
 
         /// <summary>
         ///  Initializes a new instance of the
@@ -61,11 +58,17 @@ namespace Alternet.UI
         {
             this.canContinue = canContinue;
             this.canQuit = canQuit;
-            this.additionalInfo = additionalInfo;
-            this.exception = exception;
+
+            exceptions.Add(new ExceptionInfoItem(exception, additionalInfo));
+
             InitializeControls();
             UpdateExceptionText();
         }
+
+        /// <summary>
+        /// Gets the collection of exception information items associated with the current operation.
+        /// </summary>
+        public IReadOnlyList<ExceptionInfoItem> Exceptions => exceptions;
 
         /// <summary>
         /// Gets or sets additional information related to the exception.
@@ -74,14 +77,38 @@ namespace Alternet.UI
         {
             get
             {
-                return additionalInfo;
+                return exceptions.LastOrDefault()?.AdditionalInfo as string;
             }
 
             set
             {
-                if (additionalInfo == value)
+                var item = exceptions.LastOrDefault();
+
+                if (item is null)
                     return;
-                additionalInfo = value;
+
+                exceptions.TrimCount(1);
+
+                item.AdditionalInfo = value;
+                UpdateExceptionText();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether detailed information is included.
+        /// </summary>
+        public virtual bool IsDetailed
+        {
+            get
+            {
+                return isDetailed;
+            }
+
+            set
+            {
+                if(isDetailed == value)
+                    return;
+                isDetailed = value;
                 UpdateExceptionText();
             }
         }
@@ -93,14 +120,16 @@ namespace Alternet.UI
         {
             get
             {
-                return exception;
+                return exceptions.LastOrDefault()?.Exception;
             }
 
             set
             {
-                if (exception == value)
+                var item = exceptions.LastOrDefault();
+                if (item is null)
                     return;
-                exception = value;
+                item.Exception = value ?? new Exception(ErrorMessages.Default.UnknownException);
+                exceptions.TrimCount(1);
                 UpdateExceptionText();
             }
         }
@@ -131,18 +160,23 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual string GetMessageText()
         {
-            var result = LogUtils.GetExceptionMessageText(Exception, additionalInfo);
-            return result;
-        }
+            StringBuilder result = new();
 
-        /// <summary>
-        /// Gets detailed information about the exception.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual string GetDetailsText()
-        {
-            var result = LogUtils.GetExceptionDetailsText(Exception);
-            return result;
+            foreach (var item in Exceptions)
+            {
+                var isEmpty = result.Length == 0;
+
+                if (!isEmpty)
+                {
+                    result.AppendLine(LogUtils.SectionSeparator);
+                    result.AppendLine();
+                }
+
+                var message = LogUtils.GetExceptionMessageText(item.Exception, item.AdditionalInfo, IsDetailed);
+                result.AppendLine(message);
+            }
+
+            return result.ToString();
         }
 
         /// <summary>
@@ -273,6 +307,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows another exception in the same window. This method can be used when another exception occurs while the window is already shown.
+        /// </summary>
+        /// <param name="ex">The exception to be displayed.</param>
+        /// <param name="additionalInfo">Additional information related to the exception.</param>
+        public virtual void ShowAnotherException(Exception? ex,  object? additionalInfo)
+        {
+            if (ex is null)
+                return;
+            exceptions.Add(new ExceptionInfoItem(ex, additionalInfo));
+            UpdateExceptionText();
+        }
+
+        /// <summary>
         /// Creates and returns a grid of buttons arranged horizontally,
         /// with predefined functionality.
         /// </summary>
@@ -359,25 +406,7 @@ namespace Alternet.UI
         /// <param name="e">The event data associated with the "Details" button click.</param>
         protected virtual void OnDetailsButtonClick(object? sender, EventArgs e)
         {
-            if (ShowDetailsInSeparateDialog)
-            {
-                var detailsWindow =
-                    new WindowWithMemoAndButton(
-                        CommonStrings.Default.WindowTitleExceptionDetails,
-                        GetDetailsText());
-                detailsWindow.ShowDialogAsync(this, (result) =>
-                {
-                    detailsWindow.Dispose();
-                });
-            }
-            else
-            {
-                if (messageTextBox is null || detailsButton is null)
-                    return;
-                detailsButton.Enabled = false;
-                messageTextBox.Text += Environment.NewLine + GetDetailsText()
-                    + Environment.NewLine;
-            }
+            IsDetailed = !IsDetailed;
         }
 
         /// <summary>
@@ -386,6 +415,35 @@ namespace Alternet.UI
         private void UpdateExceptionText()
         {
             messageTextBox!.Text = GetMessageText();
+        }
+
+        /// <summary>
+        /// Represents an item that encapsulates an exception and optional additional information
+        /// for diagnostic or logging purposes.
+        /// </summary>
+        public class ExceptionInfoItem
+        {
+            /// <summary>
+            /// Initializes a new instance of the ExceptionInfoItem class with the specified exception and optional
+            /// additional information.
+            /// </summary>
+            /// <param name="e">The exception to be encapsulated by this instance. Cannot be null.</param>
+            /// <param name="additionalInfo">Optional additional information related to the exception. May be null.</param>
+            public ExceptionInfoItem(Exception e, object? additionalInfo = null)
+            {
+                Exception = e;
+                AdditionalInfo = additionalInfo;
+            }
+
+            /// <summary>
+            /// Gets or sets the assiciated exception.
+            /// </summary>
+            public Exception Exception { get; set; }
+
+            /// <summary>
+            /// Gets or sets additional information associated with the object.
+            /// </summary>
+            public object? AdditionalInfo { get; set; }
         }
     }
 }
