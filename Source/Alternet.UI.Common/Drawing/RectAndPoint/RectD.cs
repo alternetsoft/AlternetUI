@@ -1421,6 +1421,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a <see cref='RectD'/> with an empty location and the size of this rectangle.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectD WithEmptyLocation()
+        {
+            return new(PointD.Empty, Size);
+        }
+
+        /// <summary>
         /// Returns new <see cref="RectD"/> value with ceiling of location and size.
         /// Uses <see cref="MathUtils.Ceiling(Coord)"/> on values.
         /// </summary>

@@ -861,6 +861,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a <see cref='RectI'/> with an empty size and the location of this rectangle.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithEmptySize()
+        {
+            return new(Location, SizeI.Empty);
+        }
+
+        /// <summary>
+        /// Creates a <see cref='RectI'/> with an empty location and the size of this rectangle.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly RectI WithEmptyLocation()
+        {
+            return new(PointI.Empty, Size);
+        }
+
+        /// <summary>
         /// Returns new rectangle with size of this rectangle and the specified location.
         /// </summary>
         /// <param name="newLocation">New location.</param>
