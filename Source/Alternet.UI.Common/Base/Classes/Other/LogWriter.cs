@@ -214,6 +214,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Writes exception details to the log, including the exception message and any additional information provided.
+        /// </summary>
+        /// <param name="exception">The exception to log. Cannot be null.</param>
+        /// <param name="additionalInfo">Optional additional information to include in the log output. May be null.</param>
+        /// <param name="details">Indicates whether to include detailed information about the exception, such as the stack trace.
+        /// If true, detailed information is included; otherwise, only the exception message is logged.</param>
+        /// <param name="writer">The log writer to which the exception details will be written. Cannot be null.</param>
+        /// <returns>The same <see cref="ILogWriter"/> instance that was provided, to support method chaining.</returns>
+        public static ILogWriter LogException(this ILogWriter writer, Exception exception, string? additionalInfo = null, bool details = true)
+        {
+            var s = LogUtils.GetExceptionMessageText(exception, additionalInfo, details);
+            writer.WriteLine(s);
+            return writer;
+        }
+
+        /// <summary>
         /// Writes each string in the specified collection to the log as a separate line.
         /// </summary>
         /// <remarks>This method is an extension method for <see cref="ILogWriter"/> and allows writing
