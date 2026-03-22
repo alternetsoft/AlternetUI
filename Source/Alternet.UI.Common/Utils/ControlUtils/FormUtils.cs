@@ -60,7 +60,7 @@ namespace Alternet.UI
         /// and positioned outside the visible screen area.</returns>
         public static Window GetPhantomWindow()
         {
-            if(phantomWindow.Value == null)
+            if (phantomWindow.Value == null)
                 phantomWindow.Value = CreatePhantomWindow();
             return phantomWindow.Value;
         }

@@ -24,6 +24,11 @@ namespace Alternet.UI.Localization
         public string WarningPrefix = "Warning";
 
         /// <summary>
+        /// Gets or sets the message shown for unknown exceptions.
+        /// </summary>
+        public string UnknownException = "Unknown exception";
+
+        /// <summary>
         /// Gets or sets error message localization.
         /// </summary>
         public string CurrentApplicationIsNotSet =

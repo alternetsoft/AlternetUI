@@ -235,8 +235,36 @@ namespace Alternet.UI.Tests
         {
             App.AddBackgroundAction(() =>
             {
+                throw new Exception("This is test exception in background task");
+            });
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestException()
+        {
+            BaseObject.Post(() =>
+            {
                 throw new Exception("This is test exception");
             });
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestMultipleExceptions()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                int index = i;
+                BaseObject.Post(() =>
+                {
+                    throw new Exception($"This is test exception: {index}");
+                });
+            }
         }
 
         /// <summary>
