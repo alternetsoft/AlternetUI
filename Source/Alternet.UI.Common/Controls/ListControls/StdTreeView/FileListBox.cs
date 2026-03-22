@@ -695,10 +695,10 @@ namespace Alternet.UI
                     OnSizeColumnClick);
 
                 columnName.Name = ColumnIdentifierName;
-                columnDateModified.Name = ColumnIdentifierName;
-                columnSize.Name = ColumnIdentifierName;
+                columnDateModified.Name = ColumnIdentifierDateModified;
+                columnSize.Name = ColumnIdentifierSize;
 
-             //   SetColumnsOrder(ColumnsOrder);
+                SetColumnsOrder(ColumnsOrder);
 
                 Header.Visible = true;
             },
