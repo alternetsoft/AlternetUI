@@ -73,6 +73,11 @@ namespace PropertyGridSample
                 Flags);
         }
 
+        protected override void OnClick(EventArgs e)
+        {
+            Kind = EnumUtils.NextOrPreviousValue(Kind, !Keyboard.IsShiftPressed);
+        }
+
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);

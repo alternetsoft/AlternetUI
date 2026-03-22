@@ -860,6 +860,28 @@ namespace Alternet.Drawing
             }
 
             /// <summary>
+            /// Determines whether two specified CanvasCreateParams instances are equal.
+            /// </summary>
+            /// <param name="left">The first CanvasCreateParams instance to compare.</param>
+            /// <param name="right">The second CanvasCreateParams instance to compare.</param>
+            /// <returns>true if the two CanvasCreateParams instances are equal; otherwise, false.</returns>
+            public static bool operator ==(CanvasCreateParams left, CanvasCreateParams right)
+            {
+                return left.Equals(right);
+            }
+
+            /// <summary>
+            /// Determines whether two CanvasCreateParams instances are not equal.
+            /// </summary>
+            /// <param name="left">The first CanvasCreateParams instance to compare.</param>
+            /// <param name="right">The second CanvasCreateParams instance to compare.</param>
+            /// <returns>true if the specified instances are not equal; otherwise, false.</returns>
+            public static bool operator !=(CanvasCreateParams left, CanvasCreateParams right)
+            {
+                return !(left == right);
+            }
+
+            /// <summary>
             /// Gets the graphics backend type used for rendering.
             /// </summary>
             public readonly GraphicsBackendType GraphicsBackendType
