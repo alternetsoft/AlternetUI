@@ -1006,59 +1006,36 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the exception message text.
         /// </summary>
-        /// <param name="e">The exception.</param>
+        /// <param name="ex">The exception.</param>
+        /// <param name="details">Whether to include stack trace details in the message text.</param>
         /// <param name="additionalInfo">Additional information to include in the message.</param>
         /// <returns>A string containing the exception message text
         /// and additional information.</returns>
-        public static string GetExceptionMessageText(
-            Exception? e,
-            string? additionalInfo = null)
+        public static string GetExceptionMessageText(Exception? ex, object? additionalInfo = null, bool details = false)
         {
-            string text = string.Empty;
+            if (ex == null)
+                return string.Empty;
 
-            if (e is not null)
+            var sb = new StringBuilder();
+            FormatExceptionRecursive(ex, sb, 0, details);
+
+            var s = additionalInfo?.ToString();
+
+            if (!string.IsNullOrEmpty(s))
             {
-                text = "Type: " + e.GetType().FullName;
-
-                if (e.Message != null)
-                    text += "\n" + "Message: " + e.Message;
-
-                if (e is BaseException baseException)
-                {
-                    var s = baseException.AdditionalInformation;
-                    if (!string.IsNullOrEmpty(s))
-                    {
-                        text += "\n" + s;
-                    }
-                }
-
-                var innerExceptionMessage = e.InnerException?.Message ?? string.Empty;
-
-                var containsInnerText = e.Message?.Contains(innerExceptionMessage) ?? false;
-
-                if (e.InnerException is not null && !containsInnerText)
-                {
-                    text += "\n" + LogUtils.SectionSeparator + "\n";
-                    text += "Inner exception: \n";
-
-                    text += GetExceptionMessageText(e.InnerException) + "\n";
-                }
+                sb.AppendLine(s);
             }
 
-            if (additionalInfo is not null)
-            {
-                text += "\n" + additionalInfo;
-            }
-
-            return text;
+            return sb.ToString();
         }
 
         /// <summary>
         /// Gets detailed text information about the specified exception.
         /// </summary>
         /// <param name="e">The exception to get details for.</param>
+        /// <param name="assemblies">Whether to include loaded assemblies information.</param>
         /// <returns>A string containing detailed information about the exception.</returns>
-        public static string GetExceptionDetailsText(Exception? e)
+        public static string GetExceptionDetailsText(Exception? e, bool assemblies = true)
         {
             if (e is null)
                 return string.Empty;
@@ -1068,50 +1045,51 @@ namespace Alternet.UI
             string separator = "----------------------------------------\n";
             string sectionSeparator = "\n************** {0} **************\n";
 
-            detailsTextBuilder.Append(string.Format(
-                CultureInfo.CurrentCulture,
-                sectionSeparator,
-                "Exception Text"));
+            detailsTextBuilder.Append(string.Format(CultureInfo.CurrentCulture, sectionSeparator, "Exception Text"));
             detailsTextBuilder.Append(e.ToString());
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(newline);
-            detailsTextBuilder.Append(
-                string.Format(
-                    CultureInfo.CurrentCulture,
-                    sectionSeparator,
-                    "Loaded Assemblies"));
 
-            foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+            if (assemblies)
             {
-                AssemblyName name = asm.GetName();
-                string? location = AssemblyUtils.GetLocationSafe(asm);
-                string? fileVer = "n/a";
-
-                try
-                {
-                    if (location is not null &&
-                        location.Length > 0)
-                    {
-                        fileVer =
-                            FileVersionInfo.GetVersionInfo(location).FileVersion;
-                    }
-                }
-                catch (FileNotFoundException)
-                {
-                }
-
-                const string ExDlgMsgLoadedAssembliesEntry =
-                    "{0}\n    Assembly Version: {1}\n" +
-                    "    Win32 Version: {2}\n    CodeBase: {3}\n";
-
+                detailsTextBuilder.Append(newline);
+                detailsTextBuilder.Append(newline);
                 detailsTextBuilder.Append(
                     string.Format(
-                        ExDlgMsgLoadedAssembliesEntry,
-                        name.Name,
-                        name.Version,
-                        fileVer,
-                        location));
-                detailsTextBuilder.Append(separator);
+                        CultureInfo.CurrentCulture,
+                        sectionSeparator,
+                        "Loaded Assemblies"));
+
+                foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
+                {
+                    AssemblyName name = asm.GetName();
+                    string? location = AssemblyUtils.GetLocationSafe(asm);
+                    string? fileVer = "n/a";
+
+                    try
+                    {
+                        if (location is not null &&
+                            location.Length > 0)
+                        {
+                            fileVer =
+                                FileVersionInfo.GetVersionInfo(location).FileVersion;
+                        }
+                    }
+                    catch (FileNotFoundException)
+                    {
+                    }
+
+                    const string ExDlgMsgLoadedAssembliesEntry =
+                        "{0}\n    Assembly Version: {1}\n" +
+                        "    Win32 Version: {2}\n    CodeBase: {3}\n";
+
+                    detailsTextBuilder.Append(
+                        string.Format(
+                            ExDlgMsgLoadedAssembliesEntry,
+                            name.Name,
+                            name.Version,
+                            fileVer,
+                            location));
+                    detailsTextBuilder.Append(separator);
+                }
             }
 
             detailsTextBuilder.Append(newline);
@@ -1168,6 +1146,42 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        private static void FormatExceptionRecursive(Exception ex, StringBuilder sb, int indent, bool details = true)
+        {
+            if (ex == null) return;
+            string prefix = new string(' ', indent * 2);
+
+            sb.AppendLine($"{prefix}Exception: {ex.GetType().FullName}");
+
+            var message = ex.Message;
+
+            if (!string.IsNullOrEmpty(message))
+            {
+                sb.AppendLine($"{prefix}Message: {message}");
+            }
+
+            if (ex is BaseException baseException)
+            {
+                var s = baseException.AdditionalInformation;
+                if (!string.IsNullOrEmpty(s))
+                {
+                    sb.AppendLine(s);
+                }
+            }
+
+            if (details)
+            {
+                sb.AppendLine($"{prefix}StackTrace:");
+                sb.AppendLine($"{prefix}{ex.StackTrace}");
+            }
+
+            if (ex.InnerException != null)
+            {
+                sb.AppendLine($"{prefix}Inner Exception:");
+                FormatExceptionRecursive(ex.InnerException, sb, indent + 1);
+            }
         }
 
         /// <summary>
