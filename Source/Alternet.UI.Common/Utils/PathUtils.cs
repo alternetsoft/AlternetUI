@@ -586,6 +586,75 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified URL has the given file name as its last segment,
+        /// using the specified string comparison option.
+        /// </summary>
+        /// <remarks>If the URL does not contain a file name segment, the method returns false.</remarks>
+        /// <param name="url">The URL to examine. Can be absolute or relative.</param>
+        /// <param name="fileName">The file name to compare against the end of the URL. Cannot be null.</param>
+        /// <param name="comparison">The string comparison option to use when comparing the file name. The default is
+        /// StringComparison.OrdinalIgnoreCase.</param>
+        /// <returns>true if the URL ends with the specified file name according to the comparison option; otherwise, false.</returns>
+        public static bool UrlHasFileName(string url, string fileName, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            var ok = TryExtractFileNameFromUrl(url, out var extractedFileName);
+            if (ok)
+                return string.Equals(extractedFileName, fileName, comparison);
+            return false;
+        }
+
+        /// <summary>
+        /// Determines whether the last segment of the specified URL ends with the given file name,
+        /// using the specified string comparison option.
+        /// </summary>
+        /// <remarks>If the URL does not contain a file name segment, the method returns false. The
+        /// comparison is performed only on the file name portion of the URL, not the entire URL string.</remarks>
+        /// <param name="url">The URL to examine. Can be absolute or relative.</param>
+        /// <param name="fileName">The file name to compare against the end of the URL. Cannot be null or empty.</param>
+        /// <param name="comparison">One of the enumeration values that specifies how the file name comparison is performed. The default is
+        /// StringComparison.OrdinalIgnoreCase.</param>
+        /// <returns>true if the URL ends with the specified file name according to the comparison option; otherwise, false.</returns>
+        public static bool UrlEndsWithFileName(string? url, string fileName, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            var ok = TryExtractFileNameFromUrl(url, out var extractedFileName);
+            if (ok)
+                return extractedFileName.EndsWith(fileName, comparison);
+            return false;
+        }
+
+        /// <summary>
+        /// Tries to extract the file name from the given URL.
+        /// The method returns <c>true</c> if the file name was successfully extracted; otherwise, it returns <c>false</c>.
+        /// </summary>
+        /// <param name="url">The URL from which to extract the file name.</param>
+        /// <param name="fileName">When this method returns, contains the extracted file name if the
+        /// extraction was successful; otherwise, an empty string.</param>
+        /// <returns><c>true</c> if the file name was successfully extracted; otherwise, <c>false</c>.</returns>
+        public static bool TryExtractFileNameFromUrl(string? url, out string fileName)
+        {
+            fileName = string.Empty;
+
+            if (string.IsNullOrEmpty(url))
+                return false;
+
+            try
+            {
+                var uri = new Uri(url, UriKind.Absolute);
+
+                string lastSegment = uri.Segments.Length > 0
+                    ? uri.Segments[uri.Segments.Length - 1]
+                    : uri.AbsolutePath;
+
+                fileName = lastSegment.TrimEnd('/');
+                return !string.IsNullOrEmpty(fileName);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Generates a temporary file name with the specified extension.
         /// </summary>
         /// <param name="extension">The file extension to use for the temporary file.</param>
