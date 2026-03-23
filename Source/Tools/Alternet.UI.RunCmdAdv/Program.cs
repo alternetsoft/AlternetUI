@@ -5,6 +5,6 @@ using System.IO;
 
 var application = new Application();
 
-Commands.RunApplication(args, true);
+Commands.RunApplication(args, adv: true);
 
 application.Dispose();

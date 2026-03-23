@@ -23,7 +23,7 @@ static void CmdLogLicense(CommandLineArgs args)
     Console.WriteLine($"Command: logLicense");
 
     var provider = new Alternet.Common.License.UILicenseProvider();
-    provider.LogExistingLicenses(LogWriter.Console.WriteLineStr);
+    provider.LogExistingLicenses(LogWriter.Console.WriteLineStr, includeExpired: true);
 
     Console.WriteLine("Completed");
 }

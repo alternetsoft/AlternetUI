@@ -46,6 +46,10 @@
     "someAction": {
       "commandName": "Project",
       "commandLineArgs": "-r=someAction"
+    },
+    "exportSvg": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=exportSvg Name=\"alternet-circle-xmark.svg\" Size=64 Result=\"d:\\Images\\\""
     }
   }
 }

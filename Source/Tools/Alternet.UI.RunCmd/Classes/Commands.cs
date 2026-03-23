@@ -342,6 +342,36 @@ namespace Alternet.UI
             Console.WriteLine("Completed");
         }
 
+        public static void CmdExportSvg(CommandLineArgs args)
+        {
+            string svgName = args.AsString("Name");
+            int size = args.AsInt("Size");
+            string pathToResult = args.AsString("Result");
+
+            Console.WriteLine($"Command: exportSvg");
+            Console.WriteLine($"Name: {svgName}");
+            Console.WriteLine($"Size: {size}");
+            Console.WriteLine($"Result: {pathToResult}");
+
+            foreach(var image in KnownSvgImages.GetAllImages())
+            {
+                if (svgName is null || PathUtils.UrlEndsWithFileName(image.Url, svgName))
+                {
+                    var path = Path.Combine(pathToResult, $"{svgName}_{size}.png");
+                    Directory.CreateDirectory(pathToResult);
+
+                    image.AsImage(size)?.Save(path);
+
+                    Console.WriteLine($"Exported: {path}");
+                }
+                else
+                {
+                }
+            }
+
+            Console.WriteLine("Completed");
+        }
+
         public static void CmdDarkImages(CommandLineArgs args)
         {
             string pathToFolder = args.AsString("Path");
@@ -771,6 +801,11 @@ namespace Alternet.UI
                     "darkImages",
                     CmdDarkImages,
                     "-r=darkImages Path=\"d:\\Images\" Result=\"d:\\ImagesConverted\"");
+
+                RegisterCommand(
+                    "exportSvg",
+                    CmdExportSvg,
+                    "-r=exportSvg Name=\"alternet-circle-xmark\" Size=64 Result=\"d:\\Images\"");
 
                 RegisterCommand(
                     "svgToPng",
