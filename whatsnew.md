@@ -1,3 +1,23 @@
+# 1.0.8 (2026 March 24)
+
+- Support multiple exceptions in ThreadExceptionWindow.
+- Create GenericPanel, GenericContainerControl.
+- Enhance exception logging and details formatting.
+- Add TrimCount method to BaseCollection.
+- Fix ControlPainter which stopped to work on Windows when we started to use DirectX drawing context.
+- FileListBox: Fix column names and ordering.
+- VirtualListBox: Notify on horizontal scroll offset change.
+- StdTreeView: IsHeaderAllocated and IsHeaderVisible properties to manage header allocation and visibility. 
+- StdTreeView: Keep the header's LayoutOffset.X in sync with the internal list box horizontal scroll.
+- Support LayoutOffset when Layout=Dock.
+- VirtualLIstBox: support complex tooltips for items.
+- VirtualBox: Add configurable tooltip provider for items.
+- ControlPainter: fix painting for GenericControl.
+- Improve exception handling.
+- Fix context menu exception when called on GenericControl.
+
+---
+
 # 1.0.7 (2026 March 19)
 
 - Respect MaxWidth for ToolTipWindow.
