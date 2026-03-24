@@ -18,6 +18,8 @@ namespace Alternet.UI
         private static CommandLineArgs? defaultInstance;
 
         private readonly Dictionary<string, string> args = new();
+        private readonly Dictionary<string, Action<CommandLineArgs>> commands = new();
+        private readonly List<string> originalCommandNames = new();
 
         /// <summary>
         /// Occurs when exception is raised.
@@ -37,6 +39,17 @@ namespace Alternet.UI
             set
             {
                 defaultInstance = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of command names associated with this instance.
+        /// </summary>
+        public List<string> CommandNames
+        {
+            get
+            {
+                return originalCommandNames;
             }
         }
 
@@ -162,6 +175,59 @@ namespace Alternet.UI
                 OnError(e);
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Attempts to execute a command by its name, returning a value that indicates whether the command was found
+        /// and executed successfully.
+        /// </summary>
+        /// <remarks>If the specified command name does not match any registered command, or if an error
+        /// occurs during execution, the method returns false. Command names are matched in a case-insensitive manner
+        /// after trimming whitespace and surrounding quotes.</remarks>
+        /// <param name="originalName">The name of the command to execute. Leading and trailing whitespace and quotes are ignored. The comparison
+        /// is case-insensitive. Cannot be null or whitespace.</param>
+        /// <returns>true if the command was found and executed without error; otherwise, false.</returns>
+        public virtual bool RunCommand(string? originalName)
+        {
+            if (originalName is null || string.IsNullOrWhiteSpace(originalName))
+                return false;
+
+            var name = originalName.ToLower().Trim().Trim('"', '\'');
+
+            if (commands.TryGetValue(name, out var action))
+            {
+                if (action is null)
+                    return false;
+                try
+                {
+                    action(this);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine($"Error running command: {originalName}");
+                    LogUtils.LogException(e);
+                    LogUtils.LogExceptionToConsole(e);
+                    return false;
+                }
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Registers a new command with the specified name and associated action to be executed when the command is
+        /// invoked.
+        /// </summary>
+        /// <remarks>If a command with the same name (case-insensitive) is already registered, it will be
+        /// overwritten. Use this method to extend the set of available commands at runtime.</remarks>
+        /// <param name="name">The name of the command to register. Cannot be null or empty. Command names are case-insensitive.</param>
+        /// <param name="action">The action to execute when the command is invoked. The action receives the parsed command-line arguments.</param>
+        /// <param name="example">An optional example string demonstrating how to use the command. May be null if no example is provided.</param>
+        public virtual void RegisterCommand(string name, Action<CommandLineArgs> action, string? example = null)
+        {
+            originalCommandNames.Add(name);
+            commands.Add(name.ToLower(), action);
         }
 
         /// <summary>

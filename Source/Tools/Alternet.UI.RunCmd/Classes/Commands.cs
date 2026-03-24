@@ -12,19 +12,8 @@ namespace Alternet.UI
 {
     public static partial class Commands
     {
-        private static readonly Dictionary<string, Action<CommandLineArgs>> commands = new();
-        private static readonly List<string> originalCommandNames = new();
-
         static Commands()
         {
-        }
-
-        public static IEnumerable<string> CommandNames
-        {
-            get
-            {
-                return originalCommandNames;
-            }
         }
 
         public static void RunApplication(string[] args, bool adv = false)
@@ -54,7 +43,7 @@ namespace Alternet.UI
                 Console.WriteLine("Known commands:");
                 Console.WriteLine();
 
-                var commands = Commands.CommandNames;
+                var commands = CommandLineArgs.Default.CommandNames;
 
                 foreach (var command in commands)
                 {
@@ -86,7 +75,7 @@ namespace Alternet.UI
                 Console.WriteLine();
             }
 
-            Commands.RunCommand(commandNames, CommandLineArgs.Default);
+            CommandLineArgs.Default.RunCommand(commandNames);
         }
 
         public static void CmdDownload(CommandLineArgs args)
@@ -756,41 +745,9 @@ namespace Alternet.UI
             File.WriteAllText(resultPath, contents);
         }
 
-        public static bool RunCommand(string? originalName, CommandLineArgs args)
+        public static void RegisterCommand(string name, Action<CommandLineArgs> action, string usage)
         {
-            if (originalName is null || string.IsNullOrWhiteSpace(originalName))
-                return false;
-
-            var name = originalName.ToLower().Trim().Trim('"','\'');
-
-            if(commands.TryGetValue(name, out var action))
-            {
-                if (action is null)
-                    return false;
-                try
-                {
-                    action(args);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error running command: {originalName}");
-                    LogUtils.LogException(e);
-                    LogUtils.LogExceptionToConsole(e);
-                    return false;                    
-                }
-                return true;
-            }
-
-            return false;
-        }
-
-        public static void RegisterCommand(
-            string name,
-            Action<CommandLineArgs> action,
-            string? example = null)
-        {
-            originalCommandNames.Add(name);
-            commands.Add(name.ToLower(), action);
+            CommandLineArgs.Default.RegisterCommand(name, action, usage);
         }
 
         public static void RegisterCommands(bool adv)
@@ -898,7 +855,7 @@ namespace Alternet.UI
                 CmdDownloadAndUnzip,
                 "-r=downloadAndUnzip Url=\"http://localhost/file.7z\" Path=\"e:/file.7z\" ExtractTo=\"e:/Extracted7z\"");
 
-            originalCommandNames.Sort();
+            CommandLineArgs.Default.CommandNames.Sort();
         }
     }
 }
