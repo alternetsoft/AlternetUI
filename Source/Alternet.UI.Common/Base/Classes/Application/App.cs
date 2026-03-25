@@ -2046,13 +2046,15 @@ namespace Alternet.UI
         /// <param name="additionalInfo">Additional information.</param>
         /// <param name="canContinue">Whether 'Continue' button is visible.</param>
         /// <param name="canQuit">Whether 'Quit' button is visible.</param>
+        /// <param name="onCreate">Action to call when dialog is created.</param>
         /// <returns><c>true</c> if continue pressed, <c>false</c> otherwise.</returns>
         public static void ShowExceptionWindow(
             Exception exception,
             string? additionalInfo = null,
             bool canContinue = true,
             bool canQuit = true,
-            Action<bool>? onClose = null)
+            Action<ExceptionDialogResult>? onClose = null,
+            Action<ThreadExceptionWindow>? onCreate = null)
         {
             try
             {
@@ -2065,18 +2067,21 @@ namespace Alternet.UI
                     return;
                 }
 
-                var errorWindow =
-                    new ThreadExceptionWindow(exception, additionalInfo, canContinue, canQuit);
+                var errorWindow = new ThreadExceptionWindow(exception, additionalInfo, canContinue, canQuit);
+                onCreate?.Invoke(errorWindow);
+
                 if (App.IsRunning)
                 {
                     errorWindow.ShowDialogAsync(null, (result) =>
                     {
+                        var dialogResult = errorWindow.DialogResult;
+
                         App.AddIdleTask(() =>
                         {
                             errorWindow.Dispose();
                         });
 
-                        onClose?.Invoke(result);
+                        onClose?.Invoke(dialogResult);
                     });
                 }
                 else
@@ -2086,6 +2091,12 @@ namespace Alternet.UI
 
                     errorWindow.CanContinue = false;
                     errorWindow.CanQuit = true;
+
+                    errorWindow.QuitButton.Click += (s, e) =>
+                    {
+                        ExitAndTerminate(ThreadExceptionExitCode);
+                    };
+
                     App.Current.Run(errorWindow);
                 }
             }
@@ -2114,14 +2125,19 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="onClose">Action to call when dialog is closed.</param>
         /// <param name="exception">Exception information.</param>
-        public static void ShowExceptionWindow(Exception exception, Action<bool>? onClose)
+        /// <param name="onCreate">Action to call when dialog is created.</param>
+        public static void ShowExceptionWindow(
+            Exception exception,
+            Action<ExceptionDialogResult>? onClose,
+            Action<ThreadExceptionWindow>? onCreate = null)
         {
             ShowExceptionWindow(
                 exception,
                 additionalInfo: null,
                 canContinue: true,
                 canQuit: true,
-                onClose);
+                onClose,
+                onCreate);
         }
 
         /// <summary>
@@ -2175,22 +2191,28 @@ namespace Alternet.UI
                 return false;
             }
 
-            void HandleWithDialog(UnhandledExceptionMode mode, Action<bool>? onResult = null)
+            void HandleWithDialog(
+                UnhandledExceptionMode mode,
+                Action<ExceptionDialogResult>? onResult = null,
+                Action<ThreadExceptionWindow>? onCreate = null)
             {
-                ShowExceptionWindow(exception, (result) =>
-                {
-                    onResult?.Invoke(result);
-
-                    var quitApplication = !result;
-
-                    if (quitApplication)
+                ShowExceptionWindow(
+                    exception,
+                    (result) =>
                     {
-                        AddIdleTask(() =>
+                        onResult?.Invoke(result);
+
+                        var quitApplication = result == ExceptionDialogResult.Quit;
+
+                        if (quitApplication)
                         {
-                            ExitAndTerminate(ThreadExceptionExitCode);
-                        });
-                    }
-                });
+                            AddIdleTask(() =>
+                            {
+                                ExitAndTerminate(ThreadExceptionExitCode);
+                            });
+                        }
+                    },
+                    onCreate);
             }
 
             if (inOnThreadException)
@@ -2234,17 +2256,23 @@ namespace Alternet.UI
                         if (HandleWithEvent())
                             return;
 
-                        HandleWithDialog(mode, (result) =>
-                        {
-                            if (result)
+                        HandleWithDialog(
+                            mode,
+                            (result) =>
                             {
-                                Post(() =>
+                                if (result == ExceptionDialogResult.Throw)
                                 {
-                                    LastUnhandledExceptionThrown = true;
-                                    ExceptionUtils.Rethrow(exception);
-                                });
-                            }
-                        });
+                                    Post(() =>
+                                    {
+                                        LastUnhandledExceptionThrown = true;
+                                        ExceptionUtils.Rethrow(exception);
+                                    });
+                                }
+                            },
+                            (window) =>
+                            {
+                                window.ThrowButton.Visible = true;
+                            });
 
                         break;
                     case UnhandledExceptionMode.CatchWithThrow:

@@ -61,8 +61,10 @@ namespace XamlX.Transform
                 }
                 catch (Exception e) when (!(e is XmlException))
                 {
-                    throw new XamlParseException(
-                        "Internal compiler error while transforming node " + node + ":\n" + e, node);
+                    var newException = new XamlParseException(
+                        "Node transformation error in uixml reader", e, node);
+
+                    throw newException;
                 }
                 #endif
             }

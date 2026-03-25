@@ -256,22 +256,23 @@ namespace Alternet.UI
         /// <param name="flags">Flags.</param>
         public static void DefaultReportLoadException(Exception e, string? resName, Flags flags)
         {
-            var s1 = $"Error reading uixml: {e.Message}";
             var s3 = $"Exception type: {e.GetType()}";
             var s2 = GetErrorFileAndPos(e, resName);
 
+            var s1 = $"Error reading uixml";
+
             if (s2 is not null)
             {
-                BaseException exc = new(s1, e);
-                exc.AdditionalInformation = s2;
-                e = exc;
+                s1 += $" from {s2}";
             }
 
+            BaseException exc = new(s1, e);
+            e = exc;
+
+            var logText = LogUtils.GetExceptionMessageText(e, null, details: true);
+
             BeginSection();
-            WriteLine(s1);
-            if (s2 is not null)
-                WriteLine(s2);
-            WriteLine(s3);
+            WriteLine(logText);
             EndSection();
 
             if (ReportLoadException is not null)
@@ -297,7 +298,7 @@ namespace Alternet.UI
 
                     App.ShowExceptionWindow(e, (result) =>
                     {
-                        if (!result)
+                        if (result == ExceptionDialogResult.Quit)
                             App.Exit();
                         else
                         {

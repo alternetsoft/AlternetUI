@@ -47,12 +47,14 @@ namespace Alternet.UI
         /// This value can be <see langword="null" />. </param>
         /// <param name="lineNumber">The line number indicating where the error occurred. </param>
         /// <param name="linePosition">The line position indicating where the error occurred. </param>
-        public BaseXmlException(string message, Exception innerException, int lineNumber, int linePosition)
+        /// <param name="sourceUri">The URI of the source document where the error occurred. This value can be <see langword="null" />. </param>
+        public BaseXmlException(string message, Exception innerException, int lineNumber, int linePosition, string? sourceUri = null)
             : base(message, innerException, lineNumber, linePosition)
         {
             var attr = AttributesFactory.Create();
             attr["LineNumber"] = lineNumber;
             attr["LinePosition"] = linePosition;
+            attr["SourceUri"] = sourceUri;
             BaseException.RaiseExceptionCreated(this, message, innerException, attr);
         }
     }

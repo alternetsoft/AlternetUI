@@ -1,0 +1,12 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+        x:Class="ControlsSample.WindowWithError"
+        Title="Window With Error" StartLocation="CenterScreen"
+        xmlns:drawing="clr-namespace:Alternet.Drawing;assembly=Alternet.UI"
+        MinWidth="500" MinHeight="AAAAAAAA">
+    <StackPanel Orientation="Vertical">
+        <Button Name="helloButton" Text="Say Hello" IsTextLocalized="true"
+                Margin="20" Click="HelloButton_Click" />
+    </StackPanel>
+
+</Window>

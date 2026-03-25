@@ -17,13 +17,18 @@ namespace XamlX
         {
         }
 
-        public XamlParseException(string message, int line, int position)
-            : base(message, null, line, position)
+        public XamlParseException(string message, int line, int position, string? sourceUri = null)
+            : base(message, null, line, position, sourceUri)
         {
         }
 
-        public XamlParseException(string message, IXamlLineInfo lineInfo)
-            : this(message, lineInfo.Line, lineInfo.Position)
+        public XamlParseException(string message, IXamlLineInfo lineInfo, string? sourceUri = null)
+            : this(message, lineInfo.Line, lineInfo.Position, sourceUri)
+        {
+        }
+
+        public XamlParseException(string message, Exception innerException, IXamlLineInfo lineInfo, string? sourceUri = null)
+            : base(message, innerException, lineInfo.Line, lineInfo.Position, sourceUri)
         {
         }
     }

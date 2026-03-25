@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -124,6 +125,13 @@ namespace ControlsSample
             if (testBadFont)
                 AbstractControl.DefaultFont = new Font("PineApple", 12);
 
+            var testErrorInXmlBeforeWindowCreation = false;
+
+            if (testErrorInXmlBeforeWindowCreation)
+            {
+                var windowWithError = new WindowWithError();
+            }
+
             var window = new MainWindow();
 
             LogSimple("Main window created.");
@@ -131,8 +139,8 @@ namespace ControlsSample
             application.Run(window);
 
             LogSimple("After Application.Run.");
-
             window.Dispose();
+
             application.Dispose();
         }
     }

@@ -21,6 +21,19 @@ namespace ControlsSample
         public static DateTime TestStartTime;
         public static List<string> TestTimerLog = new();
 
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestExceptionInFormXml()
+        {
+            BaseObject.Post(() =>
+            {
+                var windowWithError = new ControlsSample.WindowWithError();
+            });
+        }
+
+        [Conditional("DEBUG")]
         public static void TestTimersInit(string timerKind, int interval)
         {
             TestCounter = 0;
@@ -29,6 +42,7 @@ namespace ControlsSample
             TestTimerLog.Clear();
         }
 
+        [Conditional("DEBUG")]
         public static void TestThreadingTimerXX()
         {
             System.Threading.TimerCallback callback = state =>
@@ -44,6 +58,7 @@ namespace ControlsSample
                 period: TestTimerInterval);
         }
 
+        [Conditional("DEBUG")]
         public static void TestMacOsSpecific()
         {
             if (App.Handler is not IMacOsApplicationHandler macOsApp)
@@ -60,11 +75,13 @@ namespace ControlsSample
             App.LogEndSection();
         }
 
+        [Conditional("DEBUG")]
         public static void TestTimerXX()
         {
             TestTimerWithInterval(TestTimerInterval);
         }
 
+        [Conditional("DEBUG")]
         public static void TestSystemTimerXX()
         {
             TestSystemTimerWithInterval(TestTimerInterval);

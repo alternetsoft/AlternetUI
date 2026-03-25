@@ -14,6 +14,26 @@ namespace Alternet.UI.Localization
         public static ErrorMessages Default = new();
 
         /// <summary>
+        /// Gets or sets the message shown when an error occurs in the application.
+        /// </summary>
+        public string ErrorHasOccurredInYourApplication = "Error has occurred in your application.";
+
+        /// <summary>
+        /// Gets or sets the message displayed to the user when prompting to continue after an error.
+        /// </summary>
+        public string PressContinueToSkipError = "Press 'Continue' to skip the error and proceed.";
+
+        /// <summary>
+        /// Gets or sets the message displayed to the user when prompting to quit the application.
+        /// </summary>
+        public string PressQuitToCloseApplication = "Press 'Quit' to close the application immediately.";
+
+        /// <summary>
+        /// Gets or sets the message used in exception information label.
+        /// </summary>
+        public string ExceptionInformation = "Exception information";
+
+        /// <summary>
         /// Specifies the prefix that is used for error messages.
         /// </summary>
         public string ErrorPrefix = "Error";

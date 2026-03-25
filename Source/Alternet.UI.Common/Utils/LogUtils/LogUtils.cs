@@ -1019,11 +1019,14 @@ namespace Alternet.UI
             var sb = new StringBuilder();
             FormatExceptionRecursive(ex, sb, 0, details);
 
-            var s = additionalInfo?.ToString();
-
-            if (!string.IsNullOrEmpty(s))
+            if (details)
             {
-                sb.AppendLine(s);
+                var s = additionalInfo?.ToString();
+
+                if (!string.IsNullOrEmpty(s))
+                {
+                    sb.AppendLine(s);
+                }
             }
 
             return sb.ToString();
@@ -1162,25 +1165,37 @@ namespace Alternet.UI
                 sb.AppendLine($"{prefix}Message: {message}");
             }
 
-            if (ex is BaseException baseException)
+            if (details)
             {
-                var s = baseException.AdditionalInformation;
-                if (!string.IsNullOrEmpty(s))
+                if (ex is BaseException baseException)
                 {
-                    sb.AppendLine(s);
+                    var s = baseException.AdditionalInformation;
+                    if (!string.IsNullOrEmpty(s))
+                    {
+                        sb.AppendLine($"{prefix}{s}");
+                    }
                 }
             }
 
             if (details)
             {
-                sb.AppendLine($"{prefix}StackTrace:");
-                sb.AppendLine($"{prefix}{ex.StackTrace}");
+                var stackTrace = ex.StackTrace;
+
+                if(!string.IsNullOrEmpty(stackTrace))
+                {
+                    sb.AppendLine();
+                    sb.AppendLine($"{prefix}StackTrace:");
+                    sb.AppendLine();
+                    sb.AppendLine($"{prefix}{stackTrace}");
+                }
             }
 
             if (ex.InnerException != null)
             {
+                sb.AppendLine();
                 sb.AppendLine($"{prefix}Inner Exception:");
-                FormatExceptionRecursive(ex.InnerException, sb, indent + 1);
+                sb.AppendLine();
+                FormatExceptionRecursive(ex.InnerException, sb, indent + 1, details);
             }
         }
 

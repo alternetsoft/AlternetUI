@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -29,9 +30,17 @@ namespace Alternet.UI
 
         private bool canContinue = true;
         private bool canQuit = true;
-        private TextBox? messageTextBox;
-        private Button? detailsButton;
         private bool isDetailed;
+        private TextBox? messageTextBox;
+        
+        private Button detailsButton;
+        private Button continueButton;
+        private Button copyButton;
+        private Button quitButton;
+        private Button throwButton;
+
+        private Label instructionsLabel;
+        private Label exceptionHeaderLabel;
 
         /// <summary>
         ///  Initializes a new instance of the
@@ -66,9 +75,97 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Specifies the available types of buttons in <see cref="ThreadExceptionWindow"/>.
+        /// </summary>
+        public enum ButtonKind
+        {
+            /// <summary>
+            /// Not a button.
+            /// </summary>
+            None,
+
+            /// <summary>
+            /// Indicates a button for copying exception information to clipboard.
+            /// </summary>
+            Copy,
+
+            /// <summary>
+            /// Indicates a button for showing detailed information about the exception.
+            /// </summary>
+            Details,
+
+            /// <summary>
+            /// Indicates a button for continuing the application execution after an exception has occurred.
+            /// </summary>
+            Continue,
+
+            /// <summary>
+            /// Indicates a button for quitting the application after an exception has occurred.
+            /// </summary>
+            Quit,
+
+            /// <summary>
+            /// Indicates a button for throwing the exception to be handled by the development environment or default exception handler.
+            /// </summary>
+            Throw,
+        }
+
+        /// <summary>
         /// Gets the collection of exception information items associated with the current operation.
         /// </summary>
         public IReadOnlyList<ExceptionInfoItem> Exceptions => exceptions;
+
+        /// <summary>
+        /// Gets the type of the last clicked button in the window, which can be used to determine the user's action and respond accordingly.
+        /// </summary>
+        public virtual ButtonKind LastClickedButton { get; private set; } = ButtonKind.None;
+
+        /// <summary>
+        /// Gets the result of the dialog based on the last button clicked.
+        /// </summary>
+        /// <remarks>Use this property to determine the user's chosen action after the dialog is closed.
+        /// The value reflects the most recent button interaction and can be used to control subsequent application
+        /// flow.</remarks>
+        public virtual ExceptionDialogResult DialogResult
+        {
+            get
+            {
+                return LastClickedButton switch
+                {
+                    ButtonKind.Continue => ExceptionDialogResult.Continue,
+                    ButtonKind.Quit => ExceptionDialogResult.Quit,
+                    ButtonKind.Throw => ExceptionDialogResult.Throw,
+                    _ => ExceptionDialogResult.None,
+                };
+            }
+        }
+
+        /// <summary>
+        /// Gets the "Details" button control, which can be used to show or hide detailed information about the exception when clicked.
+        /// </summary>
+        public Button DetailsButton => detailsButton;
+
+        /// <summary>
+        /// Gets the "Continue" button control, which can be used to allow
+        /// the user to continue running the application after an exception has occurred when clicked.
+        /// </summary>
+        public Button ContinueButton => continueButton;
+
+        /// <summary>
+        /// Gets the "Copy" button control, which can be used to copy exception information to clipboard when clicked.
+        /// </summary>
+        public Button CopyButton => copyButton;
+
+        /// <summary>
+        /// Gets the "Throw" button control, which can be used to throw the exception
+        /// to be handled by the development environment or default exception handler when clicked.
+        /// </summary>
+        public Button ThrowButton => throwButton;
+
+        /// <summary>
+        /// Gets the "Quit" button control, which can be used to allow the user to quit the application after an exception has occurred when clicked.
+        /// </summary>
+        public Button QuitButton => quitButton;
 
         /// <summary>
         /// Gets or sets additional information related to the exception.
@@ -141,7 +238,11 @@ namespace Alternet.UI
         {
             get => canQuit;
 
-            set => canQuit = value;
+            set
+            {
+                canQuit = value;
+                QuitButton.Visible = value;
+            }
         }
 
         /// <summary>
@@ -151,7 +252,11 @@ namespace Alternet.UI
         {
             get => canContinue;
 
-            set => canContinue = value;
+            set
+            {
+                canContinue = value;
+                ContinueButton.Visible = value;
+            }
         }
 
         /// <summary>
@@ -191,6 +296,8 @@ namespace Alternet.UI
         /// The window title is determined based on the
         /// active window or a default error title. Derived classes can override
         /// this method to customize the initialization process.</remarks>
+        [MemberNotNull(nameof(detailsButton), nameof(copyButton), nameof(continueButton), nameof(throwButton), nameof(quitButton))]
+        [MemberNotNull(nameof(instructionsLabel), nameof(exceptionHeaderLabel))]
         protected virtual void InitializeControls()
         {
             BeginInit();
@@ -226,6 +333,7 @@ namespace Alternet.UI
 
             EndInit();
 
+            [MemberNotNull(nameof(instructionsLabel), nameof(exceptionHeaderLabel))]
             AbstractControl CreateMessageGrid()
             {
                 var messageGrid = new VerticalStackPanel();
@@ -251,41 +359,36 @@ namespace Alternet.UI
                 };
                 stackPanel.Parent = firstSection;
 
-                var s1 = "Error has occurred in your application.";
-                var s2 = "If you click 'Continue', the application will ignore this error";
-                var s3 = "and attempt to continue.";
-                var s4 = "If you click 'Quit', the application will close immediately.";
+                var s1 = ErrorMessages.Default.ErrorHasOccurredInYourApplication;
+                var s2 = ErrorMessages.Default.PressContinueToSkipError;
+                var s4 = ErrorMessages.Default.PressQuitToCloseApplication;
 
-                List<string> lines = new();
-
-                lines.Add(s1);
+                var s = s1;
 
                 if (CanContinue)
                 {
-                    lines.Add(s2);
-                    lines.Add(s3);
+                    s += Environment.NewLine + s2;
                 }
 
                 if (CanQuit)
                 {
-                    lines.Add(s4);
+                    s += Environment.NewLine + s4;
                 }
 
-                foreach (var line in lines)
+                instructionsLabel = new Label
                 {
-                    new Label
-                    {
-                        Text = line,
-                        Parent = stackPanel,
-                    };
-                }
+                    Text = s,
+                    Parent = stackPanel,
+                };
 
-                messageGrid.Children.Add(
-                    new Label
-                    {
-                        Text = "Exception information" + ":",
-                        Margin = new Thickness(0, 15, 0, 5),
-                    });
+                instructionsLabel.DrawLabelFlags = DrawLabelFlags.TextHasNewLineChars | DrawLabelFlags.TextHasBold;
+
+                exceptionHeaderLabel = new Label
+                {
+                    Text = ErrorMessages.Default.ExceptionInformation + ":",
+                    Margin = new Thickness(0, 15, 0, 5),
+                    Parent = messageGrid,
+                };
 
                 Border border = new()
                 {
@@ -295,7 +398,7 @@ namespace Alternet.UI
 
                 messageTextBox = new MultilineTextBox
                 {
-                    Text = " ",
+                    Text = StringUtils.OneSpace,
                     ReadOnly = true,
                     HasBorder = false,
                     MinHeight = 150,
@@ -329,51 +432,57 @@ namespace Alternet.UI
         /// The visibility and alignment of certain buttons depend
         /// on the state of the application.</remarks>
         /// <returns>A <see cref="HorizontalStackPanel"/> containing the configured buttons.</returns>
+        [MemberNotNull(nameof(detailsButton), nameof(copyButton), nameof(continueButton), nameof(throwButton), nameof(quitButton))]
         protected virtual AbstractControl CreateButtonsGrid()
         {
-            var buttonsGrid = new HorizontalStackPanel();
-            buttonsGrid.Padding = 10;
+            var buttonContainer = new HorizontalStackPanel();
+            buttonContainer.Padding = 10;
 
             detailsButton = new Button
             {
-                Text = CommonStrings.Default.ButtonDetails + "...",
+                Text = CommonStrings.Default.ButtonDetails,
+                Parent = buttonContainer,
             };
-            detailsButton.Click += OnDetailsButtonClick;
-            buttonsGrid.Children.Add(detailsButton);
 
-            var copyButton = new Button
+            copyButton = new Button
             {
                 Text = CommonStrings.Default.ButtonCopy,
-                Parent = buttonsGrid,
+                Parent = buttonContainer,
             };
 
-            copyButton.Click += (s, e) =>
+            continueButton = new Button
             {
-                Clipboard.SetText(messageTextBox?.Text);
+                Text = CommonStrings.Default.ButtonContinue,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Visible = CanContinue,
+                Parent = buttonContainer,
             };
 
-            var continueButton =
-                new Button
-                {
-                    Text = CommonStrings.Default.ButtonContinue,
-                };
-            continueButton.Click += OnContinueButtonClick;
-            continueButton.HorizontalAlignment = HorizontalAlignment.Right;
-            buttonsGrid.Children.Add(continueButton);
-            continueButton.Visible = CanContinue;
+            throwButton = new Button
+            {
+                Text = CommonStrings.Default.ButtonThrow,
+                HorizontalAlignment = HorizontalAlignment.Right,
+                Visible = false,
+                Parent = buttonContainer,
+            };
 
-            var quitButton = new Button
+            quitButton = new Button
             {
                 Text = CommonStrings.Default.ButtonQuit,
                 IsDefault = true,
                 Visible = canQuit,
                 HorizontalAlignment = HorizontalAlignment.Right,
                 Margin = (5, 0, 0, 0),
+                Parent = buttonContainer,
             };
-            quitButton.Click += OnQuitButtonClick;
-            buttonsGrid.Children.Add(quitButton);
 
-            return buttonsGrid;
+            copyButton.Click += OnCopyButtonClick;
+            continueButton.Click += OnContinueButtonClick;
+            quitButton.Click += OnQuitButtonClick;
+            detailsButton.Click += OnDetailsButtonClick;
+            throwButton.Click += OnThrowButtonClick;
+
+            return buttonContainer;
         }
 
         /// <summary>
@@ -384,6 +493,7 @@ namespace Alternet.UI
         /// <param name="e">The event data associated with the "Quit" button click.</param>
         protected virtual void OnQuitButtonClick(object? sender, EventArgs e)
         {
+            LastClickedButton = ButtonKind.Quit;
             ModalResult = ModalResult.Canceled;
         }
 
@@ -395,7 +505,20 @@ namespace Alternet.UI
         /// <param name="e">The event data associated with the "Continue" button click.</param>
         protected virtual void OnContinueButtonClick(object? sender, EventArgs e)
         {
+            LastClickedButton = ButtonKind.Continue;
             ModalResult = ModalResult.Accepted;
+        }
+
+        /// <summary>
+        /// Handles the "Copy" button click event.
+        /// </summary>
+        /// <param name="sender">The source of the event.
+        /// This parameter can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the "Copy" button click.</param>
+        protected virtual void OnCopyButtonClick(object? sender, EventArgs e)
+        {
+            LastClickedButton = ButtonKind.Copy;
+            Clipboard.SetText(messageTextBox?.Text);
         }
 
         /// <summary>
@@ -406,7 +529,20 @@ namespace Alternet.UI
         /// <param name="e">The event data associated with the "Details" button click.</param>
         protected virtual void OnDetailsButtonClick(object? sender, EventArgs e)
         {
+            LastClickedButton = ButtonKind.Details;
             IsDetailed = !IsDetailed;
+        }
+
+        /// <summary>
+        /// Handles the "Throw" button click event.
+        /// </summary>
+        /// <param name="sender">The source of the event.
+        /// This parameter can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the "Throw" button click.</param>
+        protected virtual void OnThrowButtonClick(object? sender, EventArgs e)
+        {
+            LastClickedButton = ButtonKind.Throw;
+            ModalResult = ModalResult.Accepted;
         }
 
         /// <summary>
@@ -421,7 +557,7 @@ namespace Alternet.UI
         /// Represents an item that encapsulates an exception and optional additional information
         /// for diagnostic or logging purposes.
         /// </summary>
-        public class ExceptionInfoItem
+        public class ExceptionInfoItem : BaseObjectWithAttr
         {
             /// <summary>
             /// Initializes a new instance of the ExceptionInfoItem class with the specified exception and optional
@@ -436,7 +572,7 @@ namespace Alternet.UI
             }
 
             /// <summary>
-            /// Gets or sets the assiciated exception.
+            /// Gets or sets the associated exception.
             /// </summary>
             public Exception Exception { get; set; }
 
