@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -33,6 +35,16 @@ namespace Alternet.UI
         /// </summary>
         public Spacer()
         {
+        }
+
+        /// <inheritdoc/>
+        public override SizeD SuggestedSize
+        {
+            get => base.SuggestedSize;
+            set
+            {
+                base.SuggestedSize = value;
+            }
         }
 
         /// <summary>
