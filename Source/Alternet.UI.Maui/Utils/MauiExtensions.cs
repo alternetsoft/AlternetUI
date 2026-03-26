@@ -23,6 +23,17 @@ namespace Alternet.Maui.Extensions
     public static class MauiExtensions
     {
         /// <summary>
+        /// Sets the visibility of the specified view.
+        /// </summary>
+        /// <param name="view">The view whose visibility is to be set. Cannot be null.</param>
+        /// <param name="isVisible">A value indicating whether the view should be visible. Set to <see langword="true"/> to make the view
+        /// visible; otherwise, <see langword="false"/>.</param>
+        public static void SetVisible(this View view, bool isVisible)
+        {
+            view.IsVisible = isVisible;
+        }
+
+        /// <summary>
         /// Updates the specified view to reflect the current visibility and height of the keyboard as indicated by the
         /// event arguments.
         /// </summary>
