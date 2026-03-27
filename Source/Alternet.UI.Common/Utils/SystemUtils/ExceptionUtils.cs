@@ -12,6 +12,8 @@ namespace Alternet.UI
     /// </summary>
     public static class ExceptionUtils
     {
+        private static BaseDictionary<int, ExceptionInfo> exceptions = new();
+
         /// <summary>
         /// Gets the currently visible thread exception window, if one exists.
         /// </summary>
@@ -54,6 +56,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Generates a unique key string that identifies the specified exception based on its type, message, stack
+        /// trace and runtime identifier. If the exception implements <see cref="IBaseObjectWithId"/>,
+        /// its unique identifier will be used as the key instead.
+        /// </summary>
+        /// <remarks>This method can be used to group or track exceptions with identical characteristics.
+        /// The returned key may contain sensitive information from the exception message or stack trace; use caution
+        /// when logging or exposing it.</remarks>
+        /// <param name="ex">The exception for which to generate a unique key. Cannot be null.</param>
+        /// <returns>A string that uniquely represents the exception by combining its type, message, and stack trace.</returns>
+        public static string GetExceptionKeyAsString(Exception ex)
+        {
+            if (ex is IBaseObjectWithId objectWithId)
+            {
+                var result = objectWithId.ToString();
+
+                if (!string.IsNullOrEmpty(result))
+                    return result;
+            }
+
+            var exceptionKey = $"{CommonUtils.GetRuntimeObjectKeyAndType(ex)}_{ex.Message}";
+            return exceptionKey;
+        }
+
+        /// <summary>
         /// Rethrows the specified exception with the correct call stack information
         /// if the condition is true.
         /// </summary>
@@ -71,7 +97,7 @@ namespace Alternet.UI
         /// <param name="e">Previously thrown exception.</param>
         public static void Rethrow(Exception? e)
         {
-            if(e is not null)
+            if (e is not null)
                 ExceptionDispatchInfo.Capture(e).Throw();
         }
 
@@ -175,6 +201,103 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the associated ExceptionInfo for the specified exception instance.
+        /// </summary>
+        /// <remarks>If the exception is a BaseException, the ExceptionInfo is retrieved from its custom
+        /// attributes. For other exception types, ExceptionInfo is managed in an internal cache. This method ensures
+        /// that each exception instance is associated with a unique ExceptionInfo object.</remarks>
+        /// <param name="ex">The exception for which to obtain exception information. Cannot be null.</param>
+        /// <returns>An ExceptionInfo object associated with the specified exception. If no information exists, a new
+        /// ExceptionInfo is created and returned.</returns>
+        public static ExceptionInfo GetExceptionInfo(Exception ex)
+        {
+            if (ex is BaseException baseException)
+            {
+                var result = baseException.CustomAttr.GetAttributeOrAdd(KnownObjectAttributes.ExceptionInfo, () => new ExceptionInfo());
+                return result;
+            }
+            else
+            {
+                var hashCode = GetExceptionKeyAsString(ex).GetHashCode();
+
+                var result = exceptions.GetOrCreate(hashCode, () =>
+                {
+                    return new ExceptionInfo();
+                });
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Marks the specified exception as having been thrown during the application's main execution run.
+        /// </summary>
+        /// <param name="ex">The exception to mark as thrown in the application run. Cannot be null.</param>
+        /// <returns>True if the exception was already marked as thrown in the application run before this call; otherwise, false.</returns>
+        public static bool SetThrownInApplicationRun(Exception ex)
+        {
+            bool oldValue = false;
+
+            try
+            {
+                var info = GetExceptionInfo(ex);
+                oldValue = info.ThrownInApplicationRun;
+                info.SetThrownInApplicationRun();
+                return oldValue;
+            }
+            catch
+            {
+                return oldValue;
+            }
+        }
+
+        /// <summary>
+        /// Marks the specified exception as already logged and returns whether it was previously marked as such.
+        /// </summary>
+        /// <remarks>This method is typically used to prevent duplicate logging of the same exception
+        /// instance. If the exception cannot be marked due to an error, the method returns false.</remarks>
+        /// <param name="ex">The exception to mark as already logged. Cannot be null.</param>
+        /// <returns>true if the exception was already marked as logged before this call; otherwise, false.</returns>
+        public static bool SetAlreadyLogged(Exception ex)
+        {
+            bool oldValue = false;
+            try
+            {
+                var info = GetExceptionInfo(ex);
+                oldValue = info.AlreadyLogged;
+                info.SetAlreadyLogged();
+                return oldValue;
+            }
+            catch
+            {
+                return oldValue;
+            }
+        }
+
+        /// <summary>
+        /// Marks the specified exception as having been shown in a dialog and returns whether it was previously marked
+        /// as shown.
+        /// </summary>
+        /// <param name="ex">The exception to mark as shown in a dialog. Cannot be null.</param>
+        /// <returns>true if the exception was previously marked as shown in a dialog; otherwise, false.</returns>
+        public static bool SetShownInDialog(Exception ex)
+        {
+            bool oldValue = false;
+
+            try
+            {
+                var info = GetExceptionInfo(ex);
+                oldValue = info.ShownInDialog;
+                info.SetShownInDialog();
+                return oldValue;
+            }
+            catch
+            {
+                return oldValue;
+            }
+        }
+
+        /// <summary>
         /// Throws <see cref="ArgumentNullException"/> if argument is null.
         /// </summary>
         /// <param name="argument">Argument to check.</param>
@@ -210,6 +333,51 @@ namespace Alternet.UI
         internal static void ThrowArgumentNull(string? paramName)
         {
             throw new ArgumentNullException(paramName);
+        }
+
+        /// <summary>
+        /// Represents additional information about an exception.
+        /// </summary>
+        public class ExceptionInfo : BaseObjectWithAttr
+        {
+            /// <summary>
+            /// Indicates whether the exception was thrown inside the <see cref="App.Run(Window)"/> method.
+            /// </summary>
+            public bool ThrownInApplicationRun { get; private set; }
+
+            /// <summary>
+            /// Indicates whether the exception was shown in the default error dialog.
+            /// </summary>
+            public bool ShownInDialog { get; private set; }
+
+            /// <summary>
+            /// Indicates whether the exception information has been logged. This can be used to prevent duplicate logging of the same exception.
+            /// </summary>
+            public bool AlreadyLogged { get; private set; }
+
+            /// <summary>
+            /// Marks that an exception was thrown during the application's run phase.
+            /// </summary>
+            public void SetThrownInApplicationRun()
+            {
+                ThrownInApplicationRun = true;
+            }
+
+            /// <summary>
+            /// Marks the exception information as having been logged. This can be used to prevent duplicate logging of the same exception.
+            /// </summary>
+            public void SetAlreadyLogged()
+            {
+                AlreadyLogged = true;
+            }
+
+            /// <summary>
+            /// Marks the item as having been shown in a dialog.
+            /// </summary>
+            public void SetShownInDialog()
+            {
+                ShownInDialog = true;
+            }
         }
     }
 }
