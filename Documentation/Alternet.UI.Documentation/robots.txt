@@ -1,0 +1,26 @@
+User-agent: PetalBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-SearchBot
+Disallow: /
+
+User-agent: Sogou-Test-Spider
+Disallow: /
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: Baiduspider-render
+Disallow: /
+
+User-agent: dotbot
+Disallow: /
+
+User-agent: Applebot
+Disallow: /
