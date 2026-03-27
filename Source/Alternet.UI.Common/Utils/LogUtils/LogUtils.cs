@@ -407,7 +407,7 @@ namespace Alternet.UI
         {
             if (!condition)
                 return;
-           DebugWriteLine(e);
+            DebugWriteLine(e);
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Alternet.UI
             var message = StringUtils.GetFirstLineOfText(e.Message);
 
             var isBaseException = e is Exception || e is BaseException;
-            var exceptionType = isBaseException? string.Empty : $" {e.GetType().Name}";
+            var exceptionType = isBaseException ? string.Empty : $" {e.GetType().Name}";
 
             var s = $"<b>{prefix}{exceptionType}</b>: {message}. [{doubleClickStr}...]";
 
@@ -484,37 +484,45 @@ namespace Alternet.UI
         /// <param name="allowReplace">Whether to allow replace last log item
         /// if last item has the same text.</param>
         public static void LogException(
-            Exception e,
+            Exception? e,
             LogItemKind kind = LogItemKind.Error,
             bool allowReplace = false)
         {
-            var alreadyLogged = ExceptionUtils.SetAlreadyLogged(e);
-            if (alreadyLogged)
+            if (e == null)
                 return;
 
-            try
+            BaseObject.Post(() =>
             {
-                var item = CreateLogItemForException(e, kind, allowReplace);
-                if(e.InnerException is not null)
+                var alreadyLogged = ExceptionUtils.SetAlreadyLogged(e);
+                if (alreadyLogged)
+                    return;
+
+                try
                 {
-                    var innerItem = CreateLogItemForException(e.InnerException, kind);
-                    item.Add(innerItem);
+                    App.AddBackgroundAction(() =>
+                    {
+                        var item = CreateLogItemForException(e, kind, allowReplace);
+                        App.AddLogItem(item, kind);
+                    });
+
+                    if (LogExceptionToDebugOutput)
+                    {
+                        App.AddBackgroundAction(() =>
+                        {
+                            var exceptionText = LogUtils.GetExceptionMessageText(e, null, details: true);
+
+                            Debug.WriteLine(LogUtils.SectionSeparator);
+                            Debug.WriteLine($"Exception: {exceptionText}");
+                            Debug.WriteLine(LogUtils.SectionSeparator);
+
+                        });
+                    }
                 }
-
-                App.AddLogItem(item, kind);
-
-                if (LogExceptionToDebugOutput)
+                catch (Exception exception)
                 {
-                    var exceptionToReport = e.InnerException ?? e;
-                    var exceptionText = GetExceptionLogText(exceptionToReport);
-
-                    Debug.WriteLine($"Exception: {exceptionToReport}");
+                    BaseObject.Nop(exception);
                 }
-            }
-            catch (Exception exception)
-            {
-                BaseObject.Nop(exception);
-            }
+            });
         }
 
         /// <summary>
@@ -825,7 +833,7 @@ namespace Alternet.UI
         /// If not specified <paramref name="path"/> is logged.</param>
         public static void LogFilenamesOfFolder(string path, string? title = null)
         {
-            if(title is not null)
+            if (title is not null)
                 App.Log(title);
             else
                 App.Log(title);
@@ -1133,26 +1141,26 @@ namespace Alternet.UI
                 return true;
             }
             else
-            if (result is IEnumerable enumerable)
-            {
-                int count = 0;
-
-                foreach (var item in enumerable)
+                if (result is IEnumerable enumerable)
                 {
-                    if (count >= 100)
+                    int count = 0;
+
+                    foreach (var item in enumerable)
                     {
-                        parent.AddWithText("... (truncated after 100 items)");
-                        break;
+                        if (count >= 100)
+                        {
+                            parent.AddWithText("... (truncated after 100 items)");
+                            break;
+                        }
+
+                        parent.AddWithText($"[{count}] - {item}");
+
+                        count++;
                     }
 
-                    parent.AddWithText($"[{count}] - {item}");
-
-                    count++;
+                    parent.PrependWithText($"Total Items: {EnumerableUtils.GetCount(enumerable)}");
+                    return true;
                 }
-
-                parent.PrependWithText($"Total Items: {EnumerableUtils.GetCount(enumerable)}");
-                return true;
-            }
 
             return false;
         }
@@ -1187,7 +1195,7 @@ namespace Alternet.UI
             {
                 var stackTrace = ex.StackTrace;
 
-                if(!string.IsNullOrEmpty(stackTrace))
+                if (!string.IsNullOrEmpty(stackTrace))
                 {
                     sb.AppendLine();
                     sb.AppendLine($"{prefix}StackTrace:");

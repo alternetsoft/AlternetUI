@@ -71,7 +71,14 @@ namespace Alternet.UI
             exceptions.Add(new ExceptionInfoItem(exception, additionalInfo));
 
             InitializeControls();
-            UpdateExceptionText();
+
+            Refresh();
+
+            Post(() =>
+            {
+                Refresh();
+                UpdateExceptionText();
+            });
         }
 
         /// <summary>
@@ -410,6 +417,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Clears all exceptions from the window. This method can be used to reset
+        /// the window's state and remove any previously displayed exception information.
+        /// </summary>
+        public virtual void ClearExceptions()
+        {
+            if (DisposingOrDisposed)
+                return;
+            isDetailed = false;
+            exceptions.Clear();
+            UpdateExceptionText();
+            Refresh();
+        }
+
+        /// <summary>
         /// Shows another exception in the same window. This method can be used when another exception occurs while the window is already shown.
         /// </summary>
         /// <param name="ex">The exception to be displayed.</param>
@@ -418,8 +439,16 @@ namespace Alternet.UI
         {
             if (ex is null)
                 return;
-            exceptions.Add(new ExceptionInfoItem(ex, additionalInfo));
-            UpdateExceptionText();
+            if (DisposingOrDisposed)
+                return;
+            Post(() =>
+            {
+                if(DisposingOrDisposed)
+                    return;
+                exceptions.Add(new ExceptionInfoItem(ex, additionalInfo));
+                UpdateExceptionText();
+                Refresh();
+            });
         }
 
         /// <summary>
