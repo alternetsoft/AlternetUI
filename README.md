@@ -4,7 +4,7 @@ AlterNET UI is a cross-platform .NET UI framework that allows the development of
 applications that runs on Windows, macOS, and Linux with Microsoft Visual Studio or Visual Studio Code.
 
 It is built on top of the .NET Framework and uses a XAML-like approach to define user interface and layout. 
-It provides a set of standard controls that looks native on the target OS, such as Text Box, Label, CheckBox, Button, 
+It provides a set of standard controls that looks native on the target OS, such as TextBox, Label, CheckBox, Button, 
 Image, TreeView, ListView, WebBrowser and more.
 
 The framework includes a platform-independent graphic device interface for rendering graphical objects, such as fonts, 
