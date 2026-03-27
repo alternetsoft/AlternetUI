@@ -25,6 +25,18 @@ namespace ControlsSample
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestExceptionWithLongMessage()
+        {
+            BaseObject.Post(() =>
+            {
+                throw new Exception(PropertyGridSample.ObjectInit.LoremIpsum);
+            });
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestExceptionInFormXml()
         {
             BaseObject.Post(() =>

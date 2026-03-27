@@ -21,6 +21,11 @@ namespace Alternet.UI
         public static string RichToolTipParams = "RichToolTipParams-D1AA1013-B4BB-43DB-BA61-C3B0D45C5D87";
 
         /// <summary>
+        /// Represents a unique identifier string for exception information.
+        /// </summary>
+        public static string ExceptionInfo = "ExceptionInfo-657BD42F-AC60-4EF8-94A7-4A3443FB01B5";
+
+        /// <summary>
         /// Gets the existing rich tooltip parameters associated with the specified object, or creates and adds them if
         /// they do not exist.
         /// </summary>

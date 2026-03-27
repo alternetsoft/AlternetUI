@@ -544,6 +544,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the most descriptive name available for the specified type, or null if the type is null.
+        /// </summary>
+        /// <remarks>This method attempts to provide the most informative name for the type, preferring
+        /// the assembly-qualified name when available. This can be useful for logging, diagnostics, or serialization
+        /// scenarios where a fully qualified type identifier is needed.</remarks>
+        /// <param name="type">The type for which to retrieve the name. Can be null.</param>
+        /// <returns>A string containing the assembly-qualified name, full name, or simple name of the type, in that order of
+        /// preference; or null if the type is null.</returns>
+        public static string? GetCompleteTypeName(Type? type)
+        {
+            var bestTypeName = type?.AssemblyQualifiedName ?? type?.FullName ?? type?.Name;
+            return bestTypeName;
+        }
+
+        /// <summary>
         /// Gets the <see cref="System.Type"/> object with the specified name
         /// searching it through all assemblies of the current domain.
         /// </summary>

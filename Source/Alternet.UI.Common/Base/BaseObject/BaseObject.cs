@@ -118,6 +118,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns a hash code that uniquely identifies the specified object instance during the application's lifetime.
+        /// This value is guaranteed to be unique only for the lifetime of the
+        /// object within the current application domain.
+        /// When object is disposed, the same hash code may be returned for another object instance. This method is useful for scenarios
+        /// where a stable identifier for an object instance is needed, such as in caching or tracking mechanisms,
+        /// without relying on the object's own implementation of GetHashCode.
+        /// </summary>
+        [Browsable(false)]
+        public int RuntimeKey
+        {
+            get
+            {
+                return CommonUtils.GetRuntimeObjectKey(this);
+            }
+        }
+
+        /// <summary>
+        /// Gets a string that combines the runtime type name and the runtime key.
+        /// Result is guaranteed to be unique only for the lifetime of the object within the current application domain.
+        /// When object is disposed, the same hash code may be returned for another object instance.
+        /// </summary>
+        /// <remarks>This property is useful for scenarios where a distinct identifier is needed for an
+        /// object instance based on its type and runtime key. The format of the returned string is
+        /// "TypeName_RuntimeKey".</remarks>
+        [Browsable(false)]
+        public string RuntimeKeyAndType
+        {
+            get
+            {
+                return $"{AssemblyUtils.GetCompleteTypeName(GetType())}_{RuntimeKey}";
+            }
+        }
+
+        /// <summary>
         /// Gets whether object is immutable (properties can not be changed).
         /// </summary>
         [Browsable(false)]

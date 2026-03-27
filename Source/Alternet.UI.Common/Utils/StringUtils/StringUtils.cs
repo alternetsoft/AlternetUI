@@ -1263,6 +1263,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns the first line of the specified text, or the entire text if no line break is found.
+        /// </summary>
+        /// <param name="text">The text from which to extract the first line. Can be null.</param>
+        /// <returns>The substring containing the first line of the input text, or the original text if it is null, empty, or
+        /// contains no line breaks.</returns>
+        public static string? GetFirstLineOfText(string? text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return text;
+            var index = text.AsSpan().IndexOfAny('\r', '\n');
+            if (index < 0)
+                return text;
+            return text.Substring(0, index);
+        }
+
+        /// <summary>
         /// Splits one string to many using <see cref="StringSplitToArrayChars"/> as separators.
         /// </summary>
         /// <param name="str">String to split.</param>
