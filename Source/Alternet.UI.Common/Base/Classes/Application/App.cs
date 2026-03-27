@@ -147,15 +147,14 @@ namespace Alternet.UI
         private static UnhandledExceptionMode unhandledExceptionMode;
         private static UnhandledExceptionMode unhandledExceptionModeDebug;
 
-        private static bool lastUnhandledExceptionThrown;
+        private static volatile int inOnThreadException;
+
         private static bool toolTipProviderAssigned;
         private static bool? isMaui;
-        private static bool inOnThreadException;
         private static bool terminating = false;
         private static bool logFileIsEnabled;
         private static bool? isMono;
 
-        private static Exception? lastUnhandledException;
         private static IToolTipProvider? toolTipProvider;
         private static ApplicationAppearance? appearance;
         private static IconSet? icon;
@@ -416,26 +415,6 @@ namespace Alternet.UI
 
                 return windows;
             }
-        }
-
-        /// <summary>
-        /// Gets last unhandled exception.
-        /// </summary>
-        public static Exception? LastUnhandledException
-        {
-            get => lastUnhandledException;
-
-            internal set => lastUnhandledException = value;
-        }
-
-        /// <summary>
-        /// Gets whether last unhandled exception was thrown.
-        /// </summary>
-        public static bool LastUnhandledExceptionThrown
-        {
-            get => lastUnhandledExceptionThrown;
-
-            internal set => lastUnhandledExceptionThrown = value;
         }
 
         /// <summary>
@@ -2215,23 +2194,24 @@ namespace Alternet.UI
                     onCreate);
             }
 
-            if (inOnThreadException)
+            if (inOnThreadException != 0)
                 return;
 
-            inOnThreadException = true;
+            inOnThreadException++;
 
             try
             {
-                if (LastUnhandledException == exception)
+                var alreadyHandled = ExceptionUtils.SetShownInDialog(exception);
+                if (alreadyHandled)
                     return;
+                else
+                {
+                }
 
                 if (LogUnhandledThreadException)
                 {
                     LogUtils.LogException(exception);
                 }
-
-                LastUnhandledException = exception;
-                LastUnhandledExceptionThrown = false;
 
                 var mode = GetUnhandledExceptionMode();
 
@@ -2244,7 +2224,6 @@ namespace Alternet.UI
                             HandleWithDialog(mode);
                         break;
                     case UnhandledExceptionMode.ThrowException:
-                        LastUnhandledExceptionThrown = true;
                         ExceptionUtils.Rethrow(exception);
                         break;
                     case UnhandledExceptionMode.CatchWithDialog:
@@ -2264,7 +2243,6 @@ namespace Alternet.UI
                                 {
                                     Post(() =>
                                     {
-                                        LastUnhandledExceptionThrown = true;
                                         ExceptionUtils.Rethrow(exception);
                                     });
                                 }
@@ -2278,7 +2256,6 @@ namespace Alternet.UI
                     case UnhandledExceptionMode.CatchWithThrow:
                         if (HandleWithEvent())
                             return;
-                        LastUnhandledExceptionThrown = true;
                         ExceptionUtils.Rethrow(exception);
                         break;
                     default:
@@ -2287,7 +2264,7 @@ namespace Alternet.UI
             }
             finally
             {
-                inOnThreadException = false;
+                inOnThreadException--;
             }
         }
 
@@ -2431,12 +2408,21 @@ namespace Alternet.UI
                     {
                         OnThreadException(e);
 
-                        if (LastUnhandledExceptionThrown)
+                        //if (LastUnhandledExceptionThrown)
                         {
-                            LastUnhandledExceptionThrown = false;
+                            //LastUnhandledExceptionThrown = false;
 
                             if (DebugUtils.IsDebugDefinedAndAttached)
-                                throw;
+                            {
+                                var alreadyThrown = ExceptionUtils.SetThrownInApplicationRun(e);
+                                if (!alreadyThrown)
+                                {
+                                }
+                                else
+                                {
+                                    throw;
+                                }
+                            }
                         }
                     }
                 }
