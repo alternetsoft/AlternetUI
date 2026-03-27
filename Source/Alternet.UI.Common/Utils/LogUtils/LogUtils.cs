@@ -488,7 +488,8 @@ namespace Alternet.UI
             LogItemKind kind = LogItemKind.Error,
             bool allowReplace = false)
         {
-            if (e == App.LastUnhandledException)
+            var alreadyLogged = ExceptionUtils.SetAlreadyLogged(e);
+            if (alreadyLogged)
                 return;
 
             try
