@@ -2401,9 +2401,22 @@ namespace Alternet.UI
         {
             IsRunning = true;
 
+            ThreadExceptionWindow CreateExceptionWindow(Exception e)
+            {
+                var exceptionWindow = new ThreadExceptionWindow(e);
+                exceptionWindow.CanContinue = false;
+                exceptionWindow.CanQuit = true;
+                exceptionWindow.QuitButton.Click += (s, e) =>
+                {
+                    ExitAndTerminate(ThreadExceptionExitCode);
+                };
+                return exceptionWindow;
+            }
+
             try
             {
-                MainWindow = window ?? throw new ArgumentNullException(nameof(window));
+                MainWindow = window ??= CreateExceptionWindow(new("Main window is not specified"));
+
                 CheckDisposed();
                 window.Show();
 
@@ -2418,10 +2431,12 @@ namespace Alternet.UI
                     {
                         OnThreadException(e);
 
-                        if (Debugger.IsAttached && DebugUtils.IsDebugDefined
-                            && LastUnhandledExceptionThrown)
+                        if (LastUnhandledExceptionThrown)
                         {
-                            throw;
+                            LastUnhandledExceptionThrown = false;
+
+                            if (DebugUtils.IsDebugDefinedAndAttached)
+                                throw;
                         }
                     }
                 }
