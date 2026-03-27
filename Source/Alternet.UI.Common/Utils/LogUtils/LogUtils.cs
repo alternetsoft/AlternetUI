@@ -454,7 +454,12 @@ namespace Alternet.UI
 
             var doubleClickStr = Localization.CommonStrings.Default.DoubleClick;
 
-            var s = $"{prefix} '{e.GetType().Name}': <b>{e.Message}</b>. [{doubleClickStr}...]";
+            var message = StringUtils.GetFirstLineOfText(e.Message);
+
+            var isBaseException = e is Exception || e is BaseException;
+            var exceptionType = isBaseException? string.Empty : $" {e.GetType().Name}";
+
+            var s = $"<b>{prefix}{exceptionType}</b>: {message}. [{doubleClickStr}...]";
 
             TreeViewItem item = new(s);
             item.TextHasBold = true;
@@ -483,7 +488,8 @@ namespace Alternet.UI
             LogItemKind kind = LogItemKind.Error,
             bool allowReplace = false)
         {
-            if (e == App.LastUnhandledException)
+            var alreadyLogged = ExceptionUtils.SetAlreadyLogged(e);
+            if (alreadyLogged)
                 return;
 
             try

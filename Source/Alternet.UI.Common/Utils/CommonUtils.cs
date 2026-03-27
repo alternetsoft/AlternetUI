@@ -19,6 +19,42 @@ namespace Alternet.UI
     public static class CommonUtils
     {
         /// <summary>
+        /// Returns a hash code that uniquely identifies the specified object instance during the application's lifetime.
+        /// When object is disposed, the same hash code may be returned for another object instance. This method is useful for scenarios
+        /// where a stable identifier for an object instance is needed, such as in caching or tracking mechanisms,
+        /// without relying on the object's own implementation of GetHashCode.
+        /// </summary>
+        /// <remarks>The returned hash code is based on the object's reference and does not depend on any
+        /// overrides of the GetHashCode method. This value is guaranteed to be unique only for the lifetime of the
+        /// object within the current application domain.</remarks>
+        /// <param name="obj">The object for which to obtain the runtime hash code. Can be any reference type.</param>
+        /// <returns>An integer hash code that uniquely identifies the specified object instance for the duration of the
+        /// application's execution.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int GetRuntimeObjectKey(object obj)
+        {
+            var result = RuntimeHelpers.GetHashCode(obj);
+            return result;
+        }
+
+        /// <summary>
+        /// Generates a unique key for the specified object that includes its complete runtime type name and runtime key.
+        /// Returns a string that uniquely identifies the specified object instance during the application's lifetime.
+        /// When object is disposed, the same value may be returned for another object instance of the same type. 
+        /// </summary>
+        /// <remarks>The returned key can be used to uniquely identify objects of different types at
+        /// runtime, even if their runtime keys are identical. This is useful for scenarios where both object identity
+        /// and type information are required, such as caching or serialization.</remarks>
+        /// <param name="obj">The object for which to generate the key. Cannot be null.</param>
+        /// <returns>A string containing the object's complete type name and a unique runtime key, separated by an underscore.</returns>
+        public static string GetRuntimeObjectKeyAndType(object obj)
+        {
+            var runtimeKey = GetRuntimeObjectKey(obj);
+            var typeName = AssemblyUtils.GetCompleteTypeName(obj.GetType());
+            return $"{typeName}_{runtimeKey}";
+        }
+
+        /// <summary>
         /// Returns a new array containing all non-null elements from the specified array of nullable values.
         /// </summary>
         /// <remarks>The returned array will not contain any null elements. If the input array contains no
