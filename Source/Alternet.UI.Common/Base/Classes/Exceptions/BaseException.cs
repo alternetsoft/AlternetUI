@@ -10,9 +10,12 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for the exception descendants in the library.
     /// </summary>
-    public class BaseException : Exception
+    public class BaseException : Exception, IBaseObjectWithId
     {
+        private readonly object locker = new();
+
         private FlagsAndAttributesStruct attr = new();
+        private ObjectUniqueId? uniqueId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseException"/> class.
@@ -54,6 +57,26 @@ namespace Alternet.UI
         /// <inheritdoc cref="BaseObjectWithAttr.Tag"/>
         [Browsable(false)]
         public virtual object? Tag { get; set; }
+
+        /// <summary>
+        /// Gets unique id of this object.
+        /// </summary>
+        [Browsable(false)]
+        public ObjectUniqueId UniqueId
+        {
+            get
+            {
+                lock (locker)
+                {
+                    if (uniqueId is null)
+                    {
+                        uniqueId = new();
+                    }
+                }
+
+                return uniqueId.Value;
+            }
+        }
 
         /// <inheritdoc cref="BaseObjectWithAttr.IntFlags"/>
         [Browsable(false)]
@@ -129,6 +152,11 @@ namespace Alternet.UI
             ExceptionCreated?.Invoke(
                 sender,
                 new ExceptionCreatedEventArgs(message, innerException, attr));
+        }
+
+        /// <inheritdoc/>
+        public virtual void Required()
+        {
         }
     }
 }
