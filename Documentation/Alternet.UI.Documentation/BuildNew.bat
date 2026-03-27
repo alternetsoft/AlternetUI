@@ -16,7 +16,7 @@ copy "%PDF_MANUAL%" "%RESULT_MANUAL%"
 
 call Publish.Pdf.bat
 
-
+call CopyAdditionalFilesToSite.bat
 
 
 
