@@ -180,11 +180,12 @@ namespace PropertyGridSample
                 ControlParent.HasBorder = true;
 
                 toolBoxFilterEdit.VerticalAlignment = VerticalAlignment.Top;
-                toolBoxFilterEdit.MarginBottom = 2;
+                toolBoxFilterEdit.MarginBottom = 5;
                 toolBoxFilterEdit.InnerOuterBorder = InnerOuterSelector.Outer;
                 panel.LeftPanel.Children.Prepend(toolBoxFilterEdit);
 
-                toolBoxFilterEdit.InitFilterEdit();
+                toolBoxFilterEdit.InitSearchEdit();
+
                 panel.LeftPanel.Layout = LayoutStyle.Vertical;
             }
 
