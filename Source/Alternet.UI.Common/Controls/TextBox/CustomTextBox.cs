@@ -741,29 +741,8 @@ namespace Alternet.UI
         public static void InitErrorPicture(PictureBox picture)
         {
             picture.Image = KnownColorSvgImages.GetErrorImage();
-            picture.VerticalAlignment = UI.VerticalAlignment.Center;
-            picture.ImageVisible = false;
-            picture.ImageStretch = false;
-            picture.TabStop = false;
-            picture.Margin = (KnownMetrics.ControlLabelDistance, 1, 1, 1);
-            picture.ParentBackColor = true;
 
-            picture.MouseLeftButtonUp -= Picture_MouseLeftButtonUp;
-            picture.MouseLeftButtonUp += Picture_MouseLeftButtonUp;
-
-            static void Picture_MouseLeftButtonUp(object? sender, MouseEventArgs e)
-            {
-                if (sender is not PictureBox pictureBox)
-                    return;
-
-                pictureBox.HideToolTip();
-
-                ToolTipFactory.ShowToolTip(
-                    pictureBox,
-                    title: null,
-                    message: pictureBox.ToolTip,
-                    icon: MessageBoxIcon.Error);
-            }
+            TextBoxUtils.InitInnerTextBoxPicture(picture, tooltipOnClick: true, tooltipIcon: MessageBoxIcon.Error);
         }
 
         /// <summary>
