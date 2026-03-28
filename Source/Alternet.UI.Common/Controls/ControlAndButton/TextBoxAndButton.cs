@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -17,8 +18,8 @@ namespace Alternet.UI
         /// </summary>
         public TextBoxAndButton()
         {
-            MainControl.ValidatorReporter = ErrorPicture;
-            MainControl.TextChanged += MainControl_TextChanged;
+            MainControl.ValidatorReporter = InnerPicture;
+            MainControl.TextChanged += OnMainControlTextChanged;
             MainControl.AutoShowError = true;
             MainControl.VerticalAlignment = VerticalAlignment.Center;
             AutoBackColor = true;
@@ -174,23 +175,62 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes this control for the filter editing.
         /// </summary>
-        public virtual void InitFilterEdit()
+        public virtual void InitFilterEdit(SvgImage? image = null, string? emptyTextHint = null, UI.KnownButton? clearButton = null)
+        {
+            InitWithImageAndClearButton(image ?? KnownSvgImages.ImgFilter, emptyTextHint ?? EmptyTextHints.FilterEdit, clearButton);
+        }
+
+        /// <summary>
+        /// Initializes the control with a specified image and configures a clear button, setting the provided hint text
+        /// for empty input.
+        /// </summary>
+        /// <remarks>When the button is clicked, the text box is cleared and focus is set to the text box.
+        /// The clear button is positioned on the right side of the control.</remarks>
+        /// <param name="clearButton">The button to use for clearing the text box. If null, a default cancel button is used.</param>
+        /// <param name="image">The SVG image to display on the left side of the control.</param>
+        /// <param name="emptyTextHint">The hint text to display in the text box when it is empty. Provides guidance to the user about the expected
+        /// input.</param>
+        public virtual void InitWithImageAndClearButton(SvgImage image, string emptyTextHint, UI.KnownButton? clearButton = null)
         {
             TextBox.IsPassword = false;
-            TextBox.EmptyTextHint = EmptyTextHints.FilterEdit;
-            SetSingleButton(UI.KnownButton.Search);
-            IsButtonLeft = true;
+            TextBox.EmptyTextHint = emptyTextHint;
+
+            IsToolTipShownOnInnerPictureClick = false;
+            IsButtonLeft = false;
+
+            InnerPictureToolTipMessageIcon = null;
+            InnerPictureSvg = image;
+            InnerPicture.Dock = DockStyle.LeftAutoSize;
+            InnerPicture.Margin = TextBoxUtils.GetInnerTextBoxPictureMargin(isRight: false);
+            InnerPictureVisible = true;
+            InnerPictureToolTip = CommonStrings.Default.ButtonClear;
+            InnerPictureImageVisible = true;
+            InnerPicture.CanSelect = true;
+
+            var button = SetSingleButton(clearButton ?? UI.KnownButton.Cancel);
+
+            if (button is not null)
+            {
+                ButtonClick -= OnClearButtonClick;
+                ButtonClick += OnClearButtonClick;
+
+                void OnClearButtonClick(object? s, ControlAndButtonClickEventArgs e)
+                {
+                    if (e.ButtonId != button.UniqueId)
+                        return;
+
+                    Text = string.Empty;
+                    TextBox.SetFocusIfPossible();
+                }
+            }
         }
 
         /// <summary>
         /// Initializes this control for the search text editing.
         /// </summary>
-        public virtual void InitSearchEdit()
+        public virtual void InitSearchEdit(SvgImage? image = null, string? emptyTextHint = null, UI.KnownButton? clearButton = null)
         {
-            TextBox.IsPassword = false;
-            TextBox.EmptyTextHint = EmptyTextHints.FindEdit;
-            SetSingleButton(UI.KnownButton.Search);
-            IsButtonLeft = true;
+            InitWithImageAndClearButton(image ?? KnownSvgImages.ImgSearch, emptyTextHint ?? EmptyTextHints.FindEdit, clearButton);
         }
 
         /// <summary>
@@ -299,7 +339,7 @@ namespace Alternet.UI
             OnTextChanged(EventArgs.Empty);
         }
 
-        private void MainControl_TextChanged(object? sender, EventArgs e)
+        private void OnMainControlTextChanged(object? sender, EventArgs e)
         {
             MainControlTextChanged();
         }
@@ -313,7 +353,7 @@ namespace Alternet.UI
             /// <summary>
             /// Gets the default instance of <see cref="InitAsNumericEditParams"/>.
             /// </summary>
-            public static readonly InitAsNumericEditParams Default = new ();
+            public static readonly InitAsNumericEditParams Default = new();
 
             /// <summary>
             /// Indicates whether the numeric control should accept only unsigned
