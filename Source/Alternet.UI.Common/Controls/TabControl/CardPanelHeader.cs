@@ -395,7 +395,7 @@ namespace Alternet.UI
                 return useTabBold;
             }
 
-            internal set
+            set
             {
                 if (useTabBold == value)
                     return;
