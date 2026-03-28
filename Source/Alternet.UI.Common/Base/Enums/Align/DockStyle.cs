@@ -44,9 +44,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// The control's right edge is docked to the right edge
-        /// of its containing control. Size of the control is calculated using it's
-        /// preferred size.
+        /// of its containing control. Size of the control is calculated using it's preferred size.
         /// </summary>
         RightAutoSize = 6,
+
+        /// <summary>
+        /// The control's left edge is docked to the left edge
+        /// of its containing control. Size of the control is calculated using it's preferred size.
+        /// </summary>
+        LeftAutoSize = 7,
     }
 }

@@ -195,11 +195,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual RectD DockInRect(RectD container, DockStyle value)
         {
-            OldLayout.LayoutWhenDocked(
-                        ref container,
-                        this,
-                        value,
-                        false);
+            OldLayout.LayoutWhenDocked(ref container, this, value);
             return container;
         }
 
