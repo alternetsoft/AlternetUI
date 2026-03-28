@@ -692,7 +692,7 @@ namespace Alternet.UI
         /// Gets inner header control with tab labels.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl HeaderControl => cardPanelHeader;
+        public CardPanelHeader HeaderControl => cardPanelHeader;
 
         /// <summary>
         /// Gets inner content control with tab pages.
