@@ -11,7 +11,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements labeled control.
+    /// This is the base class for controls which consist of a label and an inner control.
     /// </summary>
     /// <remarks> You can use <see cref="TextBoxAndLabel"/>,
     /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel{TControl,TLabel}"/>
@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// <typeparam name="TLabel">Type of the label.</typeparam>
     [ControlCategory("Hidden")]
     public partial class ControlAndLabel<TControl, TLabel>
-        : ControlAndControl, IControlAndLabel, INotifyDataErrorInfo
+        : ControlAndPicture, IControlAndLabel, INotifyDataErrorInfo
         where TControl : AbstractControl, new()
         where TLabel : AbstractControl, new()
     {
@@ -148,7 +148,7 @@ namespace Alternet.UI
                 if (LabelVisible == value)
                     return;
                 Label.Visible = value;
-                UpdateErrorPictureLayout();
+                UpdateInnerPictureLayout();
             }
         }
 
@@ -207,7 +207,7 @@ namespace Alternet.UI
                         Layout = LayoutStyle.Vertical;
                     }
 
-                    UpdateErrorPictureLayout();
+                    UpdateInnerPictureLayout();
                 });
             }
         }
@@ -250,12 +250,12 @@ namespace Alternet.UI
         protected virtual AbstractControl CreateLabel() => CreateDefaultLabel();
 
         /// <inheritdoc/>
-        protected override void UpdateErrorPictureLayout()
+        protected override void UpdateInnerPictureLayout()
         {
-            if (!IsErrorPictureCreated)
+            if (!IsInnerPictureCreated)
                 return;
 
-            ErrorPicture.IsImageCentered = !LabelVisible
+            InnerPicture.IsImageCentered = !LabelVisible
                 || LabelToControl == StackPanelOrientation.Horizontal;
         }
     }

@@ -69,7 +69,7 @@ namespace ControlsSample
             BackgroundColor = Color.Gainsboro;
             ForegroundColor = Color.Black;
 
-            shortEdit.ErrorPicture.Click += (s, e) =>
+            shortEdit.InnerPicture.Click += (s, e) =>
             {
                 App.Log("Error image clicked");
             };
