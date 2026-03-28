@@ -59,19 +59,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="ImgError"/> image for the specified bitmap size.
-        /// If size is not specified, gets image for the default toolbar image size.
+        /// Returns an error image as an Image object, optionally specifying the size.
         /// </summary>
-        /// <param name="size">Image size.</param>
-        /// <param name="control">The control for which image is requested.
-        /// Used to get scale factor. Optional. If not specified,
-        /// default scale factor is used.</param>
+        /// <param name="size">The desired width and height, in pixels, of the error image. If null, a default size is used.</param>
+        /// <param name="control">The control with which is used in order to determine the default image size.</param>
+        /// <returns>An Image representing the error icon, or null if the image cannot be created.</returns>
         public static Image? GetErrorImage(int? size = null, AbstractControl? control = null)
         {
-            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
-            var imageSet = KnownColorSvgImages.ImgError.AsImageSet(size.Value);
-            var image = imageSet?.AsImage(size.Value);
-            return image;
+            return KnownColorSvgImages.ImgError.ToImageWithDefaultSize(size, control);
         }
 
         /// <summary>

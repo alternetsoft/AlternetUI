@@ -304,6 +304,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates a raster image representation of the SVG at the specified size and color scheme.
+        /// </summary>
+        /// <param name="size">The width and height, in pixels, of the resulting image. Must be a positive integer.</param>
+        /// <param name="knownColor">The base color to apply to the SVG when rendering the image.</param>
+        /// <param name="isDark">A value indicating whether to use the dark color variant. Set to <see langword="true"/> for dark mode;
+        /// otherwise, <see langword="false"/>.</param>
+        /// <returns>An <see cref="Image"/> containing the rendered SVG, or <see langword="null"/> if the image could not be
+        /// created.</returns>
+        public virtual Image? AsImage(int size, KnownSvgColor knownColor, bool isDark)
+        {
+            var result = AsImageSet(size, knownColor, isDark)?.AsImage();
+            return result;
+        }
+
+        /// <summary>
         /// Gets image with the specified size and known svg color.
         /// </summary>
         /// <param name="size">Image size in pixels.</param>
@@ -559,6 +574,44 @@ namespace Alternet.Drawing
                 for (int i = 0; i < data.Length; i++)
                     data[i] = null;
             });
+        }
+
+        /// <summary>
+        /// Creates an image representation of the current object, optionally specifying the desired image size and
+        /// associated control context.
+        /// </summary>
+        /// <param name="size">The width and height, in pixels, of the resulting image.
+        /// If null, the default image size for the specified control is used.</param>
+        /// <param name="control">The control context used to determine the default image size if <paramref name="size"/> is null. Can be
+        /// null.</param>
+        /// <param name="color">The color to apply to the image, if applicable. Can be null.</param>
+        /// <returns>An <see cref="Image"/> instance representing the object at the specified size, or null if the image cannot
+        /// be created.</returns>
+        public virtual Image? ToImageWithDefaultSize(int? size = null, AbstractControl? control = null, Color? color = null)
+        {
+            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+            var image = ImageWithColor(size.Value, color);
+            return image;
+        }
+
+        /// <summary>
+        /// Creates an image using the specified SVG color and theme, with an optional size and control context. If no
+        /// size is provided, the default image size for the specified control is used.
+        /// </summary>
+        /// <param name="knownColor">The known SVG color to apply to the image.</param>
+        /// <param name="isDark">A value indicating whether to use the dark theme variant of the image. Set to <see langword="true"/> for
+        /// dark theme; otherwise, <see langword="false"/>.</param>
+        /// <param name="size">The desired width and height, in pixels, of the resulting image. If <see langword="null"/>, the default
+        /// image size for the specified control is used.</param>
+        /// <param name="control">The control context used to determine the default image size if <paramref name="size"/> is not specified.
+        /// Can be <see langword="null"/>.</param>
+        /// <returns>An <see cref="Image"/> instance created with the specified parameters, or <see langword="null"/> if the
+        /// image could not be created.</returns>
+        public virtual Image? ToImageWithDefaultSize(KnownSvgColor knownColor, bool isDark, int? size = null, AbstractControl? control = null)
+        {
+            size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
+            var image = AsImage(size.Value, knownColor, isDark);
+            return image;
         }
 
         /// <summary>
