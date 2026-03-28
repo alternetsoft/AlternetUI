@@ -12,7 +12,7 @@ using Alternet.UI.Localization;
 
 namespace PropertyGridSample
 {
-    public partial class MainWindow : Window
+    public partial class MainControl
     {
         private void InitDefaultPropertyGrid()
         {

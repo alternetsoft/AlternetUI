@@ -103,7 +103,7 @@ namespace ControlsSample
                 e.Cancel = true;
                 App.AddIdleTask(() =>
                 {
-                    var form = new PropertyGridSample.MainWindow();
+                    var form = new PropertyGridSample.MainControl();
                     form.Show();
                 });
             }

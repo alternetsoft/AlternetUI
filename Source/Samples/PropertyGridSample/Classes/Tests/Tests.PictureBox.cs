@@ -13,7 +13,7 @@ using SkiaSharp;
 
 namespace PropertyGridSample
 {
-    public partial class MainWindow
+    public partial class MainControl
     {
         public static TemplateControls.BoldText<Label> CreateTemplateWithBoldText()
         {

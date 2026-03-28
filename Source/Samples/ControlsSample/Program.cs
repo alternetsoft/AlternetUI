@@ -23,7 +23,7 @@ namespace ControlsSample
 
         public static void InitSamples()
         {
-            PropertyGridSample.MainWindow.LimitedTypesStatic.Add(
+            PropertyGridSample.MainControl.LimitedTypesStatic.Add(
                 typeof(PropertyGridSample.ControlPainterPreview));
 
             PropertyGridSample.ObjectInit.Actions.Add(
@@ -109,7 +109,7 @@ namespace ControlsSample
                 {
                     if (uiLanguage == "ru")
                     {
-                        PropertyGridSample.MainWindow.DoSampleLocalization = false;
+                        PropertyGridSample.MainControl.DoSampleLocalization = false;
                         LocalizationManagerRu.Initialize();
                     }
                 }

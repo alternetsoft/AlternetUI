@@ -45,7 +45,6 @@ namespace ControlsSample
             Add("Common Dialogs", () => new CommonDialogsWindow());
             Add("Employee Form", () => new EmployeeFormSample.EmployeeWindow());
             Add("Drawing Sample", () => new DrawingSample.DrawingMainWindow());
-            Add("Property Grid", () => new PropertyGridSample.MainWindow());
         }
     }
 }
