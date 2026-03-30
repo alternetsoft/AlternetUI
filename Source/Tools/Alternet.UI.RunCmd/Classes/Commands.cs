@@ -346,12 +346,25 @@ namespace Alternet.UI
             {
                 if (svgName is null || PathUtils.UrlEndsWithFileName(image.Url, svgName))
                 {
-                    var path = Path.Combine(pathToResult, $"{svgName}_{size}.png");
-                    Directory.CreateDirectory(pathToResult);
+                    var success = PathUtils.TryExtractFileNameFromUrl(image.Url, out var extractedFileName);
 
-                    image.AsImage(size)?.Save(path);
+                    if (success)
+                    {
+                        string withoutExt = Path.GetFileNameWithoutExtension(extractedFileName ?? string.Empty);
 
-                    Console.WriteLine($"Exported: {path}");
+                        var lastPart = withoutExt.Split('.').LastOrDefault();
+
+                        if (lastPart != string.Empty)
+                        {
+                            var resultName = $"{lastPart}_{size}.png";
+                            var path = Path.Combine(pathToResult, resultName);
+                            Directory.CreateDirectory(pathToResult);
+
+                            image.AsImage(size)?.Save(path);
+
+                            Console.WriteLine($"Exported: {path}");
+                        }
+                    }
                 }
                 else
                 {
