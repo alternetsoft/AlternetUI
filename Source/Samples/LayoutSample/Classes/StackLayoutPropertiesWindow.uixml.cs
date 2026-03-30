@@ -49,6 +49,8 @@ namespace LayoutSample
             splitter.Parent = subjectPanel;
             dockedControl.Parent = subjectPanel;
 
+            subjectPanel.LayoutFlags |= LayoutFlags.UseMarginsWhenDock;
+
             dockedEdit.Items.Add(new("Left", DockStyle.Left));
             dockedEdit.Items.Add(new("Top", DockStyle.Top));
             dockedEdit.Items.Add(new("Right", DockStyle.Right));
@@ -65,13 +67,15 @@ namespace LayoutSample
             dockedRightMarginEdit.Value = (int)dockedControl.Margin.Right;
             dockedBottomMarginEdit.Value = (int)dockedControl.Margin.Bottom;
 
-            Group(dockedLeftMarginEdit, dockedTopMarginEdit, dockedRightMarginEdit, dockedBottomMarginEdit)
-                .Margin(10, 0, 10, 10).Parent(dockedSettings).LabelSuggestedWidthToMax();
-
-            dockedLeftMarginEdit.ValueChanged += OnDockedMarginChanged;
-            dockedTopMarginEdit.ValueChanged += OnDockedMarginChanged;
-            dockedRightMarginEdit.ValueChanged += OnDockedMarginChanged;
-            dockedBottomMarginEdit.ValueChanged += OnDockedMarginChanged;
+            GroupOf<UpDownAndLabel>(dockedLeftMarginEdit, dockedTopMarginEdit, dockedRightMarginEdit, dockedBottomMarginEdit)
+            .Margin(10, 0, 10, 10).Parent(dockedSettings).LabelSuggestedWidthToMax()
+            .Action((c)=>
+            {
+                c.ValueChanged += OnDockedMarginChanged;
+                c.MainControl.Minimum = 0;
+                c.MainControl.Maximum = 50;
+                c.MainControl.SmallChange = 2;
+            });
 
             void OnDockedMarginChanged(object? sender, EventArgs e)
             {
