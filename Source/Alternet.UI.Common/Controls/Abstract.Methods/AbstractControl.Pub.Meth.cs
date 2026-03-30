@@ -162,7 +162,7 @@ namespace Alternet.UI
         {
             if (layout == LayoutStyle.Scroll)
             {
-                OldLayout.LayoutWhenScroll(container, getBounds, items, true);
+                LayoutManager.LayoutWhenScroll(container, getBounds, items, true);
                 return;
             }
 
@@ -970,7 +970,7 @@ namespace Alternet.UI
         /// Creates <see cref="ControlSet"/> with the specified controls.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public virtual ControlSet Group(params AbstractControl[] controls)
+        public ControlSet Group(params AbstractControl[] controls)
         {
             return new(controls);
         }
@@ -979,7 +979,31 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public virtual ControlSet Group(IReadOnlyList<AbstractControl> controls)
+        public ControlSet Group(IReadOnlyList<AbstractControl> controls)
+        {
+            return new(controls);
+        }
+
+        /// <summary>
+        /// Creates a new control set containing the specified controls.
+        /// </summary>
+        /// <typeparam name="TItem">The type of control to include in the set. Must derive from AbstractControl.</typeparam>
+        /// <param name="controls">An array of controls to include in the control set. Cannot be null.</param>
+        /// <returns>A ControlSet{TItem} containing the specified controls.</returns>
+        public ControlSet<TItem> GroupOf<TItem>(params TItem[] controls)
+            where TItem : AbstractControl
+        {
+            return new(controls);
+        }
+
+        /// <summary>
+        /// Creates a new control set containing the specified controls.
+        /// </summary>
+        /// <typeparam name="TItem">The type of controls to include in the set. Must derive from AbstractControl.</typeparam>
+        /// <param name="controls">The collection of controls to group into a control set. Cannot be null.</param>
+        /// <returns>A ControlSet{TItem} containing the specified controls.</returns>
+        public ControlSet<TItem> GroupOf<TItem>(IReadOnlyList<TItem> controls)
+            where TItem : AbstractControl
         {
             return new(controls);
         }
