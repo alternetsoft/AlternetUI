@@ -8,22 +8,25 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Allows to perform group operations on the controls.
+    /// Represents a collection of controls of a specified type, providing batch operations and layout utilities for
+    /// managing and configuring multiple controls as a group.
     /// </summary>
-    public partial class ControlSet
+    /// <remarks>The ControlSet{T} class enables collective manipulation of multiple controls, such as setting
+    /// properties, handling layout, and responding to events. It is designed to simplify bulk operations and ensure
+    /// consistency across related controls. Many methods return the current instance to support fluent call chaining.
+    /// Some operations require the contained controls to implement specific interfaces, such as IControlAndLabel, for
+    /// certain features to be available.</remarks>
+    /// <typeparam name="T">The type of controls contained in the set. Must derive from <see cref="AbstractControl"/>.</typeparam>
+    public partial class ControlSet<T>
+        where T : AbstractControl
     {
-        /// <summary>
-        /// Gets <see cref="ControlSet"/> without items.
-        /// </summary>
-        public static readonly ControlSet Empty = new(Array.Empty<AbstractControl>());
-
-        private readonly IReadOnlyList<AbstractControl> items;
+        private readonly IReadOnlyList<T> items;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public ControlSet(params AbstractControl[] controls)
+        public ControlSet(params T[] controls)
         {
             items = controls;
         }
@@ -32,7 +35,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public ControlSet(IReadOnlyList<AbstractControl> controls)
+        public ControlSet(IReadOnlyList<T> controls)
         {
             items = controls;
         }
@@ -41,7 +44,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlSet"/> class.
         /// </summary>
         /// <param name="controls">Controls.</param>
-        public ControlSet(IEnumerable<AbstractControl> controls)
+        public ControlSet(IEnumerable<T> controls)
         {
             items = controls.ToArray();
         }
@@ -60,7 +63,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets first item in the <see cref="Items"/> collection or Null.
         /// </summary>
-        public AbstractControl? First
+        public T? First
         {
             get
             {
@@ -73,7 +76,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets all controls which will be affected by the group operations.
         /// </summary>
-        public IReadOnlyList<AbstractControl> Items => items;
+        public IReadOnlyList<T> Items => items;
 
         /// <summary>
         /// Gets the maximum width among all controls in the set.
@@ -172,50 +175,14 @@ namespace Alternet.UI
         /// <param name="index">The zero-based index of the element
         /// to get or set.</param>
         /// <returns>The element at the specified index.</returns>
-        public AbstractControl this[int index] => items[index];
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ControlSet"/> class.
-        /// </summary>
-        /// <param name="controls">Controls.</param>
-        public static ControlSet New(params AbstractControl[] controls) => new(controls);
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ControlSet"/> class.
-        /// </summary>
-        /// <param name="controls">Controls.</param>
-        public static ControlSet New(IReadOnlyList<AbstractControl> controls) => new(controls);
-
-        /// <summary>
-        /// Creates two dimensional array 'Control[,]' from the specified columns with controls.
-        /// </summary>
-        /// <param name="columns">Columns with the controls</param>
-        public static AbstractControl[,] GridFromColumns(params ControlSet[] columns)
-        {
-            var colCount = columns.Length;
-            var rowCount = columns[0].Items.Count;
-
-            var result = new AbstractControl[rowCount, colCount];
-
-            for (int i = 0; i < rowCount; i++)
-            {
-                for (int j = 0; j < colCount; j++)
-                {
-                    var column = columns[j];
-                    var item = column[i];
-                    result[i, j] = item;
-                }
-            }
-
-            return result;
-        }
+        public T this[int index] => items[index];
 
         /// <summary>
         /// Sets vertical alignment for all the controls in the set.
         /// </summary>
         /// <param name="value">A vertical alignment setting.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet VerticalAlignment(VerticalAlignment value)
+        public virtual ControlSet<T> VerticalAlignment(VerticalAlignment value)
         {
             return DoInsideLayout(() =>
             {
@@ -229,7 +196,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New font.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Font(Font? value)
+        public virtual ControlSet<T> Font(Font? value)
         {
             return DoInsideLayout(() =>
             {
@@ -243,7 +210,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet IsBold(bool value)
+        public virtual ControlSet<T> IsBold(bool value)
         {
             return DoInsideLayout(() =>
             {
@@ -257,7 +224,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New font.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet BackgroundColor(Color? value)
+        public virtual ControlSet<T> BackgroundColor(Color? value)
         {
             foreach (var item in items)
                 item.BackgroundColor = value;
@@ -269,7 +236,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New font.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet ForegroundColor(Color? value)
+        public virtual ControlSet<T> ForegroundColor(Color? value)
         {
             foreach (var item in items)
                 item.ForegroundColor = value;
@@ -281,7 +248,7 @@ namespace Alternet.UI
         /// of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet SuspendLayout()
+        public virtual ControlSet<T> SuspendLayout()
         {
             foreach (var item in items)
             {
@@ -296,7 +263,7 @@ namespace Alternet.UI
         /// of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet ResumeLayout()
+        public virtual ControlSet<T> ResumeLayout()
         {
             foreach (var item in items)
             {
@@ -307,12 +274,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets all controls in the set which are of the specified type <typeparamref name="T"/>.
+        /// </summary>
+        public virtual IEnumerable<TItem> ItemsOfType<TItem>()
+        {
+            foreach (var item in items)
+            {
+                if (item is TItem itemOfType)
+                    yield return itemOfType;
+            }
+        }
+
+        /// <summary>
         /// Executes <paramref name="action"/> between calls to <see cref="SuspendLayout"/>
         /// and <see cref="ResumeLayout"/>.
         /// </summary>
         /// <param name="action">Action that will be executed.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet DoInsideLayout(Action action)
+        public virtual ControlSet<T> DoInsideLayout(Action action)
         {
             SuspendLayout();
             try
@@ -331,7 +310,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New property value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Visible(bool value)
+        public virtual ControlSet<T> Visible(bool value)
         {
             return DoInsideLayout(() =>
             {
@@ -346,7 +325,7 @@ namespace Alternet.UI
         /// <param name="value">New 'Enabled' property value.</param>
         /// <param name="index">Index of the control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Enabled(int index, bool value)
+        public virtual ControlSet<T> Enabled(int index, bool value)
         {
             items[index].Enabled = value;
             return this;
@@ -357,7 +336,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">New 'Enabled' property value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Enabled(bool value)
+        public virtual ControlSet<T> Enabled(bool value)
         {
             foreach (var item in items)
                 item.Enabled = value;
@@ -367,22 +346,30 @@ namespace Alternet.UI
         /// <summary>
         /// Executes specified action for all the controls in the set.
         /// </summary>
-        /// <typeparam name="T">Type of the action parameter.</typeparam>
+        /// <typeparam name="TItem">Type of the action parameter.</typeparam>
         /// <param name="action">Action to execute.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Action<T>(Action<T> action)
-            where T : AbstractControl
+        public virtual ControlSet<T> Action<TItem>(Action<TItem> action)
         {
-            if (typeof(T) == typeof(AbstractControl))
-            {
-                foreach (var item in items)
-                    action((T)item);
-                return this;
-            }
-
             foreach (var item in items)
             {
-                if(item is T t)
+                if(item is TItem t)
+                    action(t);
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Executes specified action for all the controls in the set.
+        /// </summary>
+        /// <param name="action">Action to execute.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet<T> Action(Action<T> action)
+        {
+            foreach (var item in items)
+            {
+                if (item is T t)
                     action(t);
             }
 
@@ -393,7 +380,7 @@ namespace Alternet.UI
         /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet SuggestedWidthToMax()
+        public virtual ControlSet<T> SuggestedWidthToMax()
         {
             var v = MaxWidth;
             return SuggestedWidth(v);
@@ -403,7 +390,7 @@ namespace Alternet.UI
         /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet WidthToMax()
+        public virtual ControlSet<T> WidthToMax()
         {
             var v = MaxWidth;
             return Width(v);
@@ -413,7 +400,7 @@ namespace Alternet.UI
         /// Sets suggested height for all the controls to the max value in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet SuggestedHeightToMax()
+        public virtual ControlSet<T> SuggestedHeightToMax()
         {
             return SuggestedHeight(MaxHeight);
         }
@@ -422,7 +409,7 @@ namespace Alternet.UI
         /// Sets the suggested width for all the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet SuggestedWidth(Coord width)
+        public virtual ControlSet<T> SuggestedWidth(Coord width)
         {
             return DoInsideLayout(() =>
             {
@@ -437,7 +424,7 @@ namespace Alternet.UI
         /// Sets the width for all the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Width(Coord width)
+        public virtual ControlSet<T> Width(Coord width)
         {
             return DoInsideLayout(() =>
             {
@@ -452,7 +439,7 @@ namespace Alternet.UI
         /// Sets the suggested height for all the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet SuggestedHeight(Coord height)
+        public virtual ControlSet<T> SuggestedHeight(Coord height)
         {
             return DoInsideLayout(() =>
             {
@@ -468,7 +455,7 @@ namespace Alternet.UI
         /// affect the layout and rendering of the controls.</remarks>
         /// <param name="size">The size to suggest for each item in the control set.</param>
         /// <returns>A ControlSet instance representing the updated state after applying the suggested sizes.</returns>
-        public virtual ControlSet SuggestedSize(SizeD size)
+        public virtual ControlSet<T> SuggestedSize(SizeD size)
         {
             return DoInsideLayout(() =>
             {
@@ -482,7 +469,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">A horizontal alignment setting.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet HorizontalAlignment(HorizontalAlignment value)
+        public virtual ControlSet<T> HorizontalAlignment(HorizontalAlignment value)
         {
             return DoInsideLayout(() =>
             {
@@ -500,7 +487,7 @@ namespace Alternet.UI
         /// changes. If the MaxWidth property is less than or equal to zero, the suggested width is set to NaN,
         /// effectively removing any width constraint.</remarks>
         /// <returns>The current instance of the ControlSet, enabling method chaining.</returns>
-        public virtual ControlSet MaxWidthOnSizeChanged()
+        public virtual ControlSet<T> MaxWidthOnSizeChanged()
         {
             SizeChanged((s, e) =>
             {
@@ -517,7 +504,7 @@ namespace Alternet.UI
         /// maximum height value.
         /// </summary>
         /// <returns>The current instance of the ControlSet, enabling method chaining.</returns>
-        public virtual ControlSet MaxHeightOnSizeChanged()
+        public virtual ControlSet<T> MaxHeightOnSizeChanged()
         {
             SizeChanged((s, e) =>
             {
@@ -536,8 +523,8 @@ namespace Alternet.UI
         /// changes, respecting the maximum width and height specified by the <see cref="MaxSize"/> property. If either
         /// dimension of <see cref="MaxSize"/> is less than or equal to zero, that dimension is considered unbounded and
         /// will not restrict the suggested size.</remarks>
-        /// <returns>The current instance of the <see cref="ControlSet"/> to allow for method chaining.</returns>
-        public virtual ControlSet MaxSizeOnChanged()
+        /// <returns>The current instance of the <see cref="ControlSet{T}"/> to allow for method chaining.</returns>
+        public virtual ControlSet<T> MaxSizeOnChanged()
         {
             SizeChanged((s, e) =>
             {
@@ -561,7 +548,7 @@ namespace Alternet.UI
         /// <param name="value">The event handler to associate with the SizeChanged event of each item in the control set.
         /// Cannot be null.</param>
         /// <returns>The current instance of the ControlSet, enabling method chaining.</returns>
-        public virtual ControlSet SizeChanged(EventHandler value)
+        public virtual ControlSet<T> SizeChanged(EventHandler value)
         {
             return DoInsideLayout(() =>
             {
@@ -575,7 +562,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">An outer margin of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Margin(Thickness value)
+        public virtual ControlSet<T> Margin(Thickness value)
         {
             return DoInsideLayout(() =>
             {
@@ -592,7 +579,7 @@ namespace Alternet.UI
         /// <param name="right">The right padding of the control.</param>
         /// <param name="bottom">The bottom padding of the control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public ControlSet Padding(float left, float top, float right, float bottom)
+        public ControlSet<T> Padding(float left, float top, float right, float bottom)
         {
             return Padding(new Thickness(left, top, right, bottom));
         }
@@ -602,7 +589,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">A padding of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Padding(Thickness value)
+        public virtual ControlSet<T> Padding(Thickness value)
         {
             return DoInsideLayout(() =>
             {
@@ -616,7 +603,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">size of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Size(SizeD value)
+        public virtual ControlSet<T> Size(SizeD value)
         {
             return DoInsideLayout(() =>
             {
@@ -630,7 +617,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Minimum size of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet MinSize(SizeD value)
+        public virtual ControlSet<T> MinSize(SizeD value)
         {
             return DoInsideLayout(() =>
             {
@@ -644,7 +631,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Minimum width of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet MinWidth(Coord value)
+        public virtual ControlSet<T> MinWidth(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -658,7 +645,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Minimum height of a control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet MinHeight(Coord value)
+        public virtual ControlSet<T> MinHeight(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -675,7 +662,7 @@ namespace Alternet.UI
         /// <param name="right">The margin for the right side.</param>
         /// <param name="bottom">The margin for the bottom side.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Margin(Coord left, Coord top, Coord right, Coord bottom)
+        public virtual ControlSet<T> Margin(Coord left, Coord top, Coord right, Coord bottom)
         {
             return DoInsideLayout(() =>
             {
@@ -690,7 +677,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet MarginTop(Coord value)
+        public virtual ControlSet<T> MarginTop(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -704,7 +691,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet MarginBottom(Coord value)
+        public virtual ControlSet<T> MarginBottom(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -718,7 +705,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet MarginLeft(Coord value)
+        public virtual ControlSet<T> MarginLeft(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -732,7 +719,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet MarginRight(Coord value)
+        public virtual ControlSet<T> MarginRight(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -748,7 +735,7 @@ namespace Alternet.UI
         /// to allow this method to work.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet LabelSuggestedWidth(Coord value)
+        public virtual ControlSet<T> LabelSuggestedWidth(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -765,7 +752,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet PaddingTop(Coord value)
+        public virtual ControlSet<T> PaddingTop(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -780,7 +767,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet PaddingBottom(Coord value)
+        public virtual ControlSet<T> PaddingBottom(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -794,7 +781,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet PaddingLeft(Coord value)
+        public virtual ControlSet<T> PaddingLeft(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -808,7 +795,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">The margin value.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet PaddingRight(Coord value)
+        public virtual ControlSet<T> PaddingRight(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -821,7 +808,7 @@ namespace Alternet.UI
         /// Sets suggested width for inner children of the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet InnerSuggestedWidthToMax()
+        public virtual ControlSet<T> InnerSuggestedWidthToMax()
         {
             var v = InnerMaxWidth;
             return InnerSuggestedWidth(v);
@@ -831,7 +818,7 @@ namespace Alternet.UI
         /// Sets suggested width for all the controls in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet LabelSuggestedWidthToMax()
+        public virtual ControlSet<T> LabelSuggestedWidthToMax()
         {
             var v = LabelMaxWidth;
             return LabelSuggestedWidth(v);
@@ -844,7 +831,7 @@ namespace Alternet.UI
         /// to allow this method to work.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet InnerSuggestedWidth(Coord value)
+        public virtual ControlSet<T> InnerSuggestedWidth(Coord value)
         {
             return DoInsideLayout(() =>
             {
@@ -862,7 +849,7 @@ namespace Alternet.UI
         /// <param name="value"><c>true</c> enables editing of the text;
         /// <c>false</c> disables it.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet IsEditable(bool value)
+        public virtual ControlSet<T> IsEditable(bool value)
         {
             foreach (var item in Items)
             {
@@ -876,7 +863,7 @@ namespace Alternet.UI
         /// <summary>
         /// Sets <see cref="AbstractControl.ParentForeColor"/> property for all the controls in the set.
         /// </summary>
-        public virtual ControlSet ParentForeColor(bool value)
+        public virtual ControlSet<T> ParentForeColor(bool value)
         {
             foreach (var item in Items)
             {
@@ -890,7 +877,7 @@ namespace Alternet.UI
         /// Sets <see cref="AbstractControl.ParentBackColor"/> property for all the
         /// controls in the set.
         /// </summary>
-        public virtual ControlSet ParentBackColor(bool value)
+        public virtual ControlSet<T> ParentBackColor(bool value)
         {
             foreach (var item in Items)
             {
@@ -905,7 +892,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value">Parent control.</param>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
-        public virtual ControlSet Parent(AbstractControl? value)
+        public virtual ControlSet<T> Parent(AbstractControl? value)
         {
             foreach (var item in items)
                 item.Parent = value;
@@ -917,7 +904,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="evt">Event Handler.</param>
         /// <returns></returns>
-        public virtual ControlSet WhenCheckedChanged(EventHandler evt)
+        public virtual ControlSet<T> WhenCheckedChanged(EventHandler evt)
         {
             foreach (var item in items)
             {
@@ -957,7 +944,7 @@ namespace Alternet.UI
         /// Sets the theme for all <see cref="SpeedButton"/> controls
         /// </summary>
         /// <param name="theme">The theme to apply to the <see cref="SpeedButton"/>.</param>
-        public virtual ControlSet SetUseTheme(SpeedButton.KnownTheme theme)
+        public virtual ControlSet<T> SetUseTheme(SpeedButton.KnownTheme theme)
         {
             foreach (var item in items)
             {
@@ -988,5 +975,81 @@ namespace Alternet.UI
                 action(item);
             }
         }
+    }
+
+    /// <summary>
+    /// Represents a set of controls that can be managed as a group.
+    /// This class provides methods to apply common properties and actions
+    /// to all controls in the set, such as setting visibility, enabling/disabling, adjusting layout properties, and more.
+    /// </summary>
+    public partial class ControlSet : ControlSet<AbstractControl>
+    {
+        /// <summary>
+        /// Gets <see cref="ControlSet"/> without items.
+        /// </summary>
+        public static readonly ControlSet Empty = new(Array.Empty<AbstractControl>());
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class with the specified controls.
+        /// </summary>
+        /// <param name="items">The controls to include in the set.</param>
+        public ControlSet(params AbstractControl[] items)
+            : base(items)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public ControlSet(IReadOnlyList<AbstractControl> controls)
+            : base(controls)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public ControlSet(IEnumerable<AbstractControl> controls)
+            : base(controls)
+        {
+        }
+
+        /// <summary>
+        /// Creates two dimensional array 'Control[,]' from the specified columns with controls.
+        /// </summary>
+        /// <param name="columns">Columns with the controls</param>
+        public static AbstractControl[,] GridFromColumns(params ControlSet<AbstractControl>[] columns)
+        {
+            var colCount = columns.Length;
+            var rowCount = columns[0].Items.Count;
+
+            var result = new AbstractControl[rowCount, colCount];
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < colCount; j++)
+                {
+                    var column = columns[j];
+                    var item = column[i];
+                    result[i, j] = item;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public static ControlSet New(params AbstractControl[] controls) => new(controls);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlSet"/> class.
+        /// </summary>
+        /// <param name="controls">Controls.</param>
+        public static ControlSet New(IReadOnlyList<AbstractControl> controls) => new(controls);
     }
 }
