@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Speed buttons are often used in toolbars or as part of a user interface.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class SpeedButton : GraphicControl, ICommandSource
+    public partial class SpeedButton : GenericControl, ICommandSource
     {
         /// <summary>
         /// Represents the default border radius used for rounding corners.
