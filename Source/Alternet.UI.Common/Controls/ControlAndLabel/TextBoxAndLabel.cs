@@ -164,7 +164,7 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void Init()
         {
-            MainControl.ValidatorReporter = ErrorPicture;
+            MainControl.ValidatorReporter = InnerPicture;
             MainControl.AutoShowError = true;
             MainControl.TextChanged += (s, e) =>
             {

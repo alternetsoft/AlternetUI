@@ -14,6 +14,60 @@ namespace Alternet.UI
     public static class TextBoxUtils
     {
         /// <summary>
+        /// Calculates the margin to apply to a picture inside a text box, based on its alignment.
+        /// </summary>
+        /// <param name="isRight">true to position the picture at the right side of the text box; false to position it at the left.</param>
+        /// <returns>A Thickness value representing the margin to apply to the picture, adjusted for its alignment within the
+        /// text box.</returns>
+        public static Thickness GetInnerTextBoxPictureMargin(bool isRight)
+        {
+            if (isRight)
+                return (KnownMetrics.ControlLabelDistance, 1, 1, 1);
+            else
+                return (1, 1, KnownMetrics.ControlLabelDistance, 1);
+        }
+
+        /// <summary>
+        /// Initializes the specified PictureBox for use as an inner text box icon, configuring its appearance and
+        /// behavior.
+        /// </summary>
+        /// <remarks>When tooltipOnClick is set to true, clicking the PictureBox will display a tooltip
+        /// using the specified icon. The PictureBox is centered, non-interactive with the tab key, and its image is
+        /// hidden by default.</remarks>
+        /// <param name="picture">The PictureBox control to initialize and configure as an inner text box icon.</param>
+        /// <param name="tooltipOnClick">true to display a tooltip when the PictureBox is clicked; otherwise, false.</param>
+        /// <param name="tooltipIcon">The icon to display in the tooltip when shown on click.</param>
+        public static void InitInnerTextBoxPicture(PictureBox picture, bool tooltipOnClick, MessageBoxIcon? tooltipIcon)
+        {
+            picture.VerticalAlignment = UI.VerticalAlignment.Center;
+            picture.ImageVisible = false;
+            picture.ImageStretch = false;
+            picture.TabStop = false;
+            picture.Margin = GetInnerTextBoxPictureMargin(isRight: true);
+            picture.ParentBackColor = true;
+
+            if (tooltipOnClick)
+            {
+                picture.MouseLeftButtonUp -= OnPictureMouseLeftButtonUp;
+                picture.MouseLeftButtonUp += OnPictureMouseLeftButtonUp;
+            }
+
+            void OnPictureMouseLeftButtonUp(object? sender, MouseEventArgs e)
+            {
+                if (sender is not PictureBox pictureBox)
+                    return;
+
+                pictureBox.HideToolTip();
+
+                ToolTipFactory.ShowToolTip(
+                    pictureBox,
+                    title: null,
+                    message: pictureBox.ToolTip,
+                    icon: tooltipIcon);
+            }
+        }
+
+        /// <summary>
         /// Shows 'Go To Line' dialog.
         /// </summary>
         /// <param name="lines">Number of lines.</param>

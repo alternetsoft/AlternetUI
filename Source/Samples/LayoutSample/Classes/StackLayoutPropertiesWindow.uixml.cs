@@ -1,6 +1,7 @@
 using System;
 using Alternet.Drawing;
 using Alternet.UI;
+using Alternet.UI.Extensions;
 
 namespace LayoutSample
 {
@@ -8,23 +9,32 @@ namespace LayoutSample
     {
         private readonly AlignmentControl containerAlignmentControl;
         private readonly VerticalStackPanel dockedSettings = new();
+        
         private readonly StdListBox dockedControl = new()
         {
             Dock = DockStyle.Left,
             MinWidth = 150,
         };
+        
         private readonly Splitter splitter = new()
         {
             Dock = DockStyle.Left,
         };
+        
         private readonly Label dockedLabel = new("Dock side")
         {
             Margin = (10, 10, 10, 5),
         };
+        
         private readonly EnumPicker dockedEdit = new()
         {
             Margin = (10, 0, 10, 10),
         };
+
+        private readonly UpDownAndLabel dockedLeftMarginEdit = new("Margin.Left");
+        private readonly UpDownAndLabel dockedTopMarginEdit = new("Margin.Top");
+        private readonly UpDownAndLabel dockedRightMarginEdit = new("Margin.Right");
+        private readonly UpDownAndLabel dockedBottomMarginEdit = new("Margin.Bottom");
 
         public StackLayoutPropertiesWindow()
         {
@@ -43,8 +53,35 @@ namespace LayoutSample
             dockedEdit.Items.Add(new("Top", DockStyle.Top));
             dockedEdit.Items.Add(new("Right", DockStyle.Right));
             dockedEdit.Items.Add(new("Bottom", DockStyle.Bottom));
+            dockedEdit.Items.Add(new("LeftAutoSize", DockStyle.LeftAutoSize));
+            dockedEdit.Items.Add(new("TopAutoSize", DockStyle.TopAutoSize));
+            dockedEdit.Items.Add(new("RightAutoSize", DockStyle.RightAutoSize));
+            dockedEdit.Items.Add(new("BottomAutoSize", DockStyle.BottomAutoSize));
             dockedEdit.Value = DockStyle.Left;
             dockedEdit.ValueChanged += DockedEdit_SelectedItemChanged;
+
+            dockedLeftMarginEdit.Value = (int)dockedControl.Margin.Left;
+            dockedTopMarginEdit.Value = (int)dockedControl.Margin.Top;
+            dockedRightMarginEdit.Value = (int)dockedControl.Margin.Right;
+            dockedBottomMarginEdit.Value = (int)dockedControl.Margin.Bottom;
+
+            Group(dockedLeftMarginEdit, dockedTopMarginEdit, dockedRightMarginEdit, dockedBottomMarginEdit)
+                .Margin(10, 0, 10, 10).Parent(dockedSettings).LabelSuggestedWidthToMax();
+
+            dockedLeftMarginEdit.ValueChanged += OnDockedMarginChanged;
+            dockedTopMarginEdit.ValueChanged += OnDockedMarginChanged;
+            dockedRightMarginEdit.ValueChanged += OnDockedMarginChanged;
+            dockedBottomMarginEdit.ValueChanged += OnDockedMarginChanged;
+
+            void OnDockedMarginChanged(object? sender, EventArgs e)
+            {
+                var left = dockedLeftMarginEdit.Value;
+                var top = dockedTopMarginEdit.Value;
+                var right = dockedRightMarginEdit.Value;
+                var bottom = dockedBottomMarginEdit.Value;
+
+                dockedControl.Margin = new Thickness(left, top, right, bottom);
+            }
 
             tabControlPanel.Add(dockedSettings);
 
@@ -55,6 +92,8 @@ namespace LayoutSample
             var buttonAlignmentControl = new AlignmentControl();
             buttonAlignmentControl.Parent = buttonPanel;
             buttonAlignmentControl.Control = subjectButton;
+
+            tabControlPanel.MinSizeGrowMode = WindowSizeToContentMode.Width;
         }
 
         private void DockedEdit_SelectedItemChanged(object? sender, EventArgs e)
@@ -65,7 +104,7 @@ namespace LayoutSample
             subjectPanel.DoInsideLayout(() =>
             {
                 dockedControl.Size = 100;
-                splitter.Dock = dockStyle;
+                splitter.Dock = dockStyle.WithoutAutoSize();
                 dockedControl.Dock = dockStyle;
             });
         }

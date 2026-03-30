@@ -66,6 +66,8 @@ namespace ControlsSample
         {
             base.Initialize();
 
+            MainTabControl.Add("Controls", () => new PropertyGridSample.MainControl());
+
             var showStatusBar = false;
 
             if (showStatusBar)

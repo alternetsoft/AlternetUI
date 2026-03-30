@@ -34,6 +34,7 @@ namespace Alternet.UI
         private bool textVisible = false;
         private bool isTransparent = true;
         private TemplateControls.RichToolTipTemplate? toolTipTemplate;
+        private Action? clickAction;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
@@ -82,6 +83,20 @@ namespace Alternet.UI
                     return;
                 isTransparent = value;
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="Action"/> which will be executed when
+        /// this control is clicked by the user.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Action? ClickAction
+        {
+            get => clickAction;
+            set
+            {
+                clickAction = value;
             }
         }
 
@@ -736,6 +751,15 @@ namespace Alternet.UI
             using var dc = CreateDrawingContext();
             var result = dc.GetTextExtent(text, Font ?? UI.AbstractControl.DefaultFont);
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            base.OnMouseLeftButtonDown(e);
+            clickAction?.Invoke();
         }
 
         /// <summary>

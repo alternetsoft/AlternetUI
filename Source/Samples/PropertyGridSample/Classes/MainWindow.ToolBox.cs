@@ -10,7 +10,7 @@ using System.Diagnostics;
 
 namespace PropertyGridSample
 {
-    public partial class MainWindow
+    public partial class MainControl
     {
         public static readonly List<Type> LimitedTypesStatic = new();
 

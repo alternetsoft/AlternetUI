@@ -18,6 +18,46 @@ namespace Alternet.UI.Extensions
     public static partial class ExtensionsPublic
     {
         /// <summary>
+        /// Returns the equivalent non-auto-sized dock style for the specified dock value.
+        /// </summary>
+        /// <remarks>Use this method to normalize dock style values by removing any auto-sizing behavior,
+        /// which can be useful when consistent layout handling is required.</remarks>
+        /// <param name="dock">The dock style value to convert. May include auto-sized variants.</param>
+        /// <returns>A DockStyle value representing the non-auto-sized equivalent of the specified dock style. If the input is
+        /// not an auto-sized variant, the original value is returned.</returns>
+        public static DockStyle WithoutAutoSize(this DockStyle dock)
+        {
+            return dock switch
+            {
+                DockStyle.LeftAutoSize => DockStyle.Left,
+                DockStyle.RightAutoSize => DockStyle.Right,
+                DockStyle.TopAutoSize => DockStyle.Top,
+                DockStyle.BottomAutoSize => DockStyle.Bottom,
+                _ => dock,
+            };
+        }
+
+        /// <summary>
+        /// Returns the corresponding auto-size variant of the specified dock style, if available.
+        /// </summary>
+        /// <remarks>Use this method to obtain an auto-sizing dock style for controls that should
+        /// automatically adjust their size when docked. If the specified dock style does not have an auto-size variant,
+        /// the original value is returned.</remarks>
+        /// <param name="dock">The dock style to convert to its auto-size variant.</param>
+        /// <returns>The auto-size variant of the specified dock style if one exists; otherwise, returns the original dock style.</returns>
+        public static DockStyle WithAutoSize(this DockStyle dock)
+        {
+            return dock switch
+            {
+                DockStyle.Left => DockStyle.LeftAutoSize,
+                DockStyle.Right => DockStyle.RightAutoSize,
+                DockStyle.Top => DockStyle.TopAutoSize,
+                DockStyle.Bottom => DockStyle.BottomAutoSize,
+                _ => dock,
+            };
+        }
+
+        /// <summary>
         /// Returns a random single-precision float in the range [0.0f, 1.0f).
         /// </summary>
         public static float NextFloat(this Random rng)

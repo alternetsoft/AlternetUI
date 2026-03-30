@@ -13,7 +13,7 @@ using Alternet.UI.Extensions;
 
 namespace PropertyGridSample
 {
-    public partial class MainWindow : Window
+    public partial class MainControl : Panel
     {
         public static bool DoSampleLocalization = true;
 
@@ -25,7 +25,7 @@ namespace PropertyGridSample
         private bool useIdle = false;
         private bool showDesignCorners;
 
-        static MainWindow()
+        static MainControl()
         {
             // Registers known collection property editors.
             PropertyGrid.RegisterCollectionEditors();
@@ -86,7 +86,7 @@ namespace PropertyGridSample
 
         public AbstractControl ControlParent => panel.FillPanel;
 
-        public MainWindow()
+        public MainControl()
         {
             InitSampleLocalization();
 
@@ -99,9 +99,6 @@ namespace PropertyGridSample
                 SetBackground(SystemColors.Window);
 
                 Title = "Alternet UI PropertyGrid Sample";
-                Size = (900, 700);
-                StartLocation = WindowStartLocation.CenterScreen;
-                Padding = 5;
                 Activated += MainWindow_Activated;
                 Deactivated += MainWindow_Deactivated;
                 SizeChanged += MainWindow_SizeChanged;
@@ -119,8 +116,6 @@ namespace PropertyGridSample
                 PropGrid.Features = PropertyGridFeature.QuestionCharInNullable;
                 PropGrid.ProcessException += PropertyGrid_ProcessException;
                 InitIgnorePropNames(PropGrid.IgnorePropNames);
-
-                Icon = App.DefaultIcon;
 
                 Children.Add(panel);
 
@@ -185,10 +180,12 @@ namespace PropertyGridSample
                 ControlParent.HasBorder = true;
 
                 toolBoxFilterEdit.VerticalAlignment = VerticalAlignment.Top;
-                toolBoxFilterEdit.MarginBottom = 2;
+                toolBoxFilterEdit.MarginBottom = 5;
+                toolBoxFilterEdit.InnerOuterBorder = InnerOuterSelector.Outer;
                 panel.LeftPanel.Children.Prepend(toolBoxFilterEdit);
 
-                toolBoxFilterEdit.InitFilterEdit();
+                toolBoxFilterEdit.InitSearchEdit();
+
                 panel.LeftPanel.Layout = LayoutStyle.Vertical;
             }
 

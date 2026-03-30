@@ -12,7 +12,7 @@ using System.IO;
 
 namespace PropertyGridSample
 {
-    public partial class MainWindow
+    public partial class MainControl
     {
         internal void TestMemoFind()
         {

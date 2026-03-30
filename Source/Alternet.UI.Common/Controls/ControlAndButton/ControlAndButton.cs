@@ -11,7 +11,8 @@ namespace Alternet.UI
     /// <summary>
     /// Base abstract class for control with side buttons.
     /// </summary>
-    public abstract partial class ControlAndButton : ControlAndControl, INotifyDataErrorInfo
+    [ControlCategory("Editors")]
+    public abstract partial class ControlAndButton : ControlAndPicture, INotifyDataErrorInfo
     {
         /// <summary>
         /// Represents the default margin applied to <see cref="SubstituteControl"/>.
@@ -139,6 +140,11 @@ namespace Alternet.UI
         /// Occurs when button is clicked.
         /// </summary>
         public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
+
+        /// <summary>
+        /// Gets or sets action that is called when button is clicked. This is a simplified alternative to <see cref="ButtonClick"/> event.
+        /// </summary>
+        public Action<ControlAndButtonClickEventArgs>? ButtonClickAction;
 
         /// <summary>
         /// Gets whether substitute control is created.
@@ -619,6 +625,7 @@ namespace Alternet.UI
         public void RaiseButtonClick(ControlAndButtonClickEventArgs e)
         {
             ButtonClick?.Invoke(this, e);
+            ButtonClickAction?.Invoke(e);
             if (e.Handled)
                 return;
             OnButtonClick(e);
@@ -630,7 +637,7 @@ namespace Alternet.UI
         public virtual void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
         }
-
+        
         /// <summary>
         /// Gets whether button with the specified id is visible.
         /// </summary>
@@ -732,12 +739,13 @@ namespace Alternet.UI
         /// Initializes buttons so only combo button with the specified image remains visible.
         /// </summary>
         /// <param name="button">Known button identifier.</param>
-        public virtual void SetSingleButton(UI.KnownButton? button)
+        public virtual SpeedButton? SetSingleButton(UI.KnownButton? button)
         {
             Buttons.SetChildrenVisible(false);
             HasBtnComboBox = true;
             BtnComboBoxSvg = null;
             ButtonOverride = button;
+            return ButtonCombo;
         }
 
         /// <summary>
@@ -749,8 +757,8 @@ namespace Alternet.UI
             bool showError,
             string? errorText = null)
         {
-            ErrorPicture.Visible = showError;
-            (ErrorPicture as IValidatorReporter)?.SetErrorStatus(this, showError, errorText);
+            InnerPicture.Visible = showError;
+            (InnerPicture as IValidatorReporter)?.SetErrorStatus(this, showError, errorText);
         }
 
         /// <summary>

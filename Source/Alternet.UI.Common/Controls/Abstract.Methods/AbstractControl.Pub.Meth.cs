@@ -2904,12 +2904,15 @@ namespace Alternet.UI
             switch (mode)
             {
                 case WindowSizeToContentMode.Width:
+                case WindowSizeToContentMode.GrowWidth:
                     MinWidth = ControlUtils.GrowCoord(MinWidth, minW);
                     break;
                 case WindowSizeToContentMode.Height:
+                case WindowSizeToContentMode.GrowHeight:
                     MinHeight = ControlUtils.GrowCoord(MinHeight, minH);
                     break;
                 case WindowSizeToContentMode.WidthAndHeight:
+                case WindowSizeToContentMode.GrowWidthAndHeight:
                     MinimumSize = ControlUtils.GrowSize(MinimumSize, (minW, minH));
                     break;
             }

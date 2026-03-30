@@ -10,10 +10,10 @@ namespace PropertyGridSample
     internal class PropertyGridSettings
     {
         private readonly PropertyGrid propertyGrid;
-        private readonly MainWindow mainWindow;
+        private readonly MainControl mainWindow;
         private PropertyGridKnownColors colorScheme = PropertyGridKnownColors.Default;
 
-        public PropertyGridSettings(MainWindow window)
+        public PropertyGridSettings(MainControl window)
         {
             this.mainWindow = window;
             this.propertyGrid = window.PropGrid;

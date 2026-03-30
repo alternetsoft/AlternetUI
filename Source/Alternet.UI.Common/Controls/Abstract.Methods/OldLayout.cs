@@ -379,11 +379,7 @@ namespace Alternet.UI
             }
         }
 
-        internal static void LayoutWhenDocked(
-            ref RectD bounds,
-            AbstractControl child,
-            DockStyle value,
-            bool autoSize)
+        internal static void LayoutWhenDocked(ref RectD bounds, AbstractControl child, DockStyle value)
         {
             SizeD child_size = child.Bounds.Size;
             var space = bounds;
@@ -391,74 +387,68 @@ namespace Alternet.UI
             switch (value)
             {
                 case DockStyle.Left:
-                    LayoutLeft();
+                    LayoutLeft(autoSize: false);
                     break;
                 case DockStyle.Top:
-                    LayoutTop();
+                    LayoutTop(autoSize: false);
                     break;
                 case DockStyle.Right:
-                    LayoutRight();
+                    LayoutRight(autoSize: false);
                     break;
                 case DockStyle.Bottom:
-                    LayoutBottom();
+                    LayoutBottom(autoSize: false);
                     break;
                 case DockStyle.Fill:
-                    LayoutFill();
+                    LayoutFill(autoSize: false);
                     break;
                 case DockStyle.RightAutoSize:
-                    LayoutRight(true);
+                    LayoutRight(autoSize: true);
+                    break;
+                case DockStyle.LeftAutoSize:
+                    LayoutLeft(autoSize: true);
+                    break;
+                case DockStyle.TopAutoSize:
+                    LayoutTop(autoSize: true);
+                    break;
+                case DockStyle.BottomAutoSize:
+                    LayoutBottom(autoSize: true);
                     break;
             }
 
             bounds = space;
 
-            void LayoutLeft(bool autoSize = false)
-            {
-                if (autoSize)
-                {
-                    child_size =
-                        child.GetPreferredSizeLimited(
-                            new SizeD(child_size.Width, space.Height));
-                }
-
-                child.SetBounds(
-                    space.Left,
-                    space.Y,
-                    child_size.Width,
-                    space.Height,
-                    BoundsSpecified.All);
-                space.X += child_size.Width;
-                space.Width -= child_size.Width;
-            }
-
-            void LayoutTop(bool autoSize = false)
-            {
-                if (autoSize)
-                {
-                    child_size =
-                        child.GetPreferredSizeLimited(
-                            new SizeD(space.Width, child_size.Height));
-                }
-
-                child.SetBounds(
-                    space.Left,
-                    space.Y,
-                    space.Width,
-                    child_size.Height,
-                    BoundsSpecified.All);
-                space.Y += child_size.Height;
-                space.Height -= child_size.Height;
-            }
-
-            void LayoutRight(bool autoSize = false)
+            void LayoutTop(bool autoSize)
             {
                 Thickness margin;
 
                 if (autoSize)
                 {
-                    child_size =
-                        child.GetPreferredSizeLimited(
-                            new SizeD(child_size.Width, space.Height));
+                    child_size = child.GetPreferredSizeLimited(new SizeD(space.Width, child_size.Height));
+                    margin = child.Margin;
+                }
+                else
+                {
+                    margin = Thickness.Empty;
+                }
+
+                child.SetBounds(
+                    space.Left,
+                    space.Y + margin.Top,
+                    space.Width,
+                    child_size.Height,
+                    BoundsSpecified.All);
+                var delta = child_size.Height + margin.Vertical;
+                space.Y += delta;
+                space.Height -= delta;
+            }
+
+            void LayoutRight(bool autoSize)
+            {
+                Thickness margin;
+
+                if (autoSize)
+                {
+                    child_size = child.GetPreferredSizeLimited(new SizeD(child_size.Width, space.Height));
                     margin = child.Margin;
                 }
                 else
@@ -475,29 +465,65 @@ namespace Alternet.UI
                 space.Width -= child_size.Width + margin.Horizontal;
             }
 
-            void LayoutBottom(bool autoSize = false)
+            void LayoutLeft(bool autoSize)
             {
+                Thickness margin;
+
                 if (autoSize)
                 {
-                    child_size =
-                        child.GetPreferredSizeLimited(
-                            new SizeD(space.Width, child_size.Height));
+                    child_size = child.GetPreferredSizeLimited(new SizeD(child_size.Width, space.Height));
+                    margin = child.Margin;
+                }
+                else
+                {
+                    margin = Thickness.Empty;
+                }
+
+                child.SetBounds(
+                    space.Left + margin.Left,
+                    space.Y,
+                    child_size.Width,
+                    space.Height,
+                    BoundsSpecified.All);
+                var delta = child_size.Width + margin.Horizontal;
+                space.X += delta;
+                space.Width -= delta;
+            }
+
+            void LayoutBottom(bool autoSize)
+            {
+                Thickness margin;
+
+                if (autoSize)
+                {
+                    child_size = child.GetPreferredSizeLimited(new SizeD(space.Width, child_size.Height));
+                    margin = child.Margin;
+                }
+                else
+                {
+                    margin = Thickness.Empty;
                 }
 
                 child.SetBounds(
                     space.Left,
-                    space.Bottom - child_size.Height,
+                    space.Bottom - child_size.Height - margin.Bottom,
                     space.Width,
                     child_size.Height,
                     BoundsSpecified.All);
-                space.Height -= child_size.Height;
+                space.Height -= child_size.Height + margin.Vertical;
             }
 
-            void LayoutFill(bool autoSize = false)
+            void LayoutFill(bool autoSize)
             {
                 child_size = new SizeD(space.Width, space.Height);
                 if (autoSize)
+                {
                     child_size = child.GetPreferredSizeLimited(child_size);
+                }
+                else
+                {
+                }
+
                 child.SetBounds(
                     space.Left,
                     space.Top,
@@ -558,11 +584,7 @@ namespace Alternet.UI
 
                 result++;
 
-                LayoutWhenDocked(
-                    ref space,
-                    child,
-                    dock,
-                    autoSize: false);
+                LayoutWhenDocked(ref space, child, dock);
             }
 
             bounds = space;
