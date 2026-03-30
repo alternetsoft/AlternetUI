@@ -187,15 +187,15 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="value"><see cref="DockStyle"/> value which specifies align option.</param>
         /// <param name="container">Container rectangle.</param>
+        /// <param name="layoutFlags">Layout flags. Optional. Default is <see cref="LayoutFlags.None"/>.</param>
         /// <remarks>
         /// This method changes <see cref="Bounds"/> so default layout must be disabled
         /// before using it. You can disable default layout using
-        /// <see cref="IgnoreLayout"/> property
-        /// of the control.
+        /// <see cref="IgnoreLayout"/> property of the control.
         /// </remarks>
-        public virtual RectD DockInRect(RectD container, DockStyle value)
+        public virtual RectD DockInRect(RectD container, DockStyle value, LayoutFlags layoutFlags = LayoutFlags.None)
         {
-            OldLayout.LayoutWhenDocked(ref container, this, value);
+            LayoutManager.LayoutWhenDocked(ref container, this, value, layoutFlags);
             return container;
         }
 
@@ -256,7 +256,7 @@ namespace Alternet.UI
             PreferredSizeContext context)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                return OldLayout.GetPreferredSizeWhenHorizontal(container, context);
+                return LayoutManager.GetPreferredSizeWhenHorizontal(container, context);
             else
                 return GetPreferredSizeWhenStack(container, context, isVert: false);
         }
@@ -266,7 +266,7 @@ namespace Alternet.UI
             PreferredSizeContext context)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                return OldLayout.GetPreferredSizeWhenVertical(container, context);
+                return LayoutManager.GetPreferredSizeWhenVertical(container, context);
             else
                 return GetPreferredSizeWhenStack(container, context, isVert: true);
         }
@@ -277,9 +277,9 @@ namespace Alternet.UI
             IReadOnlyList<AbstractControl> controls)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                OldLayout.LayoutWhenHorizontal(container, childrenLayoutBounds, controls);
+                LayoutManager.LayoutWhenHorizontal(container, childrenLayoutBounds, controls);
             else
-                OldLayout.LayoutWhenHorizontal(container, childrenLayoutBounds, controls);
+                LayoutManager.LayoutWhenHorizontal(container, childrenLayoutBounds, controls);
         }
 
         internal static void LayoutWhenVertical(
@@ -288,9 +288,9 @@ namespace Alternet.UI
             IReadOnlyList<AbstractControl> items)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                OldLayout.LayoutWhenVertical(container, lBounds, items);
+                LayoutManager.LayoutWhenVertical(container, lBounds, items);
             else
-                OldLayout.LayoutWhenVertical(container, lBounds, items);
+                LayoutManager.LayoutWhenVertical(container, lBounds, items);
         }
 
         // On return, 'bounds' has an empty space left after docking the controls to sides
@@ -302,9 +302,9 @@ namespace Alternet.UI
             IReadOnlyList<AbstractControl> children)
         {
             if (UseLayoutMethod == DefaultLayoutMethod.Original)
-                return OldLayout.LayoutWhenDocked(container, ref bounds, children);
+                return LayoutManager.LayoutWhenDocked(container, ref bounds, children);
             else
-                return OldLayout.LayoutWhenDocked(container, ref bounds, children);
+                return LayoutManager.LayoutWhenDocked(container, ref bounds, children);
         }
 
         internal static SizeD GetMinStretchedSize(
