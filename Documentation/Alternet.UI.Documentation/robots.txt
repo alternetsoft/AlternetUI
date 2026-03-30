@@ -1,26 +1,35 @@
 User-agent: PetalBot
-Disallow: /
+Disallow: /api/
 
 User-agent: ClaudeBot
-Disallow: /
+Disallow: /api/
 
 User-agent: Claude-SearchBot
-Disallow: /
+Disallow: /api/
 
 User-agent: Sogou-Test-Spider
-Disallow: /
+Disallow: /api/
 
 User-agent: Baiduspider
-Disallow: /
+Disallow: /api/
 
 User-agent: SemrushBot
-Disallow: /
+Disallow: /api/
 
 User-agent: Baiduspider-render
-Disallow: /
+Disallow: /api/
 
 User-agent: dotbot
-Disallow: /
+Disallow: /api/
 
 User-agent: Applebot
-Disallow: /
+Disallow: /api/
+
+User-agent: AhrefsBot
+Disallow: /api/
+
+User-agent: Barkrowler
+Disallow: /api/
+
+User-agent: Amazonbot
+Disallow: /api/
