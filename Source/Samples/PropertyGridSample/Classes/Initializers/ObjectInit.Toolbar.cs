@@ -71,13 +71,15 @@ namespace PropertyGridSample
 
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
-                KnownSvgImages.ImgFileNew);
+                KnownSvgImages.ImgFileNew,
+                toolTip: CommonStrings.Default.ButtonNew);
             toolbar.AddToolAction(buttonIdNew, ButtonClick);
             toolbar.SetToolShortcut(buttonIdNew, Keys.Control | Keys.N);
 
             var buttonIdOpen = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonOpen,
-                KnownSvgImages.ImgFileOpen);
+                KnownSvgImages.ImgFileOpen,
+                toolTip: CommonStrings.Default.ButtonOpen);
             toolbar.AddToolAction(buttonIdOpen, ButtonClick);
             toolbar.SetToolShortcut(buttonIdOpen, Keys.Control | Keys.O);
 
@@ -96,7 +98,8 @@ namespace PropertyGridSample
 
             var buttonIdSave = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonSave,
-                saveClone);
+                saveClone,
+                toolTip: CommonStrings.Default.ButtonSave);
             toolbar.AddToolAction(buttonIdSave, ButtonClick);
 
             toolbar.AddSeparator();
