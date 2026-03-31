@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -188,51 +189,11 @@ namespace Alternet.UI
         private RightSideElementKind rightSideElementKind;
         private bool isToolTipEnabled = true;
         private Coord minRightSideWidth;
+        private bool isTransparent = true;
 
         static SpeedButton()
         {
-            var borderColor = DefaultColors.BorderColor;
-
-            InitThemeLight(DefaultTheme.Light);
-            InitThemeDark(DefaultTheme.Dark);
-
-            StaticBorderTheme = DefaultTheme.Clone();
-            StaticBorderTheme.NormalBorderAsHovered();
-            StaticBorderTheme.DisabledBorderAsHovered();
-            StaticBorderTheme.SetBorderColor(borderColor);
-
-            RoundBorderTheme = StaticBorderTheme.Clone();
-
-            RoundBorderTheme.SetCornerRadius(
-                DefaultRoundBorderRadius,
-                DefaultRoundBorderRadiusIsPercent);
-
-            StickyBorderTheme = CreateBordered(borderColor);
-            CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor);
-
-            ControlColorAndStyle CreateBordered(LightDarkColor? color)
-            {
-                var result = DefaultTheme.Clone();
-                result.SetBorderFromBorder(stateToChange: VisualControlState.Normal, assignFromState: VisualControlState.Hovered);
-                result.SetBorderWidth(DefaultStickyBorderWidth);
-                result.SetBorderColor(color);
-                return result;
-            }
-
-            PushButtonTheme = CreatePushButtonTheme(null);
-            PushButtonHoveredTheme = CreatePushButtonTheme(DrawingUtils.DrawPushButtonHovered);
-            PushButtonPressedTheme = CreatePushButtonTheme(DrawingUtils.DrawPushButtonPressed);
-
-            ControlColorAndStyle CreatePushButtonTheme(PaintEventHandler? normalStateOverride)
-            {
-                var result = DefaultTheme.Clone();
-                result.SetAsPushButton();
-                if (normalStateOverride is null)
-                    return result;
-                result.Light.BackgroundActions!.Normal = normalStateOverride;
-                result.Dark.BackgroundActions!.Normal = normalStateOverride;
-                return result;
-            }
+            ResetThemes();
         }
 
         /// <summary>
@@ -536,6 +497,29 @@ namespace Alternet.UI
                     return;
                 stickySpreadMode = value;
                 UpdateSiblingStickyState();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is transparent. Default is true.
+        /// When true, the control's background is not drawn, allowing the parent control's
+        /// background to show through. When false, the control's background
+        /// is drawn normally. In both states, the control's border is drawn if applicable.
+        /// </summary>
+        /// <remarks>Setting this property to a new value will trigger a redraw of the object.</remarks>
+        public virtual bool IsTransparent
+        {
+            get
+            {
+                return isTransparent;
+            }
+
+            set
+            {
+                if (isTransparent == value)
+                    return;
+                isTransparent = value;
+                Invalidate();
             }
         }
 
@@ -1429,11 +1413,64 @@ namespace Alternet.UI
         internal Spacer PictureBox => pictureSpacer;
 
         /// <summary>
+        /// Resets color themes of <see cref="SpeedButton"/> to their initial values.
+        /// </summary>
+        [MemberNotNull(nameof(StaticBorderTheme))]
+        [MemberNotNull(nameof(RoundBorderTheme))]
+        [MemberNotNull(nameof(StickyBorderTheme))]
+        [MemberNotNull(nameof(CheckBorderTheme))]
+        public static void ResetThemes()
+        {
+            var borderColor = DefaultColors.BorderColor;
+
+            var corners = new BorderCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
+
+            InitThemeLight(DefaultTheme.Light, corners);
+            InitThemeDark(DefaultTheme.Dark, corners);
+
+            StaticBorderTheme = DefaultTheme.Clone();
+            StaticBorderTheme.NormalBorderAsHovered();
+            StaticBorderTheme.DisabledBorderAsHovered();
+            StaticBorderTheme.SetBorderColor(borderColor);
+
+            RoundBorderTheme = StaticBorderTheme.Clone();
+            RoundBorderTheme.SetCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
+
+            StickyBorderTheme = CreateBordered(borderColor);
+            CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor);
+
+            ControlColorAndStyle CreateBordered(LightDarkColor? color)
+            {
+                var result = DefaultTheme.Clone();
+                result.SetBorderFromBorder(stateToChange: VisualControlState.Normal, assignFromState: VisualControlState.Hovered);
+                result.SetBorderWidth(DefaultStickyBorderWidth);
+                result.SetBorderColor(color);
+                return result;
+            }
+
+            PushButtonTheme = CreatePushButtonTheme(null);
+            PushButtonHoveredTheme = CreatePushButtonTheme(DrawingUtils.DrawPushButtonHovered);
+            PushButtonPressedTheme = CreatePushButtonTheme(DrawingUtils.DrawPushButtonPressed);
+
+            ControlColorAndStyle CreatePushButtonTheme(PaintEventHandler? normalStateOverride)
+            {
+                var result = DefaultTheme.Clone();
+                result.SetAsPushButton();
+                if (normalStateOverride is null)
+                    return result;
+                result.Light.BackgroundActions!.Normal = normalStateOverride;
+                result.Dark.BackgroundActions!.Normal = normalStateOverride;
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Initializes default colors and styles for the <see cref="SpeedButton"/>
         /// using 'Light' color theme.
         /// </summary>
         /// <param name="theme"><see cref="ControlStateSettings"/> to initialize.</param>
-        public static void InitThemeLight(ControlStateSettings theme)
+        /// <param name="cornerRadius">Corner radius for the borders. If null, default value is used.</param>
+        public static void InitThemeLight(ControlStateSettings theme, BorderCornerRadius? cornerRadius = null)
         {
             AllStateColors colors = new()
             {
@@ -1446,7 +1483,7 @@ namespace Alternet.UI
                 PressedBackColor = (204, 228, 247),
             };
 
-            theme.Borders = CreateBorders((204, 232, 255));
+            theme.Borders = CreateBorders((204, 232, 255), cornerRadius);
             theme.Colors = colors.AllStates;
             theme.Backgrounds = theme.Colors;
         }
@@ -1481,7 +1518,8 @@ namespace Alternet.UI
         /// using 'Dark' color theme.
         /// </summary>
         /// <param name="theme"><see cref="ControlStateSettings"/> to initialize.</param>
-        public static void InitThemeDark(ControlStateSettings theme)
+        /// <param name="cornerRadius">Optional corner radius for the borders. If not specified, default value will be used.</param>
+        public static void InitThemeDark(ControlStateSettings theme, BorderCornerRadius? cornerRadius = null)
         {
             AllStateColors colors = new()
             {
@@ -1494,7 +1532,7 @@ namespace Alternet.UI
                 PressedBackColor = (34, 34, 34),
             };
 
-            theme.Borders = CreateBorders((112, 112, 112));
+            theme.Borders = CreateBorders((112, 112, 112), cornerRadius);
             theme.Colors = colors.AllStates;
             theme.Backgrounds = theme.Colors;
         }
@@ -1505,14 +1543,17 @@ namespace Alternet.UI
         /// and using specified <paramref name="color"/>.
         /// </summary>
         /// <param name="color">Border color.</param>
+        /// <param name="cornerRadius">Corner radius for the border.</param>
         /// <returns></returns>
-        public static ControlStateBorders CreateBorders(Color color)
+        public static ControlStateBorders CreateBorders(Color color, BorderCornerRadius? cornerRadius = null)
         {
             BorderSettings hoveredBorder = new()
             {
                 Width = 1,
                 Color = color,
             };
+
+            hoveredBorder.SetCornerRadius(cornerRadius);
 
             ControlStateBorders borders = new();
             var pressedBorder = hoveredBorder.Clone();
@@ -2094,7 +2135,10 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             var state = VisualState;
-            var flags = DrawDefaultBackgroundFlags.DrawBackground;
+
+            var backgroundFlags = IsTransparent ? DrawDefaultBackgroundFlags.None : DrawDefaultBackgroundFlags.DrawBackground;
+
+            var flags = backgroundFlags;
 
             var isNormalOrDisabled = state == VisualControlState.Normal || state == VisualControlState.Disabled;
 
@@ -2120,9 +2164,7 @@ namespace Alternet.UI
                         0,
                         ClientRectangle.Width - spacer.Location.X,
                         ClientRectangle.Height);
-                    DrawDefaultBackground(
-                        e.WithRect(newRect),
-                        DrawDefaultBackgroundFlags.DrawBackground);
+                    DrawDefaultBackground(e.WithRect(newRect), backgroundFlags);
                 }
 
                 drawable.VisualState = Enabled
