@@ -759,7 +759,11 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnMouseLeftButtonDown(e);
-            clickAction?.Invoke();
+
+            if (Enabled)
+            {
+                clickAction?.Invoke();
+            }
         }
 
         /// <summary>

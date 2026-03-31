@@ -158,6 +158,9 @@ namespace ControlsSample
                 new("StdButton", () => new ButtonPage()),
                 new("StdCheckBox", () => new CheckBoxesPage()),
                 new("StdRadioButton", () => new RadioButtonsPage()),
+                new("Button", () => new NativeButtonPage()),
+                new("CheckBox", () => new NativeCheckBoxesPage()),
+                new("RadioButton", () => new NativeRadioButtonsPage()),
             };
 
             return CreateCustomPage(pages);
