@@ -22,6 +22,11 @@ namespace Alternet.UI
         public enum DrawDefaultBackgroundFlags
         {
             /// <summary>
+            /// Specifies that neither background nor border should be drawn.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
             /// Specifies that background should be drawn.
             /// </summary>
             DrawBackground = 1,

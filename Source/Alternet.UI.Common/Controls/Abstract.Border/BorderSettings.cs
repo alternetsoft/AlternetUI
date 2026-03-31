@@ -63,13 +63,7 @@ namespace Alternet.UI
         private readonly BorderSideSettings right = new();
         private readonly BorderSideSettings bottom = new();
 
-        private Coord? uniformCornerRadius;
-        private bool? uniformRadiusIsPercent = false;
-        private BorderCornerRadius? topLeftRadius;
-        private BorderCornerRadius? topRightRadius;
-        private BorderCornerRadius? bottomRightRadius;
-        private BorderCornerRadius? bottomLeftRadius;
-
+        private BorderCornerRadius cornerRadius;
         private BaseCollection<BorderSettings>? innerBorders;
         private Thickness innerBorderMargin = Thickness.One;
         private bool innerBorderVisible;
@@ -259,14 +253,14 @@ namespace Alternet.UI
         {
             get
             {
-                return uniformCornerRadius;
+                return cornerRadius.Value;
             }
 
             set
             {
-                if (uniformCornerRadius == value || Immutable)
+                if (cornerRadius.Value == value || Immutable)
                     return;
-                uniformCornerRadius = value;
+                cornerRadius.SetValue(value);
                 RaisePropertyChanged(nameof(UniformCornerRadius));
             }
         }
@@ -283,14 +277,14 @@ namespace Alternet.UI
         {
             get
             {
-                return uniformRadiusIsPercent;
+                return cornerRadius.IsPercent;
             }
 
             set
             {
-                if (uniformRadiusIsPercent == value || Immutable)
+                if (cornerRadius.IsPercent == value || Immutable)
                     return;
-                uniformRadiusIsPercent = value;
+                cornerRadius.IsPercent = value;
                 RaisePropertyChanged(nameof(UniformCornerRadius));
             }
         }
@@ -436,70 +430,6 @@ namespace Alternet.UI
         /// </summary>
         public bool IsUniformVerticalColor => left.Color == right.Color;
 
-        internal virtual BorderCornerRadius? TopLeftRadius
-        {
-            get
-            {
-                return topLeftRadius;
-            }
-
-            set
-            {
-                if (topLeftRadius == value || Immutable)
-                    return;
-                topLeftRadius = value;
-                RaisePropertyChanged(nameof(TopLeftRadius));
-            }
-        }
-
-        internal virtual BorderCornerRadius? TopRightRadius
-        {
-            get
-            {
-                return topRightRadius;
-            }
-
-            set
-            {
-                if (topRightRadius == value || Immutable)
-                    return;
-                topRightRadius = value;
-                RaisePropertyChanged(nameof(TopRightRadius));
-            }
-        }
-
-        internal virtual BorderCornerRadius? BottomRightRadius
-        {
-            get
-            {
-                return bottomRightRadius;
-            }
-
-            set
-            {
-                if (bottomRightRadius == value || Immutable)
-                    return;
-                bottomRightRadius = value;
-                RaisePropertyChanged(nameof(BottomRightRadius));
-            }
-        }
-
-        internal virtual BorderCornerRadius? BottomLeftRadius
-        {
-            get
-            {
-                return bottomLeftRadius;
-            }
-
-            set
-            {
-                if (bottomLeftRadius == value || Immutable)
-                    return;
-                bottomLeftRadius = value;
-                RaisePropertyChanged(nameof(BottomLeftRadius));
-            }
-        }
-
         /// <summary>
         /// Gets whether colors of the top and bottom edges of the border are equal.
         /// </summary>
@@ -614,6 +544,18 @@ namespace Alternet.UI
             {
                 DrawVertical(dc, border.Right.GetBrush(defaultColor), border.GetRightRectangle(rect));
             }
+        }
+
+        /// <summary>
+        /// Sets the corner radius for the border.
+        /// </summary>
+        /// <param name="cornerRadius">The corner radius to set.</param>
+        public virtual void SetCornerRadius(BorderCornerRadius? cornerRadius)
+        {
+            if (Immutable)
+                return;
+            this.cornerRadius = cornerRadius ?? new();
+            RaisePropertyChanged(nameof(UniformCornerRadius));
         }
 
         /// <summary>
@@ -848,12 +790,7 @@ namespace Alternet.UI
             top.Assign(value.top);
             bottom.Assign(value.bottom);
 
-            uniformCornerRadius = value.uniformCornerRadius;
-            uniformRadiusIsPercent = value.uniformRadiusIsPercent;
-            topLeftRadius = value.topLeftRadius;
-            topRightRadius = value.topRightRadius;
-            bottomRightRadius = value.bottomRightRadius;
-            bottomLeftRadius = value.bottomLeftRadius;
+            cornerRadius = value.cornerRadius;
         }
 
         /// <summary>
