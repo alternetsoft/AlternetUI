@@ -930,15 +930,9 @@ namespace Alternet.UI
 
             DrawBorderAndBackground(e, flags);
 
-            var rect = e.ClientRectangle;
             var dc = e.Graphics;
 
-            itemDrawable.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
-            itemDrawable.VisualState = VisualState;
-
-            if (itemDrawable.VisualState != VisualControlState.Normal)
-            {
-            }
+            ConfigureItemDrawable(itemDrawable, e);
 
             itemDrawable.Draw(this, dc);
         }
@@ -1071,6 +1065,20 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Configures the <see cref="ListItemDrawable"/> instance before it is drawn. This method is called during
+        /// the painting process to set up the drawable with the appropriate bounds
+        /// and visual state based on the current state of the control.
+        /// </summary>
+        /// <param name="itemDrawable">The <see cref="ListItemDrawable"/> instance to configure.</param>
+        /// <param name="e">The <see cref="PaintEventArgs"/> instance containing the event data.</param>
+        protected virtual void ConfigureItemDrawable(ListItemDrawable itemDrawable, PaintEventArgs e)
+        {
+            var rect = e.ClientRectangle;
+            itemDrawable.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
+            itemDrawable.VisualState = VisualState;
+        }
+
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
@@ -1084,8 +1092,12 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnClick(e);
-            clickAction?.Invoke();
-            commandSource.Execute();
+
+            if (Enabled)
+            {
+                clickAction?.Invoke();
+                commandSource.Execute();
+            }
         }
 
         /// <summary>
