@@ -71,12 +71,14 @@ namespace Alternet.Drawing
         /// <param name="controlState">Control part state.</param>
         /// <param name="canvas"><see cref="Graphics"/> used for painting the checkbox.</param>
         /// <param name="rect">Rectangle where checkbox is painted.</param>
+        /// <param name="color">Color of the checkbox. If null, default color will be used.</param>
         void DrawCheckBox(
             AbstractControl control,
             Graphics canvas,
             RectD rect,
             CheckState checkState,
-            VisualControlState controlState);
+            VisualControlState controlState,
+            Color? color = null);
 
         /// <summary>
         /// Draws a push button control within the specified bounds and visual state.
@@ -101,6 +103,7 @@ namespace Alternet.Drawing
         /// <param name="control">The <see cref="AbstractControl"/> instance
         /// where radio button will be painted. Used for scale factor and dark mode
         /// determination.</param>
+        /// <param name="color">Color of the radio button. If null, default color will be used.</param>
         /// <param name="canvas">The <see cref="Graphics"/> surface used for rendering.</param>
         /// <param name="rect">The bounding <see cref="RectD"/> that
         /// defines the button’s layout region.</param>
@@ -113,6 +116,7 @@ namespace Alternet.Drawing
             Graphics canvas,
             RectD rect,
             bool isChecked,
-            VisualControlState controlState);
+            VisualControlState controlState,
+            Color? color = null);
     }
 }

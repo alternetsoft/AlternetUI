@@ -270,7 +270,8 @@ namespace Alternet.Drawing
             Graphics canvas,
             RectD rect,
             CheckState checkState,
-            VisualControlState controlState)
+            VisualControlState controlState,
+            Color? color)
         {
             var flags = Convert(checkState, controlState);
             DrawCheckBox(control, canvas, rect, flags);
@@ -1064,7 +1065,8 @@ namespace Alternet.Drawing
             Graphics canvas,
             RectD rect,
             bool isChecked,
-            VisualControlState controlState)
+            VisualControlState controlState,
+            Color? color)
         {
             CheckState state = isChecked ? CheckState.Checked : CheckState.Unchecked;
             var flags = Convert(state, controlState);

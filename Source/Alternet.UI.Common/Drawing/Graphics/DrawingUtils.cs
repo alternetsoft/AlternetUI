@@ -173,14 +173,16 @@ namespace Alternet.UI
             AbstractControl control,
             RectD rect,
             CheckState checkState,
-            VisualControlState controlState)
+            VisualControlState controlState,
+            Color? color = null)
         {
             ControlPaint.Handler.DrawCheckBox(
                 control,
                 canvas,
                 rect,
                 checkState,
-                controlState);
+                controlState,
+                color);
         }
 
         /// <inheritdoc cref="IControlPainterHandler.DrawPushButton"/>
@@ -288,14 +290,16 @@ namespace Alternet.UI
             AbstractControl control,
             RectD rect,
             bool isChecked,
-            VisualControlState controlState)
+            VisualControlState controlState,
+            Color? color = null)
         {
             ControlPaint.Handler.DrawRadioButton(
                 control,
                 canvas,
                 rect,
                 isChecked,
-                controlState);
+                controlState,
+                color);
         }
 
         /// <summary>

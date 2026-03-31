@@ -175,12 +175,15 @@ namespace Alternet.Drawing
         /// The <see cref="VisualControlState"/> representing the current interaction state
         /// (e.g., normal, hovered, disabled) used for rendering.
         /// </param>
+        /// <param name="color">The optional <see cref="Color"/> to use when drawing the radio button. If not provided,
+        /// the default color will be used based on the control's state and theme.</param>
         public static void DrawRadioButtonSvg(
             AbstractControl control,
             Graphics canvas,
             RectD rect,
             bool isChecked,
-            VisualControlState controlState)
+            VisualControlState controlState,
+            Color? color = null)
         {
             DrawCheckBoxSvg(
                 control,
@@ -188,7 +191,8 @@ namespace Alternet.Drawing
                 rect,
                 isChecked ? CheckState.Checked : CheckState.Unchecked,
                 controlState,
-                GetRadioButtonSvg);
+                GetRadioButtonSvg,
+                color);
         }
 
         /// <summary>
@@ -202,13 +206,16 @@ namespace Alternet.Drawing
         /// <param name="controlState">The visual state of the control
         /// (e.g., normal, hovered, pressed).</param>
         /// <param name="getSvg">The optional delegate used to get svg images.</param>
+        /// <param name="color">The optional <see cref="Color"/> to use when drawing the radio button. If not provided,
+        /// the default color will be used based on the control's state and theme.</param>
         public static void DrawCheckBoxSvg(
             AbstractControl control,
             Graphics canvas,
             RectD rect,
             CheckState checkState,
             VisualControlState controlState,
-            GetCheckBoxSvgDelegate? getSvg = null)
+            GetCheckBoxSvgDelegate? getSvg = null,
+            Color? color = null)
         {
             getSvg ??= GetCheckBoxSvg;
             var svg = getSvg(checkState);
@@ -216,7 +223,7 @@ namespace Alternet.Drawing
 
             Image? image;
 
-            var color = CheckBoxStateColors[controlState];
+            color ??= CheckBoxStateColors[controlState];
 
             if (color is null)
             {
@@ -262,9 +269,10 @@ namespace Alternet.Drawing
             Graphics canvas,
             RectD rect,
             CheckState checkState,
-            VisualControlState controlState)
+            VisualControlState controlState,
+            Color? color)
         {
-            DrawCheckBoxSvg(control, canvas, rect, checkState, controlState);
+            DrawCheckBoxSvg(control, canvas, rect, checkState, controlState, null, color);
         }
 
         /// <inheritdoc/>
@@ -322,14 +330,16 @@ namespace Alternet.Drawing
             Graphics canvas,
             RectD rect,
             bool isChecked,
-            VisualControlState controlState)
+            VisualControlState controlState,
+            Color? color)
         {
             DrawRadioButtonSvg(
                 control,
                 canvas,
                 rect,
                 isChecked,
-                controlState);
+                controlState,
+                color);
         }
     }
 }
