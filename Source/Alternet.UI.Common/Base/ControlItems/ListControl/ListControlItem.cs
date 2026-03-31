@@ -273,6 +273,14 @@ namespace Alternet.UI
         public bool HasImageOrSvg => Image is not null || SvgImage is not null || HasValidImageIndex;
 
         /// <summary>
+        /// Gets or sets the callback that is invoked before a check box is drawn for a list control item.
+        /// </summary>
+        /// <remarks>Use this property to customize the appearance or behavior of check boxes before they
+        /// are rendered. The callback receives the list item and check box information, allowing for
+        /// conditional customization. If not set, the default drawing behavior is used.</remarks>
+        public Action<ListControlItem, ItemCheckBoxInfo>? BeforeDrawCheckBox { get; set; }
+
+        /// <summary>
         /// Gets or sets text for the display purposes.
         /// </summary>
         public virtual string? DisplayText
@@ -1711,13 +1719,16 @@ namespace Alternet.UI
                 }
             }
 
+            Color? color = info.Color;
+
             if (info.IsRadioButton)
             {
                 canvas.DrawRadioButton(
                     control,
                     info.CheckRect,
                     info.CheckState == CheckState.Checked,
-                    info.SvgState);
+                    info.SvgState,
+                    color);
             }
             else
             {
@@ -1725,7 +1736,8 @@ namespace Alternet.UI
                     control,
                     info.CheckRect,
                     info.CheckState,
-                    info.SvgState);
+                    info.SvgState,
+                    color);
             }
         }
 
@@ -2371,6 +2383,7 @@ namespace Alternet.UI
                 if (info.SvgState == VisualControlState.Selected)
                     info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
                 info.IsRadioButton = item.IsRadioButton;
+                BeforeDrawCheckBox?.Invoke(this, info);
                 DefaultDrawCheckBox(dc, ControlUtils.SafeControl(container), info);
                 paintRectangle = info.TextRect;
             }
@@ -2925,9 +2938,16 @@ namespace Alternet.UI
             public Color? SvgImageColor;
 
             /// <summary>
+            /// Gets or sets the color used to draw the checkbox. If not set, the checkbox may use a default color defined by the container or theme.
+            /// This property is not used when checkbox images are provided, as the images will be drawn in their original colors.
+            /// However, if the checkbox is drawn using default rendering (without custom images), this color will be applied to the checkbox elements.
+            /// </summary>
+            public Color? Color;
+
+            /// <summary>
             /// Gets or sets the visual state of the SVG image.
             /// </summary>
-            public VisualControlState SvgState = VisualControlState.Normal;
+            public VisualControlState SvgState { get; set; } = VisualControlState.Normal;
 
             /// <summary>
             /// Gets or sets a value indicating whether the checkbox is visible.
