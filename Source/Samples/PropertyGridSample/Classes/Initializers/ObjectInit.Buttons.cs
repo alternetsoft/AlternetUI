@@ -69,7 +69,8 @@ namespace PropertyGridSample
         {
             if (control is not SpeedTextButton button)
                 return;
-            button.Text = "Sample Text";
+            button.Text = "SpeedTextButton";
+            button.ToolTip = "Sample ToolTip";
             button.UseTheme = SpeedButton.KnownTheme.StaticBorder;
             button.Click += LogClick;
         }
@@ -87,7 +88,8 @@ namespace PropertyGridSample
         {
             if (control is not SpeedButton button)
                 return;
-            button.Text = "speedButton";
+            button.Text = "SpeedButton";
+            button.ToolTip = "Sample ToolTip";
             button.TextVisible = true;
             button.Click += LogClick;
 

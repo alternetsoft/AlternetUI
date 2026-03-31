@@ -600,7 +600,7 @@ namespace Alternet.UI
             var result = AddSpeedBtnCore(
                 text,
                 image,
-                null,
+                toolTip: null,
                 action);
             return result.UniqueId;
         }
@@ -1038,7 +1038,7 @@ namespace Alternet.UI
         {
             var info = KnownButtons.GetInfo(button);
 
-            var result = AddSpeedBtn(info?.Text?.SafeToString(), info?.SvgImage, action);
+            var result = AddSpeedBtn(text: null, info?.SvgImage, toolTip: info?.Text?.SafeToString(), action);
             return result;
         }
 

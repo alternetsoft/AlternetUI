@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -63,6 +64,7 @@ namespace Alternet.UI
         private bool canNavigate = true;
         private int scriptRunCounter = 0;
         private ActionsListBox? actionsControl;
+        private BaseDictionary<string, string> urlMapping = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelWebBrowser"/> class.
@@ -107,6 +109,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets dictionary for URL mappings which is used in <see cref="LoadUrl(string?)"/> method.
+        /// By default mapping "g" => "https://www.google.com" is defined.
+        /// It means when you call LoadUrl("g") or enter "g" in the URL bar, it will be translated to LoadUrl("https://www.google.com").
+        /// This allows you to define short aliases for frequently used URLs.
+        /// </summary>
+        [Browsable(false)]
+        public BaseDictionary<string, string> UrlMapping => urlMapping;
+
+        /// <summary>
         /// Gets list box with list of actions. This control is created by demand, it will be shown
         /// at the right of the browser.
         /// </summary>
@@ -115,7 +126,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(actionsControl == null)
+                if (actionsControl == null)
                 {
                     actionsControl = new()
                     {
@@ -291,7 +302,7 @@ namespace Alternet.UI
         /// <summary>
         /// Updates enabled state of the "Zoom In" and "Zoom Out" buttons on the toolbar.
         /// </summary>
-        public void UpdateZoomButtons()
+        public virtual void UpdateZoomButtons()
         {
             ToolBar.SetToolEnabled(buttonIdZoomIn, WebBrowser.CanZoomIn);
             ToolBar.SetToolEnabled(buttonIdZoomOut, WebBrowser.CanZoomOut);
@@ -300,7 +311,7 @@ namespace Alternet.UI
         /// <summary>
         /// Updates enabled state of the "Back" and "Forward" buttons on the toolbar.
         /// </summary>
-        public void UpdateHistoryButtons()
+        public virtual void UpdateHistoryButtons()
         {
             if (!historyCleared)
             {
@@ -315,22 +326,22 @@ namespace Alternet.UI
         /// <summary>
         /// Shows "Find" dialog window.
         /// </summary>
-        public void FindWithDialog()
+        public virtual void FindWithDialog()
         {
-            if(searchWindow is null)
+            if (searchWindow is null)
                 Recreate();
             else
-            if (searchWindow.TryGetTarget(out var target))
-            {
-                if (target.IsDisposed)
-                    Recreate();
-                else
+                if (searchWindow.TryGetTarget(out var target))
                 {
-                    target.ShowAndFocus();
+                    if (target.IsDisposed)
+                        Recreate();
+                    else
+                    {
+                        target.ShowAndFocus();
+                    }
                 }
-            }
-            else
-                Recreate();
+                else
+                    Recreate();
 
             void Recreate()
             {
@@ -349,13 +360,14 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void CreateToolbarItems()
         {
-            buttonIdBack = toolBar.AddSpeedBtn(KnownButton.Back, BackButton_Click);
-            buttonIdForward = toolBar.AddSpeedBtn(KnownButton.Forward, ForwardBtn_Click);
-            buttonIdZoomIn = toolBar.AddSpeedBtn(KnownButton.ZoomIn, ZoomInButton_Click);
-            buttonIdZoomOut = toolBar.AddSpeedBtn(KnownButton.ZoomOut, ZoomOutButton_Click);
+            buttonIdBack = toolBar.AddSpeedBtn(KnownButton.Back, OnBackButtonClick);
+            buttonIdForward = toolBar.AddSpeedBtn(KnownButton.Forward, OnForwardButtonClick);
+            buttonIdZoomIn = toolBar.AddSpeedBtn(KnownButton.ZoomIn, OnZoomInButtonClick);
+            buttonIdZoomOut = toolBar.AddSpeedBtn(KnownButton.ZoomOut, OnZoomOutButtonClick);
             buttonIdUrl = toolBar.AddControl(urlTextBox);
-            buttonIdGo = toolBar.AddSpeedBtn(KnownButton.BrowserGo, GoButton_Click);
+            buttonIdGo = toolBar.AddSpeedBtn(KnownButton.BrowserGo, OnGoButtonClick);
             buttonIdMoreActions = toolBar.AddSpeedBtn(null, KnownSvgImages.ImgMoreActions);
+            toolBar.SetToolAlignRight(buttonIdGo);
             toolBar.SetToolAlignRight(buttonIdMoreActions);
 
             MenuItem itemSearch = new(
@@ -373,60 +385,118 @@ namespace Alternet.UI
 
             toolBar.SetToolDropDownMenu(buttonIdMoreActions, MoreActionsMenu);
 
-            urlTextBox.KeyDown += TextBox_KeyDown;
+            urlTextBox.KeyDown += OnTextBoxKeyDown;
         }
 
-        private void WebBrowser_Loaded(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that occurs when the web browser has finished loading content.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains event data related to the web browser load event.</param>
+        protected virtual void OnWebBrowserLoaded(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
             UpdateHistoryButtons();
         }
 
-        private void WebBrowser_NewWindow(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that occurs when a new browser window is requested by the web browser control.
+        /// </summary>
+        /// <remarks>Override this method to customize how new window requests are handled in derived
+        /// classes. This method is called when the web browser control signals that a new window should be opened, such
+        /// as when a link with target='_blank' is activated.</remarks>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data, including the URL to be loaded in the new window.</param>
+        protected virtual void OnWebBrowserNewWindow(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
             LoadUrl(e.Url);
         }
 
-        private void WebBrowser_TitleChanged(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that occurs when the web browser's document title changes.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data, including the new document title.</param>
+        protected virtual void OnWebBrowserTitleChanged(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser_BeforeBrowserCreate(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that occurs before a web browser instance is created.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data.</param>
+        protected virtual void OnWebBrowserBeforeBrowserCreate(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser_FullScreenChanged(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that occurs when the web browser enters or exits full-screen mode.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains data related to the full-screen state change.</param>
+        protected virtual void OnWebBrowserFullScreenChanged(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser_ScriptMessageReceived(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that is raised when a script message is received from the web browser control.
+        /// </summary>
+        /// <remarks>Override this method to provide custom handling of script messages received from the
+        /// web browser control in derived classes.</remarks>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data for the script message.</param>
+        protected virtual void OnWebBrowserScriptMessageReceived(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser_ScriptResult(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the result of a script execution in the web browser control.
+        /// </summary>
+        /// <remarks>Override this method to provide custom handling of script results from the web
+        /// browser control. This method is called when a script execution completes and raises an event.</remarks>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data related to the script result.</param>
+        protected virtual void OnWebBrowserScriptResult(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser_Error(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles errors that occur during web browser operations.
+        /// </summary>
+        /// <remarks>Override this method to provide custom error handling logic for web browser events in
+        /// derived classes.</remarks>
+        /// <param name="sender">The source of the event, typically the web browser control that encountered the error.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data related to the error.</param>
+        protected virtual void OnWebBrowserError(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
         }
 
-        private void WebBrowser_Navigating(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that occurs before the web browser navigates to a new document.
+        /// </summary>
+        /// <remarks>Override this method to perform custom processing or to cancel navigation before it
+        /// occurs. Setting the Cancel property of the event arguments to <see langword="true"/> will prevent the
+        /// navigation.</remarks>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data, including navigation details and the ability to
+        /// cancel navigation.</param>
+        protected virtual void OnWebBrowserNavigating(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
@@ -434,7 +504,14 @@ namespace Alternet.UI
                 e.Cancel = true;
         }
 
-        private void TextBox_KeyDown(object? sender, KeyEventArgs e)
+        /// <summary>
+        /// Handles the KeyDown event for the associated TextBox, triggering URL loading when the Enter key is pressed.
+        /// </summary>
+        /// <remarks>Override this method to customize the behavior when a key is pressed in the TextBox.
+        /// The default implementation loads the URL when the Enter key is detected.</remarks>
+        /// <param name="sender">The source of the event, typically the TextBox control.</param>
+        /// <param name="e">A KeyEventArgs that contains the event data, including information about the pressed key.</param>
+        protected virtual void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
@@ -444,12 +521,23 @@ namespace Alternet.UI
             }
         }
 
-        private void GoButton_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the Go button is clicked, initiating navigation to the URL specified in the input
+        /// field.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Go button.</param>
+        /// <param name="e">An EventArgs object that contains the event data.</param>
+        protected virtual void OnGoButtonClick(object? sender, EventArgs e)
         {
             LoadUrl(urlTextBox.Text);
         }
 
-        private void LoadUrl(string? s)
+        /// <summary>
+        /// Loads the specified URL or performs a search if the input is not a valid URL.
+        /// </summary>
+        /// <param name="s">The URL to load, or a search query if the string is not a valid URL. If the value is null, the default page
+        /// is loaded.</param>
+        protected virtual void LoadUrl(string? s)
         {
             if (s == null)
             {
@@ -457,38 +545,70 @@ namespace Alternet.UI
                 return;
             }
 
-            if (s == "g")
-                s = "https://www.google.com";
+            var hasMapping = UrlMapping.TryGetValue(s, out var mapped);
+
+            if (hasMapping)
+                s = mapped;
 
             WebBrowser.LoadUrlOrSearch(s);
         }
 
-        private void ZoomInButton_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the Zoom In button is clicked, increasing the zoom level of the web browser control.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Zoom In button.</param>
+        /// <param name="e">An object that contains the event data.</param>
+        protected virtual void OnZoomInButtonClick(object? sender, EventArgs e)
         {
             WebBrowser.ZoomIn();
             UpdateZoomButtons();
         }
 
-        private void ZoomOutButton_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the Zoom Out button is clicked, decreasing the zoom level of the web browser control.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Zoom Out button.</param>
+        /// <param name="e">An object that contains the event data.</param>
+        protected virtual void OnZoomOutButtonClick(object? sender, EventArgs e)
         {
             WebBrowser.ZoomOut();
             UpdateZoomButtons();
         }
 
-        private void WebBrowser_Navigated(object? sender, WebBrowserEventArgs e)
+        /// <summary>
+        /// Handles the event that occurs after the web browser has completed navigation to a new document.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the web browser control.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains data related to the navigation event.</param>
+        protected virtual void OnWebBrowserNavigated(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
                 LogWebBrowserEvent(e);
             urlTextBox.Text = WebBrowser.GetCurrentURL();
         }
 
-        private void BackButton_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the Back button is clicked, navigating the web browser to the previous page if
+        /// possible.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Back button control.</param>
+        /// <param name="e">An EventArgs object that contains the event data.</param>
+        protected virtual void OnBackButtonClick(object? sender, EventArgs e)
         {
             WebBrowser.GoBack();
         }
 
-        private void Initialize()
+        /// <summary>
+        /// Initializes the control and configures its layout, toolbar, panel, and web browser event handlers.
+        /// </summary>
+        /// <remarks>This method sets up the initial state of the control, including assigning parent
+        /// relationships, layout styles, and subscribing to web browser events. Override this method in a derived class
+        /// to customize initialization behavior. This method is typically called during control construction or setup
+        /// and should not be called directly by user code.</remarks>
+        protected virtual void Initialize()
         {
+            UrlMapping.Add("g", "https://www.google.com");
+
             Layout = LayoutStyle.Vertical;
             toolBar.Parent = this;
 
@@ -499,19 +619,25 @@ namespace Alternet.UI
 
             WebBrowser.ZoomType = WebBrowserZoomType.Layout;
 
-            WebBrowser.Navigated += WebBrowser_Navigated;
-            WebBrowser.FullScreenChanged += WebBrowser_FullScreenChanged;
-            WebBrowser.ScriptMessageReceived += WebBrowser_ScriptMessageReceived;
-            WebBrowser.ScriptResult += WebBrowser_ScriptResult;
-            WebBrowser.Navigating += WebBrowser_Navigating;
-            WebBrowser.Error += WebBrowser_Error;
-            WebBrowser.BeforeBrowserCreate += WebBrowser_BeforeBrowserCreate;
-            WebBrowser.Loaded += WebBrowser_Loaded;
-            WebBrowser.NewWindow += WebBrowser_NewWindow;
-            WebBrowser.DocumentTitleChanged += WebBrowser_TitleChanged;
+            WebBrowser.Navigated += OnWebBrowserNavigated;
+            WebBrowser.FullScreenChanged += OnWebBrowserFullScreenChanged;
+            WebBrowser.ScriptMessageReceived += OnWebBrowserScriptMessageReceived;
+            WebBrowser.ScriptResult += OnWebBrowserScriptResult;
+            WebBrowser.Navigating += OnWebBrowserNavigating;
+            WebBrowser.Error += OnWebBrowserError;
+            WebBrowser.BeforeBrowserCreate += OnWebBrowserBeforeBrowserCreate;
+            WebBrowser.Loaded += OnWebBrowserLoaded;
+            WebBrowser.NewWindow += OnWebBrowserNewWindow;
+            WebBrowser.DocumentTitleChanged += OnWebBrowserTitleChanged;
         }
 
-        private void ForwardBtn_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the event when the Forward button is clicked, navigating the web browser to the next page in the
+        /// history, if available.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the Forward button control.</param>
+        /// <param name="e">An EventArgs object that contains the event data.</param>
+        protected virtual void OnForwardButtonClick(object? sender, EventArgs e)
         {
             WebBrowser.GoForward();
         }

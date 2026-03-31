@@ -98,34 +98,59 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void CreateToolbarItems()
         {
-            buttonIdNew = ToolBar.AddSpeedBtn(KnownButton.New, FileNew_Click);
-            buttonIdOpen = ToolBar.AddSpeedBtn(KnownButton.Open, FileOpen_Click);
-            buttonIdSave = ToolBar.AddSpeedBtn(KnownButton.Save, FileSave_Click);
-            buttonIdUndo = ToolBar.AddSpeedBtn(KnownButton.Undo, Undo_Click);
-            buttonIdRedo = ToolBar.AddSpeedBtn(KnownButton.Redo, Redo_Click);
+            buttonIdNew = ToolBar.AddSpeedBtn(KnownButton.New, OnFileNewClick);
+            buttonIdOpen = ToolBar.AddSpeedBtn(KnownButton.Open, OnFileOpenClick);
+            buttonIdSave = ToolBar.AddSpeedBtn(KnownButton.Save, OnFileSaveClick);
+            buttonIdUndo = ToolBar.AddSpeedBtn(KnownButton.Undo, OnUndoClick);
+            buttonIdRedo = ToolBar.AddSpeedBtn(KnownButton.Redo, OnRedoClick);
         }
 
-        private void Undo_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the 'Undo' button click event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnUndoClick(object? sender, EventArgs e)
         {
             TextBox.Undo();
         }
 
-        private void Redo_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the 'Redo' button click event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnRedoClick(object? sender, EventArgs e)
         {
             TextBox.Redo();
         }
 
-        private void FileNew_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the 'New' button click event and raises the <see cref="FileNewClick"/> event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnFileNewClick(object? sender, EventArgs e)
         {
             FileNewClick?.Invoke(this, EventArgs.Empty);
         }
 
-        private void FileOpen_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the 'Open' button click event and raises the <see cref="FileOpenClick"/> event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnFileOpenClick(object? sender, EventArgs e)
         {
             FileOpenClick?.Invoke(this, EventArgs.Empty);
         }
 
-        private void FileSave_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the 'Save' button click event and raises the <see cref="FileSaveClick"/> event.
+        /// </summary>
+        /// <param name="sender">The event sender.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnFileSaveClick(object? sender, EventArgs e)
         {
             FileSaveClick?.Invoke(this, EventArgs.Empty);
         }
