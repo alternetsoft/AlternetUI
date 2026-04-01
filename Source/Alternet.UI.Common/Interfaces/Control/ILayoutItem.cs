@@ -41,16 +41,6 @@ namespace Alternet.UI
         DockStyle Dock { get; set; }
 
         /// <summary>
-        /// Gets or sets cached data for the layout engine.
-        /// </summary>
-        object? LayoutData { get; set; }
-
-        /// <summary>
-        /// Gets or sets additional properties which are layout specific.
-        /// </summary>
-        object? LayoutProps { get; set; }
-
-        /// <summary>
         /// Gets or sets size of the client area, in device-independent units.
         /// </summary>
         SizeD ClientSize { get; }
@@ -337,6 +327,16 @@ namespace Alternet.UI
         RectD ClientRectangle { get; }
 
         /// <summary>
+        /// Gets or sets cached data for the layout engine.
+        /// </summary>
+        object? LayoutData { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional properties which are layout specific.
+        /// </summary>
+        object? LayoutProps { get; set; }
+
+        /// <summary>
         /// Sets the specified bounds of the control to new location and size.
         /// </summary>
         /// <param name="x">The new <see cref="Left"/> property value of
@@ -370,6 +370,20 @@ namespace Alternet.UI
         /// Resets <see cref="SuggestedSize"/> property.
         /// </summary>
         void ResetSuggestedSize();
+
+        /// <summary>
+        /// Calculates the preferred size for the current object, constrained by any applicable size limits.
+        /// </summary>
+        /// <param name="context">The context information used to determine the preferred size, including layout constraints and preferences.</param>
+        /// <returns>A SizeD structure representing the preferred size, adjusted to not exceed any defined size limitations.</returns>
+        SizeD GetPreferredSizeLimited(PreferredSizeContext context);
+
+        /// <summary>
+        /// Applies <see cref="MinimumSize"/> and <see cref="MaximumSize"/> restrictions to the specified size.
+        /// </summary>
+        /// <param name="size">The size to be limited.</param>
+        /// <returns>The size after applying the minimum and maximum restrictions.</returns>
+        SizeD GetSizeLimited(SizeD size);
 
         /// <summary>
         /// Retrieves the size of a rectangular area into which a control can
