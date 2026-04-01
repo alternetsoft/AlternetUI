@@ -1,3 +1,37 @@
+# 1.0.9 (2026 April 1)
+
+- Improve exceptions handling.
+- Add ControlAndPicture base control.
+- Inherit ControlAndButton and ControlAndLabel from ControlAndPicture.
+- Inherit SpeedButton from GenericControl.
+- Add hovered color support to StdCheckBox.
+- ListControlItem: Add checkbox pre-draw hook and color support.
+- PanelWebBrowser: Add UrlMapping and virtualize WebBrowser handlers.
+- PanelMultilineTextBox: Add tooltips and virtualize click handlers.
+- Make WebBrowser search window public and fix Enter/Esc keys processing.
+- SpeedButton: IsTransparent, ResetThemes.
+- Make BorderCornerRadius a public struct.
+- Refactor ControlSet into a generic ControlSet{T}.
+- Add UseMarginsWhenDock to LayoutFlags.
+- Add UpDownAndLabel composite control implementing an IntPicker with an attached Label.
+- DockStyle: Add LeftAutoSize, TopAutoSize and BottomAutoSize.
+- Add SVG image helpers with support for default size.
+- TabControl: Make HeaderControl property return CardPanelHeader.
+- CardPanelHeader.UseTabBold: remove internal modifier from setter.
+- Add exception tracking and ExceptionInfo cache.
+- Add runtime object key helpers to CommonUtils.
+- Add UniqueId support to BaseException.
+- Add RuntimeKey and RuntimeKeyAndType to BaseObject.
+- Refactor multi-line exception log message formatting.
+- ThreadExceptionWindow: Add Throw button if app is executed under debug environment (Visual Studio, etc.).
+- ThreadExceptionWindow: Improve uixml reading error reporting.
+- ThreadExceptionWindow: Fix Details button behavior.
+- ThreadExceptionWindow: Add localization.
+- CommandLineArgs: Add command registration and execution methods.
+- Add optional color param to for checkbox/radio control part painters.
+
+---
+
 # 1.0.8 (2026 March 24)
 
 - Support multiple exceptions in ThreadExceptionWindow.
