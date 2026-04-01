@@ -95,10 +95,6 @@ namespace Alternet::UI
         void OnFullScreenChanged(wxWebViewEvent& event);
         void OnScriptMessageReceived(wxWebViewEvent& event);
         void OnScriptResult(wxWebViewEvent& event);
-
-        virtual void OnEraseBackground(wxEraseEvent& event) override
-        {
-        }
     };
 }
 
