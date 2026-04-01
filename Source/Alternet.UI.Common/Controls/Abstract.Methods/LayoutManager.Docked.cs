@@ -10,7 +10,21 @@ namespace Alternet.UI
 {
     internal partial class LayoutManager
     {
-        internal static void LayoutWhenDocked(ref RectD bounds, AbstractControl child, DockStyle value, LayoutFlags containerFlags)
+        public virtual SizeD GetPreferredSizeDockLayout(
+            AbstractControl container,
+            PreferredSizeContext context)
+        {
+            if (container.HasChildren)
+                return container.GetBestSizeWithChildren(context);
+            return container.GetBestSizeWithPadding(context);
+        }
+
+        public virtual bool ChildIgnoresLayout(ILayoutItem control)
+        {
+            return !control.Visible || control.IgnoreLayout;
+        }
+
+        public virtual void LayoutWhenDocked(ref RectD bounds, ILayoutItem child, DockStyle value, LayoutFlags containerFlags)
         {
             SizeD child_size = child.Bounds.Size;
             var space = bounds;
@@ -184,10 +198,13 @@ namespace Alternet.UI
         /// the remaining space after docking non-fill child controls.</param>
         /// <param name="children">A read-only list of child controls to be arranged within the container.</param>
         /// <returns>The number of child controls that were docked during the layout operation.</returns>
-        internal static int LayoutWhenDocked(
-            AbstractControl container,
+        // On return, 'bounds' has an empty space left after docking the controls to sides
+        // of the container (fill controls are not counted).
+        // On return, 'result' has number of controls with Dock != None.
+        public virtual int LayoutWhenDocked(
+            ILayoutItem container,
             ref RectD bounds,
-            IReadOnlyList<AbstractControl> children)
+            IReadOnlyList<ILayoutItem> children)
         {
             var result = 0;
 
@@ -217,10 +234,10 @@ namespace Alternet.UI
 
             void LayoutControl(int index)
             {
-                AbstractControl child = children[index];
+                var child = children[index];
                 DockStyle dock = child.Dock;
 
-                if (dock == DockStyle.None || container.ChildIgnoresLayout(child))
+                if (dock == DockStyle.None || ChildIgnoresLayout(child))
                     return;
 
                 result++;

@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// and <see cref="AbstractControl.SuggestedHeight"/>
         /// properties or calculates preferred size from its children.
         /// </summary>
-        protected virtual SizeD GetBestSizeWithChildren(PreferredSizeContext context)
+        public virtual SizeD GetBestSizeWithChildren(PreferredSizeContext context)
         {
             var specifiedWidth = SuggestedWidth;
             var specifiedHeight = SuggestedHeight;
@@ -301,7 +301,7 @@ namespace Alternet.UI
         /// <param name="context">The <see cref="PreferredSizeContext"/> representing
         /// context for the layout.</param>
         /// <returns></returns>
-        protected SizeD GetBestSizeWithPadding(PreferredSizeContext context)
+        public SizeD GetBestSizeWithPadding(PreferredSizeContext context)
         {
             if (IsDummy)
                 return SizeD.Empty;

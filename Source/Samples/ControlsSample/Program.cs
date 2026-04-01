@@ -72,8 +72,6 @@ namespace ControlsSample
         {
             if (DebugUtils.IsDebugDefined)
             {
-                AbstractControl.UseLayoutMethod = AbstractControl.DefaultLayoutMethod.New;
-
                 DebugUtils.DebugLoading = false;
             }
 

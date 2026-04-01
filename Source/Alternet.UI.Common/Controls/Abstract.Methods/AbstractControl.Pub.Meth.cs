@@ -148,109 +148,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the control should
-        /// reposition its child controls.
-        /// </summary>
-        /// <remarks>
-        /// This is a default implementation which is called from
-        /// <see cref="AbstractControl.OnLayout"/>.
-        /// </remarks>
-        /// <param name="container">Container control which children will be processed.</param>
-        /// <param name="layout">Layout style to use.</param>
-        /// <param name="getBounds">Returns rectangle in which layout is performed.</param>
-        /// <param name="items">List of controls to layout.</param>
-        public static void DefaultOnLayout(
-            AbstractControl container,
-            LayoutStyle layout,
-            Func<RectD> getBounds,
-            IReadOnlyList<AbstractControl> items)
-        {
-            if (layout == LayoutStyle.Scroll)
-            {
-                LayoutManager.LayoutWhenScroll(container, getBounds, items, true);
-                return;
-            }
-
-            var space = getBounds();
-
-            if (space.SizeIsEmpty)
-                return;
-
-            var number = LayoutWhenDocked(container, ref space, items);
-
-            void UpdateItems()
-            {
-                if (number == 0 || number == items.Count)
-                    return;
-                var newItems = new List<AbstractControl>();
-                foreach (var item in items)
-                {
-                    if (item.Dock == DockStyle.None && !item.IgnoreLayout)
-                        newItems.Add(item);
-                }
-
-                items = newItems;
-            }
-
-            if (container.DebugIdentifier is not null)
-            {
-            }
-
-            switch (layout)
-            {
-                case LayoutStyle.Basic:
-                    UpdateItems();
-                    UI.AbstractControl.PerformDefaultLayout(container, space, items);
-                    break;
-                case LayoutStyle.Vertical:
-                    UpdateItems();
-                    LayoutWhenVertical(container, space, items);
-                    break;
-                case LayoutStyle.Horizontal:
-                    UpdateItems();
-                    LayoutWhenHorizontal(container, space, items);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves the size of a rectangular area into which a control can
-        /// be fitted, in device-independent units.
-        /// </summary>
-        /// <param name="context">The <see cref="PreferredSizeContext"/> providing
-        /// the available size and other layout information.</param>
-        /// <returns>A <see cref="SuggestedSize"/> representing the width and height of
-        /// a rectangle, in device-independent units.</returns>
-        /// <remarks>
-        /// This is a default implementation which is called from
-        /// <see cref="AbstractControl.GetPreferredSize(PreferredSizeContext)"/>.
-        /// </remarks>
-        /// <param name="container">Container control which children will be processed.</param>
-        /// <param name="layout">Layout style to use.</param>
-        public static SizeD DefaultGetPreferredSize(
-            AbstractControl container,
-            PreferredSizeContext context,
-            LayoutStyle layout)
-        {
-            switch (layout)
-            {
-                case LayoutStyle.Dock:
-                    return GetPreferredSizeDockLayout(container, context);
-                case LayoutStyle.None:
-                default:
-                    return GetPreferredSizeDefaultLayout(container, context);
-                case LayoutStyle.Basic:
-                    return AbstractControl.GetPreferredSizeDefaultLayout(container, context);
-                case LayoutStyle.Vertical:
-                    return AbstractControl.GetPreferredSizeWhenVertical(container, context);
-                case LayoutStyle.Horizontal:
-                    return AbstractControl.GetPreferredSizeWhenHorizontal(container, context);
-                case LayoutStyle.Scroll:
-                    return AbstractControl.GetPreferredSizeWhenScroll(container, context);
-            }
-        }
-
-        /// <summary>
         /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
         /// </summary>
         /// <param name="controlType">Type of the control.</param>
@@ -3109,15 +3006,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void InvalidateBestSize()
         {
-        }
-
-        /// <summary>
-        /// Gets whether child control ignores layout.
-        /// </summary>
-        /// <param name="control"></param>
-        public virtual bool ChildIgnoresLayout(AbstractControl control)
-        {
-            return !control.Visible || control.IgnoreLayout;
         }
 
         /// <summary>

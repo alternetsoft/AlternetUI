@@ -337,7 +337,7 @@ namespace Alternet.UI
             SizeD Internal()
             {
                 var children = ColumnControls.ToArray();
-                var result = AbstractControl.GetPreferredSizeWhenStack(this, context, isVert: false, children, ignoreDocked: false);
+                var result = GetLayoutManager().GetPreferredSizeWhenStack(this, context, isVert: false, children, ignoreDocked: false);
                 result.Width = context.AvailableSize.Width;
                 return result;
             }

@@ -8,17 +8,75 @@ namespace Alternet.UI
 {
     internal partial class LayoutManager
     {
-        internal static void LayoutWhenHorizontal(
-            AbstractControl container,
+        public virtual SizeD GetPreferredSizeWhenStack(
+            ILayoutItem container,
+            PreferredSizeContext context,
+            bool isVert,
+            IReadOnlyList<ILayoutItem>? children = null,
+            bool ignoreDocked = true)
+        {
+            if (context.AvailableSize.AnyIsEmptyOrNegative)
+                return SizeD.Empty;
+
+            var containerSuggestedSize = container.SuggestedSize;
+            if (!containerSuggestedSize.IsNanWidthOrHeight)
+                return containerSuggestedSize;
+
+            children ??= container.AllChildrenInLayout;
+
+            var isNanWidth = containerSuggestedSize.IsNanWidth;
+            var isNanHeight = containerSuggestedSize.IsNanHeight;
+            var containerSize = container.GetSizeLimited(context.AvailableSize);
+
+            SizeD result = SizeD.Empty;
+
+            foreach (var child in children)
+            {
+                if (ignoreDocked)
+                {
+                    if (child.Dock != DockStyle.None)
+                        continue;
+                }
+
+                var childMargin = child.Margin;
+
+                if (isVert)
+                {
+                    var preferredSize = child.GetPreferredSizeLimited(
+                        new(containerSize.Width, containerSize.Height - result.Height));
+                    result.Width
+                        = Math.Max(result.Width, preferredSize.Width + childMargin.Horizontal);
+                    result.Height += preferredSize.Height + childMargin.Vertical;
+                }
+                else
+                {
+                    var preferredSize = child.GetPreferredSizeLimited(
+                        new SizeD(containerSize.Width - result.Width, containerSize.Height));
+                    result.Width += preferredSize.Width + childMargin.Horizontal;
+                    result.Height
+                        = Math.Max(result.Height, preferredSize.Height + childMargin.Vertical);
+                }
+            }
+
+            var padding = container.Padding;
+            var newWidth = isNanWidth
+                ? result.Width + padding.Horizontal : container.SuggestedWidth;
+            var newHeight = isNanHeight
+                ? result.Height + padding.Vertical : container.SuggestedHeight;
+            return new(newWidth, newHeight);
+        }
+
+        public virtual void LayoutWhenHorizontal(
+            ILayoutItem container,
             RectD childrenLayoutBounds,
-            IReadOnlyList<AbstractControl> controls)
+            IReadOnlyList<ILayoutItem> controls)
         {
             Coord x = 0;
             Coord w = 0;
 
-            Stack<AbstractControl>? rightControls = null;
-            List<AbstractControl>? fillControls = null;
-            List<(AbstractControl Control, Coord Top, SizeD Size)>? centerControls = null;
+            Stack<ILayoutItem>? rightControls = null;
+            List<ILayoutItem>? fillControls = null;
+            List<(ILayoutItem Control, Coord Top, SizeD Size)>? centerControls = null;
 
             foreach (var control in controls)
             {
@@ -79,7 +137,7 @@ namespace Alternet.UI
                 }
             }
 
-            void DoAlignControl(AbstractControl control)
+            void DoAlignControl(ILayoutItem control)
             {
                 var margin = control.Margin;
                 var horizontalMargin = margin.Horizontal;
@@ -91,8 +149,7 @@ namespace Alternet.UI
                         availableWidth,
                         childrenLayoutBounds.Height));
 
-                var alignedPosition =
-                    AbstractControl.AlignVertical(
+                var alignedPosition = AlignVertical(
                         childrenLayoutBounds,
                         control,
                         preferredSize,
@@ -141,8 +198,9 @@ namespace Alternet.UI
             }
         }
 
-        internal static SizeD GetPreferredSizeWhenHorizontal(
-            AbstractControl container,
+        /*
+        public virtual SizeD GetPreferredSizeWhenHorizontal(
+            ILayoutItem container,
             PreferredSizeContext context)
         {
             var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
@@ -172,5 +230,6 @@ namespace Alternet.UI
                 isNanWidth ? width + stackPanelPadding.Horizontal : container.SuggestedWidth,
                 isNanHeight ? maxHeight + stackPanelPadding.Vertical : container.SuggestedHeight);
         }
+        */
     }
 }

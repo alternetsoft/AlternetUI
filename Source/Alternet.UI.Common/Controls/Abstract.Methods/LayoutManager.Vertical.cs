@@ -8,10 +8,10 @@ namespace Alternet.UI
 {
     internal partial class LayoutManager
     {
-        internal static void LayoutWhenVertical(
-            AbstractControl container,
+        public virtual void LayoutWhenVertical(
+            ILayoutItem container,
             RectD lBounds,
-            IReadOnlyList<AbstractControl> items)
+            IReadOnlyList<ILayoutItem> items)
         {
             Coord stretchedSize = 0;
 
@@ -62,7 +62,7 @@ namespace Alternet.UI
                 }
             }
 
-            void DoAlignControl(AbstractControl control)
+            void DoAlignControl(ILayoutItem control)
             {
                 var stretch = control.VerticalAlignment == UI.VerticalAlignment.Fill;
 
@@ -77,7 +77,7 @@ namespace Alternet.UI
                 var preferSize = control.GetPreferredSizeLimited(new PreferredSizeContext(freeSize));
                 if (stretch)
                     preferSize.Height = stretchedSize - vertMargin;
-                var alignedPos = AbstractControl.AlignHorizontal(
+                var alignedPos = AlignHorizontal(
                     lBounds,
                     control,
                     preferSize,
@@ -105,8 +105,9 @@ namespace Alternet.UI
             }
         }
 
-        internal static SizeD GetPreferredSizeWhenVertical(
-            AbstractControl container,
+/*
+        public virtual SizeD GetPreferredSizeWhenVertical(
+            ILayoutItem container,
             PreferredSizeContext context)
         {
             var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
@@ -136,5 +137,6 @@ namespace Alternet.UI
             var newHeight = isNanHeight ? height + padding.Vertical : container.SuggestedHeight;
             return new SizeD(newWidth, newHeight);
         }
+*/
     }
 }

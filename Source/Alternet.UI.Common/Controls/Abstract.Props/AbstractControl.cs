@@ -44,13 +44,13 @@ namespace Alternet.UI
         public static bool UseDebugBackgroundColor = false;
 
         private static readonly SizeD DefaultControlSize = SizeD.NaN;
+        private static readonly List<IControlNotification> globalNotifications = new();
 
         private static long? mouseWheelTimestamp;
         private static int groupIndexCounter;
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
         private static WeakReferenceValue<AbstractControl> weakHoveredControl = new();
-        private static List<IControlNotification> globalNotifications = new();
         private static bool? defaultUseInternalDropDownMenu;
 
         private bool showDropDownMenuWhenClicked = true;
@@ -3782,6 +3782,14 @@ namespace Alternet.UI
             }
         }
 
+        IReadOnlyList<ILayoutItem> ILayoutItem.AllChildrenInLayout
+        {
+            get
+            {
+                return this.AllChildrenInLayout;
+            }
+        }
+
         /// <summary>
         /// Gets all child controls which are visible and included in the layout.
         /// </summary>
@@ -3799,7 +3807,7 @@ namespace Alternet.UI
 
                 foreach (var control in controls)
                 {
-                    if (ChildIgnoresLayout(control))
+                    if (GetLayoutManager().ChildIgnoresLayout(control))
                     {
                         all = false;
                         break;
@@ -3813,7 +3821,7 @@ namespace Alternet.UI
 
                 foreach (var control in controls)
                 {
-                    if (!ChildIgnoresLayout(control))
+                    if (!GetLayoutManager().ChildIgnoresLayout(control))
                         result.Add(control);
                 }
 

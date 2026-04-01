@@ -19,23 +19,28 @@ namespace Alternet.UI
     public interface ILayoutItem
     {
         /// <summary>
-        /// Gets or sets layout style of the child items, elements or controls.
+        /// Gets or sets layout style of the child items.
         /// </summary>
         LayoutStyle? Layout { get; set; }
 
         /// <summary>
-        /// Gets or sets whether layout rules are ignored for this control.
+        /// Gets or sets whether layout rules are ignored for this item.
         /// </summary>
         bool IgnoreLayout { get; set; }
 
         /// <summary>
-        /// Gets or sets which control borders are docked to its parent control and determines
-        /// how a control is resized with its parent.
+        /// Gets or sets the offset applied to the item's layout, in device-independent units.
+        /// </summary>
+        PointD LayoutOffset { get; set; }
+
+        /// <summary>
+        /// Gets or sets which item borders are docked to its parent item and determines
+        /// how an item is resized with its parent.
         /// </summary>
         /// <returns>One of the <see cref="DockStyle" /> values.
         /// The default is <see cref="DockStyle.None" />.</returns>
         /// <remarks>
-        /// Currently this property is used only when control is placed
+        /// Currently this property is used only when item is placed
         /// inside the <see cref="LayoutPanel"/>.
         /// </remarks>
         DockStyle Dock { get; set; }
@@ -56,19 +61,19 @@ namespace Alternet.UI
         bool IsLayoutPerform { get; }
 
         /// <summary>
-        /// Gets the distance, in dips, between the right edge of the control and the left
+        /// Gets the distance, in dips, between the right edge of the item and the left
         /// edge of its container's client area.
         /// </summary>
         /// <returns>A value representing the distance, in dips, between the right edge of the
-        /// control and the left edge of its container's client area.</returns>
+        /// item and the left edge of its container's client area.</returns>
         Coord Right { get; set; }
 
         /// <summary>
-        /// Gets the distance, in dips, between the bottom edge of the control and the top edge
+        /// Gets the distance, in dips, between the bottom edge of the item and the top edge
         /// of its container's client area.
         /// </summary>
         /// <returns>A value representing the distance, in dips, between the bottom edge of
-        /// the control and the top edge of its container's client area.</returns>
+        /// the item and the top edge of its container's client area.</returns>
         Coord Bottom { get; set; }
 
         /// <summary>
@@ -82,82 +87,82 @@ namespace Alternet.UI
         RectD Bounds { get; set; }
 
         /// <summary>
-        /// Gets or sets the distance between the left edge of the control
+        /// Gets or sets the distance between the left edge of the item
         /// and the left edge of its container's client area.
         /// </summary>
         Coord Left { get; set; }
 
         /// <summary>
-        /// Gets or sets the distance between the top edge of the control
+        /// Gets or sets the distance between the top edge of the item
         /// and the top edge of its container's client area.
         /// </summary>
         Coord Top { get; set; }
 
         /// <summary>
-        /// Gets or sets the location of upper-left corner of the control, in
+        /// Gets or sets the location of upper-left corner of the item, in
         /// device-independent units.
         /// </summary>
-        /// <value>The position of the control's upper-left corner, in device-independent units.</value>
+        /// <value>The position of the item's upper-left corner, in device-independent units.</value>
         PointD Location { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control and all its
-        /// child controls are displayed.
+        /// Gets or sets a value indicating whether the item and all its
+        /// child items are displayed.
         /// </summary>
-        /// <value><c>true</c> if the control and all its child controls are
+        /// <value><c>true</c> if the item and all its child items are
         /// displayed; otherwise, <c>false</c>. The default is <c>true</c>.</value>
         bool Visible { get; set; }
 
         /// <summary>
-        /// Gets or sets the size of the control.
+        /// Gets or sets the size of the item.
         /// </summary>
-        /// <value>The size of the control, in device-independent units.
+        /// <value>The size of the item, in device-independent units.
         /// The default value is <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
         /// <see cref="Coord.NaN"/>)/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the size of the control.
+        /// This property specifies the size of the item.
         /// Set this property to <see cref="SizeD"/>(<see cref="Coord.NaN"/>,
         /// <see cref="Coord.NaN"/>) to specify system-default sizing
-        /// behavior when the control is first shown.
+        /// behavior when the item is first shown.
         /// </remarks>
         SizeD Size { get; set; }
 
         /// <summary>
-        /// Gets or sets the width of the control.
+        /// Gets or sets the width of the item.
         /// </summary>
-        /// <value>The width of the control, in device-independent units.
+        /// <value>The width of the item, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the width of the control.
+        /// This property specifies the width of the item.
         /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
-        /// behavior before the control is first shown.
+        /// behavior before the item is first shown.
         /// </remarks>
         Coord Width { get; set; }
 
         /// <summary>
-        /// Gets or sets the height of the control.
+        /// Gets or sets the height of the item.
         /// </summary>
-        /// <value>The height of the control, in device-independent units.
+        /// <value>The height of the item, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the height of the control.
+        /// This property specifies the height of the item.
         /// Set this property to <see cref="Coord.NaN"/> to specify system-default sizing
-        /// behavior before the control is first shown.
+        /// behavior before the item is first shown.
         /// </remarks>
         Coord Height { get; set; }
 
         /// <summary>
-        /// Gets or sets the suggested size of the control.
+        /// Gets or sets the suggested size of the item.
         /// </summary>
-        /// <value>The suggested size of the control, in device-independent units.
+        /// <value>The suggested size of the item, in device-independent units.
         /// The default value is <see cref="SizeD"/>
         /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>)/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the suggested size of the control. An actual
+        /// This property specifies the suggested size of the item. An actual
         /// size is calculated by the layout system.
         /// Set this property to <see cref="SizeD"/>
         /// (<see cref="Coord.NaN"/>, <see cref="Coord.NaN"/>) to specify auto
@@ -168,13 +173,13 @@ namespace Alternet.UI
         SizeD SuggestedSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the suggested width of the control.
+        /// Gets or sets the suggested width of the item.
         /// </summary>
-        /// <value>The suggested width of the control, in device-independent units.
+        /// <value>The suggested width of the item, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the suggested width of the control. An
+        /// This property specifies the suggested width of the item. An
         /// actual width is calculated by the layout system.
         /// Set this property to <see cref="Coord.NaN"/> to specify auto
         /// sizing behavior.
@@ -184,13 +189,13 @@ namespace Alternet.UI
         Coord SuggestedWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets the suggested height of the control.
+        /// Gets or sets the suggested height of the item.
         /// </summary>
-        /// <value>The suggested height of the control, in device-independent units.
+        /// <value>The suggested height of the item, in device-independent units.
         /// The default value is <see cref="Coord.NaN"/>.
         /// </value>
         /// <remarks>
-        /// This property specifies the suggested height of the control. An
+        /// This property specifies the suggested height of the item. An
         /// actual height is calculated by the layout system.
         /// Set this property to <see cref="Coord.NaN"/> to specify auto
         /// sizing behavior.
@@ -210,12 +215,12 @@ namespace Alternet.UI
         Thickness? MinChildMargin { get; set; }
 
         /// <summary>
-        /// Gets or sets the outer margin of a control.
+        /// Gets or sets the outer margin of an item.
         /// </summary>
-        /// <value>Provides margin values for the control. The default value is a
+        /// <value>Provides margin values for the item. The default value is a
         /// <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
         /// <remarks>
-        /// The margin is the space between this control and the adjacent control.
+        /// The margin is the space between this item and the adjacent item.
         /// Margin is set as a <see cref="Thickness"/> structure rather than as
         /// a number so that the margin can be set asymmetrically.
         /// The <see cref="Thickness"/> structure itself supports string
@@ -225,13 +230,13 @@ namespace Alternet.UI
         Thickness Margin { get; set; }
 
         /// <summary>
-        /// Gets or sets the padding inside a control.
+        /// Gets or sets the padding inside an item.
         /// </summary>
-        /// <value>Provides padding values for the control. The default value is
+        /// <value>Provides padding values for the item. The default value is
         /// a <see cref="Thickness"/> with all properties equal to 0 (zero).</value>
         /// <remarks>
         /// The padding is the amount of space between the content of a
-        /// object and its border.
+        /// item and its border.
         /// Padding is set as a <see cref="Thickness"/> structure rather than as
         /// a number so that the padding can be set asymmetrically.
         /// The <see cref="Thickness"/> structure itself supports string
@@ -241,80 +246,80 @@ namespace Alternet.UI
         Thickness Padding { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum size the window can be resized to.
+        /// Gets or sets the minimum size the item can be resized to.
         /// </summary>
         SizeD MinimumSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum size the window can be resized to.
+        /// Gets or sets the maximum size the item can be resized to.
         /// </summary>
         SizeD MaximumSize { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum width the window can be resized to.
+        /// Gets or sets the minimum width the item can be resized to.
         /// </summary>
         Coord? MinWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets the minimum height the window can be resized to.
+        /// Gets or sets the minimum height the item can be resized to.
         /// </summary>
         Coord? MinHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum width the window can be resized to.
+        /// Gets or sets the maximum width the item can be resized to.
         /// </summary>
         Coord? MaxWidth { get; set; }
 
         /// <summary>
-        /// Gets or sets the maximum height the window can be resized to.
+        /// Gets or sets the maximum height the item can be resized to.
         /// </summary>
         Coord? MaxHeight { get; set; }
 
         /// <summary>
-        /// Gets or sets column index which is used by the <see cref="Grid"/> control.
+        /// Gets or sets column index which is used by the grid container.
         /// </summary>
         /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
+        /// Currently this property works only in the grid container.
         /// </remarks>
         int ColumnIndex { get; set; }
 
         /// <summary>
-        /// Gets or sets row index which is used by the <see cref="Grid"/> control.
+        /// Gets or sets row index which is used by the grid container.
         /// </summary>
         /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
+        /// Currently this property works only in the grid container.
         /// </remarks>
         int RowIndex { get; set; }
 
         /// <summary>
         /// Gets or sets a value that indicates the total number of columns
-        /// this control's content spans within a container.
+        /// this item's content spans within a container.
         /// </summary>
         /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
+        /// Currently this property works only in the grid container.
         /// </remarks>
         int ColumnSpan { get; set; }
 
         /// <summary>
         /// Gets or sets a value that indicates the total number of rows
-        /// this control's content spans within a container.
+        /// this item's content spans within a container.
         /// </summary>
         /// <remarks>
-        /// Currently this property works only in <see cref="Grid"/> container.
+        /// Currently this property works only in the grid container.
         /// </remarks>
         int RowSpan { get; set; }
 
         /// <summary>
-        /// Gets or sets the vertical alignment applied to this control when it
-        /// is positioned within a parent control.
+        /// Gets or sets the vertical alignment applied to this item when it
+        /// is positioned within a parent container.
         /// </summary>
         /// <value>A vertical alignment setting. The default is
         /// <c>null</c>.</value>
         VerticalAlignment VerticalAlignment { get; set; }
 
         /// <summary>
-        /// Gets or sets the horizontal alignment applied to this control when
-        /// it is positioned within a parent control.
+        /// Gets or sets the horizontal alignment applied to this item when
+        /// it is positioned within a parent container.
         /// </summary>
         /// <value>A horizontal alignment setting. The default is
         /// <c>null</c>.</value>
@@ -322,7 +327,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets a rectangle which describes the client area inside of the
-        /// control, in device-independent units.
+        /// item, in device-independent units.
         /// </summary>
         RectD ClientRectangle { get; }
 
@@ -337,16 +342,21 @@ namespace Alternet.UI
         object? LayoutProps { get; set; }
 
         /// <summary>
-        /// Sets the specified bounds of the control to new location and size.
+        /// Gets or sets layout flags that specify the layout behavior of the item.
+        /// </summary>
+        LayoutFlags LayoutFlags { get; set; }
+
+        /// <summary>
+        /// Sets the specified bounds of the item to new location and size.
         /// </summary>
         /// <param name="x">The new <see cref="Left"/> property value of
-        /// the control.</param>
+        /// the item.</param>
         /// <param name="y">The new <see cref="Top"/> property value
-        /// of the control.</param>
+        /// of the item.</param>
         /// <param name="width">The new <see cref="Width"/> property value
-        /// of the control.</param>
+        /// of the item.</param>
         /// <param name="height">The new <see cref="Height"/> property value
-        /// of the control.</param>
+        /// of the item.</param>
         /// <param name="specified">Specifies which bounds to use when applying new
         /// location and size.</param>
         void SetBounds(
@@ -372,6 +382,11 @@ namespace Alternet.UI
         void ResetSuggestedSize();
 
         /// <summary>
+        /// Gets a read-only list of all child layout items currently included in the layout.
+        /// </summary>
+        IReadOnlyList<ILayoutItem> AllChildrenInLayout { get; }
+
+        /// <summary>
         /// Calculates the preferred size for the current object, constrained by any applicable size limits.
         /// </summary>
         /// <param name="context">The context information used to determine the preferred size, including layout constraints and preferences.</param>
@@ -386,7 +401,7 @@ namespace Alternet.UI
         SizeD GetSizeLimited(SizeD size);
 
         /// <summary>
-        /// Retrieves the size of a rectangular area into which a control can
+        /// Retrieves the size of a rectangular area into which an item can
         /// be fitted, in device-independent units.
         /// </summary>
         /// <param name="context">The <see cref="PreferredSizeContext"/> representing context

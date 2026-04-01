@@ -164,13 +164,13 @@ namespace Alternet.UI
             var preferredSize = control.GetPreferredSizeLimited(bounds.Size);
 
             var horizontalPosition =
-                AlignHorizontal(
+                GetLayoutManager().AlignHorizontal(
                     bounds,
                     control,
                     preferredSize,
                     control.HorizontalAlignment);
             var verticalPosition =
-                AlignVertical(
+                GetLayoutManager().AlignVertical(
                     bounds,
                     control,
                     preferredSize,

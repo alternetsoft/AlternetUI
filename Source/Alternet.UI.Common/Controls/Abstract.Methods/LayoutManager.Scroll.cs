@@ -8,10 +8,32 @@ namespace Alternet.UI
 {
     internal partial class LayoutManager
     {
-        internal static void LayoutWhenScroll(
+        public virtual SizeD GetPreferredSizeWhenScroll(
+            AbstractControl container,
+            PreferredSizeContext context)
+        {
+            var result = container.LayoutMaxSize
+                ?? GetPreferredSizeDefaultLayout(container, context);
+
+            var cornerSize = ScrollBar.GetCornerSize(container);
+
+            if (result.Width > context.AvailableSize.Width)
+            {
+                result.Width += cornerSize.Width;
+            }
+
+            if (result.Height > context.AvailableSize.Height)
+            {
+                result.Height += cornerSize.Height;
+            }
+
+            return result;
+        }
+
+        public virtual void LayoutWhenScroll(
             AbstractControl container,
             Func<RectD> getBounds,
-            IReadOnlyList<AbstractControl> controls,
+            IReadOnlyList<ILayoutItem> controls,
             bool updateScrollbars)
         {
             const Coord sizeMultiplicator = 1;
@@ -61,13 +83,13 @@ namespace Alternet.UI
                 }
 
                 var horizontalPosition =
-                    AbstractControl.AlignHorizontal(
+                    AlignHorizontal(
                         childrenLayoutBounds,
                         control,
                         boundedPreferredSize,
                         horizontalAlignment);
                 var verticalPosition =
-                    AbstractControl.AlignVertical(
+                    AlignVertical(
                         childrenLayoutBounds,
                         control,
                         boundedPreferredSize,
