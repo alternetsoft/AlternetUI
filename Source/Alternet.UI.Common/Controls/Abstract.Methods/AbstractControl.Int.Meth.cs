@@ -174,21 +174,6 @@ namespace Alternet.UI
             LogicalParent = value;
         }
 
-        internal virtual SizeD GetPreferredSizeLimited(PreferredSizeContext context)
-        {
-            var preferredSize = GetPreferredSize(context);
-            var result = GetSizeLimited(preferredSize);
-            return result;
-        }
-
-        internal virtual SizeD GetSizeLimited(SizeD size)
-        {
-            var minSize = MinimumSize;
-            var maxSize = MaximumSize;
-            var result = size.ApplyMinMax(minSize, maxSize);
-            return result;
-        }
-
         /// <summary>
         /// Contains location and size calculated by the align method.
         /// </summary>

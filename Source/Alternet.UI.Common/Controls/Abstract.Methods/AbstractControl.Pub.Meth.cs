@@ -355,6 +355,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the preferred size for the current object, constrained by any applicable size limits.
+        /// </summary>
+        /// <param name="context">The context information used to determine the preferred size, including layout constraints and preferences.</param>
+        /// <returns>A SizeD structure representing the preferred size, adjusted to not exceed any defined size limitations.</returns>
+        public SizeD GetPreferredSizeLimited(PreferredSizeContext context)
+        {
+            var preferredSize = GetPreferredSize(context);
+            var result = GetSizeLimited(preferredSize);
+            return result;
+        }
+
+        /// <summary>
+        /// Applies <see cref="MinimumSize"/> and <see cref="MaximumSize"/> restrictions to the specified size.
+        /// </summary>
+        /// <param name="size">The size to be limited.</param>
+        /// <returns>The size after applying the minimum and maximum restrictions.</returns>
+        public SizeD GetSizeLimited(SizeD size)
+        {
+            var minSize = MinimumSize;
+            var maxSize = MaximumSize;
+            var result = size.ApplyMinMax(minSize, maxSize);
+            return result;
+        }
+
+        /// <summary>
         /// Sets <see cref="Title"/> property.
         /// </summary>
         /// <param name="title">New title</param>
