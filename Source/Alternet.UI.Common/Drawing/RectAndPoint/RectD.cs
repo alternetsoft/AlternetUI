@@ -1093,6 +1093,37 @@ namespace Alternet.Drawing
             (ax >= X) && (ax < X + Width) && (ay >= Y) && (ay < Y + Height);
 
         /// <summary>
+        /// Determines if the specified x coordinate is contained within the horizontal bounds of this <see cref='RectD'/> .
+        /// </summary>
+        /// <param name="ax">X coordinate to test.</param>
+        /// <returns>True if the x coordinate is within the horizontal bounds; otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool ContainsX(Coord ax) => (ax >= X) && (ax < X + Width);
+
+        /// <summary>
+        /// Determines whether the specified Y-coordinate is within the vertical bounds of this region.
+        /// </summary>
+        /// <param name="ay">The Y-coordinate to test for inclusion within the region.</param>
+        /// <returns>true if the specified Y-coordinate is greater than or equal to the region's starting Y value and less than
+        /// the sum of Y and Height; otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly bool ContainsY(Coord ay) => (ay >= Y) && (ay < Y + Height);
+
+        /// <summary>
+        /// Returns the axis interval for either the vertical or horizontal axis, based on the specified orientation.
+        /// </summary>
+        /// <param name="isVert">true to retrieve the interval for the vertical axis; false to retrieve the interval for the horizontal axis.</param>
+        /// <returns>An <see cref="AxisIntervalD"/> representing the interval for the selected axis.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly AxisIntervalD GetAxisInterval(bool isVert)
+        {
+            if (isVert)
+                return new AxisIntervalD(y, height);
+            else
+                return new AxisIntervalD(x, width);
+        }
+
+        /// <summary>
         /// Gets whether rectangle is not empty and contains the specified point.
         /// </summary>
         /// <param name="x">X coordinate of the point to test.</param>
