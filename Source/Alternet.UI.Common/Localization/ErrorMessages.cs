@@ -21,12 +21,12 @@ namespace Alternet.UI.Localization
         /// <summary>
         /// Gets or sets the message displayed to the user when prompting to continue after an error.
         /// </summary>
-        public string PressContinueToSkipError = "Press 'Continue' to skip the error and proceed.";
+        public string PressContinueToSkipError = "Press <b>Continue</b> to skip the error and proceed.";
 
         /// <summary>
         /// Gets or sets the message displayed to the user when prompting to quit the application.
         /// </summary>
-        public string PressQuitToCloseApplication = "Press 'Quit' to close the application immediately.";
+        public string PressQuitToCloseApplication = "Press <b>Quit</b> to close the application immediately.";
 
         /// <summary>
         /// Gets or sets the message used in exception information label.

@@ -76,6 +76,26 @@ namespace Alternet.UI
         public static readonly string BoldTagEnd = "</b>";
 
         /// <summary>
+        /// Gets html start italic tag string constant.
+        /// </summary>
+        public static readonly string ItalicTagStart = "<i>";
+
+        /// <summary>
+        /// Represents the HTML end tag for italic text.
+        /// </summary>
+        public static readonly string ItalicTagEnd = "</i>";
+
+        /// <summary>
+        /// Represents the opening HTML tag for underlined text.
+        /// </summary>
+        public static readonly string UnderlineTagStart = "<u>";
+
+        /// <summary>
+        /// Represents the HTML end tag for underlined text.
+        /// </summary>
+        public static readonly string UnderlineTagEnd = "</u>";
+
+        /// <summary>
         /// Gets initialized string with one space character.
         /// </summary>
         public static readonly string OneSpace = " ";
@@ -1345,6 +1365,35 @@ namespace Alternet.UI
             var isOk = decimal.TryParse(s, style, provider, out var value);
             result = value;
             return isOk;
+        }
+
+        /// <summary>
+        /// Parses each string in the specified array and applies an accelerator style to the character at the given
+        /// index in each line.
+        /// </summary>
+        /// <remarks>If a line is shorter than indexAccel, no accelerator style is applied for that line.
+        /// The method processes each line independently.</remarks>
+        /// <param name="text">An array of strings to parse. Each string represents a line of text to process. Can be null or empty.</param>
+        /// <param name="indexAccel">The zero-based index of the character in each line to which the accelerator style is applied. Must be a
+        /// valid index within each string.</param>
+        /// <param name="accelStyle">The font style to apply to the accelerator character. Defaults to FontStyle.Underline.</param>
+        /// <returns>An array of arrays, where each inner array contains TextAndFontStyle objects representing the parsed
+        /// characters and their associated styles for each input line. Returns an empty array if text is null or empty.</returns>
+        public static TextAndFontStyle[][] ParseTextLinesWithIndexAccel(
+            string[]? text,
+            int indexAccel,
+            FontStyle accelStyle = FontStyle.Underline)
+        {
+            if (text == null || text.Length == 0)
+                    return Array.Empty<TextAndFontStyle[]>();
+            TextAndFontStyle[][] result = new TextAndFontStyle[text.Length][];
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                result[i] = ParseTextWithIndexAccel(text[i], indexAccel, accelStyle);
+            }
+
+            return result;
         }
 
         /// <summary>

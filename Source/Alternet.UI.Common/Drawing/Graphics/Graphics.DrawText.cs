@@ -298,6 +298,43 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws multiple lines of text, each with individual font style segments, at the specified location and
+        /// returns the size of each rendered line.
+        /// </summary>
+        /// <remarks>The method draws each line sequentially, offsetting the Y-coordinate by the height of
+        /// the previous line plus the specified line distance. Each text segment within a line can have its own font
+        /// style, but the base font is used when no style is specified.</remarks>
+        /// <param name="text">An array of text lines, where each line is represented as an array of text segments with associated font
+        /// styles to be drawn.</param>
+        /// <param name="lineDistance">The vertical distance, in device-independent units, to apply between each line of text.</param>
+        /// <param name="location">The starting location, in device-independent coordinates, where the first line of text will be drawn.</param>
+        /// <param name="font">The base font to use for rendering text segments that do not specify an explicit font style.</param>
+        /// <param name="foreColor">The color to use for the text foreground.</param>
+        /// <param name="backColor">The background color to use behind the text. If null, no background is drawn.</param>
+        /// <returns>An array of SizeD values representing the width and height of each rendered text line, in the same order as
+        /// the input lines.</returns>
+        public virtual SizeD[] DrawTextLinesWithFontStyle(
+            TextAndFontStyle[][] text,
+            Coord lineDistance,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color? backColor = null)
+        {
+            var result = new SizeD[text.Length];
+
+            for (var i = 0; i < text.Length; i++)
+            {
+                var line = text[i];
+                var size = DrawTextWithFontStyle(line, location, font, foreColor, backColor);
+                result[i] = size;
+                location.Y += size.Height + lineDistance;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Draws an array of text elements with custom font styles and colors.
         /// </summary>
         public virtual SizeD DrawTextWithFontStyle(
@@ -1026,7 +1063,13 @@ namespace Alternet.Drawing
                 {
                     if (StringUtils.ContainsNewLineChars(s))
                     {
-                        splitText = StringUtils.Split(s, false);
+                        splitText = StringUtils.Split(s, removeEmptyLines: false);
+
+                        if (splitText.Length <= 1)
+                        {
+                            splitText = null;
+                            hasNewLineChars = false;
+                        }
                     }
                     else
                     {
@@ -1034,29 +1077,47 @@ namespace Alternet.Drawing
                     }
                 }
 
-                TextAndFontStyle[]? parsed = prm.TextAndFontStyle;
+                TextAndFontStyle[][]? parsedLines = prm.TextAndFontStyle is null ? null : new[] { prm.TextAndFontStyle };
 
                 if (textOverride is null)
                 {
-                    if (parsed is null)
+                    if (parsedLines is null)
                     {
                         if (prm.Flags.HasFlag(DrawLabelFlags.TextHasBold))
                         {
-                            parsed = RegexUtils.GetBoldTagSplitted(s);
+                            if (hasNewLineChars)
+                            {
+                                parsedLines = RegexUtils.GetTextLinesBoldTagSplitted(splitText);
+                            }
+                            else
+                            {
+                                parsedLines = new[] { RegexUtils.GetBoldTagSplitted(s) };
+                            }
                         }
                         else
                             if (indexAccel >= 0)
                             {
-                                parsed = StringUtils.ParseTextWithIndexAccel(
-                                    s,
-                                    indexAccel,
-                                    FontStyle.Underline);
+                                if (hasNewLineChars)
+                                {
+                                    parsedLines = StringUtils.ParseTextLinesWithIndexAccel(
+                                        splitText,
+                                        indexAccel,
+                                        FontStyle.Underline);
+                                }
+                                else
+                                {
+                                    var parsed = StringUtils.ParseTextWithIndexAccel(
+                                        s,
+                                        indexAccel,
+                                        FontStyle.Underline);
+                                    parsedLines = new[] { parsed };
+                                }
                             }
                     }
                 }
                 else
                 {
-                    parsed = null;
+                    parsedLines = null;
                 }
 
                 DrawElementParams textElement = new()
@@ -1074,7 +1135,7 @@ namespace Alternet.Drawing
 
                         SizeD Internal()
                         {
-                            if (parsed is null)
+                            if (parsedLines is null)
                             {
                                 SizeD result;
 
@@ -1101,18 +1162,22 @@ namespace Alternet.Drawing
                             }
                             else
                             {
-                                var result = dc.DrawTextWithFontStyle(
-                                            parsed,
+                                var sizes = dc.DrawTextLinesWithFontStyle(
+                                            parsedLines,
+                                            lineDistance,
                                             PointD.Empty,
                                             font,
                                             Color.Empty);
+                                var sumHeights = SizeD.SumHeights(sizes, lineDistance);
+                                var maxWidth = SizeD.MaxWidth(sizes);
+                                result = new SizeD(maxWidth, sumHeights);
                                 return result;
                             }
                         }
                     },
                     Draw = (dc, rect) =>
                     {
-                        if (parsed is null)
+                        if (parsedLines is null)
                         {
                             if (splitText is null)
                             {
@@ -1143,8 +1208,9 @@ namespace Alternet.Drawing
                         }
                         else
                         {
-                            dc.DrawTextWithFontStyle(
-                                parsed,
+                            dc.DrawTextLinesWithFontStyle(
+                                parsedLines,
+                                lineDistance,
                                 rect.Location,
                                 font,
                                 foreColor,
