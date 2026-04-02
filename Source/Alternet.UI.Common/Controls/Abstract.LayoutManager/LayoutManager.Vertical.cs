@@ -6,9 +6,9 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal partial class LayoutManager
+    public partial class LayoutManager
     {
-        public virtual void LayoutWhenVertical(
+        private void LayoutWhenVertical(
             ILayoutItem container,
             RectD lBounds,
             IReadOnlyList<ILayoutItem> items)
@@ -86,9 +86,9 @@ namespace Alternet.UI
                 {
                     control.Bounds =
                         new RectD(
-                            alignedPos.Origin,
+                            alignedPos.Start,
                             lBounds.Bottom - h - margin.Bottom - preferSize.Height,
-                            alignedPos.Size,
+                            alignedPos.Length,
                             preferSize.Height);
                     h += preferSize.Height + vertMargin;
                 }
@@ -96,47 +96,13 @@ namespace Alternet.UI
                 {
                     control.Bounds =
                         new RectD(
-                            alignedPos.Origin,
+                            alignedPos.Start,
                             lBounds.Top + y + margin.Top,
-                            alignedPos.Size,
+                            alignedPos.Length,
                             preferSize.Height);
                     y += preferSize.Height + vertMargin;
                 }
             }
         }
-
-/*
-        public virtual SizeD GetPreferredSizeWhenVertical(
-            ILayoutItem container,
-            PreferredSizeContext context)
-        {
-            var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
-            var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
-
-            var padding = container.Padding;
-
-            Coord maxWidth = 0;
-            Coord height = 0;
-            foreach (var control in container.AllChildrenInLayout)
-            {
-                if (control.Dock != DockStyle.None)
-                    continue;
-
-                var margin = control.Margin;
-
-                var preferredSize = control.GetPreferredSizeLimited(
-                    new PreferredSizeContext(
-                        context.AvailableSize.Width,
-                        context.AvailableSize.Height - height));
-
-                maxWidth = Math.Max(maxWidth, preferredSize.Width + margin.Horizontal);
-                height += preferredSize.Height + margin.Vertical;
-            }
-
-            var newWidth = isNanWidth ? maxWidth + padding.Horizontal : container.SuggestedWidth;
-            var newHeight = isNanHeight ? height + padding.Vertical : container.SuggestedHeight;
-            return new SizeD(newWidth, newHeight);
-        }
-*/
     }
 }

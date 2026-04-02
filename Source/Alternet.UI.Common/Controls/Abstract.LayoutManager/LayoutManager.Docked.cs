@@ -8,22 +8,20 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal partial class LayoutManager
+    public partial class LayoutManager
     {
-        public virtual SizeD GetPreferredSizeDockLayout(
-            AbstractControl container,
-            PreferredSizeContext context)
-        {
-            if (container.HasChildren)
-                return container.GetBestSizeWithChildren(context);
-            return container.GetBestSizeWithPadding(context);
-        }
-
-        public virtual bool ChildIgnoresLayout(ILayoutItem control)
-        {
-            return !control.Visible || control.IgnoreLayout;
-        }
-
+        /// <summary>
+        /// Arranges the specified child layout item within the given bounds according to the provided dock style,
+        /// updating the bounds to reflect the remaining available space.
+        /// </summary>
+        /// <remarks>If the dock style specifies an auto-size variant, the child's preferred size is used
+        /// for layout. When the UseMarginsWhenDock flag is set, the child's margins are applied during arrangement.
+        /// This method is typically used by container layouts to sequentially arrange multiple children.</remarks>
+        /// <param name="bounds">A reference to the bounding rectangle in which to arrange the child. Updated to represent the remaining
+        /// space after layout.</param>
+        /// <param name="child">The layout item to be positioned within the bounds according to the specified dock style.</param>
+        /// <param name="value">The dock style that determines how the child is positioned and sized within the bounds.</param>
+        /// <param name="containerFlags">Flags that influence layout behavior, such as whether to apply margins when docking.</param>
         public virtual void LayoutWhenDocked(ref RectD bounds, ILayoutItem child, DockStyle value, LayoutFlags containerFlags)
         {
             SizeD child_size = child.Bounds.Size;
@@ -186,6 +184,13 @@ namespace Alternet.UI
             }
         }
 
+        private SizeD GetPreferredSizeDockLayout(ILayoutItem container, PreferredSizeContext context)
+        {
+            if (container.HasChildren)
+                return GetBestSizeWithChildren(container, context);
+            return container.GetBestSizeWithPadding(context);
+        }
+
         /// <summary>
         /// Arranges the child controls of a container according to their docking styles, updating the available bounds
         /// to reflect the remaining space after docking.
@@ -201,7 +206,7 @@ namespace Alternet.UI
         // On return, 'bounds' has an empty space left after docking the controls to sides
         // of the container (fill controls are not counted).
         // On return, 'result' has number of controls with Dock != None.
-        public virtual int LayoutWhenDocked(
+        private int LayoutWhenDocked(
             ILayoutItem container,
             ref RectD bounds,
             IReadOnlyList<ILayoutItem> children)

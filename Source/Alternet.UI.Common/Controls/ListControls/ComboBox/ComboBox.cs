@@ -1069,7 +1069,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
+        public override SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
         {
             SizeD result = base.GetBestSizeWithoutPadding(context);
             if (Count > 0)

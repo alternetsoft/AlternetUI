@@ -391,11 +391,6 @@ namespace Alternet.UI
         ContextMenuStrip ContextMenuStrip { get; set; }
 
         /// <summary>
-        /// Gets or sets whether controls is scrollable.
-        /// </summary>
-        bool IsScrollable { get; set; }
-
-        /// <summary>
         /// Gets or sets the Input Method Editor (IME) mode of the control.
         /// </summary>
         /// <returns>One of the <see cref="ImeMode" /> values.

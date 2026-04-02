@@ -26,29 +26,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the size of the control specified in its
-        /// <see cref="AbstractControl.SuggestedWidth"/>
-        /// and <see cref="AbstractControl.SuggestedHeight"/>
-        /// properties or calculates preferred size from its children.
-        /// </summary>
-        public virtual SizeD GetBestSizeWithChildren(PreferredSizeContext context)
-        {
-            var specifiedWidth = SuggestedWidth;
-            var specifiedHeight = SuggestedHeight;
-            if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
-                return new SizeD(specifiedWidth, specifiedHeight);
-
-            var maxSize = GetChildrenMaxPreferredSizePadded(context);
-            var maxWidth = maxSize.Width;
-            var maxHeight = maxSize.Height;
-
-            var width = Coord.IsNaN(specifiedWidth) ? maxWidth : specifiedWidth;
-            var height = Coord.IsNaN(specifiedHeight) ? maxHeight : specifiedHeight;
-
-            return new SizeD(width, height);
-        }
-
-        /// <summary>
         /// Requests scale factor from the parent or other available sources.
         /// </summary>
         /// <returns></returns>
@@ -65,39 +42,6 @@ namespace Alternet.UI
         protected virtual ControlRenderingFlags GetDefaultRenderingFlags()
         {
             return ControlRenderingFlags.None;
-        }
-
-        /// <summary>
-        /// Returns the size of the area which can fit all the children of this
-        /// control, with an added padding.
-        /// </summary>
-        protected virtual SizeD GetPaddedPreferredSize(SizeD preferredSize)
-        {
-            var padding = Padding;
-            var intrinsicPadding = NativePadding;
-            return preferredSize + padding.Size + intrinsicPadding.Size;
-        }
-
-        /// <summary>
-        /// Gets the size of the area which can fit all the children of this control.
-        /// </summary>
-        protected virtual SizeD GetChildrenMaxPreferredSize(PreferredSizeContext context)
-        {
-            Coord maxWidth = 0;
-            Coord maxHeight = 0;
-
-            foreach (var control in AllChildrenInLayout)
-            {
-                var margin = control.Margin.Size;
-
-                var preferredSize =
-                    control.GetPreferredSize(
-                        new PreferredSizeContext(context.AvailableSize - margin)) + margin;
-                maxWidth = Math.Max(preferredSize.Width, maxWidth);
-                maxHeight = Math.Max(preferredSize.Height, maxHeight);
-            }
-
-            return new SizeD(maxWidth, maxHeight);
         }
 
         /// <summary>
@@ -269,47 +213,6 @@ namespace Alternet.UI
             Parent = null;
 
             base.DisposeManaged();
-        }
-
-        /// <summary>
-        /// Gets default layout in case when <see cref="Layout"/> property
-        /// is null.
-        /// </summary>
-        /// <returns></returns>
-        /// <remarks>
-        /// This method returns <see cref="LayoutStyle.Basic"/> in <see cref="AbstractControl"/>.
-        /// </remarks>
-        protected virtual LayoutStyle GetDefaultLayout()
-        {
-            return LayoutStyle.Basic;
-        }
-
-        /// <summary>
-        /// Gets size of the native control without padding.
-        /// </summary>
-        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
-        /// context for the layout.</param>
-        /// <returns></returns>
-        protected virtual SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
-        {
-            return SizeD.Empty;
-        }
-
-        /// <summary>
-        /// Gets size of the native control based on the specified available size.
-        /// </summary>
-        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
-        /// context for the layout.</param>
-        /// <returns></returns>
-        public SizeD GetBestSizeWithPadding(PreferredSizeContext context)
-        {
-            if (IsDummy)
-                return SizeD.Empty;
-            var s = GetBestSizeWithoutPadding(context);
-            s += Padding.Size;
-            return new SizeD(
-                Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
-                Coord.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
         }
 
         /// <summary>

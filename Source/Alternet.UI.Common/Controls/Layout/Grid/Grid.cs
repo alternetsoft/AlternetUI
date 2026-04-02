@@ -177,10 +177,10 @@ namespace Alternet.UI
                     control.VerticalAlignment);
 
             control.Bounds = new RectD(
-                horizontalPosition.Origin,
-                verticalPosition.Origin,
-                horizontalPosition.Size,
-                verticalPosition.Size);
+                horizontalPosition.Start,
+                verticalPosition.Start,
+                horizontalPosition.Length,
+                verticalPosition.Length);
         }
 
         void OnChildrenChanged()

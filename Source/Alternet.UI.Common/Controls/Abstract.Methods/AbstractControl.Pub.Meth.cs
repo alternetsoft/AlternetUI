@@ -2991,16 +2991,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns a maximal preferred size of the children with an added padding.
-        /// </summary>
-        public virtual SizeD GetChildrenMaxPreferredSizePadded(PreferredSizeContext context)
-        {
-            var preferredSize = GetChildrenMaxPreferredSize(context);
-            var padded = GetPaddedPreferredSize(preferredSize);
-            return padded;
-        }
-
-        /// <summary>
         /// Resets the cached best size value so it will be recalculated the next time it is needed.
         /// </summary>
         [Browsable(false)]

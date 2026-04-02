@@ -817,6 +817,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
+        {
+            return SafeHandler?.GetPreferredSize(context) ?? SizeD.Empty;
+        }
+
+        /// <inheritdoc/>
         public override void RaiseHandleCreated(EventArgs e)
         {
             if (DisposingOrDisposed)
@@ -947,12 +953,6 @@ namespace Alternet.UI
         protected virtual IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateControlHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
-        {
-            return SafeHandler?.GetPreferredSize(context) ?? SizeD.Empty;
         }
 
         /// <inheritdoc/>

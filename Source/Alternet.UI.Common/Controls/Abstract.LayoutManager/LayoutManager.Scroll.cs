@@ -6,16 +6,14 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal partial class LayoutManager
+    public partial class LayoutManager
     {
-        public virtual SizeD GetPreferredSizeWhenScroll(
-            AbstractControl container,
-            PreferredSizeContext context)
+        private SizeD GetPreferredSizeWhenScroll(ILayoutItem container, PreferredSizeContext context)
         {
             var result = container.LayoutMaxSize
                 ?? GetPreferredSizeDefaultLayout(container, context);
 
-            var cornerSize = ScrollBar.GetCornerSize(container);
+            var cornerSize = container.GetScrollBarCornerSize();
 
             if (result.Width > context.AvailableSize.Width)
             {
@@ -30,8 +28,8 @@ namespace Alternet.UI
             return result;
         }
 
-        public virtual void LayoutWhenScroll(
-            AbstractControl container,
+        private void LayoutWhenScroll(
+            ILayoutItem container,
             Func<RectD> getBounds,
             IReadOnlyList<ILayoutItem> controls,
             bool updateScrollbars)
@@ -43,7 +41,7 @@ namespace Alternet.UI
             if (updateScrollbars && container.IsScrollable)
             {
                 var totalSize = container.LayoutMaxSize
-                    ?? container.GetChildrenMaxPreferredSizePadded(SizeD.PositiveInfinity);
+                    ?? GetChildrenMaxPreferredSizePadded(container, SizeD.PositiveInfinity);
 
                 // This multiplication is here because:
                 // 1. We need to have the ability to scroll further than calculated
@@ -98,8 +96,8 @@ namespace Alternet.UI
                 var layoutOffset = container.LayoutOffset;
 
                 control.Bounds = new RectD(
-                    horizontalPosition.Origin + layoutOffset.X,
-                    verticalPosition.Origin + layoutOffset.Y,
+                    horizontalPosition.Start + layoutOffset.X,
+                    verticalPosition.Start + layoutOffset.Y,
                     unboundedPreferredSize.Width,
                     unboundedPreferredSize.Height);
             }

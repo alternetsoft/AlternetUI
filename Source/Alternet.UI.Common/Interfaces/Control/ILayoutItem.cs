@@ -332,6 +332,20 @@ namespace Alternet.UI
         RectD ClientRectangle { get; }
 
         /// <summary>
+        /// Gets or sets whether item is scrollable.
+        /// </summary>
+        bool IsScrollable { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximal size of the layout which is used together with
+        /// <see cref="LayoutOffset"/> when scrollbar position is updated.
+        /// This property is used when layout of the child items is
+        /// <see cref="LayoutStyle.Scroll"/>. If this property is Null (default value),
+        /// automatic calculation is performed.
+        /// </summary>
+        SizeD? LayoutMaxSize { get; set; }
+
+        /// <summary>
         /// Gets or sets cached data for the layout engine.
         /// </summary>
         object? LayoutData { get; set; }
@@ -365,6 +379,34 @@ namespace Alternet.UI
             Coord width,
             Coord height,
             BoundsSpecified specified);
+
+        /// <summary>
+        /// Gets the size of the area which is used for intersection of vertical and horizontal scrollbars, in device-independent units.
+        /// </summary>
+        /// <returns>The size of the scrollbar corner area.</returns>
+        SizeD GetScrollBarCornerSize();
+
+        /// <summary>
+        /// Sets vertical or horizontal scrollbar position as <see cref="ScrollBarInfo"/>.
+        /// </summary>
+        /// <param name="isVertical">Whether to set position for the vertical or
+        /// horizontal scrollbar.</param>
+        /// <param name="value">Scrollbar position.</param>
+        void SetScrollBarInfo(bool isVertical, ScrollBarInfo value);
+
+        /// <summary>
+        /// Sets vertical and horizontal scrollbar positions using page
+        /// and total size parameters.
+        /// </summary>
+        /// <param name="pageSize">Page size.</param>
+        /// <param name="totalSize">Total size.</param>
+        /// <param name="visibilityHorz">Horizontal scrollbar visibility.</param>
+        /// <param name="visibilityVert">Vertical scrollbar visibility.</param>
+        void SetScrollBarInfo(
+            SizeD pageSize,
+            SizeD totalSize,
+            HiddenOrVisible? visibilityHorz = null,
+            HiddenOrVisible? visibilityVert = null);
 
         /// <summary>
         /// Resets <see cref="SuggestedHeight"/> property.
@@ -417,5 +459,32 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>A <see cref="SizeD"/> representing the preferred size.</returns>
         SizeD GetPreferredSize();
+
+        /// <summary>
+        /// Gets best size of the item without padding.
+        /// </summary>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
+        /// context for the layout.</param>
+        /// <returns></returns>
+        SizeD GetBestSizeWithoutPadding(PreferredSizeContext context);
+
+        /// <summary>
+        /// Gets best size of the item based on the specified available size.
+        /// </summary>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
+        /// context for the layout.</param>
+        /// <returns></returns>
+        SizeD GetBestSizeWithPadding(PreferredSizeContext context);
+
+        /// <summary>
+        /// Returns the size of the area which can fit all the children of this
+        /// item, with an added padding.
+        /// </summary>
+        SizeD GetPaddedPreferredSize(SizeD preferredSize);
+
+        /// <summary>
+        /// Gets the size of the area which can fit all the children of this item.
+        /// </summary>
+        SizeD GetChildrenMaxPreferredSize(PreferredSizeContext context);
     }
 }

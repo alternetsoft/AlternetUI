@@ -6,8 +6,24 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal partial class LayoutManager
+    public partial class LayoutManager
     {
+        /// <summary>
+        /// Calculates the preferred size for a container when arranging its child layout items in a stack, either
+        /// vertically or horizontally.
+        /// </summary>
+        /// <remarks>If the container specifies a suggested size, that value is used. Otherwise, the
+        /// preferred size is determined by aggregating the preferred sizes of the relevant child items, accounting for
+        /// their margins and the container's padding. Docked children can be excluded from the calculation by setting
+        /// ignoreDocked to true.</remarks>
+        /// <param name="container">The container layout item for which to calculate the preferred size.</param>
+        /// <param name="context">The context providing available size constraints and other layout information.</param>
+        /// <param name="isVert">true to stack child items vertically; false to stack them horizontally.</param>
+        /// <param name="children">An optional list of child layout items to consider. If null, all children in the container's layout are
+        /// used.</param>
+        /// <param name="ignoreDocked">true to ignore child items that are docked; false to include all children in the calculation.</param>
+        /// <returns>A SizeD structure representing the preferred size of the container based on the stacking arrangement of its
+        /// children. Returns SizeD.Empty if the available size is empty or negative.</returns>
         public virtual SizeD GetPreferredSizeWhenStack(
             ILayoutItem container,
             PreferredSizeContext context,
@@ -66,7 +82,7 @@ namespace Alternet.UI
             return new(newWidth, newHeight);
         }
 
-        public virtual void LayoutWhenHorizontal(
+        private void LayoutWhenHorizontal(
             ILayoutItem container,
             RectD childrenLayoutBounds,
             IReadOnlyList<ILayoutItem> controls)
@@ -163,73 +179,39 @@ namespace Alternet.UI
                         control.Bounds =
                             new RectD(
                                 childrenLayoutBounds.Left + x + margin.Left,
-                                alignedPosition.Origin,
+                                alignedPosition.Start,
                                 preferredSize.Width,
-                                alignedPosition.Size);
+                                alignedPosition.Length);
                         x += preferredSize.Width + horizontalMargin;
                         break;
                     case HorizontalAlignment.Fill:
                         control.Bounds =
                             new RectD(
                                 childrenLayoutBounds.Left + x + margin.Left,
-                                alignedPosition.Origin,
+                                alignedPosition.Start,
                                 availableWidth,
-                                alignedPosition.Size);
+                                alignedPosition.Length);
                         x += availableWidth + horizontalMargin;
                         break;
                     case HorizontalAlignment.Center:
                         centerControls ??= new();
                         var item = (
                             control,
-                            alignedPosition.Origin,
-                            (preferredSize.Width, alignedPosition.Size));
+                            alignedPosition.Start,
+                            (preferredSize.Width, alignedPosition.Length));
                         centerControls.Add(item);
                         break;
                     case HorizontalAlignment.Right:
                         control.Bounds =
                             new RectD(
                                 childrenLayoutBounds.Right - w - margin.Right - preferredSize.Width,
-                                alignedPosition.Origin,
+                                alignedPosition.Start,
                                 preferredSize.Width,
-                                alignedPosition.Size);
+                                alignedPosition.Length);
                         w += preferredSize.Width + horizontalMargin;
                         break;
                 }
             }
-        }
-
-        /*
-        public virtual SizeD GetPreferredSizeWhenHorizontal(
-            ILayoutItem container,
-            PreferredSizeContext context)
-        {
-            var isNanHeight = Coord.IsNaN(container.SuggestedHeight);
-            var isNanWidth = Coord.IsNaN(container.SuggestedWidth);
-            if (!isNanHeight && !isNanWidth)
-                return container.SuggestedHeight;
-
-            var stackPanelPadding = container.Padding;
-
-            Coord width = 0;
-            Coord maxHeight = 0;
-            foreach (var control in container.AllChildrenInLayout)
-            {
-                if (control.Dock != DockStyle.None)
-                    continue;
-
-                var margin = control.Margin;
-                var preferredSize = control.GetPreferredSizeLimited(
-                    new PreferredSizeContext(
-                        context.AvailableSize.Width - width,
-                        context.AvailableSize.Height));
-                width += preferredSize.Width + margin.Horizontal;
-                maxHeight = Math.Max(maxHeight, preferredSize.Height + margin.Vertical);
-            }
-
-            return new SizeD(
-                isNanWidth ? width + stackPanelPadding.Horizontal : container.SuggestedWidth,
-                isNanHeight ? maxHeight + stackPanelPadding.Vertical : container.SuggestedHeight);
-        }
-        */
+        }        
     }
 }
