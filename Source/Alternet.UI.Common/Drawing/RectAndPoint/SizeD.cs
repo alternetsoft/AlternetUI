@@ -547,6 +547,31 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Calculates the total sum of the heights of the specified sizes, including the specified distance between
+        /// each line.
+        /// </summary>
+        /// <remarks>If the sizes array contains one or zero elements, lineDistance is not added. The
+        /// method does not modify the input array.</remarks>
+        /// <param name="sizes">An array of SizeD structures whose Height values are to be summed. Cannot be null.</param>
+        /// <param name="lineDistance">The distance to add between each consecutive size. The default is 0.</param>
+        /// <returns>The total sum of the heights of all sizes, plus the line distance added between each pair of consecutive
+        /// sizes.</returns>
+        public static Coord SumHeights(SizeD[] sizes, Coord lineDistance = 0)
+        {
+            var length = sizes.Length;
+            Coord result = 0;
+
+            for (int i = 0; i < length; i++)
+            {
+                result += sizes[i].Height;
+                if (i < length - 1)
+                    result += lineDistance;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Multiplies <see cref="SizeD"/> by a value
         /// producing <see cref="SizeD"/>.
         /// </summary>
@@ -570,20 +595,42 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns the larger of the specified <see cref="SizeD"/> values.
+        /// Calculates a new size whose width is the maximum width and whose height is the maximum height from the
+        /// specified array of sizes.
         /// </summary>
-        /// <param name="sizes">Array of <see cref="SizeD"/> values.</param>
-        /// <exception cref="ArgumentOutOfRangeException">if <paramref name="sizes"/> is
-        /// an empty array.</exception>
+        /// <param name="sizes">An array of sizes from which to determine the maximum width and height. Cannot be null or empty.</param>
+        /// <returns>A SizeD structure whose width is the largest width and whose height is the largest height found in the input
+        /// array.</returns>
         public static SizeD MaxWidthHeights(SizeD[] sizes)
         {
-            var widths = GetWidths(sizes);
-            var heights = GetHeights(sizes);
-
-            var width = MathUtils.Max(widths);
-            var height = MathUtils.Max(heights);
+            var width = MaxWidth(sizes);
+            var height = MaxHeight(sizes);
 
             return new(width, height);
+        }
+
+        /// <summary>
+        /// Calculates the maximum width among a collection of sizes.
+        /// </summary>
+        /// <param name="sizes">An array of SizeD structures representing the sizes to evaluate. Cannot be null.</param>
+        /// <returns>The maximum width value found in the collection of sizes.</returns>
+        public static Coord MaxWidth(SizeD[] sizes)
+        {
+            var widths = GetWidths(sizes);
+            var width = MathUtils.Max(widths);
+            return width;
+        }
+
+        /// <summary>
+        /// Calculates the maximum height among a collection of sizes.
+        /// </summary>
+        /// <param name="sizes">An array of SizeD structures representing the sizes to evaluate. Cannot be null.</param>
+        /// <returns>The maximum height value found in the collection of sizes.</returns>
+        public static Coord MaxHeight(SizeD[] sizes)
+        {
+            var heights = GetHeights(sizes);
+            var height = MathUtils.Max(heights);
+            return height;
         }
 
         /// <summary>
