@@ -18,6 +18,7 @@ namespace Alternet.UI
         /// value allows you to specify a custom layout manager for the control, which can provide specialized layout behavior for its child controls.
         /// </summary>
         /// <remarks>Setting this property updates the layout of the container. </remarks>
+        [Browsable(false)]
         public virtual LayoutManager? LayoutManager
         {
             get => layoutManager;
