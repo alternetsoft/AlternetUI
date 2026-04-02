@@ -10,6 +10,26 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
+        private LayoutManager? layoutManager;
+
+        /// <summary>
+        /// Gets or sets the layout manager responsible for arranging child elements within the container.
+        /// Default is null, which means that the default layout manager will be used. Setting this property to a non-null
+        /// value allows you to specify a custom layout manager for the control, which can provide specialized layout behavior for its child controls.
+        /// </summary>
+        /// <remarks>Setting this property updates the layout of the container. </remarks>
+        public virtual LayoutManager? LayoutManager
+        {
+            get => layoutManager;
+            set
+            {
+                if (layoutManager == value)
+                    return;
+                layoutManager = value;
+                PerformLayout();
+            }
+        }
+
         /// <summary>
         /// Gets real layout style of the child controls.
         /// </summary>
@@ -87,12 +107,18 @@ namespace Alternet.UI
                 }
             }
 
-            GetLayoutManager().DefaultOnLayout(this, layoutType, GetSpace, items);
+            GetLayoutManager().OnLayout(this, layoutType, GetSpace, items);
         }
 
-        internal virtual LayoutManager GetLayoutManager()
+        /// <summary>
+        /// Gets the layout manager which is used to perform layout and calculate preferred sizes.
+        /// This method returns the value of the <see cref="LayoutManager"/> property if it is not null;
+        /// otherwise, it returns the default layout manager instance which is specified by the <see cref="LayoutManager.Instance"/> property.
+        /// </summary>
+        /// <returns>The <see cref="ILayoutManager"/> instance used by this control.</returns>
+        public virtual ILayoutManager GetLayoutManager()
         {
-            return LayoutManager.Instance;
+            return LayoutManager ?? LayoutManager.Instance;
         }
 
         /// <summary>
@@ -115,7 +141,7 @@ namespace Alternet.UI
                     return e.Result;
             }
 
-            return GetLayoutManager().DefaultGetPreferredSize(this, context, layoutType);
+            return GetLayoutManager().OnGetPreferredSize(this, context, layoutType);
         }
 
         /// <summary>
@@ -220,6 +246,76 @@ namespace Alternet.UI
             Bounds = newBounds;
         }
 
+        /// <summary>
+        /// Gets size of the native control without padding.
+        /// </summary>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
+        /// context for the layout.</param>
+        /// <returns></returns>
+        public virtual SizeD GetBestSizeWithoutPadding(PreferredSizeContext context)
+        {
+            return SizeD.Empty;
+        }
+
+        /// <summary>
+        /// Gets size of the native control based on the specified available size.
+        /// </summary>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> representing
+        /// context for the layout.</param>
+        /// <returns></returns>
+        public SizeD GetBestSizeWithPadding(PreferredSizeContext context)
+        {
+            if (IsDummy)
+                return SizeD.Empty;
+            var s = GetBestSizeWithoutPadding(context);
+            s += Padding.Size;
+            return new SizeD(
+                Coord.IsNaN(SuggestedWidth) ? s.Width : SuggestedWidth,
+                Coord.IsNaN(SuggestedHeight) ? s.Height : SuggestedHeight);
+        }
+
+        /// <summary>
+        /// Gets the size of the area which is used for intersection of vertical and horizontal scrollbars, in device-independent units.
+        /// </summary>
+        /// <returns>The size of the scrollbar corner area.</returns>
+        public virtual SizeD GetScrollBarCornerSize()
+        {
+            return ScrollBar.GetCornerSize(this);
+        }
+
+        /// <summary>
+        /// Returns the size of the area which can fit all the children of this
+        /// control, with an added padding.
+        /// </summary>
+        public virtual SizeD GetPaddedPreferredSize(SizeD preferredSize)
+        {
+            var padding = Padding;
+            var intrinsicPadding = NativePadding;
+            return preferredSize + padding.Size + intrinsicPadding.Size;
+        }
+
+        /// <summary>
+        /// Gets the size of the area which can fit all the children of this control.
+        /// </summary>
+        public virtual SizeD GetChildrenMaxPreferredSize(PreferredSizeContext context)
+        {
+            Coord maxWidth = 0;
+            Coord maxHeight = 0;
+
+            foreach (var control in AllChildrenInLayout)
+            {
+                var margin = control.Margin.Size;
+
+                var preferredSize =
+                    control.GetPreferredSize(
+                        new PreferredSizeContext(context.AvailableSize - margin)) + margin;
+                maxWidth = Math.Max(preferredSize.Width, maxWidth);
+                maxHeight = Math.Max(preferredSize.Height, maxHeight);
+            }
+
+            return new SizeD(maxWidth, maxHeight);
+        }
+
         internal static SizeD GetMinStretchedSize(
             SizeD availableSize,
             IReadOnlyList<ILayoutItem> children)
@@ -239,6 +335,18 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets default layout in case when <see cref="Layout"/> property is null.
+        /// </summary>
+        /// <returns></returns>
+        /// <remarks>
+        /// This method returns <see cref="LayoutStyle.Basic"/> in <see cref="AbstractControl"/>.
+        /// </remarks>
+        protected virtual LayoutStyle GetDefaultLayout()
+        {
+            return LayoutStyle.Basic;
         }
     }
 }
