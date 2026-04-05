@@ -1,3 +1,13 @@
+# 1.0.10 (2026 April 5)
+
+- Add `LayoutManager` and `ILayoutManager`, which allow custom layouts for controls and for classes that support `ILayoutItem`.
+- `AbstractControl`: add a `LayoutManager` property.
+- `Label` and `Graphics.DrawLabel`: add support for `<u>` and `<i>` tags, including in multiline text.
+- `SizeD`: add `SumHeights`, `MaxWidth`, and `MaxHeight` overloads that take a `SizeD[]` parameter.
+- Add axis helpers and `Contains` methods to `RectD`.
+
+---
+
 # 1.0.9 (2026 April 1)
 
 - Improve exceptions handling.

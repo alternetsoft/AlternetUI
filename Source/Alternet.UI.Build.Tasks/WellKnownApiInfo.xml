@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=1.0.9.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=1.0.10.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -304,6 +304,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.AxisIntervalD" />
     <Type Name="Alternet.Drawing.CoordAndUnit" />
     <Type Name="Alternet.Drawing.CoordD" />
     <Type Name="Alternet.Drawing.NineRects" />
@@ -2948,6 +2949,8 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.ILayoutManager" />
+    <Type Name="Alternet.UI.LayoutManager" />
     <Type Name="Alternet.UI.PaintEventHandler" />
     <Type Name="Alternet.UI.Control">
       <Event Name="LayoutMaxSizeChanged" />
@@ -18622,7 +18625,6 @@
     <Type Name="Alternet.UI.ShortcutInfo+FormatOptions" />
     <Type Name="Alternet.UI.PropInstanceAndValue+SavedPropertiesItem" />
     <Type Name="Alternet.UI.BorderCornerRadius+ValueKind" />
-    <Type Name="Alternet.UI.AbstractControl+AlignedPosition" />
     <Type Name="Alternet.UI.AbstractControl+DrawDefaultBackgroundFlags" />
     <Type Name="Alternet.UI.AbstractControl+ClickTriggerKind" />
     <Type Name="Alternet.UI.AbstractControl+DefaultLayoutMethod" />
