@@ -86,12 +86,14 @@ namespace Alternet.UI
         /// </summary>
         public WxApplicationHandler()
         {
+            /*
             if (DebugUtils.IsDebugDefined)
             {
                 LogUtils.RegisterLogAction(
                     "Log mapping: Key <-> WxWidgetsKeyCode",
                     WxKeyboardHandler.KeyAndWxMapping.LogToFile);
             }
+            */
 
             if (!App.IsWindowsOS)
                 Caret.UseGeneric = true;

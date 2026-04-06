@@ -14,17 +14,37 @@ namespace Alternet.UI
     /// </summary>
     internal partial class WxControlHandler : BaseControlHandler, IControlHandler
     {
+        private static readonly List<string>? hiddedNativeLogMessages;
+
         private Native.Control? nativeControl;
         private bool needDispose;
 
         static WxControlHandler()
         {
+            if (DebugUtils.IsDebugDefinedAndAttached)
+            {
+                hiddedNativeLogMessages = new ();
+                hiddedNativeLogMessages.Add("Using possibly wrong DPI for");
+                hiddedNativeLogMessages.Add("this window is not scrollable");
+            }
+
             App.BeforeNativeLogMessage += (s, e) =>
             {
-                const string s1 = "this window is not scrollable";
-
-                if (e.Message?.Contains(s1) ?? false)
+                if (DebugUtils.IsDebugDefinedAndAttached && hiddedNativeLogMessages is not null)
+                {
+                    foreach (var s1 in hiddedNativeLogMessages)
+                    {
+                        if (e.Message?.Contains(s1) ?? false)
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
+                    }
+                }
+                else
+                {
                     e.Cancel = true;
+                }
             };
         }
 
