@@ -69,7 +69,7 @@ namespace Alternet::UI
             wxDefaultPosition,
             wxSize(800, 600));
         
-        _state->frame->InitializeWithModality(wxPreviewFrameModalityKind::wxPreviewFrame_AppModal);
+        _state->frame->InitializeWithModality(wxPreviewFrameModalityKind::AppModal);
         _state->frame->Bind(wxEVT_CLOSE_WINDOW, &PrintPreviewDialog::OnClose, this);
         _state->frame->Show();
         

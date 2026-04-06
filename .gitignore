@@ -49,3 +49,4 @@ Documentation/Alternet.UI.Documentation/Build.Result.txt
 node_modules
 External/Svg/
 *.tmp
+External/wxWidgets-bin-noobjpch-*.7z

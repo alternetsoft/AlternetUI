@@ -5,9 +5,16 @@
 :: 4. call MSW.Update.WxWidgets.bat
 :: 5. upload wxWidgets-bin-noobjpch-*.7z to cloud and modify urls
 
+pushd ..\External\
+
+if not exist "WxWidgets" (
+  mkdir "WxWidgets"
+)
+
+popd
 
 call MSW.Update.WxWidgets.SubTool.1.DownloadAndExtract.bat
 call MSW.Update.WxWidgets.SubTool.2.Defines.bat
 call MSW.Update.WxWidgets.SubTool.3.BuildWithoutDownload.bat
-:: MSW.Update.WxWidgets.SubTool.4.WinRar.bat
 call MSW.Update.WxWidgets.SubTool.4.7z.bat
+
