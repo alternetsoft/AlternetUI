@@ -106,10 +106,10 @@ ALTERNET_UI_API int ListBox_GetTopItem_(ListBox* obj)
     });
 }
 
-ALTERNET_UI_API int ListBox_HitTest_(ListBox* obj, PointD point)
+ALTERNET_UI_API int ListBox_HitTest_(ListBox* obj, PointD* point)
 {
     return MarshalExceptions<int>([&](){
-        return obj->HitTest(point);
+        return obj->HitTest(*point);
     });
 }
 

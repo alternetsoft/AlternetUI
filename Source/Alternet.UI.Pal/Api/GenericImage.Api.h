@@ -150,10 +150,10 @@ ALTERNET_UI_API void GenericImage_SetRGB_(void* handle, int x, int y, uint8_t r,
     });
 }
 
-ALTERNET_UI_API void GenericImage_SetRGBRect_(void* handle, RectI rect, uint8_t red, uint8_t green, uint8_t blue)
+ALTERNET_UI_API void GenericImage_SetRGBRect_(void* handle, RectI* rect, uint8_t red, uint8_t green, uint8_t blue)
 {
     MarshalExceptions<void>([&](){
-        GenericImage::SetRGBRect(handle, rect, red, green, blue);
+        GenericImage::SetRGBRect(handle, *rect, red, green, blue);
     });
 }
 
@@ -262,10 +262,10 @@ ALTERNET_UI_API void GenericImage_Rescale_(void* handle, int width, int height, 
     });
 }
 
-ALTERNET_UI_API void GenericImage_Resize_(void* handle, SizeI size, PointI pos, int red, int green, int blue)
+ALTERNET_UI_API void GenericImage_Resize_(void* handle, SizeI* size, PointI* pos, int red, int green, int blue)
 {
     MarshalExceptions<void>([&](){
-        GenericImage::Resize(handle, size, pos, red, green, blue);
+        GenericImage::Resize(handle, *size, *pos, red, green, blue);
     });
 }
 
@@ -318,10 +318,10 @@ ALTERNET_UI_API void* GenericImage_Scale_(void* handle, int width, int height, i
     });
 }
 
-ALTERNET_UI_API void* GenericImage_Size_(void* handle, SizeI size, PointI pos, int red, int green, int blue)
+ALTERNET_UI_API void* GenericImage_Size_(void* handle, SizeI* size, PointI* pos, int red, int green, int blue)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::Size(handle, size, pos, red, green, blue);
+        return GenericImage::Size(handle, *size, *pos, red, green, blue);
     });
 }
 
@@ -458,10 +458,10 @@ ALTERNET_UI_API int GenericImage_GetOptionInt_(void* handle, const char16_t* nam
     });
 }
 
-ALTERNET_UI_API void* GenericImage_GetSubImage_(void* handle, RectI rect)
+ALTERNET_UI_API void* GenericImage_GetSubImage_(void* handle, RectI* rect)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::GetSubImage(handle, rect);
+        return GenericImage::GetSubImage(handle, *rect);
     });
 }
 

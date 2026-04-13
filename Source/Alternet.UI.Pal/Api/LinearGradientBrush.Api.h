@@ -15,10 +15,10 @@ ALTERNET_UI_API LinearGradientBrush* LinearGradientBrush_Create_()
     });
 }
 
-ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, PointD startPoint, PointD endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, float* gradientStopsOffsets, int gradientStopsOffsetsCount)
+ALTERNET_UI_API void LinearGradientBrush_Initialize_(LinearGradientBrush* obj, PointD* startPoint, PointD* endPoint, Color* gradientStopsColors, int gradientStopsColorsCount, float* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
     MarshalExceptions<void>([&](){
-        obj->Initialize(startPoint, endPoint, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
+        obj->Initialize(*startPoint, *endPoint, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
     });
 }
 

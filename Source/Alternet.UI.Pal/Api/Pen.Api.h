@@ -15,10 +15,10 @@ ALTERNET_UI_API Pen* Pen_Create_()
     });
 }
 
-ALTERNET_UI_API void Pen_Initialize_(Pen* obj, DashStyle style, Color color, float width, LineCap lineCap, LineJoin lineJoin)
+ALTERNET_UI_API void Pen_Initialize_(Pen* obj, DashStyle style, Color* color, float width, LineCap lineCap, LineJoin lineJoin)
 {
     MarshalExceptions<void>([&](){
-        obj->Initialize(style, color, width, lineCap, lineJoin);
+        obj->Initialize(style, *color, width, lineCap, lineJoin);
     });
 }
 

@@ -655,10 +655,10 @@ ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)
     });
 }
 
-ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD rect, c_bool eraseBackground)
+ALTERNET_UI_API void Control_RefreshRect_(Control* obj, RectD* rect, c_bool eraseBackground)
 {
     MarshalExceptions<void>([&](){
-        obj->RefreshRect(rect, eraseBackground);
+        obj->RefreshRect(*rect, eraseBackground);
     });
 }
 
@@ -802,10 +802,10 @@ ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
     });
 }
 
-ALTERNET_UI_API Control* Control_HitTest_(PointD screenPoint)
+ALTERNET_UI_API Control* Control_HitTest_(PointD* screenPoint)
 {
     return MarshalExceptions<Control*>([&](){
-        return Control::HitTest(screenPoint);
+        return Control::HitTest(*screenPoint);
     });
 }
 
@@ -900,10 +900,10 @@ ALTERNET_UI_API void Control_InvalidateBestSize_(Control* obj)
     });
 }
 
-ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD availableSize)
+ALTERNET_UI_API SizeD_C Control_GetPreferredSize_(Control* obj, SizeD* availableSize)
 {
     return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetPreferredSize(availableSize);
+        return obj->GetPreferredSize(*availableSize);
     });
 }
 
@@ -970,31 +970,31 @@ ALTERNET_UI_API void Control_ResetForegroundColor_(Control* obj)
     });
 }
 
-ALTERNET_UI_API PointD_C Control_ClientToScreen_(Control* obj, PointD point)
+ALTERNET_UI_API PointD_C Control_ClientToScreen_(Control* obj, PointD* point)
 {
     return MarshalExceptions<PointD_C>([&](){
-        return obj->ClientToScreen(point);
+        return obj->ClientToScreen(*point);
     });
 }
 
-ALTERNET_UI_API PointD_C Control_ScreenToClient_(Control* obj, PointD point)
+ALTERNET_UI_API PointD_C Control_ScreenToClient_(Control* obj, PointD* point)
 {
     return MarshalExceptions<PointD_C>([&](){
-        return obj->ScreenToClient(point);
+        return obj->ScreenToClient(*point);
     });
 }
 
-ALTERNET_UI_API PointI_C Control_ScreenToDevice_(Control* obj, PointD point)
+ALTERNET_UI_API PointI_C Control_ScreenToDevice_(Control* obj, PointD* point)
 {
     return MarshalExceptions<PointI_C>([&](){
-        return obj->ScreenToDevice(point);
+        return obj->ScreenToDevice(*point);
     });
 }
 
-ALTERNET_UI_API PointD_C Control_DeviceToScreen_(Control* obj, PointI point)
+ALTERNET_UI_API PointD_C Control_DeviceToScreen_(Control* obj, PointI* point)
 {
     return MarshalExceptions<PointD_C>([&](){
-        return obj->DeviceToScreen(point);
+        return obj->DeviceToScreen(*point);
     });
 }
 
@@ -1061,10 +1061,10 @@ ALTERNET_UI_API void Control_SendMouseUpEvent_(Control* obj, int x, int y)
     });
 }
 
-ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD rect, int flags)
+ALTERNET_UI_API void Control_SetBoundsEx_(Control* obj, RectD* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        obj->SetBoundsEx(rect, flags);
+        obj->SetBoundsEx(*rect, flags);
     });
 }
 

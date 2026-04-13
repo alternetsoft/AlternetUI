@@ -51,10 +51,10 @@ ALTERNET_UI_API void PropertyGridChoices_SetBitmap_(void* handle, uint32_t ind, 
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_SetFgCol_(void* handle, uint32_t ind, Color color)
+ALTERNET_UI_API void PropertyGridChoices_SetFgCol_(void* handle, uint32_t ind, Color* color)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridChoices::SetFgCol(handle, ind, color);
+        PropertyGridChoices::SetFgCol(handle, ind, *color);
     });
 }
 
@@ -65,10 +65,10 @@ ALTERNET_UI_API void PropertyGridChoices_SetFont_(void* handle, uint32_t ind, vo
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_SetBgCol_(void* handle, uint32_t ind, Color color)
+ALTERNET_UI_API void PropertyGridChoices_SetBgCol_(void* handle, uint32_t ind, Color* color)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridChoices::SetBgCol(handle, ind, color);
+        PropertyGridChoices::SetBgCol(handle, ind, *color);
     });
 }
 

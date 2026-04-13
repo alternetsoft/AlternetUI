@@ -204,10 +204,10 @@ ALTERNET_UI_API c_bool Calendar_SetRange_(Calendar* obj, c_bool useMinValue, c_b
     });
 }
 
-ALTERNET_UI_API void Calendar_SetHolidayColors_(Calendar* obj, Color colorFg, Color colorBg)
+ALTERNET_UI_API void Calendar_SetHolidayColors_(Calendar* obj, Color* colorFg, Color* colorBg)
 {
     MarshalExceptions<void>([&](){
-        obj->SetHolidayColors(colorFg, colorBg);
+        obj->SetHolidayColors(*colorFg, *colorBg);
     });
 }
 
@@ -225,17 +225,17 @@ ALTERNET_UI_API Color_C Calendar_GetHolidayColorBg_(Calendar* obj)
     });
 }
 
-ALTERNET_UI_API int Calendar_HitTest_(Calendar* obj, PointI point)
+ALTERNET_UI_API int Calendar_HitTest_(Calendar* obj, PointI* point)
 {
     return MarshalExceptions<int>([&](){
-        return obj->HitTest(point);
+        return obj->HitTest(*point);
     });
 }
 
-ALTERNET_UI_API void Calendar_SetHeaderColors_(Calendar* obj, Color colorFg, Color colorBg)
+ALTERNET_UI_API void Calendar_SetHeaderColors_(Calendar* obj, Color* colorFg, Color* colorBg)
 {
     MarshalExceptions<void>([&](){
-        obj->SetHeaderColors(colorFg, colorBg);
+        obj->SetHeaderColors(*colorFg, *colorBg);
     });
 }
 
@@ -253,10 +253,10 @@ ALTERNET_UI_API Color_C Calendar_GetHeaderColorBg_(Calendar* obj)
     });
 }
 
-ALTERNET_UI_API void Calendar_SetHighlightColors_(Calendar* obj, Color colorFg, Color colorBg)
+ALTERNET_UI_API void Calendar_SetHighlightColors_(Calendar* obj, Color* colorFg, Color* colorBg)
 {
     MarshalExceptions<void>([&](){
-        obj->SetHighlightColors(colorFg, colorBg);
+        obj->SetHighlightColors(*colorFg, *colorBg);
     });
 }
 
@@ -358,24 +358,24 @@ ALTERNET_UI_API void Calendar_DeleteDateAttr_(void* handle)
     });
 }
 
-ALTERNET_UI_API void Calendar_DateAttrSetTextColor_(void* handle, Color colText)
+ALTERNET_UI_API void Calendar_DateAttrSetTextColor_(void* handle, Color* colText)
 {
     MarshalExceptions<void>([&](){
-        Calendar::DateAttrSetTextColor(handle, colText);
+        Calendar::DateAttrSetTextColor(handle, *colText);
     });
 }
 
-ALTERNET_UI_API void Calendar_DateAttrSetBackgroundColor_(void* handle, Color colBack)
+ALTERNET_UI_API void Calendar_DateAttrSetBackgroundColor_(void* handle, Color* colBack)
 {
     MarshalExceptions<void>([&](){
-        Calendar::DateAttrSetBackgroundColor(handle, colBack);
+        Calendar::DateAttrSetBackgroundColor(handle, *colBack);
     });
 }
 
-ALTERNET_UI_API void Calendar_DateAttrSetBorderColor_(void* handle, Color color)
+ALTERNET_UI_API void Calendar_DateAttrSetBorderColor_(void* handle, Color* color)
 {
     MarshalExceptions<void>([&](){
-        Calendar::DateAttrSetBorderColor(handle, color);
+        Calendar::DateAttrSetBorderColor(handle, *color);
     });
 }
 

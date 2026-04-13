@@ -271,7 +271,8 @@ namespace Alternet.UI.Native
         public System.IntPtr ItemHitTest(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
-            return NativeApi.ListView_ItemHitTest_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.ListView_ItemHitTest_(NativePointer, ref point_Native);
         }
         
         public Alternet.UI.ListViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
@@ -529,7 +530,7 @@ namespace Alternet.UI.Native
             public static extern void ListView_SetSelected_(IntPtr obj, long index, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr ListView_ItemHitTest_(IntPtr obj, Alternet.Drawing.PointD point);
+            public static extern System.IntPtr ListView_ItemHitTest_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.ListViewHitTestLocations ListView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);

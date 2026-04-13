@@ -115,7 +115,8 @@ namespace Alternet.UI.Native
         
         public static void SetColor(System.IntPtr handle, Alternet.Drawing.Color val, uint kind)
         {
-            NativeApi.PropertyGridVariant_SetColor_(handle, val, kind);
+            var val_Native = val.ToNative();
+NativeApi.PropertyGridVariant_SetColor_(handle, ref val_Native, kind);
         }
         
         public static void SetDouble(System.IntPtr handle, double val)
@@ -155,7 +156,8 @@ namespace Alternet.UI.Native
         
         public static void SetDateTime(System.IntPtr handle, DateTime val)
         {
-            NativeApi.PropertyGridVariant_SetDateTime_(handle, val);
+            var val_Native = val.ToNative();
+NativeApi.PropertyGridVariant_SetDateTime_(handle, ref val_Native);
         }
         
         public static void SetString(System.IntPtr handle, string value)
@@ -232,7 +234,7 @@ namespace Alternet.UI.Native
             public static extern string PropertyGridVariant_GetString_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridVariant_SetColor_(System.IntPtr handle, NativeApiTypes.Color val, uint kind);
+            public static extern void PropertyGridVariant_SetColor_(System.IntPtr handle, ref NativeApiTypes.Color val, uint kind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetDouble_(System.IntPtr handle, double val);
@@ -256,7 +258,7 @@ namespace Alternet.UI.Native
             public static extern void PropertyGridVariant_SetShort_(System.IntPtr handle, short val);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridVariant_SetDateTime_(System.IntPtr handle, NativeApiTypes.DateTime val);
+            public static extern void PropertyGridVariant_SetDateTime_(System.IntPtr handle, ref NativeApiTypes.DateTime val);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetString_(System.IntPtr handle, string value);

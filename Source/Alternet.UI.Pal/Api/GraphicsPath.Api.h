@@ -44,59 +44,59 @@ ALTERNET_UI_API void GraphicsPath_AddLines_(GraphicsPath* obj, PointD* points, i
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddLine_(GraphicsPath* obj, PointD pt1, PointD pt2)
+ALTERNET_UI_API void GraphicsPath_AddLine_(GraphicsPath* obj, PointD* pt1, PointD* pt2)
 {
     MarshalExceptions<void>([&](){
-        obj->AddLine(pt1, pt2);
+        obj->AddLine(*pt1, *pt2);
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddLineTo_(GraphicsPath* obj, PointD pt)
+ALTERNET_UI_API void GraphicsPath_AddLineTo_(GraphicsPath* obj, PointD* pt)
 {
     MarshalExceptions<void>([&](){
-        obj->AddLineTo(pt);
+        obj->AddLineTo(*pt);
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddEllipse_(GraphicsPath* obj, RectD rect)
+ALTERNET_UI_API void GraphicsPath_AddEllipse_(GraphicsPath* obj, RectD* rect)
 {
     MarshalExceptions<void>([&](){
-        obj->AddEllipse(rect);
+        obj->AddEllipse(*rect);
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddBezier_(GraphicsPath* obj, PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
+ALTERNET_UI_API void GraphicsPath_AddBezier_(GraphicsPath* obj, PointD* startPoint, PointD* controlPoint1, PointD* controlPoint2, PointD* endPoint)
 {
     MarshalExceptions<void>([&](){
-        obj->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
+        obj->AddBezier(*startPoint, *controlPoint1, *controlPoint2, *endPoint);
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddBezierTo_(GraphicsPath* obj, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
+ALTERNET_UI_API void GraphicsPath_AddBezierTo_(GraphicsPath* obj, PointD* controlPoint1, PointD* controlPoint2, PointD* endPoint)
 {
     MarshalExceptions<void>([&](){
-        obj->AddBezierTo(controlPoint1, controlPoint2, endPoint);
+        obj->AddBezierTo(*controlPoint1, *controlPoint2, *endPoint);
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, PointD center, float radius, float startAngle, float sweepAngle)
+ALTERNET_UI_API void GraphicsPath_AddArc_(GraphicsPath* obj, PointD* center, float radius, float startAngle, float sweepAngle)
 {
     MarshalExceptions<void>([&](){
-        obj->AddArc(center, radius, startAngle, sweepAngle);
+        obj->AddArc(*center, radius, startAngle, sweepAngle);
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddRectangle_(GraphicsPath* obj, RectD rect)
+ALTERNET_UI_API void GraphicsPath_AddRectangle_(GraphicsPath* obj, RectD* rect)
 {
     MarshalExceptions<void>([&](){
-        obj->AddRectangle(rect);
+        obj->AddRectangle(*rect);
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, RectD rect, float cornerRadius)
+ALTERNET_UI_API void GraphicsPath_AddRoundedRectangle_(GraphicsPath* obj, RectD* rect, float cornerRadius)
 {
     MarshalExceptions<void>([&](){
-        obj->AddRoundedRectangle(rect, cornerRadius);
+        obj->AddRoundedRectangle(*rect, cornerRadius);
     });
 }
 
@@ -107,10 +107,10 @@ ALTERNET_UI_API RectD_C GraphicsPath_GetBounds_(GraphicsPath* obj)
     });
 }
 
-ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj, PointD point)
+ALTERNET_UI_API void GraphicsPath_StartFigure_(GraphicsPath* obj, PointD* point)
 {
     MarshalExceptions<void>([&](){
-        obj->StartFigure(point);
+        obj->StartFigure(*point);
     });
 }
 

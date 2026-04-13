@@ -561,7 +561,8 @@ namespace Alternet.UI.Native
         public bool BeginTextColour(Alternet.Drawing.Color colour)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginTextColour_(NativePointer, colour);
+            var colour_Native = colour.ToNative();
+return NativeApi.RichTextBox_BeginTextColour_(NativePointer, ref colour_Native);
         }
         
         public bool EndTextColour()
@@ -921,13 +922,15 @@ namespace Alternet.UI.Native
         public bool ShowContextMenu(System.IntPtr menu, Alternet.Drawing.PointI pt, bool addPropertyCommands)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_ShowContextMenu_(NativePointer, menu, pt, addPropertyCommands);
+            var pt_Native = pt.ToNative();
+return NativeApi.RichTextBox_ShowContextMenu_(NativePointer, menu, ref pt_Native, addPropertyCommands);
         }
         
         public int PrepareContextMenu(System.IntPtr menu, Alternet.Drawing.PointI pt, bool addPropertyCommands)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_PrepareContextMenu_(NativePointer, menu, pt, addPropertyCommands);
+            var pt_Native = pt.ToNative();
+return NativeApi.RichTextBox_PrepareContextMenu_(NativePointer, menu, ref pt_Native, addPropertyCommands);
         }
         
         public bool CanEditProperties(System.IntPtr richObj)
@@ -1077,13 +1080,15 @@ namespace Alternet.UI.Native
         public Alternet.Drawing.PointI GetPhysicalPoint(Alternet.Drawing.PointI ptLogical)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetPhysicalPoint_(NativePointer, ptLogical);
+            var ptLogical_Native = ptLogical.ToNative();
+return NativeApi.RichTextBox_GetPhysicalPoint_(NativePointer, ref ptLogical_Native);
         }
         
         public Alternet.Drawing.PointI GetLogicalPoint(Alternet.Drawing.PointI ptPhysical)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetLogicalPoint_(NativePointer, ptPhysical);
+            var ptPhysical_Native = ptPhysical.ToNative();
+return NativeApi.RichTextBox_GetLogicalPoint_(NativePointer, ref ptPhysical_Native);
         }
         
         public long FindNextWordPosition(int direction)
@@ -1125,7 +1130,8 @@ namespace Alternet.UI.Native
         public bool GetCaretPositionForIndex(long position, Alternet.Drawing.RectI rect, System.IntPtr container)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, rect, container);
+            var rect_Native = rect.ToNative();
+return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, ref rect_Native, container);
         }
         
         public System.IntPtr GetVisibleLineForCaretPosition(long caretPosition)
@@ -1877,7 +1883,7 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_EndFont_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginTextColour_(IntPtr obj, NativeApiTypes.Color colour);
+            public static extern bool RichTextBox_BeginTextColour_(IntPtr obj, ref NativeApiTypes.Color colour);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndTextColour_(IntPtr obj);
@@ -2057,10 +2063,10 @@ namespace Alternet.UI.Native
             public static extern bool RichTextBox_ApplyStyleSheet_(IntPtr obj, System.IntPtr styleSheet);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_ShowContextMenu_(IntPtr obj, System.IntPtr menu, Alternet.Drawing.PointI pt, bool addPropertyCommands);
+            public static extern bool RichTextBox_ShowContextMenu_(IntPtr obj, System.IntPtr menu, ref Alternet.Drawing.PointI pt, bool addPropertyCommands);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int RichTextBox_PrepareContextMenu_(IntPtr obj, System.IntPtr menu, Alternet.Drawing.PointI pt, bool addPropertyCommands);
+            public static extern int RichTextBox_PrepareContextMenu_(IntPtr obj, System.IntPtr menu, ref Alternet.Drawing.PointI pt, bool addPropertyCommands);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_CanEditProperties_(IntPtr obj, System.IntPtr richObj);
@@ -2135,10 +2141,10 @@ namespace Alternet.UI.Native
             public static extern void RichTextBox_MoveCaretForward_(IntPtr obj, long oldPosition);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI RichTextBox_GetPhysicalPoint_(IntPtr obj, Alternet.Drawing.PointI ptLogical);
+            public static extern Alternet.Drawing.PointI RichTextBox_GetPhysicalPoint_(IntPtr obj, ref Alternet.Drawing.PointI ptLogical);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI RichTextBox_GetLogicalPoint_(IntPtr obj, Alternet.Drawing.PointI ptPhysical);
+            public static extern Alternet.Drawing.PointI RichTextBox_GetLogicalPoint_(IntPtr obj, ref Alternet.Drawing.PointI ptPhysical);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long RichTextBox_FindNextWordPosition_(IntPtr obj, int direction);
@@ -2159,7 +2165,7 @@ namespace Alternet.UI.Native
             public static extern void RichTextBox_MoveCaretBack_(IntPtr obj, long oldPosition);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_GetCaretPositionForIndex_(IntPtr obj, long position, Alternet.Drawing.RectI rect, System.IntPtr container);
+            public static extern bool RichTextBox_GetCaretPositionForIndex_(IntPtr obj, long position, ref Alternet.Drawing.RectI rect, System.IntPtr container);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr RichTextBox_GetVisibleLineForCaretPosition_(IntPtr obj, long caretPosition);

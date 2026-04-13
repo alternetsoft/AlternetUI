@@ -150,31 +150,31 @@ ALTERNET_UI_API c_bool Image_LoadFromStream_(Image* obj, void* stream)
     });
 }
 
-ALTERNET_UI_API c_bool Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height, Color color)
+ALTERNET_UI_API c_bool Image_LoadSvgFromStream_(Image* obj, void* stream, int width, int height, Color* color)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->LoadSvgFromStream(stream, width, height, color);
+        return obj->LoadSvgFromStream(stream, width, height, *color);
     });
 }
 
-ALTERNET_UI_API c_bool Image_LoadSvgFromString_(Image* obj, const char16_t* s, int width, int height, Color color)
+ALTERNET_UI_API c_bool Image_LoadSvgFromString_(Image* obj, const char16_t* s, int width, int height, Color* color)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->LoadSvgFromString(s, width, height, color);
+        return obj->LoadSvgFromString(s, width, height, *color);
     });
 }
 
-ALTERNET_UI_API void Image_Initialize_(Image* obj, SizeI size, int depth)
+ALTERNET_UI_API void Image_Initialize_(Image* obj, SizeI* size, int depth)
 {
     MarshalExceptions<void>([&](){
-        obj->Initialize(size, depth);
+        obj->Initialize(*size, depth);
     });
 }
 
-ALTERNET_UI_API void Image_InitializeFromImage_(Image* obj, Image* source, SizeI size)
+ALTERNET_UI_API void Image_InitializeFromImage_(Image* obj, Image* source, SizeI* size)
 {
     MarshalExceptions<void>([&](){
-        obj->InitializeFromImage(source, size);
+        obj->InitializeFromImage(source, *size);
     });
 }
 
@@ -255,10 +255,10 @@ ALTERNET_UI_API c_bool Image_LoadStream_(Image* obj, void* stream, int type)
     });
 }
 
-ALTERNET_UI_API Image* Image_GetSubBitmap_(Image* obj, RectI rect)
+ALTERNET_UI_API Image* Image_GetSubBitmap_(Image* obj, RectI* rect)
 {
     return MarshalExceptions<Image*>([&](){
-        return obj->GetSubBitmap(rect);
+        return obj->GetSubBitmap(*rect);
     });
 }
 
@@ -269,10 +269,10 @@ ALTERNET_UI_API Image* Image_ConvertToDisabled_(Image* obj, uint8_t brightness)
     });
 }
 
-ALTERNET_UI_API c_bool Image_Rescale_(Image* obj, SizeI sizeNeeded)
+ALTERNET_UI_API c_bool Image_Rescale_(Image* obj, SizeI* sizeNeeded)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->Rescale(sizeNeeded);
+        return obj->Rescale(*sizeNeeded);
     });
 }
 

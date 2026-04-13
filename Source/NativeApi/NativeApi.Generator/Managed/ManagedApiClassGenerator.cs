@@ -1,5 +1,7 @@
 ﻿using ApiGenerator.Api;
+
 using Namotion.Reflection;
+
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
@@ -102,7 +104,7 @@ using System.Security;");
 
             var classDecl = $"internal{abstractModifier} partial class {typeName}{extendsClause}";
 
-            if(additionalInterface is not null)
+            if (additionalInterface is not null)
             {
                 classDecl += ", " + additionalInterface;
             }
@@ -111,7 +113,7 @@ using System.Security;");
             w.WriteLine("{");
             w.Indent++;
 
-            if(IsControl(managedApiType))
+            if (IsControl(managedApiType))
                 w.WriteLine("internal object? handler;");
 
             var events = MemberProvider.GetEvents(type).ToArray();
@@ -206,11 +208,11 @@ using System.Security;");
             var propertyTypeName = types.GetTypeName(contextualProperty);
             var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
             var managedDeclaringTypeName = TypeProvider.GetManagedName(
-                property.PropertyType!, 
+                property.PropertyType!,
                 propertyTypeName);
             bool isStatic = MemberProvider.IsStatic(property);
 
-            if (propertyTypeName != managedDeclaringTypeName) 
+            if (propertyTypeName != managedDeclaringTypeName)
             {
                 propertyTypeName = managedDeclaringTypeName;
             }
@@ -242,7 +244,7 @@ using System.Security;");
                             var nativeCallStr =
                                 $"NativeApi.{nativeDeclaringTypeName}_Get{propertyName}_({(isStatic ? "" : "NativePointer")});";
 
-                            if(isComplexType || complexTypeStr != nname)
+                            if (isComplexType || complexTypeStr != nname)
                             {
                                 w.WriteLine($"var {nname} = {nativeCallStr}");
                                 w.Write($"var {mname} = ");
@@ -274,7 +276,7 @@ using System.Security;");
                         w.WriteLine(
                             $"NativeApi.{nativeDeclaringTypeName}_Set{propertyName}_({(isStatic ? "" : "NativePointer, ")}{argument});");
                     }
-            
+
                 }
             }
 
@@ -337,7 +339,7 @@ using System.Security;");
 
             var tp = method.ReturnParameter.ToContextualParameter();
             var returnTypeName = types.GetTypeName(tp);
-            var tpType = tp.Type;// GetType();
+            var tpType = tp.Type;
 
             var managedDeclaringTypeName = TypeProvider.GetManagedName(
                 tpType!,
@@ -354,18 +356,23 @@ using System.Security;");
                     callParametersString.Append(", ");
             }
 
+            StringBuilder beforeCall = new();
+            StringBuilder afterCall = new();
+
             bool addUnsafe = false;
-            
+
             for (var i = 0; i < parameters.Length; i++)
             {
-                var parameter = parameters[i];
+                var parameterInfo = parameters[i];
+                var parameterNetType = parameterInfo.ParameterType;
 
-                var cparameter = parameter.ToContextualParameter();
+                var isStruct = ManagedGenerator.IsUserDefinedStruct(parameterNetType);
 
-                var parameterType = 
-                    types.GetTypeName(cparameter);
+                var cparameter = parameterInfo.ToContextualParameter();
 
-                var cparameterType = cparameter.Type;// GetType();
+                var parameterType = types.GetTypeName(cparameter);
+
+                var cparameterType = cparameter.Type;
 
                 var managedParameterTypeName = TypeProvider.GetManagedName(
                     cparameterType!,
@@ -379,22 +386,33 @@ using System.Security;");
                     isPointerParameter = true;
                 }
 
-                signatureParametersString.Append(managedParameterTypeName 
-                    + " " + parameter.Name);
+                var ss = managedParameterTypeName + " " + parameterInfo.Name;
+                signatureParametersString.Append(ss);
 
                 if (!isPointerParameter)
                 {
-                    callParametersString.Append(GetManagedToNativeArgument(
-                    parameter, types, pinvokeTypes));
+                    var sss = GetManagedToNativeArgument(parameterInfo, types, pinvokeTypes);
+
+                    if (isStruct)
+                    {
+                        beforeCall.AppendLine("var " + sss + "_Native = " + sss + ".ToNative();");
+
+                        sss = "ref " + sss + "_Native";
+                    }
+                    else
+                    {
+                    }
+
+                    callParametersString.Append(sss);
                 }
                 else
                 {
-                    callParametersString.Append(parameter.Name);
+                    callParametersString.Append(parameterInfo.Name);
                 }
 
-                if (parameter.ParameterType.IsArray)
+                if (parameterInfo.ParameterType.IsArray)
                 {
-                    callParametersString.Append(", " + parameter.Name + ".Length");
+                    callParametersString.Append(", " + parameterInfo.Name + ".Length");
                 }
 
                 if (i < parameters.Length - 1)
@@ -406,8 +424,10 @@ using System.Security;");
 
             var unsafeModifier = addUnsafe ? "unsafe " : "";
 
-            w.WriteLine(
-                $"public {unsafeModifier}{GetModifiers(method)}{managedDeclaringTypeName} {methodName}({signatureParametersString})");
+            var strForWriter =
+                $"public {unsafeModifier}{GetModifiers(method)}{managedDeclaringTypeName} {methodName}({signatureParametersString})";
+
+            w.WriteLine(strForWriter);
             w.WriteLine("{");
             w.Indent++;
 
@@ -417,6 +437,9 @@ using System.Security;");
             GenerateCallbackSinks(w, parameters);
 
             var callString = $"NativeApi.{TypeProvider.GetNativeName(method.DeclaringType!)}_{methodName}_({callParametersString})";
+
+            if (beforeCall.Length > 0)
+                w.Write(beforeCall.ToString());
 
             if (method.ReturnType == typeof(void))
             {
@@ -431,7 +454,7 @@ using System.Security;");
                     method.ReturnParameter.ToContextualParameter(),
                     out var isComplexType),
                     nname);
-                if(isComplexType || complexTypeStr != nname)
+                if (isComplexType || complexTypeStr != nname)
                 {
                     w.WriteLine($"var {nname} = {callString};");
                     w.Write($"var {mname} = ");
@@ -510,15 +533,15 @@ using System.Security;");
 
                     w.Indent++;
 
-                        w.WriteLine($"UI.Application.HandleThreadExceptions(() =>");
-                        using (new BlockIndent(w))
-                        {
-                            w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType(), out _), "obj")};");
-                            w.WriteLine("w ??= GlobalObject;");
-                            w.WriteLine("if (w == null) return IntPtr.Zero;");
-                            w.WriteLine("return w.OnEvent(e, parameter);");
-                        }
-                        w.WriteLine(")");
+                    w.WriteLine($"UI.Application.HandleThreadExceptions(() =>");
+                    using (new BlockIndent(w))
+                    {
+                        w.WriteLine($"var w = {string.Format(GetNativeToManagedFormatString(declaringType.ToContextualType(), out _), "obj")};");
+                        w.WriteLine("w ??= GlobalObject;");
+                        w.WriteLine("if (w == null) return IntPtr.Zero;");
+                        w.WriteLine("return w.OnEvent(e, parameter);");
+                    }
+                    w.WriteLine(")");
 
                     w.Indent--;
 
@@ -561,7 +584,7 @@ using System.Security;");
                     {
                         w.WriteLine($"var ea = new NativeEventArgs<{dataType.Name}>(MarshalEx.PtrToStructure<{dataType.Name}>(parameter));");
 
-                        if(isControlOrDescendant)
+                        if (isControlOrDescendant)
                             w.WriteLine($"OnPlatformEvent{e.Name}(ea); return ea.Result;");
                         else
                             w.WriteLine($"{e.Name}?.Invoke(this, ea); return ea.Result;");
@@ -581,7 +604,7 @@ using System.Security;");
 
                                 w.WriteLine($"var cea = new CancelEventArgs();");
 
-                                if(isControlOrDescendant)
+                                if (isControlOrDescendant)
                                     w.WriteLine($"OnPlatformEvent{e.Name}(cea);");
                                 else
                                     w.WriteLine($"{e.Name}.Invoke(this, cea);");
@@ -598,7 +621,7 @@ using System.Security;");
                         }
                         else
                         {
-                            if(isControlOrDescendant)
+                            if (isControlOrDescendant)
                                 w.WriteLine($"OnPlatformEvent{e.Name}(); return IntPtr.Zero;");
                             else
                                 w.WriteLine($"{e.Name}?.Invoke(); return IntPtr.Zero;");
@@ -630,7 +653,7 @@ using System.Security;");
 
             w.WriteLine();
 
-            if(!isControlOrDescendant)
+            if (!isControlOrDescendant)
             {
                 foreach (var e in events)
                 {
@@ -671,7 +694,7 @@ using System.Security;");
             Types pinvokeTypes)
         {
             string name = parameter.Name!;
-            
+
             if (MemberProvider.TryGetCallbackMarshalAttribute(parameter) != null)
                 return name + "Sink";
 
@@ -693,11 +716,11 @@ using System.Security;");
                 var elementType = type.OriginalType.GetElementType().ToContextualType();
 
                 var inputTypeName = types.GetTypeName(elementType);
-                
+
                 var outputTypeName = pinvokeTypes.GetTypeName(elementType);
 
-                var outputTypeNameOverride = 
-                    TypeProvider.GetManagedExternName(elementType!,outputTypeName);
+                var outputTypeNameOverride =
+                    TypeProvider.GetManagedExternName(elementType!, outputTypeName);
 
                 if (inputTypeName != outputTypeNameOverride)
                     return $"Array.ConvertAll<{inputTypeName}, {outputTypeName}>({name}, x => x)";
@@ -724,7 +747,7 @@ using System.Security;");
             isComplexType = TypeProvider.IsComplexType(type);
             if (isComplexType)
                 return "NativeObject.GetFromNativePointer"
-                    + $"<{type.OriginalType.Name}>({{0}}, {factory})" 
+                    + $"<{type.OriginalType.Name}>({{0}}, {factory})"
                     + (type.Nullability == Nullability.NotNullable ? "!" : "");
 
             return "{0}";

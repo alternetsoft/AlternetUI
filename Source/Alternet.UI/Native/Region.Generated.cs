@@ -32,13 +32,15 @@ namespace Alternet.UI.Native
         public int ContainsPoint(Alternet.Drawing.PointD pt)
         {
             CheckDisposed();
-            return NativeApi.Region_ContainsPoint_(NativePointer, pt);
+            var pt_Native = pt.ToNative();
+return NativeApi.Region_ContainsPoint_(NativePointer, ref pt_Native);
         }
         
         public int ContainsRect(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
-            return NativeApi.Region_ContainsRect_(NativePointer, rect);
+            var rect_Native = rect.ToNative();
+return NativeApi.Region_ContainsRect_(NativePointer, ref rect_Native);
         }
         
         public bool IsEmpty()
@@ -62,7 +64,8 @@ namespace Alternet.UI.Native
         public void InitializeWithRect(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
-            NativeApi.Region_InitializeWithRect_(NativePointer, rect);
+            var rect_Native = rect.ToNative();
+NativeApi.Region_InitializeWithRect_(NativePointer, ref rect_Native);
         }
         
         public void InitializeWithPolygon(Alternet.Drawing.PointD[] points, Alternet.Drawing.FillMode fillMode)
@@ -74,7 +77,8 @@ namespace Alternet.UI.Native
         public void IntersectWithRect(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
-            NativeApi.Region_IntersectWithRect_(NativePointer, rect);
+            var rect_Native = rect.ToNative();
+NativeApi.Region_IntersectWithRect_(NativePointer, ref rect_Native);
         }
         
         public void IntersectWithRegion(Region region)
@@ -86,7 +90,8 @@ namespace Alternet.UI.Native
         public void UnionWithRect(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
-            NativeApi.Region_UnionWithRect_(NativePointer, rect);
+            var rect_Native = rect.ToNative();
+NativeApi.Region_UnionWithRect_(NativePointer, ref rect_Native);
         }
         
         public void UnionWithRegion(Region region)
@@ -98,7 +103,8 @@ namespace Alternet.UI.Native
         public void XorWithRect(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
-            NativeApi.Region_XorWithRect_(NativePointer, rect);
+            var rect_Native = rect.ToNative();
+NativeApi.Region_XorWithRect_(NativePointer, ref rect_Native);
         }
         
         public void XorWithRegion(Region region)
@@ -110,7 +116,8 @@ namespace Alternet.UI.Native
         public void SubtractRect(Alternet.Drawing.RectD rect)
         {
             CheckDisposed();
-            NativeApi.Region_SubtractRect_(NativePointer, rect);
+            var rect_Native = rect.ToNative();
+NativeApi.Region_SubtractRect_(NativePointer, ref rect_Native);
         }
         
         public void SubtractRegion(Region region)
@@ -156,10 +163,10 @@ namespace Alternet.UI.Native
             public static extern void Region_Clear_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Region_ContainsPoint_(IntPtr obj, Alternet.Drawing.PointD pt);
+            public static extern int Region_ContainsPoint_(IntPtr obj, ref Alternet.Drawing.PointD pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Region_ContainsRect_(IntPtr obj, Alternet.Drawing.RectD rect);
+            public static extern int Region_ContainsRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Region_IsEmpty_(IntPtr obj);
@@ -171,31 +178,31 @@ namespace Alternet.UI.Native
             public static extern void Region_InitializeWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_InitializeWithRect_(IntPtr obj, Alternet.Drawing.RectD rect);
+            public static extern void Region_InitializeWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_InitializeWithPolygon_(IntPtr obj, Alternet.Drawing.PointD[] points, int pointsCount, Alternet.Drawing.FillMode fillMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_IntersectWithRect_(IntPtr obj, Alternet.Drawing.RectD rect);
+            public static extern void Region_IntersectWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_IntersectWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_UnionWithRect_(IntPtr obj, Alternet.Drawing.RectD rect);
+            public static extern void Region_UnionWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_UnionWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_XorWithRect_(IntPtr obj, Alternet.Drawing.RectD rect);
+            public static extern void Region_XorWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_XorWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_SubtractRect_(IntPtr obj, Alternet.Drawing.RectD rect);
+            public static extern void Region_SubtractRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_SubtractRegion_(IntPtr obj, IntPtr region);

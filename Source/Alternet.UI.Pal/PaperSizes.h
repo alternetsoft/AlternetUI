@@ -20,7 +20,7 @@ namespace Alternet::UI
         case PaperKind::Statement: return wxPAPER_STATEMENT;
         case PaperKind::Executive: return wxPAPER_EXECUTIVE;
         case PaperKind::A3: return wxPAPER_A3;
-        case PaperKind::A4mall: return wxPAPER_A4SMALL;
+        case PaperKind::A4Small: return wxPAPER_A4SMALL;
         case PaperKind::A5: return wxPAPER_A5;
         case PaperKind::B4: return wxPAPER_B4;
         case PaperKind::B5: return wxPAPER_B5;
@@ -47,7 +47,7 @@ namespace Alternet::UI
         case PaperKind::EnvelopeMonarch: return wxPAPER_ENV_MONARCH;
         case PaperKind::EnvelopePersonal: return wxPAPER_ENV_PERSONAL;
         case PaperKind::FanfoldUs: return wxPAPER_FANFOLD_US;
-        case PaperKind::FanfoldStanardGerman: return wxPAPER_FANFOLD_STD_GERMAN;
+        case PaperKind::FanfoldStandardGerman: return wxPAPER_FANFOLD_STD_GERMAN;
         case PaperKind::FanfoldLegalGerman: return wxPAPER_FANFOLD_LGL_GERMAN;
         case PaperKind::IsoB4: return wxPAPER_ISO_B4;
         case PaperKind::JapanesePostcard: return wxPAPER_JAPANESE_POSTCARD;
@@ -98,9 +98,9 @@ namespace Alternet::UI
         case PaperKind::Sheet12X11: return wxPAPER_12X11;
         case PaperKind::JapaneseEnvelopeYou4: return wxPAPER_JENV_YOU4;
         case PaperKind::JapaneseEnvelopeYou4Rotated: return wxPAPER_JENV_YOU4_ROTATED;
-        case PaperKind::P16k: return wxPAPER_P16K;
-        case PaperKind::P32k: return wxPAPER_P32K;
-        case PaperKind::P32kbig: return wxPAPER_P32KBIG;
+        case PaperKind::Prc16k: return wxPAPER_P16K;
+        case PaperKind::Prc32k: return wxPAPER_P32K;
+        case PaperKind::Prc32kBig: return wxPAPER_P32KBIG;
         case PaperKind::PrcEnvelope1: return wxPAPER_PENV_1;
         case PaperKind::PrcEnvelope2: return wxPAPER_PENV_2;
         case PaperKind::PrcEnvelope3: return wxPAPER_PENV_3;
@@ -111,9 +111,9 @@ namespace Alternet::UI
         case PaperKind::PrcEnvelope8: return wxPAPER_PENV_8;
         case PaperKind::PrcEnvelope9: return wxPAPER_PENV_9;
         case PaperKind::PrcEnvelope10: return wxPAPER_PENV_10;
-        case PaperKind::P16kRotated: return wxPAPER_P16K_ROTATED;
-        case PaperKind::P32kRotated: return wxPAPER_P32K_ROTATED;
-        case PaperKind::P32kbigRotated: return wxPAPER_P32KBIG_ROTATED;
+        case PaperKind::Prc16kRotated: return wxPAPER_P16K_ROTATED;
+        case PaperKind::Prc32kRotated: return wxPAPER_P32K_ROTATED;
+        case PaperKind::Prc32kBigRotated: return wxPAPER_P32KBIG_ROTATED;
         case PaperKind::PrcEnvelope1Rotated: return wxPAPER_PENV_1_ROTATED;
         case PaperKind::PrcEnvelope2Rotated: return wxPAPER_PENV_2_ROTATED;
         case PaperKind::PrcEnvelope3Rotated: return wxPAPER_PENV_3_ROTATED;
@@ -147,7 +147,7 @@ namespace Alternet::UI
         case wxPAPER_STATEMENT: return PaperKind::Statement;
         case wxPAPER_EXECUTIVE: return PaperKind::Executive;
         case wxPAPER_A3: return PaperKind::A3;
-        case wxPAPER_A4SMALL: return PaperKind::A4mall;
+        case wxPAPER_A4SMALL: return PaperKind::A4Small;
         case wxPAPER_A5: return PaperKind::A5;
         case wxPAPER_B4: return PaperKind::B4;
         case wxPAPER_B5: return PaperKind::B5;
@@ -174,7 +174,7 @@ namespace Alternet::UI
         case wxPAPER_ENV_MONARCH: return PaperKind::EnvelopeMonarch;
         case wxPAPER_ENV_PERSONAL: return PaperKind::EnvelopePersonal;
         case wxPAPER_FANFOLD_US: return PaperKind::FanfoldUs;
-        case wxPAPER_FANFOLD_STD_GERMAN: return PaperKind::FanfoldStanardGerman;
+        case wxPAPER_FANFOLD_STD_GERMAN: return PaperKind::FanfoldStandardGerman;
         case wxPAPER_FANFOLD_LGL_GERMAN: return PaperKind::FanfoldLegalGerman;
         case wxPAPER_ISO_B4: return PaperKind::IsoB4;
         case wxPAPER_JAPANESE_POSTCARD: return PaperKind::JapanesePostcard;
@@ -225,9 +225,9 @@ namespace Alternet::UI
         case wxPAPER_12X11: return PaperKind::Sheet12X11;
         case wxPAPER_JENV_YOU4: return PaperKind::JapaneseEnvelopeYou4;
         case wxPAPER_JENV_YOU4_ROTATED: return PaperKind::JapaneseEnvelopeYou4Rotated;
-        case wxPAPER_P16K: return PaperKind::P16k;
-        case wxPAPER_P32K: return PaperKind::P32k;
-        case wxPAPER_P32KBIG: return PaperKind::P32kbig;
+        case wxPAPER_P16K: return PaperKind::Prc16k;
+        case wxPAPER_P32K: return PaperKind::Prc32k;
+        case wxPAPER_P32KBIG: return PaperKind::Prc32kBig;
         case wxPAPER_PENV_1: return PaperKind::PrcEnvelope1;
         case wxPAPER_PENV_2: return PaperKind::PrcEnvelope2;
         case wxPAPER_PENV_3: return PaperKind::PrcEnvelope3;
@@ -238,9 +238,9 @@ namespace Alternet::UI
         case wxPAPER_PENV_8: return PaperKind::PrcEnvelope8;
         case wxPAPER_PENV_9: return PaperKind::PrcEnvelope9;
         case wxPAPER_PENV_10: return PaperKind::PrcEnvelope10;
-        case wxPAPER_P16K_ROTATED: return PaperKind::P16kRotated;
-        case wxPAPER_P32K_ROTATED: return PaperKind::P32kRotated;
-        case wxPAPER_P32KBIG_ROTATED: return PaperKind::P32kbigRotated;
+        case wxPAPER_P16K_ROTATED: return PaperKind::Prc16kRotated;
+        case wxPAPER_P32K_ROTATED: return PaperKind::Prc32kRotated;
+        case wxPAPER_P32KBIG_ROTATED: return PaperKind::Prc32kBigRotated;
         case wxPAPER_PENV_1_ROTATED: return PaperKind::PrcEnvelope1Rotated;
         case wxPAPER_PENV_2_ROTATED: return PaperKind::PrcEnvelope2Rotated;
         case wxPAPER_PENV_3_ROTATED: return PaperKind::PrcEnvelope3Rotated;

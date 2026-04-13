@@ -249,10 +249,10 @@ ALTERNET_UI_API c_bool Menu_MenuInsertItem_(void* handle, const char16_t* childI
     });
 }
 
-ALTERNET_UI_API void Menu_Show_(void* menuHandle, Control* control, PointD position)
+ALTERNET_UI_API void Menu_Show_(void* menuHandle, Control* control, PointD* position)
 {
     MarshalExceptions<void>([&](){
-        Menu::Show(menuHandle, control, position);
+        Menu::Show(menuHandle, control, *position);
     });
 }
 

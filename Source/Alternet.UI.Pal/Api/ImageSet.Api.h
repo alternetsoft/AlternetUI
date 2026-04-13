@@ -59,17 +59,17 @@ ALTERNET_UI_API void ImageSet_Clear_(ImageSet* obj)
     });
 }
 
-ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, int width, int height, Color color)
+ALTERNET_UI_API void ImageSet_LoadSvgFromStream_(ImageSet* obj, void* stream, int width, int height, Color* color)
 {
     MarshalExceptions<void>([&](){
-        obj->LoadSvgFromStream(stream, width, height, color);
+        obj->LoadSvgFromStream(stream, width, height, *color);
     });
 }
 
-ALTERNET_UI_API void ImageSet_LoadSvgFromString_(ImageSet* obj, const char16_t* s, int width, int height, Color color)
+ALTERNET_UI_API void ImageSet_LoadSvgFromString_(ImageSet* obj, const char16_t* s, int width, int height, Color* color)
 {
     MarshalExceptions<void>([&](){
-        obj->LoadSvgFromString(s, width, height, color);
+        obj->LoadSvgFromString(s, width, height, *color);
     });
 }
 

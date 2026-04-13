@@ -184,25 +184,29 @@ namespace Alternet.UI.Native
         public bool LoadSvgFromStream(InputStream stream, int width, int height, Alternet.Drawing.Color color)
         {
             CheckDisposed();
-            return NativeApi.Image_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height, color);
+            var color_Native = color.ToNative();
+return NativeApi.Image_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height, ref color_Native);
         }
         
         public bool LoadSvgFromString(string s, int width, int height, Alternet.Drawing.Color color)
         {
             CheckDisposed();
-            return NativeApi.Image_LoadSvgFromString_(NativePointer, s, width, height, color);
+            var color_Native = color.ToNative();
+return NativeApi.Image_LoadSvgFromString_(NativePointer, s, width, height, ref color_Native);
         }
         
         public void Initialize(Alternet.Drawing.SizeI size, int depth)
         {
             CheckDisposed();
-            NativeApi.Image_Initialize_(NativePointer, size, depth);
+            var size_Native = size.ToNative();
+NativeApi.Image_Initialize_(NativePointer, ref size_Native, depth);
         }
         
         public void InitializeFromImage(Image source, Alternet.Drawing.SizeI size)
         {
             CheckDisposed();
-            NativeApi.Image_InitializeFromImage_(NativePointer, source.NativePointer, size);
+            var size_Native = size.ToNative();
+NativeApi.Image_InitializeFromImage_(NativePointer, source.NativePointer, ref size_Native);
         }
         
         public void CopyFrom(Image otherImage)
@@ -274,7 +278,8 @@ namespace Alternet.UI.Native
         public Image GetSubBitmap(Alternet.Drawing.RectI rect)
         {
             CheckDisposed();
-            var _nnn = NativeApi.Image_GetSubBitmap_(NativePointer, rect);
+            var rect_Native = rect.ToNative();
+var _nnn = NativeApi.Image_GetSubBitmap_(NativePointer, ref rect_Native);
             var _mmm = NativeObject.GetFromNativePointer<Image>(_nnn, p => new Image(p))!;
             ReleaseNativeObjectPointer(_nnn);
             return _mmm;
@@ -292,7 +297,8 @@ namespace Alternet.UI.Native
         public bool Rescale(Alternet.Drawing.SizeI sizeNeeded)
         {
             CheckDisposed();
-            return NativeApi.Image_Rescale_(NativePointer, sizeNeeded);
+            var sizeNeeded_Native = sizeNeeded.ToNative();
+return NativeApi.Image_Rescale_(NativePointer, ref sizeNeeded_Native);
         }
         
         public static int GetDefaultBitmapType()
@@ -385,16 +391,16 @@ namespace Alternet.UI.Native
             public static extern bool Image_LoadFromStream_(IntPtr obj, IntPtr stream);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, NativeApiTypes.Color color);
+            public static extern bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadSvgFromString_(IntPtr obj, string s, int width, int height, NativeApiTypes.Color color);
+            public static extern bool Image_LoadSvgFromString_(IntPtr obj, string s, int width, int height, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_Initialize_(IntPtr obj, Alternet.Drawing.SizeI size, int depth);
+            public static extern void Image_Initialize_(IntPtr obj, ref Alternet.Drawing.SizeI size, int depth);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Image_InitializeFromImage_(IntPtr obj, IntPtr source, Alternet.Drawing.SizeI size);
+            public static extern void Image_InitializeFromImage_(IntPtr obj, IntPtr source, ref Alternet.Drawing.SizeI size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);
@@ -430,13 +436,13 @@ namespace Alternet.UI.Native
             public static extern bool Image_LoadStream_(IntPtr obj, IntPtr stream, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Image_GetSubBitmap_(IntPtr obj, Alternet.Drawing.RectI rect);
+            public static extern IntPtr Image_GetSubBitmap_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Image_ConvertToDisabled_(IntPtr obj, byte brightness);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_Rescale_(IntPtr obj, Alternet.Drawing.SizeI sizeNeeded);
+            public static extern bool Image_Rescale_(IntPtr obj, ref Alternet.Drawing.SizeI sizeNeeded);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Image_GetDefaultBitmapType_();

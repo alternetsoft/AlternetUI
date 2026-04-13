@@ -26,7 +26,8 @@ namespace Alternet.UI.Native
         public void Initialize(Alternet.Drawing.Color color)
         {
             CheckDisposed();
-            NativeApi.SolidBrush_Initialize_(NativePointer, color);
+            var color_Native = color.ToNative();
+NativeApi.SolidBrush_Initialize_(NativePointer, ref color_Native);
         }
         
         
@@ -39,7 +40,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr SolidBrush_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SolidBrush_Initialize_(IntPtr obj, NativeApiTypes.Color color);
+            public static extern void SolidBrush_Initialize_(IntPtr obj, ref NativeApiTypes.Color color);
             
         }
     }

@@ -15,10 +15,10 @@ ALTERNET_UI_API HatchBrush* HatchBrush_Create_()
     });
 }
 
-ALTERNET_UI_API void HatchBrush_Initialize_(HatchBrush* obj, BrushHatchStyle style, Color color)
+ALTERNET_UI_API void HatchBrush_Initialize_(HatchBrush* obj, BrushHatchStyle style, Color* color)
 {
     MarshalExceptions<void>([&](){
-        obj->Initialize(style, color);
+        obj->Initialize(style, *color);
     });
 }
 

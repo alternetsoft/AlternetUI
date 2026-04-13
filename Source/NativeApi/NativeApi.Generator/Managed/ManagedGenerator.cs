@@ -7,6 +7,17 @@ namespace ApiGenerator.Managed
 {
     internal static class ManagedGenerator
     {
+        public static bool IsUserDefinedStruct(Type t)
+        {
+            if (t == null) throw new ArgumentNullException(nameof(t));
+
+            if (!t.IsValueType) return false;   // classes/interfaces
+            if (t.IsEnum) return false;         // enums
+            if (t.IsPrimitive) return false;    // int, bool, double, etc.
+
+            return true;
+        }
+
         public static void WriteAllTextSmart(string path, string contents)
         {
             if (File.Exists(path))

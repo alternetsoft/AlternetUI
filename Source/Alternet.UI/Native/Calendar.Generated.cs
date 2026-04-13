@@ -228,7 +228,9 @@ namespace Alternet.UI.Native
         public void SetHolidayColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
         {
             CheckDisposed();
-            NativeApi.Calendar_SetHolidayColors_(NativePointer, colorFg, colorBg);
+            var colorFg_Native = colorFg.ToNative();
+var colorBg_Native = colorBg.ToNative();
+NativeApi.Calendar_SetHolidayColors_(NativePointer, ref colorFg_Native, ref colorBg_Native);
         }
         
         public Alternet.Drawing.Color GetHolidayColorFg()
@@ -246,13 +248,16 @@ namespace Alternet.UI.Native
         public int HitTest(Alternet.Drawing.PointI point)
         {
             CheckDisposed();
-            return NativeApi.Calendar_HitTest_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.Calendar_HitTest_(NativePointer, ref point_Native);
         }
         
         public void SetHeaderColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
         {
             CheckDisposed();
-            NativeApi.Calendar_SetHeaderColors_(NativePointer, colorFg, colorBg);
+            var colorFg_Native = colorFg.ToNative();
+var colorBg_Native = colorBg.ToNative();
+NativeApi.Calendar_SetHeaderColors_(NativePointer, ref colorFg_Native, ref colorBg_Native);
         }
         
         public Alternet.Drawing.Color GetHeaderColorFg()
@@ -270,7 +275,9 @@ namespace Alternet.UI.Native
         public void SetHighlightColors(Alternet.Drawing.Color colorFg, Alternet.Drawing.Color colorBg)
         {
             CheckDisposed();
-            NativeApi.Calendar_SetHighlightColors_(NativePointer, colorFg, colorBg);
+            var colorFg_Native = colorFg.ToNative();
+var colorBg_Native = colorBg.ToNative();
+NativeApi.Calendar_SetHighlightColors_(NativePointer, ref colorFg_Native, ref colorBg_Native);
         }
         
         public Alternet.Drawing.Color GetHighlightColorFg()
@@ -355,17 +362,20 @@ namespace Alternet.UI.Native
         
         public static void DateAttrSetTextColor(System.IntPtr handle, Alternet.Drawing.Color colText)
         {
-            NativeApi.Calendar_DateAttrSetTextColor_(handle, colText);
+            var colText_Native = colText.ToNative();
+NativeApi.Calendar_DateAttrSetTextColor_(handle, ref colText_Native);
         }
         
         public static void DateAttrSetBackgroundColor(System.IntPtr handle, Alternet.Drawing.Color colBack)
         {
-            NativeApi.Calendar_DateAttrSetBackgroundColor_(handle, colBack);
+            var colBack_Native = colBack.ToNative();
+NativeApi.Calendar_DateAttrSetBackgroundColor_(handle, ref colBack_Native);
         }
         
         public static void DateAttrSetBorderColor(System.IntPtr handle, Alternet.Drawing.Color color)
         {
-            NativeApi.Calendar_DateAttrSetBorderColor_(handle, color);
+            var color_Native = color.ToNative();
+NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
         }
         
         public static void DateAttrSetFont(System.IntPtr handle, System.IntPtr font)
@@ -594,7 +604,7 @@ namespace Alternet.UI.Native
             public static extern bool Calendar_SetRange_(IntPtr obj, bool useMinValue, bool useMaxValue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetHolidayColors_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
+            public static extern void Calendar_SetHolidayColors_(IntPtr obj, ref NativeApiTypes.Color colorFg, ref NativeApiTypes.Color colorBg);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color Calendar_GetHolidayColorFg_(IntPtr obj);
@@ -603,10 +613,10 @@ namespace Alternet.UI.Native
             public static extern NativeApiTypes.Color Calendar_GetHolidayColorBg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Calendar_HitTest_(IntPtr obj, Alternet.Drawing.PointI point);
+            public static extern int Calendar_HitTest_(IntPtr obj, ref Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetHeaderColors_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
+            public static extern void Calendar_SetHeaderColors_(IntPtr obj, ref NativeApiTypes.Color colorFg, ref NativeApiTypes.Color colorBg);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color Calendar_GetHeaderColorFg_(IntPtr obj);
@@ -615,7 +625,7 @@ namespace Alternet.UI.Native
             public static extern NativeApiTypes.Color Calendar_GetHeaderColorBg_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetHighlightColors_(IntPtr obj, NativeApiTypes.Color colorFg, NativeApiTypes.Color colorBg);
+            public static extern void Calendar_SetHighlightColors_(IntPtr obj, ref NativeApiTypes.Color colorFg, ref NativeApiTypes.Color colorBg);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color Calendar_GetHighlightColorFg_(IntPtr obj);
@@ -660,13 +670,13 @@ namespace Alternet.UI.Native
             public static extern void Calendar_DeleteDateAttr_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_DateAttrSetTextColor_(System.IntPtr handle, NativeApiTypes.Color colText);
+            public static extern void Calendar_DateAttrSetTextColor_(System.IntPtr handle, ref NativeApiTypes.Color colText);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_DateAttrSetBackgroundColor_(System.IntPtr handle, NativeApiTypes.Color colBack);
+            public static extern void Calendar_DateAttrSetBackgroundColor_(System.IntPtr handle, ref NativeApiTypes.Color colBack);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_DateAttrSetBorderColor_(System.IntPtr handle, NativeApiTypes.Color color);
+            public static extern void Calendar_DateAttrSetBorderColor_(System.IntPtr handle, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Calendar_DateAttrSetFont_(System.IntPtr handle, System.IntPtr font);

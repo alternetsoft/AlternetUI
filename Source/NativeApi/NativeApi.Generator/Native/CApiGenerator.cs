@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using ApiGenerator.Api;
+using ApiGenerator.Managed;
+
 using Namotion.Reflection;
 
 namespace ApiGenerator.Native
@@ -69,7 +71,8 @@ namespace ApiGenerator.Native
             var declaringTypeName = types.GetTypeName(property.DeclaringType!.ToContextualType(), TypeUsage.Static);
 
             bool isStatic = MemberProvider.IsStatic(property);
-            var instanceParameterSignaturePart = types.GetTypeName(property.DeclaringType!.ToContextualType(), TypeUsage.Argument) + " obj";
+            var instanceParameterSignaturePart
+                = types.GetTypeName(property.DeclaringType!.ToContextualType(), TypeUsage.Argument) + " obj";
 
             if (property.GetMethod != null)
             {
@@ -183,9 +186,11 @@ namespace ApiGenerator.Native
 
             for (var i = 0; i < parameters.Length; i++)
             {
-                var parameter = parameters[i];
+                var parameterInfo = parameters[i];
+                var parameterNetType = parameterInfo.ParameterType;
+                var isStruct = ManagedGenerator.IsUserDefinedStruct(parameterNetType);
 
-                var parameterType = types.GetParameterTypeName(parameter);
+                var parameterType = types.GetParameterTypeName(parameterInfo);
 
                 if (parameterType.EndsWith("**"))
                 {
@@ -193,15 +198,24 @@ namespace ApiGenerator.Native
                     parameterType = parameterType.Substring(0, parameterType.Length - 1);
                 }
 
-                signatureParametersString.Append(parameterType + " " + parameter.Name);
-                callParametersString.Append(GetCToCppArgument(parameter.ToContextualParameter(), parameter.Name!));
+                var strToAppend = parameterType + " " + parameterInfo.Name;
+                var callStrToAppend = GetCToCppArgument(parameterInfo.ToContextualParameter(), parameterInfo.Name!);
 
-                if (parameter.ParameterType.IsArray)
+                if (isStruct)
+                {
+                    strToAppend = parameterType + "* " + parameterInfo.Name;
+                    callStrToAppend = "*" + callStrToAppend;
+                }
+
+                signatureParametersString.Append(strToAppend);
+                callParametersString.Append(callStrToAppend);
+
+                if (parameterInfo.ParameterType.IsArray)
                 {
                     signatureParametersString.Append(", ");
                     callParametersString.Append(", ");
 
-                    var sizeParameterName = MemberProvider.GetArraySizeParameterName(parameter.Name!);
+                    var sizeParameterName = MemberProvider.GetArraySizeParameterName(parameterInfo.Name!);
                     signatureParametersString.Append("int " + sizeParameterName);
                     callParametersString.Append(sizeParameterName);
                 }

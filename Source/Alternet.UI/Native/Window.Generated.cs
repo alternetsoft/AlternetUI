@@ -271,7 +271,8 @@ namespace Alternet.UI.Native
         
         public static void SetDefaultBounds(Alternet.Drawing.RectD bounds)
         {
-            NativeApi.Window_SetDefaultBounds_(bounds);
+            var bounds_Native = bounds.ToNative();
+NativeApi.Window_SetDefaultBounds_(ref bounds_Native);
         }
         
         public static void SetParkingWindowFont(Font? font)
@@ -282,13 +283,15 @@ namespace Alternet.UI.Native
         public void SetMinSize(Alternet.Drawing.SizeD size)
         {
             CheckDisposed();
-            NativeApi.Window_SetMinSize_(NativePointer, size);
+            var size_Native = size.ToNative();
+NativeApi.Window_SetMinSize_(NativePointer, ref size_Native);
         }
         
         public void SetMaxSize(Alternet.Drawing.SizeD size)
         {
             CheckDisposed();
-            NativeApi.Window_SetMaxSize_(NativePointer, size);
+            var size_Native = size.ToNative();
+NativeApi.Window_SetMaxSize_(NativePointer, ref size_Native);
         }
         
         public void Close()
@@ -463,16 +466,16 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr Window_CreateEx_(int kind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetDefaultBounds_(Alternet.Drawing.RectD bounds);
+            public static extern void Window_SetDefaultBounds_(ref Alternet.Drawing.RectD bounds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetParkingWindowFont_(IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetMinSize_(IntPtr obj, Alternet.Drawing.SizeD size);
+            public static extern void Window_SetMinSize_(IntPtr obj, ref Alternet.Drawing.SizeD size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetMaxSize_(IntPtr obj, Alternet.Drawing.SizeD size);
+            public static extern void Window_SetMaxSize_(IntPtr obj, ref Alternet.Drawing.SizeD size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Close_(IntPtr obj);

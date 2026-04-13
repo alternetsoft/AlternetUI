@@ -752,7 +752,8 @@ namespace Alternet.UI.Native
         public void RefreshRect(Alternet.Drawing.RectD rect, bool eraseBackground)
         {
             CheckDisposed();
-            NativeApi.Control_RefreshRect_(NativePointer, rect, eraseBackground);
+            var rect_Native = rect.ToNative();
+NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
         }
         
         public void Raise()
@@ -876,7 +877,8 @@ namespace Alternet.UI.Native
         
         public static Control? HitTest(Alternet.Drawing.PointD screenPoint)
         {
-            var _nnn = NativeApi.Control_HitTest_(screenPoint);
+            var screenPoint_Native = screenPoint.ToNative();
+var _nnn = NativeApi.Control_HitTest_(ref screenPoint_Native);
             var _mmm = NativeObject.GetFromNativePointer<Control>(_nnn, null);
             ReleaseNativeObjectPointer(_nnn);
             return _mmm;
@@ -964,7 +966,8 @@ namespace Alternet.UI.Native
         public Alternet.Drawing.SizeD GetPreferredSize(Alternet.Drawing.SizeD availableSize)
         {
             CheckDisposed();
-            return NativeApi.Control_GetPreferredSize_(NativePointer, availableSize);
+            var availableSize_Native = availableSize.ToNative();
+return NativeApi.Control_GetPreferredSize_(NativePointer, ref availableSize_Native);
         }
         
         public void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
@@ -1030,25 +1033,29 @@ namespace Alternet.UI.Native
         public Alternet.Drawing.PointD ClientToScreen(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
-            return NativeApi.Control_ClientToScreen_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.Control_ClientToScreen_(NativePointer, ref point_Native);
         }
         
         public Alternet.Drawing.PointD ScreenToClient(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
-            return NativeApi.Control_ScreenToClient_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.Control_ScreenToClient_(NativePointer, ref point_Native);
         }
         
         public Alternet.Drawing.PointI ScreenToDevice(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
-            return NativeApi.Control_ScreenToDevice_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.Control_ScreenToDevice_(NativePointer, ref point_Native);
         }
         
         public Alternet.Drawing.PointD DeviceToScreen(Alternet.Drawing.PointI point)
         {
             CheckDisposed();
-            return NativeApi.Control_DeviceToScreen_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.Control_DeviceToScreen_(NativePointer, ref point_Native);
         }
         
         public bool SetFocus()
@@ -1108,7 +1115,8 @@ namespace Alternet.UI.Native
         public void SetBoundsEx(Alternet.Drawing.RectD rect, int flags)
         {
             CheckDisposed();
-            NativeApi.Control_SetBoundsEx_(NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
         }
         
         public System.IntPtr GetContainingSizer()
@@ -1601,7 +1609,7 @@ namespace Alternet.UI.Native
             public static extern void Control_CenterOnParent_(IntPtr obj, int orientation);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_RefreshRect_(IntPtr obj, Alternet.Drawing.RectD rect, bool eraseBackground);
+            public static extern void Control_RefreshRect_(IntPtr obj, ref Alternet.Drawing.RectD rect, bool eraseBackground);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_Raise_(IntPtr obj);
@@ -1664,7 +1672,7 @@ namespace Alternet.UI.Native
             public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_HitTest_(Alternet.Drawing.PointD screenPoint);
+            public static extern IntPtr Control_HitTest_(ref Alternet.Drawing.PointD screenPoint);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetFocusedControl_();
@@ -1706,7 +1714,7 @@ namespace Alternet.UI.Native
             public static extern void Control_InvalidateBestSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD Control_GetPreferredSize_(IntPtr obj, Alternet.Drawing.SizeD availableSize);
+            public static extern Alternet.Drawing.SizeD Control_GetPreferredSize_(IntPtr obj, ref Alternet.Drawing.SizeD availableSize);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetFocusFlags_(IntPtr obj, bool canSelect, bool tabStop, bool acceptsFocusRecursively);
@@ -1736,16 +1744,16 @@ namespace Alternet.UI.Native
             public static extern void Control_ResetForegroundColor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Control_ClientToScreen_(IntPtr obj, Alternet.Drawing.PointD point);
+            public static extern Alternet.Drawing.PointD Control_ClientToScreen_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Control_ScreenToClient_(IntPtr obj, Alternet.Drawing.PointD point);
+            public static extern Alternet.Drawing.PointD Control_ScreenToClient_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI Control_ScreenToDevice_(IntPtr obj, Alternet.Drawing.PointD point);
+            public static extern Alternet.Drawing.PointI Control_ScreenToDevice_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Control_DeviceToScreen_(IntPtr obj, Alternet.Drawing.PointI point);
+            public static extern Alternet.Drawing.PointD Control_DeviceToScreen_(IntPtr obj, ref Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_SetFocus_(IntPtr obj);
@@ -1775,7 +1783,7 @@ namespace Alternet.UI.Native
             public static extern void Control_SendMouseUpEvent_(IntPtr obj, int x, int y);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBoundsEx_(IntPtr obj, Alternet.Drawing.RectD rect, int flags);
+            public static extern void Control_SetBoundsEx_(IntPtr obj, ref Alternet.Drawing.RectD rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetContainingSizer_(IntPtr obj);

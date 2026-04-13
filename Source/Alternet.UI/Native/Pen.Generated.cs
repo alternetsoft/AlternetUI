@@ -26,7 +26,8 @@ namespace Alternet.UI.Native
         public void Initialize(Alternet.Drawing.DashStyle style, Alternet.Drawing.Color color, float width, Alternet.Drawing.LineCap lineCap, Alternet.Drawing.LineJoin lineJoin)
         {
             CheckDisposed();
-            NativeApi.Pen_Initialize_(NativePointer, style, color, width, lineCap, lineJoin);
+            var color_Native = color.ToNative();
+NativeApi.Pen_Initialize_(NativePointer, style, ref color_Native, width, lineCap, lineJoin);
         }
         
         
@@ -39,7 +40,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Pen_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Pen_Initialize_(IntPtr obj, Alternet.Drawing.DashStyle style, NativeApiTypes.Color color, float width, Alternet.Drawing.LineCap lineCap, Alternet.Drawing.LineJoin lineJoin);
+            public static extern void Pen_Initialize_(IntPtr obj, Alternet.Drawing.DashStyle style, ref NativeApiTypes.Color color, float width, Alternet.Drawing.LineCap lineCap, Alternet.Drawing.LineJoin lineJoin);
             
         }
     }

@@ -45,33 +45,33 @@ namespace ApiGenerator.Managed
 
         private static void WriteProperty(IndentedTextWriter w, ApiProperty apiProperty, Types types)
         {
-            var property = apiProperty.Property;
-            var propertyTypeName = types.GetTypeName(property.ToContextualProperty());
+            var propertyInfo = apiProperty.Property;
+            var propertyTypeName = types.GetTypeName(propertyInfo.ToContextualProperty());
 
-            if (property.GetMethod != null)
+            if (propertyInfo.GetMethod != null)
             {
                 WriteDelegateAttributes(w);
-                w.WriteLine($"public delegate {propertyTypeName} TGet{property.Name}(IntPtr obj);");
+                w.WriteLine($"public delegate {propertyTypeName} TGet{propertyInfo.Name}(IntPtr obj);");
                 w.WriteLine();
             }
 
-            if (property.SetMethod != null)
+            if (propertyInfo.SetMethod != null)
             {
                 WriteDelegateAttributes(w);
-                w.WriteLine($"public delegate void TSet{property.Name}(IntPtr obj, {propertyTypeName} value);");
+                w.WriteLine($"public delegate void TSet{propertyInfo.Name}(IntPtr obj, {propertyTypeName} value);");
                 w.WriteLine();
             }
         }
 
         private static void WriteMethod(IndentedTextWriter w, ApiMethod apiMethod, Types types)
         {
-            var method = apiMethod.Method;
-            var returnTypeName = types.GetTypeName(method.ReturnParameter.ToContextualParameter());
+            var methodInfo = apiMethod.Method;
+            var returnTypeName = types.GetTypeName(methodInfo.ReturnParameter.ToContextualParameter());
 
             var signatureParametersString = new StringBuilder();
-            var parameters = method.GetParameters();
+            var parameters = methodInfo.GetParameters();
 
-            bool isStatic = MemberProvider.IsStatic(method);
+            bool isStatic = MemberProvider.IsStatic(methodInfo);
 
             if (!isStatic)
             {
@@ -83,17 +83,28 @@ namespace ApiGenerator.Managed
 
             for (var i = 0; i < parameters.Length; i++)
             {
-                var parameter = parameters[i];
+                var parameterInfo = parameters[i];
+                var parameterNetType = parameterInfo.ParameterType;
+                var isStruct = ManagedGenerator.IsUserDefinedStruct(parameterNetType);
 
-                var parameterType = types.GetTypeName(parameter.ToContextualParameter());
-                signatureParametersString.Append($"{MemberProvider.GetPInvokeAttributes(parameter)}{parameterType} {parameter.Name}");
+                if (isStruct)
+                {
+                }
+
+                var parameterType = types.GetTypeName(parameterInfo.ToContextualParameter());
+
+                var pInvokeAttributes = MemberProvider.GetPInvokeAttributes(parameterInfo);
+
+                var ps = $"{pInvokeAttributes}{parameterType} {parameterInfo.Name}";
+
+                signatureParametersString.Append(ps);
 
                 if (i < parameters.Length - 1)
                     signatureParametersString.Append(", ");
             }
 
             WriteDelegateAttributes(w);
-            w.WriteLine($"public delegate {returnTypeName} T{method.Name}({signatureParametersString});");
+            w.WriteLine($"public delegate {returnTypeName} T{methodInfo.Name}({signatureParametersString});");
             w.WriteLine();
         }
 

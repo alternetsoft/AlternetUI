@@ -107,7 +107,8 @@ namespace Alternet.UI.Native
         public int HitTest(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
-            return NativeApi.ListBox_HitTest_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
         }
         
         public string GetString(uint n)
@@ -329,7 +330,7 @@ namespace Alternet.UI.Native
             public static extern int ListBox_GetTopItem_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_HitTest_(IntPtr obj, Alternet.Drawing.PointD point);
+            public static extern int ListBox_HitTest_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string ListBox_GetString_(IntPtr obj, uint n);

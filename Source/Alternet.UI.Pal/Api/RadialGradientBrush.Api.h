@@ -15,10 +15,10 @@ ALTERNET_UI_API RadialGradientBrush* RadialGradientBrush_Create_()
     });
 }
 
-ALTERNET_UI_API void RadialGradientBrush_Initialize_(RadialGradientBrush* obj, PointD center, float radius, PointD gradientOrigin, Color* gradientStopsColors, int gradientStopsColorsCount, float* gradientStopsOffsets, int gradientStopsOffsetsCount)
+ALTERNET_UI_API void RadialGradientBrush_Initialize_(RadialGradientBrush* obj, PointD* center, float radius, PointD* gradientOrigin, Color* gradientStopsColors, int gradientStopsColorsCount, float* gradientStopsOffsets, int gradientStopsOffsetsCount)
 {
     MarshalExceptions<void>([&](){
-        obj->Initialize(center, radius, gradientOrigin, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
+        obj->Initialize(*center, radius, *gradientOrigin, gradientStopsColors, gradientStopsColorsCount, gradientStopsOffsets, gradientStopsOffsetsCount);
     });
 }
 

@@ -43,7 +43,8 @@ namespace ApiGenerator.Managed
             w.WriteLine("}");
         }
 
-        static void WriteDllImport(IndentedTextWriter w) => w.WriteLine("[DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]");
+        static void WriteDllImport(IndentedTextWriter w) =>
+            w.WriteLine("[DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]");
 
         private static void WriteDestructor(IndentedTextWriter w, Types types, Type type)
         {
@@ -123,6 +124,9 @@ namespace ApiGenerator.Managed
             for (var i = 0; i < parameters.Length; i++)
             {
                 var parameter = parameters[i];
+                var parameterNetType = parameter.ParameterType;
+
+                var isStruct = ManagedGenerator.IsUserDefinedStruct(parameterNetType);
 
                 var parameterType = types.GetParameterTypeName(parameter);
 
@@ -130,7 +134,15 @@ namespace ApiGenerator.Managed
                     parameter.ParameterType!,
                     parameterType);
 
-                signatureParametersString.Append($"{MemberProvider.GetPInvokeAttributes(parameter)}{parameterTypeNameOverride} {parameter.Name}");
+                var pInvokeAttributes = MemberProvider.GetPInvokeAttributes(parameter);
+                var strToAppend = $"{pInvokeAttributes}{parameterTypeNameOverride} {parameter.Name}";
+
+                if (isStruct)
+                {
+                    strToAppend = "ref " + strToAppend;
+                }
+
+                signatureParametersString.Append(strToAppend);
 
                 if (parameter.ParameterType.Name.EndsWith("*"))
                 {
@@ -157,7 +169,9 @@ namespace ApiGenerator.Managed
 
             var needUnsafe = isUnsafe ? "unsafe " : "";
 
-            w.WriteLine($"public {needUnsafe}static extern {returnTypeNameOverride} {declaringTypeName}_{methodName}_({signatureParametersString});");
+            var sW = $"public {needUnsafe}static extern {returnTypeNameOverride} {declaringTypeName}_{methodName}_({signatureParametersString});";
+
+            w.WriteLine(sW);
             w.WriteLine();
         }
 

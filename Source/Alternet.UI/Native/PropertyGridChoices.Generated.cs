@@ -50,7 +50,8 @@ namespace Alternet.UI.Native
         
         public static void SetFgCol(System.IntPtr handle, uint ind, Alternet.Drawing.Color color)
         {
-            NativeApi.PropertyGridChoices_SetFgCol_(handle, ind, color);
+            var color_Native = color.ToNative();
+NativeApi.PropertyGridChoices_SetFgCol_(handle, ind, ref color_Native);
         }
         
         public static void SetFont(System.IntPtr handle, uint ind, System.IntPtr font)
@@ -60,7 +61,8 @@ namespace Alternet.UI.Native
         
         public static void SetBgCol(System.IntPtr handle, uint ind, Alternet.Drawing.Color color)
         {
-            NativeApi.PropertyGridChoices_SetBgCol_(handle, ind, color);
+            var color_Native = color.ToNative();
+NativeApi.PropertyGridChoices_SetBgCol_(handle, ind, ref color_Native);
         }
         
         public static Alternet.Drawing.Color GetFgCol(System.IntPtr handle, uint ind)
@@ -163,13 +165,13 @@ namespace Alternet.UI.Native
             public static extern void PropertyGridChoices_SetBitmap_(System.IntPtr handle, uint ind, IntPtr bitmap);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridChoices_SetFgCol_(System.IntPtr handle, uint ind, NativeApiTypes.Color color);
+            public static extern void PropertyGridChoices_SetFgCol_(System.IntPtr handle, uint ind, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridChoices_SetFont_(System.IntPtr handle, uint ind, System.IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridChoices_SetBgCol_(System.IntPtr handle, uint ind, NativeApiTypes.Color color);
+            public static extern void PropertyGridChoices_SetBgCol_(System.IntPtr handle, uint ind, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color PropertyGridChoices_GetFgCol_(System.IntPtr handle, uint ind);

@@ -25,7 +25,9 @@ namespace Alternet.UI.Native
         
         public static void TestPopupWindow(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz)
         {
-            NativeApi.WxOtherFactory_TestPopupWindow_(parent, pos, sz);
+            var pos_Native = pos.ToNative();
+var sz_Native = sz.ToNative();
+NativeApi.WxOtherFactory_TestPopupWindow_(parent, ref pos_Native, ref sz_Native);
         }
         
         public static System.IntPtr CreateToolTip(string tip)
@@ -225,7 +227,8 @@ namespace Alternet.UI.Native
         
         public static int DisplayGetFromPoint(Alternet.Drawing.PointI pt)
         {
-            return NativeApi.WxOtherFactory_DisplayGetFromPoint_(pt);
+            var pt_Native = pt.ToNative();
+return NativeApi.WxOtherFactory_DisplayGetFromPoint_(ref pt_Native);
         }
         
         public static int DisplayGetFromWindow(System.IntPtr win)
@@ -338,17 +341,20 @@ namespace Alternet.UI.Native
         
         public static long GetNumberFromUser(string message, string prompt, string caption, long value, long min, long max, System.IntPtr parent, Alternet.Drawing.PointI pos)
         {
-            return NativeApi.WxOtherFactory_GetNumberFromUser_(message, prompt, caption, value, min, max, parent, pos);
+            var pos_Native = pos.ToNative();
+return NativeApi.WxOtherFactory_GetNumberFromUser_(message, prompt, caption, value, min, max, parent, ref pos_Native);
         }
         
         public static int RendererDrawHeaderButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams)
         {
-            return NativeApi.WxOtherFactory_RendererDrawHeaderButton_(renderer, win, dc.NativePointer, rect, flags, sortArrow, headerButtonParams);
+            var rect_Native = rect.ToNative();
+return NativeApi.WxOtherFactory_RendererDrawHeaderButton_(renderer, win, dc.NativePointer, ref rect_Native, flags, sortArrow, headerButtonParams);
         }
         
         public static int RendererDrawHeaderButtonContents(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams)
         {
-            return NativeApi.WxOtherFactory_RendererDrawHeaderButtonContents_(renderer, win, dc.NativePointer, rect, flags, sortArrow, headerButtonParams);
+            var rect_Native = rect.ToNative();
+return NativeApi.WxOtherFactory_RendererDrawHeaderButtonContents_(renderer, win, dc.NativePointer, ref rect_Native, flags, sortArrow, headerButtonParams);
         }
         
         public static int RendererGetHeaderButtonHeight(System.IntPtr renderer, System.IntPtr win)
@@ -363,37 +369,44 @@ namespace Alternet.UI.Native
         
         public static void RendererDrawTreeItemButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawTreeItemButton_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawTreeItemButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawSplitterBorder(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawSplitterBorder_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawSplitterBorder_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawSplitterSash(System.IntPtr renderer, System.IntPtr win, DrawingContext dcReal, Alternet.Drawing.SizeI sizeReal, int position, int orientation, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawSplitterSash_(renderer, win, dcReal.NativePointer, sizeReal, position, orientation, flags);
+            var sizeReal_Native = sizeReal.ToNative();
+NativeApi.WxOtherFactory_RendererDrawSplitterSash_(renderer, win, dcReal.NativePointer, ref sizeReal_Native, position, orientation, flags);
         }
         
         public static void RendererDrawComboBoxDropButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawComboBoxDropButton_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawComboBoxDropButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawDropArrow(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawDropArrow_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawDropArrow_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawCheckBox(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawCheckBox_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawCheckBox_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawCheckMark(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawCheckMark_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawCheckMark_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static Alternet.Drawing.SizeI RendererGetCheckBoxSize(System.IntPtr renderer, System.IntPtr win, int flags)
@@ -413,12 +426,14 @@ namespace Alternet.UI.Native
         
         public static void RendererDrawPushButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawPushButton_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawPushButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawCollapseButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawCollapseButton_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawCollapseButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static Alternet.Drawing.SizeI RendererGetCollapseButtonSize(System.IntPtr renderer, System.IntPtr win, DrawingContext dc)
@@ -428,42 +443,50 @@ namespace Alternet.UI.Native
         
         public static void RendererDrawItemSelectionRect(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawItemSelectionRect_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawItemSelectionRect_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawFocusRect(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawFocusRect_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawFocusRect_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawChoice(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawChoice_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawChoice_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawComboBox(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawComboBox_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawComboBox_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawTextCtrl(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawTextCtrl_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawTextCtrl_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawRadioBitmap(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawRadioBitmap_(renderer, win, dc.NativePointer, rect, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawRadioBitmap_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
         public static void RendererDrawGauge(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int value, int max, int flags)
         {
-            NativeApi.WxOtherFactory_RendererDrawGauge_(renderer, win, dc.NativePointer, rect, value, max, flags);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawGauge_(renderer, win, dc.NativePointer, ref rect_Native, value, max, flags);
         }
         
         public static void RendererDrawItemText(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, string text, Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode)
         {
-            NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, text, rect, align, flags, ellipsizeMode);
+            var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, text, ref rect_Native, align, flags, ellipsizeMode);
         }
         
         public static string RendererGetVersion(System.IntPtr renderer)
@@ -633,7 +656,8 @@ namespace Alternet.UI.Native
         
         public static bool UIActionSimulatorMouseMove(System.IntPtr handle, Alternet.Drawing.PointI point)
         {
-            return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, point);
+            var point_Native = point.ToNative();
+return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Native);
         }
         
         public static bool UIActionSimulatorMouseUp(System.IntPtr handle, int button)
@@ -666,7 +690,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr WxOtherFactory_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, Alternet.Drawing.PointI pos, Alternet.Drawing.SizeI sz);
+            public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, ref Alternet.Drawing.PointI pos, ref Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateToolTip_(string tip);
@@ -786,7 +810,7 @@ namespace Alternet.UI.Native
             public static extern bool WxOtherFactory_DisplayIsOk_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_DisplayGetFromPoint_(Alternet.Drawing.PointI pt);
+            public static extern int WxOtherFactory_DisplayGetFromPoint_(ref Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxOtherFactory_DisplayGetFromWindow_(System.IntPtr win);
@@ -852,13 +876,13 @@ namespace Alternet.UI.Native
             public static extern string WxOtherFactory_GetTextFromUser_(string message, string caption, string defaultValue, System.IntPtr parent, int x, int y, bool centre);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long WxOtherFactory_GetNumberFromUser_(string message, string prompt, string caption, long value, long min, long max, System.IntPtr parent, Alternet.Drawing.PointI pos);
+            public static extern long WxOtherFactory_GetNumberFromUser_(string message, string prompt, string caption, long value, long min, long max, System.IntPtr parent, ref Alternet.Drawing.PointI pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_RendererDrawHeaderButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
+            public static extern int WxOtherFactory_RendererDrawHeaderButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int WxOtherFactory_RendererDrawHeaderButtonContents_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
+            public static extern int WxOtherFactory_RendererDrawHeaderButtonContents_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxOtherFactory_RendererGetHeaderButtonHeight_(System.IntPtr renderer, System.IntPtr win);
@@ -867,25 +891,25 @@ namespace Alternet.UI.Native
             public static extern int WxOtherFactory_RendererGetHeaderButtonMargin_(System.IntPtr renderer, System.IntPtr win);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawTreeItemButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawTreeItemButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawSplitterBorder_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawSplitterBorder_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawSplitterSash_(System.IntPtr renderer, System.IntPtr win, IntPtr dcReal, Alternet.Drawing.SizeI sizeReal, int position, int orientation, int flags);
+            public static extern void WxOtherFactory_RendererDrawSplitterSash_(System.IntPtr renderer, System.IntPtr win, IntPtr dcReal, ref Alternet.Drawing.SizeI sizeReal, int position, int orientation, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawComboBoxDropButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawComboBoxDropButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawDropArrow_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawDropArrow_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawCheckBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawCheckBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawCheckMark_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawCheckMark_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetCheckBoxSize_(System.IntPtr renderer, System.IntPtr win, int flags);
@@ -897,37 +921,37 @@ namespace Alternet.UI.Native
             public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetExpanderSize_(System.IntPtr renderer, System.IntPtr win);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawPushButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawPushButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawCollapseButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawCollapseButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI WxOtherFactory_RendererGetCollapseButtonSize_(System.IntPtr renderer, System.IntPtr win, IntPtr dc);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawItemSelectionRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawItemSelectionRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawFocusRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawFocusRect_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawChoice_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawChoice_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawComboBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawComboBox_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawTextCtrl_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawTextCtrl_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawRadioBitmap_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int flags);
+            public static extern void WxOtherFactory_RendererDrawRadioBitmap_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawGauge_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, Alternet.Drawing.RectI rect, int value, int max, int flags);
+            public static extern void WxOtherFactory_RendererDrawGauge_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int value, int max, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawItemText_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, string text, Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode);
+            public static extern void WxOtherFactory_RendererDrawItemText_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, string text, ref Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string WxOtherFactory_RendererGetVersion_(System.IntPtr renderer);
@@ -1029,7 +1053,7 @@ namespace Alternet.UI.Native
             public static extern bool WxOtherFactory_UIActionSimulatorMouseDragDrop_(System.IntPtr handle, long x1, long y1, long x2, long y2, int button);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorMouseMove_(System.IntPtr handle, Alternet.Drawing.PointI point);
+            public static extern bool WxOtherFactory_UIActionSimulatorMouseMove_(System.IntPtr handle, ref Alternet.Drawing.PointI point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_UIActionSimulatorMouseUp_(System.IntPtr handle, int button);

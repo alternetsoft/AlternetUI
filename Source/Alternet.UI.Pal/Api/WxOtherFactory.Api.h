@@ -18,10 +18,10 @@ ALTERNET_UI_API WxOtherFactory* WxOtherFactory_Create_()
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI pos, SizeI sz)
+ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI* pos, SizeI* sz)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::TestPopupWindow(parent, pos, sz);
+        WxOtherFactory::TestPopupWindow(parent, *pos, *sz);
     });
 }
 
@@ -298,10 +298,10 @@ ALTERNET_UI_API c_bool WxOtherFactory_DisplayIsOk_(void* handle)
     });
 }
 
-ALTERNET_UI_API int WxOtherFactory_DisplayGetFromPoint_(PointI pt)
+ALTERNET_UI_API int WxOtherFactory_DisplayGetFromPoint_(PointI* pt)
 {
     return MarshalExceptions<int>([&](){
-        return WxOtherFactory::DisplayGetFromPoint(pt);
+        return WxOtherFactory::DisplayGetFromPoint(*pt);
     });
 }
 
@@ -452,24 +452,24 @@ ALTERNET_UI_API char16_t* WxOtherFactory_GetTextFromUser_(const char16_t* messag
     });
 }
 
-ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, PointI pos)
+ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, PointI* pos)
 {
     return MarshalExceptions<int64_t>([&](){
-        return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, pos);
+        return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, *pos);
     });
 }
 
-ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags, int sortArrow, void* headerButtonParams)
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags, int sortArrow, void* headerButtonParams)
 {
     return MarshalExceptions<int>([&](){
-        return WxOtherFactory::RendererDrawHeaderButton(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+        return WxOtherFactory::RendererDrawHeaderButton(renderer, win, dc, *rect, flags, sortArrow, headerButtonParams);
     });
 }
 
-ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags, int sortArrow, void* headerButtonParams)
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags, int sortArrow, void* headerButtonParams)
 {
     return MarshalExceptions<int>([&](){
-        return WxOtherFactory::RendererDrawHeaderButtonContents(renderer, win, dc, rect, flags, sortArrow, headerButtonParams);
+        return WxOtherFactory::RendererDrawHeaderButtonContents(renderer, win, dc, *rect, flags, sortArrow, headerButtonParams);
     });
 }
 
@@ -487,52 +487,52 @@ ALTERNET_UI_API int WxOtherFactory_RendererGetHeaderButtonMargin_(void* renderer
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawTreeItemButton(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawTreeItemButton(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawSplitterBorder(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawSplitterBorder(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, DrawingContext* dcReal, SizeI sizeReal, int position, int orientation, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, DrawingContext* dcReal, SizeI* sizeReal, int position, int orientation, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawSplitterSash(renderer, win, dcReal, sizeReal, position, orientation, flags);
+        WxOtherFactory::RendererDrawSplitterSash(renderer, win, dcReal, *sizeReal, position, orientation, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawComboBoxDropButton(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawComboBoxDropButton(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, *rect, flags);
     });
 }
 
@@ -557,17 +557,17 @@ ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetExpanderSize_(void* renderer, 
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawPushButton(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawPushButton(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawCollapseButton(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawCollapseButton(renderer, win, dc, *rect, flags);
     });
 }
 
@@ -578,59 +578,59 @@ ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCollapseButtonSize_(void* rend
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawItemSelectionRect(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawItemSelectionRect(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawFocusRect(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawFocusRect(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawChoice(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawChoice(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawComboBox(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawComboBox(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawTextCtrl(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawTextCtrl(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, DrawingContext* dc, RectI rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawRadioBitmap(renderer, win, dc, rect, flags);
+        WxOtherFactory::RendererDrawRadioBitmap(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, DrawingContext* dc, RectI rect, int value, int max, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int value, int max, int flags)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawGauge(renderer, win, dc, rect, value, max, flags);
+        WxOtherFactory::RendererDrawGauge(renderer, win, dc, *rect, value, max, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, DrawingContext* dc, const char16_t* text, RectI rect, int align, int flags, int ellipsizeMode)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, DrawingContext* dc, const char16_t* text, RectI* rect, int align, int flags, int ellipsizeMode)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawItemText(renderer, win, dc, text, rect, align, flags, ellipsizeMode);
+        WxOtherFactory::RendererDrawItemText(renderer, win, dc, text, *rect, align, flags, ellipsizeMode);
     });
 }
 
@@ -865,10 +865,10 @@ ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseDragDrop_(void* hand
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseMove_(void* handle, PointI point)
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseMove_(void* handle, PointI* point)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::UIActionSimulatorMouseMove(handle, point);
+        return WxOtherFactory::UIActionSimulatorMouseMove(handle, *point);
     });
 }
 

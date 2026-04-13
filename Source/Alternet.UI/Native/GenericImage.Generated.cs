@@ -120,7 +120,8 @@ namespace Alternet.UI.Native
         
         public static void SetRGBRect(System.IntPtr handle, Alternet.Drawing.RectI rect, byte red, byte green, byte blue)
         {
-            NativeApi.GenericImage_SetRGBRect_(handle, rect, red, green, blue);
+            var rect_Native = rect.ToNative();
+NativeApi.GenericImage_SetRGBRect_(handle, ref rect_Native, red, green, blue);
         }
         
         public static void SetImageType(System.IntPtr handle, int type)
@@ -200,7 +201,9 @@ namespace Alternet.UI.Native
         
         public static void Resize(System.IntPtr handle, Alternet.Drawing.SizeI size, Alternet.Drawing.PointI pos, int red, int green, int blue)
         {
-            NativeApi.GenericImage_Resize_(handle, size, pos, red, green, blue);
+            var size_Native = size.ToNative();
+var pos_Native = pos.ToNative();
+NativeApi.GenericImage_Resize_(handle, ref size_Native, ref pos_Native, red, green, blue);
         }
         
         public static System.IntPtr Rotate90(System.IntPtr handle, bool clockwise)
@@ -240,7 +243,9 @@ namespace Alternet.UI.Native
         
         public static System.IntPtr Size(System.IntPtr handle, Alternet.Drawing.SizeI size, Alternet.Drawing.PointI pos, int red, int green, int blue)
         {
-            return NativeApi.GenericImage_Size_(handle, size, pos, red, green, blue);
+            var size_Native = size.ToNative();
+var pos_Native = pos.ToNative();
+return NativeApi.GenericImage_Size_(handle, ref size_Native, ref pos_Native, red, green, blue);
         }
         
         public static bool ConvertAlphaToMask(System.IntPtr handle, byte threshold)
@@ -340,7 +345,8 @@ namespace Alternet.UI.Native
         
         public static System.IntPtr GetSubImage(System.IntPtr handle, Alternet.Drawing.RectI rect)
         {
-            return NativeApi.GenericImage_GetSubImage_(handle, rect);
+            var rect_Native = rect.ToNative();
+return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
         }
         
         public static int GetImageType(System.IntPtr handle)
@@ -605,7 +611,7 @@ namespace Alternet.UI.Native
             public static extern void GenericImage_SetRGB_(System.IntPtr handle, int x, int y, byte r, byte g, byte b);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_SetRGBRect_(System.IntPtr handle, Alternet.Drawing.RectI rect, byte red, byte green, byte blue);
+            public static extern void GenericImage_SetRGBRect_(System.IntPtr handle, ref Alternet.Drawing.RectI rect, byte red, byte green, byte blue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_SetImageType_(System.IntPtr handle, int type);
@@ -653,7 +659,7 @@ namespace Alternet.UI.Native
             public static extern void GenericImage_Rescale_(System.IntPtr handle, int width, int height, int quality);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_Resize_(System.IntPtr handle, Alternet.Drawing.SizeI size, Alternet.Drawing.PointI pos, int red, int green, int blue);
+            public static extern void GenericImage_Resize_(System.IntPtr handle, ref Alternet.Drawing.SizeI size, ref Alternet.Drawing.PointI pos, int red, int green, int blue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_Rotate90_(System.IntPtr handle, bool clockwise);
@@ -677,7 +683,7 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr GenericImage_Scale_(System.IntPtr handle, int width, int height, int quality);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_Size_(System.IntPtr handle, Alternet.Drawing.SizeI size, Alternet.Drawing.PointI pos, int red, int green, int blue);
+            public static extern System.IntPtr GenericImage_Size_(System.IntPtr handle, ref Alternet.Drawing.SizeI size, ref Alternet.Drawing.PointI pos, int red, int green, int blue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool GenericImage_ConvertAlphaToMask_(System.IntPtr handle, byte threshold);
@@ -737,7 +743,7 @@ namespace Alternet.UI.Native
             public static extern int GenericImage_GetOptionInt_(System.IntPtr handle, string name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_GetSubImage_(System.IntPtr handle, Alternet.Drawing.RectI rect);
+            public static extern System.IntPtr GenericImage_GetSubImage_(System.IntPtr handle, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int GenericImage_GetImageType_(System.IntPtr handle);

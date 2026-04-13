@@ -210,7 +210,8 @@ namespace Alternet.UI.Native
         
         public static void Show(System.IntPtr menuHandle, Control control, Alternet.Drawing.PointD position)
         {
-            NativeApi.Menu_Show_(menuHandle, control.NativePointer, position);
+            var position_Native = position.ToNative();
+NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -392,7 +393,7 @@ namespace Alternet.UI.Native
             public static extern bool Menu_MenuInsertItem_(System.IntPtr handle, string childId, System.IntPtr itemHandle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_Show_(System.IntPtr menuHandle, IntPtr control, Alternet.Drawing.PointD position);
+            public static extern void Menu_Show_(System.IntPtr menuHandle, IntPtr control, ref Alternet.Drawing.PointD position);
             
         }
     }

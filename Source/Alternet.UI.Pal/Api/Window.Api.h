@@ -241,10 +241,10 @@ ALTERNET_UI_API void* Window_CreateEx_(int kind)
     });
 }
 
-ALTERNET_UI_API void Window_SetDefaultBounds_(RectD bounds)
+ALTERNET_UI_API void Window_SetDefaultBounds_(RectD* bounds)
 {
     MarshalExceptions<void>([&](){
-        Window::SetDefaultBounds(bounds);
+        Window::SetDefaultBounds(*bounds);
     });
 }
 
@@ -255,17 +255,17 @@ ALTERNET_UI_API void Window_SetParkingWindowFont_(Font* font)
     });
 }
 
-ALTERNET_UI_API void Window_SetMinSize_(Window* obj, SizeD size)
+ALTERNET_UI_API void Window_SetMinSize_(Window* obj, SizeD* size)
 {
     MarshalExceptions<void>([&](){
-        obj->SetMinSize(size);
+        obj->SetMinSize(*size);
     });
 }
 
-ALTERNET_UI_API void Window_SetMaxSize_(Window* obj, SizeD size)
+ALTERNET_UI_API void Window_SetMaxSize_(Window* obj, SizeD* size)
 {
     MarshalExceptions<void>([&](){
-        obj->SetMaxSize(size);
+        obj->SetMaxSize(*size);
     });
 }
 

@@ -315,12 +315,14 @@ namespace Alternet.UI.Native
         
         public static void SetItemTextColor(System.IntPtr handle, System.IntPtr item, Alternet.Drawing.Color color)
         {
-            NativeApi.TreeView_SetItemTextColor_(handle, item, color);
+            var color_Native = color.ToNative();
+NativeApi.TreeView_SetItemTextColor_(handle, item, ref color_Native);
         }
         
         public static void SetItemBackgroundColor(System.IntPtr handle, System.IntPtr item, Alternet.Drawing.Color color)
         {
-            NativeApi.TreeView_SetItemBackgroundColor_(handle, item, color);
+            var color_Native = color.ToNative();
+NativeApi.TreeView_SetItemBackgroundColor_(handle, item, ref color_Native);
         }
         
         public static void ResetItemTextColor(System.IntPtr handle, System.IntPtr item)
@@ -408,7 +410,8 @@ namespace Alternet.UI.Native
         public System.IntPtr ItemHitTest(Alternet.Drawing.PointD point)
         {
             CheckDisposed();
-            return NativeApi.TreeView_ItemHitTest_(NativePointer, point);
+            var point_Native = point.ToNative();
+return NativeApi.TreeView_ItemHitTest_(NativePointer, ref point_Native);
         }
         
         public Alternet.UI.TreeViewHitTestLocations GetHitTestResultLocations(System.IntPtr hitTestResult)
@@ -732,10 +735,10 @@ namespace Alternet.UI.Native
             public static extern NativeApiTypes.Color TreeView_GetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetItemTextColor_(System.IntPtr handle, System.IntPtr item, NativeApiTypes.Color color);
+            public static extern void TreeView_SetItemTextColor_(System.IntPtr handle, System.IntPtr item, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item, NativeApiTypes.Color color);
+            public static extern void TreeView_SetItemBackgroundColor_(System.IntPtr handle, System.IntPtr item, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_ResetItemTextColor_(System.IntPtr handle, System.IntPtr item);
@@ -780,7 +783,7 @@ namespace Alternet.UI.Native
             public static extern void TreeView_CollapseAll_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_ItemHitTest_(IntPtr obj, Alternet.Drawing.PointD point);
+            public static extern System.IntPtr TreeView_ItemHitTest_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.TreeViewHitTestLocations TreeView_GetHitTestResultLocations_(IntPtr obj, System.IntPtr hitTestResult);

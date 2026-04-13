@@ -15,10 +15,10 @@ ALTERNET_UI_API SolidBrush* SolidBrush_Create_()
     });
 }
 
-ALTERNET_UI_API void SolidBrush_Initialize_(SolidBrush* obj, Color color)
+ALTERNET_UI_API void SolidBrush_Initialize_(SolidBrush* obj, Color* color)
 {
     MarshalExceptions<void>([&](){
-        obj->Initialize(color);
+        obj->Initialize(*color);
     });
 }
 

@@ -55,12 +55,14 @@ namespace Alternet.UI.Native
         
         public static void SetTextColor(System.IntPtr attr, Alternet.Drawing.Color colText)
         {
-            NativeApi.TextBoxTextAttr_SetTextColor_(attr, colText);
+            var colText_Native = colText.ToNative();
+NativeApi.TextBoxTextAttr_SetTextColor_(attr, ref colText_Native);
         }
         
         public static void SetBackgroundColor(System.IntPtr attr, Alternet.Drawing.Color colBack)
         {
-            NativeApi.TextBoxTextAttr_SetBackgroundColor_(attr, colBack);
+            var colBack_Native = colBack.ToNative();
+NativeApi.TextBoxTextAttr_SetBackgroundColor_(attr, ref colBack_Native);
         }
         
         public static void SetAlignment(System.IntPtr attr, int alignment)
@@ -95,7 +97,8 @@ namespace Alternet.UI.Native
         
         public static void SetFontUnderlinedEx(System.IntPtr attr, int type, Alternet.Drawing.Color colour)
         {
-            NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, colour);
+            var colour_Native = colour.ToNative();
+NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
         }
         
         public static void SetFontStrikethrough(System.IntPtr attr, bool strikethrough)
@@ -526,10 +529,10 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr TextBoxTextAttr_RichGetTextBoxAttr_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetTextColor_(System.IntPtr attr, NativeApiTypes.Color colText);
+            public static extern void TextBoxTextAttr_SetTextColor_(System.IntPtr attr, ref NativeApiTypes.Color colText);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBackgroundColor_(System.IntPtr attr, NativeApiTypes.Color colBack);
+            public static extern void TextBoxTextAttr_SetBackgroundColor_(System.IntPtr attr, ref NativeApiTypes.Color colBack);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_SetAlignment_(System.IntPtr attr, int alignment);
@@ -550,7 +553,7 @@ namespace Alternet.UI.Native
             public static extern void TextBoxTextAttr_SetFontUnderlined_(System.IntPtr attr, bool underlined);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontUnderlinedEx_(System.IntPtr attr, int type, NativeApiTypes.Color colour);
+            public static extern void TextBoxTextAttr_SetFontUnderlinedEx_(System.IntPtr attr, int type, ref NativeApiTypes.Color colour);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_SetFontStrikethrough_(System.IntPtr attr, bool strikethrough);

@@ -57,17 +57,17 @@ ALTERNET_UI_API void* TextBoxTextAttr_RichGetTextBoxAttr_(void* attr)
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetTextColor_(void* attr, Color colText)
+ALTERNET_UI_API void TextBoxTextAttr_SetTextColor_(void* attr, Color* colText)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetTextColor(attr, colText);
+        TextBoxTextAttr::SetTextColor(attr, *colText);
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBackgroundColor_(void* attr, Color colBack)
+ALTERNET_UI_API void TextBoxTextAttr_SetBackgroundColor_(void* attr, Color* colBack)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetBackgroundColor(attr, colBack);
+        TextBoxTextAttr::SetBackgroundColor(attr, *colBack);
     });
 }
 
@@ -113,10 +113,10 @@ ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlined_(void* attr, c_bool under
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlinedEx_(void* attr, int type, Color colour)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontUnderlinedEx_(void* attr, int type, Color* colour)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetFontUnderlinedEx(attr, type, colour);
+        TextBoxTextAttr::SetFontUnderlinedEx(attr, type, *colour);
     });
 }
 

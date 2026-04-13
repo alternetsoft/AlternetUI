@@ -289,6 +289,15 @@ namespace Alternet::UI
         MenuHighlight = 174,
     };
     
+    enum class ColorAdjustmentOperation
+    {
+        None = 0,
+        Lighten = 1,
+        LightenHigh = 2,
+        Darken = 3,
+        DarkenHigh = 4,
+    };
+    
     enum class FontEncoding
     {
         Default = 0,
@@ -686,8 +695,10 @@ namespace Alternet::UI
     
     enum class DrawLabelFlags
     {
+        None = 0,
         TextHasBold = 1,
         TextHasNewLineChars = 2,
+        MeasureTextAsBold = 4,
     };
     
     enum class TextFormatFlags
@@ -743,7 +754,7 @@ namespace Alternet::UI
         Statement = 9,
         Executive = 10,
         A3 = 11,
-        A4mall = 12,
+        A4Small = 12,
         A5 = 13,
         B4 = 14,
         B5 = 15,
@@ -770,7 +781,7 @@ namespace Alternet::UI
         EnvelopeMonarch = 36,
         EnvelopePersonal = 37,
         FanfoldUs = 38,
-        FanfoldStanardGerman = 39,
+        FanfoldStandardGerman = 39,
         FanfoldLegalGerman = 40,
         IsoB4 = 41,
         JapanesePostcard = 42,
@@ -821,9 +832,9 @@ namespace Alternet::UI
         Sheet12X11 = 87,
         JapaneseEnvelopeYou4 = 88,
         JapaneseEnvelopeYou4Rotated = 89,
-        P16k = 90,
-        P32k = 91,
-        P32kbig = 92,
+        Prc16k = 90,
+        Prc32k = 91,
+        Prc32kBig = 92,
         PrcEnvelope1 = 93,
         PrcEnvelope2 = 94,
         PrcEnvelope3 = 95,
@@ -834,9 +845,9 @@ namespace Alternet::UI
         PrcEnvelope8 = 100,
         PrcEnvelope9 = 101,
         PrcEnvelope10 = 102,
-        P16kRotated = 103,
-        P32kRotated = 104,
-        P32kbigRotated = 105,
+        Prc16kRotated = 103,
+        Prc32kRotated = 104,
+        Prc32kBigRotated = 105,
         PrcEnvelope1Rotated = 106,
         PrcEnvelope2Rotated = 107,
         PrcEnvelope3Rotated = 108,
@@ -956,6 +967,9 @@ namespace Alternet::UI
         Right = 4,
         Fill = 5,
         RightAutoSize = 6,
+        LeftAutoSize = 7,
+        TopAutoSize = 8,
+        BottomAutoSize = 9,
     };
     
     enum class DropDownAlignment
@@ -966,6 +980,15 @@ namespace Alternet::UI
         AfterEnd = 3,
         Center = 4,
         Position = 5,
+    };
+    
+    enum class ElementContentAlign
+    {
+        Default = 0,
+        Left = 16,
+        Right = 32,
+        Top = 64,
+        Bottom = 128,
     };
     
     enum class GenericOrientation
@@ -992,7 +1015,9 @@ namespace Alternet::UI
     
     enum class LayoutFlags
     {
+        None = 0,
         IterateBackward = 1,
+        UseMarginsWhenDock = 2,
     };
     
     enum class LayoutStyle
@@ -1460,6 +1485,14 @@ namespace Alternet::UI
         Retry = 5,
         Ignore = 6,
         None = 7,
+    };
+    
+    enum class ExceptionDialogResult
+    {
+        None = 0,
+        Continue = 1,
+        Quit = 2,
+        Throw = 3,
     };
     
     enum class MessageBoxButtons
@@ -2502,7 +2535,7 @@ namespace Alternet::UI
     {
         Invalid = 0,
         Gif = 1,
-        Ani = 2,
+        Webp = 2,
         Any = 3,
     };
     
@@ -3656,6 +3689,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::GenericAlignment> { sta
 template<> struct enable_bitmask_operators<Alternet::UI::GenericDirection> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::AnchorStyles> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericOrientation> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::LayoutFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::SwipeDirection> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::Border3DSide> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::BoundsSpecified> { static const bool enable = true; };

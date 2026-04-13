@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -7,6 +8,54 @@ namespace Alternet.UI.Native
     [SuppressUnmanagedCodeSecurity]
     internal static class NativeApiTypes
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateTime ToNative(this System.DateTime dt)
+        {
+            return dt;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Alternet.Drawing.PointD ToNative(this Alternet.Drawing.PointD p)
+        {
+            return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Alternet.Drawing.PointI ToNative(this Alternet.Drawing.PointI p)
+        {
+            return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Alternet.Drawing.RectD ToNative(this Alternet.Drawing.RectD p)
+        {
+            return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Alternet.Drawing.RectI ToNative(this Alternet.Drawing.RectI p)
+        {
+            return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Alternet.Drawing.SizeI ToNative(this Alternet.Drawing.SizeI p)
+        {
+            return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Alternet.Drawing.SizeD ToNative(this Alternet.Drawing.SizeD p)
+        {
+            return p;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Color ToNative(this Alternet.Drawing.Color color)
+        {
+            return color;
+        }
+
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public struct Color
         {

@@ -289,17 +289,17 @@ ALTERNET_UI_API Color_C TreeView_GetItemBackgroundColor_(void* handle, void* ite
     });
 }
 
-ALTERNET_UI_API void TreeView_SetItemTextColor_(void* handle, void* item, Color color)
+ALTERNET_UI_API void TreeView_SetItemTextColor_(void* handle, void* item, Color* color)
 {
     MarshalExceptions<void>([&](){
-        TreeView::SetItemTextColor(handle, item, color);
+        TreeView::SetItemTextColor(handle, item, *color);
     });
 }
 
-ALTERNET_UI_API void TreeView_SetItemBackgroundColor_(void* handle, void* item, Color color)
+ALTERNET_UI_API void TreeView_SetItemBackgroundColor_(void* handle, void* item, Color* color)
 {
     MarshalExceptions<void>([&](){
-        TreeView::SetItemBackgroundColor(handle, item, color);
+        TreeView::SetItemBackgroundColor(handle, item, *color);
     });
 }
 
@@ -401,10 +401,10 @@ ALTERNET_UI_API void TreeView_CollapseAll_(TreeView* obj)
     });
 }
 
-ALTERNET_UI_API void* TreeView_ItemHitTest_(TreeView* obj, PointD point)
+ALTERNET_UI_API void* TreeView_ItemHitTest_(TreeView* obj, PointD* point)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->ItemHitTest(point);
+        return obj->ItemHitTest(*point);
     });
 }
 

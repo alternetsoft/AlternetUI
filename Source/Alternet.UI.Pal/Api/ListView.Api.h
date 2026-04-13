@@ -247,10 +247,10 @@ ALTERNET_UI_API void ListView_SetSelected_(ListView* obj, int64_t index, c_bool 
     });
 }
 
-ALTERNET_UI_API void* ListView_ItemHitTest_(ListView* obj, PointD point)
+ALTERNET_UI_API void* ListView_ItemHitTest_(ListView* obj, PointD* point)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->ItemHitTest(point);
+        return obj->ItemHitTest(*point);
     });
 }
 

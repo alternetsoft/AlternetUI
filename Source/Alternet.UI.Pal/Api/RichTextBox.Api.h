@@ -635,10 +635,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndFont_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginTextColour_(RichTextBox* obj, Color colour)
+ALTERNET_UI_API c_bool RichTextBox_BeginTextColour_(RichTextBox* obj, Color* colour)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginTextColour(colour);
+        return obj->BeginTextColour(*colour);
     });
 }
 
@@ -1055,17 +1055,17 @@ ALTERNET_UI_API c_bool RichTextBox_ApplyStyleSheet_(RichTextBox* obj, void* styl
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_ShowContextMenu_(RichTextBox* obj, void* menu, PointI pt, c_bool addPropertyCommands)
+ALTERNET_UI_API c_bool RichTextBox_ShowContextMenu_(RichTextBox* obj, void* menu, PointI* pt, c_bool addPropertyCommands)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->ShowContextMenu(menu, pt, addPropertyCommands);
+        return obj->ShowContextMenu(menu, *pt, addPropertyCommands);
     });
 }
 
-ALTERNET_UI_API int RichTextBox_PrepareContextMenu_(RichTextBox* obj, void* menu, PointI pt, c_bool addPropertyCommands)
+ALTERNET_UI_API int RichTextBox_PrepareContextMenu_(RichTextBox* obj, void* menu, PointI* pt, c_bool addPropertyCommands)
 {
     return MarshalExceptions<int>([&](){
-        return obj->PrepareContextMenu(menu, pt, addPropertyCommands);
+        return obj->PrepareContextMenu(menu, *pt, addPropertyCommands);
     });
 }
 
@@ -1237,17 +1237,17 @@ ALTERNET_UI_API void RichTextBox_MoveCaretForward_(RichTextBox* obj, int64_t old
     });
 }
 
-ALTERNET_UI_API PointI_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, PointI ptLogical)
+ALTERNET_UI_API PointI_C RichTextBox_GetPhysicalPoint_(RichTextBox* obj, PointI* ptLogical)
 {
     return MarshalExceptions<PointI_C>([&](){
-        return obj->GetPhysicalPoint(ptLogical);
+        return obj->GetPhysicalPoint(*ptLogical);
     });
 }
 
-ALTERNET_UI_API PointI_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, PointI ptPhysical)
+ALTERNET_UI_API PointI_C RichTextBox_GetLogicalPoint_(RichTextBox* obj, PointI* ptPhysical)
 {
     return MarshalExceptions<PointI_C>([&](){
-        return obj->GetLogicalPoint(ptPhysical);
+        return obj->GetLogicalPoint(*ptPhysical);
     });
 }
 
@@ -1293,10 +1293,10 @@ ALTERNET_UI_API void RichTextBox_MoveCaretBack_(RichTextBox* obj, int64_t oldPos
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_GetCaretPositionForIndex_(RichTextBox* obj, int64_t position, RectI rect, void* container)
+ALTERNET_UI_API c_bool RichTextBox_GetCaretPositionForIndex_(RichTextBox* obj, int64_t position, RectI* rect, void* container)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->GetCaretPositionForIndex(position, rect, container);
+        return obj->GetCaretPositionForIndex(position, *rect, container);
     });
 }
 

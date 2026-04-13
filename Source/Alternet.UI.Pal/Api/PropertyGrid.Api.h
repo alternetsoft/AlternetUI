@@ -121,31 +121,31 @@ ALTERNET_UI_API void PropertyGrid_SetCreateStyleEx_(PropertyGrid* obj, int64_t v
     });
 }
 
-ALTERNET_UI_API PointI_C PropertyGrid_CalcScrolledPosition_(PropertyGrid* obj, PointI point)
+ALTERNET_UI_API PointI_C PropertyGrid_CalcScrolledPosition_(PropertyGrid* obj, PointI* point)
 {
     return MarshalExceptions<PointI_C>([&](){
-        return obj->CalcScrolledPosition(point);
+        return obj->CalcScrolledPosition(*point);
     });
 }
 
-ALTERNET_UI_API PointI_C PropertyGrid_CalcUnscrolledPosition_(PropertyGrid* obj, PointI point)
+ALTERNET_UI_API PointI_C PropertyGrid_CalcUnscrolledPosition_(PropertyGrid* obj, PointI* point)
 {
     return MarshalExceptions<PointI_C>([&](){
-        return obj->CalcUnscrolledPosition(point);
+        return obj->CalcUnscrolledPosition(*point);
     });
 }
 
-ALTERNET_UI_API int PropertyGrid_GetHitTestColumn_(PropertyGrid* obj, PointI point)
+ALTERNET_UI_API int PropertyGrid_GetHitTestColumn_(PropertyGrid* obj, PointI* point)
 {
     return MarshalExceptions<int>([&](){
-        return obj->GetHitTestColumn(point);
+        return obj->GetHitTestColumn(*point);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetHitTestProp_(PropertyGrid* obj, PointI point)
+ALTERNET_UI_API void* PropertyGrid_GetHitTestProp_(PropertyGrid* obj, PointI* point)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->GetHitTestProp(point);
+        return obj->GetHitTestProp(*point);
     });
 }
 
@@ -170,10 +170,10 @@ ALTERNET_UI_API void PropertyGrid_ColorDatabaseSetGlobal_(void* handle)
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_ColorDatabaseAdd_(void* handle, const char16_t* name, Color color)
+ALTERNET_UI_API void PropertyGrid_ColorDatabaseAdd_(void* handle, const char16_t* name, Color* color)
 {
     MarshalExceptions<void>([&](){
-        PropertyGrid::ColorDatabaseAdd(handle, name, color);
+        PropertyGrid::ColorDatabaseAdd(handle, name, *color);
     });
 }
 
@@ -184,10 +184,10 @@ ALTERNET_UI_API Color_C PropertyGrid_ColorDatabaseFind_(void* handle, const char
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_ColorDatabaseFindName_(void* handle, Color color)
+ALTERNET_UI_API char16_t* PropertyGrid_ColorDatabaseFindName_(void* handle, Color* color)
 {
     return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(PropertyGrid::ColorDatabaseFindName(handle, color));
+        return AllocPInvokeReturnString(PropertyGrid::ColorDatabaseFindName(handle, *color));
     });
 }
 
@@ -198,10 +198,10 @@ ALTERNET_UI_API void PropertyGrid_KnownColorsClear_()
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(const char16_t* name, const char16_t* title, Color value, int knownColor)
+ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(const char16_t* name, const char16_t* title, Color* value, int knownColor)
 {
     MarshalExceptions<void>([&](){
-        PropertyGrid::KnownColorsAdd(name, title, value, knownColor);
+        PropertyGrid::KnownColorsAdd(name, title, *value, knownColor);
     });
 }
 
@@ -485,38 +485,38 @@ ALTERNET_UI_API void PropertyGrid_EndLabelEdit_(PropertyGrid* obj, c_bool commit
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetCaptionBackgroundColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetCaptionBackgroundColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetCaptionBackgroundColor(col);
+        obj->SetCaptionBackgroundColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetCaptionTextColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetCaptionTextColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetCaptionTextColor(col);
+        obj->SetCaptionTextColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetCellBackgroundColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetCellBackgroundColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetCellBackgroundColor(col);
+        obj->SetCellBackgroundColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetCellDisabledTextColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetCellDisabledTextColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetCellDisabledTextColor(col);
+        obj->SetCellDisabledTextColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetCellTextColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetCellTextColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetCellTextColor(col);
+        obj->SetCellTextColor(*col);
     });
 }
 
@@ -527,38 +527,38 @@ ALTERNET_UI_API void PropertyGrid_SetColumnCount_(PropertyGrid* obj, int colCoun
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetEmptySpaceColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetEmptySpaceColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetEmptySpaceColor(col);
+        obj->SetEmptySpaceColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetLineColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetLineColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetLineColor(col);
+        obj->SetLineColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetMarginColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetMarginColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetMarginColor(col);
+        obj->SetMarginColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetSelectionBackgroundColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetSelectionBackgroundColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetSelectionBackgroundColor(col);
+        obj->SetSelectionBackgroundColor(*col);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetSelectionTextColor_(PropertyGrid* obj, Color col)
+ALTERNET_UI_API void PropertyGrid_SetSelectionTextColor_(PropertyGrid* obj, Color* col)
 {
     MarshalExceptions<void>([&](){
-        obj->SetSelectionTextColor(col);
+        obj->SetSelectionTextColor(*col);
     });
 }
 
@@ -772,10 +772,10 @@ ALTERNET_UI_API void* PropertyGrid_CreateImageFilenameProperty_(PropertyGrid* ob
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateSystemColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value, uint32_t kind)
+ALTERNET_UI_API void* PropertyGrid_CreateSystemColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color* value, uint32_t kind)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateSystemColorProperty(label, name, value, kind);
+        return obj->CreateSystemColorProperty(label, name, *value, kind);
     });
 }
 
@@ -821,10 +821,10 @@ ALTERNET_UI_API void* PropertyGrid_CreateLongStringProperty_(PropertyGrid* obj, 
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateDateProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, DateTime value)
+ALTERNET_UI_API void* PropertyGrid_CreateDateProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, DateTime* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateDateProperty(label, name, value);
+        return obj->CreateDateProperty(label, name, *value);
     });
 }
 
@@ -1017,10 +1017,10 @@ ALTERNET_UI_API void PropertyGrid_RefreshProperty_(PropertyGrid* obj, void* p)
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color value)
+ALTERNET_UI_API void* PropertyGrid_CreateColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateColorProperty(label, name, value);
+        return obj->CreateColorProperty(label, name, *value);
     });
 }
 
@@ -1290,10 +1290,10 @@ ALTERNET_UI_API void* PropertyGrid_ReplaceProperty_(PropertyGrid* obj, void* id,
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyBackgroundColor_(PropertyGrid* obj, void* id, Color color, int flags)
+ALTERNET_UI_API void PropertyGrid_SetPropertyBackgroundColor_(PropertyGrid* obj, void* id, Color* color, int flags)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyBackgroundColor(id, color, flags);
+        obj->SetPropertyBackgroundColor(id, *color, flags);
     });
 }
 
@@ -1304,10 +1304,10 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyColorsToDefault_(PropertyGrid* obj,
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyTextColor_(PropertyGrid* obj, void* id, Color col, int flags)
+ALTERNET_UI_API void PropertyGrid_SetPropertyTextColor_(PropertyGrid* obj, void* id, Color* col, int flags)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyTextColor(id, col, flags);
+        obj->SetPropertyTextColor(id, *col, flags);
     });
 }
 
@@ -1416,10 +1416,10 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsVariant_(PropertyGrid* obj, 
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsDateTime_(PropertyGrid* obj, void* id, DateTime value)
+ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsDateTime_(PropertyGrid* obj, void* id, DateTime* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyValueAsDateTime(id, value);
+        obj->SetPropertyValueAsDateTime(id, *value);
     });
 }
 
