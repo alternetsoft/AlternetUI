@@ -28,6 +28,7 @@ namespace Alternet.UI
 
         private static ConcurrentStack<string>? pushedFolders;
         private static string? tempPathSubFolder;
+        private static string? localApplicationDataPath;
 
         /// <summary>
         /// Flags used to specify options for generating a temporary file name.
@@ -266,6 +267,28 @@ namespace Alternet.UI
                 "Downloads");
 
             return downloadsPath;
+        }
+
+        /// <summary>
+        /// Gets the path to the local application data directory for the current user.
+        /// </summary>
+        /// <remarks>By default, this property returns the path provided by the operating system for
+        /// storing application data specific to the current user. Setting this property to a non-empty value overrides
+        /// the default path. Setting it to null or an empty string resets the property to use the system
+        /// default.</remarks>
+        public static string LocalApplicationDataPath
+        {
+            get
+            {
+                return localApplicationDataPath ??= Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                    localApplicationDataPath = value;
+                localApplicationDataPath = null;
+            }
         }
 
         /// <summary>
