@@ -148,13 +148,6 @@ ALTERNET_UI_API void* ComboBox_GetEventDc_(ComboBox* obj)
     });
 }
 
-ALTERNET_UI_API RectI_C ComboBox_GetEventRect_(ComboBox* obj)
-{
-    return MarshalExceptions<RectI_C>([&](){
-        return obj->GetEventRect();
-    });
-}
-
 ALTERNET_UI_API int ComboBox_GetEventItem_(ComboBox* obj)
 {
     return MarshalExceptions<int>([&](){
@@ -208,6 +201,13 @@ ALTERNET_UI_API void ComboBox_ShowPopup_(ComboBox* obj)
 {
     MarshalExceptions<void>([&](){
         obj->ShowPopup();
+    });
+}
+
+ALTERNET_UI_API RectI_C ComboBox_GetEventRect_(ComboBox* obj)
+{
+    return MarshalExceptions<RectI_C>([&](){
+        return obj->GetEventRect();
     });
 }
 

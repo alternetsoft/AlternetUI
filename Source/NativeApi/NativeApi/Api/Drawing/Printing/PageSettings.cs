@@ -20,7 +20,10 @@ namespace NativeApi.Api
 
         public float MarginBottom { get; set; }
 
-        public SizeD CustomPaperSize { get; set; }
+        public SizeD GetCustomPaperSize() => new SizeD();
+
+        public void SetCustomPaperSize(SizeD value) { }
+
         public bool UseCustomPaperSize { get => throw new Exception(); set => throw new Exception(); }
         public PaperKind PaperSize { get => throw new Exception(); set => throw new Exception(); }
         public PrinterResolutionKind PrinterResolution { get => throw new Exception(); set => throw new Exception(); }

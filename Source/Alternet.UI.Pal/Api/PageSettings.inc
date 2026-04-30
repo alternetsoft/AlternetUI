@@ -19,9 +19,6 @@ void SetMarginTop(float value);
 float GetMarginBottom();
 void SetMarginBottom(float value);
 
-SizeD GetCustomPaperSize();
-void SetCustomPaperSize(const SizeD& value);
-
 bool GetUseCustomPaperSize();
 void SetUseCustomPaperSize(bool value);
 
@@ -31,6 +28,8 @@ void SetPaperSize(PaperKind value);
 PrinterResolutionKind GetPrinterResolution();
 void SetPrinterResolution(PrinterResolutionKind value);
 
+SizeD GetCustomPaperSize();
+void SetCustomPaperSize(const SizeD& value);
 
 public:
 PageSettings();

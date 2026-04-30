@@ -159,8 +159,12 @@ namespace NativeApi.Api
         public virtual bool UserPaint { get; set; }
         public bool IsMouseOver { get; }
         public bool HasWindowCreated { get; }
-        public Color BackgroundColor { get; set; }
-        public Color ForegroundColor { get; set; }
+        public Color GetBackgroundColor() => default;
+        public Color GetForegroundColor() => default;
+
+        public void SetBackgroundColor(Color value) { }
+        public void SetForegroundColor(Color value) { }
+
         public Font? Font { get; set; }
 
         public static Control? HitTest(PointD screenPoint) => default;

@@ -109,7 +109,7 @@ namespace Alternet.UI.Native
             var ptr = Native.Control.OpenDrawingContextForDC(EventDc, false);
             var dc = new Drawing.WxGraphics(ptr);
 
-            var rect = uiControl.PixelToDip(EventRect);
+            var rect = uiControl.PixelToDip(GetEventRect());
 
             void DefaultPaintMethod()
             {

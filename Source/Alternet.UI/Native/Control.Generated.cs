@@ -535,36 +535,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.Color BackgroundColor
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetBackgroundColor_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetBackgroundColor_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.Drawing.Color ForegroundColor
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetForegroundColor_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetForegroundColor_(NativePointer, value);
-            }
-        }
-        
         public Font? Font
         {
             get
@@ -847,6 +817,32 @@ NativeApi.Control_SetBoundsI_(NativePointer, ref bounds_Native);
             CheckDisposed();
             var size_Native = size.ToNative();
 NativeApi.Control_SetClientSize_(NativePointer, ref size_Native);
+        }
+        
+        public Alternet.Drawing.Color GetBackgroundColor()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetBackgroundColor_(NativePointer);
+        }
+        
+        public Alternet.Drawing.Color GetForegroundColor()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetForegroundColor_(NativePointer);
+        }
+        
+        public void SetBackgroundColor(Alternet.Drawing.Color value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Control_SetBackgroundColor_(NativePointer, ref value_Native);
+        }
+        
+        public void SetForegroundColor(Alternet.Drawing.Color value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Control_SetForegroundColor_(NativePointer, ref value_Native);
         }
         
         public static Control? HitTest(Alternet.Drawing.PointD screenPoint)
@@ -1490,18 +1486,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern bool Control_GetHasWindowCreated_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Control_GetBackgroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetBackgroundColor_(IntPtr obj, NativeApiTypes.Color value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color Control_GetForegroundColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetForegroundColor_(IntPtr obj, NativeApiTypes.Color value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetFont_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1635,6 +1619,18 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetClientSize_(IntPtr obj, ref Alternet.Drawing.SizeD size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color Control_GetBackgroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern NativeApiTypes.Color Control_GetForegroundColor_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetBackgroundColor_(IntPtr obj, ref NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetForegroundColor_(IntPtr obj, ref NativeApiTypes.Color value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_HitTest_(ref Alternet.Drawing.PointD screenPoint);

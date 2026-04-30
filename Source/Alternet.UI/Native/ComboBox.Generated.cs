@@ -184,16 +184,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.RectI EventRect
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.ComboBox_GetEventRect_(NativePointer);
-            }
-            
-        }
-        
         public int EventItem
         {
             get
@@ -254,6 +244,12 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.ComboBox_ShowPopup_(NativePointer);
+        }
+        
+        public Alternet.Drawing.RectI GetEventRect()
+        {
+            CheckDisposed();
+            return NativeApi.ComboBox_GetEventRect_(NativePointer);
         }
         
         public int DefaultOnMeasureItemWidth()
@@ -476,9 +472,6 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr ComboBox_GetEventDc_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectI ComboBox_GetEventRect_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ComboBox_GetEventItem_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -501,6 +494,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_ShowPopup_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectI ComboBox_GetEventRect_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ComboBox_DefaultOnMeasureItemWidth_(IntPtr obj);

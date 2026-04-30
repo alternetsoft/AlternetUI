@@ -127,14 +127,14 @@ namespace Alternet.UI
 
         public Color BackgroundColor
         {
-            get => NativeControl.BackgroundColor;
-            set => NativeControl.BackgroundColor = value;
+            get => NativeControl.GetBackgroundColor();
+            set => NativeControl.SetBackgroundColor(value);
         }
 
         public Color ForegroundColor
         {
-            get => NativeControl.ForegroundColor;
-            set => NativeControl.ForegroundColor = value;
+            get => NativeControl.GetForegroundColor();
+            set => NativeControl.SetForegroundColor(value);
         }
 
         public Font? Font

@@ -438,34 +438,6 @@ ALTERNET_UI_API c_bool Control_GetHasWindowCreated_(Control* obj)
     });
 }
 
-ALTERNET_UI_API Color_C Control_GetBackgroundColor_(Control* obj)
-{
-    return MarshalExceptions<Color_C>([&](){
-        return obj->GetBackgroundColor();
-    });
-}
-
-ALTERNET_UI_API void Control_SetBackgroundColor_(Control* obj, Color value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetBackgroundColor(value);
-    });
-}
-
-ALTERNET_UI_API Color_C Control_GetForegroundColor_(Control* obj)
-{
-    return MarshalExceptions<Color_C>([&](){
-        return obj->GetForegroundColor();
-    });
-}
-
-ALTERNET_UI_API void Control_SetForegroundColor_(Control* obj, Color value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetForegroundColor(value);
-    });
-}
-
 ALTERNET_UI_API Font* Control_GetFont_(Control* obj)
 {
     return MarshalExceptions<Font*>([&](){
@@ -778,6 +750,34 @@ ALTERNET_UI_API void Control_SetClientSize_(Control* obj, SizeD* size)
 {
     MarshalExceptions<void>([&](){
         obj->SetClientSize(*size);
+    });
+}
+
+ALTERNET_UI_API Color_C Control_GetBackgroundColor_(Control* obj)
+{
+    return MarshalExceptions<Color_C>([&](){
+        return obj->GetBackgroundColor();
+    });
+}
+
+ALTERNET_UI_API Color_C Control_GetForegroundColor_(Control* obj)
+{
+    return MarshalExceptions<Color_C>([&](){
+        return obj->GetForegroundColor();
+    });
+}
+
+ALTERNET_UI_API void Control_SetBackgroundColor_(Control* obj, Color* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetBackgroundColor(*value);
+    });
+}
+
+ALTERNET_UI_API void Control_SetForegroundColor_(Control* obj, Color* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetForegroundColor(*value);
     });
 }
 

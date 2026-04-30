@@ -99,20 +99,6 @@ ALTERNET_UI_API void PageSettings_SetMarginBottom_(PageSettings* obj, float valu
     });
 }
 
-ALTERNET_UI_API SizeD_C PageSettings_GetCustomPaperSize_(PageSettings* obj)
-{
-    return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetCustomPaperSize();
-    });
-}
-
-ALTERNET_UI_API void PageSettings_SetCustomPaperSize_(PageSettings* obj, SizeD value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetCustomPaperSize(value);
-    });
-}
-
 ALTERNET_UI_API c_bool PageSettings_GetUseCustomPaperSize_(PageSettings* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -152,6 +138,20 @@ ALTERNET_UI_API void PageSettings_SetPrinterResolution_(PageSettings* obj, Print
 {
     MarshalExceptions<void>([&](){
         obj->SetPrinterResolution(value);
+    });
+}
+
+ALTERNET_UI_API SizeD_C PageSettings_GetCustomPaperSize_(PageSettings* obj)
+{
+    return MarshalExceptions<SizeD_C>([&](){
+        return obj->GetCustomPaperSize();
+    });
+}
+
+ALTERNET_UI_API void PageSettings_SetCustomPaperSize_(PageSettings* obj, SizeD* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetCustomPaperSize(*value);
     });
 }
 

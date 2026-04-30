@@ -35,7 +35,7 @@ namespace NativeApi.Api
 
         public IntPtr PopupWidget { get; }    
         public IntPtr EventDc { get; }
-        public RectI EventRect { get; }
+        public RectI GetEventRect() => default;
         public int EventItem { get; }
         public int EventFlags { get; }
         public int EventResultInt { get; set; }

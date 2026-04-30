@@ -102,12 +102,6 @@ bool GetIsMouseOver();
 
 bool GetHasWindowCreated();
 
-Color GetBackgroundColor();
-void SetBackgroundColor(const Color& value);
-
-Color GetForegroundColor();
-void SetForegroundColor(const Color& value);
-
 Font* GetFont();
 void SetFont(Font* value);
 
@@ -154,6 +148,10 @@ SizeD GetClientSize();
 virtual void SetBounds(const RectD& bounds);
 virtual void SetBoundsI(const RectI& bounds);
 virtual void SetClientSize(const SizeD& size);
+Color GetBackgroundColor();
+Color GetForegroundColor();
+void SetBackgroundColor(const Color& value);
+void SetForegroundColor(const Color& value);
 static Control* HitTest(const PointD& screenPoint);
 static Control* GetFocusedControl();
 static void NotifyCaptureLost();

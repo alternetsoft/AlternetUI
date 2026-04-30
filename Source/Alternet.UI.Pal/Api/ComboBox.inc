@@ -33,8 +33,6 @@ void* GetPopupWidget();
 
 void* GetEventDc();
 
-RectI GetEventRect();
-
 int GetEventItem();
 
 int GetEventFlags();
@@ -47,6 +45,7 @@ void SetEventCalled(bool value);
 
 void DismissPopup();
 void ShowPopup();
+RectI GetEventRect();
 int DefaultOnMeasureItemWidth();
 int DefaultOnMeasureItem();
 void DefaultOnDrawBackground();
