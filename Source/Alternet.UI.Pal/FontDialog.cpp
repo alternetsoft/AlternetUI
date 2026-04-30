@@ -74,9 +74,28 @@ namespace Alternet::UI
         _maxRange = maxRange;
     }
 
-    Color FontDialog::GetColor()
+    uint8_t FontDialog::GetColorR()
     {
-        return _color;
+        return _color.R;
+    }
+
+    uint8_t FontDialog::GetColorG() {
+        return _color.G;
+    }
+
+    uint8_t FontDialog::GetColorB()
+    {
+        return _color.B;
+    }
+
+    uint8_t FontDialog::GetColorA()
+    {
+        return _color.A;
+    }
+
+    uint8_t FontDialog::GetColorState()
+    {
+        return _color.state;
     }
 
     void FontDialog::SetColor(const Color& value)

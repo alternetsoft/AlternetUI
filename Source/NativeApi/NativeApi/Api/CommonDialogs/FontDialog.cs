@@ -13,7 +13,13 @@ namespace NativeApi.Api
 
         public int RestrictSelection { get; set; }
 
-        public Color Color { get; set; }
+        public void SetColor(Color color) => throw new Exception();
+
+        public byte GetColorR() => throw new Exception();
+        public byte GetColorG() => throw new Exception();
+        public byte GetColorB() => throw new Exception();
+        public byte GetColorA() => throw new Exception();
+        public byte GetColorState() => throw new Exception();
 
         public ModalResult ShowModal(Window? owner) => throw new Exception();
 

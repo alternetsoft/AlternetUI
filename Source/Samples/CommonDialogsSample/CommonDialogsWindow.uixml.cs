@@ -247,6 +247,7 @@ Environment.NewLine + Environment.NewLine +
             {
                 FontInfo = fontInfo,
                 ShowHelp = false,
+                Color = sampleLabel.ForeColor ?? sampleLabel.RealForegroundColor,
             };
 
             if (setCustomTitleCheckBox.IsChecked)
@@ -256,6 +257,9 @@ Environment.NewLine + Environment.NewLine +
             {
                 if (result)
                 {
+                    sampleLabel.ParentForeColor = false;
+                    sampleLabel.ForeColor = dialog.Color;
+
                     fontInfo = dialog.FontInfo;
                     sampleLabel.Font = fontInfo;
                     LogResult(
@@ -263,7 +267,9 @@ Environment.NewLine + Environment.NewLine +
                         dialog.FontInfo.ToString() + ", Color = " + dialog.Color);
                 }
                 else
+                {
                     LogResult("Font Dialog Result: " + result.ToString());
+                }
             });
         }
 

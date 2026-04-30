@@ -83,21 +83,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.Color Color
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.FontDialog_GetColor_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.FontDialog_SetColor_(NativePointer, value);
-            }
-        }
-        
         public string ResultFontName
         {
             get
@@ -141,6 +126,43 @@ namespace Alternet.UI.Native
                 CheckDisposed();
                 NativeApi.FontDialog_SetTitle_(NativePointer, value);
             }
+        }
+        
+        public void SetColor(Alternet.Drawing.Color color)
+        {
+            CheckDisposed();
+            var color_Native = color.ToNative();
+NativeApi.FontDialog_SetColor_(NativePointer, ref color_Native);
+        }
+        
+        public byte GetColorR()
+        {
+            CheckDisposed();
+            return NativeApi.FontDialog_GetColorR_(NativePointer);
+        }
+        
+        public byte GetColorG()
+        {
+            CheckDisposed();
+            return NativeApi.FontDialog_GetColorG_(NativePointer);
+        }
+        
+        public byte GetColorB()
+        {
+            CheckDisposed();
+            return NativeApi.FontDialog_GetColorB_(NativePointer);
+        }
+        
+        public byte GetColorA()
+        {
+            CheckDisposed();
+            return NativeApi.FontDialog_GetColorA_(NativePointer);
+        }
+        
+        public byte GetColorState()
+        {
+            CheckDisposed();
+            return NativeApi.FontDialog_GetColorState_(NativePointer);
         }
         
         public Alternet.UI.ModalResult ShowModal(Window? owner)
@@ -195,12 +217,6 @@ namespace Alternet.UI.Native
             public static extern void FontDialog_SetRestrictSelection_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color FontDialog_GetColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FontDialog_SetColor_(IntPtr obj, NativeApiTypes.Color value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string FontDialog_GetResultFontName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -214,6 +230,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void FontDialog_SetTitle_(IntPtr obj, string? value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FontDialog_SetColor_(IntPtr obj, ref NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte FontDialog_GetColorR_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte FontDialog_GetColorG_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte FontDialog_GetColorB_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte FontDialog_GetColorA_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte FontDialog_GetColorState_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.ModalResult FontDialog_ShowModal_(IntPtr obj, IntPtr owner);

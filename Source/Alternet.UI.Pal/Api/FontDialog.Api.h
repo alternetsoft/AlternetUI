@@ -72,20 +72,6 @@ ALTERNET_UI_API void FontDialog_SetRestrictSelection_(FontDialog* obj, int value
     });
 }
 
-ALTERNET_UI_API Color_C FontDialog_GetColor_(FontDialog* obj)
-{
-    return MarshalExceptions<Color_C>([&](){
-        return obj->GetColor();
-    });
-}
-
-ALTERNET_UI_API void FontDialog_SetColor_(FontDialog* obj, Color value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetColor(value);
-    });
-}
-
 ALTERNET_UI_API char16_t* FontDialog_GetResultFontName_(FontDialog* obj)
 {
     return MarshalExceptions<char16_t*>([&](){
@@ -118,6 +104,48 @@ ALTERNET_UI_API void FontDialog_SetTitle_(FontDialog* obj, const char16_t* value
 {
     MarshalExceptions<void>([&](){
         obj->SetTitle(ToOptional(value));
+    });
+}
+
+ALTERNET_UI_API void FontDialog_SetColor_(FontDialog* obj, Color* color)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetColor(*color);
+    });
+}
+
+ALTERNET_UI_API uint8_t FontDialog_GetColorR_(FontDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorR();
+    });
+}
+
+ALTERNET_UI_API uint8_t FontDialog_GetColorG_(FontDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorG();
+    });
+}
+
+ALTERNET_UI_API uint8_t FontDialog_GetColorB_(FontDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorB();
+    });
+}
+
+ALTERNET_UI_API uint8_t FontDialog_GetColorA_(FontDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorA();
+    });
+}
+
+ALTERNET_UI_API uint8_t FontDialog_GetColorState_(FontDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorState();
     });
 }
 
