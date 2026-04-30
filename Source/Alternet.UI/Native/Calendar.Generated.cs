@@ -174,49 +174,43 @@ namespace Alternet.UI.Native
             }
         }
         
-        public DateTime Value
+        public DateTime GetValue()
         {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Calendar_GetValue_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Calendar_SetValue_(NativePointer, value);
-            }
+            CheckDisposed();
+            return NativeApi.Calendar_GetValue_(NativePointer);
         }
         
-        public DateTime MinValue
+        public void SetValue(DateTime value)
         {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Calendar_GetMinValue_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Calendar_SetMinValue_(NativePointer, value);
-            }
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Calendar_SetValue_(NativePointer, ref value_Native);
         }
         
-        public DateTime MaxValue
+        public DateTime GetMinValue()
         {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Calendar_GetMaxValue_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Calendar_SetMaxValue_(NativePointer, value);
-            }
+            CheckDisposed();
+            return NativeApi.Calendar_GetMinValue_(NativePointer);
+        }
+        
+        public void SetMinValue(DateTime value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Calendar_SetMinValue_(NativePointer, ref value_Native);
+        }
+        
+        public DateTime GetMaxValue()
+        {
+            CheckDisposed();
+            return NativeApi.Calendar_GetMaxValue_(NativePointer);
+        }
+        
+        public void SetMaxValue(DateTime value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Calendar_SetMaxValue_(NativePointer, ref value_Native);
         }
         
         public bool SetRange(bool useMinValue, bool useMaxValue)
@@ -586,19 +580,19 @@ NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
             public static extern NativeApiTypes.DateTime Calendar_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetValue_(IntPtr obj, NativeApiTypes.DateTime value);
+            public static extern void Calendar_SetValue_(IntPtr obj, ref NativeApiTypes.DateTime value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.DateTime Calendar_GetMinValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetMinValue_(IntPtr obj, NativeApiTypes.DateTime value);
+            public static extern void Calendar_SetMinValue_(IntPtr obj, ref NativeApiTypes.DateTime value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.DateTime Calendar_GetMaxValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_SetMaxValue_(IntPtr obj, NativeApiTypes.DateTime value);
+            public static extern void Calendar_SetMaxValue_(IntPtr obj, ref NativeApiTypes.DateTime value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Calendar_SetRange_(IntPtr obj, bool useMinValue, bool useMaxValue);

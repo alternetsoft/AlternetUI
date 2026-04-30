@@ -29,9 +29,16 @@ namespace NativeApi.Api
         public event EventHandler? DayHeaderClick;
         public event EventHandler? DayDoubleClick;
 
-        public Alternet.UI.DateTime Value { get; set; }
-        public Alternet.UI.DateTime MinValue { get; set; }
-        public Alternet.UI.DateTime MaxValue { get; set; }
+        public Alternet.UI.DateTime GetValue() => default;
+        public void SetValue(Alternet.UI.DateTime value) { }
+
+        public Alternet.UI.DateTime GetMinValue() => default;
+
+        public void SetMinValue(Alternet.UI.DateTime value) { }
+
+        public Alternet.UI.DateTime GetMaxValue() => default;
+
+        public void SetMaxValue(Alternet.UI.DateTime value) { }
 
         public bool SetRange(bool useMinValue, bool useMaxValue) => default;
 

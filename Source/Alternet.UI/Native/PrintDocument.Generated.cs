@@ -108,46 +108,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.RectD PrintPage_MarginBounds
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrintDocument_GetPrintPage_MarginBounds_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.Drawing.RectD PrintPage_PhysicalPageBounds
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrintDocument_GetPrintPage_PhysicalPageBounds_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.Drawing.RectD PrintPage_PageBounds
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrintDocument_GetPrintPage_PageBounds_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.Drawing.RectD PrintPage_PrintablePageBounds
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrintDocument_GetPrintPage_PrintablePageBounds_(NativePointer);
-            }
-            
-        }
-        
         public int PrintPage_PageNumber
         {
             get
@@ -162,6 +122,30 @@ namespace Alternet.UI.Native
         {
             CheckDisposed();
             NativeApi.PrintDocument_Print_(NativePointer);
+        }
+        
+        public Alternet.Drawing.RectD GetPrintPage_MarginBounds()
+        {
+            CheckDisposed();
+            return NativeApi.PrintDocument_GetPrintPage_MarginBounds_(NativePointer);
+        }
+        
+        public Alternet.Drawing.RectD GetPrintPage_PhysicalPageBounds()
+        {
+            CheckDisposed();
+            return NativeApi.PrintDocument_GetPrintPage_PhysicalPageBounds_(NativePointer);
+        }
+        
+        public Alternet.Drawing.RectD GetPrintPage_PageBounds()
+        {
+            CheckDisposed();
+            return NativeApi.PrintDocument_GetPrintPage_PageBounds_(NativePointer);
+        }
+        
+        public Alternet.Drawing.RectD GetPrintPage_PrintablePageBounds()
+        {
+            CheckDisposed();
+            return NativeApi.PrintDocument_GetPrintPage_PrintablePageBounds_(NativePointer);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -283,6 +267,12 @@ namespace Alternet.UI.Native
             public static extern void PrintDocument_SetPrintPage_HasMorePages_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int PrintDocument_GetPrintPage_PageNumber_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_Print_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD PrintDocument_GetPrintPage_MarginBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -293,12 +283,6 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD PrintDocument_GetPrintPage_PrintablePageBounds_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int PrintDocument_GetPrintPage_PageNumber_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintDocument_Print_(IntPtr obj);
             
         }
     }

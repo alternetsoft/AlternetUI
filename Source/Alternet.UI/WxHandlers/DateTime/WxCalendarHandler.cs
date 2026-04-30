@@ -178,12 +178,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.Value;
+                return NativeControl.GetValue();
             }
 
             set
             {
-                NativeControl.Value = value;
+                NativeControl.SetValue(value);
             }
         }
 
@@ -191,12 +191,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.MinValue;
+                return NativeControl.GetMinValue();
             }
 
             set
             {
-                NativeControl.MinValue = value;
+                NativeControl.SetMinValue(value);
             }
         }
 
@@ -204,12 +204,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.MaxValue;
+                return NativeControl.GetMaxValue();
             }
 
             set
             {
-                NativeControl.MaxValue = value;
+                NativeControl.SetMaxValue(value);
             }
         }
 

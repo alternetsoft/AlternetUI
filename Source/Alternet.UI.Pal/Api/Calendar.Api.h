@@ -162,10 +162,10 @@ ALTERNET_UI_API DateTime_C Calendar_GetValue_(Calendar* obj)
     });
 }
 
-ALTERNET_UI_API void Calendar_SetValue_(Calendar* obj, DateTime value)
+ALTERNET_UI_API void Calendar_SetValue_(Calendar* obj, DateTime* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetValue(value);
+        obj->SetValue(*value);
     });
 }
 
@@ -176,10 +176,10 @@ ALTERNET_UI_API DateTime_C Calendar_GetMinValue_(Calendar* obj)
     });
 }
 
-ALTERNET_UI_API void Calendar_SetMinValue_(Calendar* obj, DateTime value)
+ALTERNET_UI_API void Calendar_SetMinValue_(Calendar* obj, DateTime* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetMinValue(value);
+        obj->SetMinValue(*value);
     });
 }
 
@@ -190,10 +190,10 @@ ALTERNET_UI_API DateTime_C Calendar_GetMaxValue_(Calendar* obj)
     });
 }
 
-ALTERNET_UI_API void Calendar_SetMaxValue_(Calendar* obj, DateTime value)
+ALTERNET_UI_API void Calendar_SetMaxValue_(Calendar* obj, DateTime* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetMaxValue(value);
+        obj->SetMaxValue(*value);
     });
 }
 

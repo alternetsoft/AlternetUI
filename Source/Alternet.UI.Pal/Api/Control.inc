@@ -81,12 +81,6 @@ void SetToolTip(optional<string> value);
 bool GetAllowDrop();
 void SetAllowDrop(bool value);
 
-virtual RectD GetBounds();
-
-virtual RectI GetBoundsI();
-
-SizeD GetClientSize();
-
 virtual float GetAutoPaddingLeft();
 
 virtual float GetAutoPaddingTop();
@@ -154,6 +148,9 @@ static float DrawingDPIScaleFactor(void* window);
 static float DrawingToDip(int value, void* window);
 static float DrawingFromDipF(float value, void* window);
 void SetCursor(void* handle);
+virtual RectD GetBounds();
+virtual RectI GetBoundsI();
+SizeD GetClientSize();
 virtual void SetBounds(const RectD& bounds);
 virtual void SetBoundsI(const RectI& bounds);
 virtual void SetClientSize(const SizeD& size);

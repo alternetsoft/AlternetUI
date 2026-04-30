@@ -134,11 +134,11 @@ namespace NativeApi.Api
         public Control? ParentRefCounted { get; }
         public string? ToolTip { get; set; }
         public bool AllowDrop { get; set; }
-        public virtual RectD Bounds { get; }
+        public virtual RectD GetBounds() => default;
 
-        public virtual RectI BoundsI { get; }
+        public virtual RectI GetBoundsI() => default;
 
-        public SizeD ClientSize { get; }
+        public SizeD GetClientSize() => default;
 
         public virtual void SetBounds(RectD bounds) { }
 

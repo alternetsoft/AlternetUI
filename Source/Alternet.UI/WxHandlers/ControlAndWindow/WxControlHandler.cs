@@ -54,7 +54,7 @@ namespace Alternet.UI
 
         public RectI BoundsI
         {
-            get => NativeControl.BoundsI;
+            get => NativeControl.GetBoundsI();
             set => NativeControl.SetBoundsI(value);
         }
 
@@ -91,7 +91,7 @@ namespace Alternet.UI
 
         public RectD Bounds
         {
-            get => NativeControl.Bounds;
+            get => NativeControl.GetBounds();
             set => NativeControl.SetBounds(value);
         }
 
@@ -197,7 +197,7 @@ namespace Alternet.UI
 
         public SizeD ClientSize
         {
-            get => NativeControl.ClientSize;
+            get => NativeControl.GetClientSize();
             set => NativeControl.SetClientSize(value);
         }
 

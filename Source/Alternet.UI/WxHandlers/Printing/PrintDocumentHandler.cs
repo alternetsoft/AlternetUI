@@ -11,13 +11,13 @@ namespace Alternet.Drawing.Printing
 {
     internal class PrintDocumentHandler : UI.Native.PrintDocument, IPrintDocumentHandler
     {
-        RectD IPrintDocumentHandler.MarginBounds => PrintPage_MarginBounds;
+        RectD IPrintDocumentHandler.MarginBounds => GetPrintPage_MarginBounds();
 
-        RectD IPrintDocumentHandler.PhysicalPageBounds => PrintPage_PhysicalPageBounds;
+        RectD IPrintDocumentHandler.PhysicalPageBounds => GetPrintPage_PhysicalPageBounds();
 
-        RectD IPrintDocumentHandler.PageBounds => PrintPage_PageBounds;
+        RectD IPrintDocumentHandler.PageBounds => GetPrintPage_PageBounds();
 
-        RectD IPrintDocumentHandler.PrintablePageBounds => PrintPage_PrintablePageBounds;
+        RectD IPrintDocumentHandler.PrintablePageBounds => GetPrintPage_PrintablePageBounds();
 
         int IPrintDocumentHandler.PrintedPageNumber => PrintPage_PageNumber;
 

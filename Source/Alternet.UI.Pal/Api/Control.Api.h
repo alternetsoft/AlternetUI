@@ -354,27 +354,6 @@ ALTERNET_UI_API void Control_SetAllowDrop_(Control* obj, c_bool value)
     });
 }
 
-ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
-{
-    return MarshalExceptions<RectD_C>([&](){
-        return obj->GetBounds();
-    });
-}
-
-ALTERNET_UI_API RectI_C Control_GetBoundsI_(Control* obj)
-{
-    return MarshalExceptions<RectI_C>([&](){
-        return obj->GetBoundsI();
-    });
-}
-
-ALTERNET_UI_API SizeD_C Control_GetClientSize_(Control* obj)
-{
-    return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetClientSize();
-    });
-}
-
 ALTERNET_UI_API float Control_GetAutoPaddingLeft_(Control* obj)
 {
     return MarshalExceptions<float>([&](){
@@ -757,6 +736,27 @@ ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
 {
     MarshalExceptions<void>([&](){
         obj->SetCursor(handle);
+    });
+}
+
+ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
+{
+    return MarshalExceptions<RectD_C>([&](){
+        return obj->GetBounds();
+    });
+}
+
+ALTERNET_UI_API RectI_C Control_GetBoundsI_(Control* obj)
+{
+    return MarshalExceptions<RectI_C>([&](){
+        return obj->GetBoundsI();
+    });
+}
+
+ALTERNET_UI_API SizeD_C Control_GetClientSize_(Control* obj)
+{
+    return MarshalExceptions<SizeD_C>([&](){
+        return obj->GetClientSize();
     });
 }
 

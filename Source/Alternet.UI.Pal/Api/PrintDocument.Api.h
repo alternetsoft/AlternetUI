@@ -81,6 +81,20 @@ ALTERNET_UI_API void PrintDocument_SetPrintPage_HasMorePages_(PrintDocument* obj
     });
 }
 
+ALTERNET_UI_API int PrintDocument_GetPrintPage_PageNumber_(PrintDocument* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetPrintPage_PageNumber();
+    });
+}
+
+ALTERNET_UI_API void PrintDocument_Print_(PrintDocument* obj)
+{
+    MarshalExceptions<void>([&](){
+        obj->Print();
+    });
+}
+
 ALTERNET_UI_API RectD_C PrintDocument_GetPrintPage_MarginBounds_(PrintDocument* obj)
 {
     return MarshalExceptions<RectD_C>([&](){
@@ -106,20 +120,6 @@ ALTERNET_UI_API RectD_C PrintDocument_GetPrintPage_PrintablePageBounds_(PrintDoc
 {
     return MarshalExceptions<RectD_C>([&](){
         return obj->GetPrintPage_PrintablePageBounds();
-    });
-}
-
-ALTERNET_UI_API int PrintDocument_GetPrintPage_PageNumber_(PrintDocument* obj)
-{
-    return MarshalExceptions<int>([&](){
-        return obj->GetPrintPage_PageNumber();
-    });
-}
-
-ALTERNET_UI_API void PrintDocument_Print_(PrintDocument* obj)
-{
-    MarshalExceptions<void>([&](){
-        obj->Print();
     });
 }
 

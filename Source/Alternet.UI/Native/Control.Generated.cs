@@ -430,36 +430,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.RectD Bounds
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetBounds_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.Drawing.RectI BoundsI
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetBoundsI_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.Drawing.SizeD ClientSize
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetClientSize_(NativePointer);
-            }
-            
-        }
-        
         public float AutoPaddingLeft
         {
             get
@@ -838,6 +808,24 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
         {
             CheckDisposed();
             NativeApi.Control_SetCursor_(NativePointer, handle);
+        }
+        
+        public Alternet.Drawing.RectD GetBounds()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetBounds_(NativePointer);
+        }
+        
+        public Alternet.Drawing.RectI GetBoundsI()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetBoundsI_(NativePointer);
+        }
+        
+        public Alternet.Drawing.SizeD GetClientSize()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetClientSize_(NativePointer);
         }
         
         public void SetBounds(Alternet.Drawing.RectD bounds)
@@ -1466,15 +1454,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern void Control_SetAllowDrop_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectI Control_GetBoundsI_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD Control_GetClientSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern float Control_GetAutoPaddingLeft_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1638,6 +1617,15 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.RectI Control_GetBoundsI_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.Drawing.SizeD Control_GetClientSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetBounds_(IntPtr obj, ref Alternet.Drawing.RectD bounds);

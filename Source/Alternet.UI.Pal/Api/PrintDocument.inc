@@ -16,17 +16,13 @@ DrawingContext* GetPrintPage_DrawingContext();
 bool GetPrintPage_HasMorePages();
 void SetPrintPage_HasMorePages(bool value);
 
-RectD GetPrintPage_MarginBounds();
-
-RectD GetPrintPage_PhysicalPageBounds();
-
-RectD GetPrintPage_PageBounds();
-
-RectD GetPrintPage_PrintablePageBounds();
-
 int GetPrintPage_PageNumber();
 
 void Print();
+RectD GetPrintPage_MarginBounds();
+RectD GetPrintPage_PhysicalPageBounds();
+RectD GetPrintPage_PageBounds();
+RectD GetPrintPage_PrintablePageBounds();
 
 public:
 
