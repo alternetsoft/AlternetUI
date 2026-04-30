@@ -2235,14 +2235,14 @@ namespace Alternet::UI
         }
     }
 
-    SizeI Control::GetEventOldDpi()
+    int Control::GetEventOldDpi()
     {
-        return _eventOldDpi;
+        return _eventOldDpi.Width;
     }
 
-    SizeI Control::GetEventNewDpi()
+    int Control::GetEventNewDpi()
     {
-        return _eventNewDpi;
+        return _eventNewDpi.Width;
     }
 
     void Control::OnDpiChanged(wxDPIChangedEvent& event)

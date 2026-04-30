@@ -40,9 +40,9 @@ void SetName(const string& value);
 int GetId();
 void SetId(int value);
 
-SizeI GetEventOldDpi();
+int GetEventOldDpi();
 
-SizeI GetEventNewDpi();
+int GetEventNewDpi();
 
 Control* GetEventFocusedControl();
 

@@ -85,9 +85,9 @@ namespace NativeApi.Api
         public string Name { get; set; }
         public int Id { get; set; }
 
-        public SizeI EventOldDpi { get; }
+        public int EventOldDpi { get; }
 
-        public SizeI EventNewDpi { get; }
+        public int EventNewDpi { get; }
 
         public Control? EventFocusedControl { get; }
 

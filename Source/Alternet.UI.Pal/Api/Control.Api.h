@@ -193,16 +193,16 @@ ALTERNET_UI_API void Control_SetId_(Control* obj, int value)
     });
 }
 
-ALTERNET_UI_API SizeI_C Control_GetEventOldDpi_(Control* obj)
+ALTERNET_UI_API int Control_GetEventOldDpi_(Control* obj)
 {
-    return MarshalExceptions<SizeI_C>([&](){
+    return MarshalExceptions<int>([&](){
         return obj->GetEventOldDpi();
     });
 }
 
-ALTERNET_UI_API SizeI_C Control_GetEventNewDpi_(Control* obj)
+ALTERNET_UI_API int Control_GetEventNewDpi_(Control* obj)
 {
-    return MarshalExceptions<SizeI_C>([&](){
+    return MarshalExceptions<int>([&](){
         return obj->GetEventNewDpi();
     });
 }

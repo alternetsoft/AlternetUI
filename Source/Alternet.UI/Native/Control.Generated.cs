@@ -219,7 +219,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.SizeI EventOldDpi
+        public int EventOldDpi
         {
             get
             {
@@ -229,7 +229,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.SizeI EventNewDpi
+        public int EventNewDpi
         {
             get
             {
@@ -1411,10 +1411,10 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern void Control_SetId_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI Control_GetEventOldDpi_(IntPtr obj);
+            public static extern int Control_GetEventOldDpi_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI Control_GetEventNewDpi_(IntPtr obj);
+            public static extern int Control_GetEventNewDpi_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetEventFocusedControl_(IntPtr obj);
