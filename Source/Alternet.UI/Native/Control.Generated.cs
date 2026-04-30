@@ -460,16 +460,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.RectD EventBounds
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetEventBounds_(NativePointer);
-            }
-            
-        }
-        
         public Alternet.Drawing.SizeD ClientSize
         {
             get
@@ -1460,9 +1450,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetBoundsI_(IntPtr obj, Alternet.Drawing.RectI value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectD Control_GetEventBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeD Control_GetClientSize_(IntPtr obj);

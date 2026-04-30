@@ -1577,11 +1577,6 @@ namespace Alternet::UI
         RaiseEvent(ControlEvent::VisibleChanged);
     }
 
-    RectD Control::GetEventBounds()
-    {
-        return _eventBounds;
-    }
-
     void Control::OnLocationChanged(wxMoveEvent& event)
     {
         event.Skip();

@@ -87,8 +87,6 @@ virtual void SetBounds(const RectD& value);
 virtual RectI GetBoundsI();
 virtual void SetBoundsI(const RectI& value);
 
-RectD GetEventBounds();
-
 SizeD GetClientSize();
 void SetClientSize(const SizeD& value);
 

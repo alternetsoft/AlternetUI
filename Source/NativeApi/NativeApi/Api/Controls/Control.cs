@@ -136,7 +136,6 @@ namespace NativeApi.Api
         public bool AllowDrop { get; set; }
         public virtual RectD Bounds { get; set; }
         public virtual RectI BoundsI { get; set; }
-        public RectD EventBounds { get; }
 
         public SizeD ClientSize { get; set; }
 

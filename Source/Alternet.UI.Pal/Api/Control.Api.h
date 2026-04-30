@@ -382,13 +382,6 @@ ALTERNET_UI_API void Control_SetBoundsI_(Control* obj, RectI value)
     });
 }
 
-ALTERNET_UI_API RectD_C Control_GetEventBounds_(Control* obj)
-{
-    return MarshalExceptions<RectD_C>([&](){
-        return obj->GetEventBounds();
-    });
-}
-
 ALTERNET_UI_API SizeD_C Control_GetClientSize_(Control* obj)
 {
     return MarshalExceptions<SizeD_C>([&](){
