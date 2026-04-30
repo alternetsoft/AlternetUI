@@ -23,21 +23,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.Color Color
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.ColorDialog_GetColor_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.ColorDialog_SetColor_(NativePointer, value);
-            }
-        }
-        
         public string? Title
         {
             get
@@ -59,6 +44,43 @@ namespace Alternet.UI.Native
             return NativeApi.ColorDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
         }
         
+        public void SetColor(Alternet.Drawing.Color color)
+        {
+            CheckDisposed();
+            var color_Native = color.ToNative();
+NativeApi.ColorDialog_SetColor_(NativePointer, ref color_Native);
+        }
+        
+        public byte GetColorR()
+        {
+            CheckDisposed();
+            return NativeApi.ColorDialog_GetColorR_(NativePointer);
+        }
+        
+        public byte GetColorG()
+        {
+            CheckDisposed();
+            return NativeApi.ColorDialog_GetColorG_(NativePointer);
+        }
+        
+        public byte GetColorB()
+        {
+            CheckDisposed();
+            return NativeApi.ColorDialog_GetColorB_(NativePointer);
+        }
+        
+        public byte GetColorA()
+        {
+            CheckDisposed();
+            return NativeApi.ColorDialog_GetColorA_(NativePointer);
+        }
+        
+        public byte GetColorState()
+        {
+            CheckDisposed();
+            return NativeApi.ColorDialog_GetColorState_(NativePointer);
+        }
+        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -69,12 +91,6 @@ namespace Alternet.UI.Native
             public static extern IntPtr ColorDialog_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color ColorDialog_GetColor_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ColorDialog_SetColor_(IntPtr obj, NativeApiTypes.Color value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string? ColorDialog_GetTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -82,6 +98,24 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.ModalResult ColorDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ColorDialog_SetColor_(IntPtr obj, ref NativeApiTypes.Color color);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte ColorDialog_GetColorR_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte ColorDialog_GetColorG_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte ColorDialog_GetColorB_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte ColorDialog_GetColorA_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern byte ColorDialog_GetColorState_(IntPtr obj);
             
         }
     }

@@ -25,9 +25,28 @@ namespace Alternet::UI
             _dialog->SetTitle(wxStr(_title.value()));
     }
 
-    Color ColorDialog::GetColor()
+    uint8_t ColorDialog::GetColorR()
     {
-        return _color;
+		return _color.R;
+    }
+    
+    uint8_t ColorDialog::GetColorG() {
+		return _color.G;
+    }
+    
+    uint8_t ColorDialog::GetColorB()
+    {
+		return _color.B;
+    }
+    
+    uint8_t ColorDialog::GetColorA()
+    {
+		return _color.A;
+    }
+    
+    uint8_t ColorDialog::GetColorState()
+    {
+		return _color.state;
     }
 
     void ColorDialog::SetColor(const Color& value)
@@ -52,7 +71,10 @@ namespace Alternet::UI
         bool ownerChanged = _owner != owner;
         _owner = owner;
         if (ownerChanged)
+        {
             RecreateDialog();
+            GetDialog()->GetColourData().SetColour(_color);
+        }
 
         auto result = GetDialog()->ShowModal();
 

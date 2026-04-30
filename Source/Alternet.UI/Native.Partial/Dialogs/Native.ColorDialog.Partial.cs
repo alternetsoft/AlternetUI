@@ -10,6 +10,26 @@ namespace Alternet.UI.Native
     {
         public bool ShowHelp { get; set; }
 
+        public Alternet.Drawing.Color Color
+        {
+            get
+            {
+                var state = GetColorState();
+                if (state == 0)
+                    return Alternet.Drawing.Color.Empty;
+                var r = GetColorR();
+                var g = GetColorG();
+                var b = GetColorB();
+                var a = GetColorA();
+                return new Alternet.Drawing.Color(a, r, g, b);
+            }
+
+            set
+            {
+                SetColor(value);
+            }
+        }
+
         public static void DefaultShowAsync(
             Alternet.UI.Window? owner,
             Action<bool>? onClose,

@@ -5,6 +5,7 @@ using Namotion.Reflection;
 using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -202,25 +203,38 @@ using System.Security;");
             Types types,
             Types pinvokeTypes)
         {
-            var property = apiProperty.Property;
-            var propertyName = property.Name;
-            var contextualProperty = property.ToContextualProperty();
+            var propertyInfo = apiProperty.Property;
+            var propertyName = propertyInfo.Name;
+            var contextualProperty = propertyInfo.ToContextualProperty();
             var propertyTypeName = types.GetTypeName(contextualProperty);
-            var nativeDeclaringTypeName = TypeProvider.GetNativeName(property.DeclaringType!);
+            var nativeDeclaringTypeName = TypeProvider.GetNativeName(propertyInfo.DeclaringType!);
             var managedDeclaringTypeName = TypeProvider.GetManagedName(
-                property.PropertyType!,
+                propertyInfo.PropertyType!,
                 propertyTypeName);
-            bool isStatic = MemberProvider.IsStatic(property);
+            bool isStatic = MemberProvider.IsStatic(propertyInfo);
+
+            var propertyNetType = propertyInfo.PropertyType;
+
+            var isStruct = ManagedGenerator.IsUserDefinedStruct(propertyNetType);
+
+            var declaringType = propertyInfo.DeclaringType;
+
+            if (isStruct)
+            {
+                var stringToLog = $"Property is struct: {propertyNetType.Name} {declaringType?.Name}.{propertyInfo.Name}";
+                Console.WriteLine(stringToLog);
+                Debug.WriteLine(stringToLog);
+            }
 
             if (propertyTypeName != managedDeclaringTypeName)
             {
                 propertyTypeName = managedDeclaringTypeName;
             }
 
-            w.WriteLine($"public {GetModifiers(property)}{propertyTypeName} {propertyName}");
+            w.WriteLine($"public {GetModifiers(propertyInfo)}{propertyTypeName} {propertyName}");
             using (new BlockIndent(w))
             {
-                if (property.GetMethod != null)
+                if (propertyInfo.GetMethod != null)
                 {
                     w.WriteLine("get");
                     using (new BlockIndent(w))
@@ -265,7 +279,7 @@ using System.Security;");
                     w.WriteLine();
                 }
 
-                if (property.SetMethod != null)
+                if (propertyInfo.SetMethod != null)
                 {
                     w.WriteLine("set");
                     using (new BlockIndent(w))
@@ -337,6 +351,10 @@ using System.Security;");
             var method = apiMethod.Method;
             var methodName = method.Name;
 
+            if(methodName == "GetColor")
+            {
+            }
+
             var tp = method.ReturnParameter.ToContextualParameter();
             var returnTypeName = types.GetTypeName(tp);
             var tpType = tp.Type;
@@ -366,17 +384,27 @@ using System.Security;");
                 var parameterInfo = parameters[i];
                 var parameterNetType = parameterInfo.ParameterType;
 
+                /*
+                var isOut = parameterInfo.IsOut;
+                */
+
                 var isStruct = ManagedGenerator.IsUserDefinedStruct(parameterNetType);
+
+                /*
+                if (isOut)
+                {
+                }
+                */
 
                 var cparameter = parameterInfo.ToContextualParameter();
 
-                var parameterType = types.GetTypeName(cparameter);
+                var parameterTypeName = types.GetTypeName(cparameter);
 
                 var cparameterType = cparameter.Type;
 
                 var managedParameterTypeName = TypeProvider.GetManagedName(
                     cparameterType!,
-                    parameterType);
+                    parameterTypeName);
 
                 var isPointerParameter = false;
 
@@ -386,12 +414,32 @@ using System.Security;");
                     isPointerParameter = true;
                 }
 
+                if (isStruct)
+                {
+                }
+
+                /*
+                if (isOut)
+                {
+                    managedParameterTypeName = "out " + managedParameterTypeName.TrimEnd('?', '&');
+                }
+                */
+
                 var ss = managedParameterTypeName + " " + parameterInfo.Name;
+
                 signatureParametersString.Append(ss);
 
                 if (!isPointerParameter)
                 {
                     var sss = GetManagedToNativeArgument(parameterInfo, types, pinvokeTypes);
+
+                    /*
+                    if (isOut)
+                    {
+                        sss = $"out var prmNative{i}";
+                        afterCall.AppendLine(parameterInfo.Name + " = " + $"prmNative{i}.FromNative();");
+                    }
+                    */
 
                     if (isStruct)
                     {
@@ -444,6 +492,9 @@ using System.Security;");
             if (method.ReturnType == typeof(void))
             {
                 w.WriteLine(callString + ";");
+
+                if (afterCall.Length > 0)
+                    w.Write(afterCall.ToString());
             }
             else
             {

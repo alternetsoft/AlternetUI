@@ -278,7 +278,7 @@ Environment.NewLine + Environment.NewLine +
         {
             var dialog = new ColorDialog
             {
-                Color = sampleLabel.RealBackgroundColor,
+                Color = sampleLabel.BackgroundColor ?? sampleLabel.RealBackgroundColor,
             };
 
             if (setCustomTitleCheckBox.IsChecked)
@@ -288,6 +288,7 @@ Environment.NewLine + Environment.NewLine +
             {
                 sampleLabel.ParentBackColor = false;
                 sampleLabel.ParentForeColor = false;
+                sampleLabel.IsTransparent = false;
 
                 if (result)
                 {

@@ -16,20 +16,6 @@ ALTERNET_UI_API ColorDialog* ColorDialog_Create_()
     });
 }
 
-ALTERNET_UI_API Color_C ColorDialog_GetColor_(ColorDialog* obj)
-{
-    return MarshalExceptions<Color_C>([&](){
-        return obj->GetColor();
-    });
-}
-
-ALTERNET_UI_API void ColorDialog_SetColor_(ColorDialog* obj, Color value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetColor(value);
-    });
-}
-
 ALTERNET_UI_API char16_t* ColorDialog_GetTitle_(ColorDialog* obj)
 {
     return MarshalExceptions<char16_t*>([&](){
@@ -48,6 +34,48 @@ ALTERNET_UI_API ModalResult ColorDialog_ShowModal_(ColorDialog* obj, Window* own
 {
     return MarshalExceptions<ModalResult>([&](){
         return obj->ShowModal(owner);
+    });
+}
+
+ALTERNET_UI_API void ColorDialog_SetColor_(ColorDialog* obj, Color* color)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetColor(*color);
+    });
+}
+
+ALTERNET_UI_API uint8_t ColorDialog_GetColorR_(ColorDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorR();
+    });
+}
+
+ALTERNET_UI_API uint8_t ColorDialog_GetColorG_(ColorDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorG();
+    });
+}
+
+ALTERNET_UI_API uint8_t ColorDialog_GetColorB_(ColorDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorB();
+    });
+}
+
+ALTERNET_UI_API uint8_t ColorDialog_GetColorA_(ColorDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorA();
+    });
+}
+
+ALTERNET_UI_API uint8_t ColorDialog_GetColorState_(ColorDialog* obj)
+{
+    return MarshalExceptions<uint8_t>([&](){
+        return obj->GetColorState();
     });
 }
 
