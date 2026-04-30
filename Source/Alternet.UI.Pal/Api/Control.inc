@@ -81,12 +81,6 @@ void SetToolTip(optional<string> value);
 bool GetAllowDrop();
 void SetAllowDrop(bool value);
 
-SizeD GetSize();
-void SetSize(const SizeD& value);
-
-PointD GetLocation();
-void SetLocation(const PointD& value);
-
 virtual RectD GetBounds();
 virtual void SetBounds(const RectD& value);
 

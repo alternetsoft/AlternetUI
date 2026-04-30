@@ -1664,26 +1664,6 @@ namespace Alternet::UI
             wxWindow->Reparent(parent);
     }
 
-    Size Control::GetSize()
-    {
-        return GetBounds().GetSize();
-    }
-
-    void Control::SetSize(const Size& value)
-    {
-        SetBounds(Rect(GetLocation(), value));
-    }
-
-    Point Control::GetLocation()
-    {
-        return GetBounds().GetLocation();
-    }
-
-    void Control::SetLocation(const Point& value)
-    {
-        SetBounds(Rect(value, GetSize()));
-    }
-
     void Control::DisableRecreate()
     {
         auto wxWindow = GetWxWindow();

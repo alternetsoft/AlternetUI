@@ -430,36 +430,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.SizeD Size
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetSize_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetSize_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.Drawing.PointD Location
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetLocation_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetLocation_(NativePointer, value);
-            }
-        }
-        
         public Alternet.Drawing.RectD Bounds
         {
             get
@@ -1478,18 +1448,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetAllowDrop_(IntPtr obj, bool value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD Control_GetSize_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetSize_(IntPtr obj, Alternet.Drawing.SizeD value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointD Control_GetLocation_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetLocation_(IntPtr obj, Alternet.Drawing.PointD value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);

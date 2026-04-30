@@ -223,9 +223,14 @@ namespace Alternet::UI
         GetComboBox()->DefaultOnDrawBackground(*eventDc, eventRect, eventItem, eventFlags);
     }
 
-    PointI ComboBox::GetTextMargins()
+    int ComboBox::GetTextMarginsX()
     {
-        return GetComboBox()->GetMargins();
+        return GetComboBox()->GetMargins().x;
+    }
+
+    int ComboBox::GetTextMarginsY()
+    {
+        return GetComboBox()->GetMargins().y;
     }
 
     void ComboBox::DefaultOnDrawItem()

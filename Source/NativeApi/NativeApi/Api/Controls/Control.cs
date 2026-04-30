@@ -134,8 +134,6 @@ namespace NativeApi.Api
         public Control? ParentRefCounted { get; }
         public string? ToolTip { get; set; }
         public bool AllowDrop { get; set; }
-        public SizeD Size { get; set; }
-        public PointD Location { get; set; }
         public virtual RectD Bounds { get; set; }
         public virtual RectI BoundsI { get; set; }
         public RectD EventBounds { get; }

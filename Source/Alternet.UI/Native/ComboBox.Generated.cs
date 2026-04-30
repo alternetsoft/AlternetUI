@@ -129,12 +129,22 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.PointI TextMargins
+        public int TextMarginsX
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.ComboBox_GetTextMargins_(NativePointer);
+                return NativeApi.ComboBox_GetTextMarginsX_(NativePointer);
+            }
+            
+        }
+        
+        public int TextMarginsY
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ComboBox_GetTextMarginsY_(NativePointer);
             }
             
         }
@@ -448,7 +458,10 @@ namespace Alternet.UI.Native
             public static extern int ComboBox_GetTextSelectionLength_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.PointI ComboBox_GetTextMargins_(IntPtr obj);
+            public static extern int ComboBox_GetTextMarginsX_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ComboBox_GetTextMarginsY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ComboBox_GetOwnerDrawStyle_(IntPtr obj);

@@ -27,7 +27,9 @@ namespace NativeApi.Api
         public int TextSelectionStart { get; }
         public int TextSelectionLength { get; }
 
-        public PointI TextMargins { get; }
+        public int TextMarginsX { get; }
+
+        public int TextMarginsY { get; }
 
         public int OwnerDrawStyle { get; set; }
 

@@ -106,10 +106,17 @@ ALTERNET_UI_API int ComboBox_GetTextSelectionLength_(ComboBox* obj)
     });
 }
 
-ALTERNET_UI_API PointI_C ComboBox_GetTextMargins_(ComboBox* obj)
+ALTERNET_UI_API int ComboBox_GetTextMarginsX_(ComboBox* obj)
 {
-    return MarshalExceptions<PointI_C>([&](){
-        return obj->GetTextMargins();
+    return MarshalExceptions<int>([&](){
+        return obj->GetTextMarginsX();
+    });
+}
+
+ALTERNET_UI_API int ComboBox_GetTextMarginsY_(ComboBox* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetTextMarginsY();
     });
 }
 

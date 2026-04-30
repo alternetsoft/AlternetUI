@@ -354,34 +354,6 @@ ALTERNET_UI_API void Control_SetAllowDrop_(Control* obj, c_bool value)
     });
 }
 
-ALTERNET_UI_API SizeD_C Control_GetSize_(Control* obj)
-{
-    return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetSize();
-    });
-}
-
-ALTERNET_UI_API void Control_SetSize_(Control* obj, SizeD value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetSize(value);
-    });
-}
-
-ALTERNET_UI_API PointD_C Control_GetLocation_(Control* obj)
-{
-    return MarshalExceptions<PointD_C>([&](){
-        return obj->GetLocation();
-    });
-}
-
-ALTERNET_UI_API void Control_SetLocation_(Control* obj, PointD value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetLocation(value);
-    });
-}
-
 ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
 {
     return MarshalExceptions<RectD_C>([&](){

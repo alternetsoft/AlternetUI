@@ -22,7 +22,9 @@ int GetTextSelectionStart();
 
 int GetTextSelectionLength();
 
-PointI GetTextMargins();
+int GetTextMarginsX();
+
+int GetTextMarginsY();
 
 int GetOwnerDrawStyle();
 void SetOwnerDrawStyle(int value);

@@ -67,7 +67,7 @@ namespace Alternet.UI
             }
         }
 
-        public PointI TextMargins => NativeControl.TextMargins;
+        public PointI TextMargins => (NativeControl.TextMarginsX, NativeControl.TextMarginsY);
 
         internal new Native.ComboBox NativeControl =>
             (Native.ComboBox)base.NativeControl!;
