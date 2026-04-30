@@ -1,0 +1,2 @@
+Run AlternetUI\Source\Build\Alternet.UI.Pal\build-arm64.bat
+to build wxWidgets
