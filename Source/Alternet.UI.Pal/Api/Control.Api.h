@@ -361,24 +361,10 @@ ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
     });
 }
 
-ALTERNET_UI_API void Control_SetBounds_(Control* obj, RectD value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetBounds(value);
-    });
-}
-
 ALTERNET_UI_API RectI_C Control_GetBoundsI_(Control* obj)
 {
     return MarshalExceptions<RectI_C>([&](){
         return obj->GetBoundsI();
-    });
-}
-
-ALTERNET_UI_API void Control_SetBoundsI_(Control* obj, RectI value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetBoundsI(value);
     });
 }
 
@@ -389,24 +375,31 @@ ALTERNET_UI_API SizeD_C Control_GetClientSize_(Control* obj)
     });
 }
 
-ALTERNET_UI_API void Control_SetClientSize_(Control* obj, SizeD value)
+ALTERNET_UI_API float Control_GetAutoPaddingLeft_(Control* obj)
 {
-    MarshalExceptions<void>([&](){
-        obj->SetClientSize(value);
+    return MarshalExceptions<float>([&](){
+        return obj->GetAutoPaddingLeft();
     });
 }
 
-ALTERNET_UI_API SizeD_C Control_GetAutoPaddingLeftTop_(Control* obj)
+ALTERNET_UI_API float Control_GetAutoPaddingTop_(Control* obj)
 {
-    return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetAutoPaddingLeftTop();
+    return MarshalExceptions<float>([&](){
+        return obj->GetAutoPaddingTop();
     });
 }
 
-ALTERNET_UI_API SizeD_C Control_GetAutoPaddingRightBottom_(Control* obj)
+ALTERNET_UI_API float Control_GetAutoPaddingRight_(Control* obj)
 {
-    return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetAutoPaddingRightBottom();
+    return MarshalExceptions<float>([&](){
+        return obj->GetAutoPaddingRight();
+    });
+}
+
+ALTERNET_UI_API float Control_GetAutoPaddingBottom_(Control* obj)
+{
+    return MarshalExceptions<float>([&](){
+        return obj->GetAutoPaddingBottom();
     });
 }
 
@@ -764,6 +757,27 @@ ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
 {
     MarshalExceptions<void>([&](){
         obj->SetCursor(handle);
+    });
+}
+
+ALTERNET_UI_API void Control_SetBounds_(Control* obj, RectD* bounds)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetBounds(*bounds);
+    });
+}
+
+ALTERNET_UI_API void Control_SetBoundsI_(Control* obj, RectI* bounds)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetBoundsI(*bounds);
+    });
+}
+
+ALTERNET_UI_API void Control_SetClientSize_(Control* obj, SizeD* size)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetClientSize(*size);
     });
 }
 

@@ -228,7 +228,7 @@ namespace Alternet.UI.Native
             if(UIControl is not null)
             {
                 if(UIControl.ReportedBounds != Alternet.Drawing.RectD.MinusOne)
-                    Bounds = UIControl.ReportedBounds;
+                    SetBounds(UIControl.ReportedBounds);
             }
 
             Handler?.OnHandleCreated();

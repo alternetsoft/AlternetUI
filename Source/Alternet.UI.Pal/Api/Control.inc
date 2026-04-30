@@ -82,17 +82,18 @@ bool GetAllowDrop();
 void SetAllowDrop(bool value);
 
 virtual RectD GetBounds();
-virtual void SetBounds(const RectD& value);
 
 virtual RectI GetBoundsI();
-virtual void SetBoundsI(const RectI& value);
 
 SizeD GetClientSize();
-void SetClientSize(const SizeD& value);
 
-virtual SizeD GetAutoPaddingLeftTop();
+virtual float GetAutoPaddingLeft();
 
-virtual SizeD GetAutoPaddingRightBottom();
+virtual float GetAutoPaddingTop();
+
+virtual float GetAutoPaddingRight();
+
+virtual float GetAutoPaddingBottom();
 
 bool GetVisible();
 void SetVisible(bool value);
@@ -153,6 +154,9 @@ static float DrawingDPIScaleFactor(void* window);
 static float DrawingToDip(int value, void* window);
 static float DrawingFromDipF(float value, void* window);
 void SetCursor(void* handle);
+virtual void SetBounds(const RectD& bounds);
+virtual void SetBoundsI(const RectI& bounds);
+virtual void SetClientSize(const SizeD& size);
 static Control* HitTest(const PointD& screenPoint);
 static Control* GetFocusedControl();
 static void NotifyCaptureLost();

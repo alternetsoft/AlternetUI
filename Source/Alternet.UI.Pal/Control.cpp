@@ -1394,14 +1394,24 @@ namespace Alternet::UI
         return toDip(window->WindowToClientSize(fromDip(size, window)), window);
     }
 
-    SizeD Control::GetAutoPaddingRightBottom()
+    float Control::GetAutoPaddingRight()
     {
-        return SizeD();
+        return 0;
     }
 
-    SizeD Control::GetAutoPaddingLeftTop()
+    float Control::GetAutoPaddingTop()
     {
-        return SizeD();
+        return 0;
+    }
+
+    float Control::GetAutoPaddingBottom()
+    {
+        return 0;
+    }
+
+    float Control::GetAutoPaddingLeft()
+    {
+        return 0;
     }
 
     bool Control::EventsSuspended()

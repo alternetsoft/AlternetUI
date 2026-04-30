@@ -55,7 +55,7 @@ namespace Alternet.UI
         public RectI BoundsI
         {
             get => NativeControl.BoundsI;
-            set => NativeControl.BoundsI = value;
+            set => NativeControl.SetBoundsI(value);
         }
 
         /// <summary>
@@ -92,16 +92,18 @@ namespace Alternet.UI
         public RectD Bounds
         {
             get => NativeControl.Bounds;
-            set => NativeControl.Bounds = value;
+            set => NativeControl.SetBounds(value);
         }
 
         public Thickness NativePadding
         {
             get
             {
-                var leftTop = NativeControl.AutoPaddingLeftTop;
-                var rightBottom = NativeControl.AutoPaddingRightBottom;
-                return (leftTop.Width, leftTop.Height, rightBottom.Width, rightBottom.Height);
+                var left = NativeControl.AutoPaddingLeft;
+                var right = NativeControl.AutoPaddingRight;
+                var top = NativeControl.AutoPaddingTop;
+                var bottom = NativeControl.AutoPaddingBottom;
+                return (left, top, right, bottom);
             }
         }
 
@@ -196,7 +198,7 @@ namespace Alternet.UI
         public SizeD ClientSize
         {
             get => NativeControl.ClientSize;
-            set => NativeControl.ClientSize = value;
+            set => NativeControl.SetClientSize(value);
         }
 
         public bool ProcessUIUpdates

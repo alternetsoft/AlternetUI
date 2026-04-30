@@ -14,8 +14,10 @@ namespace Alternet::UI
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
 
-        SizeD GetAutoPaddingLeftTop() override;
-        SizeD GetAutoPaddingRightBottom() override;
+        float GetAutoPaddingLeft() override;
+        float GetAutoPaddingRight() override;
+        float GetAutoPaddingTop() override;
+        float GetAutoPaddingBottom() override;
 
     private:
         wxStaticBox* GetStaticBox();
