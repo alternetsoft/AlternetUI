@@ -79,9 +79,14 @@ namespace Alternet::UI
 		return icons;
 	}
 
-	Int32Size ImageSet::GetDefaultSize()
+	int ImageSet::GetDefaultSizeX()
 	{
-		return GetBitmapBundle().GetDefaultSize();
+		return GetBitmapBundle().GetDefaultSize().x;
+	}
+
+	int ImageSet::GetDefaultSizeY()
+	{
+		return GetBitmapBundle().GetDefaultSize().y;
 	}
 
 	Int32Size ImageSet::GetPreferredBitmapSizeFor(void* window)

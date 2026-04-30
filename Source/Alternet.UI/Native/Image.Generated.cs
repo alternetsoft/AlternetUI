@@ -48,12 +48,22 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.Drawing.SizeI DipSize
+        public int DipSizeX
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Image_GetDipSize_(NativePointer);
+                return NativeApi.Image_GetDipSizeX_(NativePointer);
+            }
+            
+        }
+        
+        public int DipSizeY
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetDipSizeY_(NativePointer);
             }
             
         }
@@ -68,12 +78,22 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.SizeI ScaledSize
+        public int ScaledSizeX
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Image_GetScaledSize_(NativePointer);
+                return NativeApi.Image_GetScaledSizeX_(NativePointer);
+            }
+            
+        }
+        
+        public int ScaledSizeY
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetScaledSizeY_(NativePointer);
             }
             
         }
@@ -88,12 +108,22 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.SizeI PixelSize
+        public int PixelSizeX
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.Image_GetPixelSize_(NativePointer);
+                return NativeApi.Image_GetPixelSizeX_(NativePointer);
+            }
+            
+        }
+        
+        public int PixelSizeY
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.Image_GetPixelSizeY_(NativePointer);
             }
             
         }
@@ -343,19 +373,28 @@ return NativeApi.Image_Rescale_(NativePointer, ref sizeNeeded_Native);
             public static extern void Image_SetScaleFactor_(IntPtr obj, float value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI Image_GetDipSize_(IntPtr obj);
+            public static extern int Image_GetDipSizeX_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Image_GetDipSizeY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern float Image_GetScaledHeight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI Image_GetScaledSize_(IntPtr obj);
+            public static extern int Image_GetScaledSizeX_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Image_GetScaledSizeY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern float Image_GetScaledWidth_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI Image_GetPixelSize_(IntPtr obj);
+            public static extern int Image_GetPixelSizeX_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int Image_GetPixelSizeY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_GetIsOk_(IntPtr obj);

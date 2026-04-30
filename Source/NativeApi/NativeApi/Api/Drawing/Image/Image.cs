@@ -34,13 +34,15 @@ namespace NativeApi.Api
         // to the current DPI and returns its physical size divided by this scale factor.
         // Unlike LogicalSize, this function returns the same value under all platforms
         // and so its result should not be used as window or device context coordinates.
-        public SizeI DipSize { get; }
+        public int DipSizeX { get; }
+        public int DipSizeY { get; }
 
         // Returns the height of the bitmap in logical pixels.
         public float ScaledHeight { get; }
 
         // Returns the size of the bitmap in logical pixels.        
-        public SizeI ScaledSize { get; }
+        public int ScaledSizeX { get; }
+        public int ScaledSizeY { get; }
 
         // Returns the width of the bitmap in logical pixels.
         public float ScaledWidth { get; }
@@ -75,7 +77,8 @@ namespace NativeApi.Api
         public IntPtr ConvertToGenericImage() => default;
         public void LoadFromGenericImage(IntPtr image, int depth = -1) { }
 
-        public SizeI PixelSize { get; }
+        public int PixelSizeX { get; }
+        public int PixelSizeY { get; }
 
         public bool IsOk { get; }
 

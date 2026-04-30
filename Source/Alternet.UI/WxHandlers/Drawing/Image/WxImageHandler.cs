@@ -16,6 +16,12 @@ namespace Alternet.UI.Native
 
         public int Height => PixelHeight;
 
+        public Alternet.Drawing.SizeI DipSize => (DipSizeX, DipSizeY);
+
+        public Alternet.Drawing.SizeI ScaledSize => (ScaledSizeX, ScaledSizeY);
+
+        public Alternet.Drawing.SizeI PixelSize => (PixelSizeX, PixelSizeY);
+
         public SKAlphaType AlphaType
         {
             get

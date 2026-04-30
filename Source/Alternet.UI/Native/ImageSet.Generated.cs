@@ -43,12 +43,22 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.Drawing.SizeI DefaultSize
+        public int DefaultSizeX
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.ImageSet_GetDefaultSize_(NativePointer);
+                return NativeApi.ImageSet_GetDefaultSizeX_(NativePointer);
+            }
+            
+        }
+        
+        public int DefaultSizeY
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ImageSet_GetDefaultSizeY_(NativePointer);
             }
             
         }
@@ -125,7 +135,10 @@ NativeApi.ImageSet_LoadSvgFromString_(NativePointer, s, width, height, ref color
             public static extern bool ImageSet_GetIsReadOnly_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI ImageSet_GetDefaultSize_(IntPtr obj);
+            public static extern int ImageSet_GetDefaultSizeX_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int ImageSet_GetDefaultSizeY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageSet_LoadFromStream_(IntPtr obj, IntPtr stream);

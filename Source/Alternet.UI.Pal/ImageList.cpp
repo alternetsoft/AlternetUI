@@ -7,7 +7,7 @@ namespace Alternet::UI
     {
         CreateImageList();
     }
-    
+
     ImageList::~ImageList()
     {
         DestroyImageList();
@@ -21,6 +21,16 @@ namespace Alternet::UI
     bool ImageList::Clear()
     {
         return _imageList->RemoveAll();
+    }
+
+    void ImageList::SetImageSize(float sizeX, float sizeY)
+    {
+        SetImageSize(Size(sizeX, sizeY));
+    }
+
+    void ImageList::SetPixelImageSize(int sizeX, int sizeY)
+    {
+        SetPixelImageSize(Int32Size(sizeX, sizeY));
     }
 
     Int32Size ImageList::GetPixelImageSize()
@@ -56,7 +66,7 @@ namespace Alternet::UI
     {
         if (_imageList == nullptr)
             throwExInvalidOpWithInfo(wxStr("ImageList::AddImageCore"));
-        
+
         auto finalImage = image;
         auto targetSize = _imageList->GetSize();
 
@@ -71,7 +81,7 @@ namespace Alternet::UI
     {
         return _imageList;
     }
-    
+
     void ImageList::CreateImageList()
     {
         if (_imageList != nullptr)
@@ -98,11 +108,31 @@ namespace Alternet::UI
             for (int i = 0; _imageList->GetImageCount(); i++)
                 bitmapsToRestore.push_back(_imageList->GetBitmap(i));
         }
-        
+
         DestroyImageList();
         CreateImageList();
 
         for (auto bitmap : bitmapsToRestore)
             AddImageCore(bitmap.ConvertToImage());
+    }
+
+    int ImageList::GetPixelImageSizeY()
+    {
+        return GetPixelImageSize().Height;
+    }
+
+    float ImageList::GetImageSizeY()
+    {
+        return toDip(_imageList->GetSize().y, nullptr);
+    }
+
+    int ImageList::GetPixelImageSizeX()
+    {
+        return GetPixelImageSize().Width;
+    }
+
+    float ImageList::GetImageSizeX()
+    {
+        return toDip(_imageList->GetSize().x, nullptr);
     }
 }

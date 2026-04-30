@@ -97,6 +97,8 @@ namespace Alternet::UI
 
         static wxBitmapType GetBitmapTypeFromFormat(const string& format);
 
+        Int32Size GetPixelSize();
+
         wxBitmap _bitmap; // reference-counted, so use copy-by-value.
     private:
         ImageAlphaPixelData* alphaPixelData = nullptr;

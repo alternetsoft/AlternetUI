@@ -5,7 +5,9 @@ bool GetIsOk();
 
 bool GetIsReadOnly();
 
-SizeI GetDefaultSize();
+int GetDefaultSizeX();
+
+int GetDefaultSizeY();
 
 void LoadFromStream(void* stream);
 void AddImage(Image* image);

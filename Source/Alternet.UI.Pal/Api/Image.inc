@@ -6,15 +6,21 @@ bool GetHasMask();
 float GetScaleFactor();
 void SetScaleFactor(float value);
 
-SizeI GetDipSize();
+int GetDipSizeX();
+
+int GetDipSizeY();
 
 float GetScaledHeight();
 
-SizeI GetScaledSize();
+int GetScaledSizeX();
+
+int GetScaledSizeY();
 
 float GetScaledWidth();
 
-SizeI GetPixelSize();
+int GetPixelSizeX();
+
+int GetPixelSizeY();
 
 bool GetIsOk();
 

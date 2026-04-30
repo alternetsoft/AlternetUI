@@ -38,10 +38,17 @@ ALTERNET_UI_API void Image_SetScaleFactor_(Image* obj, float value)
     });
 }
 
-ALTERNET_UI_API SizeI_C Image_GetDipSize_(Image* obj)
+ALTERNET_UI_API int Image_GetDipSizeX_(Image* obj)
 {
-    return MarshalExceptions<SizeI_C>([&](){
-        return obj->GetDipSize();
+    return MarshalExceptions<int>([&](){
+        return obj->GetDipSizeX();
+    });
+}
+
+ALTERNET_UI_API int Image_GetDipSizeY_(Image* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetDipSizeY();
     });
 }
 
@@ -52,10 +59,17 @@ ALTERNET_UI_API float Image_GetScaledHeight_(Image* obj)
     });
 }
 
-ALTERNET_UI_API SizeI_C Image_GetScaledSize_(Image* obj)
+ALTERNET_UI_API int Image_GetScaledSizeX_(Image* obj)
 {
-    return MarshalExceptions<SizeI_C>([&](){
-        return obj->GetScaledSize();
+    return MarshalExceptions<int>([&](){
+        return obj->GetScaledSizeX();
+    });
+}
+
+ALTERNET_UI_API int Image_GetScaledSizeY_(Image* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetScaledSizeY();
     });
 }
 
@@ -66,10 +80,17 @@ ALTERNET_UI_API float Image_GetScaledWidth_(Image* obj)
     });
 }
 
-ALTERNET_UI_API SizeI_C Image_GetPixelSize_(Image* obj)
+ALTERNET_UI_API int Image_GetPixelSizeX_(Image* obj)
 {
-    return MarshalExceptions<SizeI_C>([&](){
-        return obj->GetPixelSize();
+    return MarshalExceptions<int>([&](){
+        return obj->GetPixelSizeX();
+    });
+}
+
+ALTERNET_UI_API int Image_GetPixelSizeY_(Image* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetPixelSizeY();
     });
 }
 

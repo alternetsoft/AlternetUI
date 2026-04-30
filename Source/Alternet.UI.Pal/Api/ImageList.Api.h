@@ -16,31 +16,31 @@ ALTERNET_UI_API ImageList* ImageList_Create_()
     });
 }
 
-ALTERNET_UI_API SizeI_C ImageList_GetPixelImageSize_(ImageList* obj)
+ALTERNET_UI_API int ImageList_GetPixelImageSizeX_(ImageList* obj)
 {
-    return MarshalExceptions<SizeI_C>([&](){
-        return obj->GetPixelImageSize();
+    return MarshalExceptions<int>([&](){
+        return obj->GetPixelImageSizeX();
     });
 }
 
-ALTERNET_UI_API void ImageList_SetPixelImageSize_(ImageList* obj, SizeI value)
+ALTERNET_UI_API int ImageList_GetPixelImageSizeY_(ImageList* obj)
 {
-    MarshalExceptions<void>([&](){
-        obj->SetPixelImageSize(value);
+    return MarshalExceptions<int>([&](){
+        return obj->GetPixelImageSizeY();
     });
 }
 
-ALTERNET_UI_API SizeD_C ImageList_GetImageSize_(ImageList* obj)
+ALTERNET_UI_API float ImageList_GetImageSizeX_(ImageList* obj)
 {
-    return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetImageSize();
+    return MarshalExceptions<float>([&](){
+        return obj->GetImageSizeX();
     });
 }
 
-ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, SizeD value)
+ALTERNET_UI_API float ImageList_GetImageSizeY_(ImageList* obj)
 {
-    MarshalExceptions<void>([&](){
-        obj->SetImageSize(value);
+    return MarshalExceptions<float>([&](){
+        return obj->GetImageSizeY();
     });
 }
 
@@ -48,6 +48,20 @@ ALTERNET_UI_API void ImageList_AddImage_(ImageList* obj, Image* image)
 {
     MarshalExceptions<void>([&](){
         obj->AddImage(image);
+    });
+}
+
+ALTERNET_UI_API void ImageList_SetImageSize_(ImageList* obj, float sizeX, float sizeY)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetImageSize(sizeX, sizeY);
+    });
+}
+
+ALTERNET_UI_API void ImageList_SetPixelImageSize_(ImageList* obj, int sizeX, int sizeY)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetPixelImageSize(sizeX, sizeY);
     });
 }
 

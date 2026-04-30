@@ -138,9 +138,14 @@ namespace Alternet::UI
 		}
 	}
 
-	Int32Size Image::GetDipSize()
+	int Image::GetDipSizeX()
 	{
-		return _bitmap.GetDIPSize();
+		return _bitmap.GetDIPSize().x;
+	}
+
+	int Image::GetDipSizeY()
+	{
+		return _bitmap.GetDIPSize().y;
 	}
 
 	Coord Image::GetScaleFactor()
@@ -158,9 +163,14 @@ namespace Alternet::UI
 		return _bitmap.GetScaledHeight();
 	}
 
-	Int32Size Image::GetScaledSize()
+	int Image::GetScaledSizeX()
 	{
-		return _bitmap.GetScaledSize();
+		return _bitmap.GetScaledSize().x;
+	}
+
+	int Image::GetScaledSizeY()
+	{
+		return _bitmap.GetScaledSize().y;
 	}
 
 	Coord Image::GetScaledWidth() 
@@ -518,6 +528,16 @@ namespace Alternet::UI
 			return Int32Size(0, 0);
 
 		return _bitmap.GetSize();
+	}
+
+	int Image::GetPixelSizeX()
+	{
+		return GetPixelSize().Width;
+	}
+
+	int Image::GetPixelSizeY()
+	{
+		return GetPixelSize().Height;
 	}
 
 	bool Image::GrayScale()

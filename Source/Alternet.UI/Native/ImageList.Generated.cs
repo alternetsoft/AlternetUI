@@ -23,40 +23,62 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.Drawing.SizeI PixelImageSize
+        public int PixelImageSizeX
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.ImageList_GetPixelImageSize_(NativePointer);
+                return NativeApi.ImageList_GetPixelImageSizeX_(NativePointer);
             }
             
-            set
-            {
-                CheckDisposed();
-                NativeApi.ImageList_SetPixelImageSize_(NativePointer, value);
-            }
         }
         
-        public Alternet.Drawing.SizeD ImageSize
+        public int PixelImageSizeY
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.ImageList_GetImageSize_(NativePointer);
+                return NativeApi.ImageList_GetPixelImageSizeY_(NativePointer);
             }
             
-            set
+        }
+        
+        public float ImageSizeX
+        {
+            get
             {
                 CheckDisposed();
-                NativeApi.ImageList_SetImageSize_(NativePointer, value);
+                return NativeApi.ImageList_GetImageSizeX_(NativePointer);
             }
+            
+        }
+        
+        public float ImageSizeY
+        {
+            get
+            {
+                CheckDisposed();
+                return NativeApi.ImageList_GetImageSizeY_(NativePointer);
+            }
+            
         }
         
         public void AddImage(Image image)
         {
             CheckDisposed();
             NativeApi.ImageList_AddImage_(NativePointer, image.NativePointer);
+        }
+        
+        public void SetImageSize(float sizeX, float sizeY)
+        {
+            CheckDisposed();
+            NativeApi.ImageList_SetImageSize_(NativePointer, sizeX, sizeY);
+        }
+        
+        public void SetPixelImageSize(int sizeX, int sizeY)
+        {
+            CheckDisposed();
+            NativeApi.ImageList_SetPixelImageSize_(NativePointer, sizeX, sizeY);
         }
         
         public bool Remove(int index)
@@ -81,19 +103,25 @@ namespace Alternet.UI.Native
             public static extern IntPtr ImageList_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeI ImageList_GetPixelImageSize_(IntPtr obj);
+            public static extern int ImageList_GetPixelImageSizeX_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ImageList_SetPixelImageSize_(IntPtr obj, Alternet.Drawing.SizeI value);
+            public static extern int ImageList_GetPixelImageSizeY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD ImageList_GetImageSize_(IntPtr obj);
+            public static extern float ImageList_GetImageSizeX_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ImageList_SetImageSize_(IntPtr obj, Alternet.Drawing.SizeD value);
+            public static extern float ImageList_GetImageSizeY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ImageList_AddImage_(IntPtr obj, IntPtr image);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageList_SetImageSize_(IntPtr obj, float sizeX, float sizeY);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ImageList_SetPixelImageSize_(IntPtr obj, int sizeX, int sizeY);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool ImageList_Remove_(IntPtr obj, int index);

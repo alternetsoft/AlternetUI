@@ -12,6 +12,14 @@ namespace Alternet::UI
     public:
         wxImageList* GetImageList();
 
+        Size GetImageSize();
+
+        void SetImageSize(const Size& value);
+
+        Int32Size GetPixelImageSize();
+
+        void SetPixelImageSize(const Int32Size& value);
+
     private:
 
         void CreateImageList();

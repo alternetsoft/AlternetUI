@@ -18,12 +18,12 @@ namespace Alternet.UI.Native
         {
             get
             {
-                return PixelImageSize;
+                return (PixelImageSizeX, PixelImageSizeY);
             }
 
             set
             {
-                PixelImageSize = value;
+                SetPixelImageSize(value.Width, value.Height);
             }
         }
 

@@ -31,10 +31,17 @@ ALTERNET_UI_API c_bool ImageSet_GetIsReadOnly_(ImageSet* obj)
     });
 }
 
-ALTERNET_UI_API SizeI_C ImageSet_GetDefaultSize_(ImageSet* obj)
+ALTERNET_UI_API int ImageSet_GetDefaultSizeX_(ImageSet* obj)
 {
-    return MarshalExceptions<SizeI_C>([&](){
-        return obj->GetDefaultSize();
+    return MarshalExceptions<int>([&](){
+        return obj->GetDefaultSizeX();
+    });
+}
+
+ALTERNET_UI_API int ImageSet_GetDefaultSizeY_(ImageSet* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetDefaultSizeY();
     });
 }
 

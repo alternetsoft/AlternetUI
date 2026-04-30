@@ -27,7 +27,9 @@ namespace NativeApi.Api
         Note that this function is mostly used by wxWidgets itself and not
         the application. 
          */
-        public SizeI DefaultSize { get; }
+        public int DefaultSizeX { get; }
+
+        public int DefaultSizeY { get; }
 
         /*
         Get bitmap of the size appropriate for the DPI scaling used by the given window.

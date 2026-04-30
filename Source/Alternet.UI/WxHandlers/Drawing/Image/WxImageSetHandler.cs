@@ -11,6 +11,8 @@ namespace Alternet.UI.Native
 {
     internal partial class ImageSet : Alternet.Drawing.IImageSetHandler
     {
+        public SizeI DefaultSize => (DefaultSizeX, DefaultSizeY);
+
         public bool IsDummy => false;
 
         bool Alternet.Drawing.IImageContainer.Clear()
