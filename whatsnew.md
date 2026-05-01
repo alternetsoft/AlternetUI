@@ -1,3 +1,10 @@
+# 1.0.11 (2026 May 1)
+
+- Upgrade to wxWidgets 3.3.2.
+- Add Windows on Arm64 support.
+
+---
+
 # 1.0.10 (2026 April 5)
 
 - Add `LayoutManager` and `ILayoutManager`, which allow custom layouts for controls and for classes that support `ILayoutItem`.
