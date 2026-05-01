@@ -51,6 +51,17 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 
 	<DEMO_PLATFORM>$(DEMO_NAME_CPU)</DEMO_PLATFORM>
 	<DEMO_PLATFORM Condition="$(IsOsxArm64)=='true'">osx-arm64</DEMO_PLATFORM>
+
+	<COPY_README>true</COPY_README>
+	<COPY_LINUXSH>true</COPY_LINUXSH>
+</PropertyGroup>
+
+<PropertyGroup Condition="$(DEMO_NAME_CODE)=='licenseactivation'">
+	<COPY_LINUXSH>false</COPY_LINUXSH>
+	<DEMO_NAME_NET>net8</DEMO_NAME_NET>
+	<DEMO_NAME>alternet-$(DEMO_NAME_CODE)-$(DEMO_NAME_OS)-$(DEMO_NAME_CPU)-$(DEMO_NAME_NET)</DEMO_NAME>
+	<DEMO_FRAMEWORK>$(DEMO_NAME_NET).0</DEMO_FRAMEWORK>
+	<COPY_README>false</COPY_README>
 </PropertyGroup>
 
 	<PropertyGroup>
@@ -60,6 +71,7 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 
 		<DemoPathControlsSample>$(SOURCE_HOME)\Samples\ControlsSample</DemoPathControlsSample>
 		<DemoPathEditorAllQuickStarts>$(ALTERNET_HOME)\..\AlternetStudio\Demo\Editor.AlternetUI\AllQuickStarts\</DemoPathEditorAllQuickStarts>
+		<DemoPathLicenseActivation>$(ALTERNET_HOME)\..\AlternetStudio\Tools\LicenseActivation\LicenseActivationCmd\</DemoPathLicenseActivation>
 		<DemoPathEditorResources>$(ALTERNET_HOME)\..\AlternetStudio\Demo\Resources\</DemoPathEditorResources>
 
 		<DEMO_ADD_EDITOR_RES>false</DEMO_ADD_EDITOR_RES>
@@ -67,6 +79,7 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 
 		<DEMO_HOME Condition="$(DEMO_NAME_CODE)=='studio-ui'">$(DemoPathEditorAllQuickStarts)</DEMO_HOME>
 		<DEMO_HOME Condition="$(DEMO_NAME_CODE)=='ui'">$(DemoPathControlsSample)</DEMO_HOME>
+		<DEMO_HOME Condition="$(DEMO_NAME_CODE)=='licenseactivation'">$(DemoPathLicenseActivation)</DEMO_HOME>
 		<DEMO_HOME Condition="$(DEMO_HOME)==''">$(DemoPathControlsSample)</DEMO_HOME>
 
 		<DEMO_HOME_BIN>$(DEMO_HOME)\bin</DEMO_HOME_BIN>
@@ -228,17 +241,19 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 		<Copy
             		SourceFiles="$(SCRIPT_HOME)\PublicFiles\ExeDemoREADME.md"
             		DestinationFiles="$(PUBLISH_FOLDER_SFX)\README.md"
+			Condition="$(COPY_README)=='true'"
 	        />
 
 		<Copy
             		SourceFiles="$(SCRIPT_HOME)\PublicFiles\ExeDemoUSAGE.md"
             		DestinationFiles="$(PUBLISH_FOLDER_SFX)\USAGE.md"
+			Condition="$(COPY_README)=='true'"
 	        />
 
 		<Copy
             		SourceFiles="$(ALTERNET_HOME)\Install.Scripts\Ubuntu.Install.Packages.sh"
             		DestinationFiles="$(PUBLISH_FOLDER_SFX)\Ubuntu.Install.Packages.sh"
-			Condition="$([MSBuild]::IsOsPlatform('Linux'))"
+			Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(COPY_LINUXSH)=='true'"
 	        />
 
 		<Message Text="===========================================" Importance="high" />
