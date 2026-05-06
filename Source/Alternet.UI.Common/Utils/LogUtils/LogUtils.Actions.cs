@@ -855,9 +855,7 @@ namespace Alternet.UI
                 MswNativeVersionInfo.LogVersionInfo(PathUtils.GetAppFolder(), "Alternet.UI.Pal.dll", recursive: true);
             }
 
-            var commonApplicationData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
             var applicationData = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            App.LogNameValue("CommonApplicationData (licenses msw)", commonApplicationData);
             App.LogNameValue("ApplicationData (licenses non-msw)", applicationData);
         }
 
