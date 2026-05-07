@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Extends <see cref="UserControl"/> to provide scrollable functionality.
     /// </summary>
-    public class ScrollableUserControl : UserControl
+    public partial class ScrollableUserControl : UserControl
     {
         /// <summary>
         /// Indicates whether the list box controls use internal scrollbars.

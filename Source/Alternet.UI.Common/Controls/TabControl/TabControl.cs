@@ -10,11 +10,15 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a control that manages a related set of tab pages.
+    /// Represents a control that displays multiple tab pages, allowing users to switch between them by clicking tab
+    /// headers. Provides functionality to add, remove, and manage tab pages and their appearance.
     /// </summary>
-    /// <remarks>
-    /// This control is implemented inside the Alternet.UI and doesn't
-    /// use native tab control.
+    /// <remarks>The TabControl supports customizable tab alignment, appearance, and theming. It exposes
+    /// events for tab selection and close actions, and allows dynamic management of tab pages at runtime. The control
+    /// can be configured to show or hide tab headers and content, and supports both horizontal and vertical tab
+    /// layouts. Use the <see cref="Pages"/> property to access or modify the collection of tab pages. Thread safety is not
+    /// guaranteed; access the control only from the UI thread.
+    /// This control is implemented inside the Alternet.UI and doesn't use native tab control.
     /// </remarks>
     [ControlCategory("Containers")]
     [DefaultProperty("Pages")]
@@ -527,7 +531,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the button with X image that is shown in the header and can be configured
-        /// to close (or hide) tab page (or tab control itself).
+        /// to close (or hide) tab page (or tab control itself). If <see cref="HasCloseButton"/> is set to <c>true</c>,
+        /// this button is shown in the header; otherwise, it is hidden. Close button is automatically created when
+        /// <see cref="HasCloseButton"/> is set to <c>true</c> for the first time or when <see cref="CloseButton"/>
+        /// property is accessed for the first time.
         /// </summary>
         public SpeedButton CloseButton
         {
@@ -1344,7 +1351,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The event source.</param>
         /// <param name="index">The index of the item.</param>
-        /// <param name="item">The item that was removed.</param>
+        /// <param name="item">The item that was inserted.</param>
         protected virtual void OnPagesItemInserted(object? sender, int index, AbstractControl item)
         {
             if (DisposingOrDisposed)

@@ -42,5 +42,15 @@ namespace Alternet.UI
             parent = value;
             LogicalParent = value;
         }
+
+        internal void OnChildrenItemRemoved(object? sender, int index, AbstractControl item)
+        {
+            RaiseChildRemoved(item);
+        }
+
+        internal void OnChildrenItemInserted(object? sender, int index, AbstractControl item)
+        {
+            RaiseChildInserted(index, item);
+        }
     }
 }
