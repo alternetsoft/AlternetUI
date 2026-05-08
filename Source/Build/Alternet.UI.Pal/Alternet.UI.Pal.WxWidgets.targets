@@ -96,8 +96,9 @@
         <Exec WorkingDirectory="$(WxWidgetsWindowsBuildDirectoryParent)" 
 			Command="mkdir $(WxWidgetsWindowsBuildDirectoryName)" 
 			Condition="!Exists($(WxWidgetsWindowsBuildDirectory))"/>
-		<CallTarget Targets="BuildWxWidgets_Windows_x86" Condition="'$(x64Only)' != 'true'"/>
-		<CallTarget Targets="BuildWxWidgets_Windows_x64" />
+	<CallTarget Targets="BuildWxWidgets_Windows_x86" Condition="'$(x64Only)' != 'true' AND '$(IsWindowsArm64)' != 'true'"/>
+	<CallTarget Targets="BuildWxWidgets_Windows_x64" Condition="'$(IsWindowsArm64)' != 'true'"/>
+	<CallTarget Targets="BuildWxWidgets_Windows_ARM64" Condition="'$(IsWindowsArm64)' == 'true'"/>
     </Target>
     <!-- ========================================== -->
     <!-- Linux -->
