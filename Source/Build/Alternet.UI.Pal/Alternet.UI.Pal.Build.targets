@@ -30,6 +30,16 @@
         <NativeBuildResultFilesReleaseX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.dll"/>
         <NativeBuildResultFilesReleaseX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.exp"/>
         <NativeBuildResultFilesReleaseX64 Include="$(Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.lib"/>
+
+        <NativeBuildResultFilesDebugArm64 Include="$(Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.dll"/>
+        <NativeBuildResultFilesDebugArm64 Include="$(Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.exp"/>
+        <NativeBuildResultFilesDebugArm64 Include="$(Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.lib"/>
+        <NativeBuildResultFilesDebugArm64 Include="$(Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Debug)/Alternet.UI.Pal.pdb"/>
+
+        <NativeBuildResultFilesReleaseArm64 Include="$(Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.dll"/>
+        <NativeBuildResultFilesReleaseArm64 Include="$(Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.exp"/>
+        <NativeBuildResultFilesReleaseArm64 Include="$(Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Release)/Alternet.UI.Pal.lib"/>
+
     </ItemGroup>
 
     <ItemGroup Condition="$([MSBuild]::IsOsPlatform('Linux'))">
@@ -81,6 +91,32 @@
             Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_X64_Debug)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitecture_-debug.zip&quot;" />
     </Target>
 
+    <Target Name="Zip_Pal_Arm64">
+        <Copy SourceFiles="@(NativeBuildResultFilesDebugArm64)" DestinationFolder="$(OutputDirectoryPath_Arm64_Debug)" />
+        <Copy SourceFiles="@(NativeBuildResultFilesReleaseArm64)" DestinationFolder="$(OutputDirectoryPath_Arm64_Release)" 
+		Condition="'$(OnlyDebug)' != 'true'"/>
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+	    Condition="'$(OnlyDebug)' != 'true'"
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_Arm64_Release)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitecture_-release.zip&quot;" />
+
+        <Exec
+            WorkingDirectory="$(RootDirectoryPath)/Source/Tools/Alternet.UI.RunCmd"
+            Command="dotnet run -- -r=zipFile Ext=&quot;exp,lib&quot; File=&quot;$(OutputDirectoryPath_Arm64_Debug)/Alternet.UI.Pal.$(UI_PAL_EXT)&quot; Result=&quot;$(UI_PUBLISH_PACKAGES)/Alternet.UI.Pal-_UIVersion_-_OSArchitecture_-debug.zip&quot;" />
+    </Target>
+
+    <!-- ========================================== -->
+    <Target Name="BuildNative_Windows_Arm64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+
+        <Exec Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Debug|arm64&quot;" />
+
+        <Exec Condition="'$(OnlyDebug)' != 'true'"
+	 Command="&quot;$(DevenvPath)&quot; &quot;$(Bindings_NativeVcProjectFilePath)&quot; /Rebuild &quot;Release|arm64&quot;" />
+
+        <CallTarget Targets="Zip_Pal_Arm64" />
+    </Target>
+
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows_X64" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 
@@ -130,9 +166,9 @@
     <!-- ========================================== -->
     <Target Name="BuildNative_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
 
-        <CallTarget Targets="BuildNative_Windows_X86" Condition="'$(OnlyDebug)' != 'true'"/>
-
-        <CallTarget Targets="BuildNative_Windows_X64" />
+	<CallTarget Targets="BuildNative_Windows_X86" Condition="'$(OnlyDebug)' != 'true' AND '$(IsWindowsArm64)' != 'true'"/>
+	<CallTarget Targets="BuildNative_Windows_X64" Condition="'$(IsWindowsArm64)' != 'true'"/>
+	<CallTarget Targets="BuildNative_Windows_Arm64" Condition="'$(IsWindowsArm64)' == 'true'"/>
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildNative_Unix" Condition="!$([MSBuild]::IsOsPlatform('Windows'))">

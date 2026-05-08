@@ -223,8 +223,11 @@
 		<CallTarget Targets="BuildControlsSample" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
 		<Message Text="Alternet.UI Installation done." Importance="high" />
 		<Message Text="--------------------------------------------------------" Importance="high" />
+
+		<!-- Disabled because of security issues on Windows 11
 		<Message Text="Running demo..." Importance="high" />
 		<CallTarget Targets="RunControlsSample" Condition="$(BoolNet8)"/>		
+		-->
   		<Message Text="========================================================" Importance="high" />
 	<!-- ========================================== -->
     </Target>

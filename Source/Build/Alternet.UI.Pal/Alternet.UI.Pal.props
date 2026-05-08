@@ -56,6 +56,8 @@
     <OutputDirectoryPath_X86_Debug>$(BinDirectoryPath)\$(BuildPlatform)\x86\Debug\</OutputDirectoryPath_X86_Debug>
     <OutputDirectoryPath_X64_Release>$(BinDirectoryPath)\$(BuildPlatform)\x64\Release\</OutputDirectoryPath_X64_Release>
     <OutputDirectoryPath_X64_Debug>$(BinDirectoryPath)\$(BuildPlatform)\x64\Debug\</OutputDirectoryPath_X64_Debug>
+    <OutputDirectoryPath_Arm64_Release>$(BinDirectoryPath)\$(BuildPlatform)\arm64\Release\</OutputDirectoryPath_Arm64_Release>
+    <OutputDirectoryPath_Arm64_Debug>$(BinDirectoryPath)\$(BuildPlatform)\arm64\Debug\</OutputDirectoryPath_Arm64_Debug>
 
     <BuildContentFilesDirectoryPath>$(MSBuildProjectDirectory)\Content</BuildContentFilesDirectoryPath>
   </PropertyGroup>
@@ -79,6 +81,10 @@
     <Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Release</Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Release>
     <Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x86\Debug</Bindings_NativeWindowsX86ProjectOutputDirectoryPath_Debug>
     <Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\x64\Debug</Bindings_NativeWindowsX64ProjectOutputDirectoryPath_Debug>
+
+    <Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Release>$(Bindings_NativeProjectDirectoryPath)\bin\arm64\Release</Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Release>
+    <Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Debug>$(Bindings_NativeProjectDirectoryPath)\bin\arm64\Debug</Bindings_NativeWindowsArm64ProjectOutputDirectoryPath_Debug>
+
   </PropertyGroup>
 
   <ItemGroup>
