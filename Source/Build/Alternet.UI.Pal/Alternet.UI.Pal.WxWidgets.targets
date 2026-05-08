@@ -90,6 +90,13 @@
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildWxWidgets_Windows" Condition="$([MSBuild]::IsOsPlatform('Windows'))">
+
+	<Message Text="IsWindowsArm64: $(IsWindowsArm64)" Importance="high"  Condition="true"/>
+
+	<Message Text="Will build WxWidgets for Windows Arm64" Importance="high"  Condition="'$(IsWindowsArm64)' == 'true'"/>
+	<Message Text="Will build WxWidgets for Windows x86" Importance="high" Condition="'$(x64Only)' != 'true' AND '$(IsWindowsArm64)' != 'true'"/>
+	<Message Text="Will build WxWidgets for Windows x64" Importance="high" Condition="'$(IsWindowsArm64)' != 'true'"/>
+
         <Exec WorkingDirectory="$(WxWidgetsDirectory)" 
 			Command="mkdir $(WxWidgetsWindowsBuildDirectoryNameParent)" 
 			Condition="!Exists($(WxWidgetsWindowsBuildDirectoryParent))"/>
@@ -177,6 +184,7 @@
         <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_x64_mswud)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_x64_mswud))"/>
         <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_lib)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_lib))"/>
         <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_x64_lib)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_x64_lib))"/>
+        <RemoveDir Directories="$(WxWidgetsWindowsBuildDirectory_vc_arm64_lib)" Condition="Exists($(WxWidgetsWindowsBuildDirectory_vc_x64_lib))"/>
     </Target>
     <!-- ========================================== -->
     <Target Name="BuildWxWidgetsWithoutDownload">

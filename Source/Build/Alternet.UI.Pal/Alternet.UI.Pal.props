@@ -122,6 +122,7 @@
     <WxWidgetsWindowsBuildDirectory_vc_x64_mswud>$(WxWidgetsWindowsBuildDirectory)\vc_x64_mswud</WxWidgetsWindowsBuildDirectory_vc_x64_mswud>
     <WxWidgetsWindowsBuildDirectory_vc_lib>$(WxWidgetsDirectory)\lib\vc_lib</WxWidgetsWindowsBuildDirectory_vc_lib>
     <WxWidgetsWindowsBuildDirectory_vc_x64_lib>$(WxWidgetsDirectory)\lib\vc_x64_lib</WxWidgetsWindowsBuildDirectory_vc_x64_lib>
+    <WxWidgetsWindowsBuildDirectory_vc_arm64_lib>$(WxWidgetsDirectory)\lib\vc_arm64_lib</WxWidgetsWindowsBuildDirectory_vc_arm64_lib>
     <!-- ========================================== -->
     <WxWidgetsGtkBuildDirectoryName>gtk-build</WxWidgetsGtkBuildDirectoryName>
     <WxWidgetsGtkBuildDirectory>$(WxWidgetsDirectory)\$(WxWidgetsGtkBuildDirectoryName)</WxWidgetsGtkBuildDirectory>
