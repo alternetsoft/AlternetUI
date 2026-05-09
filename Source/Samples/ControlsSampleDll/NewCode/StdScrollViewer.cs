@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Alternet.UI
+using Alternet.UI;
+
+namespace ControlsSample
 {
     /// <summary>
     /// Represents a scrollable area that can contain other visible elements.

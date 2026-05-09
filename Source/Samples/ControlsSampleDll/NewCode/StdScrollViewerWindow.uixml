@@ -1,0 +1,148 @@
+<Window xmlns="http://schemas.alternetsoft.com/ui/2021"
+        xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
+	xmlns:local="clr-namespace:ControlsSample"
+        x:Class="ControlsSample.StdScrollViewerWindow" MinimumSize="600,500"
+        Title="Alternet UI StdScrollViewer Sample" StartLocation="CenterScreen" Padding="10">
+
+  <TabControl Name="tabControl">
+    <!-- ============= -->
+
+    <Panel Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
+      <StackPanel Orientation="Horizontal">
+
+        <Border SuggestedHeight="350" Padding="5"
+                        VerticalAlignment="Top" HorizontalAlignment="Fill" HasBorder="true">
+          <local:StdScrollViewer Name="scrollViewerStack">
+            <StackPanel Name="stackPanel" Orientation="Vertical" MinChildMargin="3">
+            </StackPanel>
+          </local:StdScrollViewer>
+        </Border>
+
+        <Grid Margin="10,0,0,0" HorizontalAlignment="Right">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Label Text="Orientation:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="0" />
+          <EnumPicker Name="orientationComboBox" VerticalAlignment="Center" Margin="0,0,0,5"
+                    ValueChanged="OrientationComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="0" />
+
+          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
+          <EnumPicker Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="1" />
+
+          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="2" />
+          <EnumPicker Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="2" />
+
+          <Button Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
+                  IsTextLocalized="true" Click="AddControlToStackPanelButton_Click"
+                  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
+
+          <Button Text="Remove Control" Name="removeControlFromStackPanelButton"
+                  IsTextLocalized="true" Click="RemoveControlFromStackPanelButton_Click"
+                  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+        </Grid>
+      </StackPanel>
+    </Panel>
+
+    <!-- ============= -->
+
+    <Panel Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
+      <StackPanel Orientation="Horizontal">
+
+        <Border SuggestedHeight="350" VerticalAlignment="Top"
+                HorizontalAlignment="Fill" Padding="5" HasBorder="true">
+          <local:StdScrollViewer Name="scrollViewerGrid">
+            <Grid Name="grid">
+            </Grid>
+          </local:StdScrollViewer>
+        </Border>
+
+        <Grid Margin="10,0,0,0" MinChildMargin="3" HorizontalAlignment="Right">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="0" />
+          <EnumPicker Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="0" />
+
+          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
+          <EnumPicker Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center"
+                    Margin="0,0,0,5"
+                    ValueChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
+                    Grid.Column="1" Grid.Row="1" />
+
+          <Button Text="Add Column" Name="addColumnToGridButton" Margin="0,0,0,5"
+                  IsTextLocalized="true" Click="AddColumnToGridButton_Click"
+                  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
+
+          <Button Text="Remove Column" Name="removeColumnFromGridButton" Margin="0,0,0,5"
+                  IsTextLocalized="true" Click="RemoveColumnFromGridButton_Click"
+                  Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
+
+          <Button Text="Add Row" Name="addRowToGridButton" Margin="0,0,0,5"
+                  IsTextLocalized="true" Click="AddRowToGridButton_Click"
+                  Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+
+          <Button Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
+                  IsTextLocalized="true" Click="RemoveRowFromGridButton_Click"
+                  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
+        </Grid>
+      </StackPanel>
+    </Panel>
+
+    <!-- ============= -->
+
+    <Panel Title="Drawing" IsTitleLocalized="true"
+              Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
+      <StackPanel Orientation="Vertical">
+        <HorizontalStackPanel >
+          <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
+          <Button Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
+          <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-"/>
+        </HorizontalStackPanel>
+
+        <Border SuggestedSize="250,250" HorizontalAlignment="Left"
+                HasBorder="true" Padding="5">
+          <local:StdScrollViewer Name="imageScrollViewer">
+          </local:StdScrollViewer>
+        </Border>
+        
+      </StackPanel>
+    </Panel>
+
+    <!-- ============= -->
+  </TabControl>
+
+</Window>

@@ -13,18 +13,14 @@ namespace ControlsSample
     {
         protected override void AddDefaultItems()
         {
-            /*
-                Add("NinePatch Drawing Sample", () => new NinePatchDrawingWindow());
-            */
-
-
             if (App.IsWindowsOS)
             {
                 InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
             }
 
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
-            
+
+            AddIfDebug("StdScrollViewer Sample", () => new StdScrollViewerWindow());
             AddIfDebug("Draw Test Page: Custom", () => new CustomDrawTestPage());
             AddIfDebug("Draw Test Page: Skia", () => new SkiaDrawingWindow());
             
