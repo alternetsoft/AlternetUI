@@ -11,7 +11,6 @@ using SharpCompress.Archives.SevenZip;
 using SharpCompress.Archives.Zip;
 using SharpCompress.Common;
 using SharpCompress.Readers;
-using SharpCompress.Helpers;
 
 namespace Alternet.UI
 {
@@ -42,7 +41,7 @@ namespace Alternet.UI
                 }
             }
 
-            using var archive = ZipArchive.Create();
+            using var archive = ZipArchive.CreateArchive();
             
             foreach (var file in files)
             {
@@ -73,7 +72,7 @@ namespace Alternet.UI
                 "*",
                 SearchOption.AllDirectories);
 
-            using var archive = ZipArchive.Create();
+            using var archive = ZipArchive.CreateArchive();
 
             foreach(var file in files)
             {
@@ -101,7 +100,7 @@ namespace Alternet.UI
             string pathToArch,
             CompressionType compressionType = CompressionType.Deflate)
         {
-            using var archive = ZipArchive.Create();
+            using var archive = ZipArchive.CreateArchive();
             archive.AddAllFromDirectory(pathToFolder);
             archive.SaveTo(pathToArch, compressionType);
         }
@@ -166,7 +165,7 @@ namespace Alternet.UI
                 void Extract7z()
                 {
                     using Stream stream = File.OpenRead(filePath);
-                    using var archive = ArchiveFactory.Open(stream);
+                    using var archive = ArchiveFactory.OpenArchive(stream);
 
                     var total = archive.Entries.Count();
                     var current = 0;
@@ -240,7 +239,7 @@ namespace Alternet.UI
                 void ExtractOther()
                 {
                     using Stream stream = File.OpenRead(filePath);
-                    using var reader = ReaderFactory.Open(stream);
+                    using var reader = ReaderFactory.OpenReader(stream);
 
                     while (reader.MoveToNextEntry())
                     {

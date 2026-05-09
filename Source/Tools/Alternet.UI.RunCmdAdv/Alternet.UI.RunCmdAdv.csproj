@@ -9,7 +9,11 @@
     <AlternetUIPath>$(MSBuildProjectDirectory)\..\..\..\</AlternetUIPath>
   </PropertyGroup>
 
-  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props"/>
+  <Import Project="$(AlternetUIPath)\Source\Build\Alternet.UI.Copy.props" />
+
+  <ItemGroup>
+    <PackageReference Include="SharpCompress" Version="0.48.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
