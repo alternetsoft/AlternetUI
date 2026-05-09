@@ -1,3 +1,10 @@
+# 1.0.11 (2026 May 9)
+
+- Improve the installation scripts to better support Windows on Arm64.
+- Update the SharpCompress NuGet package used in the RunCmd tools to avoid the vulnerability warning in Visual Studio.
+
+---
+
 # 1.0.11 (2026 May 1)
 
 - Upgrade to wxWidgets 3.3.2.
