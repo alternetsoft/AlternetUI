@@ -17,6 +17,7 @@ namespace ControlsSample
         /// </summary>
         public StdScrollViewer()
         {
+            Interior?.Required();
         }
 
         /// <inheritdoc/>
@@ -28,10 +29,21 @@ namespace ControlsSample
             }
         }
 
+        /// <inheritdoc/>
+        public override RectD ChildrenLayoutBounds
+        {
+            get
+            {
+                UpdateScrollBars(false);
+                UpdateInteriorProperties();
+                return GetPaintRectangle();
+            }
+        }
+
         void IScrollEventRouter.CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
         {
-            HiddenOrVisible vertVisibility = HiddenOrVisible.Auto;
-            HiddenOrVisible horzVisibility = HiddenOrVisible.Auto;
+            HiddenOrVisible vertVisibility = HiddenOrVisible.Visible; // need to be Auto
+            HiddenOrVisible horzVisibility = HiddenOrVisible.Visible; // need to be Auto
 
             if (HasHorizontalScrollBarSettings)
                 horzVisibility = HorizontalScrollBarSettings.SuggestedVisibility;
@@ -47,8 +59,8 @@ namespace ControlsSample
 
             var paintRectangle = GetPaintRectangle();
 
-            horzScrollbar = new(position: 0, range: 0, pageSize: -1);
-            vertScrollbar = new(position: 0, range: 0, pageSize: -1);
+            horzScrollbar = new(position: 0, range: 50, pageSize: 15);
+            vertScrollbar = new(position: 0, range: 50, pageSize: 15);
             horzScrollbar.Visibility = horzVisibility;
             vertScrollbar.Visibility = vertVisibility;
         }
@@ -102,6 +114,62 @@ namespace ControlsSample
         }
 
         void IScrollEventRouter.DoActionScrollToVertPos(int value)
+        {
+        }
+
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            var dc = e.Graphics;
+
+            dc.FillRectangle(RealBackgroundColor.AsBrush, ClientRectangle);
+
+            UpdateInteriorProperties();
+
+            DrawInterior(dc);
+        }
+
+
+        /// <inheritdoc/>
+        public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
+        {
+            base.SetScrollBarInfo(isVertical, value);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnChildInserted(int index, AbstractControl childControl)
+        {
+            base.OnChildInserted(index, childControl);
+
+            childControl.ChildInserted += OnChildOfChildInserted;
+            childControl.ChildRemoved += OnChildOfChildRemoved;
+
+            UpdateScrollBars(true);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnChildRemoved(AbstractControl childControl)
+        {
+            UpdateScrollBars(true);
+            childControl.ChildInserted -= OnChildOfChildInserted;
+            childControl.ChildRemoved -= OnChildOfChildRemoved;
+            base.OnChildRemoved(childControl);
+        }
+
+        private void OnChildOfChildRemoved(object? sender, BaseEventArgs<AbstractControl> e)
+        {
+        }
+
+        private void OnChildOfChildInserted(object? sender, BaseEventArgs<AbstractControl> e)
         {
         }
     }

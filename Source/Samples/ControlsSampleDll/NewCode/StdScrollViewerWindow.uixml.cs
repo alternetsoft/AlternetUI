@@ -40,6 +40,9 @@ namespace ControlsSample
                 for (int i = 0; i < 50; i++)
                     AddControlToStackPanel();
             });
+
+            stackPanel.HasBorder = true;
+            stackPanel.BorderColor = Color.Red;
         }
 
         private void InitializeGrid()

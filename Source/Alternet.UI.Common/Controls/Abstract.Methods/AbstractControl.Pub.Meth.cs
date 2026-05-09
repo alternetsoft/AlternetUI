@@ -1944,8 +1944,6 @@ namespace Alternet.UI
                 if (layoutParent)
                     Parent?.PerformLayout();
 
-                /* LogUtils.LogToFileAndDebug($"PerformLayout: {GetType()}"); */
-
                 OnLayout();
             }
             finally
