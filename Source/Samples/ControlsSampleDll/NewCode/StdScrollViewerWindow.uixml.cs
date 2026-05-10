@@ -41,8 +41,12 @@ namespace ControlsSample
                     AddControlToStackPanel();
             });
 
-            stackPanel.HasBorder = true;
-            stackPanel.BorderColor = Color.Red;
+            var setDebugBorder = false;
+            if (setDebugBorder)
+            {
+                stackPanel.HasBorder = true;
+                stackPanel.BorderColor = Color.Red;
+            }
         }
 
         private void InitializeGrid()

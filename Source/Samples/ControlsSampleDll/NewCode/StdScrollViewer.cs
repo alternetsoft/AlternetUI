@@ -12,6 +12,8 @@ namespace ControlsSample
     [ControlCategory("Containers")]
     internal partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
     {
+        public static SizeD DefaultScrollSmallChange = new (16, VirtualListControl.DefaultMinItemHeight);
+        
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
 
@@ -32,6 +34,13 @@ namespace ControlsSample
             }
         }
 
+        public virtual SizeD? ScrollSmallChange { get; set; }
+
+        public virtual SizeD? ScrollLargeChange { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the content is allowed to be scrolled vertically.
+        /// </summary>
         public virtual bool IsScrolledVertically
         {
             get => isScrolledVertically;
@@ -43,6 +52,9 @@ namespace ControlsSample
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether the content is allowed to be scrolled horizontally.
+        /// </summary>
         public virtual bool IsScrolledHorizontally
         {
             get => isScrolledHorizontally;
@@ -75,7 +87,7 @@ namespace ControlsSample
             if (HasVerticalScrollBarSettings)
                 vertVisibility = VerticalScrollBarSettings.SuggestedVisibility;
 
-            if (!HasChildren)
+            if (FirstChild is null)
             {
                 horzScrollbar = new(horzVisibility);
                 vertScrollbar = new(vertVisibility);
@@ -84,69 +96,157 @@ namespace ControlsSample
 
             var paintRectangle = GetPaintRectangle();
 
-            if (LayoutMaxSize is null)
+            if (FirstChild.LayoutMaxSize is null)
             {
                 UpdateInterior();
             }
 
-            var range = LayoutMaxSize ?? paintRectangle.Size;
+            var range = FirstChild.LayoutMaxSize ?? paintRectangle.Size;
 
-            horzScrollbar = new(position: (int)LayoutOffset.X, range: (int)range.Width, pageSize: (int)paintRectangle.Width);
-            vertScrollbar = new(position: (int)LayoutOffset.Y, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
+            horzScrollbar = new(position: (int)FirstChild.LayoutOffset.X, range: (int)range.Width, pageSize: (int)paintRectangle.Width);
+            vertScrollbar = new(position: (int)FirstChild.LayoutOffset.Y, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
             horzScrollbar.Visibility = horzVisibility;
             vertScrollbar.Visibility = vertVisibility;
         }
 
-        void IScrollEventRouter.DoActionScrollCharLeft()
+        /// <summary>
+        /// Retrieves the width of a single character using the default font.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Coord"/> representing the width of the character.
+        /// </returns>
+        public virtual Coord GetCharWidth()
+        {
+            var result = MeasureCanvas.GetTextExtent("W", RealFont).Width;
+            if (result <= 0)
+                result = 16;
+            return result;
+        }
+
+        public virtual Coord GetCharHeight()
+        {
+            var result = MeasureCanvas.GetTextExtent("W", RealFont).Height;
+            if (result <= 0)
+                result = VirtualListControl.DefaultMinItemHeight;
+            return result;
+        }
+
+        public virtual SizeD GetEffectiveScrollSmallChange()
+        {
+            if (ScrollSmallChange is not null)
+            {
+                return ScrollSmallChange.Value;
+            }
+
+            return DefaultScrollSmallChange;
+        }
+
+        public virtual SizeD GetEffectiveScrollLargeChange()
+        {
+            return ScrollLargeChange ?? GetPaintRectangle().Size;
+        }
+
+        public virtual void DoActionScrollCharLeft()
+        {
+            var value = GetEffectiveScrollSmallChange().Width;
+            DoActionOffsetScroll(new SizeD(-value, 0));
+        }
+
+        public virtual void DoActionScrollCharRight()
+        {
+            var value = GetEffectiveScrollSmallChange().Width;
+            DoActionOffsetScroll(new SizeD(value, 0));
+        }
+
+        public virtual void DoActionScrollLineDown()
+        {
+            var value = GetEffectiveScrollSmallChange().Height;
+            DoActionOffsetScroll(new SizeD(0, value));
+        }
+
+        public virtual void DoActionScrollLineUp()
+        {
+            var value = GetEffectiveScrollSmallChange().Height;
+            DoActionOffsetScroll(new SizeD(0, -value));
+        }
+
+        public virtual void DoActionScrollPageDown()
+        {
+            var value = GetEffectiveScrollLargeChange().Height;
+            DoActionOffsetScroll(new SizeD(0, value));
+        }
+
+        public virtual void DoActionScrollPageUp()
+        {
+            var value = GetEffectiveScrollLargeChange().Height;
+            DoActionOffsetScroll(new SizeD(0, -value));
+        }
+
+        public virtual void DoActionScrollPageLeft()
+        {
+            var value = GetEffectiveScrollLargeChange().Width;
+            DoActionOffsetScroll(new SizeD(-value, 0));
+        }
+
+        public virtual void DoActionScrollPageRight()
+        {
+            var value = GetEffectiveScrollLargeChange().Width;
+            DoActionOffsetScroll(new SizeD(value, 0));
+        }
+
+        public virtual void DoActionScrollToFirstChar()
+        {
+            DoActionScrollToHorzPos(0);
+        }
+
+        public virtual void DoActionScrollToFirstLine()
+        {
+            DoActionScrollToVertPos(0);
+        }
+
+        public virtual void DoActionScrollToHorzPos(int value)
+        {
+            DoActionSetScroll(new PointD(value, FirstChild?.LayoutOffset.Y ?? 0));
+        }
+
+        public virtual void DoActionScrollToLastLine()
         {
         }
 
-        void IScrollEventRouter.DoActionScrollCharRight()
+        public virtual void DoActionScrollToVertPos(int value)
         {
+            DoActionSetScroll(new PointD(FirstChild?.LayoutOffset.X ?? 0, value));
         }
 
-        void IScrollEventRouter.DoActionScrollLineDown()
+        public virtual void DoActionSetScroll(PointD value)
         {
+            var firstChild = FirstChild;
+            if (firstChild is null)
+                return;
+
+            var oldOffset = firstChild.LayoutOffset;
+
+            firstChild.LayoutOffset = value.ClampToZero();
+
+            if (oldOffset != firstChild.LayoutOffset)
+                UpdateScrollBars(true);
         }
 
-        void IScrollEventRouter.DoActionScrollLineUp()
+        public virtual void DoActionOffsetScroll(SizeD value)
         {
-        }
+            if (value.Height == 0 && value.Width == 0)
+                return;
+            var firstChild = FirstChild;
+            if (firstChild is null)
+                return;
 
-        void IScrollEventRouter.DoActionScrollPageDown()
-        {
-        }
+            var oldOffset = firstChild.LayoutOffset;
+            var newOffset = oldOffset + value;
 
-        void IScrollEventRouter.DoActionScrollPageLeft()
-        {
-        }
+            firstChild.LayoutOffset = newOffset.ClampToZero();
 
-        void IScrollEventRouter.DoActionScrollPageRight()
-        {
-        }
-
-        void IScrollEventRouter.DoActionScrollPageUp()
-        {
-        }
-
-        void IScrollEventRouter.DoActionScrollToFirstChar()
-        {
-        }
-
-        void IScrollEventRouter.DoActionScrollToFirstLine()
-        {
-        }
-
-        void IScrollEventRouter.DoActionScrollToHorzPos(int value)
-        {
-        }
-
-        void IScrollEventRouter.DoActionScrollToLastLine()
-        {
-        }
-
-        void IScrollEventRouter.DoActionScrollToVertPos(int value)
-        {
+            if (oldOffset != firstChild.LayoutOffset)
+                UpdateScrollBars(true);
         }
 
         /// <inheritdoc/>
@@ -194,9 +294,12 @@ namespace ControlsSample
             if (!IsScrolledHorizontally)
                 availableSize.Width = paintRectangle.Width;
 
-            PreferredSizeContext context = new(availableSize);
+            var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
 
-            LayoutMaxSize = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
+            value.Width += firstChild.LayoutOffset.X;
+            value.Height += firstChild.LayoutOffset.Y;
+
+            firstChild.LayoutMaxSize = value;
 
             UpdateScrollBars(true);
         }

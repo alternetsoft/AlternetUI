@@ -37,7 +37,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default provider used to generate tooltips for items.
         /// </summary>
-        /// <remarks>Changing this property affects how item tooltips are displayed. The default value is set to use the factory provider.</remarks>
+        /// <remarks>Changing this property affects how item tooltips are displayed.
+        /// The default value is set to use the factory provider.</remarks>
         public static ItemToolTipProviderType DefaultItemToolTipProvider { get; set; } = ItemToolTipProviderType.Factory;
 
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
