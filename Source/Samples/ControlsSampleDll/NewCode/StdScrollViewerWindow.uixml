@@ -11,7 +11,7 @@
       <StackPanel Orientation="Horizontal">
 
         <Border SuggestedHeight="350" Padding="5"
-                        VerticalAlignment="Top" HorizontalAlignment="Fill" HasBorder="true">
+                        VerticalAlignment="Stretch" HorizontalAlignment="Fill" HasBorder="true">
           <local:StdScrollViewer Name="scrollViewerStack">
             <StackPanel Name="stackPanel" Orientation="Vertical" MinChildMargin="3">
             </StackPanel>
@@ -67,7 +67,7 @@
     <Panel Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
 
-        <Border SuggestedHeight="350" VerticalAlignment="Top"
+        <Border SuggestedHeight="350" VerticalAlignment="Stretch"
                 HorizontalAlignment="Fill" Padding="5" HasBorder="true">
           <local:StdScrollViewer Name="scrollViewerGrid">
             <Grid Name="grid">

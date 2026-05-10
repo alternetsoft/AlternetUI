@@ -12,6 +12,9 @@ namespace ControlsSample
     [ControlCategory("Containers")]
     internal partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
     {
+        private bool isScrolledVertically = true;
+        private bool isScrolledHorizontally = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="StdScrollViewer"/> class.
         /// </summary>
@@ -29,6 +32,28 @@ namespace ControlsSample
             }
         }
 
+        public virtual bool IsScrolledVertically
+        {
+            get => isScrolledVertically;
+            set
+            {
+                if (isScrolledVertically == value)
+                    return;
+                isScrolledVertically = value;
+            }
+        }
+
+        public virtual bool IsScrolledHorizontally
+        {
+            get => isScrolledHorizontally;
+            set
+            {
+                if (isScrolledHorizontally == value)
+                    return;
+                isScrolledHorizontally = value;
+            }
+        }
+
         /// <inheritdoc/>
         public override RectD ChildrenLayoutBounds
         {
@@ -42,8 +67,8 @@ namespace ControlsSample
 
         void IScrollEventRouter.CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
         {
-            HiddenOrVisible vertVisibility = HiddenOrVisible.Visible; // need to be Auto
-            HiddenOrVisible horzVisibility = HiddenOrVisible.Visible; // need to be Auto
+            HiddenOrVisible vertVisibility = IsScrolledVertically ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
+            HiddenOrVisible horzVisibility = IsScrolledHorizontally ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
 
             if (HasHorizontalScrollBarSettings)
                 horzVisibility = HorizontalScrollBarSettings.SuggestedVisibility;
@@ -59,8 +84,15 @@ namespace ControlsSample
 
             var paintRectangle = GetPaintRectangle();
 
-            horzScrollbar = new(position: 0, range: 50, pageSize: 15);
-            vertScrollbar = new(position: 0, range: 50, pageSize: 15);
+            if (LayoutMaxSize is null)
+            {
+                UpdateInterior();
+            }
+
+            var range = LayoutMaxSize ?? paintRectangle.Size;
+
+            horzScrollbar = new(position: (int)LayoutOffset.X, range: (int)range.Width, pageSize: (int)paintRectangle.Width);
+            vertScrollbar = new(position: (int)LayoutOffset.Y, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
             horzScrollbar.Visibility = horzVisibility;
             vertScrollbar.Visibility = vertVisibility;
         }
@@ -143,6 +175,30 @@ namespace ControlsSample
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            UpdateInterior();
+        }
+
+        protected virtual void UpdateInterior()
+        {
+            var firstChild = FirstChild;
+
+            if (firstChild is null)
+                return;
+
+            var availableSize = SizeD.PositiveInfinity;
+
+            var paintRectangle = GetPaintRectangle();
+
+            if (!IsScrolledVertically)
+                availableSize.Height = paintRectangle.Height;
+            if (!IsScrolledHorizontally)
+                availableSize.Width = paintRectangle.Width;
+
+            PreferredSizeContext context = new(availableSize);
+
+            LayoutMaxSize = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
+
+            UpdateScrollBars(true);
         }
 
         /// <inheritdoc/>
@@ -150,27 +206,47 @@ namespace ControlsSample
         {
             base.OnChildInserted(index, childControl);
 
-            childControl.ChildInserted += OnChildOfChildInserted;
-            childControl.ChildRemoved += OnChildOfChildRemoved;
-
-            UpdateScrollBars(true);
+            if (IsScrolledControl(childControl))
+            {
+                childControl.LayoutUpdated += OnChildLayoutUpdated;
+                UpdateInterior();
+            }
         }
 
         /// <inheritdoc/>
         protected override void OnChildRemoved(AbstractControl childControl)
         {
-            UpdateScrollBars(true);
-            childControl.ChildInserted -= OnChildOfChildInserted;
-            childControl.ChildRemoved -= OnChildOfChildRemoved;
+            childControl.LayoutUpdated -= OnChildLayoutUpdated;
             base.OnChildRemoved(childControl);
+
+            if (IsScrolledControl(childControl))
+            {
+                UpdateInterior();
+            }
+        }
+
+        private void OnChildLayoutUpdated(object? sender, EventArgs e)
+        {
+            UpdateInterior();
+        }
+
+        protected virtual bool IsScrolledControl(AbstractControl control)
+        {
+            return control.IsVisible && !control.IgnoreLayout;
         }
 
         private void OnChildOfChildRemoved(object? sender, BaseEventArgs<AbstractControl> e)
         {
+            if(!IsScrolledControl(e.Value))
+                return;
+            UpdateInterior();
         }
 
         private void OnChildOfChildInserted(object? sender, BaseEventArgs<AbstractControl> e)
         {
+            if (!IsScrolledControl(e.Value))
+                return;
+            UpdateInterior();
         }
     }
 }

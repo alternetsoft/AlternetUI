@@ -31,6 +31,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the PreferredSizeContext class, adjusting the available size by subtracting
+        /// the specified margin size.
+        /// </summary>
+        /// <remarks>If availableSize contains infinite values for width or height, those dimensions are
+        /// not adjusted for margins. Negative results after subtraction are clamped to zero.</remarks>
+        /// <param name="availableSize">The total available size before margins are applied. Width and height values are reduced by the
+        /// corresponding values in marginSize if they are finite.</param>
+        /// <param name="marginSize">The size of the margins to subtract from the available size. Each dimension is subtracted from the
+        /// corresponding dimension in availableSize if finite.</param>
+        public PreferredSizeContext(SizeD availableSize, SizeD marginSize)
+        {
+            if (float.IsFinite(availableSize.Width))
+            {
+                availableSize.Width = Math.Max(0, availableSize.Width - marginSize.Width);
+            }
+
+            if (float.IsFinite(availableSize.Height))
+            {
+                availableSize.Height = Math.Max(0, availableSize.Height - marginSize.Height);
+            }
+
+            AvailableSize = availableSize;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PreferredSizeContext"/> struct
         /// with the specified available width and height.
         /// </summary>

@@ -296,6 +296,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the maximum bottom-right coordinate among all child controls in the layout.
+        /// </summary>
+        /// <remarks>This method is useful for determining the overall extent required to contain all
+        /// child controls within the layout. Margins are only included if the includeMargins parameter is set to
+        /// true.</remarks>
+        /// <param name="includeMargins">true to include each child's right
+        /// and bottom margins in the calculation; otherwise, false.</param>
+        /// <returns>A SizeD representing the maximum right and bottom coordinates of all child controls. The values include
+        /// margins if specified.</returns>
+        public virtual SizeD GetChildrenMaxRightBottom(bool includeMargins)
+        {
+            Coord maxRight = 0;
+            Coord maxBottom = 0;
+            foreach (var control in AllChildrenInLayout)
+            {
+                var margin = includeMargins ? control.Margin.RightBottom : SizeD.Empty;
+                var controlBounds = control.Bounds;
+                maxRight = Math.Max(controlBounds.Right + margin.Width, maxRight);
+                maxBottom = Math.Max(controlBounds.Bottom + margin.Height, maxBottom);
+            }
+
+            return new SizeD(maxRight, maxBottom);
+        }
+
+        /// <summary>
         /// Gets the size of the area which can fit all the children of this control.
         /// </summary>
         public virtual SizeD GetChildrenMaxPreferredSize(PreferredSizeContext context)
@@ -306,10 +331,9 @@ namespace Alternet.UI
             foreach (var control in AllChildrenInLayout)
             {
                 var margin = control.Margin.Size;
-
-                var preferredSize =
-                    control.GetPreferredSize(
-                        new PreferredSizeContext(context.AvailableSize - margin)) + margin;
+                var controlContext = new PreferredSizeContext(context.AvailableSize, margin);
+                var controlPreferredSize = control.GetPreferredSize(controlContext);
+                var preferredSize = controlPreferredSize + margin;
                 maxWidth = Math.Max(preferredSize.Width, maxWidth);
                 maxHeight = Math.Max(preferredSize.Height, maxHeight);
             }
