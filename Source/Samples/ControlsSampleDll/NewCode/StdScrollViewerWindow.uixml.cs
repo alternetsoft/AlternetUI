@@ -31,6 +31,8 @@ namespace ControlsSample
 
             SetSizeToContent();
             UpdateImageZoom();
+
+            MenuUtils.AddItemsForPublicParameterlessMethods(stackPanelOptionsGrid.ContextMenuStrip, scrollViewerStack, "DoAction");
         }
 
         private void InitializeStackPanel()

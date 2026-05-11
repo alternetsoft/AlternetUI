@@ -2359,6 +2359,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets public parameterless methods of the specified object.
+        /// </summary>
+        /// <param name="obj">The object whose public parameterless methods are to be retrieved.</param>
+        /// <param name="methodNameFilter">An optional filter to select methods by name.</param>
+        /// <returns>An enumerable of <see cref="MethodInfo"/> representing the public parameterless methods of the object.</returns>
+        public static IEnumerable<MethodInfo> GetPublicParameterlessMethods(object? obj, string? methodNameFilter = null)
+        {
+            if (obj is null) return [];
+
+            var methods = obj.GetType()
+                       .GetMethods(BindingFlags.Instance | BindingFlags.Public)
+                       .Where(m => !m.IsSpecialName && m.GetParameters().Length == 0);
+
+            if (!string.IsNullOrEmpty(methodNameFilter))
+                methods = methods.Where(m => m.Name.StartsWith(methodNameFilter, StringComparison.Ordinal));
+
+            return methods;
+        }
+
+        /// <summary>
         /// Tries to load native library using NativeLibrary.TryLoad.
         /// </summary>
         /// <param name="libraryPath">The path to the library to load.</param>

@@ -86,6 +86,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds menu items to the specified <see cref="Menu"/> for each public parameterless method of the given instance.
+        /// </summary>
+        /// <param name="menu">The menu to which the items will be added.</param>
+        /// <param name="instance">The instance whose methods will be used to create menu items.</param>
+        /// <param name="methodNameFilter">An optional filter to select methods by name.</param>
+        public static void AddItemsForPublicParameterlessMethods(Menu menu, object? instance, string? methodNameFilter = null)
+        {
+            var methods = AssemblyUtils.GetPublicParameterlessMethods(instance, methodNameFilter);
+            foreach (var method in methods)
+            {
+                menu.Add(method.Name, () => method.Invoke(instance, null));
+            }
+        }
+
+        /// <summary>
         /// Attaches event handlers to the specified <see cref="MenuItem"/> to log its Opened, Closed,
         /// and Highlighted events.
         /// </summary>

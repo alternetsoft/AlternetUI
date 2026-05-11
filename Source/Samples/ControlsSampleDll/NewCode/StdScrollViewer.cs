@@ -211,6 +211,20 @@ namespace ControlsSample
 
         public virtual void DoActionScrollToLastLine()
         {
+            if (FirstChild is null)
+                return;
+            var paintRectangle = GetPaintRectangle();
+
+            if (FirstChild.LayoutMaxSize is null)
+            {
+                UpdateInterior();
+            }
+
+            if (FirstChild.LayoutMaxSize is null)
+                return;
+
+            var lastLineOffset = FirstChild.LayoutMaxSize.Value.Height - paintRectangle.Height;
+            DoActionSetScroll(new PointD(FirstChild.LayoutOffset.X, lastLineOffset));
         }
 
         public virtual void DoActionScrollToVertPos(int value)
