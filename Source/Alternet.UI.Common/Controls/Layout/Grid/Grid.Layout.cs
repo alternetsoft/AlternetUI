@@ -15,6 +15,11 @@ namespace Alternet.UI
         {
             GetPreferredSize(PreferredSizeContext.PositiveInfinity);
 
+            var layoutOffset = LayoutOffset;
+
+            layoutOffset.X = -layoutOffset.X;
+            layoutOffset.Y = -layoutOffset.Y;
+
             var arrangeSize = ChildrenLayoutBounds.Size;
             try
             {
@@ -22,14 +27,14 @@ namespace Alternet.UI
 
                 if (_data == null)
                 {
-                    var children = Children;
+                    var children = AllChildrenInLayout;
 
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
                         var child = children[i];
                         if (child != null)
                         {
-                            child.Bounds = new RectD(new PointD(), arrangeSize);
+                            child.Bounds = new RectD(layoutOffset, arrangeSize);
                         }
                     }
                 }
@@ -40,7 +45,7 @@ namespace Alternet.UI
                     SetFinalSize(DefinitionsU, arrangeSize.Width, true);
                     SetFinalSize(DefinitionsV, arrangeSize.Height, false);
 
-                    var children = Children;
+                    var children = AllChildrenInLayout;
 
                     for (int currentCell = 0; currentCell < PrivateCells.Length; ++currentCell)
                     {
@@ -56,8 +61,8 @@ namespace Alternet.UI
                         int rowSpan = PrivateCells[currentCell].RowSpan;
 
                         var cellRect = new RectD(
-                            columnIndex == 0 ? 0.0f : DefinitionsU[columnIndex].FinalOffset,
-                            rowIndex == 0 ? 0.0f : DefinitionsV[rowIndex].FinalOffset,
+                            columnIndex == 0 ? layoutOffset.X : layoutOffset.X + DefinitionsU[columnIndex].FinalOffset,
+                            rowIndex == 0 ? layoutOffset.Y : layoutOffset.Y + DefinitionsV[rowIndex].FinalOffset,
                             GetFinalSizeForRange(DefinitionsU, columnIndex, columnSpan),
                             GetFinalSizeForRange(DefinitionsV, rowIndex, rowSpan));
 
@@ -86,7 +91,7 @@ namespace Alternet.UI
                 if (extData == null)
                 {
                     gridDesiredSize = new SizeD();
-                    var children = Children;
+                    var children = AllChildrenInLayout;
 
                     for (int i = 0, count = children.Count; i < count; ++i)
                     {
