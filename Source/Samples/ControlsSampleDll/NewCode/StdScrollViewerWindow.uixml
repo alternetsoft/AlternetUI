@@ -134,11 +134,19 @@
         </HorizontalStackPanel>
 
         <Border SuggestedSize="250,250" HorizontalAlignment="Left"
-                HasBorder="true" Padding="5">
+                HasBorder="true" Padding="5" Name="imageTopContainer">
           <local:StdScrollViewer Name="imageScrollViewer">
           </local:StdScrollViewer>
         </Border>
-        
+
+        <HorizontalStackPanel Margin="0,10,0,0" VerticalAlignment="Bottom">
+          <Label Text="Image Container:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
+          <Button Name="widthPlusButton" Click="WidthPlusButtonClick" Text="W+"/>
+          <Button Name="widthMinusButton" Click="WidthMinusButtonClick" Text="W-"/>
+          <Button Name="heightPlusButton" Click="HeightPlusButtonClick" Text="H+"/>
+          <Button Name="heightMinusButton" Click="HeightMinusButtonClick" Text="H-"/>
+        </HorizontalStackPanel>
+
       </StackPanel>
     </Panel>
 

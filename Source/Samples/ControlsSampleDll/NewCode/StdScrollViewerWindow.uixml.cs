@@ -10,6 +10,8 @@ namespace ControlsSample
     public partial class StdScrollViewerWindow : Window
     {
         private readonly LayoutSample.ImageControl imageControl = new();
+        private readonly Panel imagePanel;
+
         private Coord zoomFactor = 30;
 
         public StdScrollViewerWindow()
@@ -22,7 +24,14 @@ namespace ControlsSample
             InitializeComponent();
 
             imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
-            imageScrollViewer.Children.Add(imageControl);
+
+            imagePanel = new Panel
+            {
+                Parent = imageScrollViewer,
+                Layout = LayoutStyle.Vertical,
+            };
+
+            imageControl.Parent = imagePanel;
 
             InitializeComboBoxes();
 
@@ -72,12 +81,13 @@ namespace ControlsSample
 
         private void AddControlToGrid(int columnIndex, int rowIndex)
         {
-            new Button
+            var button = new Button
             {
                 Text = $"{rowIndex}.{columnIndex}",
                 RowColumn = new(rowIndex, columnIndex),
-                Parent = grid,
             };
+
+            grid.Children.Add(button);
         }
 
         private void AddControlToStackPanel()
@@ -186,6 +196,26 @@ namespace ControlsSample
                 grid.VerticalAlignment
                     = (VerticalAlignment)gridVerticalAlignmentComboBox.Value;
             }
+        }
+
+        private void WidthPlusButtonClick(object? sender, EventArgs e)
+        {
+            imageTopContainer.SuggestedWidth += 10;
+        }
+
+        private void WidthMinusButtonClick(object? sender, EventArgs e)
+        {
+            imageTopContainer.SuggestedWidth -= 10;
+        }
+
+        private void HeightPlusButtonClick(object? sender, EventArgs e)
+        {
+            imageTopContainer.SuggestedHeight += 10;
+        }
+
+        private void HeightMinusButtonClick(object? sender, EventArgs e)
+        {
+            imageTopContainer.SuggestedHeight -= 10;
         }
 
         private void ZoomMinusButtonClick(object? sender, EventArgs e)
