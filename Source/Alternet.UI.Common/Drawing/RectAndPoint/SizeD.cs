@@ -447,14 +447,28 @@ namespace Alternet.Drawing
         /// Tests whether two <see cref='SizeD'/> objects are identical.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool operator ==(SizeD sz1, SizeD sz2) =>
-            sz1.Width == sz2.Width && sz1.Height == sz2.Height;
+        public static bool operator ==(SizeD sz1, SizeD sz2)
+        {
+            return sz1.Width == sz2.Width && sz1.Height == sz2.Height;
+        }
 
         /// <summary>
         /// Tests whether two <see cref='SizeD'/> objects are different.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool operator !=(SizeD sz1, SizeD sz2) => !(sz1 == sz2);
+
+        /// <summary>
+        /// Tests whether two <see cref='SizeD'/> objects are equal, treating NaN values as equal.
+        /// </summary>
+        /// <param name="a">First <see cref="SizeD"/> value.</param>
+        /// <param name="b">Second <see cref="SizeD"/> value.</param>
+        /// <returns><c>true</c> if the values are equal or both are NaN; otherwise, <c>false</c>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool EqualsAllowNaN(SizeD a, SizeD b)
+        {
+            return MathUtils.EqualOrBothNaN(a.Width, b.Width) && MathUtils.EqualOrBothNaN(a.Height, b.Height);
+        }
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string using
