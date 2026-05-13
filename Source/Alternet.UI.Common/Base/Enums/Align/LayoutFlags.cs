@@ -35,5 +35,12 @@ namespace Alternet.UI
         /// <see cref="DockStyle.Left"/>, or <see cref="DockStyle.Right"/>.
         /// </summary>
         UseMarginsWhenDock = 2,
+
+        /// <summary>
+        /// Specifies that the layout process should not call the parent's PerformLayout method.
+        /// When this flag is set, the layout process skips the invocation of the parent's PerformLayout method,
+        /// which can be useful in scenarios where manual control over layout updates is required.
+        /// </summary>
+        NoParentPerformLayoutCalled = 4,
     }
 }

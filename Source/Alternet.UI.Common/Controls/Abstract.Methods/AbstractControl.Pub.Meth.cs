@@ -1935,8 +1935,12 @@ namespace Alternet.UI
         {
             if (IsLayoutSuspended || DisposingOrDisposed || inLayout)
                 return;
-            if (IsParentPerformLayoutCalled())
-                layoutParent = false;
+
+            if (layoutParent)
+            {
+                if (IsParentPerformLayoutCalled())
+                    layoutParent = false;
+            }
 
             inLayout = true;
             try
@@ -1956,14 +1960,15 @@ namespace Alternet.UI
 
         /// <summary>
         /// Determines whether the parent control's PerformLayout method should be called
-        /// when this control's PerformLayout is called. By default returns <see langword="true"/> if the control
-        /// is visible and not ignoring layout; otherwise, returns <see langword="false"/>.
+        /// when this control's PerformLayout is called. By default this method takes into account
+        /// the <see cref="LayoutFlags.NoParentPerformLayoutCalled"/> flag, the visibility of the control,
+        /// and whether the control is ignoring layout.
         /// </summary>
         /// <returns><see langword="true"/> if the parent control's PerformLayout method should be called;
         /// otherwise, <see langword="false"/>.</returns>
         public virtual bool IsParentPerformLayoutCalled()
         {
-            if (!Visible || IgnoreLayout)
+            if (LayoutFlags.HasFlag(LayoutFlags.NoParentPerformLayoutCalled) || !Visible || IgnoreLayout)
                 return false;
 
             return true;
