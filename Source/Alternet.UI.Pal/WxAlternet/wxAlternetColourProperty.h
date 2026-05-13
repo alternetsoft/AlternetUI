@@ -24,7 +24,7 @@ namespace Alternet::UI
         virtual void OnSetValue() wxOVERRIDE;
         virtual bool IntToValue(wxVariant& variant,
             int number,
-            int argFlags = 0) const wxOVERRIDE;
+            wxPGPropValFormatFlags argFlags = wxPGPropValFormatFlags::Null) const wxOVERRIDE;
 
         // Override in derived class to customize how colours are printed as
         // strings.

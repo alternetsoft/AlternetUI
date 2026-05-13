@@ -549,14 +549,17 @@ namespace Alternet::UI
     }
 
 
-    bool wxAlternetSystemColourProperty::IntToValue(wxVariant& variant, int number, int argFlags) const
+    bool wxAlternetSystemColourProperty::IntToValue(
+        wxVariant& variant,
+        int number,
+        wxPGPropValFormatFlags flags) const
     {
         int index = number;
         const int type = m_choices.GetValue(index);
 
         if (type == wxPG_COLOUR_CUSTOM)
         {
-            if (!(argFlags & wxPGPropValFormatFlags::PropertySpecific))
+            if (!(flags & wxPGPropValFormatFlags::PropertySpecific))
                 return QueryColourFromUser(variant);
 
             // Call from event handler.

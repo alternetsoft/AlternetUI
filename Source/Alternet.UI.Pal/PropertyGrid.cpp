@@ -380,16 +380,16 @@ namespace Alternet::UI
 		{
 		}
 
-		virtual wxString ValueToString(wxVariant& value, int argFlags = 0) const wxOVERRIDE;
+		virtual wxString ValueToString(wxVariant& value, wxPGPropValFormatFlags flags = wxPGPropValFormatFlags::Null) const wxOVERRIDE;
 	};
 
-	wxString wxFloatProperty2::ValueToString(wxVariant& value, int argFlags) const
+	wxString wxFloatProperty2::ValueToString(wxVariant& value, wxPGPropValFormatFlags flags) const
 	{
 		auto dbl = value.GetDouble();
 		if (wxIsNaN(dbl))
 			return "nan";
 
-		auto result = wxFloatProperty::ValueToString(value, (wxPGPropValFormatFlags)argFlags);
+		auto result = wxFloatProperty::ValueToString(value, flags);
 		return result;
 	}
 
