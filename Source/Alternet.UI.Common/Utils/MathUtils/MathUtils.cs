@@ -524,6 +524,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether two float values are equal or both are NaN.
+        /// </summary>
+        /// <param name="x">The first value to compare.</param>
+        /// <param name="y">The second value to compare.</param>
+        /// <returns>true if the values are equal or both are NaN; otherwise, false.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool EqualOrBothNaN(float x, float y)
+        {
+            return x == y || (float.IsNaN(x) && float.IsNaN(y));
+        }
+
+        /// <summary>
         /// Determines whether two <see cref="SizeD"/> instances are approximately
         /// equal by comparing their width and
         /// height values.
