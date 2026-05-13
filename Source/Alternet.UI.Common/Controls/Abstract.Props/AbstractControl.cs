@@ -43,7 +43,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
 
-        private static readonly SizeD DefaultControlSize = SizeD.NaN;
+        private static readonly SizeD DefaultControlSuggestedSize = SizeD.NaN;
         private static readonly List<IControlNotification> globalNotifications = new();
 
         private static long? mouseWheelTimestamp;
@@ -88,7 +88,7 @@ namespace Alternet.UI
         private SizeD minimumSize;
         private SizeD maximumSize;
         private SizeD? dpi;
-        private SizeD suggestedSize = DefaultControlSize;
+        private SizeD suggestedSize = DefaultControlSuggestedSize;
         private Thickness backgroundPadding;
 
         private PointD? minimumLocation;
@@ -2269,7 +2269,7 @@ namespace Alternet.UI
         {
             get
             {
-                SizeD result = DefaultControlSize;
+                SizeD result = DefaultControlSuggestedSize;
 
                 if (!IgnoreSuggestedWidth)
                     result.Width = suggestedSize.Width;
