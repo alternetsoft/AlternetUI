@@ -209,10 +209,10 @@ namespace ControlsSample
             DoActionSetScroll(new PointD(value, FirstChild?.LayoutOffset.Y ?? 0));
         }
 
-        public virtual void DoActionScrollToLastLine()
+        public virtual SizeD GetScrollRange()
         {
             if (FirstChild is null)
-                return;
+                return SizeD.Empty;
             var paintRectangle = GetPaintRectangle();
 
             if (FirstChild.LayoutMaxSize is null)
@@ -221,10 +221,55 @@ namespace ControlsSample
             }
 
             if (FirstChild.LayoutMaxSize is null)
+                return SizeD.Empty;
+
+            return FirstChild.LayoutMaxSize.Value;
+        }
+
+        public virtual PointD GetScrollPosition()
+        {
+            if (FirstChild is null)
+                return PointD.Empty;
+            return FirstChild.LayoutOffset;
+        }
+
+        public virtual PointD GetMaxScrollPosition()
+        {
+            if (FirstChild is null)
+                return PointD.Empty;
+            var scrollRange = GetScrollRange();
+            if (scrollRange == SizeD.Empty)
+                return PointD.Empty;
+
+            var paintRectangle = GetPaintRectangle();
+
+            var lastHorizontalOffset = Math.Max(scrollRange.Width - paintRectangle.Width, 0);
+            var lastVerticalOffset = Math.Max(scrollRange.Height - paintRectangle.Height, 0);
+            return new PointD(lastHorizontalOffset, lastVerticalOffset);
+        }
+
+        public virtual void DoActionScrollToLastLine()
+        {
+            if (FirstChild is null)
+                return;
+            var scrollRange = GetScrollRange();
+            if (scrollRange == SizeD.Empty)
                 return;
 
-            var lastLineOffset = FirstChild.LayoutMaxSize.Value.Height - paintRectangle.Height;
+            var lastLineOffset = scrollRange.Height - GetPaintRectangle().Height;
             DoActionSetScroll(new PointD(FirstChild.LayoutOffset.X, lastLineOffset));
+        }
+
+        public virtual void DoActionScrollToLastChar()
+        {
+            if (FirstChild is null)
+                return;
+            var scrollRange = GetScrollRange();
+            if (scrollRange == SizeD.Empty)
+                return;
+
+            var lastCharOffset = scrollRange.Width - GetPaintRectangle().Width;
+            DoActionSetScroll(new PointD(lastCharOffset, FirstChild.LayoutOffset.Y));
         }
 
         public virtual void DoActionScrollToVertPos(int value)
@@ -292,32 +337,6 @@ namespace ControlsSample
             UpdateInterior();
         }
 
-        protected virtual void UpdateInterior()
-        {
-            var firstChild = FirstChild;
-
-            if (firstChild is null)
-                return;
-
-            var availableSize = SizeD.PositiveInfinity;
-
-            var paintRectangle = GetPaintRectangle();
-
-            if (!IsScrolledVertically)
-                availableSize.Height = paintRectangle.Height;
-            if (!IsScrolledHorizontally)
-                availableSize.Width = paintRectangle.Width;
-
-            var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
-
-            value.Width += firstChild.LayoutOffset.X;
-            value.Height += firstChild.LayoutOffset.Y;
-
-            firstChild.LayoutMaxSize = value;
-
-            UpdateScrollBars(true);
-        }
-
         /// <inheritdoc/>
         protected override void OnChildInserted(int index, AbstractControl childControl)
         {
@@ -342,14 +361,54 @@ namespace ControlsSample
             }
         }
 
-        private void OnChildLayoutUpdated(object? sender, EventArgs e)
-        {
-            UpdateInterior();
-        }
-
         protected virtual bool IsScrolledControl(AbstractControl control)
         {
             return control.IsVisible && !control.IgnoreLayout;
+        }
+
+        protected virtual void UpdateInterior()
+        {
+            var firstChild = FirstChild;
+
+            if (firstChild is null)
+                return;
+
+            var availableSize = SizeD.PositiveInfinity;
+
+            var paintRectangle = GetPaintRectangle();
+
+            if (!IsScrolledVertically)
+                availableSize.Height = paintRectangle.Height;
+            if (!IsScrolledHorizontally)
+                availableSize.Width = paintRectangle.Width;
+
+            var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
+
+            value.Width += firstChild.LayoutOffset.X;
+            value.Height += firstChild.LayoutOffset.Y;
+
+            firstChild.LayoutMaxSize = value;
+
+            UpdateScrollBars(true);
+
+            var newPaintRectangle = GetPaintRectangle();
+
+            if (newPaintRectangle != paintRectangle)
+            {
+                PerformLayout(layoutParent: false);
+            }
+        }
+
+        private void OnChildLayoutUpdated(object? sender, EventArgs e)
+        {
+            UpdateInterior();
+
+            var maxScrollPosition = GetMaxScrollPosition();
+            var scrollPosition = GetScrollPosition();
+
+            DoActionSetScroll(new PointD(
+                Math.Min(scrollPosition.X, maxScrollPosition.X),
+                Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
         }
 
         private void OnChildOfChildRemoved(object? sender, BaseEventArgs<AbstractControl> e)

@@ -10,7 +10,7 @@ namespace ControlsSample
     public partial class StdScrollViewerWindow : Window
     {
         private readonly LayoutSample.ImageControl imageControl = new();
-        private readonly Panel imagePanel;
+        private readonly Control imageContainer;
 
         private Coord zoomFactor = 30;
 
@@ -25,13 +25,12 @@ namespace ControlsSample
 
             imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
 
-            imagePanel = new Panel
+            imageContainer = new Panel
             {
                 Parent = imageScrollViewer,
-                Layout = LayoutStyle.Vertical,
             };
 
-            imageControl.Parent = imagePanel;
+            imageControl.Parent = imageContainer;
 
             InitializeComboBoxes();
 
@@ -64,7 +63,7 @@ namespace ControlsSample
         {
             grid.DoInsideInit(() =>
             {
-                int rowCount = 10;
+                int rowCount = 17;
                 int columnCount = 10;
 
                 grid.RowColumnCount = new(rowCount, columnCount);

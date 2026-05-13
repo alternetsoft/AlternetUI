@@ -126,8 +126,8 @@
 
     <Panel Title="Drawing" IsTitleLocalized="true"
               Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
-      <StackPanel Orientation="Vertical">
-        <HorizontalStackPanel >
+      <StackPanel Orientation="Vertical" Name="imageStackPanel">
+        <HorizontalStackPanel Name="topImageToolBarPanel">
           <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Button Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
           <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-"/>
@@ -139,7 +139,7 @@
           </local:StdScrollViewer>
         </Border>
 
-        <HorizontalStackPanel Margin="0,10,0,0" VerticalAlignment="Bottom">
+        <HorizontalStackPanel Margin="0,10,0,0" VerticalAlignment="Bottom" Name="bottomImageToolBarPanel">
           <Label Text="Image Container:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Button Name="widthPlusButton" Click="WidthPlusButtonClick" Text="W+"/>
           <Button Name="widthMinusButton" Click="WidthMinusButtonClick" Text="W-"/>
