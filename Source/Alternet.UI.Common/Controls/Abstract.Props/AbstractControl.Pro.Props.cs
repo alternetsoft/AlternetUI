@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public partial class AbstractControl
@@ -21,6 +23,11 @@ namespace Alternet.UI
                 return modifiers.ToKeys();
             }
         }
+
+        /// <summary>
+        /// Gets the previous suggested size before the new value was set to <see cref="SuggestedSize"/>.
+        /// </summary>
+        protected SizeD OldSuggestedSize => oldSuggestedSize;
 
         /// <summary>
         /// Gets whether this control is dummy control.

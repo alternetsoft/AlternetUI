@@ -21,6 +21,8 @@ namespace LayoutSample
             get => zoom;
             set
             {
+                if (zoom == value)
+                    return;
                 zoom = value;
                 PerformLayout();
             }

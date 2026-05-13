@@ -89,6 +89,7 @@ namespace Alternet.UI
         private SizeD maximumSize;
         private SizeD? dpi;
         private SizeD suggestedSize = DefaultControlSuggestedSize;
+        private SizeD oldSuggestedSize = DefaultControlSuggestedSize;
         private Thickness backgroundPadding;
 
         private PointD? minimumLocation;
@@ -2285,6 +2286,7 @@ namespace Alternet.UI
                 if (suggestedSize == value)
                     return;
 
+                oldSuggestedSize = suggestedSize;
                 suggestedSize = value;
 
                 if (IgnoreSuggestedHeight && IgnoreSuggestedWidth)
