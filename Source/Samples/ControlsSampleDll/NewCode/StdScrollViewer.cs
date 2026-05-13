@@ -322,6 +322,21 @@ namespace ControlsSample
             DrawInterior(dc);
         }
 
+        /// <inheritdoc/>
+        public override bool IsParentPerformLayoutCalled()
+        {
+            var result = base.IsParentPerformLayoutCalled();
+
+            if (result)
+            {
+                if (SizeD.EqualsAllowNaN(SuggestedSize, OldSuggestedSize))
+                {
+                    return false;
+                }
+            }
+
+            return result;
+        }
 
         /// <inheritdoc/>
         public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)

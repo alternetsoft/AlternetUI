@@ -17,20 +17,27 @@ namespace ControlsSample
         public StdScrollViewerWindow()
         {
             if (HasScaleFactor)
-                zoomFactor = 30;
+                zoomFactor = 60;
             else
-                zoomFactor = 20;
+                zoomFactor = 40;
 
             InitializeComponent();
 
             imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
 
+            imageScrollViewer.ParentBackColor = false;
+            imageScrollViewer.BackColor = Color.Green;
+
             imageContainer = new Panel
             {
                 Parent = imageScrollViewer,
+                ParentBackColor = false,
+                BackColor = Color.Red,
             };
 
             imageControl.Parent = imageContainer;
+            imageControl.ParentBackColor = false;
+            imageScrollViewer.BackColor = Color.Yellow;
 
             InitializeComboBoxes();
 
@@ -41,6 +48,16 @@ namespace ControlsSample
             UpdateImageZoom();
 
             MenuUtils.AddItemsForPublicParameterlessMethods(stackPanelOptionsGrid.ContextMenuStrip, scrollViewerStack, "DoAction");
+
+            imageContainer.SizeChanged+= (sender, e) =>
+            {
+                App.LogIf($"Image container size changed: {imageContainer.Size}", false);
+            };
+
+            imageControl.SizeChanged += (sender, e) =>
+            {
+                App.LogIf($"Image control size changed: {imageControl.Size}", false);
+            };
         }
 
         private void InitializeStackPanel()
