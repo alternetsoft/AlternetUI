@@ -283,12 +283,15 @@ namespace ControlsSample
             if (firstChild is null)
                 return;
 
-            var oldOffset = firstChild.LayoutOffset;
+            var newOffset = value.ClampToZero();
 
-            firstChild.LayoutOffset = value.ClampToZero();
+            var maxOffset = GetMaxScrollPosition();
 
-            if (oldOffset != firstChild.LayoutOffset)
+            if (newOffset != firstChild.LayoutOffset)
+            {
+                firstChild.LayoutOffset = newOffset.ClampToMax(maxOffset);
                 UpdateScrollBars(true);
+            }
         }
 
         public virtual void DoActionOffsetScroll(SizeD value)
@@ -301,11 +304,7 @@ namespace ControlsSample
 
             var oldOffset = firstChild.LayoutOffset;
             var newOffset = oldOffset + value;
-
-            firstChild.LayoutOffset = newOffset.ClampToZero();
-
-            if (oldOffset != firstChild.LayoutOffset)
-                UpdateScrollBars(true);
+            DoActionSetScroll(newOffset);
         }
 
         /// <inheritdoc/>

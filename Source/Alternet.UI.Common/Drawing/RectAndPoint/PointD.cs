@@ -620,8 +620,22 @@ namespace Alternet.Drawing
         /// to the specified bounds.</returns>
         public readonly PointD ClampToMinMax(PointD min, PointD max)
         {
-            Coord clampedX = Math.Min(Math.Max(x, min.x), max.y);
+            Coord clampedX = Math.Min(Math.Max(x, min.x), max.x);
             Coord clampedY = Math.Min(Math.Max(y, min.y), max.y);
+            return new PointD(clampedX, clampedY);
+        }
+
+        /// <summary>
+        /// Returns a new point whose coordinates are clamped to the specified maximum values.
+        /// </summary>
+        /// <param name="max">The maximum allowed values for the X and Y coordinates. Each coordinate of the returned point will not
+        /// exceed the corresponding value in this parameter.</param>
+        /// <returns>A new PointD whose X and Y coordinates are the lesser of the current point's coordinates and the
+        /// corresponding values in <paramref name="max"/>.</returns>
+        public readonly PointD ClampToMax(PointD max)
+        {
+            Coord clampedX = Math.Min(x, max.x);
+            Coord clampedY = Math.Min(y, max.y);
             return new PointD(clampedX, clampedY);
         }
 

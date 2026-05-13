@@ -141,45 +141,55 @@ namespace ControlsSample
 
         private void RemoveControlFromStackPanelButton_Click(object? sender, EventArgs e)
         {
-            int count = stackPanel.Children.Count;
-            if (count > 0)
-                stackPanel.Children.RemoveAt(count - 1);
+            stackPanel.Children.RemoveLast();
         }
 
         private void AddColumnToGridButton_Click(object? sender, EventArgs e)
         {
-            grid.ColumnDefinitions.Add(new ColumnDefinition());
-            int columnIndex = grid.ColumnDefinitions.Count - 1;
-            for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
-                AddControlToGrid(columnIndex, rowIndex);
+            grid.DoInsideLayout(() =>
+            {
+                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                int columnIndex = grid.ColumnDefinitions.Count - 1;
+                for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
+                    AddControlToGrid(columnIndex, rowIndex);
+            });
         }
 
         private void RemoveColumnFromGridButton_Click(object? sender, EventArgs e)
         {
-            int columnIndex = grid.ColumnDefinitions.Count - 1;
-            var toRemove = grid.Children.Where(x => Grid.GetColumn(x) == columnIndex).ToArray();
-            foreach (var control in toRemove)
-                grid.Children.Remove(control);
+            grid.DoInsideLayout(() =>
+            {
+                int columnIndex = grid.ColumnDefinitions.Count - 1;
+                var toRemove = grid.Children.Where(x => Grid.GetColumn(x) == columnIndex).ToArray();
+                foreach (var control in toRemove)
+                    grid.Children.Remove(control);
 
-            grid.ColumnDefinitions.RemoveAt(columnIndex);
+                grid.ColumnDefinitions.RemoveAt(columnIndex);
+            });
         }
 
         private void AddRowToGridButton_Click(object? sender, EventArgs e)
         {
-            grid.RowDefinitions.Add(new RowDefinition());
-            int rowIndex = grid.RowDefinitions.Count - 1;
-            for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
-                AddControlToGrid(columnIndex, rowIndex);
+            grid.DoInsideLayout(() =>
+            {
+                grid.RowDefinitions.Add(new RowDefinition());
+                int rowIndex = grid.RowDefinitions.Count - 1;
+                for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
+                    AddControlToGrid(columnIndex, rowIndex);
+            });
         }
 
         private void RemoveRowFromGridButton_Click(object? sender, EventArgs e)
         {
-            int rowIndex = grid.RowDefinitions.Count - 1;
-            var toRemove = grid.Children.Where(x => Grid.GetRow(x) == rowIndex).ToArray();
-            foreach (var control in toRemove)
-                grid.Children.Remove(control);
+            grid.DoInsideLayout(() =>
+            {
+                int rowIndex = grid.RowDefinitions.Count - 1;
+                var toRemove = grid.Children.Where(x => Grid.GetRow(x) == rowIndex).ToArray();
+                foreach (var control in toRemove)
+                    grid.Children.Remove(control);
 
-            grid.RowDefinitions.RemoveAt(rowIndex);
+                grid.RowDefinitions.RemoveAt(rowIndex);
+            });
         }
 
         private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
