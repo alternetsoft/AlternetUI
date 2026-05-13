@@ -224,19 +224,31 @@ namespace Alternet.UI
 
                 var preferredSize = control.GetPreferredSizeLimited(
                     new PreferredSizeContext(childrenLayoutBounds.Size - control.Margin.Size));
+                var suggestedSize = control.SuggestedSize;
 
-                var horizontalPosition =
+                AxisIntervalD horizontalPosition =
                     AlignHorizontal(
                         childrenLayoutBounds,
                         control,
                         preferredSize,
                         control.HorizontalAlignment);
-                var verticalPosition =
+
+                if (!float.IsNaN(suggestedSize.Width))
+                {
+                    horizontalPosition = new AxisIntervalD(horizontalPosition.Start, suggestedSize.Width);
+                }
+
+                AxisIntervalD verticalPosition =
                     AlignVertical(
                         childrenLayoutBounds,
                         control,
                         preferredSize,
                         control.VerticalAlignment);
+
+                if (!float.IsNaN(suggestedSize.Height))
+                {
+                    verticalPosition = new AxisIntervalD(verticalPosition.Start, suggestedSize.Height);
+                }
 
                 control.Bounds = new RectD(
                     horizontalPosition.Start,
