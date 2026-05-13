@@ -1938,7 +1938,7 @@ namespace Alternet.UI
 
             if (layoutParent)
             {
-                if (IsParentPerformLayoutCalled())
+                if (!IsParentPerformLayoutCalled())
                     layoutParent = false;
             }
 
@@ -1954,6 +1954,8 @@ namespace Alternet.UI
             {
                 inLayout = false;
             }
+
+            oldSuggestedSize = suggestedSize;
 
             RaiseLayoutUpdated(EventArgs.Empty);
         }
