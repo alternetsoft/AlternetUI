@@ -50,7 +50,8 @@ namespace Alternet.UI
         /// value.</remarks>
         /// <typeparam name="T2">The type of the attribute value. Must inherit from TValue.</typeparam>
         /// <param name="id">The identifier used to locate the attribute.</param>
-        /// <param name="defaultValueFactory">A function that creates a new attribute value if one does not exist for the specified identifier.</param>
+        /// <param name="defaultValueFactory">A function that creates a new attribute value
+        /// if one does not exist for the specified identifier.</param>
         /// <returns>The existing attribute value associated with the identifier, or the newly created value if none was found.</returns>
         T2 GetAttributeOrAdd<T2>(TKey id, Func<T2> defaultValueFactory)
             where T2 : TValue;
