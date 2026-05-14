@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-using Alternet.UI;
+using Alternet.Drawing;
 
-namespace ControlsSample
+namespace Alternet.UI
 {
     /// <summary>
     /// Represents a scrollable area that can contain other visible elements.
     /// </summary>
     [ControlCategory("Containers")]
-    internal partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
+    public partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
     {
         public static SizeD DefaultScrollSmallChange = new(40, 40);
-
-        private static long childInfoCounter = 0;
-
-        private string infoPropName = "StdScrollViewer.ChildInfo" + new ObjectUniqueId(ref childInfoCounter).ToString();
 
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
@@ -440,7 +436,9 @@ namespace ControlsSample
 
         private ChildControlInfo GetChildControlInfo(AbstractControl control)
         {
-            var result = control.CustomAttr.GetAttributeOrAdd(infoPropName, () => new ChildControlInfo());
+            var result = control.CustomAttr.GetAttributeOrAdd(
+                AttributesFactory.GenUniqueAttributeName("ChildControlInfo_"),
+                () => new ChildControlInfo());
             return result;
         }
 

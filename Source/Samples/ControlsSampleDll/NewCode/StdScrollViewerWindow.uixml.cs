@@ -27,7 +27,7 @@ namespace ControlsSample
             {
                 control.LayoutUpdated += (sender, e) =>
                 {
-                    App.LogIf($"{control.Name} layout updated", true);
+                    App.LogIf($"{control.Name} layout updated", false);
                 };
             }
 
@@ -42,27 +42,27 @@ namespace ControlsSample
 
             imageTopContainer.LayoutUpdated += (sender, e) =>
             {
-                App.LogIf($"Image top container layout updated", true);
+                App.LogIf($"Image top container layout updated", false);
             };
 
             imageContainer.LayoutUpdated += (sender, e) =>
             {
-                App.LogIf($"Image container layout updated", true);
+                App.LogIf($"Image container layout updated", false);
             };
 
             imageContainer.SizeChanged += (sender, e) =>
             {
-                App.LogIf($"Image container size changed: {imageContainer.Size}. IsLayoutPerform: {imageContainer.IsLayoutPerform}", true);
+                App.LogIf($"Image container size changed: {imageContainer.Size}. IsLayoutPerform: {imageContainer.IsLayoutPerform}", false);
             };
 
             imageControl.SizeChanged += (sender, e) =>
             {
-                App.LogIf($"Image size changed: {imageControl.Size}. IsLayoutPerform: {imageControl.IsLayoutPerform}", true);
+                App.LogIf($"Image size changed: {imageControl.Size}. IsLayoutPerform: {imageControl.IsLayoutPerform}", false);
             };
 
             imageControl.LayoutUpdated += (sender, e) =>
             {
-                App.LogIf($"Image layout updated", true);
+                App.LogIf($"Image layout updated", false);
             };
 
             imageControl.Parent = imageContainer;

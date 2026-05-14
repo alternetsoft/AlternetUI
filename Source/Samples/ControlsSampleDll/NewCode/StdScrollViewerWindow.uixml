@@ -12,10 +12,10 @@
 
         <Border SuggestedHeight="350" Padding="5"
                         VerticalAlignment="Stretch" HorizontalAlignment="Fill" HasBorder="true">
-          <local:StdScrollViewer Name="scrollViewerStack">
+          <StdScrollViewer Name="scrollViewerStack">
             <StackPanel Name="stackPanel" Orientation="Vertical" MinChildMargin="3">
             </StackPanel>
-          </local:StdScrollViewer>
+          </StdScrollViewer>
         </Border>
 
         <Grid Margin="10,0,0,0" HorizontalAlignment="Right" Name="stackPanelOptionsGrid">
@@ -69,10 +69,10 @@
 
         <Border SuggestedHeight="350" VerticalAlignment="Stretch"
                 HorizontalAlignment="Fill" Padding="5" HasBorder="true">
-          <local:StdScrollViewer Name="scrollViewerGrid">
+          <StdScrollViewer Name="scrollViewerGrid">
             <Grid Name="grid">
             </Grid>
-          </local:StdScrollViewer>
+          </StdScrollViewer>
         </Border>
 
         <Grid Margin="10,0,0,0" MinChildMargin="3" HorizontalAlignment="Right">
@@ -137,8 +137,8 @@
 
         <Border SuggestedSize="250,250" HorizontalAlignment="Left"
                 HasBorder="true" Padding="5" Name="imageTopContainer">
-          <local:StdScrollViewer Name="imageScrollViewer">
-          </local:StdScrollViewer>
+          <StdScrollViewer Name="imageScrollViewer">
+          </StdScrollViewer>
         </Border>
 
         <HorizontalStackPanel Margin="0,10,0,0" VerticalAlignment="Bottom" Name="bottomImageToolBarPanel">
