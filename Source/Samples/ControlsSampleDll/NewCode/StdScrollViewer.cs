@@ -360,14 +360,7 @@ namespace ControlsSample
         protected override void OnLayoutUpdated(EventArgs e)
         {
             base.OnLayoutUpdated(e);
-
             UpdateInterior();
-            var maxScrollPosition = GetMaxScrollPosition();
-            var scrollPosition = GetScrollPosition();
-
-            DoActionSetScroll(new PointD(
-                Math.Min(scrollPosition.X, maxScrollPosition.X),
-                Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
         }
 
         protected virtual void UpdateInterior()
@@ -393,26 +386,48 @@ namespace ControlsSample
 
             firstChild.LayoutMaxSize = value;
 
-            UpdateScrollBars(true);
-
             var newPaintRectangle = GetPaintRectangle();
 
             if (newPaintRectangle != paintRectangle)
             {
                 PerformLayout(layoutParent: false);
             }
+
+            var scrollbarsUpdated = UpdateScrollBars(false);
+
+            if (scrollbarsUpdated)
+            {
+                var maxScrollPosition = GetMaxScrollPosition();
+                var scrollPosition = GetScrollPosition();
+
+                DoActionSetScroll(new PointD(
+                    Math.Min(scrollPosition.X, maxScrollPosition.X),
+                    Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
+
+                Refresh();
+            }
         }
 
-        private void OnChildOfChildRemoved(object? sender, BaseEventArgs<AbstractControl> e)
+        protected override void OnChildInserted(int index, AbstractControl childControl)
         {
-            if(!IsScrolledControl(e.Value))
-                return;
-            UpdateInterior();
+            base.OnChildInserted(index, childControl);
+
+            if (IsScrolledControl(childControl))
+            {
+                childControl.LayoutUpdated += OnChildLayoutUpdated;
+            }
         }
 
-        private void OnChildOfChildInserted(object? sender, BaseEventArgs<AbstractControl> e)
+        /// <inheritdoc/>
+        protected override void OnChildRemoved(AbstractControl childControl)
         {
-            if (!IsScrolledControl(e.Value))
+            childControl.LayoutUpdated -= OnChildLayoutUpdated;
+            base.OnChildRemoved(childControl);
+        }
+
+        private void OnChildLayoutUpdated(object? sender, EventArgs e)
+        {
+            if (sender is not AbstractControl control || !IsScrolledControl(control))
                 return;
             UpdateInterior();
         }
