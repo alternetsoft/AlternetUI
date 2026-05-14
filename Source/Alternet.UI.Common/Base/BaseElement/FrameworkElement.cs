@@ -303,6 +303,15 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override string? ToString()
+        {
+            if (!string.IsNullOrEmpty(Name))
+                return $"{GetType().Name} (Name='{Name}')";
+
+            return base.ToString();
+        }
+
         /// <summary>
         /// Recursively searches all child elements for an element
         /// with the specified name,
