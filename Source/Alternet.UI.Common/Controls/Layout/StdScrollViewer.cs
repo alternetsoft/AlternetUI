@@ -12,6 +12,10 @@ namespace Alternet.UI
     [ControlCategory("Containers")]
     public partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
     {
+        /// <summary>
+        /// Defines the default small change value for scrolling, which determines how much
+        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// </summary>
         public static SizeD DefaultScrollSmallChange = new(40, 40);
 
         private bool isScrolledVertically = true;
@@ -35,8 +39,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the small change value for scrolling, which determines how much
+        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// </summary>
         public virtual SizeD? ScrollSmallChange { get; set; }
-
+        
+        /// <summary>
+        /// Gets or sets the large change value for scrolling, which determines how much
+        /// the content should scroll when a large scroll action is performed (e.g., scrolling by one page).
+        /// </summary>
         public virtual SizeD? ScrollLargeChange { get; set; }
 
         /// <summary>
@@ -124,6 +136,12 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Retrieves the height of a single character using the default font.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Coord"/> representing the height of the character.
+        /// </returns>
         public virtual Coord GetCharHeight()
         {
             var result = MeasureCanvas.GetTextExtent("W", RealFont).Height;
@@ -132,6 +150,11 @@ namespace Alternet.UI
             return result;
         }
 
+        /// <summary>
+        /// Calculates and retrieves the effective small change value for scrolling, which determines how much
+        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> representing the effective small change value for scrolling. </returns>
         public virtual SizeD GetEffectiveScrollSmallChange()
         {
             if (ScrollSmallChange is not null)
@@ -142,79 +165,98 @@ namespace Alternet.UI
             return DefaultScrollSmallChange;
         }
 
+        /// <summary>
+        /// Calculates and retrieves the effective large change value for scrolling, which determines how much
+        /// the content should scroll when a large scroll action is performed (e.g., scrolling by one page).
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> representing the effective large change value for scrolling. </returns>
         public virtual SizeD GetEffectiveScrollLargeChange()
         {
             return ScrollLargeChange ?? GetPaintRectangle().Size;
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollCharLeft()
         {
             var value = GetEffectiveScrollSmallChange().Width;
             DoActionOffsetScroll(new SizeD(-value, 0));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollCharRight()
         {
             var value = GetEffectiveScrollSmallChange().Width;
             DoActionOffsetScroll(new SizeD(value, 0));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollLineDown()
         {
             var value = GetEffectiveScrollSmallChange().Height;
             DoActionOffsetScroll(new SizeD(0, value));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollLineUp()
         {
             var value = GetEffectiveScrollSmallChange().Height;
             DoActionOffsetScroll(new SizeD(0, -value));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollPageDown()
         {
             var value = GetEffectiveScrollLargeChange().Height;
             DoActionOffsetScroll(new SizeD(0, value));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollPageUp()
         {
             var value = GetEffectiveScrollLargeChange().Height;
             DoActionOffsetScroll(new SizeD(0, -value));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollPageLeft()
         {
             var value = GetEffectiveScrollLargeChange().Width;
             DoActionOffsetScroll(new SizeD(-value, 0));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollPageRight()
         {
             var value = GetEffectiveScrollLargeChange().Width;
             DoActionOffsetScroll(new SizeD(value, 0));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollToFirstChar()
         {
             DoActionScrollToHorzPos(0);
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollToFirstLine()
         {
             DoActionScrollToVertPos(0);
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollToHorzPos(int value)
         {
             DoActionSetScroll(new PointD(value, FirstChild?.LayoutOffset.Y ?? 0));
         }
 
+        /// <summary>
+        /// Calculates and retrieves the total scrollable area based on the maximum right and bottom positions of the child controls,
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> representing the total scrollable area.</returns>
         public virtual SizeD GetScrollRange()
         {
             if (FirstChild is null)
                 return SizeD.Empty;
-            var paintRectangle = GetPaintRectangle();
 
             if (layoutMaxSize is null)
             {
@@ -227,6 +269,10 @@ namespace Alternet.UI
             return layoutMaxSize.Value;
         }
 
+        /// <summary>
+        /// Retrieves the current scroll position, which is determined by the layout offset of the first child control.
+        /// </summary>
+        /// <returns>A <see cref="PointD"/> representing the current scroll position.</returns>
         public virtual PointD GetScrollPosition()
         {
             if (FirstChild is null)
@@ -234,6 +280,10 @@ namespace Alternet.UI
             return FirstChild.LayoutOffset;
         }
 
+        /// <summary>
+        /// Calculates and retrieves the maximum scroll position based on the scroll range and the visible area.
+        /// </summary>
+        /// <returns>A <see cref="PointD"/> representing the maximum scroll position.</returns>
         public virtual PointD GetMaxScrollPosition()
         {
             if (FirstChild is null)
@@ -249,6 +299,7 @@ namespace Alternet.UI
             return new PointD(lastHorizontalOffset, lastVerticalOffset);
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollToLastLine()
         {
             if (FirstChild is null)
@@ -261,6 +312,10 @@ namespace Alternet.UI
             DoActionSetScroll(new PointD(FirstChild.LayoutOffset.X, lastLineOffset));
         }
 
+        /// <summary>
+        /// Scrolls the content to the last character, which is determined by calculating
+        /// the maximum horizontal scroll offset based on the scroll range and the visible area.
+        /// </summary>
         public virtual void DoActionScrollToLastChar()
         {
             if (FirstChild is null)
@@ -273,11 +328,16 @@ namespace Alternet.UI
             DoActionSetScroll(new PointD(lastCharOffset, FirstChild.LayoutOffset.Y));
         }
 
+        /// <inheritdoc/>
         public virtual void DoActionScrollToVertPos(int value)
         {
             DoActionSetScroll(new PointD(FirstChild?.LayoutOffset.X ?? 0, value));
         }
 
+        /// <summary>
+        /// Scrolls the content to the specified position, ensuring that the new scroll position is within valid bounds.
+        /// </summary>
+        /// <param name="value">The target scroll position.</param>
         public virtual void DoActionSetScroll(PointD value)
         {
             var firstChild = FirstChild;
@@ -295,6 +355,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Scrolls the content by the specified offset.
+        /// </summary>
+        /// <param name="value">The offset by which to scroll the content.</param>
         public virtual void DoActionOffsetScroll(SizeD value)
         {
             if (value.Height == 0 && value.Width == 0)
@@ -324,17 +388,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool IsParentPerformLayoutCalled()
+        public override bool IsParentPerformLayoutCalled(PerformLayoutParams? layoutParams = null)
         {
-            var result = base.IsParentPerformLayoutCalled();
-
-            if (result)
+            if (layoutParams?.Reason != PerformLayoutReason.SuggestedSizeChanged)
             {
-                if (SizeD.EqualsAllowNaN(SuggestedSize, OldSuggestedSize))
-                {
-                    return false;
-                }
+                return false;
             }
+
+            var result = base.IsParentPerformLayoutCalled(layoutParams);
 
             return result;
         }
@@ -352,6 +413,12 @@ namespace Alternet.UI
             UpdateInterior();
         }
 
+        /// <summary>
+        /// Determines whether the specified control should be considered as a scrolled control,
+        /// which means that its layout updates can affect the scrollable area and may require updating the scroll bars.
+        /// </summary>
+        /// <param name="control">The control to check.</param>
+        /// <returns><c>true</c> if the control should be considered as a scrolled control; otherwise, <c>false</c>.</returns>
         protected virtual bool IsScrolledControl(AbstractControl control)
         {
             return control.IsVisible && !control.IgnoreLayout;
@@ -364,6 +431,9 @@ namespace Alternet.UI
             UpdateInterior();
         }
 
+        /// <summary>
+        /// Updates the interior layout and scroll bars based on the current child controls and their sizes.
+        /// </summary>
         protected virtual void UpdateInterior()
         {
             var firstChild = FirstChild;
@@ -375,7 +445,7 @@ namespace Alternet.UI
             {
                 var paintRectangle = GetPaintRectangle();
 
-                var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
+                var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true).Ceiling();
 
                 value.Width += firstChild.LayoutOffset.X;
                 value.Height += firstChild.LayoutOffset.Y;
@@ -416,6 +486,7 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnChildInserted(int index, AbstractControl childControl)
         {
             base.OnChildInserted(index, childControl);
