@@ -91,6 +91,12 @@ namespace Alternet.UI
                 return;
             OnLayoutUpdated(e);
             LayoutUpdated?.Invoke(this, e);
+
+            if (Parent is not null)
+            {
+                Parent.OnChildLayoutUpdated(e);
+                Parent.ChildLayoutUpdated?.Invoke(Parent, new (this));
+            }
         }
 
         /// <summary>

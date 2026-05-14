@@ -428,6 +428,12 @@ namespace Alternet.UI
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildRemoved;
 
         /// <summary>
+        /// Occurs when the layout of a child element has been updated.
+        /// </summary>
+        [Category("Layout")]
+        public event EventHandler<BaseEventArgs<AbstractControl>>? ChildLayoutUpdated;
+
+        /// <summary>
         /// Occurs when the child control's <see cref="Visible"/> property is changed.
         /// </summary>
         [Category("Behavior")]

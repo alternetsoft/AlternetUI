@@ -36,6 +36,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the layout of the child control is updated.
+        /// </summary>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnChildLayoutUpdated(EventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called after the <see cref="KeyDown" /> event of the child control is raised.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
