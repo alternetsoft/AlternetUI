@@ -111,33 +111,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when a <see cref="AbstractControl"/> is inserted into
-        /// the <see cref="AbstractControl.Children"/>.
-        /// </summary>
-        /// <remarks>Derived classes can override this method to handle the event without
-        /// attaching a delegate.</remarks>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildInserted(int index, AbstractControl childControl)
-        {
-        }
-
-        /// <summary>
         /// Called when the layout of the control is updated. This method is invoked after the layout process
         /// is completed, allowing derived classes to perform additional actions or adjustments based on the new layout.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnLayoutUpdated(EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called when a <see cref="AbstractControl"/> is removed from the
-        /// <see cref="AbstractControl.Children"/> collections.
-        /// </summary>
-        /// <remarks>Derived classes can override this method to handle the event without
-        /// attaching a delegate.</remarks>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildRemoved(AbstractControl childControl)
         {
         }
 

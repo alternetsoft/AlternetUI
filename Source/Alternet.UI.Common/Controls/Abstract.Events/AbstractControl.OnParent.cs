@@ -8,56 +8,6 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
-        /// Called when the mouse pointer leaves child control.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildMouseLeave(object? sender, EventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called before the <see cref="KeyDown" /> event of the child control is raised.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnBeforeChildKeyDown(object? sender, KeyEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called after the <see cref="KeyDown" /> event of the child control is raised.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">An <see cref="KeyEventArgs" /> that contains the event data.</param>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnAfterChildKeyDown(object? sender, KeyEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called before the <see cref="MouseWheel" /> event of the child control is raised.
-        /// </summary>
-        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
-        /// <param name="sender">The source of the event.</param>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnBeforeChildMouseWheel(object? sender, MouseEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// Called after the <see cref="MouseWheel" /> event of the child control is raised.
-        /// </summary>
-        /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
-        /// <param name="sender">The source of the event.</param>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnAfterChildMouseWheel(object? sender, MouseEventArgs e)
-        {
-        }
-
-        /// <summary>
         /// Called after the <see cref="MouseWheel" /> event of the <see cref="Parent"/> is raised.
         /// </summary>
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
@@ -143,14 +93,6 @@ namespace Alternet.UI
         /// <param name="e">An <see cref="MouseEventArgs" /> that contains the event data.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnBeforeParentMouseUp(object? sender, MouseEventArgs e)
-        {
-        }
-
-        /// <summary>
-        /// This method is invoked when the control's child lost focus.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected virtual void OnChildLostFocus(object? sender, LostFocusEventArgs e)
         {
         }
 
