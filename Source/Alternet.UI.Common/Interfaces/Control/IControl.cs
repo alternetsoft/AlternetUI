@@ -1190,7 +1190,8 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="layoutParent">Specifies whether to call parent's
         /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
-        void PerformLayout(bool layoutParent = true);
+        /// <param name="layoutParams">Additional layout parameters. Optional.</param>
+        void PerformLayout(bool layoutParent = true, PerformLayoutParams? layoutParams = null);
 
         /// <summary>
         /// Starts the initialization process for this control.

@@ -829,12 +829,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void PerformLayout(bool layoutParent = true)
-        {
-            base.PerformLayout(layoutParent);
-        }
-
-        /// <inheritdoc/>
         public override void RaiseFontChanged(EventArgs e)
         {
             if (DisposingOrDisposed)

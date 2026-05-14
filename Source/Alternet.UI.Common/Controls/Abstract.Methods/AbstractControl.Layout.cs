@@ -331,8 +331,9 @@ namespace Alternet.UI
         /// </remarks>
         /// <param name="layoutParent">Specifies whether to call parent's
         /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        /// <param name="layoutParams">The parameters for performing layout. Optional.</param>
         [Browsable(false)]
-        public virtual void PerformLayout(bool layoutParent = true)
+        public virtual void PerformLayout(bool layoutParent = true, PerformLayoutParams? layoutParams = null)
         {
             if (IsLayoutSuspended || DisposingOrDisposed)
             {
@@ -366,8 +367,6 @@ namespace Alternet.UI
                 inLayout = false;
             }
 
-            oldSuggestedSize = suggestedSize;
-
             RaiseLayoutUpdated(EventArgs.Empty);
         }
 
@@ -379,7 +378,7 @@ namespace Alternet.UI
         /// </summary>
         /// <returns><see langword="true"/> if the parent control's PerformLayout method should be called;
         /// otherwise, <see langword="false"/>.</returns>
-        public virtual bool IsParentPerformLayoutCalled()
+        public virtual bool IsParentPerformLayoutCalled(PerformLayoutParams? layoutParams = null)
         {
             if (LayoutFlags.HasFlag(LayoutFlags.NoParentPerformLayoutCalled) || !Visible || IgnoreLayout)
                 return false;

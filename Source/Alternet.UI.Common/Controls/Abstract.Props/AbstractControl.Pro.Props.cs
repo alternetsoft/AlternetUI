@@ -25,11 +25,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the previous suggested size before the new value was set to <see cref="SuggestedSize"/>.
-        /// </summary>
-        protected SizeD OldSuggestedSize => oldSuggestedSize;
-
-        /// <summary>
         /// Gets whether this control is dummy control.
         /// </summary>
         protected virtual bool IsDummy => false;
