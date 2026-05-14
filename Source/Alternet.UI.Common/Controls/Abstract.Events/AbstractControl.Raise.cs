@@ -89,6 +89,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            OnLayoutUpdated(e);
             LayoutUpdated?.Invoke(this, e);
         }
 

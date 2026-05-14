@@ -114,7 +114,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the layout manager which is used to perform layout and calculate preferred sizes.
         /// This method returns the value of the <see cref="LayoutManager"/> property if it is not null;
-        /// otherwise, it returns the default layout manager instance which is specified by the <see cref="LayoutManager.Instance"/> property.
+        /// otherwise, it returns the default layout manager instance which is specified
+        /// by the <see cref="LayoutManager.Instance"/> property.
         /// </summary>
         /// <returns>The <see cref="ILayoutManager"/> instance used by this control.</returns>
         public virtual ILayoutManager GetLayoutManager()
@@ -318,6 +319,66 @@ namespace Alternet.UI
             }
 
             return new SizeD(maxRight, maxBottom);
+        }
+
+        /// <summary>
+        /// Forces the control to apply layout logic to child controls.
+        /// </summary>
+        /// <remarks>
+        /// If the <see cref="SuspendLayout"/> method was called before calling
+        /// the <see cref="PerformLayout"/> method,
+        /// the layout is suppressed.
+        /// </remarks>
+        /// <param name="layoutParent">Specifies whether to call parent's
+        /// <see cref="PerformLayout"/>. Optional. By default is <c>true</c>.</param>
+        [Browsable(false)]
+        public virtual void PerformLayout(bool layoutParent = true)
+        {
+            if (IsLayoutSuspended || DisposingOrDisposed || inLayout)
+            {
+                return;
+            }
+
+            if (layoutParent)
+            {
+                if (!IsParentPerformLayoutCalled())
+                    layoutParent = false;
+            }
+
+            inLayout = true;
+            try
+            {
+                if (layoutParent)
+                {
+                    Parent?.PerformLayout();
+                }
+
+                OnLayout();
+            }
+            finally
+            {
+                inLayout = false;
+            }
+
+            oldSuggestedSize = suggestedSize;
+
+            RaiseLayoutUpdated(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Determines whether the parent control's PerformLayout method should be called
+        /// when this control's PerformLayout is called. By default this method takes into account
+        /// the <see cref="LayoutFlags.NoParentPerformLayoutCalled"/> flag, the visibility of the control,
+        /// and whether the control is ignoring layout.
+        /// </summary>
+        /// <returns><see langword="true"/> if the parent control's PerformLayout method should be called;
+        /// otherwise, <see langword="false"/>.</returns>
+        public virtual bool IsParentPerformLayoutCalled()
+        {
+            if (LayoutFlags.HasFlag(LayoutFlags.NoParentPerformLayoutCalled) || !Visible || IgnoreLayout)
+                return false;
+
+            return true;
         }
 
         /// <summary>
