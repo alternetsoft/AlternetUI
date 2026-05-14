@@ -13,7 +13,11 @@ namespace ControlsSample
     internal partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
     {
         public static SizeD DefaultScrollSmallChange = new (40, 40);
-        
+
+        private static long childInfoCounter = 0;
+
+        private string infoPropName = "StdScrollViewer.ChildInfo" + new ObjectUniqueId(ref childInfoCounter).ToString();        
+
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
 
@@ -415,6 +419,9 @@ namespace ControlsSample
             if (IsScrolledControl(childControl))
             {
                 childControl.LayoutUpdated += OnChildLayoutUpdated;
+                childControl.ChildLayoutUpdated += OnChildOfChildLayoutUpdated;
+                childControl.ChildInserted += OnChildInserted;
+                childControl.ChildRemoved += OnChildRemoved;
             }
         }
 
@@ -422,14 +429,46 @@ namespace ControlsSample
         protected override void OnChildRemoved(AbstractControl childControl)
         {
             childControl.LayoutUpdated -= OnChildLayoutUpdated;
+            childControl.ChildLayoutUpdated -= OnChildOfChildLayoutUpdated;
+            childControl.ChildInserted -= OnChildInserted;
+            childControl.ChildRemoved -= OnChildRemoved;
+
             base.OnChildRemoved(childControl);
+        }
+
+        private ChildControlInfo GetChildControlInfo(AbstractControl control)
+        {
+            var result = control.CustomAttr.GetAttributeOrAdd(infoPropName, () => new ChildControlInfo());
+            return result;
+        }
+
+        private void OnChildRemoved(object? sender, BaseEventArgs<AbstractControl> e)
+        {
+            if (IsScrolledControl(e.Value))
+                UpdateInterior();
+        }
+
+        private void OnChildInserted(object? sender, BaseEventArgs<AbstractControl> e)
+        {
+            if (IsScrolledControl(e.Value))
+                UpdateInterior();
         }
 
         private void OnChildLayoutUpdated(object? sender, EventArgs e)
         {
-            if (sender is not AbstractControl control || !IsScrolledControl(control))
+            if (sender is not AbstractControl control)
                 return;
-            UpdateInterior();
+
+            if (IsScrolledControl(control))
+                UpdateInterior();
+        }
+
+        private void OnChildOfChildLayoutUpdated(object? sender, BaseEventArgs<AbstractControl> e)
+        {
+        }
+
+        private class ChildControlInfo
+        {
         }
     }
 }
