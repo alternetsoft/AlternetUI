@@ -290,18 +290,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates the vertical and horizontal scrollbars.
+        /// Updates the scroll bar information and optionally refreshes the control if changes are detected.
         /// </summary>
-        public virtual void UpdateScrollBars(bool refresh)
+        /// <param name="refresh">Whether to refresh the control if scroll bar information has changed.</param>
+        /// <returns><see langword="true"/> if the scroll bar information changed; otherwise, <see langword="false"/>.</returns>
+        public virtual bool UpdateScrollBars(bool refresh)
         {
             if (DisposingOrDisposed)
-                return;
+                return false;
 
             ScrollEventRouter.CalcScrollBarInfo(out var horzScrollbar, out var vertScrollbar);
-            VertScrollBarInfo = vertScrollbar;
-            HorzScrollBarInfo = horzScrollbar;
-            if (refresh)
+
+            bool isVertEqual = VertScrollBarInfo.Equals(vertScrollbar);
+            bool isHorzEqual = HorzScrollBarInfo.Equals(horzScrollbar);
+            bool equal = isVertEqual && isHorzEqual;
+
+            if (!isVertEqual)
+            {
+                VertScrollBarInfo = vertScrollbar;
+            }
+
+            if (!isHorzEqual)
+            {
+                HorzScrollBarInfo = horzScrollbar;
+            }
+
+            if (refresh && !equal)
                 Refresh();
+
+            return !equal;
         }
 
         /// <inheritdoc/>
