@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
@@ -163,7 +164,7 @@ namespace Alternet.UI
                 StateObjects.Images ??= new();
                 StateObjects.Images.Normal = value;
                 RaiseImageChanged(EventArgs.Empty);
-                if(ImageVisible)
+                if (ImageVisible)
                     PerformLayoutAndInvalidate();
             }
         }
@@ -491,7 +492,7 @@ namespace Alternet.UI
 
                 if (toolTipTemplate == null)
                 {
-                    toolTipTemplate = new ();
+                    toolTipTemplate = new();
                     toolTipTemplate.Parent = this;
                 }
 
@@ -586,7 +587,7 @@ namespace Alternet.UI
 
             SKCanvas canvas = new(bitmap);
 
-            if(backgroundColor is not null)
+            if (backgroundColor is not null)
                 canvas.Clear(backgroundColor);
 
             action(canvas, rect.Width, rect.Height);
