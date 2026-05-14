@@ -155,6 +155,7 @@ namespace Alternet.UI
         {
             renderingFlags = GetDefaultRenderingFlags();
             visible = GetDefaultVisible();
+            font = DefaultFont;
             var defaults = GetDefaults(ControlKind);
             defaults.RaiseInitDefaults(this);
             OnCreateControl();
@@ -3512,7 +3513,7 @@ namespace Alternet.UI
 
             set
             {
-                if (font == value)
+                if (Font.AreEqual(font, value))
                     return;
 
                 font = value;

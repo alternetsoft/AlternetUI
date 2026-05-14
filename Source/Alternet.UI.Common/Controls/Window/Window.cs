@@ -2255,9 +2255,6 @@ namespace Alternet.UI
                 App.Current.RegisterWindow(this);
 
             Bounds = GetDefaultBounds();
-
-            if (AbstractControl.DefaultFont != Font.Default)
-                Font = AbstractControl.DefaultFont;
         }
 
         private void InitializeColors()
