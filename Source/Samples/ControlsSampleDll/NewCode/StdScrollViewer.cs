@@ -12,14 +12,15 @@ namespace ControlsSample
     [ControlCategory("Containers")]
     internal partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
     {
-        public static SizeD DefaultScrollSmallChange = new (40, 40);
+        public static SizeD DefaultScrollSmallChange = new(40, 40);
 
         private static long childInfoCounter = 0;
 
-        private string infoPropName = "StdScrollViewer.ChildInfo" + new ObjectUniqueId(ref childInfoCounter).ToString();        
+        private string infoPropName = "StdScrollViewer.ChildInfo" + new ObjectUniqueId(ref childInfoCounter).ToString();
 
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
+        private SizeD? layoutMaxSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StdScrollViewer"/> class.
@@ -100,12 +101,12 @@ namespace ControlsSample
 
             var paintRectangle = GetPaintRectangle();
 
-            if (FirstChild.LayoutMaxSize is null)
+            if (layoutMaxSize is null)
             {
                 UpdateInterior();
             }
 
-            var range = FirstChild.LayoutMaxSize ?? paintRectangle.Size;
+            var range = layoutMaxSize ?? paintRectangle.Size;
 
             horzScrollbar = new(position: (int)FirstChild.LayoutOffset.X, range: (int)range.Width, pageSize: (int)paintRectangle.Width);
             vertScrollbar = new(position: (int)FirstChild.LayoutOffset.Y, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
@@ -219,15 +220,15 @@ namespace ControlsSample
                 return SizeD.Empty;
             var paintRectangle = GetPaintRectangle();
 
-            if (FirstChild.LayoutMaxSize is null)
+            if (layoutMaxSize is null)
             {
                 UpdateInterior();
             }
 
-            if (FirstChild.LayoutMaxSize is null)
+            if (layoutMaxSize is null)
                 return SizeD.Empty;
 
-            return FirstChild.LayoutMaxSize.Value;
+            return layoutMaxSize.Value;
         }
 
         public virtual PointD GetScrollPosition()
@@ -374,41 +375,48 @@ namespace ControlsSample
             if (firstChild is null)
                 return;
 
-            var availableSize = SizeD.PositiveInfinity;
-
-            var paintRectangle = GetPaintRectangle();
-
-            if (!IsScrolledVertically)
-                availableSize.Height = paintRectangle.Height;
-            if (!IsScrolledHorizontally)
-                availableSize.Width = paintRectangle.Width;
-
-            var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
-
-            value.Width += firstChild.LayoutOffset.X;
-            value.Height += firstChild.LayoutOffset.Y;
-
-            firstChild.LayoutMaxSize = value;
-
-            var newPaintRectangle = GetPaintRectangle();
-
-            if (newPaintRectangle != paintRectangle)
+            bool Internal()
             {
-                PerformLayout(layoutParent: false);
+                var paintRectangle = GetPaintRectangle();
+
+                var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true);
+
+                value.Width += firstChild.LayoutOffset.X;
+                value.Height += firstChild.LayoutOffset.Y;
+
+                var oldLayoutMaxSize = layoutMaxSize ?? new SizeD(0, 0);
+                layoutMaxSize = value;
+
+                var scrollbarsUpdated = UpdateScrollBars(false);
+
+                var oldLayoutFits = oldLayoutMaxSize.Width <= paintRectangle.Width && oldLayoutMaxSize.Height <= paintRectangle.Height;
+                var newLayoutFits = layoutMaxSize.Value.Width <= paintRectangle.Width && layoutMaxSize.Value.Height <= paintRectangle.Height;
+
+                if (oldLayoutFits != newLayoutFits)
+                {
+                    return true;
+                }
+
+                if (scrollbarsUpdated)
+                {
+                    var maxScrollPosition = GetMaxScrollPosition();
+                    var scrollPosition = GetScrollPosition();
+
+                    DoActionSetScroll(new PointD(
+                        Math.Min(scrollPosition.X, maxScrollPosition.X),
+                        Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
+
+                    Refresh();
+                }
+
+                return false;
             }
 
-            var scrollbarsUpdated = UpdateScrollBars(false);
-
-            if (scrollbarsUpdated)
+            var result = Internal();
+            if (result)
             {
-                var maxScrollPosition = GetMaxScrollPosition();
-                var scrollPosition = GetScrollPosition();
-
-                DoActionSetScroll(new PointD(
-                    Math.Min(scrollPosition.X, maxScrollPosition.X),
-                    Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
-
-                Refresh();
+                PerformLayout(false);
+                Internal();
             }
         }
 
@@ -419,9 +427,6 @@ namespace ControlsSample
             if (IsScrolledControl(childControl))
             {
                 childControl.LayoutUpdated += OnChildLayoutUpdated;
-                childControl.ChildLayoutUpdated += OnChildOfChildLayoutUpdated;
-                childControl.ChildInserted += OnChildInserted;
-                childControl.ChildRemoved += OnChildRemoved;
             }
         }
 
@@ -429,9 +434,6 @@ namespace ControlsSample
         protected override void OnChildRemoved(AbstractControl childControl)
         {
             childControl.LayoutUpdated -= OnChildLayoutUpdated;
-            childControl.ChildLayoutUpdated -= OnChildOfChildLayoutUpdated;
-            childControl.ChildInserted -= OnChildInserted;
-            childControl.ChildRemoved -= OnChildRemoved;
 
             base.OnChildRemoved(childControl);
         }
@@ -442,18 +444,6 @@ namespace ControlsSample
             return result;
         }
 
-        private void OnChildRemoved(object? sender, BaseEventArgs<AbstractControl> e)
-        {
-            if (IsScrolledControl(e.Value))
-                UpdateInterior();
-        }
-
-        private void OnChildInserted(object? sender, BaseEventArgs<AbstractControl> e)
-        {
-            if (IsScrolledControl(e.Value))
-                UpdateInterior();
-        }
-
         private void OnChildLayoutUpdated(object? sender, EventArgs e)
         {
             if (sender is not AbstractControl control)
@@ -461,10 +451,6 @@ namespace ControlsSample
 
             if (IsScrolledControl(control))
                 UpdateInterior();
-        }
-
-        private void OnChildOfChildLayoutUpdated(object? sender, BaseEventArgs<AbstractControl> e)
-        {
         }
 
         private class ChildControlInfo

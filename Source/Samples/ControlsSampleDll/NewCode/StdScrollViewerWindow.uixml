@@ -130,7 +130,9 @@
         <HorizontalStackPanel Name="topImageToolBarPanel">
           <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Button Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
-          <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-"/>
+          <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-" Margin="0,0,5,0"/>
+          <Button Name="zoomMinButton" Click="ZoomMinButtonClick" Text="Min" Margin="0,0,5,0"/>
+          <Button Name="zoomMaxButton" Click="ZoomMaxButtonClick" Text="Max" Margin="0,0,5,0"/>
         </HorizontalStackPanel>
 
         <Border SuggestedSize="250,250" HorizontalAlignment="Left"

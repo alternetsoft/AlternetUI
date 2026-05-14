@@ -422,6 +422,12 @@ namespace Alternet.UI
         public event EventHandler? MouseLeave;
 
         /// <summary>
+        /// Occurs when call to <see cref="PerformLayout"/> is ignored because the layout is already being performed.
+        /// </summary>
+        [Category("Layout")]
+        public event EventHandler? PerformLayoutIgnored;
+
+        /// <summary>
         /// Occurs when the child control is removed from this control.
         /// </summary>
         [Category("Behavior")]

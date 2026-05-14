@@ -334,8 +334,14 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void PerformLayout(bool layoutParent = true)
         {
-            if (IsLayoutSuspended || DisposingOrDisposed || inLayout)
+            if (IsLayoutSuspended || DisposingOrDisposed)
             {
+                return;
+            }
+
+            if (inLayout)
+            {
+                PerformLayoutIgnored?.Invoke(this, EventArgs.Empty);
                 return;
             }
 

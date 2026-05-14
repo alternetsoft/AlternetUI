@@ -26,18 +26,6 @@ namespace LayoutSample
             }
         }
 
-        public override SizeD SuggestedSize
-        {
-            get
-            {
-                return GetZoomedImageSize();
-            }
-
-            set
-            {
-            }
-        }
-
         public Image? Image
         {
             get => image;
@@ -46,7 +34,7 @@ namespace LayoutSample
                 if (value == image)
                     return;
                 image = value;
-                PerformLayoutAndInvalidate();
+                SuggestedSize = GetZoomedImageSize();
             }
         }
 
@@ -58,7 +46,7 @@ namespace LayoutSample
                 if (zoom == value)
                     return;
                 zoom = value;
-                PerformLayoutAndInvalidate();
+                SuggestedSize = GetZoomedImageSize();
             }
         }
 

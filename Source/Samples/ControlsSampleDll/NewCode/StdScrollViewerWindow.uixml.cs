@@ -283,6 +283,24 @@ namespace ControlsSample
             UpdateImageZoom();
         }
 
+        private void ZoomMinButtonClick(object? sender, EventArgs e)
+        {
+            if (HasScaleFactor)
+                zoomFactor = 14;
+            else
+                zoomFactor = 7;
+            UpdateImageZoom();
+        }
+
+        private void ZoomMaxButtonClick(object? sender, EventArgs e)
+        {
+            if (HasScaleFactor)
+                zoomFactor = 60;
+            else
+                zoomFactor = 40;
+            UpdateImageZoom();
+        }
+
         private void UpdateImageZoom()
         {
             if (imageControl != null)
