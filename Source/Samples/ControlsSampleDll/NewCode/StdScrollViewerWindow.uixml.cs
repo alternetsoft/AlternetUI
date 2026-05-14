@@ -23,21 +23,51 @@ namespace ControlsSample
 
             InitializeComponent();
 
-            imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
+            void LogLayoutEvents(AbstractControl control)
+            {
+                control.LayoutUpdated += (sender, e) =>
+                {
+                    App.LogIf($"{control.Name} layout updated", true);
+                };
+            }
 
-            imageScrollViewer.ParentBackColor = false;
-            imageScrollViewer.BackColor = Color.Green;
+            LogLayoutEvents(imageScrollViewer);
+
+            imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
 
             imageContainer = new Panel
             {
                 Parent = imageScrollViewer,
-                ParentBackColor = false,
-                BackColor = Color.Red,
+            };
+
+            imageTopContainer.LayoutUpdated += (sender, e) =>
+            {
+                App.LogIf($"Image top container layout updated", true);
+            };
+
+            imageContainer.LayoutUpdated += (sender, e) =>
+            {
+                App.LogIf($"Image container layout updated", true);
+            };
+
+            imageContainer.SizeChanged += (sender, e) =>
+            {
+                App.LogIf($"Image container size changed: {imageContainer.Size}. IsLayoutPerform: {imageContainer.IsLayoutPerform}", true);
+            };
+
+            imageControl.SizeChanged += (sender, e) =>
+            {
+                App.LogIf($"Image size changed: {imageControl.Size}. IsLayoutPerform: {imageControl.IsLayoutPerform}", true);
+            };
+
+            imageControl.LayoutUpdated += (sender, e) =>
+            {
+                App.LogIf($"Image layout updated", true);
             };
 
             imageControl.Parent = imageContainer;
-            imageControl.ParentBackColor = false;
-            imageScrollViewer.BackColor = Color.Yellow;
+            imageControl.Name = "imageControl";
+            imageContainer.Name = "imageContainer";
 
             InitializeComboBoxes();
 
@@ -48,16 +78,11 @@ namespace ControlsSample
             UpdateImageZoom();
 
             MenuUtils.AddItemsForPublicParameterlessMethods(stackPanelOptionsGrid.ContextMenuStrip, scrollViewerStack, "DoAction");
+        }
 
-            imageContainer.SizeChanged+= (sender, e) =>
-            {
-                App.LogIf($"Image container size changed: {imageContainer.Size}", false);
-            };
-
-            imageControl.SizeChanged += (sender, e) =>
-            {
-                App.LogIf($"Image control size changed: {imageControl.Size}", false);
-            };
+        private void ImageTopContainer_LayoutUpdated(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void InitializeStackPanel()

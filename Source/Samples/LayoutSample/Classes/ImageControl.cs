@@ -79,6 +79,11 @@ namespace LayoutSample
             return GetZoomedImageSize();
         }
 
+        public override void OnLayout()
+        {
+            base.OnLayout();
+        }
+
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
@@ -87,16 +92,13 @@ namespace LayoutSample
 
         protected override void OnPaint(PaintEventArgs e)
         {
-
             var image = Image;
 
             if (image != null)
             {
-                e.Graphics.FillRectangle(Color.Moccasin.AsBrush, e.ClientRectangle);
-                e.Graphics.DrawRectangle(LightDarkColors.Green.AsPen, e.ClientRectangle);
                 var size = image.SizeDip(this);
                 var bounds = ((0, 0), new SizeD(size.Width * zoom, size.Height * zoom));
-                e.Graphics.FillRectangle(DefaultColors.WindowBackColor.AsBrush, bounds);
+                e.Graphics.FillRectangle(RealBackgroundColor.AsBrush, bounds);
                 e.Graphics.DrawImage(image, bounds);
                 e.Graphics.DrawRectangle(LightDarkColors.Red.AsPen, bounds);
             }

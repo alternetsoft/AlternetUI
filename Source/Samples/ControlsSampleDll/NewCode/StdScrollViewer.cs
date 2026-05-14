@@ -12,7 +12,7 @@ namespace ControlsSample
     [ControlCategory("Containers")]
     internal partial class StdScrollViewer : ScrollableUserControl, IScrollEventRouter
     {
-        public static SizeD DefaultScrollSmallChange = new (16, VirtualListControl.DefaultMinItemHeight);
+        public static SizeD DefaultScrollSmallChange = new (40, 40);
         
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
@@ -351,33 +351,23 @@ namespace ControlsSample
             UpdateInterior();
         }
 
-        /// <inheritdoc/>
-        protected override void OnChildInserted(int index, AbstractControl childControl)
-        {
-            base.OnChildInserted(index, childControl);
-
-            if (IsScrolledControl(childControl))
-            {
-                childControl.LayoutUpdated += OnChildLayoutUpdated;
-                UpdateInterior();
-            }
-        }
-
-        /// <inheritdoc/>
-        protected override void OnChildRemoved(AbstractControl childControl)
-        {
-            childControl.LayoutUpdated -= OnChildLayoutUpdated;
-            base.OnChildRemoved(childControl);
-
-            if (IsScrolledControl(childControl))
-            {
-                UpdateInterior();
-            }
-        }
-
         protected virtual bool IsScrolledControl(AbstractControl control)
         {
             return control.IsVisible && !control.IgnoreLayout;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnLayoutUpdated(EventArgs e)
+        {
+            base.OnLayoutUpdated(e);
+
+            UpdateInterior();
+            var maxScrollPosition = GetMaxScrollPosition();
+            var scrollPosition = GetScrollPosition();
+
+            DoActionSetScroll(new PointD(
+                Math.Min(scrollPosition.X, maxScrollPosition.X),
+                Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
         }
 
         protected virtual void UpdateInterior()
@@ -411,18 +401,6 @@ namespace ControlsSample
             {
                 PerformLayout(layoutParent: false);
             }
-        }
-
-        private void OnChildLayoutUpdated(object? sender, EventArgs e)
-        {
-            UpdateInterior();
-
-            var maxScrollPosition = GetMaxScrollPosition();
-            var scrollPosition = GetScrollPosition();
-
-            DoActionSetScroll(new PointD(
-                Math.Min(scrollPosition.X, maxScrollPosition.X),
-                Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
         }
 
         private void OnChildOfChildRemoved(object? sender, BaseEventArgs<AbstractControl> e)
