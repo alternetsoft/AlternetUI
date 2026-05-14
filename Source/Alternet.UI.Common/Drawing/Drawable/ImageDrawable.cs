@@ -83,7 +83,7 @@ namespace Alternet.Drawing
         public bool CenterHorz { get; set; } = true;
 
         /// <summary>
-        /// Gets whether or not to stretch this object. Default is <c>true</c>.
+        /// Gets whether or not to stretch this object.
         /// </summary>
         public virtual bool Stretch
         {
@@ -200,7 +200,7 @@ namespace Alternet.Drawing
 
             if (Stretch)
             {
-                    dc.DrawImage(image, Bounds);
+                dc.DrawImage(image, Bounds);
             }
             else
             {
