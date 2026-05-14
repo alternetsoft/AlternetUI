@@ -787,13 +787,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool operator ==(Font? a, Font? b)
         {
-            if (a is null && b is null)
-                return true;
-
-            if (a is null || b is null)
-                return false;
-
-            return a.Equals(b);
+            return AreEqual(a, b);
         }
 
         /// <summary>
@@ -1076,6 +1070,21 @@ namespace Alternet.Drawing
             CheckDisposed();
             hashCode ??= Handler.Serialize().GetHashCode();
             return hashCode.Value;
+        }
+
+        /// <summary>
+        /// Determines whether two <see cref="Font"/> objects are equal, handling null values.
+        /// </summary>
+        /// <param name="font1">The first font to compare.</param>
+        /// <param name="font2">The second font to compare.</param>
+        /// <returns><see langword="true"/> if both fonts are null or equal; otherwise, <see langword="false"/>.</returns>
+        public static bool AreEqual(Font? font1, Font? font2)
+        {
+            if (font1 is null && font2 is null)
+                return true;
+            if (font1 is null || font2 is null)
+                return false;
+            return font1.Equals(font2);
         }
 
         /// <summary>
