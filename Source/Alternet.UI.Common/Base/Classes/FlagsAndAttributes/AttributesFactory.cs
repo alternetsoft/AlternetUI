@@ -12,6 +12,8 @@ namespace Alternet.UI
     /// </summary>
     public static class AttributesFactory
     {
+        private static long uniqueAttributeNameCounter;
+
         /// <summary>
         /// Creates <see cref="ICustomAttributes"/> implementation.
         /// </summary>
@@ -39,6 +41,17 @@ namespace Alternet.UI
         public static ICustomAttributes CreateDefault()
         {
             return new FlagsAndAttributes();
+        }
+
+        /// <summary>
+        /// Generates a unique attribute name with an optional prefix.
+        /// </summary>
+        /// <param name="prefix">The optional prefix to prepend to the unique identifier.</param>
+        /// <returns>A unique attribute name string.</returns>
+        public static string GenUniqueAttributeName(string? prefix = null)
+        {
+            var result = prefix + new ObjectUniqueId(ref uniqueAttributeNameCounter).ToString();
+            return result;
         }
     }
 }
