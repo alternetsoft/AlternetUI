@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Alternet.UI
@@ -12,22 +13,15 @@ namespace Alternet.UI
     /// <summary>
     /// Implements object unique id.
     /// </summary>
-    [StructLayout(LayoutKind.Explicit, Pack = 1)]
+    [StructLayout(LayoutKind.Sequential)]
     public readonly struct ObjectUniqueId : IEquatable<ObjectUniqueId>
     {
-        private static ulong globalCounter;
+        private static long globalCounter;
 
-        [FieldOffset(0)]
-        private readonly State state;
-
-        [FieldOffset(1)]
-        private readonly int hashCode;
-
-        [FieldOffset(1 + 4)]
         private readonly Guid guid;
-
-        [FieldOffset(1 + 4)]
-        private readonly ulong id;
+        private readonly long id;
+        private readonly int hashCode;
+        private readonly StateKind state;        
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectUniqueId"/> struct.
@@ -42,20 +36,44 @@ namespace Alternet.UI
         /// using the specified reference to the counter variable.
         /// You should normally use the parameterless constructor.
         /// </summary>
-        public ObjectUniqueId(ref ulong counter)
+        /// <remarks>
+        /// <para>
+        /// The <paramref name="counter"/> must be a non-negative value (>= 0).
+        /// A value of <see cref="long.MinValue"/> is reserved as an internal sentinel meaning
+        /// "always generate GUID-based ids".
+        /// </para>
+        /// <para>
+        /// Passing negative values other than <see cref="long.MinValue"/> is not supported.
+        /// </para>
+        /// </remarks>
+        public ObjectUniqueId(ref long counter)
         {
-            if (counter == long.MaxValue)
+            if (Volatile.Read(ref counter) == long.MinValue)
             {
-                state = State.Guid;
+                state = StateKind.Guid;
                 guid = Guid.NewGuid();
+                id = default;
                 hashCode = guid.GetHashCode();
+                return;
             }
-            else
+
+            long value = Interlocked.Increment(ref counter) - 1;
+
+            if (value < 0)
             {
-                state = State.Long;
-                id = counter++;
-                hashCode = id.GetHashCode();
+                Interlocked.Exchange(ref counter, long.MinValue);
+
+                state = StateKind.Guid;
+                guid = Guid.NewGuid();
+                id = default;
+                hashCode = guid.GetHashCode();
+                return;
             }
+
+            state = StateKind.Long;
+            id = value;
+            guid = default;
+            hashCode = id.GetHashCode();
         }
 
         /// <summary>
@@ -66,10 +84,14 @@ namespace Alternet.UI
         /// <remarks>This constructor is used to wrap existing integer identifiers
         /// to <see cref="ObjectUniqueId"/>.</remarks>
         /// <param name="id">The integer identifier.</param>
-        public ObjectUniqueId(ulong id)
+        public ObjectUniqueId(long id)
         {
-            state = State.Long;
+            if (id < 0)
+                throw new ArgumentOutOfRangeException(nameof(id), "Numeric ids must be >= 0.");
+
+            state = StateKind.Long;
             this.id = id;
+            guid = default;
             hashCode = id.GetHashCode();
         }
 
@@ -82,15 +104,26 @@ namespace Alternet.UI
         /// the unique identity of the object.</param>
         public ObjectUniqueId(Guid guid)
         {
-            state = State.Guid;
+            state = StateKind.Guid;
             this.guid = guid;
+            id = default;
             hashCode = guid.GetHashCode();
         }
 
-        private enum State : byte
+        /// <summary>
+        /// Defines the state of the <see cref="ObjectUniqueId"/> struct, indicating
+        /// whether the unique identifier is based on a long integer or a GUID.
+        /// </summary>
+        private enum StateKind : byte
         {
+            /// <summary>
+            /// Unique identifier is represented as a long value.
+            /// </summary>
             Long,
 
+            /// <summary>
+            /// Unique identifier is represented as a GUID value.
+            /// </summary>
             Guid,
         }
 
@@ -112,7 +145,7 @@ namespace Alternet.UI
             if (left.state != right.state)
                 return false;
 
-            if(left.state == State.Guid)
+            if(left.state == StateKind.Guid)
                 return left.guid == right.guid;
             return left.id == right.id;
         }
@@ -138,12 +171,12 @@ namespace Alternet.UI
 
             if (s[0] == 'A')
             {
-                if (Guid.TryParse(s.Substring(1), out var g))
+                if (Guid.TryParse(s.AsSpan(1), out var g))
                 {
                     return new ObjectUniqueId(g);
                 }
             }
-            else if (ulong.TryParse(s, out var l))
+            else if (long.TryParse(s, out var l))
             {
                 return new ObjectUniqueId(l);
             }
@@ -185,7 +218,7 @@ namespace Alternet.UI
         public override string ToString()
         {
             // This format should not be changed as it is used in serialization.
-            if (state == State.Guid)
+            if (state == StateKind.Guid)
                 return $"A{guid:N}";
             return id.ToString();
         }
