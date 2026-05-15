@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
@@ -16,26 +17,79 @@ namespace Alternet.UI
         /// Defines the default small change value for scrolling, which determines how much
         /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
         /// </summary>
-        public static SizeD DefaultScrollSmallChange = new(40, 40);
+        public static SizeD DefaultScrollSmallChange = new (40, 40);
+
+        private readonly ScrollContainer scrollContainer;
 
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
-        private SizeD? layoutMaxSize;
+        private SizeD? oldLayoutMaxSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StdScrollViewer"/> class.
         /// </summary>
         public StdScrollViewer()
         {
+            scrollContainer = new ScrollContainer();
+            scrollContainer.Parent = this;
+            scrollContainer.SizeChanged += (s, e) =>
+            {
+                UpdateInterior();
+            };
+
+            scrollContainer.ChildSizeChanged += (s, e) =>
+            {
+                UpdateInterior();
+            };
+
             Interior?.Required();
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override IScrollEventRouter ScrollEventRouter
         {
             get
             {
                 return this;
+            }
+        }
+
+        /// <summary>
+        /// Gets the content of the scroll viewer.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl? Content
+        {
+            get
+            {
+                return scrollContainer;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of child controls within the scroll container, which represents the content of the scroll viewer.
+        /// </summary>
+        [Content]
+        [Browsable(false)]
+        public BaseCollection<AbstractControl> ContentChildren
+        {
+            get
+            {
+                return scrollContainer.Children;
+            }
+        }
+
+        /// <summary>
+        /// Gets the first child control within the scroll container, which can be used
+        /// to determine the current scroll position and the layout of the content.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl? FirstContentChild
+        {
+            get
+            {
+                return scrollContainer?.FirstChild;
             }
         }
 
@@ -90,6 +144,48 @@ namespace Alternet.UI
             }
         }
 
+        new private ControlCollection Children
+        {
+            get
+            {
+                return base.Children;
+            }
+        }
+
+        new private ControlCollection Controls
+        {
+            get
+            {
+                return base.Children;
+            }
+        }
+
+        new private PointD LayoutOffset
+        {
+            get
+            {
+                return scrollContainer.LayoutOffset;
+            }
+
+            set
+            {
+                if (LayoutOffset == value)
+                    return;
+
+                scrollContainer.LayoutOffset = value;
+
+                UpdateScrollBars(true);
+            }
+        }
+
+        new private SizeD LayoutMaxSize
+        {
+            get
+            {
+                return FirstContentChild?.Bounds.Size ?? SizeD.Empty;
+            }
+        }
+
         void IScrollEventRouter.CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
         {
             HiddenOrVisible vertVisibility = IsScrolledVertically ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
@@ -100,7 +196,7 @@ namespace Alternet.UI
             if (HasVerticalScrollBarSettings)
                 vertVisibility = VerticalScrollBarSettings.SuggestedVisibility;
 
-            if (FirstChild is null)
+            if (FirstContentChild is null)
             {
                 horzScrollbar = new(horzVisibility);
                 vertScrollbar = new(vertVisibility);
@@ -109,15 +205,14 @@ namespace Alternet.UI
 
             var paintRectangle = GetPaintRectangle();
 
-            if (layoutMaxSize is null)
-            {
-                UpdateInterior();
-            }
+            var range = LayoutMaxSize;
 
-            var range = layoutMaxSize ?? paintRectangle.Size;
+            var layoutOffset = LayoutOffset;
+            var xOffset = (int)layoutOffset.X;
+            var yOffset = (int)layoutOffset.Y;
 
-            horzScrollbar = new(position: (int)FirstChild.LayoutOffset.X, range: (int)range.Width, pageSize: (int)paintRectangle.Width);
-            vertScrollbar = new(position: (int)FirstChild.LayoutOffset.Y, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
+            horzScrollbar = new(position: xOffset, range: (int)range.Width, pageSize: (int)paintRectangle.Width);
+            vertScrollbar = new(position: yOffset, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
             horzScrollbar.Visibility = horzVisibility;
             vertScrollbar.Visibility = vertVisibility;
         }
@@ -246,7 +341,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void DoActionScrollToHorzPos(int value)
         {
-            DoActionSetScroll(new PointD(value, FirstChild?.LayoutOffset.Y ?? 0));
+            DoActionSetScroll(new PointD(value, LayoutOffset.Y));
         }
 
         /// <summary>
@@ -255,18 +350,7 @@ namespace Alternet.UI
         /// <returns>A <see cref="SizeD"/> representing the total scrollable area.</returns>
         public virtual SizeD GetScrollRange()
         {
-            if (FirstChild is null)
-                return SizeD.Empty;
-
-            if (layoutMaxSize is null)
-            {
-                UpdateInterior();
-            }
-
-            if (layoutMaxSize is null)
-                return SizeD.Empty;
-
-            return layoutMaxSize.Value;
+            return LayoutMaxSize;
         }
 
         /// <summary>
@@ -275,9 +359,13 @@ namespace Alternet.UI
         /// <returns>A <see cref="PointD"/> representing the current scroll position.</returns>
         public virtual PointD GetScrollPosition()
         {
-            if (FirstChild is null)
-                return PointD.Empty;
-            return FirstChild.LayoutOffset;
+            return LayoutOffset;
+        }
+
+        /// <inheritdoc/>
+        public override bool IsValidChild(AbstractControl control)
+        {
+            return control == scrollContainer;
         }
 
         /// <summary>
@@ -286,8 +374,6 @@ namespace Alternet.UI
         /// <returns>A <see cref="PointD"/> representing the maximum scroll position.</returns>
         public virtual PointD GetMaxScrollPosition()
         {
-            if (FirstChild is null)
-                return PointD.Empty;
             var scrollRange = GetScrollRange();
             if (scrollRange == SizeD.Empty)
                 return PointD.Empty;
@@ -302,14 +388,12 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void DoActionScrollToLastLine()
         {
-            if (FirstChild is null)
-                return;
             var scrollRange = GetScrollRange();
             if (scrollRange == SizeD.Empty)
                 return;
 
             var lastLineOffset = scrollRange.Height - GetPaintRectangle().Height;
-            DoActionSetScroll(new PointD(FirstChild.LayoutOffset.X, lastLineOffset));
+            DoActionSetScroll(new PointD(LayoutOffset.X, lastLineOffset));
         }
 
         /// <summary>
@@ -318,20 +402,18 @@ namespace Alternet.UI
         /// </summary>
         public virtual void DoActionScrollToLastChar()
         {
-            if (FirstChild is null)
-                return;
             var scrollRange = GetScrollRange();
             if (scrollRange == SizeD.Empty)
                 return;
 
             var lastCharOffset = scrollRange.Width - GetPaintRectangle().Width;
-            DoActionSetScroll(new PointD(lastCharOffset, FirstChild.LayoutOffset.Y));
+            DoActionSetScroll(new PointD(lastCharOffset, LayoutOffset.Y));
         }
 
         /// <inheritdoc/>
         public virtual void DoActionScrollToVertPos(int value)
         {
-            DoActionSetScroll(new PointD(FirstChild?.LayoutOffset.X ?? 0, value));
+            DoActionSetScroll(new PointD(LayoutOffset.X, value));
         }
 
         /// <summary>
@@ -340,19 +422,10 @@ namespace Alternet.UI
         /// <param name="value">The target scroll position.</param>
         public virtual void DoActionSetScroll(PointD value)
         {
-            var firstChild = FirstChild;
-            if (firstChild is null)
-                return;
-
             var newOffset = value.ClampToZero();
-
             var maxOffset = GetMaxScrollPosition();
-
-            if (newOffset != firstChild.LayoutOffset)
-            {
-                firstChild.LayoutOffset = newOffset.ClampToMax(maxOffset);
-                UpdateScrollBars(true);
-            }
+            newOffset = newOffset.ClampToMax(maxOffset);
+            LayoutOffset = newOffset;
         }
 
         /// <summary>
@@ -363,11 +436,8 @@ namespace Alternet.UI
         {
             if (value.Height == 0 && value.Width == 0)
                 return;
-            var firstChild = FirstChild;
-            if (firstChild is null)
-                return;
 
-            var oldOffset = firstChild.LayoutOffset;
+            var oldOffset = LayoutOffset;
             var newOffset = oldOffset + value;
             DoActionSetScroll(newOffset);
         }
@@ -436,94 +506,38 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateInterior()
         {
-            var firstChild = FirstChild;
-
-            if (firstChild is null)
-                return;
-
-            bool Internal()
+            if (LayoutMaxSize != oldLayoutMaxSize)
             {
-                var paintRectangle = GetPaintRectangle();
-
-                var value = firstChild.GetChildrenMaxRightBottom(includeMargins: true).Ceiling();
-
-                value.Width += firstChild.LayoutOffset.X;
-                value.Height += firstChild.LayoutOffset.Y;
-
-                var oldLayoutMaxSize = layoutMaxSize ?? new SizeD(0, 0);
-                layoutMaxSize = value;
-
-                var scrollbarsUpdated = UpdateScrollBars(false);
-
-                var oldLayoutFits = oldLayoutMaxSize.Width <= paintRectangle.Width && oldLayoutMaxSize.Height <= paintRectangle.Height;
-                var newLayoutFits = layoutMaxSize.Value.Width <= paintRectangle.Width && layoutMaxSize.Value.Height <= paintRectangle.Height;
-
-                if (oldLayoutFits != newLayoutFits)
-                {
-                    return true;
-                }
-
-                if (scrollbarsUpdated)
-                {
-                    var maxScrollPosition = GetMaxScrollPosition();
-                    var scrollPosition = GetScrollPosition();
-
-                    DoActionSetScroll(new PointD(
-                        Math.Min(scrollPosition.X, maxScrollPosition.X),
-                        Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
-
-                    Refresh();
-                }
-
-                return false;
-            }
-
-            var result = Internal();
-            if (result)
-            {
+                oldLayoutMaxSize = LayoutMaxSize;
                 PerformLayout(false);
-                Internal();
             }
-        }
 
-        /// <inheritdoc/>
-        protected override void OnChildInserted(int index, AbstractControl childControl)
-        {
-            base.OnChildInserted(index, childControl);
+            var scrollbarsUpdated = UpdateScrollBars(false);
 
-            if (IsScrolledControl(childControl))
+            if (scrollbarsUpdated)
             {
-                childControl.LayoutUpdated += OnChildLayoutUpdated;
+                var maxScrollPosition = GetMaxScrollPosition();
+                var scrollPosition = GetScrollPosition();
+
+                DoActionSetScroll(new PointD(
+                    Math.Min(scrollPosition.X, maxScrollPosition.X),
+                    Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
+
+                Refresh();
             }
         }
 
-        /// <inheritdoc/>
-        protected override void OnChildRemoved(AbstractControl childControl)
+        /// <summary>
+        /// Represents a container control that is used to hold the child controls within
+        /// the scrollable area of the <see cref="StdScrollViewer"/>.
+        /// </summary>
+        public class ScrollContainer : HiddenBorder
         {
-            childControl.LayoutUpdated -= OnChildLayoutUpdated;
-
-            base.OnChildRemoved(childControl);
-        }
-
-        private ChildControlInfo GetChildControlInfo(AbstractControl control)
-        {
-            var result = control.CustomAttr.GetAttributeOrAdd(
-                AttributesFactory.GenUniqueAttributeName("ChildControlInfo_"),
-                () => new ChildControlInfo());
-            return result;
-        }
-
-        private void OnChildLayoutUpdated(object? sender, EventArgs e)
-        {
-            if (sender is not AbstractControl control)
-                return;
-
-            if (IsScrolledControl(control))
-                UpdateInterior();
-        }
-
-        private class ChildControlInfo
-        {
+            /// <inheritdoc/>
+            protected override void OnChildLayoutUpdated(EventArgs e)
+            {
+                base.OnChildLayoutUpdated(e);
+            }
         }
     }
 }

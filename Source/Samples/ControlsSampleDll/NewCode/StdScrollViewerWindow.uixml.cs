@@ -10,7 +10,6 @@ namespace ControlsSample
     public partial class StdScrollViewerWindow : Window
     {
         private readonly LayoutSample.ImageControl imageControl = new();
-        private readonly Control imageContainer;
 
         private Coord zoomFactor = 30;
 
@@ -34,25 +33,11 @@ namespace ControlsSample
             LogLayoutEvents(imageScrollViewer);
 
             imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
-
-            imageContainer = new Panel
-            {
-                Parent = imageScrollViewer,
-            };
+            imageControl.Parent = imageScrollViewer.Content;
 
             imageTopContainer.LayoutUpdated += (sender, e) =>
             {
                 App.LogIf($"Image top container layout updated", false);
-            };
-
-            imageContainer.LayoutUpdated += (sender, e) =>
-            {
-                App.LogIf($"Image container layout updated", false);
-            };
-
-            imageContainer.SizeChanged += (sender, e) =>
-            {
-                App.LogIf($"Image container size changed: {imageContainer.Size}. IsLayoutPerform: {imageContainer.IsLayoutPerform}", false);
             };
 
             imageControl.SizeChanged += (sender, e) =>
@@ -65,9 +50,7 @@ namespace ControlsSample
                 App.LogIf($"Image layout updated", false);
             };
 
-            imageControl.Parent = imageContainer;
             imageControl.Name = "imageControl";
-            imageContainer.Name = "imageContainer";
 
             InitializeComboBoxes();
 
