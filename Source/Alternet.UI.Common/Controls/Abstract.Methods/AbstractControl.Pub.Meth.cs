@@ -1907,9 +1907,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified control can be a child of this control.
+        /// </summary>
+        /// <param name="control">The control to check.</param>
+        /// <returns><c>true</c> if the specified control can be a child; otherwise, <c>false</c>.</returns>
+        public virtual bool IsValidChild(AbstractControl control)
+        {
+            return true;
+        }
+
+        /// <summary>
         /// Sets the margin for the control, defining the space around it.
         /// This is the same as setting the <see cref="Margin"/> property but implemented as method.
-        /// This method is useful for chaining calls when you want to set the margin and perform other operations on the control in a fluent manner.
+        /// This method is useful for chaining calls when you want to set the margin
+        /// and perform other operations on the control in a fluent manner.
         /// </summary>
         /// <param name="margin">The margin to apply, represented as a Thickness
         /// structure that specifies the left, top, right, and bottom margins.</param>

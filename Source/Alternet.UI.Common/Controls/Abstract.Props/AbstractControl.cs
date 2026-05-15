@@ -2095,6 +2095,20 @@ namespace Alternet.UI
                 if (parent == value)
                     return;
 
+                if (value is not null)
+                {
+                    if (!value.IsValidChild(this))
+                    {
+                        var newParentType = value.GetType().Name;
+                        var thisType = this.GetType().Name;
+                        var errMessage = $"Parent control [{newParentType}] doesn't accept [{thisType}] control as a child.";
+                        Debug.WriteLine(errMessage);
+                        if (DebugUtils.IsDebuggerAttached)
+                            Debug.Assert(false, errMessage);
+                        return;
+                    }
+                }
+
                 if (parent is not null)
                 {
                     if (parent.HasChildren)
