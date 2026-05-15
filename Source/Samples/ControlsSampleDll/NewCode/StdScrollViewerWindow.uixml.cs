@@ -171,6 +171,24 @@ namespace ControlsSample
             stackPanel.Children.RemoveLast();
         }
 
+        private void MinControlsStackPanelButton_Click(object? sender, EventArgs e)
+        {
+            scrollViewerStack.SuspendUpdateInterior();
+
+            try
+            {
+                DoInsideLayout(() =>
+                {
+                    while (stackPanel.Children.Count > 5)
+                        stackPanel.Children.RemoveLast();
+                });
+            }
+            finally
+            {
+                scrollViewerStack.ResumeUpdateInterior();
+            }
+        }
+
         private void AddColumnToGridButton_Click(object? sender, EventArgs e)
         {
             grid.DoInsideLayout(() =>

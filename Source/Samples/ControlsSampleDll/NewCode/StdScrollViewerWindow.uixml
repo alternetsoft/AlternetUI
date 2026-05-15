@@ -25,6 +25,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -55,9 +56,13 @@
                   IsTextLocalized="true" Click="AddControlToStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
 
-          <Button Text="Remove Control" Name="removeControlFromStackPanelButton"
+          <Button Text="Remove Control" Name="removeControlFromStackPanelButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="RemoveControlFromStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
+          <Button Text="Min Controls" Name ="minControlsStackButton" Margin="0,0,0,5"
+                  IsTextLocalized="true" Click="MinControlsStackPanelButton_Click"
+                  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
+
         </Grid>
       </StackPanel>
     </Panel>

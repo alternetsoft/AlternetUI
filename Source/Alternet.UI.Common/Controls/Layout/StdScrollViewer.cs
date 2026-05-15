@@ -23,6 +23,8 @@ namespace Alternet.UI
 
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
+        private bool insideUpdateInterior;
+        private int suspendUpdateInteriorCounter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StdScrollViewer"/> class.
@@ -37,22 +39,11 @@ namespace Alternet.UI
                 UpdateInterior();
             };
 
-            scrollContainer.SizeChanged += (s, e) =>
+            scrollContainer.LayoutUpdated += (s, e) =>
             {
-                UpdateInterior();
             };
 
-            scrollContainer.ChildSizeChanged += (s, e) =>
-            {
-                UpdateInterior();
-            };
-
-            scrollContainer.ChildInserted += (s, e) =>
-            {
-                UpdateInterior();
-            };
-
-            scrollContainer.ChildRemoved += (s, e) =>
+            scrollContainer.ChildLayoutUpdated += (s, e) =>
             {
                 UpdateInterior();
             };
@@ -221,6 +212,30 @@ namespace Alternet.UI
             vertScrollbar = new(position: yOffset, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
             horzScrollbar.Visibility = horzVisibility;
             vertScrollbar.Visibility = vertVisibility;
+        }
+
+        /// <summary>
+        /// Suspends the update of the interior layout and scroll bars, allowing for multiple changes to be made to the child controls
+        /// without triggering a layout update for each change.
+        /// </summary>
+        public virtual void SuspendUpdateInterior()
+        {
+            suspendUpdateInteriorCounter++;
+        }
+
+        /// <summary>
+        /// Resumes the update of the interior layout and scroll bars after it has been suspended,
+        /// allowing any pending layout updates to be processed.
+        /// </summary>
+        public virtual void ResumeUpdateInterior()
+        {
+            suspendUpdateInteriorCounter--;
+
+            if (suspendUpdateInteriorCounter < 0)
+                throw new InvalidOperationException("ResumeUpdateInterior called more times than SuspendUpdateInterior.");
+
+            if (suspendUpdateInteriorCounter == 0)
+                UpdateInterior();
         }
 
         /// <summary>
@@ -504,28 +519,32 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateInterior()
         {
-            if (Name == "imageScrollViewer")
+            if (insideUpdateInterior || suspendUpdateInteriorCounter > 0)
+                return;
+
+            insideUpdateInterior = true;
+
+            try
             {
-            }
+                UpdateScrollBars(false);
+                UpdateInteriorProperties();
+                scrollContainer.SuggestedSize = GetPaintRectangle().Size;
 
-            UpdateScrollBars(false);
-            UpdateInteriorProperties();
+                UpdateScrollBars(false);
+                UpdateInteriorProperties();
 
-            scrollContainer.SuggestedSize = GetPaintRectangle().Size;
+                var maxScrollPosition = GetMaxScrollPosition();
+                var scrollPosition = GetScrollPosition();
 
-            UpdateScrollBars(false);
-            UpdateInteriorProperties();
-            scrollContainer.SuggestedSize = GetPaintRectangle().Size;
+                var scrollChanged = DoActionSetScroll(new PointD(
+                    Math.Min(scrollPosition.X, maxScrollPosition.X),
+                    Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
 
-            var maxScrollPosition = GetMaxScrollPosition();
-            var scrollPosition = GetScrollPosition();
-
-            var scrollChanged = DoActionSetScroll(new PointD(
-                Math.Min(scrollPosition.X, maxScrollPosition.X),
-                Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
-            if (scrollChanged)
-            {
                 Refresh();
+            }
+            finally
+            {
+                insideUpdateInterior = false;
             }
         }
 
