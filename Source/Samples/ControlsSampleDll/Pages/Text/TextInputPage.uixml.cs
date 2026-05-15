@@ -18,7 +18,8 @@ namespace ControlsSample
         public static string TextBoxEmptyTextHint = "Sample Hint";
         public static string TextBoxSampleText = "Sample Text";
 
-        private Timer timer = new(100);
+        private readonly Timer timer = new(100);
+
         private PopupPropertyGrid? popup;
 
         static TextInputPage()
