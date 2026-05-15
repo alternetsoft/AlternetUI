@@ -32,6 +32,8 @@ namespace ControlsSample
 
             LogLayoutEvents(imageScrollViewer);
 
+            imageControl.HorizontalAlignment = HorizontalAlignment.Left;
+            imageControl.VerticalAlignment = VerticalAlignment.Top;
             imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
             imageControl.Parent = imageScrollViewer.Content;
 

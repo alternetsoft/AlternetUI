@@ -30,14 +30,17 @@ namespace Alternet.UI
         public StdScrollViewer()
         {
             scrollContainer = new ScrollContainer();
-            scrollContainer.IgnoreLayout = true;
             scrollContainer.Parent = this;
-
-            Interior?.Required();
 
             SizeChanged += (s, e) =>
             {
-                scrollContainer.Bounds = GetPaintRectangle();
+                UpdateInterior();
+                scrollContainer.SuggestedSize = GetPaintRectangle().Size;
+            };
+
+            scrollContainer.SizeChanged += (s, e) =>
+            {
+                UpdateInterior();
             };
 
             scrollContainer.ChildSizeChanged += (s, e) =>
@@ -45,7 +48,9 @@ namespace Alternet.UI
                 UpdateInterior();
             };
 
-            scrollContainer.Bounds = GetPaintRectangle();
+            scrollContainer.SuggestedSize = GetPaintRectangle().Size;
+
+            Interior?.Required();
         }
 
         /// <inheritdoc/>
@@ -136,17 +141,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override RectD ChildrenLayoutBounds
-        {
-            get
-            {
-                UpdateScrollBars(false);
-                UpdateInteriorProperties();
-                return GetPaintRectangle();
-            }
-        }
-
         new private ControlCollection Children
         {
             get
@@ -177,7 +171,7 @@ namespace Alternet.UI
 
                 scrollContainer.LayoutOffset = value;
 
-                UpdateScrollBars(true);
+                UpdateInterior();
             }
         }
 
@@ -506,7 +500,6 @@ namespace Alternet.UI
                 DoActionSetScroll(new PointD(
                     Math.Min(scrollPosition.X, maxScrollPosition.X),
                     Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
-
                 Refresh();
             }
         }
