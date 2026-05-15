@@ -45,6 +45,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the size of the child control is changed.
+        /// </summary>
+        /// <param name="childControl">The child control whose size has changed.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnChildSizeChanged(AbstractControl childControl)
+        {
+        }
+
+        /// <summary>
         /// Called after the <see cref="KeyDown" /> event of the child control is raised.
         /// </summary>
         /// <param name="sender">The source of the event.</param>

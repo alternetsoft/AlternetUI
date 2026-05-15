@@ -930,6 +930,12 @@ namespace Alternet.UI
             Resize?.Invoke(this, e);
             OnResize(e);
 
+            if (Parent is not null)
+            {
+                Parent.OnChildSizeChanged(this);
+                Parent.ChildSizeChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
+            }
+
             RaiseNotifications((n) => n.AfterSizeChanged(this, e));
 
             ForEachVisibleChild(
