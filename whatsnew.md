@@ -1,4 +1,23 @@
-# 1.0.11 (2026 May 9)
+# 1.0.13 (2026 May 15)
+
+- Make it compilable with new VC++.
+- Grid: Improve layout. Now it supports LayoutOffset and uses AllChildrenInLayout in order to get list of control to align.
+- Layout speed up of the controls due to assign of font in constructor.
+- Default layout now takes into account SuggestedSize.
+- Add LayoutFlags.NoParentPerformLayoutCalled flag.
+- Add PerformLayoutParams to layout APIs.
+- Make ObjectUniqueId thread safe.
+- AttributesFactory: Add GenUniqueAttributeName.
+- AbstractControl: Add ChildLayoutUpdated event and OnChildLayoutUpdated method.
+- ScrollableUserControol: do not refresh if scroll not changed.
+- AxisIntervalD: Implement equality and ToString.
+- AbstractControl: Fix PerformLayoutAndInvalidate.
+- FrameworkElement: Override ToString to include element Name.
+- Add MathUtils.EqualOrBothNaN, SizeD.EqualsAllowNaN, Font.AreEqual, AbstractControl.IsParentPerformLayoutCalled(), AbstractControl.OnLayoutUpdated.
+
+---
+
+# 1.0.12 (2026 May 9)
 
 - Improve the installation scripts to better support Windows on Arm64.
 - Update the SharpCompress NuGet package used in the RunCmd tools to avoid the vulnerability warning in Visual Studio.
