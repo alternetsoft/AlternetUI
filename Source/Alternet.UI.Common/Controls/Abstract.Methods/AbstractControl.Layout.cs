@@ -15,7 +15,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the layout manager responsible for arranging child elements within the container.
         /// Default is null, which means that the default layout manager will be used. Setting this property to a non-null
-        /// value allows you to specify a custom layout manager for the control, which can provide specialized layout behavior for its child controls.
+        /// value allows you to specify a custom layout manager for the control,
+        /// which can provide specialized layout behavior for its child controls.
         /// </summary>
         /// <remarks>Setting this property updates the layout of the container. </remarks>
         [Browsable(false)]
