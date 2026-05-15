@@ -35,7 +35,6 @@ namespace Alternet.UI
             SizeChanged += (s, e) =>
             {
                 UpdateInterior();
-                scrollContainer.SuggestedSize = GetPaintRectangle().Size;
             };
 
             scrollContainer.SizeChanged += (s, e) =>
@@ -48,9 +47,19 @@ namespace Alternet.UI
                 UpdateInterior();
             };
 
-            scrollContainer.SuggestedSize = GetPaintRectangle().Size;
+            scrollContainer.ChildInserted += (s, e) =>
+            {
+                UpdateInterior();
+            };
+
+            scrollContainer.ChildRemoved += (s, e) =>
+            {
+                UpdateInterior();
+            };
 
             Interior?.Required();
+
+            UpdateInterior();
         }
 
         /// <inheritdoc/>
@@ -417,12 +426,17 @@ namespace Alternet.UI
         /// Scrolls the content to the specified position, ensuring that the new scroll position is within valid bounds.
         /// </summary>
         /// <param name="value">The target scroll position.</param>
-        public virtual void DoActionSetScroll(PointD value)
+        public virtual bool DoActionSetScroll(PointD value)
         {
             var newOffset = value.ClampToZero();
             var maxOffset = GetMaxScrollPosition();
             newOffset = newOffset.ClampToMax(maxOffset);
+
+            var oldOffset = LayoutOffset;
+
             LayoutOffset = newOffset;
+
+            return newOffset != oldOffset;
         }
 
         /// <summary>
@@ -490,16 +504,27 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateInterior()
         {
-            var scrollbarsUpdated = UpdateScrollBars(false);
-
-            if (scrollbarsUpdated)
+            if (Name == "imageScrollViewer")
             {
-                var maxScrollPosition = GetMaxScrollPosition();
-                var scrollPosition = GetScrollPosition();
+            }
 
-                DoActionSetScroll(new PointD(
-                    Math.Min(scrollPosition.X, maxScrollPosition.X),
-                    Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
+            UpdateScrollBars(false);
+            UpdateInteriorProperties();
+
+            scrollContainer.SuggestedSize = GetPaintRectangle().Size;
+
+            UpdateScrollBars(false);
+            UpdateInteriorProperties();
+            scrollContainer.SuggestedSize = GetPaintRectangle().Size;
+
+            var maxScrollPosition = GetMaxScrollPosition();
+            var scrollPosition = GetScrollPosition();
+
+            var scrollChanged = DoActionSetScroll(new PointD(
+                Math.Min(scrollPosition.X, maxScrollPosition.X),
+                Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
+            if (scrollChanged)
+            {
                 Refresh();
             }
         }

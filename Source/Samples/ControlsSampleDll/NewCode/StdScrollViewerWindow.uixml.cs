@@ -175,7 +175,7 @@ namespace ControlsSample
         {
             grid.DoInsideLayout(() =>
             {
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
+                grid.ColumnDefinitions.Add(ColumnDefinition.CreateAuto());
                 int columnIndex = grid.ColumnDefinitions.Count - 1;
                 for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
                     AddControlToGrid(columnIndex, rowIndex);
@@ -199,7 +199,7 @@ namespace ControlsSample
         {
             grid.DoInsideLayout(() =>
             {
-                grid.RowDefinitions.Add(new RowDefinition());
+                grid.RowDefinitions.Add(RowDefinition.CreateAuto());
                 int rowIndex = grid.RowDefinitions.Count - 1;
                 for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
                     AddControlToGrid(columnIndex, rowIndex);
