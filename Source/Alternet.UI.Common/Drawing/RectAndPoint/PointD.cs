@@ -503,9 +503,17 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns new <see cref='PointD'/> with coordinates of this point negated.
+        /// </summary>
+        /// <returns>A new <see cref='PointD'/> instance with negated coordinates.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly PointD Negate() => new PointD(-x, -y);
+
+        /// <summary>
         /// Returns new <see cref='PointD'/> with coordinates of this point translated
         /// by the specified amount specified in <paramref name="d"/>.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public readonly PointD OffsetBy(PointD d) => OffsetBy(d.x, d.y);
 
         /// <summary>
