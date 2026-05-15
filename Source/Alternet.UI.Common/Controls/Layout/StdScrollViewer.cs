@@ -23,7 +23,6 @@ namespace Alternet.UI
 
         private bool isScrolledVertically = true;
         private bool isScrolledHorizontally = true;
-        private SizeD? oldLayoutMaxSize;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StdScrollViewer"/> class.
@@ -31,10 +30,14 @@ namespace Alternet.UI
         public StdScrollViewer()
         {
             scrollContainer = new ScrollContainer();
+            scrollContainer.IgnoreLayout = true;
             scrollContainer.Parent = this;
-            scrollContainer.SizeChanged += (s, e) =>
+
+            Interior?.Required();
+
+            SizeChanged += (s, e) =>
             {
-                UpdateInterior();
+                scrollContainer.Bounds = GetPaintRectangle();
             };
 
             scrollContainer.ChildSizeChanged += (s, e) =>
@@ -42,7 +45,7 @@ namespace Alternet.UI
                 UpdateInterior();
             };
 
-            Interior?.Required();
+            scrollContainer.Bounds = GetPaintRectangle();
         }
 
         /// <inheritdoc/>
@@ -480,25 +483,12 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            UpdateInterior();
-        }
-
-        /// <summary>
-        /// Determines whether the specified control should be considered as a scrolled control,
-        /// which means that its layout updates can affect the scrollable area and may require updating the scroll bars.
-        /// </summary>
-        /// <param name="control">The control to check.</param>
-        /// <returns><c>true</c> if the control should be considered as a scrolled control; otherwise, <c>false</c>.</returns>
-        protected virtual bool IsScrolledControl(AbstractControl control)
-        {
-            return control.IsVisible && !control.IgnoreLayout;
         }
 
         /// <inheritdoc/>
         protected override void OnLayoutUpdated(EventArgs e)
         {
             base.OnLayoutUpdated(e);
-            UpdateInterior();
         }
 
         /// <summary>
@@ -506,12 +496,6 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdateInterior()
         {
-            if (LayoutMaxSize != oldLayoutMaxSize)
-            {
-                oldLayoutMaxSize = LayoutMaxSize;
-                PerformLayout(false);
-            }
-
             var scrollbarsUpdated = UpdateScrollBars(false);
 
             if (scrollbarsUpdated)
@@ -533,10 +517,62 @@ namespace Alternet.UI
         /// </summary>
         public class ScrollContainer : HiddenBorder
         {
-            /// <inheritdoc/>
-            protected override void OnChildLayoutUpdated(EventArgs e)
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ScrollContainer"/> class,
+            /// which serves as the container for child controls within the scrollable area of the <see cref="StdScrollViewer"/>.
+            /// </summary>
+            public ScrollContainer()
             {
-                base.OnChildLayoutUpdated(e);
+            }
+
+            /// <inheritdoc/>
+            public override void OnLayout()
+            {
+                var control = FirstChild;
+
+                if (control is null)
+                    return;
+
+                var childrenLayoutBounds = ChildrenLayoutBounds;
+
+                var boundedPreferredSize = control.GetPreferredSize(new PreferredSizeContext(childrenLayoutBounds.Size));
+                var unboundedPreferredSize = control.GetPreferredSize();
+
+                var verticalAlignment = control.VerticalAlignment;
+                var horizontalAlignment = control.HorizontalAlignment;
+
+                if (unboundedPreferredSize.Width > childrenLayoutBounds.Width)
+                {
+                    horizontalAlignment = UI.HorizontalAlignment.Left;
+                }
+
+                if (unboundedPreferredSize.Height > childrenLayoutBounds.Height)
+                {
+                    verticalAlignment = UI.VerticalAlignment.Top;
+                }
+
+                var layoutManager = GetLayoutManager();
+
+                var horizontalPosition =
+                    layoutManager.AlignHorizontal(
+                        childrenLayoutBounds,
+                        control,
+                        boundedPreferredSize,
+                        horizontalAlignment);
+                var verticalPosition =
+                    layoutManager.AlignVertical(
+                        childrenLayoutBounds,
+                        control,
+                        boundedPreferredSize,
+                        verticalAlignment);
+
+                var layoutOffset = LayoutOffset;
+
+                control.Bounds = new RectD(
+                    horizontalPosition.Start - layoutOffset.X,
+                    verticalPosition.Start - layoutOffset.Y,
+                    horizontalPosition.Length,
+                    verticalPosition.Length);
             }
         }
     }
