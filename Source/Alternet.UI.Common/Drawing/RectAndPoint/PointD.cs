@@ -507,7 +507,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A new <see cref='PointD'/> instance with negated coordinates.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public readonly PointD Negate() => new PointD(-x, -y);
+        public readonly PointD Negate() => new (-x, -y);
 
         /// <summary>
         /// Returns new <see cref='PointD'/> with coordinates of this point translated
@@ -722,6 +722,26 @@ namespace Alternet.Drawing
         public readonly PointD WithY(Coord newY)
         {
             return new PointD(x, newY);
+        }
+
+        /// <summary>
+        /// Returns a new PointD instance with the Y coordinate increased by the specified delta and the current X coordinate.
+        /// </summary>
+        /// <param name="delta">The value to add to the current Y coordinate.</param>
+        /// <returns>A new PointD with the Y coordinate increased by delta and the X coordinate unchanged.</returns>
+        public readonly SizeD WithYIncreased(float delta)
+        {
+            return new SizeD(X, Y + delta);
+        }
+
+        /// <summary>
+        /// Returns a new PointD instance with the X coordinate increased by the specified delta and the current Y coordinate.
+        /// </summary>
+        /// <param name="delta">The value to add to the current X coordinate.</param>
+        /// <returns>A new PointD with the X coordinate increased by delta and the Y coordinate unchanged.</returns>
+        public readonly SizeD WithXIncreased(float delta)
+        {
+            return new SizeD(X + delta, Y);
         }
 
         /// <summary>
