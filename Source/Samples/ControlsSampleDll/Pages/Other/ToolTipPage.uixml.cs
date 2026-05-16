@@ -38,7 +38,7 @@ namespace ControlsSample
             {
                 toolTip.HideToolTip();
                 ShowToolTipButton_Click(this, EventArgs.Empty);
-            };
+            }
 
             Group(
                 tooltipTitleLabel,
@@ -48,7 +48,7 @@ namespace ControlsSample
 
             tooltipIconComboBox.IncludeValuePredicate = (item) =>
             {
-                if(item is MessageBoxIcon icon)
+                if (item is MessageBoxIcon icon)
                     return icon == MessageBoxIcon.None || MessageBoxSvg.GetImage(icon) is not null;
                 return false;
             };
@@ -233,7 +233,7 @@ namespace ControlsSample
             tooltipMessageTextBox.DelayedTextChanged += (s, e) =>
             {
                 if (toolTip.ToolTipVisible)
-                    RunWhenIdle(()=>ShowToolTipButton_Click(this, EventArgs.Empty));
+                    RunWhenIdle(() => ShowToolTipButton_Click(this, EventArgs.Empty));
             };
 
             tooltipPreview.Click += (s, e) =>
@@ -300,7 +300,7 @@ namespace ControlsSample
                     Color.Red,
                     Color.LightGoldenrodYellow,
                     Control.DefaultFont.Scaled(1.5f)));
-            
+
             controlTemplate.ParentBackColor = false;
             controlTemplate.BackColor = Color.Transparent;
             controlTemplate.Parent = parent;
@@ -332,10 +332,10 @@ namespace ControlsSample
             if (textBox.Text == string.Empty)
                 textBox.Text = text;
             else
-            if (textBox.Text == text)
-                textBox.Text = PropertyGridSample.ObjectInit.LoremIpsum;
-            else
-                textBox.Text = string.Empty;
+                if (textBox.Text == text)
+                    textBox.Text = PropertyGridSample.ObjectInit.LoremIpsum;
+                else
+                    textBox.Text = string.Empty;
             ShowToolTipButton_Click(this, EventArgs.Empty);
         }
 
@@ -347,13 +347,13 @@ namespace ControlsSample
         internal void Log()
         {
             LogUtils.LogColor("Info", SystemColors.Info);
-            
+
             LogUtils.LogColor(
                 "SystemSettings.Info",
                 new(SystemSettings.GetColor(KnownSystemColor.Info)));
 
             LogUtils.LogColor("InfoText", SystemColors.InfoText);
-            
+
             LogUtils.LogColor(
                 "SystemSettings.InfoText",
                 new(SystemSettings.GetColor(KnownSystemColor.InfoText)));
