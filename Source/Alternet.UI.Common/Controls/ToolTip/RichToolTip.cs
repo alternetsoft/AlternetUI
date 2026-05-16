@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
-        public static new bool ShowDebugCorners = false;
+        public static bool ShowDebugCorners = false;
 
         /// <summary>
         /// Gets or sets default tooltip border color.
