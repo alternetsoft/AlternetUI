@@ -344,14 +344,17 @@ namespace ControlsSample
 
         private void ToggleText(TextBox textBox, string text)
         {
-            if (textBox.Text == string.Empty)
-                textBox.Text = text;
-            else
-                if (textBox.Text == text)
-                    textBox.Text = PropertyGridSample.ObjectInit.LoremIpsum;
+            toolTip.DoInsideUpdate(() =>
+            {
+                if (textBox.Text == string.Empty)
+                    textBox.Text = text;
                 else
-                    textBox.Text = string.Empty;
-            ShowToolTipButton_Click(this, EventArgs.Empty);
+                    if (textBox.Text == text)
+                        textBox.Text = PropertyGridSample.ObjectInit.LoremIpsum;
+                    else
+                        textBox.Text = string.Empty;
+                ShowToolTipButton_Click(this, EventArgs.Empty);
+            });
         }
 
         internal void NextAlignment()
