@@ -18,6 +18,11 @@ namespace Alternet.UI
         private Record record;
 
         /// <summary>
+        /// Gets or sets a value indicating whether the tooltip should have a border. Default is <c>true</c>.
+        /// </summary>
+        public virtual bool HasToolTipBorder { get; set; } = true;
+
+        /// <summary>
         /// Gets or sets the title associated with this instance.
         /// </summary>
         public virtual string Title { get => record.Title; set => record.Title = value; }

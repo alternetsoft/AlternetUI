@@ -69,6 +69,12 @@ namespace ControlsSample
             showImageButton.Click += ShowImageButton_Click;
             resetTextButton.Click += ResetTextButton_Click;
 
+            borderCheckBox.CheckedChanged += (s, e) =>
+            {
+                toolTip.HasToolTipBorder = borderCheckBox.IsChecked;
+                ShowToolTipButton_Click(this, EventArgs.Empty);
+            };
+
             Group(
                 showToolTipButton,
                 hideToolTipButton,

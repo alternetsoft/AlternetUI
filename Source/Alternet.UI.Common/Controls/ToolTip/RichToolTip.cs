@@ -493,6 +493,26 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets whether to show tooltip border. Default is true.
+        /// This property specifies whether to show border around the tooltip content.
+        /// </summary>
+        public virtual bool HasToolTipBorder
+        {
+            get
+            {
+                return data.HasToolTipBorder;
+            }
+
+            set
+            {
+                if (data.HasToolTipBorder == value)
+                    return;
+                data.HasToolTipBorder = value;
+                HideToolTip();
+            }
+        }
+
         RichToolTip? IRichToolTip.ToolTipControl => this;
 
         AbstractControl? IRichToolTip.AbstractToolTipControl => this;
@@ -590,7 +610,7 @@ namespace Alternet.UI
 
                 template.Font = data.Font ?? Control.DefaultFont;
                 template.NormalBorder = RealDefaultToolTipBorder;
-                template.HasBorder = true;
+                template.HasBorder = data.HasToolTipBorder;
                 template.BackgroundColor
                 = data.BackgroundColor?.Current ?? RichToolTip.DefaultToolTipBackgroundColor.Current;
                 template.RaiseBackgroundColorChanged();
@@ -1101,7 +1121,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            DrawDefaultBackground(e);
+            DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorderAndBackground);
 
             if (drawable.Visible && drawable.Image != null)
             {
