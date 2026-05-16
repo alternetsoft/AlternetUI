@@ -185,10 +185,19 @@ namespace ControlsSample
                 hasMediumImage = true;
                 ToggleLargeImage();
 
-                customImageCheckBox.Checked = true;
-                largeImageCheckBox.Checked = true;
+                toolTip.BeginUpdate();
 
-                ShowToolTipButton_Click(this, EventArgs.Empty);
+                try
+                {
+                    customImageCheckBox.Checked = true;
+                    largeImageCheckBox.Checked = true;
+
+                    ShowToolTipButton_Click(this, EventArgs.Empty);
+                }
+                finally
+                {
+                    toolTip.EndUpdate();
+                }
             });
 
             atCenterCheckBox.CheckedChanged += (s, e) =>

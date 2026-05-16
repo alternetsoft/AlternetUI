@@ -80,6 +80,7 @@ namespace Alternet.UI
         private float? maxTextWidth;
         private bool isScrolledHorizontally = true;
         private bool isScrolledVertically = true;
+        private PointD layoutOffset;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
@@ -241,6 +242,18 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public AbstractControl ToolTipTemplate => template;
+
+        /// <summary>
+        /// Gets or sets the small change value for scrolling, which determines how much
+        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// </summary>
+        public virtual SizeD? ScrollSmallChange { get; set; }
+
+        /// <summary>
+        /// Gets or sets the large change value for scrolling, which determines how much
+        /// the content should scroll when a large scroll action is performed (e.g., scrolling by one page).
+        /// </summary>
+        public virtual SizeD? ScrollLargeChange { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum width, in device-independent units (DIPs), that text can occupy before it is
@@ -503,6 +516,22 @@ namespace Alternet.UI
                 {
                     AutoReset = false,
                 };
+            }
+        }
+
+        new private PointD LayoutOffset
+        {
+            get
+            {
+                return layoutOffset;
+            }
+
+            set
+            {
+                if(layoutOffset == value)
+                    return;
+                layoutOffset = value;
+                UpdateInterior();
             }
         }
 
@@ -1086,7 +1115,7 @@ namespace Alternet.UI
 
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;
-                // alignedRect.Location += Content.LayoutOffset;
+                alignedRect.Location -= LayoutOffset;
                 drawable.Bounds = alignedRect;
                 drawable.Draw(this, e.Graphics);
 
@@ -1159,6 +1188,7 @@ namespace Alternet.UI
         {
             GetPaintRectangle();
             UpdateScrollBars(refresh: false);
+            UpdateInteriorProperties();
             Refresh();
         }
 
@@ -1195,56 +1225,228 @@ namespace Alternet.UI
             vertScrollbar.Visibility = vertVisibility;
         }
 
-        void IScrollEventRouter.DoActionScrollCharLeft()
+        /// <summary>
+        /// Retrieves the width of a single character using the default font.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Coord"/> representing the width of the character.
+        /// </returns>
+        public virtual Coord GetCharWidth()
         {
+            var result = MeasureCanvas.GetTextExtent("W", RealFont).Width;
+            if (result <= 0)
+                result = 16;
+            return result;
         }
 
-        void IScrollEventRouter.DoActionScrollCharRight()
+        /// <summary>
+        /// Retrieves the height of a single character using the default font.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="Coord"/> representing the height of the character.
+        /// </returns>
+        public virtual Coord GetCharHeight()
         {
+            var result = MeasureCanvas.GetTextExtent("W", RealFont).Height;
+            if (result <= 0)
+                result = VirtualListControl.DefaultMinItemHeight;
+            return result;
         }
 
-        void IScrollEventRouter.DoActionScrollToFirstChar()
+        /// <summary>
+        /// Calculates and retrieves the effective small change value for scrolling, which determines how much
+        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> representing the effective small change value for scrolling. </returns>
+        public virtual SizeD GetEffectiveScrollSmallChange()
         {
+            if (ScrollSmallChange is not null)
+            {
+                return ScrollSmallChange.Value;
+            }
+
+            return ScrollViewer.DefaultScrollSmallChange;
         }
 
-        void IScrollEventRouter.DoActionScrollPageLeft()
+        /// <summary>
+        /// Calculates and retrieves the effective large change value for scrolling, which determines how much
+        /// the content should scroll when a large scroll action is performed (e.g., scrolling by one page).
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> representing the effective large change value for scrolling. </returns>
+        public virtual SizeD GetEffectiveScrollLargeChange()
         {
+            return ScrollLargeChange ?? GetPaintRectangle().Size;
         }
 
-        void IScrollEventRouter.DoActionScrollPageRight()
+        /// <inheritdoc/>
+        public virtual void DoActionScrollCharLeft()
         {
+            var value = GetEffectiveScrollSmallChange().Width;
+            DoActionOffsetScroll(new SizeD(-value, 0));
         }
 
-        void IScrollEventRouter.DoActionScrollPageUp()
+        /// <inheritdoc/>
+        public virtual void DoActionScrollCharRight()
         {
+            var value = GetEffectiveScrollSmallChange().Width;
+            DoActionOffsetScroll(new SizeD(value, 0));
         }
 
-        void IScrollEventRouter.DoActionScrollPageDown()
+        /// <inheritdoc/>
+        public virtual void DoActionScrollLineDown()
         {
+            var value = GetEffectiveScrollSmallChange().Height;
+            DoActionOffsetScroll(new SizeD(0, value));
         }
 
-        void IScrollEventRouter.DoActionScrollLineUp()
+        /// <inheritdoc/>
+        public virtual void DoActionScrollLineUp()
         {
+            var value = GetEffectiveScrollSmallChange().Height;
+            DoActionOffsetScroll(new SizeD(0, -value));
         }
 
-        void IScrollEventRouter.DoActionScrollLineDown()
+        /// <inheritdoc/>
+        public virtual void DoActionScrollPageDown()
         {
+            var value = GetEffectiveScrollLargeChange().Height;
+            DoActionOffsetScroll(new SizeD(0, value));
         }
 
-        void IScrollEventRouter.DoActionScrollToFirstLine()
+        /// <inheritdoc/>
+        public virtual void DoActionScrollPageUp()
         {
+            var value = GetEffectiveScrollLargeChange().Height;
+            DoActionOffsetScroll(new SizeD(0, -value));
         }
 
-        void IScrollEventRouter.DoActionScrollToLastLine()
+        /// <inheritdoc/>
+        public virtual void DoActionScrollPageLeft()
         {
+            var value = GetEffectiveScrollLargeChange().Width;
+            DoActionOffsetScroll(new SizeD(-value, 0));
         }
 
-        void IScrollEventRouter.DoActionScrollToVertPos(int value)
+        /// <inheritdoc/>
+        public virtual void DoActionScrollPageRight()
         {
+            var value = GetEffectiveScrollLargeChange().Width;
+            DoActionOffsetScroll(new SizeD(value, 0));
         }
 
-        void IScrollEventRouter.DoActionScrollToHorzPos(int value)
+        /// <inheritdoc/>
+        public virtual void DoActionScrollToFirstChar()
         {
+            DoActionScrollToHorzPos(0);
+        }
+
+        /// <inheritdoc/>
+        public virtual void DoActionScrollToFirstLine()
+        {
+            DoActionScrollToVertPos(0);
+        }
+
+        /// <inheritdoc/>
+        public virtual void DoActionScrollToHorzPos(int value)
+        {
+            DoActionSetScroll(new PointD(value, LayoutOffset.Y));
+        }
+
+        /// <summary>
+        /// Calculates and retrieves the total scrollable area based on the maximum right and bottom positions of the child controls,
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> representing the total scrollable area.</returns>
+        public virtual SizeD GetScrollRange()
+        {
+            return LayoutMaxSize;
+        }
+
+        /// <summary>
+        /// Retrieves the current scroll position, which is determined by the layout offset of the first child control.
+        /// </summary>
+        /// <returns>A <see cref="PointD"/> representing the current scroll position.</returns>
+        public virtual PointD GetScrollPosition()
+        {
+            return LayoutOffset;
+        }
+
+        /// <summary>
+        /// Calculates and retrieves the maximum scroll position based on the scroll range and the visible area.
+        /// </summary>
+        /// <returns>A <see cref="PointD"/> representing the maximum scroll position.</returns>
+        public virtual PointD GetMaxScrollPosition()
+        {
+            var scrollRange = GetScrollRange();
+            if (scrollRange == SizeD.Empty)
+                return PointD.Empty;
+
+            var paintRectangle = GetPaintRectangle();
+
+            var lastHorizontalOffset = Math.Max(scrollRange.Width - paintRectangle.Width, 0);
+            var lastVerticalOffset = Math.Max(scrollRange.Height - paintRectangle.Height, 0);
+            return new PointD(lastHorizontalOffset, lastVerticalOffset);
+        }
+
+        /// <inheritdoc/>
+        public virtual void DoActionScrollToLastLine()
+        {
+            var scrollRange = GetScrollRange();
+            if (scrollRange == SizeD.Empty)
+                return;
+
+            var lastLineOffset = scrollRange.Height - GetPaintRectangle().Height;
+            DoActionSetScroll(new PointD(LayoutOffset.X, lastLineOffset));
+        }
+
+        /// <summary>
+        /// Scrolls the content to the last character, which is determined by calculating
+        /// the maximum horizontal scroll offset based on the scroll range and the visible area.
+        /// </summary>
+        public virtual void DoActionScrollToLastChar()
+        {
+            var scrollRange = GetScrollRange();
+            if (scrollRange == SizeD.Empty)
+                return;
+
+            var lastCharOffset = scrollRange.Width - GetPaintRectangle().Width;
+            DoActionSetScroll(new PointD(lastCharOffset, LayoutOffset.Y));
+        }
+
+        /// <inheritdoc/>
+        public virtual void DoActionScrollToVertPos(int value)
+        {
+            DoActionSetScroll(new PointD(LayoutOffset.X, value));
+        }
+
+        /// <summary>
+        /// Scrolls the content to the specified position, ensuring that the new scroll position is within valid bounds.
+        /// </summary>
+        /// <param name="value">The target scroll position.</param>
+        public virtual bool DoActionSetScroll(PointD value)
+        {
+            var newOffset = value.ClampToZero();
+            var maxOffset = GetMaxScrollPosition();
+            newOffset = newOffset.ClampToMax(maxOffset);
+
+            var oldOffset = LayoutOffset;
+
+            LayoutOffset = newOffset;
+
+            return newOffset != oldOffset;
+        }
+
+        /// <summary>
+        /// Scrolls the content by the specified offset.
+        /// </summary>
+        /// <param name="value">The offset by which to scroll the content.</param>
+        public virtual void DoActionOffsetScroll(SizeD value)
+        {
+            if (value.Height == 0 && value.Width == 0)
+                return;
+
+            var oldOffset = LayoutOffset;
+            var newOffset = oldOffset + value;
+            DoActionSetScroll(newOffset);
         }
     }
 }
