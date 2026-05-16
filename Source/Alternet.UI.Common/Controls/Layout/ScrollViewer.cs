@@ -50,6 +50,7 @@ namespace Alternet.UI
             SizeChanged += (s, e) =>
             {
                 UpdateInterior();
+                App.DebugLogIf("ScrollViewer: Size changed, updating interior.", false);
             };
 
             scrollContainer.LayoutUpdated += (s, e) =>
@@ -59,6 +60,7 @@ namespace Alternet.UI
             scrollContainer.ChildLayoutUpdated += (s, e) =>
             {
                 UpdateInterior();
+                App.DebugLogIf("ScrollViewer: Child layout updated, updating interior.", false);
             };
 
             Interior?.Required();
@@ -80,7 +82,7 @@ namespace Alternet.UI
         /// Gets the content of the scroll viewer.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl? Content
+        public AbstractControl Content
         {
             get
             {
@@ -146,6 +148,7 @@ namespace Alternet.UI
                 if (isScrolledVertically == value)
                     return;
                 isScrolledVertically = value;
+                UpdateInterior();
             }
         }
 
@@ -160,6 +163,7 @@ namespace Alternet.UI
                 if (isScrolledHorizontally == value)
                     return;
                 isScrolledHorizontally = value;
+                UpdateInterior();
             }
         }
 

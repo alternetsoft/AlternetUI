@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// specify title, image and other options.
     /// </summary>
     [ControlCategory("Other")]
-    public partial class RichToolTip : ScrollViewer, IRichToolTip, IToolTipProvider
+    public partial class RichToolTip : ScrollableUserControl, IRichToolTip, IToolTipProvider, IScrollEventRouter
     {
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
@@ -78,6 +78,8 @@ namespace Alternet.UI
         private object? toolTipOwner;
         private PointD? toolTipLocation;
         private float? maxTextWidth;
+        private bool isScrolledHorizontally = true;
+        private bool isScrolledVertically = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RichToolTip"/> class.
@@ -88,6 +90,7 @@ namespace Alternet.UI
             drawable.Visible = false;
             ParentBackColor = true;
             ParentForeColor = true;
+            Interior?.Required();
         }
 
         /// <summary>
@@ -180,6 +183,36 @@ namespace Alternet.UI
             set
             {
                 defaultTemplate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the content is allowed to be scrolled vertically.
+        /// </summary>
+        public virtual bool IsScrolledVertically
+        {
+            get => isScrolledVertically;
+            set
+            {
+                if (isScrolledVertically == value)
+                    return;
+                isScrolledVertically = value;
+                UpdateInterior();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the content is allowed to be scrolled horizontally.
+        /// </summary>
+        public virtual bool IsScrolledHorizontally
+        {
+            get => isScrolledHorizontally;
+            set
+            {
+                if (isScrolledHorizontally == value)
+                    return;
+                isScrolledHorizontally = value;
+                UpdateInterior();
             }
         }
 
@@ -287,6 +320,16 @@ namespace Alternet.UI
             get => ToolTipAlignment.Horizontal;
 
             set => ToolTipAlignment = ToolTipAlignment.WithHorizontal(value);
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override IScrollEventRouter ScrollEventRouter
+        {
+            get
+            {
+                return this;
+            }
         }
 
         /// <summary>
@@ -463,6 +506,16 @@ namespace Alternet.UI
             }
         }
 
+        new private SizeD LayoutMaxSize
+        {
+            get
+            {
+                if (!drawable.Visible)
+                    return SizeD.Empty;
+                return drawable.GetPreferredSize(this);
+            }
+        }
+
         /// <summary>
         /// Creates an image representation of a rich tooltip based
         /// on the specified template and parameters.
@@ -629,8 +682,6 @@ namespace Alternet.UI
                 {
                     drawable.Visible = false;
                     RaiseToolTipVisibleChanged(EventArgs.Empty);
-                    LayoutMaxSize = null;
-                    Invalidate();
                 }
 
                 return this;
@@ -890,7 +941,6 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
                 drawable.Visible = true;
-                LayoutMaxSize = drawable.GetPreferredSize(this);
                 RaiseToolTipVisibleChanged(EventArgs.Empty);
                 Refresh();
 
@@ -997,6 +1047,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            UpdateInterior();
             ToolTipVisibleChanged?.Invoke(this, e);
         }
 
@@ -1035,9 +1086,13 @@ namespace Alternet.UI
 
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;
-                alignedRect.Location += LayoutOffset;
+                // alignedRect.Location += Content.LayoutOffset;
                 drawable.Bounds = alignedRect;
                 drawable.Draw(this, e.Graphics);
+
+                UpdateInteriorProperties();
+
+                DrawInterior(e.Graphics);
             }
 
             DefaultPaintDebug(e);
@@ -1047,13 +1102,6 @@ namespace Alternet.UI
         {
             ToolTipOwner = sender;
             return this;
-        }
-
-        /// <inheritdoc/>
-        protected override void OnScroll(ScrollEventArgs e)
-        {
-            base.OnScroll(e);
-            Invalidate();
         }
 
         /// <inheritdoc/>
@@ -1074,6 +1122,7 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
+            UpdateInterior();
         }
 
         /// <inheritdoc/>
@@ -1089,6 +1138,7 @@ namespace Alternet.UI
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
+            UpdateInterior();
         }
 
         /// <inheritdoc/>
@@ -1103,6 +1153,98 @@ namespace Alternet.UI
             {
                 BorderSettings.DrawDesignCorners(e.Graphics, e.ClientRectangle);
             }
+        }
+
+        private void UpdateInterior()
+        {
+            GetPaintRectangle();
+            UpdateScrollBars(refresh: false);
+            Refresh();
+        }
+
+        void IScrollEventRouter.CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
+        {
+            var imageVisible = drawable.Visible && drawable.Image != null;
+
+            HiddenOrVisible vertVisibility = IsScrolledVertically ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
+            HiddenOrVisible horzVisibility = IsScrolledHorizontally ? HiddenOrVisible.Auto : HiddenOrVisible.Hidden;
+
+            if (HasHorizontalScrollBarSettings)
+                horzVisibility = HorizontalScrollBarSettings.SuggestedVisibility;
+            if (HasVerticalScrollBarSettings)
+                vertVisibility = VerticalScrollBarSettings.SuggestedVisibility;
+
+            if (!imageVisible)
+            {
+                horzScrollbar = new(horzVisibility);
+                vertScrollbar = new(vertVisibility);
+                return;
+            }
+
+            var paintRectangle = GetPaintRectangle();
+
+            var range = LayoutMaxSize;
+
+            var layoutOffset = LayoutOffset;
+            var xOffset = (int)layoutOffset.X;
+            var yOffset = (int)layoutOffset.Y;
+
+            horzScrollbar = new(position: xOffset, range: (int)range.Width, pageSize: (int)paintRectangle.Width);
+            vertScrollbar = new(position: yOffset, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
+            horzScrollbar.Visibility = horzVisibility;
+            vertScrollbar.Visibility = vertVisibility;
+        }
+
+        void IScrollEventRouter.DoActionScrollCharLeft()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollCharRight()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollToFirstChar()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollPageLeft()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollPageRight()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollPageUp()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollPageDown()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollLineUp()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollLineDown()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollToFirstLine()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollToLastLine()
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollToVertPos(int value)
+        {
+        }
+
+        void IScrollEventRouter.DoActionScrollToHorzPos(int value)
+        {
         }
     }
 }

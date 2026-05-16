@@ -15,10 +15,15 @@ namespace ControlsSample
 
         private Action<object?, EventArgs>? showMethod;
         private MessageBoxIcon toolTipIcon = MessageBoxIcon.Warning;
+        private bool hasMediumImage = true;
         private readonly TemplateControl controlTemplate;
 
         public ToolTipPage()
         {
+            var logConstructor = false;
+
+            App.LogIf("Start ToolTipPage constructor", logConstructor);
+
             InitializeComponent();
 
             controlTemplate = CreateTemplateWithBoldText(this);
@@ -32,6 +37,7 @@ namespace ControlsSample
             void HandleCheckedChanged(object? sender, EventArgs e)
             {
                 toolTip.HideToolTip();
+                ShowToolTipButton_Click(this, EventArgs.Empty);
             };
 
             Group(
@@ -53,6 +59,7 @@ namespace ControlsSample
             {
                 var icon = (MessageBoxIcon)tooltipIconComboBox.Value;
                 ToolTipIcon = icon;
+                ShowToolTipButton_Click(this, EventArgs.Empty);
             };
 
             showToolTipButton.Click += ShowToolTipButton_Click;
@@ -133,7 +140,56 @@ namespace ControlsSample
                 });
             });
 
+            popup.Add("Set ToolTip container back to green", () =>
+            {
+                tooltipPreview.ParentBackColor = false;
+                tooltipPreview.BackColor = Color.LightGreen;
+            });
+
+            popup.Add("Set ToolTip back to red", () =>
+            {
+                toolTip.ParentBackColor = false;
+                toolTip.BackColor = Color.IndianRed;
+            });
+
             popup.Add("Next Alignment", NextAlignment);
+
+            void ToggleLargeImage()
+            {
+                if (hasMediumImage)
+                {
+                    var resFolder = "Resources.Backgrounds.";
+                    var resPrefix = AssemblyUtils.GetImageUrlInAssembly(GetType().Assembly, resFolder);
+
+                    var url = $"{resPrefix}GirlAndBoyFlower.png";
+
+                    LargeImageSet = ImageSet.FromUrl(url);
+                }
+                else
+                {
+                    LargeImageSet = null;
+                }
+
+                hasMediumImage = !hasMediumImage;
+
+                HideToolTipButton_Click(this, EventArgs.Empty);
+            }
+
+            popup.Add("Toggle Large Image", () =>
+            {
+                ToggleLargeImage();
+            });
+
+            popup.Add("Show ToolTip with Large Image", () =>
+            {
+                hasMediumImage = true;
+                ToggleLargeImage();
+
+                customImageCheckBox.Checked = true;
+                largeImageCheckBox.Checked = true;
+
+                ShowToolTipButton_Click(this, EventArgs.Empty);
+            });
 
             atCenterCheckBox.CheckedChanged += (s, e) =>
             {
@@ -184,6 +240,8 @@ namespace ControlsSample
             {
                 ShowToolTipButton_Click(this, EventArgs.Empty);
             };
+
+            App.LogIf("End ToolTipPage constructor", logConstructor);
         }
 
         public static ImageSet? CustomImageSet
@@ -194,6 +252,11 @@ namespace ControlsSample
                     LoadImages();
                 return customImage;
             }
+
+            set
+            {
+                customImage = value;
+            }
         }
 
         public static ImageSet? LargeImageSet
@@ -203,6 +266,11 @@ namespace ControlsSample
                 if (largeImage is null)
                     LoadImages();
                 return largeImage;
+            }
+
+            set
+            {
+                largeImage = value;
             }
         }
 
