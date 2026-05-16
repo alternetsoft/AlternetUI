@@ -541,7 +541,9 @@ namespace Alternet.UI
             {
                 if (!drawable.Visible)
                     return SizeD.Empty;
-                return drawable.GetPreferredSize(this);
+                var result = drawable.GetPreferredSize(this);
+                var withPadding = result + Padding.Size;
+                return withPadding;
             }
         }
 
