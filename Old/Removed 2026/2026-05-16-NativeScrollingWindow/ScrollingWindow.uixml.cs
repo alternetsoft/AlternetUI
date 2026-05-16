@@ -9,50 +9,20 @@ namespace LayoutSample
 {
     public partial class ScrollingWindow : Window
     {
-        private readonly LayoutSample.ImageControl imageControl = new();
-
+        private readonly ImageControl imageControl = new();
         private Coord zoomFactor = 30;
 
         public ScrollingWindow()
         {
             if (HasScaleFactor)
-                zoomFactor = 60;
+                zoomFactor = 30;
             else
-                zoomFactor = 40;
+                zoomFactor = 20;
 
             InitializeComponent();
 
-            void LogLayoutEvents(AbstractControl control)
-            {
-                control.LayoutUpdated += (sender, e) =>
-                {
-                    App.LogIf($"{control.Name} layout updated", false);
-                };
-            }
-
-            LogLayoutEvents(imageScrollViewer);
-
-            imageControl.HorizontalAlignment = HorizontalAlignment.Left;
-            imageControl.VerticalAlignment = VerticalAlignment.Top;
-            imageControl.Image = Image.FromAssemblyUrl(typeof(LayoutSample.ImageControl).Assembly, "Resources.logo128x128.png");
-            imageControl.Parent = imageScrollViewer.Content;
-
-            imageTopContainer.LayoutUpdated += (sender, e) =>
-            {
-                App.LogIf($"Image top container layout updated", false);
-            };
-
-            imageControl.SizeChanged += (sender, e) =>
-            {
-                App.LogIf($"Image size changed: {imageControl.Size}. IsLayoutPerform: {imageControl.IsLayoutPerform}", false);
-            };
-
-            imageControl.LayoutUpdated += (sender, e) =>
-            {
-                App.LogIf($"Image layout updated", false);
-            };
-
-            imageControl.Name = "imageControl";
+            imageControl.Image = Image.FromAssemblyUrl(GetType().Assembly, "Resources.logo128x128.png");
+            imageScrollViewer.Children.Add(imageControl);
 
             InitializeComboBoxes();
 
@@ -61,13 +31,6 @@ namespace LayoutSample
 
             SetSizeToContent();
             UpdateImageZoom();
-
-            MenuUtils.AddItemsForPublicParameterlessMethods(stackPanelOptionsGrid.ContextMenuStrip, scrollViewerStack, "DoAction");
-        }
-
-        private void ImageTopContainer_LayoutUpdated(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private void InitializeStackPanel()
@@ -77,20 +40,13 @@ namespace LayoutSample
                 for (int i = 0; i < 50; i++)
                     AddControlToStackPanel();
             });
-
-            var setDebugBorder = false;
-            if (setDebugBorder)
-            {
-                stackPanel.HasBorder = true;
-                stackPanel.BorderColor = Color.Red;
-            }
         }
 
         private void InitializeGrid()
         {
             grid.DoInsideInit(() =>
             {
-                int rowCount = 17;
+                int rowCount = 10;
                 int columnCount = 10;
 
                 grid.RowColumnCount = new(rowCount, columnCount);
@@ -107,13 +63,12 @@ namespace LayoutSample
 
         private void AddControlToGrid(int columnIndex, int rowIndex)
         {
-            var button = new Button
+            new Button
             {
                 Text = $"{rowIndex}.{columnIndex}",
                 RowColumn = new(rowIndex, columnIndex),
+                Parent = grid,
             };
-
-            grid.Children.Add(button);
         }
 
         private void AddControlToStackPanel()
@@ -168,73 +123,45 @@ namespace LayoutSample
 
         private void RemoveControlFromStackPanelButton_Click(object? sender, EventArgs e)
         {
-            stackPanel.Children.RemoveLast();
-        }
-
-        private void MinControlsStackPanelButton_Click(object? sender, EventArgs e)
-        {
-            scrollViewerStack.SuspendUpdateInterior();
-
-            try
-            {
-                DoInsideLayout(() =>
-                {
-                    while (stackPanel.Children.Count > 5)
-                        stackPanel.Children.RemoveLast();
-                });
-            }
-            finally
-            {
-                scrollViewerStack.ResumeUpdateInterior();
-            }
+            int count = stackPanel.Children.Count;
+            if (count > 0)
+                stackPanel.Children.RemoveAt(count - 1);
         }
 
         private void AddColumnToGridButton_Click(object? sender, EventArgs e)
         {
-            grid.DoInsideLayout(() =>
-            {
-                grid.ColumnDefinitions.Add(ColumnDefinition.CreateAuto());
-                int columnIndex = grid.ColumnDefinitions.Count - 1;
-                for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
-                    AddControlToGrid(columnIndex, rowIndex);
-            });
+            grid.ColumnDefinitions.Add(new ColumnDefinition());
+            int columnIndex = grid.ColumnDefinitions.Count - 1;
+            for (int rowIndex = 0; rowIndex < grid.RowDefinitions.Count; rowIndex++)
+                AddControlToGrid(columnIndex, rowIndex);
         }
 
         private void RemoveColumnFromGridButton_Click(object? sender, EventArgs e)
         {
-            grid.DoInsideLayout(() =>
-            {
-                int columnIndex = grid.ColumnDefinitions.Count - 1;
-                var toRemove = grid.Children.Where(x => Grid.GetColumn(x) == columnIndex).ToArray();
-                foreach (var control in toRemove)
-                    grid.Children.Remove(control);
+            int columnIndex = grid.ColumnDefinitions.Count - 1;
+            var toRemove = grid.Children.Where(x => Grid.GetColumn(x) == columnIndex).ToArray();
+            foreach (var control in toRemove)
+                grid.Children.Remove(control);
 
-                grid.ColumnDefinitions.RemoveAt(columnIndex);
-            });
+            grid.ColumnDefinitions.RemoveAt(columnIndex);
         }
 
         private void AddRowToGridButton_Click(object? sender, EventArgs e)
         {
-            grid.DoInsideLayout(() =>
-            {
-                grid.RowDefinitions.Add(RowDefinition.CreateAuto());
-                int rowIndex = grid.RowDefinitions.Count - 1;
-                for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
-                    AddControlToGrid(columnIndex, rowIndex);
-            });
+            grid.RowDefinitions.Add(new RowDefinition());
+            int rowIndex = grid.RowDefinitions.Count - 1;
+            for (int columnIndex = 0; columnIndex < grid.ColumnDefinitions.Count; columnIndex++)
+                AddControlToGrid(columnIndex, rowIndex);
         }
 
         private void RemoveRowFromGridButton_Click(object? sender, EventArgs e)
         {
-            grid.DoInsideLayout(() =>
-            {
-                int rowIndex = grid.RowDefinitions.Count - 1;
-                var toRemove = grid.Children.Where(x => Grid.GetRow(x) == rowIndex).ToArray();
-                foreach (var control in toRemove)
-                    grid.Children.Remove(control);
+            int rowIndex = grid.RowDefinitions.Count - 1;
+            var toRemove = grid.Children.Where(x => Grid.GetRow(x) == rowIndex).ToArray();
+            foreach (var control in toRemove)
+                grid.Children.Remove(control);
 
-                grid.RowDefinitions.RemoveAt(rowIndex);
-            });
+            grid.RowDefinitions.RemoveAt(rowIndex);
         }
 
         private void GridHorizontalAlignmentComboBox_SelectedItemChanged(object sender, EventArgs e)
@@ -252,26 +179,6 @@ namespace LayoutSample
             }
         }
 
-        private void WidthPlusButtonClick(object? sender, EventArgs e)
-        {
-            imageTopContainer.SuggestedWidth += 10;
-        }
-
-        private void WidthMinusButtonClick(object? sender, EventArgs e)
-        {
-            imageTopContainer.SuggestedWidth -= 10;
-        }
-
-        private void HeightPlusButtonClick(object? sender, EventArgs e)
-        {
-            imageTopContainer.SuggestedHeight += 10;
-        }
-
-        private void HeightMinusButtonClick(object? sender, EventArgs e)
-        {
-            imageTopContainer.SuggestedHeight -= 10;
-        }
-
         private void ZoomMinusButtonClick(object? sender, EventArgs e)
         {
             if (zoomFactor > 0)
@@ -283,24 +190,6 @@ namespace LayoutSample
         {
             if (zoomFactor < 70)
                 zoomFactor++;
-            UpdateImageZoom();
-        }
-
-        private void ZoomMinButtonClick(object? sender, EventArgs e)
-        {
-            if (HasScaleFactor)
-                zoomFactor = 14;
-            else
-                zoomFactor = 7;
-            UpdateImageZoom();
-        }
-
-        private void ZoomMaxButtonClick(object? sender, EventArgs e)
-        {
-            if (HasScaleFactor)
-                zoomFactor = 60;
-            else
-                zoomFactor = 40;
             UpdateImageZoom();
         }
 

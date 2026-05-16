@@ -208,7 +208,15 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
-        private void RaiseScroll(
+        /// <summary>
+        /// Raises the scroll event for the specified control.
+        /// </summary>
+        /// <param name="sender">The control that raised the scroll event.</param>
+        /// <param name="orientation">The orientation of the scroll bar.</param>
+        /// <param name="evType">The type of scroll event.</param>
+        /// <param name="oldValue">The previous scroll value.</param>
+        /// <param name="newValue">The new scroll value.</param>
+        protected virtual void RaiseScroll(
             AbstractControl sender,
             ScrollBarOrientation orientation,
             ScrollEventType evType,
@@ -228,7 +236,13 @@ namespace Alternet.UI
                 sender.RaiseScroll(scrollArgs);
         }
 
-        private InteriorDrawable.HitTestsResult OnClickElement(
+        /// <summary>
+        /// Handles the click event on the interior drawable and raises the appropriate scroll events if a scroll bar is clicked.
+        /// </summary>
+        /// <param name="sender">The control that raised the click event.</param>
+        /// <param name="clickLocation">The location of the click event.</param>
+        /// <returns>The result of the hit tests on the interior drawable.</returns>
+        protected virtual InteriorDrawable.HitTestsResult OnClickElement(
             AbstractControl sender,
             PointD? clickLocation)
         {
@@ -268,7 +282,12 @@ namespace Alternet.UI
             return hitTests;
         }
 
-        private void OnClickRepeatTimerEvent(object? sender, EventArgs e)
+        /// <summary>
+        /// Handles the repeated click event on the interior drawable and raises the appropriate scroll events if a scroll bar is clicked.
+        /// </summary>
+        /// <param name="sender">The control that raised the repeated click event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnClickRepeatTimerEvent(object? sender, EventArgs e)
         {
             if (control is null)
                 return;
@@ -278,7 +297,10 @@ namespace Alternet.UI
             OnClickElement(control, null);
         }
 
-        private void UnsubscribeClickRepeated()
+        /// <summary>
+        /// Unsubscribes from the repeated click event and resets the control reference.
+        /// </summary>
+        protected virtual void UnsubscribeClickRepeated()
         {
             this.control = null;
             if (subscribedClickRepeated)
@@ -288,7 +310,11 @@ namespace Alternet.UI
             }
         }
 
-        private void SubscribeClickRepeated(AbstractControl control)
+        /// <summary>
+        /// Subscribes to the repeated click event for the specified control if not already subscribed.
+        /// </summary>
+        /// <param name="control">The control for which to subscribe to the repeated click event.</param>
+        protected virtual void SubscribeClickRepeated(AbstractControl control)
         {
             if (!subscribedClickRepeated)
             {

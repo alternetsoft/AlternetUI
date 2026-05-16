@@ -1,26 +1,25 @@
 <Window xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-	xmlns:local="clr-namespace:ControlsSample"
-        x:Class="ControlsSample.StdScrollViewerWindow" MinimumSize="600,500"
-        Title="Alternet UI StdScrollViewer Sample" StartLocation="CenterScreen" Padding="10">
+		xmlns:local="clr-namespace:LayoutSample"
+        x:Class="LayoutSample.ScrollingWindow" MinimumSize="600,500"
+        Title="Alternet UI Scrolling Sample" StartLocation="CenterScreen" Padding="10">
 
   <TabControl Name="tabControl">
     <!-- ============= -->
 
     <Panel Title="StackPanel" Padding="10" Grid.Row="0" Grid.Column="0">
-      <StackPanel Orientation="Horizontal" Name="stackPanelContainer">
+      <StackPanel Orientation="Horizontal">
 
         <Border SuggestedHeight="350" Padding="5"
-                        VerticalAlignment="Stretch" HorizontalAlignment="Fill" HasBorder="true">
-          <StdScrollViewer Name="scrollViewerStack">
+                        VerticalAlignment="Top" HorizontalAlignment="Fill" HasBorder="true">
+          <ScrollViewer Name="scrollViewerStack">
             <StackPanel Name="stackPanel" Orientation="Vertical" MinChildMargin="3">
             </StackPanel>
-          </StdScrollViewer>
+          </ScrollViewer>
         </Border>
 
-        <Grid Margin="10,0,0,0" HorizontalAlignment="Right" Name="stackPanelOptionsGrid">
+        <Grid Margin="10,0,0,0" HorizontalAlignment="Right">
           <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -56,13 +55,9 @@
                   IsTextLocalized="true" Click="AddControlToStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
 
-          <Button Text="Remove Control" Name="removeControlFromStackPanelButton" Margin="0,0,0,5"
+          <Button Text="Remove Control" Name="removeControlFromStackPanelButton"
                   IsTextLocalized="true" Click="RemoveControlFromStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
-          <Button Text="Min Controls" Name ="minControlsStackButton" Margin="0,0,0,5"
-                  IsTextLocalized="true" Click="MinControlsStackPanelButton_Click"
-                  Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
-
         </Grid>
       </StackPanel>
     </Panel>
@@ -72,12 +67,12 @@
     <Panel Title="Grid" Padding="10" Grid.Row="1" Grid.Column="0">
       <StackPanel Orientation="Horizontal">
 
-        <Border SuggestedHeight="350" VerticalAlignment="Stretch"
+        <Border SuggestedHeight="350" VerticalAlignment="Top"
                 HorizontalAlignment="Fill" Padding="5" HasBorder="true">
-          <StdScrollViewer Name="scrollViewerGrid">
+          <ScrollViewer Name="scrollViewerGrid">
             <Grid Name="grid">
             </Grid>
-          </StdScrollViewer>
+          </ScrollViewer>
         </Border>
 
         <Grid Margin="10,0,0,0" MinChildMargin="3" HorizontalAlignment="Right">
@@ -131,29 +126,19 @@
 
     <Panel Title="Drawing" IsTitleLocalized="true"
               Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
-      <StackPanel Orientation="Vertical" Name="imageStackPanel">
-        <HorizontalStackPanel Name="topImageToolBarPanel">
+      <StackPanel Orientation="Vertical">
+        <HorizontalStackPanel >
           <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Button Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
-          <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-" Margin="0,0,5,0"/>
-          <Button Name="zoomMinButton" Click="ZoomMinButtonClick" Text="Min" Margin="0,0,5,0"/>
-          <Button Name="zoomMaxButton" Click="ZoomMaxButtonClick" Text="Max" Margin="0,0,5,0"/>
+          <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-"/>
         </HorizontalStackPanel>
 
         <Border SuggestedSize="250,250" HorizontalAlignment="Left"
-                HasBorder="true" Padding="5" Name="imageTopContainer">
-          <StdScrollViewer Name="imageScrollViewer">
-          </StdScrollViewer>
+                HasBorder="true" Padding="5">
+          <ScrollViewer Name="imageScrollViewer">
+          </ScrollViewer>
         </Border>
-
-        <HorizontalStackPanel Margin="0,10,0,0" VerticalAlignment="Bottom" Name="bottomImageToolBarPanel">
-          <Label Text="Image Container:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
-          <Button Name="widthPlusButton" Click="WidthPlusButtonClick" Text="W+"/>
-          <Button Name="widthMinusButton" Click="WidthMinusButtonClick" Text="W-"/>
-          <Button Name="heightPlusButton" Click="HeightPlusButtonClick" Text="H+"/>
-          <Button Name="heightMinusButton" Click="HeightMinusButtonClick" Text="H-"/>
-        </HorizontalStackPanel>
-
+        
       </StackPanel>
     </Panel>
 

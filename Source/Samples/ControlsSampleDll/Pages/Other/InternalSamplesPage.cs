@@ -20,7 +20,6 @@ namespace ControlsSample
 
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
 
-            AddIfDebug("StdScrollViewer Sample", () => new StdScrollViewerWindow());
             AddIfDebug("Draw Test Page: Custom", () => new CustomDrawTestPage());
             AddIfDebug("Draw Test Page: Skia", () => new SkiaDrawingWindow());
             
