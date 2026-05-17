@@ -428,10 +428,11 @@ namespace Alternet.Drawing
         /// Performs layout of the drawable children and returns calculated bound of the different
         /// parts of the drawable.
         /// </summary>
+        /// <param name="prm">Optional parameters to control behavior.</param>
         /// <param name="control">Control which scale factor used to
         /// convert pixels to/from dips.</param>
         /// <returns>Calculated bounds of the different parts of the drawable.</returns>
-        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(AbstractControl control)
+        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(AbstractControl control, LayoutRectanglesParams? prm = null)
         {
             var result = new EnumArray<HitTestResult, RectD>();
 
@@ -461,8 +462,27 @@ namespace Alternet.Drawing
             var boundsInsideBorder = Bounds.DeflatedWithPadding(borderWidth);
             var clientRect = boundsInsideBorder;
 
-            var vertVisible = VertVisible && (VertScrollBar?.Position.IsVisible ?? false);
-            var horzVisible = HorzVisible && (HorzScrollBar?.Position.IsVisible ?? false);
+            bool vertVisible;
+            bool horzVisible;
+
+            if (prm?.VertVisible is null)
+            {
+                vertVisible = VertVisible && (VertScrollBar?.Position.IsVisible ?? false);
+            }
+            else
+            {
+                vertVisible = prm.VertVisible.Value;
+            }
+
+            if (prm?.HorzVisible is null)
+            {
+                horzVisible = HorzVisible && (HorzScrollBar?.Position.IsVisible ?? false);
+            }
+            else
+            {
+                horzVisible = prm.HorzVisible.Value;
+            }
+
             var bothVisible = vertVisible && horzVisible;
             var cornerVisible = CornerVisible && bothVisible;
 
@@ -820,6 +840,100 @@ namespace Alternet.Drawing
                 object[] values = { Interior, ScrollBar };
 
                 return StringUtils.ToStringWithNames(names, values);
+            }
+        }
+
+        /// <summary>
+        /// Represents optional parameters for the <see cref="GetLayoutRectangles"/> method.
+        /// </summary>
+        public class LayoutRectanglesParams : ImmutableObject
+        {
+            /// <summary>
+            /// Gets the default instance of <see cref="LayoutRectanglesParams"/> with all properties set to null,
+            /// </summary>
+            public static readonly LayoutRectanglesParams Default = new(immutable: true);
+
+            /// <summary>
+            /// Gets an instance of <see cref="LayoutRectanglesParams"/> with
+            /// both vertical and horizontal scrollbars considered visible.
+            /// </summary>
+            public static readonly LayoutRectanglesParams DefaultBothVisible = new(vertVisible: true, horzVisible: true, immutable: true);
+
+            /// <summary>
+            /// Gets an instance of <see cref="LayoutRectanglesParams"/> with
+            /// both vertical and horizontal scrollbars considered hidden.
+            /// </summary>
+            public static readonly LayoutRectanglesParams DefaultBothHidden = new(vertVisible: false, horzVisible: false, immutable: true);
+
+            /// <summary>
+            /// Gets an instance of <see cref="LayoutRectanglesParams"/> with vertical scrollbar considered visible
+            /// and horizontal scrollbar considered hidden.
+            /// </summary>
+            public static readonly LayoutRectanglesParams DefaultVertOnly = new(vertVisible: true, horzVisible: false, immutable: true);
+
+            /// <summary>
+            /// Gets an instance of <see cref="LayoutRectanglesParams"/> with horizontal scrollbar considered visible
+            /// and vertical scrollbar considered hidden.
+            /// </summary>
+            public static readonly LayoutRectanglesParams DefaultHorzOnly = new(vertVisible: false, horzVisible: true, immutable: true);
+
+            private bool? vertVisible;
+            private bool? horzVisible;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="LayoutRectanglesParams"/> class.
+            /// </summary>
+            public LayoutRectanglesParams()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="LayoutRectanglesParams"/> class with specified immutability.
+            /// </summary>
+            /// <param name="immutable">Indicates whether the instance should be immutable.</param>
+            public LayoutRectanglesParams(bool immutable)
+            {
+                if (immutable)
+                {
+                    SetImmutable();
+                }
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="LayoutRectanglesParams"/> class with specified values.
+            /// </summary>
+            /// <param name="vertVisible">Indicates whether the vertical scrollbar should be considered visible.</param>
+            /// <param name="horzVisible">Indicates whether the horizontal scrollbar should be considered visible.</param>
+            /// <param name="immutable">Indicates whether the instance should be immutable.</param>
+            public LayoutRectanglesParams(bool? horzVisible, bool? vertVisible, bool immutable)
+            {
+                this.vertVisible = vertVisible;
+                this.horzVisible = horzVisible;
+
+                if (immutable)
+                {
+                    SetImmutable();
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the vertical scrollbar should be considered
+            /// visible when calculating layout rectangles.
+            /// </summary>
+            public bool? VertVisible
+            {
+                get => vertVisible;
+                set => vertVisible = value;
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the horizontal scrollbar should be considered
+            /// visible when calculating layout rectangles.
+            /// </summary>
+            public bool? HorzVisible
+            {
+                get => horzVisible;
+                set => horzVisible = value;
             }
         }
     }
