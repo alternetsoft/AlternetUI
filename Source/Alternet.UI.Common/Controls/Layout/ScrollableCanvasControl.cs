@@ -13,9 +13,30 @@ namespace Alternet.UI
     /// </summary>
     public abstract partial class ScrollableCanvasControl : ScrollableUserControl, IScrollEventRouter
     {
+        /// <summary>
+        /// Gets or sets default multiplier used in calculation
+        /// of total size of the scroll area in the <see cref="ScrollViewer"/>.
+        /// This value is assigned to the scrollbar's total size.
+        /// </summary>
+        public static SizeD DefaultScrollBarTotalSizeMultiplier = 1;
+
+        /// <summary>
+        /// Gets or sets default mouse wheel scroll factor. This value is multiplied
+        /// with line height and used as an offset when control is scrolled using mouse wheel.
+        /// </summary>
+        public static SizeD DefaultMouseWheelScrollFactor = (3, 3);
+
+        /// <summary>
+        /// Defines the default small change value for scrolling, which determines how much
+        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// </summary>
+        public static SizeD DefaultScrollSmallChange = new(40, 40);
+
         private bool isScrolledHorizontally = true;
         private bool isScrolledVertically = true;
+        private bool insideUpdateInterior;
         private PointD layoutOffset;
+        private int suspendUpdateInteriorCounter;
 
         /// <summary>
         /// Gets or sets a value indicating whether the content is allowed to be scrolled vertically.
@@ -31,6 +52,12 @@ namespace Alternet.UI
                 UpdateInterior();
             }
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the scroll
+        /// viewer is scrolled with the mouse wheel.
+        /// </summary>
+        public virtual bool IsScrolledWithMouseWheel { get; set; } = true;
 
         /// <summary>
         /// Gets or sets a value indicating whether the content is allowed to be scrolled horizontally.
@@ -115,6 +142,31 @@ namespace Alternet.UI
         /// <returns></returns>
         protected abstract bool IsContentVisible();
 
+        /// <summary>
+        /// Gets default value used to offset scrollbar position when scroll
+        /// wheel event is handled.
+        /// </summary>
+        /// <param name="measureCanvas">The canvas used for text measuring.</param>
+        /// <param name="font">The font used for text measuring.</param>
+        /// <param name="isVert">Whether to get value for
+        /// the vertical of horizontal scrollbar.</param>
+        /// <returns></returns>
+        public static int GetDefaultScrollWheelDelta(Graphics measureCanvas, Font font, bool isVert)
+        {
+            if (isVert)
+            {
+                var h = measureCanvas.GetTextExtent("Wg", font).Height;
+                h *= DefaultMouseWheelScrollFactor.Height;
+                return (int)h;
+            }
+            else
+            {
+                var w = measureCanvas.GetTextExtent("W", font).Width;
+                w *= DefaultMouseWheelScrollFactor.Width;
+                return (int)w;
+            }
+        }
+
         /// <inheritdoc/>
         public virtual void CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
         {
@@ -147,6 +199,30 @@ namespace Alternet.UI
             vertScrollbar = new(position: yOffset, range: (int)range.Height, pageSize: (int)paintRectangle.Height);
             horzScrollbar.Visibility = horzVisibility;
             vertScrollbar.Visibility = vertVisibility;
+        }
+
+        /// <summary>
+        /// Suspends the update of the interior layout and scroll bars, allowing for multiple changes to be made to the child controls
+        /// without triggering a layout update for each change.
+        /// </summary>
+        public virtual void SuspendUpdateInterior()
+        {
+            suspendUpdateInteriorCounter++;
+        }
+
+        /// <summary>
+        /// Resumes the update of the interior layout and scroll bars after it has been suspended,
+        /// allowing any pending layout updates to be processed.
+        /// </summary>
+        public virtual void ResumeUpdateInterior(bool update = true)
+        {
+            suspendUpdateInteriorCounter--;
+
+            if (suspendUpdateInteriorCounter < 0)
+                throw new InvalidOperationException("ResumeUpdateInterior called more times than SuspendUpdateInterior.");
+
+            if (suspendUpdateInteriorCounter == 0 && update)
+                UpdateInterior();
         }
 
         /// <summary>
@@ -280,7 +356,7 @@ namespace Alternet.UI
         /// Calculates and retrieves the total scrollable area based on the maximum right and bottom positions of the child controls,
         /// </summary>
         /// <returns>A <see cref="SizeD"/> representing the total scrollable area.</returns>
-        public virtual SizeD GetScrollRange()
+        public SizeD GetScrollRange()
         {
             return LayoutMaxSize;
         }
@@ -289,7 +365,7 @@ namespace Alternet.UI
         /// Retrieves the current scroll position, which is determined by the layout offset of the first child control.
         /// </summary>
         /// <returns>A <see cref="PointD"/> representing the current scroll position.</returns>
-        public virtual PointD GetScrollPosition()
+        public PointD GetScrollPosition()
         {
             return LayoutOffset;
         }
@@ -388,15 +464,83 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the mouse wheel event should be ignored for
+        /// the specified child control.
+        /// </summary>
+        /// <param name="child">The child control to check.</param>
+        /// <returns>True if the mouse wheel event should be ignored; otherwise, false.</returns>
+        protected virtual bool IgnoreChildMouseWheel(AbstractControl? child)
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        public override bool IsParentPerformLayoutCalled(PerformLayoutParams? layoutParams = null)
+        {
+            if (layoutParams?.Reason != PerformLayoutReason.SuggestedSizeChanged)
+            {
+                return false;
+            }
+
+            var result = base.IsParentPerformLayoutCalled(layoutParams);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Calculates and retrieves the preferred content viewport rectangle, which represents the area of the control
+        /// that should be used for displaying the content.
+        /// </summary>
+        /// <returns>The preferred content viewport rectangle.</returns>
+        protected virtual RectD GetPreferredContentViewportRect()
+        {
+            RectD result;
+
+            if (IsContentVisible())
+            {
+                var contentSize = GetContentPreferredSize();
+
+                var areaRects = GetInteriorScrollableAreaRectangles(IsScrolledHorizontally, IsScrolledVertically);
+                result = areaRects.GetPreferredContentViewportRect(contentSize);
+            }
+            else
+            {
+                result = ClientRectangle;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Updates the interior of the control, which includes recalculating the paint rectangle,
         /// updating scroll bars, and refreshing the display.
         /// </summary>
-        protected virtual void UpdateInterior()
+        protected virtual void UpdateInterior(bool refresh = true)
         {
-            GetPaintRectangle();
-            UpdateScrollBars(refresh: false);
-            UpdateInteriorProperties();
-            Refresh();
+            if (insideUpdateInterior || suspendUpdateInteriorCounter > 0)
+                return;
+
+            insideUpdateInterior = true;
+
+            try
+            {
+                UpdateScrollBars(false);
+                UpdateInteriorProperties();
+
+                var maxScrollPosition = GetMaxScrollPosition();
+                var scrollPosition = GetScrollPosition();
+
+                DoActionSetScroll(new PointD(
+                    Math.Min(scrollPosition.X, maxScrollPosition.X),
+                    Math.Min(scrollPosition.Y, maxScrollPosition.Y)));
+
+                if (refresh)
+                    Refresh();
+            }
+            finally
+            {
+                insideUpdateInterior = false;
+            }
         }
     }
 }
