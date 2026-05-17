@@ -12,9 +12,9 @@
 
   <!-- ========================= -->
 
-  <Border VerticalAlignment="Fill" Margin="5" SuggestedWidth="350">
-    <ScrollViewer>
-      <PanelSettings Name="panelSettings">
+  <Border VerticalAlignment="Fill" Margin="5" SuggestedWidth="350" HasBorder="true">
+    <ScrollViewer Name="scrollViewer">
+      <PanelSettings Name="panelSettings" MinWidth="300">
       </PanelSettings>
     </ScrollViewer>
   </Border>

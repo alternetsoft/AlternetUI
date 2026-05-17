@@ -62,6 +62,8 @@ namespace LayoutSample
             SetSizeToContent();
             UpdateImageZoom();
 
+            stackPanel.BackColor = Color.DarkGreen;
+
             MenuUtils.AddItemsForPublicParameterlessMethods(stackPanelOptionsGrid.ContextMenuStrip, scrollViewerStack, "DoAction");
         }
 

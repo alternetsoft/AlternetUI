@@ -70,8 +70,14 @@ namespace ControlsSample
                 });
             };
 
+            panelSettings.HasBorder = false;
+            panelSettings.ParentBackColor = false;
+            panelSettings.BackColor = Color.ForestGreen;
+
             panelSettings.DoInsideLayout(() =>
             {
+                App.DebugLogIf("Adding TextBox settings inputs...", false);
+
                 panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
                 panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
                 panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
@@ -121,6 +127,8 @@ namespace ControlsSample
                 panelSettings.AddInput("Log Selection", this, nameof(LogSelection));
 
                 panelSettings.AddHorizontalLine();
+
+                App.DebugLogIf("Done adding TextBox settings inputs...", false);
             });
         }
 
