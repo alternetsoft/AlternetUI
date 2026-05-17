@@ -262,6 +262,9 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly bool IsPositive => width > CoordD.Empty && height > CoordD.Empty;
 
+        /// <summary>
+        /// Gets a value indicating whether either the width or height is less than zero.
+        /// </summary>
         [Browsable(false)]
         public readonly bool AnyIsNegative => width < CoordD.Empty || height < CoordD.Empty;
 

@@ -679,32 +679,77 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Represents the content viewport rectangles corresponding to different visibility
+        /// states of the scroll bars within the control's interior.
+        /// </summary>
         public readonly struct InteriorScrollableAreaRects
         {
+            /// <summary>
+            /// Defines the types of rectangles that can be retrieved from the <see cref="InteriorScrollableAreaRects"/> structure
+            /// based on the visibility of the scroll bars.
+            /// </summary>
             public enum RectKind
             {
+                /// <summary>
+                /// Represents the rectangle when both vertical and horizontal scroll bars are visible.
+                /// </summary>
                 BothVisible,
 
+                /// <summary>
+                /// Represents the rectangle when both vertical and horizontal scroll bars are hidden.
+                /// </summary>
                 BothHidden,
 
+                /// <summary>
+                /// Represents the rectangle when only the vertical scroll bar is visible and the horizontal scroll bar is hidden.
+                /// </summary>
                 VerticalOnly,
 
+                /// <summary>
+                /// Represents the rectangle when only the horizontal scroll bar is visible and the vertical scroll bar is hidden.
+                /// </summary>
                 HorizontalOnly,
             }
 
+            /// <summary>
+            /// Gets the rectangle representing the content viewport when both vertical and horizontal scroll bars are visible.
+            /// </summary>
             public RectD BothVisible { get; init; }
 
+            /// <summary>
+            /// Gets the rectangle representing the content viewport when both vertical and horizontal scroll bars are hidden.
+            /// </summary>
             public RectD BothHidden { get; init; }
-
+            
+            /// <summary>
+            /// Gets the rectangle representing the content viewport when only the vertical scroll bar
+            /// is visible and the horizontal scroll bar is hidden.
+            /// </summary>
             public RectD VerticalOnly { get; init; }
-
+            
+            /// <summary>
+            /// Gets the rectangle representing the content viewport when only the horizontal scroll bar
+            /// is visible and the vertical scroll bar is hidden.
+            /// </summary>
             public RectD HorizontalOnly { get; init; }
 
+            /// <summary>
+            /// Gets the size of the content viewport rectangle corresponding to the specified visibility state of the scroll bars.
+            /// </summary>
+            /// <param name="kind">The visibility state of the scroll bars.</param>
+            /// <returns>The size of the content viewport rectangle.</returns>
             public SizeD GetSize(RectKind kind)
             {
                 return GetRect(kind).Size;
             }
 
+            /// <summary>
+            /// Gets the rectangle representing the content viewport rectangle based on the specified visibility state of the scroll bars.
+            /// </summary>
+            /// <param name="kind">The visibility state of the scroll bars.</param>
+            /// <returns>The rectangle representing the content viewport.</returns>
+            /// <exception cref="ArgumentOutOfRangeException">Thrown when an invalid <see cref="RectKind"/> value is provided.</exception>
             public RectD GetRect(RectKind kind)
             {
                 return kind switch
@@ -717,12 +762,11 @@ namespace Alternet.UI
                 };
             }
 
-            public bool Fits(RectKind kind, SizeD contentSize)
-            {
-                var r = GetRect(kind);
-                return r.Contains(new RectD(r.Location, contentSize));
-            }
-
+            /// <summary>
+            /// Determines the preferred content viewport rectangle based on the size of the content and the visibility of the scroll bars.
+            /// </summary>
+            /// <param name="contentSize">The size of the content.</param>
+            /// <returns>The preferred content viewport rectangle.</returns>
             public RectD GetPreferredContentViewportRect(SizeD contentSize)
             {
                 var contentHeightIsBigger = contentSize.Height > GetRect(RectKind.VerticalOnly).Height;
