@@ -203,38 +203,6 @@ namespace Alternet.UI
         {
             OnScroll(e);
 
-            if(RealLayout == LayoutStyle.Scroll && IsScrollable)
-            {
-                switch (e.Type)
-                {
-                    case ScrollEventType.SmallDecrement:
-                    case ScrollEventType.SmallIncrement:
-                        var delta = ScrollViewer.GetDefaultScrollWheelDelta(
-                            MeasureCanvas,
-                            RealFont,
-                            e.IsVertical);
-                        if (e.IsSmallIncrement)
-                            delta *= -1;
-                        if (e.IsVertical)
-                        {
-                            IncVerticalLayoutOffset(delta);
-                        }
-                        else
-                        {
-                            IncHorizontalLayoutOffset(delta);
-                        }
-
-                        break;
-                    default:
-                        var offset = GetScrollBarInfo(e.IsVertical).Position;
-                        if (e.IsVertical)
-                            LayoutOffset = new PointD(LayoutOffset.X, -offset);
-                        else
-                            LayoutOffset = new PointD(-offset, LayoutOffset.Y);
-                        break;
-                }
-            }
-
             Scroll?.Invoke(this, e);
 
             RaiseNotifications((n) => n.AfterScroll(this, e));

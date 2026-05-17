@@ -1023,8 +1023,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets offset of the layout which is applied to the position of
         /// the child controls.
-        /// This property is used when layout of the child controls is
-        /// <see cref="LayoutStyle.Scroll"/>.
+        /// It is up to control to decide how this property is used.
         /// </summary>
         [Browsable(false)]
         public virtual PointD LayoutOffset
@@ -1043,9 +1042,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets maximal size of the layout which is used together with
         /// <see cref="LayoutOffset"/> when scrollbar position is updated.
-        /// This property is used when layout of the child controls is
-        /// <see cref="LayoutStyle.Scroll"/>. If this property is Null (default value),
-        /// automatic calculation is performed.
+        /// If this property is Null (default value), automatic calculation is performed.
+        /// It is up to control to decide how this property is used.
         /// </summary>
         [Browsable(false)]
         public virtual SizeD? LayoutMaxSize

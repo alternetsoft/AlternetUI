@@ -339,9 +339,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets maximal size of the layout which is used together with
         /// <see cref="LayoutOffset"/> when scrollbar position is updated.
-        /// This property is used when layout of the child items is
-        /// <see cref="LayoutStyle.Scroll"/>. If this property is Null (default value),
-        /// automatic calculation is performed.
+        /// It is up to the layout engine to decide whether to use this property or not.
         /// </summary>
         SizeD? LayoutMaxSize { get; set; }
 

@@ -35,10 +35,5 @@ namespace Alternet.UI
         /// Layout as in horizontal stack panel.
         /// </summary>
         Horizontal,
-
-        /// <summary>
-        /// Layout as in <c>ScrollViewer</c> control.
-        /// </summary>
-        Scroll,
     }
 }

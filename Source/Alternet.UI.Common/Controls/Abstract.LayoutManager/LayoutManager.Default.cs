@@ -51,12 +51,6 @@ namespace Alternet.UI
             Func<RectD> getBounds,
             IReadOnlyList<ILayoutItem> items)
         {
-            if (layout == LayoutStyle.Scroll)
-            {
-                LayoutWhenScroll(container, getBounds, items, true);
-                return;
-            }
-
             var space = getBounds();
 
             if (space.SizeIsEmpty)
@@ -128,8 +122,6 @@ namespace Alternet.UI
                     return GetPreferredSizeWhenStack(container, context, isVert: true);
                 case LayoutStyle.Horizontal:
                     return GetPreferredSizeWhenStack(container, context, isVert: false);
-                case LayoutStyle.Scroll:
-                    return GetPreferredSizeWhenScroll(container, context);
             }
         }
 
