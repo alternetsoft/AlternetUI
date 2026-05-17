@@ -1,3 +1,18 @@
+# 1.0.14 (2026 May 17)
+
+- Added ScrollableCanvasControl.
+- Reimplemented ScrollViewer inside the library without using native control.
+- RichToolTip is now derived from ScrollableCanvasControl.
+- InteriorDrawable: Add LayoutRectanglesParams to GetLayoutRectangles.
+- AbstractControl: Add ChildBoundsChanged and ChildSizeChanged events and handlers.
+- SizeD.IsAnyNegative, RichToolTip.HasToolTipBorder.
+- ScrollableUserControl: Add InteriorScrollableAreaRects and helpers.
+- PointD: WithYIncreased, WithXIncreased, Negate.
+- AbstractControl.IsValidChild.
+- Removed LayoutStyle.Scroll.
+
+---
+
 # 1.0.13 (2026 May 15)
 
 - Make it compilable with new VC++.

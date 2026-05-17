@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=1.0.13.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=1.0.14.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -1170,6 +1170,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1264,6 +1266,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1349,6 +1353,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1433,6 +1439,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1517,6 +1525,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1602,6 +1612,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1687,6 +1699,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1773,6 +1787,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1857,6 +1873,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -1941,6 +1959,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2026,6 +2046,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2110,6 +2132,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2195,6 +2219,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2280,6 +2306,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2365,6 +2393,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2450,6 +2480,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2535,6 +2567,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2620,6 +2654,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2782,6 +2818,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2866,6 +2904,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -2950,6 +2990,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3052,6 +3094,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3136,6 +3180,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3354,6 +3400,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3438,6 +3486,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3523,6 +3573,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3608,6 +3660,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3694,6 +3748,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3779,6 +3835,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3864,6 +3922,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -3949,6 +4009,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4035,6 +4097,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4122,6 +4186,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4208,6 +4274,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4294,6 +4362,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4379,6 +4449,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4465,6 +4537,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4557,6 +4631,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4643,6 +4719,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4730,6 +4808,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4819,6 +4899,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4906,6 +4988,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -4992,6 +5076,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5077,6 +5163,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5162,6 +5250,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5247,6 +5337,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5332,6 +5424,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5417,6 +5511,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5502,6 +5598,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5587,6 +5685,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5672,6 +5772,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5757,6 +5859,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5843,6 +5947,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -5929,6 +6035,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6015,6 +6123,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6100,6 +6210,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6185,6 +6297,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6270,6 +6384,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6355,6 +6471,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6440,6 +6558,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6525,6 +6645,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6611,6 +6733,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6696,6 +6820,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6794,6 +6920,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6878,6 +7006,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -6963,6 +7093,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7052,6 +7184,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7140,6 +7274,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7228,6 +7364,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7320,6 +7458,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7420,6 +7560,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7505,6 +7647,95 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
+      <Event Name="ChildLayoutUpdated" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ScrollableCanvasControl">
+      <Event Name="AfterPaint" />
+      <Event Name="LayoutMaxSizeChanged" />
+      <Event Name="DropDownMenuShowing" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="ContextMenuShowing" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="Shown" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="PerformLayoutIgnored" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7590,6 +7821,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7676,6 +7909,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7762,6 +7997,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7849,6 +8086,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -7934,6 +8173,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8022,6 +8263,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8108,6 +8351,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8194,6 +8439,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8280,91 +8527,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.StdScrollViewer">
-      <Event Name="AfterPaint" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8455,6 +8619,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8545,6 +8711,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8635,6 +8803,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8724,6 +8894,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8831,6 +9003,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -8929,6 +9103,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9023,6 +9199,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9119,6 +9297,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9217,6 +9397,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9316,6 +9498,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9412,6 +9596,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9507,6 +9693,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9601,6 +9789,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9687,6 +9877,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9781,6 +9973,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9875,6 +10069,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -9966,6 +10162,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10058,6 +10256,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10254,6 +10454,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10339,6 +10541,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10435,6 +10639,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10519,6 +10725,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10604,6 +10812,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10692,6 +10902,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10787,6 +10999,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10879,6 +11093,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -10968,6 +11184,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11059,6 +11277,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11145,6 +11365,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11232,6 +11454,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11318,6 +11542,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11421,6 +11647,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11524,6 +11752,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11627,6 +11857,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11730,6 +11962,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11833,6 +12067,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -11936,6 +12172,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12039,6 +12277,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12142,6 +12382,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12245,6 +12487,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12348,6 +12592,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12451,6 +12697,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12537,6 +12785,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12622,6 +12872,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12707,6 +12959,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12792,6 +13046,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12877,6 +13133,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -12962,6 +13220,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13067,6 +13327,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13159,6 +13421,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13245,6 +13509,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13335,6 +13601,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13426,6 +13694,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13519,6 +13789,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13603,6 +13875,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13697,6 +13971,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13785,6 +14061,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13874,6 +14152,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -13963,6 +14243,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14052,6 +14334,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14141,6 +14425,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14226,6 +14512,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14315,6 +14603,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14404,6 +14694,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14492,6 +14784,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14580,6 +14874,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14668,6 +14964,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14757,6 +15055,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14842,6 +15142,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -14944,6 +15246,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15033,6 +15337,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15134,6 +15440,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15223,6 +15531,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15308,6 +15618,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15392,6 +15704,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15479,6 +15793,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15571,6 +15887,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15664,6 +15982,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15758,6 +16078,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15854,6 +16176,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -15938,6 +16262,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16023,6 +16349,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16114,6 +16442,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16220,6 +16550,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16327,6 +16659,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16432,6 +16766,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16535,6 +16871,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16638,6 +16976,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16741,6 +17081,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -16848,6 +17190,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17039,6 +17383,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17142,6 +17488,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17245,6 +17593,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17348,6 +17698,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17451,6 +17803,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17554,6 +17908,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17657,6 +18013,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17760,6 +18118,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17863,6 +18223,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -17966,6 +18328,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18247,6 +18611,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18335,6 +18701,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18425,6 +18793,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18513,6 +18883,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18598,6 +18970,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18688,6 +19062,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18773,6 +19149,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -18926,6 +19304,10 @@
     <Type Name="Alternet.Drawing.BaseDrawable+PaintDelegateParams" />
     <Type Name="Alternet.Drawing.InteriorDrawable+HitTestResult" />
     <Type Name="Alternet.Drawing.InteriorDrawable+HitTestsResult" />
+    <Type Name="Alternet.Drawing.InteriorDrawable+LayoutRectanglesParams">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.Drawing.ScrollBarDrawable+HitTestResult" />
     <Type Name="Alternet.Drawing.IFontHandler+FontParams" />
     <Type Name="Alternet.Drawing.GenericImage+PixelStrategy" />
@@ -18993,6 +19375,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -19090,6 +19474,7 @@
     <Type Name="Alternet.UI.ShortcutInfo+FormatOptions" />
     <Type Name="Alternet.UI.PropInstanceAndValue+SavedPropertiesItem" />
     <Type Name="Alternet.UI.BorderCornerRadius+ValueKind" />
+    <Type Name="Alternet.UI.ScrollableUserControl+InteriorScrollableAreaRects" />
     <Type Name="Alternet.UI.AbstractControl+DrawDefaultBackgroundFlags" />
     <Type Name="Alternet.UI.AbstractControl+ClickTriggerKind" />
     <Type Name="Alternet.UI.AbstractControl+DefaultLayoutMethod" />
@@ -19116,6 +19501,93 @@
     <Type Name="Alternet.UI.ControlOverlay+TimerTickAction" />
     <Type Name="Alternet.UI.Calendar+HitTestResult" />
     <Type Name="Alternet.UI.SplittedTreeAndCards+TreeKind" />
+    <Type Name="Alternet.UI.ScrollViewer+ScrollContainer">
+      <Event Name="AfterPaint" />
+      <Event Name="LayoutMaxSizeChanged" />
+      <Event Name="DropDownMenuShowing" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="ContextMenuShowing" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="Shown" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="PerformLayoutIgnored" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
+      <Event Name="ChildLayoutUpdated" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.Splitter+DrawSplitBarKind" />
     <Type Name="Alternet.UI.ColorComboBox+DefaultColorItemPainter" />
     <Type Name="Alternet.UI.ComboBox+OwnerDrawFlags" />
@@ -19209,6 +19681,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -19297,6 +19771,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -19381,6 +19857,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -19465,6 +19943,8 @@
       <Event Name="MouseLeave" />
       <Event Name="PerformLayoutIgnored" />
       <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
       <Event Name="ChildLayoutUpdated" />
       <Event Name="ChildVisibleChanged" />
       <Event Name="ChildInserted" />
@@ -19545,6 +20025,7 @@
     <Type Name="Alternet.UI.ExceptionUtils+ExceptionInfo" />
     <Type Name="Alternet.UI.FileDialogFilterItem+Kind" />
     <Type Name="Alternet.UI.XmlUtils+XmlStreamConvertParams" />
+    <Type Name="Alternet.UI.ScrollableUserControl+InteriorScrollableAreaRects+RectKind" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
     <Type Name="Alternet.UI.StdSlider+SliderThumb+ShapeType" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+AppThemeMode" />
