@@ -405,12 +405,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the rectangles representing the interior scrollable areas of the control based
+        /// on different visibility states of the scroll bars.
+        /// </summary>
+        /// <param name="allowHorz">Indicates whether to include the horizontal scroll bar area
+        /// in the calculations. Default is <see langword="true"/>.</param>
+        /// <param name="allowVert">Indicates whether to include the vertical scroll bar area
+        /// in the calculations. Default is <see langword="true"/>.</param>
+        /// <returns>An <see cref="InteriorScrollableAreaRects"/> object containing
+        /// the rectangles for each scroll bar visibility state.</returns>
+        protected virtual InteriorScrollableAreaRects GetInteriorScrollableAreaRectangles(bool allowHorz = true, bool allowVert = true)
+        {
+            InteriorScrollableAreaRects result = new()
+            {
+                BothVisible = GetValue(InteriorDrawable.LayoutRectanglesParams.DefaultBothVisible, allowHorz && allowVert),
+                BothHidden = GetValue(InteriorDrawable.LayoutRectanglesParams.DefaultBothHidden, true),
+                VerticalOnly = GetValue(InteriorDrawable.LayoutRectanglesParams.DefaultVertOnly, allowVert),
+                HorizontalOnly = GetValue(InteriorDrawable.LayoutRectanglesParams.DefaultHorzOnly, allowHorz),
+            };
+
+            RectD GetValue(InteriorDrawable.LayoutRectanglesParams prm, bool allow)
+            {
+                if (allow)
+                {
+                    var result = GetInteriorRectangle(InteriorDrawable.HitTestResult.ClientRect, prm) ?? default;
+                    return result;
+                }
+
+                return RectD.Empty;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Retrieves the interior rectangle corresponding to the specified hit test value, if available.
         /// </summary>
         /// <param name="hitTest">The hit test value that identifies which interior rectangle to retrieve.</param>
+        /// <param name="prm">Optional parameters that may be used to determine the layout rectangles for the interior.</param>
         /// <returns>A <see cref="RectD"/> representing the interior rectangle for the given hit test result, or
         /// <see langword="null"/> if no interior is available.</returns>
-        protected virtual RectD? GetInteriorRectangle(InteriorDrawable.HitTestResult hitTest)
+        protected virtual RectD? GetInteriorRectangle(
+            InteriorDrawable.HitTestResult hitTest,
+            InteriorDrawable.LayoutRectanglesParams? prm = null)
         {
             if (interior is null)
                 return null;
@@ -419,8 +456,11 @@ namespace Alternet.UI
 
             interior.Bounds = clientR;
 
-            var rectangles = interior.GetLayoutRectangles(this);
+            var rectangles = interior.GetLayoutRectangles(this, prm);
             var result = rectangles[hitTest];
+
+            if (result.Size.AnyIsNegative)
+                result = RectD.Empty;
 
             return result;
         }
@@ -499,12 +539,12 @@ namespace Alternet.UI
                 delta = 1;
             }
             else
-            if (delta < 0)
-            {
-                delta = -1;
-            }
-            else
-                return;
+                if (delta < 0)
+                {
+                    delta = -1;
+                }
+                else
+                    return;
 
             if (Keyboard.IsShiftPressed)
             {
@@ -635,6 +675,80 @@ namespace Alternet.UI
                     case ScrollEventType.EndScroll:
                     default:
                         break;
+                }
+            }
+        }
+
+        public readonly struct InteriorScrollableAreaRects
+        {
+            public enum RectKind
+            {
+                BothVisible,
+
+                BothHidden,
+
+                VerticalOnly,
+
+                HorizontalOnly,
+            }
+
+            public RectD BothVisible { get; init; }
+
+            public RectD BothHidden { get; init; }
+
+            public RectD VerticalOnly { get; init; }
+
+            public RectD HorizontalOnly { get; init; }
+
+            public SizeD GetSize(RectKind kind)
+            {
+                return GetRect(kind).Size;
+            }
+
+            public RectD GetRect(RectKind kind)
+            {
+                return kind switch
+                {
+                    RectKind.BothVisible => BothVisible,
+                    RectKind.BothHidden => BothHidden,
+                    RectKind.VerticalOnly => VerticalOnly,
+                    RectKind.HorizontalOnly => HorizontalOnly,
+                    _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null),
+                };
+            }
+
+            public bool Fits(RectKind kind, SizeD contentSize)
+            {
+                var r = GetRect(kind);
+                return r.Contains(new RectD(r.Location, contentSize));
+            }
+
+            public RectD GetPreferredContentViewportRect(SizeD contentSize)
+            {
+                var contentHeightIsBigger = contentSize.Height > GetRect(RectKind.VerticalOnly).Height;
+                var contentWidthIsBigger = contentSize.Width > GetRect(RectKind.HorizontalOnly).Width;
+
+                if (contentWidthIsBigger)
+                {
+                    if (contentHeightIsBigger)
+                    {
+                        return BothVisible;
+                    }
+                    else
+                    {
+                        return HorizontalOnly;
+                    }
+                }
+                else
+                {
+                    if (contentHeightIsBigger)
+                    {
+                        return VerticalOnly;
+                    }
+                    else
+                    {
+                        return BothHidden;
+                    }
                 }
             }
         }
