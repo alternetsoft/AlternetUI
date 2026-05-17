@@ -262,6 +262,9 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly bool IsPositive => width > CoordD.Empty && height > CoordD.Empty;
 
+        [Browsable(false)]
+        public readonly bool AnyIsNegative => width < CoordD.Empty || height < CoordD.Empty;
+
         /// <summary>
         /// Represents the horizontal component of this <see cref='Drawing.SizeD'/>.
         /// </summary>
