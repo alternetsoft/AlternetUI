@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Gets the content of the scroll viewer.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl Content
+        public ScrollContainer Content
         {
             get
             {
@@ -142,7 +142,7 @@ namespace Alternet.UI
 
             if (child is not null)
             {
-                child.Parent = result;
+                child.Parent = result.Content;
                 child.Visible = true;
             }
 
