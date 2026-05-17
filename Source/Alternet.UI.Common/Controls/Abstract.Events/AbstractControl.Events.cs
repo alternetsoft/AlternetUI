@@ -440,6 +440,12 @@ namespace Alternet.UI
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildSizeChanged;
 
         /// <summary>
+        /// Occurs when the bounds of a child control are changed.
+        /// </summary>
+        [Category("Layout")]
+        public event EventHandler<BaseEventArgs<AbstractControl>>? ChildBoundsChanged;
+
+        /// <summary>
         /// Occurs when the layout of a child element has been updated.
         /// </summary>
         [Category("Layout")]

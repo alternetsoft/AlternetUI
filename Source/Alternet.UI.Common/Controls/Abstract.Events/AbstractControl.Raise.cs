@@ -968,6 +968,12 @@ namespace Alternet.UI
             OnBoundsChanged(e);
             BoundsChanged?.Invoke(this, e);
 
+            if (Parent is not null)
+            {
+                Parent.OnChildBoundsChanged(this);
+                Parent.ChildBoundsChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
+            }
+
             RaiseNotifications((n) => n.AfterBoundsChanged(this, e));
         }
 

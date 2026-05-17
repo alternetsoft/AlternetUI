@@ -54,6 +54,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the bounds of the child control are changed.
+        /// </summary>
+        /// <param name="childControl">The child control whose bounds have changed.</param>
+        [EditorBrowsable(EditorBrowsableState.Advanced)]
+        protected virtual void OnChildBoundsChanged(AbstractControl childControl)
+        {
+        }
+
+        /// <summary>
         /// Called after the <see cref="KeyDown" /> event of the child control is raised.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
