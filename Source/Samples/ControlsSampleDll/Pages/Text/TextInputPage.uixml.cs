@@ -71,8 +71,6 @@ namespace ControlsSample
             };
 
             panelSettings.HasBorder = false;
-            panelSettings.ParentBackColor = false;
-            panelSettings.BackColor = Color.ForestGreen;
 
             panelSettings.DoInsideLayout(() =>
             {
