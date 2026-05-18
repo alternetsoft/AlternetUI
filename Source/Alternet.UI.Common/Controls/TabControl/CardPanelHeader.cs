@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// Allows to switch cards in the <see cref="CardPanel"/> control by clicking
-    /// on the card title.
+    /// on the card title. Also this control is used in the <see cref="TabControl"/> as a part of its template.
     /// </remarks>
     [ControlCategory("Other")]
     public partial class CardPanelHeader : HiddenBorder, ITextProperty
