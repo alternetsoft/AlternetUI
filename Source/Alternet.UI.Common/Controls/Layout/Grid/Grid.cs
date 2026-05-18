@@ -267,7 +267,7 @@ namespace Alternet.UI
 
         private void ValidateCellsCore()
         {
-            var children = Children;
+            var children = AllChildrenInLayout;
             ExtendedData extData = ExtData;
 
             extData.CellCachesCollection = new CellCache[children.Count];
@@ -594,7 +594,7 @@ namespace Alternet.UI
                 return;
             }
 
-            var children = Children;
+            var children = AllChildrenInLayout;
             Hashtable spanStore = null;
             bool ignoreDesiredSizeV = forceInfinityV;
 
@@ -754,7 +754,7 @@ namespace Alternet.UI
                                         PrivateCells[cell].RowSpan);
             }
 
-            var child = Children[cell];
+            var child = AllChildrenInLayout[cell];
             if (child != null)
             {
                 var childConstraint = new SizeD(cellMeasureWidth, cellMeasureHeight);
