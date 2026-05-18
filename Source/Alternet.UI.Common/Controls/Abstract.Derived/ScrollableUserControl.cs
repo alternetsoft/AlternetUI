@@ -787,7 +787,7 @@ namespace Alternet.UI
                     {
                         if (BothVisible.SizeIsEmpty)
                         {
-                            if(!VerticalOnly.SizeIsEmpty)
+                            if (!VerticalOnly.SizeIsEmpty)
                                 return VerticalOnly;
                             if (!HorizontalOnly.SizeIsEmpty)
                                 return HorizontalOnly;

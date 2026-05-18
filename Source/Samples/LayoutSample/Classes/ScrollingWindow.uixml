@@ -39,16 +39,16 @@
                     Grid.Column="1" Grid.Row="0" />
 
           <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" IsVisible="false" IsEnabled="false"/>
           <EnumPicker Name="stackPanelVerticalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5"
+                    Margin="0,0,0,5" IsVisible="false" IsEnabled="false"
                     ValueChanged="StackPanelVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
-          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 IsTextLocalized="true" Grid.Column="0" Grid.Row="2" />
+          <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center" IsEnabled="false"
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="2" IsVisible="false"/>
           <EnumPicker Name="stackPanelHorizontalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5"
+                    Margin="0,0,0,5" IsVisible="false" IsEnabled="false"
                     ValueChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="2" />
 
@@ -87,16 +87,16 @@
           </Grid.ColumnDefinitions>
 
           <Label Text="Vertical Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 IsTextLocalized="true" Grid.Column="0" Grid.Row="0" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="0" IsVisible="false" IsEnabled="false"/>
           <EnumPicker Name="gridVerticalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5"
+                    Margin="0,0,0,5" IsVisible="false" IsEnabled="false"
                     ValueChanged="GridVerticalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="0" />
 
           <Label Text="Horizontal Alignment:" Margin="0,0,5,0" VerticalAlignment="Center"
-                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" />
+                 IsTextLocalized="true" Grid.Column="0" Grid.Row="1" IsVisible="false" IsEnabled="false"/>
           <EnumPicker Name="gridHorizontalAlignmentComboBox" VerticalAlignment="Center"
-                    Margin="0,0,0,5"
+                    Margin="0,0,0,5" IsVisible="false" IsEnabled="false"
                     ValueChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
