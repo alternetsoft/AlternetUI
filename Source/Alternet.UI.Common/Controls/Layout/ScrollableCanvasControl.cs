@@ -14,11 +14,11 @@ namespace Alternet.UI
     public abstract partial class ScrollableCanvasControl : ScrollableUserControl, IScrollEventRouter
     {
         /// <summary>
-        /// Gets or sets default multiplier used in calculation
-        /// of total size of the scroll area in the <see cref="ScrollViewer"/>.
-        /// This value is assigned to the scrollbar's total size.
+        /// Defines the default content size scale factor, which is used to determine the maximum scrollable area based
+        /// on the preferred size of the content. This scale factor allows for additional scrolling beyond the calculated
+        /// maximum size, which can be useful in scenarios such as accommodating on-screen keyboards or other dynamic content changes.
         /// </summary>
-        public static SizeD DefaultScrollBarTotalSizeMultiplier = 1;
+        public static SizeD DefaultContentSizeScale = SizeD.One;
 
         /// <summary>
         /// Gets or sets default mouse wheel scroll factor. This value is multiplied
@@ -35,6 +35,7 @@ namespace Alternet.UI
         private bool insideUpdateInterior;
         private PointD layoutOffset;
         private int suspendUpdateInteriorCounter;
+        private SizeD? contentSizeScale;
 
         /// <summary>
         /// Gets or sets a value indicating whether the content is allowed to be scrolled vertically.
@@ -50,6 +51,21 @@ namespace Alternet.UI
                     Interior.VertScrollBar.Visible = value;
                 OnScrolledVerticallyChanged();
             }
+        }
+
+        /// <summary>
+        /// Defines the content size scale factor, which is used to determine the maximum scrollable area based
+        /// on the preferred size of the content. This scale factor allows for additional scrolling beyond the calculated
+        /// maximum size, which can be useful in scenarios such as accommodating on-screen keyboards or other dynamic content changes.
+        /// </summary>
+        /// <remarks>
+        /// If this property is set to null, the default content size scale factor
+        /// defined by <see cref="DefaultContentSizeScale"/> will be used.
+        /// </remarks>
+        public virtual SizeD? ContentSizeScale
+        {
+            get => contentSizeScale;
+            set => contentSizeScale = value;
         }
 
         /// <summary>
@@ -186,7 +202,11 @@ namespace Alternet.UI
         /// Determines whether the content is currently visible, which can affect the visibility and behavior of scroll bars.
         /// </summary>
         /// <returns></returns>
-        protected abstract bool IsContentVisible();
+        /// <inheritdoc/>
+        protected virtual bool IsContentVisible()
+        {
+            return !GetContentPreferredSize().AnyIsEmptyOrNegative;
+        }
 
         /// <summary>
         /// Gets default value used to offset scrollbar position when scroll
@@ -312,6 +332,20 @@ namespace Alternet.UI
             }
 
             return ScrollViewer.DefaultScrollSmallChange;
+        }
+
+        /// <summary>
+        /// Calculates and retrieves the effective content size scale factor, which is used to determine the maximum
+        /// scrollable area based on the preferred size of the content. This scale factor allows for additional
+        /// scrolling beyond the calculated maximum size, which can be useful in scenarios such as accommodating
+        /// on-screen keyboards or other dynamic content changes.
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> representing the effective content size scale factor. </returns>
+        /// <remarks>By default, it uses the value of <see cref="ContentSizeScale"/> if it is set; otherwise,
+        /// falls back to the default content size scale defined by <see cref="DefaultContentSizeScale"/>.</remarks>
+        public SizeD GetEffectiveContentSizeScale()
+        {
+            return ContentSizeScale ?? DefaultContentSizeScale;
         }
 
         /// <summary>

@@ -30,6 +30,8 @@ namespace ControlsSample
         {
             InitializeComponent();
 
+            scrollViewer.ContentSizeScale = 1.5f;
+
             textBox.EmptyTextHint = TextBoxEmptyTextHint;
             textBox.Text = TextBoxSampleText;
             textBox.ValidatorReporter = textImage;

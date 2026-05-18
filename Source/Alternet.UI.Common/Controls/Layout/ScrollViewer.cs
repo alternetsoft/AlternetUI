@@ -108,7 +108,12 @@ namespace Alternet.UI
             }
         }
 
-        new private ControlCollection Children
+        /// <summary>
+        /// This is redeclared to hide the base class's Children property, which is not relevant for the ScrollViewer control,
+        /// as the ScrollViewer uses a <see cref="ScrollContainer"/> to manage its content.
+        /// </summary>
+        [Browsable(false)]
+        new protected ControlCollection Children
         {
             get
             {
@@ -116,7 +121,12 @@ namespace Alternet.UI
             }
         }
 
-        new private ControlCollection Controls
+        /// <summary>
+        /// This is redeclared to hide the base class's Children property, which is not relevant for the ScrollViewer control,
+        /// as the ScrollViewer uses a <see cref="ScrollContainer"/> to manage its content.
+        /// </summary>
+        [Browsable(false)]
+        new protected ControlCollection Controls
         {
             get
             {
@@ -195,18 +205,20 @@ namespace Alternet.UI
             if (control is null || !control.Visible)
                 return SizeD.Empty;
 
-            return control.Bounds.Size;
+            var result = control.Bounds.Size;
+
+            var contentSizeScale = GetEffectiveContentSizeScale();
+
+            result.Width *= contentSizeScale.Width;
+            result.Height *= contentSizeScale.Height;
+
+            return result;
         }
 
         /// <inheritdoc/>
         public override void OnLayout()
         {
-        }
-
-        /// <inheritdoc/>
-        protected override bool IsContentVisible()
-        {
-            return !GetContentPreferredSize().AnyIsEmptyOrNegative;
+            // This method is supposed to do nothing.
         }
 
         /// <inheritdoc/>
