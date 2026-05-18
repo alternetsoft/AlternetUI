@@ -25,13 +25,6 @@ namespace Alternet.UI
             scrollContainer = new ScrollContainer();
             scrollContainer.Parent = this;
 
-            void UpdateContentViewportRect(bool refresh = true)
-            {
-                var viewportRect = GetPreferredContentViewportRect();
-                scrollContainer.Bounds = viewportRect;
-                UpdateInterior();
-            }
-
             SizeChanged += (s, e) =>
             {
                 UpdateContentViewportRect();
@@ -214,6 +207,31 @@ namespace Alternet.UI
         protected override bool IsContentVisible()
         {
             return !GetContentPreferredSize().AnyIsEmptyOrNegative;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnScrolledVerticallyChanged()
+        {
+            UpdateContentViewportRect(refresh: true);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnScrolledHorizontallyChanged()
+        {
+            UpdateContentViewportRect(refresh: true);
+        }
+
+        /// <summary>
+        /// Updates the viewport rectangle of the content area within the scroll viewer,
+        /// ensuring that the visible portion of the content is correctly displayed based
+        /// on the current scroll position and layout.
+        /// </summary>
+        /// <param name="refresh">Indicates whether to refresh the interior after updating the viewport rectangle.</param>
+        protected virtual void UpdateContentViewportRect(bool refresh = true)
+        {
+            var viewportRect = GetPreferredContentViewportRect();
+            scrollContainer.Bounds = viewportRect;
+            UpdateInterior(refresh);
         }
 
         /// <summary>

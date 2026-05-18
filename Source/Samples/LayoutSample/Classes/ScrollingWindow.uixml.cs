@@ -63,6 +63,16 @@ namespace LayoutSample
             UpdateImageZoom();
 
             MenuUtils.AddItemsForPublicParameterlessMethods(stackPanelOptionsGrid.ContextMenuStrip, scrollViewerStack, "DoAction");
+
+            showHorizontalCheckBox.CheckedChanged += (sender, e) =>
+            {
+                scrollViewerGrid.IsScrolledHorizontally = showHorizontalCheckBox.Checked;
+            };
+
+            showVerticalCheckBox.CheckedChanged += (sender, e) =>
+            {
+                scrollViewerGrid.IsScrolledVertically = showVerticalCheckBox.Checked;
+            };
         }
 
         private void ImageTopContainer_LayoutUpdated(object? sender, EventArgs e)

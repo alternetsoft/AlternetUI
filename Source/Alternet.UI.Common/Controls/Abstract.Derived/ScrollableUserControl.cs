@@ -772,26 +772,44 @@ namespace Alternet.UI
                 var contentHeightIsBigger = contentSize.Height > GetRect(RectKind.VerticalOnly).Height;
                 var contentWidthIsBigger = contentSize.Width > GetRect(RectKind.HorizontalOnly).Width;
 
+                var hiddenRect = BothHidden;
+
+                RectD Coerce(RectD r)
+                {
+                    if (r.SizeIsEmpty)
+                        return hiddenRect;
+                    return r;
+                }
+
                 if (contentWidthIsBigger)
                 {
                     if (contentHeightIsBigger)
                     {
-                        return BothVisible;
+                        if (BothVisible.SizeIsEmpty)
+                        {
+                            if(!VerticalOnly.SizeIsEmpty)
+                                return VerticalOnly;
+                            if (!HorizontalOnly.SizeIsEmpty)
+                                return HorizontalOnly;
+                            return hiddenRect;
+                        }
+                        else
+                            return BothVisible;
                     }
                     else
                     {
-                        return HorizontalOnly;
+                        return Coerce(HorizontalOnly);
                     }
                 }
                 else
                 {
                     if (contentHeightIsBigger)
                     {
-                        return VerticalOnly;
+                        return Coerce(VerticalOnly);
                     }
                     else
                     {
-                        return BothHidden;
+                        return hiddenRect;
                     }
                 }
             }

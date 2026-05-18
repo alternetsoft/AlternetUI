@@ -32,8 +32,6 @@ namespace Alternet.UI
         /// </summary>
         public static SizeD DefaultScrollSmallChange = new(40, 40);
 
-        private bool isScrolledHorizontally = true;
-        private bool isScrolledVertically = true;
         private bool insideUpdateInterior;
         private PointD layoutOffset;
         private int suspendUpdateInteriorCounter;
@@ -43,13 +41,30 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsScrolledVertically
         {
-            get => isScrolledVertically;
+            get => Interior.VertScrollBar?.Visible ?? true;
             set
             {
-                if (isScrolledVertically == value)
+                if (IsScrolledVertically == value)
                     return;
-                isScrolledVertically = value;
-                UpdateInterior();
+                if (Interior.VertScrollBar != null)
+                    Interior.VertScrollBar.Visible = value;
+                OnScrolledVerticallyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the content is allowed to be scrolled horizontally.
+        /// </summary>
+        public virtual bool IsScrolledHorizontally
+        {
+            get => Interior.HorzScrollBar?.Visible ?? true;
+            set
+            {
+                if (IsScrolledHorizontally == value)
+                    return;
+                if (Interior.HorzScrollBar != null)
+                    Interior.HorzScrollBar.Visible = value;
+                OnScrolledHorizontallyChanged();
             }
         }
 
@@ -58,21 +73,6 @@ namespace Alternet.UI
         /// viewer is scrolled with the mouse wheel.
         /// </summary>
         public virtual bool IsScrolledWithMouseWheel { get; set; } = true;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the content is allowed to be scrolled horizontally.
-        /// </summary>
-        public virtual bool IsScrolledHorizontally
-        {
-            get => isScrolledHorizontally;
-            set
-            {
-                if (isScrolledHorizontally == value)
-                    return;
-                isScrolledHorizontally = value;
-                UpdateInterior();
-            }
-        }
 
         /// <summary>
         /// Gets or sets the small change value for scrolling, which determines how much
@@ -93,6 +93,52 @@ namespace Alternet.UI
             get
             {
                 return this;
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override ScrollBarInfo HorzScrollBarInfo
+        {
+            get
+            {
+                var result = GetScrollBarInfo(false);
+
+                if(!IsScrolledHorizontally)
+                    result.Visibility = HiddenOrVisible.Hidden;
+
+                return result;
+            }
+
+            set
+            {
+                if (!IsScrolledHorizontally)
+                    value.Visibility = HiddenOrVisible.Hidden;
+
+                SetScrollBarInfo(isVertical: false, value);
+            }
+        }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public override ScrollBarInfo VertScrollBarInfo
+        {
+            get
+            {
+                var result = GetScrollBarInfo(true);
+
+                if(!IsScrolledVertically)
+                    result.Visibility = HiddenOrVisible.Hidden;
+
+                return result;
+            }
+
+            set
+            {
+                if (!IsScrolledVertically)
+                    value.Visibility = HiddenOrVisible.Hidden;
+
+                SetScrollBarInfo(isVertical: true, value);
             }
         }
 
@@ -488,6 +534,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the <see cref="IsScrolledVertically"/> property changes, allowing for any necessary updates to be performed.
+        /// </summary>
+        protected virtual void OnScrolledVerticallyChanged()
+        {
+            UpdateInterior();
+        }
+
+        /// <summary>
+        /// Called when the <see cref="IsScrolledHorizontally"/> property changes, allowing for any necessary updates to be performed.
+        /// </summary>
+        protected virtual void OnScrolledHorizontallyChanged()
+        {
+            UpdateInterior();
+        }
+
+        /// <summary>
         /// Calculates and retrieves the preferred content viewport rectangle, which represents the area of the control
         /// that should be used for displaying the content.
         /// </summary>
@@ -541,6 +603,12 @@ namespace Alternet.UI
             {
                 insideUpdateInterior = false;
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateInteriorProperties()
+        {
+            base.UpdateInteriorProperties();
         }
     }
 }

@@ -33,6 +33,7 @@ namespace Alternet.Drawing
         public PaintDelegate? AfterPaint;
 
         private RectD bounds;
+        private bool visible = true;
 
         /// <summary>
         /// Represents a method that handles custom painting for a drawable control.
@@ -69,7 +70,15 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual bool Visible { get; set; } = true;
+        public virtual bool Visible
+        {
+            get => visible;
+
+            set
+            {
+                visible = value;
+            }
+        }
 
         /// <inheritdoc/>
         public bool Enabled

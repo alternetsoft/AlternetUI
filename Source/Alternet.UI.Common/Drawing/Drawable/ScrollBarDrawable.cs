@@ -173,6 +173,17 @@ namespace Alternet.Drawing
         public virtual ScrollBarInfo Position { get; set; }
 
         /// <inheritdoc/>
+        public override bool Visible
+        {
+            get => base.Visible;
+
+            set
+            {
+                base.Visible = value;
+            }
+        }
+
+        /// <inheritdoc/>
         public override RectD Bounds
         {
             get
