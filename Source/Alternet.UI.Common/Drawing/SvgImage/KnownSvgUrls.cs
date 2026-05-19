@@ -475,6 +475,18 @@ namespace Alternet.UI
             = GetImageUrl("alternet-bars");
 
         /// <summary>
+        /// Gets or sets url used to load svg image with an arrow pointing from a bracket.
+        /// </summary>
+        public static string UrlImageRightFromBracket { get; set; }
+            = GetImageUrl("alternet-right-from-bracket");
+
+        /// <summary>
+        /// Gets or sets url used to load svg image with an arrow pointing to a bracket.
+        /// </summary>
+        public static string UrlImageRightToBracket { get; set; }
+            = GetImageUrl("alternet-right-to-bracket");
+
+        /// <summary>
         /// Gets or sets url used to load "Filter" svg image.
         /// </summary>
         public static string UrlImageFilter { get; set; } = GetImageUrl("alternet-filter");

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -101,16 +102,40 @@ namespace Alternet.UI
         private static SvgImage? imgBars;
         private static SvgImage? imgFilter;
         private static SvgImage? imgCheck;
+        private static SvgImage? imgRightFromBracket;
+        private static SvgImage? imgRightToBracket;
 
         static KnownSvgImages()
         {
             SystemSettings.SystemColorsChanged += () =>
             {
-                foreach(var image in GetAllAllocatedImages())
+                foreach (var image in GetAllAllocatedImages())
                 {
                     image.ResetCachedImages();
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image with an arrow pointing from a bracket.
+        /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
+        public static SvgImage ImgRightFromBracket
+        {
+            get => imgRightFromBracket ??= new MonoSvgImage(KnownSvgUrls.UrlImageRightFromBracket);
+            set => imgRightFromBracket = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image with an arrow pointing to a bracket.
+        /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
+        public static SvgImage ImgRightToBracket
+        {
+            get => imgRightToBracket ??= new MonoSvgImage(KnownSvgUrls.UrlImageRightToBracket);
+            set => imgRightToBracket = value;
         }
 
         /// <summary>
