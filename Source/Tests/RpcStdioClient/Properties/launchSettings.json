@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "RpcStdioClient": {
+      "commandName": "Project"
+    },
+    "ConnectRpc": {
+      "commandName": "Project",
+      "commandLineArgs": "../../../../RpcStdioWorker/bin/debug/net8.0/RpcStdioWorker.exe"
+    }
+  }
+}
