@@ -699,7 +699,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual AbstractControl? FindTarget()
         {
-            if(Parent is null)
+            if (Parent is null)
                 return null;
 
             switch (TargetMode)

@@ -610,6 +610,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            PlessMouse.MouseTargetControlOverride = null;
             IsMouseLeftButtonDown = false;
             OnMouseCaptureLost(e);
             OnMouseCaptureChanged(e);

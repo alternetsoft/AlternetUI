@@ -104,14 +104,23 @@ namespace Alternet.UI
 
             var position = mousePosition ?? Mouse.GetPosition(control);
 
-            var result = PlessMouse.MouseTargetControlOverride;
+            AbstractControl? result;
 
-            if (result is not null && result.HasIndirectParent(control))
+            if(control.IsMouseCaptured)
             {
+                result = control;
             }
             else
             {
-                result = control.PointInChildRecursive(position) ?? control;
+                result = PlessMouse.MouseTargetControlOverride;
+
+                if (result is not null && result.HasIndirectParent(control))
+                {
+                }
+                else
+                {
+                    result = control.PointInChildRecursive(position) ?? control;
+                }
             }
 
             if (result == control)
