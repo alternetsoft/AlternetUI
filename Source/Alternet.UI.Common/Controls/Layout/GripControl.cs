@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 using Alternet.Drawing;
 
@@ -20,7 +21,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// The default suggested size for the grip control. This value is used to set the initial size
-        /// of the control and can be overridden by setting the <see cref="SuggestedSize"/> property.
+        /// of the control and can be overridden by setting the <see cref="AbstractControl.SuggestedSize"/> property.
         /// </summary>
         public static float DefaultSuggestedSize = 16;
 
@@ -84,42 +85,101 @@ namespace Alternet.UI
             Custom,
         }
 
+        /// <summary>
+        /// Defines the resizing behavior of the grip when dragged by the user.
+        /// </summary>
         public enum GripSizeAction
         {
+            /// <summary>
+            /// Dragging the grip does not resize the target control.
+            /// The grip can still be used for moving if the <see cref="GripMoveAction"/> is set to allow moving.
+            /// </summary>
             None,
-            
+
+            /// <summary>
+            /// Dragging the grip resizes the target control in horizontal direction,
+            /// in addition to moving if allowed by the <see cref="GripMoveAction"/>.
+            /// </summary>
             ChangeWidth,
 
+            /// <summary>
+            /// Dragging the grip resizes the target control in vertical direction,
+            /// in addition to moving if allowed by the <see cref="GripMoveAction"/>.
+            /// </summary>
             ChangeHeight,
 
+            /// <summary>
+            /// Dragging the grip resizes the target control in both horizontal and vertical directions,
+            /// in addition to moving if allowed by the <see cref="GripMoveAction"/>.
+            /// </summary>
             ChangeWidthAndHeight,
         }
 
+        /// <summary>
+        /// Defines the moving behavior of the grip when dragged by the user.
+        /// This determines whether dragging the grip will move the target control, and in which directions.
+        /// </summary>
         public enum GripMoveAction
         {
+            /// <summary>
+            /// Dragging the grip does not move the target control.
+            /// The grip can still be used for resizing if the <see cref="GripSizeAction"/> is set to allow resizing.
+            /// </summary>
             None,
 
+            /// <summary>
+            /// Dragging the grip moves the target control in both horizontal and vertical directions,
+            /// in addition to resizing if allowed by the <see cref="GripSizeAction"/>.
+            /// </summary>
             ChangeLocation,
 
+            /// <summary>
+            /// Dragging the grip moves the target control horizontally by changing its left position,
+            /// in addition to resizing if allowed by the <see cref="GripSizeAction"/>.
+            /// </summary>
             ChangeLeft,
 
+            /// <summary>
+            /// Dragging the grip moves the target control vertically by changing its top position,
+            /// in addition to resizing if allowed by the <see cref="GripSizeAction"/>.
+            /// </summary>
             ChangeTop,
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to invert the width delta when resizing horizontally.
+        /// </summary>
         [Browsable(false)]
         public bool InvertWidthDelta { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to invert the height delta when resizing vertically.
+        /// </summary>
         [Browsable(false)]
         public bool InvertHeightDelta { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to invert the left position delta when moving horizontally.
+        /// </summary>
         [Browsable(false)]
         public bool InvertLeftDelta { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to invert the top position delta when moving vertically.
+        /// </summary>
         [Browsable(false)]
         public bool InvertTopDelta { get; set; } = false;
 
+        /// <summary>
+        /// Gets or sets the resizing behavior of the grip when dragged by the user.
+        /// This determines whether dragging the grip will resize the target control, and in which directions.
+        /// </summary>
         public virtual GripSizeAction SizeAction { get; set; } = GripSizeAction.ChangeWidthAndHeight;
-        
+
+        /// <summary>
+        /// Gets or sets the moving behavior of the grip when dragged by the user.
+        /// This determines whether dragging the grip will move the target control, and in which directions.
+        /// </summary>
         public virtual GripMoveAction MoveAction { get; set; } = GripMoveAction.None;
 
         /// <inheritdoc/>
@@ -135,6 +195,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the kind of grip image to display. Changing this property triggers a redraw of the control.
+        /// </summary>
         public virtual GripImageKind ImageKind
         {
             get => imageKind;
@@ -301,10 +364,16 @@ namespace Alternet.UI
         public virtual bool CanResizeHorizontally
             => SizeAction == GripSizeAction.ChangeWidth || SizeAction == GripSizeAction.ChangeWidthAndHeight;
 
+        /// <summary>
+        /// Gets a value indicating whether the grip can move vertically. If false, only horizontal moving is allowed.
+        /// </summary>
         [Browsable(false)]
         public virtual bool CanMoveVertically
             => MoveAction == GripMoveAction.ChangeLocation || MoveAction == GripMoveAction.ChangeTop;
 
+        /// <summary>
+        /// Gets a value indicating whether the grip can move horizontally. If false, only vertical moving is allowed.
+        /// </summary>
         [Browsable(false)]
         public virtual bool CanMoveHorizontally
             => MoveAction == GripMoveAction.ChangeLocation || MoveAction == GripMoveAction.ChangeLeft;
@@ -339,6 +408,10 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the effective SVG image to be drawn based on the current <see cref="ImageKind"/> setting.
+        /// </summary>
+        /// <returns>The effective SVG image, or null if no image should be drawn.</returns>
         public virtual SvgImage? GetEffectiveSvgImage()
         {
             return ImageKind switch
@@ -349,6 +422,19 @@ namespace Alternet.UI
                 GripImageKind.Custom => SvgImage,
                 _ => null,
             };
+        }
+
+        /// <summary>
+        /// Initializes the grip control with no image and sets it up to allow moving the target control by dragging the grip.
+        /// </summary>
+        public virtual void ConfigureAsMovingGrip()
+        {
+            ImageKind = GripControl.GripImageKind.None;
+            SizeAction = GripControl.GripSizeAction.None;
+            MoveAction = GripControl.GripMoveAction.ChangeLocation;
+            Cursor = Cursors.Default;
+            MinSizeDelta = 1;
+            Alignment = new(HorizontalAlignment.Stretch, VerticalAlignment.Stretch);
         }
 
         /// <summary>
@@ -475,7 +561,7 @@ namespace Alternet.UI
                 float newWidth = GetNewSize(isVert: false, mouseNowPos, InvertWidthDelta, CanResizeHorizontally);
                 float newHeight = GetNewSize(isVert: true, mouseNowPos, InvertHeightDelta, CanResizeVertically);
 
-                var bounds = target.Bounds;
+                var bounds = origTargetBounds;
 
                 float deltaX = newWidth - bounds.Width;
                 float deltaY = newHeight - bounds.Height;

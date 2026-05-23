@@ -76,14 +76,10 @@ namespace ControlsSample
                 HasBorder = true,
                 SuggestedWidth = 100,
                 HorizontalAlignment = HorizontalAlignment.Center,
-                ImageKind = GripControl.GripImageKind.None,
-                SizeAction = GripControl.GripSizeAction.None,
-                MoveAction = GripControl.GripMoveAction.ChangeLocation,
-                Cursor = Cursors.Default,
-                MinSizeDelta = 1,
             };
 
             sizingGripLeft.ConfigureAsSizingGripLeft();
+            movingGrip.ConfigureAsMovingGrip();
 
             toolBar.SuggestedHeight = 26;
             toolBar.SetVisibleBorders(false, true);
