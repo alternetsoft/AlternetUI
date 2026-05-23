@@ -68,11 +68,9 @@ namespace ControlsSample
             var sizingGripLeft = new GripControl()
             {
                 Target = this,
-                ImageKind = GripControl.GripImageKind.SizingGripLeft,
-                Cursor = Cursors.SizeNESW,
-                MoveAction = GripControl.GripMoveAction.Horizontal,
-                Alignment = HVAlignment.BottomLeft,
             };
+
+            sizingGripLeft.ConfigureAsSizingGripLeft();
 
             toolBar.SuggestedHeight = 26;
             toolBar.SetVisibleBorders(false, true);

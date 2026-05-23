@@ -84,60 +84,30 @@ namespace Alternet.UI
             Custom,
         }
 
-        /// <summary>
-        /// Defines the resizing behavior of the grip when dragged. It determines how the grip will resize the target control.
-        /// </summary>
-        public enum GripResizeAction
+        public enum GripSizeAction
         {
-            /// <summary>
-            /// No resizing is performed. The grip will not change the size of the target control when dragged.
-            /// </summary>
             None,
             
-            /// <summary>
-            /// The grip will resize the target control only in the width direction. The height will remain unchanged.
-            /// </summary>
-            Width,
+            SetWidth,
 
-            /// <summary>
-            /// The grip will resize the target control only in the height direction. The width will remain unchanged.
-            /// </summary>
-            Height,
+            SetHeight,
 
-            /// <summary>
-            /// The grip will resize the target control in both width and height directions.
-            /// </summary>
-            WidthAndHeight,
+            SetWidthAndHeight,
         }
 
-        /// <summary>
-        /// Defines the moving behavior of the grip when dragged. It determines how the grip will move the target control.
-        /// </summary>
         public enum GripMoveAction
         {
-            /// <summary>
-            /// No moving is performed. The grip will not change the position of the target control when dragged.
-            /// </summary>
             None,
-
-            /// <summary>
-            /// The grip will move the target control only in the horizontal direction. The vertical position will remain unchanged.
-            /// </summary>
-            Horizontal,
-
-            /// <summary>
-            /// The grip will move the target control only in the vertical direction. The horizontal position will remain unchanged.
-            /// </summary>
-            Vertical,
-
-            /// <summary>
-            /// The grip will move the target control in both horizontal and vertical directions.
-            /// </summary>
-            Both,
         }
 
-        public virtual GripResizeAction ResizeAction { get; set; } = GripResizeAction.WidthAndHeight;
+        [Browsable(false)]
+        public bool ApplyNegativeDeltaX { get; set; } = false;
 
+        [Browsable(false)]
+        public bool ApplyNegativeDeltaY { get; set; } = false;
+
+        public virtual GripSizeAction SizeAction { get; set; } = GripSizeAction.SetWidthAndHeight;
+        
         public virtual GripMoveAction MoveAction { get; set; } = GripMoveAction.None;
 
         /// <inheritdoc/>
@@ -308,14 +278,14 @@ namespace Alternet.UI
         /// Default is true.
         /// </summary>
         [Browsable(false)]
-        public bool CanResizeVertically => ResizeAction == GripResizeAction.Height || ResizeAction == GripResizeAction.WidthAndHeight;
+        public bool CanResizeVertically => SizeAction == GripSizeAction.SetHeight || SizeAction == GripSizeAction.SetWidthAndHeight;
 
         /// <summary>
         /// Gets or sets a value indicating whether the grip can resize horizontally. If false, only vertical resizing is allowed.
         /// Default is true.
         /// </summary>
         [Browsable(false)]
-        public bool CanResizeHorizontally => ResizeAction == GripResizeAction.Width || ResizeAction == GripResizeAction.WidthAndHeight;
+        public bool CanResizeHorizontally => SizeAction == GripSizeAction.SetWidth || SizeAction == GripSizeAction.SetWidthAndHeight;
 
         /// <summary>
         /// Gets or sets the minimum size delta for resizing. If null, the default value is used.
@@ -357,6 +327,18 @@ namespace Alternet.UI
                 GripImageKind.Custom => SvgImage,
                 _ => null,
             };
+        }
+
+        /// <summary>
+        /// Initializes the grip control with the standard status bar grip image aligned to the left,
+        /// and sets the cursor and resizing behavior accordingly.
+        /// </summary>
+        public virtual void ConfigureAsSizingGripLeft()
+        {
+            ImageKind = GripControl.GripImageKind.SizingGripLeft;
+            Cursor = Cursors.SizeNESW;
+            ApplyNegativeDeltaX = true;
+            Alignment = HVAlignment.BottomLeft;
         }
 
         /// <summary>
@@ -403,8 +385,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="isVert">Indicates whether the resizing is vertical.</param>
         /// <param name="mouseNowPos">The current mouse position.</param>
+        /// <param name="applyNegativeDelta">Indicates whether to apply negative delta.</param>
         /// <returns>The new size for the target control.</returns>
-        protected virtual float GetNewSize(bool isVert, PointD mouseNowPos)
+        protected virtual float GetNewSize(bool isVert, PointD mouseNowPos, bool applyNegativeDelta)
         {
             var oldSize = origTargetBounds.GetSize(isVert);
             var target = GetTarget();
@@ -414,6 +397,11 @@ namespace Alternet.UI
             var prevPos = mouseDownPos.GetLocation(isVert);
 
             var delta = MathF.Round(nowPos - prevPos);
+
+            if (applyNegativeDelta)
+            {
+                delta = -delta;
+            }
 
             var absDelta = MathF.Abs(delta);
 
@@ -453,7 +441,7 @@ namespace Alternet.UI
 
                 if (CanResizeHorizontally)
                 {
-                    newW = GetNewSize(isVert: false, mouseNowPos);
+                    newW = GetNewSize(isVert: false, mouseNowPos, ApplyNegativeDeltaX);
                 }
                 else
                 {
@@ -462,7 +450,7 @@ namespace Alternet.UI
 
                 if (CanResizeVertically)
                 {
-                    newH = GetNewSize(isVert: true, mouseNowPos);
+                    newH = GetNewSize(isVert: true, mouseNowPos, ApplyNegativeDeltaY);
                 }
                 else
                 {
