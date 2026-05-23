@@ -88,25 +88,37 @@ namespace Alternet.UI
         {
             None,
             
-            SetWidth,
+            ChangeWidth,
 
-            SetHeight,
+            ChangeHeight,
 
-            SetWidthAndHeight,
+            ChangeWidthAndHeight,
         }
 
         public enum GripMoveAction
         {
             None,
+
+            ChangeLocation,
+
+            ChangeLeft,
+
+            ChangeTop,
         }
 
         [Browsable(false)]
-        public bool ApplyNegativeDeltaX { get; set; } = false;
+        public bool InvertWidthDelta { get; set; } = false;
 
         [Browsable(false)]
-        public bool ApplyNegativeDeltaY { get; set; } = false;
+        public bool InvertHeightDelta { get; set; } = false;
 
-        public virtual GripSizeAction SizeAction { get; set; } = GripSizeAction.SetWidthAndHeight;
+        [Browsable(false)]
+        public bool InvertLeftDelta { get; set; } = false;
+
+        [Browsable(false)]
+        public bool InvertTopDelta { get; set; } = false;
+
+        public virtual GripSizeAction SizeAction { get; set; } = GripSizeAction.ChangeWidthAndHeight;
         
         public virtual GripMoveAction MoveAction { get; set; } = GripMoveAction.None;
 
@@ -278,14 +290,24 @@ namespace Alternet.UI
         /// Default is true.
         /// </summary>
         [Browsable(false)]
-        public bool CanResizeVertically => SizeAction == GripSizeAction.SetHeight || SizeAction == GripSizeAction.SetWidthAndHeight;
+        public virtual bool CanResizeVertically
+            => SizeAction == GripSizeAction.ChangeHeight || SizeAction == GripSizeAction.ChangeWidthAndHeight;
 
         /// <summary>
         /// Gets or sets a value indicating whether the grip can resize horizontally. If false, only vertical resizing is allowed.
         /// Default is true.
         /// </summary>
         [Browsable(false)]
-        public bool CanResizeHorizontally => SizeAction == GripSizeAction.SetWidth || SizeAction == GripSizeAction.SetWidthAndHeight;
+        public virtual bool CanResizeHorizontally
+            => SizeAction == GripSizeAction.ChangeWidth || SizeAction == GripSizeAction.ChangeWidthAndHeight;
+
+        [Browsable(false)]
+        public virtual bool CanMoveVertically
+            => MoveAction == GripMoveAction.ChangeLocation || MoveAction == GripMoveAction.ChangeTop;
+
+        [Browsable(false)]
+        public virtual bool CanMoveHorizontally
+            => MoveAction == GripMoveAction.ChangeLocation || MoveAction == GripMoveAction.ChangeLeft;
 
         /// <summary>
         /// Gets or sets the minimum size delta for resizing. If null, the default value is used.
@@ -337,8 +359,11 @@ namespace Alternet.UI
         {
             ImageKind = GripControl.GripImageKind.SizingGripLeft;
             Cursor = Cursors.SizeNESW;
-            ApplyNegativeDeltaX = true;
+            InvertWidthDelta = true;
             Alignment = HVAlignment.BottomLeft;
+            SizeAction = GripSizeAction.ChangeWidthAndHeight;
+            MoveAction = GripMoveAction.ChangeLeft;
+            InvertLeftDelta = true;
         }
 
         /// <summary>
@@ -436,32 +461,46 @@ namespace Alternet.UI
                 if (target == null) return;
                 PointD mouseNowPos = ClientToScreen(e.Location);
 
-                float newW;
-                float newH;
+                float newWidth = GetNewSize(isVert: false, mouseNowPos, InvertWidthDelta);
+                float newHeight = GetNewSize(isVert: true, mouseNowPos, InvertHeightDelta);
 
-                if (CanResizeHorizontally)
-                {
-                    newW = GetNewSize(isVert: false, mouseNowPos, ApplyNegativeDeltaX);
-                }
-                else
-                {
-                    newW = target.Size.Width;
-                }
+                var bounds = target.Bounds;
 
-                if (CanResizeVertically)
+                float deltaX = newWidth - bounds.Width;
+                float deltaY = newHeight - bounds.Height;
+
+                bounds.Width = newWidth;
+                bounds.Height = newHeight;
+
+                if (!CanResizeHorizontally)
                 {
-                    newH = GetNewSize(isVert: true, mouseNowPos, ApplyNegativeDeltaY);
-                }
-                else
-                {
-                    newH = target.Size.Height;
+                    bounds.Width = target.Size.Width;
                 }
 
-                var newSize = new SizeD(newW, newH);
+                if (!CanResizeVertically)
+                {
+                    bounds.Height = target.Size.Height;
+                }
 
-                if (newSize == target.Size) return;
+                if (CanMoveHorizontally)
+                {
+                    if (InvertLeftDelta)
+                        bounds.X -= deltaX;
+                    else 
+                        bounds.X += deltaX;
+                }
 
-                target.Size = newSize;
+                if (CanMoveVertically)
+                {
+                    if (InvertTopDelta)
+                        bounds.Y -= deltaY;
+                    else
+                        bounds.Y += deltaY;
+                }
+
+                if (bounds == target.Bounds) return;
+
+                target.Bounds = bounds;
                 target.Refresh();
             }
         }
