@@ -9,9 +9,12 @@ using Alternet.UI.Extensions;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Implements image drawing.
+    /// Represents a drawable object that can display an image, including support for SVG images
+    /// and various image states (enabled/disabled). This class provides properties to specify the image source,
+    /// color, size, and alignment options. It also includes methods to retrieve the appropriate image based
+    /// on the control's state and to perform default drawing of the image within a specified control and drawing context.
     /// </summary>
-    public class ImageDrawable : BaseDrawable
+    public partial class ImageDrawable : BaseDrawable
     {
         private SvgImageInfo svgImageInfo;
         private bool stretch = false;

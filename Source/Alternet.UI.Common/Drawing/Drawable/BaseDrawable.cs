@@ -9,7 +9,7 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Base class for the drawable objects.
+    /// Represents a base class for drawable objects that can be rendered on a control or other visual element.
     /// </summary>
     public partial class BaseDrawable : BaseObject, IBaseDrawable
     {
