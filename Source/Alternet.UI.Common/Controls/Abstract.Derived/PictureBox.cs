@@ -510,8 +510,8 @@ namespace Alternet.UI
         /// color for both the image and the PictureBox background. This method clears any existing image before setting
         /// the new one.</remarks>
         /// <param name="template">The template control from which to generate the image. Cannot be null.</param>
-        /// <param name="backColor">An optional background color to use when rendering the template. If null, the template's default background
-        /// color is used.</param>
+        /// <param name="backColor">An optional background color to use when rendering the template.
+        /// If null, the template's default background color is used.</param>
         /// <returns>The current PictureBox instance with the updated image.</returns>
         public virtual PictureBox SetImageFrom(TemplateControl template, Color? backColor = null)
         {
@@ -701,6 +701,13 @@ namespace Alternet.UI
             primitive.Bounds =
                 (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             primitive.Draw(this, dc);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            primitive.ResetCachedImages();
         }
 
         /// <summary>
