@@ -411,8 +411,13 @@ namespace Alternet.UI
         /// <param name="isVert">Indicates whether the resizing is vertical.</param>
         /// <param name="mouseNowPos">The current mouse position.</param>
         /// <param name="applyNegativeDelta">Indicates whether to apply negative delta.</param>
+        /// <param name="applyMinMax">Indicates whether to apply minimum and maximum size constraints.</param>
         /// <returns>The new size for the target control.</returns>
-        protected virtual float GetNewSize(bool isVert, PointD mouseNowPos, bool applyNegativeDelta)
+        protected virtual float GetNewSize(
+            bool isVert,
+            PointD mouseNowPos,
+            bool applyNegativeDelta,
+            bool applyMinMax)
         {
             var oldSize = origTargetBounds.GetSize(isVert);
             var target = GetTarget();
@@ -421,7 +426,7 @@ namespace Alternet.UI
             var nowPos = mouseNowPos.GetLocation(isVert);
             var prevPos = mouseDownPos.GetLocation(isVert);
 
-            var delta = MathF.Round(nowPos - prevPos);
+            var delta = nowPos - prevPos;
 
             if (applyNegativeDelta)
             {
@@ -432,20 +437,26 @@ namespace Alternet.UI
 
             var minDelta = GetEffectiveMinSizeDelta();
 
-            if (absDelta < minDelta)
-            {
-                return oldSize;
-            }
-
             var newSize = oldSize + delta;
 
-            newSize = MathF.Floor(newSize / minDelta) * minDelta;
+            if (minDelta > 1)
+            {
+                if (absDelta < minDelta)
+                {
+                    return oldSize;
+                }
 
-            var maxSize = target.MaximumSize.GetSize(isVert);
-            var minSize = target.MinimumSize.GetSize(isVert);
+                newSize = MathF.Floor(newSize / minDelta) * minDelta;
+            }
 
-            newSize = Math.Max(minSize, newSize);
-            if (maxSize > 0) newSize = Math.Min(newSize, maxSize);
+            if (applyMinMax)
+            {
+                var maxSize = target.MaximumSize.GetSize(isVert);
+                var minSize = target.MinimumSize.GetSize(isVert);
+
+                newSize = Math.Max(minSize, newSize);
+                if (maxSize > 0) newSize = Math.Min(newSize, maxSize);
+            }
 
             return newSize;
         }
@@ -461,25 +472,22 @@ namespace Alternet.UI
                 if (target == null) return;
                 PointD mouseNowPos = ClientToScreen(e.Location);
 
-                float newWidth = GetNewSize(isVert: false, mouseNowPos, InvertWidthDelta);
-                float newHeight = GetNewSize(isVert: true, mouseNowPos, InvertHeightDelta);
+                float newWidth = GetNewSize(isVert: false, mouseNowPos, InvertWidthDelta, CanResizeHorizontally);
+                float newHeight = GetNewSize(isVert: true, mouseNowPos, InvertHeightDelta, CanResizeVertically);
 
                 var bounds = target.Bounds;
 
                 float deltaX = newWidth - bounds.Width;
                 float deltaY = newHeight - bounds.Height;
 
-                bounds.Width = newWidth;
-                bounds.Height = newHeight;
-
-                if (!CanResizeHorizontally)
+                if (CanResizeHorizontally)
                 {
-                    bounds.Width = target.Size.Width;
+                    bounds.Width = newWidth;
                 }
 
-                if (!CanResizeVertically)
+                if (CanResizeVertically)
                 {
-                    bounds.Height = target.Size.Height;
+                    bounds.Height = newHeight;
                 }
 
                 if (CanMoveHorizontally)

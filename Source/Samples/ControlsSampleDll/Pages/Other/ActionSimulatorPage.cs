@@ -70,6 +70,19 @@ namespace ControlsSample
                 Target = this,
             };
 
+            var movingGrip = new GripControl()
+            {
+                Target = this,
+                HasBorder = true,
+                SuggestedWidth = 100,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                ImageKind = GripControl.GripImageKind.None,
+                SizeAction = GripControl.GripSizeAction.None,
+                MoveAction = GripControl.GripMoveAction.ChangeLocation,
+                Cursor = Cursors.Default,
+                MinSizeDelta = 1,
+            };
+
             sizingGripLeft.ConfigureAsSizingGripLeft();
 
             toolBar.SuggestedHeight = 26;
@@ -79,6 +92,7 @@ namespace ControlsSample
 
             sizingGrip.Parent = toolBar;
             sizingGripLeft.Parent = toolBar;
+            movingGrip.Parent = toolBar;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
