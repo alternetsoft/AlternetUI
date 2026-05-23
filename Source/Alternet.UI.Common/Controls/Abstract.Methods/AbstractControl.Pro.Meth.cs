@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <see langword="true" /> to apply the specified style to the control;
         /// otherwise, <see langword="false" />.</param>
         [EditorBrowsable(EditorBrowsableState.Advanced)]
-        protected void SetStyle(ControlStyles flag, bool value)
+        protected virtual void SetStyle(ControlStyles flag, bool value)
         {
             controlStyle = value ? (controlStyle | flag) : (controlStyle & ~flag);
         }

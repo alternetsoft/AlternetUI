@@ -18,6 +18,10 @@ namespace ControlsSample
         private readonly UIActionSimulator simulator = new();
         private readonly TextBox editor;
         private readonly TextBox editor2;
+        private readonly Label label1;
+        private readonly Label label2;
+        private readonly ToolBar toolBar = new();
+
         private int counter;
 
         private readonly Panel panel = new()
@@ -27,10 +31,12 @@ namespace ControlsSample
 
         public ActionSimulatorPage()
         {
+            Layout = LayoutStyle.Vertical;
+            panel.VerticalAlignment = VerticalAlignment.Fill;
             panel.MinChildMargin = 5;
             Size = (800, 600);
 
-            new Label(
+            label1 = new Label(
                 panel,
                 [
                     "This demo send mouse clicks and key presses to operating system",
@@ -44,7 +50,7 @@ namespace ControlsSample
             editor = new TextBox(panel);
             editor2 = new TextBox(panel);
 
-            new Label(
+            label2 = new Label(
                 panel,
                 [
                     "Simulator moves mouse to 'Button1' and clicks it.",
@@ -53,6 +59,18 @@ namespace ControlsSample
                 ]);
 
             panel.Parent = this;
+
+            var sizingGrip = new StatusBarGrip()
+            {
+                Target = this,
+            };
+
+            toolBar.SuggestedHeight = 26;
+            toolBar.SetVisibleBorders(false, true);
+            toolBar.VerticalAlignment = VerticalAlignment.Bottom;
+            toolBar.Parent = this;
+
+            sizingGrip.Parent = toolBar;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

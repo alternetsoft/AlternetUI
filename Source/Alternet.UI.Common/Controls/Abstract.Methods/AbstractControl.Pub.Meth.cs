@@ -106,7 +106,7 @@ namespace Alternet.UI
 
             AbstractControl? result;
 
-            if(control.IsMouseCaptured)
+            if (control.IsMouseCaptured)
             {
                 result = control;
             }
