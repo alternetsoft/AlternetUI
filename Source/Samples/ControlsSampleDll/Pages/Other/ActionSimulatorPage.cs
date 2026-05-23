@@ -60,9 +60,18 @@ namespace ControlsSample
 
             panel.Parent = this;
 
-            var sizingGrip = new StatusBarGrip()
+            var sizingGrip = new GripControl()
             {
                 Target = this,
+            };
+
+            var sizingGripLeft = new GripControl()
+            {
+                Target = this,
+                ImageKind = GripControl.GripImageKind.SizingGripLeft,
+                Cursor = Cursors.SizeNESW,
+                MoveAction = GripControl.GripMoveAction.Horizontal,
+                Alignment = HVAlignment.BottomLeft,
             };
 
             toolBar.SuggestedHeight = 26;
@@ -71,6 +80,7 @@ namespace ControlsSample
             toolBar.Parent = this;
 
             sizingGrip.Parent = toolBar;
+            sizingGripLeft.Parent = toolBar;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
