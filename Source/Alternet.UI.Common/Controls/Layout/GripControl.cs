@@ -54,6 +54,7 @@ namespace Alternet.UI
             this.Cursor = Cursors.SizeNWSE;
             Alignment = HVAlignment.BottomRight;
             this.TabStop = false;
+            IsGraphicControl = true;
         }
 
         /// <summary>
@@ -394,7 +395,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the control that is resized or moved. If null, the top-level parent form is used.
         /// </summary>
-        public virtual Control? Target { get; set; }
+        public virtual AbstractControl? Target { get; set; }
 
         internal ImageDrawable Primitive => primitive;
 
@@ -434,7 +435,8 @@ namespace Alternet.UI
             MoveAction = GripControl.GripMoveAction.ChangeLocation;
             Cursor = Cursors.Default;
             MinSizeDelta = 1;
-            Alignment = new(HorizontalAlignment.Stretch, VerticalAlignment.Stretch);
+            SuggestedSize = SizeD.NaN;
+            Alignment = new (HorizontalAlignment.Stretch, VerticalAlignment.Stretch);
         }
 
         /// <summary>
@@ -457,8 +459,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void DrawDefaultImage(Graphics dc, RectD rect)
         {
-            primitive.Bounds =
-                (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
+            primitive.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             primitive.SvgImage = GetEffectiveSvgImage();
             primitive.Draw(this, dc);
         }
