@@ -44,6 +44,9 @@ namespace Alternet.UI
             mainPanel.HasBorder = DefaultHasAdditionalBorder;
             mainPanel.Parent = this;
             Padding = DefaultPadding;
+
+            bottomToolBar.AddSizingGrip(this, ToolBar.GripControlKind.MoveGrip);
+
             var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
             bottomToolBar.ItemSize = Math.Max(bottomToolBar.ItemSize, MinElementSize);
             ButtonIdOk = buttons[0];
