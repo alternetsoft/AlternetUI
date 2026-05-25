@@ -1,3 +1,16 @@
+# 1.0.15 (2026 May 25)
+
+- Add GripControl. It allows the user to resize or move the target control by dragging the grip.
+- PictureBox: Reset cached images on system color change.
+- Fix mouse events processing when mouse is captured.
+- Add RpcStdioClient and RpcStdioWorker sample projects.
+- Add bracket-arrow SVGs and export scripts.
+- Introduce ContentSizeScale for scroll sizing.
+- Grid: Fixed behavior when some control is invisible or ignored layout.
+- ScrollViewer: Fix IsScrolledHorizontally, IsScrolledVertically.
+
+---
+
 # 1.0.14 (2026 May 17)
 
 - Added ScrollableCanvasControl.
