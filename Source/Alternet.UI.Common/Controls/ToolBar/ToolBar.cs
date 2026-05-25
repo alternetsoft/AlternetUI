@@ -65,6 +65,27 @@ namespace Alternet.UI
         public event EventHandler? ToolClick;
 
         /// <summary>
+        /// Enumerates
+        /// </summary>
+        public enum GripControlKind
+        {
+            /// <summary>
+            /// Sizing grip is shown on the right side of the toolbar. This is the default value. 
+            /// </summary>
+            SizeGripRight,
+
+            /// <summary>
+            /// Sizing grip is shown on the left side of the toolbar.
+            /// </summary>
+            SizeGripLeft,
+
+            /// <summary>
+            /// Grip is used for moving the target control.
+            /// </summary>
+            MoveGrip,
+        }
+
+        /// <summary>
         /// Enumerates all toolbar item kinds.
         /// </summary>
         public enum ItemKind
@@ -2546,6 +2567,36 @@ namespace Alternet.UI
 
             result.DataContext = menuItem;
             return result;
+        }
+
+        /// <summary>
+        /// Adds a sizing grip to the toolbar, allowing users to resize the toolbar by dragging the grip.
+        /// </summary>
+        /// <param name="target">The target control which is being resized by the sizing grip.</param>
+        /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
+        public virtual GripControl AddSizingGrip(AbstractControl target, GripControlKind kind = GripControlKind.SizeGripRight)
+        {
+            var sizingGrip = new GripControl()
+            {
+                Target = target,
+            };
+
+            switch (kind)
+            {
+                case GripControlKind.SizeGripRight:
+                    break;
+                case GripControlKind.SizeGripLeft:
+                    sizingGrip.ConfigureAsSizingGripLeft();
+                    break;
+                case GripControlKind.MoveGrip:
+                    sizingGrip.ConfigureAsMovingGrip();
+                    sizingGrip.HorizontalAlignment = HorizontalAlignment.Fill;
+                    break;
+            }
+
+            sizingGrip.Parent = this;
+
+            return sizingGrip;
         }
 
         /// <summary>
