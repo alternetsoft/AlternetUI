@@ -20,7 +20,7 @@ namespace ControlsSample
         private readonly TextBox editor2;
         private readonly Label label1;
         private readonly Label label2;
-        private readonly ToolBar toolBar = new();
+        private readonly ToolBarForTesting statusBar = new();
 
         private int counter;
 
@@ -60,41 +60,20 @@ namespace ControlsSample
 
             panel.Parent = this;
 
-            var sizingGrip = new GripControl()
-            {
-                Target = this,
-            };
+            statusBar.SuggestedHeight = 26;
+            statusBar.SetVisibleBorders(false, true);
+            statusBar.VerticalAlignment = VerticalAlignment.Bottom;
+            statusBar.Parent = this;
 
-            var sizingGripLeft = new GripControl()
-            {
-                Target = this,
-            };
-
-            var movingGrip = new GripControl()
-            {
-                Target = this,
-                HasBorder = true,
-                SuggestedWidth = 100,
-                HorizontalAlignment = HorizontalAlignment.Center,
-            };
-
-            sizingGripLeft.ConfigureAsSizingGripLeft();
-            movingGrip.ConfigureAsMovingGrip();
-
-            toolBar.SuggestedHeight = 26;
-            toolBar.SetVisibleBorders(false, true);
-            toolBar.VerticalAlignment = VerticalAlignment.Bottom;
-            toolBar.Parent = this;
-
-            sizingGrip.Parent = toolBar;
-            sizingGripLeft.Parent = toolBar;
-            movingGrip.Parent = toolBar;
+            statusBar.AddSizingGrip(this, ToolBar.GripControlKind.SizeGripLeft);
+            statusBar.AddSizingGrip(this, ToolBar.GripControlKind.MoveGrip);
+            statusBar.AddSizingGrip(this, ToolBar.GripControlKind.SizeGripRight);
         }
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if(e.Key == Key.F5)
+            if (e.Key == Key.F5)
             {
                 App.AddIdleTask(() =>
                 {
@@ -124,6 +103,18 @@ namespace ControlsSample
                         return condition;
                     }
                 });
+            }
+        }
+
+        internal class ToolBarForTesting : ToolBar
+        {
+            public ToolBarForTesting()
+            {
+            }
+
+            public override void OnLayout()
+            {
+                base.OnLayout();
             }
         }
     }
