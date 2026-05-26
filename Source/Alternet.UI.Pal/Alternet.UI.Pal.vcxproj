@@ -40,17 +40,14 @@
     <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
-
-<PropertyGroup>
+  <PropertyGroup>
     <Company>AlterNET Software</Company>
     <Product>AlterNET UI PAL Library</Product>
     <Copyright>Copyright (c) 2021-2026 AlterNET Software</Copyright>
     <MyFileVersion>1.0.15.0</MyFileVersion>
-
-  <MyFileVersionReplaceComma>$([System.Text.RegularExpressions.Regex]::Replace('$(MyFileVersion)', '\.', ','))</MyFileVersionReplaceComma>
-
- <!-- RC contents in a property using CDATA so < and > are safe -->
-  <MyRcContent><![CDATA[
+    <MyFileVersionReplaceComma>$([System.Text.RegularExpressions.Regex]::Replace('$(MyFileVersion)', '\.', ','))</MyFileVersionReplaceComma>
+    <!-- RC contents in a property using CDATA so < and > are safe -->
+    <MyRcContent><![CDATA[
 #include <windows.h>
 
 VS_VERSION_INFO VERSIONINFO
@@ -74,19 +71,15 @@ VS_VERSION_INFO VERSIONINFO
   END
  END
 ]]></MyRcContent>
-</PropertyGroup>
-
-<Target Name="GenerateVersionResource" BeforeTargets="ResourceCompile">
-  <MakeDir Directories="$(IntermediateOutputPath)" />
-
-  <!-- WriteLinesToFile with Lines attribute referencing the property -->
-  <WriteLinesToFile File="$(IntermediateOutputPath)GeneratedVersion.rc" Lines="$(MyRcContent)" Overwrite="true" Encoding="UTF-8" />
-
-  <ItemGroup>
-    <ResourceCompile Include="$(IntermediateOutputPath)GeneratedVersion.rc" />
-  </ItemGroup>
-</Target>
-
+  </PropertyGroup>
+  <Target Name="GenerateVersionResource" BeforeTargets="ResourceCompile">
+    <MakeDir Directories="$(IntermediateOutputPath)" />
+    <!-- WriteLinesToFile with Lines attribute referencing the property -->
+    <WriteLinesToFile File="$(IntermediateOutputPath)GeneratedVersion.rc" Lines="$(MyRcContent)" Overwrite="true" Encoding="UTF-8" />
+    <ItemGroup>
+      <ResourceCompile Include="$(IntermediateOutputPath)GeneratedVersion.rc" />
+    </ItemGroup>
+  </Target>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
@@ -227,6 +220,7 @@ VS_VERSION_INFO VERSIONINFO
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -307,6 +301,7 @@ VS_VERSION_INFO VERSIONINFO
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -331,6 +326,7 @@ VS_VERSION_INFO VERSIONINFO
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
