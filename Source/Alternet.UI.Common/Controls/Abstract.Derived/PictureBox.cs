@@ -303,7 +303,52 @@ namespace Alternet.UI
                     return;
                 primitive.CenterHorz = value;
                 primitive.CenterVert = value;
-                Invalidate();
+                if (ImageVisible)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the image in the control.
+        /// This property is used when image is not stretched.
+        /// Only top, center, bottom alignment is supported.
+        /// </summary>
+        public virtual VerticalAlignment ImageVertAlign
+        {
+            get
+            {
+                return primitive.VerticalAlignment;
+            }
+
+            set
+            {
+                if (primitive.VerticalAlignment == value)
+                    return;
+                primitive.VerticalAlignment = value;
+                if (ImageVisible)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets horizontal alignment of the image in the control.
+        /// This property is used when image is not stretched.
+        /// Only left, center, right alignment is supported.
+        /// </summary>
+        public virtual HorizontalAlignment ImageHorzAlign
+        {
+            get
+            {
+                return primitive.HorizontalAlignment;
+            }
+
+            set
+            {
+                if (primitive.HorizontalAlignment == value)
+                    return;
+                primitive.HorizontalAlignment = value;
+                if (ImageVisible)
+                    Invalidate();
             }
         }
 
@@ -311,6 +356,7 @@ namespace Alternet.UI
         /// Gets or sets whether to center image vertically in the control rectangle.
         /// Default is <c>true</c>. This property is used when image is not stretched.
         /// </summary>
+        [Browsable(false)]
         public virtual bool CenterVert
         {
             get
@@ -323,7 +369,8 @@ namespace Alternet.UI
                 if (primitive.CenterVert == value)
                     return;
                 primitive.CenterVert = value;
-                Invalidate();
+                if (ImageVisible)
+                    Invalidate();
             }
         }
 
@@ -331,6 +378,7 @@ namespace Alternet.UI
         /// Gets or sets whether to center image horizontally in the control rectangle.
         /// Default is <c>true</c>. This property is used when image is not stretched.
         /// </summary>
+        [Browsable(false)]
         public virtual bool CenterHorz
         {
             get
@@ -343,7 +391,8 @@ namespace Alternet.UI
                 if (primitive.CenterHorz == value)
                     return;
                 primitive.CenterHorz = value;
-                Invalidate();
+                if (ImageVisible)
+                    Invalidate();
             }
         }
 
@@ -363,7 +412,8 @@ namespace Alternet.UI
                 if (primitive.Stretch == value)
                     return;
                 primitive.Stretch = value;
-                Invalidate();
+                if (ImageVisible)
+                    Invalidate();
             }
         }
 
@@ -698,8 +748,7 @@ namespace Alternet.UI
             var primitive = Primitive;
             var state = VisualState;
             UpdatePrimitiveImage(state);
-            primitive.Bounds =
-                (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
+            primitive.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             primitive.Draw(this, dc);
         }
 
