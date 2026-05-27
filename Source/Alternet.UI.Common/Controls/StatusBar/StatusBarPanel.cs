@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
     /// Represents an individual item that is displayed within a status bar.
     /// </summary>
     [ControlCategory("Hidden")]
-    public class StatusBarPanel : BaseControlItem
+    public partial class StatusBarPanel : BaseControlItem
     {
+        private readonly BaseConcurrentStack<string> textStack = new();
         private string text = string.Empty;
-        private int width = -1;
+        private float width = -1;
         private StatusBarPanelStyle style = StatusBarPanelStyle.Flat;
 
         /// <summary>
@@ -75,7 +78,7 @@ namespace Alternet.UI
         /// See more details in <see cref="StatusBar.SetStatusWidths"/> on how to define
         /// automatically resizable panels.
         /// </remarks>
-        public virtual int Width
+        public virtual float Width
         {
             get
             {
@@ -120,6 +123,34 @@ namespace Alternet.UI
             var result = new StatusBarPanel();
             result.Assign(this);
             return result;
+        }
+
+        /// <summary>
+        /// Pushes the current <see cref="Text"/> value onto the stack and sets a new text.
+        /// </summary>
+        /// <param name="text">The new text to set.</param>
+        public virtual void PushText(string text)
+        {
+            textStack.Push(this.text);
+            Text = text;
+        }
+
+        /// <summary>
+        /// Restores the previous text value that was saved by the last call to <see cref="PushText"/>.
+        /// </summary>
+        public virtual void PopText()
+        {
+            if (textStack.TryPop(out var value))
+                Text = value;
+        }
+
+        /// <summary>
+        /// Gets the rectangle that represents the bounds of this <see cref="StatusBarPanel"/> within the status bar.
+        /// </summary>
+        /// <returns></returns>
+        public virtual RectD GetRect()
+        {
+            return RectD.Empty;
         }
 
         /// <summary>

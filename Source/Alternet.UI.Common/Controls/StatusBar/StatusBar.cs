@@ -11,15 +11,14 @@ namespace Alternet.UI
     /// Represents a status bar control.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
-    public partial class StatusBar : FrameworkElement
+    public partial class StatusBar : ToolBar
     {
         /// <summary>
         /// Represents the height, in dips, of the Visual Studio status bar.
         /// </summary>
         public const int VisualStudioStatusBarHeight = 28;
-
-        private IStatusBarHandler? handler;
-        private int updateCount = 0;
+        private bool sizingGripVisible;
+        private TextEllipsisType textEllipsis;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
@@ -33,7 +32,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets text of the first status bar panel.
         /// </summary>
-        public virtual string? Text
+        public new virtual string? Text
         {
             get
             {
@@ -52,31 +51,7 @@ namespace Alternet.UI
         /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the control.
         /// </summary>
         [Content]
-        public virtual BaseCollection<StatusBarPanel> Panels { get; }
-            = new(CollectionSecurityFlags.NoNullOrReplace);
-
-        /// <summary>
-        /// Gets or sets whether to ignore <see cref="Panels"/>.
-        /// </summary>
-        /// <remarks>
-        /// When <see cref="Panels"/> are ignored, they are not automatically assigned to
-        /// the native control. Default value is <c>false</c>.
-        /// </remarks>
-        public virtual bool IgnorePanels { get; set; }
-
-        /// <summary>
-        /// Gets control to which this status bar is attached.
-        /// </summary>
-        [Browsable(false)]
-        public virtual AbstractControl? AttachedTo
-        {
-            get
-            {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.AttachedTo;
-            }
-        }
+        public virtual BaseCollection<StatusBarPanel> Panels { get; } = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
         /// Gets or sets a value indicating whether a sizing grip is displayed in the
@@ -86,9 +61,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.SizingGripVisible;
+                return sizingGripVisible;
             }
 
             set
@@ -97,7 +70,7 @@ namespace Alternet.UI
                     return;
                 if (SizingGripVisible == value)
                     return;
-                Handler.SizingGripVisible = value;
+                sizingGripVisible = value;
             }
         }
 
@@ -109,9 +82,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return Handler.TextEllipsis;
+                return textEllipsis;
             }
 
             set
@@ -120,12 +91,9 @@ namespace Alternet.UI
                     return;
                 if (TextEllipsis == value)
                     return;
-                Handler.TextEllipsis = value;
+                textEllipsis = value;
             }
         }
-
-        /// <inheritdoc cref="AbstractControl.InUpdates"/>
-        public virtual bool InUpdates => updateCount > 0;
 
         /// <summary>
         /// Gets whether control is fully active and is attached to the window.
@@ -136,28 +104,8 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.IsOk;
+                return true;
             }
-        }
-
-        /// <summary>
-        /// Gets handler for the control.
-        /// </summary>
-        public IStatusBarHandler Handler
-            => handler ??= ControlFactory.Handler.CreateStatusBarHandler(this);
-
-        /// <inheritdoc cref="AbstractControl.BeginUpdate"/>
-        public virtual void BeginUpdate()
-        {
-            updateCount++;
-        }
-
-        /// <inheritdoc cref="AbstractControl.EndUpdate"/>
-        public virtual void EndUpdate()
-        {
-            updateCount--;
-            if(updateCount == 0)
-                ApplyPanels();
         }
 
         /// <summary>
@@ -167,16 +115,6 @@ namespace Alternet.UI
         public void SetText(string? value)
         {
             Text = value;
-        }
-
-        /// <summary>
-        /// Applies <see cref="Panels"/> to the native control.
-        /// </summary>
-        public virtual void ApplyPanels()
-        {
-            if (IgnorePanels)
-                return;
-            ApplyPanels(Panels);
         }
 
         /// <summary>
@@ -191,56 +129,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Applies <paramref name="panels"/> to the native control.
-        /// </summary>
-        /// <param name="panels">Collection of the panels.</param>
-        public virtual void ApplyPanels(BaseCollection<StatusBarPanel> panels)
-        {
-            if (InUpdates || !IsOk)
-                return;
-            var count = panels.Count;
-            var widths = new int[count];
-            var styles = new StatusBarPanelStyle[count];
-
-            for(int i = 0; i < count; i++)
-            {
-                widths[i] = panels[i].Width;
-                styles[i] = panels[i].Style;
-            }
-
-            if(count == 0)
-            {
-                SetFieldsCount(1);
-                SetStatusText(null);
-                return;
-            }
-
-            SetFieldsCount(count);
-            SetStatusWidths(widths);
-            SetStatusStyles(styles);
-
-            for (int i = 0; i < count; i++)
-            {
-                SetStatusText(panels[i].Text, i);
-            }
-        }
-
-        /// <summary>
-        /// Returns number of the panels in the native control.
+        /// Returns number of the panels.
         /// </summary>
         /// <returns>
-        /// number of the panels in the native control if success;
-        /// <c>null</c> otherwise.
+        /// number of the panels.
         /// </returns>
-        public virtual int? GetFieldsCount()
+        public virtual int GetFieldsCount()
         {
-            if (!IsOk)
-                return null;
-            return Handler.GetFieldsCount();
+            return Panels.Count;
         }
 
         /// <summary>
-        /// Sets the status text for the specified panel in the native control.
+        /// Returns panel by index.
+        /// </summary>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns><see cref="StatusBarPanel"/> if found; <c>null</c> otherwise.</returns>
+        public virtual StatusBarPanel? GetField(int index)
+        {
+            if (index < 0 || index >= Panels.Count)
+                return null;
+
+            return Panels[index];
+        }
+
+        /// <summary>
+        /// Sets the status text for the specified panel.
         /// </summary>
         /// <param name="text">The text to be set. Use an empty string or <c>null</c>
         /// to clear the panel.</param>
@@ -250,39 +163,33 @@ namespace Alternet.UI
         /// The given text will replace the current text. The display of the status bar is
         /// updated immediately.
         /// </remarks>
-        /// <remarks>
-        /// If <see cref="PushStatusText"/> had been called before the new text will
-        /// also replace the last saved value to make sure that the next call to
-        /// <see cref="PopStatusText"/> doesn't restore the old value, which was overwritten
-        /// by the call to this function.
-        /// </remarks>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
         public virtual bool SetStatusText(string? text = null, int index = 0)
         {
             if (!IsOk)
                 return false;
+            var field = GetField(index);
+            if (field == null)
+                return false;
             text ??= string.Empty;
-            Handler.SetStatusText(text, index);
+            field.Text = text;
             return true;
         }
 
         /// <summary>
-        /// Gets the status text for the specified panel in the native control.
+        /// Gets the status text for the specified panel.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns>
         /// <see cref="string"/> with the status text if success; <c>null</c> otherwise.
         /// </returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
         public virtual string? GetStatusText(int index = 0)
         {
             if (!IsOk)
                 return null;
-            return Handler.GetStatusText(index);
+            var field = GetField(index);
+            if (field == null)
+                return null;
+            return field.Text;
         }
 
         /// <summary>
@@ -292,16 +199,16 @@ namespace Alternet.UI
         /// <param name="text">New panel status text.</param>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
         /// <seealso cref="PopStatusText"/>
         public virtual bool PushStatusText(string? text = null, int index = 0)
         {
             if (!IsOk)
                 return false;
+            var field = GetField(index);
+            if (field == null)
+                return false;
             text ??= string.Empty;
-            Handler.PushStatusText(text, index);
+            field.PushText(text);
             return true;
         }
 
@@ -311,29 +218,23 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
         /// <seealso cref="PushStatusText"/>
-        /// <remarks>
-        /// Notice that if <see cref="SetStatusText"/> had been called in the meanwhile,
-        /// <see cref="PopStatusText"/> will not change the text, i.e. it does not override
-        /// explicit changes to status text but only restores the saved text
-        /// if it hadn't been changed since.
-        /// </remarks>
         public virtual bool PopStatusText(int index = 0)
         {
             if (!IsOk)
                 return false;
-            Handler.PopStatusText(index);
+            var field = GetField(index);
+            if (field == null)
+                return false;
+            field.PopText();
             return true;
         }
 
         /// <summary>
-        /// Sets the widths of the panels in the native control.
+        /// Sets the widths of the panels.
         /// </summary>
-        /// <param name="widths">Contains an array of integers, each of which is either an
-        /// absolute status panel width in pixels if positive or indicates a variable width
+        /// <param name="widths">Contains an array of width, each of which is either an
+        /// absolute status panel width in dips if positive or indicates a variable width
         /// panel if negative. </param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <remarks>
@@ -341,7 +242,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <remarks>
         /// There are two types of panels: fixed widths and variable width panels. For the fixed
-        /// width panels you should specify their(constant) width in pixels. For the variable width
+        /// width panels you should specify their(constant) width in dips. For the variable width
         /// panels, specify a negative number which indicates how the panels should expand:
         /// the space left for all variable width panels is divided between them according
         /// to the absolute value of this number. A variable width panels with width
@@ -361,22 +262,27 @@ namespace Alternet.UI
         /// minus the sum of widths of the non-variable panels, divided by the number of
         /// variable panels.
         /// </remarks>
-        public virtual bool SetStatusWidths(int[] widths)
+        public virtual bool SetStatusWidths(float[] widths)
         {
             if (!IsOk || widths.Length == 0)
                 return false;
-            Handler.SetStatusWidths(widths);
+
+            for (int i = 0; i < widths.Length; i++)
+            {
+                var field = GetField(i);
+                if (field == null)
+                    return false;
+                field.Width = widths[i];
+            }
+
             return true;
         }
 
         /// <summary>
-        /// Sets the number of panels in the native control.
+        /// Sets the number of panels.
         /// </summary>
         /// <param name="count">New number of panels. Must be greater than zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
         /// <remarks>
         /// If <paramref name="count"/> is greater than the previous number of panels,
         /// then new panels with empty strings will be added to the status bar.
@@ -385,29 +291,32 @@ namespace Alternet.UI
         {
             if (!IsOk || count < 1)
                 return false;
-            Handler.SetFieldsCount(count);
+            Panels.SetCount(count, () =>
+            {
+                return Add(string.Empty);
+            });
             return true;
         }
 
         /// <summary>
-        /// Gets the width of the specified panel in the native control.
+        /// Gets the width of the specified panel.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns>
-        /// <see cref="int"/> with the panel width if success; <c>null</c> otherwise.
+        /// <see cref="float"/> with the panel width if success; <c>null</c> otherwise.
         /// </returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
-        public virtual int? GetStatusWidth(int index)
+        public virtual float? GetStatusWidth(int index)
         {
             if (!IsOk)
                 return null;
-            return Handler.GetStatusWidth(index);
+            var field = GetField(index);
+            if (field == null)
+                return null;
+            return field.Width;
         }
 
         /// <summary>
-        /// Gets the style of the specified panel in the native control.
+        /// Gets the style of the specified panel.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns></returns>
@@ -418,19 +327,18 @@ namespace Alternet.UI
         {
             if (!IsOk)
                 return null;
-            return Handler.GetStatusStyle(index);
+            var field = GetField(index);
+            if (field == null)
+                return null;
+            return field.Style;
         }
 
         /// <summary>
-        /// Sets the styles of the panels in the status line which can make panels appear
-        /// flat or raised instead of the standard sunken 3D border.
+        /// Sets the styles of the panels in the status bar.
         /// </summary>
         /// <param name="styles">Contains an array of <see cref="StatusBarPanelStyle"/> with
         /// the styles for each panel.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
         /// <remarks>
         /// Size of the <paramref name="styles"/> array must be equal to the number passed to
         /// <see cref="SetFieldsCount"/> the last time it was called.
@@ -439,28 +347,31 @@ namespace Alternet.UI
         {
             if (!IsOk || styles.Length == 0)
                 return false;
-            Handler.SetStatusStyles(styles);
+            for(int i = 0; i < styles.Length; i++)
+            {
+                var field = GetField(i);
+                if (field == null)
+                    return false;
+                field.Style = styles[i];
+            }
+
             return true;
         }
 
         /// <summary>
-        /// Gets the size and position of a panels's internal bounding rectangle in the
-        /// native control.
+        /// Gets the size and position of a panels's internal bounding rectangle.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
-        /// <returns><see cref="RectI"/> with the size and position of a panels's
+        /// <returns><see cref="RectD"/> with the size and position of a panels's
         /// internal bounding rectangle on success; <c>null</c> otherwise.</returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
-        public virtual RectI? GetFieldRect(int index)
+        public virtual RectD? GetFieldRect(int index)
         {
             if (!IsOk)
                 return null;
-            var result = Handler.GetFieldRect(index);
-            if (result == RectI.Empty)
+            var field = GetField(index);
+            if(field == null)
                 return null;
-            return result;
+            return field.GetRect();
         }
 
         /// <summary>
@@ -472,44 +383,10 @@ namespace Alternet.UI
         /// The real height may be bigger than the height specified here depending
         /// on the size of the font used by the status bar.
         /// </remarks>
-        public virtual bool SetMinHeight(int height)
+        public virtual bool SetMinHeight(float height)
         {
-            if (!IsOk)
-                return false;
-            Handler.SetMinHeight(height);
+            this.MinHeight = height;
             return true;
-        }
-
-        /// <summary>
-        /// Gets the horizontal border used when rendering the panel text inside the panel area.
-        /// </summary>
-        /// <returns><see cref="int"/> with the horizontal border on success;
-        /// <c>null</c> otherwise.</returns>
-        /// <remarks>
-        /// Note that the rect returned by <see cref="GetFieldRect"/> already accounts for
-        /// the presence of horizontal and vertical border returned by this function.
-        /// </remarks>
-        public virtual int? GetBorderX()
-        {
-            if (!IsOk)
-                return null;
-            return Handler.GetBorderX();
-        }
-
-        /// <summary>
-        /// Gets the vertical border used when rendering the panel text inside the panel area.
-        /// </summary>
-        /// <returns><see cref="int"/> with the vertical border on success;
-        /// <c>null</c> otherwise.</returns>
-        /// <remarks>
-        /// Note that the rect returned by <see cref="GetFieldRect"/> already accounts for
-        /// the presence of horizontal and vertical border returned by this function.
-        /// </remarks>
-        public virtual int? GetBorderY()
-        {
-            if (!IsOk)
-                return null;
-            return Handler.GetBorderY();
         }
 
         /// <summary>
@@ -526,7 +403,6 @@ namespace Alternet.UI
         protected virtual void OnItemInserted(object? sender, int index, StatusBarPanel item)
         {
             item.PropertyChanged += OnItemPropertyChanged;
-            ApplyPanels();
         }
 
         /// <inheritdoc/>
@@ -545,7 +421,6 @@ namespace Alternet.UI
         /// <param name="e">The event data associated with the property change.</param>
         protected virtual void OnItemPropertyChanged(object? sender, EventArgs e)
         {
-            ApplyPanels();
         }
 
         /// <summary>
@@ -562,7 +437,6 @@ namespace Alternet.UI
         protected virtual void OnItemRemoved(object? sender, int index, StatusBarPanel item)
         {
             item.PropertyChanged -= OnItemPropertyChanged;
-            ApplyPanels();
         }
     }
 }

@@ -123,13 +123,6 @@ namespace Alternet.UI
         IControlHandler CreateWindowHandler(Window window);
 
         /// <summary>
-        /// Creates <see cref="IStatusBarHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IStatusBarHandler CreateStatusBarHandler(StatusBar control);
-
-        /// <summary>
         /// Creates <see cref="IControlHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

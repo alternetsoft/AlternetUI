@@ -35,6 +35,7 @@ namespace Alternet.UI
         private WeakReferenceValue<Window> owner;
         private int? oldDisplay;
         private bool loadedCalled;
+        private AbstractControl? statusBar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -921,9 +922,9 @@ namespace Alternet.UI
         /// You can use this property to switch between complete status bar sets at run time.
         /// </remarks>
         [Browsable(false)]
-        public virtual DisposableObject? StatusBar
+        public virtual AbstractControl? StatusBar
         {
-            get => Handler.StatusBar;
+            get => statusBar;
 
             set
             {
@@ -933,7 +934,7 @@ namespace Alternet.UI
 
                 if (oldValue == value)
                     return;
-                Handler.StatusBar = value;
+                statusBar = value;
 
                 if (oldValue is not null)
                 {

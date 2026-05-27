@@ -1,13 +1,13 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
 {
     internal class WxWindowHandler : WxControlHandler, IWindowHandler
     {
-        private DisposableObject? statusBar;
         private WeakReferenceValue<DisposableObject> savedMenuRef = new();
 
         public override bool VisibleOnScreen
@@ -97,22 +97,6 @@ namespace Alternet.UI
             }
         }
 
-        public DisposableObject? StatusBar
-        {
-            get
-            {
-                return statusBar;
-            }
-
-            set
-            {
-                if (Control is null || StatusBar == value)
-                    return;
-                SetStatusBar(statusBar, value);
-                statusBar = value;
-            }
-        }
-
         /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
@@ -183,8 +167,6 @@ namespace Alternet.UI
                 {
                     savedMenuRef.Value = null;
                 }
-
-                SetStatusBar(statusBar, null);
             }
 
             base.OnBeforeHandleDestroyed();
@@ -194,66 +176,19 @@ namespace Alternet.UI
         {
             base.OnHandleCreated();
 
-            if (statusBar is null && savedMenuRef.Value is null)
+            if (savedMenuRef.Value is null)
                 return;
 
-            if (Control is not null)
-            {
-                Control.DoInsideLayout(() =>
+            Control?.DoInsideLayout(() =>
                 {
                     Control.SetMenu(savedMenuRef.Value, performLayout: true);
                     savedMenuRef.Value = null;
                 });
-
-                if(statusBar is null)
-                {
-                }
-                else
-                {
-                    SetStatusBar(null, statusBar);
-                }
-            }
         }
 
         internal override Native.Control CreateNativeControl()
         {
             return new NativeWindow((int)(Control?.GetWindowKind() ?? WindowKind.Control));
-        }
-
-        private void SetStatusBar(object? oldValue, object? value)
-        {
-            var nc = NativeControl;
-            
-            if (value is StatusBar asStatusBar)
-            {
-                if ((value as IDisposableObject)?.IsDisposed ?? false)
-                    throw new ObjectDisposedException(nameof(StatusBar));
-                if (asStatusBar.AttachedTo is not null && asStatusBar.AttachedTo != Control)
-                {
-                    throw new Exception("Object is already attached to the window");
-                }
-            }
-
-            if (oldValue is StatusBar asStatusBar2)
-            {
-                SetWindow(asStatusBar2, null);
-                var oldHandle = nc.WxStatusBar;
-                if (oldHandle != default)
-                    Native.WxStatusBarFactory.DeleteStatusBar(oldHandle);
-            }
-
-            if (value is StatusBar asStatusBar3)
-            {
-                SetWindow(asStatusBar3, Control);
-            }
-            else
-                nc.WxStatusBar = default;
-
-            void SetWindow(StatusBar sb, Window? window)
-            {
-                if (sb.Handler is WxStatusBarHandler handler)
-                    handler.AttachedTo = window;
-            }
         }
 
         public void SetIcon(IconSet? value)
@@ -273,9 +208,8 @@ namespace Alternet.UI
 
         protected override void DisposeManaged()
         {
-            if(Control is not null)
+            if (Control is not null)
                 MenuUtils.Factory?.SetMainMenu(Control, null);
-            SetStatusBar(statusBar, null);
             base.DisposeManaged();
         }
 

@@ -55,11 +55,6 @@ namespace Alternet.UI
         WindowState State { get; set; }
 
         /// <summary>
-        /// Gets or sets window status bar.
-        /// </summary>
-        DisposableObject? StatusBar { get; set; }
-
-        /// <summary>
         /// Gets a <see cref="Window"/> this handler provides the implementation for.
         /// </summary>
         new Window? Control { get; }
