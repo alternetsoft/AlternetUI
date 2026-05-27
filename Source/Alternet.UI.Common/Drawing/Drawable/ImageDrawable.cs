@@ -76,14 +76,47 @@ namespace Alternet.Drawing
         public ImageSet? DisabledImageSet { get; set; }
 
         /// <summary>
-        /// Gets whether or not to center this object vertically. Default is <c>true</c>.
+        /// Gets or sets horizontal alignment option that specifies how the image should be aligned within the available space.
+        /// This property is used when the image is smaller than the available space.
         /// </summary>
-        public bool CenterVert { get; set; } = true;
+        public HorizontalAlignment HorizontalAlignment { get; set; } = HorizontalAlignment.Center;
 
         /// <summary>
-        /// Gets whether or not to center this object horizontally. Default is <c>true</c>.
+        /// Gets or sets vertical alignment option that specifies how the image should be aligned within the available space.
+        /// This property is used when the image is smaller than the available space.
         /// </summary>
-        public bool CenterHorz { get; set; } = true;
+        public VerticalAlignment VerticalAlignment { get; set; } = VerticalAlignment.Center;
+
+        /// <summary>
+        /// Gets or sets whether to center this object vertically. Default is <c>true</c>.
+        /// This property is used when the image is smaller than the available space,
+        /// and it determines whether the image should be centered vertically or aligned to the top.
+        /// There is more advanced centering logic via the <see cref="VerticalAlignment"/>
+        /// and <see cref="HorizontalAlignment"/> properties.
+        /// </summary>
+        public bool CenterVert
+        {
+            get => VerticalAlignment == VerticalAlignment.Center;
+            set => VerticalAlignment = value ? VerticalAlignment.Center : VerticalAlignment.Top;
+        }
+
+        /// <summary>
+        /// Gets or sets whether to center this object horizontally. Default is <c>true</c>.
+        /// This property is used when the image is smaller than the available space,
+        /// and it determines whether the image should be centered horizontally or aligned to the left.
+        /// There is more advanced centering logic via the <see cref="VerticalAlignment"/>
+        /// and <see cref="HorizontalAlignment"/> properties.
+        /// </summary>
+        public bool CenterHorz
+        {
+            get => HorizontalAlignment == HorizontalAlignment.Center;
+            set => HorizontalAlignment = value ? HorizontalAlignment.Center : HorizontalAlignment.Left;
+        }
+
+        /// <summary>
+        /// Gets or sets whether image is aligned to the left-top of the available space.
+        /// </summary>
+        public bool IsLeftTopAligned => HorizontalAlignment == HorizontalAlignment.Left && VerticalAlignment == VerticalAlignment.Top;
 
         /// <summary>
         /// Gets whether or not to stretch this object.
@@ -204,19 +237,26 @@ namespace Alternet.Drawing
             if (Stretch)
             {
                 dc.DrawImage(image, Bounds);
+                return;
             }
-            else
+
+            if (IsLeftTopAligned)
             {
-                if (CenterHorzOrVert)
-                {
-                    var imageRect = image.BoundsDip(control);
-                    var destRect = Bounds;
-                    var centeredRect = imageRect.CenterIn(destRect, CenterHorz, CenterVert);
-                    dc.DrawImage(image, centeredRect.Location);
-                }
-                else
-                    dc.DrawImage(image, Location);
+                dc.DrawImage(image, Location);
+                return;
             }
+
+            var imageRect = image.BoundsDip(control);
+            var destRect = Bounds;
+
+            var alignedRect = AlignUtils.AlignRectInRect(
+                imageRect,
+                destRect,
+                HorizontalAlignment,
+                VerticalAlignment,
+                shrinkSize: false);
+
+            dc.DrawImage(image, alignedRect.Location);
         }
 
         /// <inheritdoc/>
