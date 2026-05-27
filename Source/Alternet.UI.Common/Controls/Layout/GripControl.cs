@@ -38,9 +38,6 @@ namespace Alternet.UI
         /// </summary>
         public GripControl()
         {
-            primitive.CenterHorz = false;
-            primitive.CenterVert = false;
-
             var styles = ControlStyles.AllPaintingInWmPaint
                 | ControlStyles.OptimizedDoubleBuffer
                 | ControlStyles.ResizeRedraw
@@ -53,6 +50,10 @@ namespace Alternet.UI
             this.SuggestedSize = new (DefaultSuggestedSize, DefaultSuggestedSize);
             this.Cursor = Cursors.SizeNWSE;
             Alignment = HVAlignment.BottomRight;
+
+            primitive.HorizontalAlignment = HorizontalAlignment.Right;
+            primitive.VerticalAlignment = VerticalAlignment.Bottom;
+
             this.TabStop = false;
             IsGraphicControl = true;
         }
@@ -211,63 +212,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether image is centered horizontally and vertically.
+        /// Gets or sets vertical alignment of the grip image.
+        /// This property is used when image is not stretched.
         /// </summary>
-        [Browsable(false)]
-        public virtual bool IsImageCentered
+        public virtual VerticalAlignment ImageVerticalAlignment
         {
             get
             {
-                return IsImageCenteredVert && IsImageCenteredHorz;
+                return primitive.VerticalAlignment;
             }
 
             set
             {
-                if (IsImageCentered == value)
+                if (primitive.VerticalAlignment == value)
                     return;
-                primitive.CenterHorz = value;
-                primitive.CenterVert = value;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets whether to center image vertically in the control rectangle.
-        /// Default is <c>true</c>. This property is used when image is not stretched.
-        /// </summary>
-        public virtual bool IsImageCenteredVert
-        {
-            get
-            {
-                return primitive.CenterVert;
-            }
-
-            set
-            {
-                if (primitive.CenterVert == value)
-                    return;
-                primitive.CenterVert = value;
+                primitive.VerticalAlignment = value;
                 if (ImageKind != GripImageKind.None)
                     Invalidate();
             }
         }
 
         /// <summary>
-        /// Gets or sets whether to center image horizontally in the control rectangle.
-        /// Default is <c>true</c>. This property is used when image is not stretched.
+        /// Gets or sets horizontal alignment of the grip image.
+        /// This property is used when image is not stretched.
         /// </summary>
-        public virtual bool IsImageCenteredHorz
+        public virtual HorizontalAlignment ImageHorizontalAlignment
         {
             get
             {
-                return primitive.CenterHorz;
+                return primitive.HorizontalAlignment;
             }
 
             set
             {
-                if (primitive.CenterHorz == value)
+                if (primitive.HorizontalAlignment == value)
                     return;
-                primitive.CenterHorz = value;
+                primitive.HorizontalAlignment = value;
                 if (ImageKind != GripImageKind.None)
                     Invalidate();
             }
@@ -449,6 +429,8 @@ namespace Alternet.UI
             Cursor = Cursors.SizeNESW;
             InvertWidthDelta = true;
             Alignment = HVAlignment.BottomLeft;
+            primitive.HorizontalAlignment = HorizontalAlignment.Left;
+            primitive.VerticalAlignment = VerticalAlignment.Bottom;
             SizeAction = GripSizeAction.ChangeWidthAndHeight;
             MoveAction = GripMoveAction.ChangeLeft;
             InvertLeftDelta = true;
