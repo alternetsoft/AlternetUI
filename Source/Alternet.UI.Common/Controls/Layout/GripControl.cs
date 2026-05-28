@@ -377,6 +377,12 @@ namespace Alternet.UI
         /// </summary>
         public virtual AbstractControl? Target { get; set; }
 
+        /// <summary>
+        /// Gets or sets the function that returns the target control.
+        /// If null, the <see cref="Target"/> property is used to determine the target control.
+        /// </summary>
+        public virtual Func<AbstractControl?>? TargetProvider { get; set; }
+
         internal ImageDrawable Primitive => primitive;
 
         /// <inheritdoc/>
@@ -624,6 +630,13 @@ namespace Alternet.UI
         /// <returns>The target control to be resized, or the top-level parent if the Target property is not set or invalid.</returns>
         protected virtual AbstractControl? GetTarget()
         {
+            if (TargetProvider != null)
+            {
+                var target = TargetProvider();
+                if (target != null && !target.DisposingOrDisposed)
+                    return target;
+            }
+
             if (Target != null && !Target.DisposingOrDisposed)
                 return Target;
             else
