@@ -104,10 +104,8 @@ namespace Alternet.UI
         /// Occurs before the window is closed.
         /// </summary>
         /// <remarks>
-        /// The <see cref="Closing"/> event occurs as the window is being closed. When a
-        /// window is closed, it is disposed,
-        /// releasing all resources associated with the form. If you cancel this event, the
-        /// window remains opened.
+        /// The <see cref="Closing"/> event occurs as the window is being closed.
+        /// If you cancel this event, the window remains opened.
         /// To cancel the closure of a window, set the <see cref="CancelEventArgs.Cancel"/>
         /// property of the
         /// <see cref="WindowClosingEventArgs"/> passed to your event handler to <c>true</c>.
@@ -1282,6 +1280,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            Show();
             Handler.Activate();
         }
 
@@ -1307,18 +1306,23 @@ namespace Alternet.UI
         /// <summary>
         /// Closes the window.
         /// </summary>
+        /// <param name="action">Action which is performed when window is closed.
+        /// If null, <see cref="CloseAction"/> is used.</param>
         /// <remarks>
-        /// When a window is closed, all resources created within the object are closed and the
-        /// window is disposed.
+        /// <para>
         /// You can prevent the closing of a window at run time by handling the
         /// <see cref="Window.Closing"/> event and
         /// setting the <c>Cancel</c> property of the <see cref="CancelEventArgs"/> passed as
         /// a parameter to your event handler.
+        /// </para>
+        /// <para>
         /// If the window you are closing is the last open window of your application,
         /// your application ends.
+        /// </para>
+        /// <para>
         /// The window is not disposed on close when you have displayed the
-        /// window as a modal dialog.
-        /// In this case, you will need to dispose it manually.
+        /// window as a modal dialog. In this case, you will need to dispose it manually.
+        /// </para>
         /// </remarks>
         public virtual void Close(WindowCloseAction? action)
         {
@@ -1341,7 +1345,8 @@ namespace Alternet.UI
                         return;
                     ignoreClosingEvent = true;
                     Visible = false;
-                    Handler.Close();
+                    RaiseClosed();
+                    ignoreClosedEvent = true;
                     break;
                 case WindowCloseAction.Hide:
                     if (!CanClose(true))

@@ -63,6 +63,36 @@ namespace WindowPropertiesSample
             {
                 PropInstanceAndValue.PopPropertiesMultiple(SavedEnabledProperties);
             });
+
+            panelSettings.AddLinkLabel("Close test window (hide)", () =>
+            {
+                testWindow?.Close(WindowCloseAction.Hide);
+            });
+
+            panelSettings.AddLinkLabel("Close test window (dispose)", () =>
+            {
+                testWindow?.Close(WindowCloseAction.Dispose);
+            });
+
+            panelSettings.AddLinkLabel("Close test window (none)", () =>
+            {
+                testWindow?.Close(WindowCloseAction.None);
+            });
+
+            panelSettings.AddLinkLabel("Show test window", () =>
+            {
+                testWindow?.Show();
+            });
+
+            panelSettings.AddLinkLabel("Activate test window", () =>
+            {
+                testWindow?.Activate();
+            });
+
+            panelSettings.AddLinkLabel("Send dispose to test window", () =>
+            {
+                testWindow?.SendDispose();
+            });
         }
 
         internal string GetIconUrl(string name)
@@ -123,7 +153,7 @@ namespace WindowPropertiesSample
 
         private void ShowTestWindow()
         {
-            if (testWindow == null)
+            if (testWindow is null)
                 throw new InvalidOperationException();
 
             UpdateWindowState();
@@ -148,8 +178,6 @@ namespace WindowPropertiesSample
             dialogWindow.ShowDialogAsync(this, (result) =>
             {
                 App.Log("Modal Result: " + (result ? "Accepted" : "Canceled"));
-                OnWindowClosed();
-
                 dialogWindow.SendDispose();
             });
         }
@@ -214,6 +242,7 @@ namespace WindowPropertiesSample
             testWindow.Disposed += (s, e) =>
             {
                 App.Log("Test Window: Disposed.");
+                OnWindowClosed();
             };
 
             PanelOkCancelButtons buttons = new()
@@ -358,8 +387,6 @@ namespace WindowPropertiesSample
                 throw new InvalidOperationException();
             if (testWindow.Modal)
                 return;
-
-            OnWindowClosed();
         }
 
         private void OnWindowClosed()
