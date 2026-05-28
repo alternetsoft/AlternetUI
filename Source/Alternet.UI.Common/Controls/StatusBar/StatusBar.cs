@@ -52,8 +52,6 @@ namespace Alternet.UI
 
         private readonly string statusBarPanelIdPropName;
 
-        private TextEllipsisType textEllipsis;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
         /// </summary>
@@ -136,27 +134,6 @@ namespace Alternet.UI
                 {
                     sizingGrip.Visible = value;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets status texts replacement method when the text widths exceed the
-        /// container's widths.
-        /// </summary>
-        public virtual TextEllipsisType TextEllipsis
-        {
-            get
-            {
-                return textEllipsis;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (TextEllipsis == value)
-                    return;
-                textEllipsis = value;
             }
         }
 
@@ -502,6 +479,11 @@ namespace Alternet.UI
 
             AbstractControl panelControl;
 
+            if (index == 0)
+            {
+                panelControl = InsertTextCore(0, item.Text);
+            }
+            else
             if (afterPanelControl is null)
             {
                 panelControl = AddTextCore(item.Text);

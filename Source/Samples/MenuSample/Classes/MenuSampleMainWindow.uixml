@@ -170,15 +170,13 @@
       <HorizontalStackPanel Margin="10" Name="statusPanel" Title="StatusBar">
         <VerticalStackPanel>
           <Button Text="Add item" IsTextLocalized="true" Name="statusAddButton" Margin="0,0,0,10" />
-          <Button Text="Remove item" IsTextLocalized="true" Name="statusRemoveButton" Margin="0,0,0,10" />
-          <Button
-            Text="Toggle Grip" IsTextLocalized="true"
-            Name="showSizingGripButton"
-            Click="ShowSizingGripButton_Click"
-            Margin="0,0,0,10"/>
+          <Button Text="Add separator" IsTextLocalized="true" Name="statusAddSeparatorButton" Margin="0,0,0,10" />
+          <Button Text="Add resizable item" IsTextLocalized="true" Name="statusAddResizableButton" Margin="0,0,0,10" />
+          <Button Text="Add custom item" IsTextLocalized="true" Name="statusAddCustomButton" Margin="0,0,0,10" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
+          <Button Text="Remove" IsTextLocalized="true" Name="statusRemoveButton" Margin="0,0,0,10" />
           <Button Text="Clear" Margin="0,0,0,10" IsTextLocalized="true" Name="statusClearButton"/>
           <Button Text="Null" Margin="0,0,0,10" IsTextLocalized="true" Name="statusNullButton"/>
           <Button Text="Recreate" Margin="0,0,0,10" IsTextLocalized="true" Name="statusRecreateButton"/>
@@ -186,6 +184,11 @@
 
         <VerticalStackPanel Margin="5,0,0,0">
           <Button Text="Edit..." Margin="0,0,0,10" Name="statusEditButton" IsTextLocalized="true"/>
+          <Button
+            Text="Toggle Grip" IsTextLocalized="true"
+            Name="showSizingGripButton"
+            Click="ShowSizingGripButton_Click"
+            Margin="0,0,0,10"/>
         </VerticalStackPanel>
       </HorizontalStackPanel>
 

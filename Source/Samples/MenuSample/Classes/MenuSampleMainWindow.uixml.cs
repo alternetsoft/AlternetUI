@@ -159,6 +159,90 @@ namespace MenuSample
             statusAddButton.Click += StatusAddButton_Click;
             statusRemoveButton.Click += StatusRemoveButton_Click;
             statusEditButton.Click += StatusEditButton_Click;
+            statusAddSeparatorButton.Click += StatusAddSeparatorButton_Click;
+            statusAddResizableButton.ClickAction = () =>
+            {
+                StatusBar ??= new StatusBar();
+                var panel = GetStatusBar()?.Add("This is a resizable item with long text");
+                var control = panel?.Control;
+
+                if (control != null && panel != null)
+                {
+                    panel.Style = StatusBarPanelStyle.Normal;
+                    control.HorizontalAlignment = HorizontalAlignment.Fill;
+                }
+            };
+
+            var menu = new ContextMenu();
+
+            menu.Add("Add item at the right", () =>
+            {
+                StatusBar ??= new StatusBar();
+                var panel = GetStatusBar()?.Add("AtRight");
+                var control = panel?.Control;
+
+                if (control != null)
+                {
+                    control.HorizontalAlignment = HorizontalAlignment.Right;
+                }
+            });
+
+            menu.Add("Add selector", () =>
+            {
+                StatusBar ??= new StatusBar();
+
+                ListPicker control = new();
+
+                control.Add("Item 1");
+                control.Add("Item 2");
+                control.Add("Item 3");
+                control.Add("Item 4");
+                control.Add("Item 5");
+                control.Add("Item 6");
+                control.Add("Item 7");
+                control.Add("Item 8");
+
+                control.Value = "Item 4";
+
+                control.VerticalAlignment = VerticalAlignment.Center;
+                control.SuggestedWidth = 100;
+
+                GetStatusBar()?.AddControl(control);
+            });
+
+            menu.Add("Add image", () =>
+            {
+                StatusBar ??= new StatusBar();
+                GetStatusBar()?.AddPicture(KnownColorSvgImages.ImgError);
+            });
+
+            menu.Add("Add progress bar", () =>
+            {
+                StatusBar ??= new StatusBar();
+                StdProgressBar progressBar = new()
+                {
+                    Value = 50,
+                    Minimum = 0,
+                    Maximum = 100,
+                    MinHeight = 16,
+                    AutoSize = false,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    SuggestedWidth = 100,
+                    SuggestedHeight = 16,
+                };
+
+                GetStatusBar()?.AddControl(progressBar);
+            });
+
+            menu.Add("Add speed button", () =>
+            {
+                GetStatusBar()?.AddSpeedBtnCore(null, KnownSvgImages.ImgArrowUp, "Sample tooltip", (s, e) =>
+                {
+                    App.Log("Speed button clicked");
+                });
+            });
+
+            statusAddCustomButton.DropDownMenu = menu;
 
             eventsListBox.ContextMenu.Required();
 
@@ -213,6 +297,12 @@ namespace MenuSample
         {
             StatusBar ??= new StatusBar();
             GetStatusBar()?.Add($"Panel {GenItemIndex()}");
+        }
+
+        private void StatusAddSeparatorButton_Click(object? sender, System.EventArgs e)
+        {
+            StatusBar ??= new StatusBar();
+            GetStatusBar()?.Add("|");
         }
 
         private void StatusRemoveButton_Click(object? sender, System.EventArgs e)
