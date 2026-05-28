@@ -1273,12 +1273,25 @@ namespace Alternet.UI
         /// for the added item.</returns>
         public virtual AbstractControl AddTextCore(string? text = null)
         {
+            var label = InsertTextCore(Children.Count, text);
+            return label;
+        }
+
+        /// <summary>
+        /// Inserts static text to the control at the specified index.
+        /// </summary>
+        /// <param name="index">The index at which to insert the text.</param>
+        /// <param name="text">The text to insert.</param>
+        /// <returns><see cref="AbstractControl"/> representing the inserted text.</returns>
+        public virtual AbstractControl InsertTextCore(int index, string? text = null)
+        {
             var label = CreateToolLabel();
             label.VerticalAlignment = UI.VerticalAlignment.Center;
             label.Text = text ?? string.Empty;
             label.Margin = DefaultTextMargin;
-            label.Parent = this;
             label.Click += RaiseToolClick;
+
+            Children.Insert(index, label);
 
             return label;
         }
@@ -2574,11 +2587,22 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="target">The target control which is being resized by the sizing grip.</param>
         /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
-        public virtual GripControl AddSizingGrip(AbstractControl target, GripControlKind kind = GripControlKind.SizeGripRight)
+        public virtual GripControl AddSizingGrip(AbstractControl? target, GripControlKind kind = GripControlKind.SizeGripRight)
+        {
+            return AddSizingGrip(() => target, kind);
+        }
+
+        /// <summary>
+        /// Adds a sizing grip to the toolbar, allowing users to resize the toolbar by dragging the grip.
+        /// </summary>
+        /// <param name="targetProvider">A function that provides the target control which is being resized by the sizing grip.</param>
+        /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
+        /// <returns>The newly created <see cref="GripControl"/> instance.</returns>
+        public virtual GripControl AddSizingGrip(Func<AbstractControl?>? targetProvider, GripControlKind kind = GripControlKind.SizeGripRight)
         {
             var sizingGrip = new GripControl()
             {
-                Target = target,
+                TargetProvider = targetProvider,
             };
 
             switch (kind)
@@ -2783,7 +2807,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates control for use in the toolbar as a label.
-        /// Override to create customized label controls.
+        /// Override to create customized label controls. By default returns a new instance of <see cref="Label"/> class.
         /// </summary>
         /// <returns></returns>
         protected virtual AbstractControl CreateToolLabel()
