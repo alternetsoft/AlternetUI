@@ -115,7 +115,13 @@ namespace Alternet.UI
         public T2? GetAttribute<T2>(TKey id)
             where T2 : TValue
         {
-            return (T2?)GetAttribute(id);
+            if (TryGetValue(id, out var result))
+            {
+                if (result is T2 res)
+                    return res;
+            }
+
+            return default;
         }
 
         /// <inheritdoc/>
