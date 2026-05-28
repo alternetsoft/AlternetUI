@@ -869,8 +869,17 @@ namespace Alternet.UI
             childControl.OnRemovedFromParent(this);
 
             RaiseNotifications((n) => n.AfterChildRemoved(this, childControl));
-            if (childControl.Visible && !childControl.IgnoreLayout)
-                PerformLayout();
+            if (childControl.Visible)
+            {
+                if (!childControl.IgnoreLayout)
+                {
+                    PerformLayoutAndInvalidate();
+                }
+                else
+                {
+                    Invalidate();
+                }
+            }
         }
 
         /// <summary>
