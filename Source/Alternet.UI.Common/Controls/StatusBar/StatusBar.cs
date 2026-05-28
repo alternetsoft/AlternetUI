@@ -8,7 +8,10 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a control that displays application status information.
+    /// Represents a control that is typically used to display information about the current
+    /// state of the application, such as the status of a document, the position of the cursor, or other contextual information.
+    /// It is derived from the <see cref="ToolBar"/> class and can contain not only simple text panels but also other types of controls,
+    /// such as speed buttons, images, combo boxes, progress bars, and other interactive elements.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
     public partial class StatusBar : ToolBar
@@ -17,6 +20,18 @@ namespace Alternet.UI
         /// Represents the height, in dips, of the Visual Studio status bar.
         /// </summary>
         public const float VisualStudioStatusBarHeight = 28;
+
+        /// <summary>
+        /// Gets or sets the padding of the panel controls in case the panel style is set to <see cref="StatusBarPanelStyle.Normal"/>
+        /// and panel has a border.
+        /// </summary>
+        public static Thickness DefaultNormalPanelPadding { get; set; } = new Thickness(4, 2);
+        
+        /// <summary>
+        /// Gets or sets the padding of the panel controls in case the panel style is set to <see cref="StatusBarPanelStyle.Flat"/>
+        /// and the panel has no border.
+        /// </summary>
+        public static Thickness DefaultFlatPanelPadding { get; set; } = new Thickness(2, 2);
 
         /// <summary>
         /// Gets or sets the default minimum height of the status bar.
@@ -500,8 +515,39 @@ namespace Alternet.UI
             }
 
             panelControl.CustomAttr.SetAttribute(statusBarPanelIdPropName, item.UniqueId);
-            panelControl.SuggestedWidth = item.Width;
-            panelControl.MinWidth = item.MinWidth;
+            UpdatePanelControl(item, panelControl);
+        }
+
+        /// <summary>
+        /// Called when property of the item in the <see cref="Panels"/> was changed.
+        /// </summary>
+        /// <param name="panel">The <see cref="StatusBarPanel"/> instance whose property changed.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> associated with the panel.</param>
+        protected virtual bool UpdatePanelControl(StatusBarPanel? panel, AbstractControl? control = null)
+        {
+            if (panel is null)
+                return false;
+
+            control ??= GetFieldControl(panel);
+
+            if (control == null)
+                return false;
+
+            control.Text = panel.Text;
+            control.SuggestedWidth = panel.Width;
+            control.MinWidth = panel.MinWidth;
+            control.HasBorder = panel.Style == StatusBarPanelStyle.Normal;
+
+            if (panel.Style == StatusBarPanelStyle.Normal)
+            {
+                control.Padding = DefaultNormalPanelPadding;
+            }
+            else
+            {
+                control.Padding = DefaultFlatPanelPadding;
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>
@@ -525,6 +571,7 @@ namespace Alternet.UI
         /// <param name="e">The event data associated with the property change.</param>
         protected virtual void OnItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
+            UpdatePanelControl(sender as StatusBarPanel);
         }
 
         /// <summary>

@@ -132,13 +132,6 @@ namespace Alternet.UI
                     return;
                 width = value;
 
-                var control = Control;
-
-                if (control is not null)
-                {
-                    control.SuggestedWidth = width;
-                }
-
                 WidthChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(Width));
             }
@@ -160,13 +153,6 @@ namespace Alternet.UI
                     return;
                 minWidth = value;
 
-                var control = Control;
-
-                if (control is not null)
-                {
-                    control.MinWidth = minWidth;
-                }
-
                 MinWidthChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(MinWidth));
             }
@@ -187,12 +173,6 @@ namespace Alternet.UI
                 if (style == value)
                     return;
                 style = value;
-
-                var control = Control;
-
-                if (control is not null)
-                {
-                }
 
                 StyleChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(Style));
@@ -246,6 +226,7 @@ namespace Alternet.UI
             text = item.Text;
             width = item.Width;
             style = item.Style;
+            minWidth = item.MinWidth;
             Tag = item.Tag;
             RaisePropertyChanged();
         }
