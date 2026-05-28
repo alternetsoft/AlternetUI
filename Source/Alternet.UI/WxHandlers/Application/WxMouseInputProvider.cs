@@ -109,7 +109,7 @@ namespace Alternet.UI
                     if (nativeHoveredHandler.NativeControl.NativePointer == targetControlPointer)
                     {
                         newHoveredControl = hoveredControl;
-                        return hoveredControl;
+                        return newHoveredControl;
                     }
                 }
 
