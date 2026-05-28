@@ -15,14 +15,15 @@ namespace Alternet.UI
     {
         private readonly BaseConcurrentStack<string> textStack = new();
         private string text = string.Empty;
-        private float width = -1;
+        private float width = float.NaN;
         private StatusBarPanelStyle style = StatusBarPanelStyle.Flat;
+        private StatusBar? statusBar = null;
+        private float minWidth;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='StatusBarPanel'/> class.
         /// </summary>
         public StatusBarPanel()
-            : this(string.Empty)
         {
         }
 
@@ -31,6 +32,7 @@ namespace Alternet.UI
         /// specified text for the status bar item.
         /// </summary>
         public StatusBarPanel(string text)
+            : this()
         {
             this.text = text;
         }
@@ -46,9 +48,43 @@ namespace Alternet.UI
         public event EventHandler? WidthChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="MinWidth"/> property changes.
+        /// </summary>
+        public event EventHandler? MinWidthChanged;
+
+        /// <summary>
         /// Occurs when the <see cref="Style"/> property changes.
         /// </summary>
         public event EventHandler? StyleChanged;
+
+        /// <summary>
+        /// Gets the <see cref="StatusBar"/> that contains this panel.
+        /// </summary>
+        [Browsable(false)]
+        public StatusBar? StatusBar
+        {
+            get => statusBar;
+        
+            internal set
+            {
+                if (statusBar != value)
+                {
+                    statusBar = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the control in which the panel is displayed.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl? Control
+        {
+            get
+            {
+                return statusBar?.GetFieldControl(this);
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating the text displayed in the status bar panel.
@@ -66,13 +102,18 @@ namespace Alternet.UI
                     return;
 
                 text = value;
+
+                Control?.SetText(text);
                 TextChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(Text));
             }
         }
 
         /// <summary>
-        /// Gets or sets width of the status bar panel.
+        /// Gets or sets width of the status bar panel. By default, the width is determined by the content of the panel.
+        /// When this property is changed, it's value is assigned to the <see cref="AbstractControl.SuggestedWidth"/>
+        /// property of the control in which the panel is displayed. If you want to set the width of the panel
+        /// to be determined by the content, set this property to <see cref="float.NaN"/>.
         /// </summary>
         /// <remarks>
         /// See more details in <see cref="StatusBar.SetStatusWidths"/> on how to define
@@ -90,8 +131,44 @@ namespace Alternet.UI
                 if (width == value)
                     return;
                 width = value;
+
+                var control = Control;
+
+                if (control is not null)
+                {
+                    control.SuggestedWidth = width;
+                }
+
                 WidthChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(Width));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the minimal width of the status bar panel.
+        /// </summary>
+        public virtual float MinWidth
+        {
+            get
+            {
+                return minWidth;
+            }
+
+            set
+            {
+                if (minWidth == value)
+                    return;
+                minWidth = value;
+
+                var control = Control;
+
+                if (control is not null)
+                {
+                    control.MinWidth = minWidth;
+                }
+
+                MinWidthChanged?.Invoke(this, EventArgs.Empty);
+                RaisePropertyChanged(nameof(MinWidth));
             }
         }
 
@@ -110,6 +187,13 @@ namespace Alternet.UI
                 if (style == value)
                     return;
                 style = value;
+
+                var control = Control;
+
+                if (control is not null)
+                {
+                }
+
                 StyleChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(Style));
             }

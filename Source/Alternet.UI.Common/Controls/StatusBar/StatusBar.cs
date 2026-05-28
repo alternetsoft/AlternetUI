@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a status bar control.
+    /// Represents a control that displays application status information.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
     public partial class StatusBar : ToolBar
@@ -16,8 +16,21 @@ namespace Alternet.UI
         /// <summary>
         /// Represents the height, in dips, of the Visual Studio status bar.
         /// </summary>
-        public const int VisualStudioStatusBarHeight = 28;
-        private bool sizingGripVisible;
+        public const float VisualStudioStatusBarHeight = 28;
+
+        /// <summary>
+        /// Gets or sets the default minimum height of the status bar.
+        /// </summary>
+        public static float DefaultMinHeight { get; set; } = VisualStudioStatusBarHeight;
+
+        /// <summary>
+        /// Gets or sets the default background color of the status bar.
+        /// </summary>
+        public static LightDarkColor DefaultBackgroundColor { get; set; }
+            = new LightDarkColor(light: Color.FromArgb(108, 108, 108), dark:Color.FromArgb(20, 20, 20));
+
+        private readonly string statusBarPanelIdPropName;
+
         private TextEllipsisType textEllipsis;
 
         /// <summary>
@@ -27,6 +40,14 @@ namespace Alternet.UI
         {
             Panels.ItemInserted += OnItemInserted;
             Panels.ItemRemoved += OnItemRemoved;
+            MinHeight = DefaultMinHeight;
+            statusBarPanelIdPropName =  AttributesFactory.GenUniqueAttributeName("StatusBarPanelId");
+
+            ParentBackColor = false;
+            ParentForeColor = false;
+            BackgroundColor = DefaultBackgroundColor.Current;
+            ForegroundColor = DefaultColors.ControlForeColor.Current;
+            SizingGripVisible = true;
         }
 
         /// <summary>
@@ -54,6 +75,19 @@ namespace Alternet.UI
         public virtual BaseCollection<StatusBarPanel> Panels { get; } = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
+        /// Gets a sizing grip that allows the user to resize the parent form.
+        /// </summary>
+        [Browsable(false)]
+        public GripControl? SizingGrip
+        {
+            get
+            {
+                var result = FirstChildOfType<GripControl>();
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether a sizing grip is displayed in the
         /// lower-right corner of the control.
         /// </summary>
@@ -61,16 +95,26 @@ namespace Alternet.UI
         {
             get
             {
-                return sizingGripVisible;
+                return SizingGrip?.Visible ?? false;
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                if (SizingGripVisible == value)
-                    return;
-                sizingGripVisible = value;
+                var sizingGrip = SizingGrip;
+
+                if (sizingGrip is null)
+                {
+                    if (value)
+                    {
+                        AddSizingGrip(() => Parent);
+                    }
+                }
+                else
+                {
+                    sizingGrip.Visible = value;
+                }
             }
         }
 
@@ -121,7 +165,7 @@ namespace Alternet.UI
         /// Adds new item to <see cref="Panels"/>.
         /// </summary>
         /// <param name="text">The text displayed in the status bar panel.</param>
-        public virtual StatusBarPanel Add(string text)
+        public StatusBarPanel Add(string text)
         {
             var result = new StatusBarPanel(text);
             Panels.Add(result);
@@ -134,7 +178,7 @@ namespace Alternet.UI
         /// <returns>
         /// number of the panels.
         /// </returns>
-        public virtual int GetFieldsCount()
+        public int GetFieldsCount()
         {
             return Panels.Count;
         }
@@ -144,7 +188,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><see cref="StatusBarPanel"/> if found; <c>null</c> otherwise.</returns>
-        public virtual StatusBarPanel? GetField(int index)
+        public StatusBarPanel? GetField(int index)
         {
             if (index < 0 || index >= Panels.Count)
                 return null;
@@ -163,7 +207,7 @@ namespace Alternet.UI
         /// The given text will replace the current text. The display of the status bar is
         /// updated immediately.
         /// </remarks>
-        public virtual bool SetStatusText(string? text = null, int index = 0)
+        public bool SetStatusText(string? text = null, int index = 0)
         {
             if (!IsOk)
                 return false;
@@ -182,7 +226,7 @@ namespace Alternet.UI
         /// <returns>
         /// <see cref="string"/> with the status text if success; <c>null</c> otherwise.
         /// </returns>
-        public virtual string? GetStatusText(int index = 0)
+        public string? GetStatusText(int index = 0)
         {
             if (!IsOk)
                 return null;
@@ -200,7 +244,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <seealso cref="PopStatusText"/>
-        public virtual bool PushStatusText(string? text = null, int index = 0)
+        public bool PushStatusText(string? text = null, int index = 0)
         {
             if (!IsOk)
                 return false;
@@ -219,7 +263,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <seealso cref="PushStatusText"/>
-        public virtual bool PopStatusText(int index = 0)
+        public bool PopStatusText(int index = 0)
         {
             if (!IsOk)
                 return false;
@@ -233,36 +277,14 @@ namespace Alternet.UI
         /// <summary>
         /// Sets the widths of the panels.
         /// </summary>
-        /// <param name="widths">Contains an array of width, each of which is either an
-        /// absolute status panel width in dips if positive or indicates a variable width
-        /// panel if negative. </param>
+        /// <param name="widths">Contains an array of width, each of which is an
+        /// absolute status panel width in dips.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
-        /// <remarks>
-        /// There are two types of panels: fixed widths and variable width panels. For the fixed
-        /// width panels you should specify their(constant) width in dips. For the variable width
-        /// panels, specify a negative number which indicates how the panels should expand:
-        /// the space left for all variable width panels is divided between them according
-        /// to the absolute value of this number. A variable width panels with width
-        /// of (-2) gets twice as much of it as a panels with width (-1) and so on.
-        /// </remarks>
-        /// <remarks>
-        /// For example, to create one fixed width panels of width 100 in the right part
-        /// of the status bar and two more panels which get 66% and 33% of the
-        /// remaining space correspondingly, you should use an array containing (-2), (-1) and 100.
-        /// </remarks>
         /// <remarks>
         /// Size of the <paramref name="widths"/> array must be equal to the number passed to
         /// <see cref="SetFieldsCount"/> the last time it was called.
         /// </remarks>
-        /// <remarks>
-        /// The widths of the variable panels are calculated from the total width of all panels,
-        /// minus the sum of widths of the non-variable panels, divided by the number of
-        /// variable panels.
-        /// </remarks>
-        public virtual bool SetStatusWidths(float[] widths)
+        public bool SetStatusWidths(float[] widths)
         {
             if (!IsOk || widths.Length == 0)
                 return false;
@@ -287,7 +309,7 @@ namespace Alternet.UI
         /// If <paramref name="count"/> is greater than the previous number of panels,
         /// then new panels with empty strings will be added to the status bar.
         /// </remarks>
-        public virtual bool SetFieldsCount(int count)
+        public bool SetFieldsCount(int count)
         {
             if (!IsOk || count < 1)
                 return false;
@@ -305,7 +327,7 @@ namespace Alternet.UI
         /// <returns>
         /// <see cref="float"/> with the panel width if success; <c>null</c> otherwise.
         /// </returns>
-        public virtual float? GetStatusWidth(int index)
+        public float? GetStatusWidth(int index)
         {
             if (!IsOk)
                 return null;
@@ -323,7 +345,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
         /// </remarks>
-        public virtual StatusBarPanelStyle? GetStatusStyle(int index)
+        public StatusBarPanelStyle? GetStatusStyle(int index)
         {
             if (!IsOk)
                 return null;
@@ -343,7 +365,7 @@ namespace Alternet.UI
         /// Size of the <paramref name="styles"/> array must be equal to the number passed to
         /// <see cref="SetFieldsCount"/> the last time it was called.
         /// </remarks>
-        public virtual bool SetStatusStyles(StatusBarPanelStyle[] styles)
+        public bool SetStatusStyles(StatusBarPanelStyle[] styles)
         {
             if (!IsOk || styles.Length == 0)
                 return false;
@@ -364,7 +386,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><see cref="RectD"/> with the size and position of a panels's
         /// internal bounding rectangle on success; <c>null</c> otherwise.</returns>
-        public virtual RectD? GetFieldRect(int index)
+        public RectD? GetFieldRect(int index)
         {
             if (!IsOk)
                 return null;
@@ -383,7 +405,7 @@ namespace Alternet.UI
         /// The real height may be bigger than the height specified here depending
         /// on the size of the font used by the status bar.
         /// </remarks>
-        public virtual bool SetMinHeight(float height)
+        public bool SetMinHeight(float height)
         {
             this.MinHeight = height;
             return true;
@@ -392,22 +414,104 @@ namespace Alternet.UI
         /// <summary>
         /// Clears <see cref="Panels"/>.
         /// </summary>
-        public virtual void Clear()
+        public void Clear()
         {
             Panels.Clear();
         }
 
         /// <summary>
+        /// Sets colors used in the control to the dark theme.
+        /// </summary>
+        public virtual void SetColorThemeToDark()
+        {
+            DoInsideUpdate(() =>
+            {
+                BackgroundColor = DefaultBackgroundColor.Dark;
+                ForegroundColor = DefaultColors.ControlForeColor.Dark;
+            });
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the light theme.
+        /// </summary>
+        public virtual void SetColorThemeToLight()
+        {
+            DoInsideUpdate(() =>
+            {
+                BackgroundColor = DefaultBackgroundColor.Light;
+                ForegroundColor = DefaultColors.ControlForeColor.Light;
+            });
+        }
+
+        /// <summary>
+        /// Gets control used to display the status bar panel.
+        /// </summary>
+        /// <param name="panel">The <see cref="StatusBarPanel"/> for which to get the control.</param>
+        /// <returns>The <see cref="AbstractControl"/> used to display the panel, or <c>null</c> if not found.</returns>
+        public AbstractControl? GetFieldControl(StatusBarPanel? panel)
+        {
+            if (!IsOk || !HasChildren || panel is null)
+                return null;
+
+            foreach (var child in Children)
+            {
+                var panelId = child.CustomAttr.GetAttribute<ObjectUniqueId>(statusBarPanelIdPropName);
+                if (panelId == panel.UniqueId)
+                    return child;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Called when item was inserted in the <see cref="Panels"/>.
         /// </summary>
+        /// <param name="sender">The source of the event, typically the collection that raised the event.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="index">The zero-based index at which the item was inserted.</param>
+        /// <param name="item">The <see cref="StatusBarPanel"/> instance that was inserted.
+        /// This parameter is never <see langword="null"/>.</param>
         protected virtual void OnItemInserted(object? sender, int index, StatusBarPanel item)
         {
             item.PropertyChanged += OnItemPropertyChanged;
+            item.StatusBar = this;
+
+            var afterPanel = GetField(index - 1);
+            var afterPanelControl = GetFieldControl(afterPanel);
+
+            AbstractControl panelControl;
+
+            if (afterPanelControl is null)
+            {
+                panelControl = AddTextCore(item.Text);
+            }
+            else
+            {
+                var panelControlIndex = Children.IndexOf(afterPanelControl);
+
+                if (panelControlIndex < 0)
+                {
+                    panelControl = AddTextCore(item.Text);
+                }
+                else
+                {
+                    panelControl = InsertTextCore(panelControlIndex + 1, item.Text);
+                }
+            }
+
+            panelControl.CustomAttr.SetAttribute(statusBarPanelIdPropName, item.UniqueId);
+            panelControl.SuggestedWidth = item.Width;
+            panelControl.MinWidth = item.MinWidth;
         }
 
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            foreach (var panel in Panels)
+            {
+                OnItemRemoved(panel);
+            }
+
             base.DisposeManaged();
         }
 
@@ -419,7 +523,7 @@ namespace Alternet.UI
         /// <param name="sender">The source of the event, typically the item whose property changed.
         /// Can be <see langword="null"/>.</param>
         /// <param name="e">The event data associated with the property change.</param>
-        protected virtual void OnItemPropertyChanged(object? sender, EventArgs e)
+        protected virtual void OnItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
         }
 
@@ -436,7 +540,35 @@ namespace Alternet.UI
         /// This parameter is never <see langword="null"/>.</param>
         protected virtual void OnItemRemoved(object? sender, int index, StatusBarPanel item)
         {
+            OnItemRemoved(item);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            if (AutoUpdateColors)
+            {
+                if (SystemSettings.AppearanceIsDark)
+                    SetColorThemeToDark();
+                else
+                    SetColorThemeToLight();
+            }
+
+            base.OnSystemColorsChanged(e);
+        }
+
+        private void OnItemRemoved(StatusBarPanel item)
+        {
+            var control = item.Control;
+
             item.PropertyChanged -= OnItemPropertyChanged;
+            item.StatusBar = null;
+
+            if (control != null)
+            {
+                control.Parent = null;
+                control.Dispose();
+            }
         }
     }
 }

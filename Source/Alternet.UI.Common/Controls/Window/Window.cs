@@ -937,11 +937,14 @@ namespace Alternet.UI
                 if (oldValue is not null)
                 {
                     oldValue.Disposed -= OnStatusBarDisposed;
+                    oldValue.Parent = null;
                 }
 
                 if (value is not null)
                 {
                     value.Disposed += OnStatusBarDisposed;
+                    value.Dock = DockStyle.Bottom;
+                    value.Parent = this;
                 }
 
                 OnStatusBarChanged(EventArgs.Empty);
