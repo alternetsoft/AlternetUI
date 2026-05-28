@@ -32,6 +32,7 @@ namespace Alternet.UI
         private bool resizing = false;
         private PointD mouseDownPos;
         private GripImageKind imageKind = GripImageKind.SizingGripRight;
+        private Color? svgColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GripControl"/> class.
@@ -317,13 +318,13 @@ namespace Alternet.UI
         /// image is visible.</remarks>
         public virtual Color? SvgColor
         {
-            get => primitive.SvgColor;
+            get => svgColor;
 
             set
             {
-                if (primitive.SvgColor == value)
+                if (svgColor == value)
                     return;
-                primitive.SvgColor = value;
+                svgColor = value;
                 if (ImageKind != GripImageKind.None)
                     Invalidate();
             }
@@ -449,6 +450,7 @@ namespace Alternet.UI
         {
             primitive.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             primitive.SvgImage = GetEffectiveSvgImage();
+            primitive.SvgColor = svgColor ?? ForeColor;
             primitive.Draw(this, dc);
         }
 
