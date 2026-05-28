@@ -42,7 +42,13 @@ namespace Alternet.UI
         /// Gets or sets the default background color of the status bar.
         /// </summary>
         public static LightDarkColor DefaultBackgroundColor { get; set; }
-            = new LightDarkColor(light: Color.FromArgb(108, 108, 108), dark:Color.FromArgb(20, 20, 20));
+            = new LightDarkColor(light: Color.FromArgb(218, 218, 218), dark:Color.FromArgb(28, 28, 28));
+
+        /// <summary>
+        /// Gets or sets the default foreground color of the status bar.
+        /// </summary>
+        public static LightDarkColor DefaultForegroundColor { get; set; }
+            = new LightDarkColor(light: Color.Black, dark: Color.White);        
 
         private readonly string statusBarPanelIdPropName;
 
@@ -61,7 +67,7 @@ namespace Alternet.UI
             ParentBackColor = false;
             ParentForeColor = false;
             BackgroundColor = DefaultBackgroundColor.Current;
-            ForegroundColor = DefaultColors.ControlForeColor.Current;
+            ForegroundColor = DefaultForegroundColor.Current;
             SizingGripVisible = true;
         }
 
@@ -442,7 +448,7 @@ namespace Alternet.UI
             DoInsideUpdate(() =>
             {
                 BackgroundColor = DefaultBackgroundColor.Dark;
-                ForegroundColor = DefaultColors.ControlForeColor.Dark;
+                ForegroundColor = DefaultForegroundColor.Dark;
             });
         }
 
@@ -454,7 +460,7 @@ namespace Alternet.UI
             DoInsideUpdate(() =>
             {
                 BackgroundColor = DefaultBackgroundColor.Light;
-                ForegroundColor = DefaultColors.ControlForeColor.Light;
+                ForegroundColor = DefaultForegroundColor.Light;
             });
         }
 
