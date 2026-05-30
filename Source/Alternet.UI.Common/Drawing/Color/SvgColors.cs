@@ -100,13 +100,13 @@ namespace Alternet.UI
 
             public override Color Normal
             {
-                get => normal ?? DefaultColors.SvgNormalColor;
+                get => normal ?? DefaultColors.SvgNormalColor.LightOrDark(IsDark);
                 set => normal = value;
             }
 
             public override Color Disabled
             {
-                get => disabled ?? DefaultColors.SvgDisabledColor;
+                get => disabled ?? DefaultColors.SvgDisabledColor.LightOrDark(IsDark);
                 set => disabled = value;
             }
 
