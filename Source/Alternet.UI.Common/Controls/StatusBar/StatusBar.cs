@@ -218,6 +218,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds separator panel to the status bar.
+        /// </summary>
+        /// <returns>The newly created <see cref="StatusBarPanel"/> representing the separator.</returns>
+        public new virtual StatusBarPanel AddSeparator()
+        {
+            var result = new StatusBarPanel()
+            {
+                Kind = StatusBarPanelKind.Separator,
+            };
+
+            Panels.Add(result);
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets the status text for the specified panel.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
@@ -462,6 +478,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds separator panel to the status bar.
+        /// </summary>
+        /// <returns>The newly created <see cref="StatusBarPanel"/> representing the separator.</returns>
+        internal new StatusBarPanel AddSeparatorCore()
+        {
+            return AddSeparator();
+        }
+
+        /// <summary>
         /// Called when item was inserted in the <see cref="Panels"/>.
         /// </summary>
         /// <param name="sender">The source of the event, typically the collection that raised the event.
@@ -474,32 +499,48 @@ namespace Alternet.UI
             item.PropertyChanged += OnItemPropertyChanged;
             item.StatusBar = this;
 
-            var afterPanel = GetField(index - 1);
-            var afterPanelControl = GetFieldControl(afterPanel);
+            var insertAfterPanel = GetField(index - 1);
+            var insertAfterPanelControl = GetFieldControl(insertAfterPanel);
 
             AbstractControl panelControl;
 
-            if (index == 0)
+            if (index < 0)
             {
-                panelControl = InsertTextCore(0, item.Text);
+                index = 0;
             }
             else
-            if (afterPanelControl is null)
+            if (insertAfterPanelControl is null)
             {
-                panelControl = AddTextCore(item.Text);
+                index = Panels.Count;
             }
             else
             {
-                var panelControlIndex = Children.IndexOf(afterPanelControl);
+                var panelControlIndex = Children.IndexOf(insertAfterPanelControl);
 
                 if (panelControlIndex < 0)
                 {
-                    panelControl = AddTextCore(item.Text);
+                    index = Panels.Count;
                 }
                 else
                 {
-                    panelControl = InsertTextCore(panelControlIndex + 1, item.Text);
+                    index = panelControlIndex + 1;
                 }
+            }
+
+            if (index > Panels.Count)
+            {
+                index = Panels.Count;
+            }
+
+            switch (item.Kind)
+            {
+                default:
+                case StatusBarPanelKind.Text:
+                    panelControl = InsertTextCore(index, item.Text);
+                    break;
+                case StatusBarPanelKind.Separator:
+                    panelControl = InsertSeparatorCore(index);
+                    break;
             }
 
             panelControl.CustomAttr.SetAttribute(statusBarPanelIdPropName, item.UniqueId);
@@ -521,19 +562,34 @@ namespace Alternet.UI
             if (control == null)
                 return false;
 
-            control.Text = panel.Text;
-            control.SuggestedWidth = panel.Width;
-            control.MinWidth = panel.MinWidth;
-            control.HasBorder = panel.Style == StatusBarPanelStyle.Normal;
+            switch (panel.Kind)
+            {
+                default:
+                case StatusBarPanelKind.Text:
+                    UpdateTextPanel();
+                    break;
+                case StatusBarPanelKind.Separator:
+                    break;
+            }
 
-            if (panel.Style == StatusBarPanelStyle.Normal)
+            void UpdateTextPanel()
             {
-                control.Padding = DefaultNormalPanelPadding;
+                control.Text = panel.Text;
+                control.SuggestedWidth = panel.Width;
+                control.MinWidth = panel.MinWidth;
+                control.HasBorder = panel.Style == StatusBarPanelStyle.Normal;
+
+                if (panel.Style == StatusBarPanelStyle.Normal)
+                {
+                    control.Padding = DefaultNormalPanelPadding;
+                }
+                else
+                {
+                    control.Padding = DefaultFlatPanelPadding;
+                }
             }
-            else
-            {
-                control.Padding = DefaultFlatPanelPadding;
-            }
+
+            control.HorizontalAlignment = panel.HorizontalAlignment;
 
             return true;
         }
