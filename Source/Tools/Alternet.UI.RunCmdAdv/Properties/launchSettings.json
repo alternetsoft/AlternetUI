@@ -50,6 +50,10 @@
     "exportSvg": {
       "commandName": "Project",
       "commandLineArgs": "-r=exportSvg Size=32 Result=\"d:\\Images\\\""
+    },
+    "exportDarkSvg": {
+      "commandName": "Project",
+      "commandLineArgs": "-r=exportSvg Size=32 Result=\"d:\\Images\" IsDark=true"
     }
   }
 }

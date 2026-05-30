@@ -336,13 +336,17 @@ namespace Alternet.UI
             string svgName = args.AsString("Name");
             int size = args.AsInt("Size");
             string pathToResult = args.AsString("Result");
+            bool isDark = args.AsBool("IsDark");
 
             Console.WriteLine($"Command: exportSvg");
             Console.WriteLine($"Name: {svgName}");
             Console.WriteLine($"Size: {size}");
             Console.WriteLine($"Result: {pathToResult}");
+            Console.WriteLine($"IsDark: {isDark}");
 
-            foreach(var image in KnownSvgImages.GetAllImages())
+            Directory.CreateDirectory(pathToResult);
+
+            foreach (var image in KnownSvgImages.GetAllImages())
             {
                 if (svgName is null || PathUtils.UrlEndsWithFileName(image.Url, svgName))
                 {
@@ -356,11 +360,23 @@ namespace Alternet.UI
 
                         if (lastPart != string.Empty)
                         {
-                            var resultName = $"{lastPart}_{size}.png";
-                            var path = Path.Combine(pathToResult, resultName);
-                            Directory.CreateDirectory(pathToResult);
+                            string resultName;
 
-                            image.AsImage(size)?.Save(path);
+                            if (isDark)
+                                resultName = $"{lastPart}-{size}-Dark.png";
+                            else
+                                resultName = $"{lastPart}-{size}.png";
+
+                            var path = Path.Combine(pathToResult, resultName);
+
+                            if (isDark)
+                            {
+                                image.AsImage(size, KnownSvgColor.Normal, isDark: true)?.Save(path);
+                            }
+                            else
+                            {
+                                image.AsImage(size)?.Save(path);
+                            }
 
                             Console.WriteLine($"Exported: {path}");
                         }
