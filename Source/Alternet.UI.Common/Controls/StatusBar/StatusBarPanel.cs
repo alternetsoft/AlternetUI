@@ -19,6 +19,8 @@ namespace Alternet.UI
         private StatusBarPanelStyle style = StatusBarPanelStyle.Flat;
         private StatusBar? statusBar = null;
         private float minWidth;
+        private StatusBarPanelKind kind = StatusBarPanelKind.Text;
+        private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Left;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='StatusBarPanel'/> class.
@@ -87,6 +89,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the horizontal alignment of the panel inside the status bar.
+        /// </summary>
+        public virtual HorizontalAlignment HorizontalAlignment
+        {
+            get
+            {
+                return horizontalAlignment;
+            }
+
+            set
+            {
+                if (horizontalAlignment != value)
+                {
+                    horizontalAlignment = value;
+                    RaisePropertyChanged(nameof(HorizontalAlignment));
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating the text displayed in the status bar panel.
         /// </summary>
         public virtual string Text
@@ -103,7 +125,6 @@ namespace Alternet.UI
 
                 text = value;
 
-                Control?.SetText(text);
                 TextChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(Text));
             }
@@ -155,6 +176,26 @@ namespace Alternet.UI
 
                 MinWidthChanged?.Invoke(this, EventArgs.Empty);
                 RaisePropertyChanged(nameof(MinWidth));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the kind of the status bar panel.
+        /// If panel is already added to the status bar, changing this property is not allowed.
+        /// </summary>
+        public virtual StatusBarPanelKind Kind
+        {
+            get
+            {
+                return kind;
+            }
+
+            set
+            {
+                if (kind == value || statusBar != null)
+                    return;
+                kind = value;
+                RaisePropertyChanged(nameof(Kind));
             }
         }
 
@@ -227,6 +268,7 @@ namespace Alternet.UI
             width = item.Width;
             style = item.Style;
             minWidth = item.MinWidth;
+            horizontalAlignment = item.HorizontalAlignment;
             Tag = item.Tag;
             RaisePropertyChanged();
         }
@@ -234,10 +276,17 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override string ToString()
         {
-            if (string.IsNullOrWhiteSpace(Text))
-                return base.ToString() ?? nameof(StatusBarPanel);
-            else
-                return Text;
+            switch (Kind)
+            {
+                default:
+                case StatusBarPanelKind.Text:
+                    if (string.IsNullOrWhiteSpace(Text))
+                        return base.ToString() ?? nameof(StatusBarPanel);
+                    else
+                        return Text;
+                case StatusBarPanelKind.Separator:
+                    return "Separator";
+            }
         }
     }
 }

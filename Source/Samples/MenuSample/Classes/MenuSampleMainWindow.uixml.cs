@@ -179,12 +179,8 @@ namespace MenuSample
             {
                 StatusBar ??= new StatusBar();
                 var panel = GetStatusBar()?.Add("AtRight");
-                var control = panel?.Control;
-
-                if (control != null)
-                {
-                    control.HorizontalAlignment = HorizontalAlignment.Right;
-                }
+                if (panel != null)
+                    panel.HorizontalAlignment = HorizontalAlignment.Right;
             });
 
             menu.Add("Add selector", () =>
@@ -291,7 +287,10 @@ namespace MenuSample
             LogEvent($"Menu Item '{(sender as MenuItem)?.Name}': Opened");
         }
 
-        private StatusBar? GetStatusBar() => StatusBar as StatusBar;
+        private StatusBar? GetStatusBar()
+        {
+            return StatusBar as StatusBar;
+        }
 
         private void StatusAddButton_Click(object? sender, System.EventArgs e)
         {
@@ -302,7 +301,7 @@ namespace MenuSample
         private void StatusAddSeparatorButton_Click(object? sender, System.EventArgs e)
         {
             StatusBar ??= new StatusBar();
-            GetStatusBar()?.Add("|");
+            GetStatusBar()?.AddSeparator();
         }
 
         private void StatusRemoveButton_Click(object? sender, System.EventArgs e)

@@ -59,6 +59,8 @@
   <Window.StatusBar>
     <StatusBar>
       <StatusBarPanel Text="Ready"/>
+      <StatusBarPanel Kind="Separator"/>
+      <StatusBarPanel Text="This is a panel with border aligned to fill" HorizontalAlignment="Fill" Style="Normal"/>
     </StatusBar>
   </Window.StatusBar>
 
