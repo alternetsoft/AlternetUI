@@ -70,6 +70,11 @@ namespace Alternet.UI
         public event EventHandler? ControlCreated;
 
         /// <summary>
+        /// Occurs when control which is used to display panel content is clicked.
+        /// </summary>
+        public event EventHandler? ControlClicked;
+
+        /// <summary>
         /// Occurs when control which is used to display panel content is updated.
         /// </summary>
         public event EventHandler? ControlUpdated;
@@ -536,6 +541,14 @@ namespace Alternet.UI
         public void RaiseControlUpdated()
         {
             ControlUpdated?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="ControlClicked"/> event.
+        /// </summary>
+        public void RaiseControlClicked()
+        {
+            ControlClicked?.Invoke(this, EventArgs.Empty);
         }
 
         private struct PanelData

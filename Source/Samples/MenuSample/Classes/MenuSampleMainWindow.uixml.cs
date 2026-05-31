@@ -216,6 +216,16 @@ namespace MenuSample
                 GetBar().Panels.Add(panel);
             });
 
+            menu.Add("Add text only button", () =>
+            {
+                var panel = new StatusBarPanel(BarPanelKind.TextButton);
+                panel.Text = "Button" + newItemIndex.ToString();
+                newItemIndex++;
+                panel.ControlClicked += (s, e) => App.Log("You clicked " + panel.Text);
+
+                GetBar().Panels.Add(panel);
+            });
+
             menu.Add("Add progress bar", () =>
             {
                 var panel = new StatusBarPanel(BarPanelKind.ProgressBar);

@@ -2499,6 +2499,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Inserts text only button to the control at the specified index.
+        /// </summary>
+        /// <param name="index">The index at which to insert the button.</param>
+        /// <param name="text">Item text.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="SpeedButton"/> instance representing the inserted button.</returns>
+        public virtual SpeedButton InsertTextBtnCore(
+            int index,
+            string? text = null,
+            object? toolTip = null,
+            EventHandler? action = null)
+        {
+            text ??= string.Empty;
+
+            var speedButton = CreateToolSpeedTextButton();
+
+            speedButton.Padding = DefaultItemPadding;
+            speedButton.ToolTipObject = toolTip;
+            speedButton.Text = text;
+            speedButton.VerticalAlignment = UI.VerticalAlignment.Center;
+            speedButton.Margin = DefaultTextBtnMargin;
+            speedButton.Click += RaiseToolClick;
+
+            UpdateItemProps(speedButton, ItemKind.ButtonText);
+
+            if (action is not null)
+                speedButton.Click += action;
+
+            Children.Insert(index, speedButton);
+
+            return speedButton;
+        }
+
+        /// <summary>
         /// Adds an empty disabled <see cref="SpeedButton"/> to the control.
         /// </summary>
         public virtual SpeedButton AddSpeedBtnCore()

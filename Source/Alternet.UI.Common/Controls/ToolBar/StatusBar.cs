@@ -460,6 +460,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the panel by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the panel.</param>
+        /// <returns>The <see cref="StatusBarPanel"/> with the specified unique identifier, or <c>null</c> if not found.</returns>
+        public StatusBarPanel? GetPanelById(ObjectUniqueId id)
+        {
+            foreach (var panel in Panels)
+            {
+                if (panel.UniqueId == id)
+                    return panel;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Adds separator panel to the status bar.
         /// </summary>
         /// <returns>The newly created <see cref="StatusBarPanel"/> representing the separator.</returns>
@@ -514,6 +530,23 @@ namespace Alternet.UI
                 index = Panels.Count;
             }
 
+            void OnButtonClick(object? sender, EventArgs e)
+            {
+                if (sender is not AbstractControl control)
+                    return;
+
+                var id = control.CustomAttr.GetAttribute(BarPanelIdPropName);
+
+                if (id is not ObjectUniqueId uniqueId)
+                    return;
+
+                var panel = GetPanelById(uniqueId);
+                if (panel is null)
+                    return;
+
+                panel.RaiseControlClicked();
+            }
+
             switch (item.Kind)
             {
                 default:
@@ -545,10 +578,9 @@ namespace Alternet.UI
                 case BarPanelKind.SpeedButton:
                     break;
                 */
-                /*
                 case BarPanelKind.TextButton:
+                    panelControl = InsertTextBtnCore(index, item.Text, null, OnButtonClick);
                     break;
-                */
                 case BarPanelKind.ProgressBar:
                     StdProgressBar progressBar = new()
                     {
@@ -626,6 +658,10 @@ namespace Alternet.UI
 
             void UpdateTextButtonPanel()
             {
+                control.Text = panel.Text;
+                control.SuggestedWidth = panel.Width;
+                control.MinWidth = panel.MinWidth;
+                control.MaxWidth = panel.MaxWidth;
             }
 
             void UpdateProgressBarPanel()
