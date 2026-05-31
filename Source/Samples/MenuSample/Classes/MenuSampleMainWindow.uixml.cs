@@ -175,18 +175,21 @@ namespace MenuSample
 
             var menu = new ContextMenu();
 
+            StatusBar GetBar()
+            {
+                if (StatusBar is not Alternet.UI.StatusBar)
+                    StatusBar = new StatusBar();
+                return (StatusBar)StatusBar;
+            }
+
             menu.Add("Add item at the right", () =>
             {
-                StatusBar ??= new StatusBar();
-                var panel = GetStatusBar()?.Add("AtRight");
-                if (panel != null)
-                    panel.HorizontalAlignment = HorizontalAlignment.Right;
+                var panel = GetBar().Add("AtRight");
+                panel.HorizontalAlignment = HorizontalAlignment.Right;
             });
 
             menu.Add("Add selector", () =>
             {
-                StatusBar ??= new StatusBar();
-
                 ListPicker control = new();
 
                 control.Add("Item 1");
@@ -203,39 +206,45 @@ namespace MenuSample
                 control.VerticalAlignment = VerticalAlignment.Center;
                 control.SuggestedWidth = 100;
 
-                GetStatusBar()?.AddControl(control);
+                GetBar().AddControl(control);
             });
 
             menu.Add("Add image", () =>
             {
-                StatusBar ??= new StatusBar();
-                GetStatusBar()?.AddPicture(KnownColorSvgImages.ImgError);
+                GetBar().AddPicture(KnownColorSvgImages.ImgError);
             });
 
             menu.Add("Add progress bar", () =>
             {
-                StatusBar ??= new StatusBar();
-                StdProgressBar progressBar = new()
+                var panel = new StatusBarPanel(BarPanelKind.ProgressBar);
+
+                panel.ControlCreated += (s, e) =>
                 {
-                    Value = 50,
-                    Minimum = 0,
-                    Maximum = 100,
-                    MinHeight = 16,
-                    AutoSize = false,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    SuggestedWidth = 100,
-                    SuggestedHeight = 16,
+                    var progressBar = panel.AsProgressBar;
+
+                    if (progressBar != null)
+                    {
+                        progressBar.Value = 50;
+                        progressBar.Minimum = 0;
+                        progressBar.Maximum = 100;
+                    }
                 };
 
-                GetStatusBar()?.AddControl(progressBar);
+                GetBar().Panels.Add(panel);
             });
 
             menu.Add("Add speed button", () =>
             {
-                GetStatusBar()?.AddSpeedBtnCore(null, KnownSvgImages.ImgArrowUp, "Sample tooltip", (s, e) =>
+                GetBar().AddSpeedBtnCore(null, KnownSvgImages.ImgArrowUp, "Sample tooltip", (s, e) =>
                 {
                     App.Log("Speed button clicked");
                 });
+            });
+
+            menu.Add("Add spacer", () =>
+            {
+                var panel = new StatusBarPanel(BarPanelKind.Spacer);
+                GetBar().Panels.Add(panel);
             });
 
             statusAddCustomButton.DropDownMenu = menu;

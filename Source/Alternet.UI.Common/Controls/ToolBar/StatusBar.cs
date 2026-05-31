@@ -22,6 +22,11 @@ namespace Alternet.UI
         public const float VisualStudioStatusBarHeight = 28;
 
         /// <summary>
+        /// Gets or sets the default width, in dips, of the progress bar panels.
+        /// </summary>
+        public static float DefaultProgressBarWidth { get; set; } = 100;
+
+        /// <summary>
         /// Gets or sets the padding of the panel controls in case the panel style is set to <see cref="StatusBarPanelStyle.Normal"/>
         /// and panel has a border.
         /// </summary>
@@ -50,8 +55,6 @@ namespace Alternet.UI
         public static LightDarkColor DefaultForegroundColor { get; set; }
             = new LightDarkColor(light: Color.Black, dark: Color.White);        
 
-        private readonly string statusBarPanelIdPropName;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StatusBar"/> class.
         /// </summary>
@@ -60,7 +63,6 @@ namespace Alternet.UI
             Panels.ItemInserted += OnItemInserted;
             Panels.ItemRemoved += OnItemRemoved;
             MinHeight = DefaultMinHeight;
-            statusBarPanelIdPropName =  AttributesFactory.GenUniqueAttributeName("StatusBarPanelId");
 
             ParentBackColor = false;
             ParentForeColor = false;
@@ -225,7 +227,7 @@ namespace Alternet.UI
         {
             var result = new StatusBarPanel()
             {
-                Kind = StatusBarPanelKind.Separator,
+                Kind = BarPanelKind.Separator,
             };
 
             Panels.Add(result);
@@ -458,26 +460,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets control used to display the status bar panel.
-        /// </summary>
-        /// <param name="panel">The <see cref="StatusBarPanel"/> for which to get the control.</param>
-        /// <returns>The <see cref="AbstractControl"/> used to display the panel, or <c>null</c> if not found.</returns>
-        public AbstractControl? GetFieldControl(StatusBarPanel? panel)
-        {
-            if (!IsOk || !HasChildren || panel is null)
-                return null;
-
-            foreach (var child in Children)
-            {
-                var panelId = child.CustomAttr.GetAttribute<ObjectUniqueId>(statusBarPanelIdPropName);
-                if (panelId == panel.UniqueId)
-                    return child;
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Adds separator panel to the status bar.
         /// </summary>
         /// <returns>The newly created <see cref="StatusBarPanel"/> representing the separator.</returns>
@@ -497,10 +479,10 @@ namespace Alternet.UI
         protected virtual void OnItemInserted(object? sender, int index, StatusBarPanel item)
         {
             item.PropertyChanged += OnItemPropertyChanged;
-            item.StatusBar = this;
+            item.Bar = this;
 
             var insertAfterPanel = GetField(index - 1);
-            var insertAfterPanelControl = GetFieldControl(insertAfterPanel);
+            var insertAfterPanelControl = item.GetControl();
 
             AbstractControl panelControl;
 
@@ -535,15 +517,49 @@ namespace Alternet.UI
             switch (item.Kind)
             {
                 default:
-                case StatusBarPanelKind.Text:
+                case BarPanelKind.Text:
                     panelControl = InsertTextCore(index, item.Text);
                     break;
-                case StatusBarPanelKind.Separator:
+                case BarPanelKind.Separator:
                     panelControl = InsertSeparatorCore(index);
                     break;
+                /*
+                case StatusBarPanelKind.PictureBox:
+                    break;
+                */
+                /*
+                case StatusBarPanelKind.SpeedButton:
+                    break;
+                */
+                /*
+                case StatusBarPanelKind.TextButton:
+                    break;
+                */
+                case BarPanelKind.ProgressBar:
+                    StdProgressBar progressBar = new()
+                    {
+                        MinHeight = 16,
+                        AutoSize = false,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        SuggestedWidth = DefaultProgressBarWidth,
+                        SuggestedHeight = 16,
+                    };
+
+                    InsertControl(index, progressBar);
+                    panelControl = progressBar;
+                    break;
+                case BarPanelKind.Spacer:
+                    float? spacerWidth = float.IsNaN(item.Width) ? null : item.Width;
+                    panelControl = InsertSpacerCore(index, spacerWidth);
+                    break;
+                /*
+                case StatusBarPanelKind.Control:
+                    break;
+                */
             }
 
-            panelControl.CustomAttr.SetAttribute(statusBarPanelIdPropName, item.UniqueId);
+            panelControl.CustomAttr.SetAttribute(barPanelIdPropName, item.UniqueId);
+            item.RaiseControlCreated();
             UpdatePanelControl(item, panelControl);
         }
 
@@ -557,19 +573,77 @@ namespace Alternet.UI
             if (panel is null)
                 return false;
 
-            control ??= GetFieldControl(panel);
+            control ??= panel?.GetControl();
 
-            if (control == null)
+            if (control == null || panel is null)
                 return false;
 
             switch (panel.Kind)
             {
                 default:
-                case StatusBarPanelKind.Text:
+                case BarPanelKind.Text:
                     UpdateTextPanel();
                     break;
-                case StatusBarPanelKind.Separator:
+                case BarPanelKind.Separator:
                     break;
+                case BarPanelKind.PictureBox:
+                    UpdatePictureBoxPanel();
+                    break;
+                case BarPanelKind.SpeedButton:
+                    UpdateSpeedButtonPanel();
+                    break;
+                case BarPanelKind.TextButton:
+                    UpdateTextButtonPanel();
+                    break;
+                case BarPanelKind.ProgressBar:
+                    UpdateProgressBarPanel();
+                    break;
+                case BarPanelKind.Spacer:
+                    UpdateSpacerPanel();
+                    break;
+                case BarPanelKind.Control:
+                    UpdateControlPanel();
+                    break;
+            }
+
+            void UpdateSpeedButtonPanel()
+            {
+            }
+
+            void UpdateTextButtonPanel()
+            {
+            }
+
+            void UpdateProgressBarPanel()
+            {
+                if (float.IsNaN(panel.Width))
+                {
+                    control.SuggestedWidth = DefaultProgressBarWidth;
+                }
+                else
+                {
+                    control.SuggestedWidth = panel.Width;
+                }
+            }
+
+            void UpdateControlPanel()
+            {
+            }
+
+            void UpdatePictureBoxPanel()
+            {
+            }
+
+            void UpdateSpacerPanel()
+            {
+                if (float.IsNaN(panel.Width))
+                {
+                    control.SuggestedSize = DefaultSpacerSize;
+                }
+                else
+                {
+                    control.SuggestedSize = panel.Width;
+                }
             }
 
             void UpdateTextPanel()
@@ -577,6 +651,7 @@ namespace Alternet.UI
                 control.Text = panel.Text;
                 control.SuggestedWidth = panel.Width;
                 control.MinWidth = panel.MinWidth;
+                control.MaxWidth = panel.MaxWidth;
                 control.HasBorder = panel.Style == StatusBarPanelStyle.Normal;
 
                 if (panel.Style == StatusBarPanelStyle.Normal)
@@ -590,6 +665,7 @@ namespace Alternet.UI
             }
 
             control.HorizontalAlignment = panel.HorizontalAlignment;
+            panel.RaiseControlUpdated();
 
             return true;
         }
@@ -653,7 +729,7 @@ namespace Alternet.UI
             var control = item.Control;
 
             item.PropertyChanged -= OnItemPropertyChanged;
-            item.StatusBar = null;
+            item.Bar = null;
 
             if (control != null)
             {
