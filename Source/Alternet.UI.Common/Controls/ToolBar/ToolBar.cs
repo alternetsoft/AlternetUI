@@ -24,6 +24,8 @@ namespace Alternet.UI
         /// </summary>
         public static new bool ShowDebugCorners = false;
 
+        private readonly string barPanelIdPropName;
+
         private Coord itemSize;
         private bool textVisible = false;
         private bool imageVisible = true;
@@ -51,6 +53,7 @@ namespace Alternet.UI
         /// </summary>
         public ToolBar()
         {
+            barPanelIdPropName = AttributesFactory.GenUniqueAttributeName("BarPanelId");
             AssignDefaultColors();
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
@@ -1181,6 +1184,34 @@ namespace Alternet.UI
             object? toolTip = default,
             bool ignoreSuggestedSize = false)
         {
+            return InsertPictureCore(
+                Children.Count,
+                image,
+                imageDisabled,
+                toolTip,
+                ignoreSuggestedSize);
+        }
+
+        /// <summary>
+        /// Inserts a new <see cref="PictureBox"/> control at the specified index with the given properties.
+        /// </summary>
+        /// <param name="index">The zero-based index at which the <see cref="PictureBox"/> should be inserted.</param>
+        /// <param name="image">The <see cref="ImageSet"/> to use as the primary image for the <see cref="PictureBox"/>.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="imageDisabled">The <see cref="ImageSet"/> to use as the disabled image for the <see cref="PictureBox"/>.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="toolTip">The tooltip text to display when the user hovers over the <see cref="PictureBox"/>.
+        /// Defaults to an empty string if <see langword="null"/>. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
+        /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
+        /// <returns>A <see cref="PictureBox"/> control configured with the specified properties.
+        /// The control is added to the current parent context.</returns>
+        public virtual PictureBox InsertPictureCore(
+            int index,
+            ImageSet? image = null,
+            ImageSet? imageDisabled = null,
+            object? toolTip = default,
+            bool ignoreSuggestedSize = false)
+        {
             PictureBox picture = new()
             {
                 IsGraphicControl = true,
@@ -1211,7 +1242,7 @@ namespace Alternet.UI
 
             UpdateItemProps(picture, ItemKind.Picture);
 
-            picture.Parent = this;
+            Children.Insert(index, picture);
             return picture;
         }
 
@@ -1249,7 +1280,18 @@ namespace Alternet.UI
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddControl(AbstractControl control)
         {
-            control.Parent = this;
+            return InsertControl(Children.Count, control);
+        }
+
+        /// <summary>
+        /// Inserts existing control to the toolbar at specified index.
+        /// </summary>
+        /// <param name="index">The index at which to insert the control.</param>
+        /// <param name="control">The control to insert.</param>
+        /// <returns><see cref="ObjectUniqueId"/> representing the inserted control.</returns>
+        public virtual ObjectUniqueId InsertControl(int index, AbstractControl control)
+        {
+            Children.Insert(index, control);
             UpdateItemProps(control, ItemKind.Control);
             return control.UniqueId;
         }
@@ -1314,6 +1356,17 @@ namespace Alternet.UI
         /// <returns><see cref="AbstractControl"/> which represents the spacer added.</returns>
         public virtual AbstractControl AddSpacerCore(Coord? size = null)
         {
+            return InsertSpacerCore(Children.Count, size);
+        }
+
+        /// <summary>
+        /// Inserts an empty space with the specified or default size at the given index.
+        /// </summary>
+        /// <param name="index">The zero-based index at which the spacer should be inserted.</param>
+        /// <param name="size">The optional spacer size.</param>
+        /// <returns><see cref="AbstractControl"/> representing the inserted spacer.</returns>
+        public virtual AbstractControl InsertSpacerCore(int index, Coord? size = null)
+        {
             Spacer control = new()
             {
                 SuggestedSize = size ?? DefaultSpacerSize,
@@ -1321,7 +1374,7 @@ namespace Alternet.UI
 
             UpdateItemProps(control, ItemKind.Spacer);
 
-            control.Parent = this;
+            Children.Insert(index, control);
             return control;
         }
 
@@ -2804,6 +2857,12 @@ namespace Alternet.UI
             ToolClick?.Invoke(s, e);
             OnToolClick(s, e);
         }
+
+        /// <summary>
+        /// Gets name of the custom attribute which can be used to 
+        /// identify the panel associated with a specific control.
+        /// </summary>
+        internal string BarPanelIdPropName => barPanelIdPropName;
 
         /// <summary>
         /// Creates control for use in the toolbar as a label.
