@@ -16,7 +16,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// The panel is a separator that displays a vertical line to separate other panels.
-        /// The <see cref="StatusBarPanel.Text"/> and other properties are ignored for this panel.
+        /// The <see cref="BarPanel.Text"/> and other properties are ignored for this panel.
         /// </summary>
         Separator,
 
@@ -42,7 +42,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// The panel is a spacer that takes up space between other panels.
-        /// The <see cref="StatusBarPanel.Text"/> and other properties are ignored for this panel.
+        /// The <see cref="BarPanel.Text"/> and other properties are ignored for this panel.
         /// </summary>
         Spacer,
 

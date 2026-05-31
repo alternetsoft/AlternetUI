@@ -1212,27 +1212,11 @@ namespace Alternet.UI
             object? toolTip = default,
             bool ignoreSuggestedSize = false)
         {
-            PictureBox picture = new()
-            {
-                IsGraphicControl = true,
-                ImageStretch = false,
-                ToolTipObject = toolTip,
-                VerticalAlignment = UI.VerticalAlignment.Center,
-            };
+            var picture = InsertPictureCore(index, toolTip, ignoreSuggestedSize);
 
             if (image is not null)
             {
                 picture.ImageSet = image;
-            }
-
-            if (ignoreSuggestedSize)
-            {
-                picture.IgnoreSuggestedSize = true;
-            }
-            else
-            {
-                picture.SuggestedSize = GetItemSuggestedSize(picture);
-                picture.MinimumSize = itemSize;
             }
 
             if (imageDisabled is not null)
@@ -1240,10 +1224,42 @@ namespace Alternet.UI
                 picture.DisabledImageSet = imageDisabled;
             }
 
-            UpdateItemProps(picture, ItemKind.Picture);
-
-            Children.Insert(index, picture);
             return picture;
+        }
+
+        /// <summary>
+        /// Inserts a new <see cref="PictureBox"/> control at the specified index with the given properties.
+        /// </summary>
+        /// <param name="index">The zero-based index at which the <see cref="PictureBox"/> should be inserted.</param>
+        /// <param name="image">The <see cref="Image"/> to use as the primary image for the <see cref="PictureBox"/>.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="imageDisabled">The <see cref="Image"/> to use as the disabled image for the <see cref="PictureBox"/>.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="toolTip">The tooltip text to display when the user hovers over the <see cref="PictureBox"/>.
+        /// Defaults to an empty string if <see langword="null"/>. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
+        /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
+        /// <returns>A <see cref="PictureBox"/> control configured with the specified properties.
+        /// The control is added to the current parent context.</returns>
+        public virtual PictureBox InsertPicture(
+            int index,
+            Image? image = null,
+            Image? imageDisabled = null,
+            object? toolTip = default,
+            bool ignoreSuggestedSize = false)
+        {
+            var result = InsertPictureCore(index, toolTip, ignoreSuggestedSize);
+
+            if (image is not null)
+            {
+                result.Image = image;
+            }
+
+            if (imageDisabled is not null)
+            {
+                result.DisabledImage = imageDisabled;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -2944,6 +2960,44 @@ namespace Alternet.UI
             if (Array.IndexOf(types, controlType) >= 0)
                 return true;
             return false;
+        }
+
+        /// <summary>
+        /// Inserts a new <see cref="PictureBox"/> control at the specified index with the given tooltip and size configuration.
+        /// </summary>
+        /// <param name="index">The zero-based index at which the <see cref="PictureBox"/> should be inserted.</param>
+        /// <param name="toolTip">The tooltip text to display when the user hovers over the <see cref="PictureBox"/>.
+        /// Defaults to an empty string if <see langword="null"/>. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
+        /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
+        /// <returns>A <see cref="PictureBox"/> control configured with the specified properties.
+        /// The control is added to the current parent context.</returns>
+        protected virtual PictureBox InsertPictureCore(
+            int index,
+            object? toolTip = default,
+            bool ignoreSuggestedSize = false)
+        {
+            PictureBox picture = new()
+            {
+                IsGraphicControl = true,
+                ImageStretch = false,
+                ToolTipObject = toolTip,
+                VerticalAlignment = UI.VerticalAlignment.Center,
+            };
+
+            if (ignoreSuggestedSize)
+            {
+                picture.IgnoreSuggestedSize = true;
+            }
+            else
+            {
+                picture.SuggestedSize = GetItemSuggestedSize(picture);
+                picture.MinimumSize = itemSize;
+            }
+
+            UpdateItemProps(picture, ItemKind.Picture);
+
+            Children.Insert(index, picture);
+            return picture;
         }
 
         /// <summary>

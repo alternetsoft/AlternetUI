@@ -523,16 +523,30 @@ namespace Alternet.UI
                 case BarPanelKind.Separator:
                     panelControl = InsertSeparatorCore(index);
                     break;
+                case BarPanelKind.PictureBox:
+                    if (item.SvgImage is not null)
+                    {
+                        var pictureBox = InsertPictureCore(index, null, null, null);
+                        pictureBox.SvgImage = item.SvgImage;
+                        panelControl = pictureBox;
+                    }
+                    else
+                    if (item.ImageSet is not null)
+                    {
+                        panelControl = InsertPictureCore(index, item.ImageSet, item.DisabledImageSet);
+                    }
+                    else
+                    {
+                        panelControl = InsertPicture(index, item.Image, item.DisabledImage);
+                    }
+
+                    break;
                 /*
-                case StatusBarPanelKind.PictureBox:
+                case BarPanelKind.SpeedButton:
                     break;
                 */
                 /*
-                case StatusBarPanelKind.SpeedButton:
-                    break;
-                */
-                /*
-                case StatusBarPanelKind.TextButton:
+                case BarPanelKind.TextButton:
                     break;
                 */
                 case BarPanelKind.ProgressBar:
@@ -553,12 +567,12 @@ namespace Alternet.UI
                     panelControl = InsertSpacerCore(index, spacerWidth);
                     break;
                 /*
-                case StatusBarPanelKind.Control:
+                case BarPanelKind.Control:
                     break;
                 */
             }
 
-            panelControl.CustomAttr.SetAttribute(barPanelIdPropName, item.UniqueId);
+            panelControl.CustomAttr.SetAttribute(BarPanelIdPropName, item.UniqueId);
             item.RaiseControlCreated();
             UpdatePanelControl(item, panelControl);
         }
@@ -632,6 +646,13 @@ namespace Alternet.UI
 
             void UpdatePictureBoxPanel()
             {
+                if(control is not PictureBox pictureBox)
+                    return;
+                pictureBox.Image = panel.Image;
+                pictureBox.DisabledImage = panel.DisabledImage;
+                pictureBox.SvgImage = panel.SvgImage;
+                pictureBox.ImageSet = panel.ImageSet;
+                pictureBox.DisabledImageSet = panel.DisabledImageSet;
             }
 
             void UpdateSpacerPanel()
@@ -665,6 +686,7 @@ namespace Alternet.UI
             }
 
             control.HorizontalAlignment = panel.HorizontalAlignment;
+            control.ToolTipObject = panel.ToolTip;
             panel.RaiseControlUpdated();
 
             return true;

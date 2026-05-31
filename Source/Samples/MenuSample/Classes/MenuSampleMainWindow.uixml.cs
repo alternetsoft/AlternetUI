@@ -211,7 +211,9 @@ namespace MenuSample
 
             menu.Add("Add image", () =>
             {
-                GetBar().AddPicture(KnownColorSvgImages.ImgError);
+                var panel = new StatusBarPanel(BarPanelKind.PictureBox);
+                panel.SvgImage = KnownColorSvgImages.ImgError;
+                GetBar().Panels.Add(panel);
             });
 
             menu.Add("Add progress bar", () =>

@@ -87,10 +87,105 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the SVG image displayed in the panel.
+        /// </summary>
+        public virtual SvgImage? SvgImage
+        {
+            get
+            {
+                return data.SvgImage;
+            }
+
+            set
+            {
+                if (data.SvgImage != value)
+                {
+                    data.SvgImage = value;
+                    RaisePropertyChanged(nameof(SvgImage));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the svg image.
+        /// </summary>
+        public virtual Color? SvgColor
+        {
+            get
+            {
+                return data.SvgColor;
+            }
+
+            set
+            {
+                if (data.SvgColor != value)
+                {
+                    data.SvgColor = value;
+                    RaisePropertyChanged(nameof(SvgColor));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the size of the SVG image.
+        /// </summary>
+        public virtual int? SvgSize
+        {
+            get
+            {
+                return data.SvgSize;
+            }
+
+            set
+            {
+                if (data.SvgSize != value)
+                {
+                    data.SvgSize = value;
+                    RaisePropertyChanged(nameof(SvgSize));
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the image displayed in the panel. This property is applicable when the panel's <see cref="Kind"/>
         /// is set to <see cref="BarPanelKind.PictureBox"/> or <see cref="BarPanelKind.SpeedButton"/>.
         /// </summary>
-        public ImageSet? Image
+        public virtual ImageSet? ImageSet
+        {
+            get => data.ImageSet;
+
+            set
+            {
+                if (data.ImageSet == value)
+                    return;
+                data.ImageSet = value;
+                RaisePropertyChanged(nameof(ImageSet));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the image displayed in the panel when it is disabled. This property is applicable
+        /// when the panel's <see cref="Kind"/> is set to <see cref="BarPanelKind.PictureBox"/>
+        /// or <see cref="BarPanelKind.SpeedButton"/>.
+        /// </summary>
+        public virtual ImageSet? DisabledImageSet
+        {
+            get => data.DisabledImageSet;
+
+            set
+            {
+                if (data.DisabledImageSet == value)
+                    return;
+                data.DisabledImageSet = value;
+                RaisePropertyChanged(nameof(DisabledImageSet));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the image displayed in the panel. This property is applicable when the panel's <see cref="Kind"/>
+        /// is set to <see cref="BarPanelKind.PictureBox"/> or <see cref="BarPanelKind.SpeedButton"/>.
+        /// </summary>
+        public virtual Image? Image
         {
             get => data.Image;
 
@@ -108,23 +203,23 @@ namespace Alternet.UI
         /// when the panel's <see cref="Kind"/> is set to <see cref="BarPanelKind.PictureBox"/>
         /// or <see cref="BarPanelKind.SpeedButton"/>.
         /// </summary>
-        public ImageSet? ImageDisabled
+        public virtual Image? DisabledImage
         {
-            get => data.ImageDisabled;
+            get => data.DisabledImage;
 
             set
             {
-                if (data.ImageDisabled == value)
+                if (data.DisabledImage == value)
                     return;
-                data.ImageDisabled = value;
-                RaisePropertyChanged(nameof(ImageDisabled));
+                data.DisabledImage = value;
+                RaisePropertyChanged(nameof(DisabledImage));
             }
         }
 
         /// <summary>
         /// Gets or sets the tool tip text for the panel.
         /// </summary>
-        public object? ToolTip
+        public virtual object? ToolTip
         {
             get => data.ToolTip;
             set
@@ -453,9 +548,14 @@ namespace Alternet.UI
             public BarPanelKind Kind = BarPanelKind.Text;
             public HorizontalAlignment HorizontalAlignment = HorizontalAlignment.Left;
             public bool IsVisible = true;
-            public ImageSet? Image;
+            public ImageSet? ImageSet;
+            public ImageSet? DisabledImageSet;
             public object? ToolTip;
-            public ImageSet? ImageDisabled;
+            public SvgImage? SvgImage;
+            public Color? SvgColor;
+            public int? SvgSize;
+            public Image? Image;
+            public Image? DisabledImage;
 
             public PanelData()
             {
