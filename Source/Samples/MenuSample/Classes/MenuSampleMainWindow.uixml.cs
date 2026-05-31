@@ -247,10 +247,11 @@ namespace MenuSample
 
             menu.Add("Add speed button", () =>
             {
-                GetBar().AddSpeedBtnCore(null, KnownSvgImages.ImgArrowUp, "Sample tooltip", (s, e) =>
-                {
-                    App.Log("Speed button clicked");
-                });
+                var panel = new StatusBarPanel(BarPanelKind.SpeedButton);
+                panel.SvgImage = KnownSvgImages.ImgArrowUp;
+                panel.ToolTip = "Sample tooltip";
+                panel.ControlClicked += (s, e) => App.Log("You clicked speed button");
+                GetBar().Panels.Add(panel);
             });
 
             menu.Add("Add spacer", () =>
@@ -258,6 +259,10 @@ namespace MenuSample
                 var panel = new StatusBarPanel(BarPanelKind.Spacer);
                 GetBar().Panels.Add(panel);
             });
+
+            menu.Add("Add custom control", () =>
+            {
+            }).IsEnabled = false;
 
             statusAddCustomButton.DropDownMenu = menu;
 

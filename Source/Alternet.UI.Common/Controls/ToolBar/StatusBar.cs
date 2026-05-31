@@ -557,27 +557,18 @@ namespace Alternet.UI
                     panelControl = InsertSeparatorCore(index);
                     break;
                 case BarPanelKind.PictureBox:
-                    if (item.SvgImage is not null)
-                    {
-                        var pictureBox = InsertPictureCore(index, null, null, null);
-                        pictureBox.SvgImage = item.SvgImage;
-                        panelControl = pictureBox;
-                    }
-                    else
-                    if (item.ImageSet is not null)
-                    {
-                        panelControl = InsertPictureCore(index, item.ImageSet, item.DisabledImageSet);
-                    }
-                    else
-                    {
-                        panelControl = InsertPicture(index, item.Image, item.DisabledImage);
-                    }
-
+                    panelControl = InsertPictureCore(index, item.ImageSet, item.DisabledImageSet, item.ToolTip);
                     break;
-                /*
                 case BarPanelKind.SpeedButton:
+                    panelControl = InsertSpeedBtnCore(
+                                index,
+                                ItemKind.Button,
+                                item.Text,
+                                item.ImageSet,
+                                item.DisabledImageSet,
+                                item.ToolTip,
+                                OnButtonClick);
                     break;
-                */
                 case BarPanelKind.TextButton:
                     panelControl = InsertTextBtnCore(index, item.Text, null, OnButtonClick);
                     break;
@@ -654,6 +645,14 @@ namespace Alternet.UI
 
             void UpdateSpeedButtonPanel()
             {
+                if (control is not SpeedButton speedButton)
+                    return;
+                speedButton.Image = panel.Image;
+                speedButton.DisabledImage = panel.DisabledImage;
+                speedButton.SvgImage = panel.SvgImage;                
+                speedButton.SvgSize = panel.SvgSize;
+                speedButton.ImageSet = panel.ImageSet;
+                speedButton.DisabledImageSet = panel.DisabledImageSet;
             }
 
             void UpdateTextButtonPanel()
@@ -687,6 +686,8 @@ namespace Alternet.UI
                 pictureBox.Image = panel.Image;
                 pictureBox.DisabledImage = panel.DisabledImage;
                 pictureBox.SvgImage = panel.SvgImage;
+                pictureBox.SvgColor = panel.SvgColor;
+                pictureBox.SvgSize = panel.SvgSize;
                 pictureBox.ImageSet = panel.ImageSet;
                 pictureBox.DisabledImageSet = panel.DisabledImageSet;
             }
