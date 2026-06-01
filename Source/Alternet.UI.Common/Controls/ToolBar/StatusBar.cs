@@ -651,6 +651,7 @@ namespace Alternet.UI
                 speedButton.DisabledImage = panel.DisabledImage;
                 speedButton.SvgImage = panel.SvgImage;                
                 speedButton.SvgSize = panel.SvgSize;
+                speedButton.SvgColor = panel.SvgColor;
                 speedButton.ImageSet = panel.ImageSet;
                 speedButton.DisabledImageSet = panel.DisabledImageSet;
             }

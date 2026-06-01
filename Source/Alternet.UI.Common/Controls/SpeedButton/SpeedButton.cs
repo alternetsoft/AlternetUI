@@ -548,6 +548,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the SVG color.
+        /// </summary>
+        /// <remarks>Setting this property triggers an invalidation of the control if the image is visible.</remarks>
+        public virtual Color? SvgColor
+        {
+            get => drawable.SvgColor;
+
+            set
+            {
+                if (drawable.SvgColor == value)
+                    return;
+                drawable.SvgColor = value;
+                if (ImageVisible)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the label has an associated image.
         /// </summary>
         [Browsable(false)]

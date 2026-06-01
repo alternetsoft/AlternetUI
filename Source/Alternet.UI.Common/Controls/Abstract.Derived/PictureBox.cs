@@ -210,8 +210,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the SVG color.
         /// </summary>
-        /// <remarks>Setting this property triggers a layout update and invalidates the control if the
-        /// image is visible.</remarks>
+        /// <remarks>Setting this property triggers an invalidation of the control if the image is visible.</remarks>
         public virtual Color? SvgColor
         {
             get => primitive.SvgColor;
@@ -223,7 +222,7 @@ namespace Alternet.UI
                 primitive.SvgColor = value;
                 RaiseImageChanged(EventArgs.Empty);
                 if (ImageVisible)
-                    PerformLayoutAndInvalidate();
+                    Invalidate();
             }
         }
 
