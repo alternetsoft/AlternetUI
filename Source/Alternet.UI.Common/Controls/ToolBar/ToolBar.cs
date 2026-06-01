@@ -20,6 +20,21 @@ namespace Alternet.UI
     public partial class ToolBar : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets the default width, in dips, of the progress bar panels.
+        /// </summary>
+        public static float DefaultProgressBarWidth { get; set; } = 100;
+
+        /// <summary>
+        /// Gets or sets the padding of the text panel controls in case the panel has a border.
+        /// </summary>
+        public static Thickness DefaultTextPanelPadding { get; set; } = new Thickness(4, 2);
+
+        /// <summary>
+        /// Gets or sets the padding of the text panel controls in case the pane has no border.
+        /// </summary>
+        public static Thickness DefaultTextPanelPaddingNoBorder { get; set; } = new Thickness(2, 2);
+
+        /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
         public static new bool ShowDebugCorners = false;
@@ -53,6 +68,8 @@ namespace Alternet.UI
         /// </summary>
         public ToolBar()
         {
+            Panels.ItemInserted += OnPanelInserted;
+            Panels.ItemRemoved += OnPanelRemoved;
             barPanelIdPropName = AttributesFactory.GenUniqueAttributeName("BarPanelId");
             AssignDefaultColors();
             Layout = LayoutStyle.Horizontal;
@@ -259,6 +276,12 @@ namespace Alternet.UI
         /// </remarks>
         [Browsable(false)]
         public virtual int? ImageSize { get; set; }
+
+        /// <summary>
+        /// Gets a collection of <see cref="BarPanel"/> objects associated with the control.
+        /// </summary>
+        [Content]
+        public virtual BaseCollection<BarPanel> Panels { get; } = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
         /// Gets or sets a value indicating whether button tooltips are enabled.
@@ -2697,6 +2720,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns panel by index.
+        /// </summary>
+        /// <param name="index">Panel index, starting from zero.</param>
+        /// <returns><see cref="BarPanel"/> if found; <c>null</c> if index is out of range.</returns>
+        public BarPanel? GetPanel(int index)
+        {
+            if (index < 0 || index >= Panels.Count)
+                return null;
+
+            return Panels[index];
+        }
+
+        /// <summary>
         /// Adds a sizing grip to the toolbar, allowing users to resize the toolbar by dragging the grip.
         /// </summary>
         /// <param name="targetProvider">A function that provides the target control which is being resized by the sizing grip.</param>
@@ -2910,6 +2946,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the panel by its unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the panel.</param>
+        /// <returns>The <see cref="BarPanel"/> with the specified unique identifier, or <c>null</c> if not found.</returns>
+        public BarPanel? GetPanelById(ObjectUniqueId id)
+        {
+            foreach (var panel in Panels)
+            {
+                if (panel.UniqueId == id)
+                    return panel;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Gets name of the custom attribute which can be used to 
         /// identify the panel associated with a specific control.
         /// </summary>
@@ -2995,6 +3047,317 @@ namespace Alternet.UI
             if (Array.IndexOf(types, controlType) >= 0)
                 return true;
             return false;
+        }
+
+        /// <summary>
+        /// Called when property of the panel was changed.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance whose property changed.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> associated with the panel.</param>
+        protected virtual bool UpdatePanelControl(BarPanel? panel, AbstractControl? control = null)
+        {
+            if (panel is null)
+                return false;
+
+            control ??= panel?.GetControl();
+
+            if (control == null || panel is null)
+                return false;
+
+            switch (panel.Kind)
+            {
+                default:
+                case BarPanelKind.Text:
+                    UpdateTextPanel();
+                    break;
+                case BarPanelKind.Separator:
+                    break;
+                case BarPanelKind.PictureBox:
+                    UpdatePictureBoxPanel();
+                    break;
+                case BarPanelKind.SpeedButton:
+                    UpdateSpeedButtonPanel();
+                    break;
+                case BarPanelKind.TextButton:
+                    UpdateTextButtonPanel();
+                    break;
+                case BarPanelKind.ProgressBar:
+                    UpdateProgressBarPanel();
+                    break;
+                case BarPanelKind.Spacer:
+                    UpdateSpacerPanel();
+                    break;
+                case BarPanelKind.CustomControl:
+                    UpdateControlPanel();
+                    break;
+            }
+
+            void UpdateSpeedButtonPanel()
+            {
+                if (control is not SpeedButton speedButton)
+                    return;
+                speedButton.Image = panel.Image;
+                speedButton.DisabledImage = panel.DisabledImage;
+                speedButton.SvgImage = panel.SvgImage;
+                speedButton.SvgSize = panel.SvgSize;
+                speedButton.SvgColor = panel.SvgColor;
+                speedButton.ImageSet = panel.ImageSet;
+                speedButton.DisabledImageSet = panel.DisabledImageSet;
+            }
+
+            void UpdateTextButtonPanel()
+            {
+                control.Text = panel.Text;
+                control.SuggestedWidth = panel.Width;
+                control.MinWidth = panel.MinWidth;
+                control.MaxWidth = panel.MaxWidth;
+            }
+
+            void UpdateProgressBarPanel()
+            {
+                if (float.IsNaN(panel.Width))
+                {
+                    control.SuggestedWidth = DefaultProgressBarWidth;
+                }
+                else
+                {
+                    control.SuggestedWidth = panel.Width;
+                }
+            }
+
+            void UpdatePictureBoxPanel()
+            {
+                if (control is not PictureBox pictureBox)
+                    return;
+                pictureBox.Image = panel.Image;
+                pictureBox.DisabledImage = panel.DisabledImage;
+                pictureBox.SvgImage = panel.SvgImage;
+                pictureBox.SvgColor = panel.SvgColor;
+                pictureBox.SvgSize = panel.SvgSize;
+                pictureBox.ImageSet = panel.ImageSet;
+                pictureBox.DisabledImageSet = panel.DisabledImageSet;
+            }
+
+            void UpdateSpacerPanel()
+            {
+                if (float.IsNaN(panel.Width))
+                {
+                    control.SuggestedSize = DefaultSpacerSize;
+                }
+                else
+                {
+                    control.SuggestedSize = panel.Width;
+                }
+            }
+
+            void UpdateControlPanel()
+            {
+            }
+
+            void UpdateTextPanel()
+            {
+                control.Text = panel.Text;
+                control.SuggestedWidth = panel.Width;
+                control.MinWidth = panel.MinWidth;
+                control.MaxWidth = panel.MaxWidth;
+                control.HasBorder = panel.HasBorder;
+
+                if (panel.HasBorder)
+                {
+                    control.Padding = DefaultTextPanelPadding;
+                }
+                else
+                {
+                    control.Padding = DefaultTextPanelPaddingNoBorder;
+                }
+            }
+
+            control.HorizontalAlignment = panel.HorizontalAlignment;
+            control.ToolTipObject = panel.ToolTip;
+            panel.RaiseControlUpdated();
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            foreach (var panel in Panels)
+            {
+                OnPanelRemoved(panel);
+            }
+
+            base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Called when panel was inserted in the <see cref="Panels"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the collection that raised the event.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="index">The zero-based index at which the item was inserted.</param>
+        /// <param name="item">The <see cref="BarPanel"/> instance that was inserted.
+        /// This parameter is never <see langword="null"/>.</param>
+        protected virtual void OnPanelInserted(object? sender, int index, BarPanel item)
+        {
+            item.PropertyChanged += OnPanelPropertyChanged;
+            item.Bar = this;
+
+            var insertAfterPanel = GetPanel(index - 1);
+            var insertAfterPanelControl = item.GetControl();
+
+            AbstractControl? panelControl = null;
+
+            if (index < 0)
+            {
+                index = 0;
+            }
+            else
+                if (insertAfterPanelControl is null)
+                {
+                    index = Panels.Count;
+                }
+                else
+                {
+                    var panelControlIndex = Children.IndexOf(insertAfterPanelControl);
+
+                    if (panelControlIndex < 0)
+                    {
+                        index = Panels.Count;
+                    }
+                    else
+                    {
+                        index = panelControlIndex + 1;
+                    }
+                }
+
+            if (index > Panels.Count)
+            {
+                index = Panels.Count;
+            }
+
+            void OnButtonClick(object? sender, EventArgs e)
+            {
+                if (sender is not AbstractControl control)
+                    return;
+
+                var id = control.CustomAttr.GetAttribute(BarPanelIdPropName);
+
+                if (id is not ObjectUniqueId uniqueId)
+                    return;
+
+                var panel = GetPanelById(uniqueId);
+                if (panel is null)
+                    return;
+
+                panel.RaiseControlClicked();
+            }
+
+            switch (item.Kind)
+            {
+                default:
+                case BarPanelKind.Text:
+                    panelControl = InsertTextCore(index, item.Text);
+                    break;
+                case BarPanelKind.Separator:
+                    panelControl = InsertSeparatorCore(index);
+                    break;
+                case BarPanelKind.PictureBox:
+                    panelControl = InsertPictureCore(index, item.ImageSet, item.DisabledImageSet, item.ToolTip);
+                    break;
+                case BarPanelKind.SpeedButton:
+                    panelControl = InsertSpeedBtnCore(
+                                index,
+                                ItemKind.Button,
+                                item.Text,
+                                item.ImageSet,
+                                item.DisabledImageSet,
+                                item.ToolTip,
+                                OnButtonClick);
+                    break;
+                case BarPanelKind.TextButton:
+                    panelControl = InsertTextBtnCore(index, item.Text, null, OnButtonClick);
+                    break;
+                case BarPanelKind.ProgressBar:
+                    StdProgressBar progressBar = new()
+                    {
+                        MinHeight = 16,
+                        AutoSize = false,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        SuggestedWidth = DefaultProgressBarWidth,
+                        SuggestedHeight = 16,
+                    };
+
+                    InsertControl(index, progressBar);
+                    panelControl = progressBar;
+                    break;
+                case BarPanelKind.Spacer:
+                    float? spacerWidth = float.IsNaN(item.Width) ? null : item.Width;
+                    panelControl = InsertSpacerCore(index, spacerWidth);
+                    break;
+                case BarPanelKind.CustomControl:
+
+                    if (item.CustomControl is not null)
+                    {
+                        InsertControl(index, item.CustomControl);
+                        panelControl = item.CustomControl;
+                    }
+                    break;
+            }
+
+            if (panelControl != null)
+            {
+                panelControl.CustomAttr.SetAttribute(BarPanelIdPropName, item.UniqueId);
+                item.RaiseControlCreated();
+                UpdatePanelControl(item, panelControl);
+            }
+        }
+
+        /// <summary>
+        /// Handles the "PropertyChanged" event for an item in the panel collection.
+        /// </summary>
+        /// <remarks>This method is called when a property of an item in the collection changes. Derived
+        /// classes can override this method to provide custom handling for property changes.</remarks>
+        /// <param name="sender">The source of the event, typically the item whose property changed.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the property change.</param>
+        protected virtual void OnPanelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            UpdatePanelControl(sender as BarPanel);
+        }
+
+        /// <summary>
+        /// Invoked when an item is removed from the panels collection.
+        /// </summary>
+        /// <remarks>This method detaches event handlers from the removed item and updates the state of
+        /// the status bar panels. Subclasses can override this method to provide additional behavior
+        /// when an item is removed.</remarks>
+        /// <param name="sender">The source of the event, typically the collection that raised the event.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="index">The zero-based index at which the item was removed.</param>
+        /// <param name="item">The <see cref="BarPanel"/> instance that was removed.
+        /// This parameter is never <see langword="null"/>.</param>
+        protected virtual void OnPanelRemoved(object? sender, int index, BarPanel item)
+        {
+            OnPanelRemoved(item);
+        }
+
+        /// <summary>
+        /// Called when panel is removed from the collection. Detaches event handlers and performs any necessary cleanup.
+        /// </summary>
+        /// <param name="item">The <see cref="BarPanel"/> instance that was removed.</param>
+        protected virtual void OnPanelRemoved(BarPanel item)
+        {
+            var control = item.Control;
+
+            item.PropertyChanged -= OnPanelPropertyChanged;
+            item.Bar = null;
+
+            if (control != null)
+            {
+                control.Parent = null;
+                control.Dispose();
+            }
         }
 
         /// <summary>
