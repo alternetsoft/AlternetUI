@@ -332,17 +332,23 @@ namespace Alternet.UI
         /// <remarks>
         /// If <paramref name="newIndex"/> = -1, moves to the end of the collection.
         /// </remarks>
-        public virtual void SetItemIndex(T item, int newIndex)
+        /// <returns><c>true</c> if the item's index was changed; otherwise, <c>false</c>.</returns>
+        public virtual bool SetItemIndex(T item, int newIndex)
         {
             if (item == null)
                 throw new ArgumentNullException(nameof(item));
             int childIndex = GetItemIndex(item);
+
+            if (newIndex >= Count || newIndex == -1)
+                newIndex = Count - 1;
+
             if (childIndex != newIndex)
             {
-                if (newIndex >= Count || newIndex == -1)
-                    newIndex = Count - 1;
                 MoveItem(item, childIndex, newIndex);
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>
