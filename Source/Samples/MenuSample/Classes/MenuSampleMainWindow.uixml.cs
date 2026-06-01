@@ -747,6 +747,11 @@ namespace MenuSample
 
         private bool IsVertical => verticalCheckBox.IsChecked;
 
+        private void TextBtnStatusBarPanel_ControlClicked(object? sender, EventArgs e)
+        {
+            App.Log("TextBtnStatusBarPanel clicked.");
+        }
+
         private void IsBottomCheckBox_Changed(object? sender, EventArgs e)
         {
             if (toolbar == null)

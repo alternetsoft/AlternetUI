@@ -58,9 +58,11 @@
 
   <Window.StatusBar>
     <StatusBar>
-      <StatusBarPanel Text="Ready"/>
+      <StatusBarPanel Text="Ready" Name="readyStatusBarPanel"/>
       <StatusBarPanel Kind="Separator"/>
-      <StatusBarPanel Text="This is a panel with border aligned to fill" HorizontalAlignment="Fill" Style="Normal"/>
+      <StatusBarPanel Text="TextBtn" Name="textBtnStatusBarPanel" ControlClicked="TextBtnStatusBarPanel_ControlClicked"/>
+      <StatusBarPanel Kind="Separator"/>
+      <StatusBarPanel Text="This is a panel with border aligned to fill" HorizontalAlignment="Fill" Style="Normal" Name="fillStatusBarPanel"/>
     </StatusBar>
   </Window.StatusBar>
 

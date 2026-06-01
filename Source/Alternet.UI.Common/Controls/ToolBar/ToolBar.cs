@@ -20,9 +20,9 @@ namespace Alternet.UI
     public partial class ToolBar : HiddenBorder
     {
         /// <summary>
-        /// Gets or sets the default width, in dips, of the progress bar panels.
+        /// Gets or sets the default size, in dips, of the progress bar panels.
         /// </summary>
-        public static float DefaultProgressBarWidth { get; set; } = 100;
+        public static SizeD DefaultProgressBarSize { get; set; } = new (100, 16);
 
         /// <summary>
         /// Gets or sets the padding of the text panel controls in case the panel has a border.
@@ -562,6 +562,15 @@ namespace Alternet.UI
                         speedButton.ImageVisible = value;
                     }
                 });
+            }
+        }
+
+        /// <inheritdoc/>
+        public override IReadOnlyList<FrameworkElement> ContentElements
+        {
+            get
+            {
+                return Panels;
             }
         }
 
@@ -3117,7 +3126,7 @@ namespace Alternet.UI
             {
                 if (float.IsNaN(panel.Width))
                 {
-                    control.SuggestedWidth = DefaultProgressBarWidth;
+                    control.SuggestedWidth = DefaultProgressBarSize.Width;
                 }
                 else
                 {
@@ -3201,7 +3210,7 @@ namespace Alternet.UI
         protected virtual void OnPanelInserted(object? sender, int index, BarPanel item)
         {
             item.PropertyChanged += OnPanelPropertyChanged;
-            item.Bar = this;
+            item.LogicalParent = this;
 
             var insertAfterPanel = GetPanel(index - 1);
             var insertAfterPanelControl = item.GetControl();
@@ -3236,7 +3245,7 @@ namespace Alternet.UI
                 index = Panels.Count;
             }
 
-            void OnButtonClick(object? sender, EventArgs e)
+            void OnControlClick(object? sender, EventArgs e)
             {
                 if (sender is not AbstractControl control)
                     return;
@@ -3258,12 +3267,14 @@ namespace Alternet.UI
                 default:
                 case BarPanelKind.Text:
                     panelControl = InsertTextCore(index, item.Text);
+                    panelControl.Click += OnControlClick;
                     break;
                 case BarPanelKind.Separator:
                     panelControl = InsertSeparatorCore(index);
                     break;
                 case BarPanelKind.PictureBox:
                     panelControl = InsertPictureCore(index, item.ImageSet, item.DisabledImageSet, item.ToolTip);
+                    panelControl.Click += OnControlClick;
                     break;
                 case BarPanelKind.SpeedButton:
                     panelControl = InsertSpeedBtnCore(
@@ -3273,19 +3284,19 @@ namespace Alternet.UI
                                 item.ImageSet,
                                 item.DisabledImageSet,
                                 item.ToolTip,
-                                OnButtonClick);
+                                OnControlClick);
                     break;
                 case BarPanelKind.TextButton:
-                    panelControl = InsertTextBtnCore(index, item.Text, item.ToolTip, OnButtonClick);
+                    panelControl = InsertTextBtnCore(index, item.Text, item.ToolTip, OnControlClick);
                     break;
                 case BarPanelKind.ProgressBar:
                     StdProgressBar progressBar = new()
                     {
-                        MinHeight = 16,
+                        MinHeight = DefaultProgressBarSize.Height,
                         AutoSize = false,
                         VerticalAlignment = VerticalAlignment.Center,
-                        SuggestedWidth = DefaultProgressBarWidth,
-                        SuggestedHeight = 16,
+                        SuggestedWidth = DefaultProgressBarSize.Width,
+                        SuggestedHeight = DefaultProgressBarSize.Height,
                     };
 
                     InsertControl(index, progressBar);
@@ -3302,6 +3313,7 @@ namespace Alternet.UI
                         InsertControl(index, item.CustomControl);
                         panelControl = item.CustomControl;
                     }
+
                     break;
             }
 
@@ -3351,7 +3363,7 @@ namespace Alternet.UI
             var control = item.Control;
 
             item.PropertyChanged -= OnPanelPropertyChanged;
-            item.Bar = null;
+            item.LogicalParent = null;
 
             if (control != null)
             {

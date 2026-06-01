@@ -10,11 +10,10 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a panel in the status bar or toolbar.
     /// </summary>
-    public partial class BarPanel : BaseControlItem
+    public partial class BarPanel : FrameworkElement
     {
         private readonly BaseConcurrentStack<string> textStack = new();
         private PanelData data = new();
-        private ToolBar? bar = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref='BarPanel'/> class.
@@ -139,7 +138,7 @@ namespace Alternet.UI
 
             set
             {
-                if (data.CustomControl == value || bar != null)
+                if (data.CustomControl == value || Bar != null)
                     return;
                 data.CustomControl = value;
                 RaisePropertyChanged(nameof(CustomControl));
@@ -459,7 +458,7 @@ namespace Alternet.UI
 
             set
             {
-                if (data.Kind == value || bar != null)
+                if (data.Kind == value || Bar != null)
                     return;
                 data.Kind = value;
                 RaisePropertyChanged(nameof(Kind));
@@ -513,14 +512,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public ToolBar? Bar
         {
-            get => bar;
-
-            internal set
+            get
             {
-                if (bar != value)
-                {
-                    bar = value;
-                }
+                return LogicalParent as ToolBar;
             }
         }
 
@@ -530,12 +524,12 @@ namespace Alternet.UI
         /// <returns>The <see cref="AbstractControl"/> used to display the panel, or <c>null</c> if not found.</returns>
         public AbstractControl? GetControl()
         {
-            if (bar is null || !bar.HasChildren)
+            if (Bar is null || !Bar.HasChildren)
                 return null;
 
-            foreach (var child in bar.Children)
+            foreach (var child in Bar.Children)
             {
-                var panelId = child.CustomAttr.GetAttribute<ObjectUniqueId>(bar.BarPanelIdPropName);
+                var panelId = child.CustomAttr.GetAttribute<ObjectUniqueId>(Bar.BarPanelIdPropName);
                 if (panelId == UniqueId)
                     return child;
             }
@@ -560,6 +554,8 @@ namespace Alternet.UI
         {
             data = item.data;
             Tag = item.Tag;
+            AutomationId = item.AutomationId;
+            Name = item.Name;
             RaisePropertyChanged();
         }
 
