@@ -1532,7 +1532,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets control index in the <see cref="Children"/> of the container control.
+        /// Gets or sets control index in the <see cref="Children"/> of the container control.
         /// </summary>
         [Browsable(false)]
         public int? IndexInParent
@@ -1541,6 +1541,14 @@ namespace Alternet.UI
             {
                 var index = Parent?.children?.IndexOf(this);
                 return index >= 0 ? index : null;
+            }
+
+            set
+            {
+                if (value is null)
+                    return;
+
+                Parent?.SetChildIndex(this, value.Value);
             }
         }
 
