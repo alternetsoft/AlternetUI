@@ -3217,7 +3217,7 @@ namespace Alternet.UI
 
             AbstractControl? panelControl = null;
 
-            if (index < 0)
+            if (index <= 0)
             {
                 index = 0;
             }
