@@ -124,6 +124,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the index of the panel in <see cref="ToolBar.Panels"/> of the toolbar or status bar.
+        /// If the panel is not added to any toolbar or status bar, returns null.
+        /// </summary>
+        public int? Index
+        {
+            get
+            {
+                if (Bar is null)
+                    return null;
+
+                var result = Bar.Panels.IndexOf(this);
+                return result >= 0 ? result : null;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the custom control displayed in the panel.
         /// This property is used when <see cref="BarPanelKind"/> is set to <see cref="BarPanelKind.CustomControl"/>.
         /// This property can be changed only when the panel is not attached to a bar.
