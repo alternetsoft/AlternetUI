@@ -154,9 +154,14 @@ namespace Alternet.UI
 
             set
             {
-                if (data.CustomControl == value || Bar != null)
+                if (data.CustomControl == value)
                     return;
+
+                var oldControl = data.CustomControl;
                 data.CustomControl = value;
+
+                ChangePanelControl(oldControl, value);
+
                 RaisePropertyChanged(nameof(CustomControl));
             }
         }
@@ -474,9 +479,10 @@ namespace Alternet.UI
 
             set
             {
-                if (data.Kind == value || Bar != null)
+                if (data.Kind == value)
                     return;
                 data.Kind = value;
+
                 RaisePropertyChanged(nameof(Kind));
             }
         }
@@ -626,6 +632,38 @@ namespace Alternet.UI
         public void RaiseControlClicked()
         {
             ControlClicked?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Replaces the control associated with this panel with a new control.
+        /// </summary>
+        /// <param name="oldControl">The control to be replaced.</param>
+        /// <param name="newControl">The new control to replace the old one.</param>
+        protected virtual void ChangePanelControl(AbstractControl? oldControl, AbstractControl? newControl)
+        {
+            if (Bar is not null)
+            {
+                if (oldControl is not null)
+                {
+                    var oldIndex = oldControl.IndexInParent;
+                    oldControl.Parent = null;
+                    if (newControl is not null)
+                    {
+                        if (oldIndex is not null)
+                            Bar.Children.Insert(oldIndex.Value, newControl);
+                        else
+                            Bar.Children.Add(newControl);
+                    }
+                }
+                else
+                {
+                    if (newControl is not null)
+                    {
+                        var insertIndex = Bar.GetPanelControlInsertIndex(this);
+                        Bar.Children.Insert(insertIndex, newControl);
+                    }
+                }
+            }
         }
 
         private struct PanelData

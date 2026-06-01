@@ -22,7 +22,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default size, in dips, of the progress bar panels.
         /// </summary>
-        public static SizeD DefaultProgressBarSize { get; set; } = new (100, 16);
+        public static SizeD DefaultProgressBarSize { get; set; } = new(100, 16);
 
         /// <summary>
         /// Gets or sets the padding of the text panel controls in case the panel has a border.
@@ -3200,22 +3200,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when panel was inserted in the <see cref="Panels"/>.
+        /// Gets index in the <see cref="AbstractControl.Children"/> collection where the panel control should be inserted.
         /// </summary>
-        /// <param name="sender">The source of the event, typically the collection that raised the event.
-        /// Can be <see langword="null"/>.</param>
-        /// <param name="index">The zero-based index at which the item was inserted.</param>
-        /// <param name="item">The <see cref="BarPanel"/> instance that was inserted.
-        /// This parameter is never <see langword="null"/>.</param>
-        protected virtual void OnPanelInserted(object? sender, int index, BarPanel item)
+        /// <param name="item">The panel item for which to get the insert index.</param>
+        /// <returns>The index at which the panel control should be inserted.</returns>
+        public virtual int GetPanelControlInsertIndex(BarPanel item)
         {
-            item.PropertyChanged += OnPanelPropertyChanged;
-            item.LogicalParent = this;
+            var index = item.Index ?? Panels.Count;
 
             var insertAfterPanel = GetPanel(index - 1);
             var insertAfterPanelControl = item.GetControl();
-
-            AbstractControl? panelControl = null;
 
             if (index <= 0)
             {
@@ -3244,6 +3238,21 @@ namespace Alternet.UI
             {
                 index = Panels.Count;
             }
+
+            return index;
+        }
+
+        /// <summary>
+        /// Creates a control for the specified panel.
+        /// </summary>
+        /// <param name="item">The panel for which to create the control.</param>
+        /// <param name="suggestedIndex">The suggested index at which to insert the control.</param>
+        /// <returns>The created control, or null if no control was created.</returns>
+        protected virtual AbstractControl? CreatePanelControl(BarPanel item, int? suggestedIndex = null)
+        {
+            AbstractControl? panelControl = null;
+
+            var index = suggestedIndex ?? GetPanelControlInsertIndex(item);
 
             void OnControlClick(object? sender, EventArgs e)
             {
@@ -3323,6 +3332,23 @@ namespace Alternet.UI
                 item.RaiseControlCreated();
                 UpdatePanelControl(item, panelControl);
             }
+
+            return panelControl;
+        }
+
+        /// <summary>
+        /// Called when panel was inserted in the <see cref="Panels"/>.
+        /// </summary>
+        /// <param name="sender">The source of the event, typically the collection that raised the event.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="index">The zero-based index at which the item was inserted.</param>
+        /// <param name="item">The <see cref="BarPanel"/> instance that was inserted.
+        /// This parameter is never <see langword="null"/>.</param>
+        protected virtual void OnPanelInserted(object? sender, int index, BarPanel item)
+        {
+            item.PropertyChanged += OnPanelPropertyChanged;
+            item.LogicalParent = this;
+            CreatePanelControl(item);
         }
 
         /// <summary>
@@ -3335,7 +3361,27 @@ namespace Alternet.UI
         /// <param name="e">The event data associated with the property change.</param>
         protected virtual void OnPanelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            UpdatePanelControl(sender as BarPanel);
+            if (sender is not BarPanel panel)
+                return;
+
+            if (e.PropertyName == nameof(BarPanel.Kind))
+            {
+                var control = panel.Control;
+
+                if (control != null)
+                {
+                    var index = control.IndexInParent;
+
+                    control.Parent = null;
+                    control.Dispose();
+
+                    CreatePanelControl(panel, index);
+                }
+            }
+            else
+            {
+                UpdatePanelControl(panel);
+            }
         }
 
         /// <summary>

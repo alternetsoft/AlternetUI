@@ -60,7 +60,7 @@
     <StatusBar>
       <StatusBarPanel Text="Ready" Name="readyStatusBarPanel"/>
       <StatusBarPanel Kind="Separator"/>
-      <StatusBarPanel Text="TextBtn" Name="textBtnStatusBarPanel" ControlClicked="TextBtnStatusBarPanel_ControlClicked"/>
+      <StatusBarPanel Text="TextBtn" Name="textBtnStatusBarPanel" ControlClicked="TextBtnStatusBarPanel_ControlClicked" Kind="TextButton"/>
       <StatusBarPanel Kind="Separator"/>
       <StatusBarPanel Text="This is a panel with border aligned to fill" HorizontalAlignment="Fill" Style="Normal" Name="fillStatusBarPanel"/>
     </StatusBar>
@@ -176,7 +176,7 @@
           <Button Text="Add item" IsTextLocalized="true" Name="statusAddButton" Margin="0,0,0,10" />
           <Button Text="Add separator" IsTextLocalized="true" Name="statusAddSeparatorButton" Margin="0,0,0,10" />
           <Button Text="Add resizable item" IsTextLocalized="true" Name="statusAddResizableButton" Margin="0,0,0,10" />
-          <Button Text="Add custom item" IsTextLocalized="true" Name="statusAddCustomButton" Margin="0,0,0,10" />
+          <Button Text="More actions..." IsTextLocalized="true" Name="statusMoreActions" Margin="0,0,0,10" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
