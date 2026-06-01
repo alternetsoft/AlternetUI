@@ -12,6 +12,7 @@ namespace Alternet.UI
     /// state of the application, such as the status of a document, the position of the cursor, or other contextual information.
     /// It is derived from the <see cref="ToolBar"/> class and can contain not only simple text panels but also other types of controls,
     /// such as speed buttons, images, combo boxes, progress bars, and other interactive elements.
+    /// Use <see cref="ToolBar.Panels"/> property to add and manage the panels within the status bar.
     /// </summary>
     [ControlCategory("MenusAndToolbars")]
     public partial class StatusBar : ToolBar
