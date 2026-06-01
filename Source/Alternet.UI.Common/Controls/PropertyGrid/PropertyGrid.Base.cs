@@ -130,41 +130,36 @@ namespace Alternet.UI
             RegisterCollectionEditor(
                 typeof(ListView),
                 nameof(ListView.Items),
-                typeof(ListEditSourceListViewItem));
+                typeof(ListEditSourceForListViewItem));
 
             RegisterCollectionEditor(
                 typeof(ListView),
                 nameof(ListView.Columns),
-                typeof(ListEditSourceListViewColumn));
+                typeof(ListEditSourceForListViewColumn));
 
             RegisterCollectionEditor(
                 typeof(ListViewItem),
                 nameof(ListViewItem.Cells),
-                typeof(ListEditSourceListViewCell));
+                typeof(ListEditSourceForListViewCell));
 
             RegisterCollectionEditor(
                 typeof(VirtualListBox),
                 nameof(VirtualListBox.Items),
-                typeof(ListEditSourceListBox));
+                typeof(ListEditSourceForListBox));
 
             RegisterCollectionEditor(
-                typeof(StatusBar),
-                nameof(StatusBar.Panels),
-                typeof(ListEditSourceStatusBar));
+                typeof(ToolBar),
+                nameof(ToolBar.Panels),
+                typeof(ListEditSourceForToolBar));
 
             RegisterCollectionEditor(
                 typeof(ComboBox),
                 nameof(ComboBox.Items),
-                typeof(ListEditSourceListBox));
+                typeof(ListEditSourceForListBox));
 
             /*RegisterCollectionEditor(
                 typeof(TabControl),
                 nameof(TabControl.Pages),
-                null);*/
-
-            /*RegisterCollectionEditor(
-                typeof(Toolbar),
-                nameof(Toolbar.Items),
                 null);*/
 
             /*RegisterCollectionEditor(
@@ -180,7 +175,7 @@ namespace Alternet.UI
             RegisterCollectionEditor(
                 typeof(PropertyGridAdapterBrush),
                 nameof(PropertyGridAdapterBrush.GradientStops),
-                typeof(ListEditSourceGradientStops));
+                typeof(ListEditSourceForGradientStops));
         }
 
         /// <summary>

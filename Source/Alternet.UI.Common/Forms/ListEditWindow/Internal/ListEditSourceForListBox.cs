@@ -8,7 +8,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class ListEditSourceListBox : ListEditSource
+    internal class ListEditSourceForListBox : ListEditSource
     {
         private IEnumerable? rootItems;
 

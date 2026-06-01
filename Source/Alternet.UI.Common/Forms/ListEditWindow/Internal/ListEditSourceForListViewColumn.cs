@@ -4,7 +4,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class ListEditSourceListViewColumn : ListEditSourceListViewItem
+    internal class ListEditSourceForListViewColumn : ListEditSourceForListViewItem
     {
         public override IEnumerable? RootItems => ListView?.Columns;
 

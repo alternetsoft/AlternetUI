@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ListEditSourceGradientStops : ListEditSource
+    internal class ListEditSourceForGradientStops : ListEditSource
     {
         public override object? CreateNewItem() => new GradientStop();
 

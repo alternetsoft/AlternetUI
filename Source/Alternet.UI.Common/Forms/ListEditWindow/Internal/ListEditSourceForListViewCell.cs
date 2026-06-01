@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class ListEditSourceListViewCell : ListEditSource
+    internal class ListEditSourceForListViewCell : ListEditSource
     {
         public override bool AllowAdd => false;
 

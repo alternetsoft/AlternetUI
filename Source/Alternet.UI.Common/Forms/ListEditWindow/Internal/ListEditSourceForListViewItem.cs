@@ -9,7 +9,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    internal class ListEditSourceListViewItem : ListEditSource
+    internal class ListEditSourceForListViewItem : ListEditSource
     {
         public ListView? ListView => Instance as ListView;
 

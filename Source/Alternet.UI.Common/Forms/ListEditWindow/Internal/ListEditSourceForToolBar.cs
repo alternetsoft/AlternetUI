@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal class ListEditSourceStatusBar : ListEditSource
+    internal class ListEditSourceForToolBar : ListEditSource
     {
         public override IEnumerable? RootItems => (Instance as StatusBar)?.Panels;
 
