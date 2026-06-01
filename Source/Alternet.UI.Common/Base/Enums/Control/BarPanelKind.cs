@@ -49,6 +49,6 @@ namespace Alternet.UI
         /// <summary>
         /// The panel is a custom control.
         /// </summary>
-        Control,
+        CustomControl,
     }
 }

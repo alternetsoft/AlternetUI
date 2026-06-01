@@ -500,7 +500,7 @@ namespace Alternet.UI
             var insertAfterPanel = GetField(index - 1);
             var insertAfterPanelControl = item.GetControl();
 
-            AbstractControl panelControl;
+            AbstractControl? panelControl = null;
 
             if (index < 0)
             {
@@ -589,15 +589,22 @@ namespace Alternet.UI
                     float? spacerWidth = float.IsNaN(item.Width) ? null : item.Width;
                     panelControl = InsertSpacerCore(index, spacerWidth);
                     break;
-                /*
-                case BarPanelKind.Control:
+                case BarPanelKind.CustomControl:
+
+                    if (item.CustomControl is not null)
+                    {
+                        InsertControl(index, item.CustomControl);
+                        panelControl = item.CustomControl;
+                    }
                     break;
-                */
             }
 
-            panelControl.CustomAttr.SetAttribute(BarPanelIdPropName, item.UniqueId);
-            item.RaiseControlCreated();
-            UpdatePanelControl(item, panelControl);
+            if (panelControl != null)
+            {
+                panelControl.CustomAttr.SetAttribute(BarPanelIdPropName, item.UniqueId);
+                item.RaiseControlCreated();
+                UpdatePanelControl(item, panelControl);
+            }
         }
 
         /// <summary>
@@ -638,7 +645,7 @@ namespace Alternet.UI
                 case BarPanelKind.Spacer:
                     UpdateSpacerPanel();
                     break;
-                case BarPanelKind.Control:
+                case BarPanelKind.CustomControl:
                     UpdateControlPanel();
                     break;
             }
@@ -676,10 +683,6 @@ namespace Alternet.UI
                 }
             }
 
-            void UpdateControlPanel()
-            {
-            }
-
             void UpdatePictureBoxPanel()
             {
                 if(control is not PictureBox pictureBox)
@@ -703,6 +706,10 @@ namespace Alternet.UI
                 {
                     control.SuggestedSize = panel.Width;
                 }
+            }
+
+            void UpdateControlPanel()
+            {
             }
 
             void UpdateTextPanel()

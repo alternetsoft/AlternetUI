@@ -92,6 +92,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the custom control displayed in the panel.
+        /// This property is used when <see cref="BarPanelKind"/> is set to <see cref="BarPanelKind.CustomControl"/>.
+        /// This property can be changed only when the panel is not attached to a bar.
+        /// </summary>
+        public virtual AbstractControl? CustomControl
+        {
+            get
+            {
+                return data.CustomControl;
+            }
+
+            set
+            {
+                if (data.CustomControl == value || bar != null)
+                    return;
+                data.CustomControl = value;
+                RaisePropertyChanged(nameof(CustomControl));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the SVG image displayed in the panel.
         /// </summary>
         public virtual SvgImage? SvgImage
@@ -522,7 +543,7 @@ namespace Alternet.UI
                 case BarPanelKind.PictureBox:
                 case BarPanelKind.ProgressBar:
                 case BarPanelKind.Spacer:
-                case BarPanelKind.Control:
+                case BarPanelKind.CustomControl:
                     return $"[{Kind}]";
             }
         }
@@ -569,6 +590,7 @@ namespace Alternet.UI
             public int? SvgSize;
             public Image? Image;
             public Image? DisabledImage;
+            public AbstractControl? CustomControl;
 
             public PanelData()
             {

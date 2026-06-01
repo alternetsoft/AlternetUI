@@ -262,7 +262,20 @@ namespace MenuSample
 
             menu.Add("Add custom control", () =>
             {
-            }).IsEnabled = false;
+                var slider = new StdSlider()
+                {
+                    Minimum = 0,
+                    Maximum = 100,
+                    Value = 50,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    SuggestedWidth = 100,
+                    SuggestedHeight = 16,
+                };
+
+                var panel = new StatusBarPanel(BarPanelKind.CustomControl);
+                panel.CustomControl = slider;
+                GetBar().Panels.Add(panel);
+            });
 
             statusAddCustomButton.DropDownMenu = menu;
 
