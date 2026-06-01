@@ -168,7 +168,7 @@ namespace MenuSample
 
                 if (control != null && panel != null)
                 {
-                    panel.Style = StatusBarPanelStyle.Normal;
+                    panel.HasBorder = true;
                     control.HorizontalAlignment = HorizontalAlignment.Fill;
                 }
             };

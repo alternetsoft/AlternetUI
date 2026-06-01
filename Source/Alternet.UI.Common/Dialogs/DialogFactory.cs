@@ -340,12 +340,12 @@ namespace Alternet.UI
             EditPropertyWithListEditor(control, nameof(ListView.Items));
 
         /// <summary>
-        /// Edits <see cref="StatusBar.Panels"/> with list editor.
+        /// Edits <see cref="ToolBar.Panels"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
-        public static void EditItemsWithListEditor(StatusBar? control)
+        public static void EditItemsWithListEditor(ToolBar? control)
         {
-            EditPropertyWithListEditor(control, nameof(StatusBar.Panels));
+            EditPropertyWithListEditor(control, nameof(ToolBar.Panels));
         }
 
         /// <summary>

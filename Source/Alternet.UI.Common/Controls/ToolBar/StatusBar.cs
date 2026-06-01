@@ -22,23 +22,6 @@ namespace Alternet.UI
         public const float VisualStudioStatusBarHeight = 28;
 
         /// <summary>
-        /// Gets or sets the default width, in dips, of the progress bar panels.
-        /// </summary>
-        public static float DefaultProgressBarWidth { get; set; } = 100;
-
-        /// <summary>
-        /// Gets or sets the padding of the panel controls in case the panel style is set to <see cref="StatusBarPanelStyle.Normal"/>
-        /// and panel has a border.
-        /// </summary>
-        public static Thickness DefaultNormalPanelPadding { get; set; } = new Thickness(4, 2);
-        
-        /// <summary>
-        /// Gets or sets the padding of the panel controls in case the panel style is set to <see cref="StatusBarPanelStyle.Flat"/>
-        /// and the panel has no border.
-        /// </summary>
-        public static Thickness DefaultFlatPanelPadding { get; set; } = new Thickness(2, 2);
-
-        /// <summary>
         /// Gets or sets the default minimum height of the status bar.
         /// </summary>
         public static float DefaultMinHeight { get; set; } = VisualStudioStatusBarHeight;
@@ -60,8 +43,6 @@ namespace Alternet.UI
         /// </summary>
         public StatusBar()
         {
-            Panels.ItemInserted += OnItemInserted;
-            Panels.ItemRemoved += OnItemRemoved;
             MinHeight = DefaultMinHeight;
 
             ParentBackColor = false;
@@ -88,12 +69,6 @@ namespace Alternet.UI
                 SetStatusText(value);
             }
         }
-
-        /// <summary>
-        /// Gets a collection of <see cref="StatusBarPanel"/> objects associated with the control.
-        /// </summary>
-        [Content]
-        public virtual BaseCollection<StatusBarPanel> Panels { get; } = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
         /// Gets a sizing grip that allows the user to resize the parent form.
@@ -162,10 +137,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds new item to <see cref="Panels"/>.
+        /// Adds new item to panels.
         /// </summary>
         /// <param name="text">The text displayed in the status bar panel.</param>
-        public StatusBarPanel Add(string text)
+        public virtual StatusBarPanel Add(string text)
         {
             var result = new StatusBarPanel(text);
             Panels.Add(result);
@@ -187,13 +162,10 @@ namespace Alternet.UI
         /// Returns panel by index.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
-        /// <returns><see cref="StatusBarPanel"/> if found; <c>null</c> otherwise.</returns>
-        public StatusBarPanel? GetField(int index)
+        /// <returns><see cref="BarPanel"/> if found; <c>null</c> otherwise.</returns>
+        public BarPanel? GetField(int index)
         {
-            if (index < 0 || index >= Panels.Count)
-                return null;
-
-            return Panels[index];
+            return GetPanel(index);
         }
 
         /// <summary>
@@ -207,7 +179,7 @@ namespace Alternet.UI
         /// The given text will replace the current text. The display of the status bar is
         /// updated immediately.
         /// </remarks>
-        public bool SetStatusText(string? text = null, int index = 0)
+        public virtual bool SetStatusText(string? text = null, int index = 0)
         {
             if (!IsOk)
                 return false;
@@ -260,7 +232,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <seealso cref="PopStatusText"/>
-        public bool PushStatusText(string? text = null, int index = 0)
+        public virtual bool PushStatusText(string? text = null, int index = 0)
         {
             if (!IsOk)
                 return false;
@@ -279,7 +251,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><c>true</c> if success; <c>false</c> otherwise.</returns>
         /// <seealso cref="PushStatusText"/>
-        public bool PopStatusText(int index = 0)
+        public virtual bool PopStatusText(int index = 0)
         {
             if (!IsOk)
                 return false;
@@ -300,7 +272,7 @@ namespace Alternet.UI
         /// Size of the <paramref name="widths"/> array must be equal to the number passed to
         /// <see cref="SetFieldsCount"/> the last time it was called.
         /// </remarks>
-        public bool SetStatusWidths(float[] widths)
+        public virtual bool SetStatusWidths(float[] widths)
         {
             if (!IsOk || widths.Length == 0)
                 return false;
@@ -325,7 +297,7 @@ namespace Alternet.UI
         /// If <paramref name="count"/> is greater than the previous number of panels,
         /// then new panels with empty strings will be added to the status bar.
         /// </remarks>
-        public bool SetFieldsCount(int count)
+        public virtual bool SetFieldsCount(int count)
         {
             if (!IsOk || count < 1)
                 return false;
@@ -343,7 +315,7 @@ namespace Alternet.UI
         /// <returns>
         /// <see cref="float"/> with the panel width if success; <c>null</c> otherwise.
         /// </returns>
-        public float? GetStatusWidth(int index)
+        public virtual float? GetStatusWidth(int index)
         {
             if (!IsOk)
                 return null;
@@ -358,17 +330,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns></returns>
-        /// <remarks>
-        /// This method doesn't affect <see cref="Panels"/>, it works with the native control.
-        /// </remarks>
-        public StatusBarPanelStyle? GetStatusStyle(int index)
+        public virtual StatusBarPanelStyle? GetStatusStyle(int index)
         {
             if (!IsOk)
                 return null;
             var field = GetField(index);
             if (field == null)
                 return null;
-            return field.Style;
+            return field.HasBorder ? StatusBarPanelStyle.Normal : StatusBarPanelStyle.Flat;
         }
 
         /// <summary>
@@ -381,7 +350,7 @@ namespace Alternet.UI
         /// Size of the <paramref name="styles"/> array must be equal to the number passed to
         /// <see cref="SetFieldsCount"/> the last time it was called.
         /// </remarks>
-        public bool SetStatusStyles(StatusBarPanelStyle[] styles)
+        public virtual bool SetStatusStyles(StatusBarPanelStyle[] styles)
         {
             if (!IsOk || styles.Length == 0)
                 return false;
@@ -390,7 +359,7 @@ namespace Alternet.UI
                 var field = GetField(i);
                 if (field == null)
                     return false;
-                field.Style = styles[i];
+                field.HasBorder = styles[i] == StatusBarPanelStyle.Normal;
             }
 
             return true;
@@ -402,7 +371,7 @@ namespace Alternet.UI
         /// <param name="index">Panel index, starting from zero.</param>
         /// <returns><see cref="RectD"/> with the size and position of a panels's
         /// internal bounding rectangle on success; <c>null</c> otherwise.</returns>
-        public RectD? GetFieldRect(int index)
+        public virtual RectD? GetFieldRect(int index)
         {
             if (!IsOk)
                 return null;
@@ -428,9 +397,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Clears <see cref="Panels"/>.
+        /// Clears panels.
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             Panels.Clear();
         }
@@ -460,321 +429,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the panel by its unique identifier.
-        /// </summary>
-        /// <param name="id">The unique identifier of the panel.</param>
-        /// <returns>The <see cref="StatusBarPanel"/> with the specified unique identifier, or <c>null</c> if not found.</returns>
-        public StatusBarPanel? GetPanelById(ObjectUniqueId id)
-        {
-            foreach (var panel in Panels)
-            {
-                if (panel.UniqueId == id)
-                    return panel;
-            }
-
-            return null;
-        }
-
-        /// <summary>
         /// Adds separator panel to the status bar.
         /// </summary>
         /// <returns>The newly created <see cref="StatusBarPanel"/> representing the separator.</returns>
         internal new StatusBarPanel AddSeparatorCore()
         {
             return AddSeparator();
-        }
-
-        /// <summary>
-        /// Called when item was inserted in the <see cref="Panels"/>.
-        /// </summary>
-        /// <param name="sender">The source of the event, typically the collection that raised the event.
-        /// Can be <see langword="null"/>.</param>
-        /// <param name="index">The zero-based index at which the item was inserted.</param>
-        /// <param name="item">The <see cref="StatusBarPanel"/> instance that was inserted.
-        /// This parameter is never <see langword="null"/>.</param>
-        protected virtual void OnItemInserted(object? sender, int index, StatusBarPanel item)
-        {
-            item.PropertyChanged += OnItemPropertyChanged;
-            item.Bar = this;
-
-            var insertAfterPanel = GetField(index - 1);
-            var insertAfterPanelControl = item.GetControl();
-
-            AbstractControl? panelControl = null;
-
-            if (index < 0)
-            {
-                index = 0;
-            }
-            else
-            if (insertAfterPanelControl is null)
-            {
-                index = Panels.Count;
-            }
-            else
-            {
-                var panelControlIndex = Children.IndexOf(insertAfterPanelControl);
-
-                if (panelControlIndex < 0)
-                {
-                    index = Panels.Count;
-                }
-                else
-                {
-                    index = panelControlIndex + 1;
-                }
-            }
-
-            if (index > Panels.Count)
-            {
-                index = Panels.Count;
-            }
-
-            void OnButtonClick(object? sender, EventArgs e)
-            {
-                if (sender is not AbstractControl control)
-                    return;
-
-                var id = control.CustomAttr.GetAttribute(BarPanelIdPropName);
-
-                if (id is not ObjectUniqueId uniqueId)
-                    return;
-
-                var panel = GetPanelById(uniqueId);
-                if (panel is null)
-                    return;
-
-                panel.RaiseControlClicked();
-            }
-
-            switch (item.Kind)
-            {
-                default:
-                case BarPanelKind.Text:
-                    panelControl = InsertTextCore(index, item.Text);
-                    break;
-                case BarPanelKind.Separator:
-                    panelControl = InsertSeparatorCore(index);
-                    break;
-                case BarPanelKind.PictureBox:
-                    panelControl = InsertPictureCore(index, item.ImageSet, item.DisabledImageSet, item.ToolTip);
-                    break;
-                case BarPanelKind.SpeedButton:
-                    panelControl = InsertSpeedBtnCore(
-                                index,
-                                ItemKind.Button,
-                                item.Text,
-                                item.ImageSet,
-                                item.DisabledImageSet,
-                                item.ToolTip,
-                                OnButtonClick);
-                    break;
-                case BarPanelKind.TextButton:
-                    panelControl = InsertTextBtnCore(index, item.Text, null, OnButtonClick);
-                    break;
-                case BarPanelKind.ProgressBar:
-                    StdProgressBar progressBar = new()
-                    {
-                        MinHeight = 16,
-                        AutoSize = false,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        SuggestedWidth = DefaultProgressBarWidth,
-                        SuggestedHeight = 16,
-                    };
-
-                    InsertControl(index, progressBar);
-                    panelControl = progressBar;
-                    break;
-                case BarPanelKind.Spacer:
-                    float? spacerWidth = float.IsNaN(item.Width) ? null : item.Width;
-                    panelControl = InsertSpacerCore(index, spacerWidth);
-                    break;
-                case BarPanelKind.CustomControl:
-
-                    if (item.CustomControl is not null)
-                    {
-                        InsertControl(index, item.CustomControl);
-                        panelControl = item.CustomControl;
-                    }
-                    break;
-            }
-
-            if (panelControl != null)
-            {
-                panelControl.CustomAttr.SetAttribute(BarPanelIdPropName, item.UniqueId);
-                item.RaiseControlCreated();
-                UpdatePanelControl(item, panelControl);
-            }
-        }
-
-        /// <summary>
-        /// Called when property of the item in the <see cref="Panels"/> was changed.
-        /// </summary>
-        /// <param name="panel">The <see cref="StatusBarPanel"/> instance whose property changed.</param>
-        /// <param name="control">The <see cref="AbstractControl"/> associated with the panel.</param>
-        protected virtual bool UpdatePanelControl(StatusBarPanel? panel, AbstractControl? control = null)
-        {
-            if (panel is null)
-                return false;
-
-            control ??= panel?.GetControl();
-
-            if (control == null || panel is null)
-                return false;
-
-            switch (panel.Kind)
-            {
-                default:
-                case BarPanelKind.Text:
-                    UpdateTextPanel();
-                    break;
-                case BarPanelKind.Separator:
-                    break;
-                case BarPanelKind.PictureBox:
-                    UpdatePictureBoxPanel();
-                    break;
-                case BarPanelKind.SpeedButton:
-                    UpdateSpeedButtonPanel();
-                    break;
-                case BarPanelKind.TextButton:
-                    UpdateTextButtonPanel();
-                    break;
-                case BarPanelKind.ProgressBar:
-                    UpdateProgressBarPanel();
-                    break;
-                case BarPanelKind.Spacer:
-                    UpdateSpacerPanel();
-                    break;
-                case BarPanelKind.CustomControl:
-                    UpdateControlPanel();
-                    break;
-            }
-
-            void UpdateSpeedButtonPanel()
-            {
-                if (control is not SpeedButton speedButton)
-                    return;
-                speedButton.Image = panel.Image;
-                speedButton.DisabledImage = panel.DisabledImage;
-                speedButton.SvgImage = panel.SvgImage;                
-                speedButton.SvgSize = panel.SvgSize;
-                speedButton.SvgColor = panel.SvgColor;
-                speedButton.ImageSet = panel.ImageSet;
-                speedButton.DisabledImageSet = panel.DisabledImageSet;
-            }
-
-            void UpdateTextButtonPanel()
-            {
-                control.Text = panel.Text;
-                control.SuggestedWidth = panel.Width;
-                control.MinWidth = panel.MinWidth;
-                control.MaxWidth = panel.MaxWidth;
-            }
-
-            void UpdateProgressBarPanel()
-            {
-                if (float.IsNaN(panel.Width))
-                {
-                    control.SuggestedWidth = DefaultProgressBarWidth;
-                }
-                else
-                {
-                    control.SuggestedWidth = panel.Width;
-                }
-            }
-
-            void UpdatePictureBoxPanel()
-            {
-                if(control is not PictureBox pictureBox)
-                    return;
-                pictureBox.Image = panel.Image;
-                pictureBox.DisabledImage = panel.DisabledImage;
-                pictureBox.SvgImage = panel.SvgImage;
-                pictureBox.SvgColor = panel.SvgColor;
-                pictureBox.SvgSize = panel.SvgSize;
-                pictureBox.ImageSet = panel.ImageSet;
-                pictureBox.DisabledImageSet = panel.DisabledImageSet;
-            }
-
-            void UpdateSpacerPanel()
-            {
-                if (float.IsNaN(panel.Width))
-                {
-                    control.SuggestedSize = DefaultSpacerSize;
-                }
-                else
-                {
-                    control.SuggestedSize = panel.Width;
-                }
-            }
-
-            void UpdateControlPanel()
-            {
-            }
-
-            void UpdateTextPanel()
-            {
-                control.Text = panel.Text;
-                control.SuggestedWidth = panel.Width;
-                control.MinWidth = panel.MinWidth;
-                control.MaxWidth = panel.MaxWidth;
-                control.HasBorder = panel.Style == StatusBarPanelStyle.Normal;
-
-                if (panel.Style == StatusBarPanelStyle.Normal)
-                {
-                    control.Padding = DefaultNormalPanelPadding;
-                }
-                else
-                {
-                    control.Padding = DefaultFlatPanelPadding;
-                }
-            }
-
-            control.HorizontalAlignment = panel.HorizontalAlignment;
-            control.ToolTipObject = panel.ToolTip;
-            panel.RaiseControlUpdated();
-
-            return true;
-        }
-
-        /// <inheritdoc/>
-        protected override void DisposeManaged()
-        {
-            foreach (var panel in Panels)
-            {
-                OnItemRemoved(panel);
-            }
-
-            base.DisposeManaged();
-        }
-
-        /// <summary>
-        /// Handles the "PropertyChanged" event for an item in the panel collection.
-        /// </summary>
-        /// <remarks>This method is called when a property of an item in the collection changes. Derived
-        /// classes can override this method to provide custom handling for property changes.</remarks>
-        /// <param name="sender">The source of the event, typically the item whose property changed.
-        /// Can be <see langword="null"/>.</param>
-        /// <param name="e">The event data associated with the property change.</param>
-        protected virtual void OnItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            UpdatePanelControl(sender as StatusBarPanel);
-        }
-
-        /// <summary>
-        /// Invoked when an item is removed from the panels collection.
-        /// </summary>
-        /// <remarks>This method detaches event handlers from the removed item and updates the state of
-        /// the status bar panels. Subclasses can override this method to provide additional behavior
-        /// when an item is removed.</remarks>
-        /// <param name="sender">The source of the event, typically the collection that raised the event.
-        /// Can be <see langword="null"/>.</param>
-        /// <param name="index">The zero-based index at which the item was removed.</param>
-        /// <param name="item">The <see cref="StatusBarPanel"/> instance that was removed.
-        /// This parameter is never <see langword="null"/>.</param>
-        protected virtual void OnItemRemoved(object? sender, int index, StatusBarPanel item)
-        {
-            OnItemRemoved(item);
         }
 
         /// <inheritdoc/>
@@ -789,20 +449,6 @@ namespace Alternet.UI
             }
 
             base.OnSystemColorsChanged(e);
-        }
-
-        private void OnItemRemoved(StatusBarPanel item)
-        {
-            var control = item.Control;
-
-            item.PropertyChanged -= OnItemPropertyChanged;
-            item.Bar = null;
-
-            if (control != null)
-            {
-                control.Parent = null;
-                control.Dispose();
-            }
         }
     }
 }

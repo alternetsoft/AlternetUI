@@ -80,6 +80,38 @@ namespace Alternet.UI
         public event EventHandler? ControlUpdated;
 
         /// <summary>
+        /// Occurs when the <see cref="HasBorder"/> property changes.
+        /// </summary>
+        [Obsolete("Use the HasBorderChanged event instead.")]
+        public event EventHandler? StyleChanged;
+
+        /// <summary>
+        /// Gets or sets style of the status bar panel.
+        /// </summary>
+        [Obsolete("Use the HasBorder property instead.")]
+        public virtual StatusBarPanelStyle Style
+        {
+            get
+            {
+                return HasBorder ? StatusBarPanelStyle.Normal : StatusBarPanelStyle.Flat;
+            }
+
+            set
+            {
+                if (Style == value)
+                    return;
+
+                if (value == StatusBarPanelStyle.Normal)
+                    HasBorder = true;
+                else
+                    HasBorder = false;
+
+                StyleChanged?.Invoke(this, EventArgs.Empty);
+                RaisePropertyChanged(nameof(Style));
+            }
+        }
+
+        /// <summary>
         /// Gets the control in which the panel is displayed.
         /// </summary>
         [Browsable(false)]
@@ -527,6 +559,16 @@ namespace Alternet.UI
             data = item.data;
             Tag = item.Tag;
             RaisePropertyChanged();
+        }
+
+        /// <summary>
+        /// Creates copy of this <see cref="BarPanel"/>.
+        /// </summary>
+        public virtual BarPanel Clone()
+        {
+            var result = new BarPanel();
+            result.Assign(this);
+            return result;
         }
 
         /// <inheritdoc/>

@@ -40,45 +40,5 @@ namespace Alternet.UI
             : base(text)
         {
         }
-
-        /// <summary>
-        /// Occurs when the <see cref="Style"/> property changes.
-        /// </summary>
-        public event EventHandler? StyleChanged;
-
-        /// <summary>
-        /// Gets or sets style of the status bar panel.
-        /// </summary>
-        public virtual StatusBarPanelStyle Style
-        {
-            get
-            {
-                return HasBorder ? StatusBarPanelStyle.Normal : StatusBarPanelStyle.Flat;
-            }
-
-            set
-            {
-                if (Style == value)
-                    return;
-
-                if (value == StatusBarPanelStyle.Normal)
-                    HasBorder = true;
-                else
-                    HasBorder = false;
-
-                StyleChanged?.Invoke(this, EventArgs.Empty);
-                RaisePropertyChanged(nameof(Style));
-            }
-        }
-
-        /// <summary>
-        /// Creates copy of this <see cref="StatusBarPanel"/>.
-        /// </summary>
-        public virtual StatusBarPanel Clone()
-        {
-            var result = new StatusBarPanel();
-            result.Assign(this);
-            return result;
-        }
     }
 }
