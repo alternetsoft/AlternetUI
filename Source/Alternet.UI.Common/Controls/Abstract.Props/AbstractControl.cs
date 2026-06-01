@@ -1540,7 +1540,7 @@ namespace Alternet.UI
             get
             {
                 var index = Parent?.children?.IndexOf(this);
-                return index;
+                return index >= 0 ? index : null;
             }
         }
 
