@@ -89,6 +89,7 @@ namespace Alternet.UI
         /// Gets or sets style of the status bar panel.
         /// </summary>
         [Obsolete("Use the HasBorder property instead.")]
+        [Browsable(false)]
         public virtual StatusBarPanelStyle Style
         {
             get
@@ -128,6 +129,7 @@ namespace Alternet.UI
         /// This property is used when <see cref="BarPanelKind"/> is set to <see cref="BarPanelKind.CustomControl"/>.
         /// This property can be changed only when the panel is not attached to a bar.
         /// </summary>
+        [Browsable(false)]
         public virtual AbstractControl? CustomControl
         {
             get

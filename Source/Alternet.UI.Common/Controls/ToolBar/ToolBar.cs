@@ -3276,7 +3276,7 @@ namespace Alternet.UI
                                 OnButtonClick);
                     break;
                 case BarPanelKind.TextButton:
-                    panelControl = InsertTextBtnCore(index, item.Text, null, OnButtonClick);
+                    panelControl = InsertTextBtnCore(index, item.Text, item.ToolTip, OnButtonClick);
                     break;
                 case BarPanelKind.ProgressBar:
                     StdProgressBar progressBar = new()

@@ -9,25 +9,34 @@ namespace Alternet.UI
 {
     internal class ListEditSourceForToolBar : ListEditSource
     {
-        public override IEnumerable? RootItems => (Instance as StatusBar)?.Panels;
+        public override IEnumerable? RootItems => (Instance as ToolBar)?.Panels;
 
-        public override object? CreateNewItem() => new StatusBarPanel();
+        public override object? CreateNewItem() => new BarPanel();
 
-        public override object CloneItem(object item) => ((StatusBarPanel)item).Clone();
+        public override string? GetItemTitle(object item)
+        {
+            return (item as BarPanel)?.Text;
+        }
+
+        public override object CloneItem(object item) => ((BarPanel)item).Clone();
 
         public override void ApplyData(IEnumerableTree tree)
         {
-            if (Instance is not StatusBar statusBar)
+            if (Instance is not ToolBar statusBar)
                 return;
 
-            List<StatusBarPanel> items = new();
-            items.AddRange(EnumerableUtils.GetItems<StatusBarPanel>(tree));
+            List<BarPanel> items = new();
+            items.AddRange(EnumerableUtils.GetItems<BarPanel>(tree));
             statusBar.BeginUpdate();
             try
             {
-                statusBar.Panels.SetCount(items.Count, () => new StatusBarPanel());
+                statusBar.Panels.Clear();
                 for (int i = 0; i < items.Count; i++)
-                    statusBar.Panels[i].Assign(items[i]);
+                {
+                    var item = new BarPanel();
+                    item.Assign(items[i]);
+                    statusBar.Panels.Add(item);
+                }
             }
             finally
             {
