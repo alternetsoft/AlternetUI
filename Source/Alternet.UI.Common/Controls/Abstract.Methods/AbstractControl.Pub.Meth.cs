@@ -303,10 +303,15 @@ namespace Alternet.UI
         /// <remarks>
         /// If <paramref name="newIndex"/> = -1, moves to the end of the collection.
         /// </remarks>
-        public virtual void SetChildIndex(AbstractControl child, int newIndex)
+        public virtual bool SetChildIndex(AbstractControl child, int newIndex)
         {
-            Children.SetItemIndex(child, newIndex);
-            PerformLayout(false);
+            var moved = Children.SetItemIndex(child, newIndex);
+            if (moved)
+            {
+                PerformLayout(layoutParent: false);
+            }
+
+            return moved;
         }
 
         /// <summary>
