@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=1.0.15.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=1.0.16.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -744,6 +744,7 @@
     <Type Name="Alternet.UI.WindowRoundedCornerPreference" />
     <Type Name="Alternet.UI.ClipboardDataFormatId" />
     <Type Name="Alternet.UI.TextDataFormat" />
+    <Type Name="Alternet.UI.BarPanelKind" />
     <Type Name="Alternet.UI.BoundsSpecified" />
     <Type Name="Alternet.UI.CheckedSpreadMode" />
     <Type Name="Alternet.UI.CheckState" />
@@ -15259,22 +15260,6 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.PlessStatusBarHandler">
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.StatusBar">
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.StatusBarPanel">
-      <Event Name="TextChanged" />
-      <Event Name="WidthChanged" />
-      <Event Name="StyleChanged" />
-      <Event Name="PropertyChanged" />
-    </Type>
     <Type Name="Alternet.UI.CardPanel">
       <Event Name="CardPropertyChanged" />
       <Event Name="AfterPaint" />
@@ -16100,6 +16085,20 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TextBoxInitializeEventArgs" />
+    <Type Name="Alternet.UI.BarPanel">
+      <Event Name="TextChanged" />
+      <Event Name="WidthChanged" />
+      <Event Name="MinWidthChanged" />
+      <Event Name="HasBorderChanged" />
+      <Event Name="ControlCreated" />
+      <Event Name="ControlClicked" />
+      <Event Name="ControlUpdated" />
+      <Event Name="StyleChanged" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.UI.FindReplaceControl">
       <Event Name="ClickFindNext" />
       <Event Name="ClickFindPrevious" />
@@ -16204,6 +16203,108 @@
       <Event Name="OptionMatchCaseChanged" />
       <Event Name="OptionMatchWholeWordChanged" />
       <Event Name="OptionUseRegularExpressionsChanged" />
+    </Type>
+    <Type Name="Alternet.UI.StatusBar">
+      <Event Name="ToolClick" />
+      <Event Name="AfterPaint" />
+      <Event Name="LayoutMaxSizeChanged" />
+      <Event Name="DropDownMenuShowing" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="ContextMenuShowing" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="Shown" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="PerformLayoutIgnored" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
+      <Event Name="ChildLayoutUpdated" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.StatusBarPanel">
+      <Event Name="TextChanged" />
+      <Event Name="WidthChanged" />
+      <Event Name="MinWidthChanged" />
+      <Event Name="HasBorderChanged" />
+      <Event Name="ControlCreated" />
+      <Event Name="ControlClicked" />
+      <Event Name="ControlUpdated" />
+      <Event Name="StyleChanged" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBar">
       <Event Name="ToolClick" />
@@ -18573,7 +18674,6 @@
     <Type Name="Alternet.UI.IFontAndColor" />
     <Type Name="Alternet.UI.IReadOnlyFontAndColor" />
     <Type Name="Alternet.UI.IControlFactoryHandler" />
-    <Type Name="Alternet.UI.IStatusBarHandler" />
     <Type Name="Alternet.UI.IToolTipFactoryHandler" />
     <Type Name="Alternet.UI.IWebBrowserFactoryHandler" />
     <Type Name="Alternet.UI.IWxControlFactoryHandler" />
@@ -20065,6 +20165,7 @@
     </Type>
     <Type Name="Alternet.UI.FindReplaceControl+SearchScope" />
     <Type Name="Alternet.UI.FindReplaceControl+IFindReplaceConnect" />
+    <Type Name="Alternet.UI.ToolBar+GripControlKind" />
     <Type Name="Alternet.UI.ToolBar+ItemKind" />
     <Type Name="Alternet.UI.ToolTipFactory+ShowInOverlayParams" />
     <Type Name="Alternet.UI.DrawingUtils+DrawBorderParams" />

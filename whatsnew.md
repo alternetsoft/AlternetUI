@@ -1,3 +1,30 @@
+# 1.0.16 (2026 June 1)
+
+- FlagsAndAttributes: fix exception in GetAttribute overload.
+- Window: Fix Close method in case when WindowCloseAction.Dispose.
+- Complete reimplementation of StatusBar inside the library. Now it is derived from the <see cref="ToolBar"/> class 
+and can contain not only simple text panels but also other types of controls, such as speed buttons, images, combo boxes, progress bars, 
+and other interactive elements.
+- Remove Raised/Sunken from StatusBarPanelStyle.
+- PictureBox: Add ImageVertAlign and ImageHorzAlign and guard invalidates.
+- GripControl: use ForeColor when grip svg is painted.
+- GripControl: Use alignment enums for sizing grip image.
+- GripControl: Add TargetProvider property.
+- ImageDrawable: Add HorizontalAlignment and VerticalAlignment.
+- ToolBar: Add GripControlKind enum and AddSizingGrip.
+- ToolBar: Add Panels property.
+- ToolBar: Add and Insert methods for different item types.
+- Add move grip to PopupWindow toolbar. This enables a move handle on the bottom toolbar (before adding OK/Cancel buttons), 
+making the popup easier to reposition on the screen.
+- Fix SvgColors to use IsDark property.
+- Fix AbstractControl.IndexInParent.
+- Fix BaseCollection.SetItemIndex and make it to return bool.
+- AbstractControl: Make SetChildIndex return bool and skip layout if not needed.
+- AbstractControl: Make IndexInParent property settable.
+- AbstractControl: Fix not invalidated when generic child was removed.
+
+---
+
 # 1.0.15 (2026 May 25)
 
 - Add GripControl. It allows the user to resize or move the target control by dragging the grip.
