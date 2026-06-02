@@ -58,9 +58,14 @@ namespace Alternet.UI
 
             var number = LayoutWhenDocked(container, ref space, items);
 
+            if (number == items.Count)
+            {
+                return;
+            }
+
             void UpdateItems()
             {
-                if (number == 0 || number == items.Count)
+                if (number == 0)
                     return;
                 var newItems = new List<ILayoutItem>();
                 foreach (var item in items)
