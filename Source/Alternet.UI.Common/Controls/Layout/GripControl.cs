@@ -51,7 +51,7 @@ namespace Alternet.UI
             this.SuggestedSize = new (DefaultSuggestedSize, DefaultSuggestedSize);
             this.Cursor = Cursors.SizeNWSE;
             Alignment = HVAlignment.BottomRight;
-            Dock = DockStyle.Right;
+            Dock = DockStyle.RightAutoSize;
 
             primitive.HorizontalAlignment = HorizontalAlignment.Right;
             primitive.VerticalAlignment = VerticalAlignment.Bottom;
@@ -424,6 +424,7 @@ namespace Alternet.UI
             Cursor = Cursors.Default;
             MinSizeDelta = 1;
             SuggestedSize = SizeD.NaN;
+            Dock = DockStyle.None;
             Alignment = new (HorizontalAlignment.Stretch, VerticalAlignment.Stretch);
         }
 
@@ -437,7 +438,7 @@ namespace Alternet.UI
             Cursor = Cursors.SizeNESW;
             InvertWidthDelta = true;
             Alignment = HVAlignment.BottomLeft;
-            Dock = DockStyle.Left;
+            Dock = DockStyle.LeftAutoSize;
             primitive.HorizontalAlignment = HorizontalAlignment.Left;
             primitive.VerticalAlignment = VerticalAlignment.Bottom;
             SizeAction = GripSizeAction.ChangeWidthAndHeight;

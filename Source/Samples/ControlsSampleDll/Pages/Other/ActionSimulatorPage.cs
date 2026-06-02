@@ -62,12 +62,14 @@ namespace ControlsSample
 
             statusBar.SuggestedHeight = 26;
             statusBar.SetVisibleBorders(false, true);
-            statusBar.VerticalAlignment = VerticalAlignment.Bottom;
+            statusBar.Dock = DockStyle.Bottom;
             statusBar.Parent = this;
 
-            statusBar.AddSizingGrip(this, ToolBar.GripControlKind.SizeGripLeft);
-            statusBar.AddSizingGrip(this, ToolBar.GripControlKind.MoveGrip);
-            statusBar.AddSizingGrip(this, ToolBar.GripControlKind.SizeGripRight);
+            var rightGrip = statusBar.AddSizingGrip(this, ToolBar.GripControlKind.SizeGripRight);
+            var moveGrip = statusBar.AddSizingGrip(this, ToolBar.GripControlKind.MoveGrip);
+            var leftGrip = statusBar.AddSizingGrip(this, ToolBar.GripControlKind.SizeGripLeft);
+
+            moveGrip.HasBorder = true;
         }
 
         protected override void OnKeyDown(KeyEventArgs e)

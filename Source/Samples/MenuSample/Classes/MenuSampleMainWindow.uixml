@@ -62,7 +62,7 @@
       <StatusBarPanel Kind="Separator"/>
       <StatusBarPanel Text="TextBtn" Name="textBtnStatusBarPanel" ControlClicked="TextBtnStatusBarPanel_ControlClicked" Kind="TextButton"/>
       <StatusBarPanel Kind="Separator"/>
-      <StatusBarPanel Text="This is a panel with border aligned to fill" HorizontalAlignment="Fill" Style="Normal" Name="fillStatusBarPanel"/>
+      <StatusBarPanel Text="This is a panel with border aligned to fill" Spring="true" Style="Normal" Name="fillStatusBarPanel"/>
     </StatusBar>
   </Window.StatusBar>
 
