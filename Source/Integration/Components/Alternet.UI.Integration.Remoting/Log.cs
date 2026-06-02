@@ -27,6 +27,11 @@ namespace Alternet.UI.Integration
             Write($"Error: {s}");
         }
 
+        public static void Warning(string s)
+        {
+            Write($"Warning: {s}");
+        }
+
         public static void Verbose(string s)
         {
             if(VerboseLogged)

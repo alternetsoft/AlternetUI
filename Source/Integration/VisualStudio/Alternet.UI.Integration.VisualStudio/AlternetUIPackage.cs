@@ -19,7 +19,6 @@ namespace Alternet.UI.Integration.VisualStudio
     [Guid(PackageGuidString)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExistsAndFullyLoaded_string, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideEditorExtension(
         typeof(EditorFactory),
         ".uixml",
@@ -87,6 +86,47 @@ namespace Alternet.UI.Integration.VisualStudio
 
         public static JoinableTaskFactory JTF { get; private set; }
 
+        internal void ScheduleOpenAfterClose(string fileName, DesignerPane pane)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            pane.CloseThisFrame();
+
+            ThreadHelper.JoinableTaskFactory.RunAsync(async delegate
+            {
+                await Task.Delay(500);
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                OpenWithMyEditor(fileName);
+            });
+        }
+
+        internal IVsWindowFrame FindDocumentFrame(string fileName)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var openDoc = GetService(typeof(SVsUIShellOpenDocument)) as IVsUIShellOpenDocument;
+            Assumes.Present(openDoc);
+
+            Guid logicalView = VSConstants.LOGVIEWID_Primary;
+
+
+            int hr = openDoc.IsDocumentOpen(
+                pHierCaller: null,
+                itemidCaller: VSConstants.VSITEMID_NIL,
+                pszMkDocument: fileName,
+                rguidLogicalView: ref logicalView,
+                grfIDO: 0,
+                ppHierOpen: out _,
+                pitemidOpen: null,
+                ppWindowFrame: out IVsWindowFrame frame,
+                pfOpen: out int isOpen);
+
+            if (hr >= 0 && isOpen != 0)
+                return frame;
+
+            return null;
+        }
+
         protected override async Task InitializeAsync(
             CancellationToken cancellationToken,
             IProgress<ServiceProgressData> progress)
@@ -109,7 +149,7 @@ namespace Alternet.UI.Integration.VisualStudio
         private readonly Dictionary<string, int> _pendingReopens =
             new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
-        internal void ScheduleReopen(string fileName, int maxRetries = 5)
+        internal void ScheduleReopen(string fileName, int maxRetries = 5, Action onOpened = null)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -135,12 +175,13 @@ namespace Alternet.UI.Integration.VisualStudio
                     if (OpenWithMyEditor(fileName))
                     {
                         _pendingReopens.Remove(fileName);
+                        onOpened?.Invoke();
                     }
                     else
                     {
                         if (_pendingReopens.TryGetValue(fileName, out var retry) && retry < maxRetries)
                         {
-                            ScheduleReopen(fileName, maxRetries);
+                            ScheduleReopen(fileName, maxRetries, onOpened);
                         }
                         else
                         {
@@ -156,7 +197,7 @@ namespace Alternet.UI.Integration.VisualStudio
             });
         }        
 
-        internal bool OpenWithMyEditor(string fileName)
+        internal bool OpenWithMyEditorOld(string fileName)
         {
             try
             {
@@ -201,6 +242,47 @@ namespace Alternet.UI.Integration.VisualStudio
             }
             catch
             {
+                return false;
+            }
+        }
+
+        internal bool OpenWithMyEditor(string fileName)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            try
+            {
+                var openDoc = GetService(typeof(SVsUIShellOpenDocument)) as IVsUIShellOpenDocument;
+                Assumes.Present(openDoc);
+
+                Guid editorGuid = new Guid(EditorFactory.EditorFactoryGuidString);
+                Guid logicalView = VSConstants.LOGVIEWID_Primary;
+
+                Microsoft.VisualStudio.OLE.Interop.IServiceProvider sp;
+                IVsUIHierarchy hierarchy;
+                uint itemId;
+                IVsWindowFrame windowFrame;
+
+                int hr = openDoc.OpenDocumentViaProjectWithSpecific(
+                    pszMkDocument: fileName,
+                    grfEditorFlags: (uint)__VSOSEFLAGS.OSE_ChooseBestStdEditor,
+                    rguidEditorType: ref editorGuid,
+                    pszPhysicalView: null,
+                    rguidLogicalView: ref logicalView,
+                    ppSP: out sp,
+                    ppHier: out hierarchy,
+                    pitemid: out itemId,
+                    ppWindowFrame: out windowFrame);
+
+
+                if (hr < 0)
+                    return false;
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Information($"OpenWithMyEditor failed for {fileName}: {ex}");
                 return false;
             }
         }

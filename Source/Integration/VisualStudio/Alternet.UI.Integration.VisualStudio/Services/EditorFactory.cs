@@ -9,6 +9,8 @@ using System.Windows.Controls;
 using Alternet.UI.Integration.VisualStudio.Models;
 using Alternet.UI.Integration.VisualStudio.Views;
 using EnvDTE;
+
+using Microsoft;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Editor;
@@ -505,73 +507,91 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             out Guid pguidCmdUI,
             out int pgrfCDW)
         {
-            const string textNotReady = "The UIXML document is not ready yet. Please wait a moment and reload it...";
-
-            ThreadHelper.ThrowIfNotOnUIThread();
-
-            Log.Verbose($"Started EditorFactory.CreateEditorInstance({pszMkDocument})");
-
             ppunkDocView = IntPtr.Zero;
             ppunkDocData = IntPtr.Zero;
             pguidCmdUI = Guids.AtlernetUIEditorFactory;
             pgrfCDW = 0;
             pbstrEditorCaption = string.Empty;
 
-            if ((grfCreateDoc & (VSConstants.CEF_OPENFILE | VSConstants.CEF_SILENT)) == 0)
+            try
             {
-                return VSConstants.E_INVALIDARG;
-            }
+                const string textNotReady = "The designer is still initializing. Please wait a moment and reopen the document.";
 
-            IVsTextLines textBuffer = null;
+                ThreadHelper.ThrowIfNotOnUIThread();
 
-            var project = GetProject(pvHier);
+                Log.Verbose($"Started EditorFactory.CreateEditorInstance({pszMkDocument})");
 
-            if (project == null)
-            {
-                return VSConstants.VS_E_UNSUPPORTEDFORMAT; // VS_E_BUSY;
-            }
-            else
-            {
-                textBuffer = GetTextBuffer(pszMkDocument, punkDocDataExisting);
-            }
 
-            if (textBuffer == null)
-            {
-                _package.ScheduleReopen(pszMkDocument);
-                return VSConstants.VS_E_UNSUPPORTEDFORMAT;
-            }
+                if ((grfCreateDoc & (VSConstants.CEF_OPENFILE | VSConstants.CEF_SILENT)) == 0)
+                {
+                    return VSConstants.E_INVALIDARG;
+                }
 
-            if (textBuffer == null)
-            {
-                var isDummy = false;
+                IVsTextLines textBuffer = null;
+
+                var project = GetProject(pvHier);
+
+                if (project is not null)
+                {
+                    textBuffer = GetTextBuffer(pszMkDocument, punkDocDataExisting);
+                }
 
                 if (textBuffer == null)
                 {
-                    textBuffer = CreateVsTextLinesFromString(_oleServiceProvider, _serviceProvider, textNotReady);
-                    isDummy = true;
+                    var tempBuffer = CreateVsTextLinesFromString(
+                        _oleServiceProvider,
+                        _serviceProvider,
+                        textNotReady);
+
+                    (IVsCodeWindow codeWindow, IWpfTextViewHost textViewHost) =
+                        CreateCodeWindowAndWpfHost(_serviceProvider, tempBuffer);
+
+                    var pane2 = new DesignerPane(
+                        _package,
+                        project,
+                        pszMkDocument,
+                        codeWindow,
+                        textViewHost,
+                        dummy: true);
+
+                    ppunkDocView = Marshal.GetIUnknownForObject(pane2);
+                    ppunkDocData = Marshal.GetIUnknownForObject(tempBuffer);
+
+                    Log.Verbose($"Finished EditorFactory.CreateEditorInstance({pszMkDocument}) with loading pane");
+                    return VSConstants.S_OK;
                 }
 
-                (IVsCodeWindow codeWindow, IWpfTextViewHost textViewHost) = CreateCodeWindowAndWpfHost(
-                   _serviceProvider,
-                   textBuffer);
+                /*
+                if (textBuffer == null)
+                {
+                    textBuffer = CreateVsTextLinesFromString(_oleServiceProvider, _serviceProvider, textNotReady);
 
-                var pane2 = new DesignerPane(project, pszMkDocument, codeWindow, textViewHost, isDummy);
-                ppunkDocView = Marshal.GetIUnknownForObject(pane2);
+                    (IVsCodeWindow codeWindow, IWpfTextViewHost textViewHost) = CreateCodeWindowAndWpfHost(
+                       _serviceProvider,
+                       textBuffer);
+
+                    var pane2 = new DesignerPane(_package, project, pszMkDocument, codeWindow, textViewHost, dummy: true);
+                    ppunkDocView = Marshal.GetIUnknownForObject(pane2);
+                    ppunkDocData = Marshal.GetIUnknownForObject(textBuffer);
+                    Log.Verbose($"Finished EditorFactory.CreateEditorInstance({pszMkDocument})");
+                    return VSConstants.S_OK;
+                }
+                */
+
+                var (editorWindow, editorControl) = CreateEditorControl(textBuffer);
+                var pane = new DesignerPane(_package, project, pszMkDocument, editorWindow, editorControl);
+                ppunkDocView = Marshal.GetIUnknownForObject(pane);
                 ppunkDocData = Marshal.GetIUnknownForObject(textBuffer);
+
                 Log.Verbose($"Finished EditorFactory.CreateEditorInstance({pszMkDocument})");
                 return VSConstants.S_OK;
             }
-
-            if (textBuffer == null)
-                return VSConstants.VS_E_UNSUPPORTEDFORMAT; //VS_E_BUSY;
-
-            var (editorWindow, editorControl) = CreateEditorControl(textBuffer);
-            var pane = new DesignerPane(project, pszMkDocument, editorWindow, editorControl);
-            ppunkDocView = Marshal.GetIUnknownForObject(pane);
-            ppunkDocData = Marshal.GetIUnknownForObject(textBuffer);
-
-            Log.Verbose($"Finished EditorFactory.CreateEditorInstance({pszMkDocument})");
-            return VSConstants.S_OK;
+            catch(Exception ex)
+            {
+                Log.Error($"Error in CreateEditorInstance for {pszMkDocument}: {ex}");
+                _package.ScheduleReopen(pszMkDocument);
+                return VSConstants.VS_E_UNSUPPORTEDFORMAT;
+            }
         }
 
         /// <inheritdoc/>
@@ -1090,7 +1110,119 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
         }
 
-        private IVsTextLines GetTextBuffer(string fileName, IntPtr punkDocDataExisting)
+        private IVsTextLines? GetTextBuffer(string fileName, IntPtr punkDocDataExisting)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            Log.Verbose($"Started EditorFactory.GetTextBuffer({fileName})");
+
+            try
+            {
+                if (punkDocDataExisting == IntPtr.Zero)
+                {
+                    var iem = _serviceProvider.GetService<IVsInvisibleEditorManager, SVsInvisibleEditorManager>();
+                    Assumes.Present(iem);
+
+                    int hr = iem.RegisterInvisibleEditor(
+                        fileName,
+                        pProject: null,
+                        dwFlags: (uint)_EDITORREGFLAGS.RIEF_ENABLECACHING,
+                        pFactory: this,
+                        ppEditor: out var invisibleEditor);
+
+                    if (hr < 0 || invisibleEditor == null)
+                    {
+                        Log.Warning($"RegisterInvisibleEditor failed for {fileName}, HR=0x{hr:X8}");
+                        return null;
+                    }
+
+                    var guidIVsTextLines = typeof(IVsTextLines).GUID;
+                    IntPtr docDataPointer = IntPtr.Zero;
+
+                    try
+                    {
+                        hr = invisibleEditor.GetDocData(
+                            fEnsureWritable: 0,
+                            riid: ref guidIVsTextLines,
+                            ppDocData: out docDataPointer);
+
+                        if ((uint)hr == 0x8000000A)
+                        {
+                            Log.Information($"Doc data not ready yet for {fileName}, HR=0x{hr:X8}");
+                            return null;
+                        }
+
+                        if (hr < 0 || docDataPointer == IntPtr.Zero)
+                        {
+                            Log.Warning($"GetDocData failed for {fileName}, HR=0x{hr:X8}");
+                            return null;
+                        }
+
+                        var result = Marshal.GetObjectForIUnknown(docDataPointer) as IVsTextLines;
+                        if (result == null)
+                        {
+                            Log.Warning($"Doc data is not IVsTextLines for {fileName}");
+                            return null;
+                        }
+
+                        hr = result.SetLanguageServiceID(XmlLanguageServiceGuid);
+                        if (hr < 0)
+                        {
+                            Log.Warning($"SetLanguageServiceID failed for {fileName}, HR=0x{hr:X8}");
+                            Marshal.ThrowExceptionForHR(hr);
+                        }
+
+                        return result;
+                    }
+                    finally
+                    {
+                        if (docDataPointer != IntPtr.Zero)
+                            Marshal.Release(docDataPointer);
+                    }
+                }
+                else
+                {
+                    IVsTextLines? result;
+
+                    try
+                    {
+                        result = Marshal.GetObjectForIUnknown(punkDocDataExisting) as IVsTextLines;
+                    }
+                    catch (COMException ex) when ((uint)ex.HResult == 0x8000000A)
+                    {
+                        Log.Information($"Existing doc data not ready yet for {fileName}, HR=0x{ex.HResult:X8}");
+                        return null;
+                    }
+
+                    if (result == null)
+                    {
+                        Log.Warning($"Existing doc data is not IVsTextLines for {fileName}");
+                        Marshal.ThrowExceptionForHR(VSConstants.VS_E_INCOMPATIBLEDOCDATA);
+                    }
+
+                    int hr = result.SetLanguageServiceID(XmlLanguageServiceGuid);
+                    if ((uint)hr == 0x8000000A)
+                    {
+                        Log.Information($"Language service not ready yet for {fileName}, HR=0x{hr:X8}");
+                        return null;
+                    }
+
+                    if (hr < 0)
+                    {
+                        Log.Warning($"SetLanguageServiceID failed for {fileName}, HR=0x{hr:X8}");
+                        Marshal.ThrowExceptionForHR(hr);
+                    }
+
+                    return result;
+                }
+            }
+            finally
+            {
+                Log.Verbose($"Finished EditorFactory.GetTextBuffer({fileName})");
+            }
+        }
+
+        private IVsTextLines GetTextBufferOld(string fileName, IntPtr punkDocDataExisting)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 

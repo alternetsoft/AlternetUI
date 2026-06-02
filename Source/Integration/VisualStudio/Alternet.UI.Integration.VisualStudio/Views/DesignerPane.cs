@@ -1,6 +1,11 @@
-﻿using Alternet.UI.Integration.VisualStudio.Services;
+﻿using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+
+using Alternet.UI.Integration.VisualStudio.Services;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
 
@@ -18,7 +23,10 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         private readonly BuildEvents _buildEvents;
         private AlternetUIDesigner _content;
         private bool _isPaused;
+        private AlternetUIPackage _package;
         private bool _isDummy;
+        private Control _rootControl;
+        private bool _reopenScheduled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DesignerPane"/> class.
@@ -28,6 +36,7 @@ namespace Alternet.UI.Integration.VisualStudio.Views
         /// <param name="editorWindow">The editor window to be used by the designer.</param>
         /// <param name="editorHost">The editor control to be used by the designer.</param>
         public DesignerPane(
+            AlternetUIPackage package,
             Project project,
             string xamlPath,
             IVsCodeWindow editorWindow,
@@ -35,7 +44,9 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             bool dummy = false)
             : base(editorWindow)
         {
+            _package = package;
             _isDummy = dummy;
+            _rootControl = editorHost.HostControl;
 
             ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -51,6 +62,102 @@ namespace Alternet.UI.Integration.VisualStudio.Views
             _buildEvents.OnBuildBegin += HandleBuildBegin;
             _buildEvents.OnBuildDone += HandleBuildDone;
             _dteEvents.ModeChanged += HandleModeChanged;
+
+            if (_isDummy)
+            {
+                _rootControl.Loaded += OnRootControlLoaded;
+            }
+        }
+
+        private async Task CloseThenOpenRealAsync()
+        {
+            await Task.Delay(1000);
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            CloseThisFrame();
+        }
+
+        private void OnRootControlLoaded(object sender, RoutedEventArgs e)
+        {
+            _rootControl.Loaded -= OnRootControlLoaded;
+
+            ThreadHelper.JoinableTaskFactory.RunAsync(CloseThenOpenRealAsync);
+        }
+
+        private async Task RetryReopenAsync()
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+            var oldFrame = GetWindowFrame();
+
+            for (int attempt = 1; attempt <= 5; attempt++)
+            {
+                await Task.Delay(300);
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+                if (_package.OpenWithMyEditor(_xamlPath))
+                {
+                    var newFrame = _package.FindDocumentFrame(_xamlPath);
+
+                    if (newFrame != null && !ReferenceEquals(newFrame, oldFrame))
+                    {
+                        oldFrame?.CloseFrame((uint)__FRAMECLOSE.FRAMECLOSE_NoSave);
+                        return;
+                    }
+                }
+            }
+        }
+
+        private async Task RetryReopenAsyncOld()
+        {
+            _package.ScheduleReopen(_xamlPath, 5, () =>
+            {
+                CloseThisFrame();
+
+                _package.ScheduleReopen(_xamlPath, 5, () =>
+                {
+                });
+            });            
+        }
+
+        private void ScheduleReopenOnce()
+        {
+            if (_reopenScheduled)
+                return;
+
+            _reopenScheduled = true;
+
+            ThreadHelper.JoinableTaskFactory.RunAsync(async delegate
+            {
+                await Task.Delay(300);
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+
+                TryReopenAndCloseSelf();
+            });
+        }
+
+        private void TryReopenAndCloseSelf()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (_package.OpenWithMyEditor(_xamlPath))
+            {
+            }
+        }
+
+        private IVsWindowFrame GetWindowFrame()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            return GetService(typeof(SVsWindowFrame)) as IVsWindowFrame;
+        }
+
+        public void CloseThisFrame()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var frame = GetWindowFrame();
+            frame?.CloseFrame((uint)__FRAMECLOSE.FRAMECLOSE_NoSave);
         }
 
         /// <summary>
