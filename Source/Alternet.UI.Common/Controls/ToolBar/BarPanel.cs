@@ -488,6 +488,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the panel automatically fills the available space on the bar as the bar is resized.
+        /// </summary>
+        /// <returns>
+        /// true if the panel automatically fills the available space on the bar
+        /// as the bar is resized; otherwise, false. The default is false.
+        /// </returns>
+        [DefaultValue(false)]
+        public bool Spring
+        {
+            get
+            {
+                return HorizontalAlignment == HorizontalAlignment.Fill;
+            }
+            set
+            {
+                HorizontalAlignment = value ? HorizontalAlignment.Fill : HorizontalAlignment.Left;
+            }
+        }
+
+        /// <summary>
         /// Pushes the current <see cref="Text"/> value onto the stack and sets a new text.
         /// </summary>
         /// <param name="text">The new text to set.</param>
