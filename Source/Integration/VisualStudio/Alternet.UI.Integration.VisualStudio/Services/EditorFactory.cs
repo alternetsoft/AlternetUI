@@ -17,6 +17,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
+using Microsoft.VisualStudio.Threading;
 using Microsoft.VisualStudio.Utilities;
 
 using IOleServiceProvider = Microsoft.VisualStudio.OLE.Interop.IServiceProvider;
@@ -27,8 +28,11 @@ namespace Alternet.UI.Integration.VisualStudio.Services
     /// Implements <see cref="IVsEditorFactory"/> to create <see cref="DesignerPane"/>s containing
     /// uixml designer.
     /// </summary>
+    [Guid(EditorFactoryGuidString)]
     internal sealed class EditorFactory : IVsEditorFactory, IVsSimpleDocFactory, IDisposable
     {
+        public const string EditorFactoryGuidString = "FE85117C-AAE9-4789-A1AE-C6E37158A7F4";
+
         private static readonly Guid XmlLanguageServiceGuid = new Guid("f6819a78-a205-47b5-be1c-675b3c7f0b8e");
         private static readonly Guid XamlLanguageServiceGuid = new Guid("cd53c9a1-6bc2-412b-be36-cc715ed8dd41");
         private readonly AlternetUIPackage _package;
@@ -467,6 +471,27 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             return (codeWindow, wpfHost);
         }
 
+        private IVsTextLines GetTextBufferWithRetry(
+            string pszMkDocument,
+            IntPtr punkDocDataExisting,
+            int retryCount = 10,
+            int delayMs = 1000)
+        {
+            IVsTextLines textBuffer = null;
+
+            for (int i = 0; i < retryCount; i++)
+            {
+                textBuffer = GetTextBuffer(pszMkDocument, punkDocDataExisting);
+                if (textBuffer != null)
+                    return textBuffer;
+
+                if (i < retryCount - 1)
+                    System.Threading.Thread.Sleep(delayMs);
+            }
+
+            return null;
+        }
+
         public int CreateEditorInstance(
             uint grfCreateDoc,
             string pszMkDocument,
@@ -480,7 +505,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             out Guid pguidCmdUI,
             out int pgrfCDW)
         {
-            const string textNotReady = "Uixml document is not yet ready. Please wait some time and reload it...";
+            const string textNotReady = "The UIXML document is not ready yet. Please wait a moment and reload it...";
 
             ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -503,7 +528,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             if (project == null)
             {
-                return VSConstants.VS_E_BUSY;
+                return VSConstants.VS_E_UNSUPPORTEDFORMAT; // VS_E_BUSY;
             }
             else
             {
@@ -512,8 +537,12 @@ namespace Alternet.UI.Integration.VisualStudio.Services
 
             if (textBuffer == null)
             {
-                /* textBuffer = GetTextBuffer2(pszMkDocument, punkDocDataExisting);*/
+                _package.ScheduleReopen(pszMkDocument);
+                return VSConstants.VS_E_UNSUPPORTEDFORMAT;
+            }
 
+            if (textBuffer == null)
+            {
                 var isDummy = false;
 
                 if (textBuffer == null)
@@ -534,7 +563,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
             }
 
             if (textBuffer == null)
-                return VSConstants.VS_E_BUSY;
+                return VSConstants.VS_E_UNSUPPORTEDFORMAT; //VS_E_BUSY;
 
             var (editorWindow, editorControl) = CreateEditorControl(textBuffer);
             var pane = new DesignerPane(project, pszMkDocument, editorWindow, editorControl);

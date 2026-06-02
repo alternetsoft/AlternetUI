@@ -1,12 +1,15 @@
 ﻿using Alternet.UI.Integration.VisualStudio.Services;
 using Alternet.UI.Integration.VisualStudio.Views;
 using EnvDTE;
+
+using Microsoft;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Threading;
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Task = System.Threading.Tasks.Task;
@@ -25,34 +28,8 @@ namespace Alternet.UI.Integration.VisualStudio
         EditorFactoryNotify = true,
         ProjectGuid = VSConstants.UICONTEXT.CSharpProject_string,
         DefaultName = Name)]
-    //[ProvideEditorExtension(
-    //    typeof(EditorFactory),
-    //    ".paml",
-    //    100,
-    //    NameResourceID = 113,
-    //    EditorFactoryNotify = true,
-    //    ProjectGuid = VSConstants.UICONTEXT.CSharpProject_string,
-    //    DefaultName = Name)]
-    //[ProvideEditorExtension(
-    //    typeof(EditorFactory),
-    //    ".xaml",
-    //    0x40,
-    //    NameResourceID = 113,
-    //    EditorFactoryNotify = true,
-    //    ProjectGuid = VSConstants.UICONTEXT.CSharpProject_string,
-    //    DefaultName = Name)]
     [ProvideEditorFactory(typeof(EditorFactory), 113, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorLogicalView(typeof(EditorFactory), LogicalViewID.Designer)]
-    //[ProvideXmlEditorChooserDesignerView(Name,
-    //    "xaml",
-    //    LogicalViewID.Designer,
-    //    10000,
-    //    Namespace = "http://schemas.alternetsoft.com/ui/2021",
-    //    MatchExtensionAndNamespace = true,
-    //    CodeLogicalViewEditor = typeof(EditorFactory),
-    //    DesignerLogicalViewEditor = typeof(EditorFactory),
-    //    DebuggingLogicalViewEditor = typeof(EditorFactory),
-    //    TextLogicalViewEditor = typeof(EditorFactory))]
     [ProvideOptionPage(typeof(OptionsDialogPage), Name, "General", 113, 0, supportsAutomation: true)]
     internal sealed class AlternetUIPackage : AsyncPackage
     {
@@ -114,8 +91,6 @@ namespace Alternet.UI.Integration.VisualStudio
             CancellationToken cancellationToken,
             IProgress<ServiceProgressData> progress)
         {
-            await base.InitializeAsync(cancellationToken, progress);
-
             JTF = JoinableTaskFactory;
 
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
@@ -130,6 +105,105 @@ namespace Alternet.UI.Integration.VisualStudio
         }
 
         bool outputPaneLoggingEnabled = true;
+
+        private readonly Dictionary<string, int> _pendingReopens =
+            new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        internal void ScheduleReopen(string fileName, int maxRetries = 5)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (_pendingReopens.TryGetValue(fileName, out var currentRetry))
+            {
+                if (currentRetry >= maxRetries)
+                    return;
+
+                _pendingReopens[fileName] = currentRetry + 1;
+            }
+            else
+            {
+                _pendingReopens[fileName] = 1;
+            }
+
+            JoinableTaskFactory.RunAsync(async delegate
+            {
+                try
+                {
+                    await Task.Delay(400);
+                    await JoinableTaskFactory.SwitchToMainThreadAsync();
+
+                    if (OpenWithMyEditor(fileName))
+                    {
+                        _pendingReopens.Remove(fileName);
+                    }
+                    else
+                    {
+                        if (_pendingReopens.TryGetValue(fileName, out var retry) && retry < maxRetries)
+                        {
+                            ScheduleReopen(fileName, maxRetries);
+                        }
+                        else
+                        {
+                            _pendingReopens.Remove(fileName);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Information($"Reopen failed for {fileName}: {ex}");
+                    _pendingReopens.Remove(fileName);
+                }
+            });
+        }        
+
+        internal bool OpenWithMyEditor(string fileName)
+        {
+            try
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
+                var openDoc = GetService(typeof(SVsUIShellOpenDocument)) as IVsUIShellOpenDocument;
+                Assumes.Present(openDoc);
+
+                Guid editorGuid = new Guid(EditorFactory.EditorFactoryGuidString);
+                Guid logicalView = VSConstants.LOGVIEWID_Primary;
+
+                Microsoft.VisualStudio.OLE.Interop.IServiceProvider sp;
+                IVsUIHierarchy hierarchy;
+                uint itemId;
+                IVsWindowFrame windowFrame;
+
+                int hr = openDoc.OpenDocumentViaProject(
+                    pszMkDocument: fileName,
+                    rguidLogicalView: ref logicalView,
+                    out sp,
+                    out hierarchy,
+                    out itemId,
+                    out windowFrame);
+
+                if (ErrorHandler.Failed(hr))
+                {
+                    throw new COMException($"OpenDocumentViaProject failed for '{fileName}'", hr);
+                }
+
+                ErrorHandler.ThrowOnFailure(openDoc.OpenDocumentViaProjectWithSpecific(
+                    pszMkDocument: fileName,
+                    grfEditorFlags: (uint)__VSOSEFLAGS.OSE_ChooseBestStdEditor,
+                    rguidEditorType: ref editorGuid,
+                    pszPhysicalView: null,
+                    rguidLogicalView: ref logicalView,
+                    ppSP: out sp,
+                    ppHier: out hierarchy,
+                    pitemid: out itemId,
+                    ppWindowFrame: out windowFrame));
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
         private static void Write(string message)
         {
