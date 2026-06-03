@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// In contrast, <see cref="RadioButton"/> controls allow a user to choose
     /// from mutually exclusive options.
     /// </remarks>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class CheckBox : ButtonBase
     {
         private bool allowAllStatesForUser;

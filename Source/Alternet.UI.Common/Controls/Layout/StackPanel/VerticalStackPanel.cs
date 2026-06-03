@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Arranges child controls into a single line that can be oriented vertically.
     /// </summary>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class VerticalStackPanel : StackPanel
     {
         /// <summary>

@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Parent class for all owner draw controls.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class UserControl : Control
     {
         private bool hasBorder;

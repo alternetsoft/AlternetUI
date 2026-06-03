@@ -34,7 +34,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultEvent("Enter")]
     [DefaultProperty("Text")]
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class GroupBox : Control
     {
         /// <summary>

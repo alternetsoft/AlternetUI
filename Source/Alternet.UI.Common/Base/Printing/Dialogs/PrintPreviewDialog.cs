@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents a dialog box form that contains a preview for printing
     /// from an Alternet.UI application.
     /// </summary>
-    [ControlCategory("Printing")]
+    [ControlCategory(KnownControlCategory.Printing)]
     public class PrintPreviewDialog : BasePrintDialog
     {
         /// <summary>

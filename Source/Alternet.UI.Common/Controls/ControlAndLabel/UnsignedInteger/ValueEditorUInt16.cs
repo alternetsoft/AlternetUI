@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="ushort"/> editor with validation.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class ValueEditorUInt16 : TextBoxAndLabel
     {
         /// <summary>

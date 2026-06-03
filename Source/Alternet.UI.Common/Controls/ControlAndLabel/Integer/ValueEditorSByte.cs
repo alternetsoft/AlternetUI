@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="sbyte"/> editor with validation.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class ValueEditorSByte : ValueEditorCustom
     {
         /// <summary>

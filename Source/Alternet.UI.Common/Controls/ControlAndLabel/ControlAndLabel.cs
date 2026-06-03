@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// in order to implement your own custom labeled control.</remarks>
     /// <typeparam name="TControl">Type of the inner control.</typeparam>
     /// <typeparam name="TLabel">Type of the label.</typeparam>
-    [ControlCategory("Hidden")]
+    [ControlCategory(KnownControlCategory.Hidden)]
     public partial class ControlAndLabel<TControl, TLabel>
         : ControlAndPicture, IControlAndLabel, INotifyDataErrorInfo
         where TControl : AbstractControl, new()

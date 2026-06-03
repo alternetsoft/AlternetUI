@@ -25,7 +25,7 @@ namespace Alternet.UI
     [DefaultEvent("SelectedIndexChanged")]
     [DefaultProperty("Items")]
     [DefaultBindingProperty("SelectedValue")]
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class ListBox : Control, ICollectionChangeRouter, IListBoxActions
     {
         /// <summary>

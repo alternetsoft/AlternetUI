@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// <remarks>
     /// It behaves like <see cref="TabControl"/> but has no tab titles.
     /// </remarks>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class CardPanel : HiddenBorder
     {
         private CardPanelItem? selectedCard;

@@ -5,7 +5,7 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a dialog window from which the user can select a directory.
     /// </summary>
-    [ControlCategory("Dialogs")]
+    [ControlCategory(KnownControlCategory.Dialogs)]
     public class SelectDirectoryDialog : CommonDialog
     {
         /// <summary>

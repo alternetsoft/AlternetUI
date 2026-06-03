@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="UI.IntPicker"/> with attached label.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class UpDownAndLabel : ControlAndLabel<IntPicker, Label>
     {
         /// <summary>

@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements panel with tree control on the left and
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
-    [ControlCategory("Panels")]
+    [ControlCategory(KnownControlCategory.Panels)]
     public partial class PanelTreeAndCards : SplittedControlsPanel
     {
         private readonly CardPanel cardPanel = new();

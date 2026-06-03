@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Additionally to the tooltip message <see cref="RichToolTip"/> allows to
     /// specify title, image and other options.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class RichToolTip : ScrollableCanvasControl, IRichToolTip, IToolTipProvider, IScrollEventRouter
     {
         /// <summary>

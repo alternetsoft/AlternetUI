@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a dialog window from which the user can select a font.
     /// </summary>
-    [ControlCategory("Dialogs")]
+    [ControlCategory(KnownControlCategory.Dialogs)]
     public class FontDialog : CommonDialog
     {
         /// <summary>

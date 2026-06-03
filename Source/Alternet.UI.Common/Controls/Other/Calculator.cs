@@ -9,20 +9,12 @@ using System.Threading.Tasks;
 
 using Alternet.Drawing;
 
-/*
-
-Thanks to https://github.com/neoxeo for the calculator sample
-https://github.com/alternetsoft/AlternetUI/issues/157.
-This control is based on his idea.
-
-*/
-
 namespace Alternet.UI
 {
     /// <summary>
     /// Calculator control with buttons and display.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class Calculator : HiddenBorder
     {
         /// <summary>

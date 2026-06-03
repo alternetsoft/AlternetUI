@@ -29,7 +29,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class StdSlider : Border, ISliderScaleContainer
     {
         /// <summary>

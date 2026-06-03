@@ -23,7 +23,7 @@ namespace Alternet.UI
     /// properties provide access to the
     /// collections that are used by the control.
     /// </remarks>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class StdCheckListBox : StdListBox
     {
         /// <summary>

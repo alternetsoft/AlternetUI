@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for text editors.
     /// </summary>
-    [ControlCategory("Hidden")]
+    [ControlCategory(KnownControlCategory.Hidden)]
     public abstract partial class CustomTextBox
         : Control, ICustomTextBox, IReadOnlyStrings, IValidatorReporter, IObjectToStringOptions,
         INotifyDataErrorInfo

@@ -57,7 +57,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Items")]
     [DefaultEvent("SelectionChanged")]
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class TreeView : Control, ITreeViewItemContainer, IListControlItemContainer
     {
         /// <summary>

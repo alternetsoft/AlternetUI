@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <summary>
     /// Defines a flexible grid area that consists of columns and rows.
     /// </summary>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class Grid : ContainerControl
     {
         //  used in fp calculations

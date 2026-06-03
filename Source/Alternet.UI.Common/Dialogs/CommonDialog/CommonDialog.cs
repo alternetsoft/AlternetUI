@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Specifies the base class used for displaying standard system dialog windows on the screen.
     /// </summary>
-    [ControlCategory("Hidden")]
+    [ControlCategory(KnownControlCategory.Hidden)]
     public abstract class CommonDialog : FrameworkElement
     {
         private IDialogHandler? handler;

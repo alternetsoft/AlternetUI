@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// Represents a container panel with docked sub-panels. Sub-panels are docked to the top, bottom, left and
     /// right side of the container. Also there is a center sub-panel that fills the remaining space in the container.
     /// </summary>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class DockedSubPanelContainer : LayoutPanel
     {
         private readonly AbstractControl rightPanel;

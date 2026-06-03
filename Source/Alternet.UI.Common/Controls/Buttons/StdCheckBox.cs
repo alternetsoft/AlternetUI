@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Use a <see cref="StdCheckBox"/> to give the user an option, such as true/false or yes/no.
     /// The <see cref="StdCheckBox"/> control can display an image or text or both.
     /// </remarks>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class StdCheckBox : GenericItemControl
     {
         /// <summary>

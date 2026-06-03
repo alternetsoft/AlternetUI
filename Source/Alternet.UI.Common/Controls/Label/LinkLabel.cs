@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// </summary>
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class LinkLabel : Label
     {
         /// <summary>

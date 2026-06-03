@@ -3,7 +3,7 @@
     /// <summary>
     /// Defined in order to make library more compatible with the legacy code.
     /// </summary>
-    [ControlCategory("Hidden")]
+    [ControlCategory(KnownControlCategory.Hidden)]
     public partial class ContextMenuStrip : ContextMenu
     {
     }

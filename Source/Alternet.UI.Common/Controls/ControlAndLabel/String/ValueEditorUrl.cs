@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements url editor with validation.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class ValueEditorUrl : ValueEditorString
     {
         /// <summary>

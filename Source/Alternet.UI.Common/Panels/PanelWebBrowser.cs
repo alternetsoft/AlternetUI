@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Implements panel with <see cref="WebBrowser"/> and toolbar with
     /// web navigation buttons.
     /// </summary>
-    [ControlCategory("Panels")]
+    [ControlCategory(KnownControlCategory.Panels)]
     public partial class PanelWebBrowser : HiddenBorder
     {
         /// <summary>

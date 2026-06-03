@@ -13,7 +13,7 @@ using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
-    [ControlCategory("Hidden")]
+    [ControlCategory(KnownControlCategory.Hidden)]
     internal class WindowListEdit : Window
     {
         private readonly SplittedPanel panel = new()

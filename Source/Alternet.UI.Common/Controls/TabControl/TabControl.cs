@@ -20,7 +20,7 @@ namespace Alternet.UI
     /// guaranteed; access the control only from the UI thread.
     /// This control is implemented inside the Alternet.UI and doesn't use native tab control.
     /// </remarks>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     [DefaultProperty("Pages")]
     [DefaultEvent("SelectedIndexChanged")]
     public partial class TabControl : HiddenBorder

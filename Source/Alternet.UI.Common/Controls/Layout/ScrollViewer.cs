@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a scrollable area that can contain other visible elements.
     /// </summary>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class ScrollViewer : ScrollableCanvasControl
     {
         internal static bool LogDebugInfo = true;

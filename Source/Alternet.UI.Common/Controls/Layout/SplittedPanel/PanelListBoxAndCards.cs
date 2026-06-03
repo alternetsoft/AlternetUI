@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Implements panel with <see cref="VirtualListBox"/> on the left and
     /// <see cref="CardPanel"/> on the right separated with splitter.
     /// </summary>
-    [ControlCategory("Panels")]
+    [ControlCategory(KnownControlCategory.Panels)]
     public partial class PanelListBoxAndCards : SplittedControlsPanel
     {
         private readonly CardPanel cardPanel = new();

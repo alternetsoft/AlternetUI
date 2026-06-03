@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="float"/> editor with validation.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class ValueEditorSingle : ValueEditorCustom
     {
         /// <summary>

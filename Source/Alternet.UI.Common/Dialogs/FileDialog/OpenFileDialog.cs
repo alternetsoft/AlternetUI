@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Displays a standard dialog window that prompts the user to open a file.
     /// </summary>
-    [ControlCategory("Dialogs")]
+    [ControlCategory(KnownControlCategory.Dialogs)]
     public class OpenFileDialog : FileDialog
     {
         /// <summary>

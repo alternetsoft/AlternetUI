@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements panel with top, bottom, left, right sub-panels and splitters.
     /// </summary>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class SplittedPanel : LayoutPanel
     {
         private readonly AbstractControl rightPanel;

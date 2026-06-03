@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Implements speed button control.
     /// Speed buttons are often used in toolbars or as part of a user interface.
     /// </summary>
-    [ControlCategory("MenusAndToolbars")]
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class SpeedButton : GenericControl, ICommandSource
     {
         /// <summary>

@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Image")]
     [DefaultBindingProperty("Image")]
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class PictureBox : HiddenGenericBorder, IValidatorReporter
     {
         /// <summary>

@@ -30,7 +30,7 @@ namespace Alternet.UI
     /// <see cref="ControlAndLabel{TControl,TLabel}"/> controls. 
     /// </para>
     /// </remarks>
-    [ControlCategory("Hidden")]
+    [ControlCategory(KnownControlCategory.Hidden)]
     public abstract partial class ControlAndPicture : HiddenBorder
     {
         private PictureBox? pictureBox;

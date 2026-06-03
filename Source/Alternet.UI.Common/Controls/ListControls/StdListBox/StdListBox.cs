@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// <see cref="VirtualListControl.SelectedIndices"/> properties provide access to the three
     /// collections that are used by the control.
     /// </remarks>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class StdListBox : VirtualListBox, ICustomListBox<object>
     {
         private readonly ListBoxItems adapter;

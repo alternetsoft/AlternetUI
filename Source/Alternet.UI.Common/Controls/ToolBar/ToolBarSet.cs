@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements multiple <see cref="ToolBar"/> controls.
     /// </summary>
-    [ControlCategory("MenusAndToolbars")]
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class ToolBarSet : HiddenBorder
     {
         /// <summary>

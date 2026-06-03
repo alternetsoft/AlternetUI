@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// <summary>
     /// Used as a container for other controls.
     /// </summary>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class Panel : ContainerControl
     {
         /// <summary>

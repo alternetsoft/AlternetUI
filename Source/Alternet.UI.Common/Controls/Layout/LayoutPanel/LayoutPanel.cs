@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// If dock style of the child control is not specified, control is positioned absolutely using
     /// its <see cref="AbstractControl.Bounds"/> property.
     /// </remarks>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class LayoutPanel : ContainerControl
     {
         /// <summary>

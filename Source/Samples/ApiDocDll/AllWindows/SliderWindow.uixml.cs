@@ -4,7 +4,7 @@ using System;
 
 namespace ApiDoc
 {
-    [ControlCategory("Internal")]
+    [ControlCategory(KnownControlCategory.Internal)]
     public partial class SliderWindow : Window
     {
         public SliderWindow()

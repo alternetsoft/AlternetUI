@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base abstract class for control with side buttons.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public abstract partial class ControlAndButton : ControlAndPicture, INotifyDataErrorInfo
     {
         /// <summary>

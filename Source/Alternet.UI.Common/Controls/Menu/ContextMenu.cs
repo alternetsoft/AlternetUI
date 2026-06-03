@@ -21,7 +21,7 @@ namespace Alternet.UI
     /// a <see cref="MainMenu"/> to provide situation specific
     /// commands that are not appropriate for the <see cref="MainMenu"/> to display.
     /// </remarks>
-    [ControlCategory("MenusAndToolbars")]
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class ContextMenu : Menu, IContextMenuProperties
     {
         private WeakReferenceValue<AbstractControl> relatedControl = new();

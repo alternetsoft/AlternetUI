@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements main control of the Find and Replace dialogs.
     /// </summary>
-    [ControlCategory("MenusAndToolbars")]
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class FindReplaceControl : ToolBarSet, IFindReplaceControlHandler
     {
         /// <summary>

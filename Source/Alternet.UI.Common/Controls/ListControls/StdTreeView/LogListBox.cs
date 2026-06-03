@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="StdListBox"/> descendant with log and debug related functionality.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class LogListBox : StdTreeView
     {
         /// <summary>

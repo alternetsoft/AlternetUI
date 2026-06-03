@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a standard horizontal scroll bar.
     /// </summary>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class HScrollBar : ScrollBar
     {
         /// <summary>

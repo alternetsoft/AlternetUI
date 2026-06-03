@@ -3,7 +3,7 @@ using System;
 
 namespace ApiDoc
 {
-    [ControlCategory("Internal")]
+    [ControlCategory(KnownControlCategory.Internal)]
     public partial class ComboBoxWindow : Window
     {
         public ComboBoxWindow()

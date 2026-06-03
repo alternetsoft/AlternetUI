@@ -12,7 +12,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="TextBox"/> with attached label.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class TextBoxAndLabel : ControlAndLabel<TextBox, Label>
     {
         /// <summary>

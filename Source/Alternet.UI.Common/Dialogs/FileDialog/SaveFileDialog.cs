@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Prompts the user to select a location for saving a file.
     /// </summary>
-    [ControlCategory("Dialogs")]
+    [ControlCategory(KnownControlCategory.Dialogs)]
     public class SaveFileDialog : FileDialog
     {
         /// <summary>

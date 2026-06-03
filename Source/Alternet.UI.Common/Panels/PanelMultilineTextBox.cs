@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// Implements panel with <see cref="MultilineTextBox"/> and toolbar with
     /// text edit buttons.
     /// </summary>
-    [ControlCategory("Panels")]
+    [ControlCategory(KnownControlCategory.Panels)]
     public partial class PanelMultilineTextBox : PanelWithToolBar
     {
         private readonly MultilineTextBox textBox = new();

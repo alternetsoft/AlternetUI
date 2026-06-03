@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class TextBox : CustomTextBox, ISimpleRichTextBox
     {
         private bool multiline = false;

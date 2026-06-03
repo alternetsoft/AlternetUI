@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents control that displays a selected enum value and allows to change it
     /// with the popup window.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class EnumPicker : SpeedEnumButton
     {
         /// <summary>

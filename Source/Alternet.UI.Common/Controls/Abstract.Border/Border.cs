@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Draws a border, background, or both around another control.
     /// </summary>
-    [ControlCategory("Containers")]
+    [ControlCategory(KnownControlCategory.Containers)]
     public partial class Border : UserControl
     {
         /// <summary>

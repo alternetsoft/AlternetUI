@@ -43,7 +43,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class Label : HiddenGenericBorder
     {
         /// <summary>

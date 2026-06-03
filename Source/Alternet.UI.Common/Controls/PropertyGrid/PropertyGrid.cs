@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// set up a complete tree-hierarchy, add more than two columns, and set
     /// arbitrary per-property attributes.
     /// </remarks>
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class PropertyGrid : Control, IPropertyGrid
     {
         internal const string PropEditClassCheckBox = "CheckBox";

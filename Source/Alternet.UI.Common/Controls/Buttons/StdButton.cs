@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// to have the same code for all platforms. <see cref="StdButton"/> provides many additional features,
     /// which are not available in the native <see cref="Button"/> control.
     /// </summary>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class StdButton : GenericItemControl, INotifyPropertyChanged, IDialogButtonRoles
     {
         /// <summary>

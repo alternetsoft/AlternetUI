@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="string"/> editor with validation.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class ValueEditorString : ValueEditorCustom
     {
         /// <summary>

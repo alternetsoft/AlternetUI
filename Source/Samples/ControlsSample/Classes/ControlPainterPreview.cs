@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace PropertyGridSample
 {
-    [ControlCategory("Tests")]
+    [ControlCategory(KnownControlCategory.Tests)]
     public class ControlPainterPreview : GenericControl
     {
         private static readonly WxControlPainterHandler Painter = new();

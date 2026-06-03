@@ -11,7 +11,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
-    [ControlCategory("Date")]
+    [ControlCategory(KnownControlCategory.Date)]
     public partial class DatePicker : SpeedDateButton
     {
         /// <summary>

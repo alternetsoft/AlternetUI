@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// To specify the allowable range of values for the control, set the
     /// <see cref="IntPicker.Minimum"/> and <see cref="IntPicker.Maximum"/> properties.
     /// </remarks>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class NumericUpDown : IntPicker
     {
         /// <summary>

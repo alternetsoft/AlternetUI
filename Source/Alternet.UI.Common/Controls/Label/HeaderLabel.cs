@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements label control that looks like header.
     /// </summary>
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class HeaderLabel : HiddenGenericBorder, ITextProperty
     {
         /// <summary>

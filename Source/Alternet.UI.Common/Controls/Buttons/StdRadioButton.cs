@@ -29,7 +29,7 @@ namespace Alternet.UI
     /// selected at the same time, but option buttons are mutually exclusive.
     /// </para>
     /// </remarks>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class StdRadioButton : StdCheckBox
     {
         private static int suppressSiblingNotifyCounter;

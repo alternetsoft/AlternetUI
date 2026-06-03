@@ -44,7 +44,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Name")]
     [DefaultEvent("Enter")]
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class WebBrowser : Control, IWebBrowser
     {
         /// <summary>

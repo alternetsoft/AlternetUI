@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements generic toolbar control.
     /// </summary>
-    [ControlCategory("MenusAndToolbars")]
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class ToolBar : HiddenBorder
     {
         /// <summary>

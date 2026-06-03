@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// may have only limited support for the animation types. Set UseGeneric if you need to
     /// support all of them.
     /// </remarks>
-    [ControlCategory("Other")]
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class AnimationPlayer : HiddenGenericBorder
     {
         private AnimatedImage? animatedImage;

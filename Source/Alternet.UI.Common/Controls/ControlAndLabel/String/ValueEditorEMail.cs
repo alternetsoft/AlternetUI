@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements e-mail editor with validation.
     /// </summary>
-    [ControlCategory("Editors")]
+    [ControlCategory(KnownControlCategory.Editors)]
     public partial class ValueEditorEMail : ValueEditorString
     {
         /// <summary>

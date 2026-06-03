@@ -27,7 +27,7 @@ namespace Alternet.UI
     /// <see cref="RadioButton"/>.
     /// </para>
     /// </remarks>
-    [ControlCategory("Common")]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class RadioButton : ButtonBase
     {
         private bool? reportedChecked;

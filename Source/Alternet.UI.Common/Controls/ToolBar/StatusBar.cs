@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// such as speed buttons, images, combo boxes, progress bars, and other interactive elements.
     /// Use <see cref="ToolBar.Panels"/> property to add and manage the panels within the status bar.
     /// </summary>
-    [ControlCategory("MenusAndToolbars")]
+    [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class StatusBar : ToolBar
     {
         /// <summary>
