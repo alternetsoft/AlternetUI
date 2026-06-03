@@ -1238,6 +1238,33 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Represents rectangle structure with left, top, right, and bottom bounds.
+            /// </summary>
+            [StructLayout(LayoutKind.Sequential)]
+            public struct RectLTRB
+            {
+                /// <summary>
+                /// Left bound of the rectangle.
+                /// </summary>
+                public int Left;
+
+                /// <summary>
+                /// Top bound of the rectangle.
+                /// </summary>
+                public int Top;
+
+                /// <summary>
+                /// Right bound of the rectangle.
+                /// </summary>
+                public int Right;
+
+                /// <summary>
+                /// Bottom bound of the rectangle.
+                /// </summary>
+                public int Bottom;
+            }
+
+            /// <summary>
             /// Contains data used by <see cref="NativeMethods.SystemParametersInfo"/>
             /// for high contrast settings.
             /// </summary>
@@ -1280,6 +1307,63 @@ namespace Alternet.UI
                     flags = 0;
                     schemeNamePointer = IntPtr.Zero;
                 }
+            }
+
+            /// <summary>
+            /// Represents a window related information.
+            /// </summary>
+            [StructLayout(LayoutKind.Sequential)]
+            public struct WindowInfo
+            {
+                /// <summary>
+                /// Size of this structure, in bytes. This is initialized in the constructor
+                /// </summary>
+                public uint cbSize;
+
+                /// <summary>
+                /// Coordinates of the window
+                /// </summary>
+                public RectLTRB rcWindow;
+
+                /// <summary>
+                /// Coordinates of the client area of the window
+                /// </summary>
+                public RectLTRB rcClient;
+                
+                /// <summary>
+                /// Window styles
+                /// </summary>
+                public uint dwStyle;
+
+                /// <summary>
+                /// Extended window styles
+                /// </summary>
+                public uint dwExStyle;
+                
+                /// <summary>
+                /// Window status (e.g., WS_ACTIVECAPTION)
+                /// </summary>
+                public uint dwWindowStatus;
+                
+                /// <summary>
+                /// Width of window borders
+                /// </summary>
+                public uint cxWindowBorders;
+                
+                /// <summary>
+                /// Height of window borders
+                /// </summary>
+                public uint cyWindowBorders;
+
+                /// <summary>
+                /// Atom of the window class
+                /// </summary>
+                public ushort atomWindowType;
+
+                /// <summary>
+                /// Creator version of the window class
+                /// </summary>
+                public ushort wCreatorVersion;
             }
 
             /// <summary>
