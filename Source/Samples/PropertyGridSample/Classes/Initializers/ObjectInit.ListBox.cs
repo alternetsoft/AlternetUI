@@ -14,6 +14,33 @@ namespace PropertyGridSample
         public static string PencilUrl = $"{ResPrefix2}Pencil32.png";
         public static string PhotoUrl = $"{ResPrefix2}Photo32.png";
 
+        public static void InitShapeControl(ShapeControl control)
+        {
+            control.SuggestedSize = new (400, 400);
+
+            var innerShape1 = new ShapeControl
+            {
+                Stroke = new Pen(Color.Red, 2),
+                Fill = new SolidBrush(Color.FromArgb(128, Color.Red)),
+                IgnoreLayout = true,
+                Location = new (50, 50),
+                Size = new (300, 300),
+            };
+
+            var innerShape2 = new ShapeControl
+            {
+                Stroke = new Pen(Color.Green, 2),
+                Fill = new SolidBrush(Color.FromArgb(128, Color.Green)),
+                ShapeType = DrawingShapeType.Ellipse,
+                IgnoreLayout = true,
+                Location = new(100, 100),
+                Size = new(300, 300),
+            };
+
+            innerShape1.Parent = control;
+            innerShape2.Parent = control;
+        }
+
         public static void InitGenericListItemControl(GenericItemControl control)
         {
             ListControlItem item = new();

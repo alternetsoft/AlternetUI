@@ -40,6 +40,7 @@ Environment.NewLine + Environment.NewLine +
 
         static ObjectInit()
         {
+            AddAction<ShapeControl>(InitShapeControl);
             AddAction<GenericItemControl>(InitGenericListItemControl);
             AddAction<CardPanelHeader>(InitCardPanelHeader);
             AddAction<RichToolTip>(InitRichToolTip);

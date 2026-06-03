@@ -318,13 +318,19 @@ namespace Alternet.UI
         /// Brings the control to the front of the z-order.
         /// </summary>
         [Browsable(false)]
-        public void BringToFront() => Parent?.SetChildIndex(this, 0);
+        public virtual void BringToFront()
+        {
+            Parent?.SetChildIndex(this, 0);
+        }
 
         /// <summary>
         /// Sends the control to the back of the z-order.
         /// </summary>
         [Browsable(false)]
-        public void SendToBack() => Parent?.SetChildIndex(this, -1);
+        public virtual void SendToBack()
+        {
+            Parent?.SetChildIndex(this, -1);
+        }
 
         /// <summary>
         /// Gets the background brush for specified state of the control.

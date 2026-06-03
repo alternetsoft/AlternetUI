@@ -114,6 +114,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<StdCheckBox>();
                 ToolBoxAdd<StdRadioButton>();
                 ToolBoxAdd<StdButton>();
+                ToolBoxAdd<ShapeControl>();
 
                 void ToolBoxAdd<T>()
                 {
