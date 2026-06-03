@@ -43,7 +43,11 @@ namespace Alternet.UI
         /// </summary>
         public static bool UseDebugBackgroundColor = false;
 
-        private static readonly SizeD DefaultControlSuggestedSize = SizeD.NaN;
+        /// <summary>
+        /// Gets default value for <see cref="SuggestedSize"/> property of the control.
+        /// </summary>
+        public static readonly SizeD DefaultControlSuggestedSize = SizeD.NaN;
+
         private static readonly List<IControlNotification> globalNotifications = new();
 
         private static long? mouseWheelTimestamp;

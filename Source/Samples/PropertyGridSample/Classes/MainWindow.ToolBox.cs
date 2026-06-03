@@ -47,6 +47,8 @@ namespace PropertyGridSample
                     noTicks.Add(typeof(CheckBox));
                 }
 
+                noTicks.Add(typeof(ResizableBorder));
+
                 bool logAddedControls = false;
                 bool logNotAddedControls = false;
 
@@ -115,6 +117,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<StdRadioButton>();
                 ToolBoxAdd<StdButton>();
                 ToolBoxAdd<ShapeControl>();
+                ToolBoxAdd<ResizableBorder>();
 
                 void ToolBoxAdd<T>()
                 {

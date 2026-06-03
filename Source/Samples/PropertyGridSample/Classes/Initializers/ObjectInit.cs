@@ -209,6 +209,25 @@ Environment.NewLine + Environment.NewLine +
 
             Actions.Add(typeof(Panel), InitPanel);
 
+            Actions.Add(typeof(ResizableBorder), (c) =>
+            {
+                ResizableBorder control = (c as ResizableBorder)!;
+                control.HasBorder = true;
+                control.IgnoreLayout = true;
+                control.Size = 300;
+                control.Location = (10, 10);
+
+                var titleControl = new GripControl();
+                titleControl.ParentBackColor = false;
+                titleControl.BackColor = Color.DarkSlateBlue;
+                titleControl.ConfigureAsMovingGrip();
+                titleControl.Target = control;
+
+                titleControl.Dock = DockStyle.Top;
+                titleControl.Height = 32;
+                titleControl.Parent = control.FillPanel;
+            });
+
             Actions.Add(typeof(AbstractControl), (c) =>
             {
                 AbstractControl control = (c as AbstractControl)!;

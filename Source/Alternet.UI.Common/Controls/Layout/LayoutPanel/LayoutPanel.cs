@@ -5,13 +5,12 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Arranges child controls using different methods.
+    /// Represents a panel with <see cref="LayoutStyle.Dock"/> layout style.
     /// </summary>
     /// <remarks>
-    /// Currently only default layout method is implemented.
-    /// Use <see cref="AbstractControl.Dock"/> to specify child controls dock style.
-    /// If it dock style is not specified, controls are positioned absolutely using
-    /// <see cref="AbstractControl.Bounds"/>.
+    /// Use <see cref="AbstractControl.Dock"/> property of the child control to specify its dock style.
+    /// If dock style of the child control is not specified, control is positioned absolutely using
+    /// its <see cref="AbstractControl.Bounds"/> property.
     /// </remarks>
     [ControlCategory("Containers")]
     public partial class LayoutPanel : ContainerControl
