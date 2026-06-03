@@ -212,20 +212,31 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(ResizableBorder), (c) =>
             {
                 ResizableBorder control = (c as ResizableBorder)!;
-                control.HasBorder = true;
+                control.HasBorder = false;
                 control.IgnoreLayout = true;
                 control.Size = 300;
                 control.Location = (10, 10);
 
+                bool isDark = control.IsDarkBackground;
+                bool isActive = true;
+
+                control.UseWindowBorderColors(isDark, isActive);
+
                 var titleControl = new GripControl();
                 titleControl.ParentBackColor = false;
-                titleControl.BackColor = Color.DarkSlateBlue;
+                titleControl.BackColor = DefaultColors.GetEffectiveWindowCaptionColor(isDark, isActive);
+                titleControl.ParentForeColor = false;
+                titleControl.ForeColor = DefaultColors.GetEffectiveWindowCaptionTextColor(isDark, isActive);
                 titleControl.ConfigureAsMovingGrip();
                 titleControl.Target = control;
 
                 titleControl.Dock = DockStyle.Top;
-                titleControl.Height = 32;
+                titleControl.MinHeight = 32;
                 titleControl.Parent = control.FillPanel;
+
+                var label = new Label("This is title");
+                label.VerticalAlignment = VerticalAlignment.Center;
+                label.Parent = titleControl;
             });
 
             Actions.Add(typeof(AbstractControl), (c) =>
