@@ -51,6 +51,21 @@ namespace Alternet.UI
         public static string UrlImageSquare { get; set; } = GetImageUrl("alternet-square");
 
         /// <summary>
+        /// Gets or sets url used to load "Window Maximize" svg image.
+        /// </summary>
+        public static string UrlImageWindowMaximize { get; set; } = GetImageUrl("alternet-window-maximize");
+
+        /// <summary>
+        /// Gets or sets url used to load "Window Minimize" svg image.
+        /// </summary>
+        public static string UrlImageWindowMinimize { get; set; } = GetImageUrl("alternet-window-minimize");
+
+        /// <summary>
+        /// Gets or sets url used to load "Window Restore" svg image.
+        /// </summary>
+        public static string UrlImageWindowRestore { get; set; } = GetImageUrl("alternet-window-restore");
+
+        /// <summary>
         /// Gets or sets url used to load "Circle Dot Filled" svg image.
         /// </summary>
         public static string UrlImageCircleDotFilled { get; set; }

@@ -104,6 +104,9 @@ namespace Alternet.UI
         private static SvgImage? imgCheck;
         private static SvgImage? imgRightFromBracket;
         private static SvgImage? imgRightToBracket;
+        private static SvgImage? imgWindowMaximize;
+        private static SvgImage? imgWindowMinimize;
+        private static SvgImage? imgWindowRestore;
 
         static KnownSvgImages()
         {
@@ -114,6 +117,52 @@ namespace Alternet.UI
                     image.ResetCachedImages();
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets or sets "Window Maximize" svg image.
+        /// </summary>
+        public static SvgImage ImgWindowMaximize
+        {
+            get
+            {
+                return imgWindowMaximize ??= new MonoSvgImage(KnownSvgUrls.UrlImageWindowMaximize);
+            }
+
+            set
+            {
+                imgWindowMaximize = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Window Minimize" svg image.
+        /// </summary>
+        public static SvgImage ImgWindowMinimize
+        {
+            get
+            {
+                return imgWindowMinimize ??= new MonoSvgImage(KnownSvgUrls.UrlImageWindowMinimize);
+            }
+            set
+            {
+                imgWindowMinimize = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets "Window Restore" svg image.
+        /// </summary>
+        public static SvgImage ImgWindowRestore
+        {
+            get
+            {
+                return imgWindowRestore ??= new MonoSvgImage(KnownSvgUrls.UrlImageWindowRestore);
+            }
+            set
+            {
+                imgWindowRestore = value;
+            }
         }
 
         /// <summary>
