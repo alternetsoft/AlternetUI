@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -21,6 +23,26 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Gets right grip control which is used on the right side of the resizable border.
+        /// </summary>
+        public GripControl RightGripControl => (GripControl)RightPanel;
+
+        /// <summary>
+        /// Gets left grip control which is used on the left side of the resizable border.
+        /// </summary>
+        public GripControl LeftGripControl => (GripControl)LeftPanel;
+
+        /// <summary>
+        /// Gets top grip control which is used on the top side of the resizable border.
+        /// </summary>
+        public GripControl TopGripControl => (GripControl)TopPanel;
+        
+        /// <summary>
+        /// Gets bottom grip control which is used on the bottom side of the resizable border.
+        /// </summary>
+        public GripControl BottomGripControl => (GripControl)BottomPanel;
+
         /// <inheritdoc/>
         public override Thickness DefaultPanelSize
         {
@@ -28,6 +50,31 @@ namespace Alternet.UI
             {
                 return DefaultBorderThickness;
             }
+        }
+
+        /// <summary>
+        /// Updates the colors of the grip control to match the current theme.
+        /// </summary>
+        /// <param name="grip">The grip control to update.</param>
+        /// <param name="isDark">Indicates whether the dark theme is applied.</param>
+        /// <param name="isActive">Indicates whether the window is active.</param>
+        public virtual void UseWindowBorderColors(GripControl grip, bool isDark, bool isActive)
+        {
+            grip.ParentBackColor = false;
+            grip.BackColor = DefaultColors.GetEffectiveWindowBorderColor(isDark, isActive);
+        }
+
+        /// <summary>
+        /// Updates the colors of the grip controls based on the specified parameters.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the dark theme is applied.</param>
+        /// <param name="isActive">Indicates whether the window is active.</param>
+        public virtual void UseWindowBorderColors(bool isDark, bool isActive)
+        {
+            UseWindowBorderColors(TopGripControl, isDark, isActive);
+            UseWindowBorderColors(BottomGripControl, isDark, isActive);
+            UseWindowBorderColors(LeftGripControl, isDark, isActive);
+            UseWindowBorderColors(RightGripControl, isDark, isActive);
         }
 
         /// <inheritdoc/>
