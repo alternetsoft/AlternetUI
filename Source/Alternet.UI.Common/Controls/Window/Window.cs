@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// Represents a window that makes up an application's user interface.
     /// </summary>
     [DesignerCategory("Code")]
-    [ControlCategory("Hidden")]
+    [ControlCategory(KnownControlCategory.Hidden)]
     public partial class Window : Control, IWindow
     {
         private static Window? dummy;
@@ -24,17 +24,18 @@ namespace Alternet.UI
         private static int? incFontSizeHighDpi;
         private static int? incFontSize;
 
-        private readonly WindowInfo info = new();
+        private WindowInfo info = new();
 
         private bool ignoreClosingEvent;
         private bool ignoreClosedEvent;
+        private bool loadedCalled;
+
         private WindowKind? windowKindOverride;
         private WeakReferenceValue<AbstractControl> activeControl;
         private IconSet? icon = null;
         private DisposableObject? menu = null;
         private WeakReferenceValue<Window> owner;
         private int? oldDisplay;
-        private bool loadedCalled;
         private AbstractControl? statusBar;
 
         /// <summary>
@@ -62,42 +63,49 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs before a window is displayed for the first time.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? Load;
 
         /// <summary>
         /// Occurs when window moves to another display.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? DisplayChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Menu"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? MenuChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Icon"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? IconChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="StatusBar"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? StatusBarChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Owner"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? OwnerChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="ShowInTaskbar"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ShowInTaskbarChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="State"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? StateChanged;
 
         /// <summary>
@@ -110,6 +118,7 @@ namespace Alternet.UI
         /// property of the
         /// <see cref="WindowClosingEventArgs"/> passed to your event handler to <c>true</c>.
         /// </remarks>
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler<WindowClosingEventArgs>? Closing;
 
         /// <summary>
@@ -128,51 +137,61 @@ namespace Alternet.UI
         /// and to save information entered in the form or to update its parent window.
         /// </para>
         /// </remarks>
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? Closed;
 
         /// <summary>
         /// Occurs when the value of the <see cref="MaximizeEnabled"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? MaximizeEnabledChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="MinimizeEnabled"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? MinimizeEnabledChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="CloseEnabled"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? CloseEnabledChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="TopMost"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? AlwaysOnTopChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="IsToolWindow"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? IsToolWindowChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="HasSystemMenu"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? HasSystemMenuChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Resizable"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ResizableChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="HasBorder"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? HasBorderChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="HasTitleBar"/> property changes.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? HasTitleBarChanged;
 
         /// <summary>
@@ -299,6 +318,18 @@ namespace Alternet.UI
             get
             {
                 return App.MainWindow == this;
+            }
+        }
+
+        /// <summary>
+        /// Gets all window information as a <see cref="WindowInfo"/> struct.
+        /// </summary>
+        [Browsable(false)]
+        public WindowInfo Info
+        {
+            get
+            {
+                return info;
             }
         }
 

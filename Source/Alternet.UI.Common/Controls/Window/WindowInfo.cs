@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains window properties.
+    /// Provides information about a window, such as its title, size, and state.
     /// </summary>
-    public class WindowInfo
+    public struct WindowInfo
     {
         /// <summary>
         /// <inheritdoc cref="Window.MinimizeEnabled"/>
@@ -70,5 +70,12 @@ namespace Alternet.UI
         /// <inheritdoc cref="Window.StartLocation"/>
         /// </summary>
         public WindowStartLocation StartLocation = WindowStartLocation.Default;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WindowInfo"/> struct with default values.
+        /// </summary>
+        public WindowInfo()
+        {
+        }
     }
 }
