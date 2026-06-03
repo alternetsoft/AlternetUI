@@ -1,1 +1,0 @@
-call "TestDotNetNew\01-VSIX.Uninstall.bat"
