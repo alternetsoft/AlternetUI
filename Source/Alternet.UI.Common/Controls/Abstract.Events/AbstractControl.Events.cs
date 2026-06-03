@@ -31,13 +31,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the layout of the various visual elements changes.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? LayoutUpdated;
 
         /// <summary>
         /// Occurs when the context menu for the control is created.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? ContextMenuCreated;
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// If the pointer remains stationary within a small rectangle(default: 4×4 dips)
         /// for a set time(default: 400 ms), the MouseHover event fires.
         /// </remarks>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event EventHandler? MouseHover;
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Alternet.UI
         /// Cell settings include <see cref="RowIndex"/>, <see cref="ColumnIndex"/>,
         /// <see cref="RowSpan"/>, <see cref="ColumnSpan"/> and other properties.
         /// </remarks>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? CellChanged;
 
         /// <summary>
@@ -83,19 +83,19 @@ namespace Alternet.UI
         /// tasks such as updating the contents of the window based on changes made to the
         /// window's data when the window was not activated.
         /// </remarks>
-        [Category("Focus")]
+        [Category(KnownMemberCategory.Focus)]
         public event EventHandler? Activated;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Title"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? TitleChanged;
 
         /// <summary>
         /// Occurs when the mouse pointer is moved over the control.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseMove;
 
         /// <summary>
@@ -104,83 +104,83 @@ namespace Alternet.UI
         /// <remarks>
         /// This event is not fired on all platforms.
         /// </remarks>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event EventHandler<TouchEventArgs>? Touch;
 
         /// <summary>
         /// Occurs when the mouse pointer is over the control and a
         /// mouse button is pressed.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseDown;
 
         /// <summary>
         /// Occurs when the mouse pointer is over the control and a mouse button
         /// is released.</summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseUp;
 
         /// <summary>
         /// Occurs when the mouse wheel moves while the control has focus.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseWheel;
 
         /// <summary>
         /// Occurs when the mouse pointer is over the control and left
         /// mouse button is pressed.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseLeftButtonDown;
 
         /// <summary>
         /// Occurs when the mouse pointer is over the control and right
         /// mouse button is pressed.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseRightButtonDown;
 
         /// <summary>
         /// Occurs when the mouse pointer is over the control and right mouse button
         /// is released.</summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseRightButtonUp;
 
         /// <summary>
         /// Occurs when the control needs to layout its children.</summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler<HandledEventArgs>? CustomLayout;
 
         /// <summary>
         /// Occurs when the control is double clicked by the mouse.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseDoubleClick;
 
         /// <summary>
         /// Occurs when the control is double clicked by the mouse.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         [Browsable(false)]
         public event MouseEventHandler? DoubleClick;
 
         /// <summary>
         /// Occurs when the mouse pointer is over the control and left mouse button
         /// is released.</summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event MouseEventHandler? MouseLeftButtonUp;
 
         /// <summary>
         /// Occurs when the control's handle is created.
         /// </summary>
-        [Category("Private")]
+        [Category(KnownMemberCategory.Private)]
         [Browsable(false)]
         public event EventHandler? HandleCreated;
 
         /// <summary>
         /// Occurs after the control's handle is destroyed.
         /// </summary>
-        [Category("Private")]
+        [Category(KnownMemberCategory.Private)]
         [Browsable(false)]
         public event EventHandler? HandleDestroyed;
 
@@ -191,7 +191,7 @@ namespace Alternet.UI
         /// You can use this event to perform tasks such as updating another window in
         /// your application with data from the deactivated window.
         /// </remarks>
-        [Category("Focus")]
+        [Category(KnownMemberCategory.Focus)]
         public event EventHandler? Deactivated;
 
         /// <summary>
@@ -201,14 +201,14 @@ namespace Alternet.UI
         /// handle of the native control is destroyed.
         /// Ensure that any resources tied to the handle are released or finalized in the event
         /// handler.</remarks>
-        [Category("Private")]
+        [Category(KnownMemberCategory.Private)]
         [Browsable(false)]
         public event EventHandler? BeforeHandleDestroyed;
 
         /// <summary>
         /// Occurs when the control gets focus.
         /// </summary>
-        [Category("Focus")]
+        [Category(KnownMemberCategory.Focus)]
         public event EventHandler? GotFocus;
 
         /// <summary>
@@ -218,31 +218,31 @@ namespace Alternet.UI
         /// <remarks>
         /// Currently this event is not called.
         /// </remarks>
-        [Category("Drag Drop")]
+        [Category(KnownMemberCategory.DragDrop)]
         public event QueryContinueDragEventHandler? QueryContinueDrag;
 
         /// <summary>
         /// Occurs when a key is pressed while the control has focus.
         /// </summary>
-        [Category("Key")]
+        [Category(KnownMemberCategory.Key)]
         public event KeyEventHandler? KeyDown;
 
         /// <summary>
         /// Occurs when a key is released while the control has focus.
         /// </summary>
-        [Category("Key")]
+        [Category(KnownMemberCategory.Key)]
         public event KeyEventHandler? KeyUp;
 
         /// <summary>
         /// Occurs when the control lost focus.
         /// </summary>
-        [Category("Focus")]
+        [Category(KnownMemberCategory.Focus)]
         public event EventHandler? LostFocus;
 
         /// <summary>
         /// Occurs when the <see cref="AbstractControl.Text" /> property value changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? TextChanged;
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Alternet.UI
         /// This is a delayed event. If multiple events are occurred during the delay,
         /// they are ignored.
         /// </remarks>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler<EventArgs>? DelayedTextChanged
         {
             add => delayedTextChanged.Delayed += value;
@@ -262,44 +262,44 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when a character, space or backspace key is pressed while the control has focus.
         /// </summary>
-        [Category("Key")]
+        [Category(KnownMemberCategory.Key)]
         public event KeyPressEventHandler? KeyPress;
 
         /// <summary>
         /// Occurs before the <see cref="AbstractControl.KeyDown" /> event when a key is pressed
         /// while focus is on this control.
         /// </summary>
-        [Category("Key")]
+        [Category(KnownMemberCategory.Key)]
         public event PreviewKeyDownEventHandler? PreviewKeyDown;
 
         /// <summary>
         /// Occurs when the <see cref="VisualState"/> property value changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? VisualStateChanged;
 
         /// <summary>
         /// Occurs when the <see cref="ToolTip"/> property value changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ToolTipChanged;
 
         /// <summary>
         /// Occurs when the <see cref="IsMouseOver"/> property value changes.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event EventHandler? IsMouseOverChanged;
 
         /// <summary>
         /// Occurs when long tap gesture is recognized.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event EventHandler<LongTapEventArgs>? LongTap;
 
         /// <summary>
         /// Occurs when the control is clicked.
         /// </summary>
-        [Category("Action")]
+        [Category(KnownMemberCategory.Action)]
         public virtual event EventHandler? Click
         {
             add
@@ -313,7 +313,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when <see cref="Parent"/> is changed.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ParentChanged;
 
         /// <summary>
@@ -324,31 +324,31 @@ namespace Alternet.UI
         /// It passes an instance of <see cref="PaintEventArgs"/> to the method(s)
         /// that handles the <see cref="Paint"/> event.
         /// </remarks>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         public event EventHandler<PaintEventArgs>? Paint;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Margin"/> property changes.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? MarginChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Padding"/> property changes.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? PaddingChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Visible"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? VisibleChanged;
 
         /// <summary>
         /// Occurs after control was shown.
         /// </summary>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         public event EventHandler? AfterShow;
 
         /// <summary>
@@ -357,13 +357,13 @@ namespace Alternet.UI
         /// <remarks>This event is raised after the control becomes visible to the user. Handlers can use
         /// this event to perform initialization or actions that should occur when the control is shown. This event is
         /// only triggered once per control instance.</remarks>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         public event EventHandler? Shown;
 
         /// <summary>
         /// Occurs after control was hidden.
         /// </summary>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         public event EventHandler? AfterHide;
 
         /// <summary>
@@ -386,143 +386,143 @@ namespace Alternet.UI
         /// for these and related unexpected scenarios, you can use the
         /// <see cref="MouseCaptureLost"/> event.
         /// </remarks>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event EventHandler? MouseCaptureLost;
 
         /// <summary>
         /// Same as <see cref="MouseCaptureLost"/>. This event is added for the compatibility with
         /// legacy code.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         [Browsable(false)]
         public event EventHandler? MouseCaptureChanged;
 
         /// <summary>
         /// When implemented by a class, occurs when user requests help for a control
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event HelpEventHandler? HelpRequested;
 
         /// <summary>
         /// Occurs when exception is raised inside <see cref="AvoidException"/>.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler<ThrowExceptionEventArgs>? ProcessException;
 
         /// <summary>
         /// Occurs when the mouse pointer enters the control.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event EventHandler? MouseEnter;
 
         /// <summary>
         /// Occurs when the mouse pointer leaves the control.
         /// </summary>
-        [Category("Mouse")]
+        [Category(KnownMemberCategory.Mouse)]
         public event EventHandler? MouseLeave;
 
         /// <summary>
         /// Occurs when call to <see cref="PerformLayout"/> is ignored because the layout is already being performed.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? PerformLayoutIgnored;
 
         /// <summary>
         /// Occurs when the child control is removed from this control.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildRemoved;
 
         /// <summary>
         /// Occurs when the size of a child control is changed.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildSizeChanged;
 
         /// <summary>
         /// Occurs when the bounds of a child control are changed.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildBoundsChanged;
 
         /// <summary>
         /// Occurs when the layout of a child element has been updated.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildLayoutUpdated;
 
         /// <summary>
         /// Occurs when the child control's <see cref="Visible"/> property is changed.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildVisibleChanged;
 
         /// <summary>
         /// Occurs when the child control is added to this control.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler<BaseEventArgs<AbstractControl>>? ChildInserted;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Enabled"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? EnabledChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Background"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? BackgroundChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Foreground"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? ForegroundChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Font"/> property changes.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler? FontChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="VerticalAlignment"/>
         /// property changes.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? VerticalAlignmentChanged;
 
         /// <summary>
         /// Occurs when the value of the <see cref="HorizontalAlignment"/>
         /// property changes.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? HorizontalAlignmentChanged;
 
         /// <summary>
         /// Occurs when the control's size is changed.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? SizeChanged;
 
         /// <summary>
         /// Occurs when the control's size is changed.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? Resize;
 
         /// <summary>
         /// Occurs when the control's location is changed.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? LocationChanged;
 
         /// <summary>
         /// Occurs when the control's bounds are changed.
         /// </summary>
-        [Category("Layout")]
+        [Category(KnownMemberCategory.Layout)]
         public event EventHandler? BoundsChanged;
 
         /// <summary>
@@ -547,55 +547,56 @@ namespace Alternet.UI
         /// }
         /// </code>
         /// </example>
-        [Category("Drag Drop")]
+        [Category(KnownMemberCategory.DragDrop)]
         public event EventHandler<DragStartEventArgs>? DragStart;
 
         /// <summary>
         /// Occurs when a drag-and-drop operation is completed.
         /// </summary>
-        [Category("Drag Drop")]
+        [Category(KnownMemberCategory.DragDrop)]
         public event EventHandler<DragEventArgs>? DragDrop;
 
         /// <summary>
         /// Occurs when an object is dragged over the control's bounds.
         /// </summary>
-        [Category("Drag Drop")]
+        [Category(KnownMemberCategory.DragDrop)]
         public event EventHandler<DragEventArgs>? DragOver;
 
         /// <summary>
         /// Occurs when an object is dragged into the control's bounds.
         /// </summary>
-        [Category("Drag Drop")]
+        [Category(KnownMemberCategory.DragDrop)]
         public event EventHandler<DragEventArgs>? DragEnter;
 
         /// <summary>
         /// Occurs when an object is dragged out of the control's bounds.
         /// </summary>
-        [Category("Drag Drop")]
+        [Category(KnownMemberCategory.DragDrop)]
         public event EventHandler? DragLeave;
 
         /// <summary>
         /// Occurs when the DPI setting changes on the display device
         /// where the form is currently displayed.
         /// </summary>
-        [Category("Property Changed")]
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event DpiChangedEventHandler? DpiChanged;
 
         /// <summary>
         /// Occurs when the system colors change.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? SystemColorsChanged;
 
         /// <summary>
         /// Occurs when the validation errors have changed for this control or its child controls.
         /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
         /// <summary>
         /// Occurs when a control's display requires redrawing.
         /// </summary>
-        [Category("Appearance")]
+        [Category(KnownMemberCategory.Appearance)]
         [Browsable(false)]
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         public event InvalidateEventHandler? Invalidated;
