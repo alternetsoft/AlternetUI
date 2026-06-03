@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the shape to be displayed on the control.
         /// </summary>
-        public DrawingShapeType ShapeType
+        public virtual DrawingShapeType ShapeType
         {
             get => drawable.ShapeType;
             set
@@ -47,7 +47,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the shape should be filled. Default is <c>true</c>.
         /// </summary>
-        public bool IsFilled
+        public virtual bool IsFilled
         {
             get => isFilled;
             set
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets a value indicating whether the shape border should be drawn. Default is <c>true</c>.
         /// </summary>
-        public bool IsStroked
+        public virtual bool IsStroked
         {
             get => isStroked;
             set
@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the fill brush for the shape.
         /// </summary>
-        public Brush? Fill
+        public virtual Brush? Fill
         {
             get => drawable.Brush;
             set
@@ -90,7 +90,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the stroke pen for the shape.
         /// </summary>
-        public Pen? Stroke
+        public virtual Pen? Stroke
         {
             get => drawable.Pen;
             set
