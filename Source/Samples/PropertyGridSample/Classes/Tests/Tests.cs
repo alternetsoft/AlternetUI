@@ -58,10 +58,36 @@ namespace PropertyGridSample
             InitTestsSlider();
             InitTestsLabel();
             InitTestsPanel();
+            InitTestsShapeControl();
 
             PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
         }
 
+        void InitTestsShapeControl()
+        {
+            ShapeControl? FindRectangleShapeControl(AbstractControl? control)
+            {
+                if (control is null)
+                    return null;
+                foreach (var child in control.Children)
+                {
+                    if (child is ShapeControl shapeControl && shapeControl.ShapeType == DrawingShapeType.Rectangle)
+                        return shapeControl;
+                }
+
+                return null;
+            }
+
+            AddControlAction<ShapeControl>("BringToFront rectangle", (c) =>
+            {
+                FindRectangleShapeControl(c)?.BringToFront();
+            });
+
+            AddControlAction<ShapeControl>("SendToBack rectangle", (c) =>
+            {
+                FindRectangleShapeControl(c)?.SendToBack();
+            });
+        }
 
         void InitTestsPanel()
         {

@@ -315,21 +315,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Brings the control to the front of the z-order.
+        /// Brings the control to the front of the z-order in the parent control and invalidates it.
+        /// This works perfectly for generic controls. For native controls it is not implemented.
         /// </summary>
         [Browsable(false)]
         public virtual void BringToFront()
         {
-            Parent?.SetChildIndex(this, 0);
+            if (Parent is not null)
+            {
+                Parent.SetChildIndex(this, -1);
+                Parent.Invalidate();
+            }
         }
 
         /// <summary>
-        /// Sends the control to the back of the z-order.
+        /// Sends the control to the back of the z-order in the parent control and invalidates it.
+        /// This works perfectly for generic controls. For native controls it is not implemented.
         /// </summary>
         [Browsable(false)]
         public virtual void SendToBack()
         {
-            Parent?.SetChildIndex(this, -1);
+            if (Parent is not null)
+            {
+                Parent.SetChildIndex(this, 0);
+                Parent.Invalidate();
+            }
         }
 
         /// <summary>
