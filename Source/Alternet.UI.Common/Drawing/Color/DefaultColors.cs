@@ -88,6 +88,42 @@ namespace Alternet.Drawing
         public static LightDarkColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new(76, 194, 255));
 
         /// <summary>
+        /// Gets or sets the override color of the active window caption. When set, this color will be used instead
+        /// of the system-defined active caption color for the window title bar (<see cref="SystemColors.ActiveCaption"/>).
+        /// </summary>
+        public static LightDarkColor? WindowActiveCaptionColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the override color of the active window caption text. When set, this color will be used instead
+        /// of the system-defined active caption text color for the window title bar (<see cref="SystemColors.ActiveCaptionText"/>).
+        /// </summary>
+        public static LightDarkColor? WindowActiveCaptionTextColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the override color of the active window caption border. When set, this color will be used instead
+        /// of the system-defined active caption border color for the window title bar (<see cref="SystemColors.ActiveBorder"/>).
+        /// </summary>
+        public static LightDarkColor? WindowActiveBorderColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the override color of the inactive window caption. When set, this color will be used instead
+        /// of the system-defined inactive caption color for the window title bar (<see cref="SystemColors.InactiveCaption"/>).
+        /// </summary>
+        public static LightDarkColor? WindowInactiveCaptionColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the override color of the inactive window caption text. When set, this color will be used instead
+        /// of the system-defined inactive caption text color for the window title bar (<see cref="SystemColors.InactiveCaptionText"/>).
+        /// </summary>
+        public static LightDarkColor? WindowInactiveCaptionTextColor { get; set; }
+
+        /// <summary>
+        /// Gets or sets the override color of the inactive window caption border. When set, this color will be used instead
+        /// of the system-defined inactive caption border color for the window title bar (<see cref="SystemColors.InactiveBorder"/>).
+        /// </summary>
+        public static LightDarkColor? WindowInactiveBorderColor { get; set; }
+
+        /// <summary>
         /// Gets or sets the default color of a checkbox in its normal state.
         /// </summary>
         public static LightDarkColor DefaultCheckBoxColor
@@ -158,6 +194,60 @@ namespace Alternet.Drawing
         {
             get => svgNormalColor ??= new LightDarkColor(light: (33, 33, 33), dark: (230, 230, 230));
             set => svgNormalColor = value;
+        }
+
+        /// <summary>
+        /// Gets the effective color for window caption based on the current theme and active state of the window.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the current theme is dark.</param>
+        /// <param name="isActive">Indicates whether the window is active.</param>
+        /// <returns>The effective color for window caption text.</returns>
+        public static Color GetEffectiveWindowCaptionColor(bool isDark, bool isActive)
+        {
+            if (isActive)
+            {
+                return WindowActiveCaptionColor?.LightOrDark(isDark) ?? SystemColors.ActiveCaption;
+            }
+            else
+            {
+                return WindowInactiveCaptionColor?.LightOrDark(isDark) ?? SystemColors.InactiveCaption;
+            }
+        }
+
+        /// <summary>
+        /// Gets the effective color for window caption text based on the current theme and active state of the window.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the current theme is dark.</param>
+        /// <param name="isActive">Indicates whether the window is active.</param>
+        /// <returns>The effective color for window caption text.</returns>
+        public static Color GetEffectiveWindowCaptionTextColor(bool isDark, bool isActive)
+        {
+            if (isActive)
+            {
+                return WindowActiveCaptionTextColor?.LightOrDark(isDark) ?? SystemColors.ActiveCaptionText;
+            }
+            else
+            {
+                return WindowInactiveCaptionTextColor?.LightOrDark(isDark) ?? SystemColors.InactiveCaptionText;
+            }
+        }
+
+        /// <summary>
+        /// Gets the effective border color of the window based on the current theme (light or dark).
+        /// </summary>
+        /// <param name="isDark">Indicates whether the current theme is dark.</param>
+        /// <param name="isActive">Indicates whether the window is active.</param>
+        /// <returns>The effective border color of the window.</returns>
+        public static Color GetEffectiveWindowBorderColor(bool isDark, bool isActive)
+        {
+            if (isActive)
+            {
+                return WindowActiveBorderColor?.LightOrDark(isDark) ?? SystemColors.ActiveBorder;
+            }
+            else
+            {
+                return WindowInactiveBorderColor?.LightOrDark(isDark) ?? SystemColors.InactiveBorder;
+            }
         }
 
         /// <summary>
