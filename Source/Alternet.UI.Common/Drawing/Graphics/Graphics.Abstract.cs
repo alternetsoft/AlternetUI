@@ -35,10 +35,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.
         /// </summary>
-        /// <param name="pen"></param>
-        /// <param name="brush"></param>
-        /// <param name="rectangle"></param>
-        /// <param name="cornerRadius"></param>
+        /// <param name="pen">The <see cref="Pen"/> used to draw the rounded rectangle.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the rounded rectangle.</param>
+        /// <param name="rectangle">The <see cref="RectD"/> that bounds the rounded rectangle.</param>
+        /// <param name="cornerRadius">The <see cref="Coord"/> that represents the corner radius of the rounded rectangle.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
@@ -51,9 +51,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Calls <see cref="FillRectangle(Brush, RectD)"/> and than <see cref="DrawRectangle"/>.
         /// </summary>
-        /// <param name="pen"></param>
-        /// <param name="brush"></param>
-        /// <param name="rectangle"></param>
+        /// <param name="pen">The <see cref="Pen"/> used to draw the rectangle.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the rectangle.</param>
+        /// <param name="rectangle">The <see cref="RectD"/> that bounds the rectangle.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
@@ -62,9 +62,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Calls <see cref="FillEllipse"/> and than <see cref="DrawEllipse"/>.
         /// </summary>
-        /// <param name="pen"></param>
-        /// <param name="brush"></param>
-        /// <param name="rectangle"></param>
+        /// <param name="pen">The <see cref="Pen"/> used to draw the ellipse.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the ellipse.</param>
+        /// <param name="rectangle">The <see cref="RectD"/> that bounds the ellipse.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
@@ -73,9 +73,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Calls <see cref="FillPath"/> and than <see cref="DrawPath"/>.
         /// </summary>
-        /// <param name="pen"></param>
-        /// <param name="brush"></param>
-        /// <param name="path"></param>
+        /// <param name="pen">The <see cref="Pen"/> used to draw the path.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the path.</param>
+        /// <param name="path">The <see cref="GraphicsPath"/> that defines the path.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
@@ -84,12 +84,12 @@ namespace Alternet.Drawing
         /// <summary>
         /// Calls <see cref="FillPie"/> and than <see cref="DrawPie"/>.
         /// </summary>
-        /// <param name="pen"></param>
-        /// <param name="brush"></param>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
-        /// <param name="startAngle"></param>
-        /// <param name="sweepAngle"></param>
+        /// <param name="pen">The <see cref="Pen"/> used to draw the pie.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the pie.</param>
+        /// <param name="center">The <see cref="PointD"/> that represents the center of the pie.</param>
+        /// <param name="radius">The <see cref="Coord"/> that represents the radius of the pie.</param>
+        /// <param name="startAngle">The <see cref="Coord"/> that represents the start angle of the pie.</param>
+        /// <param name="sweepAngle">The <see cref="Coord"/> that represents the sweep angle of the pie.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
@@ -104,10 +104,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Calls <see cref="FillCircle"/> and than <see cref="DrawCircle"/>.
         /// </summary>
-        /// <param name="pen"></param>
-        /// <param name="brush"></param>
-        /// <param name="center"></param>
-        /// <param name="radius"></param>
+        /// <param name="pen">The <see cref="Pen"/> used to draw the circle.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the circle.</param>
+        /// <param name="center">The <see cref="PointD"/> that represents the center of the circle.</param>
+        /// <param name="radius">The <see cref="Coord"/> that represents the radius of the circle.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
@@ -116,10 +116,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Calls <see cref="FillPolygon"/> and than <see cref="DrawPolygon"/>.
         /// </summary>
-        /// <param name="pen"></param>
-        /// <param name="brush"></param>
-        /// <param name="points"></param>
-        /// <param name="fillMode"></param>
+        /// <param name="pen">The <see cref="Pen"/> used to draw the polygon.</param>
+        /// <param name="brush">The <see cref="Brush"/> used to fill the polygon.</param>
+        /// <param name="points">The points that define the polygon.</param>
+        /// <param name="fillMode">The <see cref="FillMode"/> that determines how the interior of the polygon is filled.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>
