@@ -279,6 +279,173 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Fills and/or draws the border of the specified rectangle.
+        /// </summary>
+        /// <param name="pen">The pen to use for drawing the border of the rectangle. If null, no border will be drawn.</param>
+        /// <param name="brush">The brush to use for filling the rectangle. If null, the rectangle will not be filled.</param>
+        /// <param name="rectangle">The rectangle to fill and/or draw.</param>
+        public virtual void FillOrDrawRectangle(Pen? pen, Brush? brush, RectD rectangle)
+        {
+            if (pen is null)
+            {
+                if (brush is null)
+                {
+                    return;
+                }
+                else
+                {
+                    FillRectangle(brush, rectangle);
+                }
+            }
+            else
+            {
+                if (brush is null)
+                {
+                    DrawRectangle(pen, rectangle);
+                }
+                else
+                {
+                    Rectangle(pen, brush, rectangle);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fills and/or draws the border of the specified rounded rectangle.
+        /// </summary>
+        /// <param name="pen">The pen to use for drawing the border of the rounded rectangle.
+        /// If null, no border will be drawn.</param>
+        /// <param name="brush">The brush to use for filling the rounded rectangle.
+        /// If null, the rounded rectangle will not be filled.</param>
+        /// <param name="rectangle">The rectangle that bounds the rounded rectangle to fill and/or draw.</param>
+        /// <param name="cornerRadius">The corner radius for the rounded rectangle.</param>
+        public virtual void FillOrDrawRoundedRectangle(Pen? pen, Brush? brush, RectD rectangle, Coord cornerRadius)
+        {
+            if (pen is null)
+            {
+                if (brush is null)
+                {
+                    return;
+                }
+                else
+                {
+                    FillRoundedRectangle(brush, rectangle, cornerRadius);
+                }
+            }
+            else
+            {
+                if (brush is null)
+                {
+                    DrawRoundedRectangle(pen, rectangle, cornerRadius);
+                }
+                else
+                {
+                    RoundedRectangle(pen, brush, rectangle, cornerRadius);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fills and/or draws the border of the specified pie.
+        /// </summary>
+        /// <param name="pen">The pen to use for drawing the border of the pie. If null, no border will be drawn.</param>
+        /// <param name="brush">The brush to use for filling the pie. If null, the pie will not be filled.</param>
+        /// <param name="center">The center point of the pie.</param>
+        /// <param name="radius">The radius of the pie.</param>
+        /// <param name="startAngle">The start angle of the pie, in degrees.</param>
+        /// <param name="sweepAngle">The sweep angle of the pie, in degrees.</param>
+        public virtual void FillOrDrawPie(Pen? pen, Brush? brush, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
+        {
+            if (pen is null)
+            {
+                if (brush is null)
+                {
+                    return;
+                }
+                else
+                {
+                    FillPie(brush, center, radius, startAngle, sweepAngle);
+                }
+            }
+            else
+            {
+                if (brush is null)
+                {
+                    DrawPie(pen, center, radius, startAngle, sweepAngle);
+                }
+                else
+                {
+                    Pie(pen, brush, center, radius, startAngle, sweepAngle);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fills and/or draws the border of the specified circle.
+        /// </summary>
+        /// <param name="pen">The pen to use for drawing the border of the circle. If null, no border will be drawn.</param>
+        /// <param name="brush">The brush to use for filling the circle. If null, the circle will not be filled.</param>
+        /// <param name="center">The center point of the circle.</param>
+        /// <param name="radius">The radius of the circle.</param>
+        public virtual void FillOrDrawCircle(Pen? pen, Brush? brush, PointD center, Coord radius)
+        {
+            if (pen is null)
+            {
+                if (brush is null)
+                {
+                    return;
+                }
+                else
+                {
+                    FillCircle(brush, center, radius);
+                }
+            }
+            else
+            {
+                if (brush is null)
+                {
+                    DrawCircle(pen, center, radius);
+                }
+                else
+                {
+                    Circle(pen, brush, center, radius);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fills and/or draws the border of the specified ellipse.
+        /// </summary>
+        /// <param name="pen">The pen to use for drawing the border of the ellipse. If null, no border will be drawn.</param>
+        /// <param name="brush">The brush to use for filling the ellipse. If null, the ellipse will not be filled.</param>
+        /// <param name="rectangle">The rectangle that bounds the ellipse to fill and/or draw.</param>
+        public virtual void FillOrDrawEllipse(Pen? pen, Brush? brush, RectD rectangle)
+        {
+            if (pen is null)
+            {
+                if (brush is null)
+                {
+                    return;
+                }
+                else
+                {
+                    FillEllipse(brush, rectangle);
+                }
+            }
+            else
+            {
+                if (brush is null)
+                {
+                    DrawEllipse(pen, rectangle);
+                }
+                else
+                {
+                    Ellipse(pen, brush, rectangle);
+                }
+            }
+        }
+
+        /// <summary>
         /// Checks whether <see cref="Color"/> parameter is ok.
         /// </summary>
         /// <param name="value">Parameter value.</param>
