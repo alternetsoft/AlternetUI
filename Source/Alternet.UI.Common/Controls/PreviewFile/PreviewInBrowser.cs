@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -22,6 +25,7 @@ namespace Alternet.UI
         public static List<string> SupportedExtensions = new()
         {
             "html",
+            "ico",
             "htm",
             "gif",
             "png",
@@ -106,14 +110,29 @@ namespace Alternet.UI
         /// </summary>
         public virtual void Reload()
         {
-            if(FileName is null)
+            if (FileName is null)
             {
                 browser.Url = "about: blank";
                 return;
             }
 
-            var url = WebBrowser.PrepareFileUrl(FileName);
+            var isIcon = Path.GetExtension(FileName)?.ToLower() == ".ico";
 
+            if (isIcon)
+            {
+                try
+                {
+                    var tempPath = IconStream.CreateTempPreviewImage(FileName);
+                    var tempUrl = WebBrowser.PrepareFileUrl(tempPath);
+                    browser.Url = tempUrl;
+                    return;
+                }
+                catch
+                {
+                }
+            }
+
+            var url = WebBrowser.PrepareFileUrl(FileName);
             browser.Url = url;
         }
     }
