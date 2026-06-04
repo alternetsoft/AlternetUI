@@ -96,6 +96,9 @@ namespace Alternet.UI
 
             var items = AllChildrenInLayout;
 
+            if (items.Count == 0)
+                return;
+
             if (StaticControlEvents.HasLayoutHandlers)
             {
                 var e = new DefaultLayoutEventArgs(this, layoutType, GetSpace(), items);
