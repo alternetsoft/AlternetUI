@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 
 using Alternet.Drawing;
+
+using SkiaSharp;
 
 namespace Alternet.UI.Tests
 {
@@ -13,6 +16,44 @@ namespace Alternet.UI.Tests
     /// </summary>
     public static class Tests
     {
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestIconLoading()
+        {
+            using var stream = KnownIcons.GetDefaultIconStream();
+            if (stream == null)
+            {
+                App.Log("Failed to load default icon stream.");
+                return;
+            }
+            try
+            {
+                var iconStream = new IconStream(stream);
+
+                foreach (var entry in iconStream.Entries)
+                {
+                    entry.Log();
+                    if (entry.Image == null)
+                    {
+                        App.Log("Failed to load image for entry.");
+                    }
+                    else
+                    {
+                        LogUtils.LogImage((Image)entry.Image);
+                    }
+                }
+
+                var combinedBitmap = SkiaUtils.CombineIconsVertically(iconStream.Bitmaps, null);
+                LogUtils.LogImage((Image)combinedBitmap);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception occurred while loading default icon: {ex.Message}");
+            }
+        }
+
         /// <summary>
         /// Test method for the internal purposes.
         /// </summary>

@@ -24,6 +24,72 @@ namespace Alternet.Drawing
     public static partial class SkiaUtils
     {
         /// <summary>
+        /// Creates a new <see cref="SKBitmap"/> by combining the specified list of bitmaps vertically.
+        /// </summary>
+        /// <param name="images">The list of bitmaps to combine.</param>
+        /// <param name="labelProvider">A function that provides custom labels for each bitmap.</param>
+        /// <param name="minWidth">The minimum width of the resulting bitmap.</param>
+        /// <returns>A new <see cref="SKBitmap"/> containing the combined bitmaps.</returns>
+        public static SKBitmap CombineIconsVertically(
+            IEnumerable<SKBitmap>? images,
+            Func<SKBitmap, string>? labelProvider,
+            int minWidth = 128)
+        {
+            if (images == null)
+                return new SKBitmap(1, 1);
+
+            // Sort by size (smallest → largest)
+            var sorted = images.OrderBy(i => Math.Max(i.Width, i.Height)).ToList();
+
+            // Calculate canvas size
+            int totalHeight = 0;
+            int maxWidth = 0;
+
+            foreach (var bmp in sorted)
+            {
+                totalHeight += bmp.Height + 20; // space for text
+                maxWidth = Math.Max(maxWidth, bmp.Width);
+                maxWidth = Math.Max(maxWidth, minWidth);
+            }
+
+            var result = new SKBitmap(maxWidth, totalHeight);
+            using var canvas = new SKCanvas(result);
+            canvas.Clear(SKColors.White);
+
+            using var typeface = SKTypeface.Default;
+            using var font = new SKFont(typeface, 14);
+            using var paint = new SKPaint { Color = SKColors.Black, IsAntialias = true };
+
+            int y = 0;
+            foreach (var bmp in sorted)
+            {
+                // Draw image centered horizontally
+                int x = (maxWidth - bmp.Width) / 2;
+                canvas.DrawBitmap(bmp, x, y);
+
+                y += bmp.Height;
+
+                string label = $"{bmp.Width}x{bmp.Height}";
+
+                if (labelProvider != null)
+                {
+                    string? customLabel = labelProvider(bmp);
+                    if (!string.IsNullOrEmpty(customLabel))
+                        label = $"{customLabel}";
+                }
+
+                using var blob = SKTextBlob.Create(label, font);
+
+                // Draw text blob baseline
+                canvas.DrawText(blob, 5, y + font.Size, paint);
+
+                y += 20; // space for text
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Gets a lazily initialized delegate for the SkiaSharp canvas draw points function.
         /// </summary>
         /// <remarks>This property provides a delegate that represents the native SkiaSharp

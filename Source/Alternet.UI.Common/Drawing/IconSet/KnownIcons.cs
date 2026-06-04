@@ -25,8 +25,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets url used to load default icon.
         /// </summary>
-        public static string UrlDefault { get; set; }
-            = GetImageUrl("Sample");
+        public static string UrlDefault { get; set; } = GetImageUrl("Sample");
 
         /// <summary>
         /// Gets or sets the default <see cref="IconSet"/> instance.
@@ -40,6 +39,16 @@ namespace Alternet.UI
             }
 
             set => defaultIcon = value;
+        }
+
+        /// <summary>
+        /// Gets the stream for the default icon.
+        /// </summary>
+        /// <returns>The stream for the default icon, or <c>null</c> if the icon cannot be loaded.</returns>
+        public static Stream? GetDefaultIconStream()
+        {
+            var stream = ResourceLoader.StreamFromUrlOrDefault(UrlDefault);
+            return stream;
         }
 
         private static string GetImageUrl(string name) => string.Format(ResTemplate, name);
