@@ -398,6 +398,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the colors of the grip control to match the current theme.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the dark theme is applied.</param>
+        /// <param name="isActive">Indicates whether the window is active.</param>
+        public virtual GripControl UseWindowBorderColors(bool isDark, bool isActive)
+        {
+            ParentBackColor = false;
+            BackColor = DefaultColors.GetEffectiveWindowBorderColor(isDark, isActive);
+            return this;
+        }
+
+        /// <summary>
         /// Gets the effective SVG image to be drawn based on the current <see cref="ImageKind"/> setting.
         /// </summary>
         /// <returns>The effective SVG image, or null if no image should be drawn.</returns>
@@ -414,9 +426,70 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Configures the grip control to use it as the top border.
+        /// </summary>
+        /// <returns>The current instance of <see cref="GripControl"/>.</returns>
+        public virtual GripControl ConfigureAsTopBorder()
+        {
+            SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
+            Dock = DockStyle.Top;
+            ImageKind = GripControl.GripImageKind.None;
+            InvertTopDelta = true;
+            InvertHeightDelta = true;
+            MoveAction = GripControl.GripMoveAction.ChangeTop;
+            Cursor = Cursors.SizeNS;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the grip control to use it as the bottom border.
+        /// </summary>
+        /// <returns>The current instance of <see cref="GripControl"/>.</returns>
+        public virtual GripControl ConfigureAsBottomBorder()
+        {
+            SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
+            ImageKind = GripControl.GripImageKind.None;
+            Dock = DockStyle.Bottom;
+            Cursor = Cursors.SizeNS;
+            SizeAction = GripControl.GripSizeAction.ChangeHeight;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the grip control to use it as the left border.
+        /// </summary>
+        /// <returns>The current instance of <see cref="GripControl"/>.</returns>
+        public virtual GripControl ConfigureAsLeftBorder()
+        {
+            SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
+            Dock = DockStyle.Left;
+            ImageKind = GripControl.GripImageKind.None;
+            Cursor = Cursors.SizeWE;
+            SizeAction = GripControl.GripSizeAction.ChangeWidth;
+            InvertLeftDelta = true;
+            InvertWidthDelta = true;
+            MoveAction = GripControl.GripMoveAction.ChangeLeft;
+            return this;
+        }
+
+        /// <summary>
+        /// Configures the grip control to use it as the right border.
+        /// </summary>
+        /// <returns>The current instance of <see cref="GripControl"/>.</returns>
+        public virtual GripControl ConfigureAsRightBorder()
+        {
+            SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
+            ImageKind = GripControl.GripImageKind.None;
+            Dock = DockStyle.Right;
+            Cursor = Cursors.SizeWE;
+            SizeAction = GripControl.GripSizeAction.ChangeWidth;
+            return this;
+        }
+
+        /// <summary>
         /// Initializes the grip control with no image and sets it up to allow moving the target control by dragging the grip.
         /// </summary>
-        public virtual void ConfigureAsMovingGrip()
+        public virtual GripControl ConfigureAsMovingGrip()
         {
             ImageKind = GripControl.GripImageKind.None;
             SizeAction = GripControl.GripSizeAction.None;
@@ -426,13 +499,14 @@ namespace Alternet.UI
             SuggestedSize = SizeD.NaN;
             Dock = DockStyle.None;
             Alignment = new (HorizontalAlignment.Stretch, VerticalAlignment.Stretch);
+            return this;
         }
 
         /// <summary>
         /// Initializes the grip control with the standard status bar grip image aligned to the left,
         /// and sets the cursor and resizing behavior accordingly.
         /// </summary>
-        public virtual void ConfigureAsSizingGripLeft()
+        public virtual GripControl ConfigureAsSizingGripLeft()
         {
             ImageKind = GripControl.GripImageKind.SizingGripLeft;
             Cursor = Cursors.SizeNESW;
@@ -444,6 +518,7 @@ namespace Alternet.UI
             SizeAction = GripSizeAction.ChangeWidthAndHeight;
             MoveAction = GripMoveAction.ChangeLeft;
             InvertLeftDelta = true;
+            return this;
         }
 
         /// <summary>
@@ -455,6 +530,17 @@ namespace Alternet.UI
             primitive.SvgImage = GetEffectiveSvgImage();
             primitive.SvgColor = svgColor ?? ForeColor;
             primitive.Draw(this, dc);
+        }
+
+        /// <summary>
+        /// Sets the target control for the grip control.
+        /// </summary>
+        /// <param name="target">The target control to be set.</param>
+        /// <returns>The current instance of <see cref="GripControl"/>.</returns>
+        public GripControl SetTarget(AbstractControl? target)
+        {
+            Target = target;
+            return this;
         }
 
         /// <inheritdoc/>
