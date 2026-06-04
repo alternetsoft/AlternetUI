@@ -61,6 +61,7 @@ namespace Alternet.UI
                 CloseEnabled = true;
 
                 listBox = new VirtualListBox();
+                listBox.Dock = DockStyle.Fill;
                 listBox.Parent = this;
 
                 SetLocationOnDisplay(HorizontalAlignment.Left, VerticalAlignment.Fill);
