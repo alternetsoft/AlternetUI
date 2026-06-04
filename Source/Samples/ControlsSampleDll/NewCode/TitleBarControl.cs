@@ -7,12 +7,12 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a control that can be used as a window title bar.
     /// </summary>
-    public partial class WindowTitleBar : ToolBar
+    public partial class TitleBarControl : ToolBar
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowTitleBar"/> class.
+        /// Initializes a new instance of the <see cref="TitleBarControl"/> class.
         /// </summary>
-        public WindowTitleBar()
+        public TitleBarControl()
         {
         }
     }
