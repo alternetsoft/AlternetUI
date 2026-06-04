@@ -51,6 +51,9 @@ namespace Alternet.UI
             Func<RectD> getBounds,
             IReadOnlyList<ILayoutItem> items)
         {
+            if (items.Count == 0)
+                return;
+
             var space = getBounds();
 
             if (space.SizeIsEmpty)
@@ -70,7 +73,7 @@ namespace Alternet.UI
                 var newItems = new List<ILayoutItem>();
                 foreach (var item in items)
                 {
-                    if (item.Dock == DockStyle.None && !item.IgnoreLayout)
+                    if (item.Dock == DockStyle.None && !ChildIgnoresLayout(item))
                         newItems.Add(item);
                 }
 
@@ -216,7 +219,7 @@ namespace Alternet.UI
         {
             foreach (var control in childControls)
             {
-                if (control.Dock != DockStyle.None || control.IgnoreLayout)
+                if (control.Dock != DockStyle.None || ChildIgnoresLayout(control))
                     continue;
 
                 var preferredSize = control.GetPreferredSizeLimited(
