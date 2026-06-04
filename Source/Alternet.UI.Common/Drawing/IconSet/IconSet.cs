@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -25,7 +26,7 @@ namespace Alternet.Drawing
         public IconSet(Image? image)
             : base(false)
         {
-            if(image is not null)
+            if (image is not null)
                 Add(image);
         }
 
@@ -38,7 +39,7 @@ namespace Alternet.Drawing
         public IconSet(Stream? stream)
             : base(false)
         {
-            if(stream is not null)
+            if (stream is not null)
                 Add(stream);
         }
 
@@ -143,7 +144,7 @@ namespace Alternet.Drawing
                     return null;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LogUtils.LogExceptionIfDebug(e);
                 return null;
