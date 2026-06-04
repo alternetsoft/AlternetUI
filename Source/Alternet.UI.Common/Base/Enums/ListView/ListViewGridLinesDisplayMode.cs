@@ -6,23 +6,23 @@ namespace Alternet.UI
     public enum ListViewGridLinesDisplayMode
     {
         /// <summary>
-        /// No grid lines visible. Not implemented on some platforms.
+        /// No grid lines are visible. Not implemented on some platforms.
         /// If not implemented, vertical lines are shown.
         /// </summary>
         None,
 
         /// <summary>
-        /// Vertical grid lines visible.
+        /// Vertical grid lines are visible.
         /// </summary>
         Vertical,
 
         /// <summary>
-        /// Horizontal grid lines visible.
+        /// Horizontal grid lines are visible.
         /// </summary>
         Horizontal,
 
         /// <summary>
-        /// Vertical and horizontal grid lines visible.
+        /// Both vertical and horizontal grid lines are visible.
         /// </summary>
         VerticalAndHorizontal,
     }

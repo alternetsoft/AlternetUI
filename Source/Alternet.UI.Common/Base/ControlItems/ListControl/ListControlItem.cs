@@ -67,7 +67,10 @@ namespace Alternet.UI
         private bool? checkBoxThreeState;
         private bool? checkBoxAllowAllStatesForUser;
         private bool? checkBoxVisible;
+        private bool? isToolTipVisible;
 
+        private bool isImageAfterText;
+        private bool isVerticalOrientation;
         private bool canRemove = true;
         private bool hideSelection;
         private bool hideFocusRect;
@@ -91,9 +94,6 @@ namespace Alternet.UI
         private BaseCollection<ListControlItem>? cells;
         private object? toolTip;
         private ObjectUniqueId? columnId;
-        private bool? isToolTipVisible;
-        private bool isImageAfterText;
-        private bool isVerticalOrientation;
         private int indexAccel = -1;
 
         /// <summary>

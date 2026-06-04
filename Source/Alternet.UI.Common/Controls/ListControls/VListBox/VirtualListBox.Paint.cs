@@ -223,6 +223,10 @@ namespace Alternet.UI
 
             itemsLastPainted.Clear();
 
+            bool drawHorzLines = HorzGridLines;
+            bool isDark = IsDarkBackground;
+            Color horzLineColor = GetEffectiveHorzGridLinesColor(isDark);
+
             var rowSizes = MeasureRows(dc, fromIndex, toIndex);
 
             for (int line = lineMin; line < lineMax; line++)
@@ -237,9 +241,23 @@ namespace Alternet.UI
                         continue;
                 }
 
+                if (hRow <= 0)
+                    continue;
+
                 var item = SafeItem(line);
 
-                PaintRow(dc, line, item, rectRow);
+                if (drawHorzLines)
+                {
+                    var effectiveRowRect = rectRow;
+                    effectiveRowRect.Height -= 1;
+                    PaintRow(dc, line, item, effectiveRowRect);
+                    var p = effectiveRowRect.BottomLeft;
+                    dc.DrawHorzLine(horzLineColor.AsBrush, p, rectRow.Width, 1);
+                }
+                else
+                {
+                    PaintRow(dc, line, item, rectRow);
+                }
 
                 if (item is not null)
                     itemsLastPainted.Add(item);

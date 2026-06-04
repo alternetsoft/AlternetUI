@@ -35,6 +35,11 @@ namespace Alternet.UI
     public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter, IListBoxActions
     {
         /// <summary>
+        /// Gets or sets default color of the horizontal line that is drawn between items.
+        /// </summary>
+        public static LightDarkColor DefaultHorzGridLinesColor = new(light: (229, 229, 229), dark: (99, 99, 99));
+
+        /// <summary>
         /// Gets or sets the default provider used to generate tooltips for items.
         /// </summary>
         /// <remarks>Changing this property affects how item tooltips are displayed.
@@ -54,6 +59,8 @@ namespace Alternet.UI
         private string? emptyText;
         private ObjectUniqueId? itemToolTipId;
         private bool useScrollActivity;
+        private LightDarkColor? horzGridLinesColor;
+        private ListViewGridLinesDisplayMode gridLinesDisplayMode = ListViewGridLinesDisplayMode.None;
 
         static VirtualListBox()
         {
@@ -112,7 +119,8 @@ namespace Alternet.UI
         public event MeasureItemEventHandler? MeasureItem;
 
         /// <summary>
-        /// Specifies the way how item tooltip is provided for items that don't fit in the control's view or when mouse is over the item for some time.
+        /// Specifies the way how item tooltip is provided for items that don't fit
+        /// in the control's view or when mouse is over the item for some time.
         /// </summary>
         public enum ItemToolTipProviderType
         {
@@ -483,6 +491,72 @@ namespace Alternet.UI
         public virtual LightDarkColor? FullItemToolTipBorderColor { get; set; }
 
         /// <summary>
+        /// Gets or sets color of the horizontal line that is drawn between items.
+        /// If not specified, the line color is determined by <see cref="DefaultHorzGridLinesColor"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual LightDarkColor? HorzGridLinesColor
+        {
+            get
+            {
+                return horzGridLinesColor;
+            }
+
+            set
+            {
+                if (horzGridLinesColor == value)
+                    return;
+                horzGridLinesColor = value;
+                if (HorzGridLines)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the horizontal grid lines are drawn between items.
+        /// </summary>
+        public bool HorzGridLines
+        {
+            get
+            {
+                return GridLinesDisplayMode == ListViewGridLinesDisplayMode.Horizontal
+                    || GridLinesDisplayMode == ListViewGridLinesDisplayMode.VerticalAndHorizontal;
+            }
+
+            set
+            {
+                if (HorzGridLines == value)
+                    return;
+                GridLinesDisplayMode = value
+                    ? (GridLinesDisplayMode == ListViewGridLinesDisplayMode.Vertical
+                        ? ListViewGridLinesDisplayMode.VerticalAndHorizontal
+                        : ListViewGridLinesDisplayMode.Horizontal)
+                    : (GridLinesDisplayMode == ListViewGridLinesDisplayMode.VerticalAndHorizontal
+                        ? ListViewGridLinesDisplayMode.Vertical
+                        : ListViewGridLinesDisplayMode.None);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the grid lines display mode.
+        /// </summary>
+        public virtual ListViewGridLinesDisplayMode GridLinesDisplayMode
+        {
+            get
+            {
+                return gridLinesDisplayMode;
+            }
+
+            set
+            {
+                if (gridLinesDisplayMode == value)
+                    return;
+                gridLinesDisplayMode = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the index of the first visible item in the control.</summary>
         /// <returns>The zero-based index of the first visible item in the control.</returns>
         [Browsable(false)]
@@ -717,7 +791,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="unitLast">Index of the last visible item.</param>
         /// <param name="full">Whether to allow partial or full visibility of the last item.</param>
-        /// <returns></returns>
+        /// <returns>The index of the first visible item.</returns>
         public virtual int FindFirstVisibleFromLast(int unitLast, bool full = false)
         {
             if (unitLast == 0)
@@ -1395,6 +1469,11 @@ namespace Alternet.UI
                 RaiseMeasureItem(e);
             }
 
+            if (HorzGridLines && e.ItemHeight > 0)
+            {
+                e.ItemHeight += 1;
+            }
+
             SizeD Internal(int itemIndex)
             {
                 if (ItemPainter is null)
@@ -1405,6 +1484,18 @@ namespace Alternet.UI
                     return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Gets effective horizontal grid lines color. If <see cref="HorzGridLinesColor"/> is not empty, returns it,
+        /// otherwise returns <see cref="DefaultHorzGridLinesColor"/>.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the color should be adjusted for dark mode.</param>
+        /// <returns>The effective horizontal grid lines color.</returns>
+        public virtual Color GetEffectiveHorzGridLinesColor(bool isDark)
+        {
+            var result = HorzGridLinesColor ?? DefaultHorzGridLinesColor;
+            return result.LightOrDark(isDark);
         }
 
         /// <inheritdoc/>

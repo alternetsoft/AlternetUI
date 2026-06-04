@@ -187,7 +187,7 @@ namespace Alternet.UI
                     void AddControl(Type type)
                     {
                         var typeName = AssemblyUtils.GetTypeDisplayName(type);
-                        if (typeName.Contains("<"))
+                        if (typeName.Contains('<'))
                             return;
                         ListControlItem item = new(typeName, type);
                         typesListBox.Add(item);

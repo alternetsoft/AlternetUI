@@ -118,6 +118,10 @@ namespace ControlsSample
                 listBox.ItemToolTipProvider = nextValue;
             });
 
+            contextMenu.Add("Toggle horizontal lines", () =>
+            {
+                listBox.HorzGridLines = !listBox.HorzGridLines;
+            });
 
             contextMenu.AddSeparator();
             contextMenu.Add(ControlUtils.CreateMenuItemRenderingModeSelector(listBox));
