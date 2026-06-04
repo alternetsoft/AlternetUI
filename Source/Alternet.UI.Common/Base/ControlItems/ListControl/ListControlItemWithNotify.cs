@@ -47,10 +47,15 @@ namespace Alternet.UI
 
             set
             {
-                if (base.ImageIndex == value)
-                    return;
-                base.ImageIndex = value;
-                RaisePropertyChanged(nameof(ImageIndex));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.ImageIndex == value)
+                        return;
+                    base.ImageIndex = value;
+                    RaisePropertyChanged(nameof(ImageIndex));
+                }
             }
         }
 
@@ -61,10 +66,15 @@ namespace Alternet.UI
 
             set
             {
-                if (base.Text == value)
-                    return;
-                base.Text = value;
-                RaisePropertyChanged(nameof(Text));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.Text == value)
+                        return;
+                    base.Text = value;
+                    RaisePropertyChanged(nameof(Text));
+                }
             }
         }
 
@@ -74,10 +84,15 @@ namespace Alternet.UI
             get => base.FontStyle;
             set
             {
-                if (base.FontStyle == value)
-                    return;
-                base.FontStyle = value;
-                RaisePropertyChanged(nameof(FontStyle));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.FontStyle == value)
+                        return;
+                    base.FontStyle = value;
+                    RaisePropertyChanged(nameof(FontStyle));
+                }
             }
         }
 
@@ -87,10 +102,15 @@ namespace Alternet.UI
             get => base.CheckState;
             set
             {
-                if (base.CheckState == value)
-                    return;
-                base.CheckState = value;
-                RaisePropertyChanged(nameof(CheckState));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.CheckState == value)
+                        return;
+                    base.CheckState = value;
+                    RaisePropertyChanged(nameof(CheckState));
+                }
             }
         }
 
@@ -101,10 +121,15 @@ namespace Alternet.UI
 
             set
             {
-                if (base.BackgroundColor == value)
-                    return;
-                base.BackgroundColor = value;
-                RaisePropertyChanged(nameof(BackgroundColor));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.BackgroundColor == value)
+                        return;
+                    base.BackgroundColor = value;
+                    RaisePropertyChanged(nameof(BackgroundColor));
+                }
             }
         }
 
@@ -115,10 +140,15 @@ namespace Alternet.UI
 
             set
             {
-                if (base.ForegroundColor == value)
-                    return;
-                base.ForegroundColor = value;
-                RaisePropertyChanged(nameof(ForegroundColor));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.ForegroundColor == value)
+                        return;
+                    base.ForegroundColor = value;
+                    RaisePropertyChanged(nameof(ForegroundColor));
+                }
             }
         }
 
@@ -129,10 +159,35 @@ namespace Alternet.UI
 
             set
             {
-                if (base.Value == value)
-                    return;
-                base.Value = value;
-                RaisePropertyChanged(nameof(Value));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.Value == value)
+                        return;
+                    base.Value = value;
+                    RaisePropertyChanged(nameof(Value));
+                }
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool IsVisible
+        {
+            get => base.IsVisible;
+
+            set
+            {
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.IsVisible == value)
+                        return;
+
+                    base.IsVisible = value;
+                    RaisePropertyChanged(nameof(IsVisible));
+                }
             }
         }
 
@@ -143,10 +198,15 @@ namespace Alternet.UI
 
             set
             {
-                if (base.DisplayText == value)
-                    return;
-                base.DisplayText = value;
-                RaisePropertyChanged(nameof(DisplayText));
+                SmartInvoke(Internal);
+
+                void Internal()
+                {
+                    if (base.DisplayText == value)
+                        return;
+                    base.DisplayText = value;
+                    RaisePropertyChanged(nameof(DisplayText));
+                }
             }
         }
     }
