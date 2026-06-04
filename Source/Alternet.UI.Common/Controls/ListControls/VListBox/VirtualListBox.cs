@@ -538,25 +538,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the grid lines display mode.
-        /// </summary>
-        public virtual ListViewGridLinesDisplayMode GridLinesDisplayMode
-        {
-            get
-            {
-                return gridLinesDisplayMode;
-            }
-
-            set
-            {
-                if (gridLinesDisplayMode == value)
-                    return;
-                gridLinesDisplayMode = value;
-                Invalidate();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the index of the first visible item in the control.</summary>
         /// <returns>The zero-based index of the first visible item in the control.</returns>
         [Browsable(false)]
@@ -598,6 +579,25 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public override IScrollEventRouter ScrollEventRouter => this;
+
+        /// <summary>
+        /// Gets or sets the grid lines display mode.
+        /// </summary>
+        internal virtual ListViewGridLinesDisplayMode GridLinesDisplayMode
+        {
+            get
+            {
+                return gridLinesDisplayMode;
+            }
+
+            set
+            {
+                if (gridLinesDisplayMode == value)
+                    return;
+                gridLinesDisplayMode = value;
+                Invalidate();
+            }
+        }
 
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
         /// <remarks>
@@ -1467,6 +1467,16 @@ namespace Alternet.UI
             if (drawMode != DrawMode.Normal)
             {
                 RaiseMeasureItem(e);
+            }
+
+            var item = SafeItem(e.Index);
+
+            if (item is not null)
+            {
+                if (!item.IsVisible)
+                {
+                    e.ItemHeight = 0;
+                }
             }
 
             if (HorzGridLines && e.ItemHeight > 0)

@@ -123,6 +123,17 @@ namespace ControlsSample
                 listBox.HorzGridLines = !listBox.HorzGridLines;
             });
 
+            contextMenu.Add("Toggle items 3 and 6 visibility", () =>
+            {
+                var item3 = listBox.GetItem(3);
+                var item6 = listBox.GetItem(6);
+                if (item3 is not null)
+                    item3.IsVisible = !item3.IsVisible;
+                if (item6 is not null)
+                    item6.IsVisible = !item6.IsVisible;
+                listBox.Invalidate();
+            });
+
             contextMenu.AddSeparator();
             contextMenu.Add(ControlUtils.CreateMenuItemRenderingModeSelector(listBox));
             contextMenu.Add(ControlUtils.CreateMenuItemTrackPaintingTime(listBox));

@@ -76,6 +76,7 @@ namespace Alternet.UI
         private bool hideFocusRect;
         private bool isRadioButton;
         private bool isCheckRightAligned;
+        private bool isVisible = true;
 
         private Color? foregroundColor;
         private Color? backgroundColor;
@@ -298,6 +299,19 @@ namespace Alternet.UI
             get
             {
                 return ImageIndex is not null && ImageIndex >= 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this item is visible.
+        /// </summary>
+        public virtual bool IsVisible
+        {
+            get => isVisible;
+
+            set
+            {
+                isVisible = value;
             }
         }
 
@@ -2709,7 +2723,8 @@ namespace Alternet.UI
         /// suit layout requirements.</remarks>
         /// <param name="align">The alignment of the content within the element. Specifies the horizontal and vertical positioning of the
         /// content, such as centering or aligning to the left, right, top, or bottom.</param>
-        /// <param name="imageAlign">The alignment of the image relative to the content. Determines whether the image appears before or after the
+        /// <param name="imageAlign">The alignment of the image relative to the content.
+        /// Determines whether the image appears before or after the
         /// text, and whether it is oriented horizontally or vertically.</param>
         public virtual void SetContentAlignment(ElementContentAlign align, ElementContentAlign imageAlign)
         {
@@ -2774,6 +2789,15 @@ namespace Alternet.UI
             containerRelated ??= new();
             var result = containerRelated.GetLockedItemCached(id, () => new());
             return result;
+        }
+
+        /// <summary>
+        /// Used to invoke the update action. This method is thread safe and can be called from any thread.
+        /// </summary>
+        /// <param name="action">The action to invoke.</param>
+        protected virtual void SmartInvoke(Action? action)
+        {
+            Invoke(action);
         }
 
         [Conditional("DEBUG")]

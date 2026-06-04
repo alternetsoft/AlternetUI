@@ -13,7 +13,6 @@ namespace Alternet.UI
     /// </summary>
     public partial class TreeViewItem : ListControlItemWithNotify, IComparable<TreeViewItem>
     {
-        private bool isVisible = true;
         private BaseCollection<TreeViewItem>? items;
         private bool isExpanded;
         private TreeViewItem? parent;
@@ -243,28 +242,6 @@ namespace Alternet.UI
                 if (IsRoot)
                     return null;
                 return Root.Owner;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether this item is visible.
-        /// </summary>
-        public virtual bool IsVisible
-        {
-            get => isVisible;
-
-            set
-            {
-                if (isVisible == value)
-                    return;
-
-                SmartInvoke(Internal);
-
-                void Internal()
-                {
-                    isVisible = value;
-                    RaisePropertyChanged(nameof(IsVisible));
-                }
             }
         }
 
@@ -1264,15 +1241,6 @@ namespace Alternet.UI
         {
             base.OnPropertyChanged(propertyName);
             Owner?.RaiseItemPropertyChanged(this, propertyName);
-        }
-
-        /// <summary>
-        /// Used to invoke the update action.
-        /// </summary>
-        /// <param name="action">The action to invoke.</param>
-        protected virtual void SmartInvoke(Action action)
-        {
-            Invoke(action);
         }
 
         private void InternalSetParent(TreeViewItem? newParent)
