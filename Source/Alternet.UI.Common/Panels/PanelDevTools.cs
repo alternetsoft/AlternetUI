@@ -178,6 +178,7 @@ namespace Alternet.UI
                     {
                         Parent = this,
                         HasBorder = false,
+                        Name = "TypesListBox",
                     };
 
                     IEnumerable<Type> result
