@@ -53,84 +53,52 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates the colors of the grip control to match the current theme.
-        /// </summary>
-        /// <param name="grip">The grip control to update.</param>
-        /// <param name="isDark">Indicates whether the dark theme is applied.</param>
-        /// <param name="isActive">Indicates whether the window is active.</param>
-        public virtual void UseWindowBorderColors(GripControl grip, bool isDark, bool isActive)
-        {
-            grip.ParentBackColor = false;
-            grip.BackColor = DefaultColors.GetEffectiveWindowBorderColor(isDark, isActive);
-        }
-
-        /// <summary>
         /// Updates the colors of the grip controls based on the specified parameters.
         /// </summary>
         /// <param name="isDark">Indicates whether the dark theme is applied.</param>
         /// <param name="isActive">Indicates whether the window is active.</param>
         public virtual void UseWindowBorderColors(bool isDark, bool isActive)
         {
-            UseWindowBorderColors(TopGripControl, isDark, isActive);
-            UseWindowBorderColors(BottomGripControl, isDark, isActive);
-            UseWindowBorderColors(LeftGripControl, isDark, isActive);
-            UseWindowBorderColors(RightGripControl, isDark, isActive);
+            TopGripControl.UseWindowBorderColors(isDark, isActive);
+            BottomGripControl.UseWindowBorderColors(isDark, isActive);
+            LeftGripControl.UseWindowBorderColors(isDark, isActive);
+            RightGripControl.UseWindowBorderColors(isDark, isActive);
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="GripControl"/> class which is used for the resizable border.
+        /// </summary>
+        /// <returns>A new instance of <see cref="GripControl"/>.</returns>
+        protected virtual GripControl CreateGripControl()
+        {
+            return new GripControl();
         }
 
         /// <inheritdoc/>
         protected override AbstractControl CreateRightPanel()
         {
-            GripControl result = new ();
-            result.SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
-            result.ImageKind = GripControl.GripImageKind.None;
-            result.Dock = DockStyle.Right;
-            result.Cursor = Cursors.SizeWE;
-            result.SizeAction = GripControl.GripSizeAction.ChangeWidth;
-            result.Target = this;
+            GripControl result = CreateGripControl().ConfigureAsRightBorder().SetTarget(this);
             return result;
         }
 
         /// <inheritdoc/>
         protected override AbstractControl CreateLeftPanel()
         {
-            GripControl result = new();
-            result.SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
-            result.Dock = DockStyle.Left;
-            result.ImageKind = GripControl.GripImageKind.None;
-            result.Cursor = Cursors.SizeWE;
-            result.SizeAction = GripControl.GripSizeAction.ChangeWidth;
-            result.InvertLeftDelta = true;
-            result.InvertWidthDelta = true;
-            result.MoveAction = GripControl.GripMoveAction.ChangeLeft;
-            result.Target = this;
+            GripControl result = CreateGripControl().ConfigureAsLeftBorder().SetTarget(this);
             return result;
         }
 
         /// <inheritdoc/>
         protected override AbstractControl CreateTopPanel()
         {
-            GripControl result = new();
-            result.SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
-            result.Dock = DockStyle.Top;
-            result.ImageKind = GripControl.GripImageKind.None;
-            result.InvertTopDelta = true;
-            result.InvertHeightDelta = true;
-            result.MoveAction = GripControl.GripMoveAction.ChangeTop;
-            result.Cursor = Cursors.SizeNS;
-            result.Target = this;
+            GripControl result = CreateGripControl().ConfigureAsTopBorder().SetTarget(this);
             return result;
         }
 
         /// <inheritdoc/>
         protected override AbstractControl CreateBottomPanel()
         {
-            GripControl result = new();
-            result.SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
-            result.ImageKind = GripControl.GripImageKind.None;
-            result.Dock = DockStyle.Bottom;
-            result.Cursor = Cursors.SizeNS;
-            result.SizeAction = GripControl.GripSizeAction.ChangeHeight;
-            result.Target = this;
+            GripControl result = CreateGripControl().ConfigureAsBottomBorder().SetTarget(this);
             return result;
         }
     }
