@@ -24,6 +24,11 @@ namespace Alternet.UI
         LayoutStyle? Layout { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the item.
+        /// </summary>
+        string? Name { get; set; }
+
+        /// <summary>
         /// Gets or sets whether layout rules are ignored for this item.
         /// </summary>
         bool IgnoreLayout { get; set; }
