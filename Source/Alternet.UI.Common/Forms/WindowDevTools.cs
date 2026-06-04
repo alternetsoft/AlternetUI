@@ -22,7 +22,6 @@ namespace Alternet.UI
 
         private readonly PanelDevTools panel = new()
         {
-            SuggestedSize = new(900, 700),
         };
 
         static WindowDevTools()
@@ -35,9 +34,8 @@ namespace Alternet.UI
             App.LogFileIsEnabled = true;
             StartLocation = WindowStartLocation.CenterScreen;
             Title = "Developer Tools";
+            Size = (900, 700);
             panel.Parent = this;
-            panel.Update();
-            SetSizeToContent();
 
             ComponentDesigner.SafeDefault.ControlGotFocus += Designer_ControlGotFocus;
             ComponentDesigner.SafeDefault.ControlCreated += Designer_ControlCreated;
