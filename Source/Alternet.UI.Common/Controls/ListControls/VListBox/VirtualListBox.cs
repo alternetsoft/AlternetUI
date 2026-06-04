@@ -76,7 +76,6 @@ namespace Alternet.UI
         public VirtualListBox()
         {
             UserPaint = true;
-            SuggestedSize = 200;
 
             UseControlColors(true);
 
