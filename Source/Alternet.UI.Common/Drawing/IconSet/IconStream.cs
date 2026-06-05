@@ -11,6 +11,9 @@ using System.Linq;
 namespace Alternet.Drawing
 {
     /*
+
+    wxWidgets: In wxMSW, icons must contain a 16x16 or 32x32 icon, preferably both.
+
     Container format: ICO files can hold multiple images of different sizes and color depths.
     Transparency: Icons should have transparent backgrounds for best results.
     Compression: Modern ICOs use PNG compression for the 256×256 layer.
