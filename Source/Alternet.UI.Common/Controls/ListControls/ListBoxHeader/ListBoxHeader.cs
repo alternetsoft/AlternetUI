@@ -459,6 +459,31 @@ namespace Alternet.UI
             return label;
         }
 
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+
+            if (ParentForeColor || ParentBackColor)
+            {
+                BeginUpdate();
+
+                if (ParentForeColor)
+                {
+                    ParentForeColor = false;
+                    ParentForeColor = true;
+                }
+
+                if (ParentBackColor)
+                {
+                    ParentBackColor = false;
+                    ParentBackColor = true;
+                }
+
+                EndUpdate();
+            }
+        }
+
         /// <summary>
         /// Raises the event that notifies subscribers when the size of a column associated with the specified label
         /// control has changed.
