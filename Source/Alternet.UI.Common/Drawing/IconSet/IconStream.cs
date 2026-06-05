@@ -20,6 +20,7 @@ namespace Alternet.Drawing
     Color depth: 32‑bit with alpha transparency is recommended.
 
     Minimum Sizes to Include
+    ========================
     16×16: Context menus, title bar, system tray.
     24×24: Toolbar buttons, taskbar (at 100% scaling).
     32×32: Desktop icons (classic size).
@@ -28,6 +29,25 @@ namespace Alternet.Drawing
 
     Best practice: include 16, 24, 32, 48, and 256px in one ICO file.
     This ensures Windows always has a pixel‑perfect match and avoids blurry scaling.
+   
+    Meaning of planes
+    =================
+    Planes = number of color planes in the image.
+
+    Historically, this was used in very old graphics hardware that could split colors into separate planes.
+    In practice, for Windows icons and bitmaps, planes is always 1.
+
+    Relation to bitCount
+    bitCount = bits per pixel (e.g., 1, 4, 8, 24, 32).
+    Together, planes × bitCount gives the total bits per pixel.
+    Example: planes = 1, bitCount = 32 → 32‑bit RGBA icon.
+
+    Cursor Sizes
+    ============
+    16×16 (legacy, very small cursors)
+    32×32 (standard Windows cursor size)
+    48×48 or 64×64 (supported in newer Windows versions)
+
     */
 
     /// <summary>
@@ -38,15 +58,32 @@ namespace Alternet.Drawing
         /// <summary>
         /// The default minimum width for the preview image.
         /// </summary>
-        public static int DefaultPreviewImageMinWidth = 150;
+        public static int DefaultPreviewImageMinWidth = 300;
 
-        private readonly List<IconEntry> list = new ();
+        private readonly List<IconEntry> list = new();
+        private readonly bool isIcon;
+        private readonly bool isCursor;
 
         /// <summary>
         /// Represents an entry in the icon stream.
         /// </summary>
         public class IconEntry
         {
+            /// <summary>
+            /// Gets the horizontal hotspot for cursor icons.
+            /// </summary>
+            public int? HotSpotX { get; set; }
+
+            /// <summary>
+            /// Gets the vertical hotspot for cursor icons.
+            /// </summary>
+            public int? HotSpotY { get; set; }
+
+            /// <summary>
+            /// Gets the number of color planes for the icon entry.
+            /// </summary>
+            public int? Planes { get; set; }
+
             /// <summary>
             /// Gets or sets the width of the icon entry.
             /// </summary>
@@ -60,7 +97,7 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets the color count of the icon entry.
             /// </summary>
-            public int BitCount { get; set; }
+            public int? BitCount { get; set; }
 
             /// <summary>
             /// Gets or sets the size of the icon entry data.
@@ -88,13 +125,32 @@ namespace Alternet.Drawing
             public void Log()
             {
                 App.LogBeginSection("IconEntry");
-                App.Log($"Width: {Width}, Height: {Height}, BitCount: {BitCount}, Size: {Size}, Offset: {Offset}");
+                App.Log($"Width: {Width}, Height: {Height}, Size: {Size}, Offset: {Offset}");
                 App.Log("Image: " + (Image != null ? "Loaded" : "Not Loaded"));
                 App.Log("Image size: " + (Image != null ? $"{Image.Width}x{Image.Height}" : "N/A"));
                 App.Log("Is PNG: " + (IsPng ? "Yes" : "No"));
+                App.Log("HotSpotX: " + (HotSpotX.HasValue ? HotSpotX.Value.ToString() : "N/A"));
+                App.Log("HotSpotY: " + (HotSpotY.HasValue ? HotSpotY.Value.ToString() : "N/A"));
+                App.Log("Planes: " + (Planes.HasValue ? Planes.Value.ToString() : "N/A"));
+                App.Log("BitCount: " + (BitCount.HasValue ? BitCount.Value.ToString() : "N/A"));
                 App.LogEndSection();
             }
         }
+
+        /// <summary>
+        /// Gets whether the stream contains an icon.
+        /// </summary>
+        public bool IsIcon => isIcon;
+
+        /// <summary>
+        /// Gets whether the stream contains a cursor.
+        /// </summary>
+        public bool IsCursor => isCursor;
+
+        /// <summary>
+        /// Gets whether the stream contains unknown data.
+        /// </summary>
+        public bool IsUnknown => !isIcon && !isCursor;
 
         /// <summary>
         /// Gets the list of icon entries contained in the stream.
@@ -122,49 +178,84 @@ namespace Alternet.Drawing
         /// <param name="stream">The stream containing the icon data.</param>
         public IconStream(Stream stream)
         {
-            using var reader = new BinaryReader(stream);
-
-            ushort reserved = reader.ReadUInt16(); // always 0
-            ushort type = reader.ReadUInt16();     // 1 = icon, 2 = cursor
-            ushort count = reader.ReadUInt16();    // number of images
-
-            if (type != 1)
-                count = 0;
-
-            for (int i = 0; i < count; i++)
+            try
             {
-                byte width = reader.ReadByte();
-                byte height = reader.ReadByte();
-                byte colorCount = reader.ReadByte();
-                byte reservedByte = reader.ReadByte();
-                ushort planes = reader.ReadUInt16();
-                ushort bitCount = reader.ReadUInt16();
-                int size = reader.ReadInt32();
-                int offset = reader.ReadInt32();
+                using var reader = new BinaryReader(stream);
 
-                long currentPos = reader.BaseStream.Position;
+                ushort reserved = reader.ReadUInt16();
 
-                reader.BaseStream.Seek(offset, SeekOrigin.Begin);
-                byte[] imageData = reader.ReadBytes(size);
+                if (reserved != 0)
+                    return;
 
-                var isPng = IsPng(imageData);
+                ushort type = reader.ReadUInt16();
 
-                SKBitmap bmp = isPng
-                    ? SKBitmap.Decode(imageData)
-                    : LoadBmpFromIco(imageData);
+                isIcon = type == 1;
+                isCursor = type == 2;
 
-                list.Add(new IconEntry
+                if (IsUnknown)
+                    return;
+
+                ushort count = reader.ReadUInt16();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Width = width == 0 ? 256 : width,
-                    Height = height == 0 ? 256 : height,
-                    BitCount = bitCount,
-                    Size = size,
-                    Offset = offset,
-                    IsPng = isPng,
-                    Image = bmp,
-                });
+                    byte width = reader.ReadByte();
+                    byte height = reader.ReadByte();
+                    byte colorCount = reader.ReadByte();
+                    byte reservedByte = reader.ReadByte();
 
-                reader.BaseStream.Seek(currentPos, SeekOrigin.Begin);
+                    ushort? hotspotX = null;
+                    ushort? hotspotY = null;
+                    ushort? planes = null;
+                    ushort? bitCount = null;
+
+                    if (isCursor)
+                    {
+                        hotspotX = reader.ReadUInt16();
+                        hotspotY = reader.ReadUInt16();
+                    }
+                    else
+                    {
+                        planes = reader.ReadUInt16();
+                        bitCount = reader.ReadUInt16();
+                    }
+
+                    int size = reader.ReadInt32();
+                    int offset = reader.ReadInt32();
+
+                    long currentPos = reader.BaseStream.Position;
+
+                    reader.BaseStream.Seek(offset, SeekOrigin.Begin);
+                    byte[] imageData = reader.ReadBytes(size);
+
+                    var isPng = FileFormatDetector.IsPng(imageData);
+
+                    SKBitmap bmp = isPng
+                        ? SKBitmap.Decode(imageData)
+                        : LoadBmpFromIco(imageData);
+
+                    list.Add(new IconEntry
+                    {
+                        Width = width == 0 ? 256 : width,
+                        Height = height == 0 ? 256 : height,
+                        BitCount = bitCount,
+                        Size = size,
+                        Offset = offset,
+                        IsPng = isPng,
+                        HotSpotX = hotspotX,
+                        HotSpotY = hotspotY,
+                        Planes = planes,
+                        Image = bmp,
+                    });
+
+                    reader.BaseStream.Seek(currentPos, SeekOrigin.Begin);
+                }
+            }
+            catch
+            {
+                isIcon = false;
+                isCursor = false;
+                list.Clear();
             }
         }
 
@@ -211,14 +302,30 @@ namespace Alternet.Drawing
                 {
                     if (entry.Image == bitmap)
                     {
-                        return $"{entry.Width}x{entry.Height}, {entry.BitCount} bit, {(entry.IsPng ? "PNG" : "BMP")}";
+                        var hotspotInfo = entry.HotSpotX.HasValue && entry.HotSpotY.HasValue
+                            ? $"HotSpot: ({entry.HotSpotX.Value}, {entry.HotSpotY.Value})"
+                            : null;
+                        return $"{entry.Width}x{entry.Height}, {entry.BitCount} bit, {(entry.IsPng ? "PNG" : "BMP")}{hotspotInfo}";
                     }
                 }
 
                 return string.Empty;
             }
 
-            var combinedBitmap = SkiaUtils.CombineIconsVertically(images, LabelProviderFunc, minWidth ?? DefaultPreviewImageMinWidth);
+            foreach (var entry in entries)
+            {
+                if (entry.HotSpotX.HasValue && entry.HotSpotY.HasValue)
+                {
+                    var x = entry.HotSpotX.Value;
+                    var y = entry.HotSpotY.Value;
+                    entry.Image?.SetPixel(x, y, SKColors.Red);
+                }
+            }
+
+            var combinedBitmap = SkiaUtils.CombineIconsVertically(
+                images,
+                LabelProviderFunc,
+                minWidth ?? DefaultPreviewImageMinWidth);
             return combinedBitmap;
         }
 
@@ -288,20 +395,6 @@ namespace Alternet.Drawing
             list.Clear();
 
             base.DisposeManaged();
-        }
-
-        private static bool IsPng(byte[] data)
-        {
-            // PNG signature: 89 50 4E 47 0D 0A 1A 0A
-            return data.Length > 8 &&
-                   data[0] == 0x89 &&
-                   data[1] == 0x50 &&
-                   data[2] == 0x4E &&
-                   data[3] == 0x47 &&
-                   data[4] == 0x0D &&
-                   data[5] == 0x0A &&
-                   data[6] == 0x1A &&
-                   data[7] == 0x0A;
         }
 
         private static SKBitmap LoadBmpFromIco(byte[] dibData)
