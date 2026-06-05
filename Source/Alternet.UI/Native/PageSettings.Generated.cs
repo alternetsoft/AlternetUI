@@ -22,19 +22,6 @@ namespace Alternet.UI.Native
         public PageSettings(IntPtr nativePointer) : base(nativePointer)
         {
         }
-
-        public Drawing.SizeD CustomPaperSize
-        {
-            get
-            {
-                return GetCustomPaperSize();
-            }
-
-            set
-            {
-                SetCustomPaperSize(value);
-            }
-        }
         
         public bool Color
         {

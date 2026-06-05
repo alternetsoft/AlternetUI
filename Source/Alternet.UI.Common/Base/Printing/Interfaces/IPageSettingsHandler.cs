@@ -41,9 +41,16 @@ namespace Alternet.Drawing.Printing
         public Coord MarginBottom { get; set; }
 
         /// <summary>
-        /// Gets or sets custom paper size.
+        /// Gets the custom paper size.
         /// </summary>
-        public SizeD CustomPaperSize { get; set; }
+        /// <returns>The custom paper size.</returns>
+        SizeD GetCustomPaperSize();
+
+        /// <summary>
+        /// Sets the custom paper size.
+        /// </summary>
+        /// <param name="value">The custom paper size.</param>
+        void SetCustomPaperSize(SizeD value);
 
         /// <summary>
         /// Gets or sets whether to use custom paper size.

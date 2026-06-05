@@ -100,7 +100,7 @@ namespace Alternet.Drawing.Printing
             get
             {
                 if (Handler.UseCustomPaperSize)
-                    return new PaperSize(Handler.CustomPaperSize);
+                    return new PaperSize(Handler.GetCustomPaperSize());
 
                 return new PaperSize((PaperKind)Handler.PaperSize);
             }
@@ -114,7 +114,7 @@ namespace Alternet.Drawing.Printing
 
                 if (value.IsCustom)
                 {
-                    Handler.CustomPaperSize = value.CustomSize;
+                    Handler.SetCustomPaperSize(value.CustomSize);
                 }
                 else
                 {
