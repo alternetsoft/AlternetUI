@@ -149,8 +149,31 @@ namespace Alternet.Drawing
         {
             if (IsReadOnly || stream is null)
                 return false;
-            var image = new Bitmap(stream);
-            return Add(image);
+
+            var result = false;
+
+            try
+            {
+                using IconStream iconStream = new(stream);
+
+                foreach (var entry in iconStream.Entries)
+                {
+                    if (entry.Image is null)
+                        continue;
+
+                    var image = (Image)entry.Image;
+
+                    Images.Add(image);
+                    result = true;
+                }
+
+                return result;
+            }
+            catch(Exception ex)
+            {
+                App.DebugLogError($"Error adding icon image from stream: {ex.Message}");
+                return false;
+            }
         }
 
         /// <summary>

@@ -34,13 +34,6 @@ namespace Alternet.Drawing
         SizeI GetPreferredBitmapSizeAtScale(Coord scale);
 
         /// <summary>
-        /// Adds image from the specified stream with the image data.
-        /// </summary>
-        /// <param name="stream">Stream with the image data.</param>
-        /// <returns></returns>
-        bool LoadFromStream(Stream stream);
-
-        /// <summary>
         /// Gets as image with the specified size.
         /// </summary>
         /// <param name="size">Image size.</param>

@@ -28,12 +28,6 @@ namespace Alternet.Drawing
         public static Func<Image, Bitmap>? RecolorForDarkModeOverride;
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use SkiaSharp for loading images.
-        /// Default is True. If this value is False, platform specific image loading will be used.
-        /// </summary>
-        public static bool UseSkiaSharpForLoading = true;
-
-        /// <summary>
         /// Gets or sets default quality used when images are saved and quality parameter is omitted.
         /// </summary>
         public static int DefaultSaveQuality = 70;
@@ -1375,22 +1369,15 @@ namespace Alternet.Drawing
         /// <param name="type">One of the <see cref="BitmapType"/> values</param>
         protected virtual bool InternalLoadFromStream(Stream stream, BitmapType type = BitmapType.Any)
         {
-            if (UseSkiaSharpForLoading)
+            try
             {
-                try
-                {
-                    var bitmap = SKBitmap.Decode(stream);
-                    Assign(bitmap);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                var bitmap = SKBitmap.Decode(stream);
+                Assign(bitmap);
+                return true;
             }
-            else
+            catch
             {
-                return Handler.LoadFromStream(stream, type);
+                return false;
             }
         }
     }

@@ -23,12 +23,6 @@ namespace Alternet.UI
         public static readonly ImageSet Empty = new(immutable: true);
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use SkiaSharp for loading images.
-        /// Default is True. If this value is False, platform specific image loading will be used.
-        /// </summary>
-        public static bool UseSkiaSharpForLoading = true;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with default values.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -423,22 +417,15 @@ namespace Alternet.UI
         /// <param name="stream">The data stream used to load the image.</param>
         protected virtual bool InternalLoadFromStream(Stream stream)
         {
-            if (UseSkiaSharpForLoading)
+            try
             {
-                try
-                {
-                    var bitmap = SKBitmap.Decode(stream);
-                    Images.Add((Image)bitmap);
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
+                var bitmap = SKBitmap.Decode(stream);
+                Images.Add((Image)bitmap);
+                return true;
             }
-            else
+            catch
             {
-                return Handler.LoadFromStream(stream);
+                return false;
             }
         }
     }

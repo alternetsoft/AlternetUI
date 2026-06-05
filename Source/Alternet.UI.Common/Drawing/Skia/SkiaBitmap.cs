@@ -47,7 +47,7 @@ namespace Alternet.Drawing
         {
             if (stream is null)
                 return;
-            Handler.LoadFromStream(stream);
+            InternalLoadFromStream(stream);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Alternet.Drawing
                 return;
             }
 
-            var result = Handler.LoadFromStream(stream);
+            var result = InternalLoadFromStream(stream);
 
             if (!result)
             {

@@ -46,16 +46,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Image.Depth"/>
         int Depth { get; }
 
-        /// <summary>
-        /// Loads image from stream.
-        /// </summary>
-        /// <param name="stream">Stream with image data.</param>
-        /// <returns></returns>
-        bool LoadFromStream(Stream stream);
-
-        /// <inheritdoc cref="Image.Load(Stream, BitmapType)"/>
-        bool LoadFromStream(Stream stream, BitmapType type);
-
         /// <inheritdoc cref="Image.Save(Stream, BitmapType, int?)"/>
         bool SaveToStream(Stream stream, BitmapType type, int quality);
 
