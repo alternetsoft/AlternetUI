@@ -16,7 +16,7 @@ namespace Alternet.Drawing
     /// Base class for the image containers.
     /// </summary>
     /// <typeparam name="T">Type of the handler.</typeparam>
-    public abstract class ImageContainer<T> : HandledObject<T>, IImageContainer
+    public abstract partial class ImageContainer<T> : HandledObject<T>, IImageContainer
         where T : class, IImageContainer
     {
         private int suspendImagesEvents;
@@ -149,31 +149,8 @@ namespace Alternet.Drawing
         {
             if (IsReadOnly || stream is null)
                 return false;
-
-            var result = false;
-
-            try
-            {
-                using IconStream iconStream = new(stream);
-
-                foreach (var entry in iconStream.Entries)
-                {
-                    if (entry.Image is null)
-                        continue;
-
-                    var image = (Image)entry.Image;
-
-                    Images.Add(image);
-                    result = true;
-                }
-
-                return result;
-            }
-            catch(Exception ex)
-            {
-                App.DebugLogError($"Error adding icon image from stream: {ex.Message}");
-                return false;
-            }
+            var image = new Bitmap(stream);
+            return Add(image);
         }
 
         /// <summary>
@@ -206,9 +183,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Called when image is inserted in the container.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="index"></param>
-        /// <param name="item"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index at which the image was inserted.</param>
+        /// <param name="item">The image that was inserted.</param>
         protected virtual void OnImageInserted(object? sender, int index, Image item)
         {
             if (suspendImagesEvents > 0)
@@ -221,9 +198,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Called when image is removed from the container.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="index"></param>
-        /// <param name="item"></param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index at which the image was removed.</param>
+        /// <param name="item">The image that was removed.</param>
         protected virtual void OnImageRemoved(object? sender, int index, Image item)
         {
             if (suspendImagesEvents > 0)

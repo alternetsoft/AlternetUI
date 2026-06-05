@@ -31,6 +31,9 @@ namespace Alternet.UI.Tests
             {
                 App.Log($"Default icon image: {image.Size}");
             }
+
+            App.LogNameValue("EffectiveSystemIconSize", IconSet.EffectiveSystemIconSize);
+            App.LogNameValue("EffectiveSystemSmallIconSize", IconSet.EffectiveSystemSmallIconSize);
         }
 
         /// <summary>
