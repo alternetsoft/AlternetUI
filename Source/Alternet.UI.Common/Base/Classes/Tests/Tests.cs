@@ -17,6 +17,23 @@ namespace Alternet.UI.Tests
     public static class Tests
     {
         /// <summary>
+        /// Logs information about the default icon to the application log.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestDefaultIcon()
+        {
+            var icon = KnownIcons.Default;
+
+            if (icon is null)
+                return;
+
+            foreach (var image in icon.Images)
+            {
+                App.Log($"Default icon image: {image.Size}");
+            }
+        }
+
+        /// <summary>
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]

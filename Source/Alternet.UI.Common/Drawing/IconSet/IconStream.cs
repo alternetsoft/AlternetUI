@@ -33,7 +33,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Represents helper class for reading icon data from a stream.
     /// </summary>
-    public class IconStream
+    public class IconStream : DisposableObject
     {
         /// <summary>
         /// The default minimum width for the preview image.
@@ -276,6 +276,20 @@ namespace Alternet.Drawing
             }
         }
 
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            foreach (var entry in Entries)
+            {
+                entry.Image?.Dispose();
+                entry.Image = null;
+            }
+
+            list.Clear();
+
+            base.DisposeManaged();
+        }
+
         private static bool IsPng(byte[] data)
         {
             // PNG signature: 89 50 4E 47 0D 0A 1A 0A
@@ -295,7 +309,7 @@ namespace Alternet.Drawing
             int infoHeaderSize = BitConverter.ToInt32(dibData, 0);
             int width = BitConverter.ToInt32(dibData, 4);
             int height = BitConverter.ToInt32(dibData, 8) / 2; // actual height
-            ushort planes = BitConverter.ToUInt16(dibData, 12);
+            ushort _ = BitConverter.ToUInt16(dibData, 12); // planes
             ushort bitCount = BitConverter.ToUInt16(dibData, 14);
 
             // Palette size
