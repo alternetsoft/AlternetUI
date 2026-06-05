@@ -190,6 +190,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Reads resource from the specified URL and returns it as a data URL string.
+        /// </summary>
+        /// <param name="resourceUrl">The URL of the resource.</param>
+        /// <param name="mimeType">The MIME type of the resource. Optional.</param>
+        /// <returns>A data URL string representing the resource, or <c>null</c> if the resource cannot be loaded.</returns>
+        public static string? DataUrlFromResource(string? resourceUrl, string? mimeType = null)
+        {
+            var stream = StreamFromUrlOrDefault(resourceUrl);
+            return WebUtils.StreamToDataUrl(stream, mimeType);
+        }
+
+        /// <summary>
         /// Loads a string from the specified resource URL or returns null if failed.
         /// </summary>
         /// <param name="url">The resource URL used to load the data.</param>
@@ -222,6 +234,11 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Stream? DefaultStreamFromUrl(string url, Uri? baseUri = null)
         {
+            var isData = WebUtils.IsDataUrl(url);
+
+            if (isData)
+                return WebUtils.StreamFromDataUrl(url);
+
             var s = url.Trim();
 
             var isFile = s.StartsWith("file:");
