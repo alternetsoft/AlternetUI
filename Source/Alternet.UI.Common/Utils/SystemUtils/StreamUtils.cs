@@ -40,9 +40,12 @@ namespace Alternet.UI
         /// otherwise, a new <see cref="MemoryStream"/> is created with the data copied from the specified stream.
         /// </summary>
         /// <param name="stream">The stream to convert.</param>
-        /// <returns>A <see cref="MemoryStream"/> containing the data from the specified stream.</returns>
-        public static MemoryStream ToMemoryStream(Stream stream)
+        /// <returns>A <see cref="MemoryStream"/> containing the data from the specified stream,
+        /// or <c>null</c> if the input stream is <c>null</c>.</returns>
+        public static MemoryStream? ToMemoryStream(Stream? stream)
         {
+            if (stream == null)
+                return null;
             if (stream is MemoryStream memoryStream)
                 return memoryStream;
             return CreateMemoryStream(stream);

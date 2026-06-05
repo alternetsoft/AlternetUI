@@ -20,6 +20,23 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestDataUrl()
+        {
+            var dataUrl = ResourceLoader.DataUrlFromResource(KnownIcons.UrlDefault);
+            var stream = ResourceLoader.StreamFromUrlOrDefault(dataUrl);
+
+            if (stream != null)
+            {
+                var iconStream = new IconStream(stream);
+                var combinedBitmap = SkiaUtils.CombineIconsVertically(iconStream.Bitmaps, null);
+                LogUtils.LogImage((Image)combinedBitmap);
+            }
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestIconLoading()
         {
             using var stream = KnownIcons.GetDefaultIconStream();

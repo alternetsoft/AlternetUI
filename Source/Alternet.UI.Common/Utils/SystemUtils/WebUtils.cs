@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -32,11 +33,58 @@ namespace Alternet.UI
 
             if (strict)
             {
-                return DataUrlRegex.IsMatch(url.Trim());
+                return DataUrlRegex.IsMatch(url);
             }
             else
             {
-                return url.TrimStart().StartsWith("data:", StringComparison.OrdinalIgnoreCase);
+                return url.StartsWith("data:", StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// Converts stream to data URL string.
+        /// </summary>
+        /// <param name="stream">The stream containing the data.</param>
+        /// <param name="mimeType">The MIME type of the data.</param>
+        /// <returns>A data URL string, or <c>null</c> if the stream is <c>null</c>.</returns>
+        public static string? StreamToDataUrl(Stream? stream, string? mimeType = null)
+        {
+            var memoryStream = StreamUtils.ToMemoryStream(stream);
+            return StreamToDataUrl(memoryStream, mimeType);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="MemoryStream"/> to a data URL string with the specified MIME type.
+        /// </summary>
+        /// <param name="stream">The memory stream containing the data.</param>
+        /// <param name="mimeType">The MIME type of the data.</param>
+        /// <returns>A data URL string, or <c>null</c> if the stream is <c>null</c>.</returns>
+        public static string? StreamToDataUrl(MemoryStream? stream, string? mimeType = null)
+        {
+            if (stream == null)
+                return null;
+            mimeType ??= "application/octet-stream";
+            byte[] data = stream.ToArray();
+            return DataUrlFromBytes(data, mimeType);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="MemoryStream"/> from the specified data URL.
+        /// </summary>
+        /// <param name="url">The data URL string.</param>
+        /// <returns>A <see cref="MemoryStream"/> containing the decoded data, or <c>null</c> if the URL is invalid.</returns>
+        public static MemoryStream? StreamFromDataUrl(string? url)
+        {
+            try
+            {
+                var bytes = DataUrlToBytes(url, out string mimeType);
+                if (bytes == null)
+                    return null;
+                return new MemoryStream(bytes);
+            }
+            catch
+            {
+                return null;
             }
         }
 
