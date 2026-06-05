@@ -12,10 +12,11 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Allows to use icons in the application.
+    /// Represents a set of icons, typically loaded from an .ico file, containing multiple icon
+    /// images of various sizes and color depths.
     /// </summary>
     [TypeConverter(typeof(IconSetConverter))]
-    public class IconSet : ImageContainer<IIconSetHandler>
+    public partial class IconSet : ImageContainer<IIconSetHandler>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/>.
@@ -86,11 +87,101 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets width of the icon from the system settings.
+        /// </summary>
+        public static int SystemIconWidth => SystemSettings.GetMetric(SystemSettingsMetric.IconX);
+
+        /// <summary>
+        /// Gets height of the icon from the system settings.
+        /// </summary>
+        public static int SystemIconHeight => SystemSettings.GetMetric(SystemSettingsMetric.IconY);
+
+        /// <summary>
+        /// Gets size of the icon from the system settings.
+        /// </summary>
+        public static SizeI SystemIconSize => new (SystemIconWidth, SystemIconHeight);
+
+        /// <summary>
+        /// Gets width of the small icon from the system settings (used in window captions and small icon view).
+        /// </summary>
+        public static int SystemSmallIconWidth => SystemSettings.GetMetric(SystemSettingsMetric.SmallIconX);
+
+        /// <summary>
+        /// Gets height of the small icon from the system settings (used in window captions and small icon view).
+        /// </summary>
+        public static int SystemSmallIconHeight => SystemSettings.GetMetric(SystemSettingsMetric.SmallIconY);
+
+        /// <summary>
+        /// Gets size of the small icon from the system settings (used in window captions and small icon view).
+        /// </summary>
+        public static SizeI SystemSmallIconSize => new (SystemSmallIconWidth, SystemSmallIconHeight);
+
+        /// <summary>
+        /// Gets or sets an override value for the system small icon width.
+        /// If set to a value greater than zero, this value will be used instead of the system icon width
+        /// in <see cref="EffectiveSystemSmallIconWidth"/>.
+        /// </summary>
+        public static int? SystemSmallIconWidthOverride;
+
+        /// <summary>
+        /// Gets or sets an override value for the system small icon height.
+        /// If set to a value greater than zero, this value will be used instead of the system icon height
+        /// in <see cref="EffectiveSystemSmallIconHeight"/>.
+        /// </summary>
+        public static int? SystemSmallIconHeightOverride;
+
+        /// <summary>
+        /// Gets or sets an override value for the system icon width.
+        /// If set to a value greater than zero, this value will be used instead of the system icon width
+        /// in <see cref="EffectiveSystemIconWidth"/>.
+        /// </summary>
+        public static int? SystemIconWidthOverride;
+
+        /// <summary>
+        /// Gets or sets an override value for the system icon height.
+        /// If set to a value greater than zero, this value will be used instead of the system icon height
+        /// in <see cref="EffectiveSystemIconHeight"/>.
+        /// </summary>
+        public static int? SystemIconHeightOverride;
+
+        /// <summary>
+        /// Gets effective system small icon width, taking into account the <see cref="SystemSmallIconWidthOverride"/>.
+        /// </summary>
+        public static int EffectiveSystemSmallIconWidth => SystemSmallIconWidthOverride ?? SystemSmallIconWidth;
+
+        /// <summary>
+        /// Gets effective system small icon height, taking into account the <see cref="SystemSmallIconHeightOverride"/>.
+        /// </summary>
+        public static int EffectiveSystemSmallIconHeight => SystemSmallIconHeightOverride ?? SystemSmallIconHeight;
+
+        /// <summary>
+        /// Gets effective system icon width, taking into account the <see cref="SystemIconWidthOverride"/>.
+        /// </summary>
+        public static int EffectiveSystemIconWidth => SystemIconWidthOverride ?? SystemIconWidth;
+
+        /// <summary>
+        /// Gets effective system icon height, taking into account the <see cref="SystemIconHeightOverride"/>.
+        /// </summary>
+        public static int EffectiveSystemIconHeight => SystemIconHeightOverride ?? SystemIconHeight;
+
+        /// <summary>
+        /// Gets effective system small icon size, taking into account
+        /// the <see cref="SystemSmallIconWidthOverride"/> and <see cref="SystemSmallIconHeightOverride"/>.
+        /// </summary>
+        public static SizeI EffectiveSystemSmallIconSize => new(EffectiveSystemSmallIconWidth, EffectiveSystemSmallIconHeight);
+
+        /// <summary>
+        /// Gets effective system icon size, taking into account
+        /// the <see cref="SystemIconWidthOverride"/> and <see cref="SystemIconHeightOverride"/>.
+        /// </summary>
+        public static SizeI EffectiveSystemIconSize => new(EffectiveSystemIconWidth, EffectiveSystemIconHeight);
+
+        /// <summary>
         /// Creates <see cref="IconSet"/> instance from
         /// the <see cref="Image"/> instance.
         /// </summary>
         /// <param name="image">The image used to load the data.</param>
-        /// <returns></returns>
+        /// <returns>An <see cref="IconSet"/> instance or null if the image is null.</returns>
         public static IconSet? FromImage(Image? image)
         {
             if (image == null)
@@ -169,6 +260,38 @@ namespace Alternet.Drawing
             catch
             {
                 return defaultIcon;
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool Add(Stream? stream)
+        {
+            if (IsReadOnly || stream is null)
+                return false;
+
+            var result = false;
+
+            try
+            {
+                using IconStream iconStream = new(stream);
+
+                foreach (var entry in iconStream.Entries)
+                {
+                    if (entry.Image is null)
+                        continue;
+
+                    var image = (Image)entry.Image;
+
+                    Images.Add(image);
+                    result = true;
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                App.DebugLogError($"Error adding icon image from stream: {ex.Message}");
+                return false;
             }
         }
 
