@@ -20,19 +20,31 @@ namespace Alternet.UI
     {
         static Application()
         {
+
             if (!App.IsMaui)
             {
-                if (!App.Is64BitProcess && App.IsWindowsOS)
+                if (App.IsWindowsOS)
                 {
-                    if (!IsNetOrCoreApp)
+                    try
                     {
-                        var s = $"Critical error\n\n";
-                        s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
-                        s += $"Your software configuration is not supported:\n";
-                        s += $"Windows 32 bit and Net Framework {Environment.Version}\n\n";
-                        s += $"Use Windows 64 bit or newer Net Framework version.\n";
+                        InitDpiAwareness();
+                    }
+                    catch
+                    {
+                    }
 
-                        DialogFactory.ShowCriticalMessage(s);
+                    if (!App.Is64BitProcess)
+                    {
+                        if (!IsNetOrCoreApp)
+                        {
+                            var s = $"Critical error\n\n";
+                            s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
+                            s += $"Your software configuration is not supported:\n";
+                            s += $"Windows 32 bit and Net Framework {Environment.Version}\n\n";
+                            s += $"Use Windows 64 bit or newer Net Framework version.\n";
+
+                            DialogFactory.ShowCriticalMessage(s);
+                        }
                     }
                 }
             }
@@ -80,6 +92,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows critical warning message.
+        /// </summary>
+        /// <param name="warning">The warning message to display.</param>
+        public static void ShowCriticalWarning(string warning)
+        {
+            try
+            {
+                var s = $"Warning\n\n";
+                s += $"Application: [{CommonUtils.GetAppExePath()}]\n\n";
+                s += $"Warning: {warning}\n\n";
+                DialogFactory.ShowCriticalMessage(s, null, true);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
         /// Attempts to load a GTK CSS file named '&lt;ApplicationFileName&gt;.gtk.css' from
         /// the application directory.
         /// Returns the contents as a string, or <c>null</c> if the file doesn't exist or can't be read.
@@ -109,6 +139,68 @@ namespace Alternet.UI
             {
                 BaseObject.Nop(new Exception($"Failed to load GTK CSS: {ex.Message}"));
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Initializes dpi awareness for the application. This is called automatically.
+        /// </summary>
+        private static void InitDpiAwareness()
+        {
+            bool setProcessDpiAware = false;
+
+            if (MswUtils.IsWindows81OrLater())
+            {
+                IntPtr hProcess = System.Diagnostics.Process.GetCurrentProcess().Handle;
+
+                int v = MswUtils.NativeMethods.GetProcessDpiAwareness(hProcess, out MswProcessDpiAwareness awareness);
+                if (v == 0)
+                {
+                    switch (awareness)
+                    {
+                        case MswProcessDpiAwareness.Unaware:
+                            setProcessDpiAware = true;
+                            break;
+                        case MswProcessDpiAwareness.SystemAware:
+                            break;
+                        case MswProcessDpiAwareness.PerMonitorAware:
+                            ShowCriticalWarning(
+"""
+Per-monitor DPI awareness is not supported.
+Please edit app.manifest and set the DPI awareness to 'SystemAware'. Example:
+
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
+    </windowsSettings>
+  </application>
+  <application xmlns="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
+    </windowsSettings>
+  </application>
+
+"""
+);
+                            break;
+                    }
+                }
+                else
+                {
+                    setProcessDpiAware = true;
+                }
+            }
+
+            if (setProcessDpiAware && MswUtils.IsWindowsVistaOrLater())
+            {
+                var result = MswUtils.NativeMethods.SetProcessDPIAware();
+
+                if (result)
+                {
+                }
+                else
+                {
+                }
             }
         }
     }

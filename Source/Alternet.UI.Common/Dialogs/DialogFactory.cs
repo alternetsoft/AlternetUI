@@ -96,8 +96,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">Message to show.</param>
         /// <param name="e">Exception information.</param>
-        /// <returns><c>true</c> on success, <c>false</c> on failure.</returns>
-        public static void ShowCriticalMessage(string s, Exception? e = null)
+        /// <param name="pressEnterToContinue">Indicates whether to prompt the user to press ENTER to continue.</param>
+        public static void ShowCriticalMessage(string s, Exception? e = null, bool pressEnterToContinue = false)
         {
             try
             {
@@ -117,7 +117,12 @@ namespace Alternet.UI
                         console.TextColor = ConsoleColor.White;
                         console.Clear();
                         console.WriteLine(s);
-                        Console.ReadLine();
+                        if (pressEnterToContinue)
+                        {
+                            Console.WriteLine($"Press ENTER to continue.");
+                            Console.ReadLine();
+                            Console.WriteLine($"ENTER pressed. Continuing...");
+                        }
                     }
                     catch
                     {

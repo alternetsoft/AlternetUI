@@ -49,6 +49,12 @@
   </compatibility>
 
 <!--
+
+dpiAware
+false	   - App is DPI‑unaware. Windows scales it automatically.
+true	   - App is System DPI aware. Queries DPI once at startup and ignores later changes.
+true/pm    - App is Per‑monitor DPI aware. Adjusts scale factor when moved between monitors. 
+
 dpiAwareness 
 Element is absent	
 	The dpiAware element specifies whether the process is dpi aware.
@@ -69,8 +75,7 @@ First recognized item is "unaware"
 
   <application xmlns="urn:schemas-microsoft-com:asm.v3">
     <windowsSettings>
-      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware>
-      <dpiAwareness xmlns="http://schemas.microsoft.com/SMI/2016/WindowsSettings">PerMonitorV2, unaware</dpiAwareness>
+      <dpiAware xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">true</dpiAware> 
     </windowsSettings>
   </application>
 

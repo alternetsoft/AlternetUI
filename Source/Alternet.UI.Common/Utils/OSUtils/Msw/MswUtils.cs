@@ -9,12 +9,49 @@ using Microsoft.Win32.SafeHandles;
 
 namespace Alternet.UI
 {
+    /*
+
+    High DPI on MSW:
+    https://learn.microsoft.com/en-us/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows?redirectedfrom=MSDN
+
+    */
+
     /// <summary>
     /// Contains static methods and properties related to Windows operating system.
     /// </summary>
     public static class MswUtils
     {
         private static bool consoleAllocated = false;
+
+        /// <summary>
+        /// Logs current DPI awareness context of the process for debugging purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void LogCurrentAwareness()
+        {
+            if (IsWindows81OrLater())
+            {
+                IntPtr hProcess = System.Diagnostics.Process.GetCurrentProcess().Handle;
+
+                int v = NativeMethods.GetProcessDpiAwareness(hProcess, out MswProcessDpiAwareness awareness);
+                if (v == 0)
+                {
+                    App.Log($"Current process DPI awareness: {awareness}");
+                }
+                else
+                {
+                    App.Log($"Failed to get process DPI awareness. Error code: {v}");
+                }
+            }
+
+            if (IsWindows10OrLater())
+            {
+                // Query thread DPI awareness context (Windows 10+)
+                IntPtr context = NativeMethods.GetThreadDpiAwarenessContext();
+                MswDpiAwareness ctx = NativeMethods.GetAwarenessFromDpiAwarenessContext(context);
+                App.Log($"Thread DPI Awareness Context: {ctx}");
+            }
+        }
 
         /// <summary>
         /// Determines whether the current operating system is Windows 10 or later.
@@ -53,6 +90,19 @@ namespace Alternet.UI
             var os = Environment.OSVersion;
             return os.Platform == PlatformID.Win32NT &&
                    (os.Version.Major > 6 || (os.Version.Major == 6 && os.Version.Minor >= 2));
+        }
+
+        /// <summary>
+        /// Determines whether the current operating system is Windows 8.1 or later.
+        /// </summary>
+        /// <returns>
+        /// <c>true</c> if the operating system is Windows 8.1 or later; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsWindows81OrLater()
+        {
+            var os = Environment.OSVersion;
+            return os.Platform == PlatformID.Win32NT &&
+                   (os.Version.Major > 6 || (os.Version.Major == 6 && os.Version.Minor >= 3));
         }
 
         /// <summary>
@@ -1045,6 +1095,68 @@ namespace Alternet.UI
                 uint dwDesiredAccess,
                 bool bInheritHandle,
                 uint dwProcessId);
+
+            /// <summary>
+            /// Sets the current process as system DPI aware. Requires Windows Vista or later.
+            /// This legacy API makes the process aware of the system DPI at startup.
+            /// The process will not be scaled automatically when Windows DPI settings change.
+            /// </summary>
+            /// <returns>
+            /// True if the call succeeds; otherwise false.
+            /// </returns>
+            [DllImport("user32.dll")]
+            public static extern bool SetProcessDPIAware();
+
+            /// <summary>
+            /// Sets the DPI awareness level for the current process.
+            /// This modern API (Windows 8.1+) allows specifying whether the process is
+            /// DPI unaware, system DPI aware, or per‑monitor DPI aware.
+            /// </summary>
+            /// <param name="value">
+            /// The desired DPI awareness level. Use values from <see cref="MswProcessDpiAwareness"/>.
+            /// </param>
+            /// <returns>
+            /// Returns S_OK (0) if successful, or an error code otherwise.
+            /// </returns>
+            [DllImport("Shcore.dll")]
+            public static extern int SetProcessDpiAwareness(MswProcessDpiAwareness value);
+
+            /// <summary>
+            /// Retrieves the DPI awareness level of a specified process.
+            /// </summary>
+            /// <param name="hProcess">
+            /// A handle to the process whose DPI awareness you want to query.
+            /// Typically, use System.Diagnostics.Process.GetCurrentProcess().Handle.
+            /// </param>
+            /// <param name="awareness">
+            /// When the function returns, contains the DPI awareness level of the process.
+            /// </param>
+            /// <returns>
+            /// Returns S_OK (0) if successful, or an error code otherwise.
+            /// </returns>
+            [DllImport("Shcore.dll")]
+            public static extern int GetProcessDpiAwareness(IntPtr hProcess, out MswProcessDpiAwareness awareness);
+
+            /// <summary>
+            /// Retrieves the DPI awareness context for the current thread.
+            /// </summary>
+            /// <returns>
+            /// An <see cref="IntPtr"/> representing the DPI awareness context of the calling thread.
+            /// </returns>
+            [DllImport("user32.dll")]
+            public static extern IntPtr GetThreadDpiAwarenessContext();
+
+            /// <summary>
+            /// Converts a DPI awareness context value into a <see cref="MswDpiAwareness"/> enumeration.
+            /// </summary>
+            /// <param name="dpiContext">
+            /// A DPI awareness context handle, typically obtained from <see cref="GetThreadDpiAwarenessContext"/>.
+            /// </param>
+            /// <returns>
+            /// A <see cref="MswDpiAwareness"/> value that describes the DPI awareness mode.
+            /// </returns>
+            [DllImport("user32.dll")]
+            public static extern MswDpiAwareness GetAwarenessFromDpiAwarenessContext(IntPtr dpiContext);
 
             /// <summary>
             /// Represents X and Y coordinates.

@@ -2571,10 +2571,25 @@ namespace Alternet.UI
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
+            OnDpiOrSystemColorsChanged();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnDpiChanged(DpiChangedEventArgs e)
+        {
+            base.OnDpiChanged(e);
+            OnDpiOrSystemColorsChanged();
+        }
+
+        /// <summary>
+        /// Invoked when either the DPI or system colors change, allowing for adjustments to the control's appearance or layout.
+        /// </summary>
+        protected virtual void OnDpiOrSystemColorsChanged()
+        {
             drawable.ResetCachedImages();
-            pictureSpacer.RaiseSystemColorsChanged(e);
-            spacer.RaiseSystemColorsChanged(e);
-            label.RaiseSystemColorsChanged(e);
+            pictureSpacer.RaiseSystemColorsChanged(EventArgs.Empty);
+            spacer.RaiseSystemColorsChanged(EventArgs.Empty);
+            label.RaiseSystemColorsChanged(EventArgs.Empty);
         }
 
         /// <summary>

@@ -17,10 +17,19 @@ namespace Alternet.UI.Tests
     public static class Tests
     {
         /// <summary>
-        /// Logs information about the default icon to the application log.
+        /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
-        public static void TestDefaultIcon()
+        public static void TestDpiAwareness()
+        {
+            MswUtils.LogCurrentAwareness();
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
+        public static void TestIcon()
         {
             var icon = KnownIcons.Default;
 
