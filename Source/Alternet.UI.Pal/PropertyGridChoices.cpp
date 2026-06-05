@@ -45,11 +45,12 @@ namespace Alternet::UI
 		return nullptr;
 	}
 
+	/*
 	void PropertyGridChoices::SetBitmap(void* handle, uint32_t ind, ImageSet* bitmap)
 	{
 		wxPGChoiceEntry& item = Item(handle, ind);
 		item.SetBitmap(ImageSet::BitmapBundle(bitmap));
-	}
+	}*/
 
 	void PropertyGridChoices::SetFgCol(void* handle, uint32_t ind, const Color& color)
 	{
@@ -99,12 +100,11 @@ namespace Alternet::UI
 		delete (PropertyGridChoices*)handle;
 	}
 
-	void PropertyGridChoices::Add(void* handle, const string& text, 
-		int value, ImageSet* bitmapBundle)
+	void PropertyGridChoices::Add(void* handle, const string& text, int value)
 	{
 		PropertyGridChoices* instance = Choices(handle);
 
-		instance->choices.Add(wxStr(text), ImageSet::BitmapBundle(bitmapBundle), value);
+		instance->choices.Add(wxStr(text), value);
 	}
 
 	string PropertyGridChoices::GetLabel(void* handle, uint32_t ind)
@@ -137,14 +137,11 @@ namespace Alternet::UI
 		return instance->choices.Index(val);
 	}
 
-	void PropertyGridChoices::Insert(void* handle, int index, const string& text, 
-		int value, ImageSet* bitmapBundle)
+	void PropertyGridChoices::Insert(void* handle, int index, const string& text, int value)
 	{
 		PropertyGridChoices* instance = Choices(handle);
 
 		wxPGChoiceEntry entry = wxPGChoiceEntry(wxStr(text), value);
-		if (bitmapBundle != nullptr)
-			entry.SetBitmap(ImageSet::BitmapBundle(bitmapBundle));
 
 		instance->choices.Insert(entry, index);
 	}

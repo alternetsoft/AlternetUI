@@ -774,9 +774,6 @@ namespace Alternet.UI
                     IPropertyGridItem prop,
                     IPropertyGridVariant value);
 
-        /// <inheritdoc cref="PropertyGrid.SetPropertyImage"/>
-        void SetPropertyImage(IPropertyGridItem prop, ImageSet? bmp);
-
         /// <inheritdoc cref="PropertyGrid.SetPropertyAttribute"/>
         void SetPropertyAttribute(
                     IPropertyGridItem prop,

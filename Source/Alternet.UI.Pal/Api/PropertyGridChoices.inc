@@ -3,9 +3,8 @@
 public:
 static void* CreatePropertyGridChoices();
 static void Delete(void* handle);
-static void Add(void* handle, const string& text, int value, ImageSet* bitmapBundle);
+static void Add(void* handle, const string& text, int value);
 static void SetLabel(void* handle, uint32_t ind, const string& value);
-static void SetBitmap(void* handle, uint32_t ind, ImageSet* bitmap);
 static void SetFgCol(void* handle, uint32_t ind, const Color& color);
 static void SetFont(void* handle, uint32_t ind, void* font);
 static void SetBgCol(void* handle, uint32_t ind, const Color& color);
@@ -20,7 +19,7 @@ static uint32_t GetCount(void* handle);
 static int GetValue(void* handle, uint32_t ind);
 static int GetLabelIndex(void* handle, const string& str);
 static int GetValueIndex(void* handle, int val);
-static void Insert(void* handle, int index, const string& text, int value, ImageSet* bitmapBundle);
+static void Insert(void* handle, int index, const string& text, int value);
 static bool IsOk(void* handle);
 static void RemoveAt(void* handle, uint64_t nIndex, uint64_t count);
 static void Clear(void* handle);

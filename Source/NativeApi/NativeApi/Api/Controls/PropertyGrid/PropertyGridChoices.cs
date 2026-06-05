@@ -13,11 +13,9 @@ namespace NativeApi.Api
 
         public static void Delete(IntPtr handle) { }
 
-        public static void Add(IntPtr handle, string text, int value,
-            ImageSet? bitmapBundle) {}
+        public static void Add(IntPtr handle, string text, int value) {}
 
         public static void SetLabel(IntPtr handle, uint ind, string value) { }
-        public static void SetBitmap(IntPtr handle, uint ind, ImageSet? bitmap) { }
         public static void SetFgCol(IntPtr handle, uint ind, Color color){}
         public static void SetFont(IntPtr handle, uint ind, IntPtr font){}
         public static void SetBgCol(IntPtr handle, uint ind, Color color){}
@@ -45,8 +43,7 @@ namespace NativeApi.Api
         // Returns index of item with given value.
         public static int GetValueIndex(IntPtr handle, int val) => default;
 
-        public static void Insert(IntPtr handle, int index, string text, int value,
-            ImageSet? bitmapBundle) { }
+        public static void Insert(IntPtr handle, int index, string text, int value) { }
 
         // Returns false if this is a constant empty set of choices,
         // which should not be modified.

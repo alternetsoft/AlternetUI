@@ -347,19 +347,6 @@ namespace Alternet.UI
             Native.PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
         }
 
-        /// <summary>
-        /// Sets image associated with the property.
-        /// </summary>
-        /// <param name="prop">Property item.</param>
-        /// <param name="bmp">Image.</param>
-        public void SetPropertyImage(IPropertyGridItem prop, ImageSet? bmp)
-        {
-            var ptr = ItemToPtr(prop);
-            if (ptr is null)
-                return;
-            NativeControl.SetPropertyImage(ptr.Value, (UI.Native.ImageSet?)bmp?.Handler);
-        }
-
         public bool IsSmallScreen()
         {
             return Native.PropertyGrid.IsSmallScreen();

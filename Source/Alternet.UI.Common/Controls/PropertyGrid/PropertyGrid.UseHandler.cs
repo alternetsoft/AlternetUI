@@ -2414,18 +2414,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets image associated with the property.
-        /// </summary>
-        /// <param name="prop">Property item.</param>
-        /// <param name="bmp">Image.</param>
-        public virtual void SetPropertyImage(IPropertyGridItem prop, ImageSet? bmp)
-        {
-            if (DisposingOrDisposed)
-                return;
-            Handler.SetPropertyImage(prop, bmp);
-        }
-
-        /// <summary>
         /// Sets an attribute for the property.
         /// </summary>
         /// <param name="prop"></param>

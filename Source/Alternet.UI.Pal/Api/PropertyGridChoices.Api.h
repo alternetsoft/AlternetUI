@@ -3,7 +3,6 @@
 #pragma once
 
 #include "PropertyGridChoices.h"
-#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -30,10 +29,10 @@ ALTERNET_UI_API void PropertyGridChoices_Delete_(void* handle)
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_Add_(void* handle, const char16_t* text, int value, ImageSet* bitmapBundle)
+ALTERNET_UI_API void PropertyGridChoices_Add_(void* handle, const char16_t* text, int value)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridChoices::Add(handle, text, value, bitmapBundle);
+        PropertyGridChoices::Add(handle, text, value);
     });
 }
 
@@ -41,13 +40,6 @@ ALTERNET_UI_API void PropertyGridChoices_SetLabel_(void* handle, uint32_t ind, c
 {
     MarshalExceptions<void>([&](){
         PropertyGridChoices::SetLabel(handle, ind, value);
-    });
-}
-
-ALTERNET_UI_API void PropertyGridChoices_SetBitmap_(void* handle, uint32_t ind, ImageSet* bitmap)
-{
-    MarshalExceptions<void>([&](){
-        PropertyGridChoices::SetBitmap(handle, ind, bitmap);
     });
 }
 
@@ -149,10 +141,10 @@ ALTERNET_UI_API int PropertyGridChoices_GetValueIndex_(void* handle, int val)
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_Insert_(void* handle, int index, const char16_t* text, int value, ImageSet* bitmapBundle)
+ALTERNET_UI_API void PropertyGridChoices_Insert_(void* handle, int index, const char16_t* text, int value)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridChoices::Insert(handle, index, text, value, bitmapBundle);
+        PropertyGridChoices::Insert(handle, index, text, value);
     });
 }
 

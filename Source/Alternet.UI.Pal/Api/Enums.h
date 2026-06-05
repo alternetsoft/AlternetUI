@@ -602,6 +602,17 @@ namespace Alternet::UI
         Percent = 2,
     };
     
+    enum class DrawingShapeType
+    {
+        None = 0,
+        Rectangle = 1,
+        Ellipse = 2,
+        RoundedRectangle = 3,
+        Pie = 4,
+        Circle = 5,
+        Arc = 6,
+    };
+    
     enum class FillMode
     {
         Alternate = 0,
@@ -1018,6 +1029,7 @@ namespace Alternet::UI
         None = 0,
         IterateBackward = 1,
         UseMarginsWhenDock = 2,
+        NoParentPerformLayoutCalled = 4,
     };
     
     enum class LayoutStyle
@@ -1027,7 +1039,6 @@ namespace Alternet::UI
         Basic = 2,
         Vertical = 3,
         Horizontal = 4,
-        Scroll = 5,
     };
     
     enum class RightToLeft
@@ -1156,6 +1167,18 @@ namespace Alternet::UI
         Html = 2,
         CommaSeparatedValue = 3,
         Xaml = 4,
+    };
+    
+    enum class BarPanelKind
+    {
+        Text = 0,
+        Separator = 1,
+        PictureBox = 2,
+        SpeedButton = 3,
+        TextButton = 4,
+        ProgressBar = 5,
+        Spacer = 6,
+        CustomControl = 7,
     };
     
     enum class BoundsSpecified
@@ -1371,8 +1394,6 @@ namespace Alternet::UI
     {
         Normal = 0,
         Flat = 1,
-        Raised = 2,
-        Sunken = 3,
     };
     
     enum class ToolStripDropDownCloseReason

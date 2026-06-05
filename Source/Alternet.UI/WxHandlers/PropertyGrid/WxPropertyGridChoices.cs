@@ -16,7 +16,6 @@ namespace Alternet.UI
         private IPropertyGridChoices? nullableChoices;
         private int nullableValue = DefaultNullableValue;
         private bool hasCustomFonts = false;
-        private bool hasBitmaps = false;
         private bool hasCustomFgColors = false;
         private bool hasCustomBgColors = false;
 
@@ -32,7 +31,7 @@ namespace Alternet.UI
 
         public bool HasCustomFonts => hasCustomFonts;
 
-        public bool HasBitmaps => hasBitmaps;
+        public bool HasBitmaps => false;
 
         public bool HasCustomFgColors => hasCustomFgColors;
 
@@ -130,16 +129,6 @@ namespace Alternet.UI
             ChoicesChanged();
         }
 
-        public void SetBitmap(int index, ImageSet? bitmap)
-        {
-            hasBitmaps = true;
-            Native.PropertyGridChoices.SetBitmap(
-                handle,
-                (uint)index,
-                (UI.Native.ImageSet?)bitmap?.Handler);
-            ChoicesChanged();
-        }
-
         public void SetFgColor(int index, Color color)
         {
             hasCustomFgColors = true;
@@ -205,7 +194,6 @@ namespace Alternet.UI
 
         public void Clear()
         {
-            hasBitmaps = false;
             hasCustomFgColors = false;
             hasCustomBgColors = false;
             hasCustomFonts = false;
@@ -214,45 +202,38 @@ namespace Alternet.UI
             ChoicesChanged();
         }
 
-        public int Add(string? text, int value, ImageSet? bitmap = null)
+        public int Add(string? text, int value)
         {
-            if(bitmap != null)
-                hasBitmaps = true;
-
             text ??= string.Empty;
             Native.PropertyGridChoices.Add(
                 handle,
                 text,
-                value,
-                (UI.Native.ImageSet?)bitmap?.Handler);
+                value);
             ChoicesChanged();
             return Count - 1;
         }
 
-        public int Add(string text, object value, ImageSet? bitmap = null)
+        public int Add(string text, object value)
         {
             var intValue = 0;
             if (value is not null)
                 intValue = (int)value;
-            return Add(text, intValue, bitmap);
+            return Add(text, intValue);
         }
 
-        public int Add(object value, ImageSet? bitmap = null)
+        public int Add(object value)
         {
             var text = value?.ToString();
-            return Add(text ?? string.Empty, value ?? 0, bitmap);
+            return Add(text ?? string.Empty, value ?? 0);
         }
 
-        public void Insert(int index, string text, int value, ImageSet? bitmap)
+        public void Insert(int index, string text, int value)
         {
-            if (bitmap != null)
-                hasBitmaps = true;
             Native.PropertyGridChoices.Insert(
                 handle,
                 index,
                 text,
-                value,
-                (UI.Native.ImageSet?)bitmap?.Handler);
+                value);
             ChoicesChanged();
         }
 
