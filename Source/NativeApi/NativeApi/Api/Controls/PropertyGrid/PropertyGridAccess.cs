@@ -270,9 +270,6 @@ namespace NativeApi.Api
         public bool ChangePropertyValue(IntPtr id, IntPtr variant) =>
             throw new Exception();
 
-        public void SetPropertyImage(IntPtr id, ImageSet? bmp) =>
-            throw new Exception();
-
         public void SetPropertyAttribute(IntPtr id, string attrName, IntPtr variant,
             long argFlags = 0) => throw new Exception();
 

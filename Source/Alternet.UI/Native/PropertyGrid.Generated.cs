@@ -1294,12 +1294,6 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             return NativeApi.PropertyGrid_ChangePropertyValue_(NativePointer, id, variant);
         }
         
-        public void SetPropertyImage(System.IntPtr id, ImageSet? bmp)
-        {
-            CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyImage_(NativePointer, id, bmp?.NativePointer ?? IntPtr.Zero);
-        }
-        
         public void SetPropertyAttribute(System.IntPtr id, string attrName, System.IntPtr variant, long argFlags)
         {
             CheckDisposed();
@@ -2061,9 +2055,6 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_ChangePropertyValue_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyImage_(IntPtr obj, System.IntPtr id, IntPtr bmp);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyAttribute_(IntPtr obj, System.IntPtr id, string attrName, System.IntPtr variant, long argFlags);

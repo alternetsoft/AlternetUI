@@ -3,7 +3,6 @@
 #pragma once
 
 #include "PropertyGrid.h"
-#include "ImageSet.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -1448,13 +1447,6 @@ ALTERNET_UI_API c_bool PropertyGrid_ChangePropertyValue_(PropertyGrid* obj, void
 {
     return MarshalExceptions<c_bool>([&](){
         return obj->ChangePropertyValue(id, variant);
-    });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetPropertyImage_(PropertyGrid* obj, void* id, ImageSet* bmp)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetPropertyImage(id, bmp);
     });
 }
 

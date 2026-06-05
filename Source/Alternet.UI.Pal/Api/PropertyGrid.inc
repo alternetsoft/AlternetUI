@@ -216,7 +216,6 @@ void SetValidationFailureBehavior(int vfbFlags);
 void SortChildren(void* id, int flags);
 static void* GetEditorByName(const string& editorName);
 bool ChangePropertyValue(void* id, void* variant);
-void SetPropertyImage(void* id, ImageSet* bmp);
 void SetPropertyAttribute(void* id, const string& attrName, void* variant, int64_t argFlags);
 void SetPropertyAttributeAll(const string& attrName, void* variant);
 

@@ -45,13 +45,6 @@ namespace Alternet::UI
 		return nullptr;
 	}
 
-	/*
-	void PropertyGridChoices::SetBitmap(void* handle, uint32_t ind, ImageSet* bitmap)
-	{
-		wxPGChoiceEntry& item = Item(handle, ind);
-		item.SetBitmap(ImageSet::BitmapBundle(bitmap));
-	}*/
-
 	void PropertyGridChoices::SetFgCol(void* handle, uint32_t ind, const Color& color)
 	{
 		wxPGChoiceEntry& item = Item(handle, ind);

@@ -1361,12 +1361,6 @@ namespace Alternet::UI
 		return GetPropGrid()->ChangePropertyValue(_propArg, v);
 	}
 
-	void PropertyGrid::SetPropertyImage(void* id, ImageSet* bmp)
-	{
-		ToPropArg(id);
-		GetPropGrid()->SetPropertyImage(_propArg, ImageSet::BitmapBundle(bmp));
-	}
-
 	void PropertyGrid::SetPropertyAttribute(void* id, const string& attrName, 
 		void* variant, int64_t argFlags)
 	{

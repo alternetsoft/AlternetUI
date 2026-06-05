@@ -2,7 +2,6 @@
 #include "Common.h"
 #include "ApiTypes.h"
 #include "Object.h"
-#include "ImageSet.h"
 
 #include <wx/propgrid/property.h>
 
