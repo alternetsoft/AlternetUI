@@ -340,7 +340,6 @@ VS_VERSION_INFO VERSIONINFO
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AnimationControl.cpp" />
     <ClCompile Include="Api.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Brush.cpp" />
@@ -413,10 +412,8 @@ VS_VERSION_INFO VERSIONINFO
     <ClCompile Include="WxStatusBarFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AnimationControl.h" />
     <ClInclude Include="ApiUtils.h" />
     <ClInclude Include="ApiTypes.h" />
-    <ClInclude Include="Api\AnimationControl.Api.h" />
     <ClInclude Include="Api\Application.Api.h" />
     <ClInclude Include="Api\Brush.Api.h" />
     <ClInclude Include="Api\Button.Api.h" />
@@ -579,7 +576,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="WxStatusBarFactory.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Api\AnimationControl.inc" />
     <None Include="Api\Application.inc" />
     <None Include="Api\Brush.inc" />
     <None Include="Api\Button.inc" />

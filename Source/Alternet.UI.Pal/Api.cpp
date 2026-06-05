@@ -20,7 +20,6 @@
 #include "Api/ComboBox.Api.h"
 #include "Api/ListBox.Api.h"
 #include "Api/ListView.Api.h"
-#include "Api/AnimationControl.Api.h"
 #include "Api/Calendar.Api.h"
 #include "Api/ProgressBar.Api.h"
 #include "Api/ScrollBar.Api.h"
