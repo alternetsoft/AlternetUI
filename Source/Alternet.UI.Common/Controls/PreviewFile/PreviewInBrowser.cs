@@ -26,6 +26,7 @@ namespace Alternet.UI
         {
             "html",
             "ico",
+            "cur",
             "htm",
             "gif",
             "png",
@@ -117,8 +118,9 @@ namespace Alternet.UI
             }
 
             var isIcon = Path.GetExtension(FileName)?.ToLower() == ".ico";
+            var isCursor = Path.GetExtension(FileName)?.ToLower() == ".cur";
 
-            if (isIcon)
+            if (isIcon || isCursor)
             {
                 try
                 {
