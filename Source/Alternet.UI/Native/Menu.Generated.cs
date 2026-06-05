@@ -158,7 +158,7 @@ namespace Alternet.UI.Native
             return NativeApi.Menu_GetMenuItemType_(handle);
         }
         
-        public static void SetMenuItemBitmap(System.IntPtr handle, ImageSet? value)
+        public static void SetMenuItemBitmap(System.IntPtr handle, Image? value)
         {
             NativeApi.Menu_SetMenuItemBitmap_(handle, value?.NativePointer ?? IntPtr.Zero);
         }

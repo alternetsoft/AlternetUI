@@ -68,7 +68,7 @@ namespace NativeApi.Api
         /* Work with menu item */
 
         public static MenuItemType GetMenuItemType(IntPtr handle) => default;
-        public static void SetMenuItemBitmap(IntPtr handle, ImageSet? value) { }
+        public static void SetMenuItemBitmap(IntPtr handle, Image? value) { }
         public static void SetMenuItemEnabled(IntPtr handle, bool value) { }
         public static void SetMenuItemRole(IntPtr handle, string role) { }
 

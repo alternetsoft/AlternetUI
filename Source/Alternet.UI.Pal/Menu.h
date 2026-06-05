@@ -32,7 +32,7 @@ namespace Alternet::UI
     {
     public:
         wxAlternetMenu* ownerMenu = nullptr;
-        ImageSet* _normalImage = nullptr;
+        Image* _normalImage = nullptr;
         string _id;
         string _role;
 

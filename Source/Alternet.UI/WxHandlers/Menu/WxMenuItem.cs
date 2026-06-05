@@ -51,7 +51,7 @@ namespace Alternet.UI
             item.AddHostObject(this);
 
             if (item.Image is not null)
-                Bitmap = item.Image;
+                Bitmap = item.Image.AsImageFor(App.SafeWindow);
 
             if (!item.Enabled)
                 Enabled = item.Enabled;
@@ -81,12 +81,12 @@ namespace Alternet.UI
             }
         }
 
-        public virtual ImageSet? Bitmap
+        public virtual Alternet.Drawing.Image? Bitmap
         {
             set
             {
                 var itemPtr = AsPointer;
-                var nativeImage = (UI.Native.ImageSet?)value?.Handler;
+                var nativeImage = (UI.Native.Image?)value?.Handler;
                 if (itemPtr == IntPtr.Zero)
                     return;
                 Native.Menu.SetMenuItemBitmap(itemPtr, nativeImage);

@@ -115,7 +115,7 @@ namespace Alternet.UI
                     return;
                 var itemHandles = GetItemHandles(item);
                 foreach (var itemHandle in itemHandles)
-                    itemHandle.Bitmap = item.Image;
+                    itemHandle.Bitmap = item.Image?.AsImageFor(App.SafeWindow);
             };
 
             StaticMenuEvents.ItemVisibleChanged += (s, e) =>

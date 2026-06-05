@@ -28,7 +28,7 @@ static void DestroyMenuItem(void* menuHandle);
 static void DestroyContextMenu(void* menuHandle);
 static string GetMenuId(void* handle);
 static MenuItemType GetMenuItemType(void* handle);
-static void SetMenuItemBitmap(void* handle, ImageSet* value);
+static void SetMenuItemBitmap(void* handle, Image* value);
 static void SetMenuItemEnabled(void* handle, bool value);
 static void SetMenuItemRole(void* handle, const string& role);
 static void SetMenuItemText(void* handle, const string& value, const string& rightValue);

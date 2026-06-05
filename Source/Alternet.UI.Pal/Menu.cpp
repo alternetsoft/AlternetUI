@@ -260,7 +260,7 @@ namespace Alternet::UI
         }
     }
 
-    void Menu::SetMenuItemBitmap(void* handle, ImageSet* value)
+    void Menu::SetMenuItemBitmap(void* handle, Image* value)
     {
         auto item = (wxAlternetMenuItem*)handle;
 
@@ -273,9 +273,15 @@ namespace Alternet::UI
         item->_normalImage = value;
 
         if (item->_normalImage != nullptr)
+        {
             item->_normalImage->AddRef();
+            item->SetBitmap(wxBitmapBundle(value->GetBitmap()));
+        }
+        else
+        {
+            item->SetBitmap(wxBitmapBundle());
 
-        item->SetBitmap(ImageSet::BitmapBundle(value));
+        }
     }
 
     void Menu::SetMenuItemEnabled(void* handle, bool value)

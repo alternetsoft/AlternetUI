@@ -4,7 +4,7 @@
 
 #include "Menu.h"
 #include "Window.h"
-#include "ImageSet.h"
+#include "Image.h"
 #include "Control.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -179,7 +179,7 @@ ALTERNET_UI_API MenuItemType Menu_GetMenuItemType_(void* handle)
     });
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemBitmap_(void* handle, ImageSet* value)
+ALTERNET_UI_API void Menu_SetMenuItemBitmap_(void* handle, Image* value)
 {
     MarshalExceptions<void>([&](){
         Menu::SetMenuItemBitmap(handle, value);
