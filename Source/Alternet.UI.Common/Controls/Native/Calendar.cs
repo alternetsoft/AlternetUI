@@ -42,7 +42,7 @@ namespace Alternet.UI
     /// if possible.The native Linux calendar chooses the first weekday based on
     /// locale, and these styles have no effect on it.
     /// </remarks>
-    [ControlCategory(KnownControlCategory.Date)]
+    [ControlCategory(KnownControlCategory.Native)]
     public partial class Calendar : CustomDateEdit
     {
         /// <summary>

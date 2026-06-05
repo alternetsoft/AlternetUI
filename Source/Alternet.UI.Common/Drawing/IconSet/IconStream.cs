@@ -10,6 +10,23 @@ using System.Linq;
 
 namespace Alternet.Drawing
 {
+    /*
+    Container format: ICO files can hold multiple images of different sizes and color depths.
+    Transparency: Icons should have transparent backgrounds for best results.
+    Compression: Modern ICOs use PNG compression for the 256×256 layer.
+    Color depth: 32‑bit with alpha transparency is recommended.
+
+    Minimum Sizes to Include
+    16×16: Context menus, title bar, system tray.
+    24×24: Toolbar buttons, taskbar (at 100% scaling).
+    32×32: Desktop icons (classic size).
+    48×48: Larger desktop icons, taskbar at higher DPI.
+    256×256: Explorer large icon view, high DPI scaling.
+
+    Best practice: include 16, 24, 32, 48, and 256px in one ICO file.
+    This ensures Windows always has a pixel‑perfect match and avoids blurry scaling.
+    */
+
     /// <summary>
     /// Represents helper class for reading icon data from a stream.
     /// </summary>

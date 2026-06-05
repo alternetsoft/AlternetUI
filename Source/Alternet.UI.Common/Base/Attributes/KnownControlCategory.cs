@@ -68,5 +68,11 @@ namespace Alternet.UI
         /// Indicates that the control belongs to the dialogs category.
         /// </summary>
         public const string Dialogs = "Dialogs";
+        
+        /// <summary>
+        /// Indicates that the control belongs to the native category.
+        /// </summary>
+        public const string Native = "Native";
+
     }
 }

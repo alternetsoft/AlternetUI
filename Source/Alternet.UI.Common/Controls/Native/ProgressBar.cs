@@ -31,7 +31,7 @@ namespace Alternet.UI
     /// </remarks>
     [DefaultProperty("Value")]
     [DefaultBindingProperty("Value")]
-    [ControlCategory(KnownControlCategory.Common)]
+    [ControlCategory(KnownControlCategory.Native)]
     public partial class ProgressBar : Control
     {
         private bool isIndeterminate;

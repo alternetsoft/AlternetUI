@@ -33,7 +33,7 @@ namespace Alternet.UI
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
-    [ControlCategory(KnownControlCategory.Common)]
+    [ControlCategory(KnownControlCategory.Native)]
     public partial class Slider : Control
     {
         /// <summary>

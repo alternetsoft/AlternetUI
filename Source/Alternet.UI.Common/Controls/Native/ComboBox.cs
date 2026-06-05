@@ -48,7 +48,7 @@ namespace Alternet.UI
     /// to the selected object.
     /// </para>
     /// </remarks>
-    [ControlCategory(KnownControlCategory.Common)]
+    [ControlCategory(KnownControlCategory.Native)]
     public partial class ComboBox : Control, IListControl, IListControlItemContainer
     {
         /// <summary>
