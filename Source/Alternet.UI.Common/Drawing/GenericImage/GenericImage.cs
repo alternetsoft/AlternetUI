@@ -396,26 +396,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Returns <c>true</c> if at least one of the available image handlers can read the file
-        /// with the given name.
-        /// </summary>
-        /// <param name="url">Path or url to file with image data.</param>
-        /// <returns></returns>
-        public static bool CanRead(string? url)
-        {
-            if (string.IsNullOrEmpty(url))
-                return false;
-
-            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
-            if (stream is null)
-            {
-                return false;
-            }
-
-            return CanRead(stream);
-        }
-
-        /// <summary>
         /// Fills array of <see cref="SKColor"/> with the specified color.
         /// </summary>
         /// <param name="pixels">Array of pixels.</param>
@@ -790,108 +770,6 @@ namespace Alternet.Drawing
         {
             var result = new GenericImage(bitmap.Width, bitmap.Height, bitmap.Pixels);
             return result;
-        }
-
-        /// <summary>
-        /// Returns <c>true</c> if at least one of the available image handlers can read the data in
-        /// the given stream.
-        /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image. Currently,
-        /// the stream must support seeking.</param>
-        /// <returns></returns>
-        /// <remarks>
-        /// This function doesn't modify the current stream position
-        /// (because it restores the original position before returning; this however requires
-        /// the stream to be seekable).
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool CanRead(Stream stream)
-        {
-            return GraphicsFactory.Handler.CanReadGenericImage(stream);
-        }
-
-        /// <summary>
-        /// Iterates all registered image handlers, and returns a string containing
-        /// file extension masks suitable for passing to file open/save dialog boxes.
-        /// </summary>
-        /// <returns>
-        /// The format of the returned string is "(*.ext1;*.ext2)|*.ext1;*.ext2". It is usually
-        /// a good idea to prepend a description before passing the result to the dialog.
-        /// </returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static string GetImageExtWildcard()
-        {
-            return GraphicsFactory.Handler.GetGenericImageExtWildcard();
-        }
-
-        /// <summary>
-        /// If the image file contains more than one image and the image handler is capable of
-        /// retrieving these individually, this function will return the number of available images.
-        /// </summary>
-        /// <param name="url">Path or url to file with image data.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
-        /// been configured and
-        /// by which handlers have been loaded, not all formats may be available. If value is
-        /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <returns>Number of available images. For most image handlers, this is 1
-        /// (exceptions are TIFF and ICO formats as well as animated GIFs for which this function
-        /// returns the number of frames in the animation).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetImageCount(
-            string? url,
-            BitmapType bitmapType = BitmapType.Any)
-        {
-            if (string.IsNullOrEmpty(url))
-                return 0;
-
-            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
-            if (stream is null)
-            {
-                return 0;
-            }
-
-            return GetImageCount(stream, bitmapType);
-        }
-
-        /// <summary>
-        /// If the image stream contains more than one image and the image handler is capable of
-        /// retrieving these individually, this function will return the number of available images.
-        /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image. Currently,
-        /// the stream must support seeking.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
-        /// been configured and
-        /// by which handlers have been loaded, not all formats may be available. If value is
-        /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <returns>Number of available images. For most image handlers, this is 1
-        /// (exceptions are TIFF and ICO formats as well as animated GIFs for which this function
-        /// returns the number of frames in the animation).</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int GetImageCount(
-            Stream stream,
-            BitmapType bitmapType = BitmapType.Any)
-        {
-            return GraphicsFactory.Handler.GetGenericImageCount(stream, bitmapType);
-        }
-
-        /// <summary>
-        /// Returns the currently used default file load flags.
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static GenericImageLoadFlags GetDefaultLoadFlags()
-        {
-            return GraphicsFactory.Handler.GenericImageDefaultLoadFlags;
-        }
-
-        /// <summary>
-        /// Sets the default value for the flags used for loading image files.
-        /// </summary>
-        /// <param name="flags"></param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void SetDefaultLoadFlags(GenericImageLoadFlags flags)
-        {
-            GraphicsFactory.Handler.GenericImageDefaultLoadFlags = flags;
         }
 
         /// <summary>
@@ -1378,29 +1256,6 @@ namespace Alternet.Drawing
         public virtual void ChangeBrightness(double factor)
         {
             Handler.ChangeBrightness(factor);
-        }
-
-        /// <summary>
-        /// Returns the file load flags used for this object.
-        /// </summary>
-        /// <returns></returns>
-        public virtual GenericImageLoadFlags GetLoadFlags()
-        {
-            return Handler.LoadFlags;
-        }
-
-        /// <summary>
-        /// Sets the flags used for loading image files by this object.
-        /// </summary>
-        /// <remarks>
-        /// The flags will affect any future calls to load from file functions for this object.
-        /// To change the flags for all image objects, call <see cref="SetDefaultLoadFlags"/>
-        /// before creating any of them.
-        /// </remarks>
-        /// <param name="flags"></param>
-        public virtual void SetLoadFlags(GenericImageLoadFlags flags)
-        {
-            Handler.LoadFlags = flags;
         }
 
         /// <summary>

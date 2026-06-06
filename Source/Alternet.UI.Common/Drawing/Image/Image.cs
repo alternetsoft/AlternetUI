@@ -88,18 +88,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets default <see cref="BitmapType"/> value for the current operating system.
-        /// </summary>
-        /// <returns></returns>
-        public static BitmapType DefaultBitmapType
-        {
-            get
-            {
-                return GraphicsFactory.Handler.GetDefaultBitmapType();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets list of extensions (including ".") which can be used to filter out
         /// supported image formats when using
         /// <see cref="OpenFileDialog"/>.

@@ -15,17 +15,12 @@ namespace Alternet.Drawing
     /// Contains methods and properties which allow to create graphics objects and to perform
     /// graphics related operations.
     /// </summary>
-    public interface IGraphicsFactoryHandler : IDisposable
+    public partial interface IGraphicsFactoryHandler : IDisposable
     {
         /// <summary>
         /// Gets a value indicating whether OpenGL is available on the current system.
         /// </summary>
         public bool IsOpenGLAvailable { get; }
-
-        /// <summary>
-        /// Gets or sets <see cref="GenericImageLoadFlags"/> used to specify default load image flags.
-        /// </summary>
-        GenericImageLoadFlags GenericImageDefaultLoadFlags { get; set; }
 
         /// <summary>
         /// Creates memory drawing context.
@@ -40,12 +35,6 @@ namespace Alternet.Drawing
         /// <param name="image">Surface on which drawing is performed.</param>
         /// <returns></returns>
         Graphics CreateMemoryCanvas(Image image);
-
-        /// <summary>
-        /// Gets default bitmap type.
-        /// </summary>
-        /// <returns></returns>
-        BitmapType GetDefaultBitmapType();
 
         /// <summary>
         /// Creates <see cref="IFontFactoryHandler"/> provider.
@@ -155,15 +144,6 @@ namespace Alternet.Drawing
         Graphics CreateGraphicsFromImage(Image image);
 
         /// <summary>
-        /// Creates <see cref="IImageHandler"/> for the specified <see cref="ImageSet"/>
-        /// and image size.
-        /// </summary>
-        /// <param name="imageSet">Image set.</param>
-        /// <param name="size">Image size.</param>
-        /// <returns></returns>
-        IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size);
-
-        /// <summary>
         /// Creates <see cref="IImageHandler"/> provider.
         /// </summary>
         /// <returns></returns>
@@ -187,15 +167,6 @@ namespace Alternet.Drawing
         /// <param name="dc">Drawing context to get dpi from.</param>
         /// <returns></returns>
         IImageHandler CreateImageHandler(int width, int height, Graphics dc);
-
-        /// <summary>
-        /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <returns></returns>
-        /// <param name="imageSet">Image set.</param>
-        /// <param name="control">Control to get dpi from.</param>
-        /// <returns></returns>
-        IImageHandler CreateImageHandler(ImageSet imageSet, IControl control);
 
         /// <summary>
         /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
@@ -267,40 +238,6 @@ namespace Alternet.Drawing
             Color? color = null);
 
         /// <summary>
-        /// Creates <see cref="IImageSetHandler"/> provider.
-        /// </summary>
-        /// <returns></returns>
-        IImageSetHandler? CreateImageSetHandler();
-
-        /// <summary>
-        /// Creates <see cref="IImageSetHandler"/> provider for svg image using the specified parameters.
-        /// </summary>
-        /// <param name="stream">Stream with svg data.</param>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="color">Default color of the svg figures.</param>
-        /// <returns></returns>
-        IImageSetHandler CreateImageSetHandlerFromSvg(
-            Stream stream,
-            int width,
-            int height,
-            Color? color = null);
-
-        /// <summary>
-        /// Creates <see cref="IImageSetHandler"/> provider for svg image using the specified parameters.
-        /// </summary>
-        /// <param name="s">String with svg data.</param>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="color">Default color of the svg figures.</param>
-        /// <returns></returns>
-        IImageSetHandler CreateImageSetHandlerFromSvg(
-            string s,
-            int width,
-            int height,
-            Color? color = null);
-
-        /// <summary>
         /// Creates <see cref="IImageListHandler"/> provider.
         /// </summary>
         /// <returns></returns>
@@ -311,29 +248,6 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         IIconSetHandler? CreateIconSetHandler();
-
-        /// <summary>
-        /// Gets whether or not stream contains image data.
-        /// </summary>
-        /// <param name="stream">Stream with data.</param>
-        /// <returns></returns>
-        bool CanReadGenericImage(Stream stream);
-
-        /// <summary>
-        /// Gets generic image wildcards for open/save dialogs.
-        /// </summary>
-        /// <returns></returns>
-        string GetGenericImageExtWildcard();
-
-        /// <summary>
-        /// Gets number of images in the stream.
-        /// </summary>
-        /// <param name="stream">Stream with image data.</param>
-        /// <param name="bitmapType">Type of the image.</param>
-        /// <returns></returns>
-        int GetGenericImageCount(
-            Stream stream,
-            BitmapType bitmapType = BitmapType.Any);
 
         /// <summary>
         /// Creates <see cref="IGenericImageHandler"/> provider.
@@ -349,14 +263,6 @@ namespace Alternet.Drawing
         /// <param name="clear">Whether or not to clear the image.</param>
         /// <returns></returns>
         IGenericImageHandler CreateGenericImageHandler(int width, int height, bool clear = false);
-
-        /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <param name="size">Image size.</param>
-        /// <param name="clear">Whether or not to clear the image.</param>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler(SizeI size, bool clear = false);
 
         /// <summary>
         /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.

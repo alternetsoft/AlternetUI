@@ -25,11 +25,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="GenericImage.AlphaData"/>
         byte[] AlphaData { get; set; }
 
-        /// <summary>
-        /// Gets or sets image load flags.
-        /// </summary>
-        GenericImageLoadFlags LoadFlags { get; set; }
-
         /// <inheritdoc cref="GenericImage.BestStrategy"/>
         GenericImage.PixelStrategy BestStrategy { get; }
 
