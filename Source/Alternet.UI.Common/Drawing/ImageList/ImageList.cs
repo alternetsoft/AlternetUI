@@ -151,10 +151,11 @@ namespace Alternet.Drawing
         /// Gets suggested size of the image for the specified scale factor.
         /// </summary>
         /// <param name="scaleFactor">Scale factor for which to get suggested size of the image.</param>
-        /// <returns></returns>
-        public static int GetSuggestedSize(Coord scaleFactor)
+        /// <param name="baseSize">Base size of the image. Default is 16.</param>
+        /// <returns>Suggested size of the image for the specified scale factor.</returns>
+        public static int GetSuggestedSize(Coord scaleFactor, int baseSize = 16)
         {
-            int size = 16;
+            int size = baseSize;
 
             if (scaleFactor > 1)
             {
@@ -282,28 +283,6 @@ namespace Alternet.Drawing
                 var image = imageSet.AsImage(ImageSize);
                 return Add(image);
             }
-        }
-
-        /// <summary>
-        /// Draws an image on the specified graphic surface at the location specified
-        /// by a coordinate pair.
-        /// </summary>
-        /// <param name="g">The Graphics object to draw on.</param>
-        /// <param name="x">X-coordinate of the upper-left corner of the image to be drawn.</param>
-        /// <param name="y">Y-coordinate of the upper-left corner of the image to be drawn.</param>
-        /// <param name="index">Index of image to draw within image list.</param>
-        public virtual bool Draw(Graphics g, Coord x, Coord y, int index)
-        {
-            if (index < 0 || index >= Images.Count)
-                return false;
-
-            var image = Images[index];
-
-            if (image is null)
-                return false;
-
-            g.DrawImageUnscaled(image, new(x, y));
-            return true;
         }
 
         /// <summary>

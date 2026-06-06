@@ -216,6 +216,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws an image on the specified graphic surface at the location specified
+        /// by a coordinate pair.
+        /// </summary>
+        /// <param name="g">The Graphics object to draw on.</param>
+        /// <param name="x">X-coordinate of the upper-left corner of the image to be drawn.</param>
+        /// <param name="y">Y-coordinate of the upper-left corner of the image to be drawn.</param>
+        /// <param name="index">Index of image to draw within image list.</param>
+        public virtual bool Draw(Graphics g, Coord x, Coord y, int index)
+        {
+            if (index < 0 || index >= Images.Count)
+                return false;
+
+            var image = Images[index];
+
+            if (image is null)
+                return false;
+
+            g.DrawImageUnscaled(image, new(x, y));
+            return true;
+        }
+
+        /// <summary>
         /// Called when <see cref="Changed"/> event is raised.
         /// </summary>
         protected virtual void OnChanged()
