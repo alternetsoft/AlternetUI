@@ -123,6 +123,72 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Compares two images and returns a value indicating whether the first image is smaller than the second image.
+        /// This method is used for sorting images by size.
+        /// </summary>
+        /// <param name="image1">The first image to compare.</param>
+        /// <param name="image2">The second image to compare.</param>
+        /// <returns><c>true</c> if the first image is smaller than the second image; otherwise, <c>false</c>.</returns>
+        public virtual bool IsSmallerThan(Image image1, Image image2)
+        {
+            int h1 = image1.Height;
+            int h2 = image2.Height;
+            return h1 < h2 || (h1 == h2 && image1.Width < image2.Width);
+        }
+
+        /// <summary>
+        /// Gets the image from the container that is the closest in size to the specified size.
+        /// </summary>
+        /// <param name="size">The target size to find the closest image for.</param>
+        /// <returns>The image that is closest in size to the specified size.</returns>
+        public virtual Image AsImage(SizeI size)
+        {
+            return GetImageOrNull(size) ?? Bitmap.Empty;
+        }
+
+        /// <summary>
+        /// Gets the image from the container that has the specified size, or null if no such image exists.
+        /// </summary>
+        /// <param name="size">The target size to find the exact image for.</param>
+        /// <returns>The image that has the specified size, or null if no such image exists.</returns>
+        public virtual Image? GetExactImage(SizeI size)
+        {
+            return Images.FirstOrDefault(i => i.Size == size);
+        }
+
+        /// <summary>
+        /// Gets the image from the container that is the closest in size to the specified size.
+        /// </summary>
+        /// <param name="size">The target size to find the closest image for.</param>
+        /// <returns>The image that is closest in size to the specified size.</returns>
+        public virtual Image? GetImageOrNull(SizeI size)
+        {
+            Image? result = null;
+
+            foreach (var bitmap in Images)
+            {
+                if (result is null)
+                    result = bitmap;
+                else
+                {
+                    var newDistance = SizeI.Subtract(bitmap.Size, size).Abs;
+                    var oldDistance = SizeI.Subtract(result.Size, size).Abs;
+
+                    if (newDistance.Width < oldDistance.Width
+                        && newDistance.Height < oldDistance.Height)
+                        result = bitmap;
+                }
+            }
+
+            result ??= Images.First();
+
+            if (Immutable && result is not null)
+                result.SetImmutable();
+
+            return result;
+        }
+
+        /// <summary>
         /// Adds image from the specified resource url.
         /// See <see cref="Image.FromUrl"/> for the url format example.
         /// </summary>
