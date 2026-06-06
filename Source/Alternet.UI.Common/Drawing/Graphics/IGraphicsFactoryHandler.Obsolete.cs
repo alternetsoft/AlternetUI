@@ -32,7 +32,5 @@ namespace Alternet.Drawing
         /// <param name="control">Control to get dpi from.</param>
         /// <returns></returns>
         IImageHandler CreateImageHandler(ImageSet imageSet, IControl control);
-
-
     }
 }

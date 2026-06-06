@@ -15,25 +15,6 @@ namespace Alternet.Drawing
     public interface IImageSetHandler : IImageContainer
     {
         /// <summary>
-        /// Gets default image size.
-        /// </summary>
-        SizeI DefaultSize { get; }
-
-        /// <summary>
-        /// Gets preferred image size for the specified control.
-        /// </summary>
-        /// <param name="control"></param>
-        /// <returns></returns>
-        SizeI GetPreferredBitmapSizeFor(IControl control);
-
-        /// <summary>
-        /// Gets preferred image size for the specified scale factor.
-        /// </summary>
-        /// <param name="scale">Scale factor.</param>
-        /// <returns></returns>
-        SizeI GetPreferredBitmapSizeAtScale(Coord scale);
-
-        /// <summary>
         /// Gets as image with the specified size.
         /// </summary>
         /// <param name="size">Image size.</param>

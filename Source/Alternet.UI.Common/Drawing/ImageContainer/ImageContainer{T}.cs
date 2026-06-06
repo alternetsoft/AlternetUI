@@ -55,7 +55,7 @@ namespace Alternet.Drawing
         /// Gets the <see cref="Image"/> collection for this image list.
         /// </summary>
         /// <value>The collection of images.</value>
-        public virtual BaseCollection<Image> Images { get; } = new(CollectionSecurityFlags.NoNull);
+        public virtual BaseCollection<Image> Images { get; } = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
         /// Retrieves an image from the container at the specified index.

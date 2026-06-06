@@ -10,11 +10,14 @@ using Alternet.UI.Localization;
 using SkiaSharp;
 
 using Alternet.UI;
+using System.Linq;
 
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// <see cref="ImageSet"/> contains the same <see cref="Image"/> with different sizes.
+    /// Represents a set of images with different sizes and scales. It is used to provide the best image for a given size and scale.
+    /// This class generalizes image for applications supporting multiple DPIs and allows to operate with multiple versions
+    /// of the same image, in the sizes appropriate to the currently used display resolution, as a single unit.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
     public partial class ImageSet : ImageContainer<IImageSetHandler>, IImageSource, IGetAsToolTip
@@ -117,21 +120,24 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (Handler.IsDummy)
+                if (Images.Count == 0)
+                    return 16;
+
+                var image = Images[0];
+
+                for (int i = 1; i < Images.Count; i++)
                 {
-                    if (Images.Count == 0)
-                        return 16;
-                    return Images[0].Size;
+                    if (IsSmallerThan(Images[i], image))
+                        image = Images[i];
                 }
 
-                return Handler.DefaultSize;
+                return image.Size;
             }
         }
 
         /// <inheritdoc/>
         [Browsable(false)]
-        public override bool IsReadOnly
-            => Immutable || Handler.IsReadOnly;
+        public override bool IsReadOnly => Immutable || Handler.IsReadOnly;
 
         Image? IImageSource.Image => null;
 
@@ -315,14 +321,70 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets first image.
+        /// Compares two images and returns a value indicating whether the first image is smaller than the second image.
+        /// This method is used for sorting images by size.
         /// </summary>
+        /// <param name="image1">The first image to compare.</param>
+        /// <param name="image2">The second image to compare.</param>
+        /// <returns><c>true</c> if the first image is smaller than the second image; otherwise, <c>false</c>.</returns>
+        public virtual bool IsSmallerThan(Image image1, Image image2)
+        {
+            int h1 = image1.Height;
+            int h2 = image2.Height;
+            return h1 < h2 || (h1 == h2 && image1.Width < image2.Width);
+        }
+
+        /// <summary>
+        /// Gets the image from the set that is the closest in size to the specified size.
+        /// </summary>
+        /// <param name="size">The target size to find the closest image for.</param>
+        /// <returns>The image that is closest in size to the specified size.</returns>
         public virtual Image AsImage(SizeI size)
         {
-            var result = Handler.AsImage(size);
+            Image? result = null;
+
+            foreach (var bitmap in Images)
+            {
+                if (result is null)
+                    result = bitmap;
+                else
+                {
+                    var newDistance = SizeI.Subtract(bitmap.Size, size).Abs;
+                    var oldDistance = SizeI.Subtract(result.Size, size).Abs;
+
+                    if (newDistance.Width < oldDistance.Width
+                        && newDistance.Height < oldDistance.Height)
+                        result = bitmap;
+                }
+            }
+
+            result ??= Images.First() ?? Bitmap.Empty;
+
             if (Immutable)
                 result.SetImmutable();
+
             return result;
+        }
+
+        /// <summary>
+        /// Gets preferred image size for the specified scale factor.
+        /// </summary>
+        /// <param name="scale">The scale factor.</param>
+        /// <returns>The preferred image size at the specified scale.</returns>
+        public virtual SizeI GetPreferredBitmapSizeAtScale(Coord scale)
+        {
+            return new((int)(DefaultSize.Width * scale), (int)(DefaultSize.Height * scale));
+        }
+
+        /// <summary>
+        /// Gets preferred image size for the specified control. Control is used to get the scale factor.
+        /// This is a convenient method to get preferred image size for the control without calculating its scale factor.
+        /// </summary>
+        /// <param name="control">The control to get the preferred image size for.</param>
+        /// <returns>The preferred image size for the specified control.</returns>
+        public virtual SizeI GetPreferredBitmapSizeFor(Control control)
+        {
+            return GetPreferredBitmapSizeAtScale(control.ScaleFactor);
         }
 
         /// <summary>
@@ -331,22 +393,6 @@ namespace Alternet.Drawing
         public virtual Image AsImage()
         {
             return AsImage(DefaultSize);
-        }
-
-        /// <summary>
-        /// Get the size that would be best to use for this <see cref="ImageSet"/> at the DPI
-        /// scaling factor used by the given control.
-        /// </summary>
-        /// <param name="control">Control to get DPI scaling factor from.</param>
-        /// <returns></returns>
-        /// <remarks>
-        /// This is just a convenient wrapper for
-        /// <see cref="ImageSet.GetPreferredBitmapSizeAtScale"/> calling
-        /// that function with the result of <see cref="AbstractControl.ScaleFactor"/>.
-        /// </remarks>
-        public virtual SizeI GetPreferredBitmapSizeFor(AbstractControl control)
-        {
-            return Handler.GetPreferredBitmapSizeFor(control);
         }
 
         /// <summary>
@@ -379,26 +425,6 @@ namespace Alternet.Drawing
                 });
 
             return result;
-        }
-
-        /// <summary>
-        /// Get the size that would be best to use for this <see cref="ImageSet"/> at
-        /// the given DPI scaling factor.
-        /// </summary>
-        /// <remarks>
-        /// Passing a size returned by this function to <see cref="AsImage(SizeI)"/> ensures that bitmap
-        /// doesn't need to be rescaled, which typically significantly lowers its quality.
-        /// </remarks>
-        /// <remarks>
-        /// For <see cref="ImageSet"/> containing some number of the fixed-size bitmaps, this
-        /// function returns the size of an existing bitmap closest to the ideal size at the given
-        /// scale, i.e. <see cref="DefaultSize"/> multiplied by scale.
-        /// </remarks>
-        /// <param name="scale"></param>
-        /// <returns></returns>
-        public virtual SizeI GetPreferredBitmapSizeAtScale(Coord scale)
-        {
-            return Handler.GetPreferredBitmapSizeAtScale(scale);
         }
 
         /// <inheritdoc/>
