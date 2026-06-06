@@ -24,6 +24,120 @@ namespace Alternet.Drawing
     public static partial class SkiaUtils
     {
         /// <summary>
+        /// Loads svg image from the specified string with svg data.
+        /// </summary>
+        /// <param name="s">The string containing the SVG data.</param>
+        /// <param name="width">The desired width of the resulting bitmap.</param>
+        /// <param name="height">The desired height of the resulting bitmap.</param>
+        /// <param name="color">The optional color to apply to the SVG.</param>
+        /// <returns>A <see cref="SKBitmap"/> representing the loaded SVG.</returns>
+        public static SKBitmap BitmapFromSvgString(
+                    string s,
+                    int width,
+                    int height,
+                    Color? color)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(s);
+            MemoryStream stream = new(bytes);
+            var result = BitmapFromSvgStream(stream, width, height, color);
+            return result;
+        }
+
+        /// <summary>
+        /// Loads svg from stream and returns loaded image as <see cref="SKBitmap"/> with the specified size. 
+        /// </summary>
+        /// <param name="stream">The stream containing the SVG data.</param>
+        /// <param name="width">The desired width of the resulting bitmap.</param>
+        /// <param name="height">The desired height of the resulting bitmap.</param>
+        /// <param name="color">The optional color to apply to the SVG.</param>
+        /// <returns>A <see cref="SKBitmap"/> representing the loaded SVG.</returns>
+        public static SKBitmap BitmapFromSvgStream(
+            Stream stream,
+            int width,
+            int height,
+            Color? color)
+        {
+            var svg = new Svg.Skia.SKSvg();
+            svg.Load(stream);
+            var picture = svg.Picture;
+
+            var result = BitmapFromPicture(picture, width, height, color);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a <see cref="SKBitmap"/> from the given <see cref="SKPicture"/> with the specified size and optional color.
+        /// </summary>
+        /// <param name="picture">The <see cref="SKPicture"/> to create the bitmap from.</param>
+        /// <param name="width">The desired width of the resulting bitmap.</param>
+        /// <param name="height">The desired height of the resulting bitmap.</param>
+        /// <param name="color">The optional color to apply to the bitmap.</param>
+        /// <returns>A <see cref="SKBitmap"/> representing the created bitmap.</returns>
+        public static SKBitmap BitmapFromPicture(
+            SKPicture? picture,
+            int width,
+            int height,
+            Color? color)
+        {
+            var result = CreateBitmap((width, height));
+            if (picture is null)
+                return result;
+            var cullRect = picture.CullRect;
+            var scaleX = width / cullRect.Width;
+            var scaleY = height / cullRect.Height;
+            var matrix = SKMatrix.CreateScale((float)scaleX, (float)scaleY);
+
+            using var canvas = new SKCanvas(result);
+
+            if (color is not null)
+            {
+                using SKPaint paint = new();
+                paint.ColorFilter = SKColorFilter.CreateBlendMode(color, SKBlendMode.SrcIn);
+                canvas.DrawPicture(picture, in matrix, paint);
+            }
+            else
+            {
+                canvas.DrawPicture(picture, in matrix);
+            }
+
+            canvas.Flush();
+
+            return result;
+        }
+
+        /// <summary>
+        /// Coerces the specified image depth to a supported value.
+        /// </summary>
+        /// <param name="depth">The desired image depth.</param>
+        /// <returns>The coerced image depth.</returns>
+        public static int CoerceImageDepth(int depth)
+        {
+            if (depth >= 0 && depth != 32 && depth != 24)
+            {
+                App.DebugLogError("Depth = 32 or 24 is expected for SkiaSharp images");
+                return 32;
+            }
+
+            if (depth < 0)
+                return 32;
+
+            return depth;
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="SKBitmap"/> with the specified parameters.
+        /// </summary>
+        /// <param name="size">The size of the bitmap.</param>
+        /// <param name="depth">The color depth of the bitmap.</param>
+        /// <returns>A new <see cref="SKBitmap"/> instance.</returns>
+        public static SKBitmap CreateBitmap(SizeI size, int depth = 32)
+        {
+            depth = CoerceImageDepth(depth);
+            SKBitmap bitmap = new(size.Width, size.Height, depth != 32);
+            return bitmap;
+        }
+
+        /// <summary>
         /// Creates a new <see cref="SKBitmap"/> by combining the specified list of bitmaps vertically.
         /// </summary>
         /// <param name="images">The list of bitmaps to combine.</param>

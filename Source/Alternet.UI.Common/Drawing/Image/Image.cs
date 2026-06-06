@@ -623,13 +623,9 @@ namespace Alternet.Drawing
         /// If provided, svg fill color is changed to the specified value.</param>
         public static Image FromSvgStream(Stream stream, int width, int height, Color? color = null)
         {
-            var nativeImage = GraphicsFactory.Handler.CreateImageHandlerFromSvg(
-                stream,
-                width,
-                height,
-                color);
-            var result = new Image(nativeImage);
-            return result;
+            var skiaBitmap = SkiaUtils.BitmapFromSvgStream(stream, width, height, color);
+            var bitmap = (Image)skiaBitmap;
+            return bitmap;
         }
 
         /// <summary>
@@ -645,10 +641,9 @@ namespace Alternet.Drawing
         /// If provided, svg fill color is changed to the specified value.</param>
         public static Image FromSvgString(string s, int width, int height, Color? color = null)
         {
-            var nativeImage = GraphicsFactory.Handler
-                .CreateImageHandlerFromSvg(s, width, height, color);
-            var result = new Image(nativeImage);
-            return result;
+            var skiaBitmap = SkiaUtils.BitmapFromSvgString(s, width, height, color);
+            var bitmap = (Image)skiaBitmap;
+            return bitmap;
         }
 
         /// <summary>

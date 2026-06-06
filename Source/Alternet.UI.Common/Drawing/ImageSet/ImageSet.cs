@@ -248,12 +248,9 @@ namespace Alternet.Drawing
         /// <paramref name="stream"/>. </returns>
         public static ImageSet FromSvgStream(Stream stream, int width, int height, Color? color = null)
         {
-            var handler = GraphicsFactory.Handler.CreateImageSetHandlerFromSvg(
-                stream,
-                width,
-                height,
-                color);
-            var result = new ImageSet(handler);
+            var skiaBitmap = SkiaUtils.BitmapFromSvgStream(stream, width, height, color);
+            var bitmap = (Image)skiaBitmap;
+            ImageSet result = new(bitmap);
             return result;
         }
 
@@ -270,12 +267,9 @@ namespace Alternet.Drawing
         /// <paramref name="s"/>. </returns>
         public static ImageSet FromSvgString(string s, int width, int height, Color? color = null)
         {
-            var handler = GraphicsFactory.Handler.CreateImageSetHandlerFromSvg(
-                s,
-                width,
-                height,
-                color);
-            var result = new ImageSet(handler);
+            var skiaBitmap = SkiaUtils.BitmapFromSvgString(s, width, height, color);
+            var bitmap = (Image)skiaBitmap;
+            ImageSet result = new(bitmap);
             return result;
         }
 

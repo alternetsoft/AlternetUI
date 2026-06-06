@@ -16,34 +16,6 @@ namespace Alternet.Drawing
         IImageSetHandler? CreateImageSetHandler();
 
         /// <summary>
-        /// Creates <see cref="IImageSetHandler"/> provider for svg image using the specified parameters.
-        /// </summary>
-        /// <param name="s">String with svg data.</param>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="color">Default color of the svg figures.</param>
-        /// <returns></returns>
-        IImageSetHandler CreateImageSetHandlerFromSvg(
-            string s,
-            int width,
-            int height,
-            Color? color = null);
-
-        /// <summary>
-        /// Creates <see cref="IImageSetHandler"/> provider for svg image using the specified parameters.
-        /// </summary>
-        /// <param name="stream">Stream with svg data.</param>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="color">Default color of the svg figures.</param>
-        /// <returns></returns>
-        IImageSetHandler CreateImageSetHandlerFromSvg(
-            Stream stream,
-            int width,
-            int height,
-            Color? color = null);
-
-        /// <summary>
         /// Creates <see cref="IImageHandler"/> for the specified <see cref="ImageSet"/>
         /// and image size.
         /// </summary>

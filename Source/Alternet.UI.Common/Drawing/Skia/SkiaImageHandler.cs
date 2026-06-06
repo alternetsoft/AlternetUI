@@ -64,7 +64,7 @@ namespace Alternet.UI
         /// <param name="depth"></param>
         public SkiaImageHandler(GenericImage genericImage, int depth = 32)
         {
-            CoerceDepth(depth);
+            SkiaUtils.CoerceImageDepth(depth);
             bitmap = (SKBitmap)genericImage;
         }
 
@@ -114,10 +114,10 @@ namespace Alternet.UI
                 bitmap = skiaHandler.bitmap.Copy();
             }
             else
-            if (image is null)
-                bitmap = new();
-            else
-                bitmap = (SKBitmap)image;
+                if (image is null)
+                    bitmap = new();
+                else
+                    bitmap = (SKBitmap)image;
         }
 
         /// <summary>
@@ -133,8 +133,8 @@ namespace Alternet.UI
             if (image?.Handler is SkiaImageHandler skiaHandler)
                 Fn(skiaHandler.bitmap);
             else
-            if (image is not null)
-                Fn((SKBitmap)image);
+                if (image is not null)
+                    Fn((SKBitmap)image);
 
             void Fn(SKBitmap source)
             {
@@ -151,8 +151,7 @@ namespace Alternet.UI
         /// <param name="depth"></param>
         public SkiaImageHandler(SizeI size, int depth = 32)
         {
-            depth = CoerceDepth(depth);
-            bitmap = new(size.Width, size.Height, depth != 32);
+            bitmap = SkiaUtils.CreateBitmap(size, depth);
         }
 
         /// <inheritdoc/>
@@ -329,7 +328,7 @@ namespace Alternet.UI
 
             using var canvas = new SKCanvas(skiaBitmap);
 
-            if(color is not null)
+            if (color is not null)
             {
                 using SKPaint paint = new();
                 paint.ColorFilter = SKColorFilter.CreateBlendMode(color, SKBlendMode.SrcIn);
@@ -500,20 +499,6 @@ namespace Alternet.UI
         {
             base.DisposeManaged();
             DisposeBitmap();
-        }
-
-        private int CoerceDepth(int depth)
-        {
-            if (depth >= 0 && depth != 32 && depth != 24)
-            {
-                App.LogError("Depth = 32 or 24 is expected");
-                return 32;
-            }
-
-            if (depth < 0)
-                return 32;
-
-            return depth;
         }
 
         private void DisposeBitmap()

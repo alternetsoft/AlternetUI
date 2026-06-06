@@ -244,26 +244,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IImageHandler CreateImageHandlerFromSvg(
-            Stream stream,
-            int width,
-            int height,
-            Color? color)
-        {
-            return SkiaImageHandler.CreateFromSvg(stream, width, height, color);
-        }
-
-        /// <inheritdoc/>
-        public virtual IImageHandler CreateImageHandlerFromSvg(
-            string s,
-            int width,
-            int height,
-            Color? color)
-        {
-            return SkiaImageHandler.CreateFromSvg(s, width, height, color);
-        }
-
-        /// <inheritdoc/>
         public virtual IImageListHandler? CreateImageListHandler()
         {
             return null;
@@ -273,34 +253,6 @@ namespace Alternet.UI
         public virtual IImageSetHandler? CreateImageSetHandler()
         {
             return null;
-        }
-
-        /// <inheritdoc/>
-        public virtual IImageSetHandler CreateImageSetHandlerFromSvg(
-            Stream stream,
-            int width,
-            int height,
-            Color? color)
-        {
-            var result = new PlessImageSetHandler();
-            result.DefaultSize = (width, height);
-            var handler = SkiaImageHandler.CreateFromSvg(stream, width, height, color);
-            result.Add(new Bitmap(handler));
-            return result;
-        }
-
-        /// <inheritdoc/>
-        public virtual IImageSetHandler CreateImageSetHandlerFromSvg(
-            string s,
-            int width,
-            int height,
-            Color? color)
-        {
-            var result = new PlessImageSetHandler();
-            result.DefaultSize = (width, height);
-            var handler = SkiaImageHandler.CreateFromSvg(s, width, height, color);
-            result.Add(new Bitmap(handler));
-            return result;
         }
 
         /// <inheritdoc/>
