@@ -138,12 +138,14 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the image from the container that is the closest in size to the specified size.
+        /// If there are multiple images of the same size, the first one is returned.
+        /// If there are no images in the container, an empty <see cref="Bitmap"/> is returned.
         /// </summary>
         /// <param name="size">The target size to find the closest image for.</param>
         /// <returns>The image that is closest in size to the specified size.</returns>
         public virtual Image AsImage(SizeI size)
         {
-            return GetImageOrNull(size) ?? Bitmap.Empty;
+            return GetImage(size) ?? Bitmap.Empty;
         }
 
         /// <summary>
@@ -158,10 +160,12 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets the image from the container that is the closest in size to the specified size.
+        /// If there are multiple images of the same size, the first one is returned.
+        /// If there are no images in the container, null is returned.
         /// </summary>
         /// <param name="size">The target size to find the closest image for.</param>
         /// <returns>The image that is closest in size to the specified size.</returns>
-        public virtual Image? GetImageOrNull(SizeI size)
+        public virtual Image? GetImage(SizeI size)
         {
             Image? result = null;
 
