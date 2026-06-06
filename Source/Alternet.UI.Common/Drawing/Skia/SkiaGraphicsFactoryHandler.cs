@@ -173,7 +173,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IIconSetHandler? CreateIconSetHandler()
+        public virtual IImageContainer? CreateIconSetHandler()
         {
             return null;
         }
@@ -245,12 +245,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual IImageListHandler? CreateImageListHandler()
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
-        public virtual IImageSetHandler? CreateImageSetHandler()
         {
             return null;
         }

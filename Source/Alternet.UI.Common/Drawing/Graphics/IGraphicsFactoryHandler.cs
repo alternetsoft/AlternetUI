@@ -215,10 +215,10 @@ namespace Alternet.Drawing
         IImageListHandler? CreateImageListHandler();
 
         /// <summary>
-        /// Creates <see cref="IIconSetHandler"/> provider.
+        /// Creates <see cref="IconSet"/> handler.
         /// </summary>
         /// <returns></returns>
-        IIconSetHandler? CreateIconSetHandler();
+        IImageContainer? CreateIconSetHandler();
 
         /// <summary>
         /// Creates <see cref="IGenericImageHandler"/> provider.

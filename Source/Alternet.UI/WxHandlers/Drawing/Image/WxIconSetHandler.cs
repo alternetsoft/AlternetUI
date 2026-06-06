@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI.Native
 {
-    internal partial class IconSet : Alternet.Drawing.IIconSetHandler
+    internal partial class IconSet : Alternet.Drawing.IImageContainer
     {
         public bool IsDummy => false;
 

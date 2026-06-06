@@ -126,30 +126,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
-        /// <see cref="ImageSet"/>.
-        /// </summary>
-        /// <param name="imageSet">Source of the image.</param>
-        /// <param name="size">Size of the image in device pixels.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(ImageSet imageSet, SizeI size)
-            : base(GraphicsFactory.Handler.CreateImageHandler(imageSet, size))
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Bitmap"/> class with the image from
-        /// <see cref="ImageSet"/>.
-        /// </summary>
-        /// <param name="imageSet">Source of the image.</param>
-        /// <param name="control">Control used to get dpi.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(ImageSet imageSet, AbstractControl control)
-            : base(GraphicsFactory.Handler.CreateImageHandler(imageSet, control))
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class from the specified
         /// existing image.
         /// </summary>

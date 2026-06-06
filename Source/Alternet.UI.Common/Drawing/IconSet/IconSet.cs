@@ -16,7 +16,7 @@ namespace Alternet.Drawing
     /// images of various sizes and color depths.
     /// </summary>
     [TypeConverter(typeof(IconSetConverter))]
-    public partial class IconSet : ImageContainer<IIconSetHandler>
+    public partial class IconSet : AttachedImageContainer<IImageContainer>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/>.
@@ -25,7 +25,6 @@ namespace Alternet.Drawing
         /// to the set of icons.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet(Image? image)
-            : base(false)
         {
             if (image is not null)
                 Add(image);
@@ -38,7 +37,6 @@ namespace Alternet.Drawing
         /// <param name="stream">The data stream used to load the icon.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet(Stream? stream)
-            : base(false)
         {
             if (stream is not null)
                 Add(stream);
@@ -55,7 +53,6 @@ namespace Alternet.Drawing
         /// </remarks>
         /// <param name="baseUri">Base url. Optional. Used if <paramref name="url"/> is relative.</param>
         public IconSet(string? url, Uri? baseUri = null)
-            : base(false)
         {
             if (string.IsNullOrEmpty(url))
                 return;
@@ -82,7 +79,6 @@ namespace Alternet.Drawing
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public IconSet()
-            : base(false)
         {
         }
 
@@ -296,9 +292,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override IIconSetHandler CreateHandler()
+        protected override IImageContainer? CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateIconSetHandler() ?? DummyIconSetHandler.Default;
+            return GraphicsFactory.Handler.CreateIconSetHandler();
         }
     }
 }

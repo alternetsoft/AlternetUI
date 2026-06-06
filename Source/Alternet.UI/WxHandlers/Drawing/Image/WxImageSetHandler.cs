@@ -9,7 +9,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI.Native
 {
-    internal partial class ImageSet : Alternet.Drawing.IImageSetHandler
+    internal partial class ImageSet : Alternet.Drawing.IImageContainer
     {
         public SizeI DefaultSize => (DefaultSizeX, DefaultSizeY);
 

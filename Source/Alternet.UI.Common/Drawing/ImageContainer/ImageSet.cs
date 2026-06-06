@@ -20,7 +20,7 @@ namespace Alternet.Drawing
     /// of the same image, in the sizes appropriate to the currently used display resolution, as a single unit.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public partial class ImageSet : ImageContainer<IImageSetHandler>, IImageSource, IGetAsToolTip
+    public partial class ImageSet : ImageContainer, IImageSource, IGetAsToolTip
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
@@ -47,8 +47,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageSet"/> with <see cref="Image"/>.
         /// </summary>
-        /// <param name="image">This image will be added
-        /// to <see cref="ImageContainer{T}.Images"/>.</param>
+        /// <param name="image">This image will be added to <see cref="ImageContainer.Images"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public ImageSet(Image image)
             : this()
@@ -97,17 +96,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ImageSet"/> class.
-        /// </summary>
-        /// <param name="imageSet">Native image set instance.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ImageSet(IImageSetHandler imageSet)
-            : this()
-        {
-            Handler = imageSet;
-        }
-
-        /// <summary>
         /// Get the size of the bitmap represented by this bundle in default resolution
         /// or, equivalently, at 100% scaling.
         /// </summary>
@@ -137,7 +125,7 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         [Browsable(false)]
-        public override bool IsReadOnly => Immutable || Handler.IsReadOnly;
+        public override bool IsReadOnly => Immutable;
 
         Image? IImageSource.Image => null;
 
@@ -382,7 +370,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="control">The control to get the preferred image size for.</param>
         /// <returns>The preferred image size for the specified control.</returns>
-        public virtual SizeI GetPreferredBitmapSizeFor(Control control)
+        public virtual SizeI GetPreferredBitmapSizeFor(AbstractControl control)
         {
             return GetPreferredBitmapSizeAtScale(control.ScaleFactor);
         }
@@ -406,9 +394,8 @@ namespace Alternet.Drawing
         /// <param name="control">Control to get DPI scaling factor from.</param>
         public virtual Image AsImageFor(AbstractControl control)
         {
-            var result = new Bitmap(this, control);
-            if (Immutable)
-                result.SetImmutable();
+            var preferredSize = GetPreferredBitmapSizeFor(control);
+            var result = AsImage(preferredSize);
             return result;
         }
 
@@ -425,12 +412,6 @@ namespace Alternet.Drawing
                 });
 
             return result;
-        }
-
-        /// <inheritdoc/>
-        protected override IImageSetHandler CreateHandler()
-        {
-            return GraphicsFactory.Handler.CreateImageSetHandler() ?? new PlessImageSetHandler();
         }
 
         /// <summary>

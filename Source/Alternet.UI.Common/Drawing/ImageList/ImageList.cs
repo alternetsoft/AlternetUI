@@ -18,7 +18,7 @@ namespace Alternet.Drawing
     /// You can add images to the <see cref="ImageList"/>, and the controls are
     /// able to use the images as they require.
     /// </remarks>
-    public class ImageList : ImageContainer<IImageListHandler>
+    public class ImageList : AttachedImageContainer<IImageListHandler>
     {
         /// <summary>
         /// Gets an empty <see cref="ImageList"/>.
@@ -106,15 +106,14 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="ImageList"/> with default values.
         /// </summary>
         public ImageList(bool immutable)
-            : base(immutable)
         {
+            SetImmutable(immutable);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImageList"/> with default values.
         /// </summary>
         public ImageList()
-            : this(false)
         {
         }
 
@@ -142,7 +141,8 @@ namespace Alternet.Drawing
                 if (size == value)
                     return;
                 size = value;
-                Handler.Size = value;
+                if (Handler != null)
+                    Handler.Size = value;
                 RaiseChanged();
             }
         }
@@ -348,39 +348,10 @@ namespace Alternet.Drawing
             return WithConvertedColors(ControlPaint.Light);
         }
 
-        /// <summary>
-        /// Exports all images in the collection to files at the specified base path, using the provided file names or
-        /// default names if none are specified.
-        /// </summary>
-        /// <remarks>If a file name does not have a supported image extension (.png, .jpg, .jpeg, .bmp),
-        /// the method appends '.png' by default. Existing files with the same names may be overwritten.</remarks>
-        /// <param name="basePath">The directory path where the image files will be saved. Must be a valid, writable file system path.</param>
-        /// <param name="fileNames">An array of file names to use for the exported images. If the array contains fewer names than images,
-        /// default names in the format 'ImageN.png' will be used for remaining images.</param>
-        public virtual void ExportImagesToFiles(string basePath, IReadOnlyList<string> fileNames)
-        {
-            for (int i = 0; i < Images.Count; i++)
-            {
-                var image = Images[i];
-                var fileName = fileNames.Count > i ? fileNames[i] : $"Image{i}.png";
-
-                var extension = System.IO.Path.GetExtension(fileName).ToLowerInvariant();
-                if (extension != ".png" && extension != ".jpg" && extension != ".jpeg" && extension != ".bmp")
-                    fileName += ".png";
-
-                var filePath = System.IO.Path.Combine(basePath, fileName);
-
-                if(File.Exists(filePath))
-                    File.Delete(filePath);
-
-                image.Save(filePath);
-            }
-        }
-
         /// <inheritdoc/>
-        protected override IImageListHandler CreateHandler()
+        protected override IImageListHandler? CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateImageListHandler() ?? new PlessImageListHandler();
+            return GraphicsFactory.Handler.CreateImageListHandler();
         }
 
         /// <summary>

@@ -166,40 +166,12 @@ namespace Alternet.Drawing
             return new UI.Native.GraphicsPath();
         }
 
-        public IImageSetHandler? CreateImageSetHandler()
-        {
-            return new UI.Native.ImageSet();
-        }
-
-        public IImageSetHandler CreateImageSetHandlerFromSvg(
-            Stream stream,
-            int width,
-            int height,
-            Color? color = null)
-        {
-            var nativeImage = new UI.Native.ImageSet();
-            using var inputStream = new UI.Native.InputStream(stream, false);
-            nativeImage.LoadSvgFromStream(inputStream, width, height, color ?? Color.Black);
-            return nativeImage;
-        }
-
-        public IImageSetHandler CreateImageSetHandlerFromSvg(
-            string s,
-            int width,
-            int height,
-            Color? color = null)
-        {
-            var nativeImage = new UI.Native.ImageSet();
-            nativeImage.LoadSvgFromString(s, width, height, color ?? Color.Black);
-            return nativeImage;
-        }
-
         public IImageListHandler? CreateImageListHandler()
         {
             return new UI.Native.ImageList();
         }
 
-        public IIconSetHandler? CreateIconSetHandler()
+        public IImageContainer? CreateIconSetHandler()
         {
             return new UI.Native.IconSet();
         }
@@ -251,25 +223,6 @@ namespace Alternet.Drawing
                 size.Width,
                 size.Height);
             return image;
-        }
-
-        public IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
-        {
-            var image = new UI.Native.Image();
-            ((UI.Native.ImageSet)imageSet.Handler).InitImage(
-                image,
-                size.Width,
-                size.Height);
-            return image;
-        }
-
-        public IImageHandler CreateImageHandler(ImageSet imageSet, IControl control)
-        {
-            var nativeObject = CreateImageHandler();
-            ((UI.Native.ImageSet)imageSet.Handler).InitImageFor(
-                (UI.Native.Image)nativeObject,
-                WxApplicationHandler.WxWidget(control));
-            return nativeObject;
         }
 
         public IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc)
