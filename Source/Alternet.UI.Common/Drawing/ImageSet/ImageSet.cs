@@ -9,13 +9,15 @@ using Alternet.UI.Localization;
 
 using SkiaSharp;
 
-namespace Alternet.UI
+using Alternet.UI;
+
+namespace Alternet.Drawing
 {
     /// <summary>
     /// <see cref="ImageSet"/> contains the same <see cref="Image"/> with different sizes.
     /// </summary>
     [TypeConverter(typeof(ImageSetConverter))]
-    public class ImageSet : ImageContainer<IImageSetHandler>, IImageSource, IGetAsToolTip
+    public partial class ImageSet : ImageContainer<IImageSetHandler>, IImageSource, IGetAsToolTip
     {
         /// <summary>
         /// Gets an empty <see cref="ImageSet"/>.
