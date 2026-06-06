@@ -164,7 +164,9 @@ namespace Alternet.UI
                         case MswProcessDpiAwareness.SystemAware:
                             break;
                         case MswProcessDpiAwareness.PerMonitorAware:
-                            ShowCriticalWarning(
+                            if (DebugUtils.IsDebugDefined)
+                            {
+                                ShowCriticalWarning(
 """
 Per-monitor DPI awareness is not supported.
 Please edit app.manifest and set the DPI awareness to 'SystemAware'. Example:
@@ -181,7 +183,8 @@ Please edit app.manifest and set the DPI awareness to 'SystemAware'. Example:
   </application>
 
 """
-);
+    );
+                            }
                             break;
                     }
                 }
