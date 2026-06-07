@@ -398,7 +398,7 @@ namespace Alternet.Drawing
             if (result != null)
             {
                 result = new Bitmap(result, size);
-                if (addScaled)
+                if (addScaled && !IsReadOnly)
                     Add(result);
                 return result;
             }
@@ -419,11 +419,12 @@ namespace Alternet.Drawing
             var result = GetExactImage(size);
             if (result != null)
                 return result;
+
             var larger = GetNearestLargerImage(size);
             if (larger != null)
             {
                 result = new Bitmap(larger, size);
-                if (addScaled)
+                if (addScaled && !IsReadOnly)
                     Add(result);
                 return result;
             }

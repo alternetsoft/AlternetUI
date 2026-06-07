@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.UI;
+
+using SkiaSharp;
 
 namespace Alternet.Drawing
 {
@@ -31,6 +34,7 @@ namespace Alternet.Drawing
         private Exception? loadingError;
         private Color?[]? colorOverridesLight;
         private Color?[]? colorOverridesDark;
+        private Svg.Skia.SKSvg? svgProvider;
 
         internal SvgImage()
         {
@@ -98,6 +102,30 @@ namespace Alternet.Drawing
                 svg = GetXmlForSvgLoadedWithError();
                 if (throwException)
                     throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="SKPicture"/> representation of the SVG image.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SKPicture AsPicture
+        {
+            get
+            {
+                SKPicture? result = null;
+
+                if (svgProvider is null)
+                {
+                    LoadImage();
+
+                    svgProvider = new Svg.Skia.SKSvg();
+                    var data = svg ?? GetXmlForSvgLoadedWithError();
+                    svgProvider.FromSvg(data);
+                    result = svgProvider.Picture;
+                }
+
+                return result ?? SkiaUtils.EmptyPicture;
             }
         }
 
@@ -530,10 +558,15 @@ namespace Alternet.Drawing
             LoadImage();
 
             if (svg is null)
+            {
                 return ImageSet.Empty;
+            }
             else
             {
-                var result = ImageSet.FromSvgString(svg, size.Width, size.Height, color);
+                var skiaBitmap = SkiaUtils.BitmapFromPicture(AsPicture, size.Width, size.Height, color);
+
+                var bitmap = (Image)skiaBitmap;
+                ImageSet result = new(bitmap);
                 result.SetImmutable();
                 return result;
             }
@@ -660,6 +693,13 @@ namespace Alternet.Drawing
         protected override SvgImage? GetImageSourceSvgImage()
         {
             return this;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref svgProvider);
+            base.DisposeManaged();
         }
 
         internal class Data

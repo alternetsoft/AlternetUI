@@ -24,6 +24,24 @@ namespace Alternet.Drawing
     public static partial class SkiaUtils
     {
         /// <summary>
+        /// Gets an empty <see cref="SKPicture"/>.
+        /// </summary>
+        public static SKPicture EmptyPicture = CreateEmptyPicture();
+
+        /// <summary>
+        /// Creates a new <see cref="SKPicture"/> that is empty.
+        /// </summary>
+        /// <returns>An empty <see cref="SKPicture"/>.</returns>
+        public static SKPicture CreateEmptyPicture()
+        {
+            using var recorder = new SKPictureRecorder();
+
+            recorder.BeginRecording(SKRect.Empty);
+
+            return recorder.EndRecording();
+        }
+
+        /// <summary>
         /// Loads svg image from the specified string with svg data.
         /// </summary>
         /// <param name="s">The string containing the SVG data.</param>
@@ -37,9 +55,9 @@ namespace Alternet.Drawing
                     int height,
                     Color? color)
         {
-            byte[] bytes = Encoding.UTF8.GetBytes(s);
-            MemoryStream stream = new(bytes);
-            var result = BitmapFromSvgStream(stream, width, height, color);
+            var svg = new Svg.Skia.SKSvg();
+            var picture = svg.FromSvg(s);
+            var result = BitmapFromPicture(picture, width, height, color);
             return result;
         }
 
@@ -58,8 +76,7 @@ namespace Alternet.Drawing
             Color? color)
         {
             var svg = new Svg.Skia.SKSvg();
-            svg.Load(stream);
-            var picture = svg.Picture;
+            var picture = svg.Load(stream);
 
             var result = BitmapFromPicture(picture, width, height, color);
             return result;
