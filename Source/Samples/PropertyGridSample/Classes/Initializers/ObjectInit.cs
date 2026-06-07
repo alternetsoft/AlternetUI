@@ -242,6 +242,7 @@ Environment.NewLine + Environment.NewLine +
                 titleControl.Parent = control.FillPanel;
 
                 var label = new Label("This is title");
+                label.Margin = (5, 0, 5, 0);
                 label.VerticalAlignment = VerticalAlignment.Center;
                 label.InputTransparent = true;
                 label.Parent = titleControl;

@@ -20,6 +20,11 @@ namespace Alternet.UI
         public static float DefaultMinSizeDelta = 10;
 
         /// <summary>
+        /// The default minimum position delta for moving. This value is used if the <see cref="MinPositionDelta"/> property is not set.
+        /// </summary>
+        public static float DefaultMinPositionDelta = 1;
+
+        /// <summary>
         /// The default suggested size for the grip control. This value is used to set the initial size
         /// of the control and can be overridden by setting the <see cref="AbstractControl.SuggestedSize"/> property.
         /// </summary>
@@ -28,6 +33,7 @@ namespace Alternet.UI
         private readonly ImageDrawable primitive = new();
 
         private float? minSizeDelta;
+        private float? minPositionDelta;
         private RectD origTargetBounds;
         private bool resizing = false;
         private PointD mouseDownPos;
@@ -381,6 +387,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the minimum position delta for moving. If null, the default value is used.
+        /// </summary>
+        public virtual float? MinPositionDelta
+        {
+            get => minPositionDelta;
+            set
+            {
+                if (value <= 0) value = null;
+                minPositionDelta = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the control that is resized or moved. If null, the top-level parent form is used.
         /// </summary>
         public virtual AbstractControl? Target { get; set; }
@@ -501,7 +520,6 @@ namespace Alternet.UI
             SizeAction = GripControl.GripSizeAction.None;
             MoveAction = GripControl.GripMoveAction.ChangeLocation;
             Cursor = Cursors.Default;
-            MinSizeDelta = 1;
             SuggestedSize = SizeD.NaN;
             Dock = DockStyle.None;
             Alignment = new (HorizontalAlignment.Stretch, VerticalAlignment.Stretch);
@@ -568,6 +586,14 @@ namespace Alternet.UI
         }
 
         ///<summary>
+        /// Gets the effective minimum position delta for moving, considering the user-defined value and the default value.
+        /// </summary>
+        protected virtual float GetEffectiveMinPositionDelta()
+        {
+            return MinPositionDelta ?? DefaultMinPositionDelta;
+        }
+
+        ///<summary>
         /// Gets the effective minimum size delta for resizing, considering the user-defined value and the default value.
         /// </summary>
         protected virtual float GetEffectiveMinSizeDelta()
@@ -584,12 +610,15 @@ namespace Alternet.UI
         /// <param name="mouseNowPos">The current mouse position.</param>
         /// <param name="applyNegativeDelta">Indicates whether to apply negative delta.</param>
         /// <param name="applyMinMax">Indicates whether to apply minimum and maximum size constraints.</param>
+        /// <param name="minSizeDelta">The minimum size delta to be applied. If not specified,
+        /// the effective minimum size delta will be used.</param>
         /// <returns>The new size for the target control.</returns>
         protected virtual float GetNewSize(
             bool isVert,
             PointD mouseNowPos,
             bool applyNegativeDelta,
-            bool applyMinMax)
+            bool applyMinMax,
+            float? minSizeDelta = null)
         {
             var oldSize = origTargetBounds.GetSize(isVert);
             var target = GetTarget();
@@ -607,7 +636,7 @@ namespace Alternet.UI
 
             var absDelta = MathF.Abs(delta);
 
-            var minDelta = GetEffectiveMinSizeDelta();
+            var minDelta = minSizeDelta ?? GetEffectiveMinSizeDelta();
 
             var newSize = oldSize + delta;
 
@@ -644,8 +673,15 @@ namespace Alternet.UI
                 if (target == null) return;
                 PointD mouseNowPos = ClientToScreen(e.Location);
 
-                float newWidth = GetNewSize(isVert: false, mouseNowPos, InvertWidthDelta, CanResizeHorizontally);
-                float newHeight = GetNewSize(isVert: true, mouseNowPos, InvertHeightDelta, CanResizeVertically);
+                float szDelta = GetEffectiveMinSizeDelta();
+
+                if (!CanResize)
+                {
+                    szDelta = GetEffectiveMinPositionDelta();
+                }
+
+                float newWidth = GetNewSize(isVert: false, mouseNowPos, InvertWidthDelta, CanResizeHorizontally, szDelta);
+                float newHeight = GetNewSize(isVert: true, mouseNowPos, InvertHeightDelta, CanResizeVertically, szDelta);
 
                 var bounds = origTargetBounds;
 
@@ -664,22 +700,22 @@ namespace Alternet.UI
 
                 if (!CanResize)
                 {
-                    var minDelta = GetEffectiveMinSizeDelta();
+                    var minPositionDelta = GetEffectiveMinPositionDelta();
                     if (deltaX > 0)
                     {
-                        deltaX = Math.Max(deltaX, minDelta);
+                        deltaX = Math.Max(deltaX, minPositionDelta);
                     }
                     else if (deltaX < 0)
                     {
-                        deltaX = Math.Min(deltaX, -minDelta);
+                        deltaX = Math.Min(deltaX, -minPositionDelta);
                     }
                     if (deltaY > 0)
                     {
-                        deltaY = Math.Max(deltaY, minDelta);
+                        deltaY = Math.Max(deltaY, minPositionDelta);
                     }
                     else if (deltaY < 0)
                     {
-                        deltaY = Math.Min(deltaY, -minDelta);
+                        deltaY = Math.Min(deltaY, -minPositionDelta);
                     }
                 }
 
