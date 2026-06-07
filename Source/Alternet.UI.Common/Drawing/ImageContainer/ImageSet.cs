@@ -186,7 +186,7 @@ namespace Alternet.Drawing
         /// </example>
         /// <remarks>
         /// <paramref name="url"/> can include assembly name. Example:
-        /// "embres:Alternet.UI.Resources.Svg.ImageName.png?assembly=Alternet.UI"
+        /// "embres:Alternet.UI.Resources.ImageName.png?assembly=Alternet.UI"
         /// </remarks>
         public static ImageSet FromUrl(string url)
         {

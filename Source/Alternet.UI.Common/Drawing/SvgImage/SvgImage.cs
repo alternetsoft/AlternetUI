@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI;
 
 namespace Alternet.Drawing
@@ -78,7 +79,7 @@ namespace Alternet.Drawing
 
             if (!throwException)
             {
-                if(stream is null)
+                if (stream is null)
                 {
                     loadingError = new ArgumentNullException(nameof(stream));
                     svg = GetXmlForSvgLoadedWithError();
@@ -95,7 +96,7 @@ namespace Alternet.Drawing
             {
                 loadingError = e;
                 svg = GetXmlForSvgLoadedWithError();
-                if(throwException)
+                if (throwException)
                     throw;
             }
         }
@@ -124,7 +125,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                 return loadingError;
+                return loadingError;
             }
 
             internal set
@@ -264,7 +265,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image? AsDisabledImage(int size, bool isDark)
         {
-            if(IsMono)
+            if (IsMono)
                 return AsImageSet(size, KnownSvgColor.Disabled, isDark)?.AsImage();
             else
                 return AsNormalImage(size, isDark)?.ToGrayScaleCached();
@@ -308,7 +309,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">The width and height, in pixels, of the resulting image. Must be a positive integer.</param>
         /// <param name="knownColor">The base color to apply to the SVG when rendering the image.</param>
-        /// <param name="isDark">A value indicating whether to use the dark color variant. Set to <see langword="true"/> for dark mode;
+        /// <param name="isDark">A value indicating whether to use the dark color variant.
+        /// Set to <see langword="true"/> for dark mode;
         /// otherwise, <see langword="false"/>.</param>
         /// <returns>An <see cref="Image"/> containing the rendered SVG, or <see langword="null"/> if the image could not be
         /// created.</returns>
@@ -348,7 +350,7 @@ namespace Alternet.Drawing
             if (data[size] is null)
                 data[size] = new();
 
-            if(isDark)
+            if (isDark)
                 data[size]!.KnownColorImagesDark[(int)knownColor] = result;
             else
                 data[size]!.KnownColorImagesLight[(int)knownColor] = result;
@@ -364,7 +366,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual ImageSet? ImageSetWithColor(int size, Color color)
         {
-            if(!IsMono)
+            if (!IsMono)
                 return AsImageSet(size);
 
             Resize(size);
@@ -378,7 +380,7 @@ namespace Alternet.Drawing
                 return result;
 
             result = LoadImage(size, color);
-            if(result is not null)
+            if (result is not null)
                 images.Add(color, result);
             return result;
         }
@@ -421,7 +423,7 @@ namespace Alternet.Drawing
                     result = colorOverridesLight[(int)knownColor];
             }
 
-            if(result is null)
+            if (result is null)
                 return SvgColors.GetSvgColor(knownColor, isDark);
             return result;
         }
@@ -483,7 +485,7 @@ namespace Alternet.Drawing
         /// If <see langword="null"/>, the override is removed.</param>
         public virtual void SetColorOverride(KnownSvgColor knownColor, Color? value)
         {
-            if(value is LightDarkColor ldc)
+            if (value is LightDarkColor ldc)
                 SetColorOverride(knownColor, ldc);
             else
             {
@@ -552,7 +554,7 @@ namespace Alternet.Drawing
                     using var reader = new StreamReader(stream);
                     svg = reader.ReadToEnd();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     loadingError = e;
                     svg = GetXmlForSvgLoadedWithError();
@@ -582,7 +584,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">The width and height, in pixels, of the resulting image.
         /// If null, the default image size for the specified control is used.</param>
-        /// <param name="control">The control context used to determine the default image size if <paramref name="size"/> is null. Can be
+        /// <param name="control">The control context used to determine the default
+        /// image size if <paramref name="size"/> is null. Can be
         /// null.</param>
         /// <param name="color">The color to apply to the image, if applicable. Can be null.</param>
         /// <returns>An <see cref="Image"/> instance representing the object at the specified size, or null if the image cannot
@@ -599,15 +602,23 @@ namespace Alternet.Drawing
         /// size is provided, the default image size for the specified control is used.
         /// </summary>
         /// <param name="knownColor">The known SVG color to apply to the image.</param>
-        /// <param name="isDark">A value indicating whether to use the dark theme variant of the image. Set to <see langword="true"/> for
+        /// <param name="isDark">A value indicating whether to use the dark theme variant of the image.
+        /// Set to <see langword="true"/> for
         /// dark theme; otherwise, <see langword="false"/>.</param>
-        /// <param name="size">The desired width and height, in pixels, of the resulting image. If <see langword="null"/>, the default
+        /// <param name="size">The desired width and height, in pixels, of the resulting image.
+        /// If <see langword="null"/>, the default
         /// image size for the specified control is used.</param>
-        /// <param name="control">The control context used to determine the default image size if <paramref name="size"/> is not specified.
+        /// <param name="control">The control context used to determine the default image size
+        /// if <paramref name="size"/> is not specified.
         /// Can be <see langword="null"/>.</param>
-        /// <returns>An <see cref="Image"/> instance created with the specified parameters, or <see langword="null"/> if the
+        /// <returns>An <see cref="Image"/> instance created with the specified parameters,
+        /// or <see langword="null"/> if the
         /// image could not be created.</returns>
-        public virtual Image? ToImageWithDefaultSize(KnownSvgColor knownColor, bool isDark, int? size = null, AbstractControl? control = null)
+        public virtual Image? ToImageWithDefaultSize(
+            KnownSvgColor knownColor,
+            bool isDark,
+            int? size = null,
+            AbstractControl? control = null)
         {
             size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
             var image = AsImage(size.Value, knownColor, isDark);

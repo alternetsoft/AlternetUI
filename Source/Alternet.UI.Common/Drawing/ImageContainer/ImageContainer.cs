@@ -339,12 +339,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Get the image from the container that has the specified size, or the scaled closest image if no exact match is found.
+        /// Get the image from the container that has the specified size,
+        /// or the scaled closest image if no exact match is found.
         /// </summary>
         /// <param name="size">The target size to find the image for.</param>
-        /// <param name="addScaled">Indicates whether to add the scaled image to the container if no exact match is found.</param>
-        /// <param name="downscaleFirst">Indicates whether to prioritize downscaling over upscaling when no exact match is found.</param>
-        /// <returns>The image that has the specified size, or the scaled closest image if no exact match is found.</returns>
+        /// <param name="addScaled">Indicates whether to add the scaled image
+        /// to the container if no exact match is found.</param>
+        /// <param name="downscaleFirst">Indicates whether to prioritize downscaling
+        /// over upscaling when no exact match is found.</param>
+        /// <returns>The image that has the specified size, or the scaled closest
+        /// image if no exact match is found.</returns>
         /// <remarks>
         /// <para>
         /// <b>Downscaling</b><br/>
@@ -377,11 +381,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Get the image from the container that has the specified size, or the upscaled closest smaller image if no exact match is found.
+        /// Get the image from the container that has the specified size,
+        /// or the upscaled closest smaller image if no exact match is found.
         /// </summary>
         /// <param name="size">The target size to find the image for.</param>
-        /// <param name="addScaled">Indicates whether to add the scaled image to the container if no exact match is found.</param>
-        /// <returns>The image that has the specified size, or the upscaled closest smaller image if no exact match is found.</returns>
+        /// <param name="addScaled">Indicates whether to add the scaled image
+        /// to the container if no exact match is found.</param>
+        /// <returns>The image that has the specified size, or the upscaled closest
+        /// smaller image if no exact match is found.</returns>
         public virtual Image? GetExactOrUpscaleSmallerImage(SizeI size, bool addScaled)
         {
             var result = GetExactImage(size);
@@ -399,11 +406,14 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Get the image from the container that has the specified size, or the downscaled closest larger image if no exact match is found.
+        /// Get the image from the container that has the specified size,
+        /// or the downscaled closest larger image if no exact match is found.
         /// </summary>
         /// <param name="size">The target size to find the image for.</param>
-        /// <param name="addScaled">Indicates whether to add the scaled image to the container if no exact match is found.</param>
-        /// <returns>The image that has the specified size, or the downscaled closest larger image if no exact match is found.</returns>
+        /// <param name="addScaled">Indicates whether to add the scaled image
+        /// to the container if no exact match is found.</param>
+        /// <returns>The image that has the specified size, or the downscaled closest
+        /// larger image if no exact match is found.</returns>
         public virtual Image? GetExactOrDownscaleLargerImage(SizeI size, bool addScaled)
         {
             var result = GetExactImage(size);
@@ -595,12 +605,31 @@ namespace Alternet.Drawing
         /// <param name="svg">The svg image to add.</param>
         /// <param name="imageSize">The size of the image to be added.</param>
         /// <param name="isDarkTheme">Whether theme is dark.</param>
-        /// <returns></returns>
-        public virtual bool AddSvg(SvgImage svg, SizeI imageSize, bool isDarkTheme)
+        /// <returns>The added <see cref="Image"/> if successful; otherwise, <see langword="null"/>.</returns>
+        public virtual Image? AddSvg(SvgImage svg, SizeI imageSize, bool isDarkTheme)
         {
             var color = svg.GetSvgColor(KnownSvgColor.Normal, isDarkTheme);
             var result = AddSvg(svg, imageSize, color);
             return result;
+        }
+
+        /// <summary>
+        /// Adds svg to the image container with the specified color or default color for the specified theme.
+        /// If <paramref name="isDarkTheme"/> is not null, it is used to determine the svg color.
+        /// Otherwise, if <paramref name="color"/> is not null, it is used as the svg color.
+        /// If both parameters are null, the default color of the svg is used.
+        /// </summary>
+        /// <param name="svg">The svg image to add.</param>
+        /// <param name="imageSize">The size of the image to be added.</param>
+        /// <param name="isDarkTheme">Whether theme is dark. Optional.</param>
+        /// <param name="color">The color to apply to the SVG image. Optional.</param>
+        /// <returns>The added <see cref="Image"/> if successful; otherwise, <see langword="null"/>.</returns>
+        public virtual Image? AddSvg(SvgImage svg, SizeI imageSize, bool? isDarkTheme = null, Color? color = null)
+        {
+            if (isDarkTheme.HasValue)
+                return AddSvg(svg, imageSize, isDarkTheme.Value);
+
+            return AddSvg(svg, imageSize, color);
         }
 
         /// <summary>
@@ -610,21 +639,26 @@ namespace Alternet.Drawing
         /// <param name="imageSize">The size of the image to be added.</param>
         /// <param name="color">Svg color. Optional. If not specified, svg colors
         /// are not changed.</param>
-        /// <returns>True if the image was added successfully; otherwise, false.</returns>
-        public virtual bool AddSvg(SvgImage svg, SizeI imageSize, Color? color = null)
+        /// <returns>The added <see cref="Image"/> if successful; otherwise, <see langword="null"/>.</returns>
+        public virtual Image? AddSvg(SvgImage svg, SizeI imageSize, Color? color = null)
         {
+            if (IsReadOnly)
+                return null;
+
             if (imageSize.SameWidthHeight)
             {
                 var image = svg.ImageWithColor(imageSize.Width, color);
-                return Add(image);
+                Add(image);
+                return image;
             }
             else
             {
                 var imageSet = svg.LoadImage(imageSize, color);
                 if (imageSet is null)
-                    return false;
+                    return null;
                 var image = imageSet.AsImage(imageSize);
-                return Add(image);
+                Add(image);
+                return image;
             }
         }
 

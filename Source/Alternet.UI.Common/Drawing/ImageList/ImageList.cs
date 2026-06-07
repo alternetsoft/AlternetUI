@@ -197,8 +197,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="svg">Svg to add.</param>
         /// <param name="isDarkTheme">Whether theme is dark.</param>
-        /// <returns></returns>
-        public virtual bool AddSvg(SvgImage svg, bool isDarkTheme)
+        /// <returns>The added <see cref="Image"/> if successful; otherwise, <see langword="null"/>.</returns>
+        public virtual Image? AddSvg(SvgImage svg, bool isDarkTheme)
         {
             return AddSvg(svg, ImageSize, isDarkTheme);
         }
@@ -207,11 +207,10 @@ namespace Alternet.Drawing
         /// Adds svg to the image list with the default normal color for the specified theme.
         /// </summary>
         /// <param name="svg">Svg to add.</param>
-        /// <returns></returns>
+        /// <returns>The added <see cref="Image"/> if successful; otherwise, <see langword="null"/>.</returns>
         /// <param name="color">Svg color. Optional. If not specified, svg colors
         /// are not changed.</param>
-        /// <returns></returns>
-        public virtual bool AddSvg(SvgImage svg, Color? color = null)
+        public virtual Image? AddSvg(SvgImage svg, Color? color = null)
         {
             return AddSvg(svg, ImageSize, color);
         }
