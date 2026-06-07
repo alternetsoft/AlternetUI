@@ -541,26 +541,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Selects all items in the control.
+        /// Selects all items in the control (including those that are not visible).
         /// </summary>
         public virtual void SelectAll()
         {
-            SetAllSelected(true);
+            SetAllSelected(selected: true, onlyVisible: false);
         }
 
         /// <summary>
-        /// Unselects all items in the control.
+        /// Unselects all items in the control (including those that are not visible).
         /// </summary>
         public virtual void UnselectAll()
         {
-            SetAllSelected(false);
+            SetAllSelected(selected: false, onlyVisible: false);
+        }
+
+        /// <summary>
+        /// Selects all visible items in the control.
+        /// </summary>
+        public virtual void SelectAllVisible()
+        {
+            SetAllSelected(selected: true, onlyVisible: true);
+        }
+
+        /// <summary>
+        /// Unselects all visible items in the control.
+        /// </summary>
+        public virtual void UnselectAllVisible()
+        {
+            SetAllSelected(selected: false, onlyVisible: true);
         }
 
         /// <summary>
         /// Changes selected state for all items in the control.
         /// </summary>
         /// <param name="selected">New selected state.</param>
-        public virtual void SetAllSelected(bool selected)
+        /// <param name="onlyVisible">Indicates whether to apply the change only to visible items.</param>
+        public virtual void SetAllSelected(bool selected, bool onlyVisible = true)
         {
             if (SelectionMode == ListBoxSelectionMode.Single)
             {
@@ -577,7 +594,10 @@ namespace Alternet.UI
             {
                 foreach (var item in Items)
                 {
-                    item.SetSelected(this, selected);
+                    if (!onlyVisible || item.IsVisible)
+                    {
+                        item.SetSelected(this, selected);
+                    }
                 }
 
                 if (!selected)
@@ -868,7 +888,8 @@ namespace Alternet.UI
         /// <param name="startIndex">Index of the first item to select.</param>
         /// <param name="endIndex">Index of the last item to select.</param>
         /// <param name="select">Whether to select or unselect the items.</param>
-        public virtual void SelectRange(int startIndex, int endIndex, bool select = true)
+        /// <param name="onlyVisible">Whether to select only visible items.</param>
+        public virtual void SelectRange(int startIndex, int endIndex, bool select = true, bool onlyVisible = true)
         {
             var min = Math.Min(startIndex, endIndex);
             var max = Math.Max(startIndex, endIndex);
@@ -879,7 +900,7 @@ namespace Alternet.UI
             {
                 for (int i = min; i <= max; i++)
                 {
-                    SetSelectedCore(i, select);
+                    SetSelectedCore(i, select, onlyVisible);
                 }
             });
         }
@@ -954,12 +975,16 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The Item index</param>
         /// <param name="value">The selected state of the item.</param>
+        /// <param name="onlyVisible">Whether to change the selected state only for visible items.</param>
         /// <returns></returns>
-        protected virtual bool SetSelectedCore(int index, bool value)
+        protected virtual bool SetSelectedCore(int index, bool value, bool onlyVisible = true)
         {
             var item = SafeItem(index);
 
             if (item is null)
+                return false;
+
+            if (onlyVisible && !item.IsVisible)
                 return false;
 
             var changed = item.SetSelected(this, value);

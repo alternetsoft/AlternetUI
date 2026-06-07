@@ -284,7 +284,7 @@ namespace Alternet.UI
 
                     scrollActivity.Scroll += (s, e) =>
                     {
-                        if(!e.IsVertical)
+                        if (!e.IsVertical)
                             e.Handled = true;
                     };
 
@@ -297,7 +297,7 @@ namespace Alternet.UI
                         var r = GetPaintRectangle();
                         if (r.Width <= 0 || r.Height <= 0)
                             return -1;
-                        if(r.Contains(hitTest))
+                        if (r.Contains(hitTest))
                             return 0;
                         return -1;
                     };
@@ -629,18 +629,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets whether item with the specified index is visible.
+        /// Gets whether item with the specified index is visible on screen.
         /// </summary>
         /// <param name="index">Item index.</param>
-        /// <returns></returns>
-        public virtual bool IsItemVisible(int index)
+        /// <returns><c>true</c> if the item is visible on the screen, <c>false</c> otherwise.</returns>
+        public virtual bool IsItemVisibleOnScreen(int index)
         {
             if (DisposingOrDisposed)
                 return default;
             var visibleBegin = GetVisibleBegin();
             var visibleEnd = GetVisibleEnd();
 
-            return index >= visibleBegin && index < visibleEnd;
+            var result = index >= visibleBegin && index < visibleEnd;
+
+            var item = SafeItem(index);
+
+            if (item is not null)
+                result = result && item.IsVisible;
+
+            return result;
         }
 
         /// <summary>
@@ -995,7 +1002,7 @@ namespace Alternet.UI
             for (int line = lineFirst; line < lineMax; line++)
             {
                 var rect = GetItemRect(line);
-                if(rect is null)
+                if (rect is null)
                     continue;
                 if (rect.Value.Contains(position))
                     return line;
@@ -1058,7 +1065,7 @@ namespace Alternet.UI
             if (DisposingOrDisposed || CanSkipInvalidate())
                 return;
 
-            if (!IsItemVisible(row))
+            if (!IsItemVisibleOnScreen(row))
                 return;
 
             MeasureItemEventArgs e = new(MeasureCanvas, row);
@@ -1085,7 +1092,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void RefreshLastRow()
         {
-            if(Count > 0)
+            if (Count > 0)
                 RefreshRow(Count - 1);
         }
 
@@ -1141,13 +1148,13 @@ namespace Alternet.UI
                 SelectFirstItem();
             }
             else
-            if (SelectedIndex == Count - 1)
-            {
-            }
-            else
-            {
-                SelectedIndex++;
-            }
+                if (SelectedIndex == Count - 1)
+                {
+                }
+                else
+                {
+                    SelectedIndex++;
+                }
         }
 
         /// <summary>
@@ -1160,13 +1167,13 @@ namespace Alternet.UI
                 SelectFirstItem();
             }
             else
-            if (SelectedIndex == 0)
-            {
-            }
-            else
-            {
-                SelectedIndex--;
-            }
+                if (SelectedIndex == 0)
+                {
+                }
+                else
+                {
+                    SelectedIndex--;
+                }
         }
 
         /// <summary>
@@ -1380,7 +1387,7 @@ namespace Alternet.UI
             if (index < 0 || index >= Count)
                 return false;
 
-            if (IsItemVisible(index))
+            if (IsItemVisibleOnScreen(index))
             {
                 if (index >= (GetVisibleEnd() - 1))
                     DoActionScrollLineDown();
@@ -1889,7 +1896,7 @@ namespace Alternet.UI
             if (tooltip is string s)
                 data.Text = s;
             else
-                if(tooltip is RichToolTipParams content)
+                if (tooltip is RichToolTipParams content)
                     data.ToolTipParams = content;
                 else
                     data.Text = tooltip.ToString() ?? string.Empty;
@@ -2128,6 +2135,44 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets the index of the first visible item at or after the specified index.
+        /// </summary>
+        /// <param name="index">The starting index to search from.</param>
+        /// <returns>The index of the first visible item at or after the specified index.
+        /// If no visible item is found, returns the specified index.</returns>
+        protected virtual int GetVisibleItemIndexAtOrAfter(int index)
+        {
+            for (int i = index; i < Count; i++)
+            {
+                var item = SafeItem(i);
+
+                if (item?.IsVisible == true || item is null)
+                    return i;
+            }
+
+            return index;
+        }
+
+        /// <summary>
+        /// Gets the index of the first visible item at or before the specified index.
+        /// </summary>
+        /// <param name="index">The starting index to search from.</param>
+        /// <returns>The index of the first visible item at or before the specified index.
+        /// If no visible item is found, returns the specified index.</returns>
+        protected virtual int GetVisibleItemIndexAtOrBefore(int index)
+        {
+            for (int i = index; i >= 0; i--)
+            {
+                var item = SafeItem(i);
+
+                if (item?.IsVisible == true || item is null)
+                    return i;
+            }
+
+            return index;
+        }
+
         /// <inheritdoc/>
         protected override void OnKeyDown(KeyEventArgs e)
         {
@@ -2136,7 +2181,7 @@ namespace Alternet.UI
 
             base.OnKeyDown(e);
 
-            if(e.IsHandledOrSuppressed || Count == 0)
+            if (e.IsHandledOrSuppressed || Count == 0)
                 return;
 
             ItemClickFlags flags = ItemClickFlags.Keyboard;
@@ -2152,7 +2197,7 @@ namespace Alternet.UI
                 case Key.A:
                     if (e.Control)
                     {
-                        SelectAll();
+                        SelectAllVisible();
                         e.Suppressed();
                     }
 
@@ -2167,55 +2212,55 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        current = 0;
+                        current = GetVisibleItemIndexAtOrAfter(0);
                     }
 
                     break;
 
                 case Key.End:
-                    current = Count - 1;
+                    current = GetVisibleItemIndexAtOrBefore(Count - 1);
                     break;
 
                 case Key.Down:
                     if (selected is null)
                     {
-                        SelectedIndex = 0;
+                        SelectedIndex = GetVisibleItemIndexAtOrAfter(0);
                         e.Suppressed();
                         return;
                     }
                     else
-                    if (selected >= Count - 1)
-                    {
-                        e.Suppressed();
-                        return;
-                    }
+                        if (selected >= Count - 1)
+                        {
+                            e.Suppressed();
+                            return;
+                        }
 
-                    current = selected.Value + 1;
+                    current = GetVisibleItemIndexAtOrAfter(selected.Value + 1);
                     break;
 
                 case Key.Up:
                     if (selected is null)
                     {
-                        SelectedIndex = Count - 1;
+                        SelectedIndex = GetVisibleItemIndexAtOrBefore(Count - 1);
                         e.Suppressed();
                         return;
                     }
                     else
-                    if (selected <= 0)
-                    {
-                        e.Suppressed();
-                        return;
-                    }
+                        if (selected <= 0)
+                        {
+                            e.Suppressed();
+                            return;
+                        }
 
-                    current = selected.Value - 1;
+                    current = GetVisibleItemIndexAtOrBefore(selected.Value - 1);
                     break;
 
                 case Key.PageDown:
-                    current = GetIndexOnNextPage() ?? 0;
+                    current = GetVisibleItemIndexAtOrAfter(GetIndexOnNextPage() ?? 0);
                     break;
 
                 case Key.PageUp:
-                    current = GetIndexOnPreviousPage() ?? 0;
+                    current = GetVisibleItemIndexAtOrBefore(GetIndexOnPreviousPage() ?? 0);
                     break;
 
                 case Key.Left:
@@ -2238,7 +2283,7 @@ namespace Alternet.UI
                     // like a keyboard arrow press, so trick DoHandleItemClick() in
                     // thinking we were clicked.
                     flags &= ~ItemClickFlags.Keyboard;
-                    current = selected ?? 0;
+                    current = GetVisibleItemIndexAtOrAfter(selected ?? 0);
                     break;
 
                 default:
