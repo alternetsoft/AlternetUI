@@ -16,11 +16,6 @@ namespace Alternet.Drawing
     public interface IImageContainer : IDisposable
     {
         /// <summary>
-        /// Gets whether this object is dummy and does nothing.
-        /// </summary>
-        bool IsDummy { get; }
-
-        /// <summary>
         /// Gets whether this object is ok.
         /// </summary>
         bool IsOk { get; }

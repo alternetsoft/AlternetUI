@@ -108,18 +108,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (Images.Count == 0)
-                    return 16;
-
-                var image = Images[0];
-
-                for (int i = 1; i < Images.Count; i++)
-                {
-                    if (IsSmallerThan(Images[i], image))
-                        image = Images[i];
-                }
-
-                return image.Size;
+                return GetMinSize();
             }
         }
 

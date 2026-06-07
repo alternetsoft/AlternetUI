@@ -100,31 +100,31 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets width of the small icon from the system settings (used in window captions and small icon view).
         /// </summary>
-        public static int SystemSmallIconWidth => SystemSettings.GetMetric(SystemSettingsMetric.SmallIconX);
+        public static int SmallSystemIconWidth => SystemSettings.GetMetric(SystemSettingsMetric.SmallIconX);
 
         /// <summary>
         /// Gets height of the small icon from the system settings (used in window captions and small icon view).
         /// </summary>
-        public static int SystemSmallIconHeight => SystemSettings.GetMetric(SystemSettingsMetric.SmallIconY);
+        public static int SmallSystemIconHeight => SystemSettings.GetMetric(SystemSettingsMetric.SmallIconY);
 
         /// <summary>
         /// Gets size of the small icon from the system settings (used in window captions and small icon view).
         /// </summary>
-        public static SizeI SystemSmallIconSize => new (SystemSmallIconWidth, SystemSmallIconHeight);
+        public static SizeI SmallSystemIconSize => new (SmallSystemIconWidth, SmallSystemIconHeight);
 
         /// <summary>
         /// Gets or sets an override value for the system small icon width.
         /// If set to a value greater than zero, this value will be used instead of the system icon width
-        /// in <see cref="EffectiveSystemSmallIconWidth"/>.
+        /// in <see cref="EffectiveSmallSystemIconWidth"/>.
         /// </summary>
-        public static int? SystemSmallIconWidthOverride;
+        public static int? SmallSystemIconWidthOverride;
 
         /// <summary>
         /// Gets or sets an override value for the system small icon height.
         /// If set to a value greater than zero, this value will be used instead of the system icon height
-        /// in <see cref="EffectiveSystemSmallIconHeight"/>.
+        /// in <see cref="EffectiveSmallSystemIconHeight"/>.
         /// </summary>
-        public static int? SystemSmallIconHeightOverride;
+        public static int? SmallSystemIconHeightOverride;
 
         /// <summary>
         /// Gets or sets an override value for the system icon width.
@@ -141,14 +141,14 @@ namespace Alternet.Drawing
         public static int? SystemIconHeightOverride;
 
         /// <summary>
-        /// Gets effective system small icon width, taking into account the <see cref="SystemSmallIconWidthOverride"/>.
+        /// Gets effective system small icon width, taking into account the <see cref="SmallSystemIconWidthOverride"/>.
         /// </summary>
-        public static int EffectiveSystemSmallIconWidth => SystemSmallIconWidthOverride ?? SystemSmallIconWidth;
+        public static int EffectiveSmallSystemIconWidth => SmallSystemIconWidthOverride ?? SmallSystemIconWidth;
 
         /// <summary>
-        /// Gets effective system small icon height, taking into account the <see cref="SystemSmallIconHeightOverride"/>.
+        /// Gets effective system small icon height, taking into account the <see cref="SmallSystemIconHeightOverride"/>.
         /// </summary>
-        public static int EffectiveSystemSmallIconHeight => SystemSmallIconHeightOverride ?? SystemSmallIconHeight;
+        public static int EffectiveSmallSystemIconHeight => SmallSystemIconHeightOverride ?? SmallSystemIconHeight;
 
         /// <summary>
         /// Gets effective system icon width, taking into account the <see cref="SystemIconWidthOverride"/>.
@@ -162,9 +162,9 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets effective system small icon size, taking into account
-        /// the <see cref="SystemSmallIconWidthOverride"/> and <see cref="SystemSmallIconHeightOverride"/>.
+        /// the <see cref="SmallSystemIconWidthOverride"/> and <see cref="SmallSystemIconHeightOverride"/>.
         /// </summary>
-        public static SizeI EffectiveSystemSmallIconSize => new(EffectiveSystemSmallIconWidth, EffectiveSystemSmallIconHeight);
+        public static SizeI EffectiveSmallSystemIconSize => new(EffectiveSmallSystemIconWidth, EffectiveSmallSystemIconHeight);
 
         /// <summary>
         /// Gets effective system icon size, taking into account

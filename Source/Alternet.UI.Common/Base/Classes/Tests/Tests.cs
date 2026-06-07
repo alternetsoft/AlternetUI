@@ -42,7 +42,7 @@ namespace Alternet.UI.Tests
             }
 
             App.LogNameValue("EffectiveSystemIconSize", IconSet.EffectiveSystemIconSize);
-            App.LogNameValue("EffectiveSystemSmallIconSize", IconSet.EffectiveSystemSmallIconSize);
+            App.LogNameValue("EffectiveSystemSmallIconSize", IconSet.EffectiveSmallSystemIconSize);
         }
 
         /// <summary>

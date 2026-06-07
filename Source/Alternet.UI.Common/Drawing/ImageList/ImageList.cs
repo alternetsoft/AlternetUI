@@ -25,19 +25,14 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly ImageList Empty = new(immutable: true);
 
-        /// <summary>
-        /// Gets or sets the default size of the images in the image list, in pixels.
-        /// </summary>
-        public static int DefaultSize = 16;
-
-        private SizeI size = DefaultSize;
+        private SizeI size = DefaultImageSize;
 
         /// <summary>
         /// Initializes a new empty instance of the <c>ImageList</c> class with
         /// the specified image size.
         /// </summary>
         public ImageList(SizeI size)
-            : this(false)
+            : this()
         {
             ImageSize = size;
         }
@@ -47,12 +42,12 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="images">Collection of images to be stored in this new instance.</param>
         public ImageList(IEnumerable<Image> images)
-            : this(false)
+            : this()
         {
             var firstImage = images.FirstOrDefault();
             if (firstImage == null)
             {
-                ImageSize = new(16, 16);
+                ImageSize = new(DefaultImageSize, DefaultImageSize);
                 return;
             }
 
@@ -65,7 +60,7 @@ namespace Alternet.Drawing
         /// <param name="images">Collection of images to be stored in this new instance.</param>
         /// <param name="size">New size of the images.</param>
         public ImageList(IEnumerable<Image> images, SizeI size)
-            : this(false)
+            : this()
         {
             Initialize(images, size);
         }
@@ -96,7 +91,7 @@ namespace Alternet.Drawing
         /// <param name="stripImage">List of images concatenated in a single image strip.</param>
         /// <param name="imageWidth">Width of the particular image in the strip.</param>
         public ImageList(Image stripImage, int imageWidth)
-            : this(false)
+            : this()
         {
             ImageSize = new(imageWidth, stripImage.Height);
             AddImageStrip(stripImage);
@@ -118,11 +113,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets the size of the images in the image list, in pixels.
+        /// Gets or sets the size of the images in the image container, in pixels.
         /// </summary>
         /// <value>
         /// The <see cref="SizeI"/> that defines the height and width, in pixels, of the images
-        /// in the list. The default size is 16 by 16.
+        /// in the container. The default size is 16 by 16.
         /// </value>
         /// <remarks>
         /// Setting the <see cref="ImageSize"/> to a different value than the actual size
@@ -148,55 +143,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets suggested size of the image for the specified scale factor.
-        /// </summary>
-        /// <param name="scaleFactor">Scale factor for which to get suggested size of the image.</param>
-        /// <param name="baseSize">Base size of the image. Default is 16.</param>
-        /// <returns>Suggested size of the image for the specified scale factor.</returns>
-        public static int GetSuggestedSize(Coord scaleFactor, int baseSize = 16)
-        {
-            int size = baseSize;
-
-            if (scaleFactor > 1)
-            {
-                size = (int)(size * scaleFactor);
-                if (size < 32)
-                    size = 32;
-            }
-
-            return size;
-        }
-
-        /// <summary>
         /// Adds the image to the image list, resizing it if necessary.
         /// </summary>
         /// <param name="image">The image to be added.</param>
         /// <returns>Returns true if the image was added successfully.</returns>
         public virtual bool AddResized(Image image)
         {
-            if (image.Size != ImageSize)
-            {
-                var resizedImage = new Bitmap(image, ImageSize);
-                return Add(resizedImage);
-            }
-
-            return Add(image);
+            return AddResized(image, ImageSize);
         }
 
         /// <summary>
-        /// Adds image strip to the image list.
+        /// Adds image strip to the image container. The image strip is a single image
+        /// that contains multiple images concatenated horizontally.
+        /// This method divides the image strip into individual images based on the <see cref="ImageSize"/>
+        /// property and adds them to the container.
         /// </summary>
         /// <param name="strip">The image strip containing multiple images.</param>
         public virtual void AddImageStrip(Image strip)
         {
-            var width = ImageSize.Width;
-            int imageCount = strip.Width / width;
-            for (int i = 0; i < imageCount; i++)
-            {
-                var sourceRectangle = new RectI(i * width, 0, width, ImageSize.Height);
-                var image = strip.GetSubBitmap(sourceRectangle);
-                Add(image);
-            }
+            AddImageStrip(strip, ImageSize);
         }
 
         /// <summary>
@@ -210,11 +175,7 @@ namespace Alternet.Drawing
         /// contains no images.</returns>
         public virtual Image? AsImageStrip()
         {
-            var result = AsSkiaStrip();
-            if (result == null)
-                return null;
-
-            return (Bitmap)result;
+            return AsImageStrip(ImageSize);
         }
 
         /// <summary>
@@ -228,23 +189,7 @@ namespace Alternet.Drawing
         /// collection contains no images.</returns>
         public virtual SKBitmap? AsSkiaStrip()
         {
-            if (Images.Count == 0)
-                return null;
-            var width = ImageSize.Width;
-            var height = ImageSize.Height;
-            var stripWidth = width * Images.Count;
-
-            var stripImage = new SKBitmap(stripWidth, height, false);
-            var canvas = new SKCanvas(stripImage);
-
-            for (int i = 0; i < Images.Count; i++)
-            {
-                var image = Images[i];
-                var x = i * width;
-                canvas.DrawBitmap((SKBitmap)image, x, 0);
-            }
-
-            return stripImage;
+            return AsSkiaStrip(ImageSize);
         }
 
         /// <summary>
@@ -255,9 +200,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual bool AddSvg(SvgImage svg, bool isDarkTheme)
         {
-            var color = svg.GetSvgColor(KnownSvgColor.Normal, isDarkTheme);
-            var result = AddSvg(svg, color);
-            return result;
+            return AddSvg(svg, ImageSize, isDarkTheme);
         }
 
         /// <summary>
@@ -270,19 +213,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual bool AddSvg(SvgImage svg, Color? color = null)
         {
-            if (ImageSize.SameWidthHeight)
-            {
-                var image = svg.ImageWithColor(size.Width, color);
-                return Add(image);
-            }
-            else
-            {
-                var imageSet = svg.LoadImage(ImageSize, color);
-                if (imageSet is null)
-                    return false;
-                var image = imageSet.AsImage(ImageSize);
-                return Add(image);
-            }
+            return AddSvg(svg, ImageSize, color);
         }
 
         /// <summary>
@@ -291,13 +222,13 @@ namespace Alternet.Drawing
         /// the specified function.
         /// </summary>
         /// <param name="func">Function used to convert color of the pixel.</param>
-        /// <returns></returns>
+        /// <returns>Image list with all pixels converted using the specified function.</returns>
         public virtual ImageList WithConvertedColors(Func<ColorStruct, ColorStruct> func)
         {
             ImageList result = new();
             result.ImageSize = ImageSize;
 
-            foreach(var image in Images)
+            foreach (var image in Images)
             {
                 var converted = image.WithConvertedColors(func);
                 result.Add(converted);
@@ -311,7 +242,7 @@ namespace Alternet.Drawing
         /// with all pixels lighter
         /// (this method makes 2x lighter than <see cref="WithLightColors"/>).
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Image list with all pixels 2x lighter.</returns>
         public virtual ImageList WithLightLightColors()
         {
             return WithConvertedColors(ControlPaint.LightLight);
@@ -321,7 +252,7 @@ namespace Alternet.Drawing
         /// Creates an new <see cref="ImageList"/> from this <see cref="ImageList"/>
         /// with all pixels lighter.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Image list with all pixels lighter.</returns>
         public virtual ImageList WithLightColors()
         {
             return WithConvertedColors(ControlPaint.Light);

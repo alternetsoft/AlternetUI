@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using Alternet.Base.Collections;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -17,6 +19,11 @@ namespace Alternet.Drawing
     /// </summary>
     public partial class ImageContainer : ImmutableObject, IImageContainer
     {
+        /// <summary>
+        /// Gets or sets the default size of the images in the image container, in pixels.
+        /// </summary>
+        public static int DefaultImageSize = 16;
+
         private int suspendImagesEvents;
 
         /// <summary>
@@ -44,6 +51,47 @@ namespace Alternet.Drawing
         public event EventHandler? Changed;
 
         /// <summary>
+        /// Flags that determine what happens when image with the exact size is not found in the container.
+        /// </summary>
+        public enum ImageSizeFallback
+        {
+            /// <summary>
+            /// No fallback. If image with is not found, <c>null</c> is returned.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// If image is not found, image with the system icon size is returned.
+            /// </summary>
+            SystemIcon = 1,
+
+            /// <summary>
+            /// If image is not found, image with the small system icon size is returned.
+            /// </summary>
+            SmallSystemIcon = 2,
+
+            /// <summary>
+            /// If image is not found, the image with the closest larger size is returned.
+            /// </summary>
+            NearestLarger = 3,
+
+            /// <summary>
+            /// If image is not found, the image with the closest size is returned.
+            /// </summary>
+            Closest = 4,
+
+            /// <summary>
+            /// If image is not found, the first image is returned.
+            /// </summary>
+            First = 5,
+
+            /// <summary>
+            /// If image is not found, the smallest image is returned.
+            /// </summary>
+            Smallest = 6,
+        }
+
+        /// <summary>
         /// Gets whether object is ok.
         /// </summary>
         /// <summary>
@@ -53,15 +101,67 @@ namespace Alternet.Drawing
         public virtual bool IsOk => Images.Count > 0;
 
         /// <summary>
-        /// Gets whether this object is dummy and doesn't do anything.
-        /// </summary>
-        public virtual bool IsDummy => false;
-
-        /// <summary>
         /// Gets whether object is readonly.
         /// </summary>
         [Browsable(false)]
         public virtual bool IsReadOnly => Immutable;
+
+        /// <summary>
+        /// Gets the first image in the container or null if the container is empty.
+        /// Result is returned as immutable image if the container is immutable.
+        /// </summary>
+        [Browsable(false)]
+        public Image? FirstImage => MakeImmutableIfNeeded(Images.Count > 0 ? Images[0] : null);
+
+        /// <summary>
+        /// Gets the first image in the container which has the system icon size.
+        /// Result is returned as immutable image if the container is immutable.
+        /// </summary>
+        [Browsable(false)]
+        public Image? ImageOfSystemIconSize
+        {
+            get
+            {
+                return GetExactImage(IconSet.EffectiveSystemIconSize);
+            }
+        }
+
+        /// <summary>
+        /// Gets the smallest image in the container.
+        /// Result is returned as immutable image if the container is immutable.
+        /// </summary>
+        [Browsable(false)]
+        public Image? SmallestImage
+        {
+            get
+            {
+                if (Images.Count == 0)
+                    return null;
+
+                var image = Images[0];
+
+                for (int i = 1; i < Images.Count; i++)
+                {
+                    if (IsSmallerThan(Images[i], image))
+                        image = Images[i];
+                }
+
+                return MakeImmutableIfNeeded(image);
+            }
+        }
+
+        /// <summary>
+        /// Gets the first image in the container which has the small system icon size.
+        /// Result is returned as immutable image if the container is immutable.
+        /// </summary>
+        [Browsable(false)]
+        public Image? ImageOfSmallSystemIconSize
+        {
+            get
+            {
+                return GetExactImage(IconSet.EffectiveSmallSystemIconSize);
+            }
+        }
 
         /// <summary>
         /// Gets the <see cref="Image"/> collection for this image list.
@@ -70,18 +170,38 @@ namespace Alternet.Drawing
         public virtual BaseCollection<Image> Images { get; } = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
+        /// Gets suggested size of the image for the specified scale factor.
+        /// </summary>
+        /// <param name="scaleFactor">Scale factor for which to get suggested size of the image.</param>
+        /// <param name="baseSize">Base size of the image. Default is 16.</param>
+        /// <returns>Suggested size of the image for the specified scale factor.</returns>
+        public static int GetSuggestedSize(Coord scaleFactor, int baseSize = 16)
+        {
+            int size = baseSize;
+
+            if (scaleFactor > 1)
+            {
+                size = (int)(size * scaleFactor);
+                if (size < 32)
+                    size = 32;
+            }
+
+            return size;
+        }
+
+        /// <summary>
         /// Retrieves an image from the container at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the image to retrieve.
         /// If the index is null, less than 0, or greater than or equal to the
         /// number of images, null is returned.</param>
         /// <returns>The <see cref="Image"/> at the specified index, or null if
-        /// the index is invalid.</returns>
+        /// the index is invalid. Result is returned as immutable image if the container is immutable.</returns>
         public virtual Image? GetImage(int? index)
         {
             if (index < 0 || index >= Images.Count)
                 return null;
-            return Images[index];
+            return MakeImmutableIfNeeded(Images[index]);
         }
 
         /// <summary>
@@ -131,9 +251,21 @@ namespace Alternet.Drawing
         /// <returns><c>true</c> if the first image is smaller than the second image; otherwise, <c>false</c>.</returns>
         public virtual bool IsSmallerThan(Image image1, Image image2)
         {
-            int h1 = image1.Height;
-            int h2 = image2.Height;
-            return h1 < h2 || (h1 == h2 && image1.Width < image2.Width);
+            return IsSmallerThan(image1.Size, image2.Size);
+        }
+
+        /// <summary>
+        /// Compares two sizes and returns a value indicating whether the first size is smaller than the second size.
+        /// This method is used for sorting images by size.
+        /// </summary>
+        /// <param name="size1">The first size to compare.</param>
+        /// <param name="size2">The second size to compare.</param>
+        /// <returns><c>true</c> if the first size is smaller than the second size; otherwise, <c>false</c>.</returns>
+        public virtual bool IsSmallerThan(SizeI size1, SizeI size2)
+        {
+            int h1 = size1.Height;
+            int h2 = size2.Height;
+            return h1 < h2 || (h1 == h2 && size1.Width < size2.Width);
         }
 
         /// <summary>
@@ -142,20 +274,214 @@ namespace Alternet.Drawing
         /// If there are no images in the container, an empty <see cref="Bitmap"/> is returned.
         /// </summary>
         /// <param name="size">The target size to find the closest image for.</param>
-        /// <returns>The image that is closest in size to the specified size.</returns>
+        /// <returns>The image that is closest in size to the specified size.
+        /// Result is returned as immutable image if the container is immutable.</returns>
         public virtual Image AsImage(SizeI size)
         {
-            return GetImage(size) ?? Bitmap.Empty;
+            return GetClosestImage(size) ?? Bitmap.Empty;
         }
 
         /// <summary>
         /// Gets the image from the container that has the specified size, or null if no such image exists.
         /// </summary>
         /// <param name="size">The target size to find the exact image for.</param>
-        /// <returns>The image that has the specified size, or null if no such image exists.</returns>
+        /// <returns>The image that has the specified size, or null if no such image exists.
+        /// Result is returned as immutable image if the container is immutable.</returns>
         public virtual Image? GetExactImage(SizeI size)
         {
-            return Images.FirstOrDefault(i => i.Size == size);
+            var result = Images.FirstOrDefault(i => i.Size == size);
+            return MakeImmutableIfNeeded(result);
+        }
+
+        /// <summary>
+        /// Gets the image from the container that has the specified size, or null if no such image exists.
+        /// </summary>
+        /// <param name="size">The target size to find the exact image for.</param>
+        /// <param name="fallbacks">An array of fallback options to use if the exact image is not found.</param>
+        /// <returns>The image that has the specified size, or null if no such image exists.
+        /// Result is returned as immutable image if the container is immutable.</returns>
+        public virtual Image? GetExactOrClosestImage(SizeI size, params ImageSizeFallback[] fallbacks)
+        {
+            var result = GetExactImage(size);
+
+            if (result != null)
+                return result;
+
+            foreach (var fallback in fallbacks)
+            {
+                switch (fallback)
+                {
+                    case ImageSizeFallback.SystemIcon:
+                        result = ImageOfSystemIconSize;
+                        break;
+                    case ImageSizeFallback.SmallSystemIcon:
+                        result = ImageOfSmallSystemIconSize;
+                        break;
+                    case ImageSizeFallback.NearestLarger:
+                        result = GetNearestLargerImage(size);
+                        break;
+                    case ImageSizeFallback.Closest:
+                        result = GetClosestImage(size);
+                        break;
+                    case ImageSizeFallback.Smallest:
+                        result = SmallestImage;
+                        break;
+                    case ImageSizeFallback.First:
+                        result = FirstImage;
+                        break;
+                }
+
+                if (result != null)
+                    return result;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Get the image from the container that has the specified size, or the scaled closest image if no exact match is found.
+        /// </summary>
+        /// <param name="size">The target size to find the image for.</param>
+        /// <param name="addScaled">Indicates whether to add the scaled image to the container if no exact match is found.</param>
+        /// <param name="downscaleFirst">Indicates whether to prioritize downscaling over upscaling when no exact match is found.</param>
+        /// <returns>The image that has the specified size, or the scaled closest image if no exact match is found.</returns>
+        /// <remarks>
+        /// <para>
+        /// <b>Downscaling</b><br/>
+        ///   Pros: Preserves sharpness, smaller file size, faster load times<br/>
+        ///   Cons: Some fine detail lost, compression artifacts possible<br/>
+        ///   Best Use Cases: Web optimization, thumbnails, email attachments
+        /// </para>
+        /// <para>
+        /// <b>Upscaling</b><br/>
+        ///   Pros: Larger display size, needed for print or high‑res screens<br/>
+        ///   Cons: Pixelation, blur, no new detail created, quality drops beyond ~150–200%<br/>
+        ///   Best Use Cases: Posters, large displays, when only low‑res source exists
+        /// </para>
+        /// </remarks>
+        public virtual Image? GetExactOrScaledImage(SizeI size, bool downscaleFirst, bool addScaled)
+        {
+            var result = GetExactImage(size);
+            if (result != null)
+                return result;
+            if (downscaleFirst)
+            {
+                result = GetNearestLargerImage(size) ?? GetNearestSmallerImage(size);
+            }
+            else
+            {
+                result = GetNearestSmallerImage(size) ?? GetNearestLargerImage(size);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get the image from the container that has the specified size, or the upscaled closest smaller image if no exact match is found.
+        /// </summary>
+        /// <param name="size">The target size to find the image for.</param>
+        /// <param name="addScaled">Indicates whether to add the scaled image to the container if no exact match is found.</param>
+        /// <returns>The image that has the specified size, or the upscaled closest smaller image if no exact match is found.</returns>
+        public virtual Image? GetExactOrUpscaleSmallerImage(SizeI size, bool addScaled)
+        {
+            var result = GetExactImage(size);
+            if (result != null)
+                return result;
+            result = GetNearestSmallerImage(size);
+            if (result != null)
+            {
+                result = new Bitmap(result, size);
+                if (addScaled)
+                    Add(result);
+                return result;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Get the image from the container that has the specified size, or the downscaled closest larger image if no exact match is found.
+        /// </summary>
+        /// <param name="size">The target size to find the image for.</param>
+        /// <param name="addScaled">Indicates whether to add the scaled image to the container if no exact match is found.</param>
+        /// <returns>The image that has the specified size, or the downscaled closest larger image if no exact match is found.</returns>
+        public virtual Image? GetExactOrDownscaleLargerImage(SizeI size, bool addScaled)
+        {
+            var result = GetExactImage(size);
+            if (result != null)
+                return result;
+            var larger = GetNearestLargerImage(size);
+            if (larger != null)
+            {
+                result = new Bitmap(larger, size);
+                if (addScaled)
+                    Add(result);
+                return result;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the image from the container that is smaller than the specified size,
+        /// or null if no such image exists.
+        /// </summary>
+        /// <param name="size">The target size to find the nearest smaller image for.</param>
+        /// <returns>The image that is smaller than the specified size, or null if no such image exists.
+        /// Result is returned as immutable image if the container is immutable.</returns>
+        public virtual Image? GetNearestSmallerImage(SizeI size)
+        {
+            Image? result = null;
+
+            foreach (var bitmap in Images)
+            {
+                if (IsSmallerThan(bitmap.Size, size))
+                {
+                    if (result is null)
+                        result = bitmap;
+                    else
+                    {
+                        var newDistance = SizeI.Subtract(bitmap.Size, size).Abs;
+                        var oldDistance = SizeI.Subtract(result.Size, size).Abs;
+
+                        if (newDistance.Width < oldDistance.Width
+                            && newDistance.Height < oldDistance.Height)
+                            result = bitmap;
+                    }
+                }
+            }
+
+            return MakeImmutableIfNeeded(result);
+        }
+
+        /// <summary>
+        /// Gets the image from the container that is larger than the specified size,
+        /// or null if no such image exists.
+        /// </summary>
+        /// <param name="size">The target size to find the nearest larger image for.</param>
+        /// <returns>The image that is larger than the specified size, or null if no such image exists.
+        /// Result is returned as immutable image if the container is immutable.</returns>
+        public virtual Image? GetNearestLargerImage(SizeI size)
+        {
+            Image? result = null;
+
+            foreach (var bitmap in Images)
+            {
+                if (IsSmallerThan(bitmap.Size, size))
+                    continue;
+
+                if (result is null)
+                    result = bitmap;
+                else
+                {
+                    var newDistance = SizeI.Subtract(bitmap.Size, size).Abs;
+                    var oldDistance = SizeI.Subtract(result.Size, size).Abs;
+
+                    if (newDistance.Width < oldDistance.Width
+                        && newDistance.Height < oldDistance.Height)
+                        result = bitmap;
+                }
+            }
+
+            return MakeImmutableIfNeeded(result);
         }
 
         /// <summary>
@@ -164,8 +490,9 @@ namespace Alternet.Drawing
         /// If there are no images in the container, null is returned.
         /// </summary>
         /// <param name="size">The target size to find the closest image for.</param>
-        /// <returns>The image that is closest in size to the specified size.</returns>
-        public virtual Image? GetImage(SizeI size)
+        /// <returns>The image that is closest in size to the specified size.
+        /// Result is returned as immutable image if the container is immutable.</returns>
+        public virtual Image? GetClosestImage(SizeI size)
         {
             Image? result = null;
 
@@ -186,10 +513,7 @@ namespace Alternet.Drawing
 
             result ??= Images.First();
 
-            if (Immutable && result is not null)
-                result.SetImmutable();
-
-            return result;
+            return MakeImmutableIfNeeded(result);
         }
 
         /// <summary>
@@ -266,6 +590,154 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Adds svg to the image container with the default normal color for the specified color theme.
+        /// </summary>
+        /// <param name="svg">The svg image to add.</param>
+        /// <param name="imageSize">The size of the image to be added.</param>
+        /// <param name="isDarkTheme">Whether theme is dark.</param>
+        /// <returns></returns>
+        public virtual bool AddSvg(SvgImage svg, SizeI imageSize, bool isDarkTheme)
+        {
+            var color = svg.GetSvgColor(KnownSvgColor.Normal, isDarkTheme);
+            var result = AddSvg(svg, imageSize, color);
+            return result;
+        }
+
+        /// <summary>
+        /// Adds svg to the image container with the specified color.
+        /// </summary>
+        /// <param name="svg">The svg image to add.</param>
+        /// <param name="imageSize">The size of the image to be added.</param>
+        /// <param name="color">Svg color. Optional. If not specified, svg colors
+        /// are not changed.</param>
+        /// <returns>True if the image was added successfully; otherwise, false.</returns>
+        public virtual bool AddSvg(SvgImage svg, SizeI imageSize, Color? color = null)
+        {
+            if (imageSize.SameWidthHeight)
+            {
+                var image = svg.ImageWithColor(imageSize.Width, color);
+                return Add(image);
+            }
+            else
+            {
+                var imageSet = svg.LoadImage(imageSize, color);
+                if (imageSet is null)
+                    return false;
+                var image = imageSet.AsImage(imageSize);
+                return Add(image);
+            }
+        }
+
+        /// <summary>
+        /// Adds the image to the image container, resizing it if necessary.
+        /// If image size equal to the specified size, it is added without resizing.
+        /// </summary>
+        /// <param name="image">The image to be added.</param>
+        /// <param name="imageSize">The size to which the image should be resized if necessary.</param>
+        /// <returns>Returns true if the image was added successfully.</returns>
+        public virtual bool AddResized(Image image, SizeI imageSize)
+        {
+            if (image.Size != imageSize)
+            {
+                var resizedImage = new Bitmap(image, imageSize);
+                return Add(resizedImage);
+            }
+
+            return Add(image);
+        }
+
+        /// <summary>
+        /// Creates a single image strip by combining all images in the collection horizontally.
+        /// </summary>
+        /// <remarks>Each image in the collection is placed side by side in the resulting strip,
+        /// maintaining its original size and order. The width of the strip is the sum of the widths of all images, and
+        /// the height matches the individual image height. This method is useful for generating sprite sheets or
+        /// preview strips from a sequence of images.</remarks>
+        /// <returns>An <see cref="Image"/> containing the combined image strip, or <see langword="null"/> if the collection
+        /// contains no images.</returns>
+        /// <param name="imageSize">The size of each individual image in the strip.</param>
+        public virtual Image? AsImageStrip(SizeI imageSize)
+        {
+            var result = AsSkiaStrip(imageSize);
+            if (result == null)
+                return null;
+
+            return (Image)result;
+        }
+
+        /// <summary>
+        /// Creates a single horizontal bitmap strip by concatenating all images in the collection.
+        /// </summary>
+        /// <remarks>The resulting bitmap arranges each image side by side in the order they appear in the
+        /// collection. The width of the strip is the sum of the widths of all images, and the height matches the
+        /// individual image height. The caller is responsible for disposing the returned <see cref="SKBitmap"/> when it
+        /// is no longer needed.</remarks>
+        /// <returns>An <see cref="SKBitmap"/> representing the concatenated image strip, or <see langword="null"/> if the
+        /// collection contains no images.</returns>
+        /// <param name="imageSize">The size of each individual image in the strip.</param>
+        public virtual SKBitmap? AsSkiaStrip(SizeI imageSize)
+        {
+            if (Images.Count == 0)
+                return null;
+            var width = imageSize.Width;
+            var height = imageSize.Height;
+            var stripWidth = width * Images.Count;
+
+            var stripImage = new SKBitmap(stripWidth, height, false);
+            var canvas = new SKCanvas(stripImage);
+
+            for (int i = 0; i < Images.Count; i++)
+            {
+                var image = Images[i];
+                var x = i * width;
+                canvas.DrawBitmap((SKBitmap)image, x, 0);
+            }
+
+            return stripImage;
+        }
+
+        /// <summary>
+        /// Adds image strip to the image container. The image strip is a single image
+        /// that contains multiple images concatenated horizontally.
+        /// This method divides the image strip into individual images based on the <paramref name="imageSize"/>
+        /// parameter and adds them to the container.
+        /// </summary>
+        /// <param name="strip">The image strip containing multiple images.</param>
+        /// <param name="imageSize">The size of each individual image in the strip.</param>
+        public virtual void AddImageStrip(Image strip, SizeI imageSize)
+        {
+            var width = imageSize.Width;
+            int imageCount = strip.Width / width;
+            for (int i = 0; i < imageCount; i++)
+            {
+                var sourceRectangle = new RectI(i * width, 0, width, imageSize.Height);
+                var image = strip.GetSubBitmap(sourceRectangle);
+                Add(image);
+            }
+        }
+
+        /// <summary>
+        /// Gets the minimal size of the bitmaps in this image container.
+        /// If there are no bitmaps, returns <see cref="ImageContainer.DefaultImageSize"/>.
+        /// </summary>
+        /// <returns>The size of the smallest bitmap in the container.</returns>
+        public virtual SizeI GetMinSize()
+        {
+            if (Images.Count == 0)
+                return DefaultImageSize;
+
+            var image = Images[0];
+
+            for (int i = 1; i < Images.Count; i++)
+            {
+                if (IsSmallerThan(Images[i], image))
+                    image = Images[i];
+            }
+
+            return image.Size;
+        }
+
+        /// <summary>
         /// Removes all images from the container.
         /// </summary>
         public virtual bool Clear()
@@ -318,6 +790,18 @@ namespace Alternet.Drawing
         protected override void DisposeManaged()
         {
             base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// Makes image immutable if the container is immutable.
+        /// </summary>
+        /// <param name="image">The image to potentially make immutable.</param>
+        /// <returns>The original image, potentially made immutable.</returns>
+        protected virtual Image? MakeImmutableIfNeeded(Image? image)
+        {
+            if (Immutable)
+                image?.SetImmutable();
+            return image;
         }
 
         /// <summary>
