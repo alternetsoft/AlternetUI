@@ -11,11 +11,6 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-/*
-        private static MouseEventArgsSnapshot lastUsedMouseDownArgsSnapshot = new();
-        private static MouseEventArgsSnapshot lastUsedMouseUpArgsSnapshot = new();
-*/
-
         /// <summary>
         /// Notifies all windows and their child controls about changed dpi.
         /// </summary>
@@ -595,18 +590,10 @@ namespace Alternet.UI
         {
             if (currentTarget is GenericControl generic)
             {
-                /*
-                var s = $"UpdateCursor: {generic.GetType()}";
-                App.LogReplace(s, s);
-                */
                 (originalTarget as Control)?.UpdateCursor(generic.Cursor);
             }
             else
             {
-                /*
-                var s = $"UpdateCursor: {originalTarget?.GetType()}";
-                App.LogReplace(s, s);
-                */
                 (originalTarget as Control)?.UpdateCursor();
             }
         }

@@ -348,6 +348,12 @@ namespace Alternet.UI
             => SizeAction == GripSizeAction.ChangeWidth || SizeAction == GripSizeAction.ChangeWidthAndHeight;
 
         /// <summary>
+        /// Gets a value indicating whether the grip can resize. If false, the grip will not resize the target control when dragged.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool CanResize => CanResizeVertically || CanResizeHorizontally;
+
+        /// <summary>
         /// Gets a value indicating whether the grip can move vertically. If false, only horizontal moving is allowed.
         /// </summary>
         [Browsable(false)]
@@ -654,6 +660,27 @@ namespace Alternet.UI
                 if (CanResizeVertically)
                 {
                     bounds.Height = newHeight;
+                }
+
+                if (!CanResize)
+                {
+                    var minDelta = GetEffectiveMinSizeDelta();
+                    if (deltaX > 0)
+                    {
+                        deltaX = Math.Max(deltaX, minDelta);
+                    }
+                    else if (deltaX < 0)
+                    {
+                        deltaX = Math.Min(deltaX, -minDelta);
+                    }
+                    if (deltaY > 0)
+                    {
+                        deltaY = Math.Max(deltaY, minDelta);
+                    }
+                    else if (deltaY < 0)
+                    {
+                        deltaY = Math.Min(deltaY, -minDelta);
+                    }
                 }
 
                 if (CanMoveHorizontally)
