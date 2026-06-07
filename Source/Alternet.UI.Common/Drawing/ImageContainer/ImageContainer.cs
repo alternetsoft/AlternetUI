@@ -159,7 +159,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets the image from the container that is the closest in size to the specified size.
+        /// Gets the image from the container that is the closest to the specified size.
         /// If there are multiple images of the same size, the first one is returned.
         /// If there are no images in the container, null is returned.
         /// </summary>
@@ -312,6 +312,12 @@ namespace Alternet.Drawing
         /// </summary>
         protected virtual void OnChanged()
         {
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
         }
 
         /// <summary>

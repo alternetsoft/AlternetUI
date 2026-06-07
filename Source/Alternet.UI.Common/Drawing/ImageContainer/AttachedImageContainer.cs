@@ -12,35 +12,42 @@ namespace Alternet.Drawing
     public class AttachedImageContainer<T> : ImageContainer
         where T : IImageContainer
     {
+        private T? handler;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttachedImageContainer{T}"/> class with the specified handler.
         /// </summary>
         /// <param name="handler">The handler to be attached.</param>
         public AttachedImageContainer(T? handler)
-            : base()
         {
-            Handler = handler;
+            this.handler = handler;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AttachedImageContainer{T}"/> class.
         /// </summary>
         public AttachedImageContainer()
-            : base()
         {
-            Handler = CreateHandler();
+            handler = CreateHandler();
         }
 
         /// <summary>
         /// Gets handler of this image container.
         /// </summary>
-        public T? Handler { get; }
+        public T? Handler => handler;
 
         /// <summary>
         /// Creates the handler for this image container.
         /// </summary>
         /// <returns></returns>
         protected virtual T? CreateHandler() => default;
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref handler);
+            base.DisposeManaged();
+        }
 
         /// <inheritdoc/>
         protected override void OnImageInserted(object? sender, int index, Image item)
