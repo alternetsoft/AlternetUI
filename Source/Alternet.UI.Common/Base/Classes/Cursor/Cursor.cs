@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -17,6 +18,7 @@ namespace Alternet.UI
         private static ICursorFactoryHandler? factory;
 
         private readonly CursorType? cursorType;
+        private readonly string? url;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Cursor"/> class.
@@ -48,18 +50,21 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="Cursor"/> class
         /// by passing a filename.
         /// </summary>
-        /// <param name="cursorName">Cursor filename.</param>
+        /// <param name="cursorFileName">Cursor filename.</param>
         /// <param name="type">Type of the bitmap.</param>
         /// <param name="hotSpotX">Hot spot X.</param>
         /// <param name="hotSpotY">Hot spot Y.</param>
         public Cursor(
-            string cursorName,
+            string cursorFileName,
             BitmapType type = BitmapType.CursorDefaultType,
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
             if (GetAllowCustomCursors())
-                Handler = Factory.CreateCursorHandler(cursorName, type, hotSpotX, hotSpotY);
+            {
+                url = cursorFileName;
+                Handler = Factory.CreateCursorHandler(cursorFileName, type, hotSpotX, hotSpotY);
+            }
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
         }
@@ -85,8 +90,11 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
         {
-            if(GetAllowCustomCursors())
+            if (GetAllowCustomCursors())
+            {
+                url = image.Url;
                 Handler = Factory.CreateCursorHandler(image, hotSpotX, hotSpotY);
+            }
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
         }
@@ -103,7 +111,9 @@ namespace Alternet.UI
             int hotSpotY = 0)
         {
             if (GetAllowCustomCursors())
+            {
                 Handler = Factory.CreateCursorHandler(image, hotSpotX, hotSpotY);
+            }
             else
                 Handler = Factory.CreateCursorHandler(CursorType.Arrow);
         }
@@ -128,6 +138,14 @@ namespace Alternet.UI
             }
 
             set => factory = value;
+        }
+
+        /// <summary>
+        /// Gets url of the cursor, if it was created from a file or url.
+        /// </summary>
+        public string? Url
+        {
+            get => url;
         }
 
         /// <summary>
@@ -195,7 +213,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override string? ToString()
         {
-            if(cursorType is not null)
+            if (cursorType is not null)
                 return Enum.GetName(typeof(Cursor), cursorType);
             return base.ToString();
         }
