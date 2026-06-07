@@ -17,7 +17,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Represents a container for images. It can be used to store multiple images of various sizes and color depths.
     /// </summary>
-    public partial class ImageContainer : ImmutableObject, IImageContainer
+    public partial class ImageContainer : ImmutableObject, IImageContainer, IComparer<SizeI>
     {
         /// <summary>
         /// Gets or sets the default size of the images in the image container, in pixels.
@@ -105,6 +105,30 @@ namespace Alternet.Drawing
         /// </summary>
         [Browsable(false)]
         public virtual bool IsReadOnly => Immutable;
+
+        /// <summary>
+        /// Gets image with size equal to system icon size.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? ImageWithSystemIconSize => GetExactImage(IconSet.EffectiveSystemIconSize);
+
+        /// <summary>
+        /// Gets whether container contains an image with the system icon size.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasImageWithSystemIconSize => ImageWithSystemIconSize != null;
+
+        /// <summary>
+        /// Gets image with size equal to small system icon size.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Image? ImageWithSmallSystemIconSize => GetExactImage(IconSet.EffectiveSmallSystemIconSize);
+
+        /// <summary>
+        /// Gets whether container contains an image with the small system icon size.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool HasImageWithSmallSystemIconSize => ImageWithSmallSystemIconSize != null;
 
         /// <summary>
         /// Gets the first image in the container or null if the container is empty.
@@ -765,6 +789,24 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Enumerates the images in the container, yielding size of each image.
+        /// Result is optionally ordered by size.
+        /// </summary>
+        /// <returns>An enumerable collection of <see cref="SizeI"/> representing the size of each image.</returns>
+        public virtual IEnumerable<SizeI> GetImageSizes(bool? sortDescending = null)
+        {
+            var sizes = Images.Select(image => image.Size);
+            
+            if (sortDescending.HasValue)
+            {
+                sizes = sortDescending.Value
+                    ? sizes.OrderByDescending(s => s, this) : sizes.OrderBy(s => s, this);
+            }
+
+            return sizes;
+        }
+
+        /// <summary>
         /// Gets the minimal size of the bitmaps in this image container.
         /// If there are no bitmaps, returns <see cref="ImageContainer.DefaultImageSize"/>.
         /// </summary>
@@ -803,6 +845,17 @@ namespace Alternet.Drawing
             {
                 suspendImagesEvents--;
             }
+        }
+
+        int IComparer<SizeI>.Compare(SizeI x, SizeI y)
+        {
+            if (x == y)
+                return 0;
+
+            if (IsSmallerThan(x, y))
+                return -1;
+
+            return 1;
         }
 
         /// <summary>
