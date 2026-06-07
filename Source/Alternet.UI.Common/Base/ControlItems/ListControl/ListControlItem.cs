@@ -973,7 +973,7 @@ namespace Alternet.UI
         /// <param name="container">Container of the items.</param>
         /// <param name="svgColor">Color of the svg image when item is selected.</param>
         /// <param name="onlyNormal">Specifies whether to get image only for the normal state.</param>
-        /// <returns></returns>
+        /// <returns>And array of state images.</returns>
         public static EnumArrayStateImages GetItemImages(
             ListControlItem? item,
             IListControlItemContainer? container,
@@ -987,7 +987,7 @@ namespace Alternet.UI
 
             if (item.HasValidImageIndex && container is not null)
             {
-                var img = container.ImageList?.GetImage(item.ImageIndex);
+                var img = container.ImageList?.GetImageAt(item.ImageIndex);
                 result[VisualControlState.Normal] = img;
 
                 if (!onlyNormal)

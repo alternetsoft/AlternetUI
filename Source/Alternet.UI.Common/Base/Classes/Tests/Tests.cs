@@ -49,6 +49,23 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestSvgImageSet()
+        {
+            var svgImage = KnownColorSvgImages.ImgError;
+            var imageSet1 = svgImage.ToSvgImageSet(16);
+            var image32 = imageSet1.GetExactImage(32);
+
+            var imageSet2 = svgImage.ToSvgImageSet(16);
+            var image64 = imageSet2.GetExactImage(64);
+
+            LogUtils.LogImage(image32);
+            LogUtils.LogImage(image64);
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestDataUrl()
         {
             var dataUrl = ResourceLoader.DataUrlFromResource(KnownIcons.UrlDefault);

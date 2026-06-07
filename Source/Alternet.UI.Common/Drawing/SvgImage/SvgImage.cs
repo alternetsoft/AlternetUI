@@ -560,15 +560,54 @@ namespace Alternet.Drawing
 
         internal class Data
         {
-            public ImageSet? OriginalImage;
-            public ImageSet?[] KnownColorImagesLight;
-            public ImageSet?[] KnownColorImagesDark;
-            public Dictionary<Color, ImageSet>? ColoredImages;
+            public ImageSet? OriginalImageSet;
+            public ImageSet?[] KnownColorImageSetLight;
+            public ImageSet?[] KnownColorImageSetDark;
+            public Dictionary<Color, ImageSet>? ColoredImageSet;
+
+            public SvgImageSet? OriginalSvgImageSet;
+            public SvgImageSet?[] KnownColorSvgImageSetLight;
+            public SvgImageSet?[] KnownColorSvgImageSetDark;
+            public Dictionary<Color, SvgImageSet>? ColoredSvgImageSet;
 
             public Data()
             {
-                KnownColorImagesLight = new ImageSet?[(int)KnownSvgColor.MaxValue + 1];
-                KnownColorImagesDark = new ImageSet?[(int)KnownSvgColor.MaxValue + 1];
+                KnownColorImageSetLight = new ImageSet?[(int)KnownSvgColor.MaxValue + 1];
+                KnownColorImageSetDark = new ImageSet?[(int)KnownSvgColor.MaxValue + 1];
+                KnownColorSvgImageSetLight = new SvgImageSet?[(int)KnownSvgColor.MaxValue + 1];
+                KnownColorSvgImageSetDark = new SvgImageSet?[(int)KnownSvgColor.MaxValue + 1];
+            }
+
+            public void SetKnownColorSvgImageSet(bool isDark, KnownSvgColor knownColor, SvgImageSet? imageSet)
+            {
+                if (isDark)
+                    KnownColorSvgImageSetDark[(int)knownColor] = imageSet;
+                else
+                    KnownColorSvgImageSetLight[(int)knownColor] = imageSet;
+            }
+
+            public SvgImageSet? GetKnownColorSvgImageSet(bool isDark, KnownSvgColor knownColor)
+            {
+                if (isDark)
+                    return KnownColorSvgImageSetDark[(int)knownColor];
+                else
+                    return KnownColorSvgImageSetLight[(int)knownColor];
+            }
+
+            public void SetKnownColorImageSet(bool isDark, KnownSvgColor knownColor, ImageSet? imageSet)
+            {
+                if (isDark)
+                    KnownColorImageSetDark[(int)knownColor] = imageSet;
+                else
+                    KnownColorImageSetLight[(int)knownColor] = imageSet;
+            }
+
+            public ImageSet? GetKnownColorImageSet(bool isDark, KnownSvgColor knownColor)
+            {
+                if (isDark)
+                    return KnownColorImageSetDark[(int)knownColor];
+                else
+                    return KnownColorImageSetLight[(int)knownColor];
             }
         }
     }

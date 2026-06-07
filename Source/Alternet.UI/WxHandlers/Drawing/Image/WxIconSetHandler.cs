@@ -15,7 +15,7 @@ namespace Alternet.UI.Native
 
         bool Alternet.Drawing.IImageContainer.IsOk => IsOk();
 
-        public bool Remove(int index) => false;
+        public bool RemoveAt(int index) => false;
 
         bool Alternet.Drawing.IImageContainer.Clear()
         {

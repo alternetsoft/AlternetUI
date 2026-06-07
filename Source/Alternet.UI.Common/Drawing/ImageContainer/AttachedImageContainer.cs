@@ -63,7 +63,7 @@ namespace Alternet.Drawing
         {
             base.OnImageRemoved(sender, index, item);
 
-            if (Handler != null && !Handler.Remove(index))
+            if (Handler != null && !Handler.RemoveAt(index))
                 App.DebugLogError("Error removing image from container");
         }
     }

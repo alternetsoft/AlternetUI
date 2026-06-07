@@ -14,6 +14,8 @@ namespace Alternet.UI.Native
 
         public bool IsReadOnly => false;
 
+        bool Alternet.Drawing.IImageContainer.RemoveAt(int index) => false;
+
         Alternet.Drawing.SizeI Alternet.Drawing.IImageListHandler.Size
         {
             get

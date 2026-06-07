@@ -197,7 +197,7 @@ namespace Alternet.Drawing
         /// number of images, null is returned.</param>
         /// <returns>The <see cref="Image"/> at the specified index, or null if
         /// the index is invalid. Result is returned as immutable image if the container is immutable.</returns>
-        public virtual Image? GetImage(int? index)
+        public virtual Image? GetImageAt(int? index)
         {
             if (index < 0 || index >= Images.Count)
                 return null;
@@ -217,9 +217,8 @@ namespace Alternet.Drawing
         /// Removes image from the container.
         /// </summary>
         /// <param name="imageIndex">Index of image to remove.</param>
-        /// <returns></returns>
         /// <returns>True on success; False on failure.</returns>
-        public virtual bool Remove(int imageIndex)
+        public virtual bool RemoveAt(int imageIndex)
         {
             if (imageIndex < 0 || imageIndex >= Images.Count)
                 return false;

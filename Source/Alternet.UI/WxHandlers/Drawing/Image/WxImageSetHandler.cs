@@ -21,7 +21,7 @@ namespace Alternet.UI.Native
             return true;
         }
 
-        bool Alternet.Drawing.IImageContainer.Remove(int imageIndex)
+        bool Alternet.Drawing.IImageContainer.RemoveAt(int imageIndex)
         {
             return false;    
         }

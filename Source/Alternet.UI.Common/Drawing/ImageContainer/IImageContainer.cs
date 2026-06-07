@@ -37,7 +37,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="imageIndex">Image index.</param>
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
-        bool Remove(int imageIndex);
+        bool RemoveAt(int imageIndex);
 
         /// <summary>
         /// Removes all images from the container.

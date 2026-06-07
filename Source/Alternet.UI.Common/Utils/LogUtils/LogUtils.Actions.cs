@@ -137,8 +137,10 @@ namespace Alternet.UI
         /// Adds <see cref="Image"/> to log.
         /// </summary>
         /// <param name="image">Image to log.</param>
-        public static void LogImage(Image image)
+        public static void LogImage(Image? image)
         {
+            if (image == null) return;
+
             TreeViewItem logItem = new();
             logItem.Image = image;
             logItem.HideSelection = true;
