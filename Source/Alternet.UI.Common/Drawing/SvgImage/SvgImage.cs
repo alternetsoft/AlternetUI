@@ -172,7 +172,13 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets image url.
         /// </summary>
-        public virtual string? Url => url;
+        public virtual string? Url
+        {
+            get
+            {
+                return url;
+            }
+        }
 
         /// <summary>
         /// Gets the XML content for an SVG that was loaded with an error.

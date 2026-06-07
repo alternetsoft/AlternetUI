@@ -18,6 +18,8 @@ namespace Alternet.Drawing
     [TypeConverter(typeof(IconSetConverter))]
     public partial class IconSet : AttachedImageContainer<IImageContainer>
     {
+        private string? url;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> with <see cref="Image"/>.
         /// </summary>
@@ -56,6 +58,9 @@ namespace Alternet.Drawing
         {
             if (string.IsNullOrEmpty(url))
                 return;
+
+            Url = url;
+            BaseUrl = baseUri;
 
             try
             {
@@ -173,6 +178,29 @@ namespace Alternet.Drawing
         public static SizeI EffectiveSystemIconSize => new(EffectiveSystemIconWidth, EffectiveSystemIconHeight);
 
         /// <summary>
+        /// Gets url of the icon if it is loaded from a url,
+        /// or null if the icon is not loaded from a url.
+        /// </summary>
+        public string? Url
+        {
+            get
+            {
+                return url;
+            }
+
+            private set
+            {
+                url = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets base url of the icon if it is loaded from a url,
+        /// or null if the icon is not loaded from a url or the url is absolute.
+        /// </summary>
+        public Uri? BaseUrl { get; private set; }
+
+        /// <summary>
         /// Creates <see cref="IconSet"/> instance from
         /// the <see cref="Image"/> instance.
         /// </summary>
@@ -210,7 +238,9 @@ namespace Alternet.Drawing
         public static IconSet? FromUrl(string url)
         {
             using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
-            return new IconSet(stream);
+            var result = new IconSet(stream);
+            result.Url = url;
+            return result;
         }
 
         /// <inheritdoc cref="FromUrl"/>
@@ -225,7 +255,11 @@ namespace Alternet.Drawing
             {
                 var stream = ResourceLoader.StreamFromUrlOrDefault(url);
                 if (stream is not null)
-                    return new IconSet(stream);
+                {
+                    var result = new IconSet(stream);
+                    result.Url = url;
+                    return result;
+                }
                 else
                 {
                     return null;
@@ -249,7 +283,11 @@ namespace Alternet.Drawing
             {
                 var stream = ResourceLoader.StreamFromUrlOrDefault(url);
                 if (stream is not null)
-                    return new IconSet(stream);
+                {
+                    var result = new IconSet(stream);
+                    result.Url = url;
+                    return result;
+                }
                 else
                     return defaultIcon;
             }
