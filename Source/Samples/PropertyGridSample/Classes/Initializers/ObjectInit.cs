@@ -212,6 +212,12 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(ResizableBorder), (c) =>
             {
                 ResizableBorder control = (c as ResizableBorder)!;
+
+                control.BoundsChanged+=(sender, e) =>
+                {
+                    App.LogReplace("ResizableBorder.BoundsChanged: " + control.Bounds, "ResizableBorder.BoundsChanged: ");
+                };
+
                 control.HasBorder = false;
                 control.IgnoreLayout = true;
                 control.Size = 300;
@@ -220,6 +226,7 @@ Environment.NewLine + Environment.NewLine +
                 bool isDark = control.IsDarkBackground;
                 bool isActive = true;
 
+                control.UseWindowBorderSize(Window.FrameMetrics.BorderMetricKind.ThickFrame);
                 control.UseWindowBorderColors(isDark, isActive);
 
                 var titleControl = new GripControl();
@@ -231,11 +238,12 @@ Environment.NewLine + Environment.NewLine +
                 titleControl.Target = control;
 
                 titleControl.Dock = DockStyle.Top;
-                titleControl.MinHeight = 32;
+                titleControl.MinHeight = Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow);
                 titleControl.Parent = control.FillPanel;
 
                 var label = new Label("This is title");
                 label.VerticalAlignment = VerticalAlignment.Center;
+                label.InputTransparent = true;
                 label.Parent = titleControl;
             });
 

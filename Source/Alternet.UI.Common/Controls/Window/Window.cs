@@ -2321,5 +2321,205 @@ namespace Alternet.UI
             loadedCalled = true;
             Load?.Invoke(this, EventArgs.Empty);
         }
+
+        /// <summary>
+        /// Provides window frame metrics such as caption area height, edge border size, single border size, and thick
+        /// frame border size. These metrics are essential for accurate layout and rendering of the window's non-client area,
+        /// ensuring that the window's appearance and behavior are consistent with the operating system's
+        /// standards and user expectations. Values are returned in device pixels.
+        /// </summary>
+        public static class FrameMetrics
+        {
+            /// <summary>
+            /// Enumerates the types of border metrics that can be retrieved.
+            /// </summary>
+            public enum BorderMetricKind
+            {
+                /// <summary>
+                /// Represents single border size, typically used for windows with a single border style.
+                /// </summary>
+                Single,
+
+                /// <summary>
+                /// Represents thick frame border size, typically used for resizable windows.
+                /// </summary>
+                ThickFrame,
+
+                /// <summary>
+                /// Represents edge border size, typically used for windows with an edge style.
+                /// </summary>
+                Edge,
+            }
+
+            /// <summary>
+            /// Height of caption area.
+            /// </summary>
+            public static int CaptionAreaHeight => SystemSettings.GetMetric(SystemSettingsMetric.CaptionY);
+
+            /// <summary>
+            /// Override value for height of caption area.
+            /// </summary>
+            public static int? CaptionAreaHeightOverride;
+
+            /// <summary>
+            /// Effective height of caption area, using override if set.
+            /// </summary>
+            public static int EffectiveCaptionAreaHeight => CaptionAreaHeightOverride ?? CaptionAreaHeight;
+
+            /// <summary>
+            /// Width of single border.
+            /// </summary>
+            public static int SingleBorderWidth => SystemSettings.GetMetric(SystemSettingsMetric.BorderX);
+
+            /// <summary>
+            /// Override value for width of single border.
+            /// </summary>
+            public static int? SingleBorderWidthOverride;
+
+            /// <summary>
+            /// Override value for height of single border.
+            /// </summary>
+            public static int? SingleBorderHeightOverride;
+
+            /// <summary>
+            /// Effective width of single border, using override if set.
+            /// </summary>
+            public static int EffectiveSingleBorderWidth => SingleBorderWidthOverride ?? SingleBorderWidth;
+
+            /// <summary>
+            /// Effective height of single border, using override if set.
+            /// </summary>
+            public static int EffectiveSingleBorderHeight => SingleBorderHeightOverride ?? SingleBorderHeight;
+
+            /// <summary>
+            /// Height of single border.
+            /// </summary>
+            public static int SingleBorderHeight => SystemSettings.GetMetric(SystemSettingsMetric.BorderY);
+
+            /// <summary>
+            /// Width of a thick frame border (resizable border).
+            /// </summary>
+            public static int ThickFrameBorderWidth => SystemSettings.GetMetric(SystemSettingsMetric.FrameSizeX);
+
+            /// <summary>
+            /// Override value for width of a thick frame border (resizable border).
+            /// </summary>
+            public static int? ThickFrameBorderWidthOverride;
+
+            /// <summary>
+            /// Effective width of a thick frame border (resizable border), using override if set.
+            /// </summary>
+            public static int EffectiveThickFrameBorderWidth => ThickFrameBorderWidthOverride ?? ThickFrameBorderWidth;
+
+            /// <summary>
+            /// Height of a thick frame border (resizable border).
+            /// </summary>
+            public static int ThickFrameBorderHeight => SystemSettings.GetMetric(SystemSettingsMetric.FrameSizeY);
+
+            /// <summary>
+            /// Override value for height of a thick frame border (resizable border).
+            /// </summary>
+            public static int? ThickFrameBorderHeightOverride;
+
+            /// <summary>
+            /// Effective height of a thick frame border (resizable border), using override if set.
+            /// </summary>
+            public static int EffectiveThickFrameBorderHeight => ThickFrameBorderHeightOverride ?? ThickFrameBorderHeight;
+
+            /// <summary>
+            /// Gets thick frame border size (resizable border).
+            /// </summary>
+            public static SizeI EffectiveThickFrameBorderSize => (EffectiveThickFrameBorderWidth, EffectiveThickFrameBorderHeight);
+
+            /// <summary>
+            /// Gets single border size.
+            /// </summary>
+            public static SizeI EffectiveSingleBorderSize => (EffectiveSingleBorderWidth, EffectiveSingleBorderHeight);
+
+            /// <summary>
+            /// Width of a 3D border (raised/sunken look).
+            /// </summary>
+            public static int EdgeBorderWidth => SystemSettings.GetMetric(SystemSettingsMetric.EdgeX);
+
+            /// <summary>
+            /// Override value for width of a 3D border (raised/sunken look).
+            /// </summary>
+            public static int? EdgeBorderWidthOverride;
+
+            /// <summary>
+            /// Effective width of a 3D border (raised/sunken look), using override if set.
+            /// </summary>
+            public static int EffectiveEdgeBorderWidth => EdgeBorderWidthOverride ?? EdgeBorderWidth;
+
+            /// <summary>
+            /// Height of a 3D border (raised/sunken look).
+            /// </summary>
+            public static int EdgeBorderHeight => SystemSettings.GetMetric(SystemSettingsMetric.EdgeY);
+
+            /// <summary>
+            /// Override value for height of a 3D border (raised/sunken look).
+            /// </summary>
+            public static int? EdgeBorderHeightOverride;
+
+            /// <summary>
+            /// Effective height of a 3D border (raised/sunken look), using override if set.
+            /// </summary>
+            public static int EffectiveEdgeBorderHeight => EdgeBorderHeightOverride ?? EdgeBorderHeight;
+
+            /// <summary>
+            /// Gets effective 3D border size (raised/sunken look), using override if set.
+            /// </summary>
+            public static SizeI EffectiveEdgeBorderSize => (EffectiveEdgeBorderWidth, EffectiveEdgeBorderHeight);
+
+            /// <summary>
+            /// Gets effective border size for the specified border metric kind, using overrides if set.
+            /// </summary>
+            /// <param name="kind">The kind of border metric.</param>
+            /// <returns>The effective border size.</returns>
+            public static SizeI GetBorderSize(BorderMetricKind kind)
+            {
+                return kind switch
+                {
+                    BorderMetricKind.Single => EffectiveSingleBorderSize,
+                    BorderMetricKind.ThickFrame => EffectiveThickFrameBorderSize,
+                    BorderMetricKind.Edge => EffectiveEdgeBorderSize,
+                    _ => EffectiveSingleBorderSize,
+                };
+            }
+
+            /// <summary>
+            /// Gets effective border width for the specified border metric kind, using overrides if set.
+            /// </summary>
+            /// <param name="kind">The kind of border metric.</param>
+            /// <param name="control">The control to use for DPI scaling.</param>
+            /// <returns>The effective border size in device-independent pixels.</returns>
+            public static SizeD GetBorderSize(BorderMetricKind kind, AbstractControl control)
+            {
+                SizeI baseSize = GetBorderSize(kind);
+                return control.PixelToDip(baseSize);
+            }
+
+            /// <summary>
+            /// Gets effective caption area height in device-independent pixels, using override if set.
+            /// </summary>
+            /// <param name="control">The control to use for DPI scaling.</param>
+            /// <returns>The effective caption area height in device-independent pixels.</returns>
+            public static Coord GetCaptionAreaHeight(AbstractControl control)
+            {
+                return control.PixelToDip(CaptionAreaHeight);
+            }
+
+            /// <summary>
+            /// Logs the current frame metrics values.
+            /// </summary>
+            [Conditional("DEBUG")]
+            public static void Log()
+            {
+                App.LogNameValue("CaptionAreaHeight", CaptionAreaHeight);
+                App.LogNameValue("EffectiveEdgeBorderSize", EffectiveEdgeBorderWidth);
+                App.LogNameValue("EffectiveSingleBorderSize", EffectiveSingleBorderSize);
+                App.LogNameValue("EffectiveThickFrameBorderSize", EffectiveThickFrameBorderSize);
+            }
+        }
     }
 }

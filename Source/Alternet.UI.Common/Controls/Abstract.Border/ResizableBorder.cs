@@ -53,16 +53,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates width and height of the resizable borders.
+        /// </summary>
+        /// <param name="kind">The kind of border metric to use.</param>
+        /// <returns>The current instance of <see cref="ResizableBorder"/> to allow method chaining.</returns>
+        public virtual ResizableBorder UseWindowBorderSize(Window.FrameMetrics.BorderMetricKind kind)
+        {
+            var size = Window.FrameMetrics.GetBorderSize(kind, this);
+            RightPanel.Width = size.Width;
+            LeftPanel.Width = size.Width;
+            TopPanel.Height = size.Height;
+            BottomPanel.Height = size.Height;
+            return this;
+        }
+
+        /// <summary>
         /// Updates the colors of the grip controls based on the specified parameters.
         /// </summary>
         /// <param name="isDark">Indicates whether the dark theme is applied.</param>
         /// <param name="isActive">Indicates whether the window is active.</param>
-        public virtual void UseWindowBorderColors(bool isDark, bool isActive)
+        /// <returns>The current instance of <see cref="ResizableBorder"/> to allow method chaining.</returns>
+        public virtual ResizableBorder UseWindowBorderColors(bool isDark, bool isActive)
         {
             TopGripControl.UseWindowBorderColors(isDark, isActive);
             BottomGripControl.UseWindowBorderColors(isDark, isActive);
             LeftGripControl.UseWindowBorderColors(isDark, isActive);
             RightGripControl.UseWindowBorderColors(isDark, isActive);
+            return this;
         }
 
         /// <summary>

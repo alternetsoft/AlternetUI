@@ -29,6 +29,15 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestWindowFrameMetrics()
+        {
+            Window.FrameMetrics.Log();
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestIcon()
         {
             var icon = KnownIcons.Default;
