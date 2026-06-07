@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI;
 using Alternet.UI.Extensions;
 
@@ -20,9 +22,30 @@ namespace Alternet.Drawing
         private bool stretch = false;
 
         /// <summary>
+        /// Enumerates icon size options for the <see cref="ImageDrawable"/> class.
+        /// </summary>
+        public enum IconSizeKind
+        {
+            /// <summary>
+            /// Specifies that the icon size should be determined using <see cref="IconSet.EffectiveSmallSystemIconSize"/>
+            /// </summary>
+            Small,
+
+            /// <summary>
+            /// Specifies that the icon should be determined using <see cref="IconSet.EffectiveSystemIconSize"/>
+            /// </summary>
+            Large,
+
+            /// <summary>
+            /// Specifies that the icon size should be determined using <see cref="CustomIconSize"/> property.
+            /// </summary>
+            Custom,
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the object has an associated image.
         /// </summary>
-        public bool IsImageSpecified => SvgImage is not null || Image is not null || ImageSet is not null;
+        public bool IsImageSpecified => SvgImage is not null || Image is not null || ImageSet is not null || Icon is not null;
 
         /// <summary>
         /// Gets or sets the SVG image associated with this instance.
@@ -76,6 +99,21 @@ namespace Alternet.Drawing
         public ImageSet? DisabledImageSet { get; set; }
 
         /// <summary>
+        /// Gets or sets icon to draw.
+        /// </summary>
+        public IconSet? Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets icon size which is used when icon is drawn.
+        /// </summary>
+        public SizeI? CustomIconSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the icon size kind which determines how the icon size is calculated.
+        /// </summary>
+        public IconSizeKind IconSize { get; set; } = IconSizeKind.Small;
+
+        /// <summary>
         /// Gets or sets horizontal alignment option that specifies how the image should be aligned within the available space.
         /// This property is used when the image is smaller than the available space.
         /// </summary>
@@ -116,7 +154,30 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets whether image is aligned to the left-top of the available space.
         /// </summary>
-        public bool IsLeftTopAligned => HorizontalAlignment == HorizontalAlignment.Left && VerticalAlignment == VerticalAlignment.Top;
+        public bool IsLeftTopAligned => HorizontalAlignment == HorizontalAlignment.Left
+            && VerticalAlignment == VerticalAlignment.Top;
+
+        /// <summary>
+        /// Gets effective size of the icon based on the <see cref="IconSize"/>, <see cref="CustomIconSize"/> properties
+        /// and system settings.
+        /// </summary>
+        [Browsable(false)]
+        public SizeI EffectiveIconSize
+        {
+            get
+            {
+                if (IconSize == IconSizeKind.Custom)
+                {
+                    if (CustomIconSize.HasValue)
+                        return CustomIconSize.Value;
+                    else
+                        return IconSet.EffectiveSmallSystemIconSize;
+                }
+                if (IconSize == IconSizeKind.Large)
+                    return IconSet.EffectiveSystemIconSize;
+                return IconSet.EffectiveSmallSystemIconSize;
+            }
+        }
 
         /// <summary>
         /// Gets whether or not to stretch this object.
@@ -142,16 +203,23 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image? GetImage(AbstractControl control, bool isDark)
         {
+            if (Icon is not null)
+            {
+                var iconSize = EffectiveIconSize;
+                var iconImage = Icon.GetExactImage(iconSize);
+                return iconImage;
+            }
+
             var sz = SvgSize ?? ToolBarUtils.GetDefaultImageSize(control).Width;
 
             Image? GetNormalImage()
             {
                 Image? image = null;
 
-                if(SvgImage is not null)
+                if (SvgImage is not null)
                 {
-                    if(SvgColor is null)
-                       image = SvgImage.AsNormalImage(sz, isDark);
+                    if (SvgColor is null)
+                        image = SvgImage.AsNormalImage(sz, isDark);
                     else
                         image = SvgImage.ImageWithColor(sz, SvgColor);
                 }
