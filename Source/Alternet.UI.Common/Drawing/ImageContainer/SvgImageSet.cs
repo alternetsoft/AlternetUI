@@ -14,8 +14,8 @@ namespace Alternet.Drawing
     public partial class SvgImageSet : ImageSet
     {
         private readonly SvgImage svgImage;
-        private readonly SizeI baseSize;
-        private readonly bool? isDarkTheme;
+        private readonly SizeI defaultSize;
+        private readonly bool? isDark;
         private readonly Color? color;
 
         /// <summary>
@@ -23,30 +23,30 @@ namespace Alternet.Drawing
         /// base size and color theme.
         /// </summary>
         /// <param name="svgImage">The SVG image to use for the image set.</param>
-        /// <param name="baseSize">The base size of the images in the set.</param>
-        /// <param name="isDarkTheme">Indicates whether the image set is for a dark theme.</param>
-        public SvgImageSet(SvgImage svgImage, SizeI baseSize, bool isDarkTheme)
+        /// <param name="defaultSize">The default size of the images in the set.</param>
+        /// <param name="isDark">Indicates whether the image set is for a dark theme.</param>
+        public SvgImageSet(SvgImage svgImage, SizeI defaultSize, bool isDark)
         {
-            this.isDarkTheme = isDarkTheme;
+            this.isDark = isDark;
             this.svgImage = svgImage;
-            this.baseSize = baseSize;
+            this.defaultSize = defaultSize;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SvgImageSet"/> class using the specified stream with SVG data,
-        /// base size and optional color.
+        /// default size and optional color.
         /// </summary>
         /// <param name="stream">The stream containing the SVG data.</param>
-        /// <param name="baseSize">The base size of the images in the set.</param>
+        /// <param name="defaultSize">The default size of the images in the set.</param>
         /// <param name="color">The color to apply to the SVG image. Optional.</param>
         /// <param name="throwException">Indicates whether to throw an exception on error. Optional.</param>
         public SvgImageSet(
             Stream stream,
-            SizeI baseSize,
+            SizeI defaultSize,
             Color? color = null,
             bool throwException = true)
         {
-            this.baseSize = baseSize;
+            this.defaultSize = defaultSize;
             this.color = color;
 
             if (color is null)
@@ -60,18 +60,18 @@ namespace Alternet.Drawing
         /// loaded from url or data string, base size, and optional color.
         /// </summary>
         /// <param name="urlOrData">The URL or data of the SVG image.</param>
-        /// <param name="baseSize">The base size of the images in the set.</param>
+        /// <param name="defaultSize">The default size of the images in the set.</param>
         /// <param name="kind">The kind of SVG image data.</param>
         /// <param name="color">The color to apply to the SVG image. Optional.</param>
         /// <param name="throwException">Indicates whether to throw an exception on error. Optional.</param>
         public SvgImageSet(
             string urlOrData,
-            SizeI baseSize,
+            SizeI defaultSize,
             SvgImageDataKind kind = SvgImageDataKind.Url,
             Color? color = null,
             bool throwException = true)
         {
-            this.baseSize = baseSize;
+            this.defaultSize = defaultSize;
             this.color = color;
 
             if (color is null)
@@ -85,21 +85,36 @@ namespace Alternet.Drawing
         /// base size and optional color.
         /// </summary>
         /// <param name="svg">The SVG image to use for the image set.</param>
-        /// <param name="baseSize">The base size of the images in the set.</param>
+        /// <param name="defaultSize">The default size of the images in the set.</param>
         /// <param name="color">The color to apply to the SVG image. Optional.</param>
-        public SvgImageSet(SvgImage svg, SizeI baseSize, Color? color = null)
+        public SvgImageSet(SvgImage svg, SizeI defaultSize, Color? color = null)
         {
             this.svgImage = svg;
-            this.baseSize = baseSize;
+            this.defaultSize = defaultSize;
             this.color = color;
         }
+
+        /// <summary>
+        /// Gets the SVG image used as the source for generating images in the set.
+        /// </summary>
+        public SvgImage SvgImage => svgImage;
+
+        /// <summary>
+        /// Gets color theme of the image set. Returns null if the image set is not associated with any color theme.
+        /// </summary>
+        public bool? IsDark => isDark;
+
+        /// <summary>
+        /// Gets the color applied to the SVG image, or null if no color is applied.
+        /// </summary>
+        public Color? SvgColor => color;
 
         /// <inheritdoc/>
         public override SizeI DefaultSize
         {
             get
             {
-                return baseSize;
+                return defaultSize;
             }
         }
 
@@ -108,7 +123,7 @@ namespace Alternet.Drawing
         {
             var result = base.GetExactImage(size);
 
-            result ??= AddSvg(svgImage, size, isDarkTheme, color);
+            result ??= AddSvg(svgImage, size, isDark, color);
 
             return result;
         }
