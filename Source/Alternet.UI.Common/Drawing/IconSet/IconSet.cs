@@ -59,12 +59,11 @@ namespace Alternet.Drawing
             if (string.IsNullOrEmpty(url))
                 return;
 
-            Url = url;
-            BaseUrl = baseUri;
+            Url = ResourceLoader.ToAbsoluteUrl(url, baseUri);
 
             try
             {
-                using var stream = ResourceLoader.StreamFromUrlOr(url!, baseUri);
+                using var stream = ResourceLoader.StreamFromUrlOr(url, baseUri);
                 if (stream is null)
                 {
                     App.LogError($"Image not loaded from: {url}");
@@ -193,12 +192,6 @@ namespace Alternet.Drawing
                 url = value;
             }
         }
-
-        /// <summary>
-        /// Gets base url of the icon if it is loaded from a url,
-        /// or null if the icon is not loaded from a url or the url is absolute.
-        /// </summary>
-        public Uri? BaseUrl { get; private set; }
 
         /// <summary>
         /// Creates <see cref="IconSet"/> instance from

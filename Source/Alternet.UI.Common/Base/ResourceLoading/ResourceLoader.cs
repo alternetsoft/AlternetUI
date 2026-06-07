@@ -85,9 +85,38 @@ namespace Alternet.UI
 
             string ErrorText()
             {
-                if(baseUri is null)
+                if (baseUri is null)
                     return $"The resource '{url}' not found.";
                 return $"The resource '{url}' (baseUri: '{baseUri}') not found.";
+            }
+        }
+
+        /// <summary>
+        /// Combines base url with relative url and returns an absolute url.
+        /// </summary>
+        /// <param name="url">The relative or absolute URL.</param>
+        /// <param name="baseUri">The base URL to combine with the relative URL.</param>
+        /// <returns>The absolute URL as a string, or null if the URL is null and no base URI is provided.
+        /// In case of an error, the original URL is returned.</returns>
+        public static string? ToAbsoluteUrl(string? url, Uri? baseUri = null)
+        {
+            try
+            {
+                if (url is null)
+                {
+                    return baseUri?.ToString();
+                }
+                else
+                {
+                    var uri = new Uri(url, UriKind.Absolute);
+                    uri = uri.EnsureAbsolute(baseUri);
+                    var result = uri.ToString();
+                    return result;
+                }
+            }
+            catch
+            {
+                return url;
             }
         }
 
@@ -159,7 +188,7 @@ namespace Alternet.UI
         {
             var allResult = true;
 
-            foreach(var fileName in fileNames)
+            foreach (var fileName in fileNames)
             {
                 var destPath = Path.Combine(destFolder, fileName);
                 var sourceUrl = url + @"." + fileName;
@@ -418,7 +447,7 @@ namespace Alternet.UI
             if (uri.IsAbsoluteEmbres())
             {
                 var asm = GetAssembly(uri) ?? GetAssembly(baseUri) ?? defaultEmbresAssembly;
-                if(asm is null)
+                if (asm is null)
                 {
                     App.LogErrorIfDebug("Assembly is not specified in ResourceLoader.GetAsset");
                     return null;
