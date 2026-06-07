@@ -1,3 +1,42 @@
+# 1.0.17 (2026 June 7)
+
+## Top improvements:
+
+- Add ListControlItem.IsVisible and implement item visibility support in VirtualListBox.
+- SvgImage: Loading speed up. Optimized to use SKPicture.
+- Improve dpi awareness support on msw.
+- VirtualListBox: Implement horz lines painting.
+- ListBoxHeader: Fix behavior on sys colors changed.
+- ResourceLoader: Add support for data urls through the library. Now it is possible to specify "data:" url prefix.
+- Add SvgImageSet, IconStream, KnownMimeTypes, FileFormatDetector classes.
+
+## Other improvements:
+
+- Add Url property to Cursor, IconSet.
+- Redo image containers including ImageList, ImageSet, IconSet and other.
+- Fix Bitmap.Empty so it is returned immutable
+- Reimplement some of the ImageSet methods and props internally in the library.
+- Redo svg loading to use SkiaSharp.
+- IconSet: Add props to get system icon sizes.
+- Use SkiaSharp for image and svg loading.
+- ListControlItemWithNotify: Make prop setters thread-safe.
+- VirtualListBox: Do not set SuggestedSize in constructor.
+- Do not call layout if there are no child controls.
+- Fix minor layout issues.
+- Add ShapeControl, ResizableBorder, DockedSubPanelContainer controls.
+- WebUtils: Add data url handling methods.
+- GripControl: Add configure as border methods.
+- Add minimize, maximize, restore svg images.
+- AbstractControl: Fix BringToFront and SendToBack.
+- Graphics: Add FillOrDraw helpers for shapes.
+- Improve vsix: Add reopen retry logic and EditorFactory fixes.
+- GripControl: Fix layout.
+- Add BarPanel.Spring property.
+- Fix control layout when all childs are docked.
+- PreviewInBrowser: ico and cur file preview.
+
+---
+
 # 1.0.16 (2026 June 1)
 
 - FlagsAndAttributes: fix exception in GetAttribute overload.
