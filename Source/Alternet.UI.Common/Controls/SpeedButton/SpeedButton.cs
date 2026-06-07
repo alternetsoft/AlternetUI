@@ -1723,6 +1723,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the icon as the image for the control.
+        /// </summary>
+        /// <param name="icon">The icon to be set.</param>
+        /// <param name="iconSizeKind">The size kind of the icon.</param>
+        /// <param name="customSize">The custom size of the icon.</param>
+        public virtual void SetIconAsImage(
+            IconSet? icon,
+            ImageDrawable.IconSizeKind iconSizeKind = ImageDrawable.IconSizeKind.Small,
+            SizeI? customSize = null)
+        {
+            PerformLayoutAndInvalidate(() =>
+            {
+                drawable.Icon = icon;
+                drawable.IconSize = iconSizeKind;
+                drawable.CustomIconSize = customSize;
+                PictureSizeChanged();
+            });
+        }
+
+        /// <summary>
         /// Sets the SVG image for the control.
         /// </summary>
         /// <param name="svg">The SVG image to be set. If null, known
