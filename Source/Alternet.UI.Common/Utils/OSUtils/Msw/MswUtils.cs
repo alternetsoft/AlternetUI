@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using Microsoft.Win32;
 using Microsoft.Win32.SafeHandles;
 
 namespace Alternet.UI
@@ -22,6 +23,122 @@ namespace Alternet.UI
     public static class MswUtils
     {
         private static bool consoleAllocated = false;
+        private static IDictionary<string, string>? cursorRegistryInfo;
+
+        private const string CursorKeyPath = @"Control Panel\Cursors";
+
+        /// <summary>
+        /// Resets cursor registry info cache.
+        /// </summary>
+        public static void ResetCursorRegistryInfo()
+        {
+            cursorRegistryInfo = null;
+        }
+
+        /// <summary>
+        /// Gets all cursor related registry values from "Control Panel\Cursors" into a dictionary.
+        /// This function caches the result for future calls to avoid redundant registry access.
+        /// </summary>
+        public static IDictionary<string, string> GetCursorRegistryInfo()
+        {
+            if (!App.IsWindowsOS)
+            {
+                cursorRegistryInfo ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+                return cursorRegistryInfo;
+            }
+
+            if (cursorRegistryInfo == null)
+            {
+                cursorRegistryInfo = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+                using var key = Registry.CurrentUser.OpenSubKey(CursorKeyPath);
+
+                if (key == null)
+                    return cursorRegistryInfo;
+
+                foreach (var valueName in key.GetValueNames())
+                {
+                    var value = key.GetValue(valueName)?.ToString() ?? string.Empty;
+                    cursorRegistryInfo[valueName] = value;
+                }
+            }
+
+            return cursorRegistryInfo;
+        }
+
+        /// <summary>
+        /// Gets the path to a specific cursor role using the CursorType enum.
+        /// Returns null if not found.
+        /// </summary>
+        public static string? GetCursorPath(CursorType type)
+        {
+            if (!App.IsWindowsOS)
+                return null;
+
+            var registryName = GetCursorRegistryName(type);
+            if (registryName == null) return null;
+
+            var cursorRegistryInfo = GetCursorRegistryInfo();
+
+            return cursorRegistryInfo.TryGetValue(registryName, out var path) ? path : null;
+        }
+
+        /// <summary>
+        /// Gets value name in registry for a given cursor type.
+        /// </summary>
+        /// <param name="type">The cursor type.</param>
+        /// <returns>The registry value name for the specified cursor type.</returns>
+        public static string GetCursorRegistryName(CursorType type)
+        {
+            // Registry value names differ slightly from enum names
+            // Map enum → registry string here
+            string registryName = type switch
+            {
+                CursorType.Arrow => "Arrow",
+                CursorType.Char => "Char",       // sometimes "IBeam" is used instead
+                CursorType.Cross => "Crosshair",
+                CursorType.Hand => "Hand",
+                CursorType.IBeam => "IBeam",
+                CursorType.LeftButton => "Left",
+                CursorType.MiddleButton => "Middle",
+                CursorType.NoEntry => "No",
+                CursorType.QuestionArrow => "Help",
+                CursorType.RightButton => "Right",
+                CursorType.SizeNESW => "SizeNESW",
+                CursorType.SizeNS => "SizeNS",
+                CursorType.SizeNWSE => "SizeNWSE",
+                CursorType.SizeWE => "SizeWE",
+                CursorType.Sizing => "SizeAll",
+                CursorType.Wait => "Wait",
+                CursorType.Watch => "AppStarting",
+                _ => type.ToString()
+            };
+
+            return registryName;
+        }
+
+        /// <summary>
+        /// Gets the CursorBaseSize value (in pixels) if present from the registry.
+        /// </summary>
+        public static int? GetCursorBaseSize()
+        {
+            if (!App.IsWindowsOS)
+                return null;
+
+            try
+            {
+                using var key = Registry.CurrentUser.OpenSubKey(CursorKeyPath);
+
+                var value = key?.GetValue("CursorBaseSize");
+                if (value is int i) return i;
+                if (int.TryParse(value?.ToString(), out var parsed)) return parsed;
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         /// <summary>
         /// Logs current DPI awareness context of the process for debugging purposes.
@@ -1441,7 +1558,7 @@ namespace Alternet.UI
                 /// Coordinates of the client area of the window
                 /// </summary>
                 public RectLTRB rcClient;
-                
+
                 /// <summary>
                 /// Window styles
                 /// </summary>
@@ -1451,17 +1568,17 @@ namespace Alternet.UI
                 /// Extended window styles
                 /// </summary>
                 public uint dwExStyle;
-                
+
                 /// <summary>
                 /// Window status (e.g., WS_ACTIVECAPTION)
                 /// </summary>
                 public uint dwWindowStatus;
-                
+
                 /// <summary>
                 /// Width of window borders
                 /// </summary>
                 public uint cxWindowBorders;
-                
+
                 /// <summary>
                 /// Height of window borders
                 /// </summary>

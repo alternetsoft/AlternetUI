@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
+    /*
+        Do not change the order of the items in this enum or element indexes.
+        Do not remove or add items.
+        This enum is mapped to the native cursor types and is used in interop calls, so changing it may break functionality.
+    */
+
     /// <summary>Specifies the built in cursor types.</summary>
     public enum CursorType
     {
@@ -18,16 +24,6 @@ namespace Alternet.UI
         /// A standard arrow cursor.
         /// </summary>
         Arrow = 1,
-
-        /*/// <summary>
-        /// A standard arrow cursor pointing to the right.
-        /// </summary>
-        RightArrow = 2,*/
-
-        /*/// <summary>
-        /// Bullseye cursor
-        /// </summary>
-        Bullseye = 3,*/
 
         /// <summary>
         /// Rectangular character cursor.
@@ -54,11 +50,6 @@ namespace Alternet.UI
         /// </summary>
         LeftButton = 8,
 
-        /*/// <summary>
-        /// A magnifier icon.
-        /// </summary>
-        Magnifier = 9,*/
-
         /// <summary>
         /// Represents a mouse with the middle button depressed.
         /// </summary>
@@ -68,26 +59,6 @@ namespace Alternet.UI
         /// A no-entry sign cursor.
         /// </summary>
         NoEntry = 11,
-
-        /*/// <summary>
-        /// A paintbrush cursor.
-        /// </summary>
-        PaintBrush = 12,*/
-
-        /*/// <summary>
-        /// A pencil cursor.
-        /// </summary>
-        Pencil = 13,*/
-
-        /*/// <summary>
-        /// A cursor that points left.
-        /// </summary>
-        PointLeft = 14,*/
-
-        /*/// <summary>
-        /// A cursor that points right.
-        /// </summary>
-        PointRight = 15,*/
 
         /// <summary>
         /// An arrow and question mark.
@@ -124,11 +95,6 @@ namespace Alternet.UI
         /// </summary>
         Sizing = 22,
 
-        /*/// <summary>
-        /// A spraycan cursor.
-        /// </summary>
-        SprayCan = 23,*/
-
         /// <summary>
         /// An hourglass cursor.
         /// </summary>
@@ -138,10 +104,5 @@ namespace Alternet.UI
         /// A watch cursor.
         /// </summary>
         Watch = 25,
-
-        /*/// <summary>
-        /// A transparent cursor.
-        /// </summary>
-        Blank = 26,*/
     }
 }

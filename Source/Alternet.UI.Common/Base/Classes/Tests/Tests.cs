@@ -20,6 +20,16 @@ namespace Alternet.UI.Tests
         /// Test method for the internal purposes.
         /// </summary>
         [Conditional("DEBUG")]
+        public static void TestCursors()
+        {
+            App.LogNameValue("GetCursorBaseSize", MswUtils.GetCursorBaseSize());
+            App.LogNameValue("Path to arrow cursor", MswUtils.GetCursorPath(CursorType.Arrow));
+        }
+
+        /// <summary>
+        /// Test method for the internal purposes.
+        /// </summary>
+        [Conditional("DEBUG")]
         public static void TestDpiAwareness()
         {
             MswUtils.LogCurrentAwareness();
