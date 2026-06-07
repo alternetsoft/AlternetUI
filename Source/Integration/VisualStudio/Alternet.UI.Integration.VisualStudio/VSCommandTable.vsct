@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!-- Bring in built-in menu definitions -->
+  <Extern href="stdidcmd.h"/>
+  <Extern href="vsshlids.h"/>
+  <Extern>
+    <Include href="Vsct.vsct" />
+    <GuidSymbol name="guidMySidebarCmdSet" value="{A1B2C3D4-E5F6-47A8-ABCD-1234567890AB}" />
+  </Extern>
+
+  <Commands>
+    <Groups>
+      <!-- Place our group inside the Tools menu -->
+      <Group guid="guidMySidebarCmdSet" id="MySidebarGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      </Group>
+    </Groups>
+
+    <Buttons>
+      <!-- Command that appears under Tools -->
+      <Button guid="guidMySidebarCmdSet" id="cmdidShowSidebar" priority="0x0100" type="Button">
+        <Parent guid="guidMySidebarCmdSet" id="MySidebarGroup" />
+        <Strings>
+          <ButtonText>Show My Sidebar</ButtonText>
+        </Strings>
+      </Button>
+    </Buttons>
+  </Commands>
+
+  <Symbols>
+    <GuidSymbol name="guidMySidebarCmdSet" value="{A1B2C3D4-E5F6-47A8-ABCD-1234567890AB}">
+      <IDSymbol name="MySidebarGroup" value="0x1020" />
+      <IDSymbol name="cmdidShowSidebar" value="0x0100" />
+    </GuidSymbol>
+  </Symbols>
+</CommandTable>

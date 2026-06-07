@@ -3,6 +3,14 @@
   <Import Project="..\..\..\Version\Version.props" />
   <Import Project="..\..\..\Keys\Keys.props" />
   <Import Project="..\..\..\Keys\Private.props" Condition="Exists('..\..\..\Keys\Private.props')" />
+
+  <ItemGroup>
+    <VSCTCompile Include="VSCommandTable.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <Generator>VsctGenerator</Generator>
+    </VSCTCompile>
+  </ItemGroup>
+
   <PropertyGroup>
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -66,6 +74,8 @@
     <Compile Include="IntelliSense\ExceptionDetails.cs" />
     <Compile Include="IntelliSense\XamlTextManipulatorRegistrar.cs" />
     <Compile Include="IntelliSense\XamlTextViewCreationListener.cs" />
+    <Compile Include="SideBar\MySidebarControl.cs" />
+    <Compile Include="SideBar\MySidebarToolWindow.cs" />
     <Compile Include="IntelliSense\XamlCompletionHandlerProvider.cs" />
     <Compile Include="IntelliSense\XamlCompletionSourceProvider.cs" />
     <Compile Include="IntelliSense\XamlCompletionSource.cs" />
@@ -107,7 +117,7 @@
   </ItemGroup>
   <!-- ========================================== -->
   <ItemGroup>
-    <PackageReference Include="Microsoft.VSSDK.Vsixsigntool" Version="16.2.29116.78" />
+    <PackageReference Include="Microsoft.VSSDK.Vsixsigntool" Version="17.10.34916.79" />
   </ItemGroup>
   <Target Name="SignPackage" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <PropertyGroup>
@@ -133,10 +143,15 @@
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.32112.339" ExcludeAssets="runtime" NoWarn="NU1604" />
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2094" NoWarn="NU1604" />
-    <PackageReference Include="Microsoft.VisualStudio.Composition" Version="17.2.41" />
-    <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="17.2.402-pre" />
+    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.14.40265" ExcludeAssets="runtime" NoWarn="NU1604">
+      <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.14.2142" NoWarn="NU1604">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Composition" Version="17.13.41" />
+    <PackageReference Include="Microsoft.VisualStudio.ProjectSystem" Version="17.9.380" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="PInvoke.User32">

@@ -10,15 +10,22 @@ using Microsoft.VisualStudio.Threading;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Task = System.Threading.Tasks.Task;
 
 namespace Alternet.UI.Integration.VisualStudio
 {
+    [ProvideAutoLoad(VSConstants.UICONTEXT.NoSolution_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(VSConstants.UICONTEXT.SolutionExists_string, PackageAutoLoadFlags.BackgroundLoad)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [ProvideToolWindow(typeof(MySidebarToolWindow))]
     [Guid(PackageGuidString)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
-    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+    [ProvideOptionPage(typeof(OptionsDialogPage), Name, "General", 113, 0, supportsAutomation: true)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
+    /*
     [ProvideEditorExtension(
         typeof(EditorFactory),
         ".uixml",
@@ -29,12 +36,13 @@ namespace Alternet.UI.Integration.VisualStudio
         DefaultName = Name)]
     [ProvideEditorFactory(typeof(EditorFactory), 113, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorLogicalView(typeof(EditorFactory), LogicalViewID.Designer)]
-    [ProvideOptionPage(typeof(OptionsDialogPage), Name, "General", 113, 0, supportsAutomation: true)]
-    internal sealed class AlternetUIPackage : AsyncPackage
+    */
+    internal sealed class AlternetUIPackage : AsyncPackage, IVsRunningDocTableEvents
     {
         internal static IVsOutputWindow? OutputWindow;        
         internal static IVsOutputWindowPane OutputPane;
 
+        private uint _rdtCookie;
         private static Guid _guid;
         private static ErrorListProvider _errorListProvider;
 
@@ -61,6 +69,39 @@ namespace Alternet.UI.Integration.VisualStudio
         public static void AddMessage(string message, int line = -1, int column = -1)
         {
             AddMsgTask(message, TaskErrorCategory.Message, line, column);
+        }
+
+        // Called when a document is saved, opened, closed, etc.
+        public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame) => VSConstants.S_OK;
+        public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining) => VSConstants.S_OK;
+        public int OnAfterSave(uint docCookie) => VSConstants.S_OK;
+        public int OnBeforeDocumentWindowShow(uint docCookie, int fFirstShow, IVsWindowFrame pFrame) => VSConstants.S_OK;
+        public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining) => VSConstants.S_OK;
+
+        // This is the key one: fires when a document is opened or reloaded
+        public int OnAfterAttributeChange(uint docCookie, uint grfAttribs)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var rdt = new RunningDocumentTable(this);
+            var docInfo = rdt.GetDocumentInfo(docCookie);
+
+            string docPath = docInfo.Moniker;
+            string projectPath = null;
+
+            if (docInfo.Hierarchy is IVsHierarchy hierarchy)
+            {
+                hierarchy.GetCanonicalName(docInfo.ItemId, out projectPath);
+            }
+
+            // Update sidebar
+            var window = this.FindToolWindow(typeof(MySidebarToolWindow), 0, true) as MySidebarToolWindow;
+            if (window?.Content is MySidebarControl control)
+            {
+                control.UpdateInfo(docPath, projectPath);
+            }
+
+            return VSConstants.S_OK;
         }
 
         private static void AddMsgTask(
@@ -136,18 +177,101 @@ namespace Alternet.UI.Integration.VisualStudio
             await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
             InitializeLogging();
+
+            var rdt = await GetServiceAsync(typeof(SVsRunningDocumentTable)) as IVsRunningDocumentTable;
+            if (rdt != null)
+            {
+                rdt.AdviseRunningDocTableEvents(this, out _rdtCookie);
+            }
+
+
+            OleMenuCommandService commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            if (commandService != null)
+            {
+                var cmdId = new CommandID(new Guid("A1B2C3D4-E5F6-47A8-ABCD-1234567890AB"), 0x0100);
+                var menuItem = new OleMenuCommand((s, e) => ShowSidebar(), cmdId);
+                menuItem.Text = "My menu item";
+                menuItem.BeforeQueryStatus += (s, e) =>
+                {
+                    ThreadHelper.ThrowIfNotOnUIThread();
+                    var selected = GetSelectedFilePath();
+                    menuItem.Visible = selected != null && selected.EndsWith(".uixml", StringComparison.OrdinalIgnoreCase);
+                };
+                commandService.AddCommand(menuItem);
+            }
+
+            Log.Information("AlterNET UI Package initialized");
+
+            /*
             RegisterEditorFactory(new EditorFactory(this));
 
             var dte = (DTE)await GetServiceAsync(typeof(DTE));
             SolutionService = new SolutionService(dte);
 
-            Log.Information("AlterNET UI Package initialized");
+            */
+
+            /*
+            var window = this.FindToolWindow(typeof(MySidebarToolWindow), 0, true);
+            if (window?.Frame is IVsWindowFrame frame)
+            {
+                try
+                {
+                    frame.Show();
+
+                }
+                catch
+                {
+                }
+            }
+            */
         }
 
         bool outputPaneLoggingEnabled = true;
 
         private readonly Dictionary<string, int> _pendingReopens =
             new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+
+        private string GetSelectedFilePath()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var monitorSelection = (IVsMonitorSelection)GetService(typeof(SVsShellMonitorSelection));
+            if (monitorSelection == null)
+                return null;
+
+            IntPtr hierarchyPtr;
+            uint itemid;
+            IVsMultiItemSelect multiItemSelect;
+            IntPtr selectionContainerPtr;
+
+            monitorSelection.GetCurrentSelection(out hierarchyPtr, out itemid, out multiItemSelect, out selectionContainerPtr);
+
+            if (hierarchyPtr == IntPtr.Zero)
+                return null;
+
+            var hierarchy = Marshal.GetObjectForIUnknown(hierarchyPtr) as IVsHierarchy;
+            Marshal.Release(hierarchyPtr);
+
+            if (hierarchy == null)
+                return null;
+
+            object value;
+            hierarchy.GetProperty(itemid, (int)__VSHPROPID.VSHPROPID_Name, out value);
+            hierarchy.GetProperty(itemid, (int)__VSHPROPID.VSHPROPID_ExtObject, out value);
+
+            var projItem = value as EnvDTE.ProjectItem;
+            return projItem?.FileNames[1];
+        }
+
+        private void ShowSidebar()
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var window = this.FindToolWindow(typeof(MySidebarToolWindow), 0, true);
+            if (window?.Frame is IVsWindowFrame frame)
+            {
+                Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(frame.Show());
+            }
+        }
 
         internal void ScheduleReopen(string fileName, int maxRetries = 5, Action onOpened = null)
         {
