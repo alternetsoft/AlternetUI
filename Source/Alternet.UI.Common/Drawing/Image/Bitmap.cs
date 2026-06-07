@@ -223,13 +223,19 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets an empty bitmap.
+        /// Gets an empty immutable bitmap.
         /// </summary>
         public static Bitmap Empty
         {
             get
             {
-                return empty ??= new Bitmap();
+                if (empty is null)
+                {
+                    empty = new Bitmap();
+                    empty.SetImmutable();
+                }
+
+                return empty;
             }
         }
 
