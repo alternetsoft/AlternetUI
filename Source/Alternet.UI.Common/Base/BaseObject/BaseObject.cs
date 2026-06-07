@@ -121,7 +121,8 @@ namespace Alternet.UI
         /// Returns a hash code that uniquely identifies the specified object instance during the application's lifetime.
         /// This value is guaranteed to be unique only for the lifetime of the
         /// object within the current application domain.
-        /// When object is disposed, the same hash code may be returned for another object instance. This method is useful for scenarios
+        /// When object is disposed, the same hash code may be returned for another object instance.
+        /// This method is useful for scenarios
         /// where a stable identifier for an object instance is needed, such as in caching or tracking mechanisms,
         /// without relying on the object's own implementation of GetHashCode.
         /// </summary>
@@ -274,7 +275,7 @@ namespace Alternet.UI
         public static object? EndInvoke(IAsyncResult result)
         {
             if (result is not Invocation invocation)
-                throw new ArgumentException("Invalid IAsyncResult.", nameof(result));
+                throw new ArgumentException(null, nameof(result));
 
             result.AsyncWaitHandle.WaitOne();
 
@@ -330,9 +331,7 @@ namespace Alternet.UI
         {
             if (action is null)
                 return;
-
-            var handler = App.Handler
-                ?? throw new NullReferenceException("Application handler is null");
+            var handler = App.SafeHandler;
             handler.BeginInvoke(action);
         }
 
@@ -346,8 +345,7 @@ namespace Alternet.UI
 
             if (InvokeRequired)
             {
-                var handler = App.Handler
-                    ?? throw new NullReferenceException("Application handler is null");
+                var handler = App.SafeHandler;
                 handler.BeginInvoke(action);
             }
             else
