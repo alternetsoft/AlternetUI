@@ -34,7 +34,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> class from the specified
-        /// data stream.
+        /// data stream. Data stream must contain icon data in .ico format.
         /// </summary>
         /// <param name="stream">The data stream used to load the icon.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -47,6 +47,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> class from the specified
         /// url. See <see cref="FromUrl"/> for the details.
+        /// Data stream must contain icon data in .ico format.
         /// </summary>
         /// <param name="url">The file or embedded resource url used to load the image.</param>
         /// <remarks>
@@ -211,7 +212,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="IconSet"/> class
-        /// from the specified url.
+        /// from the specified url. Data stream must contain icon data in .ico format.
         /// </summary>
         /// <param name="url">The file or embedded resource url used to load the image.
         /// </param>
@@ -291,6 +292,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        /// <remarks>
+        /// Data stream must contain icon data in .ico format.
+        /// </remarks>
         public override bool Add(Stream? stream)
         {
             if (IsReadOnly || stream is null)

@@ -198,6 +198,11 @@ namespace PropertyGridSample
 
         internal void InitTestsSpeedButton()
         {
+            AddControlAction<SpeedButton>("Set Icon as Image", (c) =>
+            {
+                c.SetIconAsImage(KnownIcons.Default, ImageDrawable.IconSizeKind.Small);
+            });
+
             AddControlAction<SpeedButton>("Set Right Side", (c) =>
             {
                 c.ShortcutKeys = Keys.Control | Keys.F;

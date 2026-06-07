@@ -62,6 +62,12 @@ namespace Alternet.UI.Tests
 
             App.LogNameValue("EffectiveSystemIconSize", IconSet.EffectiveSystemIconSize);
             App.LogNameValue("EffectiveSystemSmallIconSize", IconSet.EffectiveSmallSystemIconSize);
+
+            var descending = icon.GetImageSizes(sortDescending: true);
+            var ascending = icon.GetImageSizes(sortDescending: false);
+
+            LogUtils.LogAsSection("Descending sizes", descending);
+            LogUtils.LogAsSection("Ascending sizes", ascending);
         }
 
         /// <summary>

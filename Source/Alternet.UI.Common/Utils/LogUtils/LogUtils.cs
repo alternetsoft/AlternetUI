@@ -210,6 +210,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Logs <see cref="IEnumerable{T}"/>.
+        /// </summary>
+        public static void LogEnumerable<T>(IEnumerable<T>? items, LogItemKind kind = LogItemKind.Information)
+        {
+            if (items is null)
+                return;
+            foreach (var item in items)
+                App.Log(item, kind);
+        }
+
+        /// <summary>
         /// Logs <see cref="IEnumerable"/> as section.
         /// </summary>
         public static void LogAsSection(IEnumerable? items, LogItemKind kind = LogItemKind.Information)
@@ -217,6 +228,18 @@ namespace Alternet.UI
             if (items is null)
                 return;
             App.LogBeginSection();
+            LogEnumerable(items, kind);
+            App.LogEndSection();
+        }
+
+        /// <summary>
+        /// Logs <see cref="IEnumerable{T}"/> as section.
+        /// </summary>
+        public static void LogAsSection<T>(string? title, IEnumerable<T>? items, LogItemKind kind = LogItemKind.Information)
+        {
+            if (items is null)
+                return;
+            App.LogBeginSection(title);
             LogEnumerable(items, kind);
             App.LogEndSection();
         }
