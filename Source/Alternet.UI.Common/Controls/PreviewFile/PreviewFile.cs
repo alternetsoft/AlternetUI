@@ -48,8 +48,7 @@ namespace Alternet.UI
         /// </summary>
         public PreviewFile()
         {
-            BackColor = SystemColors.Window;
-            ForeColor = SystemColors.WindowText;
+            UseControlColors(useControlColors: true);
             cardPanel.Parent = this;
             label.Text = CommonStrings.Default.SelectFileToPreview;
             cardPanel.Add(null, label);
@@ -199,6 +198,48 @@ namespace Alternet.UI
         public virtual void RegisterPreview(PreviewFileRegisterItem item)
         {
             register.Add(item);
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the dark theme.
+        /// </summary>
+        public virtual void SetColorThemeToDark()
+        {
+            DoInsideUpdate(() =>
+            {
+                ParentForeColor = false;
+                ParentBackColor = false;
+                BackgroundColor = DefaultColors.ControlBackColor.Dark;
+                ForegroundColor = DefaultColors.ControlForeColor.Dark;
+            });
+        }
+
+        /// <summary>
+        /// Sets colors used in the control to the light theme.
+        /// </summary>
+        public virtual void SetColorThemeToLight()
+        {
+            DoInsideUpdate(() =>
+            {
+                ParentForeColor = false;
+                ParentBackColor = false;
+                BackColor = DefaultColors.ControlBackColor.Light;
+                ForeColor = DefaultColors.ControlForeColor.Light;
+            });
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            if (AutoUpdateColors)
+            {
+                if (SystemSettings.AppearanceIsDark)
+                    SetColorThemeToDark();
+                else
+                    SetColorThemeToLight();
+            }
+
+            base.OnSystemColorsChanged(e);
         }
 
         /// <summary>
