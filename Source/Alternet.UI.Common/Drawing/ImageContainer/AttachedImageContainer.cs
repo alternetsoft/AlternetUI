@@ -23,6 +23,9 @@ namespace Alternet.Drawing
             this.handler = handler;
         }
 
+        /// <inheritdoc/>
+        public override bool IsReadOnly => base.IsReadOnly || Handler?.IsReadOnly == true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AttachedImageContainer{T}"/> class.
         /// </summary>
@@ -54,8 +57,19 @@ namespace Alternet.Drawing
         {
             base.OnImageInserted(sender, index, item);
 
-            if (Handler != null && !Handler.Add(item))
-                App.DebugLogError("Error adding image to container");
+            if (IsReadOnly)
+            {
+                App.DebugLogError("Failed to add image in read-only container");
+                return;
+            }
+
+            if (Handler != null)
+            {
+                if (!Handler.Add(item))
+                {
+                    App.DebugLogError("Cannot add image to attached handler ");
+                }
+            }
         }
 
         /// <inheritdoc/>
@@ -63,8 +77,27 @@ namespace Alternet.Drawing
         {
             base.OnImageRemoved(sender, index, item);
 
-            if (Handler != null && !Handler.RemoveAt(index))
-                App.DebugLogError("Error removing image from container");
+            if (IsReadOnly)
+            {
+                App.DebugLogError("Failed to remove image in read-only container");
+                return;
+            }
+
+            if (Handler != null)
+            {
+                if (!Handler.RemoveAt(index))
+                {
+                    if (Handler.Clear())
+                    {
+                        foreach (var image in Images)
+                            Handler.Add(image);
+                    }
+                    else
+                    {
+                        App.DebugLogError("Cannot remove image from attached handler ");
+                    }
+                }
+            }
         }
     }
 }

@@ -608,6 +608,9 @@ namespace Alternet.Drawing
         /// <returns>The added <see cref="Image"/> if successful; otherwise, <see langword="null"/>.</returns>
         public virtual Image? AddSvg(SvgImage svg, SizeI imageSize, bool isDarkTheme)
         {
+            if (IsReadOnly)
+                return null;
+
             var color = svg.GetSvgColor(KnownSvgColor.Normal, isDarkTheme);
             var result = AddSvg(svg, imageSize, color);
             return result;
@@ -626,6 +629,9 @@ namespace Alternet.Drawing
         /// <returns>The added <see cref="Image"/> if successful; otherwise, <see langword="null"/>.</returns>
         public virtual Image? AddSvg(SvgImage svg, SizeI imageSize, bool? isDarkTheme = null, Color? color = null)
         {
+            if (IsReadOnly)
+                return null;
+
             if (isDarkTheme.HasValue)
                 return AddSvg(svg, imageSize, isDarkTheme.Value);
 
@@ -671,6 +677,9 @@ namespace Alternet.Drawing
         /// <returns>Returns true if the image was added successfully.</returns>
         public virtual bool AddResized(Image image, SizeI imageSize)
         {
+            if (IsReadOnly)
+                return false;
+
             if (image.Size != imageSize)
             {
                 var resizedImage = new Bitmap(image, imageSize);
@@ -738,8 +747,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="strip">The image strip containing multiple images.</param>
         /// <param name="imageSize">The size of each individual image in the strip.</param>
-        public virtual void AddImageStrip(Image strip, SizeI imageSize)
+        public virtual bool AddImageStrip(Image strip, SizeI imageSize)
         {
+            if (IsReadOnly)
+                return false;
+
             var width = imageSize.Width;
             int imageCount = strip.Width / width;
             for (int i = 0; i < imageCount; i++)
@@ -748,6 +760,8 @@ namespace Alternet.Drawing
                 var image = strip.GetSubBitmap(sourceRectangle);
                 Add(image);
             }
+            
+            return true;
         }
 
         /// <summary>
