@@ -101,7 +101,7 @@ namespace Alternet.Drawing
                 loadingError = e;
                 svg = GetXmlForSvgLoadedWithError();
                 if (throwException)
-                    throw;
+                    ExceptionUtils.Rethrow(loadingError);
             }
         }
 
@@ -113,8 +113,6 @@ namespace Alternet.Drawing
         {
             get
             {
-                SKPicture? result = null;
-
                 if (svgProvider is null)
                 {
                     LoadImage();
@@ -122,10 +120,9 @@ namespace Alternet.Drawing
                     svgProvider = new Svg.Skia.SKSvg();
                     var data = svg ?? GetXmlForSvgLoadedWithError();
                     svgProvider.FromSvg(data);
-                    result = svgProvider.Picture;
                 }
 
-                return result ?? SkiaUtils.EmptyPicture;
+                return svgProvider.Picture ?? SkiaUtils.EmptyPicture;
             }
         }
 
@@ -552,7 +549,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">Svg image size in pixels.</param>
         /// <param name="color">Color of the mono svg image. Optional.</param>
-        /// <returns></returns>
+        /// <returns>Image set containing the loaded SVG image. Returned image set is immutable.</returns>
         public virtual ImageSet? LoadImage(SizeI size, Color? color = null)
         {
             LoadImage();
@@ -592,7 +589,7 @@ namespace Alternet.Drawing
                     loadingError = e;
                     svg = GetXmlForSvgLoadedWithError();
                     if (throwException)
-                        throw;
+                        ExceptionUtils.Rethrow(loadingError);
                 }
             }
         }

@@ -824,6 +824,8 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            suspendImagesEvents++;
+            Images.Clear();
             base.DisposeManaged();
         }
 
