@@ -43,6 +43,11 @@ namespace Alternet.UI
             MarginBottom = 10,
         };
 
+        private readonly Label filePathLabel = new()
+        {
+            Margin = 5,
+        };
+
         private readonly Panel rootPanel = new()
         {
             Layout = LayoutStyle.Vertical,
@@ -80,11 +85,18 @@ namespace Alternet.UI
             fileListBox.Parent = panel.TopPanel;
             fileListBox.RequireDefaultColumns();
 
+            panel.FillPanel.Layout = LayoutStyle.Vertical;
+
+            filePathLabel.Parent = panel.FillPanel;
+
             preview.Visible = false;
+            preview.VerticalAlignment = VerticalAlignment.Fill;
             preview.Parent = panel.FillPanel;
 
             logListBox.Parent = panel.BottomPanel;
             logListBox.BindApplicationLog();
+
+            panel.BottomVisible = false;
 
             fileListBox.SelectionChanged += FileListBox_SelectionChanged;
 
@@ -229,6 +241,9 @@ namespace Alternet.UI
             preview.FileName = item.Path;
 
             preview.Visible = true;
+
+            filePathLabel.Text = item.Path;
+
             Refresh();
         }
 
