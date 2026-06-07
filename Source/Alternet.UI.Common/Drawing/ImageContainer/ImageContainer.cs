@@ -654,7 +654,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                var imageSet = svg.LoadImage(imageSize, color);
+                var imageSet = svg.CreateImageSet(imageSize, color);
                 if (imageSet is null)
                     return null;
                 var image = imageSet.AsImage(imageSize);

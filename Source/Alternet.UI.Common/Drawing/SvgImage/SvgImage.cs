@@ -18,7 +18,7 @@ namespace Alternet.Drawing
     /// to speed up loading and getting of different states (and sizes) of the
     /// same image.
     /// </summary>
-    public class SvgImage : NullImageSource
+    public partial class SvgImage : NullImageSource
     {
         /// <summary>
         /// Gets or sets the XML content for an SVG that was loaded with an error.
@@ -194,16 +194,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets svg image as <see cref="ImageSet"/> with default toolbar image size.
-        /// </summary>
-        public virtual ImageSet? AsImageSet()
-        {
-            var result = AsImageSet(ToolBarUtils.GetDefaultImageSize().Width);
-            return result;
-        }
-
-        /// <summary>
         /// Gets svg image as <see cref="Image"/> with default toolbar image size.
+        /// This function caches the result, so subsequent calls with the same size will be faster.
         /// </summary>
         public virtual Image? AsImage()
         {
@@ -213,6 +205,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets svg image as <see cref="Image"/>.
+        /// This function caches the result, so subsequent calls with the same size will be faster.
         /// </summary>
         /// <param name="size">Image size</param>
         /// <returns></returns>
@@ -223,46 +216,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets svg image as <see cref="ImageSet"/>.
-        /// </summary>
-        /// <param name="size">Image size</param>
-        /// <returns></returns>
-        public virtual ImageSet? AsImageSet(int size)
-        {
-            Resize(size);
-            var result = data[size]?.OriginalImage;
-            if (result is not null)
-                return result;
-            result = LoadImage(size);
-            data[size] ??= new();
-            data[size]!.OriginalImage = result;
-            return result;
-        }
-
-        /// <summary>
         /// Gets image with the specified size and <see cref="KnownSvgColor.Normal"/> color.
-        /// </summary>
-        /// <param name="size">Image size in pixels.</param>
-        /// <param name="isDark">Whether color theme is dark.</param>
-        /// <returns></returns>
-        public virtual ImageSet? AsNormal(int size, bool isDark)
-        {
-            return AsImageSet(size, KnownSvgColor.Normal, isDark);
-        }
-
-        /// <summary>
-        /// Gets image with the specified size and <see cref="KnownSvgColor.Disabled"/> color.
-        /// </summary>
-        /// <param name="size">Image size in pixels.</param>
-        /// <param name="isDark">Whether color theme is dark.</param>
-        /// <returns></returns>
-        public virtual ImageSet? AsDisabled(int size, bool isDark)
-        {
-            return AsImageSet(size, KnownSvgColor.Disabled, isDark);
-        }
-
-        /// <summary>
-        /// Gets image with the specified size and <see cref="KnownSvgColor.Normal"/> color.
+        /// This function caches the result, so subsequent calls with the same size will be faster.
         /// </summary>
         /// <param name="size">Image size in pixels.</param>
         /// <param name="isDark">Whether color theme is dark.</param>
@@ -275,6 +230,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the normal image representation for a control using it's scale factor and
         /// color theme settings.
+        /// This function caches the result, so subsequent calls with the same size and color theme will be faster.
         /// </summary>
         public virtual Image? AsNormalImage(AbstractControl control)
         {
@@ -342,71 +298,6 @@ namespace Alternet.Drawing
         public virtual Image? AsImage(int size, KnownSvgColor knownColor, bool isDark)
         {
             var result = AsImageSet(size, knownColor, isDark)?.AsImage();
-            return result;
-        }
-
-        /// <summary>
-        /// Gets image with the specified size and known svg color.
-        /// </summary>
-        /// <param name="size">Image size in pixels.</param>
-        /// <param name="knownColor">Known image color.</param>
-        /// <param name="isDark">Whether color theme is dark.</param>
-        /// <returns></returns>
-        public virtual ImageSet? AsImageSet(int size, KnownSvgColor knownColor, bool isDark)
-        {
-            if (!IsMono && knownColor == KnownSvgColor.Normal)
-                return AsImageSet(size);
-
-            Resize(size);
-
-            ImageSet? result;
-
-            if (isDark)
-                result = data[size]?.KnownColorImagesDark[(int)knownColor];
-            else
-                result = data[size]?.KnownColorImagesLight[(int)knownColor];
-
-            if (result is not null)
-                return result;
-
-            var color = GetSvgColor(knownColor, isDark);
-            result = LoadImage(size, color);
-
-            if (data[size] is null)
-                data[size] = new();
-
-            if (isDark)
-                data[size]!.KnownColorImagesDark[(int)knownColor] = result;
-            else
-                data[size]!.KnownColorImagesLight[(int)knownColor] = result;
-            return result;
-        }
-
-        /// <summary>
-        /// Gets mono svg image as <see cref="ImageSet"/> filled using the specified color.
-        /// Svg images with two or more colors are returned as is.
-        /// </summary>
-        /// <param name="size">Svg image size.</param>
-        /// <param name="color">Svg image color.</param>
-        /// <returns></returns>
-        public virtual ImageSet? ImageSetWithColor(int size, Color color)
-        {
-            if (!IsMono)
-                return AsImageSet(size);
-
-            Resize(size);
-
-            data[size] ??= new();
-            data[size]!.ColoredImages ??= new();
-
-            var images = data[size]!.ColoredImages!;
-
-            if (images.TryGetValue(color, out var result))
-                return result;
-
-            result = LoadImage(size, color);
-            if (result is not null)
-                images.Add(color, result);
             return result;
         }
 
@@ -529,44 +420,6 @@ namespace Alternet.Drawing
         {
             SetColorOverride(knownColor, true, value?.Dark);
             SetColorOverride(knownColor, false, value?.Light);
-        }
-
-        /// <summary>
-        /// Creates new <see cref="ImageSet"/> and loads there this svg image
-        /// with the specified size and color.
-        /// </summary>
-        /// <param name="size">Svg image size in pixels.</param>
-        /// <param name="color">Color of the mono svg image. Optional.</param>
-        /// <returns></returns>
-        public ImageSet? LoadImage(int size, Color? color = null)
-        {
-            return LoadImage((size, size), color);
-        }
-
-        /// <summary>
-        /// Creates new <see cref="ImageSet"/> and loads there this svg image
-        /// with the specified size and color.
-        /// </summary>
-        /// <param name="size">Svg image size in pixels.</param>
-        /// <param name="color">Color of the mono svg image. Optional.</param>
-        /// <returns>Image set containing the loaded SVG image. Returned image set is immutable.</returns>
-        public virtual ImageSet? LoadImage(SizeI size, Color? color = null)
-        {
-            LoadImage();
-
-            if (svg is null)
-            {
-                return ImageSet.Empty;
-            }
-            else
-            {
-                var skiaBitmap = SkiaUtils.BitmapFromPicture(AsPicture, size.Width, size.Height, color);
-
-                var bitmap = (Image)skiaBitmap;
-                ImageSet result = new(bitmap);
-                result.SetImmutable();
-                return result;
-            }
         }
 
         /// <summary>
