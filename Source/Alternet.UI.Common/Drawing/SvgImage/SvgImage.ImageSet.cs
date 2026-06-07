@@ -91,8 +91,7 @@ namespace Alternet.Drawing
                 return result;
 
             result = CreateImageSet(size, color);
-            if (result is not null)
-                images.Add(color, result);
+            images.Add(color, result);
             return result;
         }
 

@@ -2,7 +2,6 @@
 
 #include "Common.h"
 #include "Control.h"
-#include "ImageSet.h"
 #include "IconSet.h"
 #include "StatusBar.h"
 

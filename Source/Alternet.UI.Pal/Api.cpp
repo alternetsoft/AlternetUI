@@ -44,7 +44,6 @@
 #include "Api/IconSet.Api.h"
 #include "Api/Image.Api.h"
 #include "Api/ImageList.Api.h"
-#include "Api/ImageSet.Api.h"
 #include "Api/DrawingContext.Api.h"
 #include "Api/Font.Api.h"
 #include "Api/GraphicsPath.Api.h"

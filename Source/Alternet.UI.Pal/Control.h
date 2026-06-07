@@ -3,7 +3,6 @@
 #include "Common.h"
 #include "DrawingContext.h"
 #include "Object.h"
-#include "ImageSet.h"
 #include "UnmanagedDataObject.h"
 #include "DropTarget.h"
 

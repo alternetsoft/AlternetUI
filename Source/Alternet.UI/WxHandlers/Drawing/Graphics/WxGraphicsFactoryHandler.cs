@@ -215,16 +215,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        public static IImageHandler CreateImageHandler(UI.Native.ImageSet imageSet, SizeI size)
-        {
-            var image = new UI.Native.Image();
-            imageSet.InitImage(
-                image,
-                size.Width,
-                size.Height);
-            return image;
-        }
-
         public IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc)
         {
             var nativeImage = CreateImageHandler();
