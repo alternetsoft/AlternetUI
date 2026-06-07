@@ -23,9 +23,6 @@ namespace Alternet.UI
     public partial class SkiaGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
     {
         /// <inheritdoc/>
-        public virtual GenericImageLoadFlags GenericImageDefaultLoadFlags { get; set; }
-
-        /// <inheritdoc/>
         public virtual bool IsOpenGLAvailable => false;
 
         /// <inheritdoc/>
@@ -79,12 +76,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual bool CanReadGenericImage(Stream stream)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public virtual IGenericImageHandler CreateGenericImageHandler()
         {
             throw new NotImplementedException();
@@ -94,14 +85,6 @@ namespace Alternet.UI
         public virtual IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
-            bool clear)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler(
-            SizeI size,
             bool clear)
         {
             throw new NotImplementedException();
@@ -179,12 +162,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IImageHandler CreateImageHandler(ImageSet imageSet, SizeI size)
-        {
-            return new SkiaImageHandler(imageSet, size);
-        }
-
-        /// <inheritdoc/>
         public virtual IImageHandler CreateImageHandler()
         {
             return new SkiaImageHandler();
@@ -202,12 +179,6 @@ namespace Alternet.UI
         public virtual IImageHandler CreateImageHandler(int width, int height, Graphics dc)
         {
             return new SkiaImageHandler(width, height, dc);
-        }
-
-        /// <inheritdoc/>
-        public virtual IImageHandler CreateImageHandler(ImageSet imageSet, IControl control)
-        {
-            return new SkiaImageHandler(imageSet, control);
         }
 
         /// <inheritdoc/>
@@ -271,26 +242,6 @@ namespace Alternet.UI
         public virtual IRegionHandler CreateRegionHandler(PointD[] points, FillMode fillMode)
         {
             return new SkiaRegionHandler(points, fillMode);
-        }
-
-        /// <inheritdoc/>
-        public virtual BitmapType GetDefaultBitmapType()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual int GetGenericImageCount(
-            Stream stream,
-            BitmapType bitmapType)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual string GetGenericImageExtWildcard()
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>

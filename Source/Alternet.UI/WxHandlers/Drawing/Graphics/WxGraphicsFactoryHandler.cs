@@ -176,11 +176,6 @@ namespace Alternet.Drawing
             return new UI.Native.IconSet();
         }
 
-        public BitmapType GetDefaultBitmapType()
-        {
-            return (BitmapType)UI.Native.Image.GetDefaultBitmapType();
-        }
-
         public Graphics CreateGraphicsFromScreen()
         {
             return new WxGraphics(UI.Native.DrawingContext.FromScreen());
@@ -255,87 +250,6 @@ namespace Alternet.Drawing
             return nativeImage;
         }
 
-        public IImageHandler CreateImageHandlerFromSvg(
-            Stream stream,
-            int width,
-            int height,
-            Color? color = null)
-        {
-            var nativeImage = CreateImageHandler();
-            using var inputStream = new UI.Native.InputStream(stream);
-            ((UI.Native.Image)nativeImage).LoadSvgFromStream(
-                inputStream,
-                width,
-                height,
-                color ?? Color.Black);
-            return nativeImage;
-        }
-
-        public IImageHandler CreateImageHandlerFromSvg(
-            string s,
-            int width,
-            int height,
-            Color? color = null)
-        {
-            var nativeImage = CreateImageHandler();
-            ((UI.Native.Image)nativeImage).LoadSvgFromString(s, width, height, color ?? Color.Black);
-            return nativeImage;
-        }
-
-        public bool CanReadGenericImage(string filename)
-        {
-            return UI.Native.GenericImage.CanRead(filename);
-        }
-
-        public bool CanReadGenericImage(Stream stream)
-        {
-            var inputStream = new UI.Native.InputStream(stream);
-            return UI.Native.GenericImage.CanReadStream(inputStream);
-        }
-
-        public string GetGenericImageExtWildcard()
-        {
-            return UI.Native.GenericImage.GetImageExtWildcard();
-        }
-
-        public bool RemoveGenericImageHandler(string name)
-        {
-            return UI.Native.GenericImage.RemoveHandler(name);
-        }
-
-        public int GetGenericImageCount(
-            string filename,
-            BitmapType bitmapType = BitmapType.Any)
-        {
-            return UI.Native.GenericImage.GetImageCountInFile(filename, (int)bitmapType);
-        }
-
-        public int GetGenericImageCount(
-            Stream stream,
-            BitmapType bitmapType = BitmapType.Any)
-        {
-            var inputStream = new UI.Native.InputStream(stream);
-            return UI.Native.GenericImage.GetImageCountInStream(inputStream, (int)bitmapType);
-        }
-
-        public void CleanUpGenericImageHandlers()
-        {
-            UI.Native.GenericImage.CleanUpHandlers();
-        }
-
-        public GenericImageLoadFlags GenericImageDefaultLoadFlags
-        {
-            get
-            {
-                return (GenericImageLoadFlags)UI.Native.GenericImage.GetDefaultLoadFlags();
-            }
-
-            set
-            {
-                UI.Native.GenericImage.SetDefaultLoadFlags((int)value);
-            }
-        }
-
         public IGenericImageHandler CreateGenericImageHandler()
         {
             return new WxGenericImageHandler();
@@ -344,24 +258,6 @@ namespace Alternet.Drawing
         public IGenericImageHandler CreateGenericImageHandler(int width, int height, bool clear = false)
         {
             return new WxGenericImageHandler(width, height, clear);
-        }
-
-        public IGenericImageHandler CreateGenericImageHandler(SizeI size, bool clear = false)
-        {
-            return new WxGenericImageHandler(size.Width, size.Height, clear);
-        }
-
-        public IGenericImageHandler CreateGenericImageHandler(
-            string fileName,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1)
-        {
-            return new WxGenericImageHandler(fileName, bitmapType,index);
-        }
-
-        public IGenericImageHandler CreateGenericImageHandler(string name, string mimetype, int index = -1)
-        {
-            return new WxGenericImageHandler(name, mimetype, index);
         }
 
         public IGenericImageHandler CreateGenericImageHandler(
