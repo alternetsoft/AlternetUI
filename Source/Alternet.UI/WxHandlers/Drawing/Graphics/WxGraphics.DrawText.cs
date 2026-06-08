@@ -12,6 +12,13 @@ namespace Alternet.Drawing
 {
     internal partial class WxGraphics
     {
+        public override IGraphicsPathHandler CreateGraphicsPathHandler()
+        {
+            var result = new UI.Native.GraphicsPath();
+            result.Initialize((UI.Native.DrawingContext)NativeObject);
+            return result;
+        }
+
         /// <inheritdoc/>
         public override SizeD GetTextExtent(ReadOnlySpan<char> text, Font font)
         {

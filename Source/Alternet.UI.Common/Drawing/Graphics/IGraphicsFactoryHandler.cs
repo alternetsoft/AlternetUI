@@ -129,14 +129,6 @@ namespace Alternet.Drawing
         ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind);
 
         /// <summary>
-        /// Creates <see cref="IGraphicsPathHandler"/> provider for the specified
-        /// drawing context.
-        /// </summary>
-        /// <param name="drawingContext">Drawing context.</param>
-        /// <returns></returns>
-        IGraphicsPathHandler CreateGraphicsPathHandler(Graphics drawingContext);
-
-        /// <summary>
         /// Creates drawing context for the specified image.
         /// </summary>
         /// <param name="image">Image on which drawing will be performed.</param>

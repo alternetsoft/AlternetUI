@@ -17,7 +17,7 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="GraphicsPath.AddLines"/>
         void AddLines(ReadOnlySpan<PointD> points);
 
-        /// <inheritdoc cref="GraphicsPath.AddLine"/>
+        /// <inheritdoc cref="GraphicsPath.AddLine(PointD, PointD)"/>
         void AddLine(PointD pt1, PointD pt2);
 
         /// <inheritdoc cref="GraphicsPath.AddLineTo"/>

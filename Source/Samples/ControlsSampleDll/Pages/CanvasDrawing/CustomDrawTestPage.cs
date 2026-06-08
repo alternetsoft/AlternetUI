@@ -123,6 +123,10 @@ namespace ControlsSample
 
             panel.AddAction("Draw Radio Button", DrawNativeRadioButton);
 
+            panel.AddAction("Test Draw Path", TestDrawPath);
+
+            panel.AddAction("Test Fill Path", TestFillPath);
+
             /* Do not uncomment, this causes bad results.
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
             */
@@ -143,6 +147,52 @@ namespace ControlsSample
             panel.AddAction("Draw Control Template", DrawControlTemplate);
 
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
+        }
+
+        public void TestDrawPath()
+        {
+            customDrawControl.SetPaintAction((control, canvas, rect) =>
+            {
+                TestDrawPath(canvas, Color.Red, 1);
+            });
+        }
+
+        public void TestFillPath()
+        {
+            customDrawControl.SetPaintAction((control, canvas, rect) =>
+            {
+                TestFillPath(canvas, Color.Green);
+            });
+        }
+
+        public static void TestDrawPath(Graphics g, Color penColor, float penWidth)
+        {
+            if (g == null) return;
+
+            var pen = penColor.GetAsPen(penWidth);
+
+            using GraphicsPath path = new (g);
+
+            path.AddRectangle(new (20, 20, 100, 60));
+            path.AddEllipse(new (150, 50, 120, 80));
+            path.AddLine(10, 200, 300, 200);
+
+            g.DrawPath(pen, path);
+        }
+
+        public static void TestFillPath(Graphics g, Color fillColor)
+        {
+            if (g == null) return;
+
+            var brush = fillColor.AsBrush;
+
+            using GraphicsPath path = new(g);
+
+            path.AddRectangle(new (20, 20, 100, 60));
+            path.AddEllipse(new (150, 50, 120, 80));
+            path.AddLine(10, 200, 300, 200);
+
+            g.FillPath(brush, path);
         }
 
         public static InteriorDrawable CreateInteriorDrawable(bool isDarkBackground)

@@ -272,6 +272,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override IGraphicsPathHandler CreateGraphicsPathHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         protected override void SetHandlerTransform(TransformMatrix matrix)
         {
             throw new NotImplementedException();

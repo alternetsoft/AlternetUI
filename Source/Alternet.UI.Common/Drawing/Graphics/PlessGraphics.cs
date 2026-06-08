@@ -137,8 +137,20 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void DrawTextWithAngle(ReadOnlySpan<char> text, PointD location, Font font, Color foreColor, Color backColor, Coord angle)
+        public override void DrawTextWithAngle(
+            ReadOnlySpan<char> text,
+            PointD location,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            Coord angle)
         {
+        }
+
+        /// <inheritdoc/>
+        public override IGraphicsPathHandler CreateGraphicsPathHandler()
+        {
+            return new PlessGraphicsPathHandler();
         }
 
         /// <inheritdoc/>

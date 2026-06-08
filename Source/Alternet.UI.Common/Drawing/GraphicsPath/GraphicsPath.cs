@@ -32,7 +32,7 @@ namespace Alternet.Drawing
         {
             if (drawingContext is null)
                 throw new ArgumentNullException(nameof(drawingContext));
-            Handler = GraphicsFactory.Handler.CreateGraphicsPathHandler(drawingContext);
+            Handler = drawingContext.CreateGraphicsPathHandler();
         }
 
         /// <summary>
@@ -101,6 +101,27 @@ namespace Alternet.Drawing
         {
             CheckDisposed();
             Handler.AddLine(pt1, pt2);
+        }
+
+        /// <summary>
+        /// Appends a line segment to this <see cref="GraphicsPath"/>.
+        /// </summary>
+        /// <remarks>
+        /// This method adds the line segment defined by the specified points to the
+        /// end of this <see cref="GraphicsPath"/>. If there
+        /// are previous lines or curves in the <see cref="GraphicsPath"/>, a line
+        /// segment is drawn to connect the last point in the
+        /// path to the first point in the new line segment.
+        /// </remarks>
+        /// <param name="x1">The x-coordinate of the starting point of the line.</param>
+        /// <param name="y1">The y-coordinate of the starting point of the line.</param>
+        /// <param name="x2">The x-coordinate of the endpoint of the line.</param>
+        /// <param name="y2">The y-coordinate of the endpoint of the line.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddLine(float x1, float y1, float x2, float y2)
+        {
+            CheckDisposed();
+            Handler.AddLine(new PointD(x1, y1), new PointD(x2, y2));
         }
 
         /// <summary>

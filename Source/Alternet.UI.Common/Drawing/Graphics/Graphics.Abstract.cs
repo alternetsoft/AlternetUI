@@ -33,6 +33,12 @@ namespace Alternet.Drawing
         public abstract object NativeObject { get; }
 
         /// <summary>
+        /// Creates <see cref="IGraphicsPathHandler"/> provider.
+        /// </summary>
+        /// <returns></returns>
+        public abstract IGraphicsPathHandler CreateGraphicsPathHandler();
+
+        /// <summary>
         /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.
         /// </summary>
         /// <param name="pen">The <see cref="Pen"/> used to draw the rounded rectangle.</param>
