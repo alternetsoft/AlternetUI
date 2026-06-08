@@ -145,17 +145,8 @@ namespace Alternet.Drawing
         {
             get
             {
-                if (IconSize == IconSizeKind.Custom)
-                {
-                    if (CustomIconSize.HasValue)
-                        return CustomIconSize.Value;
-                    else
-                        return IconSet.EffectiveSmallSystemIconSize;
-                }
-                if (IconSize == IconSizeKind.Large)
-                    return IconSet.EffectiveSystemIconSize;
-                return IconSet.EffectiveSmallSystemIconSize;
-            }
+                return IconSet.GetEffectiveIconSize(IconSize, CustomIconSize);
+            }                           
         }
 
         /// <summary>

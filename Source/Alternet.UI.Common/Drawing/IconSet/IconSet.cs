@@ -237,6 +237,28 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Gets an effective icon size for the specified size, taking into account the system settings and overrides.
+        /// </summary>
+        /// <param name="iconSizeKind">The kind of icon size.</param>
+        /// <param name="customSize">The custom size, if applicable.</param>
+        /// <returns>The effective icon size.</returns>
+        public static SizeI GetEffectiveIconSize(IconSizeKind? iconSizeKind, SizeI? customSize)
+        {
+            if (iconSizeKind == IconSizeKind.Custom)
+            {
+                if (customSize.HasValue)
+                    return customSize.Value;
+                else
+                    return IconSet.EffectiveSmallSystemIconSize;
+            }
+
+            if (iconSizeKind == IconSizeKind.Large)
+                return IconSet.EffectiveSystemIconSize;
+
+            return IconSet.EffectiveSmallSystemIconSize;
+        }
+
         /// <inheritdoc cref="FromUrl"/>
         /// <remarks>
         /// Returns null if error occurs during icon load.
@@ -271,7 +293,7 @@ namespace Alternet.Drawing
         /// Returns <paramref name="defaultIcon"/> if error occurs during icon load.
         /// No exceptions are raised.
         /// </remarks>
-        public static IconSet? FromUrlOrDefault(string url, IconSet? defaultIcon)
+        public static IconSet? FromUrlOrDefault(string url, IconSet? defaultIcon = null)
         {
             try
             {
