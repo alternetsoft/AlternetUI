@@ -13,12 +13,51 @@ namespace Alternet.Drawing
     /// </summary>
     public static class ColorUtils
     {
+        /// <summary>
+        /// Gets or sets default color dim factor used to calculate the dimmed color for dark theme
+        /// when no specific factor is provided as a parameter.
+        /// </summary>
+        public static float DefaultColorDimFactor = 0.6f;
+
         private static EnumArray<KnownColor, IKnownColorInfo> knownColorItems;
         private static bool knownColorsRegistered = false;
 
         static ColorUtils()
         {
             knownColorItems = new();
+        }
+
+        /// <summary>
+        /// Gets dimmed color.
+        /// </summary>
+        /// <param name="color">The color to be dimmed.</param>
+        /// <param name="factor">The factor by which to dim the color.</param>
+        /// <returns>The dimmed color.</returns>
+        public static LightDarkColor? GetDimmedLightDarkColor(LightDarkColor? color, float? factor = null)
+        {
+            if (color is null)
+                return null;
+
+            return new LightDarkColor(
+                light: GetDimmedColor(color.Light, factor),
+                dark: GetDimmedColor(color.Dark, factor));
+        }
+
+        /// <summary>
+        /// Gets dimmed color.
+        /// </summary>
+        /// <param name="color">The color to be dimmed.</param>
+        /// <param name="factor">The factor by which to dim the color.</param>
+        /// <returns>The dimmed color.</returns>
+        public static Color GetDimmedColor(Color color, float? factor = null)
+        {
+            var df = factor ?? DefaultColorDimFactor;
+
+            var rgb = color.AsStruct;
+            int r = (int)(rgb.R * df);
+            int g = (int)(rgb.G * df);
+            int b = (int)(rgb.B * df);
+            return Color.FromArgb(rgb.A, r, g, b);
         }
 
         /// <summary>
