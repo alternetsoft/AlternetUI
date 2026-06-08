@@ -1693,19 +1693,20 @@ namespace Alternet.Drawing
         /// <param name="size">Size of the created image.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage AsImage(SizeI size)
+        public Image AsImage(SizeI size)
         {
-            GenericImage image = new(size.Width, size.Height);
-            image.SetRGBRect(this);
-            return image;
+            var result = Bitmap.Create(size.Width, size.Height, this);
+            return result;
         }
 
         /// <summary>
         /// Adjusts the color according to the specified color adjustment operation.
         /// </summary>
-        /// <remarks>Use this method to dynamically modify color RGB values. The adjustment is determined by the provided operation.</remarks>
+        /// <remarks>Use this method to dynamically modify color RGB values.
+        /// The adjustment is determined by the provided operation.</remarks>
         /// <param name="op">The color adjustment operation to apply.</param>
-        /// <returns>A new <see cref="Color"/> instance representing the adjusted color. If the operation is not recognized, returns the
+        /// <returns>A new <see cref="Color"/> instance representing the adjusted color.
+        /// If the operation is not recognized, returns the
         /// original color.</returns>
         public Color GetAdjustedColor(ColorAdjustmentOperation op)
         {
@@ -1825,18 +1826,6 @@ namespace Alternet.Drawing
             graphics.FillRectangle(this.AsBrush, colorRect);
 
             return (Image)graphics.Bitmap!;
-        }
-
-        /// <summary>
-        /// Creates <see cref="ImageSet"/> of the specified <paramref name="size"/>
-        /// filled with this color.
-        /// </summary>
-        /// <param name="size">Size of the created image.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ImageSet AsImageSet(SizeI size)
-        {
-            return (ImageSet)(Image)AsImage(size);
         }
 
         /// <summary>

@@ -222,7 +222,7 @@ namespace ControlsSample
                 canvas.Flush();
             }
 
-            pictureBox.Image = (Image)image;
+            pictureBox.Image = image.AsImage;
         }
 
         private void DrawTextOnSkia() => DrawTextOnSkia(false);

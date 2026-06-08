@@ -369,6 +369,22 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Changes each pixel of the specified bitmap to grayscale.
+        /// </summary>
+        /// <param name="bitmap">The bitmap to be converted to grayscale.</param>
+        /// <returns>True if the operation was successful; otherwise, false.</returns>
+        public static bool ChangeToGrayScale(SKBitmap bitmap)
+        {
+            static void ChangePixel(ref RGBValue rgb, int value)
+            {
+                byte color = (byte)((0.299 * rgb.R) + (0.587 * rgb.G) + (0.114 * rgb.B));
+                rgb.R = rgb.G = rgb.B = color;
+            }
+
+            return ForEachPixel<int>(bitmap, ChangePixel, 0);
+        }
+
+        /// <summary>
         /// Converts the specified <see cref="Image"/> to a grayscale version.
         /// </summary>
         /// <param name="image">The <see cref="Image"/> to convert to grayscale.</param>

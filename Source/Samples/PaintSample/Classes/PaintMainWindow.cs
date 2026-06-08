@@ -577,8 +577,8 @@ namespace PaintSample
                 string ext = Path.GetExtension(dialog.FileName);
                 var bm = new Bitmap();
                 bm.Load(dialog.FileName, BitmapType.Any);
-                var image = (GenericImage)bm;
-                image.ChangeToGrayScale();
+                var image = (SKBitmap)bm;
+                SkiaUtils.ChangeToGrayScale(image);
                 var greyBm = (Bitmap)image;
                 greyBm.Save(dialog.FileName.Replace(ext, "_Gray" + ext));
                 Document.Bitmap = greyBm;
