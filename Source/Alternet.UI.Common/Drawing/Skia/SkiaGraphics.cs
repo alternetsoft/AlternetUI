@@ -185,6 +185,12 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override IGraphicsPathHandler CreateGraphicsPathHandler()
+        {
+            return new SkiaGraphicsPathHandler(this);
+        }
+
+        /// <inheritdoc/>
         public override void DrawText(ReadOnlySpan<char> text, Font font, Brush brush, RectD bounds)
         {
             Save();
@@ -389,7 +395,7 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
             var rect = RectD.GetCircleBoundingBox(center, radius);
-            canvas.DrawArc(rect, startAngle, sweepAngle, true, pen);
+            canvas.DrawArc(rect, startAngle, sweepAngle, useCenter: true, pen);
         }
 
         /// <inheritdoc/>

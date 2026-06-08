@@ -12,12 +12,6 @@ namespace Alternet.Drawing
     public partial class SkiaGraphics
     {
         /// <inheritdoc/>
-        public override IGraphicsPathHandler CreateGraphicsPathHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public override void ClipRegion(Region region)
         {
             throw new NotImplementedException();
