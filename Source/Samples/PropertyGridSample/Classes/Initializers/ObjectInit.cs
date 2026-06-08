@@ -215,6 +215,12 @@ Environment.NewLine + Environment.NewLine +
                 control.IgnoreLayout = true;
                 control.Size = 300;
                 control.Location = (10, 10);
+                control.Title = "This is title";
+
+                control.MinimizeButtonClick += (s, e) => App.Log("Minimize button clicked");
+                control.MaximizeButtonClick += (s, e) => App.Log("Maximize button clicked");
+                control.CloseButtonClick += (s, e) => App.Log("Close button clicked");
+                control.IconClick += (s, e) => App.Log("Icon clicked");
             });
 
             Actions.Add(typeof(ResizableBorder), (c) =>
