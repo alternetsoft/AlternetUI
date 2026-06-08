@@ -193,15 +193,14 @@ namespace Alternet.UI.Integration.VisualStudio
                 
                 var menuItem = new OleMenuCommand((s, e) => ShowSidebar(), cmdId);
                 menuItem.Enabled = true;
+                menuItem.Supported = true;
 
-                /*
                 menuItem.BeforeQueryStatus += (s, e) =>
                 {
                     ThreadHelper.ThrowIfNotOnUIThread();
                     menuItem.Visible = true; // always visible on toolbar
                     menuItem.Enabled = true;
                 };
-                */
 
                 commandService.AddCommand(menuItem);
             }
