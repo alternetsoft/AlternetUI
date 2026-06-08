@@ -13,9 +13,15 @@ namespace Alternet.UI
     /// </summary>
     public partial class ResizableWindowBorder : ResizableBorder
     {
+        /// <summary>
+        /// Gets or sets the default icon margin.
+        /// </summary>
         public static Thickness DefaultIconMargin = (5, 0, 0, 0);
         
-        public static Thickness DefaultLabelMargin = (5, 0, 5, 0);
+        /// <summary>
+        /// Gets or sets the default title margin.
+        /// </summary>
+        public static Thickness DefaultTitleMargin = (5, 0, 5, 0);
 
         private readonly GripControl gripControl;
         private readonly Label label;
@@ -45,10 +51,6 @@ namespace Alternet.UI
             toolBar.MinHeight = Coord.Max(Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow), ToolBar.DefaultMinItemSize);
             toolBar.Parent = this.FillPanel;
 
-            toolBar.ParentBackColorChanged += (s, e) =>
-            {
-            };
-
             AssignDefaultColors();
 
             fallbackOptions = new ImageSizeFallbackOptions();
@@ -66,7 +68,7 @@ namespace Alternet.UI
             label = new Label();
             label.VerticalAlignment = VerticalAlignment.Center;
             label.HorizontalAlignment = HorizontalAlignment.Left;
-            label.Margin = DefaultLabelMargin;
+            label.Margin = DefaultTitleMargin;
             label.InputTransparent = true;
             label.Parent = gripControl;
 
@@ -85,6 +87,9 @@ namespace Alternet.UI
             closeButton.HorizontalAlignment = HorizontalAlignment.Right;
         }
 
+        /// <summary>
+        /// Occurs when the minimize button is clicked.
+        /// </summary>
         public event EventHandler MinimizeButtonClick
         {
             add
@@ -97,6 +102,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Occurs when the close button is clicked.
+        /// </summary>
         public event EventHandler CloseButtonClick
         {
             add
@@ -109,6 +117,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Occurs when the maximize button is clicked.
+        /// </summary>
         public event EventHandler MaximizeButtonClick
         {
             add
@@ -121,6 +132,9 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Occurs when the icon is clicked.
+        /// </summary>
         public event EventHandler IconClick
         {
             add
@@ -134,22 +148,49 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets grip control used for moving the window.
+        /// </summary>
         public GripControl GripControl => gripControl;
 
+        /// <summary>
+        /// Gets the label used for displaying the window title.
+        /// </summary>
         public Label TitleLabel => label;
 
+        /// <summary>
+        /// Gets the button used for minimizing the window.
+        /// </summary>
         public SpeedButton MinimizeButton => minimizeButton;
 
+        /// <summary>
+        /// Gets the button used for maximizing the window.
+        /// </summary>
         public SpeedButton MaximizeButton => maximizeButton;
 
+        /// <summary>
+        /// Gets the button used for closing the window.
+        /// </summary>
         public SpeedButton CloseButton => closeButton;
 
+        /// <summary>
+        /// Gets icon size fallback options.
+        /// </summary>
         public ImageSizeFallbackOptions IconSizeFallbackOptions => fallbackOptions;
 
+        /// <summary>
+        /// Gets the toolbar used in the window title bar.
+        /// </summary>
         public ToolBar ToolBar => toolBar;
 
+        /// <summary>
+        /// Gets the picture box used for displaying the window icon.
+        /// </summary>
         public PictureBox IconPictureBox => icon;
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this border is active.
+        /// </summary>
         public virtual bool IsActiveBorder
         {
             get => isActiveBorder;
@@ -163,12 +204,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
         protected override void OnTitleChanged(EventArgs e)
         {
             base.OnTitleChanged(e);
             label.Text = Title;
         }
 
+        /// <summary>
+        /// Assigns default colors to the control based on the active state and color theme.
+        /// </summary>
         protected virtual void AssignDefaultColors()
         {
             if (!AutoUpdateColors)
@@ -187,6 +232,7 @@ namespace Alternet.UI
             this.UseWindowBorderColors(isDark, isActiveBorder);
         }
 
+        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
