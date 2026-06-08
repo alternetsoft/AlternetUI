@@ -102,36 +102,6 @@ namespace Alternet.Drawing
             PointI pos,
             RGBValue? color = null);
 
-        /// <inheritdoc cref="GenericImage.SizeNoScale"/>
-        GenericImage SizeNoScale(
-            SizeI size,
-            PointI pos = default,
-            RGBValue? color = null);
-
-        /// <inheritdoc cref="GenericImage.Rotate90"/>
-        GenericImage Rotate90(bool clockwise = true);
-
-        /// <inheritdoc cref="GenericImage.Rotate180"/>
-        GenericImage Rotate180();
-
-        /// <inheritdoc cref="GenericImage.RotateHue"/>
-        void RotateHue(double angle);
-
-        /// <inheritdoc cref="GenericImage.ChangeSaturation"/>
-        void ChangeSaturation(double factor);
-
-        /// <inheritdoc cref="GenericImage.ChangeBrightness"/>
-        void ChangeBrightness(double factor);
-
-        /// <inheritdoc cref="GenericImage.ChangeHSV"/>
-        void ChangeHSV(double angleH, double factorS, double factorV);
-
-        /// <inheritdoc cref="GenericImage.Scale"/>
-        GenericImage Scale(
-            int width,
-            int height,
-            GenericImageResizeQuality quality = GenericImageResizeQuality.Normal);
-
         /// <summary>
         /// Converts alpha components of the image to mask. Mask color is choosen automatically.
         /// </summary>
@@ -161,9 +131,6 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         GenericImage ConvertToGreyscale();
-
-        /// <inheritdoc cref="GenericImage.ConvertToMono"/>
-        GenericImage ConvertToMono(RGBValue rgb);
 
         /// <inheritdoc cref="GenericImage.GetAlpha"/>
         byte GetAlpha(int x, int y);

@@ -102,13 +102,6 @@ namespace PaintSample
             testMenu.Add("Convert To Disabled", DoConvertToDisabled);
             testMenu.Add("Convert To Disabled (Skia)", DoConvertToDisabledSkia);
 
-            /*
-            if (!App.IsLinuxOS)
-                testMenu.Add("Sample draw", DoDrawOnBitmap);
-            */
-
-            testMenu.Add("Rotate", DoRotate);
-
             helpMainMenu = new("_Help");
             menu.Add(helpMainMenu);
 
@@ -590,14 +583,6 @@ namespace PaintSample
                 greyBm.Save(dialog.FileName.Replace(ext, "_Gray" + ext));
                 Document.Bitmap = greyBm;
             });
-        }
-
-        public void DoRotate()
-        {
-            var bitmap = Document.Bitmap;
-            GenericImage image = (GenericImage)bitmap;
-            var newImage = image.Rotate90(); 
-            Document.Bitmap = (Bitmap)newImage;
         }
 
         public unsafe void DoGenImageUseGetData()
