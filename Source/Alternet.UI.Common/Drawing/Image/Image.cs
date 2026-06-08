@@ -737,7 +737,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                result = GenericImage.CreateSkiaBitmapForImage(
+                result = DrawingUtils.CreateSkiaBitmapForImage(
                     bitmap.Width,
                     bitmap.Height,
                     bitmap.HasAlpha);

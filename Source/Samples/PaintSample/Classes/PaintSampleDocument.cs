@@ -127,7 +127,8 @@ namespace PaintSample
 
         private Bitmap LoadBitmap(string fileName)
         {
-            var image = new GenericImage(fileName);
+            var bitmap = new Bitmap(fileName);
+            var image = (GenericImage)bitmap;
             image.ResizeNoScale((600, 600), (0, 0), Color.White);
             return (Bitmap)image;
         }

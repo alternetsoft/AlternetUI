@@ -237,23 +237,5 @@ namespace Alternet.Drawing
 
         /// <inheritdoc cref="GenericImage.IsTransparent"/>
         bool IsTransparent(int x, int y, byte threshold);
-
-        /// <inheritdoc cref="GenericImage.LoadFromStream(Stream, BitmapType, int)"/>
-        bool LoadFromStream(
-            Stream stream,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1);
-
-        /// <inheritdoc cref="GenericImage.LoadFromStream(Stream, string, int)"/>
-        bool LoadFromStream(
-            Stream stream,
-            string mimetype,
-            int index = -1);
-
-        /// <inheritdoc cref="GenericImage.SaveToStream(Stream, string)"/>
-        bool SaveToStream(Stream stream, string mimetype);
-
-        /// <inheritdoc cref="GenericImage.SaveToStream(Stream, BitmapType)"/>
-        bool SaveToStream(Stream stream, BitmapType type);
     }
 }

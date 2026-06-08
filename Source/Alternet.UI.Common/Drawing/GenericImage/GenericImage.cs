@@ -62,119 +62,6 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image with the given size and clears it if requested.
-        /// Does not create an alpha channel.
-        /// </summary>
-        /// <param name="size">Specifies the size of the image.</param>
-        /// <param name="clear">If true, initialize the image to black.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(SizeI size, bool clear = false)
-        {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                size.Width,
-                size.Height,
-                clear);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image from a file.
-        /// </summary>
-        /// <param name="url">Path or url to file with image data.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library
-        /// and OS has been configured and
-        /// by which handlers have been loaded, not all formats may be available. If value is
-        /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <param name="index">Index of the image to load in the case that the image
-        /// file contains multiple images.
-        /// This is only used by GIF, ICO and TIFF handlers.The default value(-1) means
-        /// "choose the default image" and is interpreted as the first image(index= 0) by the GIF and
-        /// TIFF handler and as the largest and most colorful one by the ICO handler.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string? url, BitmapType bitmapType = BitmapType.Any, int index = -1)
-        {
-            if (string.IsNullOrEmpty(url))
-                return;
-
-            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
-            if (stream is null)
-            {
-                App.LogError($"GenericImage not loaded from: {url}");
-                return;
-            }
-
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                    stream,
-                    bitmapType,
-                    index);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image from a file using MIME-types to specify the type.
-        /// </summary>
-        /// <param name="url">Path or url to file with image data.</param>
-        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(string? url, string mimeType, int index = -1)
-        {
-            if (string.IsNullOrEmpty(url))
-                return;
-
-            using var stream = ResourceLoader.StreamFromUrlOrDefault(url!);
-            if (stream is null)
-            {
-                App.LogError($"GenericImage not loaded from: {url}");
-                return;
-            }
-
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                    stream,
-                    mimeType,
-                    index);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image from a stream.
-        /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image.
-        /// Currently, the stream must support seeking.</param>
-        /// <param name="bitmapType">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/>.</param>
-        /// <param name="index">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/>.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(Stream stream, BitmapType bitmapType = BitmapType.Any, int index = -1)
-        {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                      stream,
-                      bitmapType,
-                      index);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image from a stream.
-        /// </summary>
-        /// <param name="stream">Opened input stream from which to load the image.
-        /// Currently, the stream must support seeking.</param>
-        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(Stream stream, string mimeType, int index = -1)
-        {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                      stream,
-                      mimeType,
-                      index);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from data in memory.
         /// </summary>
         /// <param name="width">Specifies the width of the image.</param>
@@ -322,11 +209,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets number of pixels in this image (Width * Height).
-        /// </summary>
-        public virtual int PixelCount => Size.PixelCount;
-
-        /// <summary>
         /// Gets or sets pixels using array of <see cref="SKColor"/>.
         /// </summary>
         /// <remarks>
@@ -396,61 +278,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Fills array of <see cref="SKColor"/> with the specified color.
-        /// </summary>
-        /// <param name="pixels">Array of pixels.</param>
-        /// <param name="fill">Color to fill.</param>
-        public static unsafe void FillPixels(SKColor[] pixels, SKColor fill)
-        {
-            var length = pixels.Length;
-
-            fixed (SKColor* rgbPtr = pixels)
-            {
-                var ptr = rgbPtr;
-
-                for (int i = 0; i < length; i++)
-                {
-                    *ptr = fill;
-                    ptr++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Fills array with alpha component data with the specified alpha value.
-        /// </summary>
-        /// <param name="alpha">Array of alpha components.</param>
-        /// <param name="fill">Value to fill.</param>
-        public static unsafe void FillAlphaData(byte[] alpha, byte fill)
-        {
-            fixed (byte* alphaPtr = alpha)
-            {
-                BaseMemory.Fill((IntPtr)alphaPtr, fill, alpha.Length);
-            }
-        }
-
-        /// <summary>
-        /// Fills array with <see cref="RGBValue"/> with the specified color.
-        /// </summary>
-        /// <param name="rgb">Array of pixels.</param>
-        /// <param name="fill">Color to fill.</param>
-        public static unsafe void FillRgbData(RGBValue[] rgb, RGBValue fill)
-        {
-            var length = rgb.Length;
-
-            fixed (RGBValue* rgbPtr = rgb)
-            {
-                var ptr = rgbPtr;
-
-                for (int i = 0; i < length; i++)
-                {
-                    *ptr = fill;
-                    ptr++;
-                }
-            }
-        }
-
-        /// <summary>
         /// Creates <see cref="GenericImage"/> with the specified size and
         /// fills it with the color.
         /// </summary>
@@ -460,259 +287,10 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static GenericImage Create(int width, int height, Color color)
         {
-            var alphaData = CreateAlphaData(width, height, color.A);
-            var rgbData = CreateRgbData(width, height, color);
+            var alphaData = DrawingUtils.CreateAlphaData(width, height, color.A);
+            var rgbData = DrawingUtils.CreateRgbData(width, height, color);
             GenericImage image = new(width, height, rgbData, alphaData);
             return image;
-        }
-
-        /// <summary>
-        /// Creates array of <see cref="SKColor"/> with the specified size and optionally
-        /// fills it with the color.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="fill">Color to fill.</param>
-        /// <returns></returns>
-        public static SKColor[] CreatePixels(int width, int height, SKColor? fill = null)
-        {
-            var size = width * height;
-            SKColor[] result = new SKColor[size];
-            if (fill is null)
-                return result;
-            FillPixels(result, fill.Value);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates array of <see cref="RGBValue"/> with the specified size and optionally
-        /// fills it with the color.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="fill">Color to fill.</param>
-        /// <returns></returns>
-        public static RGBValue[] CreateRgbData(int width, int height, RGBValue? fill = null)
-        {
-            var size = width * height;
-            RGBValue[] result = new RGBValue[size];
-            if (fill is null)
-                return result;
-            FillRgbData(result, fill.Value);
-            return result;
-        }
-
-        /// <summary>
-        /// Creates array of <see cref="RGBValue"/> with the specified size and copies
-        /// pixel data from the <paramref name="source"/> pointer.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="source">Pointer to the pixel data (array of <see cref="RGBValue"/>).</param>
-        /// <returns></returns>
-        public static unsafe RGBValue[] CreateRgbDataFromPtr(int width, int height, IntPtr source)
-        {
-            var size = width * height;
-            RGBValue[] result = new RGBValue[size];
-
-            if(source != default)
-            {
-                fixed (RGBValue* resultPtr = result)
-                {
-                    BaseMemory.Move((IntPtr)resultPtr, source, size * 3);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Creates array of alpha components with the specified size and copies
-        /// alpha component data from the <paramref name="source"/> pointer.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="source">Pointer to the alpha component data (array of bytes).</param>
-        /// <returns></returns>
-        public static unsafe byte[] CreateAlphaDataFromPtr(int width, int height, IntPtr source)
-        {
-            var size = width * height;
-            byte[] result = new byte[size];
-
-            if (source != default)
-            {
-                fixed (byte* resultPtr = result)
-                {
-                    BaseMemory.Move((IntPtr)resultPtr, source, size);
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Creates array of alpha components with the specified size and optionally fills
-        /// it with the given value.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="fill">Value to fill.</param>
-        /// <returns></returns>
-        public static byte[] CreateAlphaData(int width, int height, byte? fill = null)
-        {
-            var size = width * height;
-            byte[] result = new byte[size];
-            if (fill is null)
-                return result;
-            FillAlphaData(result, fill.Value);
-            return result;
-        }
-
-        /// <summary>
-        /// Converts array of <see cref="SKColor"/> to array of <see cref="RGBValue"/>.
-        /// </summary>
-        /// <param name="data">Array with pixel data.</param>
-        /// <returns></returns>
-        public static unsafe RGBValue[] GetRGBValues(SKColor[] data)
-        {
-            var length = data.Length;
-
-            var result = new RGBValue[length];
-
-            fixed (SKColor* dataPtr = data)
-            {
-                var ptr = dataPtr;
-
-                fixed (RGBValue* resultPtr = result)
-                {
-                    var aPtr = resultPtr;
-
-                    for (int i = 0; i < length; i++)
-                    {
-                        *aPtr = *ptr;
-                        ptr++;
-                        aPtr++;
-                    }
-                }
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Copies pixel data from <paramref name="source"/> to <paramref name="data"/>.
-        /// </summary>
-        /// <param name="data">Destination array of <see cref="SKColor"/>.</param>
-        /// <param name="source">Pointer to pixel data.</param>
-        public static unsafe void SetRgbValuesFromPtr(SKColor[] data, RGBValue* source)
-        {
-            var length = data.Length;
-
-            fixed (SKColor* dataPtr = data)
-            {
-                var ptr = dataPtr;
-
-                for (int i = 0; i < length; i++)
-                {
-                    byte alpha = (*ptr).Alpha;
-                    var rgb = *source;
-                    *ptr = new SKColor(rgb.R, rgb.G, rgb.B, alpha);
-                    ptr++;
-                    source++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Fills alpha component of the colors with the specified value.
-        /// </summary>
-        /// <param name="data">Array of pixels.</param>
-        /// <param name="alpha">Value to fill.</param>
-        public static unsafe void FillAlphaData(SKColor[] data, byte alpha)
-        {
-            var length = data.Length;
-
-            fixed (SKColor* dataPtr = data)
-            {
-                var ptr = dataPtr;
-
-                for (int i = 0; i < length; i++)
-                {
-                    SKColor color = *ptr;
-                    *ptr = new SKColor(color.Red, color.Green, color.Blue, alpha);
-                    ptr++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Copies alpha components from <paramref name="source"/> to <paramref name="data"/>.
-        /// </summary>
-        /// <param name="data">Destination array of <see cref="SKColor"/>.</param>
-        /// <param name="source">Pointer to alpha components.</param>
-        public static unsafe void SetAlphaValuesFromPtr(SKColor[] data, byte* source)
-        {
-            var length = data.Length;
-
-            fixed (SKColor* dataPtr = data)
-            {
-                var ptr = dataPtr;
-
-                for (int i = 0; i < length; i++)
-                {
-                    SKColor color = (*ptr).WithAlpha(*source);
-                    *ptr = color;
-                    ptr++;
-                    source++;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Creates array of alpha components from the array of <see cref="SKColor"/>.
-        /// </summary>
-        /// <param name="data">Array of pixel data.</param>
-        /// <returns></returns>
-        public static unsafe byte[] GetAlphaValues(SKColor[] data)
-        {
-            var length = data.Length;
-
-            var alpha = new byte[length];
-
-            fixed (SKColor* dataPtr = data)
-            {
-                var ptr = dataPtr;
-
-                fixed (byte* alphaPtr = alpha)
-                {
-                    var aPtr = alphaPtr;
-
-                    for (int i = 0; i < length; i++)
-                    {
-                        *aPtr = (*ptr).Alpha;
-                        ptr++;
-                        aPtr++;
-                    }
-                }
-            }
-
-            return alpha;
-        }
-
-        /// <summary>
-        /// Converts array of <see cref="SKColor"/> into array of <see cref="RGBValue"/>
-        /// and array of alpha components.
-        /// </summary>
-        /// <param name="data">Source array with pixel data.</param>
-        /// <param name="rgb">Destination array of <see cref="RGBValue"/>.</param>
-        /// <param name="alpha">Destination array of <see cref="byte"/> with alpha components.</param>
-        public static void SeparateAlphaData(
-            SKColor[] data,
-            out RGBValue[] rgb,
-            out byte[] alpha)
-        {
-            rgb = GetRGBValues(data);
-            alpha = GetAlphaValues(data);
         }
 
         /// <summary>
@@ -728,24 +306,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates <see cref="SKBitmap"/> with the specifies size.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="hasAlpha">Whether image has alpha component.</param>
-        /// <returns></returns>
-        public static SKBitmap CreateSkiaBitmapForImage(int width, int height, bool hasAlpha)
-        {
-            var count = width * height;
-            if (count == 0)
-                return new SKBitmap();
-
-            var result = new SKBitmap(width, height, isOpaque: !hasAlpha);
-
-            return result;
-        }
-
-        /// <summary>
         /// Converts image specified with <see cref="IGenericImageHandler"/> to
         /// <see cref="SKBitmap"/>. Optionally copies pixel data.
         /// </summary>
@@ -754,7 +314,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static SKBitmap ToSkia(IGenericImageHandler bitmap, bool assignPixels = true)
         {
-            var result = CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
+            var result = DrawingUtils.CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
 
             if (assignPixels)
                 result.Pixels = bitmap.Pixels;
@@ -881,7 +441,7 @@ namespace Alternet.Drawing
             if (!HasAlpha)
             {
                 InitAlpha();
-                AlphaData = CreateAlphaData(Width, Height, value);
+                AlphaData = DrawingUtils.CreateAlphaData(Width, Height, value);
                 return true;
             }
 
@@ -1779,155 +1339,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Loads an image from an input stream.
-        /// </summary>
-        /// <param name="stream">Input stream with image data.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
-        /// been configured and
-        /// by which handlers have been loaded, not all formats may be available. If value is
-        /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <param name="index">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromStream(
-            Stream stream,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1)
-        {
-            return Handler.LoadFromStream(stream, bitmapType, index);
-        }
-
-        /// <summary>
-        /// Loads an image from a file.
-        /// </summary>
-        /// <param name="url">Path or url to file with image data.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS has
-        /// been configured and
-        /// by which handlers have been loaded, not all formats may be available. If value is
-        /// <see cref="BitmapType.Any"/>, function will try to autodetect the format.</param>
-        /// <param name="index">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromFile(
-            string? url,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1)
-        {
-            if (string.IsNullOrEmpty(url))
-                return false;
-
-            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
-            if (stream is null)
-            {
-                return false;
-            }
-
-            return Handler.LoadFromStream(
-                stream,
-                bitmapType,
-                index);
-        }
-
-        /// <summary>
-        /// Loads an image from a file.
-        /// </summary>
-        /// <param name="url">Path or url to file with image data.</param>
-        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromFile(string? url, string mimeType, int index = -1)
-        {
-            if (string.IsNullOrEmpty(url))
-                return false;
-
-            using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
-            if (stream is null)
-            {
-                return false;
-            }
-
-            return Handler.LoadFromStream(stream, mimeType, index);
-        }
-
-        /// <summary>
-        /// Loads an image from an input stream.
-        /// </summary>
-        /// <param name="stream">Input stream with image data.</param>
-        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
-        /// <param name="index">See description in
-        /// <see cref="GenericImage(string, BitmapType, int)"/></param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool LoadFromStream(Stream stream, string mimeType, int index = -1)
-        {
-            return Handler.LoadFromStream(stream, mimeType, index);
-        }
-
-        /// <summary>
-        /// Saves an image in the given stream.
-        /// </summary>
-        /// <param name="stream">Output stream.</param>
-        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool SaveToStream(Stream stream, string mimeType)
-        {
-            return Handler.SaveToStream(stream, mimeType);
-        }
-
-        /// <summary>
-        /// Saves an image in the named file.
-        /// </summary>
-        /// <param name="filename">Path to file.</param>
-        /// <param name="bitmapType">Type of the bitmap. Depending on how library and OS
-        /// has been configured and
-        /// by which handlers have been loaded, not all formats may be available.</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool SaveToFile(string filename, BitmapType bitmapType)
-        {
-            return InsideTryCatch(() =>
-            {
-                using var stream = FileSystem.Default.Create(filename);
-                return SaveToStream(stream, bitmapType);
-            });
-        }
-
-        /// <summary>
-        /// Saves an image in the named file.
-        /// </summary>
-        /// <param name="filename">Name of the file to save the image to.</param>
-        /// <param name="mimeType">MIME type string (for example 'image/jpeg').</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool SaveToFile(string filename, string mimeType)
-        {
-            return InsideTryCatch(() =>
-            {
-                using var stream = FileSystem.Default.Create(filename);
-                return SaveToStream(stream, mimeType);
-            });
-        }
-
-        /// <summary>
-        /// Saves an image in the named file.
-        /// </summary>
-        /// <param name="filename">Path to file.</param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        /// <remarks>
-        /// File type is determined from the extension of the file name.
-        /// Note that this function may fail if the extension is not recognized!
-        /// You can use one of the overload methods to save images to files
-        /// with non-standard extensions.
-        /// </remarks>
-        public virtual bool SaveToFile(string filename)
-        {
-            return InsideTryCatch(() =>
-            {
-                using var stream = FileSystem.Default.Create(filename);
-                var bitmapType = Image.GetBitmapTypeFromFileName(filename);
-                return SaveToStream(stream, bitmapType);
-            });
-        }
-
-        /// <summary>
         /// Locks pixels data and gets <see cref="ISkiaSurface"/> to access it.
         /// </summary>
         /// <param name="lockMode">Lock mode.</param>
@@ -1938,17 +1349,6 @@ namespace Alternet.Drawing
             Debug.Assert(!HasMask, "Image.HasMask == false is required.");
 
             return GraphicsFactory.CreateSkiaSurface(this, lockMode);
-        }
-
-        /// <summary>
-        /// Saves an image in the given stream.
-        /// </summary>
-        /// <param name="stream">Output stream</param>
-        /// <param name="type"></param>
-        /// <returns><c>true</c> if the call succeeded, <c>false</c> otherwise.</returns>
-        public virtual bool SaveToStream(Stream stream, BitmapType type)
-        {
-            return Handler.SaveToStream(stream, type);
         }
 
         /// <inheritdoc/>

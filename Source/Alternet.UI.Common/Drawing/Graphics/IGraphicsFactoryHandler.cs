@@ -230,30 +230,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
         /// </summary>
-        /// <param name="stream">Stream with image data.</param>
-        /// <param name="bitmapType">Type of the image.</param>
-        /// <param name="index">Image index.</param>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler(
-            Stream stream,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1);
-
-        /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <param name="stream">Stream with image data.</param>
-        /// <param name="mimeType">Mime-type of the image.</param>
-        /// <param name="index">Image index.</param>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler(
-            Stream stream,
-            string mimeType,
-            int index = -1);
-
-        /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
-        /// </summary>
         /// <param name="width">Image width.</param>
         /// <param name="height">Image height.</param>
         /// <param name="data">Array with image pixels.</param>

@@ -24,6 +24,328 @@ namespace Alternet.UI
         public static char[] SpaceCharsUsedToSplit = new char[] { ' ', '\u00A0' };
 
         /// <summary>
+        /// Fills array with alpha component data with the specified alpha value.
+        /// </summary>
+        /// <param name="alpha">Array of alpha components.</param>
+        /// <param name="fill">Value to fill.</param>
+        public static unsafe void FillAlphaData(byte[] alpha, byte fill)
+        {
+            fixed (byte* alphaPtr = alpha)
+            {
+                BaseMemory.Fill((IntPtr)alphaPtr, fill, alpha.Length);
+            }
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKBitmap"/> with the specifies size.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="hasAlpha">Whether image has alpha component.</param>
+        /// <returns></returns>
+        public static SKBitmap CreateSkiaBitmapForImage(int width, int height, bool hasAlpha)
+        {
+            var count = width * height;
+            if (count == 0)
+                return new SKBitmap();
+
+            var result = new SKBitmap(width, height, isOpaque: !hasAlpha);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Fills array of <see cref="SKColor"/> with the specified color.
+        /// </summary>
+        /// <param name="pixels">Array of pixels.</param>
+        /// <param name="fill">Color to fill.</param>
+        public static unsafe void FillPixels(SKColor[] pixels, SKColor fill)
+        {
+            var length = pixels.Length;
+
+            fixed (SKColor* rgbPtr = pixels)
+            {
+                var ptr = rgbPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    *ptr = fill;
+                    ptr++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates array of <see cref="SKColor"/> with the specified size and optionally
+        /// fills it with the color.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="fill">Color to fill.</param>
+        /// <returns></returns>
+        public static SKColor[] CreatePixels(int width, int height, SKColor? fill = null)
+        {
+            var size = width * height;
+            SKColor[] result = new SKColor[size];
+            if (fill is null)
+                return result;
+            FillPixels(result, fill.Value);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts array of <see cref="SKColor"/> into array of <see cref="RGBValue"/>
+        /// and array of alpha components.
+        /// </summary>
+        /// <param name="data">Source array with pixel data.</param>
+        /// <param name="rgb">Destination array of <see cref="RGBValue"/>.</param>
+        /// <param name="alpha">Destination array of <see cref="byte"/> with alpha components.</param>
+        public static void SeparateAlphaData(
+            SKColor[] data,
+            out RGBValue[] rgb,
+            out byte[] alpha)
+        {
+            rgb = GetRGBValues(data);
+            alpha = GetAlphaValues(data);
+        }
+
+        /// <summary>
+        /// Creates array of <see cref="RGBValue"/> with the specified size and optionally
+        /// fills it with the color.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="fill">Color to fill.</param>
+        /// <returns></returns>
+        public static RGBValue[] CreateRgbData(int width, int height, RGBValue? fill = null)
+        {
+            var size = width * height;
+            RGBValue[] result = new RGBValue[size];
+            if (fill is null)
+                return result;
+            FillRgbData(result, fill.Value);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates array of <see cref="RGBValue"/> with the specified size and copies
+        /// pixel data from the <paramref name="source"/> pointer.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="source">Pointer to the pixel data (array of <see cref="RGBValue"/>).</param>
+        /// <returns></returns>
+        public static unsafe RGBValue[] CreateRgbDataFromPtr(int width, int height, IntPtr source)
+        {
+            var size = width * height;
+            RGBValue[] result = new RGBValue[size];
+
+            if (source != default)
+            {
+                fixed (RGBValue* resultPtr = result)
+                {
+                    BaseMemory.Move((IntPtr)resultPtr, source, size * 3);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates array of alpha components with the specified size and copies
+        /// alpha component data from the <paramref name="source"/> pointer.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="source">Pointer to the alpha component data (array of bytes).</param>
+        /// <returns></returns>
+        public static unsafe byte[] CreateAlphaDataFromPtr(int width, int height, IntPtr source)
+        {
+            var size = width * height;
+            byte[] result = new byte[size];
+
+            if (source != default)
+            {
+                fixed (byte* resultPtr = result)
+                {
+                    BaseMemory.Move((IntPtr)resultPtr, source, size);
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates array of alpha components with the specified size and optionally fills
+        /// it with the given value.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="fill">Value to fill.</param>
+        /// <returns></returns>
+        public static byte[] CreateAlphaData(int width, int height, byte? fill = null)
+        {
+            var size = width * height;
+            byte[] result = new byte[size];
+            if (fill is null)
+                return result;
+            FillAlphaData(result, fill.Value);
+            return result;
+        }
+
+        /// <summary>
+        /// Converts array of <see cref="SKColor"/> to array of <see cref="RGBValue"/>.
+        /// </summary>
+        /// <param name="data">Array with pixel data.</param>
+        /// <returns></returns>
+        public static unsafe RGBValue[] GetRGBValues(SKColor[] data)
+        {
+            var length = data.Length;
+
+            var result = new RGBValue[length];
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                fixed (RGBValue* resultPtr = result)
+                {
+                    var aPtr = resultPtr;
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        *aPtr = *ptr;
+                        ptr++;
+                        aPtr++;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Copies pixel data from <paramref name="source"/> to <paramref name="data"/>.
+        /// </summary>
+        /// <param name="data">Destination array of <see cref="SKColor"/>.</param>
+        /// <param name="source">Pointer to pixel data.</param>
+        public static unsafe void SetRgbValuesFromPtr(SKColor[] data, RGBValue* source)
+        {
+            var length = data.Length;
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    byte alpha = (*ptr).Alpha;
+                    var rgb = *source;
+                    *ptr = new SKColor(rgb.R, rgb.G, rgb.B, alpha);
+                    ptr++;
+                    source++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Fills alpha component of the colors with the specified value.
+        /// </summary>
+        /// <param name="data">Array of pixels.</param>
+        /// <param name="alpha">Value to fill.</param>
+        public static unsafe void FillAlphaData(SKColor[] data, byte alpha)
+        {
+            var length = data.Length;
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    SKColor color = *ptr;
+                    *ptr = new SKColor(color.Red, color.Green, color.Blue, alpha);
+                    ptr++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Copies alpha components from <paramref name="source"/> to <paramref name="data"/>.
+        /// </summary>
+        /// <param name="data">Destination array of <see cref="SKColor"/>.</param>
+        /// <param name="source">Pointer to alpha components.</param>
+        public static unsafe void SetAlphaValuesFromPtr(SKColor[] data, byte* source)
+        {
+            var length = data.Length;
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    SKColor color = (*ptr).WithAlpha(*source);
+                    *ptr = color;
+                    ptr++;
+                    source++;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates array of alpha components from the array of <see cref="SKColor"/>.
+        /// </summary>
+        /// <param name="data">Array of pixel data.</param>
+        /// <returns></returns>
+        public static unsafe byte[] GetAlphaValues(SKColor[] data)
+        {
+            var length = data.Length;
+
+            var alpha = new byte[length];
+
+            fixed (SKColor* dataPtr = data)
+            {
+                var ptr = dataPtr;
+
+                fixed (byte* alphaPtr = alpha)
+                {
+                    var aPtr = alphaPtr;
+
+                    for (int i = 0; i < length; i++)
+                    {
+                        *aPtr = (*ptr).Alpha;
+                        ptr++;
+                        aPtr++;
+                    }
+                }
+            }
+
+            return alpha;
+        }
+
+        /// <summary>
+        /// Fills array with <see cref="RGBValue"/> with the specified color.
+        /// </summary>
+        /// <param name="rgb">Array of pixels.</param>
+        /// <param name="fill">Color to fill.</param>
+        public static unsafe void FillRgbData(RGBValue[] rgb, RGBValue fill)
+        {
+            var length = rgb.Length;
+
+            fixed (RGBValue* rgbPtr = rgb)
+            {
+                var ptr = rgbPtr;
+
+                for (int i = 0; i < length; i++)
+                {
+                    *ptr = fill;
+                    ptr++;
+                }
+            }
+        }
+
+        /// <summary>
         /// Creates <see cref="Image"/> with the size specified by <paramref name="sizeAndDrawFunc"/>
         /// and with pixels filled with <paramref name="drawAction"/>
         /// (or <paramref name="sizeAndDrawFunc"/> if it is null).

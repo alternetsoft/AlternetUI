@@ -35,19 +35,19 @@ namespace Alternet.Drawing
             {
                 if (!IsOk)
                     return Array.Empty<SKColor>();
-                var pixels = GenericImage.CreatePixels(Width, Height);
+                var pixels = DrawingUtils.CreatePixels(Width, Height);
 
                 var rgb = UI.Native.GenericImage.GetData(Handle);
-                GenericImage.SetRgbValuesFromPtr(pixels, (RGBValue*)rgb);
+                DrawingUtils.SetRgbValuesFromPtr(pixels, (RGBValue*)rgb);
 
                 if (HasAlpha)
                 {
                     var alpha = UI.Native.GenericImage.GetAlphaData(Handle);
-                    GenericImage.SetAlphaValuesFromPtr(pixels, (byte*)alpha);
+                    DrawingUtils.SetAlphaValuesFromPtr(pixels, (byte*)alpha);
                 }
                 else
                 {
-                    GenericImage.FillAlphaData(pixels, 255);
+                    DrawingUtils.FillAlphaData(pixels, 255);
                 }
 
                 return pixels;
@@ -57,7 +57,7 @@ namespace Alternet.Drawing
             {
                 if (!IsOk)
                     return;
-                GenericImage.SeparateAlphaData(value, out var rgb, out var alpha);
+                DrawingUtils.SeparateAlphaData(value, out var rgb, out var alpha);
                 var alphaPtr = AllocAlphaData(Width, Height, alpha);
                 var dataPtr = AllocData(Width, Height, rgb);
                 UI.Native.GenericImage.SetData(Handle, dataPtr, false);
@@ -73,7 +73,7 @@ namespace Alternet.Drawing
                     return Array.Empty<RGBValue>();
 
                 var dataPtr = UI.Native.GenericImage.GetData(Handle);
-                var result = GenericImage.CreateRgbDataFromPtr(Width, Height, dataPtr);
+                var result = DrawingUtils.CreateRgbDataFromPtr(Width, Height, dataPtr);
                 return result;
             }
 
@@ -97,12 +97,12 @@ namespace Alternet.Drawing
 
                 if (!HasAlpha)
                 {
-                    result = GenericImage.CreateAlphaData(Width, Height, 255);
+                    result = DrawingUtils.CreateAlphaData(Width, Height, 255);
                     return result;
                 }
 
                 var alphaPtr = UI.Native.GenericImage.GetAlphaData(Handle);
-                result = GenericImage.CreateAlphaDataFromPtr(Width, Height, alphaPtr);
+                result = DrawingUtils.CreateAlphaDataFromPtr(Width, Height, alphaPtr);
                 return result;
             }
 

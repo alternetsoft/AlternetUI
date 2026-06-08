@@ -533,7 +533,7 @@ namespace PaintSample
         public void DoConvertToDisabledSkia()
         {
             var result = SkiaHelper.ConvertToGrayscale((SKBitmap)Document.Bitmap);
-            Document.Bitmap = (Bitmap)result;
+            Document.Bitmap = (Image)result;
         }
 
         public void DoConvertToDisabled()
@@ -554,7 +554,7 @@ namespace PaintSample
                 var height = 600;
                 var width = 600;
 
-                var pixels = GenericImage.CreatePixels(width, height, Color.Green.WithAlpha(alpha));
+                var pixels = DrawingUtils.CreatePixels(width, height, Color.Green.WithAlpha(alpha));
                 Document.Bitmap = Bitmap.Create(width, height, pixels);
             }, 100);
         }
@@ -607,7 +607,7 @@ namespace PaintSample
 
             var width = bitmap.Width;
             var height = bitmap.Height;
-            var pixels = GenericImage.CreatePixels(width, height);
+            var pixels = DrawingUtils.CreatePixels(width, height);
 
             fixed(SKColor* ptr = pixels)
             {
