@@ -11,6 +11,9 @@ namespace Alternet.UI.Integration.VisualStudio
 {
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Media;
+
+    using Microsoft.VisualStudio.PlatformUI;
 
     public partial class MySidebarControl : UserControl
     {
@@ -30,9 +33,10 @@ namespace Alternet.UI.Integration.VisualStudio
             {
                 Text = "Waiting for document change...",
                 TextWrapping = TextWrapping.Wrap,
-                FontSize = 12,
-                Foreground = System.Windows.Media.Brushes.DarkSlateGray
             };
+
+            InfoTextBlock.SetResourceReference(TextBlock.ForegroundProperty, EnvironmentColors.ToolWindowTextBrushKey);
+            InfoTextBlock.SetResourceReference(TextBlock.BackgroundProperty, EnvironmentColors.ToolWindowBackgroundBrushKey);
 
             // Add to container
             stack.Children.Add(InfoTextBlock);

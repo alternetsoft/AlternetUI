@@ -37,7 +37,7 @@ namespace Alternet.UI.Integration.VisualStudio
     [ProvideEditorFactory(typeof(EditorFactory), 113, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorLogicalView(typeof(EditorFactory), LogicalViewID.Designer)]
     */
-    public sealed class AlternetUIPackage : AsyncPackage, IVsRunningDocTableEvents
+    public sealed class AlternetUIPackage : AsyncPackage, IVsRunningDocTableEvents, IVsSelectionEvents
     {
         internal static IVsOutputWindow? OutputWindow;        
         internal static IVsOutputWindowPane OutputPane;
@@ -72,10 +72,45 @@ namespace Alternet.UI.Integration.VisualStudio
         }
 
         // Called when a document is saved, opened, closed, etc.
-        public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame) => VSConstants.S_OK;
+        public int OnAfterDocumentWindowHide(uint docCookie, IVsWindowFrame pFrame)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            // After closing, determine the new active document
+            var monitorSelection = (IVsMonitorSelection)GetService(typeof(SVsShellMonitorSelection));
+            monitorSelection.GetCurrentElementValue((uint)VSConstants.VSSELELEMID.SEID_DocumentFrame, out object frameObj);
+
+            string docPath = null;
+            string projectPath = null;
+
+            if (frameObj is IVsWindowFrame frame)
+            {
+                frame.GetProperty((int)__VSFPROPID.VSFPROPID_pszMkDocument, out object docPathObj);
+                docPath = docPathObj as string;
+
+                frame.GetProperty((int)__VSFPROPID.VSFPROPID_Hierarchy, out object hierarchyObj);
+                if (hierarchyObj is IVsHierarchy hierarchy)
+                {
+                    hierarchy.GetCanonicalName(VSConstants.VSITEMID_ROOT, out projectPath);
+                }
+            }
+
+            var window = this.FindToolWindow(typeof(MySidebarToolWindow), 0, true) as MySidebarToolWindow;
+            if (window?.Content is MySidebarControl control)
+            {
+                // If no active doc, clear info
+                control.UpdateInfo(docPath, projectPath);
+            }
+
+            return VSConstants.S_OK;
+        }
+
         public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining) => VSConstants.S_OK;
+
         public int OnAfterSave(uint docCookie) => VSConstants.S_OK;
+
         public int OnBeforeDocumentWindowShow(uint docCookie, int fFirstShow, IVsWindowFrame pFrame) => VSConstants.S_OK;
+
         public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining) => VSConstants.S_OK;
 
         // This is the key one: fires when a document is opened or reloaded
@@ -91,7 +126,8 @@ namespace Alternet.UI.Integration.VisualStudio
 
             if (docInfo.Hierarchy is IVsHierarchy hierarchy)
             {
-                hierarchy.GetCanonicalName(docInfo.ItemId, out projectPath);
+                // Get the project root item
+                hierarchy.GetCanonicalName(VSConstants.VSITEMID_ROOT, out projectPath);
             }
 
             // Update sidebar
@@ -205,6 +241,12 @@ namespace Alternet.UI.Integration.VisualStudio
                 commandService.AddCommand(menuItem);
             }
 
+            var monitorSelection = await GetServiceAsync(typeof(SVsShellMonitorSelection)) as IVsMonitorSelection;
+            if (monitorSelection != null)
+            {
+                monitorSelection.AdviseSelectionEvents(this, out _selectionCookie);
+            }
+
             Log.Information("AlterNET UI Package initialized");
 
             /*
@@ -232,7 +274,7 @@ namespace Alternet.UI.Integration.VisualStudio
         }
 
         bool outputPaneLoggingEnabled = true;
-
+        private uint _selectionCookie;
         private readonly Dictionary<string, int> _pendingReopens =
             new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
 
@@ -459,55 +501,42 @@ namespace Alternet.UI.Integration.VisualStudio
             var settings = this.GetMefService<IAlternetUIVisualStudioSettings>();
         }
 
-        /*/// <summary>
-         /// Removes all text from the Output Window pane.
-         /// </summary>
-         public static void Clear()
-         {
-             Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-             pane?.Clear();
-         }*/
-
-        /*/// <summary>
-        /// Deletes the Output Window pane.
-        /// </summary>
-        public static void DeletePane()
+        public int OnSelectionChanged(IVsHierarchy pHierOld, uint itemidOld, IVsMultiItemSelect pMISOld, ISelectionContainer pSCOld, IVsHierarchy pHierNew, uint itemidNew, IVsMultiItemSelect pMISNew, ISelectionContainer pSCNew)
         {
-            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-            if (pane != null)
-            {
-                try
-                {
-                    var output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
-                    output.DeletePane(ref _guid);
-                    pane = null;
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.Write(ex);
-                }
-            }
-        }*/
+            return VSConstants.S_OK;
+        }
 
-        /*private static bool EnsurePane()
+        public int OnElementValueChanged(uint elementid, object varValueOld, object varValueNew)
         {
-            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+            ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (pane == null)
+            if (elementid == (uint)VSConstants.VSSELELEMID.SEID_DocumentFrame)
             {
-                lock (_syncRoot)
+                if (varValueNew is IVsWindowFrame frame)
                 {
-                    if (pane == null)
+                    frame.GetProperty((int)__VSFPROPID.VSFPROPID_pszMkDocument, out object docPathObj);
+                    string docPath = docPathObj as string;
+
+                    frame.GetProperty((int)__VSFPROPID.VSFPROPID_Hierarchy, out object hierarchyObj);
+                    string projectPath = null;
+                    if (hierarchyObj is IVsHierarchy hierarchy)
                     {
-                        _guid = Guid.NewGuid();
-                        IVsOutputWindow output = (IVsOutputWindow)_provider.GetService(typeof(SVsOutputWindow));
-                        output.CreatePane(ref _guid, _name, 1, 1);
-                        output.GetPane(ref _guid, out pane);
+                        hierarchy.GetCanonicalName(VSConstants.VSITEMID_ROOT, out projectPath);
+                    }
+
+                    var window = FindToolWindow(typeof(MySidebarToolWindow), 0, true) as MySidebarToolWindow;
+                    if (window?.Content is MySidebarControl control)
+                    {
+                        control.UpdateInfo(docPath, projectPath);
                     }
                 }
             }
+            return VSConstants.S_OK;
+        }
 
-            return pane != null;
-        }*/
+        public int OnCmdUIContextChanged(uint dwCmdUICookie, int fActive)
+        {
+            return VSConstants.S_OK;
+        }
     }
 }

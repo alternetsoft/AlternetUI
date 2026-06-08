@@ -19,5 +19,4 @@ namespace Alternet.UI.Integration.VisualStudio
             this.Content = new MySidebarControl();
         }
     }
-
 }

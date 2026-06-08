@@ -10,7 +10,7 @@
     <Menus>
       <Menu guid="guidMySidebarCmdSet" id="MyToolbar" type="Toolbar" priority="0x000">
         <Strings>
-          <ButtonText>My Sidebar Toolbar</ButtonText>
+          <ButtonText>Alternet.UI</ButtonText>
         </Strings>
       </Menu>
     </Menus>
@@ -25,8 +25,8 @@
       <Button guid="guidMySidebarCmdSet" id="cmdidShowSidebar" priority="0x0100" type="Button">
         <Parent guid="guidMySidebarCmdSet" id="MyToolbarGroup" />
         <Strings>
-          <ButtonText>Show Sidebar 1</ButtonText>
-          <CommandName>ShowSidebar</CommandName>
+          <ButtonText>Uixml</ButtonText>
+          <CommandName>Alternet.UI.PreviewUixml</CommandName>
         </Strings>
       </Button>    
     </Buttons>    
