@@ -209,82 +209,22 @@ Environment.NewLine + Environment.NewLine +
 
             Actions.Add(typeof(Panel), InitPanel);
 
+            Actions.Add(typeof(ResizableWindowBorder), (c) =>
+            {
+                ResizableWindowBorder control = (c as ResizableWindowBorder)!;
+                control.IgnoreLayout = true;
+                control.Size = 300;
+                control.Location = (10, 10);
+            });
+
             Actions.Add(typeof(ResizableBorder), (c) =>
             {
                 ResizableBorder control = (c as ResizableBorder)!;
 
-                control.BoundsChanged+=(sender, e) =>
-                {
-                    App.LogReplace("ResizableBorder.BoundsChanged: " + control.Bounds, "ResizableBorder.BoundsChanged: ");
-                };
-
-                control.HasBorder = false;
+                control.HasBorder = true;
                 control.IgnoreLayout = true;
                 control.Size = 300;
                 control.Location = (10, 10);
-
-                bool isDark = control.IsDarkBackground;
-                bool isActive = true;
-
-                control.UseWindowBorderSize(Window.FrameMetrics.BorderMetricKind.ThickFrame);
-                control.UseWindowBorderColors(isDark, isActive);
-
-                var toolBar = new ToolBar();
-                toolBar.ResetSuggestedSize();
-                toolBar.Dock = DockStyle.Top;
-                toolBar.MinHeight = Coord.Max(Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow), ToolBar.DefaultMinItemSize);
-                toolBar.Parent = control.FillPanel;
-                toolBar.ParentBackColor = false;
-                toolBar.BackColor = DefaultColors.GetEffectiveWindowCaptionColor(isDark, isActive);
-                toolBar.ParentForeColor = false;
-                toolBar.ForeColor = DefaultColors.GetEffectiveWindowCaptionTextColor(isDark, isActive);
-                toolBar.AutoUpdateColors = false;
-
-                ImageSizeFallbackOptions fallbackOptions = new();
-                fallbackOptions.AllowScaled = true;
-
-                var icon = toolBar.AddIcon(KnownIcons.Default, fallbackOptions);
-                icon.Margin = (5, 0, 0, 0);
-                icon.Click += (sender, e) =>
-                {
-                    App.Log("Icon clicked");
-                };
-
-                var gripControl = new GripControl();
-                gripControl.ConfigureAsMovingGrip();
-                gripControl.VerticalAlignment = VerticalAlignment.Stretch;
-                gripControl.Target = control;
-                gripControl.HorizontalAlignment = HorizontalAlignment.Fill;
-
-                var label = new Label("This is title");
-                label.VerticalAlignment = VerticalAlignment.Center;
-                label.HorizontalAlignment = HorizontalAlignment.Left;
-                label.Margin = (5, 0, 5, 0);
-                label.InputTransparent = true;
-                label.Parent = gripControl;
-
-                toolBar.AddControl(gripControl);
-
-                var minimizeButton = toolBar.AddSpeedBtnCore(null, KnownSvgImages.ImgWindowMinimize, "Minimize", (s, e) =>
-                {
-                    App.Log("Minimize button clicked");
-                });
-
-                minimizeButton.HorizontalAlignment = HorizontalAlignment.Right;
-
-                var maximizeButton = toolBar.AddSpeedBtnCore(null, KnownSvgImages.ImgWindowMaximize, "Maximize", (s, e) =>
-                {
-                    App.Log("Maximize button clicked");
-                });
-
-                maximizeButton.HorizontalAlignment = HorizontalAlignment.Right;
-
-                var closeButton = toolBar.AddSpeedBtnCore(null, KnownSvgImages.ImgClose, "Close", (s, e) =>
-                {
-                    App.Log("Close button clicked");
-                });
-
-                closeButton.HorizontalAlignment = HorizontalAlignment.Right;
             });
 
             Actions.Add(typeof(AbstractControl), (c) =>

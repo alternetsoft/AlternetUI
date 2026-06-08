@@ -126,7 +126,7 @@ namespace Alternet.UI
         {
             get
             {
-                return imgWindowMaximize ??= new MonoSvgImage(KnownSvgUrls.UrlImageWindowMaximize);
+                return imgWindowMaximize ?? ImgSquare;
             }
 
             set
@@ -142,7 +142,7 @@ namespace Alternet.UI
         {
             get
             {
-                return imgWindowMinimize ??= new MonoSvgImage(KnownSvgUrls.UrlImageWindowMinimize);
+                return imgWindowMinimize ?? ImgMinus;
             }
             set
             {
@@ -157,7 +157,7 @@ namespace Alternet.UI
         {
             get
             {
-                return imgWindowRestore ??= new MonoSvgImage(KnownSvgUrls.UrlImageWindowRestore);
+                return imgWindowRestore ?? ImgSquare;
             }
             set
             {

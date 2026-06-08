@@ -1028,6 +1028,8 @@ namespace Alternet.UI
             var fgColor = AbstractControl.GetClassDefaultAttributesFgColor(ControlTypeId.TextBox);
             LogUtils.LogColor("TextBox.ClassDefaultBgColor", bgColor);
             LogUtils.LogColor("TextBox.ClassDefaultFgColor", fgColor);
+
+            LogUtils.LogColor("MSW.AccentColor", MswUtils.AccentColor);
         }
 
         /// <summary>

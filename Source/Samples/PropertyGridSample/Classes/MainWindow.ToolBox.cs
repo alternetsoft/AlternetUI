@@ -48,6 +48,7 @@ namespace PropertyGridSample
                 }
 
                 noTicks.Add(typeof(ResizableBorder));
+                noTicks.Add(typeof(ResizableWindowBorder));
 
                 bool logAddedControls = false;
                 bool logNotAddedControls = false;
@@ -118,6 +119,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<StdButton>();
                 ToolBoxAdd<ShapeControl>();
                 ToolBoxAdd<ResizableBorder>();
+                ToolBoxAdd<ResizableWindowBorder>();
 
                 void ToolBoxAdd<T>()
                 {

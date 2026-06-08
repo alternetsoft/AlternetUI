@@ -82,46 +82,55 @@ namespace Alternet.Drawing
         /// This color can be used to style various controls and components in the application,
         /// providing a consistent look and feel across different themes.
         /// </summary>
-        /// <remarks>The accent color is represented as a LightDarkColor object, which allows for
+        /// <remarks>
+        /// The accent color is represented as a LightDarkColor object, which allows for
         /// different colors in light and dark modes. This property can be used to customize the appearance of the
-        /// application based on user preferences or system settings.</remarks>
+        /// application based on user preferences or system settings.
+        /// On MSW accent color can be obtained from system settings using <see cref="MswUtils.AccentColor"/>.
+        /// </remarks>
         public static LightDarkColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new(76, 194, 255));
 
         /// <summary>
         /// Gets or sets the override color of the active window caption. When set, this color will be used instead
         /// of the system-defined active caption color for the window title bar (<see cref="SystemColors.ActiveCaption"/>).
         /// </summary>
-        public static LightDarkColor? WindowActiveCaptionColor { get; set; }
+        public static LightDarkColor? WindowActiveCaptionColor { get; set; } = 
+            new LightDarkColor(light: (243, 243, 243), dark: new (32, 32, 32));
 
         /// <summary>
         /// Gets or sets the override color of the active window caption text. When set, this color will be used instead
         /// of the system-defined active caption text color for the window title bar (<see cref="SystemColors.ActiveCaptionText"/>).
         /// </summary>
-        public static LightDarkColor? WindowActiveCaptionTextColor { get; set; }
+        public static LightDarkColor? WindowActiveCaptionTextColor { get; set; } =
+            new LightDarkColor(light: (23, 23, 23), dark: Color.White);
 
         /// <summary>
         /// Gets or sets the override color of the active window caption border. When set, this color will be used instead
         /// of the system-defined active caption border color for the window title bar (<see cref="SystemColors.ActiveBorder"/>).
         /// </summary>
-        public static LightDarkColor? WindowActiveBorderColor { get; set; }
+        public static LightDarkColor? WindowActiveBorderColor { get; set; } =
+            new LightDarkColor(light: (180, 181, 183), dark: new(61, 63, 65));
 
         /// <summary>
         /// Gets or sets the override color of the inactive window caption. When set, this color will be used instead
         /// of the system-defined inactive caption color for the window title bar (<see cref="SystemColors.InactiveCaption"/>).
         /// </summary>
         public static LightDarkColor? WindowInactiveCaptionColor { get; set; }
+            = ColorUtils.GetDimmedLightDarkColor(WindowActiveCaptionColor);
 
         /// <summary>
         /// Gets or sets the override color of the inactive window caption text. When set, this color will be used instead
         /// of the system-defined inactive caption text color for the window title bar (<see cref="SystemColors.InactiveCaptionText"/>).
         /// </summary>
         public static LightDarkColor? WindowInactiveCaptionTextColor { get; set; }
+            = ColorUtils.GetDimmedLightDarkColor(WindowActiveCaptionTextColor);
 
         /// <summary>
         /// Gets or sets the override color of the inactive window caption border. When set, this color will be used instead
         /// of the system-defined inactive caption border color for the window title bar (<see cref="SystemColors.InactiveBorder"/>).
         /// </summary>
         public static LightDarkColor? WindowInactiveBorderColor { get; set; }
+            = ColorUtils.GetDimmedLightDarkColor(WindowActiveBorderColor);
 
         /// <summary>
         /// Gets or sets the default color of a checkbox in its normal state.
