@@ -53,6 +53,12 @@ namespace Alternet.Drawing
         private static LightDarkColor? svgNormalColor;
         
         private static LightDarkColor? defaultCheckBoxColor;
+        private static LightDarkColor? windowInactiveCaptionTextColor;
+        private static LightDarkColor? windowInactiveBorderColor;
+        private static LightDarkColor? windowInactiveCaptionColor;
+        private static LightDarkColor? windowActiveCaptionColor;
+        private static LightDarkColor? windowActiveCaptionTextColor;
+        private static LightDarkColor? windowActiveBorderColor;
 
 #pragma warning disable
         static DefaultColors()
@@ -91,46 +97,76 @@ namespace Alternet.Drawing
         public static LightDarkColor AccentColor { get; set; } = new(light: (0, 103, 192), dark: new(76, 194, 255));
 
         /// <summary>
-        /// Gets or sets the override color of the active window caption. When set, this color will be used instead
-        /// of the system-defined active caption color for the window title bar (<see cref="SystemColors.ActiveCaption"/>).
+        /// Gets or sets the override color of the common window caption.
         /// </summary>
-        public static LightDarkColor? WindowActiveCaptionColor { get; set; } = 
-            new LightDarkColor(light: (243, 243, 243), dark: new (43, 43, 43));
+        public static LightDarkColor WindowCommonCaptionColor { get; set; } =
+            new LightDarkColor(light: (243, 243, 243), dark: new(43, 43, 43));
 
         /// <summary>
-        /// Gets or sets the override color of the active window caption text. When set, this color will be used instead
-        /// of the system-defined active caption text color for the window title bar (<see cref="SystemColors.ActiveCaptionText"/>).
+        /// Gets or sets the override color of the common window caption text.
         /// </summary>
-        public static LightDarkColor? WindowActiveCaptionTextColor { get; set; } =
+        public static LightDarkColor WindowCommonCaptionTextColor { get; set; } =
             new LightDarkColor(light: (23, 23, 23), dark: Color.White);
 
         /// <summary>
-        /// Gets or sets the override color of the active window caption border. When set, this color will be used instead
-        /// of the system-defined active caption border color for the window title bar (<see cref="SystemColors.ActiveBorder"/>).
+        /// Gets or sets the override color of the common window caption border.
         /// </summary>
-        public static LightDarkColor? WindowActiveBorderColor { get; set; } =
-            new LightDarkColor(light: (180, 181, 183), dark: new(61, 63, 65));
+        public static LightDarkColor WindowCommonBorderColor { get; set; } =
+            new LightDarkColor(light: (204, 206, 219), dark: new(69, 69, 69));
 
         /// <summary>
-        /// Gets or sets the override color of the inactive window caption. When set, this color will be used instead
-        /// of the system-defined inactive caption color for the window title bar (<see cref="SystemColors.InactiveCaption"/>).
+        /// Gets or sets the color of the active window caption.
         /// </summary>
-        public static LightDarkColor? WindowInactiveCaptionColor { get; set; }
-            = ColorUtils.GetDimmedLightDarkColor(WindowActiveCaptionColor);
+        public static LightDarkColor WindowActiveCaptionColor
+        {
+            get => windowActiveCaptionColor ?? WindowCommonCaptionColor;
+            set => windowActiveCaptionColor = value;
+        }
 
         /// <summary>
-        /// Gets or sets the override color of the inactive window caption text. When set, this color will be used instead
-        /// of the system-defined inactive caption text color for the window title bar (<see cref="SystemColors.InactiveCaptionText"/>).
+        /// Gets or sets the color of the active window caption text. 
         /// </summary>
-        public static LightDarkColor? WindowInactiveCaptionTextColor { get; set; }
-            = ColorUtils.GetDimmedLightDarkColor(WindowActiveCaptionTextColor);
+        public static LightDarkColor WindowActiveCaptionTextColor
+        {
+            get => windowActiveCaptionTextColor ?? WindowCommonCaptionTextColor;
+            set => windowActiveCaptionTextColor = value;
+        }
 
         /// <summary>
-        /// Gets or sets the override color of the inactive window caption border. When set, this color will be used instead
-        /// of the system-defined inactive caption border color for the window title bar (<see cref="SystemColors.InactiveBorder"/>).
+        /// Gets or sets the color of the active window caption border.
         /// </summary>
-        public static LightDarkColor? WindowInactiveBorderColor { get; set; }
-            = ColorUtils.GetDimmedLightDarkColor(WindowActiveBorderColor);
+        public static LightDarkColor WindowActiveBorderColor
+        {
+            get => windowActiveBorderColor ?? WindowCommonBorderColor;
+            set => windowActiveBorderColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the inactive window caption. 
+        /// </summary>
+        public static LightDarkColor WindowInactiveCaptionColor
+        {
+            get => windowInactiveCaptionColor ?? WindowCommonCaptionColor;
+            set => windowInactiveCaptionColor = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the color of the inactive window caption text. 
+        /// </summary>
+        public static LightDarkColor WindowInactiveCaptionTextColor
+        {
+            get => windowInactiveCaptionTextColor ?? WindowCommonCaptionTextColor;
+            set => windowInactiveCaptionTextColor = value;
+        }
+         
+        /// <summary>
+        /// Gets or sets the color of the inactive window caption border. 
+        /// </summary>
+        public static LightDarkColor WindowInactiveBorderColor
+        {
+            get => windowInactiveBorderColor ?? WindowCommonBorderColor;
+            set => windowInactiveBorderColor = value;
+        }
 
         /// <summary>
         /// Gets or sets the default color of a checkbox in its normal state.
