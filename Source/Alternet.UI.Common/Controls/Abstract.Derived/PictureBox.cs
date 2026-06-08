@@ -728,7 +728,7 @@ namespace Alternet.UI
         /// <param name="customSize">The custom size of the icon.</param>
         public virtual void SetIconAsImage(
             IconSet? icon,
-            ImageDrawable.IconSizeKind iconSizeKind = ImageDrawable.IconSizeKind.Small,
+            IconSizeKind iconSizeKind = IconSizeKind.Small,
             SizeI? customSize = null)
         {
             PerformLayoutAndInvalidate(() =>

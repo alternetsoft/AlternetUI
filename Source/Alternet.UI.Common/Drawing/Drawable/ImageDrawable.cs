@@ -22,27 +22,6 @@ namespace Alternet.Drawing
         private bool stretch = false;
 
         /// <summary>
-        /// Enumerates icon size options for the <see cref="ImageDrawable"/> class.
-        /// </summary>
-        public enum IconSizeKind
-        {
-            /// <summary>
-            /// Specifies that the icon size should be determined using <see cref="IconSet.EffectiveSmallSystemIconSize"/>
-            /// </summary>
-            Small,
-
-            /// <summary>
-            /// Specifies that the icon should be determined using <see cref="IconSet.EffectiveSystemIconSize"/>
-            /// </summary>
-            Large,
-
-            /// <summary>
-            /// Specifies that the icon size should be determined using <see cref="CustomIconSize"/> property.
-            /// </summary>
-            Custom,
-        }
-
-        /// <summary>
         /// Gets a value indicating whether the object has an associated image.
         /// </summary>
         public bool IsImageSpecified => SvgImage is not null || Image is not null || ImageSet is not null || Icon is not null;

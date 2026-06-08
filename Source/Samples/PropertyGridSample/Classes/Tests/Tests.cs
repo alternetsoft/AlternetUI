@@ -200,7 +200,7 @@ namespace PropertyGridSample
         {
             AddControlAction<SpeedButton>("Set Icon as Image", (c) =>
             {
-                c.SetIconAsImage(KnownIcons.Default, ImageDrawable.IconSizeKind.Small);
+                c.SetIconAsImage(KnownIcons.Default, IconSizeKind.Small);
             });
 
             AddControlAction<SpeedButton>("Set Right Side", (c) =>
