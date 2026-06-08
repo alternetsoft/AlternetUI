@@ -1260,6 +1260,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a <see cref="PictureBox"/> to the control with the specified icon properties.
+        /// </summary>
+        /// <param name="icon">The <see cref="IconSet"/> to use as the icon for the <see cref="PictureBox"/>.</param>
+        /// <param name="iconSizeKind">The size kind of the icon.</param>
+        /// <param name="customSize">The custom size of the icon.</param>
+        /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
+        /// <returns>A <see cref="PictureBox"/> control configured with the specified icon properties.</returns>
+        public virtual PictureBox AddIcon(
+            IconSet? icon,
+            IconSizeKind iconSizeKind = IconSizeKind.Small,
+            SizeI? customSize = null,
+            bool ignoreSuggestedSize = false)
+        {
+            return InsertIcon(
+                Children.Count,
+                icon,
+                iconSizeKind,
+                customSize,
+                ignoreSuggestedSize);
+        }
+
+        /// <summary>
+        /// Inserts a new <see cref="PictureBox"/> control at the specified index with the given icon properties.
+        /// </summary>
+        /// <param name="index">The zero-based index at which the <see cref="PictureBox"/> should be inserted.</param>
+        /// <param name="icon">The <see cref="IconSet"/> to use as the icon for the <see cref="PictureBox"/>.</param>
+        /// <param name="iconSizeKind">The size kind of the icon.</param>
+        /// <param name="customSize">The custom size of the icon.</param>
+        /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
+        /// <returns>A <see cref="PictureBox"/> control configured with the specified icon properties.</returns>
+        public virtual PictureBox InsertIcon(
+            int index,
+            IconSet? icon,
+            IconSizeKind iconSizeKind = IconSizeKind.Small,
+            SizeI? customSize = null,
+            bool ignoreSuggestedSize = false)
+        {
+            var picture = InsertPictureCore(index, null, ignoreSuggestedSize);
+            picture.SetIconAsImage(icon, iconSizeKind, customSize);
+            return picture;
+        }
+
+        /// <summary>
         /// Inserts a new <see cref="PictureBox"/> control at the specified index with the given properties.
         /// </summary>
         /// <param name="index">The zero-based index at which the <see cref="PictureBox"/> should be inserted.</param>
@@ -1415,10 +1458,8 @@ namespace Alternet.UI
         /// <returns><see cref="AbstractControl"/> representing the inserted spacer.</returns>
         public virtual AbstractControl InsertSpacerCore(int index, Coord? size = null)
         {
-            Spacer control = new()
-            {
-                SuggestedSize = size ?? DefaultSpacerSize,
-            };
+            var control = CreateToolSpacer();
+            control.SuggestedSize = size ?? DefaultSpacerSize;
 
             UpdateItemProps(control, ItemKind.Spacer);
 
@@ -2977,40 +3018,6 @@ namespace Alternet.UI
         internal string BarPanelIdPropName => barPanelIdPropName;
 
         /// <summary>
-        /// Creates control for use in the toolbar as a label.
-        /// Override to create customized label controls. By default returns a new instance of <see cref="Label"/> class.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual AbstractControl CreateToolLabel()
-        {
-            return new Label();
-        }
-
-        /// <summary>
-        /// Creates <see cref="SpeedButton"/> for use in the toolbar.
-        /// Override to create customized speed buttons.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual SpeedButton CreateToolSpeedButton()
-        {
-            if (customButtonType is null)
-                return new SpeedButton();
-            return (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedButton();
-        }
-
-        /// <summary>
-        /// Creates <see cref="SpeedTextButton"/> for use in the toolbar.
-        /// Override to create customized speed text buttons.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual SpeedButton CreateToolSpeedTextButton()
-        {
-            if (customButtonType is null)
-                return new SpeedTextButton();
-            return (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedTextButton();
-        }
-
-        /// <summary>
         /// Updates common properties of the item control.
         /// </summary>
         /// <param name="control">Control which properties to update.</param>
@@ -3208,7 +3215,6 @@ namespace Alternet.UI
         {
             var index = item.Index ?? Panels.Count;
 
-            var insertAfterPanel = GetPanel(index - 1);
             var insertAfterPanelControl = item.GetControl();
 
             if (index <= 0)
@@ -3240,100 +3246,6 @@ namespace Alternet.UI
             }
 
             return index;
-        }
-
-        /// <summary>
-        /// Creates a control for the specified panel.
-        /// </summary>
-        /// <param name="item">The panel for which to create the control.</param>
-        /// <param name="suggestedIndex">The suggested index at which to insert the control.</param>
-        /// <returns>The created control, or null if no control was created.</returns>
-        protected virtual AbstractControl? CreatePanelControl(BarPanel item, int? suggestedIndex = null)
-        {
-            AbstractControl? panelControl = null;
-
-            var index = suggestedIndex ?? GetPanelControlInsertIndex(item);
-
-            void OnControlClick(object? sender, EventArgs e)
-            {
-                if (sender is not AbstractControl control)
-                    return;
-
-                var id = control.CustomAttr.GetAttribute(BarPanelIdPropName);
-
-                if (id is not ObjectUniqueId uniqueId)
-                    return;
-
-                var panel = GetPanelById(uniqueId);
-                if (panel is null)
-                    return;
-
-                panel.RaiseControlClicked();
-            }
-
-            switch (item.Kind)
-            {
-                default:
-                case BarPanelKind.Text:
-                    panelControl = InsertTextCore(index, item.Text);
-                    panelControl.Click += OnControlClick;
-                    break;
-                case BarPanelKind.Separator:
-                    panelControl = InsertSeparatorCore(index);
-                    break;
-                case BarPanelKind.PictureBox:
-                    panelControl = InsertPictureCore(index, item.ImageSet, item.DisabledImageSet, item.ToolTip);
-                    panelControl.Click += OnControlClick;
-                    break;
-                case BarPanelKind.SpeedButton:
-                    panelControl = InsertSpeedBtnCore(
-                                index,
-                                ItemKind.Button,
-                                item.Text,
-                                item.ImageSet,
-                                item.DisabledImageSet,
-                                item.ToolTip,
-                                OnControlClick);
-                    break;
-                case BarPanelKind.TextButton:
-                    panelControl = InsertTextBtnCore(index, item.Text, item.ToolTip, OnControlClick);
-                    break;
-                case BarPanelKind.ProgressBar:
-                    StdProgressBar progressBar = new()
-                    {
-                        MinHeight = DefaultProgressBarSize.Height,
-                        AutoSize = false,
-                        VerticalAlignment = VerticalAlignment.Center,
-                        SuggestedWidth = DefaultProgressBarSize.Width,
-                        SuggestedHeight = DefaultProgressBarSize.Height,
-                    };
-
-                    InsertControl(index, progressBar);
-                    panelControl = progressBar;
-                    break;
-                case BarPanelKind.Spacer:
-                    float? spacerWidth = float.IsNaN(item.Width) ? null : item.Width;
-                    panelControl = InsertSpacerCore(index, spacerWidth);
-                    break;
-                case BarPanelKind.CustomControl:
-
-                    if (item.CustomControl is not null)
-                    {
-                        InsertControl(index, item.CustomControl);
-                        panelControl = item.CustomControl;
-                    }
-
-                    break;
-            }
-
-            if (panelControl != null)
-            {
-                panelControl.CustomAttr.SetAttribute(BarPanelIdPropName, item.UniqueId);
-                item.RaiseControlCreated();
-                UpdatePanelControl(item, panelControl);
-            }
-
-            return panelControl;
         }
 
         /// <summary>
@@ -3423,7 +3335,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="index">The zero-based index at which the <see cref="PictureBox"/> should be inserted.</param>
         /// <param name="toolTip">The tooltip text to display when the user hovers over the <see cref="PictureBox"/>.
-        /// Defaults to an empty string if <see langword="null"/>. For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
+        /// Defaults to an empty string if <see langword="null"/>.
+        /// For complex tooltips, assign <see cref="RichToolTipParams"/>.</param>
         /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
         /// <returns>A <see cref="PictureBox"/> control configured with the specified properties.
         /// The control is added to the current parent context.</returns>
@@ -3432,13 +3345,11 @@ namespace Alternet.UI
             object? toolTip = default,
             bool ignoreSuggestedSize = false)
         {
-            PictureBox picture = new()
-            {
-                IsGraphicControl = true,
-                ImageStretch = false,
-                ToolTipObject = toolTip,
-                VerticalAlignment = UI.VerticalAlignment.Center,
-            };
+            var picture = CreatePictureBox();
+            picture.IsGraphicControl = true;
+            picture.ImageStretch = false;
+            picture.ToolTipObject = toolTip;
+            picture.VerticalAlignment = UI.VerticalAlignment.Center;
 
             if (ignoreSuggestedSize)
             {
@@ -3588,20 +3499,6 @@ namespace Alternet.UI
                     e,
                     MenuChangeHandler);
             });
-        }
-
-        /// <summary>
-        /// Creates a new instance of a tool separator item for use in a toolbar.
-        /// </summary>
-        /// <remarks>This method is intended to be overridden in derived classes
-        /// to customize the creation of the tool separator item.
-        /// By default, it returns a new instance of <see cref="ToolBarSeparatorItem"/>.</remarks>
-        /// <returns>A new instance of <see cref="ToolBarSeparatorItem"/> representing
-        /// a separator in the toolbar.</returns>
-        protected virtual ToolBarSeparatorItem CreateToolSeparator()
-        {
-            ToolBarSeparatorItem border = new();
-            return border;
         }
 
         /// <inheritdoc/>
