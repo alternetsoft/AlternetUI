@@ -49,6 +49,9 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Image.Save(Stream, BitmapType, int?)"/>
         bool SaveToStream(Stream stream, BitmapType type, int quality);
 
+        /// <inheritdoc/>
+        SKBitmap ToSkia(bool assignPixels = true);
+
         /// <summary>
         /// Convert this image to <see cref="GenericImage"/>.
         /// </summary>

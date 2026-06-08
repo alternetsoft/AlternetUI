@@ -252,6 +252,18 @@ namespace Alternet.Drawing
             SKColor[] data);
 
         /// <summary>
+        /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="data">Array with image pixels.</param>
+        /// <returns></returns>
+        IImageHandler CreateImageHandler(
+            int width,
+            int height,
+            SKColor[] data);
+
+        /// <summary>
         /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
         /// </summary>
         /// <param name="width">Image width.</param>

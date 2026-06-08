@@ -83,6 +83,22 @@ namespace Alternet.UI.Native
             return SaveToStream(outputStream, format.ToString());
         }
 
+        /// <inheritdoc/>
+        public SKBitmap ToSkia(bool assignPixels = true)
+        {
+            SKBitmap result = DrawingUtils.CreateSkiaBitmapForImage(Width, Height, HasAlpha);
+
+            if (assignPixels)
+            {
+                var genericImage = ToGenericImage();
+                result.Pixels = genericImage.Pixels;
+            }
+
+            if (Immutable)
+                result.SetImmutable();
+            return result;
+        }
+
         public bool LoadFromStream(Stream stream)
         {
             using var inputStream = new UI.Native.InputStream(stream);

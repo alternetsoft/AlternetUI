@@ -300,5 +300,13 @@ namespace Alternet.Drawing
         {
             return new WxGenericImageHandler(width, height, data, alpha);
         }
+
+        public IImageHandler CreateImageHandler(int width, int height, SKColor[] data)
+        {
+            using var genericImage = new WxGenericImageHandler(width, height, data);
+            var nativeImage = CreateImageHandler();
+            ((UI.Native.Image)nativeImage).LoadFromGenericImage(genericImage.Handle, 32);
+            return nativeImage;
+        }
     }
 }

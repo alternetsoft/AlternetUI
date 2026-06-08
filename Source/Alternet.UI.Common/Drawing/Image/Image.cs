@@ -422,8 +422,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image Create(int width, int height, SKColor[] pixels)
         {
-            var image = new GenericImage(width, height, pixels);
-            return (Image)image;
+            var image = SkiaUtils.CreateBitmap((width, height), 32);
+            return Bitmap.FromSkia(image);
         }
 
         /// <summary>
@@ -699,7 +699,7 @@ namespace Alternet.Drawing
         /// <param name="bitmap"><see cref="SKBitmap"/> with image data.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Image FromSkia(SKBitmap bitmap)
+        public static Bitmap FromSkia(SKBitmap bitmap)
         {
             if (App.IsMaui)
             {
@@ -711,8 +711,10 @@ namespace Alternet.Drawing
             {
                 if (bitmap.Width == 0 || bitmap.Height == 0)
                     return new Bitmap();
-                var genericImage = GenericImage.FromSkia(bitmap);
-                return (Image)genericImage;
+
+                var handler = GraphicsFactory.Handler.CreateImageHandler(bitmap.Width, bitmap.Height, bitmap.Pixels);
+                var image = new Bitmap(handler);
+                return image;
             }
         }
 
@@ -725,27 +727,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public static SKBitmap ToSkia(Image bitmap, bool assignPixels = true)
         {
-            if (bitmap.Handler is SkiaImageHandler skiaHandler)
-                return skiaHandler.Bitmap;
-
-            SKBitmap result;
-
-            if (assignPixels)
-            {
-                var genericImage = (GenericImage)bitmap;
-                result = GenericImage.ToSkia(genericImage, assignPixels);
-            }
-            else
-            {
-                result = DrawingUtils.CreateSkiaBitmapForImage(
-                    bitmap.Width,
-                    bitmap.Height,
-                    bitmap.HasAlpha);
-            }
-
-            if (bitmap.Immutable)
-                result.SetImmutable();
-            return result;
+            return bitmap.Handler.ToSkia(assignPixels);
         }
 
         /// <summary>
@@ -958,9 +940,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image ChangeLightness(int alpha)
         {
-            GenericImage image = (GenericImage)this;
-            var converted = image.ConvertLightness(alpha);
-            var result = (Image)converted;
+            var image = (SKBitmap)this;
+            SkiaUtils.ChangeLightness(image, alpha);
+            var result = (Image)image;
             return result;
         }
 
@@ -971,8 +953,8 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image ConvertToDisabled(byte brightness = 255)
         {
-            GenericImage image = (GenericImage)this;
-            image.ChangeToDisabled(brightness);
+            var image = (SKBitmap)this;
+            SkiaUtils.ChangeToDisabled(image, brightness);
             return (Image)image;
         }
 
@@ -1151,7 +1133,7 @@ namespace Alternet.Drawing
             if (RecolorForDarkModeOverride != null)
                 return RecolorForDarkModeOverride(this);
 
-            GenericImage image = this.AsGeneric;
+            var skia = (SKBitmap)this;
 
             ColorStruct ConvertPixel(ColorStruct color)
             {
@@ -1165,9 +1147,9 @@ namespace Alternet.Drawing
                 return newColor2;
             }
 
-            image.ConvertColors(ConvertPixel);
+            SkiaUtils.ConvertColors(skia, ConvertPixel);
 
-            return (Bitmap)image;
+            return Bitmap.FromSkia(skia);
         }
 
         /// <summary>

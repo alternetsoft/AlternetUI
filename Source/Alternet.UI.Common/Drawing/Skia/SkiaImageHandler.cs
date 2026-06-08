@@ -38,6 +38,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class using the
+        /// specified parameters.
+        /// </summary>
+        public SkiaImageHandler(int width, int height, SKColor[] data)
+        {
+            bitmap = new SKBitmap(width, height);
+            bitmap.Pixels = data;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class.
         /// </summary>
         public SkiaImageHandler()
@@ -450,6 +460,12 @@ namespace Alternet.UI
 
                 return true;
             });
+        }
+
+        /// <inheritdoc/>
+        public SKBitmap ToSkia(bool assignPixels = true)
+        {
+            return Bitmap;
         }
 
         /// <inheritdoc/>

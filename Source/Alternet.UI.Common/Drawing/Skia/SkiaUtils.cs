@@ -142,6 +142,106 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Executes specified <paramref name="action"/> for the each pixel of the image.
+        /// </summary>
+        /// <typeparam name="T">Type of the custom value.</typeparam>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> to process.</param>
+        /// <param name="action">Action to call for the each pixel. <see cref="RGBValue"/>
+        /// is passed as the first
+        /// parameter of the action.</param>
+        /// <param name="param">Custom value. It is passed to the <paramref name="action"/>
+        /// as the second parameter.</param>
+        /// <remarks>
+        /// For an example of the action implementation, see source code of the
+        /// <see cref="Color.ChangeLightness(ref RGBValue, int)"/> method.
+        /// </remarks>
+        public static unsafe bool ForEachPixel<T>(SKBitmap bitmap, ActionRef<RGBValue, T> action, T param)
+        {
+            if (bitmap.IsNull || bitmap.IsImmutable || bitmap.IsEmpty)
+                return false;
+
+            if (HasAlpha(bitmap))
+            {
+                return ForEachPixel(bitmap, TransparentAction, param);
+
+                void TransparentAction(ref SKColor color, T param)
+                {
+                    var alpha = color.Alpha;
+
+                    if (alpha == 0)
+                        return;
+
+                    RGBValue rgb = color;
+                    action(ref rgb, param);
+                    color = rgb.WithAlpha(alpha);
+                }
+            }
+            else
+            {
+                return ForEachPixelInternal(action, param);
+            }
+
+            unsafe bool ForEachPixelInternal<T1>(ActionRef<RGBValue, T1> action, T1 param)
+            {
+                DrawingUtils.SeparateAlphaData(bitmap.Pixels, out RGBValue[] rgb, out byte[] alpha);
+
+                var count = rgb.Length;
+
+                fixed (RGBValue* ptr = rgb)
+                {
+                    var p = ptr;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        action(ref *p, param);
+                        p++;
+                    }
+                }
+
+                var pixels = ToPixels(rgb, alpha);
+                bitmap.Pixels = pixels;
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Creates an array of <see cref="SKColor"/> from the rgb and alpha data.
+        /// </summary>
+        /// <param name="rgb">An array of <see cref="RGBValue"/> representing the RGB values of the pixels.</param>
+        /// <param name="alpha">An array of bytes representing the alpha values of the pixels.</param>
+        /// <returns>An array of <see cref="SKColor"/> representing the pixels.</returns>
+        public static SKColor[] ToPixels(RGBValue[] rgb, byte[] alpha)
+        {
+            var count = rgb.Length;
+            var result = new SKColor[count];
+            for (int i = 0; i < count; i++)
+            {
+                var c = rgb[i];
+                result[i] = new SKColor(c.R, c.G, c.B, alpha[i]);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Changes lightness of the each pixel.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> to process.</param>
+        /// <param name="ialpha">New lightness value (0..200).</param>
+        public static void ChangeLightness(SKBitmap bitmap, int ialpha)
+        {
+            ialpha = MathUtils.ApplyMinMax(ialpha, 0, 200);
+            ForEachPixel(bitmap, Color.ChangeLightness, ialpha);
+        }
+
+        /// <summary>
+        /// Changes each pixel of this image, making its color disabled.
+        /// </summary>
+        public static void ChangeToDisabled(SKBitmap bitmap, byte brightness = 255)
+        {
+            ForEachPixel(bitmap, Color.MakeDisabled, brightness);
+        }
+
+        /// <summary>
         /// Creates a new <see cref="SKBitmap"/> with the specified parameters.
         /// </summary>
         /// <param name="size">The size of the bitmap.</param>
@@ -279,7 +379,7 @@ namespace Alternet.Drawing
         public static Image ConvertToGrayscale(Image image)
         {
             var result = SkiaHelper.ConvertToGrayscale((SKBitmap)image);
-            return (Bitmap)result;
+            return (Image)result;
         }
 
         /// <summary>
@@ -664,6 +764,86 @@ namespace Alternet.Drawing
             path.MoveTo(startPoint);
             path.CubicTo(controlPoint1, controlPoint2, endPoint);
             canvas.DrawPath(path, pen);
+        }
+
+        /// <summary>
+        /// Gets whether the specified <see cref="SKBitmap"/> has an alpha channel, meaning it supports transparency.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> to check.</param>
+        /// <returns><see langword="true"/> if the bitmap has an alpha channel; otherwise, <see langword="false"/>.</returns>
+        public static bool HasAlpha(SKBitmap bitmap)
+        {
+            if (bitmap == null)
+                return false;
+
+            return bitmap.AlphaType != SKAlphaType.Opaque;
+        }
+
+        /// <summary>
+        /// Converts all pixels using the specified function.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> on which the action will be executed.</param>
+        /// <param name="func">Function used to convert color of the pixel.</param>
+        /// <returns></returns>
+        public static bool ConvertColors(SKBitmap bitmap, Func<ColorStruct, ColorStruct> func)
+        {
+            void ChangePixel(ref SKColor rgb, int value)
+            {
+                rgb = func(rgb);
+            }
+
+            return ForEachPixel<int>(bitmap, ChangePixel, 0);
+        }
+
+        /// <summary>
+        /// Executes specified <paramref name="action"/> for the each pixel of the image.
+        /// </summary>
+        /// <typeparam name="T">Type of the custom value.</typeparam>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> on which the action will be executed.</param>
+        /// <param name="action">Action to call for the each pixel. <see cref="RGBValue"/>
+        /// is passed as the first
+        /// parameter of the action.</param>
+        /// <param name="param">Custom value. It is passed to the <paramref name="action"/>
+        /// as the second parameter.</param>
+        public static unsafe bool ForEachPixel<T>(SKBitmap bitmap, ActionRef<SKColor, T> action, T param)
+        {
+            if (bitmap.IsNull || bitmap.IsImmutable || bitmap.IsEmpty)
+                return false;
+
+            if (HasAlpha(bitmap))
+            {
+                return ForEachPixelInternal(TransparentAction, param);
+
+                void TransparentAction(ref SKColor color, T param)
+                {
+                    if (color.Alpha != 0)
+                        action(ref color, param);
+                }
+            }
+            else
+            {
+                return ForEachPixelInternal(action, param);
+            }
+
+            unsafe bool ForEachPixelInternal<T2>(ActionRef<SKColor, T2> action, T2 param)
+            {
+                var rgb = bitmap.Pixels;
+                var count = rgb.Length;
+
+                fixed (SKColor* ptr = rgb)
+                {
+                    var p = ptr;
+
+                    for (int i = 0; i < count; i++)
+                    {
+                        action(ref *p, param);
+                        p++;
+                    }
+                }
+
+                bitmap.Pixels = rgb;
+                return true;
+            }
         }
 
         /// <summary>

@@ -92,24 +92,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual IGenericImageHandler CreateGenericImageHandler(
-            Stream stream,
-            BitmapType bitmapType,
-            int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler(
-            Stream stream,
-            string mimeType,
-            int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,
             RGBValue[] data)
@@ -145,12 +127,6 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         public virtual IGraphicsPathHandler CreateGraphicsPathHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual IGraphicsPathHandler CreateGraphicsPathHandler(Graphics drawingContext)
         {
             throw new NotImplementedException();
         }
@@ -248,6 +224,21 @@ namespace Alternet.UI
         public virtual Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams createParams)
         {
             return SkiaUtils.CreateMeasureCanvas(createParams.ScaleFactor);
+        }
+
+        /// <summary>
+        /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
+        /// </summary>
+        /// <param name="width">Image width.</param>
+        /// <param name="height">Image height.</param>
+        /// <param name="data">Array with image pixels.</param>
+        /// <returns></returns>
+        public virtual IImageHandler CreateImageHandler(
+            int width,
+            int height,
+            SKColor[] data)
+        {
+            return new SkiaImageHandler(width, height, data);
         }
 
         /// <inheritdoc/>
