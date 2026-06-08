@@ -477,6 +477,19 @@ namespace Alternet.Drawing
             return MakeImmutableIfNeeded(result);
         }
 
+        public virtual Image? GetImageSafe(SizeI size, ImageSizeFallbackOptions opt)
+        {
+            if (opt.AllowScaled)
+            {
+                return GetExactOrScaledImage(size, opt.DownscaleFirst, opt.AddScaled);
+
+            }
+            else
+            {
+                return GetExactOrClosestImage(size, opt.SizeFallback);
+            }
+        }
+
         /// <summary>
         /// Gets the image from the container that is the closest to the specified size.
         /// If there are multiple images of the same size, the first one is returned.
