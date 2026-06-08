@@ -33,7 +33,7 @@ namespace PropertyGridSample
         {
             AddControlAction<PictureBox>("Set Icon as Image", (c) =>
             {
-                c.SetIconAsImage(KnownIcons.Default, IconSizeKind.Small);
+                c.SetIconAsImage(KnownIcons.Default);
             });
 
             AddControlAction<PictureBox>(

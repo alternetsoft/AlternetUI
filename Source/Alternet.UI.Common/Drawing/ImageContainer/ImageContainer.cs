@@ -153,6 +153,28 @@ namespace Alternet.Drawing
         public virtual BaseCollection<Image> Images { get; } = new(CollectionSecurityFlags.NoNullOrReplace);
 
         /// <summary>
+        /// Gets an effective image size for the specified size, taking into account the system settings and overrides.
+        /// </summary>
+        /// <param name="kind">The kind of image size.</param>
+        /// <param name="customSize">The custom size, if applicable.</param>
+        /// <returns>The effective image size.</returns>
+        public static SizeI GetEffectiveImageSize(ImageSizeKind? kind, SizeI? customSize)
+        {
+            if (kind == ImageSizeKind.Custom)
+            {
+                if (customSize.HasValue)
+                    return customSize.Value;
+                else
+                    return IconSet.EffectiveSmallSystemIconSize;
+            }
+
+            if (kind == ImageSizeKind.LargeIcon)
+                return IconSet.EffectiveSystemIconSize;
+
+            return IconSet.EffectiveSmallSystemIconSize;
+        }
+
+        /// <summary>
         /// Gets suggested size of the image for the specified scale factor.
         /// </summary>
         /// <param name="scaleFactor">Scale factor for which to get suggested size of the image.</param>
@@ -481,11 +503,12 @@ namespace Alternet.Drawing
         /// Gets the image from the container that has the specified size using image size fallback options
         /// in case an exact match is not found.
         /// </summary>
-        /// <param name="size">The target size to find the image for.</param>
         /// <param name="opt">The options to use when retrieving the image. Optional.</param>
         /// <returns>The image that has the specified or fallback size, or null if no such image exists.</returns>
-        public virtual Image? GetImageWithFallback(SizeI size, ImageSizeFallbackOptions? opt)
+        public virtual Image? GetImageWithFallback(ImageSizeFallbackOptions? opt)
         {
+            var size = GetEffectiveImageSize(opt?.SizeKind ?? ImageSizeKind.SmallIcon, opt?.Size);
+
             if (opt is null)
             {
                 return GetExactImage(size);
@@ -498,7 +521,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                return GetExactOrClosestImage(size, opt.SizeFallback);
+                return GetExactOrClosestImage(size, opt.SizeFallback ?? Array.Empty<ImageSizeFallback>());
             }
         }
 

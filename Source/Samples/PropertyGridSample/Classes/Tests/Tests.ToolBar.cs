@@ -18,7 +18,7 @@ namespace PropertyGridSample
         {
             AddControlAction<ToolBar>("Add Icon item", (c) =>
             {
-                c.AddIcon(KnownIcons.Default, IconSizeKind.Small);
+                c.AddIcon(KnownIcons.Default);
             });
 
             PropertyGrid.AddSimpleAction<ToolBar>(

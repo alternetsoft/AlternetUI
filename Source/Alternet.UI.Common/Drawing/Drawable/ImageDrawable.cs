@@ -83,16 +83,6 @@ namespace Alternet.Drawing
         public IconSet? Icon { get; set; }
 
         /// <summary>
-        /// Gets or sets icon size which is used when icon is drawn.
-        /// </summary>
-        public SizeI? CustomIconSize { get; set; }
-
-        /// <summary>
-        /// Gets or sets the icon size kind which determines how the icon size is calculated.
-        /// </summary>
-        public IconSizeKind IconSize { get; set; } = IconSizeKind.Small;
-
-        /// <summary>
         /// Gets or sets horizontal alignment option that specifies how the image should be aligned within the available space.
         /// This property is used when the image is smaller than the available space.
         /// </summary>
@@ -137,19 +127,6 @@ namespace Alternet.Drawing
             && VerticalAlignment == VerticalAlignment.Top;
 
         /// <summary>
-        /// Gets effective size of the icon based on the <see cref="IconSize"/>, <see cref="CustomIconSize"/> properties
-        /// and system settings.
-        /// </summary>
-        [Browsable(false)]
-        public SizeI EffectiveIconSize
-        {
-            get
-            {
-                return IconSet.GetEffectiveIconSize(IconSize, CustomIconSize);
-            }                           
-        }
-
-        /// <summary>
         /// Gets whether or not to stretch this object.
         /// </summary>
         public virtual bool Stretch
@@ -181,8 +158,7 @@ namespace Alternet.Drawing
         {
             if (Icon is not null)
             {
-                var iconSize = EffectiveIconSize;
-                var iconImage = Icon.GetImageWithFallback(iconSize, SizeFallbackOptions);
+                var iconImage = Icon.GetImageWithFallback(SizeFallbackOptions);
                 return iconImage;
             }
 
