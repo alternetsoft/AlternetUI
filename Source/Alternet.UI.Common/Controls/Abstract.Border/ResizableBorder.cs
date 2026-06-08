@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
@@ -26,21 +27,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets right grip control which is used on the right side of the resizable border.
         /// </summary>
+        [Browsable(false)]
         public GripControl RightGripControl => (GripControl)RightPanel;
 
         /// <summary>
         /// Gets left grip control which is used on the left side of the resizable border.
         /// </summary>
+        [Browsable(false)]
         public GripControl LeftGripControl => (GripControl)LeftPanel;
 
         /// <summary>
         /// Gets top grip control which is used on the top side of the resizable border.
         /// </summary>
+        [Browsable(false)]
         public GripControl TopGripControl => (GripControl)TopPanel;
-        
+
         /// <summary>
         /// Gets bottom grip control which is used on the bottom side of the resizable border.
         /// </summary>
+        [Browsable(false)]
         public GripControl BottomGripControl => (GripControl)BottomPanel;
 
         /// <inheritdoc/>
