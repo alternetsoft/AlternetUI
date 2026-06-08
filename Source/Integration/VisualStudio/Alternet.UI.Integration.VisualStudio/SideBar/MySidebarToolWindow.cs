@@ -15,7 +15,7 @@ namespace Alternet.UI.Integration.VisualStudio
     {
         public MySidebarToolWindow() : base(null)
         {
-            this.Caption = "My Sidebar Panel";
+            this.Caption = "Alternet.UI Window Preview";
             this.Content = new MySidebarControl();
         }
     }

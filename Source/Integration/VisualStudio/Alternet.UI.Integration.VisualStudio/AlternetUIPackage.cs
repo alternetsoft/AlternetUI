@@ -95,26 +95,43 @@ namespace Alternet.UI.Integration.VisualStudio
                 }
             }
 
-            var window = this.FindToolWindow(typeof(MySidebarToolWindow), 0, true) as MySidebarToolWindow;
-            if (window?.Content is MySidebarControl control)
-            {
-                // If no active doc, clear info
-                control.UpdateInfo(docPath, projectPath);
-            }
+            UpdateSidebarInfo(docPath, projectPath);
 
             return VSConstants.S_OK;
         }
 
-        public int OnAfterFirstDocumentLock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining) => VSConstants.S_OK;
+        public int OnAfterFirstDocumentLock(
+            uint docCookie,
+            uint dwRDTLockType,
+            uint dwReadLocksRemaining,
+            uint dwEditLocksRemaining) => VSConstants.S_OK;
 
-        public int OnAfterSave(uint docCookie) => VSConstants.S_OK;
+        public int OnAfterSave(uint docCookie)
+        {
+            UpdateSidebarInfo(docCookie);
 
-        public int OnBeforeDocumentWindowShow(uint docCookie, int fFirstShow, IVsWindowFrame pFrame) => VSConstants.S_OK;
+            return VSConstants.S_OK;
+        }
 
-        public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining) => VSConstants.S_OK;
+        public int OnBeforeDocumentWindowShow(uint docCookie, int fFirstShow, IVsWindowFrame pFrame)
+        {
+            return VSConstants.S_OK;
+        }
+
+        public int OnBeforeLastDocumentUnlock(uint docCookie, uint dwRDTLockType, uint dwReadLocksRemaining, uint dwEditLocksRemaining)
+        {
+            return VSConstants.S_OK;
+        }
 
         // This is the key one: fires when a document is opened or reloaded
         public int OnAfterAttributeChange(uint docCookie, uint grfAttribs)
+        {
+            UpdateSidebarInfo(docCookie);
+
+            return VSConstants.S_OK;
+        }
+
+        private void UpdateSidebarInfo(uint docCookie)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
@@ -126,18 +143,19 @@ namespace Alternet.UI.Integration.VisualStudio
 
             if (docInfo.Hierarchy is IVsHierarchy hierarchy)
             {
-                // Get the project root item
                 hierarchy.GetCanonicalName(VSConstants.VSITEMID_ROOT, out projectPath);
             }
 
-            // Update sidebar
+            UpdateSidebarInfo(docPath, projectPath);
+        }
+
+        private void UpdateSidebarInfo(string docPath, string projectPath)
+        {
             var window = this.FindToolWindow(typeof(MySidebarToolWindow), 0, true) as MySidebarToolWindow;
             if (window?.Content is MySidebarControl control)
             {
                 control.UpdateInfo(docPath, projectPath);
             }
-
-            return VSConstants.S_OK;
         }
 
         private static void AddMsgTask(
@@ -162,20 +180,6 @@ namespace Alternet.UI.Integration.VisualStudio
         public static SolutionService SolutionService { get; private set; }
 
         public static JoinableTaskFactory JTF { get; private set; }
-
-        internal void ScheduleOpenAfterClose(string fileName, DesignerPane pane)
-        {
-            ThreadHelper.ThrowIfNotOnUIThread();
-
-            pane.CloseThisFrame();
-
-            ThreadHelper.JoinableTaskFactory.RunAsync(async delegate
-            {
-                await Task.Delay(500);
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                OpenWithMyEditor(fileName);
-            });
-        }
 
         internal IVsWindowFrame FindDocumentFrame(string fileName)
         {
@@ -214,19 +218,17 @@ namespace Alternet.UI.Integration.VisualStudio
 
             InitializeLogging();
 
-            var rdt = await GetServiceAsync(typeof(SVsRunningDocumentTable)) as IVsRunningDocumentTable;
-            if (rdt != null)
+            if (await GetServiceAsync(typeof(SVsRunningDocumentTable)) is IVsRunningDocumentTable rdt)
             {
                 rdt.AdviseRunningDocTableEvents(this, out _rdtCookie);
             }
 
-            var commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            if (commandService != null)
+            if (await GetServiceAsync(typeof(IMenuCommandService)) is OleMenuCommandService commandService)
             {
                 // Command ID must match your VSCT Guid + IDSymbol
                 var cmdId = new CommandID(new Guid("A1B2C3D4-E5F6-47A8-ABCD-1234567890AB"), 0x0100);
 
-                
+
                 var menuItem = new OleMenuCommand((s, e) => ShowSidebar(), cmdId);
                 menuItem.Enabled = true;
                 menuItem.Supported = true;
@@ -248,29 +250,6 @@ namespace Alternet.UI.Integration.VisualStudio
             }
 
             Log.Information("AlterNET UI Package initialized");
-
-            /*
-            RegisterEditorFactory(new EditorFactory(this));
-
-            var dte = (DTE)await GetServiceAsync(typeof(DTE));
-            SolutionService = new SolutionService(dte);
-
-            */
-
-            /*
-            var window = this.FindToolWindow(typeof(MySidebarToolWindow), 0, true);
-            if (window?.Frame is IVsWindowFrame frame)
-            {
-                try
-                {
-                    frame.Show();
-
-                }
-                catch
-                {
-                }
-            }
-            */
         }
 
         bool outputPaneLoggingEnabled = true;
