@@ -3136,6 +3136,7 @@ namespace Alternet.UI
                 parentBackgroundColor = value;
                 if (value && Parent is not null)
                     BackgroundColor = Parent.BackColor;
+                ParentBackColorChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 

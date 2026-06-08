@@ -93,6 +93,12 @@ namespace Alternet.UI
         public event EventHandler? TitleChanged;
 
         /// <summary>
+        /// Occurs when the value of the <see cref="ParentBackColor"/> property changes.
+        /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
+        public event EventHandler? ParentBackColorChanged;
+
+        /// <summary>
         /// Occurs when the mouse pointer is moved over the control.
         /// </summary>
         [Category(KnownMemberCategory.Mouse)]
