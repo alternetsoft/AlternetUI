@@ -95,7 +95,7 @@ namespace Alternet.Drawing
         /// of the system-defined active caption color for the window title bar (<see cref="SystemColors.ActiveCaption"/>).
         /// </summary>
         public static LightDarkColor? WindowActiveCaptionColor { get; set; } = 
-            new LightDarkColor(light: (243, 243, 243), dark: new (32, 32, 32));
+            new LightDarkColor(light: (243, 243, 243), dark: new (43, 43, 43));
 
         /// <summary>
         /// Gets or sets the override color of the active window caption text. When set, this color will be used instead

@@ -112,6 +112,12 @@ namespace Alternet.UI.Localization
         public string ButtonClose { get; set; } = "Close";
 
         /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonMinimize { get; set; } = "Minimize";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string ButtonMaximize { get; set; } = "Maximize";
+
+        /// <inheritdoc cref="ButtonOk"/>
         public string ButtonCopy { get; set; } = "Copy";
 
         /// <inheritdoc cref="ButtonOk"/>

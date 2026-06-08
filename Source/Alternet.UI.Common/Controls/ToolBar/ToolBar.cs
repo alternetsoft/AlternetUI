@@ -71,6 +71,7 @@ namespace Alternet.UI
             Panels.ItemInserted += OnPanelInserted;
             Panels.ItemRemoved += OnPanelRemoved;
             barPanelIdPropName = AttributesFactory.GenUniqueAttributeName("BarPanelId");
+            AutoUpdateColors = true;
             AssignDefaultColors();
             Layout = LayoutStyle.Horizontal;
             itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
@@ -3445,6 +3446,9 @@ namespace Alternet.UI
         /// controls.</remarks>
         protected virtual void AssignDefaultColors()
         {
+            if (!AutoUpdateColors)
+                return;
+
             if (App.IsMaui)
             {
                 ParentBackColor = false;
@@ -3463,8 +3467,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            if (AutoUpdateColors)
-                AssignDefaultColors();
+            AssignDefaultColors();
 
             base.OnSystemColorsChanged(e);
         }
