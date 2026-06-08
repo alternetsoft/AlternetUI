@@ -721,6 +721,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the icon as the image for the control.
+        /// </summary>
+        /// <param name="icon">The icon to be set.</param>
+        /// <param name="iconSizeKind">The size kind of the icon.</param>
+        /// <param name="customSize">The custom size of the icon.</param>
+        public virtual void SetIconAsImage(
+            IconSet? icon,
+            ImageDrawable.IconSizeKind iconSizeKind = ImageDrawable.IconSizeKind.Small,
+            SizeI? customSize = null)
+        {
+            PerformLayoutAndInvalidate(() =>
+            {
+                primitive.Icon = icon;
+                primitive.IconSize = iconSizeKind;
+                primitive.CustomIconSize = customSize;
+                RaiseImageChanged(EventArgs.Empty);
+                if (ImageVisible)
+                    PerformLayoutAndInvalidate();
+            });
+        }
+
+        /// <summary>
         /// Paints image in the default style.
         /// </summary>
         /// <param name="e">Paint arguments.</param>

@@ -31,6 +31,11 @@ namespace PropertyGridSample
 
         void InitTestsPictureBox()
         {
+            AddControlAction<PictureBox>("Set Icon as Image", (c) =>
+            {
+                c.SetIconAsImage(KnownIcons.Default, ImageDrawable.IconSizeKind.Small);
+            });
+
             AddControlAction<PictureBox>(
                 "Set MessageBoxIcon.Error",
                 TestPictureBoxSetMessageBoxIconError);
