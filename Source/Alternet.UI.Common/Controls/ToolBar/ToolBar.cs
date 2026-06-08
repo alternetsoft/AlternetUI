@@ -1266,11 +1266,13 @@ namespace Alternet.UI
         /// <param name="iconSizeKind">The size kind of the icon.</param>
         /// <param name="customSize">The custom size of the icon.</param>
         /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
+        /// <param name="sizeFallbackOptions">The options to use when the specified icon size is not available.</param>
         /// <returns>A <see cref="PictureBox"/> control configured with the specified icon properties.</returns>
         public virtual PictureBox AddIcon(
             IconSet? icon,
             IconSizeKind iconSizeKind = IconSizeKind.Small,
             SizeI? customSize = null,
+            ImageSizeFallbackOptions? sizeFallbackOptions = null,
             bool ignoreSuggestedSize = false)
         {
             return InsertIcon(
@@ -1278,6 +1280,7 @@ namespace Alternet.UI
                 icon,
                 iconSizeKind,
                 customSize,
+                sizeFallbackOptions,
                 ignoreSuggestedSize);
         }
 
@@ -1288,6 +1291,7 @@ namespace Alternet.UI
         /// <param name="icon">The <see cref="IconSet"/> to use as the icon for the <see cref="PictureBox"/>.</param>
         /// <param name="iconSizeKind">The size kind of the icon.</param>
         /// <param name="customSize">The custom size of the icon.</param>
+        /// <param name="sizeFallbackOptions">The options to use when the specified icon size is not available.</param>
         /// <param name="ignoreSuggestedSize">A value indicating whether to ignore the suggested size.</param>
         /// <returns>A <see cref="PictureBox"/> control configured with the specified icon properties.</returns>
         public virtual PictureBox InsertIcon(
@@ -1295,10 +1299,11 @@ namespace Alternet.UI
             IconSet? icon,
             IconSizeKind iconSizeKind = IconSizeKind.Small,
             SizeI? customSize = null,
+            ImageSizeFallbackOptions? sizeFallbackOptions = null,
             bool ignoreSuggestedSize = false)
         {
             var picture = InsertPictureCore(index, null, ignoreSuggestedSize);
-            picture.SetIconAsImage(icon, iconSizeKind, customSize);
+            picture.SetIconAsImage(icon, iconSizeKind, customSize, sizeFallbackOptions);
             return picture;
         }
 

@@ -168,6 +168,12 @@ namespace Alternet.Drawing
         public bool CenterHorzOrVert => CenterHorz || CenterVert;
 
         /// <summary>
+        /// Gets or sets image size fallback options that determine how to handle
+        /// cases where the specified image size is not available in the <see cref="IconSet"/> or other containers.
+        /// </summary>
+        public virtual ImageSizeFallbackOptions? SizeFallbackOptions { get; set; }
+
+        /// <summary>
         /// Gets image to draw.
         /// </summary>
         /// <returns></returns>
@@ -176,7 +182,7 @@ namespace Alternet.Drawing
             if (Icon is not null)
             {
                 var iconSize = EffectiveIconSize;
-                var iconImage = Icon.GetExactImage(iconSize);
+                var iconImage = Icon.GetImageWithFallback(iconSize, SizeFallbackOptions);
                 return iconImage;
             }
 

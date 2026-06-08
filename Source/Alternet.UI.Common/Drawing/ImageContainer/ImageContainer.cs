@@ -477,8 +477,20 @@ namespace Alternet.Drawing
             return MakeImmutableIfNeeded(result);
         }
 
-        public virtual Image? GetImageSafe(SizeI size, ImageSizeFallbackOptions opt)
+        /// <summary>
+        /// Gets the image from the container that has the specified size using image size fallback options
+        /// in case an exact match is not found.
+        /// </summary>
+        /// <param name="size">The target size to find the image for.</param>
+        /// <param name="opt">The options to use when retrieving the image. Optional.</param>
+        /// <returns>The image that has the specified or fallback size, or null if no such image exists.</returns>
+        public virtual Image? GetImageWithFallback(SizeI size, ImageSizeFallbackOptions? opt)
         {
+            if (opt is null)
+            {
+                return GetExactImage(size);
+            }
+
             if (opt.AllowScaled)
             {
                 return GetExactOrScaledImage(size, opt.DownscaleFirst, opt.AddScaled);
@@ -756,7 +768,7 @@ namespace Alternet.Drawing
                 var image = strip.GetSubBitmap(sourceRectangle);
                 Add(image);
             }
-            
+
             return true;
         }
 
@@ -768,7 +780,7 @@ namespace Alternet.Drawing
         public virtual IEnumerable<SizeI> GetImageSizes(bool? sortDescending = null)
         {
             var sizes = Images.Select(image => image.Size);
-            
+
             if (sortDescending.HasValue)
             {
                 sizes = sortDescending.Value
