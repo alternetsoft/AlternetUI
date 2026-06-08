@@ -408,8 +408,8 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Image Create(int width, int height, Color color)
         {
-            var image = GenericImage.Create(width, height, color);
-            return (Image)image;
+            SKColor[] pixels = DrawingUtils.CreatePixels(width, height, color);
+            return Create(width, height, pixels);
         }
 
         /// <summary>
@@ -423,6 +423,7 @@ namespace Alternet.Drawing
         public static Image Create(int width, int height, SKColor[] pixels)
         {
             var image = SkiaUtils.CreateBitmap((width, height), 32);
+            image.Pixels = pixels;
             return Bitmap.FromSkia(image);
         }
 
@@ -828,7 +829,7 @@ namespace Alternet.Drawing
                 if (stream is null)
                     return false;
                 var result = InternalLoadFromStream(stream, type);
-                if(result)
+                if (result)
                     this.url = url;
                 return result;
             });
@@ -961,15 +962,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Rescales this image to the requested size.
         /// </summary>
-        /// <remarks>
-        /// This function is just a convenient wrapper for <see cref="GenericImage.Rescale"/> used to
-        /// resize the given image to the requested size. If you need more control over
-        /// resizing, e.g.to specify the quality option different from
-        /// <see cref="GenericImageResizeQuality.Nearest"/> used by this function, please use
-        /// the <see cref="GenericImage"/> function
-        /// directly instead. Size must be valid.
-        /// </remarks>
-        /// <param name="sizeNeeded"></param>
+        /// <param name="sizeNeeded">The desired size of the image.</param>
         public virtual bool Rescale(SizeI sizeNeeded)
         {
             if (Immutable)
@@ -1040,16 +1033,11 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts the current image to a grayscale version.
         /// </summary>
-        /// <remarks>
-        /// If the <see cref="GrayScale"/> event is not null, it will be invoked to allow
-        /// custom grayscale conversion logic. Otherwise, the default grayscale conversion
-        /// logic will be applied using the <see cref="GenericImage.ChangeToGrayScale"/> method.
-        /// </remarks>
         /// <returns>A new <see cref="Image"/> instance representing
         /// the grayscale version of the current image.</returns>
         public virtual Image ToGrayScale()
         {
-            if(GrayScale is null)
+            if (GrayScale is null)
             {
                 return SkiaUtils.ConvertToGrayscale(this);
             }
@@ -1088,8 +1076,8 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image WithConvertedColors(Func<ColorStruct, ColorStruct> func)
         {
-            var generic = (GenericImage)this;
-            generic.ConvertColors(func);
+            var generic = (SKBitmap)this;
+            SkiaUtils.ConvertColors(generic, func);
             return (Image)generic;
         }
 
@@ -1280,17 +1268,6 @@ namespace Alternet.Drawing
             memStream.Seek(0, SeekOrigin.Begin);
             var result = StreamUtils.ConvertStreamToBase64(memStream);
             return result;
-        }
-
-        /// <summary>
-        /// Assigns <see cref="GenericImage"/> to this image.
-        /// </summary>
-        /// <param name="genericImage">Image to assign.</param>
-        public virtual void Assign(GenericImage genericImage)
-        {
-            if (Immutable)
-                throw new Exception($"Assign(GenericImage) is not possible on the immutable image.");
-            Handler.Assign(genericImage);
         }
 
         /// <summary>
