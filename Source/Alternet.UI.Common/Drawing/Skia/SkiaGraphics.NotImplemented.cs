@@ -16,25 +16,5 @@ namespace Alternet.Drawing
         {
             throw new NotImplementedException();
         }
-
-        /// <inheritdoc/>
-        public override void DrawPath(Pen pen, GraphicsPath path)
-        {
-            DebugPenAssert(pen);
-            throw new NotImplementedException();
-            /*
-            var paint = GetStrokePaint(pen);
-            */
-        }
-
-        /// <inheritdoc/>
-        public override void FillPath(Brush brush, GraphicsPath path)
-        {
-            DebugBrushAssert(brush);
-            throw new NotImplementedException();
-            /*
-            var paint = GetFillPaint(brush);
-            */
-        }
     }
 }

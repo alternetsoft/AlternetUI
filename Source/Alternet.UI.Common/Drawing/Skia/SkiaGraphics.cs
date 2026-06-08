@@ -439,6 +439,32 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawPath(Pen pen, GraphicsPath path)
+        {
+            DebugPenAssert(pen);
+
+            if (path.Handler is not SkiaGraphicsPathHandler handler)
+            {
+                throw new ArgumentException("Incompatible path handler", nameof(path));
+            }
+
+            canvas.DrawPath(handler.Path, pen);
+        }
+
+        /// <inheritdoc/>
+        public override void FillPath(Brush brush, GraphicsPath path)
+        {
+            DebugBrushAssert(brush);
+
+            if (path.Handler is not SkiaGraphicsPathHandler handler)
+            {
+                throw new ArgumentException("Incompatible path handler", nameof(path));
+            }
+
+            canvas.DrawPath(handler.Path, brush);
+        }
+
+        /// <inheritdoc/>
         public override void DrawEllipse(Pen pen, RectD bounds)
         {
             DebugPenAssert(pen);
