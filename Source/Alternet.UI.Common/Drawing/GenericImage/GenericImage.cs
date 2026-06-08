@@ -80,19 +80,6 @@ namespace Alternet.Drawing
         /// <param name="width">Specifies the width of the image.</param>
         /// <param name="height">Specifies the height of the image.</param>
         /// <param name="data">RGB data.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, RGBValue[] data)
-        {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image from data in memory.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">RGB data.</param>
         /// <param name="alpha">Alpha-channel data.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, RGBValue[] data, byte[] alpha)
@@ -178,14 +165,6 @@ namespace Alternet.Drawing
         public virtual int Height
         {
             get => Handler.Height;
-        }
-
-        /// <summary>
-        /// Returns the size of the image in pixels.
-        /// </summary>
-        public virtual SizeI Size
-        {
-            get => new(Width, Height);
         }
 
         /// <summary>
@@ -333,21 +312,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Sets the alpha value for the given pixel.
-        /// </summary>
-        /// <param name="x">X coordinate of the pixel.</param>
-        /// <param name="y">Y coordinate of the pixel.</param>
-        /// <param name="alpha">New alpha channel (transparency) value of the pixels.</param>
-        /// <remarks>
-        /// This function should only be called if the image has alpha channel data,
-        /// use <see cref="HasAlpha"/> to check for this.
-        /// </remarks>
-        public virtual void SetAlpha(int x, int y, byte alpha)
-        {
-            Handler.SetAlpha(x, y, alpha);
-        }
-
-        /// <summary>
         /// Removes the alpha channel from the image.
         /// </summary>
         /// <remarks>
@@ -424,42 +388,6 @@ namespace Alternet.Drawing
             }
 
             return ForEachPixel<int>(ChangePixel, 0);
-        }
-
-        /// <summary>
-        /// Sets the alpha value for the each pixel.
-        /// </summary>
-        /// <param name="value">New alpha channel (transparency) value of the pixels.</param>
-        /// <remarks>
-        /// This function should only be called if the image has alpha channel data,
-        /// use <see cref="HasAlpha"/> to check for this.
-        /// </remarks>
-        public virtual unsafe bool SetAlpha(byte value)
-        {
-            if (!IsOk)
-                return false;
-            if (!HasAlpha)
-            {
-                InitAlpha();
-                AlphaData = DrawingUtils.CreateAlphaData(Width, Height, value);
-                return true;
-            }
-
-            var alpha = AlphaData;
-            var count = alpha.Length;
-
-            fixed (byte* ptr = alpha)
-            {
-                var p = ptr;
-
-                for (int i = 0; i < count; i++)
-                {
-                    *p++ = value;
-                }
-            }
-
-            AlphaData = alpha;
-            return true;
         }
 
         /// <summary>
@@ -870,74 +798,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// If the image has alpha channel, this method converts it to mask.
-        /// </summary>
-        /// <param name="threshold"></param>
-        /// <returns>Returns <c>true</c> on success, <c>false</c> on error.</returns>
-        /// <remarks>
-        /// If the image has an alpha channel, all pixels with alpha value less
-        /// than threshold are replaced with the mask color and the alpha channel
-        /// is removed. Otherwise nothing is done.
-        /// </remarks>
-        /// <remarks>
-        /// The mask color is chosen automatically using <see cref="FindFirstUnusedColor"/>,
-        /// see the overload method if this is not appropriate.
-        /// </remarks>
-        public virtual bool ConvertAlphaToMask(byte threshold = AlphaChannelThreshold)
-        {
-            return Handler.ConvertAlphaToMask(threshold);
-        }
-
-        /// <summary>
-        /// If the image has alpha channel, this method converts it to mask using the
-        /// specified color as the mask color.
-        /// </summary>
-        /// <param name="rgb">Mask color.</param>
-        /// <param name="threshold">Pixels with alpha channel values below the
-        /// given threshold are considered to be
-        /// transparent, i.e.the corresponding mask pixels are set. Pixels with
-        /// the alpha values above the
-        /// threshold are considered to be opaque.</param>
-        /// <returns>Returns <c>true</c> on success, <c>false</c> on error.</returns>
-        /// <remarks>
-        /// If the image has an alpha channel, all pixels with alpha value less
-        /// than threshold are replaced
-        /// with the mask color and the alpha channel is removed.Otherwise nothing is done.
-        /// </remarks>
-        public virtual bool ConvertAlphaToMask(
-            RGBValue rgb,
-            byte threshold = AlphaChannelThreshold)
-        {
-            return Handler.ConvertAlphaToMask(rgb, threshold);
-        }
-
-        /// <summary>
-        /// Returns a greyscale version of the image.
-        /// </summary>
-        /// <param name="weightR">Weight of the Red component.</param>
-        /// <param name="weightG">Weight of the Green component.</param>
-        /// <param name="weightB">Weight of the Blue component.</param>
-        /// <returns></returns>
-        /// <remarks>
-        /// The returned image uses the luminance component of the original to calculate
-        /// the greyscale. Defaults to using the standard ITU-T BT.601 when converting to
-        /// YUV, where every pixel equals(R* weight_r) + (G* weight_g) + (B* weight_b).
-        /// </remarks>
-        public virtual GenericImage ConvertToGreyscale(double weightR, double weightG, double weightB)
-        {
-            return Handler.ConvertToGreyscale(weightR, weightG, weightB);
-        }
-
-        /// <summary>
-        /// Returns a greyscale version of the image.
-        /// </summary>
-        /// <returns></returns>
-        public virtual GenericImage ConvertToGreyscale()
-        {
-            return Handler.ConvertToGreyscale();
-        }
-
-        /// <summary>
         /// Returns monochromatic version of the image.
         /// </summary>
         /// <param name="rgb">RGB color.</param>
@@ -946,18 +806,6 @@ namespace Alternet.Drawing
         public virtual GenericImage ConvertToMono(RGBValue rgb)
         {
             return Handler.ConvertToMono(rgb);
-        }
-
-        /// <summary>
-        /// Returns disabled(dimmed) version of the image.
-        /// </summary>
-        /// <param name="brightness"></param>
-        /// <returns></returns>
-        public virtual GenericImage ConvertToDisabled(byte brightness = 255)
-        {
-            GenericImage image = this.Copy();
-            image.ChangeToDisabled(brightness);
-            return image;
         }
 
         /// <summary>
