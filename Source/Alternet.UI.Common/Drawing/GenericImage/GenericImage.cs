@@ -358,25 +358,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Makes pixels of the image lighter
-        /// (this method makes 2x lighter than <see cref="LightColors"/>).
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool LightLightColors()
-        {
-            return ConvertColors(ControlPaint.LightLight);
-        }
-
-        /// <summary>
-        /// Makes pixels of the image lighter.
-        /// </summary>
-        /// <returns></returns>
-        public virtual bool LightColors()
-        {
-            return ConvertColors(ControlPaint.Light);
-        }
-
-        /// <summary>
         /// Makes this image grayscale.
         /// </summary>
         public virtual bool ChangeToGrayScale()
@@ -552,88 +533,6 @@ namespace Alternet.Drawing
             if (HasAlpha)
                 return;
             Handler.InitAlpha();
-        }
-
-        /// <summary>
-        /// Blurs the image in both horizontal and vertical directions by the specified
-        /// <paramref name="blurRadius"/> (in pixels).
-        /// </summary>
-        /// <param name="blurRadius">Blur radius in pixels.</param>
-        /// <returns>Blurred image.</returns>
-        /// <remarks>
-        /// This should not be used when using a single mask color for transparency.
-        /// </remarks>
-        public virtual GenericImage Blur(int blurRadius)
-        {
-            return Handler.Blur(blurRadius);
-        }
-
-        /// <summary>
-        /// Blurs the image in the horizontal direction only.
-        /// </summary>
-        /// <param name="blurRadius">Blur radius in pixels.</param>
-        /// <returns>Blurred image.</returns>
-        /// <remarks>
-        /// This should not be used when using a single mask color for transparency.
-        /// </remarks>
-        public virtual GenericImage BlurHorizontal(int blurRadius)
-        {
-            return Handler.BlurHorizontal(blurRadius);
-        }
-
-        /// <summary>
-        /// Blurs the image in the vertical direction only.
-        /// </summary>
-        /// <param name="blurRadius">Blur radius in pixels.</param>
-        /// <returns>Blurred image.</returns>
-        /// <remarks>
-        /// This should not be used when using a single mask color for transparency.
-        /// </remarks>
-        public virtual GenericImage BlurVertical(int blurRadius)
-        {
-            return Handler.BlurVertical(blurRadius);
-        }
-
-        /// <summary>
-        /// Returns a mirrored copy of the image.
-        /// </summary>
-        /// <param name="horizontally"></param>
-        /// <returns>Mirrored copy of the image</returns>
-        public virtual GenericImage Mirror(bool horizontally = true)
-        {
-            return Handler.Mirror(horizontally);
-        }
-
-        /// <summary>
-        /// Copy the data of the given image to the specified position in this image.
-        /// </summary>
-        /// <param name="image">The image containing the data to copy, must be valid.</param>
-        /// <param name="x">The horizontal position of the position to copy the data to.</param>
-        /// <param name="y">The vertical position of the position to copy the data to.</param>
-        /// <param name="alphaBlend">This parameter determines whether the alpha values of
-        /// the original
-        /// image replace(default) or are composed with the alpha channel of this image.
-        /// Notice that alpha blending overrides the mask handling.</param>
-        /// <remarks>
-        /// Takes care of the mask color and out of bounds problems.
-        /// </remarks>
-        public virtual void Paste(
-            GenericImage image,
-            int x,
-            int y,
-            GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite)
-        {
-            Handler.Paste(image, x, y, alphaBlend);
-        }
-
-        /// <summary>
-        /// Replaces the color specified by (r1.R, r1.G, r1.B) by the color (r2.R, r2.G, r2.B).
-        /// </summary>
-        /// <param name="r1">RGB Color 1.</param>
-        /// <param name="r2">RGB Color 2.</param>
-        public virtual void Replace(RGBValue r1, RGBValue r2)
-        {
-            Handler.Replace(r1, r2);
         }
 
         /// <summary>

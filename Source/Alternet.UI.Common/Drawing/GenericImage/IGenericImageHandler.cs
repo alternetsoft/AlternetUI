@@ -90,28 +90,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="GenericImage.InitAlpha"/>
         void InitAlpha();
 
-        /// <inheritdoc cref="GenericImage.Blur"/>
-        GenericImage Blur(int blurRadius);
-
-        /// <inheritdoc cref="GenericImage.BlurHorizontal"/>
-        GenericImage BlurHorizontal(int blurRadius);
-
-        /// <inheritdoc cref="GenericImage.BlurVertical"/>
-        GenericImage BlurVertical(int blurRadius);
-
-        /// <inheritdoc cref="GenericImage.Mirror"/>
-        GenericImage Mirror(bool horizontally = true);
-
-        /// <inheritdoc cref="GenericImage.Paste"/>
-        void Paste(
-            GenericImage image,
-            int x,
-            int y,
-            GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite);
-
-        /// <inheritdoc cref="GenericImage.Replace"/>
-        void Replace(RGBValue r1, RGBValue r2);
-
         /// <inheritdoc cref="GenericImage.Rescale"/>
         void Rescale(
             int width,
