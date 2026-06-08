@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
@@ -149,43 +150,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets grip control used for moving the window.
+        /// Gets grip control used for moving the target control.
         /// </summary>
+        [Browsable(false)]
         public GripControl GripControl => gripControl;
 
         /// <summary>
-        /// Gets the label used for displaying the window title.
+        /// Gets the label used for displaying the title.
         /// </summary>
+        [Browsable(false)]
         public Label TitleLabel => label;
 
         /// <summary>
-        /// Gets the button used for minimizing the window.
+        /// Gets the button used for minimizing.
         /// </summary>
+        [Browsable(false)]
         public SpeedButton MinimizeButton => minimizeButton;
 
         /// <summary>
-        /// Gets the button used for maximizing the window.
+        /// Gets the button used for maximizing.
         /// </summary>
+        [Browsable(false)]
         public SpeedButton MaximizeButton => maximizeButton;
 
         /// <summary>
-        /// Gets the button used for closing the window.
+        /// Gets the button used for closing.
         /// </summary>
+        [Browsable(false)]
         public SpeedButton CloseButton => closeButton;
 
         /// <summary>
         /// Gets icon size fallback options.
         /// </summary>
+        [Browsable(false)]
         public ImageSizeFallbackOptions IconSizeFallbackOptions => fallbackOptions;
 
         /// <summary>
-        /// Gets the toolbar used in the window title bar.
+        /// Gets the toolbar used in the title bar.
         /// </summary>
+        [Browsable(false)]
         public ToolBar ToolBar => toolBar;
 
         /// <summary>
-        /// Gets the picture box used for displaying the window icon.
+        /// Gets the picture box used for displaying the icon.
         /// </summary>
+        [Browsable(false)]
         public PictureBox IconPictureBox => icon;
 
         /// <summary>
@@ -201,6 +210,71 @@ namespace Alternet.UI
                     isActiveBorder = value;
                     AssignDefaultColors();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether close button is visible and enabled.
+        /// </summary>
+        public virtual bool CloseEnabled
+        {
+            get => closeButton.Visible;
+
+            set
+            {
+                closeButton.Visible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether maximize button is visible and enabled.
+        /// </summary>
+        public virtual bool MaximizeEnabled
+        {
+            get => maximizeButton.Visible;
+
+            set
+            {
+                maximizeButton.Visible = value;
+            }
+        }
+
+
+        /// <summary>
+        /// Gets or sets whether system menu is visible.
+        /// </summary>
+        public virtual bool HasSystemMenu
+        {
+            get
+            {
+                return IconPictureBox.IsVisible;
+            }
+
+            set
+            {
+                IconPictureBox.IsVisible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether title bar is visible.
+        /// </summary>
+        public virtual bool HasTitleBar
+        {
+            get => toolBar.Visible;
+            set => toolBar.Visible = value;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether minimize button is visible and enabled.
+        /// </summary>
+        public virtual bool MinimizeEnabled
+        {
+            get => minimizeButton.Visible;
+
+            set
+            {
+                minimizeButton.Visible = value;
             }
         }
 
