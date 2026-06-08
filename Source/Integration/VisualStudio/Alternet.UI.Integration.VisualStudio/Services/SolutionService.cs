@@ -19,7 +19,7 @@ namespace Alternet.UI.Integration.VisualStudio.Services
     /// <summary>
     /// Queries the projects in the current solution.
     /// </summary>
-    internal class SolutionService
+    public class SolutionService
     {
         private readonly DTE _dte;
 

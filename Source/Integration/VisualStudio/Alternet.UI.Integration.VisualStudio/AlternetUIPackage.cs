@@ -37,7 +37,7 @@ namespace Alternet.UI.Integration.VisualStudio
     [ProvideEditorFactory(typeof(EditorFactory), 113, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorLogicalView(typeof(EditorFactory), LogicalViewID.Designer)]
     */
-    internal sealed class AlternetUIPackage : AsyncPackage, IVsRunningDocTableEvents
+    public sealed class AlternetUIPackage : AsyncPackage, IVsRunningDocTableEvents
     {
         internal static IVsOutputWindow? OutputWindow;        
         internal static IVsOutputWindowPane OutputPane;
@@ -184,19 +184,25 @@ namespace Alternet.UI.Integration.VisualStudio
                 rdt.AdviseRunningDocTableEvents(this, out _rdtCookie);
             }
 
-
-            OleMenuCommandService commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+            var commandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
             if (commandService != null)
             {
+                // Command ID must match your VSCT Guid + IDSymbol
                 var cmdId = new CommandID(new Guid("A1B2C3D4-E5F6-47A8-ABCD-1234567890AB"), 0x0100);
+
+                
                 var menuItem = new OleMenuCommand((s, e) => ShowSidebar(), cmdId);
-                menuItem.Text = "My menu item";
+                menuItem.Enabled = true;
+
+                /*
                 menuItem.BeforeQueryStatus += (s, e) =>
                 {
                     ThreadHelper.ThrowIfNotOnUIThread();
-                    var selected = GetSelectedFilePath();
-                    menuItem.Visible = selected != null && selected.EndsWith(".uixml", StringComparison.OrdinalIgnoreCase);
+                    menuItem.Visible = true; // always visible on toolbar
+                    menuItem.Enabled = true;
                 };
+                */
+
                 commandService.AddCommand(menuItem);
             }
 

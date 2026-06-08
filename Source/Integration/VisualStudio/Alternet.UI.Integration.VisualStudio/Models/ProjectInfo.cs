@@ -6,7 +6,7 @@ namespace Alternet.UI.Integration.VisualStudio.Models
     /// <summary>
     /// Holds information required by the designer about a project.
     /// </summary>
-    internal class ProjectInfo
+    public class ProjectInfo
     {
         /// <summary>
         /// Gets or sets a value indicating whether the project is an executable.

@@ -1,28 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable">
 
-  <!-- Bring in built-in menu definitions -->
   <Extern href="stdidcmd.h"/>
   <Extern href="vsshlids.h"/>
-  <Extern>
-    <Include href="Vsct.vsct" />
-    <GuidSymbol name="guidMySidebarCmdSet" value="{A1B2C3D4-E5F6-47A8-ABCD-1234567890AB}" />
-  </Extern>
 
   <Commands>
+
+    <Menus>
+      <Menu guid="guidMySidebarCmdSet" id="MyToolbar" type="Toolbar" priority="0x700">
+        <Strings>
+          <ButtonText>My Sidebar Toolbar</ButtonText>
+          <CommandName>MySidebarToolbar</CommandName>
+        </Strings>
+      </Menu>
+    </Menus>
+
     <Groups>
-      <!-- Place our group inside the Tools menu -->
-      <Group guid="guidMySidebarCmdSet" id="MySidebarGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS" />
+      <Group guid="guidMySidebarCmdSet" id="MyToolbarGroup" priority="0x0600">
+        <Parent guid="guidMySidebarCmdSet" id="MyToolbar" />
       </Group>
     </Groups>
 
     <Buttons>
-      <!-- Command that appears under Tools -->
       <Button guid="guidMySidebarCmdSet" id="cmdidShowSidebar" priority="0x0100" type="Button">
-        <Parent guid="guidMySidebarCmdSet" id="MySidebarGroup" />
+        <Parent guid="guidMySidebarCmdSet" id="MyToolbarGroup" />
         <Strings>
-          <ButtonText>Show My Sidebar</ButtonText>
+          <ButtonText>Show Sidebar</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -30,8 +33,11 @@
 
   <Symbols>
     <GuidSymbol name="guidMySidebarCmdSet" value="{A1B2C3D4-E5F6-47A8-ABCD-1234567890AB}">
-      <IDSymbol name="MySidebarGroup" value="0x1020" />
+      <IDSymbol name="MyToolbar" value="0x2000" />
+      <IDSymbol name="MyToolbarGroup" value="0x2010" />
       <IDSymbol name="cmdidShowSidebar" value="0x0100" />
+      <IDSymbol name="bmpPic1" value="1" />
+      <!-- icon ID -->
     </GuidSymbol>
   </Symbols>
 </CommandTable>
