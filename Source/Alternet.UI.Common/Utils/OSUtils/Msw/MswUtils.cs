@@ -5,6 +5,8 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
+using Alternet.Drawing;
+
 using Microsoft.Win32;
 using Microsoft.Win32.SafeHandles;
 
@@ -24,6 +26,7 @@ namespace Alternet.UI
     {
         private static bool consoleAllocated = false;
         private static IDictionary<string, string>? cursorRegistryInfo;
+        private static Lazy<Color?> accentColor = new (GetAccentColor);
 
         private const string CursorKeyPath = @"Control Panel\Cursors";
 
@@ -34,6 +37,12 @@ namespace Alternet.UI
         {
             cursorRegistryInfo = null;
         }
+
+        /// <summary>
+        /// Gets accent color value from registry.
+        /// </summary>
+        /// <returns>The accent color if found; otherwise, <c>null</c>.</returns>
+        public static Color? AccentColor => accentColor.Value;
 
         /// <summary>
         /// Gets all cursor related registry values from "Control Panel\Cursors" into a dictionary.
@@ -306,6 +315,28 @@ namespace Alternet.UI
             }
 
             return libraries.ToArray();
+        }
+
+        private static Color? GetAccentColor()
+        {
+            if (!App.IsWindowsOS)
+                return null;
+
+            const string keyPath = @"Software\Microsoft\Windows\DWM";
+            const string valueName = "ColorizationColor";
+
+            using var key = Registry.CurrentUser.OpenSubKey(keyPath);
+
+            if (key != null)
+            {
+                var value = key.GetValue(valueName);
+                if (value is int argb)
+                {
+                    return Color.FromArgb(argb);
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
