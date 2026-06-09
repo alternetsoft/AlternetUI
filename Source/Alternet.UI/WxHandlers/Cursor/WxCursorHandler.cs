@@ -45,19 +45,6 @@ namespace Alternet.UI
         {
         }
 
-        public WxCursorHandler(
-            GenericImage image,
-            int hotSpotX = 0,
-            int hotSpotY = 0)
-            : base(
-                  UI.Native.WxOtherFactory.CreateCursor5(
-                      ((WxGenericImageHandler)image.Handler).Handle,
-                      hotSpotX,
-                      hotSpotY),
-                  true)
-        {
-        }
-
         public bool IsOk
         {
             get => UI.Native.WxOtherFactory.CursorIsOk(Handle);

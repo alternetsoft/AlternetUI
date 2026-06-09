@@ -13,7 +13,7 @@ namespace Alternet.Drawing
     /// <summary>
     /// Implements platform independent image.
     /// </summary>
-    public class GenericImage : HandledObject<IGenericImageHandler>
+    internal class GenericImage : HandledObject<IGenericImageHandler>
     {
         /// <summary>
         /// Gets an empty generic image.
@@ -31,20 +31,6 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image with the given size and clears it if requested.
-        /// Does not create an alpha channel.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="clear">If true, initialize the image to black.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, bool clear = false)
-        {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, clear);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from data in memory.
         /// </summary>
         /// <param name="width">Specifies the width of the image.</param>
@@ -53,25 +39,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GenericImage(int width, int height, SKColor[] data)
         {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(width, height, data);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an image from data in memory.
-        /// </summary>
-        /// <param name="width">Specifies the width of the image.</param>
-        /// <param name="height">Specifies the height of the image.</param>
-        /// <param name="data">RGB data.</param>
-        /// <param name="alpha">Alpha-channel data.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage(int width, int height, RGBValue[] data, byte[] alpha)
-        {
-            Handler = GraphicsFactory.Handler.CreateGenericImageHandler(
-                width,
-                height,
-                data,
-                alpha);
+            Handler = new WxGenericImageHandler(width, height, data);
         }
 
         /// <summary>
@@ -207,7 +175,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IGenericImageHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateGenericImageHandler();
+            return new WxGenericImageHandler();
         }
     }
 }

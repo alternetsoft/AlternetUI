@@ -192,13 +192,6 @@ namespace Alternet.Drawing
             return new UI.Native.Image();
         }
 
-        public IImageHandler CreateImageHandler(GenericImage genericImage, int depth = -1)
-        {
-            var nativeImage = CreateImageHandler();
-            ((UI.Native.Image)nativeImage).LoadFromGenericImage(WxGenericImageHandler.GetPtr(genericImage), depth);
-            return nativeImage;
-        }
-
         public IImageHandler CreateImageHandler(int width, int height, Graphics dc)
         {
             var nativeImage = CreateImageHandler();
@@ -206,16 +199,6 @@ namespace Alternet.Drawing
                 (UI.Native.Image)nativeImage,
                 width,
                 height,
-                (UI.Native.DrawingContext)dc.NativeObject);
-            return nativeImage;
-        }
-
-        public IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc)
-        {
-            var nativeImage = CreateImageHandler();
-            UI.Native.DrawingContext.ImageFromGenericImageDC(
-                (UI.Native.Image)nativeImage,
-                WxGenericImageHandler.GetPtr(genericImage),
                 (UI.Native.DrawingContext)dc.NativeObject);
             return nativeImage;
         }

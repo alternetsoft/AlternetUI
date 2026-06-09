@@ -254,18 +254,6 @@ namespace Alternet.Drawing
             UI.Native.GenericImage.SetMaskColor(Handle, rgb.R, rgb.G, rgb.B);
         }
 
-        public bool SetMaskFromImage(
-            GenericImage image,
-            RGBValue mask)
-        {
-            return UI.Native.GenericImage.SetMaskFromImage(
-                Handle,
-                GetPtr(image),
-                mask.R,
-                mask.G,
-                mask.B);
-        }
-
         /// <inheritdoc/>
         public void SetOptionAsString(string name, string value)
         {
@@ -291,11 +279,6 @@ namespace Alternet.Drawing
         public void SetImageType(BitmapType type)
         {
             UI.Native.GenericImage.SetImageType(Handle, (int)type);
-        }
-
-        public GenericImage Copy()
-        {
-            return Create(UI.Native.GenericImage.Copy(Handle));
         }
 
         public bool Reset(int width, int height, bool clear = false)
@@ -331,26 +314,6 @@ namespace Alternet.Drawing
             UI.Native.GenericImage.InitAlpha(Handle);
         }
 
-        public GenericImage Blur(int blurRadius)
-        {
-            return Create(UI.Native.GenericImage.Blur(Handle, blurRadius));
-        }
-
-        public GenericImage BlurHorizontal(int blurRadius)
-        {
-            return Create(UI.Native.GenericImage.BlurHorizontal(Handle, blurRadius));
-        }
-
-        public GenericImage BlurVertical(int blurRadius)
-        {
-            return Create(UI.Native.GenericImage.BlurVertical(Handle, blurRadius));
-        }
-
-        public GenericImage Mirror(bool horizontally = true)
-        {
-            return Create(UI.Native.GenericImage.Mirror(Handle, horizontally));
-        }
-
         public void ResizeNoScale(
             SizeI size,
             PointI pos,
@@ -364,44 +327,9 @@ namespace Alternet.Drawing
 
             var red = color.Value.R;
             var green = color.Value.G;
-            var blue = color.Value.G;
+            var blue = color.Value.B;
 
             UI.Native.GenericImage.Resize(Handle, size, pos, red, green, blue);
-        }
-
-        public GenericImage SizeNoScale(
-            SizeI size,
-            PointI pos = default,
-            RGBValue? color = null)
-        {
-            int red;
-            int green;
-            int blue;
-
-            if (color is null)
-            {
-                red = -1;
-                green = -1;
-                blue = -1;
-            }
-            else
-            {
-                red = color.Value.R;
-                green = color.Value.G;
-                blue = color.Value.G;
-            }
-
-            return Create(UI.Native.GenericImage.Size(Handle, size, pos, red, green, blue));
-        }
-
-        public GenericImage Rotate90(bool clockwise = true)
-        {
-            return Create(UI.Native.GenericImage.Rotate90(Handle, clockwise));
-        }
-
-        public GenericImage Rotate180()
-        {
-            return Create(UI.Native.GenericImage.Rotate180(Handle));
         }
 
         public void RotateHue(double angle)
@@ -434,38 +362,6 @@ namespace Alternet.Drawing
                 rgb.G,
                 rgb.B,
                 threshold);
-        }
-
-        public GenericImage ConvertToGreyscale(
-            double weightR,
-            double weightG,
-            double weightB)
-        {
-            return Create(UI.Native.GenericImage.ConvertToGreyscaleEx(
-                Handle,
-                weightR,
-                weightG,
-                weightB));
-        }
-
-        public GenericImage ConvertToGreyscale()
-        {
-            return Create(UI.Native.GenericImage.ConvertToGreyscale(Handle));
-        }
-
-        public GenericImage ConvertToMono(RGBValue rgb)
-        {
-            return Create(UI.Native.GenericImage.ConvertToMono(Handle, rgb.R, rgb.G, rgb.B));
-        }
-
-        public GenericImage ConvertToDisabled(byte brightness = 255)
-        {
-            return Create(UI.Native.GenericImage.ConvertToDisabled(Handle, brightness));
-        }
-
-        public GenericImage ChangeLightness(int ialpha)
-        {
-            return Create(UI.Native.GenericImage.ChangeLightness(Handle, ialpha));
         }
 
         public byte GetAlpha(int x, int y)
@@ -551,11 +447,6 @@ namespace Alternet.Drawing
         public int GetOptionAsInt(string name)
         {
             return UI.Native.GenericImage.GetOptionInt(Handle, name);
-        }
-
-        public GenericImage GetSubImage(RectI rect)
-        {
-            return Create(UI.Native.GenericImage.GetSubImage(Handle, rect));
         }
 
         public BitmapType GetImageType()

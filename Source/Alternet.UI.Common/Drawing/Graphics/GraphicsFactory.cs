@@ -165,7 +165,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets <see cref="ImageBitsFormat"/> for the <see cref="GenericImage"/> images.
+        /// Gets or sets <see cref="ImageBitsFormat"/> for the generic images.
         /// </summary>
         public static ImageBitsFormat GenericBitsFormat
         {
@@ -293,9 +293,9 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates <see cref="ISkiaSurface"/> object for the specified image.
         /// Consider using transparent images as they are handled faster.
-        /// Solid images are handled slower as they are converted to <see cref="GenericImage"/>
+        /// Solid images are handled slower as they are converted to generic image
         /// before rendering. This is required as SkiaSharp does not support all pixel formats.
-        /// Also on MacOS all images are handled via <see cref="GenericImage"/> as
+        /// Also on MacOS all images are handled via generic image as
         /// native image pixels cannot be accessed directly via SkiaSharp.
         /// </summary>
         /// <param name="image">Image on which <see cref="ISkiaSurface"/> object is created.</param>
@@ -330,7 +330,7 @@ namespace Alternet.Drawing
 
             ISkiaSurface CreateUsingGenericImage()
             {
-                App.DebugLogIf("CreateSkiaSurface for image using GenericImage", false);
+                App.DebugLogIf("CreateSkiaSurface for image using SkiaSurfaceOnSkia", false);
 
                 SKBitmap bitmap = Image.ToSkia(image, lockMode.CanRead());
 
@@ -345,27 +345,6 @@ namespace Alternet.Drawing
 
                 return result;
             }
-        }
-
-        /// <summary>
-        /// Creates <see cref="ISkiaSurface"/> object for the specified generic image.
-        /// </summary>
-        /// <param name="image">Image on which <see cref="ISkiaSurface"/> object is created.</param>
-        /// <param name="lockMode">Image lock mode.</param>
-        /// <returns></returns>
-        public static ISkiaSurface CreateSkiaSurface(GenericImage image, ImageLockMode lockMode)
-        {
-            SKBitmap bitmap = GenericImage.ToSkia(image, lockMode.CanRead());
-
-            var result = new SkiaSurfaceOnSkia(bitmap, lockMode);
-
-            result.Disposed += (s, e) =>
-            {
-                if(lockMode.CanWrite())
-                    image.Pixels = bitmap.Pixels;
-            };
-
-            return result;
         }
 
         /// <summary>

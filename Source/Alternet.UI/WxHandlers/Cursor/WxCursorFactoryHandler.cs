@@ -62,14 +62,6 @@ namespace Alternet.UI
             return new WxCursorHandler(image, hotSpotX, hotSpotY);
         }
 
-        public ICursorHandler CreateCursorHandler(
-            GenericImage image,
-            int hotSpotX = 0,
-            int hotSpotY = 0)
-        {
-            return new WxCursorHandler(image, hotSpotX, hotSpotY);
-        }
-
         public ICursorHandler CreateCursorHandler()
         {
             return new WxCursorHandler();

@@ -195,45 +195,6 @@ namespace Alternet.Drawing
         IImageContainer? CreateIconSetHandler();
 
         /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider.
-        /// </summary>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler();
-
-        /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="clear">Whether or not to clear the image.</param>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler(int width, int height, bool clear = false);
-
-        /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="data">Array with image pixels.</param>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler(
-            int width,
-            int height,
-            RGBValue[] data);
-
-        /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="data">Array with image pixels.</param>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler(
-            int width,
-            int height,
-            SKColor[] data);
-
-        /// <summary>
         /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
         /// </summary>
         /// <param name="width">Image width.</param>
@@ -244,19 +205,5 @@ namespace Alternet.Drawing
             int width,
             int height,
             SKColor[] data);
-
-        /// <summary>
-        /// Creates <see cref="IGenericImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="data">Array with image pixels.</param>
-        /// <param name="alpha">Array with alpha component of the pixels.</param>
-        /// <returns></returns>
-        IGenericImageHandler CreateGenericImageHandler(
-            int width,
-            int height,
-            RGBValue[] data,
-            byte[] alpha);
     }
 }

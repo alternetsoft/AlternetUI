@@ -76,40 +76,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler(
-            int width,
-            int height,
-            bool clear)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler(
-            int width,
-            int height,
-            RGBValue[] data)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler(
-            int width,
-            int height,
-            RGBValue[] data,
-            byte[] alpha)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public virtual Graphics CreateGraphicsFromImage(Image image)
         {
             if (image.Handler is not SkiaImageHandler skiaImageHandler)
@@ -225,12 +191,6 @@ namespace Alternet.UI
             SKColor[] data)
         {
             return new SkiaImageHandler(width, height, data);
-        }
-
-        /// <inheritdoc/>
-        public virtual IGenericImageHandler CreateGenericImageHandler(int width, int height, SKColor[] data)
-        {
-            throw new NotImplementedException();
         }
 
         /// <inheritdoc/>
