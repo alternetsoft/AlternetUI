@@ -32,13 +32,15 @@ namespace Alternet.UI
         /// </summary>
         public ToolTipWindow()
         {
+            toolTip.IsScrolledVertically = false;
+            toolTip.IsScrolledHorizontally = false;
             toolTip.ToolTipVisibleChanged += (s, e) =>
             {
                 Hide();
 
                 if (toolTip.ToolTipVisible)
                 {
-                    var size = toolTip.LayoutMaxSize ?? SizeD.Empty;
+                    SizeD size = toolTip.LayoutMaxSize;
 
                     if (size == SizeD.Empty)
                     {
@@ -299,7 +301,10 @@ namespace Alternet.UI
                     if (string.IsNullOrEmpty(toolTipStr))
                         return;
 
-                    Post(() => toolTip.ShowToolTip(toolTipStr));
+                    Post(() =>
+                    {
+                        toolTip.ShowToolTip(toolTipStr);
+                    });
                     return;
                 }
 

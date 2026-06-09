@@ -80,7 +80,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override PointD LayoutOffset
+        public override PointD LayoutOffset
         {
             get
             {

@@ -161,7 +161,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the layout offset, which represents the current scroll position of the content.
         /// </summary>
-        new protected virtual PointD LayoutOffset
+        new public virtual PointD LayoutOffset
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the maximum size of the layout, which is determined by the preferred size of the content and the padding of the control.
         /// </summary>
-        new protected virtual SizeD LayoutMaxSize
+        new public virtual SizeD LayoutMaxSize
         {
             get
             {

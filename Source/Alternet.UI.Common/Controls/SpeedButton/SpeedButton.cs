@@ -2573,6 +2573,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override void OnToolTipChanged(EventArgs e)
+        {
+            base.OnToolTipChanged(e);
+        }
+
         /// <summary>
         /// Handles changes to the picture size.
         /// </summary>
