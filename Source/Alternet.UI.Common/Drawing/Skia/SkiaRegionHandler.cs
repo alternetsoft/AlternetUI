@@ -76,6 +76,11 @@ namespace Alternet.Drawing
         /// </summary>
         public Coord? ScaleFactor { get; set; } = 1;
 
+        /// <summary>
+        /// Gets the SkiaSharp region which used by this handler.
+        /// </summary>
+        public SKRegion Region => region;
+
         /// <seealso cref="Region.Clear()"/>
         public virtual void Clear()
         {

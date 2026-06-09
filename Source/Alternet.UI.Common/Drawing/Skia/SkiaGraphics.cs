@@ -283,6 +283,19 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void ClipRegion(Region region)
+        {
+            if (region.Handler is not SkiaRegionHandler handler)
+            {
+                throw new ArgumentException("Incompatible region handler", nameof(region));
+            }
+
+            var skiaRegion = handler.Region;
+
+            canvas.ClipRegion(skiaRegion, SKClipOperation.Intersect);
+        }
+
+        /// <inheritdoc/>
         public override void DrawRectangle(Pen pen, RectD rectangle)
         {
             DebugPenAssert(pen);
