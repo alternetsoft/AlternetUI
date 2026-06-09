@@ -128,9 +128,19 @@ namespace PaintSample
         private Bitmap LoadBitmap(string fileName)
         {
             var bitmap = new Bitmap(fileName);
-            var image = bitmap.AsGeneric;
-            image.ResizeNoScale((600, 600), (0, 0), Color.White);
-            return (Bitmap)image;
+            
+            if (bitmap.Width < 600 || bitmap.Height < 600)
+            {
+                var canvasBitmap = Image.Create(600, 600, Color.White);
+
+                using var canvas = canvasBitmap.Canvas;
+
+                canvas.DrawImageUnscaled(bitmap, PointD.Empty);
+
+                return canvasBitmap;
+            }
+
+            return bitmap;
         }
 
         private void RaiseChanged()

@@ -637,60 +637,11 @@ namespace PaintSample
 
             var background = Image.Create(backgroundSize.Width, backgroundSize.Height, Color.LightGreen);
 
-            background.Canvas.DrawImage(toucan, (50, 50));
+            using var canvas = background.Canvas;
+
+            canvas.DrawImage(toucan, (50, 50));
 
             Document.Bitmap = background;
         }
-
-        /*
-        public void DoDrawOnBitmap()
-        {
-            CreateNewDocument();
-            var bitmap = new Bitmap(1000, 800);
-            bitmap.ScaleFactor = this.ScaleFactor;
-            var dc = bitmap.Canvas;
-
-            DrawSample(dc, (15, 15), bitmap.Bounds);
-
-            Document.Bitmap = bitmap;
-        }
-        */
-
-        /*
-        public void DrawSample(Graphics dc, PointD location, RectD rect)
-        {
-            dc.FillRectangle(Color.WhiteSmoke.AsBrush, rect);
-
-            App.LogNameValue("dc.DPI", dc.GetDPI());
-            App.LogNameValue("window.DPI", GetDPI());
-
-            var s = "Hello text";
-
-            var font = AbstractControl.DefaultFont.Scaled(5);
-            var measure = dc.MeasureText(s, font);
-
-            var size = dc.GetTextExtent(s, font);
-
-            App.Log($"GetTextExtent: {measure}, {size}");
-
-            RectD r1 = (location.X, location.Y, measure.Width, measure.Height);
-            RectD r2 = (location.X, location.Y, size.Width, size.Height);
-
-            DrawingUtils.DrawBorderWithBrush(dc, Color.DarkRed.AsBrush, r1, 1);
-
-            DrawingUtils.DrawBorderWithBrush(dc, Color.Red.AsBrush, r2, 1);
-
-            dc.DrawWave((location.X, location.Y, size.Width, size.Height), Color.Green);
-
-            dc.DestroyClippingRegion();
-            dc.SetClippingRegion((location.X + size.Width / 2, location.Y, size.Width, size.Height));
-            dc.DrawText(s, location, font, Color.Black, Color.Empty);
-
-            dc.DestroyClippingRegion();
-            dc.SetClippingRegion((location.X, location.Y, size.Width / 2, size.Height));
-            dc.DrawText(s, location, font, Color.Green, Color.Empty);
-            dc.DestroyClippingRegion();
-        }
-        */
     }
 }

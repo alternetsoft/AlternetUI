@@ -106,13 +106,6 @@ namespace ControlsSample
             actionsListBox.AddAction("Draw text on SKSurface (alpha Bitmap)", DrawTextOnSkiaA);
             actionsListBox.AddAction("Draw text on SKSurface (opaque Bitmap)", DrawTextOnSkia);
             
-            actionsListBox.AddAction(
-                "Lock SKSurface (alpha GenericImage)",
-                LockSurfaceOnGenericImageA);
-            actionsListBox.AddAction(
-                "Lock SKSurface (opaque GenericImage)",
-                LockSurfaceOnGenericImage);
-
             propGrid.SuggestedInitDefaults();
 
             RefreshPreviewControl();
@@ -188,42 +181,6 @@ namespace ControlsSample
         }
 
         private Bitmap? bitmap;
-
-        private void LockSurfaceOnGenericImageA() => LockSurfaceOnGenericImage(true);
-
-        private void LockSurfaceOnGenericImage() => LockSurfaceOnGenericImage(false);
-
-        private void LockSurfaceOnGenericImage(bool hasAlpha)
-        {
-            var width = 700;
-            var height = 500;
-
-            var image = GenericImage.Create(
-                PixelFromDip(width),
-                PixelFromDip(height),
-                Color.Aquamarine);
-
-            image.HasAlpha = hasAlpha;
-
-            using (var canvasLock = image.LockSurface())
-            {
-                var canvas = canvasLock.Canvas;
-                canvas.Scale((float)ScaleFactor);
-
-                canvas.Clear(prm.BackColor);
-
-                var font = SkiaSampleControl.SampleFont;
-
-                canvas.DrawText((counter++).ToString(), (600, 0), font, Color.Black, Color.LightGreen);
-
-                canvas.DrawRect(SKRect.Create(width, height), Color.Red.AsPen);
-
-                DrawBeziersPoint(canvas);
-                canvas.Flush();
-            }
-
-            pictureBox.Image = image.AsImage;
-        }
 
         private void DrawTextOnSkia() => DrawTextOnSkia(false);
 

@@ -124,18 +124,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Converts this object to <see cref="GenericImage"/>.
-        /// </summary>
-        [Browsable(false)]
-        public virtual GenericImage AsGeneric
-        {
-            get
-            {
-                return Handler.ToGenericImage();
-            }
-        }
-
-        /// <summary>
         /// Gets or sets source url of this image. This is informational property and
         /// doesn't reload the image.
         /// </summary>
@@ -394,7 +382,7 @@ namespace Alternet.Drawing
         /// <param name="color">Color to fill.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Image Create(int width, int height, Color color)
+        public static Bitmap Create(int width, int height, Color color)
         {
             SKColor[] pixels = DrawingUtils.CreatePixels(width, height, color);
             return Create(width, height, pixels);
@@ -408,7 +396,7 @@ namespace Alternet.Drawing
         /// <param name="pixels">Pixel data.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Image Create(int width, int height, SKColor[] pixels)
+        public static Bitmap Create(int width, int height, SKColor[] pixels)
         {
             var image = SkiaUtils.CreateBitmap((width, height), 32);
             image.Pixels = pixels;

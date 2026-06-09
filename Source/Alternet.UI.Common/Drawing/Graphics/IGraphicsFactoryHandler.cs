@@ -145,29 +145,11 @@ namespace Alternet.Drawing
         /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
         /// </summary>
         /// <returns></returns>
-        /// <param name="genericImage">Source image used to get pixel data.</param>
-        /// <param name="depth">Image depth.</param>
-        /// <returns></returns>
-        IImageHandler CreateImageHandler(GenericImage genericImage, int depth = -1);
-
-        /// <summary>
-        /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <returns></returns>
         /// <param name="width">Image width.</param>
         /// <param name="height">Image height.</param>
         /// <param name="dc">Drawing context to get dpi from.</param>
         /// <returns></returns>
         IImageHandler CreateImageHandler(int width, int height, Graphics dc);
-
-        /// <summary>
-        /// Creates <see cref="IImageHandler"/> provider using the specified parameters.
-        /// </summary>
-        /// <returns></returns>
-        /// <param name="genericImage">Source image used to get pixel data.</param>
-        /// <param name="dc">Drawing context to get dpi from.</param>
-        /// <returns></returns>
-        IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc);
 
         /// <summary>
         /// Creates <see cref="IImageHandler"/> provider using the specified parameters.

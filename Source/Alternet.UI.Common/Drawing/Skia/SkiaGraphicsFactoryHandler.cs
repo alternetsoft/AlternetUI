@@ -144,23 +144,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IImageHandler CreateImageHandler(
-            GenericImage genericImage,
-            int depth)
-        {
-            return new SkiaImageHandler(genericImage, depth);
-        }
-
-        /// <inheritdoc/>
         public virtual IImageHandler CreateImageHandler(int width, int height, Graphics dc)
         {
             return new SkiaImageHandler(width, height, dc);
-        }
-
-        /// <inheritdoc/>
-        public virtual IImageHandler CreateImageHandler(GenericImage genericImage, Graphics dc)
-        {
-            return new SkiaImageHandler(genericImage, dc);
         }
 
         /// <inheritdoc/>

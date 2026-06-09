@@ -70,44 +70,10 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class using the
         /// specified parameters.
         /// </summary>
-        /// <param name="genericImage"></param>
-        /// <param name="depth"></param>
-        public SkiaImageHandler(GenericImage genericImage, int depth = 32)
-        {
-            SkiaUtils.CoerceImageDepth(depth);
-            bitmap = (SKBitmap)genericImage;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class using the
-        /// specified parameters.
-        /// </summary>
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="dc"></param>
         public SkiaImageHandler(int width, int height, Graphics dc)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class using the
-        /// specified parameters.
-        /// </summary>
-        /// <param name="imageSet"></param>
-        /// <param name="control"></param>
-        public SkiaImageHandler(ImageSet imageSet, IControl control)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SkiaImageHandler"/> class using the
-        /// specified parameters.
-        /// </summary>
-        /// <param name="genericImage"></param>
-        /// <param name="dc"></param>
-        public SkiaImageHandler(GenericImage genericImage, Graphics dc)
         {
             throw new NotImplementedException();
         }
@@ -415,12 +381,6 @@ namespace Alternet.UI
             else
                 SafeDispose(ref newBitmap);
             return result;
-        }
-
-        /// <inheritdoc/>
-        public virtual GenericImage ToGenericImage()
-        {
-            return (GenericImage)bitmap;
         }
 
         /// <inheritdoc/>

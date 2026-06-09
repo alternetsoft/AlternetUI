@@ -52,12 +52,6 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         SKBitmap ToSkia(bool assignPixels = true);
 
-        /// <summary>
-        /// Convert this image to <see cref="GenericImage"/>.
-        /// </summary>
-        /// <returns></returns>
-        GenericImage ToGenericImage();
-
         /// <inheritdoc cref="Image.GetSubBitmap"/>
         IImageHandler GetSubBitmap(RectI rect);
 
@@ -66,12 +60,6 @@ namespace Alternet.Drawing
 
         /// <inheritdoc cref="Image.Rescale"/>
         bool Rescale(SizeI sizeNeeded);
-
-        /// <summary>
-        /// Assigns pixels of <see cref="GenericImage"/> to this image.
-        /// </summary>
-        /// <param name="image">Image.</param>
-        void Assign(GenericImage image);
 
         /// <summary>
         /// Assigns pixels of <see cref="SKBitmap"/> to this image.

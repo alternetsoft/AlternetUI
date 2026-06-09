@@ -154,21 +154,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Bitmap"/> class from
-        /// the specified <see cref="GenericImage"/>.
-        /// </summary>
-        /// <param name="genericImage">Generic image.</param>
-        /// <param name="depth">Specifies the depth of the bitmap.
-        /// Some platforms only support (1) for monochrome and (-1) for the current color setting.
-        /// A depth of 32 including an alpha channel is supported under MSW, Mac and Linux.
-        /// If this parameter is -1, the display depth of the screen is used.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(GenericImage genericImage, int depth = 32)
-            : base(GraphicsFactory.Handler.CreateImageHandler(genericImage, depth))
-        {
-        }
-
-        /// <summary>
         /// Creates a bitmap compatible with the given <see cref="Graphics"/>, inheriting
         /// its magnification factor.
         /// </summary>
@@ -178,24 +163,6 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(int width, int height, Graphics dc)
             : base(GraphicsFactory.Handler.CreateImageHandler(width, height, dc))
-        {
-        }
-
-        /// <summary>
-        /// Creates a bitmap compatible with the given <see cref="Graphics"/> from
-        /// the given <see cref="GenericImage"/>.
-        /// </summary>
-        /// <param name="genericImage">Platform-independent image object.</param>
-        /// <param name="dc"><see cref="Graphics"/> from which the scaling
-        /// factor is inherited.</param>
-        /// <remarks>
-        /// This constructor initializes the bitmap with the data of the given image, which
-        /// must be valid, but inherits the scaling factor from the given device context
-        /// instead of simply using the default factor of 1.
-        /// </remarks>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Bitmap(GenericImage genericImage, Graphics dc)
-            : base(GraphicsFactory.Handler.CreateImageHandler(genericImage, dc))
         {
         }
 
@@ -238,12 +205,6 @@ namespace Alternet.Drawing
                 return empty;
             }
         }
-
-        /// <summary>
-        /// Converts the specified <see cref='GenericImage'/> to a <see cref='Bitmap'/>.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static explicit operator Bitmap(GenericImage image) => new(image);
 
         /// <summary>
         /// Returns a version of the image recolored for dark mode if required.

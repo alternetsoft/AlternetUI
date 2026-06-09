@@ -24,11 +24,6 @@ namespace Alternet.Drawing
             }
         }
 
-        public GenericImage.PixelStrategy BestStrategy
-        {
-            get => GenericImage.PixelStrategy.RgbData;
-        }
-
         public unsafe SKColor[] Pixels
         {
             get

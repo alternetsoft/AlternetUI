@@ -67,7 +67,7 @@ namespace Alternet.UI.Native
 
         public void Assign(SKBitmap bitmap)
         {
-            Alternet.Drawing.GenericImage image = (Alternet.Drawing.GenericImage)bitmap;
+            var image = Alternet.Drawing.GenericImage.FromSkia(bitmap);
             Assign(image);
         }
 
