@@ -16,20 +16,6 @@ namespace Alternet.Drawing
     internal class GenericImage : HandledObject<IGenericImageHandler>
     {
         /// <summary>
-        /// Gets an empty generic image.
-        /// </summary>
-        public static readonly GenericImage Empty = new();
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericImage"/> class.
-        /// Creates an empty image without an alpha channel.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GenericImage()
-        {
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="GenericImage"/> class.
         /// Creates an image from data in memory.
         /// </summary>
@@ -102,63 +88,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets pixels using array of <see cref="RGBValue"/>.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="AlphaData"/> to get alpha component of the pixels.
-        /// </remarks>
-        public virtual RGBValue[] RgbData
-        {
-            get => Handler.RgbData;
-            set => Handler.RgbData = value;
-        }
-
-        /// <summary>
-        /// Gets or sets alpha component of the pixels using array of <see cref="byte"/>.
-        /// </summary>
-        /// <remarks>
-        /// Use <see cref="RgbData"/> to get alpha component of the pixels.
-        /// </remarks>
-        public virtual byte[] AlphaData
-        {
-            get => Handler.AlphaData;
-            set => Handler.AlphaData = value;
-        }
-
-        /// <summary>
         /// Returns <c>true</c> if image data is present.
         /// </summary>
         public virtual bool IsOk
         {
             get => Handler.IsOk;
-        }
-
-        /// <summary>
-        /// Converts <see cref="GenericImage"/> to <see cref="SKBitmap"/>. Optionally
-        /// copies pixel data.
-        /// </summary>
-        /// <param name="bitmap">Image.</param>
-        /// <param name="assignPixels">Whether to copy pixel data. Optional. Default is <c>true</c>.</param>
-        /// <returns></returns>
-        public static SKBitmap ToSkia(GenericImage bitmap, bool assignPixels = true)
-        {
-            return ToSkia(bitmap.Handler, assignPixels);
-        }
-
-        /// <summary>
-        /// Converts image specified with <see cref="IGenericImageHandler"/> to
-        /// <see cref="SKBitmap"/>. Optionally copies pixel data.
-        /// </summary>
-        /// <param name="bitmap">Image.</param>
-        /// <param name="assignPixels">Whether to copy pixel data. Optional. Default is <c>true</c>.</param>
-        /// <returns></returns>
-        public static SKBitmap ToSkia(IGenericImageHandler bitmap, bool assignPixels = true)
-        {
-            var result = DrawingUtils.CreateSkiaBitmapForImage(bitmap.Width, bitmap.Height, bitmap.HasAlpha);
-
-            if (assignPixels)
-                result.Pixels = bitmap.Pixels;
-            return result;
         }
 
         /// <summary>

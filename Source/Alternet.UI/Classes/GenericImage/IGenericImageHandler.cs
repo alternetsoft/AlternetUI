@@ -19,12 +19,6 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="GenericImage.Pixels"/>
         SKColor[] Pixels { get; set; }
 
-        /// <inheritdoc cref="GenericImage.RgbData"/>
-        RGBValue[] RgbData { get; set; }
-
-        /// <inheritdoc cref="GenericImage.AlphaData"/>
-        byte[] AlphaData { get; set; }
-
         /// <inheritdoc cref="GenericImage.HasAlpha"/>
         bool HasAlpha { get; }
 
