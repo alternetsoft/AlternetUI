@@ -12,6 +12,23 @@ namespace Alternet.UI
     public static class StaticControlEvents
     {
         /// <summary>
+        /// Enumerates the types of notifications that can be raised by <see cref="RaiseNotification"/>
+        /// and are passed to the <see cref="Notification"/> event handlers.
+        /// </summary>
+        public enum NotificationType
+        {
+            /// <summary>
+            /// Indicates that the system colors have changed.
+            /// </summary>
+            SystemColorsChanged,
+        }
+
+        /// <summary>
+        /// Occurs when a system event related to controls is raised.
+        /// </summary>
+        public static event Action<NotificationType, EventArgs>? Notification;
+
+        /// <summary>
         /// Occurs when the DPI setting of the main window changes.
         /// </summary>
         public static event EventHandler? MainWindowDpiChanged;
@@ -253,6 +270,16 @@ namespace Alternet.UI
             {
                 MainWindowDpiChanged?.Invoke(sender, e);
             }
+        }
+
+        /// <summary>
+        /// Raises the <see cref="Notification"/> event with the specified notification type.
+        /// </summary>
+        /// <param name="type">The type of notification that was raised.</param>
+        /// <param name="e">An <see cref="EventArgs"/> instance containing the event data.</param>
+        public static void RaiseNotification(NotificationType type, EventArgs e)
+        {
+            Notification?.Invoke(type, e);
         }
     }
 }
