@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     public partial class Graphics
@@ -37,6 +39,13 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         public abstract IGraphicsPathHandler CreateGraphicsPathHandler();
+
+        /// <summary>
+        /// Draws the specified <see cref="SKBitmap"/>, using its original size, at the specified location.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> to draw.</param>
+        /// <param name="origin">The <see cref="PointD"/> representing the location to draw the bitmap.</param>
+        public abstract void DrawBitmap(SKBitmap bitmap, PointD origin);
 
         /// <summary>
         /// Calls <see cref="FillRoundedRectangle"/> and than <see cref="DrawRoundedRectangle"/>.

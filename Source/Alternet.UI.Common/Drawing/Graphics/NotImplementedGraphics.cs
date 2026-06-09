@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -261,6 +263,12 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void Rectangle(Pen pen, Brush brush, RectD rectangle)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public override void DrawBitmap(SKBitmap bitmap, PointD origin)
         {
             throw new NotImplementedException();
         }

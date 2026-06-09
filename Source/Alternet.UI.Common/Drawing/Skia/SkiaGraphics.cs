@@ -493,6 +493,14 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawBitmap(SKBitmap bitmap, PointD origin)
+        {
+            BeforeDrawImage(ref origin);
+            canvas.DrawBitmap(bitmap, origin, InterpolationModePaint);
+            AfterDrawImage();
+        }
+
+        /// <inheritdoc/>
         public override void DrawImage(Image image, RectD destinationRect)
         {
             BeforeDrawImage(ref image, ref destinationRect);
@@ -680,7 +688,16 @@ namespace Alternet.Drawing
         protected virtual bool BeforeDrawImage(ref Image image, ref PointD location)
         {
             DebugImageAssert(image);
+            return BeforeDrawImage(ref location);
+        }
 
+        /// <summary>
+        /// Called before any draw image operation.
+        /// </summary>
+        /// <param name="location"><see cref="PointD"/> structure that represents the
+        /// upper-left corner of the drawn image on the destination drawing context.</param>
+        protected virtual bool BeforeDrawImage(ref PointD location)
+        {
             if (UseUnscaledDrawImage && IsScaled)
             {
                 var sf = OriginalScaleFactor;

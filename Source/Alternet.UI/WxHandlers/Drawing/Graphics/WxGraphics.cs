@@ -4,6 +4,8 @@ using System.Runtime.CompilerServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -247,6 +249,13 @@ namespace Alternet.Drawing
                 TransformPointToNative(controlPoint1),
                 TransformPointToNative(controlPoint2),
                 TransformPointToNative(endPoint));
+        }
+
+        /// <inheritdoc/>
+        public override void DrawBitmap(SKBitmap bitmap, PointD origin)
+        {
+            using var naBitmap = (Image)bitmap;
+            DrawImageUnscaled(naBitmap, origin);
         }
 
         /// <inheritdoc/>

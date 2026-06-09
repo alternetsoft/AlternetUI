@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -217,6 +219,11 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override void Pie(Pen pen, Brush brush, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
+        {
+        }
+
+        /// <inheritdoc/>
+        public override void DrawBitmap(SKBitmap bitmap, PointD origin)
         {
         }
 
