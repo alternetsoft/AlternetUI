@@ -357,7 +357,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public IReadOnlyList<TreeViewItem> Items
         {
-            get => RootItem.Items;
+            get => RootItem?.Items ?? Array.Empty<TreeViewItem>();
         }
 
         /// <summary>
