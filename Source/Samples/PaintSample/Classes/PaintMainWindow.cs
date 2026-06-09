@@ -587,7 +587,7 @@ namespace PaintSample
 
         public unsafe void DoGenImageUseGetData()
         {
-            App.Log($"Generate sample image using GenericImage.GetData");
+            App.Log($"Generate sample image using pixels");
             var bitmap = Document.Bitmap;
 
             var width = bitmap.Width;

@@ -82,16 +82,5 @@ namespace Alternet.UI
             Image image,
             int hotSpotX,
             int hotSpotY);
-
-        /// <summary>
-        /// Create cursor handler for the specified image.
-        /// </summary>
-        /// <param name="image">Image for the cursor.</param>
-        /// <param name="hotSpotX">Hotspot x coordinate (relative to the top left of the image).</param>
-        /// <param name="hotSpotY">Hotspot y coordinate (relative to the top left of the image).</param>
-        ICursorHandler CreateCursorHandler(
-            GenericImage image,
-            int hotSpotX,
-            int hotSpotY);
     }
 }

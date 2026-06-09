@@ -100,25 +100,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Cursor"/> class from an image.
-        /// </summary>
-        /// <param name="image">Image with cursor.</param>
-        /// <param name="hotSpotX">Hot spot X.</param>
-        /// <param name="hotSpotY">Hot spot Y.</param>
-        public Cursor(
-            GenericImage image,
-            int hotSpotX = 0,
-            int hotSpotY = 0)
-        {
-            if (GetAllowCustomCursors())
-            {
-                Handler = Factory.CreateCursorHandler(image, hotSpotX, hotSpotY);
-            }
-            else
-                Handler = Factory.CreateCursorHandler(CursorType.Arrow);
-        }
-
-        /// <summary>
         /// Gets or sets whether custom cursors are allowed. Default is <c>false</c>.
         /// </summary>
         /// <remarks>

@@ -933,11 +933,6 @@ namespace Alternet.UI
             return default;
         }
 
-        public GenericImage GetFrame(uint i)
-        {
-            return GenericImage.Empty;
-        }
-
         public bool GetFullLayoutRequired()
         {
             return default;

@@ -1687,7 +1687,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates <see cref="GenericImage"/> of the specified <paramref name="size"/>
+        /// Creates <see cref="Image"/> of the specified <paramref name="size"/>
         /// filled with this color.
         /// </summary>
         /// <param name="size">Size of the created image.</param>

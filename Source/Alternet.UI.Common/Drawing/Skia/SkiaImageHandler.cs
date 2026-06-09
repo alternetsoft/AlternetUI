@@ -458,12 +458,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual void Assign(GenericImage image)
-        {
-            bitmap.Pixels = image.Pixels;
-        }
-
-        /// <inheritdoc/>
         public virtual void Assign(SKBitmap image)
         {
             if (!image.CopyTo(bitmap))
