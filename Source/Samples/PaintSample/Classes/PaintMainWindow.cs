@@ -579,7 +579,7 @@ namespace PaintSample
                 bm.Load(dialog.FileName, BitmapType.Any);
                 var image = (SKBitmap)bm;
                 SkiaUtils.ChangeToGrayScale(image);
-                var greyBm = (Bitmap)image;
+                var greyBm = (Image)image;
                 greyBm.Save(dialog.FileName.Replace(ext, "_Gray" + ext));
                 Document.Bitmap = greyBm;
             });

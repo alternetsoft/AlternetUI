@@ -351,33 +351,6 @@ namespace Alternet.Drawing
             return Create(UI.Native.GenericImage.Mirror(Handle, horizontally));
         }
 
-        public void Paste(
-            GenericImage img,
-            int x,
-            int y,
-            GenericImageAlphaBlendMode alphaBlend = GenericImageAlphaBlendMode.Overwrite)
-        {
-            UI.Native.GenericImage.Paste(
-                Handle,
-                GetPtr(img),
-                x,
-                y,
-                (int)alphaBlend);
-        }
-
-        public void Replace(RGBValue r1, RGBValue r2)
-        {
-            UI.Native.GenericImage.Replace(Handle, r1.R, r1.G, r1.B, r2.R, r2.G, r2.B);
-        }
-
-        public void Rescale(
-            int width,
-            int height,
-            GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
-        {
-            UI.Native.GenericImage.Rescale(Handle, width, height, (int)quality);
-        }
-
         public void ResizeNoScale(
             SizeI size,
             PointI pos,
@@ -444,35 +417,6 @@ namespace Alternet.Drawing
         public void ChangeBrightness(double factor)
         {
             UI.Native.GenericImage.ChangeBrightness(Handle, factor);
-        }
-
-        public GenericImageLoadFlags LoadFlags
-        {
-            get
-            {
-                return (GenericImageLoadFlags)UI.Native.GenericImage.GetLoadFlags(Handle);
-            }
-
-            set
-            {
-                UI.Native.GenericImage.SetLoadFlags(Handle, (int)value);
-            }
-        }
-
-        public void ChangeHSV(
-            double angleH,
-            double factorS,
-            double factorV)
-        {
-            UI.Native.GenericImage.ChangeHSV(Handle, angleH, factorS, factorV);
-        }
-
-        public GenericImage Scale(
-            int width,
-            int height,
-            GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
-        {
-            return Create(UI.Native.GenericImage.Scale(Handle, width, height, (int)quality));
         }
 
         public bool ConvertAlphaToMask(byte threshold)

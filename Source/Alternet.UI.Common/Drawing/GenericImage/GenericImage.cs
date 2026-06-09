@@ -93,16 +93,6 @@ namespace Alternet.Drawing
             {
                 return Handler.HasAlpha;
             }
-
-            set
-            {
-                if (HasAlpha == value)
-                    return;
-                if (value)
-                    InitAlpha();
-                else
-                    ClearAlpha();
-            }
         }
 
         /// <summary>
@@ -176,22 +166,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates <see cref="GenericImage"/> with the specified size and
-        /// fills it with the color.
-        /// </summary>
-        /// <param name="width">Image width.</param>
-        /// <param name="height">Image height.</param>
-        /// <param name="color">Color to fill.</param>
-        /// <returns></returns>
-        public static GenericImage Create(int width, int height, Color color)
-        {
-            var alphaData = DrawingUtils.CreateAlphaData(width, height, color.A);
-            var rgbData = DrawingUtils.CreateRgbData(width, height, color);
-            GenericImage image = new(width, height, rgbData, alphaData);
-            return image;
-        }
-
-        /// <summary>
         /// Converts <see cref="GenericImage"/> to <see cref="SKBitmap"/>. Optionally
         /// copies pixel data.
         /// </summary>
@@ -228,83 +202,6 @@ namespace Alternet.Drawing
         {
             var result = new GenericImage(bitmap.Width, bitmap.Height, bitmap.Pixels);
             return result;
-        }
-
-        /// <summary>
-        /// Removes the alpha channel from the image.
-        /// </summary>
-        /// <remarks>
-        /// This function should only be called if the image has alpha channel data,
-        /// use <see cref="HasAlpha"/> to check for this.
-        /// </remarks>
-        public virtual void ClearAlpha()
-        {
-            if (HasAlpha)
-                Handler.ClearAlpha();
-        }
-
-        /// <summary>
-        /// Initializes the image alpha channel data.
-        /// </summary>
-        /// <remarks>
-        /// It is an error to call it if the image already has alpha data. If it doesn't,
-        /// alpha data will be by default initialized to all pixels being fully opaque.
-        /// But if the image has a mask color, all mask pixels will be completely transparent.
-        /// </remarks>
-        public virtual void InitAlpha()
-        {
-            if (HasAlpha)
-                return;
-            Handler.InitAlpha();
-        }
-
-        /// <summary>
-        /// Changes the size of the image in-place by scaling it: after a call to this
-        /// function,the image will have the given width and height.
-        /// </summary>
-        /// <param name="width">New image width.</param>
-        /// <param name="height">New image height.</param>
-        /// <param name="quality">Scaling quality.</param>
-        public virtual void Rescale(
-            int width,
-            int height,
-            GenericImageResizeQuality quality = GenericImageResizeQuality.Normal)
-        {
-            Handler.Rescale(width, height, quality);
-        }
-
-        /// <summary>
-        /// Changes the size of the image in-place without scaling it by adding either a border
-        /// with the given color or cropping as necessary.
-        /// </summary>
-        /// <param name="size"></param>
-        /// <param name="pos"></param>
-        /// <param name="color">RGB Color to fill background.</param>
-        /// <remarks>
-        /// The image is pasted into a new image with the given size and background color
-        /// at the position pos relative to the upper left of the new image.
-        /// If <paramref name="color"/> is null then use either the current mask color if
-        /// set or find, use, and set a suitable mask color for any newly exposed areas.
-        /// </remarks>
-        public virtual void ResizeNoScale(
-            SizeI size,
-            PointI pos,
-            RGBValue? color = null)
-        {
-            Handler.ResizeNoScale(size, pos, color);
-        }
-
-        /// <summary>
-        /// Locks pixels data and gets <see cref="ISkiaSurface"/> to access it.
-        /// </summary>
-        /// <param name="lockMode">Lock mode.</param>
-        /// <returns></returns>
-        public virtual ISkiaSurface LockSurface(ImageLockMode lockMode = ImageLockMode.ReadWrite)
-        {
-            Debug.Assert(IsOk, "Image.IsOk == true is required.");
-            Debug.Assert(!HasMask, "Image.HasMask == false is required.");
-
-            return GraphicsFactory.CreateSkiaSurface(this, lockMode);
         }
 
         /// <inheritdoc/>
