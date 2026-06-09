@@ -164,6 +164,7 @@ namespace Alternet.UI
             OnCreateControl();
             Designer?.RaiseCreated(this, EventArgs.Empty);
             RaiseNotifications((n) => n.AfterCreate(this, EventArgs.Empty));
+            StaticControlEvents.Notification += OnGlobalControlNotification;
         }
 
         /// <summary>

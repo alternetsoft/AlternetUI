@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -257,6 +258,7 @@ namespace Alternet.UI
         /// <summary>
         /// Logs all fonts enumerated in <see cref="SystemSettingsFont"/>.
         /// </summary>
+        [Conditional("DEBUG")]
         public static void LogSystemFonts()
         {
             App.LogBeginSection("System Fonts");
@@ -267,23 +269,23 @@ namespace Alternet.UI
 
             App.LogEmptyLine();
 
-            var values = Enum.GetValues(typeof(GenericFontFamily));
-            foreach (var value in values)
+            var fontFamilies = Enum.GetValues<GenericFontFamily>();
+            foreach (var value in fontFamilies)
             {
-                if ((GenericFontFamily)value == GenericFontFamily.None)
+                if (value == GenericFontFamily.None)
                     continue;
 
-                var font = SystemFonts.GetFont((GenericFontFamily)value);
+                var font = SystemFonts.GetFont(value);
 
                 App.Log($"Font {value}: {font.ToInfoString()}");
             }
 
             App.LogEmptyLine();
 
-            values = Enum.GetValues(typeof(SystemSettingsFont));
-            foreach(var value in values)
+            var fonts = Enum.GetValues<SystemSettingsFont>();
+            foreach(var value in fonts)
             {
-                var font = SystemFonts.GetFont((SystemSettingsFont)value);
+                var font = SystemFonts.GetFont(value);
 
                 App.Log($"Font {value}: {font.ToInfoString()}");
             }
@@ -370,6 +372,8 @@ namespace Alternet.UI
                 PlessSystemColors.Reset();
                 DefaultColors.Initialize();
                 SystemColorsChanged?.Invoke();
+
+                StaticControlEvents.RaiseNotification(StaticControlEvents.NotificationType.SystemColorsChanged, EventArgs.Empty);
 
                 FormUtils.ForEach((form) =>
                 {

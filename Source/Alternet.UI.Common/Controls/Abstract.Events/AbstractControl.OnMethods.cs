@@ -21,6 +21,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when global control notifications are raised.
+        /// </summary>
+        /// <param name="type">The type of notification that was raised.</param>
+        /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>
+        protected virtual void OnGlobalControlNotification(StaticControlEvents.NotificationType type, EventArgs e)
+        {
+            if (type == StaticControlEvents.NotificationType.SystemColorsChanged)
+            {
+                if (ParentWindow is not null)
+                    return;
+                RaiseSystemColorsChanged(e);
+            }
+        }
+
+        /// <summary>
         /// Called when the <see cref="ContextMenuCreated" /> event is raised.
         /// </summary>
         /// <remarks>Derived classes can override this method to handle the event without

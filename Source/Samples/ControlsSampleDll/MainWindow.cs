@@ -10,8 +10,22 @@ namespace ControlsSample
 {
     public partial class MainWindow : CustomDemoWindow
     {
+        internal static bool TestSystemColorsChanged = false;
+
+        private static readonly AbstractControl hiddenControl = new GenericControl();
+
         static MainWindow()
         {
+            SystemSettings.SystemColorsChanged += () =>
+            {
+                App.LogIf("SystemColorsChanged event from SystemSettings", TestSystemColorsChanged);
+            };
+
+            hiddenControl.SystemColorsChanged += (s, e) =>
+            {
+                App.LogIf("SystemColorsChanged event was raised in hidden control", TestSystemColorsChanged);
+            };
+
             DebugUtils.AreDeveloperToolsShown = true;
 
             DebugUtils.RegisterExceptionsLoggerIfDebug((e) =>
@@ -90,6 +104,11 @@ namespace ControlsSample
 
                 statusBar.Parent = this;
             }
+
+            SystemColorsChanged += (s, e) =>
+            {
+                App.LogIf("SystemColorsChanged event was raised in main window", TestSystemColorsChanged);
+            };
         }
 
         protected override void OnClosing(WindowClosingEventArgs e)

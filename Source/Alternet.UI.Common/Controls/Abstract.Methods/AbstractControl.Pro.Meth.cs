@@ -164,6 +164,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            StaticControlEvents.Notification -= OnGlobalControlNotification;
+
             SuspendLayout();
 
             if (HasComponents)
