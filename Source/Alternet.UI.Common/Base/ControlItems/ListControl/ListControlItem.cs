@@ -2254,7 +2254,8 @@ namespace Alternet.UI
         /// If the cell does not exist, it is created and added to the <see cref="Cells"/> collection.
         /// </summary>
         /// <param name="columnId">The unique identifier of the column.</param>
-        /// <returns></returns>
+        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column identifier. If the cell does not exist,
+        /// a default or placeholder cell is returned.</returns>
         public virtual ListControlItem SafeCell(ObjectUniqueId columnId)
         {
             var result = GetCell(columnId);
@@ -2280,10 +2281,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the cell for the specified column index.
+        /// </summary>
+        /// <param name="index">The index of the column.</param>
+        /// <returns>The cell associated with the specified column index, or null if no cell exists for the index.</returns>
+        public ListControlItem? GetCell(int index)
+        {
+            return index >= 0 && index < Cells.Count ? Cells[index] : null;
+        }
+
+        /// <summary>
         /// Gets the cell for the specified column identifier.
         /// </summary>
         /// <param name="columnId">The unique identifier of the column.</param>
-        /// <returns></returns>
+        /// <returns>The cell associated with the specified column identifier,
+        /// or null if no cell exists for the identifier.</returns>
         public virtual ListControlItem? GetCell(ObjectUniqueId columnId)
         {
             if (!HasCells)

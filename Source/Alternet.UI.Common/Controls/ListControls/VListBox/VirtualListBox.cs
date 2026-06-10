@@ -607,6 +607,42 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets cell item at the specified row index and column ID.
+        /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnId">The unique ID of the column.</param>
+        /// <returns>The cell item at the specified location, or null if no cell exists for the location.</returns>
+        public virtual ListControlItem? GetCell(int rowIndex, ObjectUniqueId columnId)
+        {
+            var item = GetItem(rowIndex);
+            return item?.GetCell(columnId);
+        }
+
+        /// <summary>
+        /// Gets cell item at the specified row index and column.
+        /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="column">The column for which to retrieve the cell.</param>
+        /// <returns>The cell item at the specified location, or null if no cell exists for the location.</returns>
+        public ListControlItem? GetCell(int rowIndex, ListControlColumn column)
+        {
+            var item = GetItem(rowIndex);
+            return item?.GetCell(column);
+        }
+
+        /// <summary>
+        /// Gets cell item at the specified row index and column index.
+        /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnIndex">The index of the column.</param>
+        /// <returns>The cell item at the specified location, or null if no cell exists for the location.</returns>
+        public ListControlItem? GetCell(int rowIndex, int columnIndex)
+        {
+            var item = GetItem(rowIndex);
+            return item?.GetCell(columnIndex);
+        }
+
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
         /// <remarks>
         /// If text is found in the control, item which contains this text will be selected
