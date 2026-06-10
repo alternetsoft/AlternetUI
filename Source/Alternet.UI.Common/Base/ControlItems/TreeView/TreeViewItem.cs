@@ -443,6 +443,7 @@ namespace Alternet.UI
         /// Gets the previous sibling of this item, or its parent if this item is the first in the collection,
         /// or <see langword="null"/> if this item is the root.
         /// </summary>
+        [Browsable(false)]
         public TreeViewItem? PrevSiblingOrParent
         {
             get
@@ -458,6 +459,7 @@ namespace Alternet.UI
         /// Gets the previous sibling of this item, or <see langword="null"/>
         /// if this item is the first one in its parent items collection.
         /// </summary>
+        [Browsable(false)]
         public TreeViewItem? PrevSibling
         {
             get
