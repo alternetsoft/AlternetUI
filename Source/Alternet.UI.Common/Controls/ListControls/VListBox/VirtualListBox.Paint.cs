@@ -244,7 +244,7 @@ namespace Alternet.UI
                 if (hRow <= 0)
                     continue;
 
-                var item = SafeItem(line);
+                var item = GetItem(line);
 
                 if (drawHorzLines)
                 {

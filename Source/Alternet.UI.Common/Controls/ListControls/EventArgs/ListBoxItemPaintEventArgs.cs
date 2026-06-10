@@ -109,7 +109,7 @@ namespace Alternet.UI
         {
             get
             {
-                return ListBox.SafeItem(ItemIndex);
+                return ListBox.GetItem(ItemIndex);
             }
         }
 

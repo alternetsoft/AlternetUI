@@ -846,7 +846,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        ListControlItem? IListControlItemContainer.SafeItem(int index)
+        ListControlItem? IListControlItemContainer.GetItem(int index)
         {
             return index == 0 ? Item : null;
         }

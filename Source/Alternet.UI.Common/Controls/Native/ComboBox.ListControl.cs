@@ -333,40 +333,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets item with the specified index.
-        /// If index of the item is invalid, throws an exception.
-        /// </summary>
-        /// <typeparam name="T">Type of the result.</typeparam>
-        /// <param name="index">Index of the item.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T RequiredItem<T>(int index)
-            where T : class
-            => SafeItem<T>(index) ?? throw new NullReferenceException();
-
-        /// <summary>
-        /// Gets <see cref="ListControlItem"/> item with the specified index.
-        /// If index of the item is invalid or item is not <see cref="ListControlItem"/>,
-        /// returns <c>null</c>.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ListControlItem? SafeItem(int index) => SafeItem<ListControlItem>(index);
-
-        /// <summary>
-        /// Gets <see cref="ListControlItem"/> item with the specified index.
-        /// If index of the item is invalid, an exception is thrown.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ListControlItem RequiredItem(int index)
-            => SafeItem<ListControlItem>(index) ?? throw new NullReferenceException();
-
-        /// <summary>
         /// Selects last item in the control.
         /// </summary>
         public virtual void SelectLastItem()
         {
             if (Count > 0)
                 SelectedIndex = Count - 1;
+        }
+
+        /// <inheritdoc/>
+        ListControlItem? IListControlItemContainer.GetItem(int index)
+        {
+            return GetItem(index) as ListControlItem;
         }
 
         /// <summary>

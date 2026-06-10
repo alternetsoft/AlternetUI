@@ -128,39 +128,6 @@ namespace Alternet.UI
         int Add(TItem item);
 
         /// <summary>
-        /// Gets item with the specified index.
-        /// If index of the item is invalid, returns null.
-        /// </summary>
-        /// <typeparam name="T">Type of the result.</typeparam>
-        /// <param name="index">Index of the item.</param>
-        /// <returns></returns>
-        T? SafeItem<T>(int index)
-            where T : class;
-
-        /// <summary>
-        /// Gets item with the specified index.
-        /// If index of the item is invalid, throws an exception.
-        /// </summary>
-        /// <typeparam name="T">Type of the result.</typeparam>
-        /// <param name="index">Index of the item.</param>
-        /// <returns></returns>
-        public T RequiredItem<T>(int index)
-            where T : class;
-
-        /// <summary>
-        /// Gets <see cref="ListControlItem"/> item with the specified index.
-        /// If index of the item is invalid or item is not <see cref="ListControlItem"/>,
-        /// returns <c>null</c>.
-        /// </summary>
-        public ListControlItem? SafeItem(int index);
-
-        /// <summary>
-        /// Gets <see cref="ListControlItem"/> item with the specified index.
-        /// If index of the item is invalid, an exception is thrown.
-        /// </summary>
-        public ListControlItem RequiredItem(int index);
-
-        /// <summary>
         /// Selects last item in the control.
         /// </summary>
         void SelectLastItem();

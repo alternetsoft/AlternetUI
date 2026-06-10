@@ -275,9 +275,11 @@ namespace Alternet.UI
                     DetachItems(items);
                 }
 
-                items = value;
-
-                AttachItems(items);
+                DoInsideUpdate(() =>
+                {
+                    items = value;
+                    AttachItems(items);
+                });
             }
         }
 
@@ -631,18 +633,6 @@ namespace Alternet.UI
             return item?.GetCell(column);
         }
 
-        /// <summary>
-        /// Gets cell item at the specified row index and column index.
-        /// </summary>
-        /// <param name="rowIndex">The index of the row.</param>
-        /// <param name="columnIndex">The index of the column.</param>
-        /// <returns>The cell item at the specified location, or null if no cell exists for the location.</returns>
-        public ListControlItem? GetCell(int rowIndex, int columnIndex)
-        {
-            var item = GetItem(rowIndex);
-            return item?.GetCell(columnIndex);
-        }
-
         /// <inheritdoc cref="StringSearch.FindStringEx(string?, int?, bool, bool)"/>
         /// <remarks>
         /// If text is found in the control, item which contains this text will be selected
@@ -686,7 +676,7 @@ namespace Alternet.UI
 
             var result = index >= visibleBegin && index < visibleEnd;
 
-            var item = SafeItem(index);
+            var item = GetItem(index);
 
             if (item is not null)
                 result = result && item.IsVisible;
@@ -1323,7 +1313,7 @@ namespace Alternet.UI
         /// <param name="itemIndex">Index of the item.</param>
         public virtual bool ToggleItemCheckState(int itemIndex)
         {
-            var item = SafeItem(itemIndex);
+            var item = GetItem(itemIndex);
             if (item is null)
                 return false;
 
@@ -1528,7 +1518,7 @@ namespace Alternet.UI
                 RaiseMeasureItem(e);
             }
 
-            var item = SafeItem(e.Index);
+            var item = GetItem(e.Index);
 
             if (item is not null)
             {
@@ -2176,7 +2166,7 @@ namespace Alternet.UI
 
                             if (!flags.HasFlag(ItemClickFlags.Keyboard))
                             {
-                                SafeItem(item)?.ToggleSelected(this);
+                                GetItem(item)?.ToggleSelected(this);
                                 setSelected = false;
                             }
                         }
@@ -2204,7 +2194,7 @@ namespace Alternet.UI
         {
             for (int i = index; i < Count; i++)
             {
-                var item = SafeItem(i);
+                var item = GetItem(i);
 
                 if (item?.IsVisible == true || item is null)
                     return i;
@@ -2223,7 +2213,7 @@ namespace Alternet.UI
         {
             for (int i = index; i >= 0; i--)
             {
-                var item = SafeItem(i);
+                var item = GetItem(i);
 
                 if (item?.IsVisible == true || item is null)
                     return i;

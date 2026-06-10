@@ -227,35 +227,6 @@ namespace Alternet.UI
             set => LastItem = value;
         }
 
-        /*
-        /// <summary>
-        /// Gets or sets the items of the control.
-        /// </summary>
-        /// <value>A collection representing the items
-        /// in the control.</value>
-        /// <remarks>This property enables you to obtain a reference to the list
-        /// of items that are currently stored in the control.
-        /// With this reference, you can add items, remove items, and obtain
-        /// a count of the items in the collection.</remarks>
-        [Content]
-        public virtual BaseCollection<TItem> Items
-        {
-            get
-            {
-                return SafeItems();
-            }
-
-            set
-            {
-                DoInsideUpdate(() =>
-                {
-                    RemoveAll();
-                    Items.AddRange(value);
-                });
-            }
-        }
-        */
-
         /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in
         /// the control. Same as <see cref="SelectedIndex"/> but is not nullable.
@@ -386,19 +357,6 @@ namespace Alternet.UI
         string? IReadOnlyStrings.this[int index] => GetItemText(index, false);
 
         /// <summary>
-        /// Gets item with the specified index cast to <typeparamref name="T"/>.
-        /// If index of the item is invalid, returns null.
-        /// </summary>
-        /// <typeparam name="T">Type of the result.</typeparam>
-        /// <param name="index">Index of the item.</param>
-        /// <returns>The item at the specified index cast to the specified type, or <c>null</c> if the cast fails.</returns>
-        public virtual T? SafeItem<T>(int index)
-            where T : class
-        {
-            return GetItem(index) as T;
-        }
-
-        /// <summary>
         /// Gets item with the specified index.
         /// This methods is called from all other methods that
         /// request the item.
@@ -443,34 +401,6 @@ namespace Alternet.UI
             Items.Add(item);
             return Count - 1;
         }
-
-        /// <summary>
-        /// Gets item with the specified index.
-        /// If index of the item is invalid, throws an exception.
-        /// </summary>
-        /// <typeparam name="T">Type of the result.</typeparam>
-        /// <param name="index">Index of the item.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public T RequiredItem<T>(int index)
-            where T : class
-            => SafeItem<T>(index) ?? throw new NullReferenceException();
-
-        /// <summary>
-        /// Gets <see cref="ListControlItem"/> item with the specified index.
-        /// If index of the item is invalid or item is not <see cref="ListControlItem"/>,
-        /// returns <c>null</c>.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ListControlItem? SafeItem(int index) => SafeItem<ListControlItem>(index);
-
-        /// <summary>
-        /// Gets <see cref="ListControlItem"/> item with the specified index.
-        /// If index of the item is invalid, an exception is thrown.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public ListControlItem RequiredItem(int index)
-            => SafeItem<ListControlItem>(index) ?? throw new NullReferenceException();
 
         /// <summary>
         /// Selects last item in the control.

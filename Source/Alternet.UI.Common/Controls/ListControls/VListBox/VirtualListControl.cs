@@ -369,7 +369,7 @@ namespace Alternet.UI
 
                 for (int i = 0; i < Count; i++)
                 {
-                    var item = SafeItem(i);
+                    var item = GetItem(i);
                     if (item is null)
                         continue;
                     if (item.CheckState == CheckState.Checked)
@@ -440,7 +440,7 @@ namespace Alternet.UI
                 var result = 0;
                 for (int i = 0; i < Count; i++)
                 {
-                    var item = SafeItem(i);
+                    var item = GetItem(i);
                     if (item is null)
                         continue;
                     if (item.CheckState == CheckState.Checked)
@@ -870,7 +870,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Font GetItemFont(int itemIndex, bool isSelected)
         {
-            return ListControlItem.GetFont(SafeItem(itemIndex), this, isSelected);
+            return ListControlItem.GetFont(GetItem(itemIndex), this, isSelected);
         }
 
         /// <summary>
@@ -920,7 +920,7 @@ namespace Alternet.UI
             bool changed = false;
             for (int i = 0; i < Count; i++)
             {
-                var item = SafeItem(i);
+                var item = GetItem(i);
                 if (item is null)
                     continue;
                 if (item.CheckState != CheckState.Unchecked)
@@ -968,7 +968,7 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SetItemCheckStateCore(int index, CheckState value)
         {
-            var item = SafeItem(index);
+            var item = GetItem(index);
             if (item is null)
                 return false;
             if (item.CheckState == value)
@@ -1134,7 +1134,7 @@ namespace Alternet.UI
             }
             else
             {
-                var item = SafeItem(index);
+                var item = GetItem(index);
                 return item?.IsSelected(this) ?? false;
             }
         }
@@ -1156,7 +1156,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public HVAlignment GetItemAlignment(int itemIndex)
         {
-            return ListControlItem.GetAlignment(SafeItem(itemIndex), this);
+            return ListControlItem.GetAlignment(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1166,7 +1166,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public Coord GetItemMinHeight(int itemIndex)
         {
-            return ListControlItem.GetMinHeight(SafeItem(itemIndex), this);
+            return ListControlItem.GetMinHeight(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1177,7 +1177,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public EnumArrayStateImages GetItemImages(int itemIndex, Color? svgColor)
         {
-            return ListControlItem.GetItemImages(SafeItem(itemIndex), this, svgColor);
+            return ListControlItem.GetItemImages(GetItem(itemIndex), this, svgColor);
         }
 
         /// <summary>
@@ -1253,7 +1253,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public Color? GetSelectedItemTextColor(int itemIndex)
         {
-            return ListControlItem.GetSelectedTextColor(SafeItem(itemIndex), this);
+            return ListControlItem.GetSelectedTextColor(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1263,7 +1263,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public Color? GetItemTextColor(int itemIndex)
         {
-            return ListControlItem.GetItemTextColor(SafeItem(itemIndex), this);
+            return ListControlItem.GetItemTextColor(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1273,7 +1273,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public Color? GetSelectedItemBackColor(int itemIndex)
         {
-            return ListControlItem.GetSelectedItemBackColor(SafeItem(itemIndex), this);
+            return ListControlItem.GetSelectedItemBackColor(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1336,7 +1336,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public Color? GetDisabledItemTextColor(int itemIndex)
         {
-            return ListControlItem.GetDisabledTextColor(SafeItem(itemIndex), this);
+            return ListControlItem.GetDisabledTextColor(GetItem(itemIndex), this);
         }
 
         /// <summary>
@@ -1344,7 +1344,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void DefaultDrawItemForeground(ListBoxItemPaintEventArgs e)
         {
-            var item = SafeItem(e.ItemIndex);
+            var item = GetItem(e.ItemIndex);
             if (item is null)
                 ListControlItem.DefaultDrawForeground(this, e);
             else
@@ -1469,7 +1469,7 @@ namespace Alternet.UI
         /// </returns>
         public ListControlItem.ItemCheckBoxInfo? GetCheckBoxInfo(int itemIndex, RectD rect)
         {
-            var item = SafeItem(itemIndex);
+            var item = GetItem(itemIndex);
             if (item is null)
                 return null;
             rect.ApplyMargin(item.ForegroundMargin);

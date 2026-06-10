@@ -368,10 +368,7 @@ namespace ControlsSample
             var item = treeView.LastItem;
             if (item != null)
             {
-                var collection = item.Parent == null ?
-                    treeView.Items : item.Parent.Items;
-                var newItem =
-                    new TreeViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
+                var newItem = new TreeViewItem(item.Text + " Sibling", item.ImageIndex ?? 0);
                 item.Parent?.Insert(item.Index ?? 0, newItem);
                 newItem.EnsureVisible();
             }

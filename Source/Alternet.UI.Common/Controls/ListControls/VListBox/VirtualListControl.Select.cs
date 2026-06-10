@@ -994,7 +994,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual bool SetSelectedCore(int index, bool value, bool onlyVisible = true)
         {
-            var item = SafeItem(index);
+            var item = GetItem(index);
 
             if (item is null)
                 return false;

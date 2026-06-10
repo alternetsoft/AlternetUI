@@ -1125,7 +1125,7 @@ namespace Alternet.UI
         {
         }
 
-        ListControlItem? IListControlItemContainer.SafeItem(int index)
+        ListControlItem? IListControlItemContainer.GetItem(int index)
         {
             return Items[index] as ListControlItem;
         }

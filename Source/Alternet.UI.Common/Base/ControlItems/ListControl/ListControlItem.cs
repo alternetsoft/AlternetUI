@@ -1101,7 +1101,7 @@ namespace Alternet.UI
             Graphics dc,
             int itemIndex)
         {
-            var item = container.SafeItem(itemIndex);
+            var item = container.GetItem(itemIndex);
 
             if (container.HasColumns && item is not null && item.HasCells)
                 return InternalMultiColumn();
@@ -1258,7 +1258,7 @@ namespace Alternet.UI
             }
             else
             {
-                item ??= container.SafeItem(itemIndex.Value);
+                item ??= container.GetItem(itemIndex.Value);
             }
 
             var flags = item?.LabelFlags ?? DrawLabelFlags.None;
@@ -2278,16 +2278,6 @@ namespace Alternet.UI
         public ListControlItem? GetCell(ListControlColumn column)
         {
             return GetCell(column.UniqueId);
-        }
-
-        /// <summary>
-        /// Gets the cell for the specified column index.
-        /// </summary>
-        /// <param name="index">The index of the column.</param>
-        /// <returns>The cell associated with the specified column index, or null if no cell exists for the index.</returns>
-        public ListControlItem? GetCell(int index)
-        {
-            return index >= 0 && index < Cells.Count ? Cells[index] : null;
         }
 
         /// <summary>
