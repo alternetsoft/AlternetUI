@@ -780,6 +780,84 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets child item by its index. If index is below zero, a new item is created and added to the end
+        /// of the child items and returned.
+        /// If index is above or equal to the number of child items, they are extended with new
+        /// items until the specified index is reached, and then the item at that index is returned.
+        /// </summary>
+        /// <param name="index">The index of the child item.</param>
+        /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
+        /// If not specified, <see cref="TreeViewItem"/> will be created.</param>
+        /// <returns>The <see cref="TreeViewItem"/> at the specified index. A result is guaranteed to be not null.</returns>
+        public virtual TreeViewItem SafeItem(int index, Func<TreeViewItem>? fnCreateItem = null)
+        {
+            TreeViewItem CreateItem()
+            {
+                if (fnCreateItem != null)
+                    return fnCreateItem();
+                return new TreeViewItem();
+            }
+
+            TreeViewItem item;
+
+            if (index < 0)
+            {
+                item = CreateItem();
+                Add(item);
+            }
+            else
+            {
+                if (index >= ItemCount)
+                {
+                    DoInsideUpdate(() =>
+                    {
+                        while (index >= ItemCount)
+                        {
+                            item = CreateItem();
+                            Add(item);
+                        }
+                    });
+                }
+
+                item = Items[index];
+            }
+
+            return item;
+        }
+
+        /// <summary>
+        /// Retrieves the cell associated with the specified child item index and column,
+        /// ensuring that a valid cell is always returned.
+        /// </summary>
+        /// <param name="rowIndex">The index of the child item.</param>
+        /// <param name="column">The column for which to retrieve the corresponding cell. Cannot be null.</param>
+        /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
+        /// If not specified, <see cref="TreeViewItem"/> will be created.</param>
+        /// <returns>A <see cref="TreeViewItem"/> representing the cell for the specified child item and column.
+        /// If the cell does not exist, it is created and added to the cells collection of the item.</returns>
+        public virtual ListControlItem SafeCell(int rowIndex, ListControlColumn column, Func<TreeViewItem>? fnCreateItem = null)
+        {
+            var item = SafeItem(rowIndex, fnCreateItem);
+            return item.SafeCell(column);
+        }
+
+        /// <summary>
+        /// Gets the cell for the specified child item and column.
+        /// If the cell does not exist, it is created and added to the cells collection of the item.
+        /// </summary>
+        /// <param name="rowIndex">The index of the child item.</param>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
+        /// If not specified, <see cref="TreeViewItem"/> will be created.</param>
+        /// <returns>A <see cref="TreeViewItem"/> representing the cell for the specified child item and column.
+        /// If the cell does not exist, it is created and added to the cells collection of the item.</returns>
+        public virtual ListControlItem SafeCell(int rowIndex, ObjectUniqueId columnId, Func<TreeViewItem>? fnCreateItem = null)
+        {
+            var item = SafeItem(rowIndex, fnCreateItem);
+            return item.SafeCell(columnId);
+        }
+
+        /// <summary>
         /// Sets child items of this tree control item to the specified collection.
         /// </summary>
         /// <param name="items">The items to set.</param>
