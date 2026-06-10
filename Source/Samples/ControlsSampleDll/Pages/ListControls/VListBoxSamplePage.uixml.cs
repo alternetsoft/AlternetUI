@@ -140,9 +140,13 @@ namespace ControlsSample
 
             listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars || App.IsWindowsOS;
 
-            var item = listBox.Items[1];
-            item.ToolTip = ButtonPage.CreateRichToolTipParams();
-            item.IsToolTipVisible = true;
+            var item = listBox.GetItem(1);
+
+            if (item is not null)
+            {
+                item.ToolTip = ButtonPage.CreateRichToolTipParams();
+                item.IsToolTipVisible = true;
+            }
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)

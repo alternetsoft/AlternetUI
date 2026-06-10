@@ -22,7 +22,7 @@ namespace Alternet.UI
     /// <para>
     /// To add or remove objects in the list at run time, use methods of the
     /// <see cref="Collection{Object}" /> class
-    /// (through the <see cref="ListControl{T}.Items"/> property of the
+    /// (through the <c>Items</c> property of the
     /// <see cref="ComboBox" />).
     /// The list then displays the default string value for each object.
     /// You can add individual objects with the
@@ -285,7 +285,7 @@ namespace Alternet.UI
         /// Setting the <see cref="Text"/> property to an empty string ("")
         /// sets the <see cref="SelectedIndex"/> to <c>null</c>.
         /// Setting the <see cref="Text"/> property to a value that is in the
-        /// <see cref="ListControl{T}.Items"/> collection sets the
+        /// <see cref="Items"/> collection sets the
         /// <see cref="SelectedIndex"/> to the index of that item.
         /// Setting the <see cref="Text"/> property to a value that is not in
         /// the collection leaves the <see cref="SelectedIndex"/> unchanged.

@@ -22,9 +22,6 @@ namespace Alternet.UI
                 if (Instance is VirtualListBox listBox)
                     rootItems = listBox.Items;
                 else
-                if (Instance is VirtualListBox comboBox)
-                    rootItems = comboBox.Items;
-                else
                 if(Instance is not null)
                     rootItems = PropInfo?.GetValue(Instance) as IEnumerable;
 

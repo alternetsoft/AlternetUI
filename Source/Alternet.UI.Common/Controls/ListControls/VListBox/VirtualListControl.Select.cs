@@ -260,7 +260,7 @@ namespace Alternet.UI
         {
             get
             {
-                return SelectedIndexes.Select(x => Items[x]).ToArray();
+                return SelectedIndexes.Select(x => GetItem(x)).ToArray();
             }
 
             set
@@ -438,10 +438,10 @@ namespace Alternet.UI
 
                 int value = selectedIndex.Value;
 
-                if (value >= Items.Count || value < 0)
+                if (value >= Count || value < 0)
                     return null;
 
-                return Items[value];
+                return GetItem(value);
             }
 
             set
@@ -592,8 +592,13 @@ namespace Alternet.UI
 
             DoInsideSuspendedSelectionEvents(() =>
             {
-                foreach (var item in Items)
+                for (int i = 0; i < Count; i++)
                 {
+                    var item = GetItem(i);
+
+                    if(item is null)
+                        continue;
+
                     if (!onlyVisible || item.IsVisible)
                     {
                         item.SetSelected(this, selected);
@@ -625,7 +630,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return false;
-            if (index < 0 || index >= Items.Count)
+            if (index < 0 || index >= Count)
                 return false;
 
             var result = false;
@@ -746,7 +751,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int? GetFirstSelectedIndex()
         {
-            var count = Items.Count;
+            var count = Count;
 
             for(int i = 0; i < count; i++)
             {
@@ -763,7 +768,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual int? GetLastSelectedIndexInBlock()
         {
-            var count = Items.Count;
+            var count = Count;
 
             for (int i = count - 1; i >= 0; i--)
             {
@@ -920,7 +925,7 @@ namespace Alternet.UI
         /// <returns></returns>
         internal virtual SelectionRange<int>? GetSelectedMinMax(int blockItemIndex)
         {
-            var count = Items.Count;
+            var count = Count;
             int? minIndex = null;
             int? maxIndex = null;
 

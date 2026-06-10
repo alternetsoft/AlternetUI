@@ -13,7 +13,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides a common implementation of members for the list controls.
+    /// Abstract list control which can be used as base for list controls with virtual items.
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,
     /// <see cref="ListControlItem"/> or any other type.</typeparam>
@@ -46,6 +46,47 @@ namespace Alternet.UI
                 if (value is null)
                     return;
                 search = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the zero-based index of the currently selected item in
+        /// the control.
+        /// </summary>
+        /// <value>A zero-based index of the currently selected item. A value
+        /// of <c>null</c> is returned if no item is selected.</value>
+        [Browsable(false)]
+        public abstract int? SelectedIndex
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the currently selected item in the control.
+        /// </summary>
+        /// <value>An object that represents the current selection in the
+        /// control, or <c>null</c> if no item is selected.</value>
+        [Browsable(false)]
+        public abstract TItem? SelectedItem
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets the number of items contained in the control.
+        /// </summary>
+        /// <returns>
+        /// The number of items contained in the control.
+        /// </returns>
+        [Browsable(false)]
+        public int Count
+        {
+            get => Items.Count;
+            set
+            {
+                Items.Count = value;
             }
         }
 
@@ -166,6 +207,7 @@ namespace Alternet.UI
             set => LastItem = value;
         }
 
+        /*
         /// <summary>
         /// Gets or sets the items of the control.
         /// </summary>
@@ -192,6 +234,7 @@ namespace Alternet.UI
                 });
             }
         }
+        */
 
         /// <summary>
         /// Gets or sets the zero-based index of the currently selected item in
@@ -235,23 +278,6 @@ namespace Alternet.UI
         public virtual ObjectUniqueId? SelectedUniqueId =>
             (SelectedItem as ListControlItem)?.UniqueId;
 
-        /// <summary>
-        /// Gets the number of items contained in the control.
-        /// </summary>
-        /// <returns>
-        /// The number of items contained in the control.
-        /// </returns>
-        [Browsable(false)]
-        public virtual int Count
-        {
-            get => Items.Count;
-
-            set
-            {
-                throw new InvalidOperationException();
-            }
-        }
-
         [Browsable(false)]
         int IReadOnlyStrings.Count
         {
@@ -280,7 +306,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="Items"/> element at the specified index.
+        /// Gets or sets the item at the specified index.
         /// </summary>
         /// <param name="index">The zero-based index of the element
         /// to get or set.</param>
@@ -292,7 +318,10 @@ namespace Alternet.UI
                 return GetItem((int)index);
             }
 
-            set => SetItem((int)index, value ?? throw new ArgumentNullException(nameof(value)));
+            set
+            {
+                SetItem((int)index, value ?? throw new ArgumentNullException(nameof(value)));
+            }
         }
 
         /// <summary>
@@ -337,6 +366,19 @@ namespace Alternet.UI
         string? IReadOnlyStrings.this[int index] => GetItemText(index, false);
 
         /// <summary>
+        /// Gets item with the specified index cast to <typeparamref name="T"/>.
+        /// If index of the item is invalid, returns null.
+        /// </summary>
+        /// <typeparam name="T">Type of the result.</typeparam>
+        /// <param name="index">Index of the item.</param>
+        /// <returns>The item at the specified index cast to the specified type, or <c>null</c> if the cast fails.</returns>
+        public virtual T? SafeItem<T>(int index)
+            where T : class
+        {
+            return GetItem(index) as T;
+        }
+
+        /// <summary>
         /// Gets item with the specified index.
         /// This methods is called from all other methods that
         /// request the item.
@@ -347,7 +389,7 @@ namespace Alternet.UI
         {
             TItem? result;
             if (index >= 0 && items is not null && index < items.Count)
-                result = Items[index];
+                result = Items.GetItem(index);
             else
             {
                 result = default;
@@ -366,36 +408,20 @@ namespace Alternet.UI
         public virtual void SetItem(int index, TItem value)
         {
             if (index >= 0 && items is not null && index < items.Count)
-                Items[index] = value;
+                Items.SetItem(index, value);
             else
             {
             }
         }
 
         /// <summary>
-        /// Adds an object to the end of the <see cref="Items"/> collection.
+        /// Adds an object to the end of the items collection.
         /// </summary>
-        /// <param name="item">The object to be added to the end of the
-        /// <see cref="Items"/> collection.</param>
+        /// <param name="item">The object to be added to the end of the items collection.</param>
         public virtual int Add(TItem item)
         {
             Items.Add(item);
-            return Items.Count - 1;
-        }
-
-        /// <summary>
-        /// Gets item with the specified index.
-        /// If index of the item is invalid, returns null.
-        /// </summary>
-        /// <typeparam name="T">Type of the result.</typeparam>
-        /// <param name="index">Index of the item.</param>
-        /// <returns></returns>
-        public virtual T? SafeItem<T>(int index)
-            where T : class
-        {
-            if (index < 0 || index >= Count)
-                return default;
-            return GetItem(index) as T;
+            return Count - 1;
         }
 
         /// <summary>
@@ -497,7 +523,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void RemoveAll()
         {
-            if (Items.Count == 0)
+            if (Count == 0)
                 return;
             DoInsideUpdate(() =>
             {
@@ -520,7 +546,7 @@ namespace Alternet.UI
                 ClearSelected();
                 foreach (int index in items)
                 {
-                    if (index < Items.Count)
+                    if (index < Count)
                         Items.RemoveAt(index);
                 }
 
@@ -538,8 +564,12 @@ namespace Alternet.UI
         /// <remarks>Each item is separated by <paramref name="separator"/> or
         /// <see cref="Environment.NewLine"/> if it is empty.</remarks>
         /// <param name="separator">Items separator string.</param>
+        /// <param name="forDisplay">Specifies whether to get text for display purposes or the real value.</param>
         /// <param name="indexes">Items indexes.</param>
-        public virtual string? ItemsAsText(IReadOnlyList<int> indexes, string? separator = default)
+        public virtual string? ItemsAsText(
+            IReadOnlyList<int> indexes,
+            string? separator = default,
+            bool forDisplay = false)
         {
             separator ??= Environment.NewLine;
             string? result = null;
@@ -547,9 +577,9 @@ namespace Alternet.UI
             foreach (var index in indexes)
             {
                 if (result is null)
-                    result = GetItemText(index, false);
+                    result = GetItemText(index, forDisplay);
                 else
-                    result += $"{separator}{Items[index]}";
+                    result += $"{separator}{GetItemText(index, forDisplay)}";
             }
 
             return result;
@@ -615,9 +645,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool RemoveItemWithValue(object? value)
         {
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
-                var item = Items[i];
+                var item = GetItem(i);
 
                 if (ValueEquals(item))
                 {
@@ -626,8 +656,11 @@ namespace Alternet.UI
                 }
             }
 
-            bool ValueEquals(object item)
+            bool ValueEquals(object? item)
             {
+                if (item is null)
+                    return false;
+
                 if (item.Equals(value))
                     return true;
 
@@ -638,22 +671,6 @@ namespace Alternet.UI
             }
 
             return false;
-        }
-
-        /// <summary>
-        /// Changes the number of elements in the <see cref="Items"/>.
-        /// </summary>
-        /// <param name="newCount">New number of elements.</param>
-        /// <param name="createItem">Function which creates new item.</param>
-        /// <remarks>
-        /// If collection has more items than specified in <paramref name="newCount"/>,
-        /// these items are removed. If collection has less items, new items are created
-        /// using <paramref name="createItem"/> function.
-        /// </remarks>
-        public virtual void SetCount(int newCount, Func<TItem> createItem)
-        {
-            var safeItems = SafeItems();
-            safeItems.SetCount(newCount, createItem);
         }
 
         /// <summary>
@@ -700,31 +717,6 @@ namespace Alternet.UI
             object? sender,
             NotifyCollectionChangedEventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Recreates items. Before calling this method, you need to unbind all events
-        /// connected to the <see cref="Items"/>.
-        /// </summary>
-        protected virtual void RecreateItems(BaseCollection<TItem>? newItems = null)
-        {
-            DetachItems(Items);
-            items = newItems;
-        }
-
-        /// <summary>
-        /// Gets items.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual BaseCollection<TItem> SafeItems()
-        {
-            if(items is null)
-            {
-                items = new NotNullCollection<TItem>();
-                AttachItems(items);
-            }
-
-            return items;
         }
     }
 }

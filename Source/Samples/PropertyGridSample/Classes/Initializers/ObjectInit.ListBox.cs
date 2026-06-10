@@ -190,7 +190,7 @@ namespace PropertyGridSample
             listBox.DoInsideUpdate(() =>
             {
                 for(int i = 0; i < 5000; i++)
-                    listBox.Items.Add(new($"Item #{LogUtils.GenNewId()}"));
+                    listBox.Add(new($"Item #{LogUtils.GenNewId()}"));
 
                 App.Log("Added 5000 items");
             });

@@ -27,10 +27,8 @@ namespace Alternet.UI
     /// and <see cref="AbstractControl.EndUpdate"/> methods enable
     /// you to add a large number of items without the control being repainted each
     /// time an item is added to the list.
-    /// The <see cref="ListControl{T}.Items"/>, <see cref="VirtualListControl.SelectedItems"/>
-    /// and <see cref="VirtualListControl.SelectedIndices"/>
-    /// properties provide access to
-    /// the three collections that are used by the control.
+    /// The <see cref="VirtualListControl.SelectedItems"/> and <see cref="VirtualListControl.SelectedIndices"/>
+    /// properties provide access to the selected items and their indices.
     /// </remarks>
     public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter, IListBoxActions
     {
@@ -392,7 +390,7 @@ namespace Alternet.UI
                 if (emptyText == value)
                     return;
                 emptyText = value;
-                if (Items.Count == 0)
+                if (Count == 0)
                     Invalidate();
             }
         }
@@ -410,27 +408,6 @@ namespace Alternet.UI
                 if (firstVisibleItem < 0 || lastVisibleItem < 0)
                     return 0;
                 return lastVisibleItem - firstVisibleItem + 1;
-            }
-        }
-
-        /// <inheritdoc/>
-        public override int Count
-        {
-            get
-            {
-                return Items.Count;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                if (Count == value)
-                    return;
-                DoInsideUpdate(() =>
-                {
-                    SafeItems().SetCount(value, () => new ListControlItem());
-                });
             }
         }
 
@@ -854,78 +831,14 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            if (Items.Count == 0)
+            if (Count == 0)
                 return;
 
             DoInsideUpdate(() =>
             {
-                RecreateItems();
+                Items.Clear();
                 Invalidate();
             });
-        }
-
-        /// <summary>
-        /// Sets items to the new value using the fastest method.
-        /// </summary>
-        /// <param name="value">Collection with the new items.</param>
-        public virtual void SetItemsFastest(BaseCollection<ListControlItem> value)
-        {
-            SetItemsFast(value, SetItemsKind.ChangeField);
-        }
-
-        /// <summary>
-        /// Sets items to the new value using the specified method.
-        /// </summary>
-        /// <param name="value">Collection with the new items.</param>
-        /// <param name="kind">The method which is used when items are set.</param>
-        public virtual bool SetItemsFast(BaseCollection<ListControlItem> value, SetItemsKind kind)
-        {
-            if (value == Items)
-                return true;
-
-            if (DisposingOrDisposed)
-                return default;
-
-            firstVisibleItem = 0;
-
-            if (kind == SetItemsKind.Default)
-                kind = DefaultSetItemsKind;
-            if (kind == SetItemsKind.Default)
-                kind = SetItemsKind.ChangeField;
-
-            switch (kind)
-            {
-                case SetItemsKind.ClearAddRange:
-                    return UseClearAddRange();
-                case SetItemsKind.ChangeField:
-                    return UseChangeField();
-                default:
-                    return false;
-            }
-
-            bool UseClearAddRange()
-            {
-                DoInsideUpdate(() =>
-                {
-                    RemoveAll();
-                    Items.AddRange(value);
-                });
-
-                return true;
-            }
-
-            bool UseChangeField()
-            {
-                DoInsideUpdate(() =>
-                {
-                    ClearSelected();
-                    DetachItems(Items);
-                    RecreateItems(value);
-                    AttachItems(Items);
-                });
-
-                return true;
-            }
         }
 
         /// <summary>
@@ -1425,7 +1338,7 @@ namespace Alternet.UI
 
         void IListControl.Add(ListControlItem item)
         {
-            Items.Add(item);
+            base.Add(item);
         }
 
         /// <summary>
@@ -1627,9 +1540,12 @@ namespace Alternet.UI
             if (value is null)
                 return null;
 
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
-                var item = Items[i];
+                var item = GetItem(i);
+
+                if (item is null)
+                    continue;
 
                 if (value.Equals(item.Value))
                     return i;
@@ -1657,17 +1573,17 @@ namespace Alternet.UI
         /// to the underlying image source.</remarks>
         public virtual void ResetCachedImagesInItems()
         {
-            foreach (var item in Items)
+            for (int i = 0; i < Count; i++)
             {
-                item.ResetCachedImages();
+                var item = GetItem(i);
+                item?.ResetCachedImages();
             }
         }
 
         /// <summary>
         /// Searches for the specified item within the current list and returns its index if found.
         /// </summary>
-        /// <param name="value">The item to locate within the
-        /// <see cref="ListControl{T}.Items"/> collection.</param>
+        /// <param name="value">The item to locate within the items collection.</param>
         /// <returns>
         /// The zero-based index of the item if it exists in the collection; otherwise, <c>null</c>.
         /// Returns <c>null</c> if <paramref name="value"/> is <c>null</c>.
@@ -1680,9 +1596,9 @@ namespace Alternet.UI
             if (value is null)
                 return null;
 
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
-                if (Items[i] == value)
+                if (GetItem(i) == value)
                     return i;
             }
 
@@ -1700,9 +1616,12 @@ namespace Alternet.UI
             if (value is null)
                 return null;
 
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
-                var item = Items[i];
+                var item = GetItem(i);
+
+                if (item is null)
+                    continue;
 
                 if (value.Equals(item.Value))
                     return item;

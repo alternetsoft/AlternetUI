@@ -861,7 +861,7 @@ namespace Alternet.UI
             BeginUpdate();
             try
             {
-                ListBox.SetItemsFast(new(), VirtualListBox.SetItemsKind.ChangeField);
+                ListBox.Items.Clear();
                 rootItem.Clear();
             }
             finally
@@ -1031,7 +1031,7 @@ namespace Alternet.UI
                     if (InUpdates)
                         needTreeChanged = true;
                     else
-                        ListBox.Items.Add(item);
+                        ListBox.Add(item);
                 }
                 else
                 {
@@ -1194,7 +1194,9 @@ namespace Alternet.UI
                     if (InUpdates)
                         needTreeChanged = true;
                     else
-                        ListBox.Items?.Remove(item);
+                    {
+                        ListBox.Items.Remove(item);
+                    }
                 }
 
                 if (ItemRemoved is not null)
@@ -1822,7 +1824,7 @@ namespace Alternet.UI
             if (ListBox.HitTestCheckBox(e.Location) is not null)
                 isOnCheckBox = true;
 
-            var item = ListBox.Items[itemIndex] as TreeViewItem;
+            var item = ListBox.GetItem(itemIndex.Value) as TreeViewItem;
 
             if (item is not null && (isOnCheckBox || item.ExpandOnClick))
             {

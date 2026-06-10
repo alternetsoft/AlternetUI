@@ -20,9 +20,8 @@ namespace Alternet.UI
     /// methods enable
     /// you to add a large number of items to the ListBox without the control
     /// being repainted each time an item is added to the list.
-    /// The <see cref="ListControl{T}.Items"/>, <see cref="VirtualListControl.SelectedItems"/>, and
-    /// <see cref="VirtualListControl.SelectedIndices"/> properties provide access to the three
-    /// collections that are used by the control.
+    /// The <see cref="VirtualListControl.SelectedItems"/>, and <see cref="VirtualListControl.SelectedIndices"/>
+    /// properties provide access to the collection of selected items and their indices.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Common)]
     public partial class StdListBox : VirtualListBox, ICustomListBox<object>
@@ -334,7 +333,7 @@ namespace Alternet.UI
         /// </remarks>
         public void SetCount(int newCount, Func<object> createItem)
         {
-            base.SetCount(newCount, () =>
+            base.Items.SetCount(newCount, () =>
             {
                 ListControlItem item = new();
                 SetItemData(item, createItem());

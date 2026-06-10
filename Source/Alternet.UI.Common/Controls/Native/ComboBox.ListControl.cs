@@ -501,7 +501,8 @@ namespace Alternet.UI
         /// <see cref="Environment.NewLine"/> if it is empty.</remarks>
         /// <param name="separator">Items separator string.</param>
         /// <param name="indexes">Items indexes.</param>
-        public virtual string? ItemsAsText(IReadOnlyList<int> indexes, string? separator = default)
+        /// <param name="forDisplay">Indicates whether to get the display text or the actual value.</param>
+        public virtual string? ItemsAsText(IReadOnlyList<int> indexes, string? separator = default, bool forDisplay = true)
         {
             separator ??= Environment.NewLine;
             string? result = null;
@@ -509,9 +510,9 @@ namespace Alternet.UI
             foreach (var index in indexes)
             {
                 if (result is null)
-                    result = GetItemText(index, false);
+                    result = GetItemText(index, forDisplay);
                 else
-                    result += $"{separator}{Items[index]}";
+                    result += $"{separator}{GetItemText(index, forDisplay)}";
             }
 
             return result;

@@ -162,7 +162,7 @@ namespace ControlsSample
 
         private void ShowPopupListBoxButton_Click(object? sender, EventArgs e)
         {
-            if (popupListBox.MainControl.Items.Count == 0)
+            if (popupListBox.MainControl.Count == 0)
             {
                 AddDefaultItems(popupListBox.MainControl);
                 popupListBox.MainControl.SelectFirstItem();
@@ -172,7 +172,7 @@ namespace ControlsSample
 
         private void ShowPopupVListBoxButton_Click(object? sender, EventArgs e)
         {
-            if (popupVListBox.MainControl.Items.Count == 0)
+            if (popupVListBox.MainControl.Count == 0)
             {
                 PropertyGridSample.ObjectInit.InitVListBox(popupVListBox.MainControl);
                 popupVListBox.MainControl.SelectFirstItem();
@@ -191,7 +191,7 @@ namespace ControlsSample
         {
             var control = popupCheckListBox.MainControl;
 
-            if (control.Items.Count == 0)
+            if (control.Count == 0)
             {
                 AddDefaultItems(control);
                 control.SelectFirstItem();

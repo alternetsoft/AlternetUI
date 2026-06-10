@@ -13,7 +13,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Advanced list control with ability to customize item painting.
+    /// Abstract list control with <see cref="ListControlItem"/> support.
     /// </summary>
     public abstract partial class VirtualListControl
         : ListControl<ListControlItem>, ICustomListBox<ListControlItem>,
@@ -337,7 +337,7 @@ namespace Alternet.UI
                 if (DisposingOrDisposed)
                     return;
 
-                if (value != null && (value < 0 || value >= Items.Count))
+                if (value != null && (value < 0 || value >= Count))
                     value = null;
 
                 ClearChecked();
@@ -906,7 +906,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool IsValidIndex(int index)
         {
-            return index >= 0 && index < Items.Count;
+            return index >= 0 && index < Count;
         }
 
         /// <summary>
@@ -915,7 +915,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool ClearChecked(bool raiseEvents)
         {
-            if (Items.Count == 0)
+            if (Count == 0)
                 return false;
             bool changed = false;
             for (int i = 0; i < Count; i++)
@@ -1035,7 +1035,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool HasItems()
         {
-            return Items.Count > 0;
+            return Count > 0;
         }
 
         /// <summary>
@@ -1434,12 +1434,13 @@ namespace Alternet.UI
             BeginUpdate();
             try
             {
-                SetCount(count, fnCreateItem);
+                Items.SetCount(count, fnCreateItem);
                 var i = 0;
                 foreach (var itemFrom in from)
                 {
-                    var itemTo = Items[i];
-                    fnAssign(itemTo, itemFrom);
+                    var itemTo = GetItem(i);
+                    if (itemTo is not null)
+                        fnAssign(itemTo, itemFrom);
                     i++;
                 }
             }
@@ -1453,7 +1454,7 @@ namespace Alternet.UI
 
         int IListControlItemContainer.GetItemCount()
         {
-            return Items.Count;
+            return Count;
         }
 
         /// <summary>

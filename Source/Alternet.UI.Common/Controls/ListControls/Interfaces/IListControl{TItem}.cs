@@ -203,8 +203,9 @@ namespace Alternet.UI
         /// <remarks>Each item is separated by <paramref name="separator"/> or
         /// <see cref="Environment.NewLine"/> if it is empty.</remarks>
         /// <param name="separator">Items separator string.</param>
+        /// <param name="forDisplay">Specifies whether to get item's text for display purposes or the real value.</param>
         /// <param name="indexes">Items indexes.</param>
-        string? ItemsAsText(IReadOnlyList<int> indexes, string? separator = default);
+        string? ItemsAsText(IReadOnlyList<int> indexes, string? separator = default, bool forDisplay = true);
 
         /// <inheritdoc cref="StringSearch.FindString(string)"/>
         int? FindString(string s);
@@ -251,17 +252,5 @@ namespace Alternet.UI
         /// property equals the value.
         /// </summary>
         bool RemoveItemWithValue(object? value);
-
-        /// <summary>
-        /// Changes the number of elements in the items.
-        /// </summary>
-        /// <param name="newCount">New number of elements.</param>
-        /// <param name="createItem">Function which creates new item.</param>
-        /// <remarks>
-        /// If collection has more items than specified in <paramref name="newCount"/>,
-        /// these items are removed. If collection has less items, new items are created
-        /// using <paramref name="createItem"/> function.
-        /// </remarks>
-        void SetCount(int newCount, Func<TItem> createItem);
     }
 }

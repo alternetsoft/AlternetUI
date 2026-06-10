@@ -348,7 +348,7 @@ namespace Alternet.UI
         public virtual ListControlItem AddColor(Color? value, string? title = null)
         {
             var item = CreateItem(value, title);
-            Items.Add(item);
+            Add(item);
             return item;
         }
 

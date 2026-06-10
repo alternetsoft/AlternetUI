@@ -354,7 +354,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Edits <see cref="ListControl{T}.Items"/> with list editor.
+        /// Edits items of the <see cref="ListControl{T}"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>
         public static void EditItemsWithListEditor<T>(ListControl<T> control)

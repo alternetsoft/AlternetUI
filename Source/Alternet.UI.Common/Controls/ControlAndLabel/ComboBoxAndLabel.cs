@@ -94,7 +94,9 @@ namespace Alternet.UI
             set => ComboBox.SelectedIndex = value;
         }
 
-        /// <inheritdoc cref="ListControl{T}.Items"/>
+        /// <summary>
+        /// Gets or sets items of the combo box.
+        /// </summary>
         [Content]
         public virtual BaseCollection<object> Items
         {

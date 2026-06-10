@@ -17,11 +17,9 @@ namespace Alternet.UI
     /// methods enable
     /// you to add a large number of items to the CheckListBox without the control
     /// being repainted each time an item is added to the list.
-    /// The <see cref="ListControl{T}.Items"/>, <see cref="VirtualListControl.SelectedItems"/>,
-    /// <see cref="VirtualListControl.SelectedIndices"/>, and
+    /// The <see cref="VirtualListControl.SelectedItems"/>, <see cref="VirtualListControl.SelectedIndices"/>, and
     /// <see cref="VirtualListControl.CheckedIndices"/>
-    /// properties provide access to the
-    /// collections that are used by the control.
+    /// properties provide access to the selected and checked items collections.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Common)]
     public partial class StdCheckListBox : StdListBox
