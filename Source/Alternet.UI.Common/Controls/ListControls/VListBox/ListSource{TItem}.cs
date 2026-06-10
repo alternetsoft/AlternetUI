@@ -72,6 +72,9 @@ namespace Alternet.UI
         public virtual bool IsReadOnly => false;
 
         /// <inheritdoc/>
+        public IList AsList => collection;
+
+        /// <inheritdoc/>
         public virtual void Add(TItem item)
         {
             collection.Add(item);
@@ -158,6 +161,30 @@ namespace Alternet.UI
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        /// <inheritdoc/>
+        public void Sort(IComparer<TItem>? comparer)
+        {
+            collection.Sort(comparer);
+        }
+
+        /// <inheritdoc/>
+        public void Sort(int index, int count, IComparer<TItem>? comparer)
+        {
+            collection.Sort(index, count, comparer);
+        }
+
+        /// <inheritdoc/>
+        public void Sort(Comparison<TItem> comparison)
+        {
+            collection.Sort(comparison);
+        }
+
+        /// <inheritdoc/>
+        public void SortDescending(Comparison<TItem> comparison)
+        {
+            collection.SortDescending(comparison);
         }
     }
 }

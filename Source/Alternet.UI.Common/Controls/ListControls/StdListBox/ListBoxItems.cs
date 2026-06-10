@@ -101,6 +101,9 @@ namespace Alternet.UI
         public bool IsFixedSize => false;
 
         /// <inheritdoc/>
+        public IList AsList => provider().AsList;
+
+        /// <inheritdoc/>
         public object this[int index]
         {
             get
@@ -331,6 +334,30 @@ namespace Alternet.UI
         public object? GetItem(int index)
         {
             return provider().GetItem(index)?.Value;
+        }
+
+        /// <inheritdoc/>
+        public void Sort(IComparer<object>? comparer)
+        {
+            provider().Sort(comparer);
+        }
+
+        /// <inheritdoc/>
+        public void Sort(int index, int count, IComparer<object>? comparer)
+        {
+            provider().Sort(index, count, comparer);
+        }
+
+        /// <inheritdoc/>
+        public void Sort(Comparison<object> comparison)
+        {
+            provider().Sort(comparison);
+        }
+
+        /// <inheritdoc/>
+        public void SortDescending(Comparison<object> comparison)
+        {
+            provider().SortDescending(comparison);
         }
 
         private static class CollectionChangedHelper

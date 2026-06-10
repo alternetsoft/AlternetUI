@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -21,6 +22,11 @@ namespace Alternet.UI
         /// Occurs when a property changes.
         /// </summary>
         event PropertyChangedEventHandler? PropertyChanged;
+        
+        /// <summary>
+        /// Gets the items as <see cref="IList"/>.
+        /// </summary>
+        IList AsList {  get; }
 
         /// <summary>
         /// Gets or sets the number of items in the list.
@@ -61,5 +67,37 @@ namespace Alternet.UI
         /// Sorts the items in the list.
         /// </summary>
         void Sort();
+
+        /// <summary>
+        /// Sorts the elements. Uses the provided comparer.
+        /// </summary>
+        void Sort(IComparer<TItem>? comparer);
+
+        /// <summary>
+        /// Sorts the elements in a section of this collection. The sort compares the
+        /// elements to each other using the given IComparer interface. If
+        /// comparer is null, the elements are compared to each other using
+        /// the IComparable interface, which in that case must be implemented by all
+        /// elements of the list.
+        /// </summary>
+        void Sort(int index, int count, IComparer<TItem>? comparer);
+
+        /// <summary>
+        /// Sorts the elements in the entire collection using the specified comparison.
+        /// </summary>
+        void Sort(Comparison<TItem> comparison);
+
+        /// <summary>
+        /// Sorts the items in descending order based on the specified comparison logic.
+        /// </summary>
+        /// <remarks>This method performs the sorting operation only if the collection contains items.
+        /// The sorting is executed in descending order by reversing the result of the provided
+        /// comparison logic.</remarks>
+        /// <param name="comparison">A delegate that defines the comparison logic
+        /// to apply to the items. The delegate
+        /// should return a value less than zero if the first item is less than the second,
+        /// zero if they are equal, or
+        /// greater than zero if the first item is greater than the second.</param>
+        void SortDescending(Comparison<TItem> comparison);
     }
 }
