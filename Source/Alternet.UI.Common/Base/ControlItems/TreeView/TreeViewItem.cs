@@ -440,6 +440,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the previous sibling of this item, or its parent if this item is the first in the collection,
+        /// or <see langword="null"/> if this item is the root.
+        /// </summary>
+        public TreeViewItem? PrevSiblingOrParent
+        {
+            get
+            {
+                if (IsRoot)
+                    return null;
+
+                return PrevSibling ?? Parent;
+            }
+        }
+
+        /// <summary>
+        /// Gets the previous sibling of this item, or <see langword="null"/>
+        /// if this item is the first one in its parent items collection.
+        /// </summary>
+        public TreeViewItem? PrevSibling
+        {
+            get
+            {
+                var items = ParentItems;
+                if (items is null || items.Count == 0)
+                    return null;
+                var index = Index;
+                if (index is null || index == 0)
+                    return null;
+                return items[index.Value - 1];
+            }
+        }
+
+        /// <summary>
         /// Gets next sibling if item is not the last one, otherwise gets previous sibling.
         /// If item has no siblings, <see cref="Parent"/> is returned.
         /// </summary>

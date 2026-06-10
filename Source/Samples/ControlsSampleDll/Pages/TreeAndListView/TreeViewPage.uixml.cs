@@ -59,7 +59,18 @@ namespace ControlsSample
         private void TreeView_MouseMove(object sender, MouseEventArgs e)
         {
             var item = treeView.GetNodeAtMouseCursor();
-            var s = item?.Text ?? "<none>";
+
+            string s;
+
+            if (item is null)
+            {
+                s = "<none>";
+            }
+            else
+            {
+                s = $"{item.Text}";
+            }
+
             var prefix = "MouseMove. Item under mouse:";
             App.LogReplace($"{prefix} '{s}'", prefix);
         }
