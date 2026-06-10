@@ -44,7 +44,7 @@ namespace Alternet.UI
         /// </summary>
         public StdListBox()
         {
-            adapter = new ListBoxItems(base.Items);
+            adapter = new ListBoxItems(() => BaseItems);
         }
 
         /// <summary>
@@ -137,12 +137,14 @@ namespace Alternet.UI
                 return ItemToData(base.SelectedItem);
             }
 
+#pragma warning disable
             set
             {
                 if (SelectedItem == value)
                     return;
                 base.SelectedItem = DataToItem(value);
             }
+#pragma warning restore
         }
 
         /// <summary>
@@ -167,7 +169,7 @@ namespace Alternet.UI
         /// This is the fastest way to access items.
         /// </summary>
         [Browsable(false)]
-        public BaseCollection<ListControlItem> BaseItems
+        public IListSource<ListControlItem> BaseItems
         {
             get
             {
@@ -192,7 +194,7 @@ namespace Alternet.UI
 
             set
             {
-                NotNullCollection<ListControlItem> newItems = new();
+                ListSource newItems = new();
                 foreach(var valueItem in value)
                 {
                     ListControlItem item = new();
@@ -226,12 +228,16 @@ namespace Alternet.UI
         {
             get
             {
-                return ItemToData(base[index]);
+                if (index is null)
+                    return null;
+                return GetItem(index.Value);
             }
 
             set
             {
-                SetItemData(base[index], value);
+                if (index is null)
+                    return;
+                SetItemData(base.GetItem(index.Value), value);
             }
         }
 
@@ -245,31 +251,12 @@ namespace Alternet.UI
         {
             get
             {
-                return ItemToData(base[index]);
+                return GetItem(index);
             }
 
             set
             {
-                SetItemData(base[index], value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the <see cref="Items"/> element at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index of the element
-        /// to get or set.</param>
-        /// <returns>The element at the specified index.</returns>
-        public new object? this[long index]
-        {
-            get
-            {
-                return ItemToData(base[index]);
-            }
-
-            set
-            {
-                SetItemData(base[index], value);
+                SetItemData(base.GetItem(index), value);
             }
         }
 

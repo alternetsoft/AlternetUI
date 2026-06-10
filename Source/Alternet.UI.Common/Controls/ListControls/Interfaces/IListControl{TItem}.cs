@@ -11,8 +11,7 @@ using Alternet.Base.Collections;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Common interface for the <see cref="StdListBox"/>, <see cref="ComboBox"/>
-    /// and other controls with items.
+    /// Represents common interface for controls with items.
     /// </summary>
     /// <typeparam name="TItem">Type of the item. Can be <see cref="object"/>,
     /// <see cref="ListControlItem"/> or any other type.</typeparam>
@@ -86,14 +85,6 @@ namespace Alternet.UI
         /// Gets or sets string search provider.
         /// </summary>
         StringSearch Search { get; set; }
-
-        /// <summary>
-        /// Gets or sets item at the specified index.
-        /// </summary>
-        /// <param name="index">The zero-based index of the element
-        /// to get or set.</param>
-        /// <returns>The element at the specified index.</returns>
-        TItem? this[long index] { get; set; }
 
         /// <summary>
         /// Gets or sets the element at the specified index.

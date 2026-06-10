@@ -14,8 +14,7 @@ namespace Alternet.UI
     /// the user to select one or more items.
     /// This control encapsulates the native list box implemented by the operating system.
     /// It has limited functionality.
-    /// For the full featured list control, use the <see cref="VirtualListBox"/>
-    /// or <see cref="StdListBox"/> controls.
+    /// For the full featured list control, use the <see cref="VirtualListBox"/> control.
     /// </summary>
     /// <remarks>The <see cref="ListBox"/> control is commonly used to present a collection of items in a
     /// scrollable list.  It supports single or multiple selection modes,

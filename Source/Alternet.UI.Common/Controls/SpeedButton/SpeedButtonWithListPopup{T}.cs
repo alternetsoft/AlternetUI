@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool DefaultExpandDropDownMenuToWidth = true;
 
-        private BaseCollection<ListControlItem>? items;
+        private IListSource<ListControlItem>? items;
         private ObjectUniqueId? createdMenuId;
         private ListBoxItems? simpleItems;
 
@@ -139,20 +139,20 @@ namespace Alternet.UI
         {
             get
             {
-                return simpleItems ??= new(Items);
+                return simpleItems ??= new(() => Items);
             }
         }
 
         /// <summary>
         /// Gets the collection of items used in the list box control within the popup window.
         /// </summary>
-        public virtual BaseCollection<ListControlItem> Items
+        public virtual IListSource<ListControlItem> Items
         {
             get
             {
                 if (items is not null)
                     return items;
-                items = GetItems();
+                items = CreateItems();
                 return items;
             }
 
@@ -302,7 +302,7 @@ namespace Alternet.UI
         /// equal to the specified value.
         /// </summary>
         /// <param name="value">Value to search for.</param>
-        /// <returns></returns>
+        /// <returns>The item with the specified value, or <see langword="null"/> if not found.</returns>
         public virtual ListControlItem? FindItemWithValue(object? value)
         {
             if (value is null)
@@ -412,7 +412,7 @@ namespace Alternet.UI
         /// or populating them with values.</remarks>
         public virtual void ReloadItems()
         {
-            items = GetItems();
+            items = CreateItems();
         }
 
         /// <inheritdoc/>
@@ -584,12 +584,12 @@ namespace Alternet.UI
         /// or <see langword="null"/> if no items are available.
         /// Derived classes can override this method to provide a custom
         /// collection of items.</remarks>
-        /// <returns>A <see cref="BaseCollection{T}"/> containing
+        /// <returns>A <see cref="IListSource{T}"/> containing
         /// <see cref="ListControlItem"/> objects, or <see
         /// langword="null"/> if no items are available.</returns>
-        protected virtual BaseCollection<ListControlItem> GetItems()
+        protected virtual IListSource<ListControlItem> CreateItems()
         {
-            return new();
+            return new ListSource<ListControlItem>();
         }
     }
 }

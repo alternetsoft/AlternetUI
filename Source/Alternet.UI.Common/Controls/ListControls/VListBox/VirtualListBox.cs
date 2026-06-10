@@ -59,6 +59,7 @@ namespace Alternet.UI
         private bool useScrollActivity;
         private LightDarkColor? horzGridLinesColor;
         private ListViewGridLinesDisplayMode gridLinesDisplayMode = ListViewGridLinesDisplayMode.None;
+        private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
 
         static VirtualListBox()
         {
@@ -247,6 +248,29 @@ namespace Alternet.UI
             set
             {
                 DoActionScrollToHorzPos((int)value);
+            }
+        }
+
+        /// <inheritdoc/>
+        public override IListSource<ListControlItem> Items
+        {
+            get => items;
+
+            set
+            {
+                if (items == value)
+                    return;
+
+                value ??= new ListSource<ListControlItem>();
+
+                if (items is not null)
+                {
+                    DetachItems(items);
+                }
+
+                items = value;
+
+                AttachItems(items);
             }
         }
 
@@ -1090,6 +1114,70 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets items to the new value using the fastest method.
+        /// </summary>
+        /// <param name="value">Collection with the new items.</param>
+        public virtual void SetItemsFastest(IListSource<ListControlItem> value)
+        {
+            SetItemsFast(value, SetItemsKind.ChangeField);
+        }
+
+        /// <summary>
+        /// Sets items to the new value using the specified method.
+        /// </summary>
+        /// <param name="value">Collection with the new items.</param>
+        /// <param name="kind">The method which is used when items are set.</param>
+        public virtual bool SetItemsFast(IListSource<ListControlItem> value, SetItemsKind kind)
+        {
+            if (value == Items)
+                return true;
+
+            if (DisposingOrDisposed)
+                return default;
+
+            firstVisibleItem = 0;
+
+            if (kind == SetItemsKind.Default)
+                kind = DefaultSetItemsKind;
+            if (kind == SetItemsKind.Default)
+                kind = SetItemsKind.ChangeField;
+
+            switch (kind)
+            {
+                case SetItemsKind.ClearAddRange:
+                    return UseClearAddRange();
+                case SetItemsKind.ChangeField:
+                    return UseChangeField();
+                default:
+                    return false;
+            }
+
+            bool UseClearAddRange()
+            {
+                DoInsideUpdate(() =>
+                {
+                    RemoveAll();
+                    Items.AddRange(value);
+                });
+
+                return true;
+            }
+
+            bool UseChangeField()
+            {
+                DoInsideUpdate(() =>
+                {
+                    ClearSelected();
+                    DetachItems(Items);
+                    RecreateItems(value);
+                    AttachItems(Items);
+                });
+
+                return true;
+            }
+        }
+
+        /// <summary>
         /// Selects items with the specified indexes
         /// and scrolls the control so the first selected item will become visible in the view.
         /// </summary>
@@ -1760,7 +1848,8 @@ namespace Alternet.UI
         /// empty, the item rectangle cannot be determined, or the item is fully visible without horizontal scrolling.
         /// Override this method to customize tooltip display behavior for items.</remarks>
         /// <param name="horzAlignment">The horizontal alignment for the tooltip relative to the container.</param>
-        /// <param name="provider">The type of tooltip provider to use for displaying the tooltip. If null, the default provider is used.</param>
+        /// <param name="provider">The type of tooltip provider to use for displaying the tooltip.
+        /// If null, the default provider is used.</param>
         /// <param name="itemIndex">The zero-based index of the item for which to show the overlay tooltip,
         /// or null to indicate no item.</param>
         /// <returns>true if the overlay tooltip was shown for the specified item; otherwise, false.</returns>
@@ -1921,7 +2010,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void ItemsCollectionChanged(
+        protected override void OnItemsCollectionChanged(
             object? sender,
             NotifyCollectionChangedEventArgs e)
         {

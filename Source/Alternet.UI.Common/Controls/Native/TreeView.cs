@@ -1370,7 +1370,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Changes visual style of the control to look like <see cref="StdListBox"/>.
+        /// Changes visual style of the control to look like list box.
         /// </summary>
         public virtual void MakeAsListBox()
         {

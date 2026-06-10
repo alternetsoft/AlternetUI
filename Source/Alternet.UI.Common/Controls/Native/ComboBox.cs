@@ -13,8 +13,8 @@ namespace Alternet.UI
     /// </summary>
     /// <remarks>
     /// <para>
-    /// A <see cref="ComboBox"/> displays a text box combined with a
-    /// <see cref="StdListBox"/>, which enables the user
+    /// A <see cref="ComboBox"/> displays a text box combined with a drop down
+    /// list box, which enables the user
     /// to select items from the list or enter a new value.
     /// The <see cref="IsEditable"/> property specifies whether the text portion
     /// can be edited.

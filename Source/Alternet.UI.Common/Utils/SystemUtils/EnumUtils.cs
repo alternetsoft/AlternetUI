@@ -89,7 +89,7 @@ namespace Alternet.UI
         public static T GetMaxValueUseMax<T>()
             where T : struct, Enum
         {
-            var result = Enum.GetValues(typeof(T)).Cast<T>().Max();
+            var result = Enum.GetValues<T>().Max();
             return result;
         }
 
@@ -115,8 +115,8 @@ namespace Alternet.UI
         public static T GetMaxValueUseLast<T>()
             where T : struct, Enum
         {
-            var enumValues = Enum.GetValues(typeof(T));
-            var result = (T)enumValues.GetValue(enumValues.Length - 1)!;
+            var enumValues = Enum.GetValues<T>();
+            var result = enumValues[enumValues.Length - 1];
             return result;
         }
 
@@ -163,7 +163,9 @@ namespace Alternet.UI
         public static int GetMaxValueUseMaxAsInt<T>()
             where T : struct, Enum
         {
+#pragma warning disable
             var result = Enum.GetValues(typeof(T)).Cast<int>().Max();
+#pragma warning restore
             return result;
         }
 

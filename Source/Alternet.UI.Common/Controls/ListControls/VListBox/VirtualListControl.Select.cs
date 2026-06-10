@@ -177,7 +177,10 @@ namespace Alternet.UI
 
                 if (IsSelectionModeSingle)
                 {
-                    SelectedIndex = value?.FirstOrDefault();
+                    if (value is not null && value.Count > 0)
+                        SelectedIndex = value[0];
+                    else
+                        SelectedIndex = null;
                 }
                 else
                 {
@@ -260,12 +263,19 @@ namespace Alternet.UI
         {
             get
             {
-                return SelectedIndexes.Select(x => GetItem(x)).ToArray();
+                var result = SelectedIndexes
+                    .Select(x => GetItem(x))
+                    .Where(item => item is not null)
+                    .ToArray();
+
+#pragma warning disable
+                return result;
+#pragma warning restore
             }
 
             set
             {
-                if(value is null || value.Count == 0)
+                if (value is null || value.Count == 0)
                 {
                     SelectedIndexes = [];
                     return;
@@ -596,7 +606,7 @@ namespace Alternet.UI
                 {
                     var item = GetItem(i);
 
-                    if(item is null)
+                    if (item is null)
                         continue;
 
                     if (!onlyVisible || item.IsVisible)
@@ -753,7 +763,7 @@ namespace Alternet.UI
         {
             var count = Count;
 
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 if (IsSelected(i))
                     return i;
@@ -858,12 +868,12 @@ namespace Alternet.UI
 
             DoInsideSuspendedSelectionEvents(() =>
             {
-                if(clearSelection)
+                if (clearSelection)
                     ClearSelected();
 
                 selectedIndex = index;
 
-                if(index is not null)
+                if (index is not null)
                     EnsureVisible(index.Value);
 
                 AnchorIndex = index;

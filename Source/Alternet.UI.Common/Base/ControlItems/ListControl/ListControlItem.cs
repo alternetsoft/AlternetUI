@@ -16,8 +16,7 @@ namespace Alternet.UI
         = IndexedValues<ObjectUniqueId, ListControlItem.ContainerRelatedData>.ILockedItem;
 
     /// <summary>
-    /// Custom item for <see cref="StdListBox"/>, <see cref="ComboBox"/> and other
-    /// list controls. This class has <see cref="Text"/>,
+    /// Represents an item used in list controls. This class has <see cref="Text"/>,
     /// <see cref="Value"/> and other properties which allow to customize look and behavior of the item.
     /// </summary>
     public partial class ListControlItem : BaseControlItem, IComparable<ListControlItem>
@@ -1549,7 +1548,7 @@ namespace Alternet.UI
         /// values will be added.</param>
         /// <param name="values">The values to add to the collection.</param>
         public static void AddRangeOfValues(
-            BaseCollection<ListControlItem>? items,
+            IListSource<ListControlItem>? items,
             IEnumerable? values)
         {
             if (items is null)

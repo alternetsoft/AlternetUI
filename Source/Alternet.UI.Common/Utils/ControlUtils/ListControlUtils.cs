@@ -8,8 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods related to list controls
-    /// including <see cref="StdListBox"/> and <see cref="ComboBox"/>.
+    /// Contains static methods related to list controls.
     /// </summary>
     public static class ListControlUtils
     {
@@ -252,7 +251,7 @@ namespace Alternet.UI
         /// Adds font names to the specified collection.
         /// </summary>
         /// <param name="items"></param>
-        public static void AddFontNames(BaseCollection<ListControlItem> items)
+        public static void AddFontNames(IListSource<ListControlItem> items)
         {
             var families = FontFamily.FamiliesNamesAscending;
             ListControlItem.AddRangeOfValues(items, families);
@@ -265,7 +264,7 @@ namespace Alternet.UI
         /// to which font sizes will be added.</param>
         /// <param name="defaultSize">Optional. The additional size to add to the collection.</param>
         public static void AddFontSizes(
-            BaseCollection<ListControlItem> items,
+            IListSource<ListControlItem> items,
             Coord? defaultSize = null)
         {
             var fontSizes = new List<Coord>();

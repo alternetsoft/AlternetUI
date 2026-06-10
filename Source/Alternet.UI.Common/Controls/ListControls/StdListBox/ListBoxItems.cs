@@ -24,41 +24,19 @@ namespace Alternet.UI
     /// <seealso cref="IReadOnlyList{T}"/>
     /// <seealso cref="ICollection"/>
     /// <seealso cref="IList"/>
-    public class ListBoxItems : ICollection<object>, IEnumerable<object>,
-        IEnumerable, IList<object>, IReadOnlyCollection<object>, IReadOnlyList<object>,
-        ICollection, IList
+    public class ListBoxItems : IListSource<object>
     {
-        private readonly BaseCollection<ListControlItem> items;
+        private readonly Func<IListSource<ListControlItem>> provider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxItems"/> class.
         /// </summary>
-        public ListBoxItems()
-            : this(new BaseCollection<ListControlItem>())
+        public ListBoxItems(Func<IListSource<ListControlItem>> provider)
         {
-        }
+            this.provider = provider;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ListBoxItems"/> class
-        /// to use live items from the specified collection.
-        /// </summary>
-        /// <param name="items">The source of the items.</param>
-        public ListBoxItems(BaseCollection<ListControlItem> items)
-        {
-            this.items = items;
-
-            items.PropertyChanged += Items_PropertyChanged;
-            items.CollectionChanged += Items_CollectionChanged;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ListBoxItems"/> class.
-        /// </summary>
-        /// <param name="items"></param>
-        public ListBoxItems(IEnumerable<object> items)
-            : this(new BaseCollection<ListControlItem>())
-        {
-            AddRange(items);
+            provider().PropertyChanged += Items_PropertyChanged;
+            provider().CollectionChanged += Items_CollectionChanged;
         }
 
         /// <summary>
@@ -66,8 +44,8 @@ namespace Alternet.UI
         /// </summary>
         ~ListBoxItems()
         {
-            items.PropertyChanged -= Items_PropertyChanged;
-            items.CollectionChanged -= Items_CollectionChanged;
+            provider().PropertyChanged -= Items_PropertyChanged;
+            provider().CollectionChanged -= Items_CollectionChanged;
         }
 
         /// <summary>
@@ -85,7 +63,18 @@ namespace Alternet.UI
         public event NotifyCollectionChangedEventHandler? CollectionChanged;
 
         /// <inheritdoc/>
-        public int Count => items.Count;
+        public int Count
+        {
+            get
+            {
+                return provider().Count;
+            }
+
+            set
+            {
+                provider().Count = value;
+            }
+        }
 
         /// <inheritdoc/>
         public bool IsReadOnly
@@ -97,37 +86,24 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool IsFixedSize => ((IList)items).IsFixedSize;
-
-        /// <inheritdoc/>
-        public bool IsSynchronized => ((ICollection)items).IsSynchronized;
-
-        /// <inheritdoc/>
-        public object SyncRoot => ((ICollection)items).SyncRoot;
+        public bool IsFixedSize => false;
 
         /// <inheritdoc/>
         public object this[int index]
         {
             get
             {
-                return items[index].Value!;
+                return provider().GetItem(index)?.Value!;
             }
 
-#pragma warning disable
             set
             {
-                items[index].Value = value;
+                var item = provider().GetItem(index);
+                if (item != null)
+                {
+                    item.Value = value;
+                }
             }
-#pragma warning restore
-        }
-
-        /// <summary>
-        /// Implicitly converts an object collection to a ListBoxItems collection.
-        /// </summary>
-        /// <param name="items">The array of objects to convert.</param>
-        public static implicit operator ListBoxItems(object[] items)
-        {
-            return new ListBoxItems(items);
         }
 
         /// <inheritdoc/>
@@ -135,7 +111,7 @@ namespace Alternet.UI
         {
             ListControlItem item = new();
             item.Value = value;
-            items.Add(item);
+            provider().Add(item);
         }
 
         /// <summary>
@@ -155,15 +131,16 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public void Clear()
         {
-            items.Clear();
+            provider().Clear();
         }
 
         /// <inheritdoc/>
         public bool Contains(object? value)
         {
-            foreach(var item in items)
+            for (int i = 0; i < provider().Count; i++)
             {
-                if (item.Value == value)
+                var item = provider().GetItem(i);
+                if (item != null && item.Value == value)
                     return true;
             }
 
@@ -175,21 +152,22 @@ namespace Alternet.UI
         {
             ListControlItem item = new();
             item.Value = value;
-            items.Insert(index, item);
+            provider().Insert(index, item);
         }
 
         /// <inheritdoc/>
         public void RemoveAt(int index)
         {
-            items.RemoveAt(index);
+            provider().RemoveAt(index);
         }
 
         /// <inheritdoc/>
         public int IndexOf(object? item)
         {
-            for (int i = 0; i < items.Count; i++)
+            for (int i = 0; i < provider().Count; i++)
             {
-                if (items[i].Value == item)
+                var listItem = provider().GetItem(i);
+                if (listItem != null && listItem.Value == item)
                 {
                     return i;
                 }
@@ -203,9 +181,9 @@ namespace Alternet.UI
         {
             var index = IndexOf(item);
 
-            if(index >= 0)
+            if (index >= 0)
             {
-                items.RemoveAt(index);
+                provider().RemoveAt(index);
                 return true;
             }
 
@@ -217,35 +195,17 @@ namespace Alternet.UI
             return GetEnumerator();
         }
 
-        int IList.Add(object? value)
-        {
-            ListControlItem item = new();
-            item.Value = value;
-            return ((IList)items).Add(item);
-        }
-
-        void IList.Remove(object? value)
-        {
-            Remove(value);
-        }
-
         /// <inheritdoc/>
         public void CopyTo(object[] array, int arrayIndex)
         {
-            var itm = items.Select(x => x.Value).ToList();
+            var itm = provider().Select(x => x.Value).ToList();
             itm.CopyTo(array, arrayIndex);
-        }
-
-        void ICollection.CopyTo(Array array, int index)
-        {
-            var itm = items.Select(x => x.Value).ToList();
-            ((ICollection)itm).CopyTo(array, index);
         }
 
         /// <inheritdoc/>
         public IEnumerator<object> GetEnumerator()
         {
-            var itm = items.Select(x => x.Value!);
+            var itm = provider().Select(x => x.Value!);
             return itm.GetEnumerator();
         }
 
@@ -280,7 +240,7 @@ namespace Alternet.UI
                 if (items is null)
                     return result;
 
-                foreach(var item in items)
+                foreach (var item in items)
                 {
                     result.Add(((ListControlItem)item).Value);
                 }
@@ -317,6 +277,39 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public void SetCount(int count, Func<object> fnCreateItem)
+        {
+            provider().SetCount(count, () =>
+            {
+                var item = new ListControlItem();
+                item.Value = fnCreateItem();
+                return item;
+            });
+        }
+
+        /// <inheritdoc/>
+        public void SetItem(int index, object value)
+        {
+            var item = provider().GetItem(index);
+            if (item != null)
+            {
+                item.Value = value;
+            }
+        }
+
+        /// <inheritdoc/>
+        public void Sort()
+        {
+            provider().Sort();
+        }
+
+        /// <inheritdoc/>
+        public object? GetItem(int index)
+        {
+            return provider().GetItem(index)?.Value;
+        }
+
         private static class CollectionChangedHelper
         {
             public static NotifyCollectionChangedEventArgs OnResetItems()
@@ -326,12 +319,12 @@ namespace Alternet.UI
 
             public static NotifyCollectionChangedEventArgs OnRemoveItem(int index, IList val)
             {
-                return new (NotifyCollectionChangedAction.Remove, val, index);
+                return new(NotifyCollectionChangedAction.Remove, val, index);
             }
 
             public static NotifyCollectionChangedEventArgs OnInsertItem(int index, IList item)
             {
-                return new (NotifyCollectionChangedAction.Add, item, index);
+                return new(NotifyCollectionChangedAction.Add, item, index);
             }
 
             public static NotifyCollectionChangedEventArgs OnReplaceItem(

@@ -1800,7 +1800,8 @@ namespace Alternet.UI
             {
                 List<ListControlItem> list = new(rootItem.EnumExpandedItems());
                 NotNullCollection<ListControlItem> collection = new(list);
-                ListBox.SetItemsFast(collection, VirtualListBox.SetItemsKind.ChangeField);
+                var listSource = new ListSource(collection);
+                ListBox.SetItemsFast(listSource, VirtualListBox.SetItemsKind.ChangeField);
             });
         }
 

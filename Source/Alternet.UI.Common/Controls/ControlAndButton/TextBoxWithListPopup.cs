@@ -141,7 +141,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of items used in the list box control within the popup window.
         /// </summary>
-        public virtual BaseCollection<ListControlItem> Items
+        public virtual IListSource<ListControlItem> Items
         {
             get
             {

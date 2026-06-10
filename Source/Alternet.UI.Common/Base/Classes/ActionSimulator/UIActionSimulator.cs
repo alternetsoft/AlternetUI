@@ -207,8 +207,7 @@ namespace Alternet.UI
         /// the currently focused window is not one of the controls allowing
         /// item selection or if the item with the given text was not found in it.</returns>
         /// <remarks>
-        /// This method selects an item in the currently focused
-        /// <see cref="ComboBox"/>, <see cref="StdListBox"/> and similar controls.
+        /// This method selects an item in the currently focused list control.
         /// It does it by simulating keyboard events, so the behaviour
         /// should be the same as if the item was really selected by the user.
         /// </remarks>

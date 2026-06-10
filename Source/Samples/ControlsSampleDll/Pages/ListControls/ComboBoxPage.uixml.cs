@@ -75,7 +75,7 @@ namespace ControlsSample
 
         private void LoadDefaultItems(bool ownerDraw = false)
         {
-            BaseCollection<ListControlItem> items = new();
+            ListSource items = new();
 
             if (ownerDraw)
             {

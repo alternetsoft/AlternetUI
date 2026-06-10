@@ -14,7 +14,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// <see cref="StdListBox"/> descendant with log and debug related functionality.
+    /// Represents list control with log and debug related functionality.
     /// </summary>
     [ControlCategory(KnownControlCategory.Other)]
     public partial class LogListBox : StdTreeView

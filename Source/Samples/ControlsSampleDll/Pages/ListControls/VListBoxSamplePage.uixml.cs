@@ -9,8 +9,8 @@ namespace ControlsSample
 {
     internal partial class VListBoxSamplePage: Panel
     {
-        private readonly NotNullCollection<ListControlItem> items1 = new();
-        private readonly NotNullCollection<ListControlItem> items2 = new();
+        private readonly ListSource items1 = new();
+        private readonly ListSource items2 = new();
         private bool useItems1 = true;
 
         private readonly VirtualListBox listBox = new()

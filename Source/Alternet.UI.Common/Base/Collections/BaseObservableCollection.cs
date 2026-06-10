@@ -37,7 +37,7 @@ namespace Alternet.UI
         private int blockReentrancyCount;
 
         [NonSerialized]
-        private List<T> list;
+        private readonly List<T> list;
 
         static BaseObservableCollection()
         {

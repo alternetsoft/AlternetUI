@@ -22,7 +22,6 @@ namespace Alternet.UI
         where TItem : class, new()
     {
         private StringSearch? search;
-        private BaseCollection<TItem>? items;
         private SvgImage? checkImageUnchecked;
         private SvgImage? checkImageChecked;
         private SvgImage? checkImageIndeterminate;
@@ -32,6 +31,16 @@ namespace Alternet.UI
         /// or other purposes. Called from <see cref="GetItemText(int, bool)"/>.
         /// </summary>
         public event EventHandler<GetItemTextEventArgs>? CustomItemText;
+
+        /// <summary>
+        /// Occurs when the <see cref="Items"/> collection is changed.
+        /// </summary>
+        public event NotifyCollectionChangedEventHandler? ItemsCollectionChanged;
+
+        /// <summary>
+        /// Occurs when a property of the <see cref="Items"/> collection changes.
+        /// </summary>
+        public event PropertyChangedEventHandler? ItemsPropertyChanged;
 
         /// <summary>
         /// Gets or sets string search provider.
@@ -83,10 +92,21 @@ namespace Alternet.UI
         [Browsable(false)]
         public int Count
         {
-            get => Items.Count;
+            get
+            {
+                return Items.Count;
+            }
+
             set
             {
-                Items.Count = value;
+                if (DisposingOrDisposed)
+                    return;
+                if (Count == value)
+                    return;
+                DoInsideUpdate(() =>
+                {
+                    Items.SetCount(value, () => new TItem());
+                });
             }
         }
 
@@ -388,7 +408,7 @@ namespace Alternet.UI
         public virtual TItem? GetItem(int index)
         {
             TItem? result;
-            if (index >= 0 && items is not null && index < items.Count)
+            if (index >= 0 && index < Count)
                 result = Items.GetItem(index);
             else
             {
@@ -407,7 +427,7 @@ namespace Alternet.UI
         /// <param name="value">New item value.</param>
         public virtual void SetItem(int index, TItem value)
         {
-            if (index >= 0 && items is not null && index < items.Count)
+            if (index >= 0 && index < Count)
                 Items.SetItem(index, value);
             else
             {
@@ -692,31 +712,51 @@ namespace Alternet.UI
         /// Called when items are attached to the control.
         /// </summary>
         /// <param name="itm">Attached items.</param>
-        protected virtual void AttachItems(BaseCollection<TItem>? itm)
+        protected virtual void AttachItems(IListSource<TItem>? itm)
         {
             if (itm is null)
                 return;
-            itm.CollectionChanged += ItemsCollectionChanged;
+            itm.CollectionChanged += OnItemsCollectionChanged;
+            itm.PropertyChanged += OnItemsPropertyChanged;
+        }
+
+        /// <summary>
+        /// Recreates items. Before calling this method, you need to unbind all events
+        /// connected to the items.
+        /// </summary>
+        protected virtual void RecreateItems(IListSource<TItem>? newItems = null)
+        {
+            Items = newItems ?? new ListSource<TItem>();
         }
 
         /// <summary>
         /// Called when items are detached to the control.
         /// </summary>
         /// <param name="itm">Detached items.</param>
-        protected virtual void DetachItems(BaseCollection<TItem>? itm)
+        protected virtual void DetachItems(IListSource<TItem>? itm)
         {
             if (itm is null)
                 return;
-            itm.CollectionChanged -= ItemsCollectionChanged;
+            itm.CollectionChanged -= OnItemsCollectionChanged;
+            itm.PropertyChanged -= OnItemsPropertyChanged;
         }
 
         /// <summary>
-        /// Callback which is called when items are changed in the control.
+        /// Callback which is called when <see cref="Items"/> property changes.
         /// </summary>
-        protected virtual void ItemsCollectionChanged(
+        protected virtual void OnItemsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            ItemsPropertyChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Callback which is called when <see cref="Items"/> collection changes.
+        /// </summary>
+        protected virtual void OnItemsCollectionChanged(
             object? sender,
             NotifyCollectionChangedEventArgs e)
         {
+            ItemsCollectionChanged?.Invoke(this, e);
         }
     }
 }
