@@ -26,6 +26,7 @@ namespace Alternet.UI
     /// <seealso cref="IList"/>
     public class ListBoxItems : IListSource<object>
     {
+        private readonly ListSource<ListControlItem>? items;
         private readonly Func<IListSource<ListControlItem>> provider;
 
         /// <summary>
@@ -35,6 +36,17 @@ namespace Alternet.UI
         {
             this.provider = provider;
 
+            provider().PropertyChanged += Items_PropertyChanged;
+            provider().CollectionChanged += Items_CollectionChanged;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ListBoxItems"/> class.
+        /// </summary>
+        public ListBoxItems()
+        {
+            items = new ListSource<ListControlItem>();
+            provider = () => items;
             provider().PropertyChanged += Items_PropertyChanged;
             provider().CollectionChanged += Items_CollectionChanged;
         }
@@ -104,6 +116,17 @@ namespace Alternet.UI
                     item.Value = value;
                 }
             }
+        }
+
+        /// <summary>
+        /// Implicitly converts an object collection to a ListBoxItems collection.
+        /// </summary>
+        /// <param name="items">The array of objects to convert.</param>
+        public static implicit operator ListBoxItems(object[] items)
+        {
+            var result = new ListBoxItems();
+            result.AddRange(items);
+            return result;
         }
 
         /// <inheritdoc/>
