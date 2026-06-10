@@ -40,6 +40,7 @@ namespace Alternet.UI
                 owner.Columns.Clear();
                 var nameColumn = owner.AddColumn("Name", 200);
                 var dataColumn = owner.AddColumn("Data", 100);
+                owner.Header.Visible = true;
 
                 void Initialize(TreeViewItem item)
                 {
@@ -48,7 +49,7 @@ namespace Alternet.UI
                     textCell.SvgImage = KnownColorSvgImages.ImgLogo;
                     var dataCell = item.SafeCell(dataColumn);
                     dataCell.Text = "Data " + LogUtils.GenNewId();
-                    dataCell.HorizontalAlignment = HorizontalAlignment.Right;
+                    dataCell.HorizontalAlignment = HorizontalAlignment.Left;
                 }
 
                 for (int i = 0; i < count; i++)

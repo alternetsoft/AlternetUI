@@ -1117,7 +1117,7 @@ namespace Alternet.UI
 
                 for (int i = 0; i < columnCount; i++)
                 {
-                    var cell = item.SafeCell(i);
+                    var cell = item.GetCell(i);
                     var suggestedWidth = container.Columns[i].SuggestedWidth;
                     SizeD cellSize;
 
@@ -2238,6 +2238,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves the cell at the specified index if it exists; otherwise, returns null.
+        /// It is safe method which does not throw exceptions.
+        /// </summary>
+        /// <param name="cellIndex">The zero-based index of the cell to retrieve.</param>
+        /// <returns>The cell at the specified index if it exists; otherwise, null.</returns>
+        public ListControlItem? GetCell(int cellIndex)
+        {
+            if (cells is null || cellIndex < 0 || cellIndex >= cells.Count)
+                return null;
+            return cells[cellIndex];
+        }
+
+        /// <summary>
         /// Retrieves the cell associated with the specified column in the current row, ensuring that a valid cell is
         /// always returned.
         /// </summary>
@@ -2254,7 +2267,8 @@ namespace Alternet.UI
         /// If the cell does not exist, it is created and added to the <see cref="Cells"/> collection.
         /// </summary>
         /// <param name="columnId">The unique identifier of the column.</param>
-        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column identifier. If the cell does not exist,
+        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column identifier.
+        /// If the cell does not exist,
         /// a default or placeholder cell is returned.</returns>
         public virtual ListControlItem SafeCell(ObjectUniqueId columnId)
         {
@@ -2498,19 +2512,6 @@ namespace Alternet.UI
             Value = assignFrom.Value;
             Group = assignFrom.Group;
             DoubleClickAction = assignFrom.DoubleClickAction;
-        }
-
-        /// <summary>
-        /// Retrieves the cell at the specified index if it exists; otherwise, returns null.
-        /// It is safe method which does not throw exceptions.
-        /// </summary>
-        /// <param name="cellIndex">The zero-based index of the cell to retrieve.</param>
-        /// <returns>The cell at the specified index if it exists; otherwise, null.</returns>
-        public ListControlItem? SafeCell(int cellIndex)
-        {
-            if (cells is null || cellIndex < 0 || cellIndex >= cells.Count)
-                return null;
-            return cells[cellIndex];
         }
 
         /// <summary>

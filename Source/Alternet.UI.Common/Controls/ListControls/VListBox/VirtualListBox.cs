@@ -611,6 +611,76 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets row item by its index. If row index is below zero, a new item is created and added to the end of the list and returned.
+        /// If row index is above or equal to the number of items, item list is extended with new
+        /// items until the specified index is reached, and then the item at that index is returned.
+        /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
+        /// If not specified, <see cref="ListControlItem"/> will be created.</param>
+        /// <returns>The <see cref="ListControlItem"/> at the specified index. A result is guaranteed to be not null.</returns>
+        public virtual ListControlItem SafeRow(int rowIndex, Func<ListControlItem>? fnCreateItem = null)
+        {
+            ListControlItem CreateItem()
+            {
+                if (fnCreateItem != null)
+                    return fnCreateItem();
+                return new ListControlItem();
+            }
+
+            ListControlItem item;
+
+            if (rowIndex < 0)
+            {
+                item = CreateItem();
+                Items.Add(item);
+            }
+            else
+            {
+                if (rowIndex >= Items.Count)
+                {
+                    Items.SetCount(rowIndex + 1, CreateItem);
+                }
+
+                item = Items[rowIndex];
+            }
+
+            return item;
+        }
+
+        /// <summary>
+        /// Retrieves the cell associated with the specified row and column,
+        /// ensuring that a valid cell is always returned.
+        /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="column">The column for which to retrieve the corresponding cell. Cannot be null.</param>
+        /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
+        /// If not specified, <see cref="ListControlItem"/> will be created.</param>
+        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified row and column.
+        /// If the cell does not exist, it is created and added to the cells collection of the item.</returns>
+        public virtual ListControlItem SafeCell(int rowIndex, ListControlColumn column, Func<ListControlItem>? fnCreateItem = null)
+        {
+            var item = SafeRow(rowIndex, fnCreateItem);
+            return item.SafeCell(column);
+        }
+
+        /// <summary>
+        /// Gets the cell for the specified row and column.
+        /// If the cell does not exist, it is created and added to the cells collection of the item.
+        /// </summary>
+        /// <param name="rowIndex">The index of the row.</param>
+        /// <param name="columnId">The unique identifier of the column.</param>
+        /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
+        /// If not specified, <see cref="ListControlItem"/> will be created.</param>
+        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified row and column.
+        /// If the cell does not exist, it is created and added to the cells collection of the item.</returns>
+        public virtual ListControlItem SafeCell(int rowIndex, ObjectUniqueId columnId, Func<ListControlItem>? fnCreateItem = null)
+        {
+            var item = SafeRow(rowIndex, fnCreateItem);
+            return item.SafeCell(columnId);
+        }
+
+        /// <summary>
         /// Gets cell item at the specified row index and column ID.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
@@ -628,7 +698,7 @@ namespace Alternet.UI
         /// <param name="rowIndex">The index of the row.</param>
         /// <param name="column">The column for which to retrieve the cell.</param>
         /// <returns>The cell item at the specified location, or null if no cell exists for the location.</returns>
-        public ListControlItem? GetCell(int rowIndex, ListControlColumn column)
+        public virtual ListControlItem? GetCell(int rowIndex, ListControlColumn column)
         {
             var item = GetItem(rowIndex);
             return item?.GetCell(column);

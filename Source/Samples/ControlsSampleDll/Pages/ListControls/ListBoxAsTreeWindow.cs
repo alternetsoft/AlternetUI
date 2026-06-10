@@ -56,6 +56,13 @@ namespace ControlsSample
             
             treeView.ContextMenu.Add("Add many items", () =>
             {
+                if (treeView.HasColumns)
+                {
+                    treeView.Clear();
+                    treeView.Header.Visible = false;
+                    treeView.Columns.Clear();
+                }
+
                 ListControlUtils.AddTestItems(treeView.RootItem, 1000);
                 treeView.SelectLastItemAndScroll();
             });
@@ -116,6 +123,13 @@ namespace ControlsSample
             treeView.ContextMenu.Add("Multiple Columns", () =>
             {
                 ListControlUtils.SetTestItemsWithColumns(treeView, count: 10);
+                var column1 = treeView.Columns[1];
+                var column0 = treeView.Columns[0];
+                var cell = treeView.RootItem.SafeCell(155, column1);
+                cell.Text = "Cell 155-1";
+
+                cell = treeView.RootItem.SafeCell(155, column0);
+                cell.Text = "Cell 155-0";
             });
 
             treeView.ContextMenu.Add("Toggle vertical scroll bar visibility", () =>
@@ -176,8 +190,8 @@ namespace ControlsSample
 
             if (treeView.HasColumns)
             {
-                item.SafeCell(0)?.SetText(item.Text).SetSvgImage(item.SvgImage);
-                item.SafeCell(1)?.SetText("Data" + Alternet.UI.LogUtils.GenNewId());
+                item.GetCell(0)?.SetText(item.Text).SetSvgImage(item.SvgImage);
+                item.GetCell(1)?.SetText("Data" + Alternet.UI.LogUtils.GenNewId());
             }
 
             treeView.AddChild(root, item, true);
