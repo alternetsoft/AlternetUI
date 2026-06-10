@@ -382,8 +382,9 @@ namespace Alternet.UI
             Coord? width = null,
             Action? onClick = null)
         {
-            SpeedButton label = new()
+            var label = new HeaderButton()
             {
+                IsClipped = true,
                 Text = title ?? string.Empty,
                 ImageVisible = true,
                 TextVisible = true,
@@ -551,6 +552,14 @@ namespace Alternet.UI
             /// Gets or sets the column associated with the event.
             /// </summary>
             public AbstractControl Column { get; set; }
+        }
+
+        private class HeaderButton : SpeedButton
+        {
+            public override void DefaultPaint(PaintEventArgs e)
+            {
+                base.DefaultPaint(e);
+            }
         }
     }
 }
