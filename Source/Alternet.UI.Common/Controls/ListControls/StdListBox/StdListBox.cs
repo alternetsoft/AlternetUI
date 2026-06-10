@@ -44,6 +44,7 @@ namespace Alternet.UI
         /// </summary>
         public StdListBox()
         {
+            HasBorder = true;
             adapter = new ListBoxItems(() => BaseItems);
         }
 

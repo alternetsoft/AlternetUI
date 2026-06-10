@@ -83,6 +83,7 @@ namespace Alternet.UI
         public VirtualListBox()
         {
             UserPaint = true;
+            HasBorder = true;
 
             UseControlColors(true);
 

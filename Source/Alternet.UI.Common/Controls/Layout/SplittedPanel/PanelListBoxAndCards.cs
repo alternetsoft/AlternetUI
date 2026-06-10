@@ -33,7 +33,7 @@ namespace Alternet.UI
             RightVisible = false;
             LeftListBox.Required();
             cardPanel.Parent = FillPanel;
-            LeftListBox.SelectionChanged += LeftListBox_SelectionChanged;
+            LeftListBox.SelectionChanged += OnLeftListBoxSelectionChanged;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Alternet.UI
             return index;
         }
 
-        private void LeftListBox_SelectionChanged(object? sender, System.EventArgs e)
+        private void OnLeftListBoxSelectionChanged(object? sender, System.EventArgs e)
         {
             var tag = LeftListBox.SelectedItem?.Tag;
             if(tag is not null)

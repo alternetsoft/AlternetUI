@@ -185,9 +185,7 @@
     </Project>
   </Folder>
   <Folder Name="/Other/">
-    <Project Path="../../../../AlternetStudio/Source/ProviderAi/Common/Alternet.ProviderAi.Common.csproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
+    <File Path="../../../../AlternetStudio/Demo/.editorconfig" />
   </Folder>
   <Folder Name="/Scripter/">
     <Project Path="../../../../AlternetStudio/Source/Common/Python/Alternet.Common.Python.csproj" />
