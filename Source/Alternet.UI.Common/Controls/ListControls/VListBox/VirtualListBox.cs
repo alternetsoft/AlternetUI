@@ -60,6 +60,7 @@ namespace Alternet.UI
         private LightDarkColor? horzGridLinesColor;
         private ListViewGridLinesDisplayMode gridLinesDisplayMode = ListViewGridLinesDisplayMode.None;
         private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
+        private bool immutableItems;
 
         static VirtualListBox()
         {
@@ -251,6 +252,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets whether the <see cref="Items"/> property is immutable and cannot be changed.
+        /// Use <see cref="SetImmutableItems"/> to mark the items as immutable.
+        /// </summary>
+        public bool ImmutableItems => immutableItems;
+
         /// <inheritdoc/>
         public override IListSource<ListControlItem> Items
         {
@@ -258,7 +265,7 @@ namespace Alternet.UI
 
             set
             {
-                if (items == value)
+                if (immutableItems || items == value)
                     return;
 
                 value ??= new ListSource<ListControlItem>();
@@ -1168,9 +1175,7 @@ namespace Alternet.UI
                 DoInsideUpdate(() =>
                 {
                     ClearSelected();
-                    DetachItems(Items);
                     RecreateItems(value);
-                    AttachItems(Items);
                 });
 
                 return true;
@@ -1410,6 +1415,16 @@ namespace Alternet.UI
                 return;
             OnMeasureItem(e);
             MeasureItem?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Marks <see cref="Items"/> as immutable. After this call any attempt to change <see cref="Items"/> property
+        /// will throw <see cref="InvalidOperationException"/>. This method is intended to be used
+        /// in scenarios where items are set once and then not changed.
+        /// </summary>
+        public void SetImmutableItems()
+        {
+            immutableItems = true;
         }
 
         /// <summary>
