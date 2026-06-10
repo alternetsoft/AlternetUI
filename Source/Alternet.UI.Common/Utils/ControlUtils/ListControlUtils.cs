@@ -49,7 +49,7 @@ namespace Alternet.UI
                     textCell.SvgImage = KnownColorSvgImages.ImgLogo;
                     var dataCell = item.SafeCell(dataColumn);
                     dataCell.Text = "Data " + LogUtils.GenNewId();
-                    dataCell.HorizontalAlignment = HorizontalAlignment.Left;
+                    dataCell.HorizontalAlignment = HorizontalAlignment.Right;
                 }
 
                 for (int i = 0; i < count; i++)

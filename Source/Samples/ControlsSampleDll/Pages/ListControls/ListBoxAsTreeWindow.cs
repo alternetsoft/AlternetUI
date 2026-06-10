@@ -122,14 +122,20 @@ namespace ControlsSample
 
             treeView.ContextMenu.Add("Multiple Columns", () =>
             {
-                ListControlUtils.SetTestItemsWithColumns(treeView, count: 10);
-                var column1 = treeView.Columns[1];
-                var column0 = treeView.Columns[0];
-                var cell = treeView.RootItem.SafeCell(155, column1);
-                cell.Text = "Cell 155-1";
+                treeView.DoInsideUpdate(() =>
+                {
+                    ListControlUtils.SetTestItemsWithColumns(treeView, count: 10);
+                    var column1 = treeView.Columns[1];
+                    var column0 = treeView.Columns[0];
+                    var cell = treeView.RootItem.SafeCell(15, column1);
+                    cell.Text = "Cell 15-1";
 
-                cell = treeView.RootItem.SafeCell(155, column0);
-                cell.Text = "Cell 155-0";
+                    cell = treeView.RootItem.SafeCell(15, column0);
+                    cell.Text = "Cell 15-0";
+
+                    cell = treeView.RootItem.SafeCell(13, column1);
+                    cell.Text = "Cell 13-1";
+                });
             });
 
             treeView.ContextMenu.Add("Toggle vertical scroll bar visibility", () =>

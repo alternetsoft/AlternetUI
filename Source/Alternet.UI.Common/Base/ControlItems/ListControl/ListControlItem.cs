@@ -1910,32 +1910,34 @@ namespace Alternet.UI
             var itemMargin = item?.ForegroundMargin ?? 0;
             var isSelected = e.HasSelection;
             var paintRectangle = e.PaintRectangle;
-            var image = e.GetImage(isSelected);
             var s = e.VisibleTextForDisplay;
             var itemColor = e.GetTextColor(isSelected) ?? SystemColors.WindowText;
             var useColumns = item is not null && e.UseColumns && container is not null;
 
-            void InternalDrawCheckBox()
+            RectD InternalDrawCheckBox()
             {
                 if (item is null)
-                    return;
-                paintRectangle = item.DrawCheckBox(
+                    return paintRectangle;
+                var result = item.DrawCheckBox(
                             e.Graphics,
                             item,
                             container,
                             paintRectangle,
                             isSelected);
+                return result;
             }
 
             if (useColumns)
             {
-                InternalDrawCheckBox();
+                paintRectangle = InternalDrawCheckBox();
                 PaintWithColumns();
                 e.LabelMetrics = new();
             }
             else
             {
-                InternalDrawCheckBox();
+                var image = e.GetImage(isSelected);
+
+                paintRectangle = InternalDrawCheckBox();
 
                 Graphics.DrawLabelParams prm = new(
                     s,
@@ -1976,57 +1978,61 @@ namespace Alternet.UI
             {
                 var columnSeparatorWidth = GetColumnSeparatorWidth(container);
                 var columns = container!.Columns;
+                float checkDelta = paintRectangle.Left - e.PaintRectangle.Left;
 
                 for (int i = 0; i < columns.Count; i++)
                 {
                     var column = columns[i];
 
-                    var levelOffset = 0f;
+                    float widthDelta;
 
                     if (i > 0)
                     {
-                        levelOffset = -itemMargin.Left;
+                        widthDelta = 0f;
+                    }
+                    else
+                    {
+                        widthDelta = itemMargin.Left + checkDelta;
                     }
 
                     if (!column.IsVisible)
                         continue;
 
-                    var width = column.SuggestedWidth;
+                    var width = column.SuggestedWidth - widthDelta;
                     var cell = item?.GetCell(column.UniqueId);
 
-                    if (cell is null)
-                        continue;
+                    if (cell is not null)
+                    {
+                        s = DefaultGetItemText(cell, forDisplay: true, container?.FormatProvider);
 
-                    s = DefaultGetItemText(cell, forDisplay: true, container?.FormatProvider);
+                        var r = paintRectangle;
+                        // r.Left -= levelOffset;
+                        r.Width = width;
 
-                    var r = paintRectangle;
-                    r.Left += levelOffset;
-                    r.Width = width;
+                        var cellImage = e.GetImage(cell, container, isSelected);
 
-                    var cellImage = e.GetImage(cell, container, isSelected);
+                        var itemAlignment = cell.Alignment;
 
-                    var itemAlignment = cell.Alignment;
+                        Graphics.DrawLabelParams prm = new(
+                            s,
+                            e.ItemFont,
+                            itemColor,
+                            backColor: Color.Empty,
+                            image: cellImage,
+                            r,
+                            itemAlignment);
 
-                    Graphics.DrawLabelParams prm = new(
-                        s,
-                        e.ItemFont,
-                        itemColor,
-                        backColor: Color.Empty,
-                        image: cellImage,
-                        r,
-                        itemAlignment);
+                        prm.SuffixElements = cell.SuffixElements;
+                        prm.PrefixElements = cell.PrefixElements;
+                        prm.Flags = cell.LabelFlags;
+                        prm.TextHorizontalAlignment = cell.TextLineAlignment ?? TextHorizontalAlignment.Left;
+                        prm.LineDistance = cell.TextLineDistance ?? 0;
+                        prm.DrawDebugCorners = false;
 
-                    prm.SuffixElements = cell.SuffixElements;
-                    prm.PrefixElements = cell.PrefixElements;
-                    prm.Flags = cell.LabelFlags;
-                    prm.TextHorizontalAlignment = cell.TextLineAlignment ?? TextHorizontalAlignment.Left;
-                    prm.LineDistance = cell.TextLineDistance ?? 0;
-                    prm.DrawDebugCorners = false;
-
-                    e.Graphics.DrawLabel(ref prm);
+                        e.Graphics.DrawLabel(ref prm);
+                    }
 
                     var leftIncrement = width + columnSeparatorWidth;
-
                     paintRectangle.Left += leftIncrement;
                     paintRectangle.Width -= leftIncrement;
                 }
