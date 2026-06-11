@@ -6,8 +6,9 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Provides a collection of static events and methods for managing and
-    /// interacting with menu-related actions.
+    /// Contains static events related to menu operations, such as opening and closing of menus.
+    /// When any of these events are raised, the related menu instance is passed as the sender of the event.
+    /// These events are raised for all context menus, allowing you to handle menu operations globally across the application.
     /// </summary>
     /// <remarks>The <see cref="StaticMenuEvents"/> class defines a set of events
     /// that are triggered in
@@ -144,6 +145,23 @@ namespace Alternet.UI
         /// <remarks>This event is triggered whenever the click action is updated,
         /// allowing subscribers to respond to the change.</remarks>
         public static event EventHandler? ItemClickActionChanged;
+
+        /// <summary>
+        /// Binds the event handler to all context menus in the application, logging opening and closing context menu events
+        /// to the application's log.
+        /// </summary>
+        public static void StartLogContextMenuOpeningAndClosing()
+        {
+            MenuOpening += (sender, e) =>
+            {
+                App.Log($"Opening {sender?.GetType().ToString() ?? "menu"}");
+            };
+
+            MenuClosing += (sender, e) =>
+            {
+                App.Log($"Closing {sender?.GetType().ToString() ?? "menu"}");
+            };
+        }
 
         /// <summary>
         /// Raises the <see cref="MenuOpening"/> event.

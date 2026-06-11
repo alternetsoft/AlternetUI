@@ -24,6 +24,23 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class ContextMenu : Menu, IContextMenuProperties
     {
+        /// <summary>
+        /// Gets a dictionary of currently opened context menus.
+        /// </summary>
+        public static BaseDictionary<ObjectUniqueId, ContextMenu> OpenedContextMenus { get; } = new ();
+
+        /// <summary>
+        /// Gets a value indicating whether the context menu is currently open.
+        /// </summary>
+        public static bool HasOpenedContextMenus => OpenedContextMenus.Count > 0;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether tooltips can be displayed during context menu operations
+        /// (when any context menu is open). Default is false. This property is used to prevent tooltips
+        /// from interfering with context menu interactions.
+        /// </summary>
+        public static bool ShowToolTipsDuringContextMenu { get; set; } = false;
+
         private WeakReferenceValue<AbstractControl> relatedControl = new();
 
         /// <summary>
@@ -215,6 +232,7 @@ namespace Alternet.UI
         /// whether the opening event should be raised for child items.</param>
         public void RaiseClosing(EventArgs e, bool recursive = true)
         {
+            OpenedContextMenus.TryRemove(this.UniqueId, out _);
             Closing?.Invoke(this, e);
             StaticMenuEvents.RaiseMenuClosing(this, e);
             Closed?.Invoke(this, new(ToolStripDropDownCloseReason.Other));
@@ -239,35 +257,47 @@ namespace Alternet.UI
         /// whether the opening event should be raised for child items.</param>
         public void RaiseOpening(CancelEventArgs e, bool recursive = true)
         {
-            ForEachItem(UpdateEnabled, recursive: true);
-            StaticMenuEvents.RaiseMenuOpening(this, e);
-            Opening?.Invoke(this, e);
+            ToolTipWindow.HideGlobalToolTip();
 
-            static void UpdateEnabled(MenuItem item)
+            try
             {
-                var func = item.EnabledFunc;
-                if (func is not null)
+                ForEachItem(UpdateEnabled, recursive: true);
+                StaticMenuEvents.RaiseMenuOpening(this, e);
+                Opening?.Invoke(this, e);
+
+                static void UpdateEnabled(MenuItem item)
                 {
-                    item.Enabled = func();
-                    return;
+                    var func = item.EnabledFunc;
+                    if (func is not null)
+                    {
+                        item.Enabled = func();
+                        return;
+                    }
+
+                    if (item.Command is not null)
+                    {
+                        item.Enabled = item.CommandSourceCanExecute();
+                    }
                 }
 
-                if (item.Command is not null)
+                OnOpening(e);
+
+                if (recursive)
                 {
-                    item.Enabled = item.CommandSourceCanExecute();
+                    ForEachItem(RaiseItemOpened, recursive: true);
+                }
+
+                void RaiseItemOpened(MenuItem item)
+                {
+                    item.RaiseOpened();
                 }
             }
-
-            OnOpening(e);
-
-            if (recursive)
+            finally
             {
-                ForEachItem(RaiseItemOpened, recursive: true);
-            }
-
-            void RaiseItemOpened(MenuItem item)
-            {
-                item.RaiseOpened();
+                if (!e.Cancel)
+                {
+                    OpenedContextMenus.TryAdd(this.UniqueId, this);
+                }
             }
         }
 
@@ -594,6 +624,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
+            OpenedContextMenus.TryRemove(this.UniqueId, out _);
             base.DisposeManaged();
         }
 
@@ -613,6 +644,6 @@ namespace Alternet.UI
         /// the event data.</param>
         protected virtual void OnClosing(EventArgs e)
         {
-        }
+        } 
     }
 }
