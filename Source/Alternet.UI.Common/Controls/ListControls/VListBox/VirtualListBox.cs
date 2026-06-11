@@ -38,6 +38,11 @@ namespace Alternet.UI
         public static LightDarkColor DefaultHorzGridLinesColor = new(light: (229, 229, 229), dark: (99, 99, 99));
 
         /// <summary>
+        /// Gets or sets default color of the vertical line that is drawn between columns.
+        /// </summary>
+        public static LightDarkColor DefaultVertGridLinesColor = new(light: (229, 229, 229), dark: (99, 99, 99));
+
+        /// <summary>
         /// Gets or sets the default provider used to generate tooltips for items.
         /// </summary>
         /// <remarks>Changing this property affects how item tooltips are displayed.
@@ -58,6 +63,7 @@ namespace Alternet.UI
         private ObjectUniqueId? itemToolTipId;
         private bool useScrollActivity;
         private LightDarkColor? horzGridLinesColor;
+        private LightDarkColor? vertGridLinesColor;
         private ListViewGridLinesDisplayMode gridLinesDisplayMode = ListViewGridLinesDisplayMode.None;
         private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
         private bool immutableItems;
@@ -524,6 +530,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets color of the vertical line that is drawn between columns.
+        /// If not specified, the line color is determined by <see cref="DefaultVertGridLinesColor"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual LightDarkColor? VertGridLinesColor
+        {
+            get
+            {
+                return vertGridLinesColor;
+            }
+
+            set
+            {
+                if (vertGridLinesColor == value)
+                    return;
+                vertGridLinesColor = value;
+                if (VertGridLines)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the horizontal grid lines are drawn between items.
         /// </summary>
         public bool HorzGridLines
@@ -544,6 +572,31 @@ namespace Alternet.UI
                         : ListViewGridLinesDisplayMode.Horizontal)
                     : (GridLinesDisplayMode == ListViewGridLinesDisplayMode.VerticalAndHorizontal
                         ? ListViewGridLinesDisplayMode.Vertical
+                        : ListViewGridLinesDisplayMode.None);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the horizontal grid lines are drawn between items.
+        /// </summary>
+        public bool VertGridLines
+        {
+            get
+            {
+                return GridLinesDisplayMode == ListViewGridLinesDisplayMode.Vertical
+                    || GridLinesDisplayMode == ListViewGridLinesDisplayMode.VerticalAndHorizontal;
+            }
+
+            set
+            {
+                if (VertGridLines == value)
+                    return;
+                GridLinesDisplayMode = value
+                    ? (GridLinesDisplayMode == ListViewGridLinesDisplayMode.Horizontal
+                        ? ListViewGridLinesDisplayMode.VerticalAndHorizontal
+                        : ListViewGridLinesDisplayMode.Vertical)
+                    : (GridLinesDisplayMode == ListViewGridLinesDisplayMode.VerticalAndHorizontal
+                        ? ListViewGridLinesDisplayMode.Horizontal
                         : ListViewGridLinesDisplayMode.None);
             }
         }
@@ -594,7 +647,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the grid lines display mode.
         /// </summary>
-        internal virtual ListViewGridLinesDisplayMode GridLinesDisplayMode
+        [Browsable(false)]
+        public virtual ListViewGridLinesDisplayMode GridLinesDisplayMode
         {
             get
             {
@@ -1614,6 +1668,18 @@ namespace Alternet.UI
                     return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Gets effective vertical grid lines color. If <see cref="VertGridLinesColor"/> is not empty, returns it,
+        /// otherwise returns <see cref="DefaultVertGridLinesColor"/>.
+        /// </summary>
+        /// <param name="isDark">Indicates whether the color should be adjusted for dark mode.</param>
+        /// <returns>The effective vertical grid lines color.</returns>
+        public virtual Color GetEffectiveVertGridLinesColor(bool isDark)
+        {
+            var result = VertGridLinesColor ?? DefaultVertGridLinesColor;
+            return result.LightOrDark(isDark);
         }
 
         /// <summary>

@@ -120,10 +120,38 @@ namespace ControlsSample
                 treeView.RootItem = item;
             });
 
+            treeView.ContextMenu.Add("Toggle second column alignment", () =>
+            {
+                var column = treeView.Columns.Count > 1 ? treeView.Columns[1] : null;
+
+                if (column is null)
+                {
+                    return;
+                }
+
+                treeView.DoInsideUpdate(() =>
+                {
+                    foreach (var item in treeView.RootItem.EnumExpandedItems())
+                    {
+                        var dataCell = item.SafeCell(column);
+                        if(dataCell.HorizontalAlignment == HorizontalAlignment.Right)
+                        {
+                            dataCell.HorizontalAlignment = HorizontalAlignment.Left;
+                        }
+                        else
+                        {
+                            dataCell.HorizontalAlignment = HorizontalAlignment.Right;
+                        }
+                    }
+                });
+            });
+
             treeView.ContextMenu.Add("Multiple Columns", () =>
             {
                 treeView.DoInsideUpdate(() =>
                 {
+                    treeView.ListBox.VertGridLines = true;
+
                     ListControlUtils.SetTestItemsWithColumns(treeView, count: 10);
                     var column1 = treeView.Columns[1];
                     var column0 = treeView.Columns[0];
@@ -157,6 +185,11 @@ namespace ControlsSample
                 }
 
                 treeView.ListBox.VerticalScrollBarSettings.SuggestedVisibility = visibility;
+            });
+
+            treeView.ContextMenu.Add("Toggle vert grid lines", () =>
+            {
+                treeView.ListBox.VertGridLines = !treeView.ListBox.VertGridLines;
             });
 
             var lastChild = treeView.RootItem.LastChild;

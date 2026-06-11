@@ -40,6 +40,8 @@ namespace Alternet.UI
                 owner.Columns.Clear();
                 var nameColumn = owner.AddColumn("Name", 200);
                 var dataColumn = owner.AddColumn("Data", 100);
+                var infoColumn = owner.AddColumn("Info", 150);
+
                 owner.Header.Visible = true;
 
                 void Initialize(TreeViewItem item)
@@ -50,6 +52,8 @@ namespace Alternet.UI
                     var dataCell = item.SafeCell(dataColumn);
                     dataCell.Text = "Data " + LogUtils.GenNewId();
                     dataCell.HorizontalAlignment = HorizontalAlignment.Right;
+                    var infoCell = item.SafeCell(infoColumn);
+                    infoCell.Text = "Info " + LogUtils.GenNewId();
                 }
 
                 for (int i = 0; i < count; i++)

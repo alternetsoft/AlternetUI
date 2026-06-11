@@ -1977,6 +1977,8 @@ namespace Alternet.UI
             void PaintWithColumns()
             {
                 var columnSeparatorWidth = GetColumnSeparatorWidth(container);
+                var halfOfColumnSeparatorWidth = (columnSeparatorWidth - 1) / 2;
+
                 var columns = container!.Columns;
                 float checkDelta = paintRectangle.Left - e.PaintRectangle.Left;
 
@@ -1998,7 +2000,7 @@ namespace Alternet.UI
                     if (!column.IsVisible)
                         continue;
 
-                    var width = column.SuggestedWidth - widthDelta;
+                    var width = column.SuggestedWidth - widthDelta - halfOfColumnSeparatorWidth;
                     var cell = item?.GetCell(column.UniqueId);
 
                     if (cell is not null)
@@ -2006,7 +2008,6 @@ namespace Alternet.UI
                         s = DefaultGetItemText(cell, forDisplay: true, container?.FormatProvider);
 
                         var r = paintRectangle;
-                        // r.Left -= levelOffset;
                         r.Width = width;
 
                         var cellImage = e.GetImage(cell, container, isSelected);
@@ -2032,7 +2033,7 @@ namespace Alternet.UI
                         e.Graphics.DrawLabel(ref prm);
                     }
 
-                    var leftIncrement = width + columnSeparatorWidth;
+                    var leftIncrement = width + columnSeparatorWidth + halfOfColumnSeparatorWidth;
                     paintRectangle.Left += leftIncrement;
                     paintRectangle.Width -= leftIncrement;
                 }
@@ -2433,7 +2434,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets <see cref="Value"/> property.
-        /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="Value"/> property.
+        /// This is a convenient method which can be used in fluent API style. It is the same
+        /// as setting <see cref="Value"/> property.
         /// </summary>
         /// <param name="value">The value to set.</param>
         /// <returns>The current instance of <see cref="ListControlItem"/>, enabling method chaining.</returns>
@@ -2445,7 +2447,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets the text content of the item to the specified value.
-        /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="Text"/> property.
+        /// This is a convenient method which can be used in fluent API style. It is the same
+        /// as setting <see cref="Text"/> property.
         /// </summary>
         /// <param name="value">The value to set as the text. If <paramref name="value"/> is <see langword="null"/>,
         /// the text is set to an empty string.</param>
@@ -2472,7 +2475,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Sets <see cref="SvgImage"/> property.
-        /// This is a convenient method which can be used in fluent API style. It is the same as setting <see cref="SvgImage"/> property.
+        /// This is a convenient method which can be used in fluent API style. It is the same
+        /// as setting <see cref="SvgImage"/> property.
         /// </summary>
         /// <param name="svgImage">The SVG image to set.</param>
         /// <returns>The current instance of <see cref="ListControlItem"/>, enabling method chaining.</returns>
@@ -2654,7 +2658,8 @@ namespace Alternet.UI
         /// <remarks>If the container's default setting for the checkbox is not specified, the method
         /// returns false. If the CheckBoxAllowAllStatesForUser property is set, its value overrides the container's
         /// default setting.</remarks>
-        /// <param name="container">The item container whose checkbox state settings are to be evaluated. This parameter can be null, in which
+        /// <param name="container">The item container whose checkbox state settings are to be evaluated.
+        /// This parameter can be null, in which
         /// case the default behavior is applied.</param>
         /// <returns>true if the checkbox allows all states for the user; otherwise, false.</returns>
         public virtual bool GetCheckBoxAllowAllStatesForUser(IListControlItemContainer? container)
@@ -2729,7 +2734,8 @@ namespace Alternet.UI
         /// <remarks>Use this method to customize both the content and image alignment for the element.
         /// The default alignment centers both content and image, while other options allow for specific positioning to
         /// suit layout requirements.</remarks>
-        /// <param name="align">The alignment of the content within the element. Specifies the horizontal and vertical positioning of the
+        /// <param name="align">The alignment of the content within the element.
+        /// Specifies the horizontal and vertical positioning of the
         /// content, such as centering or aligning to the left, right, top, or bottom.</param>
         /// <param name="imageAlign">The alignment of the image relative to the content.
         /// Determines whether the image appears before or after the
@@ -2970,9 +2976,12 @@ namespace Alternet.UI
             public Color? SvgImageColor;
 
             /// <summary>
-            /// Gets or sets the color used to draw the checkbox. If not set, the checkbox may use a default color defined by the container or theme.
-            /// This property is not used when checkbox images are provided, as the images will be drawn in their original colors.
-            /// However, if the checkbox is drawn using default rendering (without custom images), this color will be applied to the checkbox elements.
+            /// Gets or sets the color used to draw the checkbox. If not set, the checkbox may use
+            /// a default color defined by the container or theme.
+            /// This property is not used when checkbox images are provided, as the images will be
+            /// drawn in their original colors.
+            /// However, if the checkbox is drawn using default rendering (without custom images),
+            /// this color will be applied to the checkbox elements.
             /// </summary>
             public Color? Color;
 

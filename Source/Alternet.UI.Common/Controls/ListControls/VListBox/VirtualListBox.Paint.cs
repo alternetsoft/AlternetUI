@@ -225,6 +225,7 @@ namespace Alternet.UI
 
             bool drawHorzLines = HorzGridLines;
             bool isDark = IsDarkBackground;
+            bool drawVertLines = HasColumns && VertGridLines;
             Color horzLineColor = GetEffectiveHorzGridLinesColor(isDark);
 
             var rowSizes = MeasureRows(dc, fromIndex, toIndex);
@@ -263,6 +264,25 @@ namespace Alternet.UI
                     itemsLastPainted.Add(item);
 
                 rectRow.Top += hRow;
+            }
+
+            if (drawVertLines)
+            {
+                var vertLineColor = GetEffectiveVertGridLinesColor(isDark);
+
+                r = paintRectangle;
+
+                var x = r.Left;
+
+                var halfOfColumnSeparatorWidth = (ListControlItem.GetColumnSeparatorWidth(this) - 1) / 2;
+
+                for (int i = 0; i < Columns.Count; i++)
+                {
+                    x += Columns[i].SuggestedWidth + halfOfColumnSeparatorWidth;
+                    var p1 = new PointD(x, r.Top);
+                    dc.DrawVertLine(vertLineColor.AsBrush, p1, r.Height, 1);
+                    x += halfOfColumnSeparatorWidth + 1;
+                }
             }
         }
 
