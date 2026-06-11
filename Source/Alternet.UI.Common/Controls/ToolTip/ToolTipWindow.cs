@@ -40,6 +40,12 @@ namespace Alternet.UI
 
                 if (toolTip.ToolTipVisible)
                 {
+                    if (!ContextMenu.ShowToolTipsDuringContextMenu)
+                    {
+                        if (ContextMenu.HasOpenedContextMenus)
+                            return;
+                    }
+
                     SizeD size = toolTip.LayoutMaxSize;
 
                     if (size == SizeD.Empty)
@@ -142,6 +148,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the tooltip window was created.
+        /// </summary>
+        public static bool IsInstanceCreated => instance is not null;
+
+        /// <summary>
         /// Gets the singleton instance of the ToolTipWindow class.
         /// </summary>
         /// <remarks>This property ensures that only one instance of ToolTipWindow is created and reused
@@ -173,7 +184,13 @@ namespace Alternet.UI
         /// no tooltip is visible, this method has no effect.</remarks>
         public static void HideGlobalToolTip()
         {
-            instance?.HideToolTip(null, EventArgs.Empty);
+            try
+            {
+                instance?.HideToolTip(null, EventArgs.Empty);
+            }
+            catch
+            {
+            }
         }
 
         /// <summary>
