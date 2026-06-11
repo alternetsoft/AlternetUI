@@ -643,22 +643,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds <see cref="SpeedButton"/> with svg image.
+        /// Adds <see cref="SpeedButton"/> with svg image and tooltip.
         /// </summary>
-        /// <param name="text">Item text.</param>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, pass <see cref="RichToolTipParams"/>.</param>
         /// <param name="image">Item image.</param>
         /// <param name="action">Click action.</param>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddSpeedBtn(
-            string? text,
+            object? toolTip,
             SvgImage? image,
             EventHandler? action)
         {
             var result = AddSpeedBtnCore(
-                text,
+                text: null,
                 image,
-                toolTip: null,
+                toolTip,
                 action);
+            return result.UniqueId;
+        }
+
+        /// <summary>
+        /// Adds <see cref="SpeedButton"/> with svg image and tooltip.
+        /// </summary>
+        /// <param name="toolTip">Item tooltip. For complex tooltips, pass <see cref="RichToolTipParams"/>.</param>
+        /// <param name="image">Item image.</param>
+        /// <param name="action">Click action.</param>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddSpeedBtn(
+            object? toolTip,
+            SvgImage? image,
+            Action? action)
+        {
+            var result = AddSpeedBtnCore(
+                text: null,
+                image,
+                toolTip,
+                (s, e) => action?.Invoke());
             return result.UniqueId;
         }
 

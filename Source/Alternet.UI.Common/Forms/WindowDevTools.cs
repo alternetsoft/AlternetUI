@@ -30,21 +30,24 @@ namespace Alternet.UI
 
         public WindowDevTools()
         {
+            panel.Margin = 10;
             HasSystemMenu = false;
             App.LogFileIsEnabled = true;
             StartLocation = WindowStartLocation.CenterScreen;
             Title = "Developer Tools";
             Size = (900, 700);
             panel.Parent = this;
+            Icon = App.MainWindow?.Icon ?? KnownIcons.Default;
 
-            ComponentDesigner.SafeDefault.ControlGotFocus += Designer_ControlGotFocus;
-            ComponentDesigner.SafeDefault.ControlCreated += Designer_ControlCreated;
-            ComponentDesigner.SafeDefault.ControlDisposed += Designer_ControlDisposed;
-            ComponentDesigner.SafeDefault.ControlParentChanged += Designer_ControlParentChanged;
+            ComponentDesigner.SafeDefault.ControlGotFocus += OnDesignerControlGotFocus;
+            ComponentDesigner.SafeDefault.ControlCreated += OnDesignerControlCreated;
+            ComponentDesigner.SafeDefault.ControlDisposed += OnDesignerControlDisposed;
+            ComponentDesigner.SafeDefault.ControlParentChanged += OnDesignerControlParentChanged;
 
             panel.CenterNotebook.SelectedIndex = 0;
             panel.RightNotebook.SelectedIndex = 0;
             panel.PropGrid.SuggestedInitDefaults();
+            StatusBar = new StatusBar();
         }
 
         public PanelDevTools DevPanel => panel;
@@ -64,13 +67,13 @@ namespace Alternet.UI
         {
             base.DisposeManaged();
 
-            ComponentDesigner.SafeDefault.ControlGotFocus -= Designer_ControlGotFocus;
-            ComponentDesigner.SafeDefault.ControlCreated -= Designer_ControlCreated;
-            ComponentDesigner.SafeDefault.ControlDisposed -= Designer_ControlDisposed;
-            ComponentDesigner.SafeDefault.ControlParentChanged -= Designer_ControlParentChanged;
+            ComponentDesigner.SafeDefault.ControlGotFocus -= OnDesignerControlGotFocus;
+            ComponentDesigner.SafeDefault.ControlCreated -= OnDesignerControlCreated;
+            ComponentDesigner.SafeDefault.ControlDisposed -= OnDesignerControlDisposed;
+            ComponentDesigner.SafeDefault.ControlParentChanged -= OnDesignerControlParentChanged;
         }
 
-        private void Designer_ControlDisposed(object? sender, EventArgs e)
+        private void OnDesignerControlDisposed(object? sender, EventArgs e)
         {
             if (panel.LastFocusedControl == sender)
                 panel.LastFocusedControl = null;
@@ -80,11 +83,11 @@ namespace Alternet.UI
                 panel.PropGrid.Clear();
         }
 
-        private void Designer_ControlParentChanged(object? sender, EventArgs e)
+        private void OnDesignerControlParentChanged(object? sender, EventArgs e)
         {
         }
 
-        private void Designer_ControlCreated(object? sender, EventArgs e)
+        private void OnDesignerControlCreated(object? sender, EventArgs e)
         {
             if (sender is not AbstractControl control)
                 return;
@@ -111,7 +114,7 @@ namespace Alternet.UI
             return false;
         }
 
-        private void Designer_ControlGotFocus(object? sender, EventArgs e)
+        private void OnDesignerControlGotFocus(object? sender, EventArgs e)
         {
             if (sender is not AbstractControl control)
                 return;
@@ -131,32 +134,36 @@ namespace Alternet.UI
                 LogFocusedControl(control);
         }
 
-        private void LogFocusedControl(AbstractControl control)
+        private void LogFocusedControl(AbstractControl control, bool details = false)
         {
             var defaultColors = control.GetDefaultFontAndColor();
 
             var windowTitle = control.ParentWindow?.Title ?? control.ParentWindow?.GetType().Name;
 
-            App.Log($"FocusedControl: {control.GetType().FullName}");
+            if (details)
+            {
+                App.LogBeginSection("Focused Control");
+                App.LogNameValue("Name", control.Name);
+                App.LogNameValue("Type", control.GetType().FullName);
+                App.LogNameValue("Window", windowTitle);
+                LogUtils.LogColor("ForegroundColor", control.ForegroundColor);
+                LogUtils.LogColor("ForegroundColor (real)", control.RealForegroundColor);
+                LogUtils.LogColor("ForegroundColor (defaults)", defaultColors.ForegroundColor);
 
-            /*
-            App.LogSeparator();
-            App.LogNameValue("Name", control.Name);
-            App.LogNameValue("Type", control.GetType().FullName);
-            App.LogNameValue("Window", windowTitle);
-            LogUtils.LogColor("ForegroundColor", control.ForegroundColor);
-            LogUtils.LogColor("ForegroundColor (real)", control.RealForegroundColor);
-            LogUtils.LogColor("ForegroundColor (defaults)", defaultColors.ForegroundColor);
+                LogUtils.LogColor("BackgroundColor", control.BackgroundColor);
+                LogUtils.LogColor("BackgroundColor (real)", control.RealBackgroundColor);
+                LogUtils.LogColor("BackgroundColor (defaults)", defaultColors.BackgroundColor);
 
-            LogUtils.LogColor("BackgroundColor", control.BackgroundColor);
-            LogUtils.LogColor("BackgroundColor (real)", control.RealBackgroundColor);
-            LogUtils.LogColor("BackgroundColor (defaults)", defaultColors.BackgroundColor);
+                App.LogNameValue("PixelScaleFactor", control.ScaleFactor);
+                App.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
+                App.LogNameValue("DPI", control.GetDPI());
+                App.LogEndSection();
+            }
+            else
+            {
+                App.Log($"FocusedControl: {control.GetType().FullName}");
+            }
 
-            App.LogNameValue("PixelScaleFactor", control.ScaleFactor);
-            App.LogNameValue("PixelToDip(100)", control.PixelToDip(100));
-            App.LogNameValue("DPI", control.GetDPI());
-            App.LogSeparator();
-            */
         }
     }
 }

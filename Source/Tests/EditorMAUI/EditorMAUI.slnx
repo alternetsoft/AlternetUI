@@ -4,12 +4,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Folder Name="/DebuggerOld/">
-    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/corapi/corapi.csproj" />
-    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/mdbgeng/mdbgeng.csproj" />
-    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/NativeDebugWrappers/NativeDebugWrappers.csproj" />
-    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/mdbg/raw/raw.csproj" />
-  </Folder>
   <Folder Name="/Editor/">
     <Project Path="../../../../AlternetStudio/Source/Common.AlternetUI/Alternet.Common.AlternetUI.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Common.Winforms/Alternet.Common.Winforms.csproj" />
@@ -199,7 +193,7 @@
     <Project Path="../../../../AlternetStudio/Source/Scripter.TypeScript/Thirdparty/SourcemapToolkit.SourcemapParser/SourcemapToolkit.SourcemapParser.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Scripter/Alternet.Scripter.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Scripter/Common/Alternet.Scripter.Common.csproj" />
-    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/Alternet.Scripter.Debugger.csproj" />
+    <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger.Universal/Alternet.Scripter.Debugger.Universal.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/Common/Alternet.Scripter.Debugger.Common.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Scripter/Debugger/UI.AlternetUI/Alternet.Scripter.Debugger.UI.AlternetUI.csproj" />
   </Folder>
