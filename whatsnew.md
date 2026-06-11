@@ -1,3 +1,42 @@
+# 1.0.18 (2026 June 11)
+
+- VirtualListBox: draw vertical grid lines.
+- ListBoxHeader: Turn on IsClipped so columns with small width are painted ok.
+- VirtualListBox: Fix painting in multi-column mode.
+- TreeViewItem: SafeItem, SafeCell.
+- VirtualListBox: SafeRow, SafeCell.
+- FindReplaceControl: Assign tooltips to buttons.
+- Fix internal tooltip behavior.
+- VirtualListBox.GetCell overloads.
+- Redo VirtualListBox.Items. Now you can assign IListSource{ListControlItem} there.
+- Fix StdTreeView exception in Items getter in some situations.
+- Receive SystemColorsChanged for controls that have no parent window.
+- Add StaticControlEvents.Notification.
+- Add Graphics.DrawBitmap with SKBitmap parameter.
+- Rewrite some of the Image methods using SKBitmap
+- Remove GenericImage. Please use SKBitmap as a generic image.
+- SkiaGraphics: Implement DrawPath, FillPath.
+- Add support for GraphicsPath on SkiaSharp canvas.
+- Implement GraphicsPath handler for SkiaSharp.
+- Implement ClipRegion for SkiaGraphics
+- Add AbstractControl.ParentBackColorChanged event.
+- MswUtils.AccentColor.
+- Add ResizableWindowBorder control.
+- ColorUtils.GetDimmedColor.
+- ToolBar.Addcon.
+- SpeedButton and PictureBox: SetIconAsImage.
+- ImageDrawable: Add icon painting.
+- MswUtils: Get msw cursor related info (path to cursors, base size).
+- GripControl.MinPositionDelta.
+- Add Window.FrameMetrics.
+- SvgImage: Add get/create methods with SvgImageSet result.
+- SvgImage: ImageSet get/create methods now return not null values.
+- SvgImage: Add CreateSvgImageSet methods.
+- WindowFilePreview: add file path label.
+- PreviewFile: Fix behaviour on color theme change on msw.
+
+---
+
 # 1.0.17 (2026 June 7)
 
 ## Top improvements:

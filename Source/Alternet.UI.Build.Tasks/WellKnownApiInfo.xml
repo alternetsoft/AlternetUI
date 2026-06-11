@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=1.0.17.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=1.0.18.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -25,16 +25,9 @@
     <Type Name="Alternet.Drawing.FontStyle" />
     <Type Name="Alternet.Drawing.FontWeight" />
     <Type Name="Alternet.Drawing.GenericFontFamily" />
-    <Type Name="Alternet.Drawing.GenericImageAlphaBlendMode" />
-    <Type Name="Alternet.Drawing.GenericImageLoadFlags" />
-    <Type Name="Alternet.Drawing.GenericImagePngSetFilter" />
-    <Type Name="Alternet.Drawing.GenericImagePngType" />
-    <Type Name="Alternet.Drawing.GenericImageResizeQuality" />
-    <Type Name="Alternet.Drawing.GenericImageResolutionUnit" />
-    <Type Name="Alternet.Drawing.GenericImageTiffCompression" />
-    <Type Name="Alternet.Drawing.GenericImageTiffPhotometric" />
     <Type Name="Alternet.Drawing.ImageBitsFormatKind" />
     <Type Name="Alternet.Drawing.ImageLockMode" />
+    <Type Name="Alternet.Drawing.ImageSizeFallback" />
     <Type Name="Alternet.Drawing.InterpolationMode" />
     <Type Name="Alternet.Drawing.PixelFormat" />
     <Type Name="Alternet.Drawing.ClipOperation" />
@@ -195,17 +188,15 @@
     <Type Name="Alternet.Drawing.SkiaFontSettings">
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.Drawing.GenericImage">
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.Drawing.GenericImageOptionNames" />
-    <Type Name="Alternet.Drawing.IGenericImageHandler" />
     <Type Name="Alternet.Drawing.GraphicsPath">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.IGraphicsPathHandler" />
+    <Type Name="Alternet.Drawing.PlessGraphicsPathHandler">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
     <Type Name="Alternet.Drawing.Graphics">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -247,6 +238,10 @@
     </Type>
     <Type Name="Alternet.Drawing.ImageSet">
       <Event Name="Changed" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.Drawing.ImageSizeFallbackOptions">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -330,6 +325,10 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.Drawing.SkiaGraphics">
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.Drawing.SkiaGraphicsPathHandler">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
@@ -802,6 +801,7 @@
     <Type Name="Alternet.UI.AppColorTheme" />
     <Type Name="Alternet.UI.DrawItemState" />
     <Type Name="Alternet.UI.DrawMode" />
+    <Type Name="Alternet.UI.ImageSizeKind" />
     <Type Name="Alternet.UI.KnownSvgColor" />
     <Type Name="Alternet.UI.TextEllipsisType" />
     <Type Name="Alternet.UI.TrimTextRules" />
@@ -1139,6 +1139,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1235,6 +1236,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1322,6 +1324,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1408,6 +1411,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1494,6 +1498,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1581,6 +1586,99 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
+      <Event Name="MouseMove" />
+      <Event Name="Touch" />
+      <Event Name="MouseDown" />
+      <Event Name="MouseUp" />
+      <Event Name="MouseWheel" />
+      <Event Name="MouseLeftButtonDown" />
+      <Event Name="MouseRightButtonDown" />
+      <Event Name="MouseRightButtonUp" />
+      <Event Name="CustomLayout" />
+      <Event Name="MouseDoubleClick" />
+      <Event Name="DoubleClick" />
+      <Event Name="MouseLeftButtonUp" />
+      <Event Name="HandleCreated" />
+      <Event Name="HandleDestroyed" />
+      <Event Name="Deactivated" />
+      <Event Name="BeforeHandleDestroyed" />
+      <Event Name="GotFocus" />
+      <Event Name="QueryContinueDrag" />
+      <Event Name="KeyDown" />
+      <Event Name="KeyUp" />
+      <Event Name="LostFocus" />
+      <Event Name="TextChanged" />
+      <Event Name="DelayedTextChanged" />
+      <Event Name="KeyPress" />
+      <Event Name="PreviewKeyDown" />
+      <Event Name="VisualStateChanged" />
+      <Event Name="ToolTipChanged" />
+      <Event Name="IsMouseOverChanged" />
+      <Event Name="LongTap" />
+      <Event Name="Click" />
+      <Event Name="ParentChanged" />
+      <Event Name="Paint" />
+      <Event Name="MarginChanged" />
+      <Event Name="PaddingChanged" />
+      <Event Name="VisibleChanged" />
+      <Event Name="AfterShow" />
+      <Event Name="Shown" />
+      <Event Name="AfterHide" />
+      <Event Name="MouseCaptureLost" />
+      <Event Name="MouseCaptureChanged" />
+      <Event Name="HelpRequested" />
+      <Event Name="ProcessException" />
+      <Event Name="MouseEnter" />
+      <Event Name="MouseLeave" />
+      <Event Name="PerformLayoutIgnored" />
+      <Event Name="ChildRemoved" />
+      <Event Name="ChildSizeChanged" />
+      <Event Name="ChildBoundsChanged" />
+      <Event Name="ChildLayoutUpdated" />
+      <Event Name="ChildVisibleChanged" />
+      <Event Name="ChildInserted" />
+      <Event Name="EnabledChanged" />
+      <Event Name="BackgroundChanged" />
+      <Event Name="ForegroundChanged" />
+      <Event Name="FontChanged" />
+      <Event Name="VerticalAlignmentChanged" />
+      <Event Name="HorizontalAlignmentChanged" />
+      <Event Name="SizeChanged" />
+      <Event Name="Resize" />
+      <Event Name="LocationChanged" />
+      <Event Name="BoundsChanged" />
+      <Event Name="DragStart" />
+      <Event Name="DragDrop" />
+      <Event Name="DragOver" />
+      <Event Name="DragEnter" />
+      <Event Name="DragLeave" />
+      <Event Name="DpiChanged" />
+      <Event Name="SystemColorsChanged" />
+      <Event Name="ErrorsChanged" />
+      <Event Name="Invalidated" />
+      <Event Name="Scroll" />
+      <Event Name="DataContextChanged" />
+      <Event Name="NameChanged" />
+      <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ResizableWindowBorder">
+      <Event Name="MinimizeButtonClick" />
+      <Event Name="CloseButtonClick" />
+      <Event Name="MaximizeButtonClick" />
+      <Event Name="IconClick" />
+      <Event Name="AfterPaint" />
+      <Event Name="LayoutMaxSizeChanged" />
+      <Event Name="DropDownMenuShowing" />
+      <Event Name="LayoutUpdated" />
+      <Event Name="ContextMenuCreated" />
+      <Event Name="MouseHover" />
+      <Event Name="CellChanged" />
+      <Event Name="ContextMenuShowing" />
+      <Event Name="Activated" />
+      <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1668,6 +1766,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1755,6 +1854,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1843,6 +1943,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -1929,6 +2030,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2015,6 +2117,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2102,6 +2205,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2189,6 +2293,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2276,6 +2381,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2363,6 +2469,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2450,6 +2557,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2537,6 +2645,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2624,6 +2733,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2788,6 +2898,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2874,6 +2985,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -2960,6 +3072,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3046,6 +3159,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3150,6 +3264,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3236,6 +3351,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3456,6 +3572,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3543,6 +3660,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3631,6 +3749,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3718,6 +3837,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3805,6 +3925,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3895,6 +4016,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -3984,6 +4106,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4072,6 +4195,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4160,6 +4284,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4245,6 +4370,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4335,6 +4461,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4429,6 +4556,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4517,6 +4645,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4606,6 +4735,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4697,6 +4827,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4786,6 +4917,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4874,6 +5006,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -4961,6 +5094,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5048,6 +5182,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5135,6 +5270,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5222,6 +5358,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5309,6 +5446,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5396,6 +5534,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5483,6 +5622,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5570,6 +5710,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5657,6 +5798,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5745,6 +5887,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5833,6 +5976,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -5921,6 +6065,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6008,6 +6153,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6095,6 +6241,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6182,6 +6329,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6269,6 +6417,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6356,6 +6505,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6443,6 +6593,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6531,6 +6682,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6618,6 +6770,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6711,6 +6864,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6798,6 +6952,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6889,6 +7044,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -6979,6 +7135,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7069,6 +7226,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7157,6 +7315,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7250,6 +7409,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7352,6 +7512,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7439,6 +7600,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7526,6 +7688,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7613,6 +7776,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7700,6 +7864,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7788,6 +7953,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7876,6 +8042,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -7965,6 +8132,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8052,6 +8220,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8142,6 +8311,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8230,6 +8400,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8318,6 +8489,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8406,6 +8578,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8515,6 +8688,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8608,6 +8782,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8696,6 +8871,8 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -8706,6 +8883,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8792,6 +8970,8 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -8802,6 +8982,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -8900,6 +9081,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9000,6 +9182,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9101,6 +9284,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9199,6 +9383,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9286,6 +9471,8 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -9296,6 +9483,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9382,6 +9570,8 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -9392,6 +9582,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9468,8 +9659,15 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.UI.IListSource`1">
+      <Event Name="CollectionChanged" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.IReadOnlyListSource`1" />
     <Type Name="Alternet.UI.ListControl`1">
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -9480,6 +9678,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9554,6 +9753,14 @@
       <Event Name="DataContextChanged" />
       <Event Name="NameChanged" />
       <Event Name="Disposed" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListSource">
+      <Event Name="CollectionChanged" />
+      <Event Name="PropertyChanged" />
+    </Type>
+    <Type Name="Alternet.UI.ListSource`1">
+      <Event Name="CollectionChanged" />
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.VirtualCheckListBox">
@@ -9566,6 +9773,8 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -9576,6 +9785,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9662,6 +9872,8 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -9672,6 +9884,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9755,6 +9968,8 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectionModeChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="ItemsCollectionChanged" />
+      <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
@@ -9765,6 +9980,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -9958,6 +10174,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10049,6 +10266,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10136,6 +10354,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10226,6 +10445,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10316,6 +10536,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10408,6 +10629,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10500,6 +10722,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10586,6 +10809,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10675,6 +10899,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10767,6 +10992,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10861,6 +11087,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -10948,6 +11175,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11042,6 +11270,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11140,6 +11369,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11226,6 +11456,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11313,6 +11544,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11403,6 +11635,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11510,6 +11743,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11601,6 +11835,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11689,6 +11924,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11778,6 +12014,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11866,6 +12103,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -11971,6 +12209,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12076,6 +12315,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12181,6 +12421,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12286,6 +12527,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12391,6 +12633,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12496,6 +12739,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12601,6 +12845,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12706,6 +12951,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12811,6 +13057,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -12916,6 +13163,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13021,6 +13269,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13109,6 +13358,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13196,6 +13446,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13283,6 +13534,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13370,6 +13622,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13457,6 +13710,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13544,6 +13798,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13651,6 +13906,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13745,6 +14001,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13833,6 +14090,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -13925,6 +14183,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14018,6 +14277,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14105,6 +14365,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14201,6 +14462,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14291,6 +14553,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14382,6 +14645,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14473,6 +14737,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14564,6 +14829,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14655,6 +14921,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14742,6 +15009,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14833,6 +15101,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -14924,6 +15193,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15014,6 +15284,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15104,6 +15375,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15194,6 +15466,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15285,6 +15558,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15372,6 +15646,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15460,6 +15735,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15551,6 +15827,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15654,6 +15931,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15745,6 +16023,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15832,6 +16111,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -15918,6 +16198,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16007,6 +16288,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16101,6 +16383,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16196,6 +16479,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16306,6 +16590,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16404,6 +16689,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16506,6 +16792,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16592,6 +16879,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16679,6 +16967,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16772,6 +17061,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16880,6 +17170,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -16989,6 +17280,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17096,6 +17388,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17201,6 +17494,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17306,6 +17600,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17411,6 +17706,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17520,6 +17816,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17708,6 +18005,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17813,6 +18111,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -17918,6 +18217,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18023,6 +18323,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18128,6 +18429,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18233,6 +18535,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18338,6 +18641,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18443,6 +18747,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18548,6 +18853,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18653,6 +18959,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -18935,6 +19242,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19025,6 +19333,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19117,6 +19426,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19207,6 +19517,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19294,6 +19605,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19386,6 +19698,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19473,6 +19786,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19680,14 +19994,12 @@
     </Type>
     <Type Name="Alternet.Drawing.ScrollBarDrawable+HitTestResult" />
     <Type Name="Alternet.Drawing.IFontHandler+FontParams" />
-    <Type Name="Alternet.Drawing.GenericImage+PixelStrategy" />
     <Type Name="Alternet.Drawing.Graphics+CanvasCreateParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawElementsParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawElementParams" />
     <Type Name="Alternet.Drawing.Graphics+DrawLabelParams" />
     <Type Name="Alternet.Drawing.GraphicsUnitConverter+GraphicsType" />
     <Type Name="Alternet.Drawing.IconStream+IconEntry" />
-    <Type Name="Alternet.Drawing.ImageContainer+ImageSizeFallback" />
     <Type Name="Alternet.Drawing.MaterialDesign+CornerRadius" />
     <Type Name="Alternet.Drawing.NineRects+NineRectsParts" />
     <Type Name="Alternet.Drawing.NineRects+PreviewControl">
@@ -19701,6 +20013,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -19859,6 +20172,7 @@
       <Event Name="ItemRangeAdditionFinished" />
       <Event Name="CollectionChanged" />
     </Type>
+    <Type Name="Alternet.UI.StaticControlEvents+NotificationType" />
     <Type Name="Alternet.UI.FontAndColor+ControlDefaultFontAndColor" />
     <Type Name="Alternet.UI.FontAndColor+ControlStaticDefaultFontAndColor" />
     <Type Name="Alternet.UI.InteriorScrollActivity+ScrollMethodKind" />
@@ -19886,6 +20200,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -20010,6 +20325,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -20100,6 +20416,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -20186,6 +20503,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -20272,6 +20590,7 @@
       <Event Name="ContextMenuShowing" />
       <Event Name="Activated" />
       <Event Name="TitleChanged" />
+      <Event Name="ParentBackColorChanged" />
       <Event Name="MouseMove" />
       <Event Name="Touch" />
       <Event Name="MouseDown" />
@@ -20353,6 +20672,7 @@
     <Type Name="Alternet.UI.ToolBar+GripControlKind" />
     <Type Name="Alternet.UI.ToolBar+ItemKind" />
     <Type Name="Alternet.UI.ToolTipFactory+ShowInOverlayParams" />
+    <Type Name="Alternet.UI.Window+FrameMetrics" />
     <Type Name="Alternet.UI.DrawingUtils+DrawBorderParams" />
     <Type Name="Alternet.UI.ThreadExceptionWindow+ButtonKind" />
     <Type Name="Alternet.UI.ThreadExceptionWindow+ExceptionInfoItem" />
@@ -20404,6 +20724,7 @@
     <Type Name="Alternet.UI.ScrollableUserControl+InteriorScrollableAreaRects+RectKind" />
     <Type Name="Alternet.UI.ScrollBar+AltPositionInfo+Record" />
     <Type Name="Alternet.UI.StdSlider+SliderThumb+ShapeType" />
+    <Type Name="Alternet.UI.Window+FrameMetrics+BorderMetricKind" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+AppThemeMode" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+WindowCompositionAttribute" />
     <Type Name="Alternet.UI.MswUtils+NativeMethods+SmallPoint" />
