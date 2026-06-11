@@ -9,10 +9,14 @@ using Microsoft.Maui.Controls;
 
 #if WINDOWS
 
+using Microsoft.UI.Xaml;
+
 namespace Alternet.UI
 {
     public partial class ControlView
     {
+        private int loadUnloadCounter = 0;
+
         /// <inheritdoc/>
         protected override void OnHandlerChanging(HandlerChangingEventArgs args)
         {
@@ -38,6 +42,22 @@ namespace Alternet.UI
             platformView.Drop -= HandleWinPlatformDrop;
             platformView.DropCompleted -= HandleWinPlatformDropCompleted;
             platformView.Holding -= HandleWinPlatformHolding;
+            platformView.Unloaded -= HandleWinPlatformUnloaded;
+            platformView.Loaded -= HandleWinPlatformLoaded;
+        }
+
+        private void HandleWinPlatformLoaded(object sender, RoutedEventArgs e)
+        {
+            loadUnloadCounter++;
+            if (loadUnloadCounter != 1)
+                return;
+        }
+
+        private void HandleWinPlatformUnloaded(object sender, RoutedEventArgs e)
+        {
+            loadUnloadCounter++;
+            if (loadUnloadCounter != 1)
+                return;
         }
 
         /// <inheritdoc/>
@@ -73,6 +93,7 @@ namespace Alternet.UI
             platformView.Drop += HandleWinPlatformDrop;
             platformView.DropCompleted += HandleWinPlatformDropCompleted;
             platformView.Holding += HandleWinPlatformHolding;
+            platformView.Unloaded += HandleWinPlatformUnloaded;
         }
 
         /// <summary>

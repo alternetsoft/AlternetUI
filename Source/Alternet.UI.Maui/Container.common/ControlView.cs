@@ -310,8 +310,17 @@ namespace Alternet.UI
         {
             try
             {
-                if (GetPlatformView() is not null)
-                    InvalidateSurface();
+                var platformView = GetPlatformView();
+
+                if (platformView is null)
+                    return;
+
+#if WINDOWS
+                if (platformView.DispatcherQueue is null)
+                    return;
+#endif
+
+                InvalidateSurface();
             }
             catch(Exception ex)
             {
