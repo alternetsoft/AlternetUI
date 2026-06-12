@@ -64,7 +64,13 @@ namespace Alternet.UI
         {
             get => container;
 
-            set => container = value;
+            set
+            {
+                if (container == value)
+                    return;
+                container = value;
+                OnContainerChanged();
+            }
         }
 
         public virtual string Text { get; set; } = string.Empty;
@@ -88,9 +94,9 @@ namespace Alternet.UI
                 var oldBounds = bounds;
                 bounds = value;
 
-                if(oldBounds.Location != value.Location)
+                if (oldBounds.Location != value.Location)
                     Control?.RaiseContainerLocationChanged(EventArgs.Empty);
-                if(oldBounds.Size != value.Size)
+                if (oldBounds.Size != value.Size)
                     Control?.RaiseHandlerSizeChanged(EventArgs.Empty);
 
                 InvalidateContainer();
@@ -134,12 +140,13 @@ namespace Alternet.UI
 
         public virtual ControlBackgroundStyle BackgroundStyle { get; set; }
 
-        public virtual bool ProcessIdle { get; set; }
-
         public virtual SizeD ClientSize
         {
             get => Bounds.Size;
-            set => Bounds = (Bounds.Location, value);
+            set
+            {
+                Bounds = (Bounds.Location, value);
+            }
         }
 
         public virtual bool ProcessUIUpdates { get; set; }
@@ -150,7 +157,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value == IsMouseCaptured)
+                if (value == IsMouseCaptured)
                     return;
 
                 if (value)
@@ -342,7 +349,7 @@ namespace Alternet.UI
         public virtual void SetCursor(Cursor? value)
         {
 #if WINDOWS
-            var platformView = container?.GetPlatformView();
+            var platformView = ThisOrRootContainer?.GetPlatformView();
 
             if (platformView is null)
                 return;
@@ -353,7 +360,10 @@ namespace Alternet.UI
                 return;
             }
 
-            platformView.InputCursor = MauiWindowsUtils.GetOrCreateSystemCursor(value.KnownCursorType.Value);
+            var newCursor = MauiWindowsUtils.GetOrCreateSystemCursor(value.KnownCursorType.Value);
+
+            if (newCursor != platformView.InputCursor)
+                platformView.InputCursor = newCursor;
 #endif
         }
 
@@ -379,11 +389,7 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void UnbindEvents()
-        {
-        }
-
-        public void UpdateFocusFlags(bool canSelect, bool tabStop)
+        public virtual void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
         }
 
@@ -392,7 +398,7 @@ namespace Alternet.UI
             InvalidateContainer();
         }
 
-        public void SetRenderingFlags(ControlRenderingFlags flags)
+        public virtual void SetRenderingFlags(ControlRenderingFlags flags)
         {
         }
 
@@ -420,17 +426,17 @@ namespace Alternet.UI
         {
         }
 
-        public MauiControlHandler? GetRootHandler()
+        public virtual MauiControlHandler? GetRootHandler()
         {
             var result = (Control?.Root as Control)?.Handler as MauiControlHandler;
             return result;
         }
 
-        public void InvalidateContainer(RectD? rect = null)
-        {
-            var c = container ?? GetRootHandler()?.container;
+        public virtual ControlView? ThisOrRootContainer => container ?? GetRootHandler()?.container;
 
-            c?.Invalidate();
+        public virtual void InvalidateContainer(RectD? rect = null)
+        {
+            ThisOrRootContainer?.Invalidate();
         }
 
         public virtual void OnRemovedFromParent(AbstractControl parentControl)
@@ -438,6 +444,13 @@ namespace Alternet.UI
         }
 
         public virtual void OnInsertedToParent(AbstractControl parentControl)
+        {
+        }
+
+        protected override void OnAttach()
+        {
+        }
+        protected virtual void OnContainerChanged()
         {
         }
     }

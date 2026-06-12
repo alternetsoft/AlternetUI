@@ -55,10 +55,8 @@ namespace Alternet.UI
 
             set
             {
-                if (Cursor == value)
-                    return;
                 base.Cursor = value;
-                UpdateCursor();
+                UpdateCursor(value);
             }
         }
 

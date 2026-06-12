@@ -23,7 +23,12 @@ namespace Alternet.UI
         public virtual InputCursor? InputCursor
         {
             get => ProtectedCursor;
-            set => ProtectedCursor = value;
+            set
+            {
+                if (value == ProtectedCursor)
+                    return;
+                ProtectedCursor = value;
+            }
         }
     }
 }

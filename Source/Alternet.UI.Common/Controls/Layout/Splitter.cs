@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 using Alternet.UI.Extensions;
 
@@ -141,7 +142,8 @@ namespace Alternet.UI
         public ResolveSplitterColorsDelegate? ResolveSplitterColorsOverride { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the split operation should terminate when an escape character is
+        /// Gets or sets a value indicating whether the split operation
+        /// should terminate when an escape character is
         /// encountered. Default is true.
         /// </summary>
         /// <remarks>Set this property to <see langword="true"/> to ensure that the split operation ends
@@ -173,7 +175,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value == isBackgroundPainted)
+                if (value == isBackgroundPainted)
                     return;
                 isBackgroundPainted = value;
                 Invalidate();
@@ -184,7 +186,8 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether mouse input is enabled.
         /// </summary>
         /// <remarks>When set to <see langword="true"/>, mouse interactions are processed by the control;
-        /// otherwise, mouse input is ignored. Changing this property may affect the behavior of user interface elements
+        /// otherwise, mouse input is ignored. Changing this property may affect
+        /// the behavior of user interface elements
         /// that rely on mouse input.</remarks>
         [Browsable(false)]
         public virtual bool IsMouseEnabled
@@ -212,7 +215,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value == isForegroundPainted)
+                if (value == isForegroundPainted)
                     return;
                 isForegroundPainted = value;
                 Invalidate();
@@ -468,7 +471,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(defaultCursor != null)
+                if (defaultCursor != null)
                     return defaultCursor;
 
                 if (Dock.IsTopOrBottom())
@@ -479,7 +482,7 @@ namespace Alternet.UI
 
             set
             {
-                if(defaultCursor == value)
+                if (defaultCursor == value)
                     return;
                 defaultCursor = value;
                 Cursor = DefaultCursor;
@@ -493,7 +496,7 @@ namespace Alternet.UI
         /// <param name="foreColor">The foreground color to be set.</param>
         public virtual void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
         {
-            if(ResolveSplitterColorsOverride is not null)
+            if (ResolveSplitterColorsOverride is not null)
             {
                 ResolveSplitterColorsOverride(out backColor, out foreColor);
                 return;
@@ -574,11 +577,11 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             ResolveSplitterColors(out var backColor, out var foreColor);
-            if(IsBackgroundPainted)
+            if (IsBackgroundPainted)
                 DrawSplitterBackground(e, backColor);
-            if(IsForegroundPainted)
+            if (IsForegroundPainted)
                 DrawSplitterForeground(e, foreColor);
-            if(HasBorder)
+            if (HasBorder)
             {
                 DrawSplitterBorder(e);
             }
@@ -658,7 +661,7 @@ namespace Alternet.UI
             SplitterMoving?.Invoke(this, e);
             if (splitTarget != null)
             {
-                if(SplitMove(e.SplitX, e.SplitY))
+                if (SplitMove(e.SplitX, e.SplitY))
                     ApplySplitPosition();
             }
         }
@@ -750,8 +753,8 @@ namespace Alternet.UI
                 lastDrawSplit = -1;
             }
             else
-            if (mode != DrawSplitBarKind.Start && lastDrawSplit == -1)
-                return;
+                if (mode != DrawSplitBarKind.Start && lastDrawSplit == -1)
+                    return;
 
             if (mode != DrawSplitBarKind.End)
             {
@@ -935,10 +938,10 @@ namespace Alternet.UI
                 /* no need to call ApplySplitPosition() as splitter is live */
             }
             else
-            if (splitSize != initTargetSize)
-            {
-                SplitPosition = initTargetSize;
-            }
+                if (splitSize != initTargetSize)
+                {
+                    SplitPosition = initTargetSize;
+                }
 
             anchor = PointD.Empty;
         }

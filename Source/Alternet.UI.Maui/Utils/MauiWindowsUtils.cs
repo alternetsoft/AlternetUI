@@ -83,9 +83,8 @@ public static class MauiWindowsUtils
         {
             default:
             case CursorType.None:
-                return null;
             case CursorType.Arrow:
-                return InputSystemCursorShape.Arrow;
+                return null;
             case CursorType.Cross:
                 return InputSystemCursorShape.Cross;
             case CursorType.Hand:
