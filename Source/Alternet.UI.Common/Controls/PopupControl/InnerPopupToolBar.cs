@@ -391,7 +391,8 @@ namespace Alternet.UI
         /// <param name="container">The container control in which to display the popup. Cannot be null.</param>
         /// <param name="position">The position, in container coordinates, where the popup should appear.
         /// If null, the current mouse position is used.</param>
-        /// <param name="align">The alignment of the popup relative to the container. If null, the default alignment is used.</param>
+        /// <param name="align">The alignment of the popup relative to the container.
+        /// If null, the default alignment is used.</param>
         public virtual void ShowInContainer(
             AbstractControl container,
             PointD? position = null,

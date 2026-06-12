@@ -3218,7 +3218,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets index in the <see cref="AbstractControl.Children"/> collection where the panel control should be inserted.
+        /// Gets index in the <see cref="AbstractControl.Children"/> collection where the panel
+        /// control should be inserted.
         /// </summary>
         /// <param name="item">The panel item for which to get the insert index.</param>
         /// <returns>The index at which the panel control should be inserted.</returns>
@@ -3324,7 +3325,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when panel is removed from the collection. Detaches event handlers and performs any necessary cleanup.
+        /// Called when panel is removed from the collection. Detaches event
+        /// handlers and performs any necessary cleanup.
         /// </summary>
         /// <param name="item">The <see cref="BarPanel"/> instance that was removed.</param>
         protected virtual void OnPanelRemoved(BarPanel item)
@@ -3342,7 +3344,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Inserts a new <see cref="PictureBox"/> control at the specified index with the given tooltip and size configuration.
+        /// Inserts a new <see cref="PictureBox"/> control at the specified
+        /// index with the given tooltip and size configuration.
         /// </summary>
         /// <param name="index">The zero-based index at which the <see cref="PictureBox"/> should be inserted.</param>
         /// <param name="toolTip">The tooltip text to display when the user hovers over the <see cref="PictureBox"/>.
@@ -3408,6 +3411,12 @@ namespace Alternet.UI
         {
         }
 
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+        }
+
         /// <summary>
         /// Gets item's suggested size.
         /// </summary>
@@ -3456,15 +3465,29 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        protected override bool GetDefaultParentBackColor()
+        {
+            return false;
+        }
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultParentForeColor()
+        {
+            return false;
+        }
+
         /// <summary>
-        /// Assigns default background and foreground color values based on the current application platform and
+        /// Assigns default background and foreground color values based
+        /// on the current application platform and
         /// appearance settings.
         /// </summary>
         /// <remarks>On MAUI platforms, this method sets the background and foreground colors according to
-        /// the system's light or dark appearance. On other platforms, it configures the control to inherit colors from
+        /// the system's light or dark appearance. On other platforms,
+        /// it configures the control to inherit colors from
         /// its parent. Override this method to customize default color assignment behavior for derived
         /// controls.</remarks>
-        protected virtual void AssignDefaultColors()
+        public virtual void AssignDefaultColors()
         {
             if (!AutoUpdateColors)
                 return;

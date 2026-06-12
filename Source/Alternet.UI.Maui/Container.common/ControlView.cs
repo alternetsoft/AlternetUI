@@ -82,7 +82,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(interior is null)
+                if (interior is null)
                 {
                     interior = new();
                 }
@@ -121,9 +121,10 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
-                    if(interior is not null)
+                    if (interior is not null)
                     {
                         control.RemoveNotification(interior.Notification);
+                        control.SystemColorsChanged -= OnControlSystemColorsChanged;
 
                         var scrollBar = interior.VertScrollBar;
 
@@ -146,6 +147,7 @@ namespace Alternet.UI
                     if (interior is not null && !control.HasOwnInterior)
                     {
                         control.AddNotification(interior.Notification);
+                        control.SystemColorsChanged += OnControlSystemColorsChanged;
 
                         var scrollBar = interior.VertScrollBar;
 
@@ -323,7 +325,7 @@ namespace Alternet.UI
 
                 InvalidateSurface();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Debug.WriteLine($"Exception in {this.GetType()}.Invalidate: {ex}");
             }
@@ -350,7 +352,7 @@ namespace Alternet.UI
                 return;
             SystemSettings.ResetColors();
 
-            if(!control.HasOwnInterior)
+            if (!control.HasOwnInterior)
                 Interior.UpdateThemeMetrics();
 
             Invalidate();
@@ -569,6 +571,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when the control's system colors have changed, such as when switching between light and dark themes.
+        /// </summary>
+        /// <param name="sender">The source of the event. This can be <see langword="null"/>.</param>
+        /// <param name="e">The event data associated with the system colors change.</param>
+        protected virtual void OnControlSystemColorsChanged(object? sender, EventArgs e)
+        {
+            RaiseSystemColorsChanged();
+        }
+
+        /// <summary>
         /// Handles the event when the control gains focus.
         /// </summary>
         /// <remarks> Derived classes can override this method to provide
@@ -632,7 +644,7 @@ namespace Alternet.UI
             TouchEventArgs args = MauiUtils.Convert(e, Control);
 
 #if ANDROID
-            if(args.ActionType == TouchAction.WheelChanged)
+            if (args.ActionType == TouchAction.WheelChanged)
             {
                 // Wheel changed is handled in the platform view for android.
                 return;

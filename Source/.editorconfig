@@ -180,3 +180,5 @@ dotnet_diagnostic.CA1401.severity = none
 dotnet_diagnostic.SYSLIB1045.severity = none
 
 dotnet_diagnostic.CA1806.severity = none
+
+dotnet_diagnostic.IDE0031.severity = none
