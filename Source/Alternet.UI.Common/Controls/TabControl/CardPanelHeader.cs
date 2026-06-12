@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -55,11 +56,13 @@ namespace Alternet.UI
         private SizeD additionalSpace = DefaultAdditionalSpace;
         private CardPanelHeaderItem? selectedTab;
         private bool tabHasBorder = DefaultTabHasBorder;
+        private bool activeTabHasBorder = DefaultActiveTabHasBorder;
         private CardPanel? cardPanel;
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
         private HorizontalAlignment? tabHorizontalAlignment;
         private SpeedButton.KnownTheme tabTheme = SpeedButton.KnownTheme.TabControl;
+        private SpeedButton.KnownTheme activeTabTheme = SpeedButton.KnownTheme.TabControl;
         private bool hasInteriorBorder = true;
         private TabAlignment tabAlignment = TabAlignment.Top;
         private bool isVerticalText;
@@ -115,6 +118,11 @@ namespace Alternet.UI
         public event EventHandler? CloseButtonClick;
 
         /// <summary>
+        /// Gets or sets default value of the <see cref="ActiveTabHasBorder"/>.
+        /// </summary>
+        public static bool DefaultActiveTabHasBorder { get; set; } = false;
+
+        /// <summary>
         /// Gets or sets default value of the <see cref="TabHasBorder"/>.
         /// </summary>
         public static bool DefaultTabHasBorder { get; set; } = false;
@@ -166,12 +174,12 @@ namespace Alternet.UI
                 {
                     tabAlignment = value;
 
-                    if(tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom)
+                    if (tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom)
                     {
                     }
                     else
                     {
-                        if(closeButton is not null && closeButton.Visible)
+                        if (closeButton is not null && closeButton.Visible)
                         {
                             closeButton.Visible = false;
                         }
@@ -221,7 +229,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(closeButton is null || !closeButton.Visible)
+                if (closeButton is null || !closeButton.Visible)
                     return false;
                 return closeButton.Visible;
             }
@@ -254,7 +262,7 @@ namespace Alternet.UI
 
             set
             {
-                if(imageToText == value)
+                if (imageToText == value)
                     return;
                 DoInsideLayout(() =>
                 {
@@ -306,7 +314,7 @@ namespace Alternet.UI
             get => tabMargin;
             set
             {
-                if(tabMargin == value)
+                if (tabMargin == value)
                     return;
                 tabMargin = value;
                 UpdateTabs();
@@ -324,6 +332,21 @@ namespace Alternet.UI
                 if (tabTheme == value)
                     return;
                 tabTheme = value;
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets colors and styles theme of the active tab.
+        /// </summary>
+        public virtual SpeedButton.KnownTheme ActiveTabTheme
+        {
+            get => activeTabTheme;
+            set
+            {
+                if (activeTabTheme == value)
+                    return;
+                activeTabTheme = value;
                 UpdateTabs();
             }
         }
@@ -465,7 +488,7 @@ namespace Alternet.UI
         public IReadOnlyList<CardPanelHeaderItem> Tabs => tabs;
 
         /// <summary>
-        /// Gets or sets whether tabs have border.
+        /// Gets or sets whether tab buttons have border.
         /// </summary>
         public virtual bool TabHasBorder
         {
@@ -479,6 +502,25 @@ namespace Alternet.UI
                 if (tabHasBorder == value)
                     return;
                 tabHasBorder = value;
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether active tab button has border.
+        /// </summary>
+        public virtual bool ActiveTabHasBorder
+        {
+            get
+            {
+                return activeTabHasBorder;
+            }
+
+            set
+            {
+                if (activeTabHasBorder == value)
+                    return;
+                activeTabHasBorder = value;
                 UpdateTabs();
             }
         }
@@ -655,7 +697,7 @@ namespace Alternet.UI
                 if (selectedTab == value)
                     return;
                 selectedTab = value;
-                foreach(var tab in tabs)
+                foreach (var tab in tabs)
                 {
                     UpdateTab(tab);
                 }
@@ -685,7 +727,7 @@ namespace Alternet.UI
 
             set
             {
-                if(Tabs.Count == 0)
+                if (Tabs.Count == 0)
                 {
                     SelectedTab = null;
                     return;
@@ -1057,7 +1099,7 @@ namespace Alternet.UI
         /// <param name="e">The event parameters.</param>
         protected virtual void OnButtonSizeChanged(object? sender, EventArgs e)
         {
-            if(sender is AbstractControl control)
+            if (sender is AbstractControl control)
                 ButtonSizeChanged?.Invoke(this, new BaseEventArgs<AbstractControl>(control));
         }
 
@@ -1118,7 +1160,7 @@ namespace Alternet.UI
 
             var isSelected = item == selectedTab;
 
-            if(UseTabBold || useBold)
+            if (UseTabBold || useBold)
             {
                 item.HeaderButton.IsBold = isSelected;
             }
@@ -1141,7 +1183,15 @@ namespace Alternet.UI
             item.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();
             item.HeaderButton.IsVerticalText = IsVerticalText;
             item.HeaderButton.ImageToText = ImageToText;
-            item.HeaderButton.UseTheme = tabTheme;
+
+            if (isSelected)
+            {
+                item.HeaderButton.UseTheme = activeTabTheme;
+            }
+            else
+            {
+                item.HeaderButton.UseTheme = tabTheme;
+            }
         }
 
         /// <summary>
@@ -1155,7 +1205,17 @@ namespace Alternet.UI
             {
                 foreach (var item in Tabs)
                 {
-                    item.HeaderButton.HasBorder = tabHasBorder;
+                    var isSelected = item == selectedTab;
+
+                    if (isSelected)
+                    {
+                        item.HeaderButton.HasBorder = tabHasBorder || activeTabHasBorder;
+                    }
+                    else
+                    {
+                        item.HeaderButton.HasBorder = tabHasBorder;
+                    }
+
                     UpdateTab(item);
                 }
             }
@@ -1206,7 +1266,7 @@ namespace Alternet.UI
             if (sender is not AbstractControl control)
                 return;
 
-            if(BeforeTabClick is not null)
+            if (BeforeTabClick is not null)
             {
                 BaseCancelEventArgs beforeArgs = new();
                 BeforeTabClick(this, beforeArgs);
@@ -1214,13 +1274,13 @@ namespace Alternet.UI
                     return;
             }
 
-            foreach(var tab in tabs)
+            foreach (var tab in tabs)
             {
-                if(control == tab.HeaderButton || control.HasIndirectParent(tab.HeaderButton))
+                if (control == tab.HeaderButton || control.HasIndirectParent(tab.HeaderButton))
                 {
                     var oldSelectedTab = SelectedTab;
                     SelectedTab = tab;
-                    if(oldSelectedTab != SelectedTab)
+                    if (oldSelectedTab != SelectedTab)
                         TabClick?.Invoke(this, EventArgs.Empty);
                     return;
                 }
