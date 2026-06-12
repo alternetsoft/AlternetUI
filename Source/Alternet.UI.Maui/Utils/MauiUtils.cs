@@ -215,7 +215,8 @@ namespace Alternet.UI
         /// <see cref="AbsoluteLayout"/>.
         /// </summary>
         /// <remarks>This method configures the object to fill its parent <see cref="AbsoluteLayout"/> by setting its
-        /// layout flags to <see cref="AbsoluteLayoutFlags.All"/> and its bounds to cover the full area. Use this method when you want
+        /// layout flags to <see cref="AbsoluteLayoutFlags.All"/> and its bounds to cover the full area.
+        /// Use this method when you want
         /// the child to automatically size and position itself to fill the parent container.</remarks>
         /// <param name="obj">The bindable object whose layout flags and bounds are to be set. Cannot be null.</param>
         public static void FillAbsoluteLayout(BindableObject obj)
@@ -231,7 +232,8 @@ namespace Alternet.UI
         /// child element in an AbsoluteLayout. It is equivalent to calling AbsoluteLayout.SetLayoutFlags and
         /// AbsoluteLayout.SetLayoutBounds separately.</remarks>
         /// <param name="obj">The child element whose layout bounds and flags are to be set. Cannot be null.</param>
-        /// <param name="bounds">The rectangle that defines the position and size of the child element within the AbsoluteLayout, in
+        /// <param name="bounds">The rectangle that defines the position and
+        /// size of the child element within the AbsoluteLayout, in
         /// device-independent units.</param>
         /// <param name="flags">The layout flags that specify how the bounds are interpreted.
         /// The default is AbsoluteLayoutFlags.None.</param>
@@ -1112,13 +1114,16 @@ namespace Alternet.UI
                 if (child is null)
                 {
                     child = new Alternet.Maui.InnerPopupToolBarContainerView();
-                    child.BackgroundColor = cc.ToMaui();
                     child.IsVisible = false;
                     child.Control = new Alternet.UI.Panel();
                     child.Control.DebugIdentifier = "OverlayPanelForInnerPopupToolBar";
+                    FillAbsoluteLayout(child);
+
                     child.Control.BackColor = cc;
                     child.Control.ParentBackColor = false;
-                    FillAbsoluteLayout(child);
+
+                    child.BackgroundColor = cc.ToMaui();
+
                     child.ZIndex = int.MaxValue;
                     absLayout.Children.Add(child);
 
@@ -1150,9 +1155,29 @@ namespace Alternet.UI
                             ClosePopup();
                     };
                 }
+                else
+                {
+                    absLayout.Children.Remove(child);
+
+                    if (child.Control is not null)
+                    {
+                      child.Control.BackColor = cc;
+                      child.Control.ParentBackColor = false;
+                    }
+
+                    child.BackgroundColor = cc.ToMaui();
+
+                    absLayout.Children.Add(child);
+                }
 
                 var hostControl = menu.EnsureHasInnerPopupToolBarHost();
+                hostControl.ParentBackColor = false;
+                hostControl.ParentForeColor = false;
                 hostControl.ContainerSizeOverride = child.Control?.Size;
+                hostControl.Content.AutoUpdateColors = true;
+                hostControl.Content.AssignDefaultColors();
+                hostControl.BackColor = hostControl.Content.BackColor;
+                hostControl.ForeColor = hostControl.Content.ForeColor;
 
                 ShowMenu(controlView ?? child, child, align.Value);
 

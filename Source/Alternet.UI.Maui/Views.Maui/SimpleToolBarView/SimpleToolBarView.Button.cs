@@ -471,6 +471,7 @@ namespace Alternet.Maui
             public virtual void RaiseSystemColorsChanged()
             {
                 UpdateVisualStates(false);
+                (Button as Alternet.UI.IRaiseSystemColorsChanged)?.RaiseSystemColorsChanged();
             }
 
             public virtual void UpdateVisualStates(bool setNormalState)

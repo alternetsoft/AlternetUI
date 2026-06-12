@@ -159,7 +159,8 @@ namespace Alternet.Maui
         /// Provides the visual state setters for a button when it is in the hot (hovered) state.
         /// </summary>
         /// <remarks>This static instance defines the appearance of a button when the pointer is over it,
-        /// including background color, border color, text color, and border width. The values are typically used by UI
+        /// including background color, border color, text color, and border width.
+        /// The values are typically used by UI
         /// rendering logic to apply the appropriate visual feedback for user interaction.</remarks>
         public static ButtonVisualStateSetters ButtonHotState = new()
         {
@@ -176,8 +177,8 @@ namespace Alternet.Maui
         private StickyButtonStyle stickyStyle = StickyButtonStyle.Border;
         private bool isBottomBorderVisible;
         private bool isTopBorderVisible;
-        private BoxView? topBorder;
-        private BoxView? bottomBorder;
+        private BaseContentView? topBorder;
+        private BaseContentView? bottomBorder;
         private bool isBoldWhenSticky;
         private string? tabFontFamily;
         private double? tabFontSize;
@@ -648,9 +649,17 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public override void RaiseSystemColorsChanged()
         {
-            bottomBorder?.BackgroundColor = GetSeparatorColor();
-            topBorder?.BackgroundColor = GetSeparatorColor();
+            var cl = GetSeparatorColor();
+
+            bottomBorder?.BackgroundColor = cl;
+            topBorder?.BackgroundColor = cl;
             SystemColorsChanged?.Invoke(this, EventArgs.Empty);
+
+            foreach (var child in Buttons)
+            {
+                if (child is Alternet.UI.IRaiseSystemColorsChanged item)
+                    item.RaiseSystemColorsChanged();
+            }
         }
 
         /// <summary>
@@ -668,12 +677,12 @@ namespace Alternet.Maui
         /// <returns>The created expanding space view.</returns>
         public virtual View AddExpandingSpace()
         {
-            var spacer = new BoxView
+            var spacer = new BaseContentView
             {
 #pragma warning disable
                 HorizontalOptions = LayoutOptions.FillAndExpand,
 #pragma warning restore
-                Color = Colors.Transparent,
+//                Color = Alternet.Drawing.Color.Red.ToMaui(),
             };
 
             buttons.Children.Add(spacer);
@@ -1194,10 +1203,10 @@ namespace Alternet.Maui
         /// <summary>
         /// Creates a visual border for a toolbar.
         /// </summary>
-        /// <returns>A <see cref="BoxView"/> configured to serve as the toolbar border.</returns>
-        public virtual BoxView CreateToolBarBorder()
+        /// <returns>A <see cref="BaseContentView"/> configured to serve as the toolbar border.</returns>
+        public virtual BaseContentView CreateToolBarBorder()
         {
-            var result = new BoxView
+            var result = new BaseContentView
             {
                 HeightRequest = DefaultBorderWidth,
                 BackgroundColor = GetSeparatorColor(),
@@ -1336,7 +1345,8 @@ namespace Alternet.Maui
             /// </summary>
             /// <param name="control">The view control for which the visual state is being initialized.</param>
             /// <param name="state">The visual state to initialize and configure.</param>
-            /// <param name="clear">true to clear existing setters from the visual state before applying new ones; otherwise, false.
+            /// <param name="clear">true to clear existing setters from the visual
+            /// state before applying new ones; otherwise, false.
             /// The default is true.</param>
             public virtual void InitState(View control, VisualState state, bool clear = true)
             {

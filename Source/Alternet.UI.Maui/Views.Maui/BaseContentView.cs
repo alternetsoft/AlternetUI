@@ -6,6 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI;
+
 using Microsoft.Maui.Controls;
 
 namespace Alternet.Maui
@@ -13,7 +15,7 @@ namespace Alternet.Maui
     /// <summary>
     /// Represents a base class for content views in the library.
     /// </summary>
-    public partial class BaseContentView : ContentView, UI.IRaiseSystemColorsChanged
+    public partial class BaseContentView : DisposableContentView, UI.IRaiseSystemColorsChanged
     {
         private readonly Alternet.UI.ObjectUniqueId uniqueId = new();
 
@@ -30,6 +32,7 @@ namespace Alternet.Maui
         public BaseContentView()
         {
             currentIsDark = IsDark;
+            Alternet.UI.StaticControlEvents.Notification += OnStaticNotification;
         }
 
         /// <summary>
@@ -68,13 +71,6 @@ namespace Alternet.Maui
         }
 
         /// <summary>
-        /// Marks object as required.
-        /// </summary>
-        public void Required()
-        {
-        }
-
-        /// <summary>
         /// Handles the event when the size of the parent element changes.
         /// </summary>
         /// <param name="sender">The source of the event, typically the parent element.</param>
@@ -99,6 +95,44 @@ namespace Alternet.Maui
             if (newParent is not null)
             {
                 newParent.SizeChanged += OnParentSizeChanged;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeResources()
+        {
+            RemoveGlobalNotification();
+            base.DisposeResources();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnHandlerChanged()
+        {
+            base.OnHandlerChanged();
+            if (Handler == null)
+            {
+                RemoveGlobalNotification();
+            }
+        }
+
+        /// <summary>
+        /// Removes global notification subscriber.
+        /// </summary>
+        protected virtual void RemoveGlobalNotification()
+        {
+            Alternet.UI.StaticControlEvents.Notification -= OnStaticNotification;
+        }
+
+        /// <summary>
+        /// Handles static notifications from the library.
+        /// </summary>
+        /// <param name="type">The type of the notification.</param>
+        /// <param name="args">The event data associated with the notification.</param>
+        protected virtual void OnStaticNotification(StaticControlEvents.NotificationType type, EventArgs args)
+        {
+            if (type == StaticControlEvents.NotificationType.SystemColorsChanged)
+            {
+                RaiseSystemColorsChanged();
             }
         }
 
