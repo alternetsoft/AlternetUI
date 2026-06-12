@@ -341,6 +341,20 @@ namespace Alternet.UI
 
         public virtual void SetCursor(Cursor? value)
         {
+#if WINDOWS
+            var platformView = container?.GetPlatformView();
+
+            if (platformView is null)
+                return;
+
+            if (value is null || value.KnownCursorType is null)
+            {
+                platformView.InputCursor = null;
+                return;
+            }
+
+            platformView.InputCursor = MauiWindowsUtils.GetOrCreateSystemCursor(value.KnownCursorType.Value);
+#endif
         }
 
         public virtual void SetEnabled(bool value)

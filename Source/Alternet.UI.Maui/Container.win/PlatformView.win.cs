@@ -20,7 +20,7 @@ namespace Alternet.UI
         /// Gets or sets the cursor that displays when the pointer is over this element.
         /// Defaults to null, indicating no change to the cursor.
         /// </summary>
-        public InputCursor InputCursor
+        public virtual InputCursor? InputCursor
         {
             get => ProtectedCursor;
             set => ProtectedCursor = value;
