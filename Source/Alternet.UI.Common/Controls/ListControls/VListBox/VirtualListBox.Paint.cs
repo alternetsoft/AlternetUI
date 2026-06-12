@@ -292,35 +292,40 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
-            var dc = e.Graphics;
+            e.Graphics.DoInsideClipped(ClientRectangle, DoDefaultPaint);
 
-            dc.FillRectangle(RealBackgroundColor.AsBrush, ClientRectangle);
-
-            UpdateInteriorProperties();
-
-            var r = GetPaintRectangle();
-
-            if (Count == 0)
+            void DoDefaultPaint()
             {
-                PaintEmptyText(dc, r);
-            }
-            else
-            {
-                InternalPaint();
-            }
+                var dc = e.Graphics;
 
-            DrawInterior(dc);
+                dc.FillRectangle(RealBackgroundColor.AsBrush, ClientRectangle);
 
-            void InternalPaint()
-            {
-                dc.PushAndTranslate(-scrollOffsetX, 0);
-                try
+                UpdateInteriorProperties();
+
+                var r = GetPaintRectangle();
+
+                if (Count == 0)
                 {
-                    PaintRows(dc, r, scrollOffsetX);
+                    PaintEmptyText(dc, r);
                 }
-                finally
+                else
                 {
-                    dc.PopTransform();
+                    InternalPaint();
+                }
+
+                DrawInterior(dc);
+
+                void InternalPaint()
+                {
+                    dc.PushAndTranslate(-scrollOffsetX, 0);
+                    try
+                    {
+                        PaintRows(dc, r, scrollOffsetX);
+                    }
+                    finally
+                    {
+                        dc.PopTransform();
+                    }
                 }
             }
         }
