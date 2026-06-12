@@ -9,7 +9,8 @@ namespace Alternet.UI
     /*
         Do not change the order of the items in this enum or element indexes.
         Do not remove or add items.
-        This enum is mapped to the native cursor types and is used in interop calls, so changing it may break functionality.
+        This enum is mapped to the native cursor types and is used in interop calls,
+        so changing it may break functionality.
     */
 
     /// <summary>Specifies the built in cursor types.</summary>

@@ -14,7 +14,12 @@ using Windows.UI.ViewManagement;
 /// </summary>
 public static class MauiWindowsUtils
 {
-    private static EnumArray<InputSystemCursorShape, InputSystemCursor?> systemCursors = new();
+    /// <summary>
+    /// An array that maps <see cref="CursorType"/> values to their
+    /// corresponding <see cref="InputSystemCursor"/> instances.
+    /// This is used to cache cursor instances for efficient retrieval.
+    /// </summary>
+    public static EnumArray<InputSystemCursorShape, InputSystemCursor?> InputSystemCursors = new();
 
     /// <summary>
     /// Determines whether the device is in tablet mode.
@@ -133,12 +138,15 @@ public static class MauiWindowsUtils
         if (shape is null)
             return null;
 
-        if (systemCursors[shape.Value] == null)
+        var result = InputSystemCursors[shape.Value];
+
+        if (result == null)
         {
-            systemCursors[shape.Value] = InputSystemCursor.Create(shape.Value);
+            result = InputSystemCursor.Create(shape.Value);
+            InputSystemCursors[shape.Value] = result;
         }
 
-        return systemCursors[shape.Value]!;
+        return result!;
     }
 
     /// <summary>

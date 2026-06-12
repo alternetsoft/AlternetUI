@@ -15,12 +15,89 @@ using Android.Graphics;
 using Android.OS;
 using Android.Views;
 
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Platform;
 
 public static class AndroidUtils
 {
+    /// <summary>
+    /// An array that maps <see cref="CursorType"/> values to their
+    /// corresponding <see cref="PointerIcon"/> instances.
+    /// This is used to cache pointer icon instances for efficient retrieval.
+    /// </summary>
+    public static EnumArray<CursorType, PointerIcon> PointerIcons = new();
+
+    /// <summary>
+    /// Gets the <see cref="PointerIconType"/> corresponding to the specified <see cref="CursorType"/>.
+    /// </summary>
+    /// <param name="cursorType">The cursor type for which to retrieve the pointer icon.</param>
+    /// <returns>The corresponding <see cref="PointerIconType"/>, or <c>null</c>
+    /// if no matching icon is found.</returns>
+    public static PointerIconType? FromAlternet(CursorType cursorType)
+    {
+        switch (cursorType)
+        {
+            default:
+            case CursorType.None:
+            case CursorType.Arrow:
+            case CursorType.Char:
+            case CursorType.MiddleButton:
+            case CursorType.RightButton:
+            case CursorType.LeftButton:
+            case CursorType.NoEntry:
+            case CursorType.Watch:
+                return PointerIconType.NoDrop;
+            case CursorType.Cross:
+                return PointerIconType.Crosshair;
+            case CursorType.Hand:
+                return PointerIconType.Hand;
+            case CursorType.IBeam:
+                return PointerIconType.Text;
+            case CursorType.QuestionArrow:
+                return PointerIconType.Help;
+            case CursorType.SizeNESW:
+                return PointerIconType.TopRightDiagonalDoubleArrow;
+            case CursorType.SizeNS:
+                return PointerIconType.VerticalDoubleArrow;
+            case CursorType.SizeNWSE:
+                return PointerIconType.TopLeftDiagonalDoubleArrow;
+            case CursorType.SizeWE:
+                return PointerIconType.HorizontalDoubleArrow;
+            case CursorType.Sizing:
+                return PointerIconType.AllScroll;
+            case CursorType.Wait:
+                return PointerIconType.Wait;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves the <see cref="PointerIcon"/> corresponding to the specified <see cref="CursorType"/>.
+    /// </summary>
+    /// <param name="cursorType">The cursor type for which to retrieve the pointer icon.</param>
+    /// <returns>The corresponding <see cref="PointerIcon"/>, or <c>null</c> if no matching icon is found.</returns>
+    public static PointerIcon? GetOrCreatePointerIcon(CursorType cursorType)
+    {
+        var iconType = FromAlternet(cursorType);
+        if (iconType.HasValue)
+        {
+            var result = PointerIcons[cursorType];
+
+            if (result == null)
+            {
+                Context appContext = Android.App.Application.Context;
+                result = PointerIcon.GetSystemIcon(appContext, iconType.Value);
+                PointerIcons[cursorType] = result;
+                return result;
+            }
+
+            return result;
+        }
+
+        return null;
+    }
+
     public static void DefaultMainActivityOnCreate(MauiAppCompatActivity activity, Bundle? savedInstanceState)
     {
         activity.Window?.SetSoftInputMode(SoftInput.AdjustResize);
