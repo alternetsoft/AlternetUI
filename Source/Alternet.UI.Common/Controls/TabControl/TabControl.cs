@@ -530,12 +530,57 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets colors and styles theme of the active tab.
+        /// </summary>
+        public virtual SpeedButton.KnownTheme ActiveTabTheme
+        {
+            get => Header.ActiveTabTheme;
+            set
+            {
+                Header.ActiveTabTheme = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether tab buttons have border.
+        /// </summary>
+        public virtual bool TabHasBorder
+        {
+            get
+            {
+                return Header.TabHasBorder;
+            }
+
+            set
+            {
+                Header.TabHasBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether active tab button has border.
+        /// </summary>
+        public virtual bool ActiveTabHasBorder
+        {
+            get
+            {
+                return Header.ActiveTabHasBorder;
+            }
+
+            set
+            {
+                Header.ActiveTabHasBorder = value;
+            }
+        }
+
+        /// <summary>
         /// Gets the button with X image that is shown in the header and can be configured
         /// to close (or hide) tab page (or tab control itself). If <see cref="HasCloseButton"/> is set to <c>true</c>,
         /// this button is shown in the header; otherwise, it is hidden. Close button is automatically created when
         /// <see cref="HasCloseButton"/> is set to <c>true</c> for the first time or when <see cref="CloseButton"/>
         /// property is accessed for the first time.
         /// </summary>
+        [Browsable(false)]
         public SpeedButton CloseButton
         {
             get
