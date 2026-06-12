@@ -14,6 +14,8 @@ using Windows.UI.ViewManagement;
 /// </summary>
 public static class MauiWindowsUtils
 {
+    private static EnumArray<InputSystemCursorShape, InputSystemCursor?> systemCursors = new();
+
     /// <summary>
     /// Determines whether the device is in tablet mode.
     /// </summary>
@@ -68,6 +70,76 @@ public static class MauiWindowsUtils
             default:
                 return TouchAction.Cancelled;
         }
+    }
+
+    /// <summary>
+    /// Converts <see cref="CursorType"/> to <see cref="InputSystemCursorShape"/>.
+    /// </summary>
+    /// <param name="cursor">The cursor type to convert.</param>
+    /// <returns>The corresponding <see cref="InputSystemCursorShape"/> or null if none.</returns>
+    public static InputSystemCursorShape? FromAlternet(CursorType cursor)
+    {
+        switch (cursor)
+        {
+            default:
+            case CursorType.None:
+                return null;
+            case CursorType.Arrow:
+                return InputSystemCursorShape.Arrow;
+            case CursorType.Cross:
+                return InputSystemCursorShape.Cross;
+            case CursorType.Hand:
+                return InputSystemCursorShape.Hand;
+            case CursorType.IBeam:
+                return InputSystemCursorShape.IBeam;
+            case CursorType.NoEntry:
+                return InputSystemCursorShape.UniversalNo;
+            case CursorType.SizeNESW:
+                return InputSystemCursorShape.SizeNortheastSouthwest;
+            case CursorType.SizeNS:
+                return InputSystemCursorShape.SizeNorthSouth;
+            case CursorType.SizeNWSE:
+                return InputSystemCursorShape.SizeNorthwestSoutheast;
+            case CursorType.SizeWE:
+                return InputSystemCursorShape.SizeWestEast;
+            case CursorType.Sizing:
+                return InputSystemCursorShape.SizeAll;
+            case CursorType.Wait:
+                return InputSystemCursorShape.Wait;
+        }
+    }
+
+    /// <summary>
+    /// Gets the system cursor for the specified cursor type.
+    /// If the cursor does not already exist, it is created.
+    /// All continuous calls to this method with the same shape will return the same cursor instance.
+    /// </summary>
+    /// <param name="cursor">The type of the system cursor.</param>
+    /// <returns>The system cursor for the specified type.</returns>
+    public static InputSystemCursor? GetOrCreateSystemCursor(CursorType cursor)
+    {
+        var cursorShape = FromAlternet(cursor);
+        return GetOrCreateSystemCursor(cursorShape);
+    }
+
+    /// <summary>
+    /// Gets the system cursor for the specified shape.
+    /// If the cursor does not already exist, it is created.
+    /// All continuous calls to this method with the same shape will return the same cursor instance.
+    /// </summary>
+    /// <param name="shape">The shape of the system cursor.</param>
+    /// <returns>The system cursor for the specified shape.</returns>
+    public static InputSystemCursor? GetOrCreateSystemCursor(InputSystemCursorShape? shape)
+    {
+        if (shape is null)
+            return null;
+
+        if (systemCursors[shape.Value] == null)
+        {
+            systemCursors[shape.Value] = InputSystemCursor.Create(shape.Value);
+        }
+
+        return systemCursors[shape.Value]!;
     }
 
     /// <summary>

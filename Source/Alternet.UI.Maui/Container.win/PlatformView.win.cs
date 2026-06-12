@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 #if WINDOWS
 
+using Microsoft.UI.Input;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -14,6 +16,15 @@ namespace Alternet.UI
     /// </summary>
     public partial class PlatformView : SkiaSharp.Views.Windows.SKXamlCanvas
     {
+        /// <summary>
+        /// Gets or sets the cursor that displays when the pointer is over this element.
+        /// Defaults to null, indicating no change to the cursor.
+        /// </summary>
+        public InputCursor InputCursor
+        {
+            get => ProtectedCursor;
+            set => ProtectedCursor = value;
+        }
     }
 }
 
