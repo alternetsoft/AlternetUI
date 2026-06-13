@@ -18,5 +18,15 @@ namespace Alternet.UI
     public interface IMenuProperties
         : ICollectionObserver<object>, INotifyPropertyChanged, IBaseObjectWithId
     {
+        /// <summary>
+        /// Gets parent object of the menu items collection.
+        /// </summary>
+        IBaseObjectWithId? LogicalParent { get; }
+
+        /// <summary>
+        /// Gets logical level of the item.
+        /// This is the depth of the item in the hierarchy.
+        /// </summary>
+        int LogicalLevel { get; }
     }
 }

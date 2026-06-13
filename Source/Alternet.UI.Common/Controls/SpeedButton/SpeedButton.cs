@@ -1653,7 +1653,7 @@ namespace Alternet.UI
         /// returns <see langword="null"/>.</returns>
         public virtual string? GetShortcutText(bool useTemplate, bool forUser = true)
         {
-            if(shortcut is null)
+            if (shortcut is null)
                 return null;
 
             ShortcutInfo.FormatOptions options = new()
@@ -1910,7 +1910,7 @@ namespace Alternet.UI
         {
             DoInsideLayout(() =>
             {
-                if(knownButtonAndImage.Alignment is not null)
+                if (knownButtonAndImage.Alignment is not null)
                 {
                     ImageHorizontalAlignment = knownButtonAndImage.Alignment.Value.Horizontal;
                     ImageVerticalAlignment = knownButtonAndImage.Alignment.Value.Vertical;
@@ -2071,7 +2071,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void UpdateCommandState()
         {
-            if(commandSource.Command is null)
+            if (commandSource.Command is null)
                 return;
             Enabled = commandSource.CanExecute;
         }
@@ -2210,17 +2210,6 @@ namespace Alternet.UI
             {
                 Label.ForegroundColor = GetLabelTextColor(state);
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
-                /*
-                if (IsMouseOver)
-                {
-                    e.Graphics.FillRectangle(Color.Red.AsBrush, e.ClientRectangle.WithSize(5, 5));
-                }
-
-                if (HoveredControl == this)
-                {
-                    e.Graphics.FillRectangle(Color.Green.AsBrush, e.ClientRectangle.WithSize(5, 5).WithOffset(5, 5));
-                }
-                */
             }
 
             if (HasVisibleImage)
@@ -2373,12 +2362,12 @@ namespace Alternet.UI
                 element = Graphics.DrawElementParams.CreateTextElement(ref prm, s);
             }
             else
-            if (rightSide is Image img)
-            {
-                element = Graphics.DrawElementParams.CreateImageElement(ref prm, img);
-            }
-            else
-                return null;
+                if (rightSide is Image img)
+                {
+                    element = Graphics.DrawElementParams.CreateImageElement(ref prm, img);
+                }
+                else
+                    return null;
 
             element.MinWidth = MinRightSideWidth;
 
@@ -2394,7 +2383,7 @@ namespace Alternet.UI
             if (!Enabled || DropDownMenu is null)
                 return;
 
-            if(VisualState == VisualControlState.Normal)
+            if (VisualState == VisualControlState.Normal)
             {
                 Internal(afterShow);
             }
@@ -2569,7 +2558,7 @@ namespace Alternet.UI
         /// containing the details of the menu item change, including the kind of change.</param>
         protected virtual void OnMenuItemChanged(object? sender, BaseEventArgs<MenuChangeKind> e)
         {
-            if(sender is not IMenuItemProperties menuItem)
+            if (sender is not IMenuItemProperties menuItem)
                 return;
             Assign(menuItem);
         }
@@ -2639,7 +2628,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Invoked when either the DPI or system colors change, allowing for adjustments to the control's appearance or layout.
+        /// Invoked when either the DPI or system colors change,
+        /// allowing for adjustments to the control's appearance or layout.
         /// </summary>
         protected virtual void OnDpiOrSystemColorsChanged()
         {
