@@ -1093,6 +1093,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Applies known theme to the <see cref="HeaderControl"/>.
+        /// </summary>
+        /// <param name="theme">The known theme to apply.</param>
+        public virtual void ApplyThemeToHeader(CardPanelHeader.KnownTheme theme)
+        {
+            switch (theme)
+            {
+                case CardPanelHeader.KnownTheme.Default:
+                    HeaderControl.ApplyDefaultTheme();
+                    HasInteriorBorder = true;
+                    break;
+                case CardPanelHeader.KnownTheme.SpeedButton:
+                    HeaderControl.ApplySpeedButtonTheme();
+                    HasInteriorBorder = false;
+                    break;
+                case CardPanelHeader.KnownTheme.PushButton:
+                    HeaderControl.ApplyPushButtonTheme();
+                    HasInteriorBorder = false;
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Removes tab page with the specified index.
         /// </summary>
         /// <param name="index">The index of the tab page.</param>
