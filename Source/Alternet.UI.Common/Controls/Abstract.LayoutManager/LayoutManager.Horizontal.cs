@@ -19,10 +19,13 @@ namespace Alternet.UI
         /// <param name="container">The container layout item for which to calculate the preferred size.</param>
         /// <param name="context">The context providing available size constraints and other layout information.</param>
         /// <param name="isVert">true to stack child items vertically; false to stack them horizontally.</param>
-        /// <param name="children">An optional list of child layout items to consider. If null, all children in the container's layout are
+        /// <param name="children">An optional list of child layout items to consider.
+        /// If null, all children in the container's layout are
         /// used.</param>
-        /// <param name="ignoreDocked">true to ignore child items that are docked; false to include all children in the calculation.</param>
-        /// <returns>A SizeD structure representing the preferred size of the container based on the stacking arrangement of its
+        /// <param name="ignoreDocked">true to ignore child items that are docked; false to include
+        /// all children in the calculation.</param>
+        /// <returns>A SizeD structure representing the preferred size of the container based on the
+        /// stacking arrangement of its
         /// children. Returns SizeD.Empty if the available size is empty or negative.</returns>
         public virtual SizeD GetPreferredSizeWhenStack(
             ILayoutItem container,
@@ -87,8 +90,8 @@ namespace Alternet.UI
             RectD childrenLayoutBounds,
             IReadOnlyList<ILayoutItem> controls)
         {
-            Coord x = 0;
-            Coord w = 0;
+            Coord leftDelta = 0;
+            Coord widthDelta = 0;
 
             Stack<ILayoutItem>? rightControls = null;
             List<ILayoutItem>? fillControls = null;
@@ -99,7 +102,7 @@ namespace Alternet.UI
                 bool isFill = control.HorizontalAlignment == UI.HorizontalAlignment.Fill;
                 if (isFill)
                 {
-                    fillControls ??= new();
+                    fillControls ??= new(controls.Count);
                     fillControls.Add(control);
                     continue;
                 }
@@ -107,7 +110,7 @@ namespace Alternet.UI
                 bool isRight = control.HorizontalAlignment == UI.HorizontalAlignment.Right;
                 if (isRight)
                 {
-                    rightControls ??= new();
+                    rightControls ??= new(controls.Count);
                     rightControls.Push(control);
                 }
                 else
@@ -158,7 +161,7 @@ namespace Alternet.UI
                 var margin = control.Margin;
                 var horizontalMargin = margin.Horizontal;
 
-                var availableWidth = childrenLayoutBounds.Width - x - horizontalMargin - w;
+                var availableWidth = childrenLayoutBounds.Width - leftDelta - horizontalMargin - widthDelta;
 
                 var preferredSize = control.GetPreferredSizeLimited(
                     new PreferredSizeContext(
@@ -178,20 +181,20 @@ namespace Alternet.UI
                     default:
                         control.Bounds =
                             new RectD(
-                                childrenLayoutBounds.Left + x + margin.Left,
+                                childrenLayoutBounds.Left + leftDelta + margin.Left,
                                 alignedPosition.Start,
                                 preferredSize.Width,
                                 alignedPosition.Length);
-                        x += preferredSize.Width + horizontalMargin;
+                        leftDelta += preferredSize.Width + horizontalMargin;
                         break;
                     case HorizontalAlignment.Fill:
                         control.Bounds =
                             new RectD(
-                                childrenLayoutBounds.Left + x + margin.Left,
+                                childrenLayoutBounds.Left + leftDelta + margin.Left,
                                 alignedPosition.Start,
                                 availableWidth,
                                 alignedPosition.Length);
-                        x += availableWidth + horizontalMargin;
+                        leftDelta += availableWidth + horizontalMargin;
                         break;
                     case HorizontalAlignment.Center:
                         centerControls ??= new();
@@ -204,11 +207,11 @@ namespace Alternet.UI
                     case HorizontalAlignment.Right:
                         control.Bounds =
                             new RectD(
-                                childrenLayoutBounds.Right - w - margin.Right - preferredSize.Width,
+                                childrenLayoutBounds.Right - widthDelta - margin.Right - preferredSize.Width,
                                 alignedPosition.Start,
                                 preferredSize.Width,
                                 alignedPosition.Length);
-                        w += preferredSize.Width + horizontalMargin;
+                        widthDelta += preferredSize.Width + horizontalMargin;
                         break;
                 }
             }
