@@ -1159,10 +1159,63 @@ namespace Alternet.UI
                         ClosePopup();
                     };
 
+                    ContextMenu? GetAttachedContextMenu(AbstractControl popupControl)
+                    {
+                        if (popupControl is not Alternet.UI.InnerPopupToolBar toolBar)
+                            return null;
+
+                        var dataContext = toolBar.Content.DataContext;
+
+                        return dataContext as ContextMenu;
+                    }
+
+                    int? GetLevel(AbstractControl popupControl)
+                    {
+                        var contextMenu = GetAttachedContextMenu(popupControl);
+
+                        if (contextMenu is not null)
+                        {
+                            var menuSource = contextMenu.MenuSource;
+
+                            if (menuSource is not null)
+                            {
+                                var logicalLevel = menuSource.LogicalLevel;
+                                return logicalLevel;
+                            }
+                            else
+                            {
+                            }
+                        }
+                        else
+                        {
+                        }
+
+                        return null;
+                    }
+
                     child.Control.ChildVisibleChanged += (s, e) =>
                     {
-                        var firstChild = child.Control?.FirstChild;
+                        var senderLevel = GetLevel(e.Value) ?? 0;
 
+                        var childrenCopy = e.Value.Parent?.Children.ToArray() ?? [];
+
+                        foreach (var control in childrenCopy)
+                        {
+                            if(control == e.Value)
+                                continue;
+
+                            var level = GetLevel(control) ?? 0;
+
+                            if(level >= senderLevel)
+                            {
+                                if (control is Alternet.UI.InnerPopupToolBar toolBar)
+                                {
+                                    toolBar.CloseWhenIdle(ModalResult.Canceled);
+                                }
+                            }
+                        }
+
+                        var firstChild = child.Control?.FirstChild;
                         if (firstChild is not null && firstChild.IsVisible == false)
                             ClosePopup();
                     };
@@ -1192,6 +1245,7 @@ namespace Alternet.UI
                 }
 
                 var hostControl = menu.EnsureHasInnerPopupToolBarHost();
+                hostControl.HideOnEscape = true;
                 hostControl.VisualStatesOverride = VisualControlStates.None;
                 hostControl.ParentBackColor = false;
                 hostControl.ParentForeColor = false;
