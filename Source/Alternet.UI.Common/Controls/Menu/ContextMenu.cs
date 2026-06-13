@@ -79,6 +79,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets source of the menu items. This property is set in <see cref="Assign(IMenuProperties)"/>.
+        /// </summary>
+        public IMenuProperties? MenuSource { get; private set; }
+
+        /// <summary>
         /// Gets a value indicating whether a <see cref="MainMenu"/> exists
         /// in the parent hierarchy of this menu item.
         /// </summary>
@@ -184,13 +189,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Copies the properties from the specified <see cref="IMenuProperties"/>
-        /// source to the current instance.
+        /// Copies the menu items from the specified <see cref="IMenuProperties"/>
+        /// source to the current instance. This method is used to initialize
+        /// the context menu based on the items of the menu source. This method
+        /// sets the <see cref="MenuSource"/> property to the specified source.
         /// </summary>
         /// <param name="source">The source object containing the properties to copy.
         /// Cannot be <see langword="null"/>.</param>
         public virtual void Assign(IMenuProperties source)
         {
+            MenuSource = source;
+
             Items.SetCount(source.Count, () => new MenuItem());
 
             for (var i = 0; i < source.Count; i++)
