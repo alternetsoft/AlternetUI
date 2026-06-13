@@ -601,35 +601,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Configures the default header layout for the file list, ensuring required columns
-        /// are added and enabling sorting functionality for each column.
-        /// </summary>
-        /// <remarks>This method sets up the header with predefined columns:
-        /// "Name", "Date modified", and "Size".  Each column is configured with a sorting action
-        /// that toggles the sort direction when the column is clicked. The header is made visible
-        /// after the configuration is complete.</remarks>
-        public virtual void RequireDefaultHeader()
-        {
-            Header.Required();
-
-            DoInsideLayout(
-            () =>
-            {
-                Header.DeleteColumns();
-                Columns.Clear();
-
-                Header.AddColumn(CommonStrings.Default.FileListBoxColumnName, width: null, OnNameColumnClick);
-
-                Header.AddColumn(CommonStrings.Default.FileListBoxColumnDateModified, width: null, OnDateModifiedColumnClick);
-
-                Header.AddColumn(CommonStrings.Default.FileListBoxColumnSize, width: null, OnSizeColumnClick);
-
-                Header.Visible = true;
-            },
-            false);
-        }
-
-        /// <summary>
         /// Handles a click event on the size column header and initiates sorting of items by their size.
         /// </summary>
         /// <remarks>Call this method when the user interacts with the size column header to sort the
@@ -661,6 +632,37 @@ namespace Alternet.UI
         {
             Sort(FileListBoxColumn.Name, ColumnSortDirection.Flip);
         }
+
+/*
+        /// <summary>
+        /// Configures the default header layout for the file list, ensuring required columns
+        /// are added and enabling sorting functionality for each column.
+        /// </summary>
+        /// <remarks>This method sets up the header with predefined columns:
+        /// "Name", "Date modified", and "Size".  Each column is configured with a sorting action
+        /// that toggles the sort direction when the column is clicked. The header is made visible
+        /// after the configuration is complete.</remarks>
+        public virtual void RequireDefaultHeader()
+        {
+            Header.Required();
+
+            DoInsideLayout(
+            () =>
+            {
+                Header.DeleteColumns();
+                Columns.Clear();
+
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnName, width: null, OnNameColumnClick);
+
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnDateModified, width: null, OnDateModifiedColumnClick);
+
+                Header.AddColumn(CommonStrings.Default.FileListBoxColumnSize, width: null, OnSizeColumnClick);
+
+                Header.Visible = true;
+            },
+            false);
+        }
+*/
 
         /// <summary>
         /// Initializes the default columns for the file list box, including columns for file name, date modified, and

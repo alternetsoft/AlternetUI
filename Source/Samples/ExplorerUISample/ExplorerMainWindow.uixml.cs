@@ -19,9 +19,8 @@ namespace ExplorerUISample
         {
             HasBorder = false,
         };
-        private readonly ListView listView = new()
+        private readonly FileListBox filesView = new()
         {
-            View = ListViewView.Details,
             HasBorder = false,
         };
 
@@ -35,20 +34,11 @@ namespace ExplorerUISample
             mainPanel.LeftPanel.Width = 200;
             mainPanel.BottomPanel.Height = 100;
             treeView.Parent = mainPanel.LeftPanel;
-            listView.Parent = mainPanel.FillPanel;
-            listView.Columns.Add(new ListViewColumn("Name"));
-            listView.Columns.Add(new ListViewColumn("Size"));
-            listView.Columns.Add(new ListViewColumn("Modified"));
-
-            var date = System.DateTime.Now.ToShortDateString();
-            listView.Items.Add(new ListViewItem(
-                new[] { "July Report 1", "1K", date }, 0));
-            listView.Items.Add(new ListViewItem(new[] { 
-                "06.21 M&A Meeting Memo", "1.5K", date }, 2));
-            listView.Items.Add(new ListViewItem(new[] { 
-                "RTC Chart - Mary", "12M", date }, 3));
-            listView.Items.Add(new ListViewItem(new[] { 
-                "3rd quarter results - Mary", "1M", date }, 3));
+            filesView.RequireDefaultColumns();
+            filesView.Parent = mainPanel.FillPanel;
+            filesView.SelectInitialFolder();
+            filesView.ListBox.VertGridLines = true;
+            filesView.AddRootFolderItem = false;
 
             var folderImage = FileListBox.GetDefaultFolderImage();
 
@@ -78,14 +68,9 @@ namespace ExplorerUISample
 
             var imageList = LoadImageList();
 
-            listView.SmallImageList = imageList;
-            listView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
-            listView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
-            listView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
+            filesView.ContextMenuStrip = new();
 
-            listView.ContextMenuStrip = new();
-
-            listView.ContextMenuStrip.Add("Show progress", () =>
+            filesView.ContextMenuStrip.Add("Show progress", () =>
             {
                 Title = "AlterNET UI";
 
@@ -99,14 +84,20 @@ namespace ExplorerUISample
                     Layout = LayoutStyle.Vertical,
                 };
 
+                var panel = new Panel()
+                {
+                    Layout = LayoutStyle.Vertical,
+                    Parent = progressWindow,
+                };
+
                 Label progressLabel = new("Processing files...");
                 progressLabel.Margin = 10;
-                progressLabel.Parent = progressWindow;
+                progressLabel.Parent = panel;
 
                 var progressBar = new ProgressBar()
                 {
                     Margin = (10,0,10,10),
-                    Parent = progressWindow,
+                    Parent = panel,
                     Value = 70,
                 };
 

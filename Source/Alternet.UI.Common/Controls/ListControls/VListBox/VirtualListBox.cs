@@ -2127,7 +2127,7 @@ namespace Alternet.UI
         protected override void OnMouseHover(EventArgs e)
         {
             base.OnMouseHover(e);
-            if (DisposingOrDisposed || !NeedsFullItemToolTip)
+            if (DisposingOrDisposed || !NeedsFullItemToolTip || HasColumns)
                 return;
             ShowOverlayToolTipForItemAtMousePos();
         }
