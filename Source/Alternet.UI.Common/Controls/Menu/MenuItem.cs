@@ -1260,6 +1260,15 @@ namespace Alternet.UI
 
             Enabled = source.Enabled;
             Visible = source.Visible;
+
+            Items.SetCount(source.Count, () => new MenuItem());
+
+            for (var i = 0; i < source.Count; i++)
+            {
+                if (source.GetItem(i) is not IMenuItemProperties sourceItem)
+                    continue;
+                Items[i].Assign(sourceItem);
+            }
         }
 
         /// <summary>

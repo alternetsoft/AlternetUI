@@ -81,6 +81,15 @@ namespace Alternet.UI
             }
         }
 
+        IBaseObjectWithId? IMenuProperties.LogicalParent
+        {
+            get
+            {
+                return LogicalParent;
+            }
+        }
+
+
         /// <summary>
         /// Gets the last visible menu item in the collection of items.
         /// </summary>
