@@ -19,7 +19,7 @@ namespace Alternet.UI
     /// on the card title. Also this control is used in the <see cref="TabControl"/> as a part of its template.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Other)]
-    public partial class CardPanelHeader : HiddenBorder, ITextProperty
+    public partial class CardPanelHeader : HiddenGenericBorder, ITextProperty
     {
         /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
@@ -51,18 +51,20 @@ namespace Alternet.UI
 
         private readonly BaseCollection<CardPanelHeaderItem> tabs;
 
-        private readonly Panel fillPanel = new()
+        private readonly HiddenGenericBorder fillPanel = new()
         {
             ParentBackColor = true,
             ParentForeColor = true,
             ParentFont = true,
+            IsClipped = true,
         };
 
-        private readonly Panel rightPanel = new()
+        private readonly HiddenGenericBorder rightPanel = new()
         {
             ParentBackColor = true,
             ParentForeColor = true,
             ParentFont = true,
+            IsClipped = true,
         };
 
         private CardPanelHeaderItem? selectedTab;
@@ -103,6 +105,7 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeader()
         {
+            IsClipped = true;
             Layout = LayoutStyle.Horizontal;
             
             fillPanel.HorizontalAlignment = HorizontalAlignment.Fill;
@@ -317,12 +320,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the panel where the tabs are located.
         /// </summary>
-        public HiddenBorder FillPanel => fillPanel;
+        public HiddenGenericBorder FillPanel => fillPanel;
 
         /// <summary>
         /// Gets the right panel where the <see cref="CloseButton"/> is located.
         /// </summary>
-        public HiddenBorder RightPanel => rightPanel;
+        public HiddenGenericBorder RightPanel => rightPanel;
 
         /// <summary>
         /// Gets or sets a value indicating whether the close button is visible.
