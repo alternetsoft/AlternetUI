@@ -119,7 +119,7 @@ namespace Alternet.UI
             {
                 if (HasInteriorBorder)
                 {
-                    TabControl.TabHeaderInteriorDrawParams prm = new()
+                    TabControlDrawInterior.TabHeaderInteriorDrawParams prm = new()
                     {
                         Control = this,
                         Graphics = e.Graphics,
@@ -129,7 +129,7 @@ namespace Alternet.UI
                         RoundCorners = UseRoundedCorners,
                     };
 
-                    TabControl.DrawTabHeaderInterior(prm);
+                    TabControlDrawInterior.Default.DrawTabHeaderInterior(prm);
                 }
             };
 

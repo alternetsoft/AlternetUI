@@ -1374,7 +1374,7 @@ namespace Alternet.UI
             var r = Header.Bounds;
             r.Size += Header.Margin.Size;
 
-            TabControlInteriorDrawParams prm = new ()
+            TabControlDrawInterior.TabControlInteriorDrawParams prm = new ()
             {
                 Graphics = e.Graphics,
                 Bounds = ClientRectangle,
@@ -1383,7 +1383,7 @@ namespace Alternet.UI
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
             };
 
-            DrawTabControlInterior(prm);
+            TabControlDrawInterior.Default.DrawTabControlInterior(prm);
         }
 
         /// <summary>
@@ -1470,7 +1470,7 @@ namespace Alternet.UI
             if (r.Height > ClientSize.Height)
                 r.Height = ClientSize.Height;
 
-            TabControl.TabHeaderInteriorDrawParams prm = new()
+            TabControlDrawInterior.TabHeaderInteriorDrawParams prm = new()
             {
                 Control = HeaderControl,
                 Graphics = e.Graphics,
@@ -1480,7 +1480,7 @@ namespace Alternet.UI
                 RoundCorners = UseRoundedCorners,
             };
 
-            TabControl.DrawTabHeaderInterior(prm);
+            TabControlDrawInterior.Default.DrawTabHeaderInterior(prm);
         }
 
         /// <summary>
