@@ -13,6 +13,11 @@ namespace Alternet.UI
     /// </summary>
     public class FileListBoxItem : TreeViewItem
     {
+        /// <summary>
+        /// Gets or sets default alignment of the 'File Size' column cell text.
+        /// </summary>
+        public static HorizontalAlignment DefaultSizeColumnCellAlignment = HorizontalAlignment.Left;
+
         private readonly FileListBox? owner;
 
         private bool? isFolder;
@@ -284,7 +289,8 @@ namespace Alternet.UI
         /// provider. This property enables culture-specific formatting for display and parsing operations associated
         /// with the item.</remarks>
         [Browsable(false)]
-        public virtual IFormatProvider FormatProvider => owner?.ListBox.FormatProvider ?? System.Globalization.CultureInfo.CurrentCulture;
+        public virtual IFormatProvider FormatProvider
+            => owner?.ListBox.FormatProvider ?? System.Globalization.CultureInfo.CurrentCulture;
 
         /// <summary>
         /// Gets the date format string used for displaying the last modified date of files and other date-time values.
@@ -515,7 +521,8 @@ namespace Alternet.UI
         /// separated by a space.</remarks>
         /// <param name="dt">The nullable date and time value to convert. If <see langword="null"/>,
         /// the method returns an empty string.</param>
-        /// <returns>A string that represents the formatted date and time. Returns an empty string if <paramref name="dt"/> is
+        /// <returns>A string that represents the formatted date and time.
+        /// Returns an empty string if <paramref name="dt"/> is
         /// <see langword="null"/>.</returns>
         public virtual string DateTimeToString(DateTime? dt)
         {
@@ -542,7 +549,7 @@ namespace Alternet.UI
             if (IsFile)
             {
                 DateModifiedColumnCell?.SetText(LastWriteTimeText);
-                SizeColumnCell?.SetText(SizeText).SetHorizontalAlignment(HorizontalAlignment.Right);
+                SizeColumnCell?.SetText(SizeText).SetHorizontalAlignment(DefaultSizeColumnCellAlignment);
             }
         }
 
