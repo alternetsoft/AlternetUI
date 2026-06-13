@@ -2775,7 +2775,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="target">The target control which is being resized by the sizing grip.</param>
         /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
-        public virtual GripControl AddSizingGrip(AbstractControl? target, GripControlKind kind = GripControlKind.SizeGripRight)
+        public virtual GripControl AddSizingGrip(
+            AbstractControl? target,
+            GripControlKind kind = GripControlKind.SizeGripRight)
         {
             return AddSizingGrip(() => target, kind);
         }

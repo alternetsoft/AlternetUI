@@ -81,6 +81,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets source of the items.
+        /// </summary>
+        public IMenuProperties? MenuSource { get; protected set; }
+
         IBaseObjectWithId? IMenuProperties.LogicalParent
         {
             get
