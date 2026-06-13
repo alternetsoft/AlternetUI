@@ -45,10 +45,11 @@ namespace Alternet.UI
 
             this.UseWindowBorderSize(Window.FrameMetrics.BorderMetricKind.ThickFrame);
 
+            FillPanel.Layout = LayoutStyle.Vertical;
+
             toolBar = new ToolBar();
             toolBar.AutoUpdateColors = false;
             toolBar.ResetSuggestedSize();
-            toolBar.Dock = DockStyle.Top;
             toolBar.MinHeight = Coord.Max(Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow), ToolBar.DefaultMinItemSize);
             toolBar.Parent = this.FillPanel;
 
@@ -57,8 +58,9 @@ namespace Alternet.UI
             fallbackOptions = new ImageSizeFallbackOptions();
             fallbackOptions.AllowScaled = true;
 
-            icon = toolBar.AddIcon(KnownIcons.Default, fallbackOptions);
+            icon = toolBar.AddIcon(null, fallbackOptions);
             icon.Margin = DefaultIconMargin;
+            icon.Visible = false;
 
             gripControl = new GripControl();
             gripControl.ConfigureAsMovingGrip();
@@ -75,16 +77,17 @@ namespace Alternet.UI
 
             toolBar.AddControl(gripControl);
 
-            minimizeButton = toolBar.AddSpeedBtnCore(null, KnownSvgImages.ImgWindowMinimize, CommonStrings.Default.ButtonMinimize);
-
+            minimizeButton = toolBar.AddSpeedBtnCore(
+                null, KnownSvgImages.ImgWindowMinimize, CommonStrings.Default.ButtonMinimize);
             minimizeButton.HorizontalAlignment = HorizontalAlignment.Right;
+            minimizeButton.Visible = false;
 
-            maximizeButton = toolBar.AddSpeedBtnCore(null, KnownSvgImages.ImgWindowMaximize, CommonStrings.Default.ButtonMaximize);
-
+            maximizeButton = toolBar.AddSpeedBtnCore(
+                null, KnownSvgImages.ImgWindowMaximize, CommonStrings.Default.ButtonMaximize);
+            maximizeButton.Visible = false;
             maximizeButton.HorizontalAlignment = HorizontalAlignment.Right;
 
             closeButton = toolBar.AddSpeedBtnCore(null, KnownSvgImages.ImgClose, CommonStrings.Default.ButtonClose);
-
             closeButton.HorizontalAlignment = HorizontalAlignment.Right;
         }
 
