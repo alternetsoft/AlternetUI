@@ -1068,8 +1068,7 @@ namespace Alternet.UI
             button.HasBorder = TabHasBorder;
             button.VerticalAlignment = UI.VerticalAlignment.Center;
             button.SetContentHorizontalAlignment(HorizontalAlignment.Left);
-            Children.Insert(index ?? Children.Count, button);
-            button.Parent = fillPanel;
+            fillPanel.Children.Insert(index ?? fillPanel.Children.Count, button);
             button.Click += OnItemClick;
 
             var item = new CardPanelHeaderItem(button)

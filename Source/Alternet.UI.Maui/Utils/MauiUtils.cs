@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// In order to make overlay transparent, set <see cref="Alternet.Drawing.Color.Transparent"/>
         /// to this property.
         /// </summary>
-        public static Alternet.Drawing.Color ContextMenuUnderlayColorDark = new(55, 0, 0, 0);
+        public static Alternet.Drawing.Color ContextMenuUnderlayColorDark = new(5, 0, 0, 0);
 
         /// <summary>
         /// Gets or sets color used as an overlay fill color when context menu is shown.
@@ -50,7 +50,7 @@ namespace Alternet.UI
         /// In order to make overlay transparent, set <see cref="Alternet.Drawing.Color.Transparent"/>
         /// to this property.
         /// </summary>
-        public static Alternet.Drawing.Color ContextMenuUnderlayColorLight = new(55, 255, 255, 255);
+        public static Alternet.Drawing.Color ContextMenuUnderlayColorLight = new(5, 255, 255, 255);
 
         /// <summary>
         /// Override value for testing or other purposes. If set, this value will be returned by
@@ -71,14 +71,15 @@ namespace Alternet.UI
                 if (IsTabletModeOverride.HasValue)
                     return IsTabletModeOverride.Value;
 
-                return DeviceInfo.Current.Idiom == DeviceIdiom.Tablet;      
+                return DeviceInfo.Current.Idiom == DeviceIdiom.Tablet;
             }
         }
 
         /// <summary>
         /// Gets the first window in the current application's window collection.
         /// </summary>
-        /// <returns>The first <see cref="Microsoft.Maui.Controls.Window"/> instance in the application's window collection, or
+        /// <returns>The first <see cref="Microsoft.Maui.Controls.Window"/>
+        /// instance in the application's window collection, or
         /// <see langword="null"/> if the application has no windows or is not running.</returns>
         public static Microsoft.Maui.Controls.Window? FirstWindow
         {
@@ -261,10 +262,16 @@ namespace Alternet.UI
 
             foreach (var item in ancestors)
             {
-                if(item is VisualElement visualItem)
+                if (item is VisualElement visualItem)
                 {
                     x += visualItem.X;
                     y += visualItem.Y;
+                }
+                else
+                if(item is Microsoft.Maui.Controls.Window window)
+                {
+                    x += window.X;
+                    y += window.Y;
                 }
             }
 
@@ -699,7 +706,7 @@ namespace Alternet.UI
         {
             T? result = null;
 
-            foreach(var parent in AllParents(view))
+            foreach (var parent in AllParents(view))
             {
                 if (parent is T typedParent)
                     result = typedParent;
@@ -801,15 +808,15 @@ namespace Alternet.UI
                 page = asPage;
             }
             else
-            if (instance is View asView)
-            {
-                page = UI.MauiUtils.GetPage(asView);
-            }
-            else
-            if (instance is UI.Control asControl)
-            {
-                page = GetParentPage(asControl);
-            }
+                if (instance is View asView)
+                {
+                    page = UI.MauiUtils.GetPage(asView);
+                }
+                else
+                    if (instance is UI.Control asControl)
+                    {
+                        page = GetParentPage(asControl);
+                    }
 
             return page ?? GetMainPageFromApplication();
         }
@@ -855,16 +862,16 @@ namespace Alternet.UI
                 result = GetAbsoluteLayoutChild(asPage);
             }
             else
-            if (instance is View asView)
-            {
-                result = GetTopAbsoluteLayout(asView);
-            }
-            else
-            if (instance is UI.Control asControl)
-            {
-                var container = ControlView.GetContainer(asControl);
-                result = GetTopAbsoluteLayout(container);
-            }
+                if (instance is View asView)
+                {
+                    result = GetTopAbsoluteLayout(asView);
+                }
+                else
+                    if (instance is UI.Control asControl)
+                    {
+                        var container = ControlView.GetContainer(asControl);
+                        result = GetTopAbsoluteLayout(container);
+                    }
 
             return result;
         }
@@ -1069,7 +1076,7 @@ namespace Alternet.UI
 
             foreach (var item in ancestors)
             {
-                if(item == indirectParent)
+                if (item == indirectParent)
                     break;
 
                 if (item is VisualElement visualItem)
@@ -1115,16 +1122,21 @@ namespace Alternet.UI
                 {
                     child = new Alternet.Maui.InnerPopupToolBarContainerView();
                     child.IsVisible = false;
-                    child.Control = new Alternet.UI.Panel();
-                    child.Control.DebugIdentifier = "OverlayPanelForInnerPopupToolBar";
-                    FillAbsoluteLayout(child);
-
-                    child.Control.BackColor = cc;
-                    child.Control.ParentBackColor = false;
-
                     child.BackgroundColor = cc.ToMaui();
 
+                    var panel = new Alternet.UI.Panel();
+                    panel.VisualStatesOverride = VisualControlStates.None;
+
+                    child.Control = panel;
+
+                    child.Control.DebugIdentifier = "OverlayPanelForInnerPopupToolBar";
+                    child.Control.ParentBackColor = false;
+                    child.Control.BackColor = cc;
+
+                    FillAbsoluteLayout(child);
+
                     child.ZIndex = int.MaxValue;
+
                     absLayout.Children.Add(child);
 
                     void ClosePopup()
@@ -1151,26 +1163,36 @@ namespace Alternet.UI
                     {
                         var firstChild = child.Control?.FirstChild;
 
-                        if (firstChild is not null && firstChild.IsVisible == false )
+                        if (firstChild is not null && firstChild.IsVisible == false)
                             ClosePopup();
                     };
                 }
                 else
                 {
-                    absLayout.Children.Remove(child);
-
-                    if (child.Control is not null)
+                    try
                     {
-                      child.Control.BackColor = cc;
-                      child.Control.ParentBackColor = false;
+                        absLayout.BatchBegin();
+
+                        absLayout.Children.Remove(child);
+
+                        child.BackgroundColor = cc.ToMaui();
+
+                        if (child.Control is not null)
+                        {
+                            child.Control.ParentBackColor = false;
+                            child.Control.BackColor = cc;
+                        }
+
+                        absLayout.Children.Add(child);
                     }
-
-                    child.BackgroundColor = cc.ToMaui();
-
-                    absLayout.Children.Add(child);
+                    finally
+                    {
+                        absLayout.BatchCommit();
+                    }
                 }
 
                 var hostControl = menu.EnsureHasInnerPopupToolBarHost();
+                hostControl.VisualStatesOverride = VisualControlStates.None;
                 hostControl.ParentBackColor = false;
                 hostControl.ParentForeColor = false;
                 hostControl.ContainerSizeOverride = child.Control?.Size;
@@ -1193,8 +1215,6 @@ namespace Alternet.UI
                 containerView ??= controlView;
 
                 var selfContained = controlView == containerView;
-
-                HideContextMenus(view);
 
                 var c = controlView?.Control;
 

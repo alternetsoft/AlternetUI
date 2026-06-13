@@ -81,7 +81,7 @@ namespace Alternet.UI
 
                 var elements = MauiUtils.GetAllChildren<IRaiseSystemColorsChanged>();
 
-                foreach(var element in elements)
+                foreach (var element in elements)
                 {
                     element.RaiseSystemColorsChanged();
                 }
@@ -141,7 +141,7 @@ namespace Alternet.UI
             {
                 container = ControlView.GetContainer(control);
 
-                if(container is null)
+                if (container is null)
                 {
                     absolutePos += control.Location;
                     control = control.Parent;
@@ -317,7 +317,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual ICaretHandler CreateCaretHandler(AbstractControl control, int width, int height)
         {
-            if(WindowsCaretHandler.UseIfPossible)
+            if (WindowsCaretHandler.UseIfPossible)
                 return new WindowsCaretHandler(control, width, height);
             return new PlessCaretHandler(control, width, height);
         }
