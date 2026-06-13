@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements popup control which is shown inside client area of another control.
     /// </summary>
-    public partial class PopupControl : Border
+    public partial class PopupControl : ResizableWindowBorder
     {
         private readonly ControlSubscriber subscriber = new();
 
