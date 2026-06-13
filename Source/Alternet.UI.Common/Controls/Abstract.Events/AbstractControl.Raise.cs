@@ -902,7 +902,7 @@ namespace Alternet.UI
 
                 if (this is Control && !IsWindow)
                 {
-                    TemplateUtils.RaisePaintForNonPlatformChildren(this, () => e.Graphics);
+                    TemplateUtils.RaisePaintForNonPlatformChildren(this, () => e.Graphics, true);
                 }
                 else
                 {

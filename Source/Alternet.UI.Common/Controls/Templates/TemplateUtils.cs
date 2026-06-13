@@ -112,12 +112,14 @@ namespace Alternet.UI
         /// </remarks>
         public static void RaisePaintForGenericChildren(
             AbstractControl? control,
-            Func<Graphics> dc)
+            Func<Graphics> dc,
+            bool clipRect)
         {
             RaisePaintForMatchingChildren(
                 control,
                 dc,
-                c => c is GenericControl);
+                c => c is GenericControl,
+                clipRect);
         }
 
         /// <summary>
@@ -132,12 +134,14 @@ namespace Alternet.UI
         /// object used for painting.</param>
         public static void RaisePaintForNonPlatformChildren(
             AbstractControl? control,
-            Func<Graphics> dc)
+            Func<Graphics> dc,
+            bool clipRect)
         {
             RaisePaintForMatchingChildren(
                 control,
                 dc,
-                c => !c.IsPlatformControl);
+                c => !c.IsPlatformControl,
+                clipRect);
         }
 
         /// <summary>
@@ -159,13 +163,16 @@ namespace Alternet.UI
         public static void RaisePaintForMatchingChildren(
             AbstractControl? control,
             Func<Graphics> dc,
-            Predicate<AbstractControl> predicate)
+            Predicate<AbstractControl> predicate,
+            bool clipRect)
         {
             if (control is null || !control.HasChildren)
                 return;
 
             // We need Children here, not AllChildrenInLayout
             var children = control.Children;
+
+            var clippedRect = new RectD(PointD.Empty, control.ClientSize);
 
             foreach (var child in children)
             {
@@ -174,10 +181,18 @@ namespace Alternet.UI
                 if (!predicate(child))
                     continue;
 
-                if (UseSkiaForPaintGenericChildren)
-                    RaisePaintRecursiveSkia(child, dc, child.Location);
-                else
-                    RaisePaintRecursive(child, dc(), child.Location);
+                var graphics = dc();
+
+                graphics.DoInsideClipped(
+                    clippedRect,
+                    () =>
+                    {
+                        if (UseSkiaForPaintGenericChildren)
+                            RaisePaintRecursiveSkia(child, () => graphics, child.Location);
+                        else
+                            RaisePaintRecursive(child, graphics, child.Location);
+                    },
+                    clipRect);
             }
         }
 
