@@ -205,6 +205,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets logical level of the element in the logical tree.
+        /// Logical level is defined as the number of logical parents between the element
+        /// and the root of the logical tree.
+        /// </summary>
+        public virtual int LogicalLevel
+        {
+            get
+            {
+                var parent = LogicalParent;
+                if (parent is null)
+                    return 0;
+                return parent.LogicalLevel + 1;
+            }
+        }
+
+        /// <summary>
         /// Gets an enumerable collection of all parent elements in the visual tree,
         /// starting from the immediate parent and traversing upward.
         /// </summary>
