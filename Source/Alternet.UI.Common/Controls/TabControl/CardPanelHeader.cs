@@ -35,6 +35,11 @@ namespace Alternet.UI
         public static Thickness DefaultTabMargin = 1;
 
         /// <summary>
+        /// Gets or sets default value for the <see cref="UseRoundedCorners"/> property.
+        /// </summary>
+        public static bool DefaultUseRoundedCorners = true;
+
+        /// <summary>
         /// Gets or sets default value for the tab padding.
         /// </summary>
         public static Thickness DefaultTabPadding = (6, 5, 6, 5);
@@ -81,6 +86,7 @@ namespace Alternet.UI
         private TabAlignment tabAlignment;
         private bool isVerticalText;
         private ImageToText imageToText;
+        private bool useRoundedCorners;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -113,12 +119,17 @@ namespace Alternet.UI
             {
                 if (HasInteriorBorder)
                 {
-                    TabControl.DrawTabHeaderInterior(
-                        this,
-                        e.Graphics,
-                        e.ClientRectangle,
-                        GetInteriorBorderColor().AsBrush,
-                        TabsAlignment);
+                    TabControl.TabHeaderInteriorDrawParams prm = new()
+                    {
+                        Control = this,
+                        Graphics = e.Graphics,
+                        Bounds = e.ClientRectangle,
+                        Brush = GetInteriorBorderColor().AsBrush,
+                        TabAlignment = TabsAlignment,
+                        RoundCorners = UseRoundedCorners,
+                    };
+
+                    TabControl.DrawTabHeaderInterior(prm);
                 }
             };
 
@@ -396,6 +407,21 @@ namespace Alternet.UI
                         tab.HeaderButton.IsVerticalText = value;
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether interior has a border with rounded corners.
+        /// </summary>
+        public virtual bool UseRoundedCorners
+        {
+            get => useRoundedCorners;
+            set
+            {
+                if (useRoundedCorners == value)
+                    return;
+                useRoundedCorners = value;
+                InvalidateInterior();
             }
         }
 
@@ -1184,6 +1210,7 @@ namespace Alternet.UI
             tabAlignment = TabAlignment.Top;
             isVerticalText = false;
             imageToText = ImageToText.Horizontal;
+            useRoundedCorners = DefaultUseRoundedCorners;
 
             ParentBackColor = true;
             ParentForeColor = true;

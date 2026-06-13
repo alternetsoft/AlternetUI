@@ -498,6 +498,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether interior has a border with rounded corners.
+        /// </summary>
+        public virtual bool UseRoundedCorners
+        {
+            get => HeaderControl.UseRoundedCorners;
+            set
+            {
+                if (HeaderControl.UseRoundedCorners == value)
+                    return;
+                HeaderControl.UseRoundedCorners = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets the number of tabs in the tab strip.
         /// </summary>
         /// <returns>The number of tabs in the tab strip.</returns>
@@ -1358,12 +1373,17 @@ namespace Alternet.UI
                 return;
             var r = Header.Bounds;
             r.Size += Header.Margin.Size;
-            DrawTabControlInterior(
-                e.Graphics,
-                ClientRectangle,
-                r,
-                GetInteriorBorderColor().AsBrush,
-                tabPaintAlignment ?? TabAlignment);
+
+            TabControlInteriorDrawParams prm = new ()
+            {
+                Graphics = e.Graphics,
+                Bounds = ClientRectangle,
+                HeaderBounds = r,
+                Brush = GetInteriorBorderColor().AsBrush,
+                TabAlignment = tabPaintAlignment ?? TabAlignment,
+            };
+
+            DrawTabControlInterior(prm);
         }
 
         /// <summary>
@@ -1450,12 +1470,17 @@ namespace Alternet.UI
             if (r.Height > ClientSize.Height)
                 r.Height = ClientSize.Height;
 
-            DrawTabHeaderInterior(
-                Header,
-                e.Graphics,
-                r,
-                GetInteriorBorderColor().AsBrush,
-                tabPaintAlignment ?? TabAlignment);
+            TabControl.TabHeaderInteriorDrawParams prm = new()
+            {
+                Control = HeaderControl,
+                Graphics = e.Graphics,
+                Bounds = r,
+                Brush = GetInteriorBorderColor().AsBrush,
+                TabAlignment = tabPaintAlignment ?? TabAlignment,
+                RoundCorners = UseRoundedCorners,
+            };
+
+            TabControl.DrawTabHeaderInterior(prm);
         }
 
         /// <summary>
