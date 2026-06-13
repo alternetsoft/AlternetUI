@@ -54,7 +54,6 @@ namespace Alternet.UI
         private static int groupIndexCounter;
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
-        private static WeakReferenceValue<AbstractControl> weakHoveredControl = new();
         private static bool? defaultUseInternalDropDownMenu;
 
         private bool showDropDownMenuWhenClicked = true;
@@ -250,39 +249,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets hovered control.
         /// </summary>
-        /// <remarks>
-        /// Do not change this property, this is done by the library.
-        /// </remarks>
         public static AbstractControl? HoveredControl
         {
-            get => weakHoveredControl.Value;
-
-            set
-            {
-                var oldHoveredControl = weakHoveredControl.Value;
-                if (oldHoveredControl == value)
-                    return;
-
-                oldHoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
-
-                weakHoveredControl.Value = value;
-
-                UpdateMouseEventTarget(value);
-
-                StaticControlEvents.RaiseHoveredChanged(value, EventArgs.Empty);
-                value?.RaiseVisualStateChanged(EventArgs.Empty);
-
-                if (value is null)
-                {
-                    MouseHoverOrigin = null;
-                    TimerUtils.MouseHoverTimer.Stop();
-                }
-                else
-                {
-                    MouseHoverOrigin = Mouse.GetPosition(value);
-                    TimerUtils.MouseHoverTimer.RestartOnce();
-                }
-            }
+            get => PlessMouse.HoveredControl;
         }
 
         /// <summary>
@@ -2586,8 +2555,13 @@ namespace Alternet.UI
 
                 if (!ignoreHovered)
                 {
-                    if (IsMouseOver && HoveredControl == this)
-                        result |= VisualControlStates.Hovered;
+                    if (IsMouseOver)
+                    {
+                        if (HoveredControl == this)
+                        {
+                            result |= VisualControlStates.Hovered;
+                        }
+                    }
                 }
 
                 if (Focused)

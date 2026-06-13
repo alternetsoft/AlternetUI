@@ -24,11 +24,6 @@ namespace Alternet.UI
         public static int LongTapInterval = 1500;
 
         /// <summary>
-        /// Gets or sets whether to draw test mouse pointer inside the control.
-        /// </summary>
-        public static bool ShowTestMouseInControl = false;
-
-        /// <summary>
         /// Gets or sets color of the test mouse pointer.
         /// </summary>
         public static Color TestMouseColor = Color.Red;
@@ -46,11 +41,25 @@ namespace Alternet.UI
         private static Timer? longTapTimer;
         private static WeakReference<AbstractControl>? longTapControl;
         private static WeakReferenceValue<AbstractControl> mouseTargetControlOverride = new();
+        private static WeakReferenceValue<AbstractControl> weakHoveredControl = new();
+        private static bool showTestMouseInControl = false;
 
         /// <summary>
         /// Occurs when <see cref="LastMousePosition"/> property is changed.
         /// </summary>
         public static event EventHandler? LastMousePositionChanged;
+
+        /// <summary>
+        /// Gets or sets whether to draw test mouse pointer inside the control.
+        /// </summary>
+        public static bool ShowTestMouseInControl
+        {
+            get => showTestMouseInControl;
+            set
+            {
+                showTestMouseInControl = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets whether to ignore hovered state in the controls.
@@ -60,7 +69,13 @@ namespace Alternet.UI
         {
             get
             {
-                return ignoreHoveredState ??= App.IsTabletOrPhoneDevice;
+                ignoreHoveredState ??= App.IsTabletOrPhoneDevice;
+
+                if (ignoreHoveredState.Value)
+                {
+                }
+
+                return ignoreHoveredState!.Value;
             }
 
             set
@@ -94,6 +109,14 @@ namespace Alternet.UI
             }
         }
 
+        internal static AbstractControl? HoveredControl
+        {
+            get
+            {
+                return LastMousePosition.Control ?? weakHoveredControl.Value;
+            }
+        }
+
         /// <summary>
         /// Gets last mouse position passed to mouse event handlers.
         /// </summary>
@@ -113,6 +136,8 @@ namespace Alternet.UI
 
                 lastMousePosition = value;
 
+                SetHoveredControl(lastControl);
+
                 LastMousePositionChanged?.Invoke(null, EventArgs.Empty);
 
                 if (ShowTestMouseInControl)
@@ -123,6 +148,31 @@ namespace Alternet.UI
                     if (hovered != lastControl)
                         hovered?.Refresh();
                 }
+            }
+        }
+
+        internal static void SetHoveredControl(AbstractControl? value)
+        {
+            var oldHoveredControl = weakHoveredControl.Value;
+            if (oldHoveredControl == value)
+                return;
+
+            weakHoveredControl.Value = value;
+
+            oldHoveredControl?.RaiseVisualStateChanged(EventArgs.Empty);
+
+            StaticControlEvents.RaiseHoveredChanged(value, EventArgs.Empty);
+            value?.RaiseVisualStateChanged(EventArgs.Empty);
+
+            if (value is null)
+            {
+                AbstractControl.MouseHoverOrigin = null;
+                TimerUtils.MouseHoverTimer.Stop();
+            }
+            else
+            {
+                AbstractControl.MouseHoverOrigin = Mouse.GetPosition(value);
+                TimerUtils.MouseHoverTimer.RestartOnce();
             }
         }
 

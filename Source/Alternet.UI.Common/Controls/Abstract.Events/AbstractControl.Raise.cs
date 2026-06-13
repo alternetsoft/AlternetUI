@@ -46,7 +46,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates the current target control for mouse events to the specified control if it differs from the previous target.
+        /// Updates the current target control for mouse events to the specified
+        /// control if it differs from the previous target.
         /// </summary>
         public static void UpdateMouseEventTarget(AbstractControl? control)
         {
@@ -286,7 +287,6 @@ namespace Alternet.UI
             if (ForEachVisibleChild(e, (control, e) => control.OnBeforeParentMouseUp(this, e)))
                 return;
 
-            HoveredControl = this;
             PlessMouse.CancelLongTapTimer();
 
             RaiseNotifications((n) => n.BeforeMouseUp(this, e));
@@ -323,7 +323,6 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             UpdateMouseEventTarget(this);
-            HoveredControl = this;
             Mouse.RaiseMoved(this, e);
 
             RaiseNotifications((n) => n.BeforeMouseMove(this, e));
@@ -367,8 +366,6 @@ namespace Alternet.UI
 
             if (e.Handled)
                 return;
-
-            HoveredControl = this;
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
@@ -654,7 +651,6 @@ namespace Alternet.UI
                 return;
             if (Parent is null)
                 return;
-            PlessMouse.LastMousePosition = (null, null);
             Parent.OnChildMouseLeave(sender, e);
             Parent.RaiseChildMouseLeave(sender, e);
         }
@@ -670,7 +666,7 @@ namespace Alternet.UI
                 return;
             PlessMouse.CancelLongTapTimer();
             if (HoveredControl == this)
-                HoveredControl = null;
+                PlessMouse.SetHoveredControl(null);
             RaiseIsMouseOverChanged(e);
             IsMouseLeftButtonDown = false;
             OnMouseLeave(e);
@@ -694,8 +690,6 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             PlessMouse.CancelLongTapTimer();
-            HoveredControl = this;
-            PlessMouse.LastMousePosition = (null, this);
             RaiseIsMouseOverChanged(e);
             OnMouseEnter(e);
             MouseEnter?.Invoke(this, e);
@@ -1333,7 +1327,6 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             UpdateMouseEventTarget(this);
-            HoveredControl = this;
             OnMouseWheel(e);
 
             if (ForEachParent(e, (control, e) => control.OnBeforeChildMouseWheel(this, e)))

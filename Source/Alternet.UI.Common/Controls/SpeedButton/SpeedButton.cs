@@ -354,7 +354,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Indicates whether tooltips in all <see cref="SpeedButton"/> controls are suppressed throughout the application.
+        /// Indicates whether tooltips in all <see cref="SpeedButton"/> controls are
+        /// suppressed throughout the application.
         /// </summary>
         /// <remarks>When set to <see langword="true"/>, no tooltips will be displayed, regardless of
         /// individual control settings. This can be useful in scenarios where tooltips may interfere with user
@@ -436,6 +437,21 @@ namespace Alternet.UI
                 {
                     Label.IsVerticalText = value;
                 });
+            }
+        }
+
+        /// <inheritdoc/>
+        public override bool IsMouseOver
+        {
+            get
+            {
+                var result = base.IsMouseOver;
+
+                if (result)
+                {
+                }
+
+                return result;
             }
         }
 
@@ -1507,7 +1523,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Suppresses all tooltips in <see cref="SpeedButton"/> controls globally by incrementing the suppression count.
+        /// Suppresses all tooltips in <see cref="SpeedButton"/> controls globally by
+        /// incrementing the suppression count.
         /// In order to resume tooltips, a corresponding call to <see cref="AllToolTipsResume"/> must be made.
         /// </summary>
         /// <remarks>Call this method to prevent tooltips from being displayed until suppression is
@@ -1521,7 +1538,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Resumes all tooltips in <see cref="SpeedButton"/> controls globally by decrementing the suppression count.
-        /// This method should be called after a corresponding call to <see cref="AllToolTipsSuppress"/> to re-enable tooltips.
+        /// This method should be called after a corresponding call to <see cref="AllToolTipsSuppress"/>
+        /// to re-enable tooltips.
         /// </summary>
         public static void AllToolTipsResume()
         {
@@ -1536,7 +1554,8 @@ namespace Alternet.UI
         /// using 'Dark' color theme.
         /// </summary>
         /// <param name="theme"><see cref="ControlStateSettings"/> to initialize.</param>
-        /// <param name="cornerRadius">Optional corner radius for the borders. If not specified, default value will be used.</param>
+        /// <param name="cornerRadius">Optional corner radius for the borders. If not specified,
+        /// default value will be used.</param>
         public static void InitThemeDark(ControlStateSettings theme, BorderCornerRadius? cornerRadius = null)
         {
             AllStateColors colors = new()
@@ -2171,11 +2190,16 @@ namespace Alternet.UI
         {
             var state = VisualState;
 
-            var backgroundFlags = IsTransparent ? DrawDefaultBackgroundFlags.None : DrawDefaultBackgroundFlags.DrawBackground;
+            var isNormalOrDisabled = state == VisualControlState.Normal || state == VisualControlState.Disabled;
+
+            if (state == VisualControlState.Hovered)
+            {
+            }
+
+            var backgroundFlags = IsTransparent
+                ? DrawDefaultBackgroundFlags.None : DrawDefaultBackgroundFlags.DrawBackground;
 
             var flags = backgroundFlags;
-
-            var isNormalOrDisabled = state == VisualControlState.Normal || state == VisualControlState.Disabled;
 
             if (isNormalOrDisabled && ParentBackColor)
                 flags |= DrawDefaultBackgroundFlags.UseParentBackColor;
@@ -2184,9 +2208,19 @@ namespace Alternet.UI
 
             if (TextVisible)
             {
-
                 Label.ForegroundColor = GetLabelTextColor(state);
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
+                /*
+                if (IsMouseOver)
+                {
+                    e.Graphics.FillRectangle(Color.Red.AsBrush, e.ClientRectangle.WithSize(5, 5));
+                }
+
+                if (HoveredControl == this)
+                {
+                    e.Graphics.FillRectangle(Color.Green.AsBrush, e.ClientRectangle.WithSize(5, 5).WithOffset(5, 5));
+                }
+                */
             }
 
             if (HasVisibleImage)

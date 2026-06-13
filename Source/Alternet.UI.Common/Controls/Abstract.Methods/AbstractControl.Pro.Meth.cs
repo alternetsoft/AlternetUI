@@ -183,7 +183,7 @@ namespace Alternet.UI
             if (FocusedControl == this)
                 FocusedControl = null;
             if (HoveredControl == this)
-                HoveredControl = null;
+                PlessMouse.SetHoveredControl(null);
             delayedTextChanged.Reset();
 
             Designer?.RaiseDisposed(this, EventArgs.Empty);
