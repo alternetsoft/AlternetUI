@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -82,7 +83,8 @@ namespace Alternet.UI
             ParentForeColor = true;
 
             cardPanelHeader.UserPaint = true;
-            cardPanelHeader.Paint += OnHeaderPaint;
+            cardPanelHeader.FillPanel.Paint += OnHeaderPaint;
+            cardPanelHeader.RightPanel.Paint += OnRightHeaderPartPaint;
             UserPaint = true;
 
             base.Layout = LayoutStyle.Vertical;
@@ -615,7 +617,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(Layout == LayoutStyle.Vertical)
+                if (Layout == LayoutStyle.Vertical)
                 {
                     if (Header.VerticalAlignment == UI.VerticalAlignment.Bottom)
                         return TabAlignment.Bottom;
@@ -713,7 +715,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value)
+                if (value)
                     TabAlignment = TabAlignment.Top;
                 else
                     TabAlignment = TabAlignment.Left;
@@ -869,7 +871,7 @@ namespace Alternet.UI
             var result = new T();
             onCreate?.Invoke(result);
             Add(title, result);
-            if(title is not null)
+            if (title is not null)
                 result.Title = title;
             if (makeVisible)
                 SelectedControl = result;
@@ -906,7 +908,7 @@ namespace Alternet.UI
         /// <param name="pages">Collection of pages.</param>
         public virtual void AddRange(IEnumerable<NameValue<AbstractControl>> pages)
         {
-            foreach(var page in pages)
+            foreach (var page in pages)
                 Add(page);
         }
 
@@ -918,7 +920,7 @@ namespace Alternet.UI
         {
             foreach (var page in pages)
             {
-                if(page is not null)
+                if (page is not null)
                     Add(page);
             }
         }
@@ -1164,7 +1166,7 @@ namespace Alternet.UI
 
             var tabs = Header.Tabs;
 
-            for(int i = 0; i < tabs.Count; i++)
+            for (int i = 0; i < tabs.Count; i++)
             {
                 if (tabs[i].CardControl == control)
                     return i;
@@ -1243,9 +1245,9 @@ namespace Alternet.UI
         /// default svg color is used.</param>
         public virtual void SetTabSvg(int? index, SvgImage? svg, int? size = null, Color? color = null)
         {
-            if(index is null)
+            if (index is null)
                 return;
-            if(svg is null)
+            if (svg is null)
             {
                 ResetTabImage(index);
                 return;
@@ -1443,7 +1445,7 @@ namespace Alternet.UI
             if (!hasInteriorBorder || TabCount == 0 || !TabsVisible)
                 return;
             var r = e.ClientRectangle;
-            if(r.Width > ClientSize.Width)
+            if (r.Width > ClientSize.Width)
                 r.Width = ClientSize.Width;
             if (r.Height > ClientSize.Height)
                 r.Height = ClientSize.Height;
@@ -1454,6 +1456,29 @@ namespace Alternet.UI
                 r,
                 GetInteriorBorderColor().AsBrush,
                 tabPaintAlignment ?? TabAlignment);
+        }
+
+        /// <summary>
+        /// Called when the right part of the header is painted.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">The event arguments containing information about the paint event.</param>
+        protected virtual void OnRightHeaderPartPaint(object? sender, PaintEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            if (!hasInteriorBorder || TabCount == 0 || !TabsVisible)
+                return;
+            var r = e.ClientRectangle;
+            if (r.Width > ClientSize.Width)
+                r.Width = ClientSize.Width;
+            if (r.Height > ClientSize.Height)
+                r.Height = ClientSize.Height;
+
+            e.Graphics.DrawBorderWithBrush(
+                        GetInteriorBorderColor().AsBrush,
+                        e.ClientRectangle,
+                        HeaderControl.GetRightPanelBorder(TabAlignment));
         }
 
         private class TabControlCardPanel : CardPanel

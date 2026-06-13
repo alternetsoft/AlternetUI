@@ -194,6 +194,16 @@ namespace ControlsSample
             tabControl.RemoveAll();
         }
 
+        private void ToggleVerticalTextButton_Click(object? sender, EventArgs e)
+        {
+            tabControl.IsVerticalText = !tabControl.IsVerticalText;
+        }
+
+        private void ToggleCloseButton_Click(object? sender, EventArgs e)
+        {
+            tabControl.HasCloseButton = !tabControl.HasCloseButton;
+        }
+
         private void TabAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
             if(tabAlignmentComboBox.Value is TabAlignment tabAlignment)

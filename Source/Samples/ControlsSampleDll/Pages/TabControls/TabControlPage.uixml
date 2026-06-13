@@ -7,19 +7,19 @@
     <HorizontalStackPanel  HorizontalAlignment="Left" Margin="0,10,0,0">
       <VerticalStackPanel>
         <Button
-          Text="Modify Selected Page Title"
+          Text="Modify Selected Title"
           Margin="5" IsTextLocalized="true"
           Name="modifyPageTitleButton"
           Click="ModifyPageTitleButton_Click" />
 
         <Button
-          Text="Insert Before Last Page"
+          Text="Insert Before Last"
           Margin="5" IsTextLocalized="true"
           Name="InsertLastPageSiblingButton"
           Click="InsertLastPageSiblingButton_Click" />
 
         <Button
-          Text="Remove Selected Page"
+          Text="Remove Selected"
           Margin="5" IsTextLocalized="true"
           Name="removeSelectedPageButton"
           Click="RemoveSelectedPageButton_Click" />
@@ -37,6 +37,11 @@
           Margin="5" IsTextLocalized="true"
           Name="clearPagesButton"
           Click="ClearPagesButton_Click" />
+        <Button
+          Text="Toggle Close"
+          Margin="5" IsTextLocalized="true"
+          Name="toggleCloseButton"
+          Click="ToggleCloseButton_Click" />
       </VerticalStackPanel>
 
       <VerticalStackPanel Visible="true">
@@ -44,6 +49,11 @@
           <Label Text="Tabs:" VerticalAlignment="Center"  IsTextLocalized="true"/>
           <EnumPicker Name="tabAlignmentComboBox" Margin="5,0,0,0"/>
         </StackPanel>
+        <Button
+          Text="Toggle Vertical Text"
+          Margin="5" IsTextLocalized="true"
+          Name="toggleVerticalButton"
+          Click="ToggleVerticalTextButton_Click" />
       </VerticalStackPanel>
 
     </HorizontalStackPanel>

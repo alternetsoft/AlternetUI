@@ -46,6 +46,20 @@ namespace Alternet.UI
 
         private readonly BaseCollection<CardPanelHeaderItem> tabs;
 
+        private readonly Panel fillPanel = new()
+        {
+            ParentBackColor = true,
+            ParentForeColor = true,
+            ParentFont = true,
+        };
+
+        private readonly Panel rightPanel = new()
+        {
+            ParentBackColor = true,
+            ParentForeColor = true,
+            ParentFont = true,
+        };
+
         private CardPanelHeaderItem? selectedTab;
         private CardPanel? cardPanel;
         private SpeedButton? closeButton;
@@ -83,6 +97,42 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeader()
         {
+            Layout = LayoutStyle.Horizontal;
+            
+            fillPanel.HorizontalAlignment = HorizontalAlignment.Fill;
+            fillPanel.VerticalAlignment = VerticalAlignment.Fill;
+            fillPanel.Layout = LayoutStyle.Horizontal;
+            rightPanel.HorizontalAlignment = HorizontalAlignment.Right;
+            rightPanel.VerticalAlignment = VerticalAlignment.Fill;
+            fillPanel.UserPaint = true;
+            rightPanel.Parent = this;
+            rightPanel.UserPaint = true;
+            fillPanel.Parent = this;
+
+            fillPanel.Paint += (s, e) =>
+            {
+                if (HasInteriorBorder)
+                {
+                    TabControl.DrawTabHeaderInterior(
+                        this,
+                        e.Graphics,
+                        e.ClientRectangle,
+                        GetInteriorBorderColor().AsBrush,
+                        TabsAlignment);
+                }
+            };
+
+            rightPanel.Paint += (s, e) =>
+            {
+                if (HasInteriorBorder)
+                {
+                    e.Graphics.DrawBorderWithBrush(
+                                GetInteriorBorderColor().AsBrush,
+                                e.ClientRectangle,
+                                GetRightPanelBorder(TabsAlignment));
+                }
+            };
+
             ResetAppearance(invalidate: false);
             TabStop = false;
             CanSelect = false;
@@ -193,19 +243,28 @@ namespace Alternet.UI
                 if (TabsAlignment == value)
                     return;
 
-                DoInsideLayout(() =>
+                fillPanel.DoInsideLayout(() =>
                 {
                     tabAlignment = value;
 
-                    if (tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom)
+                    switch(tabAlignment)
                     {
-                    }
-                    else
-                    {
-                        if (closeButton is not null && closeButton.Visible)
-                        {
-                            closeButton.Visible = false;
-                        }
+                        case TabAlignment.Top:
+                            rightPanel.HorizontalAlignment = HorizontalAlignment.Right;
+                            rightPanel.VerticalAlignment = VerticalAlignment.Fill;
+                            break;
+                        case TabAlignment.Bottom:
+                            rightPanel.HorizontalAlignment = HorizontalAlignment.Right;
+                            rightPanel.VerticalAlignment = VerticalAlignment.Fill;
+                            break;
+                        case TabAlignment.Left:
+                            rightPanel.HorizontalAlignment = HorizontalAlignment.Right;
+                            rightPanel.VerticalAlignment = VerticalAlignment.Bottom;
+                            break;
+                        case TabAlignment.Right:
+                            rightPanel.HorizontalAlignment = HorizontalAlignment.Left;
+                            rightPanel.VerticalAlignment = VerticalAlignment.Bottom;
+                            break;
                     }
 
                     foreach (var tab in Tabs)
@@ -229,7 +288,7 @@ namespace Alternet.UI
                 if (closeButton is null)
                 {
                     closeButton = CreateCloseButton();
-                    closeButton.HorizontalAlignment = HorizontalAlignment.Right;
+                    closeButton.HorizontalAlignment = HorizontalAlignment.Center;
                     closeButton.VerticalAlignment = VerticalAlignment.Center;
 
                     closeButton.Click += (s, e) =>
@@ -237,12 +296,22 @@ namespace Alternet.UI
                         CloseButtonClick?.Invoke(this, EventArgs.Empty);
                     };
 
-                    closeButton.Parent = this;
+                    closeButton.Parent = rightPanel;
                 }
 
                 return closeButton;
             }
         }
+
+        /// <summary>
+        /// Gets the panel where the tabs are located.
+        /// </summary>
+        public HiddenBorder FillPanel => fillPanel;
+
+        /// <summary>
+        /// Gets the right panel where the <see cref="CloseButton"/> is located.
+        /// </summary>
+        public HiddenBorder RightPanel => rightPanel;
 
         /// <summary>
         /// Gets or sets a value indicating whether the close button is visible.
@@ -287,7 +356,7 @@ namespace Alternet.UI
             {
                 if (imageToText == value)
                     return;
-                DoInsideLayout(() =>
+                fillPanel.DoInsideLayout(() =>
                 {
                     imageToText = value;
 
@@ -317,9 +386,10 @@ namespace Alternet.UI
                 if (isVerticalText == value)
                     return;
 
-                DoInsideLayout(() =>
+                fillPanel.DoInsideLayout(() =>
                 {
                     isVerticalText = value;
+                    ImageToText = value ? ImageToText.Vertical : ImageToText.Horizontal;
 
                     foreach (var tab in Tabs)
                     {
@@ -408,7 +478,7 @@ namespace Alternet.UI
                     Add(value);
                 else
                     Tabs[0].HeaderButton.Text = value;
-                Refresh();
+                InvalidateInterior();
             }
         }
 
@@ -588,6 +658,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override LayoutStyle? Layout
+        {
+            get => base.Layout;
+            
+            set
+            {
+                base.Layout = value;
+                fillPanel.Layout = value;
+            }
+        }
+
         /// <summary>
         /// Gets or sets background color of the active tab.
         /// </summary>
@@ -616,7 +698,7 @@ namespace Alternet.UI
                 if (hasInteriorBorder == value)
                     return;
                 hasInteriorBorder = value;
-                Invalidate();
+                InvalidateInterior();
             }
         }
 
@@ -727,7 +809,7 @@ namespace Alternet.UI
 
                 if (UpdateCardsVisible) SetCardsVisible();
                 CardsWidthToMax(UpdateCardsMode);
-                Invalidate();
+                InvalidateInterior();
             }
         }
 
@@ -839,12 +921,12 @@ namespace Alternet.UI
             var item = GetTab(index);
             if (item is null)
                 return false;
-            DoInsideLayout(() =>
+            fillPanel.DoInsideLayout(() =>
             {
                 item.HeaderButton.Parent = null;
                 tabs.RemoveAt(index!.Value);
             });
-            Invalidate();
+            InvalidateInterior();
             return true;
         }
 
@@ -958,7 +1040,7 @@ namespace Alternet.UI
             button.VerticalAlignment = UI.VerticalAlignment.Center;
             button.SetContentHorizontalAlignment(HorizontalAlignment.Left);
             Children.Insert(index ?? Children.Count, button);
-            button.Parent = this;
+            button.Parent = fillPanel;
             button.Click += OnItemClick;
 
             var item = new CardPanelHeaderItem(button)
@@ -1052,6 +1134,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Invalidates the control and all tabs.
+        /// </summary>
+        public virtual void InvalidateInterior()
+        {
+            Invalidate();
+        }
+
+        /// <summary>
         /// Applies known theme to the control.
         /// </summary>
         /// <param name="theme">The known theme to apply.</param>
@@ -1097,6 +1187,7 @@ namespace Alternet.UI
 
             ParentBackColor = true;
             ParentForeColor = true;
+            fillPanel.Layout = LayoutStyle.Horizontal;
             Layout = LayoutStyle.Horizontal;
 
             if (invalidate)
@@ -1138,6 +1229,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the border width of the right panel.
+        /// </summary>
+        /// <param name="tabAlignment">The alignment of the tabs.</param>
+        /// <returns>The thickness of the right panel border.</returns>
+        public virtual Thickness GetRightPanelBorder(TabAlignment tabAlignment)
+        {
+            switch (tabAlignment)
+            {
+                case TabAlignment.Top:
+                    return new Thickness(0, 0, 0, 1);
+                case TabAlignment.Bottom:
+                    return new Thickness(0, 1, 0, 0);
+                case TabAlignment.Left:
+                    return new Thickness(0, 0, 1, 0);
+                case TabAlignment.Right:
+                    return new Thickness(1, 0, 0, 0);
+                default:
+                    return Thickness.Empty;
+            }
+        }
+
+        /// <summary>
         /// Gets parent control of the cards.
         /// </summary>
         public virtual AbstractControl? GetCardsParent()
@@ -1174,16 +1287,6 @@ namespace Alternet.UI
         public override void DefaultPaint(PaintEventArgs e)
         {
             base.DefaultPaint(e);
-
-            if (HasInteriorBorder)
-            {
-                TabControl.DrawTabHeaderInterior(
-                    this,
-                    e.Graphics,
-                    e.ClientRectangle,
-                    GetInteriorBorderColor().AsBrush,
-                    TabsAlignment);
-            }
         }
 
         /// <summary>
@@ -1339,7 +1442,7 @@ namespace Alternet.UI
                 }
             }
 
-            Refresh();
+            InvalidateInterior();
         }
 
         /// <summary>

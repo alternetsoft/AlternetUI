@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -101,8 +102,8 @@ namespace Alternet.UI
                         tabIndex,
                         tabCount);
 
-            if(tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom)
-            DrawLines();
+            if (tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom)
+                DrawLines();
 
             void DrawLines()
             {
@@ -147,10 +148,10 @@ namespace Alternet.UI
             if (tabIndex == 0)
                 position = PositionStart;
             else
-            if (tabIndex >= tabCount - 1)
-                position = PositionEnd;
-            else
-                position = PositionOther;
+                if (tabIndex >= tabCount - 1)
+                    position = PositionEnd;
+                else
+                    position = PositionOther;
 
             RectD rectStart;
             RectD rectEnd;
@@ -159,7 +160,7 @@ namespace Alternet.UI
             bool isTopOrBottom = tabAlignment == TabAlignment.Top
                 || tabAlignment == TabAlignment.Bottom;
 
-            if(isTopOrBottom)
+            if (isTopOrBottom)
             {
                 rectStart = RectD.FromLTRB(
                     rect.TopLeft,
