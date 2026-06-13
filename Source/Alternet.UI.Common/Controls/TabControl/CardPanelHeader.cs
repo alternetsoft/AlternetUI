@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets function which creates button for the <see cref="CardPanelHeader"/>.
         /// </summary>
-        public static Func<SpeedButton>? CreateButton = null;
+        public static Func<SpeedButton>? CreateButton;
 
         /// <summary>
         /// Gets or sets default value for the tab margin.
@@ -44,30 +44,29 @@ namespace Alternet.UI
         /// </summary>
         public static SizeD DefaultAdditionalSpace = new(30, 30);
 
-        internal static Color DefaultUnderlineColorLight = Color.FromRgb(0, 80, 197);
-
         private readonly BaseCollection<CardPanelHeaderItem> tabs;
+
+        private CardPanelHeaderItem? selectedTab;
+        private CardPanel? cardPanel;
+        private SpeedButton? closeButton;
 
         private Thickness? tabMargin;
         private Thickness? tabPadding;
-        private bool useTabBold = DefaultUseTabBold;
-        private bool useTabForegroundColor = DefaultUseTabForegroundColor;
-        private bool useTabBackgroundColor = DefaultUseTabBackgroundColor;
-        private SizeD additionalSpace = DefaultAdditionalSpace;
-        private CardPanelHeaderItem? selectedTab;
-        private bool tabHasBorder = DefaultTabHasBorder;
-        private bool activeTabHasBorder = DefaultActiveTabHasBorder;
-        private CardPanel? cardPanel;
+        private bool useTabBold;
+        private bool useTabForegroundColor;
+        private bool useTabBackgroundColor;
+        private SizeD additionalSpace;
+        private bool tabHasBorder;
+        private bool activeTabHasBorder;
         private IReadOnlyFontAndColor? activeTabColors;
         private IReadOnlyFontAndColor? inactiveTabColors;
         private HorizontalAlignment? tabHorizontalAlignment;
-        private SpeedButton.KnownTheme tabTheme = SpeedButton.KnownTheme.TabControl;
-        private SpeedButton.KnownTheme activeTabTheme = SpeedButton.KnownTheme.TabControl;
-        private bool hasInteriorBorder = true;
-        private TabAlignment tabAlignment = TabAlignment.Top;
+        private SpeedButton.KnownTheme tabTheme;
+        private SpeedButton.KnownTheme activeTabTheme;
+        private bool hasInteriorBorder;
+        private TabAlignment tabAlignment;
         private bool isVerticalText;
         private ImageToText imageToText;
-        private SpeedButton? closeButton;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -84,11 +83,9 @@ namespace Alternet.UI
         /// </summary>
         public CardPanelHeader()
         {
-            ParentBackColor = true;
-            ParentForeColor = true;
+            ResetAppearance(invalidate: false);
             TabStop = false;
             CanSelect = false;
-            Layout = LayoutStyle.Horizontal;
             tabs = new(CollectionSecurityFlags.NoNullOrReplace);
             tabs.ItemInserted += OnTabsItemInserted;
             tabs.ItemRemoved += OnTabsItemRemoved;
@@ -116,6 +113,32 @@ namespace Alternet.UI
         /// This event allows subscribers to handle the close button click action.
         /// </remarks>
         public event EventHandler? CloseButtonClick;
+
+        /// <summary>
+        /// Enumerates known themes for the control.
+        /// </summary>
+        public enum KnownTheme
+        {
+            /// <summary>
+            /// Default theme.
+            /// Visual related properties are configured so that control looks like a tab control header.
+            /// </summary>
+            Default,
+
+            /// <summary>
+            /// SpeedButton theme.
+            /// Visual related properties are configured so that the tabs look like a speed buttons.
+            /// Active tab will have a static border and other tabs will have a border on mouse hover.
+            /// </summary>
+            SpeedButton,
+
+            /// <summary>
+            /// PushButton theme.
+            /// Visual related properties are configured so that the tabs look like a push buttons.
+            /// Active tab will have a static border with accent color and other tabs will have a standard border.
+            /// </summary>
+            PushButton,
+        }
 
         /// <summary>
         /// Gets or sets default value of the <see cref="ActiveTabHasBorder"/>.
@@ -987,6 +1010,102 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Assigns visual related properties so that the tabs look like a speed buttons.
+        /// Active tab will have a static border and other tabs will have a border on mouse hover.
+        /// </summary>
+        public virtual void ApplySpeedButtonTheme()
+        {
+            ResetAppearance(invalidate: false);
+
+            tabTheme = SpeedButton.KnownTheme.Default;
+            activeTabTheme = SpeedButton.KnownTheme.StaticBorder;
+            activeTabHasBorder = true;
+            tabHasBorder = true;
+            hasInteriorBorder = false;
+
+            UpdateTabs();
+        }
+
+        /// <summary>
+        /// Assigns visual related properties so that control looks like a tab control header.
+        /// </summary>
+        public virtual void ApplyDefaultTheme()
+        {
+            ResetAppearance(invalidate: true);
+        }
+
+        /// <summary>
+        /// Assigns visual related properties so that the item looks like a standard buttons.
+        /// Active tab will have a static border with accent color and other tabs will have a standard border.
+        /// </summary>
+        public virtual void ApplyPushButtonTheme()
+        {
+            ResetAppearance(invalidate: false);
+
+            tabTheme = SpeedButton.KnownTheme.StaticBorder;
+            activeTabTheme = SpeedButton.KnownTheme.CheckBorder;
+            activeTabHasBorder = true;
+            tabHasBorder = true;
+            hasInteriorBorder = false;
+
+            UpdateTabs();
+        }
+
+        /// <summary>
+        /// Applies known theme to the control.
+        /// </summary>
+        /// <param name="theme">The known theme to apply.</param>
+        public virtual void ApplyKnownTheme(KnownTheme theme)
+        {
+            switch (theme)
+            {
+                case KnownTheme.Default:
+                    ApplyDefaultTheme();
+                    break;
+                case KnownTheme.SpeedButton:
+                    ApplySpeedButtonTheme();
+                    break;
+                case KnownTheme.PushButton:
+                    ApplyPushButtonTheme();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Resets appearance of the control to the initial state.
+        /// All appearance related properties are set to their default values as it was when the control was created.
+        /// </summary>
+        public virtual void ResetAppearance(bool invalidate = true)
+        {
+            tabMargin = null;
+            tabPadding = null;
+            useTabBold = DefaultUseTabBold;
+            useTabForegroundColor = DefaultUseTabForegroundColor;
+            useTabBackgroundColor = DefaultUseTabBackgroundColor;
+            additionalSpace = DefaultAdditionalSpace;
+            tabHasBorder = DefaultTabHasBorder;
+            activeTabHasBorder = DefaultActiveTabHasBorder;
+            activeTabColors = null;
+            inactiveTabColors = null;
+            tabHorizontalAlignment = null;
+            tabTheme = SpeedButton.KnownTheme.TabControl;
+            activeTabTheme = SpeedButton.KnownTheme.TabControl;
+            hasInteriorBorder = true;
+            tabAlignment = TabAlignment.Top;
+            isVerticalText = false;
+            imageToText = ImageToText.Horizontal;
+
+            ParentBackColor = true;
+            ParentForeColor = true;
+            Layout = LayoutStyle.Horizontal;
+
+            if (invalidate)
+            {
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
         /// Adds new item to the control.
         /// </summary>
         /// <param name="text">Item title.</param>
@@ -1195,7 +1314,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates all tabs properties.
+        /// Updates all tabs properties and refreshes the control.
         /// </summary>
         protected virtual void UpdateTabs()
         {
@@ -1209,7 +1328,7 @@ namespace Alternet.UI
 
                     if (isSelected)
                     {
-                        item.HeaderButton.HasBorder = tabHasBorder || activeTabHasBorder;
+                        item.HeaderButton.HasBorder = activeTabHasBorder;
                     }
                     else
                     {

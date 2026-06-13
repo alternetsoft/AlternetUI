@@ -174,6 +174,36 @@ namespace PropertyGridSample
 
         internal void InitTestsTabControl()
         {
+            AddControlAction<CardPanelHeader>("Apply Default Theme", (c) =>
+            {
+                c.ApplyKnownTheme(CardPanelHeader.KnownTheme.Default);
+            });
+
+            AddControlAction<CardPanelHeader>("Apply SpeedButton Theme", (c) =>
+            {
+                c.ApplyKnownTheme(CardPanelHeader.KnownTheme.SpeedButton);
+            });
+
+            AddControlAction<CardPanelHeader>("Apply PushButton Theme", (c) =>
+            {
+                c.ApplyKnownTheme(CardPanelHeader.KnownTheme.PushButton);
+            });
+
+            AddControlAction<TabControl>("Apply Default Theme to Header", (c) =>
+            {
+                c.ApplyThemeToHeader(CardPanelHeader.KnownTheme.Default);
+            });
+
+            AddControlAction<TabControl>("Apply SpeedButton Theme to Header", (c) =>
+            {
+                c.ApplyThemeToHeader(CardPanelHeader.KnownTheme.SpeedButton);
+            });
+
+            AddControlAction<TabControl>("Apply PushButton Theme to Header", (c) =>
+            {
+                c.ApplyThemeToHeader(CardPanelHeader.KnownTheme.PushButton);
+            });
+
             AddControlAction<TabControl>("Align text vertically", (c) =>
             {
                 c.TabAlignment = TabAlignment.Left;

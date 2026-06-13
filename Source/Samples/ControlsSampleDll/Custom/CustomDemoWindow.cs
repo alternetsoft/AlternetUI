@@ -58,7 +58,7 @@ namespace Alternet.UI
 
             SuppressEsc = true;
 
-            tabControl.HeaderControl.TabHasBorder = true;
+            tabControl.ApplyThemeToHeader(CardPanelHeader.KnownTheme.SpeedButton);
             tabControl.HeaderControl.Margin = (0, 0, 0, 5);
             tabControl.HeaderControl.UseTabBold = true;
             tabControl.HeaderControl.TabMargin = (0, 1, 10, 1);
