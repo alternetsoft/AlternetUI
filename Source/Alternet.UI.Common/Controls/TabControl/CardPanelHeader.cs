@@ -106,6 +106,7 @@ namespace Alternet.UI
         public CardPanelHeader()
         {
             IsClipped = true;
+            
             Layout = LayoutStyle.Horizontal;
             
             fillPanel.HorizontalAlignment = HorizontalAlignment.Fill;
@@ -132,7 +133,7 @@ namespace Alternet.UI
                         RoundCorners = UseRoundedCorners,
                     };
 
-                    TabControlDrawInterior.Default.DrawTabHeaderInterior(prm);
+                    TabControlDrawInterior.Default.DrawTabHeaderInterior(ref prm);
                 }
             };
 

@@ -79,7 +79,7 @@ namespace ControlsSample
                     item.Enabled = false;
                 }
 
-                tabControl.HeaderControl.ContextMenuStrip.Add("Toggle vertical text", () =>
+                this.ContextMenuStrip.Add("Toggle vertical text", () =>
                 {
                     if(tabControl.IsVerticalText)
                     {
@@ -93,6 +93,17 @@ namespace ControlsSample
                     }
                 });
 
+                this.ContextMenuStrip.Add("Toggle interior border", () =>
+                {
+                    tabControl.HasInteriorBorder = !tabControl.HasInteriorBorder;
+                });
+
+                this.ContextMenuStrip.Add("Toggle content visibility", () =>
+                {
+                    tabControl.ContentVisible = !tabControl.ContentVisible;
+                });
+
+                tabControl.MinHeight = 300;
                 tabControl.HasCloseButton = true;
                 tabControl.CloseButtonClick += (s, e) =>
                 {

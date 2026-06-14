@@ -17,82 +17,110 @@ namespace Alternet.UI
         /// <summary>
         /// Draws <see cref="TabControl"/> interior.
         /// </summary>
-        public virtual void DrawTabControlInterior(TabControlInteriorDrawParams prm)
+        public virtual void DrawTabControlInterior(ref TabControlInteriorDrawParams prm)
         {
-            switch (prm.TabAlignment)
-            {
-                case TabAlignment.Top:
-                    DrawInteriorTop();
-                    break;
-                case TabAlignment.Bottom:
-                    DrawInteriorBottom();
-                    break;
-                case TabAlignment.Left:
-                    DrawInteriorLeft();
-                    break;
-                case TabAlignment.Right:
-                    DrawInteriorRight();
-                    break;
-            }
+            var dc = prm.Graphics;
+            var brush = prm.Brush;
+
+            GetTabControlBorderRect(prm.Bounds, prm.HeaderBounds, prm.TabAlignment, out RectD rect, out Thickness border);
+
+            DrawBorder(rect, border);
 
             void DrawBorder(RectD rect, Thickness border)
             {
                 DrawingUtils.DrawBorderWithBrush(
-                            prm.Graphics,
-                            prm.Brush,
+                            dc,
+                            brush,
                             rect,
                             border);
-            }
-
-            void DrawInteriorTop()
-            {
-                RectD rect = (
-                    prm.Bounds.Left,
-                    prm.HeaderBounds.Bottom,
-                    prm.Bounds.Width,
-                    prm.Bounds.Height - prm.HeaderBounds.Height);
-                DrawBorder(rect, (1, 0, 1, 1));
-            }
-
-            void DrawInteriorBottom()
-            {
-                RectD rect = (
-                    prm.Bounds.Left,
-                    prm.Bounds.Top,
-                    prm.Bounds.Width,
-                    prm.Bounds.Height - prm.HeaderBounds.Height);
-                DrawBorder(rect, (1, 1, 1, 0));
-            }
-
-            void DrawInteriorLeft()
-            {
-                RectD rect = (
-                    prm.HeaderBounds.Right,
-                    prm.Bounds.Top,
-                    prm.Bounds.Width - prm.HeaderBounds.Width,
-                    prm.Bounds.Height);
-                DrawBorder(rect, (0, 1, 1, 1));
-            }
-
-            void DrawInteriorRight()
-            {
-                RectD rect = (
-                    prm.Bounds.Left,
-                    prm.Bounds.Top,
-                    prm.Bounds.Width - prm.HeaderBounds.Width,
-                    prm.Bounds.Height);
-                DrawBorder(rect, (1, 1, 0, 1));
             }
         }
 
         /// <summary>
-        /// Draws tab header interior.
+        /// Gets the rectangle and border thickness for drawing the <see cref="TabControl"/> interior.
         /// </summary>
-        public virtual void DrawTabHeaderInterior(TabHeaderInteriorDrawParams prm)
+        /// <param name="rect">The rectangle for the tab control interior.</param>
+        /// <param name="border">The border thickness for the tab control interior.</param>
+        /// <param name="bounds">The bounds of the tab control.</param>
+        /// <param name="headerBounds">The bounds of the tab control header.</param>
+        /// <param name="tabAlignment">The alignment of the tab control header.</param>
+        public virtual void GetTabControlBorderRect(
+            RectD bounds,
+            RectD headerBounds,
+            TabAlignment tabAlignment,
+            out RectD rect,
+            out Thickness border)
+        {
+            switch (tabAlignment)
+            {
+                case TabAlignment.Top:
+                    GetInteriorTop(out rect, out border);
+                    break;
+                case TabAlignment.Bottom:
+                    GetInteriorBottom(out rect, out border);
+                    break;
+                case TabAlignment.Left:
+                    GetInteriorLeft(out rect, out border);
+                    break;
+                case TabAlignment.Right:
+                    GetInteriorRight(out rect, out border);
+                    break;
+                default:
+                    rect = default;
+                    border = default;
+                    break;
+            }
+
+            void GetInteriorTop(out RectD rect, out Thickness border)
+            {
+                rect = (
+                    bounds.Left,
+                    headerBounds.Bottom,
+                    bounds.Width,
+                    bounds.Height - headerBounds.Height);
+                border = (1, 0, 1, 1);
+            }
+
+            void GetInteriorBottom(out RectD rect, out Thickness border)
+            {
+                rect = (
+                    bounds.Left,
+                    bounds.Top,
+                    bounds.Width,
+                    bounds.Height - headerBounds.Height);
+                border = (1, 1, 1, 0);
+            }
+
+            void GetInteriorLeft(out RectD rect, out Thickness border)
+            {
+                rect = (
+                    headerBounds.Right,
+                    bounds.Top,
+                    bounds.Width - headerBounds.Width,
+                    bounds.Height);
+                border = (0, 1, 1, 1);
+            }
+
+            void GetInteriorRight(out RectD rect, out Thickness border)
+            {
+                rect = (
+                    bounds.Left,
+                    bounds.Top,
+                    bounds.Width - headerBounds.Width,
+                    bounds.Height);
+                border = (1, 1, 0, 1);
+            }
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="TabHeaderItemsInteriorDrawParams"/>.
+        /// </summary>
+        /// <param name="prm">The parameters for drawing tab header interior.</param>
+        /// <returns>A new instance of <see cref="TabHeaderItemsInteriorDrawParams"/>.</returns>
+        public virtual TabHeaderItemsInteriorDrawParams CreateTabHeaderItemsInteriorDrawParams(
+            ref TabHeaderInteriorDrawParams prm)
         {
             var tabCount = prm.Control.Tabs.Count;
-            if (tabCount == 0)
-                return;
             var tabIndex = prm.Control.SelectedTabIndex ?? 0;
             var tab = prm.Control.Tabs[tabIndex];
             var tabRect = tab.HeaderButton.Bounds;
@@ -109,7 +137,26 @@ namespace Alternet.UI
                 RoundCorners = prm.RoundCorners,
             };
 
-            DrawTabHeaderItemsInterior(prmItem);
+            return prmItem;
+        }
+
+        /// <summary>
+        /// Draws tab header interior.
+        /// </summary>
+        public virtual void DrawTabHeaderInterior(ref TabHeaderInteriorDrawParams prm)
+        {
+            var tabCount = prm.Control.Tabs.Count;
+            if (tabCount == 0)
+                return;
+            var tabIndex = prm.Control.SelectedTabIndex ?? 0;
+
+            var prmItem = CreateTabHeaderItemsInteriorDrawParams(ref prm);
+
+            DrawTabHeaderItemsInterior(ref prmItem);
+
+            var dc = prm.Graphics;
+            var brush = prm.Brush;
+            var control = prm.Control;
 
             if (prm.TabAlignment == TabAlignment.Top || prm.TabAlignment == TabAlignment.Bottom)
                 DrawLines();
@@ -124,37 +171,25 @@ namespace Alternet.UI
                     if (i == tabIndex || i == (tabIndex - 1))
                         continue;
 
-                    var tab = prm.Control.Tabs[i];
+                    var tab = control.Tabs[i];
                     var rect = tab.HeaderButton.Bounds;
                     PointD startPoint = (rect.Right + 1, rect.Top);
                     var height = Math.Min(rect.Height - 4, 12);
                     SizeD size = (1, height);
                     RectD drawRect = (startPoint, size);
                     var centeredRect = drawRect.CenterIn(rect, false, true);
-                    DrawingUtils.DrawVertLine(prm.Graphics, prm.Brush, centeredRect.Location, height, 1);
+                    DrawingUtils.DrawVertLine(dc, brush, centeredRect.Location, height, 1);
                 }
             }
         }
 
         /// <summary>
-        /// Draws tab header items interior.
+        /// Gets rectangles for the <see cref="TabControl"/> interior drawing.
         /// </summary>
-        public virtual void DrawTabHeaderItemsInterior(TabHeaderItemsInteriorDrawParams prm)
+        /// <param name="prm">The parameters for drawing tab header items interior.</param>
+        /// <returns>An array of rectangles for the tab control interior drawing.</returns>
+        public virtual RectD[] GetRects(ref TabHeaderItemsInteriorDrawParams prm)
         {
-            const int PositionStart = 0;
-            const int PositionEnd = 1;
-            const int PositionOther = 2;
-
-            int position;
-
-            if (prm.TabIndex == 0)
-                position = PositionStart;
-            else
-                if (prm.TabIndex >= prm.TabCount - 1)
-                    position = PositionEnd;
-                else
-                    position = PositionOther;
-
             RectD rectStart;
             RectD rectEnd;
             RectD rectOther;
@@ -188,6 +223,19 @@ namespace Alternet.UI
             }
 
             var rects = new RectD[] { rectStart, rectOther, rectEnd };
+            return rects;
+        }
+
+        /// <summary>
+        /// Draws tab header items interior.
+        /// </summary>
+        public virtual void DrawTabHeaderItemsInterior(ref TabHeaderItemsInteriorDrawParams prm)
+        {
+            var dc = prm.Graphics;
+            var brush = prm.Brush;
+            var position = prm.TabPosition;
+
+            var rects = GetRects(ref prm);
 
             switch (prm.TabAlignment)
             {
@@ -209,8 +257,8 @@ namespace Alternet.UI
             {
 #pragma warning disable
                 DrawingUtils.DrawBordersWithBrush(
-                            prm.Graphics,
-                            prm.Brush,
+                            dc,
+                            brush,
                             rects,
                             borders);
 #pragma warning restore
@@ -242,13 +290,13 @@ namespace Alternet.UI
 
                 switch (position)
                 {
-                    case PositionStart:
+                    case TabHeaderItemsInteriorDrawParams.PositionStart:
                         DrawTopStart();
                         break;
-                    case PositionOther:
+                    case TabHeaderItemsInteriorDrawParams.PositionMiddle:
                         DrawTopOther();
                         break;
-                    case PositionEnd:
+                    case TabHeaderItemsInteriorDrawParams.PositionEnd:
                         DrawTopEnd();
                         break;
                 }
@@ -280,13 +328,13 @@ namespace Alternet.UI
 
                 switch (position)
                 {
-                    case PositionStart:
+                    case TabHeaderItemsInteriorDrawParams.PositionStart:
                         DrawRightStart();
                         break;
-                    case PositionOther:
+                    case TabHeaderItemsInteriorDrawParams.PositionMiddle:
                         DrawRightOther();
                         break;
-                    case PositionEnd:
+                    case TabHeaderItemsInteriorDrawParams.PositionEnd:
                         DrawRightEnd();
                         break;
                 }
@@ -318,13 +366,13 @@ namespace Alternet.UI
 
                 switch (position)
                 {
-                    case PositionStart:
+                    case TabHeaderItemsInteriorDrawParams.PositionStart:
                         DrawLeftStart();
                         break;
-                    case PositionOther:
+                    case TabHeaderItemsInteriorDrawParams.PositionMiddle:
                         DrawLeftOther();
                         break;
-                    case PositionEnd:
+                    case TabHeaderItemsInteriorDrawParams.PositionEnd:
                         DrawLeftEnd();
                         break;
                 }
@@ -356,13 +404,13 @@ namespace Alternet.UI
 
                 switch (position)
                 {
-                    case PositionStart:
+                    case TabHeaderItemsInteriorDrawParams.PositionStart:
                         DrawBottomStart();
                         break;
-                    case PositionOther:
+                    case TabHeaderItemsInteriorDrawParams.PositionMiddle:
                         DrawBottomOther();
                         break;
-                    case PositionEnd:
+                    case TabHeaderItemsInteriorDrawParams.PositionEnd:
                         DrawBottomEnd();
                         break;
                 }
@@ -411,6 +459,21 @@ namespace Alternet.UI
         public struct TabHeaderItemsInteriorDrawParams
         {
             /// <summary>
+            /// Start position identifier.
+            /// </summary>
+            public const int PositionStart = 0;
+
+            /// <summary>
+            /// Middle position identifier.
+            /// </summary>
+            public const int PositionMiddle = 1;
+
+            /// <summary>
+            /// End position identifier.
+            /// </summary>
+            public const int PositionEnd = 2;
+
+            /// <summary>
             /// Gets or sets a value indicating whether border has rounded corners.
             /// </summary>
             public bool RoundCorners;
@@ -449,6 +512,26 @@ namespace Alternet.UI
             /// Total number of tabs.
             /// </summary>
             public int TabCount;
+
+            /// <summary>
+            /// Gets the position of the tab (start, other, end).
+            /// </summary>
+            public int TabPosition
+            {
+                get
+                {
+                    int position;
+
+                    if (TabIndex == 0)
+                        position = PositionStart;
+                    else
+                        if (TabIndex >= TabCount - 1)
+                            position = PositionEnd;
+                        else
+                            position = PositionMiddle;
+                    return position;
+                }
+            }
         }
 
         /// <summary>
