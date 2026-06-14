@@ -226,6 +226,13 @@ namespace Alternet.UI
             get; set;
         }
 
+        /// <inheritdoc/>
+        public override object? TitleAsObject
+        {
+            get => BorderControl.TitleAsObject;
+            set => BorderControl.TitleAsObject = value;
+        }
+
         /// <summary>
         /// Gets or sets a value indicating whether mouse events
         /// should be suppressed for the parent control.

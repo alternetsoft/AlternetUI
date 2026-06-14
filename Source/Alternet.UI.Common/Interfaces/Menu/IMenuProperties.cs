@@ -28,5 +28,10 @@ namespace Alternet.UI
         /// This is the depth of the item in the hierarchy.
         /// </summary>
         int LogicalLevel { get; }
+
+        /// <summary>
+        /// Gets the title of the menu items collection. This is used when the menu is displayed using internal popup window.
+        /// </summary>  
+        string ItemsTitle { get; }
     }
 }

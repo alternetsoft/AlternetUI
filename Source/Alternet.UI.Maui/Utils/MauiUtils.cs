@@ -1102,7 +1102,10 @@ namespace Alternet.UI
         /// <param name="menu">The context menu to display. If null, the method will attempt to use the context menu
         /// associated with the view.</param>
         /// <returns>true if the context menu was successfully shown for the specified view; otherwise, false.</returns>
-        public static bool ShowContextMenu(Alternet.UI.ContextMenu? menu, View? view, HVDropDownAlignment? align = null)
+        public static bool ShowContextMenu(
+            Alternet.UI.ContextMenu? menu,
+            View? view,
+            HVDropDownAlignment? align = null)
         {
             if (menu is null)
                 return false;
@@ -1260,7 +1263,7 @@ namespace Alternet.UI
                 }
 
                 var hostControl = menu.EnsureHasInnerPopupToolBarHost();
-                hostControl.Title = menu.Title;
+                hostControl.Title = menu.ItemsTitle;
                 hostControl.HideOnEscape = true;
                 hostControl.VisualStatesOverride = VisualControlStates.None;
                 hostControl.ParentBackColor = false;

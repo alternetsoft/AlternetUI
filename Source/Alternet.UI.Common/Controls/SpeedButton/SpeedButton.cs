@@ -2161,6 +2161,7 @@ namespace Alternet.UI
             {
                 RightSideElement = RightSideElementKind.Image;
                 DropDownMenu ??= new ContextMenu();
+                DropDownMenu.ItemsTitle = menuItem.ItemsTitle;
                 this.AddWeakReference(DropDownMenu);
                 DropDownMenu.Assign(menuItem);
                 SetLabelImage(MenuItem.DefaultMenuArrowImage);

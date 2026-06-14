@@ -61,6 +61,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets title of the popup window which is used to display menu items.
+        /// This is used when the menu is displayed using internal popup window.
+        /// 
+        /// </summary>
+        public virtual string ItemsTitle { get; set; } = string.Empty;
+
+        /// <summary>
         /// Gets the first visible menu item in the collection,
         /// or <see langword="null"/> if no items are visible.
         /// </summary>

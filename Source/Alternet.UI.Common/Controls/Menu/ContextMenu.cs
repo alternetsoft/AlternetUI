@@ -79,12 +79,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets title of the context menu.
-        /// This property is used to display a title for the context menu when it is opened.
-        /// </summary>
-        public virtual string Title { get; set; } = string.Empty;
-
-        /// <summary>
         /// Gets a value indicating whether a <see cref="MainMenu"/> exists
         /// in the parent hierarchy of this menu item.
         /// </summary>
