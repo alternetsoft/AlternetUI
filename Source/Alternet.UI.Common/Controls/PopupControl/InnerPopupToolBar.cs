@@ -63,6 +63,8 @@ namespace Alternet.UI
 
             Content.ToolClick += OnToolClick;
 
+            BorderControl.CloseButton.ClickAction = () => Hide();
+
             bool InsidePopup(object? c)
             {
                 return (c as AbstractControl)?.HasIndirectParent<InnerPopupToolBar>() ?? false;

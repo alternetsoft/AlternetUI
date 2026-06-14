@@ -1091,6 +1091,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Hides popup windows with context menus in the specified view.
+        /// </summary>
+        /// <param name="view">The view for which to hide the context menu.</param>
+        public static void HideContextMenu(View? view)
+        {
+            var absLayout = GetTopAbsoluteLayout(view);
+
+            if (absLayout is not null)
+            {
+                var child = GetChildViewOfType<Alternet.Maui.InnerPopupToolBarContainerView>(absLayout);
+                if (child is not null)
+                {
+                    HidePopups(child.Control);
+                    child.IsVisible = false;
+                }
+            }
+
+            void HidePopups(AbstractControl? container)
+            {
+                var children = container?.Children.ToArray() ?? [];
+
+                foreach (var c in children)
+                {
+                    if (c is Alternet.UI.InnerPopupToolBar)
+                        c.Visible = false;
+                }
+            }
+
+            var controlView = GetControlView(view);
+
+            if (controlView is not null)
+            {
+                var c = controlView.Control;
+                HidePopups(c);
+            }
+        }
+
+        /// <summary>
         /// Displays the context menu for the specified view, if supported.
         /// </summary>
         /// <remarks>If the specified view is a ContentView, the method attempts to display the context
