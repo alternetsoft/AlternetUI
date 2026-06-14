@@ -86,7 +86,7 @@ namespace Alternet.Drawing
         private Vector2 vector;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.SizeD'/> class
+        /// Initializes a new instance of the <see cref='Drawing.SizeD'/> struct
         /// from the specified
         /// existing <see cref='Drawing.SizeD'/>.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.SizeD'/> class
+        /// Initializes a new instance of the <see cref='Drawing.SizeD'/> struct
         /// from the specified
         /// <see cref='Drawing.PointD'/>.
         /// </summary>
@@ -132,7 +132,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='Drawing.SizeD'/> class
+        /// Initializes a new instance of the <see cref='Drawing.SizeD'/> struct
         /// from the specified dimensions.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -140,6 +140,18 @@ namespace Alternet.Drawing
         {
             this.width = width;
             this.height = height;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='Drawing.SizeD'/> struct
+        /// from the specified double precision width and height values.
+        /// Values are converted to <see cref="float"/>.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public SizeD(double width, double height)
+        {
+            this.width = (float)width;
+            this.height = (float)height;
         }
 
         /// <summary>
