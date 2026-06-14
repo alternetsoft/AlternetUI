@@ -19,7 +19,8 @@ namespace Alternet.UI
     /// <remarks>The TabControl supports customizable tab alignment, appearance, and theming. It exposes
     /// events for tab selection and close actions, and allows dynamic management of tab pages at runtime. The control
     /// can be configured to show or hide tab headers and content, and supports both horizontal and vertical tab
-    /// layouts. Use the <see cref="Pages"/> property to access or modify the collection of tab pages. Thread safety is not
+    /// layouts. Use the <see cref="Pages"/> property to access or modify the collection of tab pages.
+    /// Thread safety is not
     /// guaranteed; access the control only from the UI thread.
     /// This control is implemented inside the Alternet.UI and doesn't use native tab control.
     /// </remarks>
@@ -98,15 +99,12 @@ namespace Alternet.UI
             cardPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             cardPanelHeader.Parent = this;
 
+            cardPanel.Margin = 1;
             cardPanel.Parent = this;
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
 
             cardPanelHeader.CardPanel = cardPanel;
-
-            cardPanelHeader.Margin = (15, 0, 15, 0);
-            cardPanel.Margin = 10;
-            HasInteriorBorder = false;
 
             cardPanel.Children.ItemInserted += OnPagesItemInserted;
             cardPanel.Children.ItemRemoved += OnPagesItemRemoved;
@@ -1354,157 +1352,6 @@ namespace Alternet.UI
         protected override void OnAfterPaintChildren(PaintEventArgs e)
         {
             base.OnAfterPaintChildren(e);
-
-            var tabCount = Header.Tabs.Count;
-
-            if (tabCount > 0)
-            {
-                var tabIndex = Header.SelectedTabIndex ?? 0;
-                var tab = Header.Tabs[tabIndex];
-
-                var r1 = Contents.Bounds;
-                r1.Inflate(2, 2);
-
-                var r2 = tab.HeaderButton.Bounds;
-                r2.Offset(Header.Location);
-
-                e.Graphics.FillRectangle(LightDarkColors.Green.WithAlpha(50).AsBrush, r1);
-                e.Graphics.FillRectangle(LightDarkColors.Red.WithAlpha(50).AsBrush, r2);
-
-                var scaleFactor = ScaleFactor;
-
-                var canvas = SkiaUtils.CreateBitmapCanvas(
-                    ClientRectangle.Size,
-                    scaleFactor,
-                    isTransparent: true);
-                canvas.UseUnscaledDrawImage = true;
-
-                var panelLeft = r1.Left;
-                var panelRight = r1.Right;
-                var panelTop = r1.Top;
-                var panelBottom = r1.Bottom;
-
-                var tabLeft = r2.Left;
-                var tabRight = r2.Right;
-                var tabHeight = r2.Height;
-
-                var path = CreateFullyRoundedTabPath(
-                panelLeft, panelRight, panelBottom, panelTop,
-                tabLeft, tabRight, tabHeight,
-                5);
-
-                canvas.Canvas.DrawPath(path, LightDarkColors.Red.AsPen);
-
-                var skBitmap = canvas.Bitmap;
-
-                if (skBitmap is null || skBitmap.Width == 0 || skBitmap.Height == 0)
-                    return;
-
-                var bitmap = (Image)skBitmap;
-                e.Graphics.DrawImage(bitmap, ClientRectangle.Location);
-            }
-        }
-
-        public static SKPath CreateFullyRoundedTabPath(
-                float panelLeft, float panelRight, float panelBottom, float panelTop,
-                float tabLeft, float tabRight, float tabHeight,
-                float radius)
-        {
-            SKPath path = new SKPath();
-            float tabTopY = panelTop - tabHeight;
-
-            // --- 1. START: Midpoint of the left wall going UP ---
-            path.MoveTo(panelLeft, (panelTop + panelBottom) / 2f);
-
-            // --- 2. TOP-LEFT CONTAINER CORNER ---
-            // Tangent 1 is top-left corner; Tangent 2 is the tab's left flare entry
-            path.ArcTo(new SKPoint(panelLeft, panelTop), new SKPoint(tabLeft - radius, panelTop), radius);
-
-            // --- 3. BOTTOM-LEFT TAB FLARE ---
-            // Turns upward into the vertical tab wall
-            path.ArcTo(new SKPoint(tabLeft, panelTop), new SKPoint(tabLeft, tabTopY), radius);
-
-            // --- 4. TOP-LEFT TAB CORNER ---
-            // Turns right across the top edge of the tab
-            path.ArcTo(new SKPoint(tabLeft, tabTopY), new SKPoint(tabRight, tabTopY), radius);
-
-            // --- 5. TOP-RIGHT TAB CORNER ---
-            // Turns downward toward the main panel baseline
-            path.ArcTo(new SKPoint(tabRight, tabTopY), new SKPoint(tabRight, panelTop), radius);
-
-            // --- 6. BOTTOM-RIGHT TAB FLARE ---
-            // Turns right onto the remaining top baseline of the container
-            path.ArcTo(new SKPoint(tabRight, panelTop), new SKPoint(panelRight, panelTop), radius);
-
-            // --- 7. TOP-RIGHT CONTAINER CORNER ---
-            // Turns down the right wall of the container
-            path.ArcTo(new SKPoint(panelRight, panelTop), new SKPoint(panelRight, panelBottom), radius);
-
-            // --- 8. BOTTOM-RIGHT CONTAINER CORNER ---
-            // Turns left across the bottom floor of the container
-            path.ArcTo(new SKPoint(panelRight, panelBottom), new SKPoint(panelLeft, panelBottom), radius);
-
-            // --- 9. BOTTOM-LEFT CONTAINER CORNER ---
-            // Turns back up the left wall to meet our starting point
-            path.ArcTo(new SKPoint(panelLeft, panelBottom), new SKPoint(panelLeft, panelTop), radius);
-
-            // Close the loop cleanly
-            path.Close();
-            return path;
-        }
-
-        /*
-        panelLeft: The absolute horizontal coordinate X for the left edge of the main content window.
-        panelRight: The absolute horizontal coordinate X for the right edge of the main content window.
-        panelTop: The vertical coordinate Y for the top horizontal baseline of the main panel
-        (the line that the tab sits on top of).
-        panelBottom: The vertical coordinate Y for the very bottom edge of the main content container.
-        
-        tabLeft: The absolute horizontal coordinate X where the vertical left wall of the tab begins.
-        tabRight: The absolute horizontal coordinate X where the vertical right wall of the tab ends.
-        tabHeight: The structural height of the tab itself, measured upward from the panelTop line.        
-        */
-        public static SKPath CreateTabWithPanelPath(
-                float panelLeft, float panelRight, float panelBottom, float panelTop,
-                float tabLeft, float tabRight, float tabHeight,
-                float cornerRadius)
-        {
-            SKPath path = new SKPath();
-
-            float tabTopY = panelTop - tabHeight;
-
-            // 1. Start from the bottom-left of the main content panel
-            path.MoveTo(panelLeft, panelBottom);
-
-            // 2. Up to the top-left corner of the main panel
-            path.LineTo(panelLeft, panelTop);
-
-            // 3. Move along the top panel line until we hit the tab's left flare entry point
-            // We stop short by the radius size to give room for the reverse flare curve
-            path.LineTo(tabLeft - cornerRadius, panelTop);
-
-            // 4. BOTTOM-LEFT TAB FLARE (Concave curve turning UP into the tab)
-            // Tangent 1: (tabLeft, panelTop), Tangent 2: (tabLeft, tabTopY)
-            path.ArcTo(new SKPoint(tabLeft, panelTop), new SKPoint(tabLeft, tabTopY), cornerRadius);
-
-            // 5. TOP-LEFT TAB CORNER (Convex curve turning RIGHT across the tab top)
-            path.ArcTo(new SKPoint(tabLeft, tabTopY), new SKPoint(tabRight, tabTopY), cornerRadius);
-
-            // 6. TOP-RIGHT TAB CORNER (Convex curve turning DOWN towards the panel)
-            path.ArcTo(new SKPoint(tabRight, tabTopY), new SKPoint(tabRight, panelTop), cornerRadius);
-
-            // 7. BOTTOM-RIGHT TAB FLARE (Concave curve turning RIGHT onto the panel top)
-            path.ArcTo(new SKPoint(tabRight, panelTop), new SKPoint(panelRight, panelTop), cornerRadius);
-
-            // 8. Continue along the rest of the top panel line to the right edge
-            path.LineTo(panelRight, panelTop);
-
-            // 9. Down the right side and across the bottom to close the panel shape
-            path.LineTo(panelRight, panelBottom);
-            path.LineTo(panelLeft, panelBottom);
-
-            path.Close();
-            return path;
         }
 
         /// <inheritdoc/>
