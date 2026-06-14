@@ -25,7 +25,6 @@ namespace Alternet.UI.Integration.VisualStudio
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     [ProvideOptionPage(typeof(OptionsDialogPage), Name, "General", 113, 0, supportsAutomation: true)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    /*
     [ProvideEditorExtension(
         typeof(EditorFactory),
         ".uixml",
@@ -36,7 +35,6 @@ namespace Alternet.UI.Integration.VisualStudio
         DefaultName = Name)]
     [ProvideEditorFactory(typeof(EditorFactory), 113, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     [ProvideEditorLogicalView(typeof(EditorFactory), LogicalViewID.Designer)]
-    */
     public sealed class AlternetUIPackage : AsyncPackage, IVsRunningDocTableEvents, IVsSelectionEvents
     {
         internal static IVsOutputWindow? OutputWindow;        
@@ -248,6 +246,11 @@ namespace Alternet.UI.Integration.VisualStudio
             {
                 monitorSelection.AdviseSelectionEvents(this, out _selectionCookie);
             }
+
+            RegisterEditorFactory(new EditorFactory(this));
+
+            var dte = (DTE)await GetServiceAsync(typeof(DTE));
+            SolutionService = new SolutionService(dte);
 
             Log.Information("AlterNET UI Package initialized");
         }
