@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -1199,14 +1200,25 @@ namespace Alternet.UI
 
                         var childrenCopy = e.Value.Parent?.Children.ToArray() ?? [];
 
+                        /*
+                        App.Log("=============");
                         foreach (var control in childrenCopy)
                         {
-                            if(control == e.Value)
+                            var level = GetLevel(control) ?? 0;
+
+                            App.Log($"Control: {control.GetType()}, Level: {level}");
+                        }
+                        App.Log("=============");
+                        */
+
+                        foreach (var control in childrenCopy)
+                        {
+                            if (control == e.Value)
                                 continue;
 
                             var level = GetLevel(control) ?? 0;
 
-                            if(level >= senderLevel)
+                            if (level >= senderLevel)
                             {
                                 if (control is Alternet.UI.InnerPopupToolBar toolBar)
                                 {

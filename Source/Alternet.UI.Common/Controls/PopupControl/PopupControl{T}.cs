@@ -29,7 +29,7 @@ namespace Alternet.UI
             content = CreateContent();
             content.ParentFont = true;
             content.VerticalAlignment = VerticalAlignment.Fill;
-            content.Parent = this.FillPanel;
+            content.Parent = this;
         }
 
         /// <summary>

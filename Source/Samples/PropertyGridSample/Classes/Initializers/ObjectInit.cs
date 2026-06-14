@@ -217,6 +217,9 @@ Environment.NewLine + Environment.NewLine +
                 control.Location = (10, 10);
                 control.Title = "This is title";
 
+                control.MinimizeEnabled = true;
+                control.MaximizeEnabled = true;
+                control.HasSystemMenu = true;
                 control.MinimizeButtonClick += (s, e) => App.Log("Minimize button clicked");
                 control.MaximizeButtonClick += (s, e) => App.Log("Maximize button clicked");
                 control.CloseButtonClick += (s, e) => App.Log("Close button clicked");

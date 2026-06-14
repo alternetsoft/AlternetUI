@@ -110,16 +110,20 @@ namespace Alternet.UI
         /// Only controls which are inherited from <see cref="GenericControl"/>
         /// are painted by this method.
         /// </remarks>
+        /// <param name="control">The parent control whose generic child controls will be painted.
+        /// Can be <see langword="null"/>.</param>
+        /// <param name="dc">A function that provides the <see cref="Graphics"/> object used for painting.</param>
+        /// <param name="isClipped">Indicates whether the painting should be clipped to the parent's client rectangle.</param>
         public static void RaisePaintForGenericChildren(
             AbstractControl? control,
             Func<Graphics> dc,
-            bool clipRect)
+            bool isClipped)
         {
             RaisePaintForMatchingChildren(
                 control,
                 dc,
                 c => c is GenericControl,
-                clipRect);
+                isClipped);
         }
 
         /// <summary>
@@ -132,16 +136,18 @@ namespace Alternet.UI
         /// will be painted. Can be <see langword="null"/>.</param>
         /// <param name="dc">A function that provides the <see cref="Graphics"/>
         /// object used for painting.</param>
+        /// <param name="isClipped">Indicates whether the painting should
+        /// be clipped to the parent's client rectangle.</param>
         public static void RaisePaintForNonPlatformChildren(
             AbstractControl? control,
             Func<Graphics> dc,
-            bool clipRect)
+            bool isClipped)
         {
             RaisePaintForMatchingChildren(
                 control,
                 dc,
                 c => !c.IsPlatformControl,
-                clipRect);
+                isClipped);
         }
 
         /// <summary>
@@ -158,13 +164,15 @@ namespace Alternet.UI
         /// Can be <see langword="null"/>.</param>
         /// <param name="dc">A function that provides a <see cref="Graphics"/>
         /// object for painting.</param>
+        /// <param name="isClipped">Indicates whether the painting should be
+        /// clipped to the parent's client rectangle.</param>
         /// <param name="predicate">A predicate used to determine which child controls
         /// should have their paint event raised.</param>
         public static void RaisePaintForMatchingChildren(
             AbstractControl? control,
             Func<Graphics> dc,
             Predicate<AbstractControl> predicate,
-            bool clipRect)
+            bool isClipped)
         {
             if (control is null || !control.HasChildren)
                 return;
@@ -192,7 +200,7 @@ namespace Alternet.UI
                         else
                             RaisePaintRecursive(child, graphics, child.Location);
                     },
-                    clipRect);
+                    isClipped);
             }
         }
 

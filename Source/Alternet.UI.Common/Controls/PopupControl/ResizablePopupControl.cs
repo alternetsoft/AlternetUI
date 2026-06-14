@@ -18,6 +18,8 @@ namespace Alternet.UI
         {
             border.ParentFont = true;
             border.Parent = this;
+            border.GripControl.Target = this;
+            border.SetResizeTarget(this);
         }
 
         /// <summary>
