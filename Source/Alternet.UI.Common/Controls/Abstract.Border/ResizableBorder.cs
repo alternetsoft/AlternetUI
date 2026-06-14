@@ -58,6 +58,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets target control for the resizable border.
+        /// This control will be resized when the user drags the grips of the resizable border.
+        /// </summary>
+        /// <param name="target">The target control to be resized.</param>
+        public virtual void SetResizeTarget(AbstractControl target)
+        {
+            RightGripControl.Target = target;
+            LeftGripControl.Target = target;
+            TopGripControl.Target = target;
+            BottomGripControl.Target = target;
+        }
+
+        /// <summary>
         /// Updates width and height of the resizable borders.
         /// </summary>
         /// <param name="kind">The kind of border metric to use.</param>
