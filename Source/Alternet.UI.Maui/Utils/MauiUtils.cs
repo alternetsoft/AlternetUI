@@ -951,7 +951,8 @@ namespace Alternet.UI
         /// Gets the background color of the control associated with the specified view, if available.
         /// </summary>
         /// <param name="view">The view to retrieve the background color from.</param>
-        /// <returns>The background color of the control associated with the specified view, if available; otherwise, null.</returns>
+        /// <returns>The background color of the control associated with the specified view,
+        /// if available; otherwise, null.</returns>
         public static Alternet.Drawing.Color? GetControlViewBackColor(View? view)
         {
             view = GetControlView(view);
@@ -967,16 +968,6 @@ namespace Alternet.UI
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Hides any visible context menus associated with the specified view.
-        /// </summary>
-        /// <param name="view">The view for which to hide context menus.</param>
-        public static void HideContextMenus(View? view)
-        {
-            HideContextMenusInControlView(GetControlView(view));
-            HideContextMenusInControlView(GetControlViewViaAbsoluteLayout(view));
         }
 
         /// <summary>
@@ -1094,8 +1085,10 @@ namespace Alternet.UI
         /// Hides popup windows with context menus in the specified view.
         /// </summary>
         /// <param name="view">The view for which to hide the context menu.</param>
-        public static void HideContextMenu(View? view)
+        public static bool HideContextMenus(View? view)
         {
+            var result = false;
+
             var absLayout = GetTopAbsoluteLayout(view);
 
             if (absLayout is not null)
@@ -1103,20 +1096,34 @@ namespace Alternet.UI
                 var child = GetChildViewOfType<Alternet.Maui.InnerPopupToolBarContainerView>(absLayout);
                 if (child is not null)
                 {
-                    HidePopups(child.Control);
-                    child.IsVisible = false;
+                    if (child.IsVisible)
+                    {
+                        HidePopups(child.Control);
+                        child.IsVisible = false;
+                        result = true;
+                    }
                 }
             }
 
-            void HidePopups(AbstractControl? container)
+            bool HidePopups(AbstractControl? container)
             {
+                var result = false;
+
                 var children = container?.Children.ToArray() ?? [];
 
                 foreach (var c in children)
                 {
                     if (c is Alternet.UI.InnerPopupToolBar)
-                        c.Visible = false;
+                    {
+                        if (c.Visible)
+                        {
+                            c.Visible = false;
+                            result = true;
+                        }
+                    }
                 }
+
+                return result;
             }
 
             var controlView = GetControlView(view);
@@ -1124,8 +1131,10 @@ namespace Alternet.UI
             if (controlView is not null)
             {
                 var c = controlView.Control;
-                HidePopups(c);
+                result = HidePopups(c);
             }
+
+            return result;
         }
 
         /// <summary>
@@ -1308,6 +1317,11 @@ namespace Alternet.UI
                 ShowMenu(controlView ?? child, child, align.Value);
 
                 child.IsVisible = true;
+
+                if (child.Control is not null)
+                {
+                }
+
                 return true;
             }
 
