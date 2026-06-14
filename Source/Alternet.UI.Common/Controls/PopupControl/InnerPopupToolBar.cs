@@ -138,6 +138,14 @@ namespace Alternet.UI
             };
 
             AssignDefaultColors();
+
+            ScrollViewer.ContentSizeScale = 2;
+            ScrollViewer.VerticalScrollBarSettings.SuggestedVisibility = HiddenOrVisible.Visible;
+
+            ScrollViewer.Content.SizeChanged += (s, e) =>
+            {
+                Content.Width = ScrollViewer.Content.ClientSize.Width;
+            };
         }
 
         /// <summary>

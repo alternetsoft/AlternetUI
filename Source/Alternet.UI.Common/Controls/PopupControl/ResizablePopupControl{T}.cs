@@ -30,8 +30,8 @@ namespace Alternet.UI
         {
             content = CreateContent();
             content.ParentFont = true;
-            content.VerticalAlignment = VerticalAlignment.Fill;
-            content.Parent = BorderControl.FillPanel;
+            content.HasBorder = true;
+            content.Parent = ScrollViewer.Content;
         }
 
         /// <summary>
