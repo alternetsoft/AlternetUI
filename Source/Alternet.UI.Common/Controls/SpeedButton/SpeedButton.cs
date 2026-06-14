@@ -213,6 +213,7 @@ namespace Alternet.UI
         {
             commandSource = new(this);
 
+            IsTransparent = true;
             ParentBackColor = true;
             ParentForeColor = true;
             Padding = DefaultPadding;
