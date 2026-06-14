@@ -220,6 +220,8 @@ namespace Alternet.UI
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
 
+            position ??= GetEfectiveItemsDropDownPosition();
+
             Post(() =>
             {
                 var pt = AlignUtils.GetDropDownPosition(control.Size, 0, position);
@@ -332,6 +334,8 @@ namespace Alternet.UI
                 return null;
             if (control is null)
                 return null;
+
+            dropDownMenuPosition ??= GetEfectiveItemsDropDownPosition();
 
             try
             {
@@ -454,6 +458,11 @@ namespace Alternet.UI
             Action? onClose = null,
             HVDropDownAlignment? align = null)
         {
+            if (position is null)
+            {
+                align ??= GetEfectiveItemsDropDownPosition();
+            }
+
             if (DisposingOrDisposed)
                 return null;
 

@@ -12,6 +12,11 @@ namespace Alternet.UI
     /// </summary>
     public abstract partial class Menu : ItemContainerElement<MenuItem>, IMenuProperties
     {
+        /// <summary>
+        /// Gets or sets default alignment for the items popup window when it is displayed.
+        /// </summary>
+        public static HVDropDownAlignment DefaultItemsDropDownPosition = HVDropDownAlignment.TopRight;
+
         private static readonly BaseDictionary<ObjectUniqueId, Menu> menusById = new();
         private int updateCounter;
 
@@ -66,6 +71,15 @@ namespace Alternet.UI
         /// 
         /// </summary>
         public virtual string ItemsTitle { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Gets or sets the alignment for the items popup window when it is displayed.
+        /// If not specified, the default alignment is determined
+        /// by the static field <see cref="DefaultItemsDropDownPosition"/>.
+        /// <see cref="GetEfectiveItemsDropDownPosition()"/> is used to retrieve the effective alignment,
+        /// which considers both the default and instance-specific settings.
+        /// </summary>
+        public virtual HVDropDownAlignment? ItemsDropDownPosition { get; set; }
 
         /// <summary>
         /// Gets the first visible menu item in the collection,
@@ -372,6 +386,15 @@ namespace Alternet.UI
             MenuItem item = new(title, onClick);
             Items.Add(item);
             return item;
+        }
+
+        /// <summary>
+        /// Gets effective position of the popup window when items are shown.
+        /// </summary>
+        /// <returns>The effective <see cref="HVDropDownAlignment"/> for the items popup window.</returns>
+        public virtual HVDropDownAlignment GetEfectiveItemsDropDownPosition()
+        {
+            return ItemsDropDownPosition ?? DefaultItemsDropDownPosition;
         }
 
         /// <summary>

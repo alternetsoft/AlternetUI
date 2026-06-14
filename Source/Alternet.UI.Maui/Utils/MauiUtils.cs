@@ -1102,10 +1102,12 @@ namespace Alternet.UI
         /// <param name="menu">The context menu to display. If null, the method will attempt to use the context menu
         /// associated with the view.</param>
         /// <returns>true if the context menu was successfully shown for the specified view; otherwise, false.</returns>
+        /// <param name="options">Options for showing the context menu.</param>
         public static bool ShowContextMenu(
             Alternet.UI.ContextMenu? menu,
             View? view,
-            HVDropDownAlignment? align = null)
+            HVDropDownAlignment? align = null,
+            ContextMenuDisplayOptions? options = null)
         {
             if (menu is null)
                 return false;
@@ -1206,17 +1208,6 @@ namespace Alternet.UI
 
                         var childrenCopy = e.Value.Parent?.Children.ToArray() ?? [];
 
-                        /*
-                        App.Log("=============");
-                        foreach (var control in childrenCopy)
-                        {
-                            var level = GetLevel(control) ?? 0;
-
-                            App.Log($"Control: {control.GetType()}, Level: {level}");
-                        }
-                        App.Log("=============");
-                        */
-
                         foreach (var control in childrenCopy)
                         {
                             if (control == e.Value)
@@ -1240,25 +1231,28 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    try
+                    if (child.Control?.HasChildren == false)
                     {
-                        absLayout.BatchBegin();
-
-                        absLayout.Children.Remove(child);
-
-                        child.BackgroundColor = cc.ToMaui();
-
-                        if (child.Control is not null)
+                        try
                         {
-                            child.Control.ParentBackColor = false;
-                            child.Control.BackColor = cc;
-                        }
+                            absLayout.BatchBegin();
 
-                        absLayout.Children.Add(child);
-                    }
-                    finally
-                    {
-                        absLayout.BatchCommit();
+                            absLayout.Children.Remove(child);
+
+                            child.BackgroundColor = cc.ToMaui();
+
+                            if (child.Control is not null)
+                            {
+                                child.Control.ParentBackColor = false;
+                                child.Control.BackColor = cc;
+                            }
+
+                            absLayout.Children.Add(child);
+                        }
+                        finally
+                        {
+                            absLayout.BatchCommit();
+                        }
                     }
                 }
 
@@ -1268,7 +1262,6 @@ namespace Alternet.UI
                 hostControl.VisualStatesOverride = VisualControlStates.None;
                 hostControl.ParentBackColor = false;
                 hostControl.ParentForeColor = false;
-                // hostControl.ContainerSizeOverride = child.Control?.Size;
                 hostControl.Content.AutoUpdateColors = true;
                 hostControl.Content.AssignDefaultColors();
                 hostControl.BackColor = hostControl.Content.BackColor;
@@ -1735,6 +1728,14 @@ namespace Alternet.UI
 #elif IOS || MACCATALYST
 #elif WINDOWS
 #endif
+        }
+
+        /// <summary>
+        /// Provides additional options for displaying context menus.
+        /// </summary>
+        public struct ContextMenuDisplayOptions
+        {
+
         }
     }
 }
