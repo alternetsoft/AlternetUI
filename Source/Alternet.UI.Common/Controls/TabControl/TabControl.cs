@@ -98,12 +98,15 @@ namespace Alternet.UI
             cardPanelHeader.UpdateCardsMode = WindowSizeToContentMode.None;
             cardPanelHeader.Parent = this;
 
-            cardPanel.Margin = 1;
             cardPanel.Parent = this;
             cardPanel.VerticalAlignment = UI.VerticalAlignment.Fill;
             cardPanel.HorizontalAlignment = UI.HorizontalAlignment.Fill;
 
             cardPanelHeader.CardPanel = cardPanel;
+
+            cardPanelHeader.Margin = (15, 0, 15, 0);
+            cardPanel.Margin = 10;
+            HasInteriorBorder = false;
 
             cardPanel.Children.ItemInserted += OnPagesItemInserted;
             cardPanel.Children.ItemRemoved += OnPagesItemRemoved;
@@ -1359,8 +1362,8 @@ namespace Alternet.UI
                 var tabIndex = Header.SelectedTabIndex ?? 0;
                 var tab = Header.Tabs[tabIndex];
 
-                var r1 = cardPanel.Bounds;
-                r1.Inflate(1);
+                var r1 = Contents.Bounds;
+                r1.Inflate(2, 2);
 
                 var r2 = tab.HeaderButton.Bounds;
                 r2.Offset(Header.Location);
