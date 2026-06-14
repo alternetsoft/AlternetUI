@@ -142,6 +142,7 @@ namespace Alternet.UI
         private VisualControlState? visualStateOverride;
         private VisualControlStates? visualStatesOverride;
         private BaseCollection<DisposableObject>? components;
+        private BaseCollection<WeakReferenceValue<FrameworkElement>>? weakReferences;
         private int tabIndex;
         private bool wantTab;
         private bool canLongTap;
@@ -1935,6 +1936,15 @@ namespace Alternet.UI
                     }
                 }
 
+                if (weakReferences != null)
+                {
+                    foreach (var component in weakReferences)
+                    {
+                        if (component.Value is FrameworkElement fe)
+                            yield return fe;
+                    }
+                }
+
                 if (children != null)
                 {
                     foreach (var child in children)
@@ -1990,6 +2000,12 @@ namespace Alternet.UI
         public bool HasComponents => components != null && components.Count > 0;
 
         /// <summary>
+        /// Gets a value indicating whether the control contains any weak references.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasWeakReferences => weakReferences != null && weakReferences.Count > 0;
+
+        /// <summary>
         /// Gets the collection of components associated with this object.
         /// </summary>
         /// <remarks>This property is not browsable in a property grid. The collection is intended to
@@ -2007,6 +2023,28 @@ namespace Alternet.UI
                 }
 
                 return components;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of weak references to the components associated with this object.
+        /// This property is different from <see cref="Components"/> in that objects
+        /// in this collection are held using weak references, allowing them to be garbage collected
+        /// if no strong references exist. Also these objects are not disposed when the control is disposed.
+        /// </summary>
+        /// <remarks>This property is not browsable in a property grid.</remarks>
+        [Browsable(false)]
+        public virtual IEnumerable<FrameworkElement> WeakReferences
+        {
+            get
+            {
+                if (weakReferences == null)
+                    yield break;
+                foreach (var item in weakReferences)
+                {
+                    if (item.Value != null)
+                        yield return item.Value;
+                };
             }
         }
 

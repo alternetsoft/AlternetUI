@@ -3050,6 +3050,60 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Removes the specified weak reference from the list of weak references.
+        /// </summary>
+        /// <param name="element">The element to remove from the list of weak references.</param>
+        /// <returns>True if the element was found and removed; otherwise, false.</returns>
+        public virtual bool RemoveWeakReference(FrameworkElement element)
+        {
+            if (weakReferences is null)
+                return false;
+
+            for (int i = weakReferences.Count - 1; i >= 0; i--)
+            {
+                var weakRef = weakReferences[i].Value;
+
+                if (weakRef == null)
+                {
+                    weakReferences.RemoveAt(i);
+                }
+                else
+                if (weakRef == element)
+                {
+                    weakReferences.RemoveAt(i);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Adds a weak reference to the specified <see cref="FrameworkElement"/>
+        /// to the control's collection of weak references.
+        /// </summary>
+        /// <param name="element">The element to add as a weak reference.</param>
+        public virtual void AddWeakReference(FrameworkElement element)
+        {
+            if (weakReferences == null)
+            {
+                weakReferences = new(CollectionSecurityFlags.NoNullOrReplace);
+                weakReferences.ItemRemoved += (s, index, item) =>
+                {
+                    if (item.Value != null)
+                        RaiseWeakComponentRemoved(item.Value);
+                };
+                weakReferences.ItemInserted += (s, index, item) =>
+                {
+                    if (item.Value != null)
+                        RaiseWeakComponentInserted(index, item.Value);
+                };
+            }
+
+            weakReferences.Add(new WeakReferenceValue<FrameworkElement>(element));
+        }
+
+        /// <summary>
         /// Gets the specified generic property of this control.
         /// </summary>
         /// <param name="prop">Generic property identifier.</param>
