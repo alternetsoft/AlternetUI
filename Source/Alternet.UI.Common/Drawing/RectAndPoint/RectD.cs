@@ -1369,6 +1369,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Deflates this <see cref='RectD'/> by the specified amount.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Deflate(Coord dx, Coord dy)
+        {
+            x += dx;
+            y += dy;
+            width -= CoordD.Two * dx;
+            height -= CoordD.Two * dy;
+        }
+
+        /// <summary>
         /// Inflates this <see cref='RectD'/> vertically by the specified amount.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
