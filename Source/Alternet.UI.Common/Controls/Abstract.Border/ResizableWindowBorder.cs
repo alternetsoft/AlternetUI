@@ -152,6 +152,18 @@ namespace Alternet.UI
             }
         }
 
+        /// <inheritdoc/>
+        public override SizeD InteriorBorderSize
+        {
+            get
+            {
+                var result = base.InteriorBorderSize;
+                var toolbarHeight = ToolBar.IsVisible ? ToolBar.GetPreferredSize().Height : 0;
+                result.Height += toolbarHeight;
+                return result;
+            }
+        }
+
         /// <summary>
         /// Gets grip control used for moving the target control.
         /// </summary>
@@ -296,7 +308,7 @@ namespace Alternet.UI
             if (!AutoUpdateColors)
                 return;
 
-            var isDark = IsDarkBackground;
+            var isDark = SystemSettings.AppearanceIsDark;
 
             toolBar.DoInsideUpdate(() =>
             {

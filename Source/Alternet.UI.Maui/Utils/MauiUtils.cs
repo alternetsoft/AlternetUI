@@ -1126,6 +1126,7 @@ namespace Alternet.UI
                     child.BackgroundColor = cc.ToMaui();
 
                     var panel = new Alternet.UI.Panel();
+                    panel.IgnoreLayout = true;
                     panel.VisualStatesOverride = VisualControlStates.None;
 
                     child.Control = panel;
@@ -1139,6 +1140,8 @@ namespace Alternet.UI
                     child.ZIndex = int.MaxValue;
 
                     absLayout.Children.Add(child);
+                    
+                    panel.Size = new SizeD(absLayout.Width, absLayout.Height);
 
                     void ClosePopup()
                     {
@@ -1257,11 +1260,12 @@ namespace Alternet.UI
                 }
 
                 var hostControl = menu.EnsureHasInnerPopupToolBarHost();
+                hostControl.Title = menu.Title;
                 hostControl.HideOnEscape = true;
                 hostControl.VisualStatesOverride = VisualControlStates.None;
                 hostControl.ParentBackColor = false;
                 hostControl.ParentForeColor = false;
-                hostControl.ContainerSizeOverride = child.Control?.Size;
+                // hostControl.ContainerSizeOverride = child.Control?.Size;
                 hostControl.Content.AutoUpdateColors = true;
                 hostControl.Content.AssignDefaultColors();
                 hostControl.BackColor = hostControl.Content.BackColor;

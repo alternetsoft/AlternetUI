@@ -626,7 +626,7 @@ namespace Alternet.UI
                 return null;
 
             var p = GetContainer();
-            if (p is null)
+            if (p is null || p.Size == SizeD.Empty)
                 return null;
 
             var cornerSize = FitParentScrollbars ? GetContainerScrollbarSize() : 0;

@@ -1851,7 +1851,7 @@ namespace Alternet.UI
             if (!HasChildren)
                 return null;
             AbstractControl? result = null;
-            double maxBottom = double.MinValue;
+            var maxBottom = float.MinValue;
             foreach (var child in Children)
             {
                 if (!child.Visible)

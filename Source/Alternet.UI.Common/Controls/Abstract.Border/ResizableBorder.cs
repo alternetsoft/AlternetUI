@@ -58,6 +58,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets width and height of the interior borders.
+        /// This is the size of side panels which are used to resize the control.
+        /// </summary>
+        public virtual SizeD InteriorBorderSize
+        {
+            get
+            {
+                var leftWidth = LeftPanel.Visible ? LeftPanel.Size.Width : 0;
+                var rightWidth = RightPanel.Visible ? RightPanel.Size.Width : 0;
+                var topHeight = TopPanel.Visible ? TopPanel.Size.Height : 0;
+                var bottomHeight = BottomPanel.Visible ? BottomPanel.Size.Height : 0;
+
+                return new SizeD(leftWidth + rightWidth, topHeight + bottomHeight);
+            }
+        }
+
+        /// <summary>
         /// Sets target control for the resizable border.
         /// This control will be resized when the user drags the grips of the resizable border.
         /// </summary>

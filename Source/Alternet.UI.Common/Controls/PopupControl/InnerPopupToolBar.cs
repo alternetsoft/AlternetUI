@@ -37,6 +37,9 @@ namespace Alternet.UI
             if (App.IsMaui)
                 FitParentScrollbars = false;
 
+            BorderControl.ToolBar.ParentForeColor = true;
+            BorderControl.ToolBar.ParentBackColor = true;
+
             Content.HorizontalAlignment = HorizontalAlignment.Left;
             Content.VerticalAlignment = VerticalAlignment.Top;
             Content.Margin = PopupToolBar.DefaultContentMargin;
@@ -48,6 +51,7 @@ namespace Alternet.UI
             SuppressParentKeyPress = true;
             SuppressKeyPress = true;
             SuppressKeyDown = true;
+            HasBorder = false;
             HideOnSiblingHide = true;
             HideOnSiblingShow = true;
             HideOnEscape = true;
@@ -131,10 +135,7 @@ namespace Alternet.UI
                 }
             };
 
-            Content.ParentBackColor = true;
-            Content.ParentForeColor = true;
-            BackColor = DefaultColors.GetWindowBackColor(SystemSettings.AppearanceIsDark);
-            ForeColor = DefaultColors.GetWindowForeColor(SystemSettings.AppearanceIsDark);
+            AssignDefaultColors();
         }
 
         /// <summary>
@@ -326,23 +327,6 @@ namespace Alternet.UI
         AbstractControl IContextMenuHost.ContextMenuHost => Content;
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
-        {
-            var preferredSize = Content.GetPreferredSize(PreferredSizeContext.MaxCoord);
-
-            var lastChild = Content.GetVisibleChildWithMaxBottom();
-            if (lastChild is not null)
-            {
-                preferredSize.Height = Math.Max(
-                    preferredSize.Height,
-                    lastChild.Bounds.Bottom + lastChild.Margin.Bottom);
-            }
-
-            preferredSize += Content.Padding.Size + Content.Margin.Size + Margin.Size + Padding.Size + 2;
-            return preferredSize;
-        }
-
-        /// <inheritdoc/>
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
@@ -517,33 +501,41 @@ namespace Alternet.UI
             if(!AllowUpdateMinimumSize)
                 return;
 
-            Content.DoInsideLayout(() =>
+            if (NeedsRemainingImages)
             {
-                if (NeedsRemainingImages)
-                {
-                    Content.AddRemainingImages();
-                }
+                Content.AddRemainingImages();
+            }
 
-                if (NeedsRemainingLabelImages)
-                {
-                    Content.AddRemainingLabelImages();
-                }
+            if (NeedsRemainingLabelImages)
+            {
+                Content.AddRemainingLabelImages();
+            }
 
-                if (IsLabelTextWidthMaximized)
-                    Content.MaximizeLabelTextWidth();
+            if (IsLabelTextWidthMaximized)
+                Content.MaximizeLabelTextWidth();
 
-                if (IsRightSideElementWidthMaximized)
-                    Content.MaximizeToolRightSideElementWidth();
-            });
+            if (IsRightSideElementWidthMaximized)
+                Content.MaximizeToolRightSideElementWidth();
 
-            Content.SetSizeToContent();
+            var preferredSize = Content.GetPreferredSize(PreferredSizeContext.MaxCoord);
+            Content.Size = preferredSize;
+            Content.PerformLayout(false);
 
-            var preferredSize = GetPreferredSize();
+            var lastChild = Content.GetVisibleChildWithMaxBottom();
+            if (lastChild is not null)
+            {
+                preferredSize.Height = Math.Max(
+                    preferredSize.Height,
+                    lastChild.Bounds.Bottom + lastChild.Margin.Bottom);
+            }
 
+            preferredSize += Content.Padding.Size + Content.Margin.Size
+                + Margin.Size + Padding.Size + 2 + BorderControl.InteriorBorderSize;
+          
             if (UseDefaultMinPopupWidth)
                 preferredSize.Width = Math.Max(preferredSize.Width, DefaultMinPopupWidth);
 
-            ClientSize = preferredSize;
+            Size = preferredSize;
             MinimumSize = MinimumSize.ClampTo(Size);
         }
 
@@ -603,6 +595,29 @@ namespace Alternet.UI
 
         /// <inheritdoc/>
         protected override bool GetDefaultParentForeColor() => false;
+
+        /// <summary>
+        /// Assigns default colors to the control based on the active state and color theme.
+        /// </summary>
+        protected virtual void AssignDefaultColors()
+        {
+            if (!AutoUpdateColors)
+                return;
+
+            var isDark = SystemSettings.AppearanceIsDark;
+
+            Content.ParentBackColor = true;
+            Content.ParentForeColor = true;
+            BackColor = DefaultColors.GetWindowBackColor(isDark);
+            ForeColor = DefaultColors.GetWindowForeColor(isDark);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+            AssignDefaultColors();
+        }
 
         /// <inheritdoc/>
         protected override bool HideWhenSiblingShown(AbstractControl sibling)
