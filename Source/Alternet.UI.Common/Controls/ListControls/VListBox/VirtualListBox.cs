@@ -2524,6 +2524,16 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            DoInsideUpdate(() =>
+            {
+                DoActionScrollToHorzPos(0);
+                base.OnSizeChanged(e);
+            });
+        }
+
+        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             if (AutoUpdateColors)
