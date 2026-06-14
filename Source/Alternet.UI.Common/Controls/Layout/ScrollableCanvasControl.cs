@@ -16,7 +16,8 @@ namespace Alternet.UI
         /// <summary>
         /// Defines the default content size scale factor, which is used to determine the maximum scrollable area based
         /// on the preferred size of the content. This scale factor allows for additional scrolling beyond the calculated
-        /// maximum size, which can be useful in scenarios such as accommodating on-screen keyboards or other dynamic content changes.
+        /// maximum size, which can be useful in scenarios such as accommodating on-screen
+        /// keyboards or other dynamic content changes.
         /// </summary>
         public static SizeD DefaultContentSizeScale = SizeD.One;
 
@@ -56,7 +57,8 @@ namespace Alternet.UI
         /// <summary>
         /// Defines the content size scale factor, which is used to determine the maximum scrollable area based
         /// on the preferred size of the content. This scale factor allows for additional scrolling beyond the calculated
-        /// maximum size, which can be useful in scenarios such as accommodating on-screen keyboards or other dynamic content changes.
+        /// maximum size, which can be useful in scenarios such as accommodating on-screen keyboards or other
+        /// dynamic content changes.
         /// </summary>
         /// <remarks>
         /// If this property is set to null, the default content size scale factor
@@ -178,7 +180,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the maximum size of the layout, which is determined by the preferred size of the content and the padding of the control.
+        /// Gets the maximum size of the layout, which is determined by the preferred size of the
+        /// content and the padding of the control.
         /// </summary>
         new public virtual SizeD LayoutMaxSize
         {
@@ -193,7 +196,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the preferred size of the content, which is used to determine the layout and scrolling behavior of the control.
+        /// Retrieves the preferred size of the content, which is used to determine the
+        /// layout and scrolling behavior of the control.
         /// </summary>
         /// <returns></returns>
         protected abstract SizeD GetContentPreferredSize();
@@ -268,7 +272,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Suspends the update of the interior layout and scroll bars, allowing for multiple changes to be made to the child controls
+        /// Suspends the update of the interior layout and scroll bars, allowing for multiple changes
+        /// to be made to the child controls
         /// without triggering a layout update for each change.
         /// </summary>
         public virtual void SuspendUpdateInterior()

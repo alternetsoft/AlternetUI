@@ -54,7 +54,8 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.ScrollViewer;
 
         /// <summary>
-        /// Gets the collection of child controls within the scroll container, which represents the content of the scroll viewer.
+        /// Gets the collection of child controls within the scroll container,
+        /// which represents the content of the scroll viewer.
         /// </summary>
         [Content]
         [Browsable(false)]
@@ -109,7 +110,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This is redeclared to hide the base class's Children property, which is not relevant for the ScrollViewer control,
+        /// This is redeclared to hide the base class's Children property, which is not
+        /// relevant for the ScrollViewer control,
         /// as the ScrollViewer uses a <see cref="ScrollContainer"/> to manage its content.
         /// </summary>
         [Browsable(false)]
@@ -122,7 +124,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This is redeclared to hide the base class's Children property, which is not relevant for the ScrollViewer control,
+        /// This is redeclared to hide the base class's Children property, which is
+        /// not relevant for the ScrollViewer control,
         /// as the ScrollViewer uses a <see cref="ScrollContainer"/> to manage its content.
         /// </summary>
         [Browsable(false)]

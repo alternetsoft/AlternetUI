@@ -2050,7 +2050,7 @@ namespace Alternet.UI
                     RightSideElement = SpeedButton.RightSideElementKind.None;
                 }
 
-                ShowDropDownMenuWhenHovered = !App.IsTabletOrPhoneDevice;
+                ShowDropDownMenuWhenHovered = false;
 
                 if (!App.IsMaui)
                     UseInternalDropDownMenu = true;
