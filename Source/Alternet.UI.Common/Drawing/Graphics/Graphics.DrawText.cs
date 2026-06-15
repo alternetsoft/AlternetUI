@@ -1414,7 +1414,8 @@ namespace Alternet.Drawing
             /// Gets or sets a value indicating whether the text is visible. If set to <see langword="false"/>,
             /// the text will not be drawn. Default value is <see langword="true"/>. This property can be used
             /// to control the visibility of the text independently from other elements, such as images
-            /// or prefixes/suffixes, allowing for flexible rendering options based on the specific requirements of the drawing operation.
+            /// or prefixes/suffixes, allowing for flexible rendering options based on
+            /// the specific requirements of the drawing operation.
             /// </summary>
             public bool TextVisible = true;
 

@@ -94,7 +94,7 @@ namespace Alternet.UI
         private BaseCollection<ListControlItem>? cells;
         private object? toolTip;
         private ObjectUniqueId? columnId;
-        private int indexAccel = -1;
+        private MnemonicMarkerHelper mnemonicMarkerHelper = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -102,6 +102,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">The initial value of the <see cref="Text"/> property.</param>
         public ListControlItem(string text)
+            : this()
         {
             Text = text;
         }
@@ -113,6 +114,7 @@ namespace Alternet.UI
         /// <param name="text">The default value of the <see cref="Text"/> property.</param>
         /// <param name="value">User data.</param>
         public ListControlItem(string text, object? value)
+            : this()
         {
             Text = text;
             Value = value;
@@ -123,6 +125,7 @@ namespace Alternet.UI
         /// </summary>
         public ListControlItem()
         {
+            mnemonicMarkerHelper.MnemonicMarkerEnabled = false;
         }
 
         /// <summary>
@@ -133,6 +136,7 @@ namespace Alternet.UI
         /// <param name="text">The default value of the <see cref="Text"/> property.</param>
         /// <param name="action">Action associated with the item.</param>
         public ListControlItem(string text, Action? action)
+            : this()
         {
             Text = text;
             Action = action;
@@ -567,14 +571,46 @@ namespace Alternet.UI
         /// to the text are required prior to display.</remarks>
         public BeforeDrawLabelDelegate? BeforeDrawLabel { get; set; }
 
-        /// <summary>
-        /// Gets or sets index of underlined mnemonic character.
-        /// Default is -1, which means that mnemonic character is not underlined.
-        /// </summary>
-        public virtual int IndexAccel
+        /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicCharIndex"/>
+        [DefaultValue(null)]
+        public virtual int? IndexAccel
         {
-            get => indexAccel;
-            set => indexAccel = value;
+            get
+            {
+                return mnemonicMarkerHelper.MnemonicCharIndex;
+            }
+
+            set
+            {
+                if (mnemonicMarkerHelper.MnemonicCharIndex == value)
+                    return;
+                mnemonicMarkerHelper.MnemonicCharIndex = value;
+            }
+        }
+
+        /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarker"/>
+        public virtual char? MnemonicMarker
+        {
+            get => mnemonicMarkerHelper.MnemonicMarker;
+            set
+            {
+                if (mnemonicMarkerHelper.MnemonicMarker == value)
+                    return;
+                mnemonicMarkerHelper.MnemonicMarker = value;
+            }
+        }
+
+        /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarkerEnabled"/>
+        public virtual bool? MnemonicMarkerEnabled
+        {
+            get => mnemonicMarkerHelper.MnemonicMarkerEnabled;
+
+            set
+            {
+                if (mnemonicMarkerHelper.MnemonicMarkerEnabled == value)
+                    return;
+                mnemonicMarkerHelper.MnemonicMarkerEnabled = value;
+            }
         }
 
         /// <summary>
@@ -1883,7 +1919,8 @@ namespace Alternet.UI
         /// <param name="container">The container that holds the list control item.
         /// This parameter is reserved for future use and is not
         /// currently utilized.</param>
-        /// <returns>A Thickness value representing the padding for the specified item. Returns Thickness.Empty if <paramref
+        /// <returns>A Thickness value representing the padding for the specified item.
+        /// Returns Thickness.Empty if <paramref
         /// name="item"/> is null.</returns>
         public static Thickness GetPadding(
             ListControlItem? item,
@@ -1939,6 +1976,13 @@ namespace Alternet.UI
 
                 paintRectangle = InternalDrawCheckBox();
 
+                int mnemonicCharIndex = -1;
+
+                if (item is not null)
+                {
+                    s = item?.GetWithoutMnemonicMarkers(s, out mnemonicCharIndex) ?? string.Empty;
+                }
+
                 Graphics.DrawLabelParams prm = new(
                     s,
                     e.ItemFont,
@@ -1952,7 +1996,8 @@ namespace Alternet.UI
 
                 if (item is not null)
                 {
-                    prm.IndexAccel = item.IndexAccel;
+
+                    prm.IndexAccel = mnemonicCharIndex;
                     prm.SuffixElements = item.SuffixElements;
                     prm.PrefixElements = item.PrefixElements;
                     prm.Flags = item.LabelFlags;
@@ -2046,7 +2091,8 @@ namespace Alternet.UI
         /// <remarks>This method is only executed in debug builds and is used to render visual debugging
         /// aids, such as design corners, on list control items. The debug corners are drawn if <see
         /// cref="DrawDebugCornersOnElements"/> is set to <see langword="true"/>.</remarks>
-        /// <param name="container">The container that holds the list control items. Can be <see langword="null"/>.</param>
+        /// <param name="container">The container that holds the list control items.
+        /// Can be <see langword="null"/>.</param>
         /// <param name="e">The event arguments containing details about the item being painted,
         /// including its graphics context and item
         /// data.</param>
@@ -2133,7 +2179,10 @@ namespace Alternet.UI
         /// using height of the item.</param>
         /// <param name="isRight">Indicates whether the image should be aligned to the right.</param>
         /// <returns></returns>
-        public static (RectD ImageRect, RectD TextRect) GetItemImageRect(RectD rect, SizeD? imageSize = null, bool isRight = false)
+        public static (RectD ImageRect, RectD TextRect) GetItemImageRect(
+            RectD rect,
+            SizeD? imageSize = null,
+            bool isRight = false)
         {
             Thickness textMargin = GetAdditionalTextMargin();
 
@@ -2178,6 +2227,12 @@ namespace Alternet.UI
             if (!allowThreeState && checkState == CheckState.Indeterminate)
                 checkState = CheckState.Unchecked;
             return checkState;
+        }
+
+        /// <inheritdoc cref="MnemonicMarkerHelper.GetWithoutMnemonicMarkers"/>
+        protected virtual string GetWithoutMnemonicMarkers(string s, out int mnemonicCharIndex)
+        {
+            return mnemonicMarkerHelper.GetWithoutMnemonicMarkers(s, out mnemonicCharIndex);
         }
 
         /// <summary>
