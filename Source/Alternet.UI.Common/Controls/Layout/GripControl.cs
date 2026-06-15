@@ -10,17 +10,20 @@ namespace Alternet.UI
     /// (or the top-level parent form if no target is specified) by dragging the grip.
     /// The grip can be configured to allow resizing in both directions, or only horizontally or vertically.
     /// The minimum size delta for resizing can also be customized.
-    /// The control is typically placed in the bottom-right corner of a status bar, but can be used in other contexts as well.
+    /// The control is typically placed in the bottom-right corner of a status bar,
+    /// but can be used in other contexts as well.
     /// </summary>
     public class GripControl : HiddenBorder
     {
         /// <summary>
-        /// The default minimum size delta for resizing. This value is used if the <see cref="MinSizeDelta"/> property is not set.
+        /// The default minimum size delta for resizing. This value is used if the <see cref="MinSizeDelta"/>
+        /// property is not set.
         /// </summary>
         public static float DefaultMinSizeDelta = 10;
 
         /// <summary>
-        /// The default minimum position delta for moving. This value is used if the <see cref="MinPositionDelta"/> property is not set.
+        /// The default minimum position delta for moving. This value is used if the
+        /// <see cref="MinPositionDelta"/> property is not set.
         /// </summary>
         public static float DefaultMinPositionDelta = 1;
 
@@ -29,6 +32,16 @@ namespace Alternet.UI
         /// of the control and can be overridden by setting the <see cref="AbstractControl.SuggestedSize"/> property.
         /// </summary>
         public static float DefaultSuggestedSize = 16;
+
+        /// <summary>
+        /// Gets or sets default splitter background and line color for the light color scheme.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultSplitterLightColors;
+
+        /// <summary>
+        /// Gets or sets default splitter background and line color for the dark color theme.
+        /// </summary>
+        public static IReadOnlyFontAndColor? DefaultSplitterDarkColors;
 
         private readonly ImageDrawable primitive = new();
 
@@ -39,6 +52,8 @@ namespace Alternet.UI
         private PointD mouseDownPos;
         private GripImageKind imageKind = GripImageKind.SizingGripRight;
         private Color? svgColor;
+        private bool isBackgroundPainted = true;
+        private bool isForegroundPainted = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GripControl"/> class.
@@ -93,6 +108,16 @@ namespace Alternet.UI
             /// A custom grip image is used. The image can be set using the <see cref="SvgImage"/> property.
             /// </summary>
             Custom,
+
+            /// <summary>
+            /// The grip image looks like a horizontal splitter.
+            /// </summary>
+            HorzSplitter,
+
+            /// <summary>
+            /// The grip image looks like a vertical splitter.
+            /// </summary>
+            VertSplitter,
         }
 
         /// <summary>
@@ -410,16 +435,181 @@ namespace Alternet.UI
         /// </summary>
         public virtual Func<AbstractControl?>? TargetProvider { get; set; }
 
+        /// <summary>
+        /// Gets or sets splitter background and line color when control state
+        /// is <see cref="VisualControlState.Normal"/>.
+        /// </summary>
+        /// <remarks>
+        /// If this property is not assigned, <see cref="DefaultSplitterDarkColors"/>
+        /// and <see cref="DefaultSplitterLightColors"/> are used in order to get colors.
+        /// </remarks>
+        public virtual IReadOnlyFontAndColor? NormalSplitterColors
+        {
+            get
+            {
+                return StateObjects?.Colors?.Normal;
+            }
+
+            set
+            {
+                StateObjects ??= new();
+                StateObjects.Colors ??= new();
+                StateObjects.Colors.Normal = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a delegate that resolves the splitter colors.
+        /// Use this property to override the default splitter colors resolve method.
+        /// </summary>
+        public ResolveSplitterColorsDelegate? ResolveSplitterColorsOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the foreground is painted when splitter painting mode is active.
+        /// Default is true.
+        /// </summary>
+        public virtual bool IsSplitterForegroundPainted
+        {
+            get => isForegroundPainted;
+
+            set
+            {
+                if (value == isForegroundPainted)
+                    return;
+                isForegroundPainted = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the background is painted when splitter painting mode is active.
+        /// Default is true.
+        /// </summary>
+        public virtual bool IsSplitterBackgroundPainted
+        {
+            get => isBackgroundPainted;
+
+            set
+            {
+                if (value == isBackgroundPainted)
+                    return;
+                isBackgroundPainted = value;
+                Invalidate();
+            }
+        }
+
         internal ImageDrawable Primitive => primitive;
+
+        /// <summary>
+        /// Draws the background of the splitter.
+        /// </summary>
+        /// <param name="e">The paint event arguments.</param>
+        /// <param name="color">The color to be used for drawing.</param>
+        public virtual void DrawSplitterBackground(PaintEventArgs e, Color? color)
+        {
+            if (color is null)
+                return;
+            e.Graphics.FillRectangle(color.AsBrush, e.ClientRectangle);
+        }
+
+        /// <summary>
+        /// Draws the border of the splitter control.
+        /// </summary>
+        /// <remarks>This method is responsible for rendering the border of the splitter control.
+        /// It uses the provided <see cref="PaintEventArgs"/>
+        /// to perform the drawing operation.</remarks>
+        /// <param name="e">A <see cref="PaintEventArgs"/> object that contains data
+        /// for the paint operation.</param>
+        public virtual void DrawSplitterBorder(PaintEventArgs e)
+        {
+            DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+        }
+
+        /// <summary>
+        /// Draws the foreground of the splitter.
+        /// </summary>
+        /// <param name="e">The paint event arguments.</param>
+        /// <param name="color">The color to be used for drawing.</param>
+        public virtual void DrawSplitterForeground(PaintEventArgs e, Color? color)
+        {
+            if (color is null)
+                return;
+
+            if (ImageKind == GripImageKind.HorzSplitter)
+            {
+                var vertLine = DrawingUtils.GetCenterLineVert(e.ClientRectangle);
+                e.Graphics.FillRectangle(color.AsBrush, vertLine);
+            }
+            else
+            {
+                var horzLine = DrawingUtils.GetCenterLineHorz(e.ClientRectangle);
+                e.Graphics.FillRectangle(color.AsBrush, horzLine);
+            }
+        }
 
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
+            var isSplitter = ImageKind == GripImageKind.HorzSplitter
+                || ImageKind == GripImageKind.VertSplitter;
+
+            if (isSplitter)
+            {
+                ResolveSplitterColors(out var backColor, out var foreColor);
+                if (IsSplitterBackgroundPainted)
+                    DrawSplitterBackground(e, backColor);
+                if (IsSplitterForegroundPainted)
+                    DrawSplitterForeground(e, foreColor);
+                if (HasBorder)
+                {
+                    DrawSplitterBorder(e);
+                }
+
+                return;
+            }
+
             base.DefaultPaint(e);
             if (ImageKind != GripImageKind.None)
             {
                 DrawDefaultImage(e.Graphics, this.ClientRectangle);
             }
+        }
+
+        /// <summary>
+        /// Resolves the splitter colors based on the current theme and background.
+        /// </summary>
+        /// <param name="backColor">The background color to be set.</param>
+        /// <param name="foreColor">The foreground color to be set.</param>
+        public virtual void ResolveSplitterColors(out Color? backColor, out Color? foreColor)
+        {
+            if (ResolveSplitterColorsOverride is not null)
+            {
+                ResolveSplitterColorsOverride(out backColor, out foreColor);
+                return;
+            }
+
+            var colors = NormalSplitterColors;
+
+            Color defaultColor;
+            if (IsDarkBackground)
+            {
+                colors ??= DefaultSplitterDarkColors;
+                if (ParentBackColor)
+                    defaultColor = RealBackgroundColor;
+                else
+                    defaultColor = KnownOSColorConsts.WindowsDark.ExplorerSplitter;
+            }
+            else
+            {
+                colors ??= DefaultSplitterLightColors;
+                if (ParentBackColor)
+                    defaultColor = RealBackgroundColor;
+                else
+                    defaultColor = KnownOSColorConsts.WindowsLight.ExplorerSplitter;
+            }
+
+            backColor = colors?.BackgroundColor ?? defaultColor;
+            foreColor = colors?.ForegroundColor;
         }
 
         /// <summary>
@@ -512,7 +702,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes the grip control with no image and sets it up to allow moving the target control by dragging the grip.
+        /// Initializes the grip control with no image and sets it up
+        /// to allow moving the target control by dragging the grip.
         /// </summary>
         public virtual GripControl ConfigureAsMovingGrip()
         {
