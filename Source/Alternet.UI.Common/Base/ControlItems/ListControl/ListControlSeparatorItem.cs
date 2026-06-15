@@ -22,10 +22,31 @@ namespace Alternet.UI
         /// </summary>
         public ListControlSeparatorItem()
         {
-            this.HideSelection = true;
-            ForegroundColor = DefaultSeparatorColor ?? DefaultColors.BorderColor;
-            DrawForegroundAction = DefaultDrawSeparator;
-            DrawBackgroundAction = (s, e) => { };
+            ConfigureItemAsSeparator(this);
+        }
+
+        /// <summary>
+        /// Resets the specified item to its default state, removing any separator-specific configuration.
+        /// </summary>
+        /// <param name="item">The item to reset.</param>
+        public static void ResetConfiguredSeparatorItem(ListControlItem item)
+        {
+            item.HideSelection = false;
+            item.ForegroundColor = null;
+            item.DrawForegroundAction = null;
+            item.DrawBackgroundAction = null;
+        }
+
+        /// <summary>
+        /// Configures the specified item to look like a separator.
+        /// </summary>
+        /// <param name="item">The item to configure as a separator.</param>
+        public static void ConfigureItemAsSeparator(ListControlItem item)
+        {
+            item.HideSelection = true;
+            item.ForegroundColor = DefaultSeparatorColor ?? DefaultColors.BorderColor;
+            item.DrawForegroundAction = DefaultDrawSeparator;
+            item.DrawBackgroundAction = (s, e) => { };
         }
 
         /// <summary>
@@ -33,7 +54,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="container">Container of the item. Optional.</param>
         /// <param name="item">Item for which to get the separator color. Optional.</param>
-        /// <returns></returns>
+        /// <returns>The color of the separator line.</returns>
         public static Color GetSeparatorColor(
             IListControlItemContainer? container = null,
             ListControlItem? item = null)
