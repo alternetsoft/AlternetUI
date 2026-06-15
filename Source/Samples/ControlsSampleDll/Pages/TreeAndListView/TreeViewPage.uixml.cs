@@ -54,6 +54,12 @@ namespace ControlsSample
 
             treeView.RootItem.FirstChild?.Expand();
             treeView.SelectFirstItemAndScroll();
+
+            pageControl.FirstPage?.ContextMenuStrip.Add("Assign sample menu items to tree view", () =>
+            {
+                var menu = new MenuSample.ExampleContextMenu();
+                treeView.RootItem = menu.AsTreeViewRootItem();
+            });
         }
 
         private void TreeView_MouseMove(object sender, MouseEventArgs e)

@@ -42,6 +42,7 @@ namespace Alternet.UI
         public static bool ShowToolTipsDuringContextMenu { get; set; } = false;
 
         private WeakReferenceValue<AbstractControl> relatedControl = new();
+        private MenuItem.TreeViewRootItemForMenu? rootItemForMenu;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ContextMenu"/> class.
@@ -113,6 +114,17 @@ namespace Alternet.UI
 
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="TreeViewRootItem"/> which content is based on this menu.
+        /// All items of the menu are represented as <see cref="TreeViewItem"/> children of this root item.
+        /// The connection is live.
+        /// </summary>
+        /// <returns></returns>
+        public virtual TreeViewRootItem AsTreeViewRootItem()
+        {
+            return rootItemForMenu ??= new MenuItem.TreeViewRootItemForMenu(this);
         }
 
         /// <summary>

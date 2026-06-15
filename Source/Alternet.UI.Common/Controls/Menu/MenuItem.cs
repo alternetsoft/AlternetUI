@@ -1,5 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 
 using Alternet.Drawing;
 using Alternet.UI.Localization;
@@ -36,6 +40,7 @@ namespace Alternet.UI
         private bool visible = true;
         private bool enabled = true;
         private ContextMenu? itemsMenu;
+        private TreeViewItem? treeViewItem;
 
         static MenuItem()
         {
@@ -698,7 +703,7 @@ namespace Alternet.UI
             {
                 MenuItem? result = null;
 
-                foreach(var p in LogicalParents)
+                foreach (var p in LogicalParents)
                 {
                     if (p is MenuItem mi)
                         result = mi;
@@ -1245,7 +1250,7 @@ namespace Alternet.UI
             Role = source.Role;
             Checked = source.Checked;
 
-            if(source.CommandSource.Command is not null)
+            if (source.CommandSource.Command is not null)
             {
                 Command = source.CommandSource.Command;
                 CommandParameter = source.CommandSource.CommandParameter;
@@ -1370,6 +1375,238 @@ namespace Alternet.UI
             Shortcut = null;
             commandSource.Changed = null;
             base.DisposeManaged();
+        }
+
+        private TreeViewItem AsTreeViewItem()
+        {
+            return treeViewItem ??= new TreeViewMenuItem(this);
+        }
+
+        internal class TreeViewRootItemForMenu : TreeViewRootItem
+        {
+            private readonly Menu menu;
+
+            public TreeViewRootItemForMenu(Menu menu)
+            {
+                this.menu = menu;
+                ItemSource = new ListSourceForMenu(menu);
+            }
+        }
+
+        private class ListSourceForMenu : IListSource<TreeViewItem>
+        {
+            private readonly Menu menu;
+
+            public ListSourceForMenu(Menu menu)
+            {
+                this.menu = menu;
+            }
+
+            public TreeViewItem this[int index]
+            {
+                get
+                {
+                    return menu.Items[index].AsTreeViewItem();
+                }
+            }
+
+            TreeViewItem IList<TreeViewItem>.this[int index]
+            {
+                get
+                {
+                    return menu.Items[index].AsTreeViewItem();
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public IList AsList
+            {
+                get
+                {
+                    return menu.Items.Select(item => item.AsTreeViewItem()).ToList();
+                }
+            }
+
+            public int Count
+            {
+                get
+                {
+                    return menu.Items.Count;
+                }
+
+                set
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            public bool IsReadOnly => true;
+
+            public event NotifyCollectionChangedEventHandler? CollectionChanged;
+
+            public event PropertyChangedEventHandler? PropertyChanged;
+
+            public void Add(TreeViewItem item)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void AddRange(IEnumerable<TreeViewItem> items)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Clear()
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Contains(TreeViewItem item)
+            {
+                return IndexOf(item) != -1;
+            }
+
+            public void CopyTo(TreeViewItem[] array, int arrayIndex)
+            {
+                for (var i = 0; i < menu.Items.Count; i++)
+                {
+                    array[arrayIndex + i] = menu.Items[i].AsTreeViewItem();
+                }
+            }
+
+            public IEnumerator<TreeViewItem> GetEnumerator()
+            {
+                foreach(var item in menu.Items)
+                {
+                    yield return item.AsTreeViewItem();
+                }
+            }
+
+            public TreeViewItem? GetItem(int index)
+            {
+                return menu.Items[index].AsTreeViewItem();
+            }
+
+            public int IndexOf(TreeViewItem item)
+            {
+                for (var i = 0; i < menu.Items.Count; i++)
+                {
+                    if (menu.Items[i].AsTreeViewItem() == item)
+                        return i;
+                }
+
+                return -1;
+            }
+
+            public void Insert(int index, TreeViewItem item)
+            {
+                throw new NotImplementedException();
+            }
+
+            public bool Remove(TreeViewItem item)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void RemoveAt(int index)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SetCount(int count, Func<TreeViewItem> fnCreateItem)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SetItem(int index, TreeViewItem value)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Sort()
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Sort(IComparer<TreeViewItem>? comparer)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Sort(int index, int count, IComparer<TreeViewItem>? comparer)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Sort(Comparison<TreeViewItem> comparison)
+            {
+                throw new NotImplementedException();
+            }
+
+            public void SortDescending(Comparison<TreeViewItem> comparison)
+            {
+                throw new NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                return GetEnumerator();
+            }
+        }
+
+        private class TreeViewMenuItem : TreeViewItem
+        {
+            private readonly MenuItem menuItem;
+
+            public TreeViewMenuItem(MenuItem menuItem)
+            {
+                this.menuItem = menuItem;
+                menuItem.TextChanged += OnMenuItemTextChanged;
+                menuItem.CheckedChanged += OnMenuItemCheckedChanged;
+                menuItem.VisibleChanged += OnMenuItemVisibleChanged;
+                menuItem.ImageChanged += OnMenuItemImageChanged;
+                Text = menuItem.Text;
+                IsVisible = menuItem.Visible;
+                IsChecked = menuItem.Checked;
+                OnMenuItemImageChanged(null, EventArgs.Empty);
+                ItemSource = new ListSourceForMenu(menuItem);
+            }
+
+            protected override void DisposeManaged()
+            {
+                menuItem.TextChanged -= OnMenuItemTextChanged;
+                menuItem.CheckedChanged -= OnMenuItemCheckedChanged;
+                menuItem.VisibleChanged -= OnMenuItemVisibleChanged;
+                menuItem.ImageChanged -= OnMenuItemImageChanged;
+                base.DisposeManaged();
+            }
+
+            private void OnMenuItemImageChanged(object? sender, EventArgs e)
+            {
+                SvgImage = menuItem.SvgImage;
+                SvgImageSize = menuItem.SvgImageSize;
+                Image = menuItem.Image?.AsImage();
+                DisabledImage = menuItem.DisabledImage?.AsImage();
+            }
+
+            private void OnMenuItemVisibleChanged(object? sender, EventArgs e)
+            {
+                IsVisible = menuItem.Visible;
+            }
+
+            private void OnMenuItemCheckedChanged(object? sender, EventArgs e)
+            {
+                IsChecked = menuItem.Checked;
+            }
+
+            private void OnMenuItemTextChanged(object? sender, EventArgs e)
+            {
+                Text = menuItem.Text;
+            }
         }
     }
 }
