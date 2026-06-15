@@ -225,6 +225,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override RectD GetGenericChildrenClipRect()
+        {
+            return scrollContainer.Bounds;
+        }
+
+        /// <inheritdoc/>
         protected override void OnScrolledVerticallyChanged()
         {
             UpdateContentViewportRect(refresh: true);

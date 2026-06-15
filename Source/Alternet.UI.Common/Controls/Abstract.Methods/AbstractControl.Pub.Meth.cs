@@ -1947,6 +1947,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets clipping rectangle which is used when generic child controls are painted.
+        /// </summary>
+        /// <returns>The clipping rectangle.</returns>
+        public virtual RectD GetGenericChildrenClipRect()
+        {
+            return new RectD(PointD.Empty, ClientSize);
+        }
+
+        /// <summary>
         /// Sets the margin for the control, defining the space around it.
         /// This is the same as setting the <see cref="Margin"/> property but implemented as method.
         /// This method is useful for chaining calls when you want to set the margin

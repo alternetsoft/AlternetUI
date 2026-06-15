@@ -180,7 +180,7 @@ namespace Alternet.UI
             // We need Children here, not AllChildrenInLayout
             var children = control.Children;
 
-            var clippedRect = new RectD(PointD.Empty, control.ClientSize);
+            var clippedRect = control.GetGenericChildrenClipRect();
 
             foreach (var child in children)
             {
@@ -196,9 +196,13 @@ namespace Alternet.UI
                     () =>
                     {
                         if (UseSkiaForPaintGenericChildren)
+                        {
                             RaisePaintRecursiveSkia(child, () => graphics, child.Location);
+                        }
                         else
-                            RaisePaintRecursive(child, graphics, child.Location);
+                        {
+                            RaisePaintClipped(child, graphics, child.Location, isClipped);
+                        }
                     },
                     isClipped);
             }
