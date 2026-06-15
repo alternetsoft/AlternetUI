@@ -684,44 +684,51 @@ namespace Alternet.UI
             control.ResetScaleFactor();
             var scaleFactor = (float)control.ScaleFactor;
 
-            dc.Save();
-            dc.Scale(scaleFactor);
-
-            if (graphics is null)
+            try
             {
-                graphics = new(dc);
-            }
-            else
-            {
-                graphics.Canvas = dc;
-            }
+                dc.Save();
+                dc.Scale(scaleFactor);
 
-            graphics.OriginalScaleFactor = scaleFactor;
+                if (graphics is null)
+                {
+                    graphics = new(dc);
+                }
+                else
+                {
+                    graphics.Canvas = dc;
+                }
 
-            UpdateInnerControlBounds(dc.LocalClipBounds);
+                graphics.OriginalScaleFactor = scaleFactor;
 
-            dc.Clear(control.BackColor);
+                UpdateInnerControlBounds(dc.LocalClipBounds);
 
-            dc.Save();
+                dc.Clear(control.BackColor);
 
-            graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
+                dc.Save();
 
-            var r = control.Bounds;
+                try
+                {
+                    graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
-            var paintArgs = new PaintEventArgs(graphics, r, r);
+                    var r = control.Bounds;
 
-            control.RaisePaint(paintArgs);
+                    var paintArgs = new PaintEventArgs(graphics, r, r);
 
-            dc.Restore();
+                    control.RaisePaint(paintArgs);
+                }
+                finally
+                {
+                    dc.Restore();
+                }
 
 #pragma warning disable
-            if (interior is not null)
-            {
-                interior.Draw(control, graphics);
-            }
+                if (interior is not null)
+                {
+                    interior.Draw(control, graphics);
+                }
 #pragma warning restore
 
-            graphics.UseUnscaledDrawImage = false;
+                graphics.UseUnscaledDrawImage = false;
 
 #if ANDROID
             DebugUtils.DebugCallIf(false, () =>
@@ -753,9 +760,12 @@ namespace Alternet.UI
                 }
             });
 #endif
-
-            dc.Flush();
-            dc.Restore();
+            }
+            finally
+            {
+                dc.Restore();
+                dc.Flush();
+            }
         }
 
         /// <summary>
