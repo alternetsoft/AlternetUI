@@ -30,7 +30,6 @@ namespace Alternet.UI
         {
             content = CreateContent();
             content.ParentFont = true;
-            content.HasBorder = true;
             content.Parent = ScrollViewer.Content;
         }
 
