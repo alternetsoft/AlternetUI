@@ -213,7 +213,7 @@ namespace Alternet.UI
         {
             commandSource = new(this);
 
-            IsTransparent = true;
+            IsTransparent = false; // It should be false as control paints hovered background
             ParentBackColor = true;
             ParentForeColor = true;
             Padding = DefaultPadding;
