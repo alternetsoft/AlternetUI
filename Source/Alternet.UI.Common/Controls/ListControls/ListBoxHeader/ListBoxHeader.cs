@@ -412,14 +412,18 @@ namespace Alternet.UI
 
             label.SetContentHorizontalAlignment(HorizontalAlignment.Left);
 
-            Splitter splitter = new()
+            GripControl splitter = new()
             {
                 Dock = DockStyle.Left,
+                Cursor = Cursors.SizeWE,
                 ParentBackColor = true,
                 ParentForeColor = false,
+                SizeAction = GripControl.GripSizeAction.ChangeWidth,
                 ForeColor = DefaultColors.BorderColor,
+                ImageKind = GripControl.GripImageKind.HorzSplitter,
                 ResolveSplitterColorsOverride = ResolveSplitterColors,
                 Width = GetSplitterWidth(),
+                Target = label,
             };
 
             label.CustomAttr.SetAttribute("AttachedSplitter", splitter.UniqueId);

@@ -139,7 +139,7 @@ namespace Alternet.UI
         /// Gets or sets a delegate that resolves the splitter colors.
         /// Use this property to override the default splitter colors resolve method.
         /// </summary>
-        public ResolveSplitterColorsDelegate? ResolveSplitterColorsOverride { get; set; }
+        public virtual ResolveSplitterColorsDelegate? ResolveSplitterColorsOverride { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the split operation
