@@ -1603,9 +1603,11 @@ namespace Alternet.UI
                 menuItem.CheckedChanged += OnMenuItemCheckedChanged;
                 menuItem.VisibleChanged += OnMenuItemVisibleChanged;
                 menuItem.ImageChanged += OnMenuItemImageChanged;
-                Text = menuItem.Text;
+                MnemonicMarker = '_';
+                MnemonicMarkerEnabled = true;
                 IsVisible = menuItem.Visible;
                 IsChecked = menuItem.Checked;
+                OnMenuItemTextChanged(null, EventArgs.Empty);
                 OnMenuItemImageChanged(null, EventArgs.Empty);
                 ItemSource = new ListSourceForMenu(menuItem);
             }
@@ -1639,7 +1641,17 @@ namespace Alternet.UI
 
             private void OnMenuItemTextChanged(object? sender, EventArgs e)
             {
+                if (Text == "-")
+                {
+                    ListControlSeparatorItem.ResetConfiguredSeparatorItem(this);
+                }
+
                 Text = menuItem.Text;
+
+                if (Text == "-")
+                {
+                    ListControlSeparatorItem.ConfigureItemAsSeparator(this);
+                }
             }
         }
     }
