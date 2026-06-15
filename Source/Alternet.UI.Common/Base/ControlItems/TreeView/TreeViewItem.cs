@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// </summary>
     public partial class TreeViewItem : ListControlItemWithNotify, IComparable<TreeViewItem>
     {
-        private BaseCollection<TreeViewItem>? items;
+        private IListSource<TreeViewItem>? items;
         private bool isExpanded;
         private TreeViewItem? parent;
         private object? handle;
@@ -23,6 +23,15 @@ namespace Alternet.UI
         /// </summary>
         public TreeViewItem()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TreeViewItem"/> class with the specified items.
+        /// </summary>
+        /// <param name="items">The items to be associated with the tree view item.</param>
+        public TreeViewItem(IListSource<TreeViewItem> items)
+        {
+            this.items = items;
         }
 
         /// <summary>
@@ -52,6 +61,30 @@ namespace Alternet.UI
         {
             Text = text;
             ImageIndex = imageIndex;
+        }
+
+        /// <summary>
+        /// Gets or sets the source of child items.
+        /// </summary>
+        public IListSource<TreeViewItem> ItemSource
+        {
+            get
+            {
+                return items ??= new ListSource<TreeViewItem>();
+            }
+
+            set
+            {
+                if (items == value)
+                    return;
+
+                DoInsideUpdate(Internal);
+
+                void Internal()
+                {
+                    items = value;
+                }
+            }
         }
 
         /// <summary>
@@ -336,7 +369,10 @@ namespace Alternet.UI
         {
             get
             {
-                return items ?? [];
+                if(items is null)
+                    return Array.Empty<TreeViewItem>();
+
+                return items;
             }
         }
 
@@ -768,9 +804,8 @@ namespace Alternet.UI
             {
                 bool hasItems = HasItems;
 
-                items ??= new();
                 item.InternalSetParent(this);
-                items.Insert(index, item);
+                ItemSource.Insert(index, item);
 
                 if (HasItems != hasItems)
                     RaisePropertyChanged(nameof(HasItems));
@@ -835,7 +870,10 @@ namespace Alternet.UI
         /// If not specified, <see cref="TreeViewItem"/> will be created.</param>
         /// <returns>A <see cref="TreeViewItem"/> representing the cell for the specified child item and column.
         /// If the cell does not exist, it is created and added to the cells collection of the item.</returns>
-        public virtual ListControlItem SafeCell(int rowIndex, ListControlColumn column, Func<TreeViewItem>? fnCreateItem = null)
+        public virtual ListControlItem SafeCell(
+            int rowIndex,
+            ListControlColumn column,
+            Func<TreeViewItem>? fnCreateItem = null)
         {
             var item = SafeItem(rowIndex, fnCreateItem);
             return item.SafeCell(column);
@@ -851,7 +889,10 @@ namespace Alternet.UI
         /// If not specified, <see cref="TreeViewItem"/> will be created.</param>
         /// <returns>A <see cref="TreeViewItem"/> representing the cell for the specified child item and column.
         /// If the cell does not exist, it is created and added to the cells collection of the item.</returns>
-        public virtual ListControlItem SafeCell(int rowIndex, ObjectUniqueId columnId, Func<TreeViewItem>? fnCreateItem = null)
+        public virtual ListControlItem SafeCell(
+            int rowIndex,
+            ObjectUniqueId columnId,
+            Func<TreeViewItem>? fnCreateItem = null)
         {
             var item = SafeItem(rowIndex, fnCreateItem);
             return item.SafeCell(columnId);
