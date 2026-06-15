@@ -210,6 +210,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first page in the <see cref="Pages"/> collection or null if the collection is empty.
+        /// </summary>
+        public AbstractControl? FirstPage => Pages.FirstOrDefault();
+
+        /// <summary>
         /// Gets the collection of the loaded pages.
         /// </summary>
         [Browsable(false)]
