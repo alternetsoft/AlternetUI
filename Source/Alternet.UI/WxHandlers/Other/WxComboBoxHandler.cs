@@ -189,7 +189,7 @@ namespace Alternet.UI
             Control.SelectedItemChanged -= Control_SelectedItemChanged;
         }
 
-        private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        private void Items_CollectionChanged(object? sender, ListChangedEventArgs e)
         {
             if (Control is null)
                 return;

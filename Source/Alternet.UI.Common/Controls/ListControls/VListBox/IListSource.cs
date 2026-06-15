@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the list of items changes.
         /// </summary>
-        event NotifyCollectionChangedEventHandler? CollectionChanged;
+        event ListChangedEventHandler? CollectionChanged;
 
         /// <summary>
         /// Occurs when a property changes.

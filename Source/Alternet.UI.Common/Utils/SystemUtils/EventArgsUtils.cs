@@ -35,14 +35,14 @@ namespace Alternet.UI
 
         /// <summary>
         /// Provides a pre-initialized instance
-        /// of <see cref="NotifyCollectionChangedEventArgs"/>  with the
+        /// of <see cref="ListChangedEventArgs"/>  with the
         /// <see cref="NotifyCollectionChangedAction.Reset"/> action.
         /// </summary>
         /// <remarks>This static field can be used to represent a reset action
         /// in collection change notifications,  avoiding the need to create
-        /// a new instance of <see cref="NotifyCollectionChangedEventArgs"/>
+        /// a new instance of <see cref="ListChangedEventArgs"/>
         /// each time a reset action is required.</remarks>
-        public static readonly NotifyCollectionChangedEventArgs ResetCollectionChangedArgs
+        public static readonly ListChangedEventArgs ResetCollectionChangedArgs
             = new(NotifyCollectionChangedAction.Reset);
 
         private static CancelEventArgs? defaultCancelEventArgs;

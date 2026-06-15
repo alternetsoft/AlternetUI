@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the object that provides notifications when the collection changes.
         /// </summary>
-        INotifyCollectionChanged Notification { get; }
+        INotifyListChanged Notification { get; }
 
         /// <summary>
         /// Gets the total number of items currently in the collection.

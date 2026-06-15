@@ -163,7 +163,7 @@ namespace Alternet.UI
             }
         }
 
-        INotifyCollectionChanged ICollectionObserver<object>.Notification
+        INotifyListChanged ICollectionObserver<object>.Notification
         {
             get => Items;
         }

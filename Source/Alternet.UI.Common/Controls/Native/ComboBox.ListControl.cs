@@ -624,7 +624,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ItemsCollectionChanged(
             object? sender,
-            NotifyCollectionChangedEventArgs e)
+            ListChangedEventArgs e)
         {
         }
 

@@ -20,14 +20,14 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Implementation of a dynamic data collection based on generic collection
-    /// implementing <see cref="INotifyCollectionChanged"/> to notify listeners
+    /// implementing <see cref="INotifyListChanged"/> to notify listeners
     /// when items get added, removed or the whole list is refreshed.
     /// </summary>
     [Serializable]
     [DebuggerTypeProxy(typeof(CollectionDebugView<>))]
     [DebuggerDisplay("Count = {Count}")]
     public class BaseObservableCollection<T>
-        : Collection<T>, INotifyCollectionChanged, INotifyPropertyChanged
+        : Collection<T>, INotifyListChanged, INotifyPropertyChanged
     {
         // Lazily allocated only when a subclass calls BlockReentrancy() or during
         // serialization. Do not rename (binary serialization)
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// Occurs when the collection changes, either by adding or removing an item.
         /// </summary>
         [field: NonSerialized]
-        public virtual event NotifyCollectionChangedEventHandler? CollectionChanged;
+        public virtual event ListChangedEventHandler? CollectionChanged;
 
         /// <summary>
         /// PropertyChanged event (per <see cref="INotifyPropertyChanged" />).
@@ -296,9 +296,9 @@ namespace Alternet.UI
         /// When overriding this method, either call its base implementation
         /// or call <see cref="BlockReentrancy"/> to guard against reentrant collection changes.
         /// </remarks>
-        protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        protected virtual void OnCollectionChanged(ListChangedEventArgs e)
         {
-            NotifyCollectionChangedEventHandler? handler = CollectionChanged;
+            ListChangedEventHandler? handler = CollectionChanged;
             if (handler != null)
             {
                 // Not calling BlockReentrancy() here to avoid the SimpleMonitor allocation.
@@ -360,7 +360,7 @@ namespace Alternet.UI
         /// </summary>
         protected void OnCollectionChanged(NotifyCollectionChangedAction action, object? item, int index)
         {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index));
+            OnCollectionChanged(new ListChangedEventArgs(action, item, index));
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Alternet.UI
             int index,
             int oldIndex)
         {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, item, index, oldIndex));
+            OnCollectionChanged(new ListChangedEventArgs(action, item, index, oldIndex));
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Alternet.UI
             object? newItem,
             int index)
         {
-            OnCollectionChanged(new NotifyCollectionChangedEventArgs(action, newItem, oldItem, index));
+            OnCollectionChanged(new ListChangedEventArgs(action, newItem, oldItem, index));
         }
 
         [Conditional("DEBUG")]

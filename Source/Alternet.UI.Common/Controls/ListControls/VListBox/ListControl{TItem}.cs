@@ -35,7 +35,7 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the <see cref="Items"/> collection is changed.
         /// </summary>
-        public event NotifyCollectionChangedEventHandler? ItemsCollectionChanged;
+        public event ListChangedEventHandler? ItemsCollectionChanged;
 
         /// <summary>
         /// Occurs when a property of the <see cref="Items"/> collection changes.
@@ -684,7 +684,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void OnItemsCollectionChanged(
             object? sender,
-            NotifyCollectionChangedEventArgs e)
+            ListChangedEventArgs e)
         {
             ItemsCollectionChanged?.Invoke(this, e);
         }

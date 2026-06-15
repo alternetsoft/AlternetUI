@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// This event is triggered whenever an item is added, removed, or the collection is reset.
         /// It allows subscribers to react to collection modifications dynamically.
         /// </remarks>
-        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+        public event ListChangedEventHandler? CollectionChanged;
 
         /// <inheritdoc/>
         public int Count
@@ -240,7 +240,7 @@ namespace Alternet.UI
             PropertyChanged?.Invoke(this, e);
         }
 
-        private void Items_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        private void Items_CollectionChanged(object? sender, ListChangedEventArgs e)
         {
             if (CollectionChanged is null)
                 return;
@@ -274,7 +274,7 @@ namespace Alternet.UI
                 return result;
             }
 
-            NotifyCollectionChangedEventArgs args;
+            ListChangedEventArgs args;
 
             switch (action)
             {
@@ -362,22 +362,22 @@ namespace Alternet.UI
 
         private static class CollectionChangedHelper
         {
-            public static NotifyCollectionChangedEventArgs OnResetItems()
+            public static ListChangedEventArgs OnResetItems()
             {
                 return new(NotifyCollectionChangedAction.Reset);
             }
 
-            public static NotifyCollectionChangedEventArgs OnRemoveItem(int index, IList val)
+            public static ListChangedEventArgs OnRemoveItem(int index, IList val)
             {
                 return new(NotifyCollectionChangedAction.Remove, val, index);
             }
 
-            public static NotifyCollectionChangedEventArgs OnInsertItem(int index, IList item)
+            public static ListChangedEventArgs OnInsertItem(int index, IList item)
             {
                 return new(NotifyCollectionChangedAction.Add, item, index);
             }
 
-            public static NotifyCollectionChangedEventArgs OnReplaceItem(
+            public static ListChangedEventArgs OnReplaceItem(
                 IList oldItem,
                 int index,
                 IList newItem)
@@ -385,7 +385,7 @@ namespace Alternet.UI
                 return new(NotifyCollectionChangedAction.Replace, oldItem, newItem, index);
             }
 
-            public static NotifyCollectionChangedEventArgs OnMoveItem(
+            public static ListChangedEventArgs OnMoveItem(
                 IList val,
                 int oldIndex,
                 int newIndex)

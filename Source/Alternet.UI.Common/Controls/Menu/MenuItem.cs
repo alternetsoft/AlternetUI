@@ -1400,6 +1400,8 @@ namespace Alternet.UI
             public ListSourceForMenu(Menu menu)
             {
                 this.menu = menu;
+                menu.Items.CollectionChanged += OnItemsCollectionChanged;
+                menu.Items.PropertyChanged += OnItemsPropertyChanged;
             }
 
             public TreeViewItem this[int index]
@@ -1446,7 +1448,7 @@ namespace Alternet.UI
 
             public bool IsReadOnly => true;
 
-            public event NotifyCollectionChangedEventHandler? CollectionChanged;
+            public event ListChangedEventHandler? CollectionChanged;
 
             public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -1555,6 +1557,38 @@ namespace Alternet.UI
             IEnumerator IEnumerable.GetEnumerator()
             {
                 return GetEnumerator();
+            }
+
+            private void OnItemsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+            {
+                PropertyChanged?.Invoke(this, e);
+            }
+
+            private void OnItemsCollectionChanged(object? sender, ListChangedEventArgs e)
+            {
+                ListChangedEventArgs args = new();
+
+                args.NewStartingIndex = e.NewStartingIndex;
+                args.OldStartingIndex = e.OldStartingIndex;
+                args.Action = e.Action;
+                args.NewItems = ConvertItems(e.NewItems);
+                args.OldItems = ConvertItems(e.OldItems);
+
+                IList? ConvertItems(IList? items)
+                {
+                    if (items == null)
+                        return null;
+
+                    var list = new List<object?>();
+                    foreach (var item in items)
+                    {
+                        if (item is MenuItem menuItem)
+                            list.Add(menuItem.AsTreeViewItem());
+                    }
+                    return list;
+                }
+
+                CollectionChanged?.Invoke(this, args);
             }
         }
 

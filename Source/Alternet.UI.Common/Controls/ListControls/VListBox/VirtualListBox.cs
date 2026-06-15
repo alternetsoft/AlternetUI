@@ -2190,7 +2190,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnItemsCollectionChanged(
             object? sender,
-            NotifyCollectionChangedEventArgs e)
+            ListChangedEventArgs e)
         {
             CountChanged();
         }

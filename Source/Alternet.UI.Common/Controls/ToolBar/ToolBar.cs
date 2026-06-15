@@ -3528,7 +3528,7 @@ namespace Alternet.UI
         /// <param name="e">The event data containing details about the collection change.</param>
         protected virtual void OnMenuItemsCollectionChanged(
             object? sender,
-            NotifyCollectionChangedEventArgs e)
+            ListChangedEventArgs e)
         {
             DoInsideLayout(() =>
             {

@@ -1567,7 +1567,7 @@ namespace Alternet.UI
         /// This method is triggered when the column collection is modified.
         /// Override it to implement custom behavior for handling column updates.
         /// </remarks>
-        protected virtual void OnColumnsChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        protected virtual void OnColumnsChanged(object? sender, ListChangedEventArgs e)
         {
             Invalidate();
         }

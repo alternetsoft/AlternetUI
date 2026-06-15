@@ -13,6 +13,39 @@ namespace Alternet.UI
     public static class ListUtils
     {
         /// <summary>
+        /// Performs validation of the arguments for the copying of a collection to an array.
+        /// </summary>
+        /// <param name="sourceCount">The number of elements in the source collection.</param>
+        /// <param name="array">The destination array.</param>
+        /// <param name="index">The zero-based index in the destination array at which copying begins.</param>
+        /// <exception cref="ArgumentException">Thrown when the arguments are invalid for the copy operation.</exception>
+        public static void ValidateCopyToArguments(int sourceCount, Array array, int index)
+        {
+            ArgumentNullException.ThrowIfNull(array);
+
+            if (array.Rank != 1)
+            {
+                throw new ArgumentException(
+                    "Only single dimensional arrays are supported for the requested action.",
+                    nameof(array));
+            }
+
+            if (array.GetLowerBound(0) != 0)
+            {
+                throw new ArgumentException("The lower bound of target array must be zero.", nameof(array));
+            }
+
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length);
+
+            if (array.Length - index < sourceCount)
+            {
+                throw new ArgumentException(
+                    "Destination array is not long enough to copy all the items. Check array index and length.");
+            }
+        }
+
+        /// <summary>
         /// Retrieves a list of selected items by executing the specified update action and item retrieval functions.
         /// </summary>
         /// <remarks>The <paramref name="update"/> action is called to ensure the selection state is
@@ -126,7 +159,7 @@ namespace Alternet.UI
         /// Supported actions include Add, Remove, Replace, Move, and Reset.</remarks>
         /// <param name="sender">The source of the collection change event.
         /// This may be <see langword="null"/>.</param>
-        /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance
+        /// <param name="e">The <see cref="ListChangedEventArgs"/> instance
         /// containing details about the collection change.</param>
         /// <param name="router">The <see cref="ICollectionChangeRouter"/> responsible
         /// for handling the collection change actions.</param>
@@ -136,7 +169,7 @@ namespace Alternet.UI
         /// </returns>
         public static bool RouteCollectionChange(
                 object? sender,
-                NotifyCollectionChangedEventArgs e,
+                ListChangedEventArgs e,
                 ICollectionChangeRouter router)
         {
             switch (e.Action)

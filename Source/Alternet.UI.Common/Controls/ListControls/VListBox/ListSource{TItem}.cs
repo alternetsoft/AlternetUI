@@ -19,7 +19,7 @@ namespace Alternet.UI
         private readonly BaseCollection<TItem> collection;
 
         /// <inheritdoc/>
-        public event NotifyCollectionChangedEventHandler? CollectionChanged;
+        public event ListChangedEventHandler? CollectionChanged;
 
         /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;
