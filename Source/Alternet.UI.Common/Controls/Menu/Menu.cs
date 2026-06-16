@@ -66,10 +66,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets logical parent as <see cref="ContextMenu"/>
+        /// if it is of that type; otherwise, returns <see langword="null"/>.
+        /// </summary>
+        [Browsable(false)]
+        public ContextMenu? LogicalParentAsContextMenu => LogicalParent as ContextMenu;
+
+        /// <summary>
+        /// Gets logical parent as <see cref="MainMenu"/>
+        /// if it is of that type; otherwise, returns <see langword="null"/>.
+        /// </summary>
+        [Browsable(false)]
+        public MainMenu? LogicalParentAsMainMenu => LogicalParent as MainMenu;
+
+        /// <summary>
+        /// Gets logical parent as <see cref="MenuItem"/>
+        /// if it is of that type; otherwise, returns <see langword="null"/>.
+        /// </summary>
+        [Browsable(false)]
+        public Menu? LogicalParentAsMenu => LogicalParent as Menu;
+
+        /// <summary>
+        /// Gets logical parent as <see cref="MenuItem"/>
+        /// if it is of that type; otherwise, returns <see langword="null"/>.
+        /// </summary>
+        [Browsable(false)]
+        public MenuItem? LogicalParentAsMenuItem => LogicalParent as MenuItem;
+
+        /// <summary>
         /// Gets or sets title of the popup window which is used to display menu items.
         /// This is used when the menu is displayed using internal popup window.
         /// 
         /// </summary>
+        [Browsable(false)]
         public virtual string ItemsTitle { get; set; } = string.Empty;
 
         /// <summary>
@@ -79,6 +108,7 @@ namespace Alternet.UI
         /// <see cref="GetEfectiveItemsDropDownPosition()"/> is used to retrieve the effective alignment,
         /// which considers both the default and instance-specific settings.
         /// </summary>
+        [Browsable(false)]
         public virtual HVDropDownAlignment? ItemsDropDownPosition { get; set; }
 
         /// <summary>

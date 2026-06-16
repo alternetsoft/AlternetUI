@@ -1379,7 +1379,22 @@ namespace Alternet.UI
 
         private TreeViewItem AsTreeViewItem()
         {
-            return treeViewItem ??= new TreeViewMenuItem(this);
+            var result = treeViewItem ??= new TreeViewMenuItem(this);
+
+            if (LogicalParentAsContextMenu is not null)
+            {
+                result.Parent = LogicalParentAsContextMenu.AsTreeViewRootItem();
+            }
+            else if (LogicalParent is MenuItem parentMenu)
+            {
+                result.Parent = parentMenu.AsTreeViewItem();
+            }
+            else
+            {
+                result.Parent = null;
+            }
+
+            return result;
         }
 
         internal class TreeViewRootItemForMenu : TreeViewRootItem
@@ -1454,17 +1469,14 @@ namespace Alternet.UI
 
             public void Add(TreeViewItem item)
             {
-                throw new NotImplementedException();
             }
 
             public void AddRange(IEnumerable<TreeViewItem> items)
             {
-                throw new NotImplementedException();
             }
 
             public void Clear()
             {
-                throw new NotImplementedException();
             }
 
             public bool Contains(TreeViewItem item)
@@ -1506,27 +1518,23 @@ namespace Alternet.UI
 
             public void Insert(int index, TreeViewItem item)
             {
-                throw new NotImplementedException();
             }
 
             public bool Remove(TreeViewItem item)
             {
-                throw new NotImplementedException();
+                return false;
             }
 
             public void RemoveAt(int index)
             {
-                throw new NotImplementedException();
             }
 
             public void SetCount(int count, Func<TreeViewItem> fnCreateItem)
             {
-                throw new NotImplementedException();
             }
 
             public void SetItem(int index, TreeViewItem value)
             {
-                throw new NotImplementedException();
             }
 
             public void Sort()
