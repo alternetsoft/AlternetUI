@@ -594,6 +594,46 @@ namespace Alternet.UI
             public static extern bool DeleteDC(IntPtr hdc);
 
             /// <summary>
+            /// Brings the specified window to the foreground and activates it.
+            /// </summary>
+            /// <param name="hWnd">
+            /// A handle to the window that should be brought to the foreground.
+            /// </param>
+            /// <returns>
+            /// <c>true</c> if the window was successfully brought to the foreground; 
+            /// otherwise, <c>false</c>.
+            /// </returns>
+            [DllImport("user32.dll")]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+            /// <summary>
+            /// Retrieves a handle to the foreground window (the window with which 
+            /// the user is currently working).
+            /// </summary>
+            /// <returns>
+            /// An <see cref="IntPtr"/> handle to the foreground window. 
+            /// If no window is in the foreground, the return value is <c>IntPtr.Zero</c>.
+            /// </returns>
+            [DllImport("user32.dll")]
+            public static extern IntPtr GetForegroundWindow();
+
+            /// <summary>
+            /// Determines whether the specified window is a child window of the given parent window.
+            /// </summary>
+            /// <param name="hWndParent">
+            /// A handle to the parent window.
+            /// </param>
+            /// <param name="hWnd">
+            /// A handle to the window to test.
+            /// </param>
+            /// <returns>
+            /// <c>true</c> if <paramref name="hWnd"/> is a child window of 
+            /// <paramref name="hWndParent"/>; otherwise, <c>false</c>.
+            /// </returns>
+            [DllImport("user32.dll")]
+            public static extern bool IsChild(IntPtr hWndParent, IntPtr hWnd);
+
+            /// <summary>
             /// Selects an object into the specified device context, replacing the previous object.
             /// </summary>
             /// <remarks>This method is a wrapper for the GDI `SelectObject` function. The caller is
@@ -1180,15 +1220,6 @@ namespace Alternet.UI
             /// </summary>
             [DllImport(UxTheme, EntryPoint = "#136")]
             public static extern void FlushMenuThemes();
-
-            /// <summary>
-            /// Retrieves a handle to the foreground window (the window with which the user is
-            /// currently working).
-            /// </summary>
-            /// <returns>A handle to the foreground window. If no foreground window exists,
-            /// the return value is <see cref="IntPtr.Zero"/>.</returns>
-            [DllImport(User32)]
-            public static extern IntPtr GetForegroundWindow();
 
             /// <summary>
             /// Enumerates the modules (loaded DLLs) for the specified process.
