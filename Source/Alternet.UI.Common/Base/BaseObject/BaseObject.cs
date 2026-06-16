@@ -331,8 +331,12 @@ namespace Alternet.UI
         {
             if (action is null)
                 return;
-            var handler = App.SafeHandler;
-            handler.BeginInvoke(action);
+            var handler = App.Handler;
+
+            if (handler is null)
+                action.Invoke();
+            else
+                handler.BeginInvoke(action);
         }
 
         /// <summary>
@@ -345,8 +349,11 @@ namespace Alternet.UI
 
             if (InvokeRequired)
             {
-                var handler = App.SafeHandler;
-                handler.BeginInvoke(action);
+                var handler = App.Handler;
+                if (handler is null)
+                    action.Invoke();
+                else
+                    handler.BeginInvoke(action);
             }
             else
             {
