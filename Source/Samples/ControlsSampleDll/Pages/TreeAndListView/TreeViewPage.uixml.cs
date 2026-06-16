@@ -58,7 +58,15 @@ namespace ControlsSample
             pageControl.FirstPage?.ContextMenuStrip.Add("Assign sample menu items to tree view", () =>
             {
                 var menu = new MenuSample.ExampleContextMenu();
-                treeView.RootItem = menu.AsTreeViewRootItem();
+
+                var popupTreeView = treeView.FirstChildOfType<InnerPopupTreeView>();
+                if (popupTreeView is null)
+                {
+                    popupTreeView = new();
+                    popupTreeView.SetItemSource(menu);
+                }
+
+                popupTreeView.ShowInContainer(treeView, null, HVDropDownAlignment.Center);
             });
         }
 
