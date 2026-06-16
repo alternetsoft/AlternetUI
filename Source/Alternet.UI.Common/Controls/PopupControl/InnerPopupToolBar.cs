@@ -34,6 +34,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="InnerPopupToolBar"/> class.
         /// </summary>
         public InnerPopupToolBar()
+            : base(useScrollViewer: true)
         {
             if (App.IsMaui)
                 FitParentScrollbars = false;

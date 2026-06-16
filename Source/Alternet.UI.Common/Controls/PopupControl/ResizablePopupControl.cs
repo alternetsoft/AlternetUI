@@ -10,32 +10,54 @@ namespace Alternet.UI
     /// </summary>
     public partial class ResizablePopupControl : PopupControl
     {
-        private readonly ResizableWindowBorder border = new();
-        private readonly ScrollViewer scrollViewer = new();
+        private ResizableWindowBorder? border;
+        private ScrollViewer? scrollViewer;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResizablePopupControl"/> class.
         /// </summary>
         public ResizablePopupControl()
         {
-            border.ParentFont = true;
-            border.Parent = this;
-            border.GripControl.Target = this;
-            border.SetResizeTarget(this);
-            scrollViewer.VerticalAlignment = VerticalAlignment.Fill;
-            scrollViewer.Parent = BorderControl.FillPanel;
-            scrollViewer.ParentBackColor = true;
-            scrollViewer.ParentForeColor = true;
         }
 
         /// <summary>
         /// Gets the border control of the popup.
         /// </summary>
-        public ResizableWindowBorder BorderControl => border;
+        public ResizableWindowBorder BorderControl
+        {
+            get
+            {
+                if (border is null)
+                {
+                    border = new();
+                    border.ParentFont = true;
+                    border.Parent = this;
+                    border.GripControl.Target = this;
+                    border.SetResizeTarget(this);
+                }
+
+                return border;
+            }
+        }
 
         /// <summary>
         /// Gets the scroll viewer control of the popup.
         /// </summary>
-        public ScrollViewer ScrollViewer => scrollViewer;
+        public ScrollViewer ScrollViewer
+        {
+            get
+            {
+                if (scrollViewer is null)
+                {
+                    scrollViewer = new();
+                    scrollViewer.VerticalAlignment = VerticalAlignment.Fill;
+                    scrollViewer.Parent = BorderControl.FillPanel;
+                    scrollViewer.ParentBackColor = true;
+                    scrollViewer.ParentForeColor = true;
+                }
+
+                return scrollViewer;
+            }
+        }
     }
 }
