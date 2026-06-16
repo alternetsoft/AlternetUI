@@ -948,6 +948,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Brings the specified window to the foreground, making it the active window.
+        /// </summary>
+        /// <param name="window">The window to bring to the foreground.</param>
+        /// <returns>True if the window was successfully brought to the foreground; otherwise, false.</returns>
+        public static bool BrintToFront(Microsoft.Maui.Controls.Window? window)
+        {
+#if WINDOWS
+            return MauiWindowsUtils.BrintToFront(window);
+#else
+            return false;
+#endif
+        }
+
+        /// <summary>
         /// Gets the background color of the control associated with the specified view, if available.
         /// </summary>
         /// <param name="view">The view to retrieve the background color from.</param>
