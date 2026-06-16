@@ -52,7 +52,8 @@ namespace Alternet.UI
         /// <remarks>If the empty text is null or empty, no text is drawn. The text is rendered using a
         /// gray color and is centered both horizontally and vertically within the specified rectangle.</remarks>
         /// <param name="dc">The graphics context used to render the empty text.</param>
-        /// <param name="paintRectangle">The rectangle that defines the area in which to center and draw the empty text.</param>
+        /// <param name="paintRectangle">The rectangle that defines the area in which
+        /// to center and draw the empty text.</param>
         protected virtual void PaintEmptyText(Graphics dc, RectD paintRectangle)
         {
             var s = EmptyText;
@@ -82,7 +83,8 @@ namespace Alternet.UI
         /// <param name="rowIndex">The zero-based index of the row to paint.</param>
         /// <param name="item">The item associated with the row to be painted, or null
         /// if the row does not correspond to a specific item.</param>
-        /// <param name="rectRow">The bounding rectangle, in client coordinates, that defines the area of the row to paint.</param>
+        /// <param name="rectRow">The bounding rectangle, in client coordinates,
+        /// that defines the area of the row to paint.</param>
         public virtual void PaintRow(Graphics dc, int rowIndex, ListControlItem? item, RectD rectRow)
         {
             if (drawItemArgs is null)
@@ -156,6 +158,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calculates the total size of all the rows.
+        /// </summary>
+        /// <param name="dc">The graphics context used to perform the measurement. Cannot be null.</param>
+        /// <returns>A <see cref="SizeD"/> representing the total size of all the rows.</returns>
+        public virtual SizeD GetContentSize(Graphics dc)
+        {
+            return GetContentSize(dc, 0, Items.Count);
+        }
+
+        /// <summary>
+        /// Calculates the total size of the rows within the specified index range.
+        /// </summary>
+        /// <param name="dc">The graphics context used to perform the measurement. Cannot be null.</param>
+        /// <param name="fromIndex">The zero-based index of the first row to include in the calculation.
+        /// If null, calculation starts from the first visible row.</param>
+        /// <param name="toIndex">The zero-based index after the last row to include in the calculation.
+        /// If null, calculation continues to the last visible row.</param>
+        /// <returns>A <see cref="SizeD"/> representing the total size of the rows within the specified range.</returns>
+        public virtual SizeD GetContentSize(Graphics dc, int? fromIndex, int? toIndex = null)
+        {
+            var rowSizes = MeasureRows(dc, fromIndex, toIndex);
+            float totalHeight = 0;
+            float maxWidth = 0;
+
+            foreach (var size in rowSizes)
+            {
+                totalHeight += size.Height;
+                maxWidth = Math.Max(maxWidth, size.Width);
+            }
+
+            return new SizeD(maxWidth, totalHeight);
+        }
+
+        /// <summary>
         /// Measures the sizes of rows within the specified index range and returns their dimensions.
         /// </summary>
         /// <remarks>The method measures rows in the range [fromIndex, toIndex), where fromIndex is
@@ -167,7 +203,8 @@ namespace Alternet.UI
         /// If null, measurement starts from the first visible row.</param>
         /// <param name="toIndex">The zero-based index after the last row to measure.
         /// If null, measurement continues to the last visible row.</param>
-        /// <returns>An array of <see cref="SizeD"/> values representing the measured size of each row in the specified range.
+        /// <returns>An array of <see cref="SizeD"/> values representing
+        /// the measured size of each row in the specified range.
         /// The length of the array equals the number of rows measured.</returns>
         public virtual SizeD[] MeasureRows(Graphics dc, int? fromIndex = null, int? toIndex = null)
         {
