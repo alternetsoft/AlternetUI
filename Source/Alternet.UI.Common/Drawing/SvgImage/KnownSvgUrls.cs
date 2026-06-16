@@ -46,6 +46,12 @@ namespace Alternet.UI
             = GetImageUrl("alternet-square-plus-filled");
 
         /// <summary>
+        /// Gets or sets url used to load "Circle Checkmark" svg image which can be used
+        /// for indicating a checked state of the menu item.
+        /// </summary>
+        public static string UrlImageCircleCheckmark { get; set; } = GetImageUrl("alternet-circle-checkmark");
+
+        /// <summary>
         /// Gets or sets url used to load "Square" svg image.
         /// </summary>
         public static string UrlImageSquare { get; set; } = GetImageUrl("alternet-square");

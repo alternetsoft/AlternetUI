@@ -1654,7 +1654,7 @@ namespace Alternet.UI
                 {
                     Image = null;
                     DisabledImage = null;
-                    SvgImage = KnownSvgImages.ImgCheck;
+                    SvgImage = KnownSvgImages.ImgCircleCheckmark;
                     SvgImageSize = menuItem.SvgImageSize;
                 }
                 else

@@ -107,6 +107,7 @@ namespace Alternet.UI
         private static SvgImage? imgWindowMaximize;
         private static SvgImage? imgWindowMinimize;
         private static SvgImage? imgWindowRestore;
+        private static SvgImage? imgCircleCheckmark;
 
         static KnownSvgImages()
         {
@@ -117,6 +118,16 @@ namespace Alternet.UI
                     image.ResetCachedImages();
                 }
             };
+        }
+
+        /// <summary>
+        /// Gets or sets svg image which can be used
+        /// for indicating a checked state of the menu item.
+        /// </summary>
+        public static SvgImage ImgCircleCheckmark
+        {
+            get => imgCircleCheckmark ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleCheckmark);
+            set => imgCircleCheckmark = value;
         }
 
         /// <summary>
