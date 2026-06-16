@@ -8,6 +8,9 @@ namespace MenuSample
         public ExampleContextMenu()
         {
             InitializeComponent();
+
+            openMenuItem.SvgImage = KnownSvgImages.ImgFileOpen;
+            saveMenuItem.SvgImage = KnownSvgImages.ImgFileSave;
         }
 
         private void OpenMenuItem_Click(object sender, EventArgs e) =>
