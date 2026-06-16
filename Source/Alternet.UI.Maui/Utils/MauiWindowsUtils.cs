@@ -8,6 +8,9 @@ using Microsoft.UI.Input;
 using Microsoft.UI.Xaml.Input;
 
 using Windows.UI.ViewManagement;
+using Microsoft.UI.Windowing;
+using WinRT.Interop;
+using Microsoft.Maui.Handlers;
 
 /// <summary>
 /// Contains static methods and properties related to the Windows platform.
@@ -37,6 +40,46 @@ public static class MauiWindowsUtils
             return false;
         }
     }
+
+    /// <summary>
+    /// Gets native window for the specified <see cref="Window"/> instance.
+    /// </summary>
+    /// <param name="mauiWindow">The MAUI window instance.</param>
+    /// <returns>The native window instance or null if not available.</returns>
+    public static Microsoft.UI.Xaml.Window? GetNativeWindow(Microsoft.Maui.Controls.Window? mauiWindow)
+    {
+        // The Handler is what bridges MAUI to the native platform
+        var handler = mauiWindow?.Handler as WindowHandler;
+        return handler?.PlatformView;
+    }
+
+    /// <summary>
+    /// Brings the specified window to the foreground, making it the active window.
+    /// </summary>
+    /// <param name="window">The window to bring to the foreground.</param>
+    /// <returns>True if the window was successfully brought to the foreground; otherwise, false.</returns>
+    public static bool BrintToFront(Microsoft.Maui.Controls.Window? window)
+    {
+        try
+        {
+            if (window is null)
+                return false;
+
+            var nativeWindow = GetNativeWindow(window);
+
+            if (nativeWindow is null)
+                return false;
+
+            var hwnd = WindowNative.GetWindowHandle(nativeWindow);
+
+            MswUtils.NativeMethods.SetForegroundWindow(hwnd);
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }   
 
     /// <summary>
     /// Converts <see cref="HoldingRoutedEventArgs"/> to <see cref="LongTapEventArgs"/>.
