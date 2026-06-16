@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a popup control that contains a <see cref="ToolBar"/> as its content.
     /// This control is used to display a toolbar in a popup manner, typically for context menus or tool palettes.
+    /// This control is supposed to be shown inside the client area of another control.
     /// </summary>
     public class InnerPopupToolBar : ResizablePopupControl<ToolBar>, IContextMenuHost
     {

@@ -6,6 +6,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a resizable popup control with a window like border and title bar.
+    /// This popup control is supposed to be shown inside the client area of another control.
     /// It is a specialized version of <see cref="ResizablePopupControl"/> that provides additional
     /// functionality for hosting a specific type of content control.
     /// </summary>

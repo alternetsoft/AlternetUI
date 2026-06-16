@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Contains methods and properties which allow <see cref="ListControlItem"/>
-    /// to get information about it's container.
+    /// to get information about its container.
     /// </summary>
     public interface IListControlItemContainer
     {

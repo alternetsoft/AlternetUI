@@ -6,6 +6,7 @@
   <MenuItem Text="_Save item..." IsTextLocalized="true"
             Name="saveMenuItem" Click="SaveMenuItem_Click" Shortcut="Ctrl+Alt+2"
             IsShortcutEnabled="false"/>
+  <MenuItem Text="Auto Save" Checked="true"/>
   <MenuItem Text="-" />
   <MenuItem Text="_Export" IsTextLocalized="true">
     <MenuItem Text="Export item to P_DF" IsTextLocalized="true"

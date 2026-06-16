@@ -2696,7 +2696,10 @@ namespace Alternet.UI
                 result.ImageIndeterminate = container.CheckImageIndeterminate;
             }
 
-            var (checkRect, textRect) = ListControlItem.GetItemImageRect(rect, result.CheckSize, isRight: IsCheckRightAligned);
+            var (checkRect, textRect) = ListControlItem.GetItemImageRect(
+                rect,
+                result.CheckSize,
+                isRight: IsCheckRightAligned);
 
             checkRect = checkRect.DeflatedWithPadding(CheckBoxMargin);
 

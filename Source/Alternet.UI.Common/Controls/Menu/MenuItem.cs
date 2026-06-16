@@ -1614,8 +1614,10 @@ namespace Alternet.UI
                 MnemonicMarker = '_';
                 MnemonicMarkerEnabled = true;
                 IsVisible = menuItem.Visible;
-                IsChecked = menuItem.Checked;
+                ExpandOnClick = true;
+                IsCheckRightAligned = true;
                 OnMenuItemTextChanged(null, EventArgs.Empty);
+                OnMenuItemCheckedChanged(null, EventArgs.Empty);
                 OnMenuItemImageChanged(null, EventArgs.Empty);
                 ItemSource = new ListSourceForMenu(menuItem);
             }
@@ -1631,8 +1633,12 @@ namespace Alternet.UI
 
             private void OnMenuItemImageChanged(object? sender, EventArgs e)
             {
-                SvgImage = menuItem.SvgImage;
                 SvgImageSize = menuItem.SvgImageSize;
+
+                if (menuItem.Checked)
+                    return;
+
+                SvgImage = menuItem.SvgImage;
                 Image = menuItem.Image?.AsImage();
                 DisabledImage = menuItem.DisabledImage?.AsImage();
             }
@@ -1644,7 +1650,19 @@ namespace Alternet.UI
 
             private void OnMenuItemCheckedChanged(object? sender, EventArgs e)
             {
-                IsChecked = menuItem.Checked;
+                if (menuItem.Checked)
+                {
+                    Image = null;
+                    DisabledImage = null;
+                    SvgImage = KnownSvgImages.ImgCheck;
+                    SvgImageSize = menuItem.SvgImageSize;
+                }
+                else
+                {
+                    Image = null;
+                    SvgImage = null;
+                    DisabledImage = null;
+                }
             }
 
             private void OnMenuItemTextChanged(object? sender, EventArgs e)
