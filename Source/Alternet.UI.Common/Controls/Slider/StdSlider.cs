@@ -199,7 +199,7 @@ namespace Alternet.UI
             rightBottomSpacer.BackgroundPadding = 4;
             rightBottomSpacer.HasBackground = false;
 
-            SuggestedSize = 150;
+            SuggestedSize = (150, Coord.NaN);
 
             tickStyle = DefaultTickStyle;
             Padding = (0, 0, 0, 0);

@@ -215,6 +215,7 @@ namespace PropertyGridSample
 
             listBox.HorizontalScrollbar = true;
             listBox.Count = 200;
+            listBox.SuggestedSize = defaultListSize;
             listBox.CustomItemText += ListBox_CustomItemText;
 
             static void ListBox_CustomItemText(object? sender, GetItemTextEventArgs e)

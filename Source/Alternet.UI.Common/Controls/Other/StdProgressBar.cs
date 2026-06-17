@@ -148,7 +148,7 @@ namespace Alternet.UI
 
             MinimumSize = DefaultControlMinimumSize;
 
-            SuggestedSize = 150;
+            SuggestedSize = (150, Coord.NaN);
 
             UseControlColors(DefaultUseControlColors);
 

@@ -267,17 +267,16 @@ Environment.NewLine + Environment.NewLine +
                 StdProgressBar control = (c as StdProgressBar)!;
                 control.OrientationChanged += OrientationChanged;
                 control.Value = 50;
-                control.SuggestedWidth = 200;
+                control.SuggestedWidth = 250;
 
                 static void OrientationChanged(object? sender, EventArgs e)
                 {
-                    if (sender is not ProgressBar control)
+                    if (sender is not StdProgressBar control)
                         return;
-                    if (control.Orientation == ProgressBarOrientation.Vertical)
+                    if (control.IsVertical)
                         control.SuggestedSize = (Coord.NaN, 250);
                     else
                         control.SuggestedSize = (250, Coord.NaN);
-                    control.PerformLayout();
                 }
 
             });
@@ -446,6 +445,19 @@ Environment.NewLine + Environment.NewLine +
         public static void InitGenericSlider(StdSlider control)
         {
             control.Value = 4;
+            control.SuggestedWidth = 250;
+            control.OrientationChanged += OrientationChanged;
+
+            static void OrientationChanged(object? sender, EventArgs e)
+            {
+                if (sender is not StdSlider control)
+                    return;
+                if (control.IsVertical)
+                    control.SuggestedSize = (Coord.NaN, 250);
+                else
+                    control.SuggestedSize = (250, Coord.NaN);
+                control.PerformLayout();
+            }
 
             control.ValueChanged += (s,e) =>
             {
