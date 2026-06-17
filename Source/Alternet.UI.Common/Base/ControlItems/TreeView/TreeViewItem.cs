@@ -66,7 +66,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the source of child items.
         /// </summary>
-        public IListSource<TreeViewItem> ItemSource
+        public virtual IListSource<TreeViewItem> ItemSource
         {
             get
             {
@@ -123,6 +123,34 @@ namespace Alternet.UI
             set
             {
                 handle = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a linear index of the item in the tree view.
+        /// This index is calculated based on the visible and expanded state of the items,
+        /// This index is not the same
+        /// as the index in the <see cref="ItemSource"/> collection.
+        /// This is a global flattened index of the item in the tree view, considering
+        /// only visible and expanded items.
+        /// </summary>
+        [Browsable(false)]
+        public virtual int LinearIndex
+        {
+            get
+            {
+                if (Parent is null)
+                    return 0;
+
+                int index = Parent.LinearIndex + 1;
+
+                foreach (var item in Parent.EnumVisibleItems())
+                {
+                    if (item == this) break;
+                    index += item.GetRecursiveItemCount(onlyVisible: true, onlyExpanded: true) + 1;
+                }
+
+                return index;
             }
         }
 
@@ -369,7 +397,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(items is null)
+                if (items is null)
                     return Array.Empty<TreeViewItem>();
 
                 return items;
@@ -1334,6 +1362,85 @@ namespace Alternet.UI
             var result = base.SetSelected(container, value);
             Owner?.RaiseItemSelectedChanged(this, value);
             return result;
+        }
+
+        /// <summary>
+        /// Gets number of child items in the collection.
+        /// </summary>
+        /// <param name="onlyVisible">If set to <c>true</c>, only visible items are counted.</param>
+        /// <returns>The number of child items.</returns>
+        public virtual int GetItemCount(bool onlyVisible)
+        {
+            if(!HasItems)
+                return 0;
+            if (onlyVisible)
+            {
+                int count = 0;
+                foreach (var item in Items)
+                {
+                    if (item.IsVisible)
+                        count++;
+                }
+                return count;
+            }
+
+            return ItemCount;
+        }
+
+        /// <summary>
+        /// Enumerates visible child items.
+        /// </summary>
+        /// <returns>An enumerable collection of visible child items.</returns>
+        public virtual IEnumerable<TreeViewItem> EnumVisibleItems()
+        {
+            if (!HasItems)
+                yield break;
+            foreach (var item in Items)
+            {
+                if (item.IsVisible)
+                    yield return item;
+            }
+        }
+
+        /// <summary>
+        /// Gets enumerable collection of child items with the specified visibility.
+        /// </summary>
+        /// <param name="onlyVisible">If set to <c>true</c>, only visible items are returned.
+        /// If set to <c>false</c>, all items are returned.</param>
+        /// <returns>An enumerable collection of child items.</returns>
+        public IEnumerable<TreeViewItem> EnumItems(bool onlyVisible = true)
+        {
+            if (onlyVisible)
+            {
+                return EnumVisibleItems();
+            }
+            else
+            {
+                return Items;
+            }
+        }
+
+        /// <summary>
+        /// Gets the total number of child items in this tree control item, including all nested items.
+        /// </summary>
+        /// <param name="onlyVisible">If set to <c>true</c>, only visible items are counted.</param>
+        /// <param name="onlyExpanded">If set to <c>true</c>, only expanded items are counted.</param>
+        [Browsable(false)]
+        public virtual int GetRecursiveItemCount(bool onlyVisible = true, bool onlyExpanded = true)
+        {
+            if (onlyExpanded)
+            {
+                if (!IsExpanded)
+                    return 0;
+            }
+
+            int count = GetItemCount(onlyVisible);
+            foreach (var item in EnumItems(onlyVisible))
+            {
+                count += item.GetRecursiveItemCount(onlyVisible, onlyExpanded);
+            }
+
+            return count;
         }
 
         /// <summary>
