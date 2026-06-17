@@ -67,6 +67,7 @@ namespace Alternet.UI
         private ListViewGridLinesDisplayMode gridLinesDisplayMode = ListViewGridLinesDisplayMode.None;
         private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
         private bool immutableItems;
+        private bool isHoverSelectionEnabled;
 
         static VirtualListBox()
         {
@@ -256,6 +257,23 @@ namespace Alternet.UI
             set
             {
                 DoActionScrollToHorzPos((int)value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether selection of items
+        /// is automatically changed when mouse is hovering over them.
+        /// </summary>
+        public virtual bool IsHoverSelectionEnabled
+        {
+            get
+            {
+                return isHoverSelectionEnabled;
+            }
+
+            set
+            {
+                isHoverSelectionEnabled = value;
             }
         }
 
@@ -1974,9 +1992,12 @@ namespace Alternet.UI
         /// <remarks>This method selects appropriate colors for overlay tooltips by considering
         /// user-defined color properties and the current background theme. Override this method to customize tooltip
         /// color resolution logic in derived classes.</remarks>
-        /// <param name="foreColor">When this method returns, contains the resolved foreground color for the tooltip text.</param>
-        /// <param name="backColor">When this method returns, contains the resolved background color for the tooltip.</param>
-        /// <param name="borderColor">When this method returns, contains the resolved border color for the tooltip.</param>
+        /// <param name="foreColor">When this method returns, contains
+        /// the resolved foreground color for the tooltip text.</param>
+        /// <param name="backColor">When this method returns, contains
+        /// the resolved background color for the tooltip.</param>
+        /// <param name="borderColor">When this method returns, contains
+        /// the resolved border color for the tooltip.</param>
         protected virtual void ResolveOverlayToolTipColors(out Color foreColor, out Color backColor, out Color borderColor)
         {
             backColor = (FullItemToolTipBackColor ?? DefaultFullItemToolTipBackColor)
@@ -2135,10 +2156,36 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+
+            if (IsHoverSelectionEnabled)
+            {
+                SelectedIndex = null;
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-            RemoveOverlay(ref itemToolTipId, invalidate: true);
+
+            var selectedItemChanged = false;
+
+            if (IsHoverSelectionEnabled)
+            {
+                var mousePos = Mouse.GetPosition(this);
+                var itemIndex = HitTest(mousePos);
+
+                selectedItemChanged = SelectedIndex != itemIndex;
+                SelectedIndex = itemIndex;
+            }
+
+            var overlayRemoved = RemoveOverlay(ref itemToolTipId, invalidate: false);
+
+            if (!selectedItemChanged && overlayRemoved)
+                Invalidate();
         }
 
         /// <inheritdoc/>
