@@ -27,6 +27,7 @@ namespace Alternet.UI
             Content.Margin = 10;
             HasBorder = false;
             BorderControl.ToolBar.ParentBackColor = true;
+            BorderControl.CloseButton.ClickAction = () => Hide();
         }
 
         /// <summary>
