@@ -63,8 +63,7 @@ namespace ControlsSample
                 if (popupTreeView is null)
                 {
                     popupTreeView = new();
-                    popupTreeView.SetItemSource(menu);
-                    popupTreeView.Content.ListBox.IsHoverSelectionEnabled = true;
+                    popupTreeView.SetItemSource(menu, setStyle: true);
                 }
 
                 popupTreeView.ShowInContainer(treeView, null, HVDropDownAlignment.Center);

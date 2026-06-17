@@ -189,10 +189,18 @@ namespace Alternet.UI
         /// Sets <see cref="ContextMenu"/> as a source of the items for the tree view.
         /// </summary>
         /// <param name="menu">The context menu to use as the source of items.</param>
-        public virtual void SetItemSource(ContextMenu menu)
+        /// <param name="setStyle">Indicates whether to apply the default style to the list box.</param>
+        public virtual void SetItemSource(ContextMenu menu, bool setStyle = false)
         {
             var rootItem = menu.AsTreeViewRootItem();
             Content.RootItem = rootItem;
+
+            if (setStyle)
+            {
+                Content.ListBox.IsHoverSelectionEnabled = true;
+                Content.ListBox.SetSelectionAndCurrentItemRoundBorders(true);
+                Content.ListBox.ItemMargin = (15, 0, 15, 0);
+            }
         }
 
         /// <summary>
