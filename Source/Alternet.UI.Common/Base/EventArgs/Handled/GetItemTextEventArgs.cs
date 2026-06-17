@@ -34,17 +34,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets index of the item.
         /// </summary>
-        public int ItemIndex { get; }
+        public int ItemIndex { get; set; }
 
         /// <summary>
         /// Gets a flag indicating that text is required for the display purposes.
         /// </summary>
-        public bool ForDisplay { get; }
+        public bool ForDisplay { get; set; }
 
         /// <summary>
         /// Gets item.
         /// </summary>
-        public object? Item { get; }
+        public object? Item { get; set; }
 
         /// <summary>
         /// Gets or sets string representation of the item.
