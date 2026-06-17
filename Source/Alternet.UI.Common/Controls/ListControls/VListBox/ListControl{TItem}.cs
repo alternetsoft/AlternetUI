@@ -419,14 +419,14 @@ namespace Alternet.UI
         /// for display purposes or the real value.</param>
         public virtual string GetItemText(int index, bool forDisplay)
         {
-            TItem? s;
-            s = GetItem(index);
-            var result = GetItemText(s, forDisplay);
+            TItem? item;
+            item = GetItem(index);
+            var result = GetItemText(item, forDisplay);
 
             if (CustomItemText is null)
                 return result;
 
-            GetItemTextEventArgs e = new(index, s, result, forDisplay);
+            GetItemTextEventArgs e = new(index, item, result, forDisplay);
             CustomItemText(this, e);
             if (e.Handled)
                 return e.Result;

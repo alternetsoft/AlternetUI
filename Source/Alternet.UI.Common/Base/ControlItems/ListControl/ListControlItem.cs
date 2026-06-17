@@ -2711,7 +2711,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the checkbox for the specified item container allows all possible states for the current user.
+        /// Determines whether the checkbox for the specified item container
+        /// allows all possible states for the current user.
         /// </summary>
         /// <remarks>If the container's default setting for the checkbox is not specified, the method
         /// returns false. If the CheckBoxAllowAllStatesForUser property is set, its value overrides the container's

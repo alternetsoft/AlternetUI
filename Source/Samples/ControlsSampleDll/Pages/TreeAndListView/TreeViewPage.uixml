@@ -4,8 +4,10 @@
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample" Padding="10,0,10,0">
   <Panel >
     <HorizontalStackPanel>
-      <StdTreeView SuggestedWidth="240" Name="treeView"
-                ExpandedChanged="TreeView_ExpandedChanged"
+      <Splitter  Dock="Left" />
+
+      <StdTreeView MinWidth="240" Name="treeView"
+                ExpandedChanged="TreeView_ExpandedChanged" Dock="Left"
                 BeforeExpand="TreeView_BeforeExpand"
                 BeforeCollapse="TreeView_BeforeCollapse"
                 />

@@ -75,8 +75,10 @@ namespace Alternet.UI
         /// <summary>
         /// Returns the text representation of the specified list control item.
         /// </summary>
-        /// <param name="item">The list control item to retrieve the text for. If null, the method returns an empty string.</param>
-        /// <param name="forDisplay">true to format the text for display purposes; otherwise, false to return the raw value.</param>
+        /// <param name="item">The list control item to retrieve the text for.
+        /// If null, the method returns an empty string.</param>
+        /// <param name="forDisplay">true to format the text for display purposes;
+        /// otherwise, false to return the raw value.</param>
         /// <returns>A string containing the text of the item. Returns an empty string if item is null.</returns>
         string GetItemText(ListControlItem? item, bool forDisplay);
 

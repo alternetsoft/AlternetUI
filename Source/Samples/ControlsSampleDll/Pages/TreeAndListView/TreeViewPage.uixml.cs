@@ -68,6 +68,20 @@ namespace ControlsSample
 
                 popupTreeView.ShowInContainer(treeView, null, HVDropDownAlignment.Center);
             });
+
+            pageControl.FirstPage?.ContextMenuStrip.Add("Show linear index", () =>
+            {
+                treeView.ListBox.CustomItemText -= OnGetItemTextWithIndex;
+                treeView.ListBox.CustomItemText += OnGetItemTextWithIndex;
+            });
+
+            void OnGetItemTextWithIndex(object? sender, GetItemTextEventArgs e)
+            {
+                if (e.Item is not TreeViewItem treeViewItem)
+                    return;
+                e.Result += $" (LinearIndex: {treeViewItem.LinearIndex})";
+                e.Handled = true;
+            };
         }
 
         private void TreeView_MouseMove(object sender, MouseEventArgs e)
