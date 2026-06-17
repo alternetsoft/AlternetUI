@@ -232,7 +232,7 @@ namespace Alternet.UI
             if (control is null)
                 throw new ArgumentNullException(nameof(control));
 
-            position ??= GetEfectiveItemsDropDownPosition();
+            position ??= GetEfectiveItemsPlacement(MenuPlacementKind.DropDown);
 
             Post(() =>
             {
@@ -347,7 +347,7 @@ namespace Alternet.UI
             if (control is null)
                 return null;
 
-            dropDownMenuPosition ??= GetEfectiveItemsDropDownPosition();
+            dropDownMenuPosition ??= GetEfectiveItemsPlacement(MenuPlacementKind.DropDown);
 
             try
             {
@@ -472,7 +472,7 @@ namespace Alternet.UI
         {
             if (position is null)
             {
-                align ??= GetEfectiveItemsDropDownPosition();
+                align ??= GetEfectiveItemsPlacement(MenuPlacementKind.DropDown);
             }
 
             if (DisposingOrDisposed)

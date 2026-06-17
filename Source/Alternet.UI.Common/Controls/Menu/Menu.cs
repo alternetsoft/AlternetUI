@@ -13,9 +13,16 @@ namespace Alternet.UI
     public abstract partial class Menu : ItemContainerElement<MenuItem>, IMenuProperties
     {
         /// <summary>
-        /// Gets or sets default alignment for the items popup window when it is displayed.
+        /// Gets or sets default alignment for the items popup window when it is displayed
+        /// as a sub-menu.
         /// </summary>
-        public static HVDropDownAlignment DefaultItemsDropDownPosition = HVDropDownAlignment.TopRight;
+        public static HVDropDownAlignment DefaultItemsSubMenuPosition = HVDropDownAlignment.TopRight;
+
+        /// <summary>
+        /// Gets or sets default alignment for the items popup window when it is displayed
+        /// as a drop down context menu for combo box or similar controls.
+        /// </summary>
+        public static HVDropDownAlignment DefaultItemsDropDownPosition = HVDropDownAlignment.Default;
 
         private static readonly BaseDictionary<ObjectUniqueId, Menu> menusById = new();
         private int updateCounter;
@@ -26,6 +33,22 @@ namespace Alternet.UI
         protected Menu()
         {
             menusById.Add(UniqueId, this);
+        }
+
+        /// <summary>
+        /// Enumerates possible positions for the items popup window.
+        /// </summary>
+        public enum MenuPlacementKind
+        {
+            /// <summary>
+            /// The menu is placed relative to the parent control.
+            /// </summary>
+            DropDown = 0,
+
+            /// <summary>
+            /// The menu is displayed as a sub-menu.
+            /// </summary>
+            SubMenu = 1,
         }
 
         /// <summary>
@@ -102,14 +125,24 @@ namespace Alternet.UI
         public virtual string ItemsTitle { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets the alignment for the items popup window when it is displayed.
+        /// Gets or sets the alignment for the items popup window when it is displayed as a drop down control.
         /// If not specified, the default alignment is determined
         /// by the static field <see cref="DefaultItemsDropDownPosition"/>.
-        /// <see cref="GetEfectiveItemsDropDownPosition()"/> is used to retrieve the effective alignment,
+        /// <see cref="GetEfectiveItemsPlacement"/> is used to retrieve the effective alignment,
         /// which considers both the default and instance-specific settings.
         /// </summary>
         [Browsable(false)]
         public virtual HVDropDownAlignment? ItemsDropDownPosition { get; set; }
+
+        /// <summary>
+        /// Gets or sets the alignment for the items popup window when it is displayed as a sub-menu.
+        /// If not specified, the default alignment is determined
+        /// by the static field <see cref="DefaultItemsSubMenuPosition"/>.
+        /// <see cref="GetEfectiveItemsPlacement"/> is used to retrieve the effective alignment,
+        /// which considers both the default and instance-specific settings.
+        /// </summary>
+        [Browsable(false)]
+        public virtual HVDropDownAlignment? ItemsSubMenuPosition { get; set; }
 
         /// <summary>
         /// Gets the first visible menu item in the collection,
@@ -422,9 +455,17 @@ namespace Alternet.UI
         /// Gets effective position of the popup window when items are shown.
         /// </summary>
         /// <returns>The effective <see cref="HVDropDownAlignment"/> for the items popup window.</returns>
-        public virtual HVDropDownAlignment GetEfectiveItemsDropDownPosition()
+        public virtual HVDropDownAlignment GetEfectiveItemsPlacement(MenuPlacementKind kind)
         {
-            return ItemsDropDownPosition ?? DefaultItemsDropDownPosition;
+            switch(kind)
+            {
+                case MenuPlacementKind.DropDown:
+                    return ItemsDropDownPosition ?? DefaultItemsDropDownPosition;
+                case MenuPlacementKind.SubMenu:
+                    return ItemsSubMenuPosition ?? DefaultItemsSubMenuPosition;
+                default:
+                    return DefaultItemsDropDownPosition;
+            }
         }
 
         /// <summary>

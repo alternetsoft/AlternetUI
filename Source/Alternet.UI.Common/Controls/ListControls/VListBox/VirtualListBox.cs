@@ -665,14 +665,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets row item by its index. If row index is below zero, a new item is created and added to the end of the list and returned.
+        /// Gets row item by its index. If row index is below zero,
+        /// a new item is created and added to the end of the list and returned.
         /// If row index is above or equal to the number of items, item list is extended with new
         /// items until the specified index is reached, and then the item at that index is returned.
         /// </summary>
         /// <param name="rowIndex">The index of the row.</param>
         /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
         /// If not specified, <see cref="ListControlItem"/> will be created.</param>
-        /// <returns>The <see cref="ListControlItem"/> at the specified index. A result is guaranteed to be not null.</returns>
+        /// <returns>The <see cref="ListControlItem"/> at the specified index.
+        /// A result is guaranteed to be not null.</returns>
         public virtual ListControlItem SafeRow(int rowIndex, Func<ListControlItem>? fnCreateItem = null)
         {
             ListControlItem CreateItem()
