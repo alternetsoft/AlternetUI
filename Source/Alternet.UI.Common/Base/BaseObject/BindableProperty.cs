@@ -4,24 +4,26 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    internal delegate object? BindablePropertyGetValueDelegate(object? element);
+    internal delegate TProp? BindablePropertyGetValueDelegate<TElement, TProp>(TElement element);
 
-    internal delegate void BindablePropertySetValueDelegate(object? element, object? value);
+    internal delegate void BindablePropertySetValueDelegate<TElement, TProp>(TElement element, TProp? value);
 
-    internal class BindableProperty : ImmutableObject
+    internal class BindableProperty<TElement, TProp> : ImmutableObject
     {
         public BindableProperty()
         {
+            PropertyType = typeof(TProp);
+            ElementType = typeof(TElement);
         }
 
-        public virtual string? PropertyName { get; set; }
+        public string? PropertyName { get; set; }
 
-        public virtual Type? PropertyType { get; set; }
+        public Type? PropertyType { get; }
 
-        public virtual Type? ElementType { get; set; }
+        public Type? ElementType { get; }
 
-        public virtual BindablePropertyGetValueDelegate? GetValue { get; set; }
+        public BindablePropertyGetValueDelegate<TElement, TProp>? GetValue { get; set; }
 
-        public virtual BindablePropertySetValueDelegate? SetValue { get; set; }
+        public BindablePropertySetValueDelegate<TElement, TProp>? SetValue { get; set; }
     }
 }
