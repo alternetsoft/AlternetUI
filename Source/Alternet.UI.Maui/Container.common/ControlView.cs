@@ -777,7 +777,6 @@ namespace Alternet.UI
             finally
             {
                 dc.RestoreToCount(saved1);
-                dc.Flush();
             }
         }
 
