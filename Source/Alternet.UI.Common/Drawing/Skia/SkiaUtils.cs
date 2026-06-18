@@ -726,6 +726,47 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws the specified text lines on the canvas at the given location,
+        /// using the provided or default font and colors.
+        /// </summary>
+        /// <param name="canvas">The <see cref="SKCanvas"/> on which the text will be drawn.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="lines">The text lines to draw. Each line will be drawn on a new line.</param>
+        /// <param name="location">The location where the text will be drawn,
+        /// specified as a <see cref="PointD"/>. If <see langword="null"/>,
+        /// the default location (10, 10) will be used.</param>
+        /// <param name="font">The <see cref="Font"/> to use for drawing the text.
+        /// Can be <c>null</c> if the default font is desired.</param>
+        /// <param name="foreColor">The <see cref="Color"/> to use for the text foreground.
+        /// Can be <c>null</c> if the default color is desired.</param>
+        /// <param name="backColor">The <see cref="Color"/> to use for the text background.
+        /// Can be <c>null</c> if the default color is desired.</param>
+        public static void DrawHelloLines(
+            this SKCanvas canvas,
+            IEnumerable<string> lines,
+            PointD? location = null,
+            Font? font = null,
+            Color? foreColor = null,
+            Color? backColor = null)
+        {
+            var xy = location ?? (10, 10);
+
+            foreach (var line in lines)
+            {
+                var size = canvas.GetTextExtent(line, font ?? Font.Default);
+
+                DrawHelloText(
+                    canvas,
+                    line,
+                    xy,
+                    font ?? Font.Default,
+                    foreColor: foreColor ?? Color.Green,
+                    backColor: backColor ?? Color.Yellow);
+                xy.Y += size.Height;
+            }
+        }
+
+        /// <summary>
         /// Draws text with the specified parameters.
         /// </summary>
         /// <param name="canvas">Drawing context.</param>
@@ -1003,6 +1044,21 @@ namespace Alternet.Drawing
                 throwOnError: false,
                 ignoreCase: false);
             return libraryLoaderType != null;
+        }
+
+        /// <summary>
+        /// Gets current scaling factor of the canvas.
+        /// </summary>
+        /// <param name="canvas">The canvas for which to retrieve the scaling factor.</param>
+        /// <returns>A <see cref="SizeD"/> representing the current scaling factor of the canvas.</returns>
+        public static SizeD GetCurrentScale(SKCanvas canvas)
+        {
+            SKMatrix matrix = canvas.TotalMatrix;
+
+            float scaleX = (float)Math.Sqrt(matrix.ScaleX * matrix.ScaleX + matrix.SkewY * matrix.SkewY);
+            float scaleY = (float)Math.Sqrt(matrix.ScaleY * matrix.ScaleY + matrix.SkewX * matrix.SkewX);
+
+            return new SizeD(scaleX, scaleY);
         }
 
         /// <summary>

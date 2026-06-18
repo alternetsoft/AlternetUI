@@ -431,17 +431,28 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="e">Value to convert.</param>
         /// <param name="control">Control where touch event occurred.</param>
-        /// <returns></returns>
+        /// <param name="pixelToDip">Whether to convert pixel values to device-independent pixels.</param>
+        /// <returns>Converted <see cref="TouchEventArgs"/> instance.</returns>
         public static Alternet.UI.TouchEventArgs Convert(
             SKTouchEventArgs e,
-            Alternet.UI.AbstractControl? control)
+            Alternet.UI.AbstractControl? control,
+            bool pixelToDip)
         {
             Alternet.UI.TouchEventArgs result = new();
 
             result.Id = e.Id;
             result.ActionType = (Alternet.UI.TouchAction)e.ActionType;
             result.DeviceType = (Alternet.UI.TouchDeviceType)e.DeviceType;
-            result.Location = GraphicsFactory.PixelToDip(((PointD)e.Location).ToPoint());
+
+            if (pixelToDip)
+            {
+                result.Location = GraphicsFactory.PixelToDip(((PointD)e.Location).ToPoint());
+            }
+            else
+            {
+                result.Location = e.Location;
+            }
+
             result.InContact = e.InContact;
             result.WheelDelta = e.WheelDelta;
             result.Pressure = e.Pressure;
