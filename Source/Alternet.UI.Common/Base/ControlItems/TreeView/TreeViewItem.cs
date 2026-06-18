@@ -82,7 +82,19 @@ namespace Alternet.UI
 
                 void Internal()
                 {
+                    if (items != null)
+                    {
+                        items.CollectionChanged -= OnItemSourceCollectionChanged;
+                        items.PropertyChanged -= OnItemSourcePropertyChanged;
+                    }
+
                     items = value;
+
+                    if (items != null)
+                    {
+                        items.CollectionChanged += OnItemSourceCollectionChanged;
+                        items.PropertyChanged += OnItemSourcePropertyChanged;
+                    }
                 }
             }
         }
@@ -726,6 +738,24 @@ namespace Alternet.UI
             Owner?.RaiseItemRemoved(item);
 
             return result;
+        }
+
+        /// <summary>
+        /// Called when property of the <see cref="ItemSource"/> changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnItemSourcePropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="ItemSource"/> collection changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ListChangedEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnItemSourceCollectionChanged(object? sender, ListChangedEventArgs e)
+        {
         }
 
         /// <summary>
