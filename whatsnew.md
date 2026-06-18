@@ -1,3 +1,41 @@
+# 1.0.19 (2026 June 18)
+
+- Add InnerPopupTreeView, ResizablePopupControl controls.
+- ListBoxHeader: Use GripControl instead of Splitter for column resize. This fixed column resize issues with horizontally scrolled list boxes.
+- TreeViewItem: OnItemSourcePropertyChanged, OnItemSourceCollectionChanged.
+- IListSource: ItemInserted, ItemRemoved events.
+- TreeViewItem: LinearIndex, GetItemCount, EnumVisibleItems, EnumItems, GetRecursiveItemCount, ItemSource.
+- Fix StdSlider and StdProgressBar default size.
+- ResizablePopupContol: Do not auto-create border and scroll view.
+- BaseObject: Fix Post/Invoke to allow run without app handler.
+- ListControlSeparatorItem: Add static init and reset methods to configure as separator.
+- ListControlItem: Add advanced mnemonic marker support.
+- Use ListChangedEventArgs instead of CollectionChangedEventArgs in collections.
+- BaseControlItem is now derived from DisposableObject.
+- GripControl: Improve painting to look like splitter.
+- AbstractControl: WeakReferences, AddWeakReference, RemoveWeakReference.
+- Use clipping when painting non-platform controls.
+- VirtualListBox: Change horz scroll pos to 0 on resize.
+- VirtualListBox: set clip rect when painted.
+- VirtualListBox: IsHoverSelectionEnabled, GetContentSize.
+- CardPanelHeader: inherit from HiddenGenericBorder.
+- TabControl: Fix tab layout to avoid overlapping close button.
+- TabControl: ActiveTabTheme, ActiveTabHasBorder, TabHasBorder, FirstPage.
+- CardPanelHeader.ApplyKnownTheme, TabControl.ApplyThemeToHeader.
+- CardPanelHeader: ActiveTabTheme, ActiveTabHasBorder.
+- Maui: Fix clipping when painting child controls.
+- Maui: Improve context menu handling.
+- Maui: Fix hovered control determination.
+- Maui: Improve light/dark theme change handling.
+- Maui: Create DisposableContentView.
+- Maui: Improve cursor support for non-platform controls.
+- Maui: add cursor support on msw.
+- Maui: Fix exception in InvalidateSurface call after app exit.
+- ToolTipWindow: do not show when any context menus are visible.
+- ContextMenu: OpenedContextMenus, HasOpenedContextMenus , ShowToolTipsDuringContextMenu.
+
+---
+
 # 1.0.18 (2026 June 11)
 
 - VirtualListBox: draw vertical grid lines.
