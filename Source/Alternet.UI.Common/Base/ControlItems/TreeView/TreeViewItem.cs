@@ -70,7 +70,13 @@ namespace Alternet.UI
         {
             get
             {
-                return items ??= new ListSource<TreeViewItem>();
+                if (items == null)
+                {
+                    items = new ListSource<TreeViewItem>();
+                    OnItemSourceChanged(null, items);
+                }
+
+                return items;
             }
 
             set
@@ -78,24 +84,12 @@ namespace Alternet.UI
                 if (items == value)
                     return;
 
-                DoInsideUpdate(Internal);
-
-                void Internal()
+                DoInsideUpdate(() =>
                 {
-                    if (items != null)
-                    {
-                        items.CollectionChanged -= OnItemSourceCollectionChanged;
-                        items.PropertyChanged -= OnItemSourcePropertyChanged;
-                    }
-
+                    var oldValue = items;
                     items = value;
-
-                    if (items != null)
-                    {
-                        items.CollectionChanged += OnItemSourceCollectionChanged;
-                        items.PropertyChanged += OnItemSourcePropertyChanged;
-                    }
-                }
+                    OnItemSourceChanged(oldValue, value);
+                });
             }
         }
 
@@ -735,8 +729,6 @@ namespace Alternet.UI
             if (HasItems != hasItems)
                 RaisePropertyChanged(nameof(HasItems));
 
-            Owner?.RaiseItemRemoved(item);
-
             return result;
         }
 
@@ -756,6 +748,28 @@ namespace Alternet.UI
         /// <param name="e">The <see cref="ListChangedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnItemSourceCollectionChanged(object? sender, ListChangedEventArgs e)
         {
+        }
+
+        /// <summary>
+        /// Called when an item is removed from the <see cref="ItemSource"/> collection.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index of the item that was removed.</param>
+        /// <param name="item">The item that was removed.</param>
+        protected virtual void OnItemSourceItemRemoved(object? sender, int index, TreeViewItem item)
+        {
+            Owner?.RaiseItemRemoved(item);
+        }
+
+        /// <summary>
+        /// Called when an item is inserted into the <see cref="ItemSource"/> collection.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="index">The index of the item that was inserted.</param>
+        /// <param name="item">The item that was inserted.</param>
+        protected virtual void OnItemSourceItemInserted(object? sender, int index, TreeViewItem item)
+        {
+            Owner?.RaiseItemAdded(item);
         }
 
         /// <summary>
@@ -867,8 +881,6 @@ namespace Alternet.UI
 
                 if (HasItems != hasItems)
                     RaisePropertyChanged(nameof(HasItems));
-
-                Owner?.RaiseItemAdded(item);
             }
         }
 
@@ -1524,6 +1536,32 @@ namespace Alternet.UI
                 }
 
                 return true;
+            }
+        }
+
+        /// <summary>
+        /// Called when data source of the child items collection is changed.
+        /// </summary>
+        /// <param name="oldValue">The old data source of the child items collection.</param>
+        /// <param name="newValue">The new data source of the child items collection.</param>
+        protected virtual void OnItemSourceChanged(
+            IListSource<TreeViewItem>? oldValue,
+            IListSource<TreeViewItem>? newValue)
+        {
+            if (oldValue != null)
+            {
+                oldValue.CollectionChanged -= OnItemSourceCollectionChanged;
+                oldValue.PropertyChanged -= OnItemSourcePropertyChanged;
+                oldValue.ItemInserted -= OnItemSourceItemInserted;
+                oldValue.ItemRemoved -= OnItemSourceItemRemoved;
+            }
+
+            if (newValue != null)
+            {
+                newValue.CollectionChanged += OnItemSourceCollectionChanged;
+                newValue.PropertyChanged += OnItemSourcePropertyChanged;
+                newValue.ItemInserted += OnItemSourceItemInserted;
+                newValue.ItemRemoved += OnItemSourceItemRemoved;
             }
         }
 
