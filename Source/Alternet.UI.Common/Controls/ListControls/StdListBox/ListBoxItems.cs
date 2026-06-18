@@ -24,46 +24,42 @@ namespace Alternet.UI
     /// <seealso cref="IReadOnlyList{T}"/>
     /// <seealso cref="ICollection"/>
     /// <seealso cref="IList"/>
-    public class ListBoxItems : IListSource<object>
+    public class ListBoxItems : DisposableObject, IListSource<object>
     {
         private readonly ListSource<ListControlItem>? items;
-        private readonly Func<IListSource<ListControlItem>> provider;
+
+        private Func<IListSource<ListControlItem>> provider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxItems"/> class.
         /// </summary>
+#pragma warning disable
         public ListBoxItems(Func<IListSource<ListControlItem>> provider)
+#pragma warning restore
         {
-            this.provider = provider;
-
-            provider().PropertyChanged += Items_PropertyChanged;
-            provider().CollectionChanged += Items_CollectionChanged;
+            SetProvider(provider);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxItems"/> class.
         /// </summary>
+#pragma warning disable       
         public ListBoxItems()
+#pragma warning restore       
         {
             items = new ListSource<ListControlItem>();
-            provider = () => items;
-            provider().PropertyChanged += Items_PropertyChanged;
-            provider().CollectionChanged += Items_CollectionChanged;
+            SetProvider(() => items);
         }
 
         /// <summary>
-        /// Finalizes an instance of the <see cref="ListBoxItems"/> class.
+        /// Occurs when an item is inserted.
         /// </summary>
-        ~ListBoxItems()
-        {
-            provider().PropertyChanged -= Items_PropertyChanged;
-            provider().CollectionChanged -= Items_CollectionChanged;
-        }
+        public event CollectionItemChangedHandler<object>? ItemInserted;
 
         /// <summary>
-        /// Occurs when a property value changes.
+        /// Occurs when an item is removed.
         /// </summary>
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event CollectionItemChangedHandler<object>? ItemRemoved;
 
         /// <summary>
         /// Occurs when the collection's contents change.
@@ -235,74 +231,6 @@ namespace Alternet.UI
             return itm.GetEnumerator();
         }
 
-        private void Items_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            PropertyChanged?.Invoke(this, e);
-        }
-
-        private void Items_CollectionChanged(object? sender, ListChangedEventArgs e)
-        {
-            if (CollectionChanged is null)
-                return;
-
-            var action = e.Action;
-
-            // Gets the list of new items involved in the change.
-            var newItems = ToValues(e.NewItems);
-
-            // Gets the index at which the change occurred.
-            var newStartingIndex = e.NewStartingIndex;
-
-            // Gets the list of items affected by a Replace, Remove, or Move action.
-            var oldItems = ToValues(e.OldItems);
-
-            // Gets the index at which a Move, Remove, or Replace action occurred.
-            var oldStartingIndex = e.OldStartingIndex;
-
-            IList ToValues(IList? items)
-            {
-                IList result = new List<object>();
-
-                if (items is null)
-                    return result;
-
-                foreach (var item in items)
-                {
-                    result.Add(((ListControlItem)item).Value);
-                }
-
-                return result;
-            }
-
-            ListChangedEventArgs args;
-
-            switch (action)
-            {
-                case NotifyCollectionChangedAction.Add:
-                    args = CollectionChangedHelper.OnInsertItem(newStartingIndex, newItems);
-                    CollectionChanged(this, args);
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    args = CollectionChangedHelper
-                        .OnMoveItem(oldItems, oldStartingIndex, newStartingIndex);
-                    CollectionChanged(this, args);
-                    break;
-                case NotifyCollectionChangedAction.Remove:
-                    args = CollectionChangedHelper.OnRemoveItem(oldStartingIndex, oldItems);
-                    CollectionChanged(this, args);
-                    break;
-                case NotifyCollectionChangedAction.Replace:
-                    args = CollectionChangedHelper
-                        .OnReplaceItem(oldItems, oldStartingIndex, newItems);
-                    CollectionChanged(this, args);
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    args = CollectionChangedHelper.OnResetItems();
-                    CollectionChanged(this, args);
-                    break;
-            }
-        }
-
         /// <inheritdoc/>
         public void SetCount(int count, Func<object> fnCreateItem)
         {
@@ -360,38 +288,64 @@ namespace Alternet.UI
             provider().SortDescending(comparison);
         }
 
-        private static class CollectionChangedHelper
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
         {
-            public static ListChangedEventArgs OnResetItems()
+            provider().PropertyChanged -= OnItemsPropertyChanged;
+            provider().CollectionChanged -= OnItemsCollectionChanged;
+            provider().ItemInserted -= OnItemsItemInserted;
+            provider().ItemRemoved -= OnItemsItemRemoved;
+            base.DisposeManaged();
+        }
+
+        private void OnItemsPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChangedEx(e);
+        }
+
+        private void SetProvider(Func<IListSource<ListControlItem>> provider)
+        {
+            this.provider = provider;
+
+            provider().PropertyChanged += OnItemsPropertyChanged;
+            provider().CollectionChanged += OnItemsCollectionChanged;
+            provider().ItemInserted += OnItemsItemInserted;
+            provider().ItemRemoved += OnItemsItemRemoved;
+        }
+
+        private void OnItemsCollectionChanged(object? sender, ListChangedEventArgs e)
+        {
+            if (CollectionChanged is null)
+                return;
+
+            ListChangedEventArgs newArgs = e.Clone(ToValues);
+
+            IList? ToValues(IList? items)
             {
-                return new(NotifyCollectionChangedAction.Reset);
+                if (items is null)
+                    return null;
+
+                IList result = new List<object>();
+
+                foreach (var item in items)
+                {
+                    result.Add(((ListControlItem)item).Value);
+                }
+
+                return result;
             }
 
-            public static ListChangedEventArgs OnRemoveItem(int index, IList val)
-            {
-                return new(NotifyCollectionChangedAction.Remove, val, index);
-            }
+            CollectionChanged(this, newArgs);
+        }
 
-            public static ListChangedEventArgs OnInsertItem(int index, IList item)
-            {
-                return new(NotifyCollectionChangedAction.Add, item, index);
-            }
+        private void OnItemsItemRemoved(object? sender, int index, ListControlItem item)
+        {
+            ItemRemoved?.Invoke(this, index, item.Value!);
+        }
 
-            public static ListChangedEventArgs OnReplaceItem(
-                IList oldItem,
-                int index,
-                IList newItem)
-            {
-                return new(NotifyCollectionChangedAction.Replace, oldItem, newItem, index);
-            }
-
-            public static ListChangedEventArgs OnMoveItem(
-                IList val,
-                int oldIndex,
-                int newIndex)
-            {
-                return new(NotifyCollectionChangedAction.Move, val, newIndex, oldIndex);
-            }
+        private void OnItemsItemInserted(object? sender, int index, ListControlItem item)
+        {
+            ItemInserted?.Invoke(this, index, item.Value!);
         }
     }
 }
