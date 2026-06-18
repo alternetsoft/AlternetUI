@@ -2185,7 +2185,7 @@ namespace Alternet.UI
             var overlayRemoved = RemoveOverlay(ref itemToolTipId, invalidate: false);
 
             if (!selectedItemChanged && overlayRemoved)
-                Invalidate();
+                Refresh();
         }
 
         /// <inheritdoc/>

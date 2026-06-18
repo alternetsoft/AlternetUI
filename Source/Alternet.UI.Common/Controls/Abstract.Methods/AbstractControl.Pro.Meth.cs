@@ -37,8 +37,7 @@ namespace Alternet.UI
         /// <summary>
         /// Retrieves the default rendering flags for the control.
         /// </summary>
-        /// <returns>A <see cref="ControlRenderingFlags"/> value representing the default rendering behavior.
-        /// The default is <see cref="ControlRenderingFlags.None"/>.</returns>
+        /// <returns>A <see cref="ControlRenderingFlags"/> value representing the default rendering behavior.</returns>
         protected virtual ControlRenderingFlags GetDefaultRenderingFlags()
         {
             return ControlRenderingFlags.None;

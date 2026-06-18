@@ -50,7 +50,10 @@ namespace Alternet.UI
             toolBar = new ToolBar();
             toolBar.AutoUpdateColors = false;
             toolBar.ResetSuggestedSize();
-            toolBar.MinHeight = Coord.Max(Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow), ToolBar.DefaultMinItemSize);
+            toolBar.MinHeight = Coord.Max(
+                Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
+                ToolBar.DefaultMinItemSize);
+
             toolBar.Parent = this.FillPanel;
 
             AssignDefaultColors();
