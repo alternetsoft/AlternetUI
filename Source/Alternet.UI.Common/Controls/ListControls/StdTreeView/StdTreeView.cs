@@ -1591,7 +1591,7 @@ namespace Alternet.UI
             ListBox.SelectFirstItemAndScroll();
         }
 
-        void ITreeViewItemContainer.RaiseItemPropertyChanged(TreeViewItem item, string? propertyName)
+        void ITreeViewItemNotification.RaiseItemPropertyChanged(TreeViewItem item, string? propertyName)
         {
             OnItemPropertyChanged(item, propertyName);
             ItemPropertyChanged?.Invoke(this, new TreeViewItemPropChangedEventArgs(item, propertyName));

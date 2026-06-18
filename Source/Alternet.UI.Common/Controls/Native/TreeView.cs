@@ -1078,7 +1078,7 @@ namespace Alternet.UI
         {
         }
 
-        void ITreeViewItemContainer.RaiseItemAdded(TreeViewItem item)
+        void ITreeViewItemNotification.RaiseItemAdded(TreeViewItem item)
         {
             var e = new TreeViewEventArgs(item);
             RaiseItemAdded(e);
@@ -1089,39 +1089,39 @@ namespace Alternet.UI
             Handler.SetSelected(item, selected);
         }
 
-        void ITreeViewItemContainer.RaiseItemRemoved(TreeViewItem item)
+        void ITreeViewItemNotification.RaiseItemRemoved(TreeViewItem item)
         {
             var e = new TreeViewEventArgs(item);
             RaiseItemRemoved(e);
         }
 
-        void ITreeViewItemContainer.RaiseAfterExpand(TreeViewItem item)
+        void ITreeViewItemNotification.RaiseAfterExpand(TreeViewItem item)
         {
             RaiseAfterExpand(new(item));
             Handler.Expand(item);
         }
 
-        void ITreeViewItemContainer.RaiseAfterCollapse(TreeViewItem item)
+        void ITreeViewItemNotification.RaiseAfterCollapse(TreeViewItem item)
         {
             RaiseAfterCollapse(new(item));
             Handler.Collapse(item);
         }
 
-        void ITreeViewItemContainer.RaiseBeforeExpand(TreeViewItem item, ref bool cancel)
+        void ITreeViewItemNotification.RaiseBeforeExpand(TreeViewItem item, ref bool cancel)
         {
             TreeViewCancelEventArgs e = new(item);
             RaiseBeforeExpand(e);
             cancel = e.Cancel;
         }
 
-        void ITreeViewItemContainer.RaiseBeforeCollapse(TreeViewItem item, ref bool cancel)
+        void ITreeViewItemNotification.RaiseBeforeCollapse(TreeViewItem item, ref bool cancel)
         {
             TreeViewCancelEventArgs e = new(item);
             RaiseBeforeCollapse(e);
             cancel = e.Cancel;
         }
 
-        void ITreeViewItemContainer.RaiseExpandedChanged(TreeViewItem item)
+        void ITreeViewItemNotification.RaiseExpandedChanged(TreeViewItem item)
         {
         }
 
@@ -1145,7 +1145,7 @@ namespace Alternet.UI
             return Items.Count;
         }
 
-        void ITreeViewItemContainer.RaiseItemPropertyChanged(TreeViewItem item, string? propertyName)
+        void ITreeViewItemNotification.RaiseItemPropertyChanged(TreeViewItem item, string? propertyName)
         {
             if (DisposingOrDisposed)
                 return;
