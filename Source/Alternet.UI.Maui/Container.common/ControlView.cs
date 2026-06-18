@@ -719,9 +719,11 @@ namespace Alternet.UI
 
                     control.RaisePaint(paintArgs);
 
+                    /*
                     var s1 = $"Info size: {e.Info.Width}x{e.Info.Height}";
                     var s2 = $"Control size: {this.Width}x{this.Height}";
                     dc.DrawHelloLines([s1, s2], PointD.Empty);
+                    */
                 }
                 finally
                 {
