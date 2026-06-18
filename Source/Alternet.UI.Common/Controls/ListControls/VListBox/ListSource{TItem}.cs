@@ -19,6 +19,12 @@ namespace Alternet.UI
         private readonly BaseCollection<TItem> collection;
 
         /// <inheritdoc/>
+        public event CollectionItemChangedHandler<TItem>? ItemInserted;
+
+        /// <inheritdoc/>
+        public event CollectionItemChangedHandler<TItem>? ItemRemoved;
+
+        /// <inheritdoc/>
         public event ListChangedEventHandler? CollectionChanged;
 
         /// <inheritdoc/>
@@ -41,6 +47,8 @@ namespace Alternet.UI
             this.collection = collection ?? new NotNullCollection<TItem>();
             this.collection.CollectionChanged += (s, e) => CollectionChanged?.Invoke(this, e);
             this.collection.PropertyChanged += (s, e) => PropertyChanged?.Invoke(this, e);
+            this.collection.ItemInserted += (s, index, item) => ItemInserted?.Invoke(this, index, item);
+            this.collection.ItemRemoved += (s, index, item) => ItemRemoved?.Invoke(this, index, item);
         }
 
         /// <inheritdoc/>

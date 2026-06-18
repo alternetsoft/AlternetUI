@@ -1417,6 +1417,8 @@ namespace Alternet.UI
                 this.menu = menu;
                 menu.Items.CollectionChanged += OnItemsCollectionChanged;
                 menu.Items.PropertyChanged += OnItemsPropertyChanged;
+                menu.Items.ItemInserted += OnItemsItemInserted;
+                menu.Items.ItemRemoved += OnItemsItemRemoved;
             }
 
             public TreeViewItem this[int index]
@@ -1466,6 +1468,10 @@ namespace Alternet.UI
             public event ListChangedEventHandler? CollectionChanged;
 
             public event PropertyChangedEventHandler? PropertyChanged;
+
+            public event CollectionItemChangedHandler<TreeViewItem>? ItemInserted;
+
+            public event CollectionItemChangedHandler<TreeViewItem>? ItemRemoved;
 
             public void Add(TreeViewItem item)
             {
@@ -1567,6 +1573,16 @@ namespace Alternet.UI
                 return GetEnumerator();
             }
 
+            private void OnItemsItemRemoved(object? sender, int index, MenuItem item)
+            {
+                ItemRemoved?.Invoke(this, index, item.AsTreeViewItem());
+            }
+
+            private void OnItemsItemInserted(object? sender, int index, MenuItem item)
+            {
+                ItemInserted?.Invoke(this, index, item.AsTreeViewItem());
+            }
+
             private void OnItemsPropertyChanged(object? sender, PropertyChangedEventArgs e)
             {
                 PropertyChanged?.Invoke(this, e);
@@ -1574,13 +1590,7 @@ namespace Alternet.UI
 
             private void OnItemsCollectionChanged(object? sender, ListChangedEventArgs e)
             {
-                ListChangedEventArgs args = new();
-
-                args.NewStartingIndex = e.NewStartingIndex;
-                args.OldStartingIndex = e.OldStartingIndex;
-                args.Action = e.Action;
-                args.NewItems = ConvertItems(e.NewItems);
-                args.OldItems = ConvertItems(e.OldItems);
+                ListChangedEventArgs args = e.Clone(ConvertItems);
 
                 IList? ConvertItems(IList? items)
                 {

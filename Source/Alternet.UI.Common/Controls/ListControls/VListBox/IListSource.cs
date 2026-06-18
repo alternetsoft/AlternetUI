@@ -22,7 +22,17 @@ namespace Alternet.UI
         /// Occurs when a property changes.
         /// </summary>
         event PropertyChangedEventHandler? PropertyChanged;
-        
+
+        /// <summary>
+        /// Occurs when an item is inserted.
+        /// </summary>
+        event CollectionItemChangedHandler<TItem>? ItemInserted;
+
+        /// <summary>
+        /// Occurs when an item is removed.
+        /// </summary>
+        event CollectionItemChangedHandler<TItem>? ItemRemoved;
+
         /// <summary>
         /// Gets the items as <see cref="IList"/>.
         /// </summary>
