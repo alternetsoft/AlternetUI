@@ -12,7 +12,7 @@ public delegate void ListChangedEventHandler(object? sender, ListChangedEventArg
 /// <summary>
 /// Provides data for the collection changed event.
 /// </summary>
-public class ListChangedEventArgs : EventArgs
+public class ListChangedEventArgs : BaseEventArgs
 {
     private const string ErrWrongActionForCtor = "Wrong action {0} for ctor";
     private const string ErrResetActionRequiresNullItem = "Reset action requires null item";
