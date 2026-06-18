@@ -684,9 +684,10 @@ namespace Alternet.UI
             control.ResetScaleFactor();
             var scaleFactor = (float)control.ScaleFactor;
 
+            var saved1 = dc.Save();
+
             try
             {
-                dc.Save();
                 dc.Scale(scaleFactor);
 
                 if (graphics is null)
@@ -704,7 +705,7 @@ namespace Alternet.UI
 
                 dc.Clear(control.BackColor);
 
-                dc.Save();
+                var saved2 = dc.Save();
 
                 try
                 {
@@ -718,7 +719,7 @@ namespace Alternet.UI
                 }
                 finally
                 {
-                    dc.Restore();
+                    dc.RestoreToCount(saved2);
                 }
 
 #pragma warning disable
@@ -763,7 +764,7 @@ namespace Alternet.UI
             }
             finally
             {
-                dc.Restore();
+                dc.RestoreToCount(saved1);
                 dc.Flush();
             }
         }
