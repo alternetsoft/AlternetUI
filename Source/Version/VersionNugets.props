@@ -5,12 +5,16 @@
 <!-- https://www.nuget.org/packages/SkiaSharp/#versions-body-tab -->
 <!-- https://www.nuget.org/packages/SkiaSharp.Extended/#versions-body-tab -->
 
+<!--
 	<SkiaSharpVersion>3.116.1</SkiaSharpVersion>
-	<SkiaSharpExtendedVersion>3.0.0-preview.13</SkiaSharpExtendedVersion>
-	<SvgSkiaVersion>3.0.0</SvgSkiaVersion>
+-->
 
-	<MicrosoftMauiVersion>10.0.10</MicrosoftMauiVersion>
-	<CommunityToolkitMauiVersion>13.0.0</CommunityToolkitMauiVersion>
+	<SkiaSharpVersion>3.119.4</SkiaSharpVersion>
+	<SkiaSharpExtendedVersion>3.0.0</SkiaSharpExtendedVersion>
+	<SvgSkiaVersion>5.1.1</SvgSkiaVersion>
+
+	<MicrosoftMauiVersion>10.0.71</MicrosoftMauiVersion>
+	<CommunityToolkitMauiVersion>14.2.0</CommunityToolkitMauiVersion>
 
 <!--
     	<WindowsSdkPackageVersion>10.0.19041.52</WindowsSdkPackageVersion>
