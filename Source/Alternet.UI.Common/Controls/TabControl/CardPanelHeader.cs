@@ -112,12 +112,13 @@ namespace Alternet.UI
             fillPanel.HorizontalAlignment = HorizontalAlignment.Fill;
             fillPanel.VerticalAlignment = VerticalAlignment.Fill;
             fillPanel.Layout = LayoutStyle.Horizontal;
+            fillPanel.UserPaint = true;
+            fillPanel.Parent = this;
+
             rightPanel.HorizontalAlignment = HorizontalAlignment.Right;
             rightPanel.VerticalAlignment = VerticalAlignment.Fill;
-            fillPanel.UserPaint = true;
             rightPanel.Parent = this;
             rightPanel.UserPaint = true;
-            fillPanel.Parent = this;
 
             fillPanel.Paint += (s, e) =>
             {

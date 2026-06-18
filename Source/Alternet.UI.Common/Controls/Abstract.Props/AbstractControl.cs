@@ -3669,6 +3669,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets an override value for the <see cref="IsDarkBackground"/> property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool? IsDarkBackgroundOverride { get; set; }
+
+        /// <summary>
         /// Returns true if control's background color is darker than foreground color.
         /// </summary>
         [Browsable(false)]
@@ -3676,6 +3682,9 @@ namespace Alternet.UI
         {
             get
             {
+                if (IsDarkBackgroundOverride is not null)
+                    return IsDarkBackgroundOverride.Value;
+
                 var backgroundColor = RealBackgroundColor;
 
                 if (backgroundColor.IsDark())
