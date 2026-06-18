@@ -361,6 +361,9 @@ namespace Alternet::UI
 		value->Bind(wxEVT_TREE_ITEM_COLLAPSING, &TreeView::OnItemCollapsing, this);
 		value->Bind(wxEVT_TREE_ITEM_EXPANDING, &TreeView::OnItemExpanding, this);
 
+		_allowDoubleBuffered = false;
+		SetUserPaint(false);
+
 		return value;
 	}
 

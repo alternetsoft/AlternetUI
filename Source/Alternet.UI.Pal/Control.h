@@ -177,7 +177,7 @@ namespace Alternet::UI
         bool _destroyed = false;
         bool _allowDoubleBuffered = true;
         
-        bool bindScrollEvents = true;
+        bool bindScrollEvents = false;
         int _ignoreRecreate = 0;
         wxBorder _borderStyle = wxBorder::wxBORDER_NONE;
         bool _allowDefaultContextMenu = true;

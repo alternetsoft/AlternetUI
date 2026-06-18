@@ -11,6 +11,8 @@ namespace Alternet::UI
 
 #ifdef  __WXMSW__
 
+        useDirectDraw = false;
+
         if (useDirectDraw)
         {
             wxGraphicsRenderer* renderer = wxGraphicsRenderer::GetDirect2DRenderer();

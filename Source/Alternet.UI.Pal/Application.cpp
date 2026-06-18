@@ -75,6 +75,9 @@ scrollbar.horizontal{
 
     App::App()
     {
+#ifdef __WXMSW__    
+#endif
+
 #if defined(__WXGTK__)
         setenv("GTK_OVERLAY_SCROLLING", "0", 1); // 1 = overwrite if already set
         wxApp::GTKAllowDiagnosticsControl();

@@ -62,6 +62,7 @@ namespace Alternet::UI
 	
 	ScrollBar::ScrollBar()
 	{
+		bindScrollEvents = true;
 	}
 
 	int ScrollBar::GetEventTypeID()

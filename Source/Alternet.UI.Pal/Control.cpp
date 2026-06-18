@@ -378,6 +378,7 @@ namespace Alternet::UI
         if (!IsCursorSuppressed())
             wxWindow->Unbind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
 
+        wxWindow->Unbind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         wxWindow->Unbind(wxEVT_PAINT, &Control::OnPaint, this);
         wxWindow->Unbind(wxEVT_DESTROY, &Control::OnDestroy, this);
         wxWindow->Unbind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
@@ -617,11 +618,18 @@ namespace Alternet::UI
 
         if (!window)
         {
-        }
-
-        auto dc = new wxPaintDC(window);
+        }       
         
-        return new DrawingContext(dc);
+        if (_allowDoubleBuffered && GetUserPaint())
+        {
+            auto dc = new wxAutoBufferedPaintDC(window);
+            return new DrawingContext(dc);
+        }
+        else
+        {
+            auto dc = new wxPaintDC(window);
+            return new DrawingContext(dc);
+        }
     }
 
     DrawingContext* Control::OpenClientDrawingContext()
@@ -944,6 +952,7 @@ namespace Alternet::UI
     void Control::SetAllowDoubleBuffered(bool allow)
     {
         _allowDoubleBuffered = allow;
+        /*
         auto wxWindow = GetWxWindow();
         if (allow)
         {
@@ -954,6 +963,7 @@ namespace Alternet::UI
         {
             _wxWindow->SetDoubleBuffered(false);
         }
+        */
     }
 
     void Control::CreateWxWindow()
@@ -980,10 +990,14 @@ namespace Alternet::UI
 
         ApplyToolTip();
 
-        if (GetUserPaint())
+        if (GetUserPaint() && _allowDoubleBuffered)
         {
+            /*
             if (_allowDoubleBuffered)
                 _wxWindow->SetDoubleBuffered(true);
+            */
+            _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
+            _wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         }
 
         if (!GetTabStop())
@@ -1004,7 +1018,6 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);
         _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
         _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
-
 
         if(!IsCursorSuppressed())
             _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
@@ -1500,7 +1513,8 @@ namespace Alternet::UI
 
     void Control::OnEraseBackground(wxEraseEvent& event)
     {
-        event.Skip();
+        if(!GetUserPaint())
+            event.Skip();
     }
 
     void Control::OnMouseCaptureLost(wxEvent& event)
@@ -1986,8 +2000,11 @@ namespace Alternet::UI
         if (GetUserPaint() == value)
             return;
         _flags.Set(ControlFlags::UserPaint, value);
+
+        /*
         if(_allowDoubleBuffered)
             GetWxWindow()->SetDoubleBuffered(value);
+            */
     }
 
     wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)
