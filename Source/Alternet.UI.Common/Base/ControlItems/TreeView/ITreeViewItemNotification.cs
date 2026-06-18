@@ -38,18 +38,20 @@ namespace Alternet.UI
         void RaiseItemPropertyChanged(UI.TreeViewItem item, string? propertyName);
 
         /// <summary>
-        /// Called when an item is added to this tree view control, at
-        /// any nesting level.
+        /// Called when an item is inserted into this container, at any nesting level.
         /// </summary>
-        /// <param name="item">The <see cref="UI.TreeViewItem"/> that was added.</param>
-        void RaiseItemAdded(UI.TreeViewItem item);
+        /// <param name="item">The <see cref="UI.TreeViewItem"/> that was inserted.</param>
+        /// <param name="index">The index of the inserted item.</param>
+        /// <param name="newParent">The new parent of the inserted item.</param>
+        void RaiseItemInserted(UI.TreeViewItem item, int index, TreeViewItem newParent);
 
         /// <summary>
-        /// Called when an item is removed from this tree view control,
-        /// at any nesting level.
+        /// Called when an item is removed from this container, at any nesting level.
         /// </summary>
         /// <param name="item">The <see cref="UI.TreeViewItem"/> that was removed.</param>
-        void RaiseItemRemoved(UI.TreeViewItem item);
+        /// <param name="index">The index of the removed item.</param>
+        /// <param name="previousParent">The previous parent of the removed item.</param>
+        void RaiseItemRemoved(UI.TreeViewItem item, int index, TreeViewItem previousParent);
 
         /// <summary>
         /// Called after the tree item is expanded.

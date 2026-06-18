@@ -758,7 +758,7 @@ namespace Alternet.UI
         /// <param name="item">The item that was removed.</param>
         protected virtual void OnItemSourceItemRemoved(object? sender, int index, TreeViewItem item)
         {
-            Owner?.RaiseItemRemoved(item);
+            Owner?.RaiseItemRemoved(item, index, this);
         }
 
         /// <summary>
@@ -769,7 +769,7 @@ namespace Alternet.UI
         /// <param name="item">The item that was inserted.</param>
         protected virtual void OnItemSourceItemInserted(object? sender, int index, TreeViewItem item)
         {
-            Owner?.RaiseItemAdded(item);
+            Owner?.RaiseItemInserted(item, index, this);
         }
 
         /// <summary>

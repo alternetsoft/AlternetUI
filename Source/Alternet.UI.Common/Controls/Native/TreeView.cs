@@ -1078,7 +1078,7 @@ namespace Alternet.UI
         {
         }
 
-        void ITreeViewItemNotification.RaiseItemAdded(TreeViewItem item)
+        void ITreeViewItemNotification.RaiseItemInserted(TreeViewItem item, int index, TreeViewItem newParent)
         {
             var e = new TreeViewEventArgs(item);
             RaiseItemAdded(e);
@@ -1089,7 +1089,7 @@ namespace Alternet.UI
             Handler.SetSelected(item, selected);
         }
 
-        void ITreeViewItemNotification.RaiseItemRemoved(TreeViewItem item)
+        void ITreeViewItemNotification.RaiseItemRemoved(TreeViewItem item, int index, TreeViewItem previousParent)
         {
             var e = new TreeViewEventArgs(item);
             RaiseItemRemoved(e);

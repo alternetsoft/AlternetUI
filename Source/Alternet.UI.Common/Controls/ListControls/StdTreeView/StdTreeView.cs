@@ -1020,7 +1020,7 @@ namespace Alternet.UI
         /// Called when an item is added to this tree view control, at
         /// any nesting level.
         /// </summary>
-        public virtual void RaiseItemAdded(UI.TreeViewItem item)
+        public virtual void RaiseItemInserted(UI.TreeViewItem item, int index, TreeViewItem newParent)
         {
             Invoke(Internal);
 
@@ -1050,7 +1050,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="name">The name of the column to locate.
         /// The comparison is case-sensitive and uses ordinal string comparison.</param>
-        /// <returns>The first <see cref="ListControlColumn"/> with the specified name, or <see langword="null"/> if no matching
+        /// <returns>The first <see cref="ListControlColumn"/> with the specified name,
+        /// or <see langword="null"/> if no matching
         /// column is found.</returns>
         public virtual ListControlColumn? ColumnByName(string name)
         {
@@ -1072,8 +1073,10 @@ namespace Alternet.UI
         /// <remarks>The order of the returned columns matches the order of the provided names for columns
         /// that are found. If a name does not correspond to an existing column, it is skipped and not included in the
         /// result.</remarks>
-        /// <param name="names">An array of column names to search for. Each name is matched against available columns.</param>
-        /// <returns>An array of <see cref="ListControlColumn"/> objects corresponding to the specified names. The array contains
+        /// <param name="names">An array of column names to search for. Each name is matched
+        /// against available columns.</param>
+        /// <returns>An array of <see cref="ListControlColumn"/> objects corresponding
+        /// to the specified names. The array contains
         /// only columns that were found; columns with names not found are omitted.</returns>
         public virtual ListControlColumn[] ColumnsByNames(string[] names)
         {
@@ -1179,7 +1182,7 @@ namespace Alternet.UI
         /// Called when an item is removed from this tree view control,
         /// at any nesting level.
         /// </summary>
-        public virtual void RaiseItemRemoved(UI.TreeViewItem item)
+        public virtual void RaiseItemRemoved(UI.TreeViewItem item, int index, TreeViewItem previousParent)
         {
             Invoke(Internal);
 
