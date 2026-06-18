@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// </summary>
     [DesignerCategory("Code")]
     [ControlCategory(KnownControlCategory.Hidden)]
-    public partial class Window : Control, IWindow
+    public partial class Window : HiddenBorder, IWindow
     {
         private static Window? dummy;
         private static List<IControlNotification>? globalWindowNotifications;
@@ -478,10 +478,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the window has inner border.
+        /// </summary>
+        public virtual bool HasInnerBorder
+        {
+            get
+            {
+                return base.HasBorder;
+            }
+
+            set
+            {
+                base.HasBorder = true;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the window has a border.
         /// </summary>
         [Browsable(true)]
-        public override bool HasBorder
+        new public virtual bool HasBorder
         {
             get => info.HasBorder;
 
@@ -1723,6 +1739,16 @@ namespace Alternet.UI
             CloseEnabled = false;
             TopMost = true;
             IsToolWindow = true;
+        }
+
+        /// <inheritdoc/>
+        public override void DrawDefaultBackground(
+            PaintEventArgs e,
+            DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
+        {
+            flags &= ~DrawDefaultBackgroundFlags.DrawBorder;
+
+            base.DrawDefaultBackground(e, flags);
         }
 
         /// <summary>
