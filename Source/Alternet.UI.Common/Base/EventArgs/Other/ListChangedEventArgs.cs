@@ -376,4 +376,32 @@ public class ListChangedEventArgs : BaseEventArgs
         newStartingIndex = index;
         oldStartingIndex = oldIndex;
     }
+
+    /// <summary>
+    /// Creates a new instance of the <see cref="ListChangedEventArgs"/> class that is a copy of the current instance.
+    /// </summary>
+    /// <param name="convertItems">A function to convert the items in the list. Optional. If not provided,
+    /// the items are copied as-is.</param>
+    /// <returns>A new instance of <see cref="ListChangedEventArgs"/> that is a copy of the current instance.</returns>
+    public virtual ListChangedEventArgs Clone(Func<IList?, IList?>? convertItems = null)
+    {
+        ListChangedEventArgs args = new();
+
+        args.NewStartingIndex = NewStartingIndex;
+        args.OldStartingIndex = OldStartingIndex;
+        args.Action = Action;
+
+        if (convertItems != null)
+        {
+            args.NewItems = convertItems(NewItems);
+            args.OldItems = convertItems(OldItems);
+        }
+        else
+        {
+            args.NewItems = NewItems;
+            args.OldItems = OldItems;
+        }
+
+        return args;
+    }
 }
