@@ -456,7 +456,13 @@ namespace Alternet.Drawing
         /// Gets the size in dips.
         /// </summary>
         [Browsable(false)]
-        public virtual Coord SizeInDips => GraphicsFactory.PixelToDip(SizeInPixels);
+        public virtual Coord SizeInDips
+        {
+            get
+            {
+                return GraphicsFactory.PixelToDip(SizeInPixels);
+            }
+        }
 
         /// <summary>
         /// Gets whether font size is in pixels.

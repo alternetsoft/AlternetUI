@@ -57,7 +57,8 @@ namespace Alternet.UI
             MauiApplicationHandler.RegisterThemeChangedHandler();
 
             RequireDoubleTapGesture();
-            IgnorePixelScaling = true;
+            
+            /* IgnorePixelScaling = true;*/
         }
 
         /// <summary>
@@ -642,7 +643,7 @@ namespace Alternet.UI
             if (control is null)
                 return;
 
-            TouchEventArgs args = MauiUtils.Convert(e, Control, pixelToDip: false);
+            TouchEventArgs args = MauiUtils.Convert(e, Control, pixelToDip: true);
 
 #if ANDROID
             if (args.ActionType == TouchAction.WheelChanged)
@@ -682,14 +683,14 @@ namespace Alternet.UI
 
             var dc = e.Surface.Canvas;
 
-            // control.ResetScaleFactor();
-            // var scaleFactor = (float)control.ScaleFactor;
+            control.ResetScaleFactor();
+            var scaleFactor = (float)control.ScaleFactor;
 
             var saved1 = dc.Save();
 
             try
             {
-                // dc.Scale(scaleFactor);
+                dc.Scale(scaleFactor);
 
                 if (graphics is null)
                 {
@@ -700,7 +701,7 @@ namespace Alternet.UI
                     graphics.Canvas = dc;
                 }
 
-                // graphics.OriginalScaleFactor = scaleFactor;
+                graphics.OriginalScaleFactor = scaleFactor;
 
                 UpdateInnerControlBounds(dc.LocalClipBounds);
 
@@ -718,11 +719,9 @@ namespace Alternet.UI
 
                     control.RaisePaint(paintArgs);
 
-                    /*
                     var s1 = $"Info size: {e.Info.Width}x{e.Info.Height}";
                     var s2 = $"Control size: {this.Width}x{this.Height}";
                     dc.DrawHelloLines([s1, s2], PointD.Empty);
-                    */
                 }
                 finally
                 {
