@@ -26,7 +26,7 @@ namespace Alternet.UI
     [DefaultEvent("Click")]
     public abstract partial class AbstractControl
         : FrameworkElement, ISupportInitialize, IDisposable, IFocusable,
-        IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo
+        IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo, IGripControlTarget
     {
         /// <summary>
         /// Gets or sets default value for <see cref="ParentFont"/> property.
@@ -2917,7 +2917,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the minimum size the window can be resized to.
+        /// Gets or sets the minimum size the control can be resized to.
         /// </summary>
         [Browsable(false)]
         public virtual SizeD MinimumSize
@@ -2939,7 +2939,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the maximum size the window can be resized to.
+        /// Gets or sets the maximum size the control can be resized to.
         /// </summary>
         [Browsable(false)]
         public virtual SizeD MaximumSize

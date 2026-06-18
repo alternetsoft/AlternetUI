@@ -231,7 +231,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the kind of grip image to display. Changing this property triggers a redraw of the control.
+        /// Gets or sets the kind of grip image to display.
+        /// Changing this property triggers a redraw of the control.
         /// </summary>
         public virtual GripImageKind ImageKind
         {
@@ -363,7 +364,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the grip can resize vertically. If false, only horizontal resizing is allowed.
+        /// Gets a value indicating whether the grip can resize vertically.
+        /// If false, only horizontal resizing is allowed.
         /// Default is true.
         /// </summary>
         [Browsable(false)]
@@ -371,7 +373,8 @@ namespace Alternet.UI
             => SizeAction == GripSizeAction.ChangeHeight || SizeAction == GripSizeAction.ChangeWidthAndHeight;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the grip can resize horizontally. If false, only vertical resizing is allowed.
+        /// Gets or sets a value indicating whether the grip can resize horizontally.
+        /// If false, only vertical resizing is allowed.
         /// Default is true.
         /// </summary>
         [Browsable(false)]
@@ -379,7 +382,8 @@ namespace Alternet.UI
             => SizeAction == GripSizeAction.ChangeWidth || SizeAction == GripSizeAction.ChangeWidthAndHeight;
 
         /// <summary>
-        /// Gets a value indicating whether the grip can resize. If false, the grip will not resize the target control when dragged.
+        /// Gets a value indicating whether the grip can resize.
+        /// If false, the grip will not resize the target control when dragged.
         /// </summary>
         [Browsable(false)]
         public virtual bool CanResize => CanResizeVertically || CanResizeHorizontally;
@@ -427,13 +431,15 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the control that is resized or moved. If null, the top-level parent form is used.
         /// </summary>
-        public virtual AbstractControl? Target { get; set; }
+        [Browsable(false)]
+        public virtual IGripControlTarget? Target { get; set; }
 
         /// <summary>
         /// Gets or sets the function that returns the target control.
         /// If null, the <see cref="Target"/> property is used to determine the target control.
         /// </summary>
-        public virtual Func<AbstractControl?>? TargetProvider { get; set; }
+        [Browsable(false)]
+        public virtual Func<IGripControlTarget?>? TargetProvider { get; set; }
 
         /// <summary>
         /// Gets or sets splitter background and line color when control state
@@ -443,6 +449,7 @@ namespace Alternet.UI
         /// If this property is not assigned, <see cref="DefaultSplitterDarkColors"/>
         /// and <see cref="DefaultSplitterLightColors"/> are used in order to get colors.
         /// </remarks>
+        [Browsable(false)]
         public virtual IReadOnlyFontAndColor? NormalSplitterColors
         {
             get
@@ -871,8 +878,19 @@ namespace Alternet.UI
                     szDelta = GetEffectiveMinPositionDelta();
                 }
 
-                float newWidth = GetNewSize(isVert: false, mouseNowPos, InvertWidthDelta, CanResizeHorizontally, szDelta);
-                float newHeight = GetNewSize(isVert: true, mouseNowPos, InvertHeightDelta, CanResizeVertically, szDelta);
+                float newWidth = GetNewSize(
+                    isVert: false,
+                    mouseNowPos,
+                    InvertWidthDelta,
+                    CanResizeHorizontally,
+                    szDelta);
+
+                float newHeight = GetNewSize(
+                    isVert: true,
+                    mouseNowPos,
+                    InvertHeightDelta,
+                    CanResizeVertically,
+                    szDelta);
 
                 var bounds = origTargetBounds;
 
@@ -929,7 +947,6 @@ namespace Alternet.UI
                 if (bounds == target.Bounds) return;
 
                 target.Bounds = bounds;
-                target.Refresh();
             }
         }
 
@@ -972,8 +989,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the target control to be resized. If the Target property is set and valid, it returns that.
         /// </summary>
-        /// <returns>The target control to be resized, or the top-level parent if the Target property is not set or invalid.</returns>
-        protected virtual AbstractControl? GetTarget()
+        /// <returns>The target control to be resized, or the top-level
+        /// parent if the Target property is not set or invalid.</returns>
+        protected virtual IGripControlTarget? GetTarget()
         {
             if (TargetProvider != null)
             {
