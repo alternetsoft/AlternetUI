@@ -89,16 +89,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="PropertyChanged"/> event. If events are suspended
-        /// with previous call to <see cref="SuspendPropertyChanged"/>, does nothing.
+        /// Creates <see cref="PropertyChangedEventArgs"/> for the specified property name
+        /// and calls <see cref="RaisePropertyChangedEx(PropertyChangedEventArgs)"/>.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
         public virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
+            var e = EventArgsUtils.GetPropertyChangedEventArgs(propertyName);
+            RaisePropertyChangedEx(e);
+        }
+
+        /// <summary>
+        /// Calls <see cref="PropertyChanged"/> event. If events are suspended
+        /// with previous call to <see cref="SuspendPropertyChanged"/>, does nothing.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        public virtual void RaisePropertyChangedEx(PropertyChangedEventArgs e)
+        {
             if (DisposingOrDisposed || suspendCounter > 0)
                 return;
-            OnPropertyChanged(propertyName);
-            var e = EventArgsUtils.GetPropertyChangedEventArgs(propertyName);
+            OnPropertyChanged(e.PropertyName);
             PropertyChanged?.Invoke(this, e);
             PropertyChangedAction?.Invoke(e);
         }
@@ -112,7 +122,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
+        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged(string)"/> method.
         /// </summary>
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
@@ -135,7 +145,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
+        /// Sets field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged(string)"/> method.
         /// </summary>
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
@@ -151,7 +161,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets new field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged"/> method.
+        /// Gets new field value and calls <see cref="BaseObjectWithNotify.RaisePropertyChanged(string)"/> method.
         /// </summary>
         /// <param name="storage">Field value.</param>
         /// <param name="value">New property value.</param>
