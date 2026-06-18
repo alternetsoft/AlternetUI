@@ -110,7 +110,7 @@ namespace Alternet.UI
         {
             get
             {
-                if(popupWindow is null)
+                if (popupWindow is null)
                 {
                     popupWindow = new();
                     popupWindow.Title = CommonStrings.Default.WindowTitleSelectColor;
@@ -436,7 +436,7 @@ namespace Alternet.UI
                 return;
             App.AddIdleTask(() =>
             {
-                if(!IsDisposed)
+                if (!IsDisposed)
                     ShowColorSelector(LongTapAction);
             });
         }
@@ -446,7 +446,7 @@ namespace Alternet.UI
         {
             base.OnClick(e);
 
-            if(Keyboard.IsControlPressed)
+            if (Keyboard.IsControlPressed)
                 ShowColorSelector(ctrlAction);
             else
                 ShowColorSelector();
@@ -468,7 +468,7 @@ namespace Alternet.UI
 
             var result = Value?.ToDisplayString();
 
-            if(string.IsNullOrEmpty(result) && Value == Color.Empty)
+            if (string.IsNullOrEmpty(result) && Value == Color.Empty)
             {
                 var item = ListBox.Find(Color.Empty);
                 result = item?.DisplayText ?? item?.Text ?? EmptyColorTitle;
@@ -521,7 +521,7 @@ namespace Alternet.UI
 
             LabelImage = imageColor.AsImageWithBorder(colorImageSize, ScaleFactor);
 
-            if(refresh)
+            if (refresh)
                 Refresh();
         }
     }

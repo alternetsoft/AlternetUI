@@ -44,7 +44,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
-        public static PickerPopupKind DefaultPopupKind = PickerPopupKind.Auto;
+        public static PickerPopupKind DefaultPopupKind = PickerPopupKind.ListBox;
+
+        /// <summary>
+        /// Gets or sets whether context menu is allowed to be used as a popup with a list of elements.
+        /// </summary>
+        public static bool AllowContextMenuPopup = false;
 
         /// <summary>
         /// Gets or sets whether the default behavior is to expand drop-down menu width
@@ -431,21 +436,28 @@ namespace Alternet.UI
 
             RaiseBeforeShowPopup(EventArgs.Empty);
 
-            switch (kind)
+            if (AllowContextMenuPopup)
             {
-                case PickerPopupKind.Auto:
-                default:
-                    if (Items.Count <= MaxItemsUsingContextMenu)
-                        ShowPopupMenu();
-                    else
+                switch (kind)
+                {
+                    case PickerPopupKind.Auto:
+                    default:
+                        if (Items.Count <= MaxItemsUsingContextMenu)
+                            ShowPopupMenu();
+                        else
+                            ShowListBox();
+                        break;
+                    case PickerPopupKind.ListBox:
                         ShowListBox();
-                    break;
-                case PickerPopupKind.ListBox:
-                    ShowListBox();
-                    break;
-                case PickerPopupKind.ContextMenu:
-                    ShowPopupMenu();
-                    break;
+                        break;
+                    case PickerPopupKind.ContextMenu:
+                        ShowPopupMenu();
+                        break;
+                }
+            }
+            else
+            {
+                ShowListBox();
             }
 
             void ShowPopupMenu()
