@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Alternet.Base.Collections;
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -39,13 +40,11 @@ namespace Alternet.UI
         /// </summary>
         public DateTimePicker()
         {
+            UserPaint = true;
             datePicker.Parent = this;
+
             timePicker.Visible = false;
             timePicker.Parent = this;
-
-            timePicker.SizeChanged += (s, e) =>
-            {
-            };
 
             datePicker.ValueChanged += (s, e) =>
             {
