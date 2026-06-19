@@ -44,91 +44,96 @@ namespace Alternet.UI
     public static class StringUtils
     {
         /// <summary>
+        /// Gets initialized string with one tab character.
+        /// </summary>
+        public const string OneTab = "\t";
+
+        /// <summary>
         /// Represents the symbol "Wg".
         /// </summary>
         /// <remarks>This field is a constant string value and is
         /// intended to be used as a predefined symbol.</remarks>
-        public static readonly string SymbolWg = "Wg";
+        public const string SymbolWg = "Wg";
 
         /// <summary>
         /// Represents the lowercase 'x' symbol used for layout, diagnostics, or interop.
         /// </summary>
-        public static readonly string SymbolLowercaseX = "x";
+        public const string SymbolLowercaseX = "x";
 
         /// <summary>
         /// Gets the prefix string for CDATA sections.
         /// </summary>
-        public static readonly string PrefixCDATA = "<![CDATA[";
+        public const string PrefixCDATA = "<![CDATA[";
 
         /// <summary>
         /// Gets the suffix string for CDATA sections.
         /// </summary>
-        public static readonly string SuffixCDATA = "]]>";
+        public const string SuffixCDATA = "]]>";
 
         /// <summary>
         /// Gets html start bold tag string constant.
         /// </summary>
-        public static readonly string BoldTagStart = "<b>";
+        public const string BoldTagStart = "<b>";
 
         /// <summary>
         /// Gets html end bold tag string constant.
         /// </summary>
-        public static readonly string BoldTagEnd = "</b>";
+        public const string BoldTagEnd = "</b>";
 
         /// <summary>
         /// Gets html start italic tag string constant.
         /// </summary>
-        public static readonly string ItalicTagStart = "<i>";
+        public const string ItalicTagStart = "<i>";
 
         /// <summary>
         /// Represents the HTML end tag for italic text.
         /// </summary>
-        public static readonly string ItalicTagEnd = "</i>";
+        public const string ItalicTagEnd = "</i>";
 
         /// <summary>
         /// Represents the opening HTML tag for underlined text.
         /// </summary>
-        public static readonly string UnderlineTagStart = "<u>";
+        public const string UnderlineTagStart = "<u>";
 
         /// <summary>
         /// Represents the HTML end tag for underlined text.
         /// </summary>
-        public static readonly string UnderlineTagEnd = "</u>";
+        public const string UnderlineTagEnd = "</u>";
 
         /// <summary>
         /// Gets initialized string with one space character.
         /// </summary>
-        public static readonly string OneSpace = " ";
+        public const string OneSpace = " ";
 
         /// <summary>
         /// Gets initialized string with four space characters.
         /// </summary>
-        public static readonly string FourSpaces = "    ";
+        public const string FourSpaces = "    ";
 
         /// <summary>
         /// Gets initialized string with one double quote character (").
         /// </summary>
-        public static readonly string OneDoubleQuote = "\"";
+        public const string OneDoubleQuote = "\"";
 
         /// <summary>
         /// Gets initialized string with one carriage return.
         /// </summary>
-        public static readonly string OneCarriageReturn = "\r";
+        public const string OneCarriageReturn = "\r";
 
         /// <summary>
         /// Gets initialized string with one new line character.
         /// </summary>
-        public static readonly string OneNewLine = "\n";
+        public const string OneNewLine = "\n";
 
         /// <summary>
         /// Gets initialized string with three dots.
         /// </summary>
-        public static readonly string ThreeDots = "...";
+        public const string ThreeDots = "...";
 
         /// <summary>
         /// Gets title of the command key on MacOs (0x2318 character).
         /// </summary>
-        public static readonly string MacCommandKeyTitle = "\u2318";
+        public const string MacCommandKeyTitle = "\u2318";
 
         /// <summary>
         /// Gets brackets characters used in <see cref="TrimWhitespaceAndBrackets"/>

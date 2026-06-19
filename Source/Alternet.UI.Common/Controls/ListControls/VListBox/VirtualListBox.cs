@@ -47,7 +47,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Changing this property affects how item tooltips are displayed.
         /// The default value is set to use the factory provider.</remarks>
-        public static ItemToolTipProviderType DefaultItemToolTipProvider { get; set; } = ItemToolTipProviderType.Factory;
+        public static ItemToolTipProviderType DefaultItemToolTipProvider { get; set; }
+            = ItemToolTipProviderType.Factory;
 
         private static SetItemsKind defaultSetItemsKind = SetItemsKind.ChangeField;
 
@@ -89,6 +90,8 @@ namespace Alternet.UI
         /// </summary>
         public VirtualListBox()
         {
+            MinimumSize = (120, 96);
+
             UserPaint = true;
             HasBorder = true;
 

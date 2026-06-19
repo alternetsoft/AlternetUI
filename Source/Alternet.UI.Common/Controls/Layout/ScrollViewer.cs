@@ -263,7 +263,8 @@ namespace Alternet.UI
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="ScrollContainer"/> class,
-            /// which serves as the container for child controls within the scrollable area of the <see cref="ScrollViewer"/>.
+            /// which serves as the container for child controls within the
+            /// scrollable area of the <see cref="ScrollViewer"/>.
             /// </summary>
             public ScrollContainer()
             {
@@ -271,7 +272,6 @@ namespace Alternet.UI
                 CanSelect = false;
                 ParentBackColor = true;
                 ParentForeColor = true;
-                RefreshOptions = ControlRefreshOptions.RefreshOnBackground;
             }
 
             /// <inheritdoc/>

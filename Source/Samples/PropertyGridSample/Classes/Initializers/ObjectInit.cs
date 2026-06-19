@@ -500,6 +500,7 @@ Environment.NewLine + Environment.NewLine +
         {
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
             control.MaxWidth = 450;
+            control.MinHeight = 300;
 
             control.ShowToolTip(
                 "This is title",

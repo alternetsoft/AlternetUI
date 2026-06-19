@@ -27,11 +27,6 @@ namespace ControlsSample
                     focusLastItemButton,
                     modifyLastItemButton).SuggestedWidthToMax();
 
-                treeView.ListBox.MouseUp += TreeView_MouseUp;
-                treeView.ListBox.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
-                treeView.ListBox.MouseLeftButtonDown += TreeView_MouseLeftButtonDown;
-                treeView.ListBox.MouseMove += TreeView_MouseMove;
-
                 var imageLists = DemoResourceLoader.LoadImageLists();
 
                 if (App.SafeWindow.UseSmallImages)
@@ -73,6 +68,15 @@ namespace ControlsSample
             {
                 treeView.ListBox.CustomItemText -= OnGetItemTextWithIndex;
                 treeView.ListBox.CustomItemText += OnGetItemTextWithIndex;
+            });
+
+            pageControl.FirstPage?.ContextMenuStrip.Add("Log Mouse events", () =>
+            {
+                treeView.ListBox.MouseMove -= TreeView_MouseMove;
+                treeView.ListBox.MouseMove += TreeView_MouseMove;
+                treeView.ListBox.MouseUp += TreeView_MouseUp;
+                treeView.ListBox.MouseLeftButtonUp += TreeView_MouseLeftButtonUp;
+                treeView.ListBox.MouseLeftButtonDown += TreeView_MouseLeftButtonDown;
             });
 
             void OnGetItemTextWithIndex(object? sender, GetItemTextEventArgs e)

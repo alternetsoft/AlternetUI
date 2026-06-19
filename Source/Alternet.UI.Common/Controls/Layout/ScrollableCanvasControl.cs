@@ -29,7 +29,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Defines the default small change value for scrolling, which determines how much
-        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// the content should scroll when a small scroll action is performed
+        /// (e.g., scrolling by one line or one character).
         /// </summary>
         public static SizeD DefaultScrollSmallChange = new(40, 40);
 
@@ -56,7 +57,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Defines the content size scale factor, which is used to determine the maximum scrollable area based
-        /// on the preferred size of the content. This scale factor allows for additional scrolling beyond the calculated
+        /// on the preferred size of the content. This scale factor allows for additional
+        /// scrolling beyond the calculated
         /// maximum size, which can be useful in scenarios such as accommodating on-screen keyboards or other
         /// dynamic content changes.
         /// </summary>
@@ -94,7 +96,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the small change value for scrolling, which determines how much
-        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// the content should scroll when a small scroll action is performed
+        /// (e.g., scrolling by one line or one character).
         /// </summary>
         public virtual SizeD? ScrollSmallChange { get; set; }
 
@@ -163,6 +166,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the layout offset, which represents the current scroll position of the content.
         /// </summary>
+        [Browsable(false)]
         new public virtual PointD LayoutOffset
         {
             get
@@ -183,6 +187,7 @@ namespace Alternet.UI
         /// Gets the maximum size of the layout, which is determined by the preferred size of the
         /// content and the padding of the control.
         /// </summary>
+        [Browsable(false)]
         new public virtual SizeD LayoutMaxSize
         {
             get
@@ -203,7 +208,8 @@ namespace Alternet.UI
         protected abstract SizeD GetContentPreferredSize();
 
         /// <summary>
-        /// Determines whether the content is currently visible, which can affect the visibility and behavior of scroll bars.
+        /// Determines whether the content is currently visible,
+        /// which can affect the visibility and behavior of scroll bars.
         /// </summary>
         /// <returns></returns>
         /// <inheritdoc/>
@@ -290,7 +296,8 @@ namespace Alternet.UI
             suspendUpdateInteriorCounter--;
 
             if (suspendUpdateInteriorCounter < 0)
-                throw new InvalidOperationException("ResumeUpdateInterior called more times than SuspendUpdateInterior.");
+                throw new InvalidOperationException(
+                    "ResumeUpdateInterior called more times than SuspendUpdateInterior.");
 
             if (suspendUpdateInteriorCounter == 0 && update)
                 UpdateInterior();
@@ -326,7 +333,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Calculates and retrieves the effective small change value for scrolling, which determines how much
-        /// the content should scroll when a small scroll action is performed (e.g., scrolling by one line or one character).
+        /// the content should scroll when a small scroll action is performed
+        /// (e.g., scrolling by one line or one character).
         /// </summary>
         /// <returns>A <see cref="SizeD"/> representing the effective small change value for scrolling. </returns>
         public virtual SizeD GetEffectiveScrollSmallChange()
@@ -438,7 +446,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calculates and retrieves the total scrollable area based on the maximum right and bottom positions of the child controls,
+        /// Calculates and retrieves the total scrollable area based on the maximum
+        /// right and bottom positions of the child controls,
         /// </summary>
         /// <returns>A <see cref="SizeD"/> representing the total scrollable area.</returns>
         public SizeD GetScrollRange()
@@ -447,7 +456,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Retrieves the current scroll position, which is determined by the layout offset of the first child control.
+        /// Retrieves the current scroll position, which is determined
+        /// by the layout offset of the first child control.
         /// </summary>
         /// <returns>A <see cref="PointD"/> representing the current scroll position.</returns>
         public PointD GetScrollPosition()
@@ -504,7 +514,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Scrolls the content to the specified position, ensuring that the new scroll position is within valid bounds.
+        /// Scrolls the content to the specified position, ensuring
+        /// that the new scroll position is within valid bounds.
         /// </summary>
         /// <param name="value">The target scroll position.</param>
         public virtual bool DoActionSetScroll(PointD value)
@@ -573,7 +584,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the <see cref="IsScrolledVertically"/> property changes, allowing for any necessary updates to be performed.
+        /// Called when the <see cref="IsScrolledVertically"/> property changes,
+        /// allowing for any necessary updates to be performed.
         /// </summary>
         protected virtual void OnScrolledVerticallyChanged()
         {
@@ -581,7 +593,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the <see cref="IsScrolledHorizontally"/> property changes, allowing for any necessary updates to be performed.
+        /// Called when the <see cref="IsScrolledHorizontally"/> property changes,
+        /// allowing for any necessary updates to be performed.
         /// </summary>
         protected virtual void OnScrolledHorizontallyChanged()
         {
@@ -589,7 +602,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calculates and retrieves the preferred content viewport rectangle, which represents the area of the control
+        /// Calculates and retrieves the preferred content viewport rectangle,
+        /// which represents the area of the control
         /// that should be used for displaying the content.
         /// </summary>
         /// <returns>The preferred content viewport rectangle.</returns>
