@@ -1,3 +1,6 @@
+# Ubuntu 26 installation info for net8.0 and net9.0
+# https://devblogs.microsoft.com/dotnet/whats-new-for-dotnet-in-ubuntu-2604/
+
 sudo apt -y update
 sudo apt -y upgrade 
 
