@@ -38,8 +38,6 @@ namespace Alternet.UI
             CanSelect = false;
             ParentBackColor = GetDefaultParentBackColor();
             ParentForeColor = GetDefaultParentForeColor();
-            RefreshOptions = ControlRefreshOptions.RefreshOnBorder
-                | ControlRefreshOptions.RefreshOnBackground;
             ResetBorders();
         }
 

@@ -220,7 +220,6 @@ namespace Alternet.UI
             Layout = LayoutStyle.Horizontal;
 
             IsGraphicControl = true;
-            RefreshOptions = ControlRefreshOptions.RefreshOnState;
 
             commandSource.Changed = () =>
             {
@@ -2453,6 +2452,9 @@ namespace Alternet.UI
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
+
+            Refresh();
+
             if (VisualState == VisualControlState.Pressed)
                 SubscribeClickRepeated();
             else

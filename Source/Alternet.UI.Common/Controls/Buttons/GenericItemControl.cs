@@ -81,10 +81,6 @@ namespace Alternet.UI
             ParentForeColor = true;
             HorizontalAlignment = HorizontalAlignment.Left;
             Item.ImageMargin = DefaultImageMargin;
-
-            RefreshOptions = ControlRefreshOptions.RefreshOnBorder | ControlRefreshOptions.RefreshOnImage |
-                ControlRefreshOptions.RefreshOnBackground | ControlRefreshOptions.RefreshOnColor |
-                ControlRefreshOptions.RefreshOnState;
         }
 
         /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarker"/>
@@ -902,7 +898,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="location">A <see cref="PointD"/> object containing
         /// the coordinates where the item was clicked.</param>
-        /// <param name="hitTestCheckBox">A boolean value indicating whether to perform a hit test on the checkbox.
+        /// <param name="hitTestCheckBox">A boolean value indicating
+        /// whether to perform a hit test on the checkbox.
         /// If true, the method will only toggle the check state if the click occurred on the checkbox.
         /// If false, the method will toggle the check state regardless of the click location.
         /// This allows to change checked state when item is clicked on the item text.</param>
@@ -946,7 +943,8 @@ namespace Alternet.UI
         /// <summary>
         /// Binds property specified with <paramref name="instance"/> and
         /// <paramref name="propName"/> to the <see cref="Checked"/> property of the control.
-        /// After binding is set up, changes to the <see cref="Checked"/> property will automatically update the value
+        /// After binding is set up, changes to the <see cref="Checked"/>
+        /// property will automatically update the value
         /// of the bound property on the specified instance.
         /// </summary>
         /// <param name="instance">Object.</param>
@@ -1019,7 +1017,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Override this method to customize how the effective SVG size is determined in derived
         /// classes.</remarks>
-        /// <returns>The size in pixels to use for the SVG image. Returns the value of the SvgSize property if set; otherwise,
+        /// <returns>The size in pixels to use for the SVG image. Returns the value of
+        /// the SvgSize property if set; otherwise,
         /// returns the default size converted from device-independent pixels.</returns>
         public virtual int GetEffectiveSvgSize()
         {
@@ -1129,11 +1128,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates and returns a drawable object which is responsible for rendering the visual representation of the item within the control.
+        /// Creates and returns a drawable object which is responsible
+        /// for rendering the visual representation of the item within the control.
         /// Derived classes can override this method to provide a custom drawable implementation
         /// that defines how the item should be drawn on the screen.
         /// </summary>
-        /// <returns>A <see cref="ListItemDrawable"/> instance which is responsible for rendering the visual representation of the item.</returns>
+        /// <returns>A <see cref="ListItemDrawable"/> instance which
+        /// is responsible for rendering the visual representation of the item.</returns>
         protected virtual ListItemDrawable CreateItemDrawable()
         {
             return new();
@@ -1231,10 +1232,19 @@ namespace Alternet.UI
         /// <summary>
         /// Recalculates the alignment of text and image elements within the control based on the current settings.
         /// </summary>
-        /// <remarks>Override this method in a derived class to implement custom alignment logic for text and images. </remarks>
+        /// <remarks>Override this method in a derived class to implement
+        /// custom alignment logic for text and images. </remarks>
         protected virtual void UpdateTextAndImageAlignment()
         {
             Item.SetContentAlignment(TextAlign, ImageAlign);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisualStateChanged(EventArgs e)
+        {
+            base.OnVisualStateChanged(e);
+
+            Refresh();
         }
 
         /// <summary>
@@ -1244,7 +1254,8 @@ namespace Alternet.UI
         /// <remarks>Override this method in a derived class to implement additional behavior when a new
         /// item is added to the control or an existing item is assigned. This method is called each time an item is
         /// created or assigned to the control.</remarks>
-        /// <param name="item">The list item that has been created or assigned and will be associated with the control.</param>
+        /// <param name="item">The list item that has been created or
+        /// assigned and will be associated with the control.</param>
         protected virtual void OnItemCreatedOrAssigned(ListControlItem item)
         {
             itemDrawable.Item = item;

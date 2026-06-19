@@ -146,11 +146,6 @@ namespace Alternet.UI
             ParentForeColor = true;
             CanSelect = false;
             TabStop = false;
-            RefreshOptions = ControlRefreshOptions.RefreshOnBorder
-                | ControlRefreshOptions.RefreshOnColor
-                | ControlRefreshOptions.RefreshOnBackground
-                | ControlRefreshOptions.RefreshOnImage
-                | ControlRefreshOptions.RefreshOnState;
         }
 
         /// <summary>
@@ -1053,6 +1048,12 @@ namespace Alternet.UI
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisualStateChanged(EventArgs e)
+        {
+            base.OnVisualStateChanged(e);
         }
 
         [Conditional("DEBUG")]

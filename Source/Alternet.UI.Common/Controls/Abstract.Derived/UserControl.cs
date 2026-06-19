@@ -51,12 +51,6 @@ namespace Alternet.UI
         /// of the painting process.</remarks>
         public event PaintEventHandler? AfterPaint;
 
-        /// <summary>
-        /// Gets or sets different behavior and visualization options.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlRefreshOptions RefreshOptions { get; set; }
-
         /// <inheritdoc/>
         public override ControlTypeId ControlKind => ControlTypeId.UserPaintControl;
 
@@ -258,7 +252,6 @@ namespace Alternet.UI
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
-            UserControlHelper.OnVisualStateChanged(this, RefreshOptions);
         }
 
         /// <summary>

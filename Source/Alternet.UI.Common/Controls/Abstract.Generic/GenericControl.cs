@@ -25,12 +25,6 @@ namespace Alternet.UI
             UserPaint = true;
         }
 
-        /// <summary>
-        /// Gets or sets different behavior and visualization options.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlRefreshOptions RefreshOptions { get; set; }
-
         /// <inheritdoc/>
         public override bool IsHandleCreated => true;
 
@@ -222,19 +216,12 @@ namespace Alternet.UI
         protected override void OnIsMouseOverChanged(EventArgs e)
         {
             base.OnIsMouseOverChanged(e);
-
-            if (RefreshOptions.HasFlag(ControlRefreshOptions.RefreshOnState))
-            {
-                Refresh();
-                return;
-            }
         }
 
         /// <inheritdoc/>
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
-            UserControlHelper.OnVisualStateChanged(this, RefreshOptions);
         }
 
         /// <inheritdoc/>

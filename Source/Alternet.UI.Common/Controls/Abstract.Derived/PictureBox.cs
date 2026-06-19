@@ -54,9 +54,6 @@ namespace Alternet.UI
         {
             ParentBackColor = DefaultParentBackColor;
             ParentForeColor = DefaultParentForeColor;
-            RefreshOptions = ControlRefreshOptions.RefreshOnBorder
-                | ControlRefreshOptions.RefreshOnBackground
-                | ControlRefreshOptions.RefreshOnImage;
         }
 
         /// <summary>
