@@ -288,6 +288,13 @@ ALTERNET_UI_API void* TextBox_CreateTextBox_(void* validator)
     });
 }
 
+ALTERNET_UI_API void TextBox_SetTextAsNativeStr_(TextBox* obj, void* text, int textLength)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetTextAsNativeStr(text, textLength);
+    });
+}
+
 ALTERNET_UI_API int TextBox_GetLineLength_(TextBox* obj, int64_t lineNo)
 {
     return MarshalExceptions<int>([&](){

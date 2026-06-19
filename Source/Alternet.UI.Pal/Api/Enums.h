@@ -443,82 +443,6 @@ namespace Alternet::UI
         Default = 4,
     };
     
-    enum class GenericImageAlphaBlendMode
-    {
-        Overwrite = 0,
-        Compose = 1,
-    };
-    
-    enum class GenericImageLoadFlags
-    {
-        Verbose = 1,
-    };
-    
-    enum class GenericImagePngSetFilter
-    {
-        None = 8,
-        Sub = 16,
-        Up = 32,
-        FastFilters = 56,
-        Avg = 64,
-        Paeth = 128,
-        All = 248,
-    };
-    
-    enum class GenericImagePngType
-    {
-        Color = 0,
-        Grey = 2,
-        GreyRed = 3,
-        Palette = 4,
-    };
-    
-    enum class GenericImageResizeQuality
-    {
-        Nearest = 0,
-        Normal = 0,
-        Bilinear = 1,
-        Bicubic = 2,
-        BoxAverage = 3,
-        High = 4,
-    };
-    
-    enum class GenericImageResolutionUnit
-    {
-        None = 0,
-        Inches = 1,
-        Centimeters = 2,
-    };
-    
-    enum class GenericImageTiffCompression
-    {
-        None = 1,
-        CCITTRLE = 2,
-        CCITTFAX3 = 3,
-        CCITT_T = 3,
-        CCITTFAX4 = 4,
-        CCITT_T6 = 4,
-        LZW = 5,
-        OJPEG = 6,
-        JPEG = 7,
-        T85 = 9,
-        T43 = 10,
-    };
-    
-    enum class GenericImageTiffPhotometric
-    {
-        MINISWHITE = 0,
-        MINISBLACK = 1,
-        RGB = 2,
-        PALETTE = 3,
-        MASK = 4,
-        SEPARATED = 5,
-        YCBCR = 6,
-        CIELAB = 8,
-        ICCLAB = 9,
-        ITULAB = 10,
-    };
-    
     enum class ImageBitsFormatKind
     {
         Native = 0,
@@ -539,6 +463,17 @@ namespace Alternet::UI
         ReadOnly = 1,
         WriteOnly = 2,
         ReadWrite = 3,
+    };
+    
+    enum class ImageSizeFallback
+    {
+        None = 0,
+        SystemIcon = 1,
+        SmallSystemIcon = 2,
+        NearestLarger = 3,
+        Closest = 4,
+        First = 5,
+        Smallest = 6,
     };
     
     enum class InterpolationMode
@@ -1222,16 +1157,6 @@ namespace Alternet::UI
         ForceTextChange = 4,
     };
     
-    enum class ControlRefreshOptions
-    {
-        None = 0,
-        RefreshOnBorder = 1,
-        RefreshOnImage = 2,
-        RefreshOnBackground = 4,
-        RefreshOnColor = 8,
-        RefreshOnState = 16,
-    };
-    
     enum class ControlRenderingFlags
     {
         None = 0,
@@ -1637,6 +1562,13 @@ namespace Alternet::UI
         Normal = 0,
         OwnerDrawFixed = 1,
         OwnerDrawVariable = 2,
+    };
+    
+    enum class ImageSizeKind
+    {
+        SmallIcon = 0,
+        LargeIcon = 1,
+        Custom = 2,
     };
     
     enum class KnownSvgColor
@@ -3031,13 +2963,19 @@ namespace Alternet::UI
         Watch = 5,
     };
     
-    enum class HighDpiMode
+    enum class MswDpiAwareness
     {
-        DpiUnaware = 0,
+        Unaware = 0,
         SystemAware = 1,
-        PerMonitor = 2,
-        PerMonitorV2 = 3,
-        DpiUnawareGdiScaled = 4,
+        PerMonitorAware = 2,
+        Invalid = -1,
+    };
+    
+    enum class MswProcessDpiAwareness
+    {
+        Unaware = 0,
+        SystemAware = 1,
+        PerMonitorAware = 2,
     };
     
     enum class NetFrameworkIdentifier
@@ -3702,8 +3640,6 @@ namespace Alternet::UI
 template<> struct enable_bitmask_operators<Alternet::UI::KnownColorCategory> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontWeight> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::GenericImageLoadFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::GenericImagePngSetFilter> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DrawLabelFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextFormatFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericAlignment> { static const bool enable = true; };
@@ -3715,7 +3651,6 @@ template<> struct enable_bitmask_operators<Alternet::UI::SwipeDirection> { stati
 template<> struct enable_bitmask_operators<Alternet::UI::Border3DSide> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::BoundsSpecified> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlFlags> { static const bool enable = true; };
-template<> struct enable_bitmask_operators<Alternet::UI::ControlRefreshOptions> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlRenderingFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ControlStyles> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::ListBoxHandlerCreateFlags> { static const bool enable = true; };

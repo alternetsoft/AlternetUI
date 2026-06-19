@@ -334,6 +334,12 @@ namespace Alternet.UI.Native
             return NativeApi.TextBox_CreateTextBox_(validator);
         }
         
+        public void SetTextAsNativeStr(System.IntPtr text, int textLength)
+        {
+            CheckDisposed();
+            NativeApi.TextBox_SetTextAsNativeStr_(NativePointer, text, textLength);
+        }
+        
         public int GetLineLength(long lineNo)
         {
             CheckDisposed();
@@ -724,6 +730,9 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TextBox_CreateTextBox_(System.IntPtr validator);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetTextAsNativeStr_(IntPtr obj, System.IntPtr text, int textLength);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TextBox_GetLineLength_(IntPtr obj, long lineNo);

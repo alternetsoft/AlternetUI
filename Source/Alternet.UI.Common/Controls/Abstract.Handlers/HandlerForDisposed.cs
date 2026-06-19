@@ -1863,5 +1863,10 @@ namespace Alternet.UI
         public void SetMaxSize(SizeD size)
         {
         }
+
+        public void SetNativeText(ReadOnlySpan<char> text)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

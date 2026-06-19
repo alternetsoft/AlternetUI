@@ -555,7 +555,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="StatusBar.h" />
     <ClInclude Include="TextBox.h" />
     <ClInclude Include="TextBoxTextAttr.h" />
-    <ClInclude Include="TextPainter.h" />
     <ClInclude Include="TextureBrush.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TreeView.h" />

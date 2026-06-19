@@ -14,7 +14,31 @@
 
 namespace Alternet::UI
 {
+    inline wxString StringToWx(void* text, int textLength)
+    {
+        if (text == nullptr)
+        {
+            return wxString();
+        }
 
+        if (textLength == 0)
+        {
+            return wxString();
+        }
+
+#ifdef __WXMSW__    
+        // reinterpret as wide char pointer
+        const wchar_t* wstr = reinterpret_cast<const wchar_t*>(text);
+
+        // construct wxString directly
+        wxString str(wstr, textLength);
+#else
+        const char* utf8 = reinterpret_cast<const char*>(text);
+        wxString str(utf8, wxConvUTF8, textLength);
+#endif
+
+        return str;
+    }
 /*
     std::u16string wstringToU16String(const std::wstring& wstr) {
         icu::UnicodeString unicodeStr(reinterpret_cast<const UChar*>(wstr.data()), wstr.length());
