@@ -713,7 +713,10 @@ namespace Alternet.UI
                 {
                     graphics.UseUnscaledDrawImage = UseUnscaledDrawImage;
 
-                    var r = control.Bounds;
+                    var bounds = control.Bounds;
+                    var r = control.ClientRectangle;
+
+                    dc.Translate(bounds.X, bounds.Y);
 
                     var paintArgs = new PaintEventArgs(graphics, r, r);
 
@@ -819,7 +822,7 @@ namespace Alternet.UI
                 var rectangles = interior.GetLayoutRectangles(control);
                 var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
 
-                SetControlBounds((0, 0, clientRect.Width, clientRect.Height));
+                SetControlBounds(clientRect);
             }
 
             void SetControlBounds(RectD newBounds)
