@@ -10,7 +10,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
-    public partial class GenericItemControl : HiddenGenericBorder, IListControlItemContainer, ICommandSource, IControlStateObjectChanged
+    public partial class GenericItemControl
+        : HiddenGenericBorder, IListControlItemContainer, ICommandSource, IControlStateObjectChanged
     {
         /// <summary>
         /// Gets the default margin applied to images.
@@ -21,8 +22,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Represents the default size, in device-independent pixels (DIP), for SVG images.
-        /// This is used when the <see cref="SvgSize"/> property is not explicitly set. Adjusting this value will change the default
-        /// size of SVG images across all buttons that rely on it, providing a consistent appearance for vector graphics in the user interface.
+        /// This is used when the <see cref="SvgSize"/> property is not explicitly set.
+        /// Adjusting this value will change the default
+        /// size of SVG images across all buttons that rely on it, providing
+        /// a consistent appearance for vector graphics in the user interface.
         /// </summary>
         public static int DefaultSvgSize = 16;
 
@@ -48,7 +51,8 @@ namespace Alternet.UI
         private ControlColorAndStyle? theme;
 
         /// <summary>
-        /// Initializes a new instance of the GenericListItemControl class and associates it with the specified parent
+        /// Initializes a new instance of the GenericListItemControl class
+        /// and associates it with the specified parent
         /// control, if provided.
         /// </summary>
         /// <remarks>Establishing a parent-child relationship between controls can be useful for managing
@@ -81,6 +85,7 @@ namespace Alternet.UI
             ParentForeColor = true;
             HorizontalAlignment = HorizontalAlignment.Left;
             Item.ImageMargin = DefaultImageMargin;
+            RefreshOnStateChanged = true;
         }
 
         /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarker"/>
@@ -1243,8 +1248,6 @@ namespace Alternet.UI
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
-
-            Refresh();
         }
 
         /// <summary>

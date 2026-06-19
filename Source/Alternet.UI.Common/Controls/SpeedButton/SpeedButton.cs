@@ -231,6 +231,7 @@ namespace Alternet.UI
             drawable.Stretch = false;
 
             label.BeforeDrawText += OnBeforeDrawLabel;
+            RefreshOnStateChanged = true;
         }
 
         /// <summary>
@@ -2452,8 +2453,6 @@ namespace Alternet.UI
         protected override void OnVisualStateChanged(EventArgs e)
         {
             base.OnVisualStateChanged(e);
-
-            Refresh();
 
             if (VisualState == VisualControlState.Pressed)
                 SubscribeClickRepeated();

@@ -536,6 +536,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control is refreshed when its visual state is changed.
+        /// For example, when the control is hovered or pressed, it changes its visual state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool RefreshOnStateChanged { get; set; }        
+
+        /// <summary>
         /// Gets mouse position when mouse down event was received.
         /// </summary>
         [Browsable(false)]

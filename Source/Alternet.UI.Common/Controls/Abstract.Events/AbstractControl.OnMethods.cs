@@ -371,6 +371,10 @@ namespace Alternet.UI
         [EditorBrowsable(EditorBrowsableState.Advanced)]
         protected virtual void OnVisualStateChanged(EventArgs e)
         {
+            if (RefreshOnStateChanged)
+            {
+                Refresh();
+            }
         }
 
         /// <summary>
