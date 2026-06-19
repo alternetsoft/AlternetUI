@@ -1471,10 +1471,10 @@ namespace Alternet.UI
             RoundBorderTheme = StaticBorderTheme.Clone();
             RoundBorderTheme.SetCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
 
-            StickyBorderTheme = CreateBordered(borderColor);
-            CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor);
+            StickyBorderTheme = CreateBordered(borderColor, corners);
+            CheckBorderTheme = CreateBordered(DefaultColors.DefaultCheckBoxColor, corners);
 
-            ControlColorAndStyle CreateBordered(LightDarkColor? color)
+            ControlColorAndStyle CreateBordered(LightDarkColor? color, BorderCornerRadius? cornerRadius = null)
             {
                 var result = DefaultTheme.Clone();
                 result.SetBorderFromBorder(stateToChange: VisualControlState.Normal, assignFromState: VisualControlState.Hovered);
@@ -1518,7 +1518,7 @@ namespace Alternet.UI
                 PressedBackColor = (204, 228, 247),
             };
 
-            theme.Borders = CreateBorders((204, 232, 255), cornerRadius);
+            theme.Borders = CreateBorders(color: (204, 232, 255), cornerRadius);
             theme.Colors = colors.AllStates;
             theme.Backgrounds = theme.Colors;
         }

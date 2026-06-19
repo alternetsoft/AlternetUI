@@ -731,7 +731,7 @@ namespace Alternet.UI
                 brush = null;
             }
 
-            var border = drawBorder ? GetBorderSettings(state) : null;
+            var border = GetBorderSettings(state);
 
             if (brush is null && (border is null || !HasBorder))
                 return;
