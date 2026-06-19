@@ -784,7 +784,8 @@ namespace Alternet.UI
         }
 
         ///<summary>
-        /// Gets the effective minimum position delta for moving, considering the user-defined value and the default value.
+        /// Gets the effective minimum position delta for moving, considering
+        /// the user-defined value and the default value.
         /// </summary>
         protected virtual float GetEffectiveMinPositionDelta()
         {
@@ -792,7 +793,8 @@ namespace Alternet.UI
         }
 
         ///<summary>
-        /// Gets the effective minimum size delta for resizing, considering the user-defined value and the default value.
+        /// Gets the effective minimum size delta for resizing,
+        /// considering the user-defined value and the default value.
         /// </summary>
         protected virtual float GetEffectiveMinSizeDelta()
         {
