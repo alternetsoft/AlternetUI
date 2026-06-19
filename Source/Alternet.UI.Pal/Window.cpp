@@ -11,6 +11,11 @@ namespace Alternet::UI
 {
 #define UseDebugPaintColors false
 
+    void Window::SetUserPaint(bool value)
+    {
+        Control::SetUserPaint(value);
+    }
+
     Frame::Frame(wxWindow* parent,
         wxWindowID id,
         const wxString& title,
@@ -281,7 +286,8 @@ namespace Alternet::UI
             break;
         }
 
-        /* frame->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_PAINT);*/
+        frame->Hide();
+
         ApplyIcon(frame);
 
         auto asFrame = dynamic_cast<Frame*>(frame);
@@ -300,6 +306,18 @@ namespace Alternet::UI
     void Window::Close()
     {
         DestroyWxWindow();
+    }
+
+    void Window::OnPaint(wxPaintEvent& event)
+    {
+        event.Skip();
+        if (IsNullOrDeleting())
+            return;
+        Control::RaiseEvent(ControlEvent::Paint);
+    }
+
+    void Window::OnEraseBackground(wxEraseEvent& event)
+    {
     }
 
     bool Window::GetShowInTaskbar()

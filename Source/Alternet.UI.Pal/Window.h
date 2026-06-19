@@ -43,6 +43,20 @@ namespace Alternet::UI
         {
             return false;
         }
+    protected:
+
+#ifdef __WXMSW__    
+        WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override
+        {
+            if (message == WM_ERASEBKGND)
+            {
+                // Return non-zero to tell Windows "background erased"
+                // but do nothing (no white fill).
+                return 1;
+            }
+            return wxFrame::MSWWindowProc(message, wParam, lParam);
+        }
+#endif
 
         // show help text for the currently selected menu or toolbar item
         // (typically in the status bar) or hide it and restore the status bar text
@@ -90,6 +104,19 @@ namespace Alternet::UI
         virtual void DoGiveHelp(const wxString& text, bool show) override
         {
         }
+protected:
+#ifdef __WXMSW__    
+        WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override
+        {
+            if (message == WM_ERASEBKGND)
+            {
+                // Return non-zero to tell Windows "background erased"
+                // but do nothing (no white fill).
+                return 1;
+            }
+            return wxMiniFrame::MSWWindowProc(message, wParam, lParam);
+        }
+#endif
     };
 
     // Dialog =============================================
@@ -110,6 +137,19 @@ namespace Alternet::UI
         {
             return false;
         }
+    protected:
+#ifdef __WXMSW__    
+        WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override
+        {
+            if (message == WM_ERASEBKGND)
+            {
+                // Return non-zero to tell Windows "background erased"
+                // but do nothing (no white fill).
+                return 1;
+            }
+            return wxDialog::MSWWindowProc(message, wParam, lParam);
+        }
+#endif
     };
 
     // Window =============================================
@@ -131,6 +171,7 @@ namespace Alternet::UI
 
         void ApplyMenuToFrame(wxMenuBar* value, Frame* frame);
         void ApplyMenu(wxMenuBar* value);
+        virtual void SetUserPaint(bool value) override;
 
     protected:
         void OnBeforeDestroyWxWindow() override;
@@ -144,12 +185,16 @@ namespace Alternet::UI
             Control::CreateWxWindow();
         }
 
+        virtual void OnEraseBackground(wxEraseEvent& event) override;
+        virtual void OnPaint(wxPaintEvent& event) override;
+
         virtual void OnWxWindowCreated() override;
 
         virtual void DestroyWxWindow() override;
 
     private:
         int _frameKind = 0;
+        bool _painted = false;
 
         ModalResult _modalResult = ModalResult::None;
 

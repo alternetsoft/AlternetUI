@@ -490,9 +490,6 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
-
-            if (App.IsWindowsOS)
-                UserPaint = true;
         }
 
         internal class NativeTextBox : Native.TextBox

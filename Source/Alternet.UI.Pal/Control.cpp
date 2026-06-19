@@ -35,8 +35,6 @@ namespace Alternet::UI
             if (_allowDoubleBuffered)
                 _wxWindow->SetDoubleBuffered(true);
             */
-            _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
-            _wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         }
 
         if (!GetTabStop())
@@ -45,7 +43,6 @@ namespace Alternet::UI
         _wxWindow->Bind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
         _wxWindow->Bind(wxEVT_TEXT, &Control::OnTextChanged, this);
         _wxWindow->Bind(wxEVT_ACTIVATE, &Control::OnActivate, this);
-        _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
         _wxWindow->Bind(wxEVT_DESTROY, &Control::OnDestroy, this);
         _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
         _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
@@ -2000,11 +1997,15 @@ namespace Alternet::UI
         if (GetUserPaint() == value)
             return;
         _flags.Set(ControlFlags::UserPaint, value);
-
-        /*
-        if(_allowDoubleBuffered)
-            GetWxWindow()->SetDoubleBuffered(value);
-            */
+        _allowDoubleBuffered = true;
+        GetWxWindow()->SetBackgroundStyle(wxBG_STYLE_PAINT);
+        GetWxWindow()->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
+        GetWxWindow()->Bind(wxEVT_PAINT, &Control::OnPaint, this);
+#ifdef __WXMSW__    
+        auto hwnd = (HWND)GetWxWindow()->GetHWND();
+        long exStyle = ::GetWindowLong(hwnd, GWL_EXSTYLE);
+        ::SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED);
+#endif
     }
 
     wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)

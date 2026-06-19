@@ -157,9 +157,6 @@ namespace Alternet.UI
             if (Control is null)
                 return;
 
-            if (App.IsWindowsOS)
-                UserPaint = true;
-
             ItemsToPlatform();
             ApplyIsEditable();
  

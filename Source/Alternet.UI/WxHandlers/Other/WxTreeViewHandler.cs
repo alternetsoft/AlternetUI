@@ -352,9 +352,6 @@ namespace Alternet.UI
         {
             base.OnAttach();
 
-            if (App.IsWindowsOS)
-                UserPaint = true;
-
             if (Control is null)
                 return;
 

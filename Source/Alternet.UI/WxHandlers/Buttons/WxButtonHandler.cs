@@ -97,8 +97,6 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
-            if (App.IsWindowsOS && Control is not null)
-                Control.UserPaint = true;
         }
 
         internal override Native.Control CreateNativeControl()
