@@ -322,6 +322,9 @@ namespace Alternet::UI
             NULL,
             style);
 
+        _allowDoubleBuffered = false;
+        _flags.Set(ControlFlags::UserPaint, false);
+
         value->Bind(wxEVT_COMBOBOX, &ComboBox::OnSelectedItemChanged, this);
         return value;
     }

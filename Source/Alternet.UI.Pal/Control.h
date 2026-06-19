@@ -170,13 +170,29 @@ namespace Alternet::UI
         virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
 
     protected:
+        enum class ControlFlags
+        {
+            None = 0,
+            DoNotDestroyWxWindow = 1 << 0,
+            CreatingWxWindow = 1 << 1,
+            UserPaint = 1 << 3,
+            InitInProgress = 1 << 4,
+            PostInitWxWindowRecreationPending = 1 << 5,
+            DestroyingWxWindow = 1 << 6,
+            IsScrollable = 1 << 7,
+            TabStop = 1 << 8,
+            Active = 1 << 9,
+        };
+
         bool _wantChars = false;
         bool _showVertScrollBar = false;
         bool _showHorzScrollBar = false;
         bool _scrollBarAlwaysVisible = false;
         bool _destroyed = false;
         bool _allowDoubleBuffered = true;
-        
+
+        FlagsAccessor<ControlFlags> _flags;
+
         bool bindScrollEvents = false;
         int _ignoreRecreate = 0;
         wxBorder _borderStyle = wxBorder::wxBORDER_NONE;
@@ -272,20 +288,6 @@ namespace Alternet::UI
             Enabled = 1 << 1
         };
 
-        enum class ControlFlags
-        {
-            None = 0,
-            DoNotDestroyWxWindow = 1 << 0,
-            CreatingWxWindow = 1 << 1,
-            UserPaint = 1 << 3,
-            InitInProgress = 1 << 4,
-            PostInitWxWindowRecreationPending = 1 << 5,
-            DestroyingWxWindow = 1 << 6,
-            IsScrollable = 1 << 7,
-            TabStop = 1 << 8,
-            Active = 1 << 9,
-        };
-
         void SetRecreatingWxWindow(bool value);
 
         int _recreatingWxWindowCounter = 0;
@@ -295,7 +297,6 @@ namespace Alternet::UI
         wxWindow* _wxWindow = nullptr;
         Control* _parent = nullptr;
         std::vector<Control*> _children;
-        FlagsAccessor<ControlFlags> _flags;
 
         int _beginUpdateCount = 0;
 

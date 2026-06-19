@@ -182,6 +182,9 @@ namespace Alternet::UI
             wxDefaultValidator,
             wxASCII_STR(wxButtonNameStr));
 
+        _allowDoubleBuffered = false;
+        _flags.Set(ControlFlags::UserPaint, false);
+
         button->Bind(wxEVT_BUTTON, &Button::OnButtonClick, this);
         return button;
     }

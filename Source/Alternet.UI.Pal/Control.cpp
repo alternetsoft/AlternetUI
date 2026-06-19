@@ -5,6 +5,94 @@
 
 namespace Alternet::UI
 {
+    void Control::CreateWxWindow()
+    {
+        _flags.Set(ControlFlags::CreatingWxWindow, true);
+        _flags.Set(ControlFlags::DestroyingWxWindow, false);
+        wxWindow* parentingWxWindow = nullptr;
+
+        if (_parent == nullptr)
+        {
+            parentingWxWindow = ParkingWindow::GetWindow();
+        }
+        else
+        {
+            parentingWxWindow = _parent->GetParentingWxWindow(this);
+
+            if (parentingWxWindow == nullptr)
+                parentingWxWindow = ParkingWindow::GetWindow();
+        }
+
+        _wxWindow = CreateWxWindowCore(parentingWxWindow);
+
+        _wxWindow->SetAutoLayout(false);
+
+        ApplyToolTip();
+
+        if (GetUserPaint() && _allowDoubleBuffered)
+        {
+            /*
+            if (_allowDoubleBuffered)
+                _wxWindow->SetDoubleBuffered(true);
+            */
+            _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
+            _wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
+        }
+
+        if (!GetTabStop())
+            _wxWindow->DisableFocusFromKeyboard();
+
+        _wxWindow->Bind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
+        _wxWindow->Bind(wxEVT_TEXT, &Control::OnTextChanged, this);
+        _wxWindow->Bind(wxEVT_ACTIVATE, &Control::OnActivate, this);
+        _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
+        _wxWindow->Bind(wxEVT_DESTROY, &Control::OnDestroy, this);
+        _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
+        _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
+        _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
+        _wxWindow->Bind(wxEVT_MOVE, &Control::OnLocationChanged, this);
+        _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
+        _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
+        _wxWindow->Bind(wxEVT_MOUSEWHEEL, &Control::OnMouseWheel, this);
+        _wxWindow->Bind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);
+        _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
+        _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
+
+        if (!IsCursorSuppressed())
+            _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
+
+        if (bindScrollEvents)
+        {
+            _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
+            _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
+        }
+
+        AssociateControlWithWxWindow(_wxWindow, this);
+
+        OnWxWindowCreated();
+        _delayedValues.ApplyIfPossible();
+
+        _flags.Set(ControlFlags::CreatingWxWindow, false);
+
+        for (auto child : _children)
+            child->UpdateWxWindowParent();
+        RaiseEvent(ControlEvent::HandleCreated);
+
+#ifdef  __WXMSW__
+        HWND hWnd = _wxWindow->GetHWND();
+        if (hWnd)
+        {
+            EnableTouchEvents(0);
+        }
+#endif
+    }
+
     Control::~Control()
     {
         _destroyed = true;
@@ -964,94 +1052,6 @@ namespace Alternet::UI
             _wxWindow->SetDoubleBuffered(false);
         }
         */
-    }
-
-    void Control::CreateWxWindow()
-    {
-        _flags.Set(ControlFlags::CreatingWxWindow, true);
-        _flags.Set(ControlFlags::DestroyingWxWindow, false);
-        wxWindow* parentingWxWindow = nullptr;
-
-        if (_parent == nullptr)
-        {
-            parentingWxWindow = ParkingWindow::GetWindow();
-        }
-        else
-        {
-            parentingWxWindow = _parent->GetParentingWxWindow(this);
-
-            if(parentingWxWindow == nullptr)
-                parentingWxWindow = ParkingWindow::GetWindow();
-        }
-
-        _wxWindow = CreateWxWindowCore(parentingWxWindow);
-
-        _wxWindow->SetAutoLayout(false);
-
-        ApplyToolTip();
-
-        if (GetUserPaint() && _allowDoubleBuffered)
-        {
-            /*
-            if (_allowDoubleBuffered)
-                _wxWindow->SetDoubleBuffered(true);
-            */
-            _wxWindow->SetBackgroundStyle(wxBG_STYLE_PAINT);
-            _wxWindow->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
-        }
-
-        if (!GetTabStop())
-            _wxWindow->DisableFocusFromKeyboard();
-
-        _wxWindow->Bind(wxEVT_DPI_CHANGED, &Control::OnDpiChanged, this);
-        _wxWindow->Bind(wxEVT_TEXT, &Control::OnTextChanged, this);
-        _wxWindow->Bind(wxEVT_ACTIVATE, &Control::OnActivate, this);
-        _wxWindow->Bind(wxEVT_PAINT, &Control::OnPaint, this);
-        _wxWindow->Bind(wxEVT_DESTROY, &Control::OnDestroy, this);
-        _wxWindow->Bind(wxEVT_SHOW, &Control::OnVisibleChanged, this);
-        _wxWindow->Bind(wxEVT_MOUSE_CAPTURE_LOST, &Control::OnMouseCaptureLost, this);
-        _wxWindow->Bind(wxEVT_SIZE, &Control::OnSizeChanged, this);
-        _wxWindow->Bind(wxEVT_MOVE, &Control::OnLocationChanged, this);
-        _wxWindow->Bind(wxEVT_SET_FOCUS, &Control::OnGotFocus, this);
-        _wxWindow->Bind(wxEVT_KILL_FOCUS, &Control::OnLostFocus, this);
-        _wxWindow->Bind(wxEVT_MOUSEWHEEL, &Control::OnMouseWheel, this);
-        _wxWindow->Bind(wxEVT_CONTEXT_MENU, &Control::OnContextMenu, this);
-        _wxWindow->Bind(wxEVT_LEFT_UP, &Control::OnMouseLeftUp, this);
-        _wxWindow->Bind(wxEVT_RIGHT_UP, &Control::OnMouseRightUp, this);
-
-        if(!IsCursorSuppressed())
-            _wxWindow->Bind(wxEVT_SET_CURSOR, &Control::OnSetCursor, this);
-
-        if (bindScrollEvents)
-        {
-            _wxWindow->Bind(wxEVT_SCROLLWIN_TOP, &Control::OnScrollTop, this);
-            _wxWindow->Bind(wxEVT_SCROLLWIN_BOTTOM, &Control::OnScrollBottom, this);
-            _wxWindow->Bind(wxEVT_SCROLLWIN_LINEUP, &Control::OnScrollLineUp, this);
-            _wxWindow->Bind(wxEVT_SCROLLWIN_LINEDOWN, &Control::OnScrollLineDown, this);
-            _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEUP, &Control::OnScrollPageUp, this);
-            _wxWindow->Bind(wxEVT_SCROLLWIN_PAGEDOWN, &Control::OnScrollPageDown, this);
-            _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBTRACK, &Control::OnScrollThumbTrack, this);
-            _wxWindow->Bind(wxEVT_SCROLLWIN_THUMBRELEASE, &Control::OnScrollThumbRelease, this);
-        }
-
-        AssociateControlWithWxWindow(_wxWindow, this);
-
-        OnWxWindowCreated();
-        _delayedValues.ApplyIfPossible();
-
-        _flags.Set(ControlFlags::CreatingWxWindow, false);
-
-        for (auto child : _children)
-            child->UpdateWxWindowParent();
-        RaiseEvent(ControlEvent::HandleCreated);
-
-#ifdef  __WXMSW__
-        HWND hWnd = _wxWindow->GetHWND();
-        if (hWnd)
-        {
-            EnableTouchEvents(0);
-        }
-#endif
     }
 
     bool Control::GetBindScrollEvents()
@@ -2349,6 +2349,8 @@ namespace Alternet::UI
     long Control::GetDefaultStyle()
     {
         long style = GetBorderStyle();
+
+        style |= wxCLIP_CHILDREN;
 
         if (_wantChars)
             style |= wxWANTS_CHARS;

@@ -60,7 +60,7 @@ namespace Alternet::UI
     private:
 		ListBoxHandlerCreateFlags _createFlags = ListBoxHandlerCreateFlags::None;
         bool hasBorder = true;
-		ListBoxHandlerFlags _flags = ListBoxHandlerFlags::SingleSelection | ListBoxHandlerFlags::IntegralHeight;
+		ListBoxHandlerFlags _lbFlags = ListBoxHandlerFlags::SingleSelection | ListBoxHandlerFlags::IntegralHeight;
         wxArrayInt _selections = wxArrayInt();
         wxArrayInt _checked = wxArrayInt();
 

@@ -84,7 +84,7 @@ namespace Alternet::UI
 
     wxWindow* ListBox::CreateWxWindowCore(wxWindow* parent)
     {
-        long style = (long)_flags;
+        long style = (long)_lbFlags;
 
         if (!hasBorder)
             style = style | wxBORDER_NONE;
@@ -116,6 +116,10 @@ namespace Alternet::UI
         }
 
         value->Bind(wxEVT_LISTBOX, &ListBox::OnSelectedChanged, this);
+
+        _allowDoubleBuffered = false;
+        _flags.Set(ControlFlags::UserPaint, false);
+
         return value;
     }
 
@@ -158,14 +162,14 @@ namespace Alternet::UI
 
     ListBoxHandlerFlags ListBox::GetFlags()
     {
-        return _flags;
+        return _lbFlags;
 	}
 
     void ListBox::SetFlags(ListBoxHandlerFlags flags)
     {
-        if(_flags == flags)
+        if(_lbFlags == flags)
 			return;
-		_flags = flags;
+		_lbFlags = flags;
         RecreateWxWindowIfNeeded();
     }
 

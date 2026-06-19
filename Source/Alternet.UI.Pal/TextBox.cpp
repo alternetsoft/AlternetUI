@@ -94,6 +94,10 @@ namespace Alternet::UI
 			textCtrl->Bind(wxEVT_TEXT_ENTER, &TextBox::OnTextEnter, this);
 		textCtrl->Bind(wxEVT_TEXT_URL, &TextBox::OnTextUrl, this);
 		textCtrl->Bind(wxEVT_TEXT_MAXLEN, &TextBox::OnTextMaxLength, this);
+
+		_allowDoubleBuffered = false;
+		_flags.Set(ControlFlags::UserPaint, false);
+
 		return textCtrl;
 	}
 

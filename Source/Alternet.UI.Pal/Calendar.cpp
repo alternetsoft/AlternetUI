@@ -119,6 +119,9 @@ namespace Alternet::UI
                 style);
         }
 
+		_allowDoubleBuffered = false;
+        _flags.Set(ControlFlags::UserPaint, false);
+
         window->Bind(wxEVT_CALENDAR_DOUBLECLICKED, &Calendar::OnEventDoubleClick, this);
         window->Bind(wxEVT_CALENDAR_SEL_CHANGED, &Calendar::OnEventSelChanged, this);
         window->Bind(wxEVT_CALENDAR_PAGE_CHANGED, &Calendar::OnEventPageChanged, this);

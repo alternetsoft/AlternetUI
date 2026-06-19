@@ -218,6 +218,9 @@ namespace Alternet::UI
         value->Bind(wxEVT_LIST_BEGIN_LABEL_EDIT, &ListView::OnBeginLabelEdit, this);
         value->Bind(wxEVT_LIST_END_LABEL_EDIT, &ListView::OnEndLabelEdit, this);
 
+        _allowDoubleBuffered = false;
+        _flags.Set(ControlFlags::UserPaint, false);
+
         return value;
     }
 
