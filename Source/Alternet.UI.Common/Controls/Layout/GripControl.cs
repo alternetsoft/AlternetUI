@@ -991,8 +991,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the target control to be resized. If the Target property is set and valid, it returns that.
         /// </summary>
-        /// <returns>The target control to be resized, or the top-level
-        /// parent if the Target property is not set or invalid.</returns>
+        /// <returns>The target control to be resized, or null if the Target property is not set or invalid.</returns>
         protected virtual IGripControlTarget? GetTarget()
         {
             if (TargetProvider != null)
@@ -1005,20 +1004,7 @@ namespace Alternet.UI
             if (Target != null && !Target.DisposingOrDisposed)
                 return Target;
             else
-                return FindTopLevelParent(this);
-        }
-
-        /// <summary>
-        /// Finds the top-level parent of the specified control in case the Target property is not set or invalid.
-        /// This method traverses up the control hierarchy to find the top-level parent control,
-        /// which is typically a Form, UserControl, or ContainerControl.
-        /// </summary>
-        /// <param name="c">The control for which to find the top-level parent.</param>
-        /// <returns>The top-level parent control, or null if not found.</returns>
-        protected virtual AbstractControl? FindTopLevelParent(AbstractControl c)
-        {
-            while (c.Parent != null) c = c.Parent;
-            return c is Form || c is UserControl || c is ContainerControl ? c : null;
+                return null;
         }
     }
 }
