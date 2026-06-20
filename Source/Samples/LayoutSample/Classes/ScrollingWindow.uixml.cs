@@ -121,6 +121,7 @@ namespace LayoutSample
             {
                 Text = $"{rowIndex}.{columnIndex}",
                 RowColumn = new(rowIndex, columnIndex),
+                Margin = 10,
             };
 
             grid.Children.Add(button);
@@ -128,7 +129,9 @@ namespace LayoutSample
 
         private void AddControlToStackPanel()
         {
-            stackPanel.Children.Add(new Button("Button " + (stackPanel.Children.Count + 1)));
+            var btn = new Button("Button " + (stackPanel.Children.Count + 1));
+            btn.Margin = 10;
+            stackPanel.Children.Add(btn);
         }
 
         private void InitializeComboBoxes()

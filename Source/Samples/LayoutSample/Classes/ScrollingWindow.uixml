@@ -80,7 +80,7 @@
           </ScrollViewer>
         </Border>
 
-        <Grid Margin="10,0,0,0" MinChildMargin="3" HorizontalAlignment="Right" RowCount="8">
+        <Grid Margin="10,0,0,0" MinChildMargin="10" HorizontalAlignment="Right" RowCount="8">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -125,10 +125,10 @@
 
     <!-- ============= -->
 
-    <Panel Title="Drawing" IsTitleLocalized="true"
+    <Panel Title="Drawing" IsTitleLocalized="true"  MinChildMargin="10"
               Padding="10" Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">
       <StackPanel Orientation="Vertical" Name="imageStackPanel">
-        <HorizontalStackPanel Name="topImageToolBarPanel">
+        <HorizontalStackPanel Name="topImageToolBarPanel" MinChildMargin="10">
           <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
           <Button Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
           <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-" Margin="0,0,5,0"/>
