@@ -169,6 +169,7 @@ namespace Alternet::UI
 
         virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
 
+        void InitUserPaint();
     protected:
         enum class ControlFlags
         {

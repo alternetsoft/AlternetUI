@@ -104,18 +104,16 @@ namespace PropertyGridSample
 
             toolbar.AddSeparator();
 
-            var idText = toolbar.AddText("text");
+            var idText = toolbar.AddText("Color");
             toolbar.AddToolAction(idText, ButtonClick);
 
             if (!onlyButtons)
             {
-                var textBox = new TextBox();
-                textBox.VerticalAlignment = VerticalAlignment.Center;
-                textBox.Text = "text1";
-                textBox.MinWidth = 100;
-                textBox.HorizontalAlignment = HorizontalAlignment.Fill;
+                var colorPicker = new ColorPicker();
+                colorPicker.VerticalAlignment = VerticalAlignment.Center;
+                colorPicker.MinWidth = 100;
 
-                var idEdit = toolbar.AddControl(textBox);
+                var idEdit = toolbar.AddControl(colorPicker);
             }
 
             var itemPicture = toolbar.AddPicture(

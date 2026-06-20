@@ -40,7 +40,7 @@ namespace Alternet::UI
 
     Window::Window(int kind):
         _frameKind(kind),
-        _flags(
+        _winFlags(
             WindowFlags::ShowInTaskbar |
             WindowFlags::SystemMenu |
             WindowFlags::CloseEnabled |
@@ -171,7 +171,7 @@ namespace Alternet::UI
 
     bool Window::GetIsPopupWindow()
     {
-        return _flags.IsSet(WindowFlags::PopupWindow);
+        return _winFlags.IsSet(WindowFlags::PopupWindow);
     }
 
     void Window::SetIsPopupWindow(bool value)
@@ -179,7 +179,7 @@ namespace Alternet::UI
         if (GetIsPopupWindow() == value)
             return;
 
-        _flags.Set(WindowFlags::PopupWindow, value);
+        _winFlags.Set(WindowFlags::PopupWindow, value);
         ScheduleRecreateWxWindow();
     }
 
@@ -322,7 +322,7 @@ namespace Alternet::UI
 
     bool Window::GetShowInTaskbar()
     {
-        return _flags.IsSet(WindowFlags::ShowInTaskbar);
+        return _winFlags.IsSet(WindowFlags::ShowInTaskbar);
     }
 
     void Window::SetShowInTaskbar(bool value)
@@ -330,13 +330,13 @@ namespace Alternet::UI
         if (GetShowInTaskbar() == value)
             return;
 
-        _flags.Set(WindowFlags::ShowInTaskbar, value);
+        _winFlags.Set(WindowFlags::ShowInTaskbar, value);
         ScheduleRecreateWxWindow();
     }
 
     bool Window::GetMinimizeEnabled()
     {
-        return _flags.IsSet(WindowFlags::MinimizeEnabled);
+        return _winFlags.IsSet(WindowFlags::MinimizeEnabled);
     }
 
     void Window::SetMinimizeEnabled(bool value)
@@ -344,13 +344,13 @@ namespace Alternet::UI
         if (GetMinimizeEnabled() == value)
             return;
 
-        _flags.Set(WindowFlags::MinimizeEnabled, value);
+        _winFlags.Set(WindowFlags::MinimizeEnabled, value);
         ScheduleRecreateWxWindow();
     }
 
     bool Window::GetMaximizeEnabled()
     {
-        return _flags.IsSet(WindowFlags::MaximizeEnabled);
+        return _winFlags.IsSet(WindowFlags::MaximizeEnabled);
     }
 
     void Window::SetMaximizeEnabled(bool value)
@@ -358,13 +358,13 @@ namespace Alternet::UI
         if (GetMaximizeEnabled() == value)
             return;
 
-        _flags.Set(WindowFlags::MaximizeEnabled, value);
+        _winFlags.Set(WindowFlags::MaximizeEnabled, value);
         ScheduleRecreateWxWindow();
     }
 
     bool Window::GetCloseEnabled()
     {
-        return _flags.IsSet(WindowFlags::CloseEnabled);
+        return _winFlags.IsSet(WindowFlags::CloseEnabled);
     }
 
     void Window::SetCloseEnabled(bool value)
@@ -372,7 +372,7 @@ namespace Alternet::UI
         if (GetCloseEnabled() == value)
             return;
 
-        _flags.Set(WindowFlags::CloseEnabled, value);
+        _winFlags.Set(WindowFlags::CloseEnabled, value);
         ScheduleRecreateWxWindow();
     }
 
@@ -490,7 +490,7 @@ namespace Alternet::UI
 
     bool Window::GetAlwaysOnTop()
     {
-        return _flags.IsSet(WindowFlags::AlwaysOnTop);
+        return _winFlags.IsSet(WindowFlags::AlwaysOnTop);
     }
 
     void Window::SetAlwaysOnTop(bool value)
@@ -498,13 +498,13 @@ namespace Alternet::UI
         if (GetAlwaysOnTop() == value)
             return;
 
-        _flags.Set(WindowFlags::AlwaysOnTop, value);
+        _winFlags.Set(WindowFlags::AlwaysOnTop, value);
         ScheduleRecreateWxWindow();
     }
 
     bool Window::GetIsToolWindow()
     {
-        return _flags.IsSet(WindowFlags::IsToolWindow);
+        return _winFlags.IsSet(WindowFlags::IsToolWindow);
     }
 
     void Window::SetIsToolWindow(bool value)
@@ -512,7 +512,7 @@ namespace Alternet::UI
         if (GetIsToolWindow() == value)
             return;
 
-        _flags.Set(WindowFlags::IsToolWindow, value);
+        _winFlags.Set(WindowFlags::IsToolWindow, value);
         ScheduleRecreateWxWindow();
     }
 
@@ -530,7 +530,7 @@ namespace Alternet::UI
 
     bool Window::GetResizable()
     {
-        return _flags.IsSet(WindowFlags::Resizable);
+        return _winFlags.IsSet(WindowFlags::Resizable);
     }
 
     void Window::OnSizeChanged(wxSizeEvent& event)
@@ -550,7 +550,7 @@ namespace Alternet::UI
         if (GetResizable() == value)
             return;
 
-        _flags.Set(WindowFlags::Resizable, value);
+        _winFlags.Set(WindowFlags::Resizable, value);
         ScheduleRecreateWxWindow();
     }
 
@@ -570,7 +570,7 @@ namespace Alternet::UI
 
     bool Window::GetHasBorder()
     {
-        return _flags.IsSet(WindowFlags::HasBorder);
+        return _winFlags.IsSet(WindowFlags::HasBorder);
     }
 
     void Window::SetHasBorder(bool value)
@@ -578,7 +578,7 @@ namespace Alternet::UI
         if (GetHasBorder() == value)
             return;
 
-        _flags.Set(WindowFlags::HasBorder, value);
+        _winFlags.Set(WindowFlags::HasBorder, value);
         ScheduleRecreateWxWindow();
     }
 
@@ -599,7 +599,7 @@ namespace Alternet::UI
 
     bool Window::GetHasSystemMenu()
     {
-        return _flags.IsSet(WindowFlags::SystemMenu);
+        return _winFlags.IsSet(WindowFlags::SystemMenu);
     }
     
     void Window::SetHasSystemMenu(bool value)
@@ -607,13 +607,13 @@ namespace Alternet::UI
         if (GetHasSystemMenu() == value)
             return;
 
-        _flags.Set(WindowFlags::SystemMenu, value);
+        _winFlags.Set(WindowFlags::SystemMenu, value);
         ScheduleRecreateWxWindow();
     }
 
     bool Window::GetHasTitleBar()
     {
-        return _flags.IsSet(WindowFlags::HasTitleBar);
+        return _winFlags.IsSet(WindowFlags::HasTitleBar);
     }
     
     void Window::SetHasTitleBar(bool value)
@@ -621,7 +621,7 @@ namespace Alternet::UI
         if (GetHasTitleBar() == value)
             return;
 
-        _flags.Set(WindowFlags::HasTitleBar, value);
+        _winFlags.Set(WindowFlags::HasTitleBar, value);
         ScheduleRecreateWxWindow();
     }
 

@@ -234,7 +234,7 @@ protected:
         };
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;
-        FlagsAccessor<WindowFlags> _flags;
+        FlagsAccessor<WindowFlags> _winFlags;
         DelayedValue<Window, string> _title;
         WindowState _state = WindowState::Normal;
         IconSet* _icon = nullptr;

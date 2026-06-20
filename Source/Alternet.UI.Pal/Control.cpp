@@ -28,15 +28,10 @@ namespace Alternet::UI
 
         _wxWindow->SetAutoLayout(false);
 
-        ApplyToolTip();
+		if (GetUserPaint())
+			InitUserPaint();
 
-        if (GetUserPaint() && _allowDoubleBuffered)
-        {
-            /*
-            if (_allowDoubleBuffered)
-                _wxWindow->SetDoubleBuffered(true);
-            */
-        }
+        ApplyToolTip();
 
         if (!GetTabStop())
             _wxWindow->DisableFocusFromKeyboard();
@@ -1036,20 +1031,7 @@ namespace Alternet::UI
     }
 
     void Control::SetAllowDoubleBuffered(bool allow)
-    {
-        _allowDoubleBuffered = allow;
-        /*
-        auto wxWindow = GetWxWindow();
-        if (allow)
-        {
-            if(GetUserPaint())
-                _wxWindow->SetDoubleBuffered(true);
-        }
-        else
-        {
-            _wxWindow->SetDoubleBuffered(false);
-        }
-        */
+    {        
     }
 
     bool Control::GetBindScrollEvents()
@@ -1566,23 +1548,6 @@ namespace Alternet::UI
     {
         event.Skip();
     }
-    /*
-    void Control::OnMouseLeave(wxMouseEvent& event)
-    {
-        event.Skip();
-        if (IsNullOrDeleting())
-            return;
-        RaiseEvent(ControlEvent::MouseLeave);
-
-        auto window = GetParent();
-        while (window != nullptr)
-        {
-            if(!window->GetIsMouseOver())
-                window->RaiseEvent(ControlEvent::MouseLeave);
-
-            window = window->GetParent();
-        }
-    }*/
 
     void Control::OnVisibleChanged(wxShowEvent& event)
     {
@@ -1993,12 +1958,9 @@ namespace Alternet::UI
         return _flags.IsSet(ControlFlags::UserPaint);
     }
 
-    void Control::SetUserPaint(bool value)
+    void Control::InitUserPaint()
     {
-        if (GetUserPaint() == value)
-            return;
-        _flags.Set(ControlFlags::UserPaint, value);
-        _allowDoubleBuffered = true;
+        _flags.Set(ControlFlags::UserPaint, true);
         GetWxWindow()->SetBackgroundStyle(wxBG_STYLE_PAINT);
         GetWxWindow()->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
         GetWxWindow()->Bind(wxEVT_PAINT, &Control::OnPaint, this);
@@ -2007,6 +1969,13 @@ namespace Alternet::UI
         long exStyle = ::GetWindowLong(hwnd, GWL_EXSTYLE);
         ::SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED);
 #endif
+    }
+
+    void Control::SetUserPaint(bool value)
+    {
+        if (GetUserPaint() == value)
+            return;
+        InitUserPaint();
     }
 
     wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)
