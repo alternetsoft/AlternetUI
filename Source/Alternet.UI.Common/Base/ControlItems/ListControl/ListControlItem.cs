@@ -2317,11 +2317,24 @@ namespace Alternet.UI
         /// always returned.
         /// </summary>
         /// <param name="column">The column for which to retrieve the corresponding cell. Cannot be null.</param>
-        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column. If the cell does not exist,
+        /// <returns>A <see cref="ListControlItem"/> representing the cell for the specified column.
+        /// If the cell does not exist,
         /// a default or placeholder cell is returned.</returns>
         public virtual ListControlItem SafeCell(ListControlColumn column)
         {
             return SafeCell(column.UniqueId);
+        }
+
+        /// <summary>
+        /// Sets the text of the cell associated with the specified column.
+        /// If the cell does not exist, it is created.
+        /// </summary>
+        /// <param name="column">The column for which to set the cell text. Cannot be null.</param>
+        /// <param name="text">The text to set in the cell. If null, an empty string is used.</param>
+        public virtual void SetText(ListControlColumn column, string? text)
+        {
+            var cell = SafeCell(column.UniqueId);
+            cell.Text = text ?? string.Empty;
         }
 
         /// <summary>
