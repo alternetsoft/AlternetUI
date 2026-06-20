@@ -16,8 +16,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="TextBox.HideSelection"/>
         bool HideSelection { get; set; }
 
-        void SetNativeText(ReadOnlySpan<char> text);
-
         /// <inheritdoc cref="TextBox.WantTab"/>
         bool ProcessTab { get; set; }
 

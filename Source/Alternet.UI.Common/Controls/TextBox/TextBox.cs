@@ -163,15 +163,6 @@ namespace Alternet.UI
             }
         }
 
-        public override string Text
-        {
-            get => base.Text;
-            set
-            {
-                Handler.SetNativeText(value.AsSpan());
-            }
-        }
-
         /// <summary>
         /// Gets or sets a value indicating the currently selected text in the control.
         /// </summary>

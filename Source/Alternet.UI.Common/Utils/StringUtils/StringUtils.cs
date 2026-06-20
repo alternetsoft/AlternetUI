@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using Alternet.Skia;
 
 namespace Alternet.UI
 {
@@ -304,6 +305,33 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Invokes <paramref name="callback"/> with a pointer
+        /// to the native representation of the string <paramref name="text"/>.
+        /// </summary>
+        /// <param name="text">The text to be converted to native representation.</param>
+        /// <param name="callback">The callback to invoke with the native pointer and length.</param>
+        public static void InvokeWithNativeText(ReadOnlySpan<char> text, Action<IntPtr, int> callback)
+        {
+            if (App.IsWindowsOS)
+            {
+                unsafe
+                {
+                    fixed (char* p = text)
+                    {
+                        callback((IntPtr)p, text.Length);
+                    }
+                }
+            }
+            else
+            {
+                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
+                {
+                    callback(ptr, length);
+                });
+            }
         }
 
         /// <summary>

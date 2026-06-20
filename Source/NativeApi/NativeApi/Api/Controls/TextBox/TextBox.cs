@@ -16,8 +16,6 @@ namespace NativeApi.Api
         public event EventHandler? TextUrl;
         public event EventHandler? TextMaxLength;
 
-        public void SetTextAsNativeStr(IntPtr text, int textLength) { }
-
         public string ReportedUrl { get; }
 
         public bool EditControlOnly { get; set; }

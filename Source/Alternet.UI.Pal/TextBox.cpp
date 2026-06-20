@@ -3,12 +3,6 @@
 
 namespace Alternet::UI
 {
-	void TextBox::SetTextAsNativeStr(void* text, int textLength)
-	{
-		auto str = StringToWx(text, textLength);
-		GetTextCtrl()->SetValue(str);
-	}
-
 	TextBox::TextBox() :
 		_text(*this, u"", &Control::IsWxWindowCreated, &TextBox::RetrieveText, &TextBox::ApplyText)
 	{
