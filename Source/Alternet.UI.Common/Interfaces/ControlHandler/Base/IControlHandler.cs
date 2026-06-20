@@ -209,12 +209,6 @@ namespace Alternet.UI
         SizeD GetPreferredSize(PreferredSizeContext context);
 
         /// <summary>
-        /// Opens drawing context. Available only in the event handler.
-        /// </summary>
-        /// <returns></returns>
-        Graphics OpenPaintDrawingContext();
-
-        /// <summary>
         /// Gets native control.
         /// </summary>
         /// <returns></returns>

@@ -220,11 +220,6 @@ namespace Alternet.UI
         {
         }
 
-        Graphics IControlHandler.OpenPaintDrawingContext()
-        {
-            return PlessGraphics.Default;
-        }
-
         void IControlHandler.Raise()
         {
         }

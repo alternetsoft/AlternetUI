@@ -457,7 +457,7 @@ namespace Alternet.UI
 
         public virtual Graphics OpenPaintDrawingContext()
         {
-            var dcPointer = NativeControl.GetDrawingContext();
+            var dcPointer = NativeControl.GetDrawingContext(false);
 
             if (dcPointer == IntPtr.Zero)
                 return new PlessGraphics();

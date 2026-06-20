@@ -139,7 +139,7 @@ void SetCursor(void* handle);
 virtual string GetText();
 virtual void SetText(const NativeStringSpan& value);
 virtual RectD GetBounds();
-void* GetDrawingContext();
+void* GetDrawingContext(bool native);
 virtual RectI GetBoundsI();
 SizeD GetClientSize();
 virtual void SetBounds(const RectD& bounds);

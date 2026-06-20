@@ -135,7 +135,7 @@ namespace NativeApi.Api
         public bool AllowDrop { get; set; }
         public virtual RectD GetBounds() => default;
 
-        public IntPtr GetDrawingContext() => default;
+        public IntPtr GetDrawingContext(bool native) => default;
 
         public virtual RectI GetBoundsI() => default;
 

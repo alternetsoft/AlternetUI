@@ -697,10 +697,10 @@ ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
     });
 }
 
-ALTERNET_UI_API void* Control_GetDrawingContext_(Control* obj)
+ALTERNET_UI_API void* Control_GetDrawingContext_(Control* obj, c_bool native)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->GetDrawingContext();
+        return obj->GetDrawingContext(native);
     });
 }
 

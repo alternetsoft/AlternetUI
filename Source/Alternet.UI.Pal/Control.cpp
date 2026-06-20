@@ -1452,7 +1452,7 @@ namespace Alternet::UI
     {
     }
 
-    void* Control::GetDrawingContext()
+    void* Control::GetDrawingContext(bool native)
     {
         return _drawingContext;
     }
@@ -1468,17 +1468,6 @@ namespace Alternet::UI
         if(size.x <= 0 ||size.y <=0 )
 			return;
 
-        /*
-        if (!m_buffer.IsOk() || m_buffer.GetSize() != size)
-        {
-            m_buffer = wxBitmap(size.x, size.y);
-        }
-
-        m_buffer.SetScaleFactor(DrawingDPIScaleFactor(window));
-
-        wxMemoryDC memDC;
-        memDC.SelectObject(m_buffer);
-        */
         wxPaintDC dc(window);
 
         auto gc = wxGraphicsContext::Create(dc);
@@ -1491,37 +1480,6 @@ namespace Alternet::UI
             _drawingContext = nullptr;
         }
     }
-    /*
-    {
-        if (IsNullOrDeleting())
-            return;
-
-        wxWindow* window = dynamic_cast<wxWindow*>(event.GetEventObject());
-        if (!window) return;
-
-        if (!window->IsShownOnScreen() || window->IsFrozen())
-            return;
-
-        wxBitmap buffer(window->GetClientSize().x, window->GetClientSize().y);
-        buffer.SetScaleFactor(DrawingDPIScaleFactor(window));
-        wxMemoryDC memDC(buffer);
-
-        auto ctx = wxGraphicsContext::Create(memDC);
-
-        auto drawingContext = DrawingContext(ctx, &memDC);
-        drawingContext.SetDoNotDeleteDC(true);
-
-        _drawingContext = &drawingContext;
-        auto _drawingRect = event.GetRect();
-
-        RaiseEvent(ControlEvent::Paint);
-
-        _drawingContext = nullptr;
-
-        wxPaintDC dc(window);
-        memDC.SelectObject(buffer);
-        dc.Blit(0, 0, buffer.GetWidth(), buffer.GetHeight(), &memDC, 0, 0);
-    }*/
 
     void Control::OnEraseBackground(wxEraseEvent& event)
     {

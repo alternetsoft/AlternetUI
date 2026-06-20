@@ -760,10 +760,10 @@ NativeApi.Control_SetText_(NativePointer, ref value_Native);
             return NativeApi.Control_GetBounds_(NativePointer);
         }
         
-        public System.IntPtr GetDrawingContext()
+        public System.IntPtr GetDrawingContext(bool native)
         {
             CheckDisposed();
-            return NativeApi.Control_GetDrawingContext_(NativePointer);
+            return NativeApi.Control_GetDrawingContext_(NativePointer, native);
         }
         
         public Alternet.Drawing.RectI GetBoundsI()
@@ -1567,7 +1567,7 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Control_GetDrawingContext_(IntPtr obj);
+            public static extern System.IntPtr Control_GetDrawingContext_(IntPtr obj, bool native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectI Control_GetBoundsI_(IntPtr obj);
