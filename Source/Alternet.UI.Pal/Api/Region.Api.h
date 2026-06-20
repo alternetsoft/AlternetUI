@@ -148,10 +148,10 @@ ALTERNET_UI_API c_bool Region_IsEqualTo_(Region* obj, Region* other)
     });
 }
 
-ALTERNET_UI_API int Region_GetHashCode__(Region* obj)
+ALTERNET_UI_API int Region_GetRegionHashCode_(Region* obj)
 {
     return MarshalExceptions<int>([&](){
-        return obj->GetHashCode_();
+        return obj->GetRegionHashCode();
     });
 }
 

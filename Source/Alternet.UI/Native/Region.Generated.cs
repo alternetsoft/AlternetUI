@@ -144,10 +144,10 @@ NativeApi.Region_SubtractRect_(NativePointer, ref rect_Native);
             return NativeApi.Region_IsEqualTo_(NativePointer, other.NativePointer);
         }
         
-        public int GetHashCode_()
+        public int GetRegionHashCode()
         {
             CheckDisposed();
-            return NativeApi.Region_GetHashCode__(NativePointer);
+            return NativeApi.Region_GetRegionHashCode_(NativePointer);
         }
         
         
@@ -217,7 +217,7 @@ NativeApi.Region_SubtractRect_(NativePointer, ref rect_Native);
             public static extern bool Region_IsEqualTo_(IntPtr obj, IntPtr other);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Region_GetHashCode__(IntPtr obj);
+            public static extern int Region_GetRegionHashCode_(IntPtr obj);
             
         }
     }

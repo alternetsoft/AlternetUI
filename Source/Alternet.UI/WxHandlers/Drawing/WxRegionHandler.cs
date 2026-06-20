@@ -47,7 +47,7 @@ namespace Alternet.UI.Native
 
         int Alternet.Drawing.IRegionHandler.GetHashCode()
         {
-            return GetHashCode_();
+            return GetRegionHashCode();
         }
     }
 }

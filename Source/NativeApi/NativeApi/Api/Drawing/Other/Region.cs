@@ -46,6 +46,6 @@ namespace NativeApi.Api
 
         public bool IsEqualTo(Region other) => throw new Exception();
 
-        public int GetHashCode_() => throw new Exception();
+        public int GetRegionHashCode() => throw new Exception();
     }
 }

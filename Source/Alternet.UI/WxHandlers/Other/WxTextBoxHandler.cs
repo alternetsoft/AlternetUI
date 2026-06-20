@@ -301,27 +301,6 @@ namespace Alternet.UI
             return NativeControl.GetStyle(position);
         }
 
-        public void SetNativeText(ReadOnlySpan<char> text)
-        {
-            if (App.IsWindowsOS)
-            {
-                unsafe
-                {
-                    fixed (char* p = text)
-                    {
-                        NativeControl.SetTextAsNativeStr((IntPtr)p, text.Length);
-                    }
-                }
-            }
-            else
-            {
-                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
-                {
-                    NativeControl.SetTextAsNativeStr(ptr, length);
-                });
-            }
-        }
-
         public bool SetDefaultStyle(System.IntPtr style)
         {
             return NativeControl.SetDefaultStyle(style);

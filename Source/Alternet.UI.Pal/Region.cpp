@@ -126,7 +126,7 @@ namespace Alternet::UI
         return _region.IsEqual(other->GetRegion());
     }
 
-    int Region::GetHashCode_()
+    int Region::GetRegionHashCode()
     {
         return (int)(int64_t)_region.GetRefData();
     }

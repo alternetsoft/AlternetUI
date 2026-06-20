@@ -20,7 +20,7 @@ void SubtractRegion(Region* region);
 void Translate(float dx, float dy);
 RectD GetBounds();
 bool IsEqualTo(Region* other);
-int GetHashCode_();
+int GetRegionHashCode();
 
 public:
 Region();
