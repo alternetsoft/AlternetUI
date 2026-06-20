@@ -522,27 +522,6 @@ ALTERNET_UI_API RectI_C Control_GetUpdateClientRect_(Control* obj)
     });
 }
 
-ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContextForWindow_(void* window)
-{
-    return MarshalExceptions<DrawingContext*>([&](){
-        return Control::OpenClientDrawingContextForWindow(window);
-    });
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContextForWindow_(void* window)
-{
-    return MarshalExceptions<DrawingContext*>([&](){
-        return Control::OpenPaintDrawingContextForWindow(window);
-    });
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenDrawingContextForDC_(void* dc, c_bool deleteDc)
-{
-    return MarshalExceptions<DrawingContext*>([&](){
-        return Control::OpenDrawingContextForDC(dc, deleteDc);
-    });
-}
-
 ALTERNET_UI_API void Control_CenterOnParent_(Control* obj, int orientation)
 {
     MarshalExceptions<void>([&](){
@@ -718,6 +697,13 @@ ALTERNET_UI_API RectD_C Control_GetBounds_(Control* obj)
     });
 }
 
+ALTERNET_UI_API void* Control_GetDrawingContext_(Control* obj)
+{
+    return MarshalExceptions<void*>([&](){
+        return obj->GetDrawingContext();
+    });
+}
+
 ALTERNET_UI_API RectI_C Control_GetBoundsI_(Control* obj)
 {
     return MarshalExceptions<RectI_C>([&](){
@@ -872,6 +858,13 @@ ALTERNET_UI_API void Control_Update_(Control* obj)
     });
 }
 
+ALTERNET_UI_API DrawingContext* Control_OpenDrawingContextForDC_(void* dc, c_bool deleteDc)
+{
+    return MarshalExceptions<DrawingContext*>([&](){
+        return Control::OpenDrawingContextForDC(dc, deleteDc);
+    });
+}
+
 ALTERNET_UI_API void Control_InvalidateBestSize_(Control* obj)
 {
     MarshalExceptions<void>([&](){
@@ -897,20 +890,6 @@ ALTERNET_UI_API DragDropEffects Control_DoDragDrop_(Control* obj, UnmanagedDataO
 {
     return MarshalExceptions<DragDropEffects>([&](){
         return obj->DoDragDrop(data, allowedEffects);
-    });
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenPaintDrawingContext_(Control* obj)
-{
-    return MarshalExceptions<DrawingContext*>([&](){
-        return obj->OpenPaintDrawingContext();
-    });
-}
-
-ALTERNET_UI_API DrawingContext* Control_OpenClientDrawingContext_(Control* obj)
-{
-    return MarshalExceptions<DrawingContext*>([&](){
-        return obj->OpenClientDrawingContext();
     });
 }
 

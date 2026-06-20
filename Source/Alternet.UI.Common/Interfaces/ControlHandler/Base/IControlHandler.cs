@@ -138,9 +138,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.ReleaseMouseCapture"/>
         void ReleaseMouseCapture();
 
-        /// <inheritdoc cref="AbstractControl.CreateDrawingContext"/>
-        Graphics CreateDrawingContext();
-
         /// <inheritdoc cref="AbstractControl.ScreenToClient"/>
         PointD ScreenToClient(PointD point);
 

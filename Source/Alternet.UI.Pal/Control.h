@@ -171,6 +171,8 @@ namespace Alternet::UI
 
         void InitUserPaint();
     protected:
+        DrawingContext* _drawingContext = nullptr;
+
         enum class ControlFlags
         {
             None = 0,

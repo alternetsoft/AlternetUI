@@ -139,11 +139,6 @@ namespace Alternet.UI
             return result;
         }
 
-        Graphics IControlHandler.CreateDrawingContext()
-        {
-            return PlessGraphics.Default;
-        }
-
         DragDropEffects IControlHandler.DoDragDrop(object data, DragDropEffects allowedEffects)
         {
             return default;

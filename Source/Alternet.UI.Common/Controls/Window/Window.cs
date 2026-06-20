@@ -2052,9 +2052,6 @@ namespace Alternet.UI
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-
-            if (GetWindowKind() == WindowKind.Control || App.IsInUixmlPreviewerMode)
-                DrawDefaultBackground(e);
         }
 
         /// <summary>
@@ -2450,12 +2447,14 @@ namespace Alternet.UI
             /// <summary>
             /// Effective height of a thick frame border (resizable border), using override if set.
             /// </summary>
-            public static int EffectiveThickFrameBorderHeight => ThickFrameBorderHeightOverride ?? ThickFrameBorderHeight;
+            public static int EffectiveThickFrameBorderHeight
+                => ThickFrameBorderHeightOverride ?? ThickFrameBorderHeight;
 
             /// <summary>
             /// Gets thick frame border size (resizable border).
             /// </summary>
-            public static SizeI EffectiveThickFrameBorderSize => (EffectiveThickFrameBorderWidth, EffectiveThickFrameBorderHeight);
+            public static SizeI EffectiveThickFrameBorderSize
+                => (EffectiveThickFrameBorderWidth, EffectiveThickFrameBorderHeight);
 
             /// <summary>
             /// Gets single border size.

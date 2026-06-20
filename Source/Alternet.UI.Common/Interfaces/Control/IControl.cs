@@ -1031,32 +1031,6 @@ namespace Alternet.UI
         void Hide();
 
         /// <summary>
-        /// Creates the <see cref="Graphics"/> for the control.
-        /// </summary>
-        /// <returns>The <see cref="Graphics"/> for the control.</returns>
-        /// <remarks>
-        /// The <see cref="Graphics"/> object that you retrieve through the
-        /// <see cref="CreateDrawingContext"/> method should not normally
-        /// be retained after the current UI event has been processed,
-        /// because anything painted
-        /// with that object will be erased with the next paint event. Therefore
-        /// you cannot cache
-        /// the <see cref="Graphics"/> object for reuse, except to use
-        /// non-visual methods like
-        /// <see cref="Graphics.MeasureText(ReadOnlySpan{char}, Font)"/>.
-        /// Instead, you must call <see cref="CreateDrawingContext"/> every time
-        /// that you want to use the <see cref="Graphics"/> object,
-        /// and then call its Dispose() when you are finished using it.
-        /// </remarks>
-        Graphics CreateDrawingContext();
-
-        /// <summary>
-        /// Same as <see cref="CreateDrawingContext"/>. Added mainly for legacy code.
-        /// </summary>
-        /// <returns></returns>
-        Graphics CreateGraphics();
-
-        /// <summary>
         /// Forces the control to invalidate itself and immediately redraw itself
         /// and any child controls.
         /// </summary>

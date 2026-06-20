@@ -320,11 +320,6 @@ namespace Alternet.UI
             NativeControl.SetMouseCapture(false);
         }
 
-        public Graphics CreateDrawingContext()
-        {
-            return new WxGraphics(NativeControl.OpenClientDrawingContext());
-        }
-
         public PointD ScreenToClient(PointD point)
         {
             return NativeControl.ScreenToClient(point);
@@ -462,7 +457,15 @@ namespace Alternet.UI
 
         public virtual Graphics OpenPaintDrawingContext()
         {
-            return new WxGraphics(NativeControl.OpenPaintDrawingContext());
+            var dcPointer = NativeControl.GetDrawingContext();
+
+            if (dcPointer == IntPtr.Zero)
+                return new PlessGraphics();
+
+            var dc = new Native.DrawingContext(IntPtr.Zero);
+            dc.SetNativePointerWeak(dcPointer);
+
+            return new WxGraphics(dc);
         }
 
         public virtual void OnNativeControlDestroyed()

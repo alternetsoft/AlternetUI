@@ -11,11 +11,6 @@ namespace Alternet::UI
 {
 #define UseDebugPaintColors false
 
-    void Window::SetUserPaint(bool value)
-    {
-        Control::SetUserPaint(value);
-    }
-
     Frame::Frame(wxWindow* parent,
         wxWindowID id,
         const wxString& title,
@@ -58,11 +53,12 @@ namespace Alternet::UI
         _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
             &Window::ApplyTitle)
     {
+        _flags.Set(ControlFlags::UserPaint, true);
         _borderStyle = wxBorder::wxBORDER_DEFAULT;
+        SetVisible(false);
 
         GetDelayedValues().Add(&_title);
         GetDelayedValues().Add(&_delayedFlags);
-        SetVisible(false);
 
         CreateWxWindow();
     }

@@ -34,10 +34,6 @@ namespace NativeApi.Api
 
         public RectI GetUpdateClientRect() => default;
 
-        public static DrawingContext OpenClientDrawingContextForWindow(IntPtr window) => default;
-        public static DrawingContext OpenPaintDrawingContextForWindow(IntPtr window) => default;
-        public static DrawingContext OpenDrawingContextForDC(IntPtr dc, bool deleteDc) => default;
-
         public void CenterOnParent(int orientation) { }
 
         public void RefreshRect(RectD rect, bool eraseBackground = true) { }
@@ -139,6 +135,8 @@ namespace NativeApi.Api
         public bool AllowDrop { get; set; }
         public virtual RectD GetBounds() => default;
 
+        public IntPtr GetDrawingContext() => default;
+
         public virtual RectI GetBoundsI() => default;
 
         public SizeD GetClientSize() => default;
@@ -184,6 +182,8 @@ namespace NativeApi.Api
         public void Invalidate() { }
         public void Update() { }
 
+        public static DrawingContext OpenDrawingContextForDC(IntPtr dc, bool deleteDc) => default;
+
         public virtual void InvalidateBestSize() { }
 
         public virtual SizeD GetPreferredSize(SizeD availableSize) => default;
@@ -192,8 +192,6 @@ namespace NativeApi.Api
 
         public DragDropEffects DoDragDrop(UnmanagedDataObject data,
             DragDropEffects allowedEffects) => default;
-        public DrawingContext OpenPaintDrawingContext() => default;
-        public DrawingContext OpenClientDrawingContext() => default;
         public void BeginUpdate() { }
         public void EndUpdate() { }
         public void RecreateWindow() { }

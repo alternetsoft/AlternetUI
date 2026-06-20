@@ -28,8 +28,18 @@ namespace Alternet::UI
 
         _wxWindow->SetAutoLayout(false);
 
-		if (GetUserPaint())
-			InitUserPaint();
+        if (GetUserPaint())
+        {
+            GetWxWindow()->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
+            GetWxWindow()->Bind(wxEVT_PAINT, &Control::OnPaint, this);
+            GetWxWindow()->SetBackgroundStyle(wxBG_STYLE_PAINT);
+        }
+
+#ifdef __WXMSW__    
+        auto hwnd = (HWND)GetWxWindow()->GetHWND();
+        long exStyle = ::GetWindowLong(hwnd, GWL_EXSTYLE);
+        ::SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED);
+#endif
 
         ApplyToolTip();
 
@@ -674,6 +684,14 @@ namespace Alternet::UI
         _eventFocusWindow = nullptr;
     }
 
+    DrawingContext* Control::OpenDrawingContextForDC(void* dc, bool deleteDc)
+    {
+        auto result = new DrawingContext((wxDC*)dc);
+        if (!deleteDc)
+            result->SetDoNotDeleteDC(true);
+        return result;
+    }
+
     void Control::OnLostFocus(wxFocusEvent& event)
     {
         event.Skip();
@@ -691,49 +709,6 @@ namespace Alternet::UI
             _wxWindow->Destroy();
             _wxWindow = nullptr;
         }
-    }
-
-    DrawingContext* Control::OpenPaintDrawingContext()
-    {
-        auto window = GetWxWindow();
-
-        if (!window)
-        {
-        }       
-        
-        if (_allowDoubleBuffered && GetUserPaint())
-        {
-            auto dc = new wxAutoBufferedPaintDC(window);
-            return new DrawingContext(dc);
-        }
-        else
-        {
-            auto dc = new wxPaintDC(window);
-            return new DrawingContext(dc);
-        }
-    }
-
-    DrawingContext* Control::OpenClientDrawingContext()
-    {
-        return new DrawingContext(new wxClientDC(GetWxWindow()));
-    }
-
-    DrawingContext* Control::OpenClientDrawingContextForWindow(void* window)
-    {
-        return new DrawingContext(new wxClientDC((wxWindow*)window));
-    }
-
-    DrawingContext* Control::OpenDrawingContextForDC(void* dc, bool deleteDc)
-    {
-        auto result = new DrawingContext((wxDC*)dc);
-        if (!deleteDc)
-            result->SetDoNotDeleteDC(true);
-        return result;
-    }
-
-    DrawingContext* Control::OpenPaintDrawingContextForWindow(void* window)
-    {
-        return new DrawingContext(new wxPaintDC((wxWindow*)window));
     }
 
     Control* Control::GetParent()
@@ -1475,12 +1450,11 @@ namespace Alternet::UI
 
     void Control::OnIdle(wxIdleEvent& event)
     {
-        /*
-        event.Skip();
-        if (IsNullOrDeleting())
-            return;
-        RaiseEvent(ControlEvent::Idle);
-        */
+    }
+
+    void* Control::GetDrawingContext()
+    {
+        return _drawingContext;
     }
 
     void Control::OnPaint(wxPaintEvent& event)
@@ -1488,7 +1462,19 @@ namespace Alternet::UI
         event.Skip();
         if (IsNullOrDeleting())
             return;
+
+        auto window = GetWxWindow();
+        auto dc = wxAutoBufferedPaintDC(window);
+        auto drawingContext = new DrawingContext(&dc);
+        drawingContext->SetDoNotDeleteDC(true);
+
+		_drawingContext = drawingContext;
+
         RaiseEvent(ControlEvent::Paint);
+
+        _drawingContext = nullptr;
+
+        drawingContext->Release();
     }
 
     void Control::OnEraseBackground(wxEraseEvent& event)
@@ -1503,23 +1489,6 @@ namespace Alternet::UI
             return;
         RaiseEvent(ControlEvent::MouseCaptureLost);
     }
-    /*
-    void Control::OnMouseEnter(wxMouseEvent& event)
-    {
-        event.Skip();
-        if (IsNullOrDeleting())
-            return;
-        RaiseEvent(ControlEvent::MouseEnter);
-
-        auto window = GetParent();
-        while (window != nullptr)
-        {
-            if (window->GetIsMouseOver())
-                window->RaiseEvent(ControlEvent::MouseEnter);
-
-            window = window->GetParent();
-        }
-    }*/
 
     void Control::OnMouseWheel(wxMouseEvent& event)
     {
@@ -1958,24 +1927,9 @@ namespace Alternet::UI
         return _flags.IsSet(ControlFlags::UserPaint);
     }
 
-    void Control::InitUserPaint()
-    {
-        _flags.Set(ControlFlags::UserPaint, true);
-        GetWxWindow()->SetBackgroundStyle(wxBG_STYLE_PAINT);
-        GetWxWindow()->Bind(wxEVT_ERASE_BACKGROUND, &Control::OnEraseBackground, this);
-        GetWxWindow()->Bind(wxEVT_PAINT, &Control::OnPaint, this);
-#ifdef __WXMSW__    
-        auto hwnd = (HWND)GetWxWindow()->GetHWND();
-        long exStyle = ::GetWindowLong(hwnd, GWL_EXSTYLE);
-        ::SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED);
-#endif
-    }
-
     void Control::SetUserPaint(bool value)
     {
-        if (GetUserPaint() == value)
-            return;
-        InitUserPaint();
+        _flags.Set(ControlFlags::UserPaint, value);
     }
 
     wxWindow* wxFindWindowAtPoint(wxWindow* win, const wxPoint& pt)
@@ -2282,6 +2236,7 @@ namespace Alternet::UI
 
         ControlNonAbstract()
         {
+            _flags.Set(ControlFlags::UserPaint, true);
         }
 
     protected:
@@ -2341,18 +2296,8 @@ namespace Alternet::UI
 
     wxWindow* ControlNonAbstract::CreateWxWindowCore(wxWindow* parent)
     {
-/*
-        if (GetIsScrollable())
-        {
-            auto style = GetDefaultStyle();
-            auto p = new wxScrolledWindow2(
-                this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
-            return p;
-        }
-*/
         auto style = GetDefaultStyle();
         auto p = new wxWindow2(this, parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, style);
-        p->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_PAINT);
         return p;
     }
 

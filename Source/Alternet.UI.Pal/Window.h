@@ -44,20 +44,6 @@ namespace Alternet::UI
             return false;
         }
     protected:
-
-#ifdef __WXMSW__    
-        WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override
-        {
-            if (message == WM_ERASEBKGND)
-            {
-                // Return non-zero to tell Windows "background erased"
-                // but do nothing (no white fill).
-                return 1;
-            }
-            return wxFrame::MSWWindowProc(message, wParam, lParam);
-        }
-#endif
-
         // show help text for the currently selected menu or toolbar item
         // (typically in the status bar) or hide it and restore the status bar text
         // originally shown before the menu was opened if show == false
@@ -105,18 +91,6 @@ namespace Alternet::UI
         {
         }
 protected:
-#ifdef __WXMSW__    
-        WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override
-        {
-            if (message == WM_ERASEBKGND)
-            {
-                // Return non-zero to tell Windows "background erased"
-                // but do nothing (no white fill).
-                return 1;
-            }
-            return wxMiniFrame::MSWWindowProc(message, wParam, lParam);
-        }
-#endif
     };
 
     // Dialog =============================================
@@ -138,18 +112,6 @@ protected:
             return false;
         }
     protected:
-#ifdef __WXMSW__    
-        WXLRESULT MSWWindowProc(WXUINT message, WXWPARAM wParam, WXLPARAM lParam) override
-        {
-            if (message == WM_ERASEBKGND)
-            {
-                // Return non-zero to tell Windows "background erased"
-                // but do nothing (no white fill).
-                return 1;
-            }
-            return wxDialog::MSWWindowProc(message, wParam, lParam);
-        }
-#endif
     };
 
     // Window =============================================
@@ -171,8 +133,6 @@ protected:
 
         void ApplyMenuToFrame(wxMenuBar* value, Frame* frame);
         void ApplyMenu(wxMenuBar* value);
-        virtual void SetUserPaint(bool value) override;
-
     protected:
         void OnBeforeDestroyWxWindow() override;
         void OnWxWindowDestroyed(wxWindow* window) override;

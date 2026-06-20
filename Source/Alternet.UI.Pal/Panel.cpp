@@ -4,6 +4,7 @@ namespace Alternet::UI
 {
     Panel::Panel()
     {
+        _flags.Set(ControlFlags::UserPaint, true);
     }
 
     Panel::~Panel()

@@ -818,8 +818,7 @@ namespace Alternet.UI
             if (text == null)
                 return new SizeD();
 
-            using var dc = CreateDrawingContext();
-            var result = dc.GetTextExtent(text, Font ?? UI.AbstractControl.DefaultFont);
+            var result = MeasureCanvas.GetTextExtent(text, Font ?? UI.AbstractControl.DefaultFont);
             return result;
         }
 

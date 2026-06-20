@@ -1266,37 +1266,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates the <see cref="Graphics"/> for the control.
-        /// </summary>
-        /// <returns>The <see cref="Graphics"/> for the control.</returns>
-        /// <remarks>
-        /// The <see cref="Graphics"/> object that you retrieve through the
-        /// <see cref="CreateDrawingContext"/> method should not normally
-        /// be retained after the current UI event has been processed,
-        /// because anything painted
-        /// with that object will be erased with the next paint event. Therefore
-        /// you cannot cache
-        /// the <see cref="Graphics"/> object for reuse, except to use
-        /// non-visual methods like
-        /// <see cref="Graphics.MeasureText(ReadOnlySpan{char}, Font)"/>.
-        /// Instead, you must call <see cref="CreateDrawingContext"/> every time
-        /// that you want to use the <see cref="Graphics"/> object,
-        /// and then call its Dispose() when you are finished using it.
-        /// </remarks>
-        [Browsable(false)]
-        public virtual Graphics CreateDrawingContext()
-        {
-            return new PlessGraphics();
-        }
-
-        /// <summary>
-        /// Same as <see cref="CreateDrawingContext"/>. Added mainly for legacy code.
-        /// </summary>
-        /// <returns></returns>
-        [Browsable(false)]
-        public virtual Graphics CreateGraphics() => CreateDrawingContext();
-
-        /// <summary>
         /// Sets the specified bounds of the control to new location and size.
         /// </summary>
         /// <param name="newBounds">New location and size.</param>

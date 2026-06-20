@@ -11,6 +11,8 @@ namespace Alternet.UI.Native
         private static readonly Dictionary<IntPtr, NativeObject>
             InstancesByNativePointers = new();
 
+        private bool disposeHandle = true;
+
         protected NativeObject()
         {
         }
@@ -66,6 +68,12 @@ namespace Alternet.UI.Native
             GC.SuppressFinalize(this);
         }
 
+        internal void SetNativePointerWeak(IntPtr nativePointer)
+        {
+            NativePointer = nativePointer;
+            disposeHandle = false;
+        }
+
         protected static void AddRefNativeObjectPointer(IntPtr value)
         {
             if (value != IntPtr.Zero)
@@ -102,8 +110,6 @@ namespace Alternet.UI.Native
 
             InstancesByNativePointers[value] = this;
             NativePointer = value;
-
-            /*Debug.WriteLineIf(true, $"SetNativePointer: {this.GetType()} : {value}");*/
         }
 
         /// <summary>
@@ -123,7 +129,7 @@ namespace Alternet.UI.Native
                     DisposeManaged();
                 }
 
-                if (NativePointer != IntPtr.Zero)
+                if (NativePointer != IntPtr.Zero && disposeHandle)
                 {
                     ReleaseNativeObjectPointer(NativePointer);
                     SetNativePointer(IntPtr.Zero);
