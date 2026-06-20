@@ -10,6 +10,22 @@ namespace EmployeeFormSample
 {
     public partial class EmployeeWindow : Window
     {
+        public class EmployeeEvaluation
+        {
+            public DateTime Date { get; set; }
+
+            public string? Manager { get; set; }
+
+            public string? Info { get; set; }
+
+            public EmployeeEvaluation(DateTime date, string? manager, string? info)
+            {
+                Date = date;
+                Manager = manager;
+                Info = info;
+            }
+        }
+
         public EmployeeWindow()
         {
             Icon = App.DefaultIcon;
@@ -46,24 +62,63 @@ namespace EmployeeFormSample
 
             DataContext = employee;
 
-            evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2018,12,21).ToShortDateString(),
-                "2018 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2019,12,10).ToShortDateString(),
-                "2019 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2020,12,13).ToShortDateString(),
-                "2020 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2021,12,20).ToShortDateString(),
-                "2021 Employee Review", "James Smith" }));
-            evaluationsListView.Items.Add(new ListViewItem(new[] {
-                new DateTime(2022,12,15).ToShortDateString(),
-                "2022 Employee Review", "James Smith" }));
+            evaluationsListView.IsHeaderVisible = true;
+            evaluationsListView.ListBox.SetSelectionAndCurrentItemRoundBorders(true);
+            var dateColumn = evaluationsListView.AddColumn("Date", 110);
+            var infoColumn = evaluationsListView.AddColumn("Info", 190);
+            var managerColumn = evaluationsListView.AddColumn("Manager", 150);
+
+            EmployeeEvaluation evaluation1 = new EmployeeEvaluation(
+                new DateTime(2022, 12, 21),
+                "James Smith", "2022 Employee Review");
+            EmployeeEvaluation evaluation2 = new EmployeeEvaluation(
+                new DateTime(2023, 12, 10),
+                "James Smith", "2023 Employee Review");
+            EmployeeEvaluation evaluation3 = new EmployeeEvaluation(
+                new DateTime(2024, 12, 13),
+                "James Smith", "2024 Employee Review");
+            EmployeeEvaluation evaluation4 = new EmployeeEvaluation(
+                new DateTime(2025, 12, 20),
+                "James Smith", "2025 Employee Review");
+            EmployeeEvaluation evaluation5 = new EmployeeEvaluation(
+                new DateTime(2026, 12, 15),
+                "James Smith", "2026 Employee Review");
+
+            var evaluations = new List<EmployeeEvaluation>
+            {
+                evaluation1,
+                evaluation2,
+                evaluation3,
+                evaluation4,
+                evaluation5,
+            };
+
+            var items = new List<TreeViewItem>();
+
+            void AddEvaluation(EmployeeEvaluation evaluation)
+            {
+                TreeViewItem item = new ();
+
+                item.SetText(dateColumn, evaluation.Date.ToShortDateString());
+                item.SetText(infoColumn, evaluation.Info);
+                item.SetText(managerColumn, evaluation.Manager);
+
+                items.Add(item);
+            }
+
+            foreach (var evaluation in evaluations)
+            {
+                AddEvaluation(evaluation);
+            }
+
+            evaluationsListView.RootItem.AddRange(items);
+            evaluationsListView.ListBox.VertGridLines = true;
+
+            /*
             evaluationsListView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
             evaluationsListView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
+            */
 
             stateComboBox.PopupKind = PickerPopupKind.ListBox;
 

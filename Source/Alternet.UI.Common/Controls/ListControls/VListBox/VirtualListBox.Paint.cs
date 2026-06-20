@@ -160,25 +160,27 @@ namespace Alternet.UI
         /// <summary>
         /// Calculates the total size of all the rows.
         /// </summary>
-        /// <param name="dc">The graphics context used to perform the measurement. Cannot be null.</param>
+        /// <param name="dc">The graphics context used to perform the measurement.
+        /// If null, the default measurement canvas is used.</param>
         /// <returns>A <see cref="SizeD"/> representing the total size of all the rows.</returns>
-        public virtual SizeD GetContentSize(Graphics dc)
+        public virtual SizeD GetContentSize(Graphics? dc = null)
         {
-            return GetContentSize(dc, 0, Items.Count);
+            return GetContentSize(dc ?? MeasureCanvas, 0, Items.Count);
         }
 
         /// <summary>
         /// Calculates the total size of the rows within the specified index range.
         /// </summary>
-        /// <param name="dc">The graphics context used to perform the measurement. Cannot be null.</param>
+        /// <param name="dc">The graphics context used to perform the measurement.
+        /// If null, the default measurement canvas is used.</param>
         /// <param name="fromIndex">The zero-based index of the first row to include in the calculation.
         /// If null, calculation starts from the first visible row.</param>
         /// <param name="toIndex">The zero-based index after the last row to include in the calculation.
         /// If null, calculation continues to the last visible row.</param>
         /// <returns>A <see cref="SizeD"/> representing the total size of the rows within the specified range.</returns>
-        public virtual SizeD GetContentSize(Graphics dc, int? fromIndex, int? toIndex = null)
+        public virtual SizeD GetContentSize(Graphics? dc, int? fromIndex, int? toIndex = null)
         {
-            var rowSizes = MeasureRows(dc, fromIndex, toIndex);
+            var rowSizes = MeasureRows(dc ?? MeasureCanvas, fromIndex, toIndex);
             float totalHeight = 0;
             float maxWidth = 0;
 

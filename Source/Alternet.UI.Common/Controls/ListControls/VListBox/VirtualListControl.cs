@@ -1225,11 +1225,11 @@ namespace Alternet.UI
         /// is specified as a percentage of the item's dimensions;
         /// otherwise, <see langword="false"/>. The default value is <see langword="true"/>.</param>
         /// <param name="cornerRadius">The corner radius to apply to the rounded borders.
-        /// The default value is 25.</param>
+        /// The default value is 15.</param>
         public virtual void SetSelectionAndCurrentItemRoundBorders(
-            bool isRound,
+            bool isRound = true,
             bool radiusIsPercent = true,
-            Coord cornerRadius = 25)
+            Coord cornerRadius = 15)
         {
             if (isRound)
             {

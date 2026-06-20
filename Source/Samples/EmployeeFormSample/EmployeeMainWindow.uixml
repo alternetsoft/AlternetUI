@@ -137,13 +137,8 @@
 
         <Label Text="Evaluations" Grid.Row="5" Grid.Column="0" VerticalAlignment="Center"
                  IsTextLocalized="true" Margin="0,10,0,5"/>
-        <ListView Name="evaluationsListView" Grid.Row="6" Grid.ColumnSpan="2" View="Details">
-          <ListView.Columns>
-            <ListViewColumn Title="Date" />
-            <ListViewColumn Title="Info" />
-            <ListViewColumn Title="Manager" />
-          </ListView.Columns>
-        </ListView>
+        <StdTreeView Name="evaluationsListView" SuggestedSize="400, 300" Grid.Row="6" Grid.ColumnSpan="2">
+        </StdTreeView>
 
       </Grid>
     </Grid>
