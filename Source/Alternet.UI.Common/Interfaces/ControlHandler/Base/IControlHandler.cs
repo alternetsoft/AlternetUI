@@ -260,6 +260,14 @@ namespace Alternet.UI
         void SetAllowDefaultContextMenu(bool value);
 
         /// <summary>
+        /// Creates drawing context. This method is a convenience API that gives
+        /// you a temporary Graphics object tied to the control.
+        /// Lets you draw immediately onto the control’s surface outside of the normal paint cycle.
+        /// </summary>
+        /// <returns></returns>
+        Graphics CreateDrawingContext();
+
+        /// <summary>
         /// Detaches this handler from the <see cref="Control"/> it is attached to.
         /// </summary>
         void Detach();

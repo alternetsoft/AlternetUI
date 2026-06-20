@@ -338,5 +338,11 @@ namespace Alternet.UI
         public void OnInsertedToParent(AbstractControl parentControl)
         {
         }
+
+        /// <inheritdoc/>
+        public Graphics CreateDrawingContext()
+        {
+            return new PlessGraphics();
+        }
     }
 }

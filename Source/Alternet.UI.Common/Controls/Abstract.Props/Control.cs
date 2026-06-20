@@ -731,6 +731,13 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
+        public override Graphics CreateDrawingContext()
+        {
+            return SafeHandler?.CreateDrawingContext() ?? new PlessGraphics();
+        }
+
+        /// <inheritdoc/>
         public override void BeginInit()
         {
             base.BeginInit();

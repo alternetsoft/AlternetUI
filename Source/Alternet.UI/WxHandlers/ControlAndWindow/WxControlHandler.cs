@@ -589,5 +589,10 @@ namespace Alternet.UI
         public virtual void OnInsertedToParent(AbstractControl parentControl)
         {
         }
+
+        public virtual Graphics CreateDrawingContext()
+        {
+            return NativeControl.CreateGraphicsFunc?.Invoke() ?? new PlessGraphics();
+        }
     }
 }

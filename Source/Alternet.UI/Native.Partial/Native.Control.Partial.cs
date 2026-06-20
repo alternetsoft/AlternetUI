@@ -19,6 +19,8 @@ namespace Alternet.UI.Native
             }
         }
 
+        public Func<Alternet.Drawing.Graphics>? CreateGraphicsFunc;
+
         public WxControlHandler? Handler
         {
             get
@@ -311,6 +313,14 @@ namespace Alternet.UI.Native
 
             using var nativeGraphics = CreateDefaultGraphics();
             var hdc = nativeGraphics.GetHdc();
+
+            Alternet.Drawing.Graphics? publicGraphics = null;
+
+            CreateGraphicsFunc = () =>
+            {
+                return publicGraphics ?? new Alternet.Drawing.PlessGraphics();
+            };
+
             try
             {
                 dibSurface.Paint(
@@ -324,12 +334,17 @@ namespace Alternet.UI.Native
 
                         using var graphics = Drawing.SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, scaleFactor);
 
+                        publicGraphics = graphics;
+
                         var e = new PaintEventArgs(() => graphics, clipRect: clientRect, clientRect: clientRect);
                         uiControl.RaisePaint(e);
+
+                        publicGraphics = null;
                     });
             }
             finally
             {
+                CreateGraphicsFunc = null;
                 nativeGraphics.ReleaseHdc(hdc);
             }
 
@@ -371,18 +386,31 @@ namespace Alternet.UI.Native
 
             var canvas = canvasLock.Canvas;
 
-            using var graphics = Drawing.SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, (float)scaleFactor);
+            CreateGraphicsFunc = () =>
+            {
+                return Drawing.SkiaUtils.CreateSkiaGraphicsOnCanvas(canvas, scaleFactor);
+            };
 
-            var e = new PaintEventArgs(() => graphics, clientRect, clientRect);
-            uiControl.RaisePaint(e);
+            try
+            {
+                using var graphics = CreateGraphicsFunc();
 
-            canvas.Flush();
+                var e = new PaintEventArgs(() => graphics, clientRect, clientRect);
+                uiControl.RaisePaint(e);
 
-            canvasLock.Dispose();
+                canvas.Flush();
 
-            using var dc = CreateDefaultGraphics();
+                canvasLock.Dispose();
 
-            dc.DrawImage(bitmap, clientRect.Location);
+                using var dc = CreateDefaultGraphics();
+
+                dc.DrawImage(bitmap, clientRect.Location);
+
+            }
+            finally
+            {
+                CreateGraphicsFunc = null;
+            }
 
             KnownRunTimeTrackers.SkiaPaintStop(uiControl);
         }
