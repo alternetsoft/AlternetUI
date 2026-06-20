@@ -118,7 +118,10 @@ namespace NativeApi.Api
         public event EventHandler? HandleDestroyed;
         public event EventHandler? SystemColorsChanged;
 
-        public virtual string Text { get; set; }
+        public virtual string GetText() => default;
+
+        public virtual void SetText(string value) { }
+
         public bool IsActive { get; }
         public bool IsHandleCreated { get; }
         public bool IsWxWidgetCreated { get; }

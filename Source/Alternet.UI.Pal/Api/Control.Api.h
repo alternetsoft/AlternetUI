@@ -214,20 +214,6 @@ ALTERNET_UI_API Control* Control_GetEventFocusedControl_(Control* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* Control_GetText_(Control* obj)
-{
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetText());
-    });
-}
-
-ALTERNET_UI_API void Control_SetText_(Control* obj, const char16_t* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetText(value);
-    });
-}
-
 ALTERNET_UI_API c_bool Control_GetIsActive_(Control* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -708,6 +694,20 @@ ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
 {
     MarshalExceptions<void>([&](){
         obj->SetCursor(handle);
+    });
+}
+
+ALTERNET_UI_API char16_t* Control_GetText_(Control* obj)
+{
+    return MarshalExceptions<char16_t*>([&](){
+        return AllocPInvokeReturnString(obj->GetText());
+    });
+}
+
+ALTERNET_UI_API void Control_SetText_(Control* obj, const char16_t* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetText(value);
     });
 }
 

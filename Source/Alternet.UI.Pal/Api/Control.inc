@@ -46,9 +46,6 @@ int GetEventNewDpi();
 
 Control* GetEventFocusedControl();
 
-virtual string GetText();
-virtual void SetText(const string& value);
-
 bool GetIsActive();
 
 bool GetIsHandleCreated();
@@ -142,6 +139,8 @@ static float DrawingDPIScaleFactor(void* window);
 static float DrawingToDip(int value, void* window);
 static float DrawingFromDipF(float value, void* window);
 void SetCursor(void* handle);
+virtual string GetText();
+virtual void SetText(const string& value);
 virtual RectD GetBounds();
 virtual RectI GetBoundsI();
 SizeD GetClientSize();

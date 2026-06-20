@@ -85,8 +85,8 @@ namespace Alternet.UI
 
         public string Text
         {
-            get => NativeControl.Text;
-            set => NativeControl.Text = value;
+            get => NativeControl.GetText();
+            set => NativeControl.SetText(value);
         }
 
         public RectD Bounds

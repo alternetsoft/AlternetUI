@@ -145,7 +145,7 @@ namespace Alternet.UI.Native
 
         public virtual void OnPlatformEventTextChanged()
         {
-            UIControl?.RaiseHandlerTextChanged(Text);
+            UIControl?.RaiseHandlerTextChanged(GetText());
         }
 
         public virtual void OnPlatformEventGotFocus()

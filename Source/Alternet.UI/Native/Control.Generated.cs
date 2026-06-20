@@ -252,21 +252,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public string Text
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetText_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetText_(NativePointer, value);
-            }
-        }
-        
         public bool IsActive
         {
             get
@@ -778,6 +763,18 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
         {
             CheckDisposed();
             NativeApi.Control_SetCursor_(NativePointer, handle);
+        }
+        
+        public string GetText()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetText_(NativePointer);
+        }
+        
+        public void SetText(string value)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetText_(NativePointer, value);
         }
         
         public Alternet.Drawing.RectD GetBounds()
@@ -1390,12 +1387,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern IntPtr Control_GetEventFocusedControl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Control_GetText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetText_(IntPtr obj, string value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetIsActive_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1601,6 +1592,12 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern string Control_GetText_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetText_(IntPtr obj, string value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);
