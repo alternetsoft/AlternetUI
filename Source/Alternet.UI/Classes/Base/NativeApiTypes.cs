@@ -15,6 +15,12 @@ namespace Alternet.UI.Native
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static NativeStringSpan ToNative(this NativeStringSpan dt)
+        {
+            return dt;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Alternet.Drawing.PointD ToNative(this Alternet.Drawing.PointD p)
         {
             return p;

@@ -273,7 +273,7 @@ namespace Alternet::UI
 
         virtual void DestroyWxWindow();
     private:
-        string _textValue = u"";
+        wxString _textValue = "";
         RectD _eventBounds;
         bool _destroying = false;
 

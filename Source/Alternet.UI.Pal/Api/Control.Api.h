@@ -704,10 +704,10 @@ ALTERNET_UI_API char16_t* Control_GetText_(Control* obj)
     });
 }
 
-ALTERNET_UI_API void Control_SetText_(Control* obj, const char16_t* value)
+ALTERNET_UI_API void Control_SetText_(Control* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetText(value);
+        obj->SetText(*value);
     });
 }
 

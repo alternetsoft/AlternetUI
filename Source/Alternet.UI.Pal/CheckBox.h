@@ -14,22 +14,15 @@ namespace Alternet::UI
 
     public:
         string GetText() override;
-        void SetText(const string& value) override;
+        void SetText(const NativeStringSpan& value) override;
 
+        virtual void RecreateWxWindowIfNeeded() override;
     private:
 
         wxCheckBox* GetCheckBox();
 
-        DelayedValue<CheckBox, string> _text;
-        DelayedValue<CheckBox, wxCheckBoxState> _state;
         bool _threeState = false;
         bool _alignRight = false;
         bool _allowAllStatesForUser = false;
-
-        string RetrieveText();
-        void ApplyText(const string& value);
-
-        wxCheckBoxState RetrieveState();
-        void ApplyState(const wxCheckBoxState& value);
     };
 }

@@ -3,11 +3,9 @@
 
 namespace Alternet::UI
 {
-	TextBox::TextBox() :
-		_text(*this, u"", &Control::IsWxWindowCreated, &TextBox::RetrieveText, &TextBox::ApplyText)
+	TextBox::TextBox()
 	{
 		bindScrollEvents = false;
-		GetDelayedValues().Add(&_text);
 	}
 
 	TextBox::~TextBox()
@@ -27,12 +25,13 @@ namespace Alternet::UI
 
 	string TextBox::GetText()
 	{
-		return _text.Get();
+		auto result = GetTextCtrl()->GetValue();
+		return wxStr(result);
 	}
 
-	void TextBox::SetText(const string& value)
+	void TextBox::SetText(const NativeStringSpan& value)
 	{
-		_text.Set(value);
+		GetTextCtrl()->SetValue(StringSpanToWx(value));
 	}
 
 	TextBox::TextBox(void* validator) : TextBox()
@@ -369,16 +368,6 @@ namespace Alternet::UI
 	wxTextCtrl* TextBox::GetTextCtrl()
 	{
 		return dynamic_cast<wxTextCtrl*>(GetWxWindow());
-	}
-
-	string TextBox::RetrieveText()
-	{
-		return wxStr(GetTextCtrl()->GetValue());
-	}
-
-	void TextBox::ApplyText(const string& value)
-	{
-		GetTextCtrl()->SetValue(wxStr(value));
 	}
 
 	bool TextBox::GetIsRichEdit()

@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NativeApi.Data
+namespace Alternet.UI
 {
-    [ManagedName("NativeStringSpan")]
+    [ManagedExternName("Alternet.UI.NativeStringSpan")]
     public struct NativeStringSpan
     {
     }

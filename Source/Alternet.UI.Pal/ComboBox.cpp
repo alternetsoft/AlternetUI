@@ -72,11 +72,8 @@ namespace Alternet::UI
         return ((ComboBox*)_palControl)->OnMeasureItemWidth(item);
     }
 
-    ComboBox::ComboBox() :
-        _text(*this, u"", &ComboBox::IsUsingComboBoxControl, &ComboBox::RetrieveText, 
-            &ComboBox::ApplyText)
+    ComboBox::ComboBox()
     {
-        GetDelayedValues().Add({ &_text });
     }
 
     bool ComboBox::GetHasBorder()
@@ -405,12 +402,13 @@ namespace Alternet::UI
 
     string ComboBox::GetText()
     {
-        return _text.Get();
+        auto result = GetComboBox()->GetValue();
+        return wxStr(result);
     }
 
-    void ComboBox::SetText(const string& value)
+    void ComboBox::SetText(const NativeStringSpan& value)
     {
-        _text.Set(value);
+        GetComboBox()->SetValue(StringSpanToWx(value));
     }
 
     void ComboBox::OnWxWindowCreated()
@@ -426,17 +424,6 @@ namespace Alternet::UI
     int ComboBox::GetItemsCount()
     {
         return GetItemContainer()->GetCount();
-    }
-
-    string ComboBox::RetrieveText()
-    {
-        auto result = GetComboBox()->GetValue();
-        return wxStr(result);
-    }
-
-    void ComboBox::ApplyText(const string& value)
-    {
-        GetComboBox()->SetValue(wxStr(value));
     }
 
     wxControlWithItems* ComboBox::GetControlWithItems()

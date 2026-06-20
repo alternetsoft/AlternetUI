@@ -14,7 +14,8 @@ namespace Alternet::UI
 
     public:
         string GetText() override;
-        void SetText(const string& value) override;
+        void SetText(const NativeStringSpan& value) override;
+        virtual void RecreateWxWindowIfNeeded() override;
 
     private:
         enum class RadioButtonFlags
@@ -25,23 +26,11 @@ namespace Alternet::UI
 
         wxRadioButton* GetRadioButton();
 
-        DelayedValue<RadioButton, string> _text;
-        DelayedFlags<RadioButton, RadioButtonFlags> _flags;
-
-        string RetrieveText();
-        void ApplyText(const string& value);
-
         std::vector<RadioButton*> GetRadioButtonsInGroup();
 
         int GetChildRadioButtonsCount(wxWindow* parent);
 
-        bool RetrieveChecked();
-        void ApplyChecked(bool value);
-
         bool _firstInGroup = false;
-        
-        bool _isCheckedWhileRecreating = false;
-        bool _isRecreating = false;
 
     protected:
         void SetWxWindowParent(wxWindow* parent) override;

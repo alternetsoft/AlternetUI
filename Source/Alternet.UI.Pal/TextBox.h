@@ -10,7 +10,7 @@ namespace Alternet::UI
 #include "Api/TextBox.inc"
     public:
         string GetText() override;
-        void SetText(const string& value) override;
+        void SetText(const NativeStringSpan& value) override;
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
@@ -37,12 +37,7 @@ namespace Alternet::UI
         int _textWrap = 0;
         string _eventUrl = wxStr(wxEmptyString);
 
-        DelayedValue<TextBox, string> _text;
-
         wxTextCtrl* GetTextCtrl();
-
-        string RetrieveText();
-        void ApplyText(const string& value);
 
         long GetCreateStyle();
 

@@ -183,7 +183,7 @@ namespace Alternet::UI
 #include "Api/ComboBox.inc"
     public:
         string GetText() override;
-        void SetText(const string& value) override;
+        void SetText(const NativeStringSpan& value) override;
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
@@ -230,12 +230,7 @@ namespace Alternet::UI
         bool IsUsingComboBoxControl();
         bool hasBorder = true;
 
-        DelayedValue<ComboBox, string> _text;
-
         bool _isEditable = true;
-
-        string RetrieveText();
-        void ApplyText(const string& value);
 
         wxVListBoxComboPopup2* GetPopup();
         wxOwnerDrawnComboBox2* GetComboBox();

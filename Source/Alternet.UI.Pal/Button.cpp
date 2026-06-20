@@ -83,11 +83,8 @@ namespace Alternet::UI
         GetButton()->SetBitmapMargins(x, y);
     }
 
-    Button::Button():
-        _text(*this, u"", &Control::IsWxWindowCreated, 
-            &Button::RetrieveText, &Button::ApplyText)
+    Button::Button()
     {
-        GetDelayedValues().Add(&_text);
     }
 
     bool Button::GetHasBorder()
@@ -101,6 +98,13 @@ namespace Alternet::UI
             return;
         _hasBorder = value;
         RecreateWxWindowIfNeeded();
+    }
+
+    void Button::RecreateWxWindowIfNeeded()
+    {
+        auto text = GetText();
+        Control::RecreateWxWindowIfNeeded();
+        GetButton()->SetLabel(wxStr(text));
     }
 
     Button::~Button()
@@ -117,12 +121,12 @@ namespace Alternet::UI
 
     string Button::GetText()
     {
-        return _text.Get();
+        return wxStr(GetButton()->GetLabel());
     }
 
-    void Button::SetText(const string& value)
+    void Button::SetText(const NativeStringSpan& value)
     {
-        _text.Set(value);
+        GetButton()->SetLabel(StringSpanToWx(value));
     }
 
     bool Button::GetExactFit()
@@ -197,16 +201,6 @@ namespace Alternet::UI
     wxButton2* Button::GetButton2()
     {
         return dynamic_cast<wxButton2*>(GetWxWindow());
-    }
-
-    string Button::RetrieveText()
-    {
-        return wxStr(GetButton()->GetLabel());
-    }
-
-    void Button::ApplyText(const string& value)
-    {
-        GetButton()->SetLabel(wxStr(value));
     }
 
     void Button::OnButtonClick(wxCommandEvent& event)

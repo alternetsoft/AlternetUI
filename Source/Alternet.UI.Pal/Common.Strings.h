@@ -14,7 +14,29 @@
 
 namespace Alternet::UI
 {
-    inline wxString StringToWx(void* text, int textLength)
+#pragma pack(push, 1)
+
+    extern "C"
+    {
+        struct NativeStringSpan_C
+        {
+            const void* Pointer;   // UTF-16 on Windows, UTF-8 on Linux/macOS
+            size_t Length;         // number of code units (chars or bytes)
+        };
+    }
+
+#pragma pack(pop)
+
+    struct NativeStringSpan
+    {
+        const void* Pointer;
+        size_t Length;
+
+        NativeStringSpan() : Pointer(nullptr), Length(0) {}
+        NativeStringSpan(const NativeStringSpan_C& c) : Pointer(c.Pointer), Length(c.Length) {}
+    };
+
+    inline wxString StringToWx(const void* text, size_t textLength)
     {
         if (text == nullptr)
         {
@@ -39,6 +61,12 @@ namespace Alternet::UI
 
         return str;
     }
+
+    inline wxString StringSpanToWx(const NativeStringSpan& value)
+    {
+        return StringToWx(value.Pointer, value.Length);
+    }
+
 /*
     std::u16string wstringToU16String(const std::wstring& wstr) {
         icu::UnicodeString unicodeStr(reinterpret_cast<const UChar*>(wstr.data()), wstr.length());

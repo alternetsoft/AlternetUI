@@ -120,7 +120,7 @@ namespace NativeApi.Api
 
         public virtual string GetText() => default;
 
-        public virtual void SetText(string value) { }
+        public virtual void SetText(NativeStringSpan value) { }
 
         public bool IsActive { get; }
         public bool IsHandleCreated { get; }

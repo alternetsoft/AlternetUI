@@ -771,10 +771,11 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
             return NativeApi.Control_GetText_(NativePointer);
         }
         
-        public void SetText(string value)
+        public void SetText(Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.Control_SetText_(NativePointer, value);
+            var value_Native = value.ToNative();
+NativeApi.Control_SetText_(NativePointer, ref value_Native);
         }
         
         public Alternet.Drawing.RectD GetBounds()
@@ -1597,7 +1598,7 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern string Control_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetText_(IntPtr obj, string value);
+            public static extern void Control_SetText_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);

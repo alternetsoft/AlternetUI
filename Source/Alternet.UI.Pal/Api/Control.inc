@@ -140,7 +140,7 @@ static float DrawingToDip(int value, void* window);
 static float DrawingFromDipF(float value, void* window);
 void SetCursor(void* handle);
 virtual string GetText();
-virtual void SetText(const string& value);
+virtual void SetText(const NativeStringSpan& value);
 virtual RectD GetBounds();
 virtual RectI GetBoundsI();
 SizeD GetClientSize();

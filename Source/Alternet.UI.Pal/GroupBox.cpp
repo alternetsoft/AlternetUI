@@ -2,25 +2,12 @@
 
 namespace Alternet::UI
 {
-    GroupBox::GroupBox() :
-        _title(*this, u"", &Control::IsWxWindowCreated,
-            &GroupBox::RetrieveTitle, &GroupBox::ApplyTitle)
+    GroupBox::GroupBox()
     {
-        GetDelayedValues().Add(&_title);
     }
 
     GroupBox::~GroupBox()
     {
-    }
-
-    string GroupBox::GetText()
-    {
-        return _title.Get();
-    }
-
-    void GroupBox::SetText(const string& value)
-    {
-        _title.Set(value);
     }
 
     class wxStaticBox2 : public wxStaticBox, public wxWidgetExtender
@@ -126,7 +113,7 @@ namespace Alternet::UI
         return dynamic_cast<wxStaticBox*>(GetWxWindow());
     }
 
-    string GroupBox::RetrieveTitle()
+    string GroupBox::GetText()
     {
         auto value = wxStr(GetStaticBox()->GetLabel());
 
@@ -136,8 +123,8 @@ namespace Alternet::UI
         return value;
     }
 
-    void GroupBox::ApplyTitle(const string& value)
+    void GroupBox::SetText(const NativeStringSpan& value)
     {
-        GetStaticBox()->SetLabel(wxStr(value));
+        GetStaticBox()->SetLabel(StringSpanToWx(value));
     }
 }

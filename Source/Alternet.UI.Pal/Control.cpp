@@ -1,4 +1,5 @@
 #include "Control.h"
+#include "Control.h"
 #include "Application.h"
 #include "Screenshot.h"
 #include "Window.h"
@@ -2268,12 +2269,13 @@ namespace Alternet::UI
 
     string Control::GetText()
     {
-        return _textValue;
+        return wxStr(_textValue);
     }
 
-    void Control::SetText(const string& value)
+    void Control::SetText(const NativeStringSpan& value)
     {
-        _textValue = value;
+        auto wx = StringSpanToWx(value);
+        _textValue = wx;
     }
 
     Color Control::GetClassDefaultAttributesBgColor(int controlType, int windowVariant)

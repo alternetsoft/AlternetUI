@@ -334,6 +334,27 @@ namespace Alternet.UI
             }
         }
 
+        public static void InvokeWithNativeText(ReadOnlySpan<char> text, Action<NativeStringSpan> callback)
+        {
+            if (App.IsWindowsOS)
+            {
+                unsafe
+                {
+                    fixed (char* p = text)
+                    {
+                        callback(new NativeStringSpan((IntPtr)p, text.Length));
+                    }
+                }
+            }
+            else
+            {
+                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
+                {
+                    callback(new NativeStringSpan(ptr, length));
+                });
+            }
+        }
+
         /// <summary>
         /// Limits the length of text to a defined length.
         /// </summary>

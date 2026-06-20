@@ -2,20 +2,8 @@
 
 namespace Alternet::UI
 {
-    RadioButton::RadioButton() :
-        _text(*this, u"", &Control::IsWxWindowCreated, &RadioButton::RetrieveText,
-            &RadioButton::ApplyText),
-        _flags(
-            *this,
-            RadioButtonFlags::Checked,
-            &Control::IsWxWindowCreated,
-            {
-                {RadioButtonFlags::Checked, std::make_tuple(&RadioButton::RetrieveChecked,
-                &RadioButton::ApplyChecked)},
-            })
+    RadioButton::RadioButton()
     {
-        GetDelayedValues().Add(&_text);
-        GetDelayedValues().Add(&_flags);
     }
 
     RadioButton::~RadioButton()
@@ -24,12 +12,12 @@ namespace Alternet::UI
 
     string RadioButton::GetText()
     {
-        return _text.Get();
+        return wxStr(GetRadioButton()->GetLabel());
     }
 
-    void RadioButton::SetText(const string& value)
+    void RadioButton::SetText(const NativeStringSpan& value)
     {
-        _text.Set(value);
+        GetRadioButton()->SetLabel(StringSpanToWx(value));
     }
 
     class wxRadioButton2 : public wxRadioButton, public wxWidgetExtender
@@ -62,7 +50,7 @@ namespace Alternet::UI
         auto radioButton = new wxRadioButton2(
             parent,
             wxID_ANY,
-            wxStr(_text.Get()),
+            "",
             wxDefaultPosition,
             wxDefaultSize,
             _firstInGroup ? wxRB_GROUP : 0);
@@ -74,16 +62,6 @@ namespace Alternet::UI
     wxRadioButton* RadioButton::GetRadioButton()
     {
         return dynamic_cast<wxRadioButton*>(GetWxWindow());
-    }
-
-    string RadioButton::RetrieveText()
-    {
-        return wxStr(GetRadioButton()->GetLabel());
-    }
-
-    void RadioButton::ApplyText(const string& value)
-    {
-        GetRadioButton()->SetLabel(wxStr(value));
     }
 
     std::vector<RadioButton*> RadioButton::GetRadioButtonsInGroup()
@@ -105,23 +83,6 @@ namespace Alternet::UI
         return result;
     }
 
-    bool RadioButton::RetrieveChecked()
-    {
-#ifdef __WXGTK20__
-        // On Linux, it seems wxGTK seem to not support radio groups with no selection.
-        // So wxRadioButton::GetValue() will return true when a radio button is the only one in the group
-        // So while control is a child of the parking window a wrong value is returned. This is a workaround:
-        if (_isRecreating)
-            return _isCheckedWhileRecreating;
-#endif
-        return GetRadioButton()->GetValue();
-    }
-
-    void RadioButton::ApplyChecked(bool value)
-    {
-        GetRadioButton()->SetValue(value);
-    }
-
     int RadioButton::GetChildRadioButtonsCount(wxWindow* parent)
     {
         int result = 0;
@@ -139,14 +100,18 @@ namespace Alternet::UI
         return result;
     }
 
+    void RadioButton::RecreateWxWindowIfNeeded()
+    {
+        auto text = GetText();
+        auto state = GetIsChecked();
+        Control::RecreateWxWindowIfNeeded();
+        GetRadioButton()->SetLabel(wxStr(text));
+        SetIsChecked(state);
+    }
+
     void RadioButton::SetWxWindowParent(wxWindow* parent)
     {
         _firstInGroup = GetChildRadioButtonsCount(parent) == 0;
-        _isRecreating = true;
-        _isCheckedWhileRecreating = _flags.GetDelayed(RadioButtonFlags::Checked);
-        RecreateWxWindowIfNeeded();
-        _isRecreating = false;
-
         Control::SetWxWindowParent(parent);
     }
 
@@ -167,11 +132,11 @@ namespace Alternet::UI
 
     bool RadioButton::GetIsChecked()
     {
-        return _flags.Get(RadioButtonFlags::Checked);
+        return GetRadioButton()->GetValue();
     }
 
     void RadioButton::SetIsChecked(bool value)
     {
-        _flags.Set(RadioButtonFlags::Checked, value);
+        GetRadioButton()->SetValue(value);
     }
 }

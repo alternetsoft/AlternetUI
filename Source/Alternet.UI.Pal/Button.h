@@ -47,7 +47,8 @@ namespace Alternet::UI
         void RaiseClick();
 
         string GetText() override;
-        void SetText(const string& value) override;
+        void SetText(const NativeStringSpan& value) override;
+        virtual void RecreateWxWindowIfNeeded() override;
 
     protected:
         virtual void OnWxWindowCreated() override;
@@ -57,11 +58,6 @@ namespace Alternet::UI
     private:
         wxButton* GetButton();
         wxButton2* GetButton2();
-
-        DelayedValue<Button, string> _text;
-
-        string RetrieveText();
-        void ApplyText(const string& value);
 
         bool _hasBorder = true;
         bool _textVisible = true;
