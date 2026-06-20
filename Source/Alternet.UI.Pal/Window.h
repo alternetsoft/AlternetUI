@@ -145,9 +145,6 @@ protected:
             Control::CreateWxWindow();
         }
 
-        virtual void OnEraseBackground(wxEraseEvent& event) override;
-        virtual void OnPaint(wxPaintEvent& event) override;
-
         virtual void OnWxWindowCreated() override;
 
         virtual void DestroyWxWindow() override;

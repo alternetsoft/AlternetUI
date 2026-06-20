@@ -17,8 +17,7 @@ bool GetNativeDataPresent(int format);
 public:
 UnmanagedDataObject();
 
-protected:
+public:
 virtual ~UnmanagedDataObject();
 
 private:
-BYREF_ONLY(UnmanagedDataObject);

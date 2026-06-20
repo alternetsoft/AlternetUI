@@ -84,8 +84,7 @@ inline static ListBoxEventCallbackType eventCallback = nullptr;
 public:
 ListBox();
 
-protected:
+public:
 virtual ~ListBox();
 
 private:
-BYREF_ONLY(ListBox);

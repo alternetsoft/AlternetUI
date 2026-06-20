@@ -108,8 +108,7 @@ static void UnlockBits(void* handle);
 public:
 GenericImage();
 
-protected:
+public:
 virtual ~GenericImage();
 
 private:
-BYREF_ONLY(GenericImage);

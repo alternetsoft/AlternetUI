@@ -27,8 +27,7 @@ static void Clear(void* handle);
 public:
 PropertyGridChoices();
 
-protected:
+public:
 virtual ~PropertyGridChoices();
 
 private:
-BYREF_ONLY(PropertyGridChoices);

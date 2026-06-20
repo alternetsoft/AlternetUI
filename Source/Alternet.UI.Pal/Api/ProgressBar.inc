@@ -20,8 +20,7 @@ void SetOrientation(ProgressBarOrientation value);
 public:
 ProgressBar();
 
-protected:
+public:
 virtual ~ProgressBar();
 
 private:
-BYREF_ONLY(ProgressBar);

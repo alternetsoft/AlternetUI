@@ -10,8 +10,7 @@ bool IsStrFormatSupported(const string& format);
 public:
 Clipboard();
 
-protected:
+public:
 virtual ~Clipboard();
 
 private:
-BYREF_ONLY(Clipboard);

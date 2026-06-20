@@ -338,7 +338,14 @@ namespace Alternet.UI.Native
 
         protected void SkiaPaint()
         {
-            SkiaPaintCrossPlatform();
+            if (App.IsWindowsOS)
+            {
+                SkiaPaintMsw();
+            }
+            else
+            {
+                SkiaPaintCrossPlatform();
+            }
         }
 
         protected void SkiaPaintCrossPlatform()

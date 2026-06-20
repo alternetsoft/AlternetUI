@@ -305,8 +305,7 @@ inline static RichTextBoxEventCallbackType eventCallback = nullptr;
 public:
 RichTextBox();
 
-protected:
+public:
 virtual ~RichTextBox();
 
 private:
-BYREF_ONLY(RichTextBox);

@@ -34,8 +34,7 @@ static uint32_t GetLastColorKind();
 public:
 PropertyGridVariant();
 
-protected:
+public:
 virtual ~PropertyGridVariant();
 
 private:
-BYREF_ONLY(PropertyGridVariant);

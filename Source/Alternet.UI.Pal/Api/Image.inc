@@ -64,8 +64,7 @@ void UnlockBits();
 public:
 Image();
 
-protected:
+public:
 virtual ~Image();
 
 private:
-BYREF_ONLY(Image);

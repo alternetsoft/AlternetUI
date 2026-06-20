@@ -203,6 +203,7 @@ namespace Alternet::UI
         int _disableRecreateCounter = 0;
         SizeI _eventOldDpi;
         SizeI _eventNewDpi;
+        wxBitmap m_buffer;
         wxWindow* _eventFocusWindow = nullptr;
 
         bool IsNullOrDeleting();

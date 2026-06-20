@@ -150,8 +150,7 @@ inline static WebBrowserEventCallbackType eventCallback = nullptr;
 public:
 WebBrowser();
 
-protected:
+public:
 virtual ~WebBrowser();
 
 private:
-BYREF_ONLY(WebBrowser);

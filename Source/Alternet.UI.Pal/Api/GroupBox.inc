@@ -7,8 +7,7 @@ int GetOtherBorderForSizer();
 public:
 GroupBox();
 
-protected:
+public:
 virtual ~GroupBox();
 
 private:
-BYREF_ONLY(GroupBox);

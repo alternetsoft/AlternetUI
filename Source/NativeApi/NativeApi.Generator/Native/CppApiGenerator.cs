@@ -32,18 +32,22 @@ namespace ApiGenerator.Native
             WriteEvents(w, types, MemberProvider.GetEvents(type).ToArray());
 
             w.WriteLine();
-            w.WriteLine(GetVisibility(MemberProvider.GetConstructorVisibility(type)));
+            w.WriteLine(GetVisibility(MemberVisibility.Public));
             WriteConstructor(w, types, type);
 
             w.WriteLine();
-            w.WriteLine(GetVisibility(MemberProvider.GetDestructorVisibility(type)));
+
+            // MemberProvider.GetDestructorVisibility(type)
+            w.WriteLine(GetVisibility(MemberVisibility.Public));
             WriteDestructor(w, types, type);
 
             w.WriteLine();
             w.WriteLine("private:");
 
+            /*
             var aa = types.GetTypeName(type.ToContextualType(), TypeUsage.Static);
             w.WriteLine($"BYREF_ONLY({aa});");
+            */
 
             return codeWriter.ToString();
         }

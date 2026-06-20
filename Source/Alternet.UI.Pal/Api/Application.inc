@@ -114,8 +114,7 @@ inline static ApplicationEventCallbackType eventCallback = nullptr;
 public:
 Application();
 
-protected:
+public:
 virtual ~Application();
 
 private:
-BYREF_ONLY(Application);

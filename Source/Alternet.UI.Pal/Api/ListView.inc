@@ -111,8 +111,7 @@ inline static ListViewEventCallbackType eventCallback = nullptr;
 public:
 ListView();
 
-protected:
+public:
 virtual ~ListView();
 
 private:
-BYREF_ONLY(ListView);

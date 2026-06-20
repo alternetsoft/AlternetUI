@@ -36,8 +36,7 @@ string Serialize();
 public:
 Font();
 
-protected:
+public:
 virtual ~Font();
 
 private:
-BYREF_ONLY(Font);

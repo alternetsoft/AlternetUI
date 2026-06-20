@@ -21,8 +21,7 @@ static int GetBorderY(void* handle);
 public:
 WxStatusBarFactory();
 
-protected:
+public:
 virtual ~WxStatusBarFactory();
 
 private:
-BYREF_ONLY(WxStatusBarFactory);

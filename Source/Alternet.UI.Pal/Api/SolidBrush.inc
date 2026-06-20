@@ -6,8 +6,7 @@ void Initialize(const Color& color);
 public:
 SolidBrush();
 
-protected:
+public:
 virtual ~SolidBrush();
 
 private:
-BYREF_ONLY(SolidBrush);

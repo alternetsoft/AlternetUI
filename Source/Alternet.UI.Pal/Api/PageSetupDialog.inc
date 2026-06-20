@@ -36,8 +36,7 @@ ModalResult ShowModal(Window* owner);
 public:
 PageSetupDialog();
 
-protected:
+public:
 virtual ~PageSetupDialog();
 
 private:
-BYREF_ONLY(PageSetupDialog);

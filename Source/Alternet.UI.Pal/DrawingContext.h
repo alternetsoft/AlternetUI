@@ -21,6 +21,7 @@ namespace Alternet::UI
 #include "Api/DrawingContext.inc"
     public:                                
         DrawingContext(wxDC* dc, bool useDirectDraw = true);
+        DrawingContext(wxGraphicsContext* graphicsContext, wxDC* dc);
 
         wxGraphicsContext* GetGraphicsContext();     
         wxDC* GetDC();

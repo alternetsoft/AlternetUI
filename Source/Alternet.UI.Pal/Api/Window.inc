@@ -103,8 +103,7 @@ inline static WindowEventCallbackType eventCallback = nullptr;
 public:
 Window();
 
-protected:
+public:
 virtual ~Window();
 
 private:
-BYREF_ONLY(Window);

@@ -5,6 +5,12 @@
 
 namespace Alternet::UI
 {
+    DrawingContext::DrawingContext(wxGraphicsContext* graphicsContext, wxDC* dc)
+    {
+        _graphicsContext = graphicsContext;
+        _dc = dc;
+    }
+
     DrawingContext::DrawingContext(wxDC* dc, bool useDirectDraw) : _dc(dc)
     {
         assert(_dc);

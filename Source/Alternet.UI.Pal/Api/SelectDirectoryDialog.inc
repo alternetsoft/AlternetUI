@@ -15,8 +15,7 @@ ModalResult ShowModal(Window* owner);
 public:
 SelectDirectoryDialog();
 
-protected:
+public:
 virtual ~SelectDirectoryDialog();
 
 private:
-BYREF_ONLY(SelectDirectoryDialog);

@@ -6,8 +6,7 @@ void Initialize(BrushHatchStyle style, const Color& color);
 public:
 HatchBrush();
 
-protected:
+public:
 virtual ~HatchBrush();
 
 private:
-BYREF_ONLY(HatchBrush);

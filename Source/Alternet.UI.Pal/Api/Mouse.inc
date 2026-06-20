@@ -50,8 +50,7 @@ inline static MouseEventCallbackType eventCallback = nullptr;
 public:
 Mouse();
 
-protected:
+public:
 virtual ~Mouse();
 
 private:
-BYREF_ONLY(Mouse);

@@ -80,8 +80,7 @@ inline static ButtonEventCallbackType eventCallback = nullptr;
 public:
 Button();
 
-protected:
+public:
 virtual ~Button();
 
 private:
-BYREF_ONLY(Button);

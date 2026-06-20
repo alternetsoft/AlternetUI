@@ -73,8 +73,7 @@ inline static SliderEventCallbackType eventCallback = nullptr;
 public:
 Slider();
 
-protected:
+public:
 virtual ~Slider();
 
 private:
-BYREF_ONLY(Slider);

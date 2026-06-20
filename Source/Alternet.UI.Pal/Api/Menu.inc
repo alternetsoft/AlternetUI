@@ -90,8 +90,7 @@ inline static MenuEventCallbackType eventCallback = nullptr;
 public:
 Menu();
 
-protected:
+public:
 virtual ~Menu();
 
 private:
-BYREF_ONLY(Menu);

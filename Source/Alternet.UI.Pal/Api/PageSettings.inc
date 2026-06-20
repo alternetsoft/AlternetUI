@@ -34,8 +34,7 @@ void SetCustomPaperSize(const SizeD& value);
 public:
 PageSettings();
 
-protected:
+public:
 virtual ~PageSettings();
 
 private:
-BYREF_ONLY(PageSettings);

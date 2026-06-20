@@ -6,8 +6,7 @@ void Initialize(const PointD& startPoint, const PointD& endPoint, Color* gradien
 public:
 LinearGradientBrush();
 
-protected:
+public:
 virtual ~LinearGradientBrush();
 
 private:
-BYREF_ONLY(LinearGradientBrush);

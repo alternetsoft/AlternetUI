@@ -260,11 +260,10 @@ private:
 
 inline static ControlEventCallbackType eventCallback = nullptr;
 
-protected:
+public:
 Control();
 
-protected:
+public:
 virtual ~Control();
 
 private:
-BYREF_ONLY(Control);

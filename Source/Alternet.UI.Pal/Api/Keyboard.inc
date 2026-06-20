@@ -60,8 +60,7 @@ inline static KeyboardEventCallbackType eventCallback = nullptr;
 public:
 Keyboard();
 
-protected:
+public:
 virtual ~Keyboard();
 
 private:
-BYREF_ONLY(Keyboard);

@@ -112,8 +112,7 @@ inline static ComboBoxEventCallbackType eventCallback = nullptr;
 public:
 ComboBox();
 
-protected:
+public:
 virtual ~ComboBox();
 
 private:
-BYREF_ONLY(ComboBox);

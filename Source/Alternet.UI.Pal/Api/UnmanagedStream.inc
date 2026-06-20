@@ -15,8 +15,7 @@ void* Read(void* buffer, int bufferCount, void* length);
 public:
 UnmanagedStream();
 
-protected:
+public:
 virtual ~UnmanagedStream();
 
 private:
-BYREF_ONLY(UnmanagedStream);

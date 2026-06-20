@@ -5,8 +5,7 @@ public:
 public:
 Brush();
 
-protected:
+public:
 virtual ~Brush();
 
 private:
-BYREF_ONLY(Brush);

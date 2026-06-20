@@ -6,8 +6,7 @@ void Initialize(DashStyle style, const Color& color, float width, LineCap lineCa
 public:
 Pen();
 
-protected:
+public:
 virtual ~Pen();
 
 private:
-BYREF_ONLY(Pen);

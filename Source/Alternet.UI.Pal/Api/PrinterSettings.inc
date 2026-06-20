@@ -42,8 +42,7 @@ void SetPrintFileName(optional<string> value);
 public:
 PrinterSettings();
 
-protected:
+public:
 virtual ~PrinterSettings();
 
 private:
-BYREF_ONLY(PrinterSettings);

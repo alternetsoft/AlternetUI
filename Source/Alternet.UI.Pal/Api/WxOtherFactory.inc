@@ -131,8 +131,7 @@ static void UIActionSimulatorYield();
 public:
 WxOtherFactory();
 
-protected:
+public:
 virtual ~WxOtherFactory();
 
 private:
-BYREF_ONLY(WxOtherFactory);

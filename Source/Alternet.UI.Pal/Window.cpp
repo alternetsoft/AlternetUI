@@ -304,18 +304,6 @@ namespace Alternet::UI
         DestroyWxWindow();
     }
 
-    void Window::OnPaint(wxPaintEvent& event)
-    {
-        event.Skip();
-        if (IsNullOrDeleting())
-            return;
-        Control::RaiseEvent(ControlEvent::Paint);
-    }
-
-    void Window::OnEraseBackground(wxEraseEvent& event)
-    {
-    }
-
     bool Window::GetShowInTaskbar()
     {
         return _winFlags.IsSet(WindowFlags::ShowInTaskbar);

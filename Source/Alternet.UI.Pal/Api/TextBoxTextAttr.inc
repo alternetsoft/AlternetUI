@@ -100,8 +100,7 @@ static void AddFlag(void* attr, int64_t flag);
 public:
 TextBoxTextAttr();
 
-protected:
+public:
 virtual ~TextBoxTextAttr();
 
 private:
-BYREF_ONLY(TextBoxTextAttr);

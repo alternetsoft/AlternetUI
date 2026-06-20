@@ -147,8 +147,7 @@ inline static TextBoxEventCallbackType eventCallback = nullptr;
 public:
 TextBox();
 
-protected:
+public:
 virtual ~TextBox();
 
 private:
-BYREF_ONLY(TextBox);

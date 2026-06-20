@@ -10,8 +10,7 @@ static void AddFileWithMimeType(const string& filename, void* binarydata, int si
 public:
 MemoryFSHandler();
 
-protected:
+public:
 virtual ~MemoryFSHandler();
 
 private:
-BYREF_ONLY(MemoryFSHandler);

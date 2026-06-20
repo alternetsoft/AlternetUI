@@ -146,8 +146,7 @@ inline static TreeViewEventCallbackType eventCallback = nullptr;
 public:
 TreeView();
 
-protected:
+public:
 virtual ~TreeView();
 
 private:
-BYREF_ONLY(TreeView);

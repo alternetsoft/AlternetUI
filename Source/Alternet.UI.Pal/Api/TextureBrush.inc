@@ -6,8 +6,7 @@ void Initialize(Image* image);
 public:
 TextureBrush();
 
-protected:
+public:
 virtual ~TextureBrush();
 
 private:
-BYREF_ONLY(TextureBrush);

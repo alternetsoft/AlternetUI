@@ -63,8 +63,7 @@ inline static CheckBoxEventCallbackType eventCallback = nullptr;
 public:
 CheckBox();
 
-protected:
+public:
 virtual ~CheckBox();
 
 private:
-BYREF_ONLY(CheckBox);

@@ -67,8 +67,7 @@ inline static ScrollBarEventCallbackType eventCallback = nullptr;
 public:
 ScrollBar();
 
-protected:
+public:
 virtual ~ScrollBar();
 
 private:
-BYREF_ONLY(ScrollBar);

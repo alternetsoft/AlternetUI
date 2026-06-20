@@ -72,8 +72,7 @@ inline static PrintDocumentEventCallbackType eventCallback = nullptr;
 public:
 PrintDocument();
 
-protected:
+public:
 virtual ~PrintDocument();
 
 private:
-BYREF_ONLY(PrintDocument);

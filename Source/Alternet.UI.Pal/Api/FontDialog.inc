@@ -35,8 +35,7 @@ void SetInitialFont(GenericFontFamily genericFamily, optional<string> familyName
 public:
 FontDialog();
 
-protected:
+public:
 virtual ~FontDialog();
 
 private:
-BYREF_ONLY(FontDialog);

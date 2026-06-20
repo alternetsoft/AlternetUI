@@ -72,8 +72,7 @@ inline static NotifyIconEventCallbackType eventCallback = nullptr;
 public:
 NotifyIcon();
 
-protected:
+public:
 virtual ~NotifyIcon();
 
 private:
-BYREF_ONLY(NotifyIcon);

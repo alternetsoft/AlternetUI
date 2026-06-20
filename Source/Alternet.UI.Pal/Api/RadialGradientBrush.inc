@@ -6,8 +6,7 @@ void Initialize(const PointD& center, float radius, const PointD& gradientOrigin
 public:
 RadialGradientBrush();
 
-protected:
+public:
 virtual ~RadialGradientBrush();
 
 private:
-BYREF_ONLY(RadialGradientBrush);

@@ -49,8 +49,7 @@ ModalResult ShowModal(Window* owner);
 public:
 FileDialog();
 
-protected:
+public:
 virtual ~FileDialog();
 
 private:
-BYREF_ONLY(FileDialog);

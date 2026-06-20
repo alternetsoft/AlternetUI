@@ -12,8 +12,7 @@ void ShowModal(Window* owner);
 public:
 PrintPreviewDialog();
 
-protected:
+public:
 virtual ~PrintPreviewDialog();
 
 private:
-BYREF_ONLY(PrintPreviewDialog);

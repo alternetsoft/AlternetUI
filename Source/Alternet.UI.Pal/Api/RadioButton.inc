@@ -51,8 +51,7 @@ inline static RadioButtonEventCallbackType eventCallback = nullptr;
 public:
 RadioButton();
 
-protected:
+public:
 virtual ~RadioButton();
 
 private:
-BYREF_ONLY(RadioButton);

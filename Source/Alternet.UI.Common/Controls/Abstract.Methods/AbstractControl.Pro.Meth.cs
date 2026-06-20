@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// <returns>A <see cref="ControlRenderingFlags"/> value representing the default rendering behavior.</returns>
         protected virtual ControlRenderingFlags GetDefaultRenderingFlags()
         {
-            return ControlRenderingFlags.None;
+            return ControlRenderingFlags.UseSkiaSharp;
         }
 
         /// <summary>

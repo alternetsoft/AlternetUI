@@ -21,8 +21,7 @@ void CloseFigure();
 public:
 GraphicsPath();
 
-protected:
+public:
 virtual ~GraphicsPath();
 
 private:
-BYREF_ONLY(GraphicsPath);

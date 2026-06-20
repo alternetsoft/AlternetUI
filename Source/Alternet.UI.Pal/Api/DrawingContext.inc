@@ -59,11 +59,10 @@ void FillRoundedRectangle(Brush* brush, const RectD& rect, float cornerRadius);
 void DrawPolygon(Pen* pen, PointD* points, int pointsLength);
 void FillPolygon(Brush* brush, PointD* points, int pointsLength, FillMode fillMode);
 
-private:
+public:
 DrawingContext() {}
 
-protected:
+public:
 virtual ~DrawingContext();
 
 private:
-BYREF_ONLY(DrawingContext);

@@ -18,8 +18,7 @@ bool Clear();
 public:
 ImageList();
 
-protected:
+public:
 virtual ~ImageList();
 
 private:
-BYREF_ONLY(ImageList);

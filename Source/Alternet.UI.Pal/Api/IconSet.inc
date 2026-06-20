@@ -9,8 +9,7 @@ bool IsOk();
 public:
 IconSet();
 
-protected:
+public:
 virtual ~IconSet();
 
 private:
-BYREF_ONLY(IconSet);

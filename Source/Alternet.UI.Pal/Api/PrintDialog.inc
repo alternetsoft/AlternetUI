@@ -21,8 +21,7 @@ ModalResult ShowModal(Window* owner);
 public:
 PrintDialog();
 
-protected:
+public:
 virtual ~PrintDialog();
 
 private:
-BYREF_ONLY(PrintDialog);

@@ -128,8 +128,7 @@ inline static CalendarEventCallbackType eventCallback = nullptr;
 public:
 Calendar();
 
-protected:
+public:
 virtual ~Calendar();
 
 private:
-BYREF_ONLY(Calendar);

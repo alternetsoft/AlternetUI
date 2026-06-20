@@ -25,8 +25,7 @@ int GetRegionHashCode();
 public:
 Region();
 
-protected:
+public:
 virtual ~Region();
 
 private:
-BYREF_ONLY(Region);

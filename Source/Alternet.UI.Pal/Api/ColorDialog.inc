@@ -15,8 +15,7 @@ uint8_t GetColorState();
 public:
 ColorDialog();
 
-protected:
+public:
 virtual ~ColorDialog();
 
 private:
-BYREF_ONLY(ColorDialog);

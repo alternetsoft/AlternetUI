@@ -3,11 +3,10 @@
 public:
 static DialogResult Show(Window* owner, const string& text, optional<string> caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton);
 
-private:
+public:
 MessageBoxObj() {}
 
-protected:
+public:
 virtual ~MessageBoxObj();
 
 private:
-BYREF_ONLY(MessageBoxObj);

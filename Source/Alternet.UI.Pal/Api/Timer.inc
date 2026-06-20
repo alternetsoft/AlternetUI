@@ -58,8 +58,7 @@ inline static TimerEventCallbackType eventCallback = nullptr;
 public:
 Timer();
 
-protected:
+public:
 virtual ~Timer();
 
 private:
-BYREF_ONLY(Timer);

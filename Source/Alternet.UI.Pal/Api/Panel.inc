@@ -5,8 +5,7 @@ public:
 public:
 Panel();
 
-protected:
+public:
 virtual ~Panel();
 
 private:
-BYREF_ONLY(Panel);

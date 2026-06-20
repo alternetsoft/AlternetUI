@@ -278,8 +278,7 @@ inline static PropertyGridEventCallbackType eventCallback = nullptr;
 public:
 PropertyGrid();
 
-protected:
+public:
 virtual ~PropertyGrid();
 
 private:
-BYREF_ONLY(PropertyGrid);
