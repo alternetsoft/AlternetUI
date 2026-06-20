@@ -146,6 +146,33 @@ namespace Alternet.UI
         public event EventHandler<UI.TreeViewEventArgs>? ExpandedChanged;
 
         /// <summary>
+        /// Enumerates flags that allow to custommize the behavior of auto fit mode of the columns.
+        /// </summary>
+        [Flags]
+        public enum ColumnAutoFitFlags
+        {
+            /// <summary>
+            /// No flags are specified.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// The column can grow to fit the content.
+            /// </summary>
+            CanGrow = 1,
+
+            /// <summary>
+            /// The column can shrink to fit the content.
+            /// </summary>
+            CanShrink = 2,
+            
+            /// <summary>
+            /// The column can both grow and shrink to fit the content.
+            /// </summary>  
+            CanShrinkAndGrow = CanShrink | CanGrow,
+        }
+
+        /// <summary>
         /// Gets or sets the selection mode (single or multiple).
         /// </summary>
         /// <remarks>The selection mode determines whether multiple items can be selected
@@ -561,7 +588,7 @@ namespace Alternet.UI
 
             set
             {
-                if(value)
+                if (value)
                 {
                     TreeButtons = TreeViewButtonsKind.Angle;
                 }
@@ -967,6 +994,105 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a control which is used to display a column header.
+        /// Typically, this is a <see cref="SpeedButton"/> control.
+        /// </summary>
+        /// <param name="column">The column for which to get the header control.</param>
+        /// <returns>The control used to display the column header, or null if the column is null
+        /// or is not attached to the header control.</returns>
+        public virtual AbstractControl? GetTitleControl(ListControlColumn? column)
+        {
+            if (column == null)
+                return null;
+            var result = column.HeaderColumn(Header);
+            return result;
+        }
+
+        /// <summary>
+        /// Changes width of the specified column based on the preferred width of the column header control
+        /// and additional parameters.
+        /// </summary>
+        /// <param name="column">The column to adjust.</param>
+        /// <param name="flags">Flags that specify the behavior of the auto fit mode.</param>
+        /// <param name="minWidth">The minimum width of the column.</param>
+        /// <param name="maxWidth">The maximum width of the column.</param>
+        /// <param name="widthExtent">Additional width to add to the preferred width.</param>
+        public virtual void AutoFitTitleWidth(
+            ListControlColumn? column,
+            ColumnAutoFitFlags flags = ColumnAutoFitFlags.CanGrow | ColumnAutoFitFlags.CanShrink,
+            float minWidth = 0,
+            float maxWidth = 0,
+            float widthExtent = 0)
+        {
+            if (column == null)
+                return;
+            var preferredWidth = GetTitleControlPreferredWidth(column);
+
+            if (preferredWidth <= 0)
+                return;
+
+            preferredWidth += widthExtent;
+            if (preferredWidth < minWidth)
+                preferredWidth = minWidth;
+            if (preferredWidth > maxWidth && maxWidth > 0)
+                preferredWidth = maxWidth;
+
+            bool changed = false;
+            bool canGrow = (flags & ColumnAutoFitFlags.CanGrow) != 0;
+            bool canShrink = (flags & ColumnAutoFitFlags.CanShrink) != 0;
+
+            if (preferredWidth > column.SuggestedWidth && canGrow)
+            {
+                column.SuggestedWidth = preferredWidth;
+                changed = true;
+            }
+            else
+                if (preferredWidth < column.SuggestedWidth && canShrink)
+                {
+                    column.SuggestedWidth = preferredWidth;
+                    changed = true;
+                }
+
+            if (changed && IsHeaderAllocated)
+            {
+                var headerColumn = column.HeaderColumn(Header);
+
+                if (headerColumn != null)
+                    headerColumn.Width = column.SuggestedWidth;
+            }
+        }
+
+        /// <summary>
+        /// Gets the preferred width of the column header control for the specified column.
+        /// </summary>
+        /// <param name="column">The column for which to get the preferred width.</param>
+        /// <returns>The preferred width of the column header control, or 0 if the column is null.</returns>
+        public virtual float GetTitleControlPreferredWidth(ListControlColumn? column)
+        {
+            if (column == null)
+                return 0;
+            var result = GetTitleControl(column);
+            return result?.GetPreferredSize().Width ?? 0;
+        }
+
+        /// <summary>
+        /// Gets all controls used to display column headers.
+        /// </summary>
+        /// <returns>An enumerable collection of controls used to display column headers.</returns>
+        public virtual IEnumerable<AbstractControl?> GetTitleControls()
+        {
+            if (!HasColumns)
+                yield break;
+
+            foreach (var column in Columns)
+            {
+                var control = GetTitleControl(column);
+                if (control is not null)
+                    yield return control;
+            }
+        }
+
+        /// <summary>
         /// Removes the currently selected item from the tree view.
         /// </summary>
         public void RemoveSelectedItem()
@@ -1055,7 +1181,7 @@ namespace Alternet.UI
         /// column is found.</returns>
         public virtual ListControlColumn? ColumnByName(string name)
         {
-            if(!HasColumns)
+            if (!HasColumns)
                 return null;
 
             foreach (var column in Columns)
@@ -1484,7 +1610,7 @@ namespace Alternet.UI
         /// <see langword="false"/> to collapse it.</param>
         public virtual void SetExpandedAndKeepPosAndSelection(TreeViewItem? item, bool expanded)
         {
-            if(item is null)
+            if (item is null)
                 return;
 
             Post(() =>
@@ -1720,7 +1846,7 @@ namespace Alternet.UI
         {
             if (item is null)
                 return false;
-            if(string.IsNullOrEmpty(subString))
+            if (string.IsNullOrEmpty(subString))
                 return true;
             var txt = ListBox.GetItemText(item, true);
             return txt.Contains(subString!, comparison);
@@ -1769,7 +1895,7 @@ namespace Alternet.UI
             Predicate<TreeViewItem> filter,
             TreeViewItem.EnumExpandedItemsParams? prm = null)
         {
-            if(prm is null)
+            if (prm is null)
             {
                 prm = new();
                 prm.OnlyVisible = false;
@@ -1852,11 +1978,11 @@ namespace Alternet.UI
                 e.Suppressed();
             }
             else
-            if (item?.Parent is not null && item.Parent.Parent is not null)
-            {
-                SelectItem(item.Parent);
-                e.Suppressed();
-            }
+                if (item?.Parent is not null && item.Parent.Parent is not null)
+                {
+                    SelectItem(item.Parent);
+                    e.Suppressed();
+                }
         }
 
         /// <summary>
@@ -1986,13 +2112,13 @@ namespace Alternet.UI
         /// <param name="propertyName">The name of the property that changed.</param>
         protected virtual void OnItemPropertyChanged(TreeViewItem item, string? propertyName)
         {
-            if(!TrackItemPropertyChanges)
+            if (!TrackItemPropertyChanges)
                 return;
             if (string.IsNullOrEmpty(propertyName))
                 return;
             if (!ListBox.ItemsLastPainted.Contains(item))
                 return;
-            if(InvalidateWhenItemPropertyChanged(item, propertyName))
+            if (InvalidateWhenItemPropertyChanged(item, propertyName))
             {
                 ListBox.Invalidate();
             }
@@ -2052,7 +2178,7 @@ namespace Alternet.UI
                     var oldWidth = col.SuggestedWidth;
                     col.SuggestedWidth = newWidth;
 
-                    if (oldWidth != newWidth)                    
+                    if (oldWidth != newWidth)
                     {
                         ListBox.Refresh();
                     }

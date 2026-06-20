@@ -62,11 +62,34 @@ namespace EmployeeFormSample
 
             DataContext = employee;
 
+            evaluationsListView.TreeButtons = TreeViewButtonsKind.Null;
             evaluationsListView.IsHeaderVisible = true;
             evaluationsListView.ListBox.SetSelectionAndCurrentItemRoundBorders(true);
-            var dateColumn = evaluationsListView.AddColumn("Date", 110);
-            var infoColumn = evaluationsListView.AddColumn("Info", 190);
-            var managerColumn = evaluationsListView.AddColumn("Manager", 150);
+            var dateColumn = evaluationsListView.AddColumn("Date", 100);
+            var infoColumn = evaluationsListView.AddColumn("Info", 100);
+            var managerColumn = evaluationsListView.AddColumn("Manager", 100);
+
+            var dateColumnControl = evaluationsListView.GetTitleControl(dateColumn);
+            var infoColumnControl = evaluationsListView.GetTitleControl(infoColumn);
+            var managerColumnControl = evaluationsListView.GetTitleControl(managerColumn);
+
+            evaluationsListView.AutoFitTitleWidth(
+                dateColumn,
+                StdTreeView.ColumnAutoFitFlags.CanShrinkAndGrow,
+                minWidth:100,
+                maxWidth:200);
+
+            evaluationsListView.AutoFitTitleWidth(
+                infoColumn,
+                StdTreeView.ColumnAutoFitFlags.CanShrinkAndGrow,
+                minWidth:100,
+                maxWidth:200);
+
+            evaluationsListView.AutoFitTitleWidth(
+                managerColumn,
+                StdTreeView.ColumnAutoFitFlags.CanShrinkAndGrow,
+                minWidth:100,
+                maxWidth:200);
 
             EmployeeEvaluation evaluation1 = new EmployeeEvaluation(
                 new DateTime(2022, 12, 21),

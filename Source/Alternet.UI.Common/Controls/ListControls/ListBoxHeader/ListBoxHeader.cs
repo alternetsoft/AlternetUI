@@ -213,7 +213,8 @@ namespace Alternet.UI
         /// Retrieves the splitter control attached to the specified column, if one exists.
         /// </summary>
         /// <param name="column">The column control for which to retrieve the attached splitter. Can be null.</param>
-        /// <returns>The splitter control attached to the specified column, or null if no splitter is attached or if the column
+        /// <returns>The splitter control attached to the specified column,
+        /// or null if no splitter is attached or if the column
         /// is null.</returns>
         public virtual AbstractControl? GetColumnSplitter(AbstractControl? column)
         {
@@ -337,7 +338,8 @@ namespace Alternet.UI
             SizeD Internal()
             {
                 var children = ColumnControls.ToArray();
-                var result = GetLayoutManager().GetPreferredSizeWhenStack(this, context, isVert: false, children, ignoreDocked: false);
+                var result = GetLayoutManager()
+                    .GetPreferredSizeWhenStack(this, context, isVert: false, children, ignoreDocked: false);
                 result.Width = context.AvailableSize.Width;
                 return result;
             }
@@ -495,14 +497,16 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Override this method in a derived class to provide custom handling when a column size
         /// changes. This method invokes the ColumnSizeChanged event with the provided label control.</remarks>
-        /// <param name="label">The label control representing the column whose size has changed. Cannot be null.</param>
+        /// <param name="label">The label control representing the column whose
+        /// size has changed. Cannot be null.</param>
         protected virtual void OnColumnSizeChanged(AbstractControl label)
         {
             ColumnSizeChanged?.Invoke(this, new ColumnEventArgs(label));
         }
 
         /// <summary>
-        /// Raises the event that notifies subscribers when the visibility of a column associated with the specified label
+        /// Raises the event that notifies subscribers when the visibility
+        /// of a column associated with the specified label
         /// control has changed.
         /// </summary>
         /// <param name="label"></param>
