@@ -23,6 +23,13 @@ namespace Alternet::UI
 		}
 	}
 
+	void TextBox::RecreateWxWindowIfNeeded()
+	{
+		auto text = GetText();
+		Control::RecreateWxWindowIfNeeded();
+		GetTextCtrl()->SetValue(wxStr(text));
+	}
+	
 	string TextBox::GetText()
 	{
 		auto result = GetTextCtrl()->GetValue();

@@ -184,6 +184,7 @@ namespace Alternet::UI
     public:
         string GetText() override;
         void SetText(const NativeStringSpan& value) override;
+        virtual void RecreateWxWindowIfNeeded() override;
 
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;

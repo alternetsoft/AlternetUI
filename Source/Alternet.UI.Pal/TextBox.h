@@ -18,6 +18,8 @@ namespace Alternet::UI
         void OnTextUrl(wxTextUrlEvent& event);
         void OnTextMaxLength(wxCommandEvent& event);
         TextBox(void* validator);
+        virtual void RecreateWxWindowIfNeeded() override;
+
     protected:
         bool IsCursorSuppressed() override { return true; }
 

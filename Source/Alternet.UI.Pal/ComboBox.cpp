@@ -72,6 +72,13 @@ namespace Alternet::UI
         return ((ComboBox*)_palControl)->OnMeasureItemWidth(item);
     }
 
+    void ComboBox::RecreateWxWindowIfNeeded()
+    {
+        auto text = GetText();
+        Control::RecreateWxWindowIfNeeded();
+        GetComboBox()->SetValue(wxStr(text));
+    }
+
     ComboBox::ComboBox()
     {
     }

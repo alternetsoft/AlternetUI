@@ -8,6 +8,7 @@ namespace Alternet::UI
     {
 #include "Api/GroupBox.inc"
     public:
+        virtual void RecreateWxWindowIfNeeded() override;
         string GetText() override;
         void SetText(const NativeStringSpan& value) override;
 
