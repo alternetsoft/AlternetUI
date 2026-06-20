@@ -28,6 +28,8 @@ namespace Alternet.UI
         : FrameworkElement, ISupportInitialize, IDisposable, IFocusable,
         IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo, IGripControlTarget
     {
+        public static readonly ControlRenderingFlags RenderingFlags = ControlRenderingFlags.UseSkiaSharp;
+
         /// <summary>
         /// Gets or sets default value for <see cref="ParentFont"/> property.
         /// </summary>
@@ -149,14 +151,12 @@ namespace Alternet.UI
         private bool bubbleKeys;
         private HVDropDownAlignment? dropDownMenuPosition;
         private long? lastClickedTimestamp;
-        private ControlRenderingFlags renderingFlags;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractControl"/> class.
         /// </summary>
         public AbstractControl()
         {
-            renderingFlags = GetDefaultRenderingFlags();
             visible = GetDefaultVisible();
             font = DefaultFont;
             var defaults = GetDefaults(ControlKind);
@@ -376,20 +376,6 @@ namespace Alternet.UI
                     return Display.Primary.ScaleFactor;
 
                 return scaleFactor.Value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the rendering flags that determine how the control is rendered.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlRenderingFlags RenderingFlags
-        {
-            get => renderingFlags;
-
-            set
-            {
-                renderingFlags = value;
             }
         }
 

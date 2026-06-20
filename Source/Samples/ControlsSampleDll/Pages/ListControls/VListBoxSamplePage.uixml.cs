@@ -134,10 +134,6 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
-            contextMenu.AddSeparator();
-            contextMenu.Add(ControlUtils.CreateMenuItemRenderingModeSelector(listBox));
-            contextMenu.Add(ControlUtils.CreateMenuItemTrackPaintingTime(listBox));
-
             listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars || App.IsWindowsOS;
 
             var item = listBox.GetItem(1);

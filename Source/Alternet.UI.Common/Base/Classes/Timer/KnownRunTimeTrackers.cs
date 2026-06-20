@@ -146,57 +146,5 @@ namespace Alternet.UI
 
             TrackedControl = null;
         }
-
-        /// <summary>
-        /// Tracks and logs the rendering performance of a
-        /// <see cref="UserControl"/> across all supported rendering modes.
-        /// </summary>
-        /// <remarks>This method evaluates the rendering performance of the specified
-        /// <paramref name="control"/> in three rendering modes: SoftwareDoubleBuffered, SkiaSharp,
-        /// and SkiaSharpWithOpenGL. For
-        /// each mode, the method sets the rendering mode, processes pending application events,
-        /// performs the rendering
-        /// operation, and logs the results.</remarks>
-        /// <param name="control">The <see cref="UserControl"/> to be
-        /// tested for rendering performance.</param>
-        /// <param name="repeatCount">The number of times to repeat the rendering operation for each mode.
-        /// Must be a non-negative integer.</param>
-        public static void TrackAllModesPainting(
-            UserControl control,
-            int repeatCount)
-        {
-            if(control is ScrollableUserControl scrollable)
-            {
-                scrollable.UseInternalScrollBars = true;
-            }
-
-            ControlUtils.SetRenderingMode(control, ControlRenderingMode.SoftwareDoubleBuffered);
-            App.DoEvents();
-            control.Refresh();
-            App.DoEvents();
-            ControlUtils.SetRenderingMode(control, ControlRenderingMode.SkiaSharp);
-            App.DoEvents();
-            control.Refresh();
-            App.DoEvents();
-            ControlUtils.SetRenderingMode(control, ControlRenderingMode.SkiaSharpWithOpenGL);
-            App.DoEvents();
-            control.Refresh();
-            App.DoEvents();
-
-            ResetPaintTrackers();
-            ControlUtils.SetRenderingMode(control, ControlRenderingMode.SoftwareDoubleBuffered);
-            App.DoEvents();
-            TrackPainting(control, repeatCount);
-            App.DoEvents();
-            ControlUtils.SetRenderingMode(control, ControlRenderingMode.SkiaSharp);
-            App.DoEvents();
-            TrackPainting(control, repeatCount);
-            App.DoEvents();
-            ControlUtils.SetRenderingMode(control, ControlRenderingMode.SkiaSharpWithOpenGL);
-            App.DoEvents();
-            TrackPainting(control, repeatCount);
-            App.DoEvents();
-            RunTimeTracker.Log();
-        }
     }
 }

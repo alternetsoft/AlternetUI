@@ -189,19 +189,6 @@ namespace Alternet.UI
                 App.DebugLog($"Log File = {App.LogFilePath}");
             if (Display.MinScaleFactor != Display.MaxScaleFactor)
                 App.DebugLog("Displays have different scale factors");
-
-            if(App.PlatformKind == UIPlatformKind.WxWidgets)
-            {
-                if(VirtualListBox.DefaultRenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp))
-                {
-                    App.DebugLog("SkiaSharp rendering is forcibly enabled for VirtualListBox.");
-                }
-
-                if(VirtualListBox.DefaultRenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL))
-                {
-                    App.DebugLog("OpenGL rendering is forcibly enabled for VirtualListBox.");
-                }
-            }
         }
 
         /// <summary>

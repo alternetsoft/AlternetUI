@@ -72,7 +72,6 @@ namespace Alternet.UI
 
         static VirtualListBox()
         {
-            DefaultRenderingFlags = ControlRenderingFlags.None;
         }
 
         /// <summary>
@@ -193,11 +192,6 @@ namespace Alternet.UI
             /// </summary>
             Default,
         }
-
-        /// <summary>
-        /// Represents the default rendering flags for <see cref="VirtualListBox"/> and it's descendants.
-        /// </summary>
-        public static ControlRenderingFlags DefaultRenderingFlags { get; set; }
 
         /// <summary>
         /// Gets or sets the default border color of the full item tooltip.
@@ -2560,12 +2554,6 @@ namespace Alternet.UI
         {
             base.OnLostFocus(e);
             Invalidate();
-        }
-
-        /// <inheritdoc/>
-        protected override ControlRenderingFlags GetDefaultRenderingFlags()
-        {
-            return DefaultRenderingFlags;
         }
 
         /// <inheritdoc/>

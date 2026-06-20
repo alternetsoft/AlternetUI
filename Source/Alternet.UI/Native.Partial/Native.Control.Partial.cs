@@ -3,10 +3,13 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Security;
 using SkiaSharp;
+using System.Diagnostics;
 namespace Alternet.UI.Native
 {
     internal partial class Control
     {
+        private static bool reportedUsedGraphics = false;
+
         private readonly Alternet.Skia.SkiaSurfaceOnMswDib dibSurface = new();
 
         private Drawing.DynamicBitmap? dynamicBitmap;
@@ -71,8 +74,7 @@ namespace Alternet.UI.Native
             if (uiControl is null)
                 return;
 
-            var skia = !App.IsMacOS &&
-                uiControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
+            var skia = AbstractControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
 
             if (skia)
             {
@@ -271,8 +273,19 @@ namespace Alternet.UI.Native
             return Handler?.OpenPaintDrawingContext() ?? Alternet.Drawing.PlessGraphics.Default;
         }
 
+        [Conditional("DEBUG")]
+        protected void ReportUsedGraphics(string s)
+        {
+            if (reportedUsedGraphics)
+                return;
+            reportedUsedGraphics = true;
+            App.Log("Use graphics engine: " + s);
+        }
+
         protected void DefaultPaint()
         {
+            ReportUsedGraphics("Default");
+
             var uiControl = UIControl;
 
             if (uiControl is null)
@@ -301,6 +314,8 @@ namespace Alternet.UI.Native
 
         protected void SkiaPaintMsw()
         {
+            ReportUsedGraphics("SkiaPaintMsw");
+
             var uiControl = UIControl;
             if (uiControl is null)
                 return;
@@ -365,6 +380,8 @@ namespace Alternet.UI.Native
 
         protected void SkiaPaintCrossPlatform()
         {
+            ReportUsedGraphics("SkiaPaintCrossPlatform");
+
             var uiControl = UIControl;
             if (uiControl is null)
                 return;

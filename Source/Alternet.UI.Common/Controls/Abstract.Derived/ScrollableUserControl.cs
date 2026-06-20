@@ -144,27 +144,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        [Browsable(false)]
-        public override ControlRenderingFlags RenderingFlags
-        {
-            get => base.RenderingFlags;
-            set
-            {
-                if (RenderingFlags == value)
-                    return;
-
-                var newOpenGL = value.HasFlag(ControlRenderingFlags.UseOpenGL);
-
-                if (newOpenGL)
-                {
-                    UseInternalScrollBars = true;
-                }
-
-                base.RenderingFlags = value;
-            }
-        }
-
-        /// <inheritdoc/>
         [Browsable(true)]
         public override bool HasBorder
         {
