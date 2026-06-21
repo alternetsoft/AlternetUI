@@ -58,6 +58,7 @@ namespace Alternet.UI
             hasInternalScrollBars = useOpenGL || DefaultUseInternalScrollBars;
 
             OnHasInternalScrollBarsChanged();
+            SetInternalScrollBarsImmutable();
         }
 
         /// <summary>

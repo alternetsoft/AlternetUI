@@ -100,7 +100,7 @@ namespace Alternet.Drawing
         /// Creates <see cref="IRegionHandler"/> provider and initializes it with the rectangle.
         /// </summary>
         /// <returns></returns>
-        IRegionHandler CreateRegionHandler(RectD rect);
+        IRegionHandler CreateRegionHandler(RectI rect);
 
         /// <summary>
         /// Creates <see cref="IRegionHandler"/> provider and initializes it with the region.
@@ -113,7 +113,10 @@ namespace Alternet.Drawing
         /// specified with array of points and fill mode.
         /// </summary>
         /// <returns></returns>
-        IRegionHandler CreateRegionHandler(PointD[] points, FillMode fillMode = FillMode.Alternate);
+        IRegionHandler CreateRegionHandler(
+            ReadOnlySpan<PointD> points,
+            FillMode fillMode = FillMode.Alternate,
+            float scaleFactor = 1.0f);
 
         /// <summary>
         /// Creates <see cref="IGraphicsPathHandler"/> provider.

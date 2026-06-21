@@ -22,14 +22,14 @@ ALTERNET_UI_API void Region_Clear_(Region* obj)
     });
 }
 
-ALTERNET_UI_API int Region_ContainsPoint_(Region* obj, PointD* pt)
+ALTERNET_UI_API int Region_ContainsPoint_(Region* obj, PointI* pt)
 {
     return MarshalExceptions<int>([&](){
         return obj->ContainsPoint(*pt);
     });
 }
 
-ALTERNET_UI_API int Region_ContainsRect_(Region* obj, RectD* rect)
+ALTERNET_UI_API int Region_ContainsRect_(Region* obj, RectI* rect)
 {
     return MarshalExceptions<int>([&](){
         return obj->ContainsRect(*rect);
@@ -57,21 +57,21 @@ ALTERNET_UI_API void Region_InitializeWithRegion_(Region* obj, Region* region)
     });
 }
 
-ALTERNET_UI_API void Region_InitializeWithRect_(Region* obj, RectD* rect)
+ALTERNET_UI_API void Region_InitializeWithRect_(Region* obj, RectI* rect)
 {
     MarshalExceptions<void>([&](){
         obj->InitializeWithRect(*rect);
     });
 }
 
-ALTERNET_UI_API void Region_InitializeWithPolygon_(Region* obj, PointD* points, int pointsCount, FillMode fillMode)
+ALTERNET_UI_API void Region_InitializeWithPolygon_(Region* obj, PointD* points, int pointsCount, FillMode fillMode, float scaleFactor)
 {
     MarshalExceptions<void>([&](){
-        obj->InitializeWithPolygon(points, pointsCount, fillMode);
+        obj->InitializeWithPolygon(points, pointsCount, fillMode, scaleFactor);
     });
 }
 
-ALTERNET_UI_API void Region_IntersectWithRect_(Region* obj, RectD* rect)
+ALTERNET_UI_API void Region_IntersectWithRect_(Region* obj, RectI* rect)
 {
     MarshalExceptions<void>([&](){
         obj->IntersectWithRect(*rect);
@@ -85,7 +85,7 @@ ALTERNET_UI_API void Region_IntersectWithRegion_(Region* obj, Region* region)
     });
 }
 
-ALTERNET_UI_API void Region_UnionWithRect_(Region* obj, RectD* rect)
+ALTERNET_UI_API void Region_UnionWithRect_(Region* obj, RectI* rect)
 {
     MarshalExceptions<void>([&](){
         obj->UnionWithRect(*rect);
@@ -99,7 +99,7 @@ ALTERNET_UI_API void Region_UnionWithRegion_(Region* obj, Region* region)
     });
 }
 
-ALTERNET_UI_API void Region_XorWithRect_(Region* obj, RectD* rect)
+ALTERNET_UI_API void Region_XorWithRect_(Region* obj, RectI* rect)
 {
     MarshalExceptions<void>([&](){
         obj->XorWithRect(*rect);
@@ -113,7 +113,7 @@ ALTERNET_UI_API void Region_XorWithRegion_(Region* obj, Region* region)
     });
 }
 
-ALTERNET_UI_API void Region_SubtractRect_(Region* obj, RectD* rect)
+ALTERNET_UI_API void Region_SubtractRect_(Region* obj, RectI* rect)
 {
     MarshalExceptions<void>([&](){
         obj->SubtractRect(*rect);
@@ -127,16 +127,16 @@ ALTERNET_UI_API void Region_SubtractRegion_(Region* obj, Region* region)
     });
 }
 
-ALTERNET_UI_API void Region_Translate_(Region* obj, float dx, float dy)
+ALTERNET_UI_API void Region_Translate_(Region* obj, int dx, int dy)
 {
     MarshalExceptions<void>([&](){
         obj->Translate(dx, dy);
     });
 }
 
-ALTERNET_UI_API RectD_C Region_GetBounds_(Region* obj)
+ALTERNET_UI_API RectI_C Region_GetBounds_(Region* obj)
 {
-    return MarshalExceptions<RectD_C>([&](){
+    return MarshalExceptions<RectI_C>([&](){
         return obj->GetBounds();
     });
 }

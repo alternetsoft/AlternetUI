@@ -655,29 +655,36 @@ constexpr Coord M_PI_Coord = 3.1415927f;
 #endif
 	}
 
-	inline int wxRound2(double x)
+	constexpr float MinIntBound = float(INT_MIN) + 0.5f;
+	constexpr float MaxIntBound = float(INT_MAX) - 0.5f;
+
+	inline int fromDipSf(Coord value, float scaleFactor)
 	{
-		wxASSERT_MSG(x > double(INT_MIN) - 0.5 && x < double(INT_MAX) + 0.5,
-			"argument out of supported range");
+		auto px = value * scaleFactor;
 
-		return int(std::lround(x));
+		if (px >= MaxIntBound) return INT_MAX;
+		if (px <= MinIntBound) return INT_MIN;
+		return wxRound(px);
 	}
-
-	constexpr float MinIntBound = float(INT_MIN) - 0.5f;
-	constexpr float MaxIntBound = float(INT_MAX) + 0.5f;
 
 	inline int fromDip(Coord value, wxWindow* window)
 	{
-		auto px = value * GetDPIScaleFactor(window);
+		return fromDipSf(value, GetDPIScaleFactor(window));
+	}
 
-		if(px >= MaxIntBound)
-			return INT_MAX;
-		else
-		if(px <= MinIntBound)
-			return INT_MIN;
-
+	inline int fromDipUnscaled(Coord px)
+	{
+		if (px >= MaxIntBound) return INT_MAX;
+		if (px <= MinIntBound) return INT_MIN;
 		return wxRound(px);
 	}
+
+	inline wxPoint fromDipUnscaled(const Point& value)
+	{
+		return wxPoint(
+			fromDipUnscaled(value.X),
+			fromDipUnscaled(value.Y));
+	};
 
 	inline Coord fromDipF(Coord value, wxWindow* window)
 	{
@@ -765,6 +772,13 @@ constexpr Coord M_PI_Coord = 3.1415927f;
 		return wxPoint(
 			fromDip(value.X, window),
 			fromDip(value.Y, window));
+	};
+
+	inline wxPoint fromDipSf(const Point& value, float scaleFactor)
+	{
+		return wxPoint(
+			fromDipSf(value.X, scaleFactor),
+			fromDipSf(value.Y, scaleFactor));
 	};
 
 	inline Point fromDipF(const Point& value, wxWindow* window)

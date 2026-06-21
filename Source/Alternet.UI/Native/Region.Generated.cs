@@ -29,14 +29,14 @@ namespace Alternet.UI.Native
             NativeApi.Region_Clear_(NativePointer);
         }
         
-        public int ContainsPoint(Alternet.Drawing.PointD pt)
+        public int ContainsPoint(Alternet.Drawing.PointI pt)
         {
             CheckDisposed();
             var pt_Native = pt.ToNative();
 return NativeApi.Region_ContainsPoint_(NativePointer, ref pt_Native);
         }
         
-        public int ContainsRect(Alternet.Drawing.RectD rect)
+        public int ContainsRect(Alternet.Drawing.RectI rect)
         {
             CheckDisposed();
             var rect_Native = rect.ToNative();
@@ -61,20 +61,20 @@ return NativeApi.Region_ContainsRect_(NativePointer, ref rect_Native);
             NativeApi.Region_InitializeWithRegion_(NativePointer, region.NativePointer);
         }
         
-        public void InitializeWithRect(Alternet.Drawing.RectD rect)
+        public void InitializeWithRect(Alternet.Drawing.RectI rect)
         {
             CheckDisposed();
             var rect_Native = rect.ToNative();
 NativeApi.Region_InitializeWithRect_(NativePointer, ref rect_Native);
         }
         
-        public void InitializeWithPolygon(Alternet.Drawing.PointD[] points, Alternet.Drawing.FillMode fillMode)
+        public unsafe void InitializeWithPolygon(Alternet.Drawing.PointD* points, int pointsCount, Alternet.Drawing.FillMode fillMode, float scaleFactor)
         {
             CheckDisposed();
-            NativeApi.Region_InitializeWithPolygon_(NativePointer, points, points.Length, fillMode);
+            NativeApi.Region_InitializeWithPolygon_(NativePointer, points, pointsCount, fillMode, scaleFactor);
         }
         
-        public void IntersectWithRect(Alternet.Drawing.RectD rect)
+        public void IntersectWithRect(Alternet.Drawing.RectI rect)
         {
             CheckDisposed();
             var rect_Native = rect.ToNative();
@@ -87,7 +87,7 @@ NativeApi.Region_IntersectWithRect_(NativePointer, ref rect_Native);
             NativeApi.Region_IntersectWithRegion_(NativePointer, region.NativePointer);
         }
         
-        public void UnionWithRect(Alternet.Drawing.RectD rect)
+        public void UnionWithRect(Alternet.Drawing.RectI rect)
         {
             CheckDisposed();
             var rect_Native = rect.ToNative();
@@ -100,7 +100,7 @@ NativeApi.Region_UnionWithRect_(NativePointer, ref rect_Native);
             NativeApi.Region_UnionWithRegion_(NativePointer, region.NativePointer);
         }
         
-        public void XorWithRect(Alternet.Drawing.RectD rect)
+        public void XorWithRect(Alternet.Drawing.RectI rect)
         {
             CheckDisposed();
             var rect_Native = rect.ToNative();
@@ -113,7 +113,7 @@ NativeApi.Region_XorWithRect_(NativePointer, ref rect_Native);
             NativeApi.Region_XorWithRegion_(NativePointer, region.NativePointer);
         }
         
-        public void SubtractRect(Alternet.Drawing.RectD rect)
+        public void SubtractRect(Alternet.Drawing.RectI rect)
         {
             CheckDisposed();
             var rect_Native = rect.ToNative();
@@ -126,13 +126,13 @@ NativeApi.Region_SubtractRect_(NativePointer, ref rect_Native);
             NativeApi.Region_SubtractRegion_(NativePointer, region.NativePointer);
         }
         
-        public void Translate(float dx, float dy)
+        public void Translate(int dx, int dy)
         {
             CheckDisposed();
             NativeApi.Region_Translate_(NativePointer, dx, dy);
         }
         
-        public Alternet.Drawing.RectD GetBounds()
+        public Alternet.Drawing.RectI GetBounds()
         {
             CheckDisposed();
             return NativeApi.Region_GetBounds_(NativePointer);
@@ -163,10 +163,10 @@ NativeApi.Region_SubtractRect_(NativePointer, ref rect_Native);
             public static extern void Region_Clear_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Region_ContainsPoint_(IntPtr obj, ref Alternet.Drawing.PointD pt);
+            public static extern int Region_ContainsPoint_(IntPtr obj, ref Alternet.Drawing.PointI pt);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Region_ContainsRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
+            public static extern int Region_ContainsRect_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Region_IsEmpty_(IntPtr obj);
@@ -178,40 +178,40 @@ NativeApi.Region_SubtractRect_(NativePointer, ref rect_Native);
             public static extern void Region_InitializeWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_InitializeWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
+            public static extern void Region_InitializeWithRect_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_InitializeWithPolygon_(IntPtr obj, Alternet.Drawing.PointD[] points, int pointsCount, Alternet.Drawing.FillMode fillMode);
+            public unsafe static extern void Region_InitializeWithPolygon_(IntPtr obj, Alternet.Drawing.PointD* points, int pointsCount, Alternet.Drawing.FillMode fillMode, float scaleFactor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_IntersectWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
+            public static extern void Region_IntersectWithRect_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_IntersectWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_UnionWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
+            public static extern void Region_UnionWithRect_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_UnionWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_XorWithRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
+            public static extern void Region_XorWithRect_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_XorWithRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_SubtractRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
+            public static extern void Region_SubtractRect_(IntPtr obj, ref Alternet.Drawing.RectI rect);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Region_SubtractRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Region_Translate_(IntPtr obj, float dx, float dy);
+            public static extern void Region_Translate_(IntPtr obj, int dx, int dy);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.RectD Region_GetBounds_(IntPtr obj);
+            public static extern Alternet.Drawing.RectI Region_GetBounds_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Region_IsEqualTo_(IntPtr obj, IntPtr other);

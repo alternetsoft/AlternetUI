@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,12 +32,9 @@ namespace Alternet.Drawing
         /// with the specified rectangle.
         /// </summary>
         /// <param name="rect">The rectangle.</param>
-        /// <param name="scaleFactor">The scale factor.</param>
-        public SkiaRegionHandler(RectD rect, Coord? scaleFactor = null)
+        public SkiaRegionHandler(RectI rect)
         {
-            ScaleFactor = scaleFactor;
-            var rectI = GraphicsFactory.PixelFromDip(rect, ScaleFactor);
-            region = new(rectI);
+            region = new(rect);
         }
 
         /// <summary>
@@ -62,19 +60,22 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="points">Array of points which specify region.</param>
         /// <param name="fillMode">Fill mode.</param>
-        public SkiaRegionHandler(PointD[] points, FillMode fillMode)
+        /// <param name="scaleFactor">The scale factor for the polygon.</param>
+        public SkiaRegionHandler(ReadOnlySpan<PointD> points, FillMode fillMode, float scaleFactor = 1.0f)
         {
             SKPath path = new();
             path.FillType = fillMode.ToSkia();
-            path.AddPoly(points.PixelFromDipD(ScaleFactor));
+
+            ReadOnlySpan<SKPoint> spanSKPoint = MemoryMarshal.Cast<PointD, SKPoint>(points);
+            path.AddPoly(spanSKPoint);
+
+            if (scaleFactor != 1.0f)
+            {
+                path.Transform(SKMatrix.CreateScale(scaleFactor, scaleFactor));
+            }
+
             region = new(path);
         }
-
-        /// <summary>
-        /// Gets or sets scale factor used when conversion device-independent units
-        /// to/from pixels is performed.
-        /// </summary>
-        public Coord? ScaleFactor { get; set; } = 1;
 
         /// <summary>
         /// Gets the SkiaSharp region which used by this handler.
@@ -87,29 +88,28 @@ namespace Alternet.Drawing
             region.SetEmpty();
         }
 
-        /// <seealso cref="Region.Contains(PointD)"/>
-        public virtual RegionContain ContainsPoint(PointD pt)
+        /// <seealso cref="Region.Contains(PointI)"/>
+        public virtual RegionContain ContainsPoint(PointI pt)
         {
-            if (region.Contains(pt.PixelFromDip(ScaleFactor)))
+            if (region.Contains(pt))
                 return RegionContain.InRegion;
             else
                 return RegionContain.OutRegion;
         }
 
-        /// <seealso cref="Region.Contains(RectD)"/>
-        public virtual RegionContain ContainsRect(RectD rect)
+        /// <seealso cref="Region.Contains(RectI)"/>
+        public virtual RegionContain ContainsRect(RectI rect)
         {
-            if (region.Contains(rect.PixelFromDip(ScaleFactor)))
+            if (region.Contains(rect))
                 return RegionContain.InRegion;
             else
                 return RegionContain.OutRegion;
         }
 
         /// <seealso cref="Region.GetBounds()"/>
-        public virtual RectD GetBounds()
+        public virtual RectI GetBounds()
         {
-            var resultI = (RectI)region.Bounds;
-            return resultI.PixelToDip(ScaleFactor);
+            return region.Bounds;
         }
 
         /// <summary>
@@ -117,9 +117,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="rect">Rectangle parameter value for the operation.</param>
         /// <param name="op">Operation kind.</param>
-        public virtual void Op(RectD rect, SKRegionOperation op)
+        public virtual void Op(RectI rect, SKRegionOperation op)
         {
-            region.Op(rect.PixelFromDip(ScaleFactor), op);
+            region.Op(rect, op);
         }
 
         /// <summary>
@@ -138,8 +138,8 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <seealso cref="Region.Intersect(RectD)"/>
-        public virtual void IntersectWithRect(RectD rect)
+        /// <seealso cref="Region.Intersect(RectI)"/>
+        public virtual void IntersectWithRect(RectI rect)
         {
             Op(rect, SKRegionOperation.Intersect);
         }
@@ -181,8 +181,8 @@ namespace Alternet.Drawing
             return !IsDisposed;
         }
 
-        /// <seealso cref="Region.Union(RectD)"/>
-        public virtual void UnionWithRect(RectD rect)
+        /// <seealso cref="Region.Union(RectI)"/>
+        public virtual void UnionWithRect(RectI rect)
         {
             Op(rect, SKRegionOperation.Union);
         }
@@ -193,8 +193,8 @@ namespace Alternet.Drawing
             Op(region, SKRegionOperation.Union);
         }
 
-        /// <seealso cref="Region.Xor(RectD)"/>
-        public virtual void XorWithRect(RectD rect)
+        /// <seealso cref="Region.Xor(RectI)"/>
+        public virtual void XorWithRect(RectI rect)
         {
             Op(rect, SKRegionOperation.XOR);
         }
@@ -206,13 +206,13 @@ namespace Alternet.Drawing
         }
 
         /// <seealso cref="Region.Translate"/>
-        public virtual void Translate(Coord dx, Coord dy)
+        public virtual void Translate(int dx, int dy)
         {
-            region.Translate(dx.PixelFromDip(ScaleFactor), dy.PixelFromDip(ScaleFactor));
+            region.Translate(dx, dy);
         }
 
-        /// <seealso cref="Region.Subtract(RectD)"/>
-        public virtual void SubtractRect(RectD rect)
+        /// <seealso cref="Region.Subtract(RectI)"/>
+        public virtual void SubtractRect(RectI rect)
         {
             Op(rect, SKRegionOperation.Difference);
         }

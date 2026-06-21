@@ -25,7 +25,7 @@ namespace Alternet.Drawing
         /// <param name="rect">A <see cref="RectD"/> structure that defines the interior
         /// of the new <see cref="Region"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Region(RectD rect)
+        public Region(RectI rect)
         {
             Handler = GraphicsFactory.Handler.CreateRegionHandler(rect);
         }
@@ -48,10 +48,14 @@ namespace Alternet.Drawing
         /// <param name="points">A <see cref="PointD"/> structures array
         /// describing the polygon.</param>
         /// <param name="fillMode">The polygon fill mode.</param>
+        /// <param name="scaleFactor">The scale factor for the polygon.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Region(PointD[] points, FillMode fillMode = FillMode.Alternate)
+        public Region(
+            ReadOnlySpan<PointD> points,
+            FillMode fillMode = FillMode.Alternate,
+            float scaleFactor = 1.0f)
         {
-            Handler = GraphicsFactory.Handler.CreateRegionHandler(points, fillMode);
+            Handler = GraphicsFactory.Handler.CreateRegionHandler(points, fillMode, scaleFactor);
         }
 
         /// <summary>
@@ -89,7 +93,7 @@ namespace Alternet.Drawing
         /// <param name="pt">Point to check.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RegionContain Contains(PointD pt)
+        public RegionContain Contains(PointI pt)
         {
             CheckDisposed();
             return Handler.ContainsPoint(pt);
@@ -101,7 +105,7 @@ namespace Alternet.Drawing
         /// <param name="rect">Rectangle to check.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RegionContain Contains(RectD rect)
+        public RegionContain Contains(RectI rect)
         {
             CheckDisposed();
             return Handler.ContainsRect(rect);
@@ -109,12 +113,12 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Updates this <see cref="Region"/> to the intersection of itself with the
-        /// specified <see cref="RectD"/> structure.
+        /// specified <see cref="RectI"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="RectD"/> structure to intersect with this
+        /// <param name="rect">The <see cref="RectI"/> structure to intersect with this
         /// <see cref="Region"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Intersect(RectD rect)
+        public void Intersect(RectI rect)
         {
             CheckDisposed();
             Handler.IntersectWithRect(rect);
@@ -135,12 +139,12 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Updates this <see cref="Region"/> to the union of itself with the
-        /// specified <see cref="RectD"/> structure.
+        /// specified <see cref="RectI"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="RectD"/> structure to union with
+        /// <param name="rect">The <see cref="RectI"/> structure to union with
         /// this <see cref="Region"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Union(RectD rect)
+        public void Union(RectI rect)
         {
             CheckDisposed();
             Handler.UnionWithRect(rect);
@@ -174,12 +178,12 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Updates this <see cref="Region"/> to the xor of itself with the
-        /// specified <see cref="RectD"/> structure.
+        /// specified <see cref="RectI"/> structure.
         /// </summary>
-        /// <param name="rect">The <see cref="RectD"/> structure to xor with
+        /// <param name="rect">The <see cref="RectI"/> structure to xor with
         /// this <see cref="Region"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Xor(RectD rect)
+        public void Xor(RectI rect)
         {
             CheckDisposed();
             Handler.XorWithRect(rect);
@@ -198,7 +202,7 @@ namespace Alternet.Drawing
         /// may nevertheless be safely used even in this case.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Subtract(RectD rect)
+        public void Subtract(RectI rect)
         {
             CheckDisposed();
             Handler.SubtractRect(rect);
@@ -229,31 +233,21 @@ namespace Alternet.Drawing
         /// <param name="dx">The amount to offset this <see cref="Region"/> horizontally.</param>
         /// <param name="dy">The amount to offset this <see cref="Region"/> vertically.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Translate(Coord dx, Coord dy)
+        public void Translate(int dx, int dy)
         {
             CheckDisposed();
             Handler.Translate(dx, dy);
         }
 
         /// <summary>
-        /// Gets a <see cref="RectD"/> structure that represents a rectangle that
+        /// Gets a <see cref="RectI"/> structure that represents a rectangle that
         /// bounds this <see cref="Region"/>.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RectD GetBounds()
+        public RectI GetBounds()
         {
             CheckDisposed();
             return Handler.GetBounds();
-        }
-
-        /// <summary>
-        /// Gets a <see cref="RectD"/> structure that represents a rectangle that
-        /// bounds this <see cref="Region"/>.
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public RectD GetBounds(Graphics g)
-        {
-            return GetBounds();
         }
 
         /// <inheritdoc/>

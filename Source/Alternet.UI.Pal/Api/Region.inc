@@ -2,23 +2,23 @@
 
 public:
 void Clear();
-int ContainsPoint(const PointD& pt);
-int ContainsRect(const RectD& rect);
+int ContainsPoint(const PointI& pt);
+int ContainsRect(const RectI& rect);
 bool IsEmpty();
 bool IsOk();
 void InitializeWithRegion(Region* region);
-void InitializeWithRect(const RectD& rect);
-void InitializeWithPolygon(PointD* points, int pointsCount, FillMode fillMode);
-void IntersectWithRect(const RectD& rect);
+void InitializeWithRect(const RectI& rect);
+void InitializeWithPolygon(PointD* points, int pointsCount, FillMode fillMode, float scaleFactor);
+void IntersectWithRect(const RectI& rect);
 void IntersectWithRegion(Region* region);
-void UnionWithRect(const RectD& rect);
+void UnionWithRect(const RectI& rect);
 void UnionWithRegion(Region* region);
-void XorWithRect(const RectD& rect);
+void XorWithRect(const RectI& rect);
 void XorWithRegion(Region* region);
-void SubtractRect(const RectD& rect);
+void SubtractRect(const RectI& rect);
 void SubtractRegion(Region* region);
-void Translate(float dx, float dy);
-RectD GetBounds();
+void Translate(int dx, int dy);
+RectI GetBounds();
 bool IsEqualTo(Region* other);
 int GetRegionHashCode();
 

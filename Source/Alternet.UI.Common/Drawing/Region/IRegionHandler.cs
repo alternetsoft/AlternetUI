@@ -20,20 +20,20 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Region.Clear"/>
         void Clear();
 
-        /// <inheritdoc cref="Region.Contains(PointD)"/>
-        RegionContain ContainsPoint(PointD pt);
+        /// <inheritdoc cref="Region.Contains(PointI)"/>
+        RegionContain ContainsPoint(PointI pt);
 
-        /// <inheritdoc cref="Region.Contains(RectD)"/>
-        RegionContain ContainsRect(RectD rect);
+        /// <inheritdoc cref="Region.Contains(RectI)"/>
+        RegionContain ContainsRect(RectI rect);
 
-        /// <inheritdoc cref="Region.Intersect(RectD)"/>
-        void IntersectWithRect(RectD rect);
+        /// <inheritdoc cref="Region.Intersect(RectI)"/>
+        void IntersectWithRect(RectI rect);
 
         /// <inheritdoc cref="Region.Intersect(Region)"/>
         void IntersectWithRegion(Region region);
 
-        /// <inheritdoc cref="Region.Union(RectD)"/>
-        void UnionWithRect(RectD rect);
+        /// <inheritdoc cref="Region.Union(RectI)"/>
+        void UnionWithRect(RectI rect);
 
         /// <inheritdoc cref="Region.Union(Region)"/>
         void UnionWithRegion(Region region);
@@ -41,20 +41,20 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Region.Xor(Region)"/>
         void XorWithRegion(Region region);
 
-        /// <inheritdoc cref="Region.Xor(RectD)"/>
-        void XorWithRect(RectD rect);
+        /// <inheritdoc cref="Region.Xor(RectI)"/>
+        void XorWithRect(RectI rect);
 
-        /// <inheritdoc cref="Region.Subtract(RectD)"/>
-        void SubtractRect(RectD rect);
+        /// <inheritdoc cref="Region.Subtract(RectI)"/>
+        void SubtractRect(RectI rect);
 
         /// <inheritdoc cref="Region.Subtract(Region)"/>
         void SubtractRegion(Region region);
 
         /// <inheritdoc cref="Region.Translate"/>
-        void Translate(Coord dx, Coord dy);
+        void Translate(int dx, int dy);
 
         /// <inheritdoc cref="Region.GetBounds()"/>
-        RectD GetBounds();
+        RectI GetBounds();
 
         /// <summary>
         /// Gets whether or not this region is equal to other region.

@@ -155,7 +155,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IRegionHandler CreateRegionHandler(RectD rect)
+        public virtual IRegionHandler CreateRegionHandler(RectI rect)
         {
             return new SkiaRegionHandler(rect);
         }
@@ -167,9 +167,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IRegionHandler CreateRegionHandler(PointD[] points, FillMode fillMode)
+        public virtual IRegionHandler CreateRegionHandler(ReadOnlySpan<PointD> points, FillMode fillMode, float scaleFactor)
         {
-            return new SkiaRegionHandler(points, fillMode);
+            return new SkiaRegionHandler(points, fillMode, scaleFactor);
         }
 
         /// <inheritdoc/>

@@ -17,9 +17,9 @@ namespace Alternet::UI
         _region = wxRegion(region->_region);
     }
 
-    void Region::InitializeWithRect(const Rect& rect)
+    void Region::InitializeWithRect(const RectI& rect)
     {
-        _region = wxRegion(fromDip(rect, GetWindow()));
+        _region = wxRegion(rect);
     }
 
     void Region::Clear()
@@ -27,16 +27,14 @@ namespace Alternet::UI
         _region.Clear();
     }
 
-    int Region::ContainsPoint(const Point& pt)
+    int Region::ContainsPoint(const PointI& pt)
     {
-        auto point = fromDip(pt, GetWindow());
-        return _region.Contains(point);
+        return _region.Contains(pt);
     }
 
-    int Region::ContainsRect(const Rect& rect)
+    int Region::ContainsRect(const RectI& rect)
     {
-        auto r = fromDip(rect, GetWindow());
-        return _region.Contains(r);
+        return _region.Contains(rect);
     }
 
     bool Region::IsEmpty()
@@ -49,13 +47,13 @@ namespace Alternet::UI
         return _region.IsOk();
     }
 
-    void Region::InitializeWithPolygon(Point* points, int pointsCount, FillMode fillMode)
+    void Region::InitializeWithPolygon(Point* points, int pointsCount, FillMode fillMode, float scaleFactor)
     {
         std::vector<wxPoint> wxPoints;
         wxPoints.reserve(pointsCount);
         for (int i = 0; i < pointsCount; i++)
         {
-            wxPoints.push_back(fromDip(points[i], GetWindow()));
+            wxPoints.push_back(fromDipSf(points[i], scaleFactor));
         }
 
         _region = wxRegion(pointsCount, &wxPoints[0], GraphicsPath::GetWxFillMode(fillMode));
@@ -71,9 +69,9 @@ namespace Alternet::UI
         return ParkingWindow::GetWindow();
     }
 
-    void Region::IntersectWithRect(const Rect& rect)
+    void Region::IntersectWithRect(const RectI& rect)
     {
-        _region.Intersect(fromDip(rect, GetWindow()));
+        _region.Intersect(rect);
     }
 
     void Region::IntersectWithRegion(Region* region)
@@ -81,9 +79,9 @@ namespace Alternet::UI
         _region.Intersect(region->GetRegion());
     }
 
-    void Region::UnionWithRect(const Rect& rect)
+    void Region::UnionWithRect(const RectI& rect)
     {
-        _region.Union(fromDip(rect, GetWindow()));
+        _region.Union(rect);
     }
 
     void Region::UnionWithRegion(Region* region)
@@ -91,9 +89,9 @@ namespace Alternet::UI
         _region.Union(region->GetRegion());
     }
 
-    void Region::XorWithRect(const Rect& rect)
+    void Region::XorWithRect(const RectI& rect)
     {
-        _region.Xor(fromDip(rect, GetWindow()));
+        _region.Xor(rect);
     }
 
     void Region::XorWithRegion(Region* region)
@@ -101,9 +99,9 @@ namespace Alternet::UI
         _region.Xor(region->GetRegion());
     }
 
-    void Region::SubtractRect(const Rect& rect)
+    void Region::SubtractRect(const RectI& rect)
     {
-        _region.Subtract(fromDip(rect, GetWindow()));
+        _region.Subtract(rect);
     }
 
     void Region::SubtractRegion(Region* region)
@@ -111,14 +109,14 @@ namespace Alternet::UI
         _region.Subtract(region->GetRegion());
     }
 
-    void Region::Translate(Coord dx, Coord dy)
+    void Region::Translate(int dx, int dy)
     {
-        _region.Offset(fromDip(dx, GetWindow()), fromDip(dy, GetWindow()));
+        _region.Offset(dx, dy);
     }
 
-    Rect Region::GetBounds()
+    RectI Region::GetBounds()
     {
-        return toDip(_region.GetBox(), GetWindow());
+        return _region.GetBox();
     }
 
     bool Region::IsEqualTo(Region* other)

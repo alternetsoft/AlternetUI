@@ -147,7 +147,7 @@ namespace Alternet.Drawing
             }
         }
 
-        public IRegionHandler CreateRegionHandler(RectD rect)
+        public IRegionHandler CreateRegionHandler(RectI rect)
         {
             if (ControlUtils.SkiaSharpRendering)
             {
@@ -175,16 +175,25 @@ namespace Alternet.Drawing
             }
         }
 
-        public IRegionHandler CreateRegionHandler(PointD[] points, FillMode fillMode = FillMode.Alternate)
+        public IRegionHandler CreateRegionHandler(
+            ReadOnlySpan<PointD> points,
+            FillMode fillMode = FillMode.Alternate,
+            float scaleFactor = 1.0f)
         {
             if (ControlUtils.SkiaSharpRendering)
             {
-                return new SkiaRegionHandler(points, fillMode);
+                return new SkiaRegionHandler(points, fillMode, scaleFactor);
             }
             else
             {
                 var nativeObject = new UI.Native.Region();
-                nativeObject.InitializeWithPolygon(points, fillMode);
+                unsafe
+                {
+                    fixed (PointD* pointsPtr = points)
+                    {
+                        nativeObject.InitializeWithPolygon(pointsPtr, points.Length, fillMode, scaleFactor);
+                    }
+                }
                 return nativeObject;
             }
         }
