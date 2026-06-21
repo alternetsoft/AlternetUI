@@ -19,7 +19,7 @@ namespace Alternet::UI
         void DestroyDialog();
         void CreateDialog();
 
-        optional<string> _title;
+        wxString _title;
         Color _color;
 
         Window* _owner = nullptr;

@@ -360,14 +360,15 @@ namespace Alternet::UI
         GetWxWindow()->SetId(value);
     }
 
-    string Control::GetName()
+    NativeStringSpan Control::GetName()
     {
-        return wxStr(GetWxWindow()->GetName());
+        _name = GetWxWindow()->GetName();
+        return WxToStringSpan(_name);
     }
 
-    void Control::SetName(const string& value)
+    void Control::SetName(const NativeStringSpan& value)
     {
-        GetWxWindow()->SetName(wxStr(value));
+        GetWxWindow()->SetName(StringSpanToWx(value));
     }
 
     int Control::GetBorderStyle()
@@ -440,9 +441,9 @@ namespace Alternet::UI
     }
 
 
-    void Control::SaveScreenshot(const string& fileName)
+    void Control::SaveScreenshot(const NativeStringSpan& fileName)
     {
-        UI::SaveScreenshot(GetWxWindow(), fileName);
+        UI::SaveScreenshot(GetWxWindow(), StringSpanToWx(fileName));
     }
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)
@@ -888,14 +889,14 @@ namespace Alternet::UI
         wxWindow->SendSizeEvent();
     }
 
-    optional<string> Control::GetToolTip()
+    NativeStringSpan Control::GetToolTip()
     {
-        return _toolTip;
+        return WxToStringSpan(_toolTip);
     }
 
-    void Control::SetToolTip(optional<string> value)
+    void Control::SetToolTip(const NativeStringSpan& value)
     {
-        _toolTip = value;
+        _toolTip = StringSpanToWx(value);
 
         if (IsWxWindowCreated())
             ApplyToolTip();
@@ -908,10 +909,10 @@ namespace Alternet::UI
         if (_wxWindow == nullptr)
             throwExInvalidOpWithInfo(wxStr("Control::ApplyToolTip"));
 
-        if (_toolTip == nullopt)
+        if (_toolTip.empty())
             _wxWindow->UnsetToolTip();
         else
-            _wxWindow->SetToolTip(wxStr(_toolTip.value()));
+            _wxWindow->SetToolTip(_toolTip);
     }
 
     void Control::OnParentChanged()

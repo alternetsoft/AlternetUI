@@ -4,9 +4,9 @@
 
 namespace Alternet::UI
 {
-    int SaveScreenshot(wxWindow* xWindow, string fileName)
+    int SaveScreenshot(wxWindow* xWindow, wxString fileName)
     {
-        if (!wxStr(fileName).MakeLower().EndsWith(".bmp"))
+        if (!fileName.MakeLower().EndsWith(".bmp"))
             throwEx(u"Only .bmp file format is supported for screenshots.");
 
 #ifndef __WXMSW__

@@ -21,8 +21,8 @@ namespace Alternet::UI
 
         _dialog = new wxColourDialog(owner, _data);
         
-        if (_title.has_value())
-            _dialog->SetTitle(wxStr(_title.value()));
+        if (!_title.empty())
+            _dialog->SetTitle(_title);
     }
 
     uint8_t ColorDialog::GetColorR()
@@ -55,15 +55,15 @@ namespace Alternet::UI
         GetDialog()->GetColourData().SetColour(value);
     }
 
-    optional<string> ColorDialog::GetTitle()
+    NativeStringSpan ColorDialog::GetTitle()
     {
-        return _title;
+        return WxToStringSpan(_title);
     }
 
-    void ColorDialog::SetTitle(optional<string> value)
+    void ColorDialog::SetTitle(const NativeStringSpan& value)
     {
-        _title = value;
-        GetDialog()->SetTitle(wxStr(value.value_or(u"")));
+        _title = StringSpanToWx(value);
+        GetDialog()->SetTitle(_title);
     }
 
     ModalResult ColorDialog::ShowModal(Window* owner)

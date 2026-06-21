@@ -546,7 +546,7 @@ namespace Alternet::UI
         _graphicsContext->DrawEllipse(rect.x, rect.y, rect.width, rect.height);
     }
 
-    void DrawingContext::DrawText(void* text, int charLength, const PointD& location,
+    void DrawingContext::DrawText(const NativeStringSpan& text, const PointD& location,
         Font* font, const Color& foreColor, Brush* backColor, float angle, bool useBrush)
     {
         auto window = DrawingContext::GetWindow(_dc);
@@ -566,7 +566,7 @@ namespace Alternet::UI
         wxGraphicsFont gFont = _graphicsContext->CreateFont(font->GetWxFont(), wxForeColor);
         _graphicsContext->SetFont(gFont);
 
-        auto wxText = FromSmartString(text, charLength);
+        auto wxText = StringSpanToWx(text);
 
         if (useBrush)
         {
@@ -595,7 +595,7 @@ namespace Alternet::UI
         return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
     }
 
-    Size DrawingContext::GetTextExtentSimple(void* text, int charLength, Font* font, void* control)
+    Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, Font* font, void* control)
     {
         auto wxf = font->GetWxFont();
 
@@ -609,7 +609,7 @@ namespace Alternet::UI
 
         _graphicsContext->SetFont(wxf, *wxBLACK);
 
-        auto wText = FromSmartString(text, charLength);
+        auto wText = StringSpanToWx(text);
 
         _graphicsContext->GetTextExtent(wText, &width, &height, nullptr, nullptr);
         

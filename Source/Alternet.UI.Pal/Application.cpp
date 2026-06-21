@@ -276,10 +276,10 @@ scrollbar.horizontal{
         _clipboard = nullptr;
     }
 
-    void Application::SetGtkCss(bool inject, const string& css)
+    void Application::SetGtkCss(bool inject, const NativeStringSpan& css)
     {
         _injectGtkCss = inject;
-        _gtkCss = wxStr(css);
+        _gtkCss = StringSpanToWx(css);
     }
 
     void Application::GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount)
@@ -387,9 +387,9 @@ scrollbar.horizontal{
         _app->SetExitOnFrameDelete(flag);
     }
 
-    bool Application::SetNativeTheme(const string& theme)
+    bool Application::SetNativeTheme(const NativeStringSpan& theme)
     {
-        return _app->SetNativeTheme(wxStr(theme));
+        return _app->SetNativeTheme(StringSpanToWx(theme));
     }
 
     void Application::SetTopWindow(void* window)
@@ -437,18 +437,18 @@ scrollbar.horizontal{
         return wxStr(_app->GetAppDisplayName());
     }
 
-    void Application::SetDisplayName(const string& value) 
+    void Application::SetDisplayName(const NativeStringSpan& value) 
     {
-        _app->SetAppDisplayName(wxStr(value));
+        _app->SetAppDisplayName(StringSpanToWx(value));
     }
 
     string Application::GetAppClassName() 
     {
         return wxStr(_app->GetClassName());
     }
-    void Application::SetAppClassName(const string& value)
+    void Application::SetAppClassName(const NativeStringSpan& value)
     {
-        _app->SetClassName(wxStr(value));
+        _app->SetClassName(StringSpanToWx(value));
     }
 
     string Application::GetVendorName()
@@ -456,9 +456,9 @@ scrollbar.horizontal{
         return wxStr(_app->GetVendorName());
     }
 
-    void Application::SetVendorName(const string& value)
+    void Application::SetVendorName(const NativeStringSpan& value)
     {
-        _app->SetVendorName(wxStr(value));
+        _app->SetVendorName(StringSpanToWx(value));
     }
 
     string Application::GetVendorDisplayName()
@@ -466,9 +466,9 @@ scrollbar.horizontal{
         return wxStr(_app->GetVendorDisplayName());
     }
 
-    void Application::SetVendorDisplayName(const string& value)
+    void Application::SetVendorDisplayName(const NativeStringSpan& value)
     {
-        _app->SetVendorDisplayName(wxStr(value));
+        _app->SetVendorDisplayName(StringSpanToWx(value));
     }
 
     string Application::GetName()
@@ -476,9 +476,9 @@ scrollbar.horizontal{
         return wxStr(_app->GetAppName());
     }
 
-    void Application::SetName(const string& value)
+    void Application::SetName(const NativeStringSpan& value)
     {
-        _app->SetAppName(wxStr(value));
+        _app->SetAppName(StringSpanToWx(value));
     }
 
     void Application::RaiseIdle()
@@ -553,9 +553,9 @@ scrollbar.horizontal{
         return s_current;
     }
 
-    void Application::SetSystemOptionInt(const string& name, int value)
+    void Application::SetSystemOptionInt(const NativeStringSpan& name, int value)
     {
-        wxSystemOptions::SetOption(wxStr(name), value);
+        wxSystemOptions::SetOption(StringSpanToWx(name), value);
     }
 
     void Application::ProcessPendingEvents()
@@ -634,7 +634,8 @@ currently means only Microsoft Visual C++.
 This function is called when an assert failure occurs, i.e. the condition specified in wxASSERT()
 macro evaluated to false.
 It is only called in debug mode (when __WXDEBUG__ is defined) as asserts are not left in the
-release code at all. The base class version shows the default assert failure dialog box proposing to the user to stop the program, continue or ignore all subsequent asserts.
+release code at all. The base class version shows the default assert failure
+dialog box proposing to the user to stop the program, continue or ignore all subsequent asserts.
 Parameters
 file
 the name of the source file where the assert occurred
@@ -777,14 +778,16 @@ public:
         return portName + " " + version;
     }
 
-    string Application::GetCustomData(const string& key)
+    NativeStringSpan Application::GetCustomData(const NativeStringSpan& key)
     {
-        if (key == wxStr("wx.PortAndVersion"))
+        auto wx = StringSpanToWx(key);
+
+        if (wx == "wx.PortAndVersion")
         {
             return wxStr(GetPortAndVersion());
         }
 
-		return string();
+		return NativeStringSpan();
     }
 
 }

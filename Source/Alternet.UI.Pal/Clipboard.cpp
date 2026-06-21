@@ -18,12 +18,12 @@ namespace Alternet::UI
         return wxTheClipboard->IsSupported(wxDataFormat((wxDataFormatId)format));
     }
 
-    bool Clipboard::IsStrFormatSupported(const string& format)
+    bool Clipboard::IsStrFormatSupported(const NativeStringSpan& format)
     {
         wxClipboardLocker clipboardLocker;
         if (!clipboardLocker)
             return false;
-        auto fmt = wxStr(format);
+        auto fmt = StringSpanToWx(format);
         auto dataFmt = wxDataFormat(fmt);
         auto result = wxTheClipboard->IsSupported(dataFmt);
         return result;

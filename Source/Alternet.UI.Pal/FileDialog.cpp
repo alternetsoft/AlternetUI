@@ -17,10 +17,10 @@ namespace Alternet::UI
 
         _dialog = new wxFileDialog(
             owner,
-            wxStr(_title.value_or(u"")),
-            wxStr(_initialDirectory.value_or(u"")),
-            wxStr(_fileName.value_or(u"")),
-            wxStr(_filter.value_or(u"")),
+            _title,
+            _initialDirectory,
+            _fileName,
+            _filter,
             GetStyle(),
             wxDefaultPosition,
             wxDefaultSize,
@@ -143,41 +143,46 @@ namespace Alternet::UI
         RecreateDialog();
     }
 
-    optional<string> FileDialog::GetInitialDirectory()
+    NativeStringSpan FileDialog::GetInitialDirectory()
     {
-        return _initialDirectory;
+        return WxToStringSpan(_initialDirectory);
     }
 
-    void FileDialog::SetInitialDirectory(optional<string> value)
+    void FileDialog::SetInitialDirectory(const NativeStringSpan& value)
     {
-        _initialDirectory = value;
-        GetDialog()->SetDirectory(wxStr(value.value_or(u"")));
-    }
-
-    optional<string> FileDialog::GetTitle()
-    {
-        return _title;
-    }
-
-    void FileDialog::SetTitle(optional<string> value)
-    {
-        if (_title == value)
+        auto _newInitialDirectory = StringSpanToWx(value);
+        if (_initialDirectory == _newInitialDirectory)
             return;
-        _title = value;
+        _initialDirectory = _newInitialDirectory;
+        GetDialog()->SetDirectory(_initialDirectory);
+    }
+
+    NativeStringSpan FileDialog::GetTitle()
+    {
+        return WxToStringSpan(_title);
+    }
+
+    void FileDialog::SetTitle(const NativeStringSpan& value)
+    {
+        auto _newTitle = StringSpanToWx(value);
+        if (_title == _newTitle)
+            return;
+        _title = _newTitle;
         RecreateDialog();
     }
 
-    optional<string> FileDialog::GetFilter()
+    NativeStringSpan FileDialog::GetFilter()
     {
-        return _filter;
+        return WxToStringSpan(_filter);
     }
 
-    void FileDialog::SetFilter(optional<string> value)
+    void FileDialog::SetFilter(const NativeStringSpan& value)
     {
-        if (_filter == value)
+        auto _newFilter = StringSpanToWx(value);
+        if (_filter == _newFilter)
             return;
-        _filter = value;
-        GetDialog()->SetWildcard(wxStr(value.value_or(u"")));
+        _filter = _newFilter;
+        GetDialog()->SetWildcard(_filter);
     }
 
     int FileDialog::GetSelectedFilterIndex()
@@ -193,30 +198,29 @@ namespace Alternet::UI
         GetDialog()->SetFilterIndex(value);
     }
 
-    optional<string> FileDialog::GetFileName()
+    NativeStringSpan FileDialog::GetFileName()
     {
-        string value;
-
         if (_allowMultipleSelection)
         {
             wxArrayString paths;
             GetDialog()->GetPaths(paths);
-            value = paths.GetCount() == 0 ? u"" : wxStr(paths[0]);
+            _fileNameResult = paths.GetCount() == 0 ? "" : paths[0];
         }
         else
         {
-            value = wxStr(GetDialog()->GetPath());
+            _fileNameResult = GetDialog()->GetPath();
         }
 
-        return value == u"" ? nullopt : optional<string>(value);
+        return WxToStringSpan(_fileNameResult);
     }
 
-    void FileDialog::SetFileName(optional<string> value)
+    void FileDialog::SetFileName(const NativeStringSpan& value)
     {
-        if (_fileName == value)
+        auto _newFileName = StringSpanToWx(value);
+        if (_fileName == _newFileName)
             return;
-        _fileName = value;
-        GetDialog()->SetPath(wxStr(value.value_or(u"")));
+        _fileName = _newFileName;
+        GetDialog()->SetPath(_fileName);
     }
 
     bool FileDialog::GetAllowMultipleSelection()
@@ -245,10 +249,11 @@ namespace Alternet::UI
         return paths->GetCount();
     }
 
-    optional<string> FileDialog::GetFileNamesItemAt(void* array, int index)
+    NativeStringSpan FileDialog::GetFileNamesItemAt(void* array, int index)
     {
         auto paths = (wxArrayString*)array;
-        return wxStr((*paths)[index]);
+        _fileNameResult = (*paths)[index];
+        return WxToStringSpan(_fileNameResult);
     }
 
     void FileDialog::CloseFileNamesArray(void* array)

@@ -30,11 +30,12 @@ namespace Alternet::UI
         bool _showHiddenFiles = false;
 
         FileDialogMode _mode = FileDialogMode::Open;
-        optional<string> _initialDirectory;
-        optional<string> _title;
-        optional<string> _filter;
+        wxString _initialDirectory;
+        wxString _title;
+        wxString _filter;
         int _selectedFilterIndex = 0;
-        optional<string> _fileName;
+        wxString _fileName;
+        wxString _fileNameResult;
         bool _allowMultipleSelection = false;
         Window* _owner = nullptr;
 

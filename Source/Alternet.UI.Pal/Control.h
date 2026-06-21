@@ -186,6 +186,7 @@ namespace Alternet::UI
             Active = 1 << 9,
         };
 
+        wxString _name;
         bool _wantChars = false;
         bool _showVertScrollBar = false;
         bool _showHorzScrollBar = false;
@@ -308,7 +309,7 @@ namespace Alternet::UI
 
         DropTarget* _dropTarget = nullptr;
 
-        optional<string> _toolTip;
+        wxString _toolTip;
 
         int _scrollbarEvtKind = 0;
         int _scrollbarEvtPosition = 0;
