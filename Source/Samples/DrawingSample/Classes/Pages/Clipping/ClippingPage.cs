@@ -63,7 +63,9 @@ namespace DrawingSample
 #pragma warning restore
             }
 
-            using var region = new Region(GetPolygonPoints());
+
+            var points = GetPolygonPoints();
+            using var region = new Region(points, FillMode.Alternate, Canvas?.ScaleFactor ?? 1.0f);
             ApplyRegionParts(region);
 
             dc.DoInsideClipped(region, () =>
@@ -168,11 +170,11 @@ namespace DrawingSample
                 switch (part.Operation)
                 {
                     case ClipOperation.Union:
-                        region.Union(part.Bounds);
+                        region.Union(part.Bounds.PixelFromDip(Canvas?.ScaleFactor ?? 1.0f));
                         break;
 
                     case ClipOperation.Subtract:
-                        region.Subtract(part.Bounds);
+                        region.Subtract(part.Bounds.PixelFromDip(Canvas?.ScaleFactor ?? 1.0f));
                         break;
 
                     default:
