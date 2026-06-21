@@ -1062,6 +1062,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets preferred columns width based on the preferred width of the column header control,
+        /// column content, and additional parameters.
+        /// </summary>
+        /// <param name="prm">Parameters for setting the preferred column width.</param>
         public virtual void SetPreferredColumnWidth(PreferredColumnWidthParams? prm = null)
         {
             var expandColumnToTitle = prm?.ExpandColumnToTitle ?? true;
@@ -1082,6 +1087,11 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets the width of the specified column inside the control and in the header.
+        /// </summary>
+        /// <param name="column">The column to set the width for.</param>
+        /// <param name="width">The width to set.</param>
         public virtual void SetColumnTitleAndContentWidth(ListControlColumn column, float width)
         {
             if (column.SuggestedWidth == width)
@@ -2313,10 +2323,21 @@ namespace Alternet.UI
             Header.LayoutOffset = Header.LayoutOffset.WithX(offsetX);
         }
 
+        /// <summary>
+        /// Represents the parameters for setting preferred column widths.
+        /// </summary>
         public struct PreferredColumnWidthParams
         {
+            /// <summary>
+            /// Gets or sets a value indicating whether to expand column width so its title fits.
+            /// If false, only the content of the column is considered when calculating the preferred width.
+            /// </summary>
             public bool ExpandColumnToTitle = true;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="PreferredColumnWidthParams"/> struct
+            /// with the default parameters.
+            /// </summary>
             public PreferredColumnWidthParams()
             {
             }
