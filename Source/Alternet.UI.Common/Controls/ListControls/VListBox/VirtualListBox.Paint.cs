@@ -157,15 +157,28 @@ namespace Alternet.UI
             }
         }
 
+        public virtual MeasureContentSizeResult GetPreferredContentSize(Graphics? dc = null)
+        {
+            ListControlItem.MeasureItemSizeParams prm = new();
+            prm.UseColumnWidth = false;
+            prm.RequestCellSize = true;
+
+            var contentSize = GetContentSize(dc, prm);
+            return contentSize;
+        }
+
         /// <summary>
         /// Calculates the total size of all the rows.
         /// </summary>
         /// <param name="dc">The graphics context used to perform the measurement.
         /// If null, the default measurement canvas is used.</param>
-        /// <returns>A <see cref="SizeD"/> representing the total size of all the rows.</returns>
-        public virtual SizeD GetContentSize(Graphics? dc = null)
+        /// <returns>A <see cref="MeasureContentSizeResult"/> representing the total size of all the rows.</returns>
+        /// <param name="prm">Optional parameters for additional measurement options.</param>
+        public virtual MeasureContentSizeResult GetContentSize(
+            Graphics? dc = null,
+            ListControlItem.MeasureItemSizeParams? prm = null)
         {
-            return GetContentSize(dc ?? MeasureCanvas, 0, Items.Count);
+            return GetContentSize(dc ?? MeasureCanvas, 0, Items.Count, prm);
         }
 
         /// <summary>
@@ -177,10 +190,21 @@ namespace Alternet.UI
         /// If null, calculation starts from the first visible row.</param>
         /// <param name="toIndex">The zero-based index after the last row to include in the calculation.
         /// If null, calculation continues to the last visible row.</param>
-        /// <returns>A <see cref="SizeD"/> representing the total size of the rows within the specified range.</returns>
-        public virtual SizeD GetContentSize(Graphics? dc, int? fromIndex, int? toIndex = null)
+        /// <returns>A <see cref="MeasureContentSizeResult"/> representing the total
+        /// size of the rows within the specified range.</returns>
+        /// <param name="prm">Optional parameters for additional measurement options.</param>
+        public virtual MeasureContentSizeResult GetContentSize(
+            Graphics? dc,
+            int? fromIndex,
+            int? toIndex = null,
+            ListControlItem.MeasureItemSizeParams? prm = null)
         {
-            var rowSizes = MeasureRows(dc ?? MeasureCanvas, fromIndex, toIndex);
+            MeasureContentSizeResult result = new();
+
+            var rowSizes = MeasureRows(dc ?? MeasureCanvas, fromIndex, toIndex, prm);
+
+            result.RowSizes = rowSizes;
+
             float totalHeight = 0;
             float maxWidth = 0;
 
@@ -190,7 +214,9 @@ namespace Alternet.UI
                 maxWidth = Math.Max(maxWidth, size.Width);
             }
 
-            return new SizeD(maxWidth, totalHeight);
+            result.ContentSize = new SizeD(maxWidth, totalHeight);
+
+            return result;
         }
 
         /// <summary>
@@ -208,21 +234,37 @@ namespace Alternet.UI
         /// <returns>An array of <see cref="SizeD"/> values representing
         /// the measured size of each row in the specified range.
         /// The length of the array equals the number of rows measured.</returns>
-        public virtual SizeD[] MeasureRows(Graphics dc, int? fromIndex = null, int? toIndex = null)
+        /// <param name="prm">The parameters used to measure the item sizes. Can be null.</param>
+        public virtual ListControlItem.MeasureItemSizeResult[] MeasureRows(
+            Graphics dc,
+            int? fromIndex = null,
+            int? toIndex = null,
+            ListControlItem.MeasureItemSizeParams? prm = null)
         {
             int lineMax = toIndex ?? GetVisibleEnd();
             int lineMin = fromIndex ?? GetVisibleBegin();
             int count = lineMax - lineMin;
 
-            var sizes = new SizeD[count];
+            var sizes = new ListControlItem.MeasureItemSizeResult[count];
 
             MeasureItemEventArgs.EnsureCreated(ref measureItemArgs, dc);
 
             for (int i = 0, line = lineMin; line < lineMax; i++, line++)
             {
                 measureItemArgs.Index = line;
+                measureItemArgs.MeasureParams = prm;
                 MeasureItemSize(measureItemArgs);
-                sizes[i] = measureItemArgs.ItemSize;
+
+                if(measureItemArgs.MeasureResult is null)
+                {
+                    sizes[i] = new (measureItemArgs.ItemSize);
+                }
+                else
+                {
+                    sizes[i] = measureItemArgs.MeasureResult.Value;
+                }
+
+                sizes[i].ItemIndex = line;
             }
 
             return sizes;
@@ -366,6 +408,57 @@ namespace Alternet.UI
                         dc.PopTransform();
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Represents the result of measuring the content size of a virtual list box,
+        /// including the overall content size and the sizes of individual rows.
+        /// </summary>
+        public struct MeasureContentSizeResult
+        {
+            /// <summary>
+            /// Gets or sets the overall content size of the virtual list box.
+            /// </summary>
+            public SizeD ContentSize { get; set; }
+
+            /// <summary>
+            /// Gets content width.
+            /// </summary>
+            public float Width { get => ContentSize.Width; }
+
+            /// <summary>
+            /// Gets content height.
+            /// </summary>
+            public float Height { get => ContentSize.Height; }
+
+            /// <summary>
+            /// Gets or sets an array of <see cref="ListControlItem.MeasureItemSizeResult"/> representing
+            /// the sizes of individual rows in the virtual list box.
+            /// </summary>
+            public ListControlItem.MeasureItemSizeResult[] RowSizes { get; set; }
+
+            public float GetContentWidth(ListControlColumn column)
+            {
+                float result = -1;
+
+                foreach (ListControlItem.MeasureItemSizeResult rowSize in RowSizes)
+                {
+                    foreach (ListControlItem.MeasureItemSizeResult cellSize in rowSize.Cells)
+                    {
+                        if (cellSize.Item is null)
+                            continue;
+
+                        var columnId = cellSize.Item.ColumnId;
+
+                        if (columnId == column.UniqueId)
+                        {
+                            result = Math.Max(result, cellSize.Size.Width);
+                        }
+                    }
+                }
+
+                return result;
             }
         }
     }

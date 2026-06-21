@@ -1675,15 +1675,18 @@ namespace Alternet.UI
                 e.ItemHeight += 1;
             }
 
-            SizeD Internal(int itemIndex)
+            itemSize.Size = new SizeD(e.ItemWidth, e.ItemHeight);
+            e.MeasureResult = itemSize;
+
+            ListControlItem.MeasureItemSizeResult Internal(int itemIndex)
             {
                 if (ItemPainter is null)
-                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
+                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex, e.MeasureParams);
 
                 var result = ItemPainter.GetSize(this, itemIndex);
                 if (result == SizeD.MinusOne)
-                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex);
-                return result;
+                    return ListControlItem.DefaultMeasureItemSize(this, e.Graphics, itemIndex, e.MeasureParams);
+                return new(result);
             }
         }
 

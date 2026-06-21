@@ -1062,6 +1062,39 @@ namespace Alternet.UI
             }
         }
 
+        public virtual void SetPreferredColumnWidth(PreferredColumnWidthParams? prm = null)
+        {
+            var expandColumnToTitle = prm?.ExpandColumnToTitle ?? true;
+            var contentSize = ListBox.GetPreferredContentSize();
+
+            foreach (var column in Columns)
+            {
+                var width = contentSize.GetContentWidth(column);
+
+                if (expandColumnToTitle || width <= 0)
+                {
+                    AutoFitTitleWidth(column, StdTreeView.ColumnAutoFitFlags.CanGrow, width);
+                }
+                else
+                {
+                    SetColumnTitleAndContentWidth(column, width);
+                }
+            }
+        }
+
+        public virtual void SetColumnTitleAndContentWidth(ListControlColumn column, float width)
+        {
+            if (column.SuggestedWidth == width)
+                return;
+
+            column.SuggestedWidth = width;
+
+            var headerColumn = column.HeaderColumn(Header);
+
+            if (headerColumn != null)
+                headerColumn.Width = column.SuggestedWidth;
+        }
+
         /// <summary>
         /// Gets the preferred width of the column header control for the specified column.
         /// </summary>
@@ -2269,7 +2302,8 @@ namespace Alternet.UI
         /// <summary>
         /// Handles the event that occurs when the horizontal scroll offset of the internal list box changes.
         /// </summary>
-        /// <param name="sender">The source of the event, typically the list box whose scroll offset has changed.</param>
+        /// <param name="sender">The source of the event, typically the list box
+        /// whose scroll offset has changed.</param>
         /// <param name="e">An object that contains the event data.</param>
         protected virtual void OnListBoxScrollOffsetXChanged(object? sender, EventArgs e)
         {
@@ -2277,6 +2311,15 @@ namespace Alternet.UI
                 return;
             var offsetX = ListBox.ScrollOffsetX;
             Header.LayoutOffset = Header.LayoutOffset.WithX(offsetX);
+        }
+
+        public struct PreferredColumnWidthParams
+        {
+            public bool ExpandColumnToTitle = true;
+
+            public PreferredColumnWidthParams()
+            {
+            }
         }
     }
 }

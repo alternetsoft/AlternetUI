@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.Collections;
 using System.Linq;
+
 using Alternet.Drawing;
 using Alternet.UI;
 using Alternet.Base.Collections;
@@ -73,37 +74,19 @@ namespace EmployeeFormSample
             var infoColumnControl = evaluationsListView.GetTitleControl(infoColumn);
             var managerColumnControl = evaluationsListView.GetTitleControl(managerColumn);
 
-            evaluationsListView.AutoFitTitleWidth(
-                dateColumn,
-                StdTreeView.ColumnAutoFitFlags.CanShrinkAndGrow,
-                minWidth:100,
-                maxWidth:200);
-
-            evaluationsListView.AutoFitTitleWidth(
-                infoColumn,
-                StdTreeView.ColumnAutoFitFlags.CanShrinkAndGrow,
-                minWidth:100,
-                maxWidth:200);
-
-            evaluationsListView.AutoFitTitleWidth(
-                managerColumn,
-                StdTreeView.ColumnAutoFitFlags.CanShrinkAndGrow,
-                minWidth:100,
-                maxWidth:200);
-
-            EmployeeEvaluation evaluation1 = new EmployeeEvaluation(
+            EmployeeEvaluation evaluation1 = new (
                 new DateTime(2022, 12, 21),
                 "James Smith", "2022 Employee Review");
-            EmployeeEvaluation evaluation2 = new EmployeeEvaluation(
+            EmployeeEvaluation evaluation2 = new (
                 new DateTime(2023, 12, 10),
                 "James Smith", "2023 Employee Review");
-            EmployeeEvaluation evaluation3 = new EmployeeEvaluation(
+            EmployeeEvaluation evaluation3 = new (
                 new DateTime(2024, 12, 13),
                 "James Smith", "2024 Employee Review");
-            EmployeeEvaluation evaluation4 = new EmployeeEvaluation(
+            EmployeeEvaluation evaluation4 = new (
                 new DateTime(2025, 12, 20),
                 "James Smith", "2025 Employee Review");
-            EmployeeEvaluation evaluation5 = new EmployeeEvaluation(
+            EmployeeEvaluation evaluation5 = new (
                 new DateTime(2026, 12, 15),
                 "James Smith", "2026 Employee Review");
 
@@ -120,7 +103,7 @@ namespace EmployeeFormSample
 
             void AddEvaluation(EmployeeEvaluation evaluation)
             {
-                TreeViewItem item = new ();
+                TreeViewItem item = new();
 
                 item.SetText(dateColumn, evaluation.Date.ToShortDateString());
                 item.SetText(infoColumn, evaluation.Info);
@@ -137,11 +120,7 @@ namespace EmployeeFormSample
             evaluationsListView.RootItem.AddRange(items);
             evaluationsListView.ListBox.VertGridLines = true;
 
-            /*
-            evaluationsListView.Columns[0].WidthMode = ListViewColumnWidthMode.AutoSize;
-            evaluationsListView.Columns[1].WidthMode = ListViewColumnWidthMode.AutoSize;
-            evaluationsListView.Columns[2].WidthMode = ListViewColumnWidthMode.AutoSize;
-            */
+            evaluationsListView.SetPreferredColumnWidth();
 
             stateComboBox.PopupKind = PickerPopupKind.ListBox;
 
@@ -166,8 +145,7 @@ namespace EmployeeFormSample
             statusTextBox.Text = employee.Status.ToString();
             statusTextBox.TextChanged += (s, e) =>
             {
-                employee.Status
-                = (Employee.EmployeeStatus)Enum.Parse(typeof(Employee.EmployeeStatus), statusTextBox.Text);
+                employee.Status = Enum.Parse<Employee.EmployeeStatus>(statusTextBox.Text);
             };
 
             emailTextBox.Text = employee.Email;
@@ -251,7 +229,7 @@ namespace EmployeeFormSample
             this.SetSizeToContent();
         }
 
-       internal class Employee
+        internal class Employee
         {
             private string? firstName;
             private string? lastName;

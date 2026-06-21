@@ -51,6 +51,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the parameters for measuring the item size.
+        /// </summary>
+        public virtual ListControlItem.MeasureItemSizeParams? MeasureParams { get; set; }
+
+        /// <summary>
+        /// Gets or sets the result of measuring the item size.
+        /// </summary>
+        public virtual ListControlItem.MeasureItemSizeResult? MeasureResult { get; set; }
+
+        /// <summary>
         /// Gets or sets the <see cref="Graphics" /> object to measure against.
         /// </summary>
         /// <returns>
@@ -173,7 +183,11 @@ namespace Alternet.UI
         /// Cannot be <see langword="null"/>.</param>
         /// <param name="index">The zero-based index of the item to measure.</param>
         /// <param name="itemHeight">The height of the item to be measured.</param>
-        public static void EnsureCreated([NotNull] ref MeasureItemEventArgs? e, Graphics graphics, int index, Coord itemHeight)
+        public static void EnsureCreated(
+            [NotNull] ref MeasureItemEventArgs? e,
+            Graphics graphics,
+            int index,
+            Coord itemHeight)
         {
             if (e == null)
                 e = new MeasureItemEventArgs(graphics, index, itemHeight);
@@ -194,6 +208,8 @@ namespace Alternet.UI
             this.index = index;
             this.itemHeight = itemHeight;
             this.itemWidth = 0;
+            this.MeasureResult = null;
+            this.MeasureParams = null;
         }
 
         /// <summary>
@@ -208,6 +224,8 @@ namespace Alternet.UI
             this.index = index;
             this.itemHeight = 0;
             this.itemWidth = 0;
+            this.MeasureResult = null;
+            this.MeasureParams = null;
         }
     }
 }

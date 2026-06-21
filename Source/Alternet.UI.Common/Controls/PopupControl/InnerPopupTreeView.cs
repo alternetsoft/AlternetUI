@@ -97,6 +97,16 @@ namespace Alternet.UI
             if (!AllowUpdateMinimumSize)
                 return;
 
+            Size = GetContentPreferrredSize();
+            MinimumSize = MinimumSize.ClampTo(Size);
+        }
+
+        /// <summary>
+        /// Gets the preferred size of the content within the control.
+        /// </summary>
+        /// <returns>The preferred size of the content.</returns>
+        public virtual SizeD GetContentPreferrredSize()
+        {
             float minWidth = 0;
             float minHeight = 0;
 
@@ -104,13 +114,13 @@ namespace Alternet.UI
             {
                 var contentSize = Content.ListBox.GetContentSize(Content.MeasureCanvas);
 
-                if(AutoWidthFromItems)
+                if (AutoWidthFromItems)
                     minWidth = contentSize.Width;
-                if(AutoHeightFromItems)
+                if (AutoHeightFromItems)
                     minHeight = contentSize.Height;
             }
 
-            var preferredSize  = new SizeD(minWidth, minHeight);
+            var preferredSize = new SizeD(minWidth, minHeight);
 
             preferredSize += Content.Padding.Size + Content.Margin.Size
                 + Margin.Size + Padding.Size + ExtraContentSize + BorderControl.InteriorBorderSize;
@@ -118,8 +128,7 @@ namespace Alternet.UI
             if (UseDefaultMinPopupWidth)
                 preferredSize.Width = Math.Max(preferredSize.Width, DefaultMinPopupWidth);
 
-            Size = preferredSize;
-            MinimumSize = MinimumSize.ClampTo(Size);
+            return preferredSize;
         }
 
         /// <summary>
