@@ -89,6 +89,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.SquareCorners"/>.
+        /// </summary>
+        public static ControlColorAndStyle SquareCornersTheme;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StickyBorder"/>.
         /// </summary>
         public static ControlColorAndStyle StickyBorderTheme;
@@ -140,7 +147,7 @@ namespace Alternet.UI
         /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.TabControl"/>.
         /// </summary>
-        public static ControlColorAndStyle? TabControlTheme = DefaultTheme;
+        public static ControlColorAndStyle TabControlTheme;
 
         private static bool? ignoreMenuItemShortcuts;
         private static int toolTipSuppressCount = 0;
@@ -334,6 +341,11 @@ namespace Alternet.UI
             /// Theme <see cref="RoundBorderTheme"/> is used.
             /// </summary>
             RoundBorder,
+
+            /// <summary>
+            /// Theme <see cref="SquareCornersTheme"/> is used.
+            /// </summary>
+            SquareCorners,
         }
 
         /// <summary>
@@ -1452,16 +1464,27 @@ namespace Alternet.UI
         /// </summary>
         [MemberNotNull(nameof(StaticBorderTheme))]
         [MemberNotNull(nameof(RoundBorderTheme))]
+        [MemberNotNull(nameof(SquareCornersTheme))]
         [MemberNotNull(nameof(StickyBorderTheme))]
         [MemberNotNull(nameof(CheckBorderTheme))]
+        [MemberNotNull(nameof(TabControlTheme))]
         public static void ResetThemes()
         {
             var borderColor = DefaultColors.BorderColor;
 
             var corners = new BorderCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
+            var squareCorners = new BorderCornerRadius(0, false);
 
             InitThemeLight(DefaultTheme.Light, corners);
             InitThemeDark(DefaultTheme.Dark, corners);
+
+            SquareCornersTheme = new();
+            InitThemeLight(SquareCornersTheme.Light, squareCorners);
+            InitThemeDark(SquareCornersTheme.Dark, squareCorners);
+            
+            TabControlTheme = new();
+            InitThemeLight(TabControlTheme.Light, squareCorners);
+            InitThemeDark(TabControlTheme.Dark, squareCorners);
 
             StaticBorderTheme = DefaultTheme.Clone();
             StaticBorderTheme.NormalBorderAsHovered();
@@ -2269,6 +2292,10 @@ namespace Alternet.UI
                     return PushButtonPressedTheme;
                 case KnownTheme.RoundBorder:
                     return RoundBorderTheme;
+                case KnownTheme.SquareCorners:
+                    return SquareCornersTheme;
+                case KnownTheme.TabControl:
+                    return TabControlTheme;
                 case KnownTheme.Default:
                 default:
                     return DefaultTheme;
