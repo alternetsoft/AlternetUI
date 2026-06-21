@@ -36,8 +36,8 @@ namespace Alternet::UI
 
     DialogResult MessageBoxObj::Show(
         Window* owner,
-        const string& text,
-        optional<string> caption,
+        const NativeStringSpan& text,
+        const NativeStringSpan& caption,
         MessageBoxButtons buttons,
         MessageBoxIcon icon,
         MessageBoxDefaultButton defaultButton)
@@ -47,8 +47,8 @@ namespace Alternet::UI
         auto wxOwner = owner != nullptr ? owner->GetWxWindow() : nullptr;
 
         auto wxResult = wxMessageBox2(
-            wxStr(text),
-            wxStr(caption.value_or(u"")),
+            StringSpanToWx(text),
+            StringSpanToWx(caption),
             style,
             wxOwner);
 

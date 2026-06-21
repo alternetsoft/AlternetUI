@@ -22,12 +22,12 @@ namespace Alternet::UI
         return nullptr;
     }
 
-    wxAlternetMenuItem* wxAlternetMenuItem::GetSubMenuItemById(const NativeStringSpan& id)
+    wxAlternetMenuItem* wxAlternetMenuItem::GetSubMenuItemById(const wxString& id)
     {
         auto wxSubMenu = GetSubMenu();
         auto subMenu = wxDynamicCast(wxSubMenu, wxAlternetMenu);
         if (subMenu != nullptr)
-            return subMenu->GetItemById(StringSpanToWx(id));
+            return subMenu->GetItemById(id);
         return nullptr;
     }
 
@@ -115,7 +115,7 @@ namespace Alternet::UI
 
         return WxToStringSpan(_container);
 #else
-        return wxStr("");
+        return WxToStringSpan("");
 #endif
     }
 
@@ -126,7 +126,7 @@ namespace Alternet::UI
 
         return WxToStringSpan(_container);
 #else
-        return wxStr("");
+        return WxToStringSpan("");
 #endif
     }
 
@@ -146,28 +146,28 @@ namespace Alternet::UI
 
         if (wxAlternetMenuItem* item = wxDynamicCast(obj, wxAlternetMenuItem))
         {
-            return item->_id;
+            return WxToStringSpan(item->_id);
         }
         else
             if (wxAlternetMenu* menu = wxDynamicCast(obj, wxAlternetMenu))
             {
-                return menu->_id;
+                return WxToStringSpan(menu->_id);
             }
             else
                 if (wxAlternetMenuBar* bar = wxDynamicCast(obj, wxAlternetMenuBar))
                 {
-                    return bar->_id;
+                    return WxToStringSpan(bar->_id);
                 }
                 else
                 {
-                    return wxStr("");
+                    return WxToStringSpan("");
                 }
     }
 
     void* Menu::CreateContextMenu(const NativeStringSpan& id)
     {
         auto result = new wxAlternetMenu();
-		result->_id = id;
+		result->_id = StringSpanToWx(id);
 
 		return result;
     }
@@ -175,7 +175,7 @@ namespace Alternet::UI
     void* Menu::CreateMainMenu(const NativeStringSpan& id)
     {
         auto result = new wxAlternetMenuBar();
-        result->_id = id;
+        result->_id = StringSpanToWx(id);
         return result;
     }
 
@@ -203,11 +203,11 @@ namespace Alternet::UI
         auto result = new wxAlternetMenuItem(
             nullptr,
             kind == wxITEM_SEPARATOR ? wxID_SEPARATOR : IdManager::AllocateId(),
-            CoerceMenuText(title),
-            CoerceMenuHelp(help),
+            CoerceMenuText(StringSpanToWx(title)),
+            CoerceMenuHelp(StringSpanToWx(help)),
             kind,
             nullptr);
-        result->_id = id;
+        result->_id = StringSpanToWx(id);
         return result;
     }
 

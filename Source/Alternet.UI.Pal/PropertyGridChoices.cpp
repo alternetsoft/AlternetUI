@@ -9,10 +9,10 @@ namespace Alternet::UI
 		return item;
 	}
 
-	void PropertyGridChoices::SetLabel(void* handle, uint32_t ind, const string& value)
+	void PropertyGridChoices::SetLabel(void* handle, uint32_t ind, const NativeStringSpan& value)
 	{
 		wxPGChoiceEntry& item = Item(handle, ind);
-		item.SetText(wxStr(value));
+		item.SetText(StringSpanToWx(value));
 	}
 
 	void* PropertyGridChoices::GetFont(void* handle, uint32_t ind)
@@ -93,17 +93,20 @@ namespace Alternet::UI
 		delete (PropertyGridChoices*)handle;
 	}
 
-	void PropertyGridChoices::Add(void* handle, const string& text, int value)
+	void PropertyGridChoices::Add(void* handle, const NativeStringSpan& text, int value)
 	{
 		PropertyGridChoices* instance = Choices(handle);
 
-		instance->choices.Add(wxStr(text), value);
+		instance->choices.Add(StringSpanToWx(text), value);
 	}
 
-	string PropertyGridChoices::GetLabel(void* handle, uint32_t ind)
+	NativeStringSpan PropertyGridChoices::GetLabel(void* handle, uint32_t ind)
 	{
 		PropertyGridChoices* instance = Choices(handle);
-		return wxStr(instance->choices.GetLabel(ind));
+
+		_containerStatic = instance->choices.GetLabel(ind);
+
+		return WxToStringSpan(_containerStatic);
 	}
 
 	uint32_t PropertyGridChoices::GetCount(void* handle)
@@ -118,10 +121,10 @@ namespace Alternet::UI
 		return instance->choices.GetValue(ind);
 	}
 
-	int PropertyGridChoices::GetLabelIndex(void* handle, const string& str)
+	int PropertyGridChoices::GetLabelIndex(void* handle, const NativeStringSpan& str)
 	{
 		PropertyGridChoices* instance = Choices(handle);
-		return instance->choices.Index(wxStr(str));
+		return instance->choices.Index(StringSpanToWx(str));
 	}
 
 	int PropertyGridChoices::GetValueIndex(void* handle, int val)
@@ -130,11 +133,11 @@ namespace Alternet::UI
 		return instance->choices.Index(val);
 	}
 
-	void PropertyGridChoices::Insert(void* handle, int index, const string& text, int value)
+	void PropertyGridChoices::Insert(void* handle, int index, const NativeStringSpan& text, int value)
 	{
 		PropertyGridChoices* instance = Choices(handle);
 
-		wxPGChoiceEntry entry = wxPGChoiceEntry(wxStr(text), value);
+		wxPGChoiceEntry entry = wxPGChoiceEntry(StringSpanToWx(text), value);
 
 		instance->choices.Insert(entry, index);
 	}

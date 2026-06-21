@@ -79,17 +79,15 @@ namespace Alternet::UI
         if (_taskBarIcon == nullptr)
             throwExNoInfo;
 
-        auto text = wxStr(_text.value_or(u""));
-
         if (_icon != nullptr)
         {
             wxBitmapBundle bundle(_icon->GetBitmap());
-            _taskBarIcon->SetIcon(bundle, text);
+            _taskBarIcon->SetIcon(bundle, _text);
         }
         else
         {
             wxBitmapBundle bundle;
-            _taskBarIcon->SetIcon(bundle, text);
+            _taskBarIcon->SetIcon(bundle, _text);
         }
     }
 
@@ -145,9 +143,9 @@ namespace Alternet::UI
             CreateTaskBarIcon();
     }
 
-    optional<string> NotifyIcon::GetText()
+    NativeStringSpan NotifyIcon::GetText()
     {
-        return _text;
+        return WxToStringSpan(_text);
     }
 
     bool NotifyIcon::GetIsAvailable()
@@ -169,9 +167,9 @@ namespace Alternet::UI
         return _taskBarIcon->IsOk();
     }
 
-    void NotifyIcon::SetText(optional<string> value)
+    void NotifyIcon::SetText(const NativeStringSpan& value)
     {
-        _text = value;
+        _text = StringSpanToWx(value);
 
         if (_taskBarIcon == nullptr)
             RecreateTaskBarIconIfNeeded();

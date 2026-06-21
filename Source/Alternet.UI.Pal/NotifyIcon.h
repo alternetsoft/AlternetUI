@@ -42,7 +42,7 @@ namespace Alternet::UI
 
         void ApplyTextAndIcon();
 
-        optional<string> _text;
+        wxString _text;
         Image* _icon = nullptr;
         bool _visible = false;
     };
