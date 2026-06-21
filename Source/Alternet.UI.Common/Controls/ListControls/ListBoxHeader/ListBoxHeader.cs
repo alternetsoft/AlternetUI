@@ -18,6 +18,11 @@ namespace Alternet.UI
     public partial class ListBoxHeader : HiddenBorder, IListBoxHeader
     {
         /// <summary>
+        /// Gets or sets the default theme for header buttons used in the list box header.
+        /// </summary>
+        public static SpeedButton.KnownTheme DefaultHeaderButtonTheme = SpeedButton.KnownTheme.SquareCorners;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ListBoxHeader"/> class.
         /// </summary>
         public ListBoxHeader()
@@ -384,16 +389,16 @@ namespace Alternet.UI
             Coord? width = null,
             Action? onClick = null)
         {
-            var label = new HeaderButton()
-            {
-                IsClipped = true,
-                Text = title ?? string.Empty,
-                ImageVisible = true,
-                TextVisible = true,
-                ImageToText = ImageToText.Horizontal,
-                Dock = DockStyle.Left,
-                ClickAction = onClick,
-            };
+            var label = CreateHeaderButton();
+
+            label.IsClipped = true;
+            label.UseTheme = DefaultHeaderButtonTheme;
+            label.Text = title ?? string.Empty;
+            label.ImageVisible = true;
+            label.TextVisible = true;
+            label.ImageToText = ImageToText.Horizontal;
+            label.Dock = DockStyle.Left;
+            label.ClickAction = onClick;
 
             label.SizeChanged += (s, e) =>
             {
@@ -414,19 +419,18 @@ namespace Alternet.UI
 
             label.SetContentHorizontalAlignment(HorizontalAlignment.Left);
 
-            GripControl splitter = new()
-            {
-                Dock = DockStyle.Left,
-                Cursor = Cursors.SizeWE,
-                ParentBackColor = true,
-                ParentForeColor = false,
-                SizeAction = GripControl.GripSizeAction.ChangeWidth,
-                ForeColor = DefaultColors.BorderColor,
-                ImageKind = GripControl.GripImageKind.HorzSplitter,
-                ResolveSplitterColorsOverride = ResolveSplitterColors,
-                Width = GetSplitterWidth(),
-                Target = label,
-            };
+            GripControl splitter = CreateSplitterControl();
+
+            splitter.Dock = DockStyle.Left;
+            splitter.Cursor = Cursors.SizeWE;
+            splitter.ParentBackColor = true;
+            splitter.ParentForeColor = false;
+            splitter.SizeAction = GripControl.GripSizeAction.ChangeWidth;
+            splitter.ForeColor = DefaultColors.BorderColor;
+            splitter.ImageKind = GripControl.GripImageKind.HorzSplitter;
+            splitter.ResolveSplitterColorsOverride = ResolveSplitterColors;
+            splitter.Width = GetSplitterWidth();
+            splitter.Target = label;
 
             label.CustomAttr.SetAttribute("AttachedSplitter", splitter.UniqueId);
 
@@ -528,6 +532,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a new instance of the splitter control used between columns.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual GripControl CreateSplitterControl()
+        {
+            return new GripControl();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the header button control used for column headers.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual HeaderButton CreateHeaderButton()
+        {
+            return new HeaderButton();
+        }
+
+        /// <summary>
         /// Sets a custom attribute on the specified control to indicate whether it is a column control.
         /// </summary>
         /// <param name="control">The <see cref="SpeedButton"/> control
@@ -562,8 +584,12 @@ namespace Alternet.UI
             public AbstractControl Column { get; set; }
         }
 
-        private class HeaderButton : SpeedButton
+        /// <summary>
+        /// Represents custom speed button control that is used as column header.
+        /// </summary>
+        protected class HeaderButton : SpeedButton
         {
+            /// <inheritdoc/>
             public override void DefaultPaint(PaintEventArgs e)
             {
                 base.DefaultPaint(e);
