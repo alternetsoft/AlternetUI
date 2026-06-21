@@ -28,6 +28,9 @@ namespace Alternet.UI
         : FrameworkElement, ISupportInitialize, IDisposable, IFocusable,
         IWin32Window, ITextProperty, IComponent, IControl, INotifyDataErrorInfo, IGripControlTarget
     {
+        /// <summary>
+        /// Gets the rendering flags used for the control painting.
+        /// </summary>
         public static readonly ControlRenderingFlags RenderingFlags = ControlRenderingFlags.UseSkiaSharp;
 
         /// <summary>
