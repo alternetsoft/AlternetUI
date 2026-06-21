@@ -16,7 +16,7 @@
 
   <PropertyGroup>
    	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
-  	<BoolNet10>false</BoolNet10>
+  	<BoolNet10>true</BoolNet10>
   	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
   </PropertyGroup>
