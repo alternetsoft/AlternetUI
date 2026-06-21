@@ -114,7 +114,7 @@ namespace NativeApi.Api
         public event EventHandler? HandleDestroyed;
         public event EventHandler? SystemColorsChanged;
 
-        public virtual string GetText() => default;
+        public virtual NativeStringSpan GetText() => default;
 
         public virtual void SetText(NativeStringSpan value) { }
 

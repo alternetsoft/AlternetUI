@@ -20,21 +20,48 @@ namespace Alternet::UI
     {
         struct NativeStringSpan_C
         {
-            const void* Pointer;   // UTF-16 on Windows, UTF-8 on Linux/macOS
-            size_t Length;         // number of code units (chars or bytes)
+            void* Pointer;   // UTF-16 on Windows, UTF-8 on Linux/macOS
+            int Length;   // number of code units (chars or bytes)
         };
     }
 
 #pragma pack(pop)
 
-    struct NativeStringSpan
+    struct NativeStringSpan : NativeStringSpan_C
     {
-        const void* Pointer;
-        size_t Length;
-
-        NativeStringSpan() : Pointer(nullptr), Length(0) {}
-        NativeStringSpan(const NativeStringSpan_C& c) : Pointer(c.Pointer), Length(c.Length) {}
+        NativeStringSpan()
+        {
+			Pointer = nullptr;
+			Length = 0;
+        }
+        
+        NativeStringSpan(const NativeStringSpan_C& c)
+        {
+			Pointer = c.Pointer;
+			Length = c.Length;
+        }
     };
+
+    inline const NativeStringSpan_C WxToStringSpan(const wxString& s)
+    {
+        int length = static_cast<int>(s.length());
+
+		if (length == 0)
+		{
+			return { nullptr, 0 };
+		}
+
+#if defined(__WXMSW__)
+        // Windows: UTF-16
+        const wchar_t* buf = s.c_str().AsWChar();
+
+        return { (void*)buf, length };
+#else
+        // Linux/macOS: UTF-8
+        const char* buf = s.utf8_str();
+        return { (void*)buf, length };
+#endif
+    }
 
     inline wxString StringToWx(const void* text, size_t textLength)
     {
@@ -66,33 +93,6 @@ namespace Alternet::UI
     {
         return StringToWx(value.Pointer, value.Length);
     }
-
-/*
-    std::u16string wstringToU16String(const std::wstring& wstr) {
-        icu::UnicodeString unicodeStr(reinterpret_cast<const UChar*>(wstr.data()), wstr.length());
-        return std::u16string(reinterpret_cast<const char16_t*>(unicodeStr.getBuffer()), unicodeStr.length());
-    }
-
-    std::wstring u16StringToWstring(const std::u16string& u16str) {
-        icu::UnicodeString unicodeStr(reinterpret_cast<const UChar*>(u16str.data()), u16str.length());
-        return std::wstring(reinterpret_cast<const wchar_t*>(unicodeStr.getBuffer()), unicodeStr.length());
-    }
-*/
-    /*
-    std::u16string To_UTF16(const std::u32string& s)
-    {
-        std::wstring_convert<std::codecvt_utf16<char32_t>, char32_t> conv;
-        std::string bytes = conv.to_bytes(s);
-        return std::u16string(reinterpret_cast<const char16_t*>(bytes.c_str()), bytes.length() / sizeof(char16_t));
-    }
-
-    std::u32string To_UTF32(const std::u16string& s)
-    {
-        const char16_t* pData = s.c_str();
-        std::wstring_convert<std::codecvt_utf16<char32_t>, char32_t> conv;
-        return conv.from_bytes(reinterpret_cast<const char*>(pData), reinterpret_cast<const char*>(pData + s.length()));
-    }
-    */
 
     static void LogMessage(std::string msg)
     {

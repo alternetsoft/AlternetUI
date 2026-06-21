@@ -136,7 +136,7 @@ static float DrawingDPIScaleFactor(void* window);
 static float DrawingToDip(int value, void* window);
 static float DrawingFromDipF(float value, void* window);
 void SetCursor(void* handle);
-virtual string GetText();
+virtual NativeStringSpan GetText();
 virtual void SetText(const NativeStringSpan& value);
 virtual RectD GetBounds();
 void* GetDrawingContext(bool native);

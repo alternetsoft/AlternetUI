@@ -182,7 +182,7 @@ namespace Alternet::UI
     {
 #include "Api/ComboBox.inc"
     public:
-        string GetText() override;
+        NativeStringSpan GetText() override;
         void SetText(const NativeStringSpan& value) override;
         virtual void RecreateWxWindowIfNeeded() override;
 

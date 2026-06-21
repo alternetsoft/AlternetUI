@@ -10,9 +10,10 @@ namespace Alternet::UI
     {
     }
 
-    string RadioButton::GetText()
+    NativeStringSpan RadioButton::GetText()
     {
-        return wxStr(GetRadioButton()->GetLabel());
+        _textValue = GetRadioButton()->GetLabel();
+        return WxToStringSpan(_textValue);
     }
 
     void RadioButton::SetText(const NativeStringSpan& value)
@@ -102,10 +103,10 @@ namespace Alternet::UI
 
     void RadioButton::RecreateWxWindowIfNeeded()
     {
-        auto text = GetText();
+        auto text = GetRadioButton()->GetLabel();
         auto state = GetIsChecked();
         Control::RecreateWxWindowIfNeeded();
-        GetRadioButton()->SetLabel(wxStr(text));
+        GetRadioButton()->SetLabel(text);
         SetIsChecked(state);
     }
 

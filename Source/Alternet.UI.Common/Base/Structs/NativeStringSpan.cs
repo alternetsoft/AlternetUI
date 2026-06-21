@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -40,6 +41,33 @@ namespace Alternet.UI
         {
             Pointer = pointer;
             Length = length;
+        }
+
+        /// <summary>
+        /// Converts the native string span to a managed string.
+        /// </summary>
+        /// <returns>The managed string representation of the native string span.</returns>
+        public static string ToManagedString(NativeStringSpan span)
+        {
+            if (span.Pointer == IntPtr.Zero || span.Length == 0)
+                return string.Empty;
+
+            if (App.IsWindowsOS)
+            {
+                // Windows: UTF-16
+                return Marshal.PtrToStringUni(span.Pointer, span.Length);
+            }
+            else
+            {
+                // Linux/macOS: UTF-8
+                return Marshal.PtrToStringUTF8(span.Pointer, span.Length);
+            }
+        }
+
+        /// <inheritdoc/>
+        public readonly override string ToString()
+        {
+            return $"Pointer: {Pointer.ToInt64():X}, Length: {Length}";
         }
     }
 }

@@ -741,7 +741,7 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
             NativeApi.Control_SetCursor_(NativePointer, handle);
         }
         
-        public string GetText()
+        public Alternet.UI.NativeStringSpan GetText()
         {
             CheckDisposed();
             return NativeApi.Control_GetText_(NativePointer);
@@ -1558,7 +1558,7 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Control_GetText_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Control_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetText_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);

@@ -85,7 +85,13 @@ namespace Alternet.UI
 
         public string Text
         {
-            get => NativeControl.GetText();
+            get
+            {
+                var sp = NativeControl.GetText();
+                var s = NativeStringSpan.ToManagedString(sp);
+                return s;
+            }
+
             set
             {
                 StringUtils.InvokeWithNativeText(value, (s) =>

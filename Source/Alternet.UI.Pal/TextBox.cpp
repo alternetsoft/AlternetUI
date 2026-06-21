@@ -25,15 +25,15 @@ namespace Alternet::UI
 
 	void TextBox::RecreateWxWindowIfNeeded()
 	{
-		auto text = GetText();
+		auto text = GetTextCtrl()->GetValue();
 		Control::RecreateWxWindowIfNeeded();
-		GetTextCtrl()->SetValue(wxStr(text));
+		GetTextCtrl()->SetValue(text);
 	}
 	
-	string TextBox::GetText()
+	NativeStringSpan TextBox::GetText()
 	{
-		auto result = GetTextCtrl()->GetValue();
-		return wxStr(result);
+		_textValue = GetTextCtrl()->GetValue();
+		return WxToStringSpan(_textValue);
 	}
 
 	void TextBox::SetText(const NativeStringSpan& value)

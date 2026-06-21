@@ -113,22 +113,17 @@ namespace Alternet::UI
         return dynamic_cast<wxStaticBox*>(GetWxWindow());
     }
 
-    string GroupBox::GetText()
+    NativeStringSpan GroupBox::GetText()
     {
-        auto value = wxStr(GetStaticBox()->GetLabel());
-
-        if (value.empty())
-            return u"";
-
-        return value;
+        _textValue = GetStaticBox()->GetLabel();
+        return WxToStringSpan(_textValue);
     }
-
 
     void GroupBox::RecreateWxWindowIfNeeded()
     {
-        auto text = GetText();
+        auto text = GetStaticBox()->GetLabel();
         Control::RecreateWxWindowIfNeeded();
-        GetStaticBox()->SetLabel(wxStr(text));
+        GetStaticBox()->SetLabel(text);
     }
 
     void GroupBox::SetText(const NativeStringSpan& value)

@@ -13,7 +13,7 @@ namespace Alternet::UI
         void OnCheckedChanged(wxCommandEvent& event);
 
     public:
-        string GetText() override;
+        NativeStringSpan GetText() override;
         void SetText(const NativeStringSpan& value) override;
         virtual void RecreateWxWindowIfNeeded() override;
 

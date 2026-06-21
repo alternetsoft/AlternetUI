@@ -2194,9 +2194,9 @@ namespace Alternet::UI
         RaiseEvent(ControlEvent::TextChanged);
     }
 
-    string Control::GetText()
+    NativeStringSpan Control::GetText()
     {
-        return wxStr(_textValue);
+        return WxToStringSpan(_textValue);
     }
 
     void Control::SetText(const NativeStringSpan& value)

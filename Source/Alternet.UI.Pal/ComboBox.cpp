@@ -74,9 +74,9 @@ namespace Alternet::UI
 
     void ComboBox::RecreateWxWindowIfNeeded()
     {
-        auto text = GetText();
+        auto text = GetComboBox()->GetValue();
         Control::RecreateWxWindowIfNeeded();
-        GetComboBox()->SetValue(wxStr(text));
+        GetComboBox()->SetValue(text);
     }
 
     ComboBox::ComboBox()
@@ -407,10 +407,10 @@ namespace Alternet::UI
 */
     }
 
-    string ComboBox::GetText()
+    NativeStringSpan ComboBox::GetText()
     {
-        auto result = GetComboBox()->GetValue();
-        return wxStr(result);
+        _textValue = GetComboBox()->GetValue();
+        return WxToStringSpan(_textValue);
     }
 
     void ComboBox::SetText(const NativeStringSpan& value)

@@ -46,7 +46,7 @@ namespace Alternet::UI
 
         void RaiseClick();
 
-        string GetText() override;
+        NativeStringSpan GetText() override;
         void SetText(const NativeStringSpan& value) override;
         virtual void RecreateWxWindowIfNeeded() override;
 

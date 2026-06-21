@@ -10,9 +10,10 @@ namespace Alternet::UI
     {
     }
 
-    string CheckBox::GetText()
+    NativeStringSpan CheckBox::GetText()
     {
-        return wxStr(GetCheckBox()->GetLabel());
+        _textValue = GetCheckBox()->GetLabel();
+        return WxToStringSpan(_textValue);
     }
 
     void CheckBox::SetText(const NativeStringSpan& value)
@@ -116,10 +117,10 @@ namespace Alternet::UI
 
     void CheckBox::RecreateWxWindowIfNeeded()
     {
-		auto text = GetText();
+		auto text = GetCheckBox()->GetLabel();
 		auto state = GetCheckState();
         Control::RecreateWxWindowIfNeeded();
-        GetCheckBox()->SetLabel(wxStr(text));
+        GetCheckBox()->SetLabel(text);
         SetCheckState(state);
     }
 

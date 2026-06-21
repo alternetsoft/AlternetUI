@@ -168,10 +168,9 @@ namespace Alternet::UI
         bool HasEnabledChilds();
 
         virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
-
-        void InitUserPaint();
     protected:
         DrawingContext* _drawingContext = nullptr;
+        wxString _textValue = "";
 
         enum class ControlFlags
         {
@@ -277,7 +276,6 @@ namespace Alternet::UI
 
         virtual void DestroyWxWindow();
     private:
-        wxString _textValue = "";
         RectD _eventBounds;
         bool _destroying = false;
 

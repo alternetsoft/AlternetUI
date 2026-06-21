@@ -102,9 +102,9 @@ namespace Alternet::UI
 
     void Button::RecreateWxWindowIfNeeded()
     {
-        auto text = GetText();
+        auto text = GetButton()->GetLabel();
         Control::RecreateWxWindowIfNeeded();
-        GetButton()->SetLabel(wxStr(text));
+        GetButton()->SetLabel(text);
     }
 
     Button::~Button()
@@ -119,9 +119,10 @@ namespace Alternet::UI
         }
     }
 
-    string Button::GetText()
+    NativeStringSpan Button::GetText()
     {
-        return wxStr(GetButton()->GetLabel());
+        _textValue = GetButton()->GetLabel();
+        return WxToStringSpan(_textValue);
     }
 
     void Button::SetText(const NativeStringSpan& value)

@@ -676,10 +676,10 @@ ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
     });
 }
 
-ALTERNET_UI_API char16_t* Control_GetText_(Control* obj)
+ALTERNET_UI_API NativeStringSpan_C Control_GetText_(Control* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetText());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetText();
     });
 }
 

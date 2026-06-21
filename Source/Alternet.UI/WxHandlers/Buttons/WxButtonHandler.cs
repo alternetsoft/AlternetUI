@@ -97,6 +97,9 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
             base.OnAttach();
+
+            if (Control is null)
+                return;
         }
 
         internal override Native.Control CreateNativeControl()
