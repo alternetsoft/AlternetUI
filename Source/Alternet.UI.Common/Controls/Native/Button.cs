@@ -43,6 +43,11 @@ namespace Alternet.UI
         /// </summary>
         public Button()
         {
+            if (App.IsWindowsOS && App.PlatformKind == UIPlatformKind.WxWidgets)
+            {
+                ParentBackColor = true;
+                ParentForeColor = true;
+            }
         }
 
         /// <summary>
