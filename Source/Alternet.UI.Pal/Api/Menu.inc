@@ -5,7 +5,7 @@ NativeStringSpan GetMacHelpMenuTitleName();
 
 NativeStringSpan GetMacWindowMenuTitleName();
 
-static string GetEventMenuItemId();
+static NativeStringSpan GetEventMenuItemId();
 
 static bool GetEventMenuItemChecked();
 
@@ -26,7 +26,7 @@ static void* CreateMenuItem(MenuItemType itemType, const NativeStringSpan& id, c
 static void DestroyMainMenu(void* menuHandle);
 static void DestroyMenuItem(void* menuHandle);
 static void DestroyContextMenu(void* menuHandle);
-static string GetMenuId(void* handle);
+static NativeStringSpan GetMenuId(void* handle);
 static MenuItemType GetMenuItemType(void* handle);
 static void SetMenuItemBitmap(void* handle, Image* value);
 static void SetMenuItemEnabled(void* handle, bool value);

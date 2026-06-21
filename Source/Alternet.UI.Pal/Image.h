@@ -81,7 +81,7 @@ namespace Alternet::UI
         wxBitmap GetBitmap();
         void SetBitmap(const wxBitmap& value);
 
-        static wxBitmapBundle CreateFromSvgStr(const string& s, int width,
+        static wxBitmapBundle CreateFromSvgStr(const NativeStringSpan& s, int width,
             int height, const Color& color);
 
         static wxBitmapBundle CreateFromSvgStream(void* stream, int width, int height,
@@ -95,7 +95,7 @@ namespace Alternet::UI
                 return wxBitmap();
         }
 
-        static wxBitmapType GetBitmapTypeFromFormat(const string& format);
+        static wxBitmapType GetBitmapTypeFromFormat(wxString format);
 
         Int32Size GetPixelSize();
 

@@ -63,7 +63,7 @@ namespace NativeApi.Api
 
         /* Common methods */
 
-        public static string GetMenuId(IntPtr handle) => throw new Exception();
+        public static NativeStringSpan GetMenuId(IntPtr handle) => throw new Exception();
 
         /* Work with menu item */
 
@@ -103,7 +103,7 @@ namespace NativeApi.Api
         public event EventHandler? MenuClosed;
         public event EventHandler? MenuDestroying;
 
-        public static string EventMenuItemId { get; }
+        public static NativeStringSpan EventMenuItemId { get; }
         public static bool EventMenuItemChecked { get; }
     }
 }

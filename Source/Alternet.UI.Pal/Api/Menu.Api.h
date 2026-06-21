@@ -32,10 +32,10 @@ ALTERNET_UI_API NativeStringSpan_C Menu_GetMacWindowMenuTitleName_(Menu* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* Menu_GetEventMenuItemId_()
+ALTERNET_UI_API NativeStringSpan_C Menu_GetEventMenuItemId_()
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(Menu::GetEventMenuItemId());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return Menu::GetEventMenuItemId();
     });
 }
 
@@ -165,10 +165,10 @@ ALTERNET_UI_API void Menu_DestroyContextMenu_(void* menuHandle)
     });
 }
 
-ALTERNET_UI_API char16_t* Menu_GetMenuId_(void* handle)
+ALTERNET_UI_API NativeStringSpan_C Menu_GetMenuId_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(Menu::GetMenuId(handle));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return Menu::GetMenuId(handle);
     });
 }
 

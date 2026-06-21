@@ -45,6 +45,10 @@ namespace Alternet::UI
         }
 
     protected:
+        wxString _container;
+
+        static wxString _containerStatic;
+
         virtual bool EventsSuspended()
         {
             return false;
@@ -54,5 +58,7 @@ namespace Alternet::UI
         int _referenceCount;
         int _id = 0;
     };
+
+    wxString Object::_containerStatic = "";
 }
 

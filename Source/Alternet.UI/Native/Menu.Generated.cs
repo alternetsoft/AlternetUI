@@ -44,7 +44,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public static string EventMenuItemId
+        public static Alternet.UI.NativeStringSpan EventMenuItemId
         {
             get
             {
@@ -164,7 +164,7 @@ return NativeApi.Menu_CreateMenuItem_(itemType, ref id_Native, ref title_Native,
             NativeApi.Menu_DestroyContextMenu_(menuHandle);
         }
         
-        public static string GetMenuId(System.IntPtr handle)
+        public static Alternet.UI.NativeStringSpan GetMenuId(System.IntPtr handle)
         {
             return NativeApi.Menu_GetMenuId_(handle);
         }
@@ -321,7 +321,7 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             public static extern Alternet.UI.NativeStringSpan Menu_GetMacWindowMenuTitleName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Menu_GetEventMenuItemId_();
+            public static extern Alternet.UI.NativeStringSpan Menu_GetEventMenuItemId_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Menu_GetEventMenuItemChecked_();
@@ -378,7 +378,7 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             public static extern void Menu_DestroyContextMenu_(System.IntPtr menuHandle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Menu_GetMenuId_(System.IntPtr handle);
+            public static extern Alternet.UI.NativeStringSpan Menu_GetMenuId_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.MenuItemType Menu_GetMenuItemType_(System.IntPtr handle);

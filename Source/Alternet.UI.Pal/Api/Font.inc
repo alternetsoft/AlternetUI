@@ -7,7 +7,7 @@ float GetSizeInPoints();
 
 FontStyle GetStyle();
 
-string GetDescription();
+NativeStringSpan GetDescription();
 
 static void* OpenFamiliesArray();
 static int GetFamiliesItemCount(void* array);
@@ -31,7 +31,7 @@ void InitializeFromFont(Font* font);
 static bool IsFamilyValid(const NativeStringSpan& fontFamily);
 static NativeStringSpan GetGenericFamilyName(GenericFontFamily genericFamily);
 bool IsEqualTo(Font* other);
-string Serialize();
+NativeStringSpan Serialize();
 
 public:
 Font();

@@ -432,9 +432,10 @@ scrollbar.horizontal{
         _inUixmlPreviewerMode = value;
     }
 
-    string Application::GetDisplayName() 
+    NativeStringSpan Application::GetDisplayName() 
     {
-        return wxStr(_app->GetAppDisplayName());
+        _container = _app->GetAppDisplayName();
+        return WxToStringSpan(_container);
     }
 
     void Application::SetDisplayName(const NativeStringSpan& value) 
@@ -442,18 +443,20 @@ scrollbar.horizontal{
         _app->SetAppDisplayName(StringSpanToWx(value));
     }
 
-    string Application::GetAppClassName() 
+    NativeStringSpan Application::GetAppClassName() 
     {
-        return wxStr(_app->GetClassName());
+        _container = _app->GetClassName();
+        return WxToStringSpan(_container);
     }
     void Application::SetAppClassName(const NativeStringSpan& value)
     {
         _app->SetClassName(StringSpanToWx(value));
     }
 
-    string Application::GetVendorName()
+    NativeStringSpan Application::GetVendorName()
     {
-        return wxStr(_app->GetVendorName());
+        _container = _app->GetVendorName();
+        return WxToStringSpan(_container);
     }
 
     void Application::SetVendorName(const NativeStringSpan& value)
@@ -461,9 +464,10 @@ scrollbar.horizontal{
         _app->SetVendorName(StringSpanToWx(value));
     }
 
-    string Application::GetVendorDisplayName()
+    NativeStringSpan Application::GetVendorDisplayName()
     {
-        return wxStr(_app->GetVendorDisplayName());
+        _container = _app->GetVendorDisplayName();
+        return WxToStringSpan(_container);
     }
 
     void Application::SetVendorDisplayName(const NativeStringSpan& value)
@@ -471,9 +475,10 @@ scrollbar.horizontal{
         _app->SetVendorDisplayName(StringSpanToWx(value));
     }
 
-    string Application::GetName()
+    NativeStringSpan Application::GetName()
     {
-        return wxStr(_app->GetAppName());
+        _container = _app->GetAppName();
+        return WxToStringSpan(_container);
     }
 
     void Application::SetName(const NativeStringSpan& value)
@@ -525,17 +530,12 @@ scrollbar.horizontal{
         return _keyboard;
     }
 
-    string Application::GetEventArgString()
+    NativeStringSpan Application::GetEventArgString()
     {
-        return _eventArgString;
+        return WxToStringSpan(_eventArgString);
     }
 
     void Application::Log(const wxString& msg)
-    {
-        Log(wxStr(msg));
-    }
-
-    void Application::Log(const string& msg)
     {
         GetCurrent()->_eventArgString = msg;
         GetCurrent()->RaiseStaticEvent(ApplicationEvent::LogMessage);
@@ -544,7 +544,7 @@ scrollbar.horizontal{
     void Application::DoLogRecord(wxLogLevel level /*unsigned long*/, const wxString& msg,
         const wxLogRecordInfo& info)
     {
-        _eventArgString = wxStr(msg);
+        _eventArgString = msg;
         RaiseStaticEvent(ApplicationEvent::LogMessage);
     }
 
@@ -688,7 +688,7 @@ or wxFAIL was used
             xmlCond+
             xmlSuffix;
 
-        _eventArgString = wxStr(xml);
+        _eventArgString = xml;
 
         RaiseStaticEvent(ApplicationEvent::AssertFailure);
         return false;
@@ -784,7 +784,9 @@ public:
 
         if (wx == "wx.PortAndVersion")
         {
-            return wxStr(GetPortAndVersion());
+            _container = GetPortAndVersion();
+
+            return WxToStringSpan(_container);
         }
 
 		return NativeStringSpan();

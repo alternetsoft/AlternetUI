@@ -21,21 +21,21 @@ namespace Alternet::UI
     }
 
     void Font::Initialize(GenericFontFamily genericFamily,
-        optional<string> familyName, Coord emSize, FontStyle style)
+        const NativeStringSpan& familyName, Coord emSize, FontStyle style)
     {
-        _font = InitializeWxFont(genericFamily, familyName, emSize, style);
+        _font = InitializeWxFont(genericFamily, StringSpanToWx(familyName), emSize, style);
     }
 
     wxFont Font::InitializeWxFont(GenericFontFamily genericFamily, 
-        optional<string> familyName, Coord emSize, FontStyle style)
+        wxString familyName, Coord emSize, FontStyle style)
     {
         wxFontInfo fontInfo(emSize);
 
         if (genericFamily != GenericFontFamily::None)
             fontInfo.Family(GetWxFontFamily(genericFamily));
 
-        if (familyName.has_value())
-            fontInfo.FaceName(wxStr(familyName.value()));
+        if (!familyName.empty())
+            fontInfo.FaceName(familyName);
 
         if ((style & FontStyle::Bold) != (FontStyle)0)
             fontInfo.Bold();
@@ -77,9 +77,10 @@ namespace Alternet::UI
         return _font;
     }
 
-    string Font::GetName()
+    NativeStringSpan Font::GetName()
     {
-        return wxStr(_font.GetFaceName());
+		_container = _font.GetFaceName();
+        return WxToStringSpan(_container);
     }
 
     FontStyle Font::GetStyle()
@@ -168,9 +169,10 @@ namespace Alternet::UI
         return _font.GetFractionalPointSize();
     }
 
-    string Font::GetDescription()
+    NativeStringSpan Font::GetDescription()
     {
-        return wxStr(_font.GetNativeFontInfoUserDesc());
+        _container = _font.GetNativeFontInfoUserDesc();
+        return WxToStringSpan(_container);
     }
 
     bool Font::IsEqualTo(Font* other)
@@ -181,9 +183,10 @@ namespace Alternet::UI
         return _font == other->_font;
     }
 
-    string Font::Serialize()
+    NativeStringSpan Font::Serialize()
     {
-        return wxStr(_font.GetNativeFontInfoDesc());
+        _container = _font.GetNativeFontInfoDesc();
+        return WxToStringSpan(_container);
     }
 
     /*static*/ wxFontFamily Font::GetWxFontFamily(GenericFontFamily genericFamily)
@@ -213,9 +216,10 @@ namespace Alternet::UI
         return ((wxArrayString*)array)->GetCount();
     }
 
-    /*static*/ string Font::GetFamiliesItemAt(void* array, int index)
+    /*static*/ NativeStringSpan Font::GetFamiliesItemAt(void* array, int index)
     {
-        return wxStr(((wxArrayString*)array)->Item(index));
+        _containerStatic = ((wxArrayString*)array)->Item(index);
+        return WxToStringSpan(_containerStatic);
     }
 
     /*static*/ void Font::CloseFamiliesArray(void* array)
@@ -223,7 +227,7 @@ namespace Alternet::UI
         delete (wxArrayString*)array;
     }
 
-    /*static*/ bool Font::IsFamilyValid(const string& fontFamily)
+    /*static*/ bool Font::IsFamilyValid(const NativeStringSpan& fontFamily)
     {
 #ifdef __WXOSX_COCOA__
         // the wx function will return false for this.
@@ -232,16 +236,17 @@ namespace Alternet::UI
             return true; 
 #endif
 
-        return wxFontEnumerator::IsValidFacename(wxStr(fontFamily));
+        return wxFontEnumerator::IsValidFacename(StringSpanToWx(fontFamily));
     }
 
-    /*static*/ string Font::GetGenericFamilyName(GenericFontFamily genericFamily)
+    /*static*/ NativeStringSpan Font::GetGenericFamilyName(GenericFontFamily genericFamily)
     {
         if (genericFamily == GenericFontFamily::None)
             throwExInvalidArg(genericFamily, u"genericFamily cannot be None");
 
         wxFontInfo fontInfo;
         fontInfo.Family(GetWxFontFamily(genericFamily));
-        return wxStr(wxFont(fontInfo).GetFaceName());
+        _containerStatic = wxFont(fontInfo).GetFaceName();
+        return WxToStringSpan(_containerStatic);
     }
 }

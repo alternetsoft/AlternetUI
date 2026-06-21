@@ -375,9 +375,9 @@ namespace Alternet::UI
 			return wxBitmapBundle();
 	}
 
-	wxBitmapBundle Image::CreateFromSvgStr(const string& s, int width, int height, const Color& color)
+	wxBitmapBundle Image::CreateFromSvgStr(const NativeStringSpan& s, int width, int height, const Color& color)
 	{
-		auto wxs = wxStr(s);
+		auto wxs = StringSpanToWx(s);
 		wxCharBuffer buffer = wxs.ToUTF8();
 		char* const ptr = buffer.data();
 
@@ -386,7 +386,7 @@ namespace Alternet::UI
 		return bitmapBundle;
 	}
 
-	bool Image::LoadSvgFromString(const string& s, int width, int height, const Color& color)
+	bool Image::LoadSvgFromString(const NativeStringSpan& s, int width, int height, const Color& color)
 	{
 
 		auto bundle = CreateFromSvgStr(s, width, height, color);
@@ -440,18 +440,18 @@ namespace Alternet::UI
 		_bitmap = wxBitmap(((GenericImage*)image)->_image, depth);
 	}
 
-	bool Image::SaveToStream(void* stream, const string& format)
+	bool Image::SaveToStream(void* stream, const NativeStringSpan& format)
 	{
 		OutputStream outputStream(stream);
 		ManagedOutputStream managedOutputStream(&outputStream);
 
-		return _bitmap.ConvertToImage().SaveFile(managedOutputStream, GetBitmapTypeFromFormat(format));
+		return _bitmap.ConvertToImage().SaveFile(managedOutputStream, GetBitmapTypeFromFormat(StringSpanToWx(format)));
 	}
 
-	bool Image::SaveToFile(const string& fileName)
+	bool Image::SaveToFile(const NativeStringSpan& fileName)
 	{
 		auto image = _bitmap.ConvertToImage();
-		return image.SaveFile(wxStr(fileName));
+		return image.SaveFile(StringSpanToWx(fileName));
 	}
 
 	void Image::Initialize(const Int32Size& size, int depth)
@@ -466,20 +466,20 @@ namespace Alternet::UI
 		}
 	}
 
-	/*static*/ wxBitmapType Image::GetBitmapTypeFromFormat(const string& format)
+	/*static*/ wxBitmapType Image::GetBitmapTypeFromFormat(wxString format)
 	{
-		if (format == u"Bmp")
+		if (format == "Bmp")
 			return wxBITMAP_TYPE_BMP;
-		if (format == u"Png")
+		if (format == "Png")
 			return wxBITMAP_TYPE_PNG;
-		if (format == u"Jpeg")
+		if (format == "Jpeg")
 			return wxBITMAP_TYPE_JPEG;
-		if (format == u"Png")
+		if (format == "Png")
 			return wxBITMAP_TYPE_PNG;
-		if (format == u"Tiff")
+		if (format == "Tiff")
 			return wxBITMAP_TYPE_TIFF;
 
-		throwEx(u"Image format is not supported: " + format);
+		throwEx(wxStr("Image format is not supported: " + format));
 	}
 
 	void Image::InitializeFromImage(Image* source, const Int32Size& size)
@@ -756,14 +756,14 @@ namespace Alternet::UI
 		return true;
 	}
 
-	bool Image::LoadFile(const string& name, int type)
+	bool Image::LoadFile(const NativeStringSpan& name, int type)
 	{
-		return _bitmap.LoadFile(wxStr(name), (wxBitmapType)type);
+		return _bitmap.LoadFile(StringSpanToWx(name), (wxBitmapType)type);
 	}
 
-	bool Image::SaveFile(const string& name, int type)
+	bool Image::SaveFile(const NativeStringSpan& name, int type)
 	{
-		return _bitmap.SaveFile(wxStr(name), (wxBitmapType)type);
+		return _bitmap.SaveFile(StringSpanToWx(name), (wxBitmapType)type);
 	}
 
 	bool Image::SaveStream(void* stream, int type)

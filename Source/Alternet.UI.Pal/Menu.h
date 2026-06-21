@@ -9,13 +9,13 @@ namespace Alternet::UI
     {
 #include "Api/Menu.inc"
     public:
-        static string _eventMenuItemId;
+        static wxString _eventMenuItemId;
         static bool _eventMenuItemChecked;
 
-        static wxString CoerceMenuHelp(const string& value);
-        static wxString CoerceMenuText(const string& value);
+        static wxString CoerceMenuHelp(const wxString& value);
+        static wxString CoerceMenuText(const wxString& value);
 
-        static bool RaiseStaticEventWithId(MenuEvent event, string id, void* parameter = nullptr)
+        static bool RaiseStaticEventWithId(MenuEvent event, wxString id, void* parameter = nullptr)
         {
             _eventMenuItemId = id;
             return RaiseStaticEvent(event, parameter);
@@ -33,8 +33,8 @@ namespace Alternet::UI
     public:
         wxAlternetMenu* ownerMenu = nullptr;
         Image* _normalImage = nullptr;
-        string _id;
-        string _role;
+        wxString _id;
+        wxString _role;
 
         wxAlternetMenuItem(wxMenu* parent = nullptr,
             int id = wxID_ANY,
@@ -51,7 +51,7 @@ namespace Alternet::UI
             Menu::RaiseStaticEventWithId(Menu::MenuEvent::MenuDestroying, _id);
         }
 
-        wxAlternetMenuItem* GetSubMenuItemById(const string& id);
+        wxAlternetMenuItem* GetSubMenuItemById(const wxString& id);
 
         wxAlternetMenuBar* FindParentMainMenu();
     };
@@ -61,7 +61,7 @@ namespace Alternet::UI
     public:
         wxAlternetMenuBar* ownerMenuBar = nullptr;
         wxAlternetMenuItem* ownerMenuItem = nullptr;
-        string _id;
+        wxString _id;
 
         wxAlternetMenu(const wxString& title = wxEmptyString, long style = 0)
             : wxMenu(title, style)
@@ -79,7 +79,7 @@ namespace Alternet::UI
 
         wxAlternetMenuBar* FindParentMainMenu();
 
-        wxAlternetMenuItem* GetItemById(const string& id)
+        wxAlternetMenuItem* GetItemById(const wxString& id)
         {
             for (int n = GetMenuItemCount() - 1; n >= 0; --n)
             {
@@ -101,7 +101,7 @@ namespace Alternet::UI
             return nullptr;
         }
 
-        int GetItemIndex(const string& id)
+        int GetItemIndex(const wxString& id)
         {
             for (int n = GetMenuItemCount() - 1; n >= 0; --n)
             {
@@ -128,7 +128,7 @@ namespace Alternet::UI
     {
     public:
         wxFrame* ownerFrame = nullptr;
-        string _id;
+        wxString _id;
 
         wxAlternetMenuBar(long style = 0)
             : wxMenuBar(style)
@@ -140,7 +140,7 @@ namespace Alternet::UI
             Menu::RaiseStaticEventWithId(Menu::MenuEvent::MenuDestroying, _id);
         }
 
-        wxAlternetMenuItem* GetMenuItemById(const string& id)
+        wxAlternetMenuItem* GetMenuItemById(const wxString& id)
         {
             for (size_t i = 0; i < GetMenuCount(); i++)
             {
@@ -158,7 +158,7 @@ namespace Alternet::UI
             return nullptr;
         }
 
-        int GetItemIndex(const string& id)
+        int GetItemIndex(const wxString& id)
         {
             for (size_t i = 0; i < GetMenuCount(); i++)
             {

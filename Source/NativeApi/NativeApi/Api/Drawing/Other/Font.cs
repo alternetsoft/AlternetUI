@@ -34,8 +34,8 @@ namespace NativeApi.Api
         public float SizeInPoints { get => throw new Exception(); }
         public FontStyle Style { get => throw new Exception(); }
 
-        public string Description { get => throw new Exception(); }
+        public NativeStringSpan Description { get => throw new Exception(); }
         public bool IsEqualTo(Font other) => throw new Exception();
-        public string Serialize() => throw new Exception();
+        public NativeStringSpan Serialize() => throw new Exception();
     }
 }

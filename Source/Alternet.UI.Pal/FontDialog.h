@@ -16,7 +16,7 @@ namespace Alternet::UI
     
     private:
         GenericFontFamily _genericFamily = GenericFontFamily::None;
-        optional<string> _familyName;
+        wxString _familyName;
         double _fontSizeInPoints = 12.0;
         FontStyle _fontStyle = FontStyle::Regular;
 
@@ -27,7 +27,7 @@ namespace Alternet::UI
         void DestroyDialog();
         void CreateDialog();
 
-        optional<string> _title;
+        wxString _title;
 
         Window* _owner = nullptr;
 

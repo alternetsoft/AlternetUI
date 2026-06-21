@@ -64,7 +64,6 @@ namespace Alternet::UI
         void DoLogRecord(wxLogLevel level, const wxString& msg,
             const wxLogRecordInfo& info);
         static void Log(const wxString& msg);
-        static void Log(const string& msg);
 
         static void LogSeparator()
         {
@@ -80,7 +79,7 @@ namespace Alternet::UI
     private:
 
         App* _app = nullptr;
-        string _eventArgString;
+        wxString _eventArgString;
 
         Keyboard* _keyboard = nullptr;
         Mouse* _mouse = nullptr;

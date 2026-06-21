@@ -57,7 +57,7 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::InsertColumnAt(int64_t index, const string& header, 
+    void ListView::InsertColumnAt(int64_t index, const NativeStringSpan& header, 
         Coord width, ListViewColumnWidthMode widthMode)
     {
         if (_view == ListViewView::Details)
@@ -67,7 +67,7 @@ namespace Alternet::UI
                 return;
 
             auto w = GetWxColumnWidth(width, widthMode);
-            listView->InsertColumn(index, wxStr(header), 0, w);
+            listView->InsertColumn(index, StringSpanToWx(header), 0, w);
         }
     }
 
@@ -83,11 +83,11 @@ namespace Alternet::UI
         }
     }
 
-    void ListView::InsertItemAt(int64_t index, const string& value, int64_t columnIndex,
+    void ListView::InsertItemAt(int64_t index, const NativeStringSpan& value, int64_t columnIndex,
         int imageIndex)
     {
         wxListItem item;
-        item.SetText(wxStr(value));
+        item.SetText(StringSpanToWx(value));
         item.SetColumn(columnIndex);
         item.SetId(index);
         item.SetImage(imageIndex);
@@ -255,8 +255,11 @@ namespace Alternet::UI
 
         data.editCancelled = event.IsEditCancelled();
         data.itemIndex = event.GetItem().m_itemId;
-        auto label = wxStr(event.GetLabel());
-        data.label = const_cast<char16_t*>(label.c_str());
+        auto label = event.GetLabel();
+
+        _container = label;
+
+        data.label = WxToStringSpan(_container);
 
         auto result = RaiseEventWithPointerResult(e, &data);
 
@@ -300,19 +303,19 @@ namespace Alternet::UI
         listView->SetColumnWidth(columnIndex, width);
     }
 
-    void ListView::SetColumnTitle(int64_t columnIndex, const string& title)
+    void ListView::SetColumnTitle(int64_t columnIndex, const NativeStringSpan& title)
     {
         if (_view != ListViewView::Details)
             return;
 
         wxListItem item;
         item.SetMask(wxLIST_MASK_TEXT);
-        item.SetText(wxStr(title));
+        item.SetText(StringSpanToWx(title));
 
         GetListView()->SetColumn(columnIndex, item);
     }
 
-    void ListView::SetItemText(int64_t itemIndex, int64_t columnIndex, const string& text)
+    void ListView::SetItemText(int64_t itemIndex, int64_t columnIndex, const NativeStringSpan& text)
     {
         auto listView = GetListView();
 
@@ -328,7 +331,7 @@ namespace Alternet::UI
             item.SetColumn(columnIndex);
             item.SetId(itemIndex);
             item.SetMask(wxLIST_MASK_TEXT);
-            item.SetText(wxStr(text));
+            item.SetText(StringSpanToWx(text));
             listView->SetItem(item);
         }
     }

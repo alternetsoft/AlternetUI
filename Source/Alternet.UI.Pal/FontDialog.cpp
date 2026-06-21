@@ -3,19 +3,17 @@
 namespace Alternet::UI
 {
     void FontDialog::SetInitialFont(GenericFontFamily genericFamily, 
-        optional<string> familyName, Coord emSizeInPoints, FontStyle style)
+        const NativeStringSpan& familyName, Coord emSizeInPoints, FontStyle style)
     {
         _genericFamily = genericFamily;
-        _familyName = familyName;
+        _familyName = StringSpanToWx(familyName);
         _fontSizeInPoints = emSizeInPoints;
         _fontStyle = style;
     }
 
-    string FontDialog::GetResultFontName() 
+    NativeStringSpan FontDialog::GetResultFontName() 
     {
-        if (_familyName.has_value())
-            return _familyName.value();
-        return wxStr(wxEmptyString);
+        return WxToStringSpan(_familyName);
     }
 
     Coord FontDialog::GetResultFontSizeInPoints() 
@@ -174,15 +172,15 @@ namespace Alternet::UI
         return wxf;
     }
 
-    optional<string> FontDialog::GetTitle()
+    NativeStringSpan FontDialog::GetTitle()
     {
-        return _title;
+        return WxToStringSpan(_title);
     }
 
-    void FontDialog::SetTitle(optional<string> value)
+    void FontDialog::SetTitle(const NativeStringSpan& value)
     {
-        _title = value;
-        GetDialog()->SetTitle(wxStr(value.value_or(u"")));
+        _title = StringSpanToWx(value);
+        GetDialog()->SetTitle(_title);
     }
 
     ModalResult FontDialog::ShowModal(Window* owner)
@@ -221,7 +219,7 @@ namespace Alternet::UI
             if (weight > wxFONTWEIGHT_NORMAL)
                 font.SetWeight(wxFONTWEIGHT_BOLD);
             */
-            _familyName = wxStr(font.GetFaceName());
+            _familyName = font.GetFaceName();
             _fontSizeInPoints = font.GetFractionalPointSize();
             _fontStyle = Font::GetFontStyle(font);
 
@@ -272,8 +270,8 @@ namespace Alternet::UI
 
         _dialog = new wxFontDialog(owner);
 
-        if (_title.has_value())
-            _dialog->SetTitle(wxStr(_title.value()));
+        if (_title != "")
+            _dialog->SetTitle(_title);
     }
 }
 

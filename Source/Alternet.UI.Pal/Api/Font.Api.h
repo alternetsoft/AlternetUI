@@ -36,10 +36,10 @@ ALTERNET_UI_API FontStyle Font_GetStyle_(Font* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* Font_GetDescription_(Font* obj)
+ALTERNET_UI_API NativeStringSpan_C Font_GetDescription_(Font* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetDescription());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetDescription();
     });
 }
 
@@ -197,10 +197,10 @@ ALTERNET_UI_API c_bool Font_IsEqualTo_(Font* obj, Font* other)
     });
 }
 
-ALTERNET_UI_API char16_t* Font_Serialize_(Font* obj)
+ALTERNET_UI_API NativeStringSpan_C Font_Serialize_(Font* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->Serialize());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->Serialize();
     });
 }
 

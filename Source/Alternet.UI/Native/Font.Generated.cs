@@ -78,7 +78,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string Description
+        public Alternet.UI.NativeStringSpan Description
         {
             get
             {
@@ -194,7 +194,7 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             return NativeApi.Font_IsEqualTo_(NativePointer, other.NativePointer);
         }
         
-        public string Serialize()
+        public Alternet.UI.NativeStringSpan Serialize()
         {
             CheckDisposed();
             return NativeApi.Font_Serialize_(NativePointer);
@@ -219,7 +219,7 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             public static extern Alternet.Drawing.FontStyle Font_GetStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Font_GetDescription_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Font_GetDescription_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Font_OpenFamiliesArray_();
@@ -288,7 +288,7 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             public static extern bool Font_IsEqualTo_(IntPtr obj, IntPtr other);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Font_Serialize_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Font_Serialize_(IntPtr obj);
             
         }
     }
