@@ -21,9 +21,32 @@ namespace Alternet.UI
         /// </summary>
         public static bool DefaultHasAdditionalBorder = true;
 
+        /// <summary>
+        /// Gets or sets the default distance between OK and Cancel buttons in the bottom toolbar.
+        /// If not specified, a default value will be used.
+        /// </summary>
+        public static float? DefaultOkCancelDistance = 10;
+
+        /// <summary>
+        /// Gets or sets the default title margin.
+        /// </summary>
+        public static Thickness DefaultTitleMargin = (5, 0, 5, 0);
+
+        /// <summary>
+        /// Gets or sets default theme for OK and Cancel buttons.
+        /// </summary>
+        public static SpeedButton.KnownTheme DefaultOkCancelTheme = SpeedButton.KnownTheme.RoundBorder;
+
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ControlSubscriber notification = new();
         private readonly ToolBar bottomToolBar = new();
+        private readonly ToolBar topToolBar = new();
+        private readonly SpeedButton buttonOk;
+        private readonly SpeedButton buttonCancel;
+        private readonly AbstractControl buttonSpacer;
+        private readonly GripControl gripControl;
+        private readonly Label label;
+
         private ModalResult popupResult;
         private T? mainControl;
 
@@ -32,25 +55,57 @@ namespace Alternet.UI
         /// </summary>
         public PopupWindow()
         {
-            MinimizeEnabled = DefaultMinimizeEnabled;
-            MaximizeEnabled = DefaultMaximizeEnabled;
+            Layout = LayoutStyle.Vertical;
+            mainPanel.VerticalAlignment = VerticalAlignment.Fill;
+
+            topToolBar.ResetSuggestedSize();
+            topToolBar.MinHeight = Coord.Max(
+                Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
+                ToolBar.DefaultMinItemSize);
+
+            gripControl = new GripControl();
+            gripControl.ConfigureAsMovingGrip();
+            gripControl.VerticalAlignment = VerticalAlignment.Stretch;
+            gripControl.Target = this;
+            gripControl.HorizontalAlignment = HorizontalAlignment.Fill;
+
+            label = new Label();
+            label.VerticalAlignment = VerticalAlignment.Center;
+            label.HorizontalAlignment = HorizontalAlignment.Left;
+            label.Margin = DefaultTitleMargin;
+            label.InputTransparent = true;
+            label.Parent = gripControl;
+
+            topToolBar.AddControl(gripControl);
+            topToolBar.Parent = this;
+
+            topToolBar.Margin = DefaultTopToolBarMargin;
+            topToolBar.Visible = DefaultHasTitleBar;
+            mainPanel.Margin = DefaultMainPanelMargin;
+
+            MakeWithoutTitleBar();
             ShowInTaskbar = false;
             StartLocation = WindowStartLocation.Manual;
-            HasTitleBar = DefaultHasTitleBar;
             TopMost = DefaultTopMost;
-            CloseEnabled = DefaultCloseEnabled;
-            HasSystemMenu = false;
 
-            mainPanel.HasBorder = DefaultHasAdditionalBorder;
+            HasInnerBorder = DefaultHasAdditionalBorder;
             mainPanel.Parent = this;
             Padding = DefaultPadding;
 
             bottomToolBar.AddSizingGrip(this, ToolBar.GripControlKind.MoveGrip);
 
-            var buttons = bottomToolBar.AddSpeedBtn(KnownButton.OK, KnownButton.Cancel);
+            ButtonIdOk = bottomToolBar.AddSpeedBtn(KnownButton.OK);
+            buttonSpacer = bottomToolBar.AddSpacerCore(DefaultOkCancelDistance);
+            buttonSpacer.HorizontalAlignment = HorizontalAlignment.Right;
+            ButtonIdCancel = bottomToolBar.AddSpeedBtn(KnownButton.Cancel);
+
+            buttonOk = bottomToolBar.FindTool(ButtonIdOk)!;
+            buttonCancel = bottomToolBar.FindTool(ButtonIdCancel)!;
+
+            buttonOk.UseTheme = DefaultOkCancelTheme;
+            buttonCancel.UseTheme = DefaultOkCancelTheme;
+
             bottomToolBar.ItemSize = Math.Max(bottomToolBar.ItemSize, MinElementSize);
-            ButtonIdOk = buttons[0];
-            ButtonIdCancel = buttons[1];
             bottomToolBar.SuspendLayout();
             bottomToolBar.Padding = DefaultBottomToolBarPadding;
             bottomToolBar.MinHeight = bottomToolBar.ItemSize + bottomToolBar.Padding.Vertical;
@@ -118,7 +173,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default popup window padding.
         /// </summary>
-        public static Thickness DefaultPadding { get; set; } = (5, 5, 5, 10);
+        public static Thickness DefaultPadding { get; set; } = (0, 0, 0, 0);
+
+        /// <summary>
+        /// Gets or sets default main panel margin.
+        /// </summary>
+        public static Thickness DefaultMainPanelMargin { get; set; } = (5, 5, 5, 5);
+
+        /// <summary>
+        /// Gets or sets default top toolbar margin.
+        /// </summary>
+        public static Thickness DefaultTopToolBarMargin { get; set; } = (0, 0, 0, 0);
 
         /// <summary>
         /// Gets the <see cref="ControlSubscriber"/> associated with the notification system.
@@ -127,6 +192,11 @@ namespace Alternet.UI
         /// window is shown and removed when it is hidden.
         /// </summary>
         public virtual ControlSubscriber Subscriber => notification;
+
+        /// <summary>
+        /// Gets spacer which is added between OK and Cancel buttons in the bottom toolbar.
+        /// </summary>
+        public AbstractControl ButtonSpacer => buttonSpacer;
 
         /// <summary>
         /// Gets or sets whether 'Ok' and 'Cancel' buttons are visible.
@@ -141,6 +211,27 @@ namespace Alternet.UI
                 ShowCancelButton = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a boolean value indicating whether title bar is visible.
+        /// </summary>
+        public new virtual bool HasTitleBar
+        {
+            get => topToolBar.Visible;
+            set => topToolBar.Visible = value;
+        }
+
+        /// <summary>
+        /// Gets grip control used for moving the target control.
+        /// </summary>
+        [Browsable(false)]
+        public GripControl TitleGripControl => gripControl;
+
+        /// <summary>
+        /// Gets the label used for displaying the title.
+        /// </summary>
+        [Browsable(false)]
+        public Label TitleLabel => label;
 
         /// <summary>
         /// Gets or sets whether 'Ok' button is visible.
@@ -185,6 +276,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets OK button.
+        /// </summary>
+        public SpeedButton ButtonOk => buttonOk;
+
+        /// <summary>
+        /// Gets Cancel button.
+        /// </summary>
+        public SpeedButton ButtonCancel => buttonCancel;
+
+        /// <summary>
         /// Gets 'Ok' button id.
         /// </summary>
         [Browsable(false)]
@@ -218,6 +319,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public ToolBar BottomToolBar => bottomToolBar;
+
+        /// <summary>
+        /// Gets top toolbar with title and other buttons.
+        /// </summary>
+        [Browsable(false)]
+        public ToolBar TopToolBar => topToolBar;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.MinimizeEnabled"/> property.
@@ -751,6 +858,13 @@ namespace Alternet.UI
                 return;
             control.MouseDoubleClick += OnMainControlMouseDoubleClick;
             control.MouseLeftButtonUp += OnMainControlMouseLeftButtonUp;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTitleChanged(EventArgs e)
+        {
+            base.OnTitleChanged(e);
+            label.Text = Title;
         }
 
         /// <summary>
