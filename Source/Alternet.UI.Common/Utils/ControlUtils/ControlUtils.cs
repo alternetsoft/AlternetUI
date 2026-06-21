@@ -15,6 +15,12 @@ namespace Alternet.UI
         private static Control? empty;
 
         /// <summary>
+        /// Gets whether SkiaSharp is used for rendering controls.
+        /// </summary>
+        public static bool SkiaSharpRendering
+            => AbstractControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
+
+        /// <summary>
         /// Gets an empty control for the debug purposes.
         /// </summary>
         public static Control Empty
