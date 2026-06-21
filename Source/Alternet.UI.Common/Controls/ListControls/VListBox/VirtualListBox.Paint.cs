@@ -157,6 +157,12 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets preferred content size based on the current items and layout of the control.
+        /// </summary>
+        /// <param name="dc">The graphics context used to perform the measurement.
+        /// If null, the default measurement canvas is used.</param>
+        /// <returns>A <see cref="MeasureContentSizeResult"/> representing the preferred content size.</returns>
         public virtual MeasureContentSizeResult GetPreferredContentSize(Graphics? dc = null)
         {
             ListControlItem.MeasureItemSizeParams prm = new();
@@ -425,12 +431,12 @@ namespace Alternet.UI
             /// <summary>
             /// Gets content width.
             /// </summary>
-            public float Width { get => ContentSize.Width; }
+            public readonly float Width { get => ContentSize.Width; }
 
             /// <summary>
             /// Gets content height.
             /// </summary>
-            public float Height { get => ContentSize.Height; }
+            public readonly float Height { get => ContentSize.Height; }
 
             /// <summary>
             /// Gets or sets an array of <see cref="ListControlItem.MeasureItemSizeResult"/> representing
@@ -438,7 +444,13 @@ namespace Alternet.UI
             /// </summary>
             public ListControlItem.MeasureItemSizeResult[] RowSizes { get; set; }
 
-            public float GetContentWidth(ListControlColumn column)
+            /// <summary>
+            /// Gets content width of the specified column. Returns -1 if
+            /// no measurement is available for the column.
+            /// </summary>
+            /// <param name="column">The column for which to get the content width.</param>
+            /// <returns>The content width of the specified column.</returns>
+            public readonly float GetContentWidth(ListControlColumn column)
             {
                 float result = -1;
 
