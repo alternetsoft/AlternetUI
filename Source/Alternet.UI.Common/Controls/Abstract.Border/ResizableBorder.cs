@@ -13,9 +13,9 @@ namespace Alternet.UI
     public partial class ResizableBorder : DockedSubPanelContainer
     {
         /// <summary>
-        /// Gets or sets the thickness of the resizable border.
+        /// Gets or sets the minimum thickness of the resizable border.
         /// </summary>
-        public static float DefaultBorderThickness = 3f;
+        public static float MinBorderThickness = 3f;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResizableBorder"/> class.
@@ -53,7 +53,7 @@ namespace Alternet.UI
         {
             get
             {
-                return DefaultBorderThickness;
+                return MinBorderThickness;
             }
         }
 
@@ -95,10 +95,10 @@ namespace Alternet.UI
         public virtual ResizableBorder UseWindowBorderSize(Window.FrameMetrics.BorderMetricKind kind)
         {
             var size = Window.FrameMetrics.GetBorderSize(kind, this);
-            RightPanel.Width = size.Width;
-            LeftPanel.Width = size.Width;
-            TopPanel.Height = size.Height;
-            BottomPanel.Height = size.Height;
+            RightPanel.Width = MathF.Max(size.Width, MinBorderThickness);
+            LeftPanel.Width = MathF.Max(size.Width, MinBorderThickness);
+            TopPanel.Height = MathF.Max(size.Height, MinBorderThickness);
+            BottomPanel.Height = MathF.Max(size.Height, MinBorderThickness);
             return this;
         }
 
