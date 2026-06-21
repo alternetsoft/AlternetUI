@@ -10,6 +10,8 @@ namespace Alternet.Drawing
     /// </summary>
     public partial class Region : HandledObject<IRegionHandler>
     {
+        private float scaleFactor = 1.0f;
+
         /// <summary>
         /// This constructor creates an invalid (empty, null) <see cref="Region"/>.
         /// </summary>
@@ -20,14 +22,29 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Initializes a new <see cref="Region"/> from the specified <see cref="RectD"/> structure.
+        /// Initializes a new <see cref="Region"/> from the specified <see cref="RectI"/> structure.
         /// </summary>
-        /// <param name="rect">A <see cref="RectD"/> structure that defines the interior
+        /// <param name="rect">A <see cref="RectI"/> structure that defines the interior
         /// of the new <see cref="Region"/>.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(RectI rect)
         {
             Handler = GraphicsFactory.Handler.CreateRegionHandler(rect);
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Region"/> from the specified <see cref="RectI"/> structure.
+        /// </summary>
+        /// <param name="rect">A <see cref="RectI"/> structure that defines the interior
+        /// of the new <see cref="Region"/>.</param>
+        /// <param name="scaleFactor">The scale factor for the polygon.
+        /// This value is used when converting parameters for the region operations
+        /// from device-independent units to pixels. Internally the region is stored in pixels.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Region(RectD rect, float scaleFactor = 1.0f)
+            : this(rect.PixelFromDip(scaleFactor)) 
+        {
+            this.scaleFactor = scaleFactor;
         }
 
         /// <summary>
@@ -48,7 +65,9 @@ namespace Alternet.Drawing
         /// <param name="points">A <see cref="PointD"/> structures array
         /// describing the polygon.</param>
         /// <param name="fillMode">The polygon fill mode.</param>
-        /// <param name="scaleFactor">The scale factor for the polygon.</param>
+        /// <param name="scaleFactor">The scale factor for the polygon.
+        /// This value is used when converting parameters for the region operations
+        /// from device-independent units to pixels. Internally the region is stored in pixels.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(
             ReadOnlySpan<PointD> points,
@@ -56,6 +75,7 @@ namespace Alternet.Drawing
             float scaleFactor = 1.0f)
         {
             Handler = GraphicsFactory.Handler.CreateRegionHandler(points, fillMode, scaleFactor);
+            this.scaleFactor = scaleFactor;
         }
 
         /// <summary>
@@ -65,6 +85,24 @@ namespace Alternet.Drawing
         public Region(IRegionHandler region)
         {
             Handler = region;
+        }
+
+        /// <summary>
+        /// Gets or sets the scale factor for the region.
+        /// This value is used when converting parameters for the region operations
+        /// from device-independent units to pixels. Internally the region is stored in pixels.
+        /// </summary>
+        public virtual float ScaleFactor
+        {
+            get
+            {
+                return scaleFactor;
+            }
+
+            set
+            {
+                scaleFactor = value;
+            }
         }
 
         /// <summary>
@@ -148,6 +186,19 @@ namespace Alternet.Drawing
         {
             CheckDisposed();
             Handler.UnionWithRect(rect);
+        }
+
+        /// <summary>
+        /// Updates this <see cref="Region"/> to the union of itself with the
+        /// specified <see cref="RectD"/> structure.
+        /// </summary>
+        /// <param name="rect">The <see cref="RectD"/> structure to union with
+        /// this <see cref="Region"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Union(RectD rect)
+        {
+            CheckDisposed();
+            Handler.UnionWithRect(rect.PixelFromDip(ScaleFactor));
         }
 
         /// <summary>
