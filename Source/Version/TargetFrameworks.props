@@ -16,7 +16,7 @@
 
   <PropertyGroup>
    	<FrameworkOverridesName>FrameworksOverride.props</FrameworkOverridesName>
-  	<BoolNet10>false</BoolNet10>
+  	<BoolNet10>true</BoolNet10>
   	<BoolNet9>true</BoolNet9>
   	<BoolNet8>true</BoolNet8>
   </PropertyGroup>
@@ -27,11 +27,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsOsxArm64)=='true'">
-  	<BoolNet10>true</BoolNet10>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(IsWindows)=='true'">
-  	<BoolNet10>true</BoolNet10>
   </PropertyGroup>
 
   <Import Project="$(FrameworkOverridesName)" Condition="Exists($(FrameworkOverridesName))"/>
