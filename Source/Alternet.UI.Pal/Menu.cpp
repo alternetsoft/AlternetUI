@@ -113,7 +113,7 @@ namespace Alternet::UI
 #ifdef __WXOSX__
         _container = wxApp::s_macHelpMenuTitleName;
 
-        return WxStr(_container);
+        return wxStr(_container);
 #else
         return wxStr("");
 #endif
@@ -124,7 +124,7 @@ namespace Alternet::UI
 #ifdef __WXOSX__
         _container = wxApp::s_macWindowMenuTitleName;
 
-        return WxStr(_container);
+        return wxStr(_container);
 #else
         return wxStr("");
 #endif
