@@ -120,31 +120,31 @@ ALTERNET_UI_API c_bool WebBrowser_GetHasSelection_(WebBrowser* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_GetSelectedSource_(WebBrowser* obj)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetSelectedSource_(WebBrowser* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetSelectedSource());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetSelectedSource();
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_GetSelectedText_(WebBrowser* obj)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetSelectedText_(WebBrowser* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetSelectedText());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetSelectedText();
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_GetPageSource_(WebBrowser* obj)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetPageSource_(WebBrowser* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPageSource());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPageSource();
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_GetPageText_(WebBrowser* obj)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetPageText_(WebBrowser* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPageText());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPageText();
     });
 }
 
@@ -176,14 +176,14 @@ ALTERNET_UI_API void WebBrowser_SetPreferredColorScheme_(WebBrowser* obj, int va
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_GetUserAgent_(WebBrowser* obj)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetUserAgent_(WebBrowser* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetUserAgent());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetUserAgent();
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetUserAgent_(WebBrowser* obj, const char16_t* value)
+ALTERNET_UI_API void WebBrowser_SetUserAgent_(WebBrowser* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetUserAgent(value);
@@ -239,59 +239,59 @@ ALTERNET_UI_API c_bool WebBrowser_GetIsEdge_(WebBrowser* obj)
     });
 }
 
-ALTERNET_UI_API void* WebBrowser_CreateWebBrowser_(const char16_t* url)
+ALTERNET_UI_API void* WebBrowser_CreateWebBrowser_(NativeStringSpan* url)
 {
     return MarshalExceptions<void*>([&](){
-        return WebBrowser::CreateWebBrowser(url);
+        return WebBrowser::CreateWebBrowser(*url);
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetDefaultUserAgent_(const char16_t* value)
+ALTERNET_UI_API void WebBrowser_SetDefaultUserAgent_(NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        WebBrowser::SetDefaultUserAgent(value);
+        WebBrowser::SetDefaultUserAgent(*value);
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetDefaultScriptMesageName_(const char16_t* value)
+ALTERNET_UI_API void WebBrowser_SetDefaultScriptMesageName_(NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        WebBrowser::SetDefaultScriptMesageName(value);
+        WebBrowser::SetDefaultScriptMesageName(*value);
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetDefaultFSNameMemory_(const char16_t* value)
+ALTERNET_UI_API void WebBrowser_SetDefaultFSNameMemory_(NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        WebBrowser::SetDefaultFSNameMemory(value);
+        WebBrowser::SetDefaultFSNameMemory(*value);
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetDefaultFSNameArchive_(const char16_t* value)
+ALTERNET_UI_API void WebBrowser_SetDefaultFSNameArchive_(NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        WebBrowser::SetDefaultFSNameArchive(value);
+        WebBrowser::SetDefaultFSNameArchive(*value);
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_DoCommand_(WebBrowser* obj, const char16_t* cmdName, const char16_t* cmdParam1, const char16_t* cmdParam2)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_DoCommand_(WebBrowser* obj, NativeStringSpan* cmdName, NativeStringSpan* cmdParam1, NativeStringSpan* cmdParam2)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->DoCommand(cmdName, cmdParam1, cmdParam2));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->DoCommand(*cmdName, *cmdParam1, *cmdParam2);
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_DoCommandGlobal_(const char16_t* cmdName, const char16_t* cmdParam1, const char16_t* cmdParam2)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_DoCommandGlobal_(NativeStringSpan* cmdName, NativeStringSpan* cmdParam1, NativeStringSpan* cmdParam2)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(WebBrowser::DoCommandGlobal(cmdName, cmdParam1, cmdParam2));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WebBrowser::DoCommandGlobal(*cmdName, *cmdParam1, *cmdParam2);
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetVirtualHostNameToFolderMapping_(WebBrowser* obj, const char16_t* hostName, const char16_t* folderPath, int accessKind)
+ALTERNET_UI_API void WebBrowser_SetVirtualHostNameToFolderMapping_(WebBrowser* obj, NativeStringSpan* hostName, NativeStringSpan* folderPath, int accessKind)
 {
     MarshalExceptions<void>([&](){
-        obj->SetVirtualHostNameToFolderMapping(hostName, folderPath, accessKind);
+        obj->SetVirtualHostNameToFolderMapping(*hostName, *folderPath, accessKind);
     });
 }
 
@@ -421,24 +421,24 @@ ALTERNET_UI_API void WebBrowser_RemoveAllUserScripts_(WebBrowser* obj)
     });
 }
 
-ALTERNET_UI_API c_bool WebBrowser_AddScriptMessageHandler_(WebBrowser* obj, const char16_t* name)
+ALTERNET_UI_API c_bool WebBrowser_AddScriptMessageHandler_(WebBrowser* obj, NativeStringSpan* name)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->AddScriptMessageHandler(name);
+        return obj->AddScriptMessageHandler(*name);
     });
 }
 
-ALTERNET_UI_API c_bool WebBrowser_RemoveScriptMessageHandler_(WebBrowser* obj, const char16_t* name)
+ALTERNET_UI_API c_bool WebBrowser_RemoveScriptMessageHandler_(WebBrowser* obj, NativeStringSpan* name)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->RemoveScriptMessageHandler(name);
+        return obj->RemoveScriptMessageHandler(*name);
     });
 }
 
-ALTERNET_UI_API void WebBrowser_RunScriptAsync_(WebBrowser* obj, const char16_t* javascript, void* clientData)
+ALTERNET_UI_API void WebBrowser_RunScriptAsync_(WebBrowser* obj, NativeStringSpan* javascript, void* clientData)
 {
     MarshalExceptions<void>([&](){
-        obj->RunScriptAsync(javascript, clientData);
+        obj->RunScriptAsync(*javascript, clientData);
     });
 }
 
@@ -456,52 +456,52 @@ ALTERNET_UI_API int WebBrowser_GetBackendOS_()
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetEdgePath_(const char16_t* path)
+ALTERNET_UI_API void WebBrowser_SetEdgePath_(NativeStringSpan* path)
 {
     MarshalExceptions<void>([&](){
-        WebBrowser::SetEdgePath(path);
+        WebBrowser::SetEdgePath(*path);
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_GetCurrentTitle_(WebBrowser* obj)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetCurrentTitle_(WebBrowser* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetCurrentTitle());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetCurrentTitle();
     });
 }
 
-ALTERNET_UI_API char16_t* WebBrowser_GetCurrentURL_(WebBrowser* obj)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetCurrentURL_(WebBrowser* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetCurrentURL());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetCurrentURL();
     });
 }
 
-ALTERNET_UI_API void WebBrowser_LoadURL_(WebBrowser* obj, const char16_t* url)
-{
-    MarshalExceptions<void>([&](){
-        obj->LoadURL(url);
-    });
-}
-
-ALTERNET_UI_API char16_t* WebBrowser_RunScript_(WebBrowser* obj, const char16_t* javascript)
-{
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->RunScript(javascript));
-    });
-}
-
-ALTERNET_UI_API void WebBrowser_SetPage_(WebBrowser* obj, const char16_t* text, const char16_t* baseUrl)
+ALTERNET_UI_API void WebBrowser_LoadURL_(WebBrowser* obj, NativeStringSpan* url)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPage(text, baseUrl);
+        obj->LoadURL(*url);
     });
 }
 
-ALTERNET_UI_API c_bool WebBrowser_AddUserScript_(WebBrowser* obj, const char16_t* javascript, int injectionTime)
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_RunScript_(WebBrowser* obj, NativeStringSpan* javascript)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->RunScript(*javascript);
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetPage_(WebBrowser* obj, NativeStringSpan* text, NativeStringSpan* baseUrl)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetPage(*text, *baseUrl);
+    });
+}
+
+ALTERNET_UI_API c_bool WebBrowser_AddUserScript_(WebBrowser* obj, NativeStringSpan* javascript, int injectionTime)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->AddUserScript(javascript, injectionTime);
+        return obj->AddUserScript(*javascript, injectionTime);
     });
 }
 

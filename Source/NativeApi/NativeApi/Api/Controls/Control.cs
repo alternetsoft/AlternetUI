@@ -78,7 +78,7 @@ namespace NativeApi.Api
 
         public int BorderStyle { get; set; }
         public int LayoutDirection { get; set; }
-        public string Name { get; set; }
+        public NativeStringSpan Name { get; set; }
         public int Id { get; set; }
 
         public int EventOldDpi { get; }
@@ -131,7 +131,7 @@ namespace NativeApi.Api
         public bool IsFocusable { get; }
         public bool CanAcceptFocus { get; }
         public Control? ParentRefCounted { get; }
-        public string? ToolTip { get; set; }
+        public NativeStringSpan ToolTip { get; set; }
         public bool AllowDrop { get; set; }
         public virtual RectD GetBounds() => default;
 
@@ -206,7 +206,7 @@ namespace NativeApi.Api
         public void BeginInit() { }
         public void EndInit() { }
         public void Destroy() { }
-        public void SaveScreenshot(string fileName) { }
+        public void SaveScreenshot(NativeStringSpan fileName) { }
         public void SendSizeEvent() { }
         public void SendMouseDownEvent(int x, int y) { }
         public void SendMouseUpEvent(int x, int y) { }

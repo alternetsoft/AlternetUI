@@ -226,10 +226,11 @@ namespace Alternet.UI.Native
             }
         }
         
-        public void InsertItemAt(long index, string text, long columnIndex, int imageIndex)
+        public void InsertItemAt(long index, Alternet.UI.NativeStringSpan text, long columnIndex, int imageIndex)
         {
             CheckDisposed();
-            NativeApi.ListView_InsertItemAt_(NativePointer, index, text, columnIndex, imageIndex);
+            var text_Native = text.ToNative();
+NativeApi.ListView_InsertItemAt_(NativePointer, index, ref text_Native, columnIndex, imageIndex);
         }
         
         public void RemoveItemAt(long index)
@@ -244,10 +245,11 @@ namespace Alternet.UI.Native
             NativeApi.ListView_ClearItems_(NativePointer);
         }
         
-        public void InsertColumnAt(long index, string header, float width, Alternet.UI.ListViewColumnWidthMode widthMode)
+        public void InsertColumnAt(long index, Alternet.UI.NativeStringSpan header, float width, Alternet.UI.ListViewColumnWidthMode widthMode)
         {
             CheckDisposed();
-            NativeApi.ListView_InsertColumnAt_(NativePointer, index, header, width, widthMode);
+            var header_Native = header.ToNative();
+NativeApi.ListView_InsertColumnAt_(NativePointer, index, ref header_Native, width, widthMode);
         }
         
         public void RemoveColumnAt(long index)
@@ -323,10 +325,11 @@ return NativeApi.ListView_ItemHitTest_(NativePointer, ref point_Native);
             NativeApi.ListView_EnsureItemVisible_(NativePointer, itemIndex);
         }
         
-        public void SetItemText(long itemIndex, long columnIndex, string text)
+        public void SetItemText(long itemIndex, long columnIndex, Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.ListView_SetItemText_(NativePointer, itemIndex, columnIndex, text);
+            var text_Native = text.ToNative();
+NativeApi.ListView_SetItemText_(NativePointer, itemIndex, columnIndex, ref text_Native);
         }
         
         public void SetItemImageIndex(long itemIndex, long columnIndex, int imageIndex)
@@ -341,10 +344,11 @@ return NativeApi.ListView_ItemHitTest_(NativePointer, ref point_Native);
             NativeApi.ListView_SetColumnWidth_(NativePointer, columnIndex, fixedWidth, widthMode);
         }
         
-        public void SetColumnTitle(long columnIndex, string text)
+        public void SetColumnTitle(long columnIndex, Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.ListView_SetColumnTitle_(NativePointer, columnIndex, text);
+            var text_Native = text.ToNative();
+NativeApi.ListView_SetColumnTitle_(NativePointer, columnIndex, ref text_Native);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -509,7 +513,7 @@ return NativeApi.ListView_ItemHitTest_(NativePointer, ref point_Native);
             public static extern void ListView_CloseSelectedIndicesArray_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_InsertItemAt_(IntPtr obj, long index, string text, long columnIndex, int imageIndex);
+            public static extern void ListView_InsertItemAt_(IntPtr obj, long index, ref Alternet.UI.NativeStringSpan text, long columnIndex, int imageIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_RemoveItemAt_(IntPtr obj, long index);
@@ -518,7 +522,7 @@ return NativeApi.ListView_ItemHitTest_(NativePointer, ref point_Native);
             public static extern void ListView_ClearItems_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_InsertColumnAt_(IntPtr obj, long index, string header, float width, Alternet.UI.ListViewColumnWidthMode widthMode);
+            public static extern void ListView_InsertColumnAt_(IntPtr obj, long index, ref Alternet.UI.NativeStringSpan header, float width, Alternet.UI.ListViewColumnWidthMode widthMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_RemoveColumnAt_(IntPtr obj, long index);
@@ -557,7 +561,7 @@ return NativeApi.ListView_ItemHitTest_(NativePointer, ref point_Native);
             public static extern void ListView_EnsureItemVisible_(IntPtr obj, long itemIndex);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_SetItemText_(IntPtr obj, long itemIndex, long columnIndex, string text);
+            public static extern void ListView_SetItemText_(IntPtr obj, long itemIndex, long columnIndex, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListView_SetItemImageIndex_(IntPtr obj, long itemIndex, long columnIndex, int imageIndex);
@@ -566,7 +570,7 @@ return NativeApi.ListView_ItemHitTest_(NativePointer, ref point_Native);
             public static extern void ListView_SetColumnWidth_(IntPtr obj, long columnIndex, float fixedWidth, Alternet.UI.ListViewColumnWidthMode widthMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListView_SetColumnTitle_(IntPtr obj, long columnIndex, string text);
+            public static extern void ListView_SetColumnTitle_(IntPtr obj, long columnIndex, ref Alternet.UI.NativeStringSpan text);
             
         }
     }

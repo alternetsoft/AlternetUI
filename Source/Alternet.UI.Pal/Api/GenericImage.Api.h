@@ -38,17 +38,17 @@ ALTERNET_UI_API void* GenericImage_CreateImageWithSize_(int width, int height, c
     });
 }
 
-ALTERNET_UI_API void* GenericImage_CreateImageFromFileWithBitmapType_(const char16_t* name, int bitmapType, int index)
+ALTERNET_UI_API void* GenericImage_CreateImageFromFileWithBitmapType_(NativeStringSpan* name, int bitmapType, int index)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::CreateImageFromFileWithBitmapType(name, bitmapType, index);
+        return GenericImage::CreateImageFromFileWithBitmapType(*name, bitmapType, index);
     });
 }
 
-ALTERNET_UI_API void* GenericImage_CreateImageFromFileWithMimeType_(const char16_t* name, const char16_t* mimetype, int index)
+ALTERNET_UI_API void* GenericImage_CreateImageFromFileWithMimeType_(NativeStringSpan* name, NativeStringSpan* mimetype, int index)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::CreateImageFromFileWithMimeType(name, mimetype, index);
+        return GenericImage::CreateImageFromFileWithMimeType(*name, *mimetype, index);
     });
 }
 
@@ -59,10 +59,10 @@ ALTERNET_UI_API void* GenericImage_CreateImageFromStreamWithBitmapData_(void* st
     });
 }
 
-ALTERNET_UI_API void* GenericImage_CreateImageFromStreamWithMimeType_(void* stream, const char16_t* mimetype, int index)
+ALTERNET_UI_API void* GenericImage_CreateImageFromStreamWithMimeType_(void* stream, NativeStringSpan* mimetype, int index)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::CreateImageFromStreamWithMimeType(stream, mimetype, index);
+        return GenericImage::CreateImageFromStreamWithMimeType(stream, *mimetype, index);
     });
 }
 
@@ -129,17 +129,17 @@ ALTERNET_UI_API c_bool GenericImage_SetMaskFromImage_(void* handle, void* image,
     });
 }
 
-ALTERNET_UI_API void GenericImage_SetOptionString_(void* handle, const char16_t* name, const char16_t* value)
+ALTERNET_UI_API void GenericImage_SetOptionString_(void* handle, NativeStringSpan* name, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        GenericImage::SetOptionString(handle, name, value);
+        GenericImage::SetOptionString(handle, *name, *value);
     });
 }
 
-ALTERNET_UI_API void GenericImage_SetOptionInt_(void* handle, const char16_t* name, int value)
+ALTERNET_UI_API void GenericImage_SetOptionInt_(void* handle, NativeStringSpan* name, int value)
 {
     MarshalExceptions<void>([&](){
-        GenericImage::SetOptionInt(handle, name, value);
+        GenericImage::SetOptionInt(handle, *name, value);
     });
 }
 
@@ -444,17 +444,17 @@ ALTERNET_UI_API SizeI_C GenericImage_GetSize_(void* handle)
     });
 }
 
-ALTERNET_UI_API char16_t* GenericImage_GetOptionString_(void* handle, const char16_t* name)
+ALTERNET_UI_API NativeStringSpan_C GenericImage_GetOptionString_(void* handle, NativeStringSpan* name)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(GenericImage::GetOptionString(handle, name));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return GenericImage::GetOptionString(handle, *name);
     });
 }
 
-ALTERNET_UI_API int GenericImage_GetOptionInt_(void* handle, const char16_t* name)
+ALTERNET_UI_API int GenericImage_GetOptionInt_(void* handle, NativeStringSpan* name)
 {
     return MarshalExceptions<int>([&](){
-        return GenericImage::GetOptionInt(handle, name);
+        return GenericImage::GetOptionInt(handle, *name);
     });
 }
 
@@ -486,10 +486,10 @@ ALTERNET_UI_API c_bool GenericImage_HasMask_(void* handle)
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_HasOption_(void* handle, const char16_t* name)
+ALTERNET_UI_API c_bool GenericImage_HasOption_(void* handle, NativeStringSpan* name)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::HasOption(handle, name);
+        return GenericImage::HasOption(handle, *name);
     });
 }
 
@@ -514,52 +514,52 @@ ALTERNET_UI_API c_bool GenericImage_LoadStreamWithBitmapType_(void* handle, void
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_LoadFileWithBitmapType_(void* handle, const char16_t* name, int bitmapType, int index)
+ALTERNET_UI_API c_bool GenericImage_LoadFileWithBitmapType_(void* handle, NativeStringSpan* name, int bitmapType, int index)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::LoadFileWithBitmapType(handle, name, bitmapType, index);
+        return GenericImage::LoadFileWithBitmapType(handle, *name, bitmapType, index);
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_LoadFileWithMimeType_(void* handle, const char16_t* name, const char16_t* mimetype, int index)
+ALTERNET_UI_API c_bool GenericImage_LoadFileWithMimeType_(void* handle, NativeStringSpan* name, NativeStringSpan* mimetype, int index)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::LoadFileWithMimeType(handle, name, mimetype, index);
+        return GenericImage::LoadFileWithMimeType(handle, *name, *mimetype, index);
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_LoadStreamWithMimeType_(void* handle, void* stream, const char16_t* mimetype, int index)
+ALTERNET_UI_API c_bool GenericImage_LoadStreamWithMimeType_(void* handle, void* stream, NativeStringSpan* mimetype, int index)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::LoadStreamWithMimeType(handle, stream, mimetype, index);
+        return GenericImage::LoadStreamWithMimeType(handle, stream, *mimetype, index);
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_SaveStreamWithMimeType_(void* handle, void* stream, const char16_t* mimetype)
+ALTERNET_UI_API c_bool GenericImage_SaveStreamWithMimeType_(void* handle, void* stream, NativeStringSpan* mimetype)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::SaveStreamWithMimeType(handle, stream, mimetype);
+        return GenericImage::SaveStreamWithMimeType(handle, stream, *mimetype);
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_SaveFileWithBitmapType_(void* handle, const char16_t* name, int bitmapType)
+ALTERNET_UI_API c_bool GenericImage_SaveFileWithBitmapType_(void* handle, NativeStringSpan* name, int bitmapType)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::SaveFileWithBitmapType(handle, name, bitmapType);
+        return GenericImage::SaveFileWithBitmapType(handle, *name, bitmapType);
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_SaveFileWithMimeType_(void* handle, const char16_t* name, const char16_t* mimetype)
+ALTERNET_UI_API c_bool GenericImage_SaveFileWithMimeType_(void* handle, NativeStringSpan* name, NativeStringSpan* mimetype)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::SaveFileWithMimeType(handle, name, mimetype);
+        return GenericImage::SaveFileWithMimeType(handle, *name, *mimetype);
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_SaveFile_(void* handle, const char16_t* name)
+ALTERNET_UI_API c_bool GenericImage_SaveFile_(void* handle, NativeStringSpan* name)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::SaveFile(handle, name);
+        return GenericImage::SaveFile(handle, *name);
     });
 }
 
@@ -570,10 +570,10 @@ ALTERNET_UI_API c_bool GenericImage_SaveStreamWithBitmapType_(void* handle, void
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_CanRead_(const char16_t* filename)
+ALTERNET_UI_API c_bool GenericImage_CanRead_(NativeStringSpan* filename)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::CanRead(filename);
+        return GenericImage::CanRead(*filename);
     });
 }
 
@@ -591,10 +591,10 @@ ALTERNET_UI_API int GenericImage_GetDefaultLoadFlags_()
     });
 }
 
-ALTERNET_UI_API char16_t* GenericImage_GetImageExtWildcard_()
+ALTERNET_UI_API NativeStringSpan_C GenericImage_GetImageExtWildcard_()
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(GenericImage::GetImageExtWildcard());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return GenericImage::GetImageExtWildcard();
     });
 }
 
@@ -612,17 +612,17 @@ ALTERNET_UI_API void GenericImage_CleanUpHandlers_()
     });
 }
 
-ALTERNET_UI_API void* GenericImage_FindHandlerByName_(const char16_t* name)
+ALTERNET_UI_API void* GenericImage_FindHandlerByName_(NativeStringSpan* name)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::FindHandlerByName(name);
+        return GenericImage::FindHandlerByName(*name);
     });
 }
 
-ALTERNET_UI_API void* GenericImage_FindHandlerByExt_(const char16_t* extension, int bitmapType)
+ALTERNET_UI_API void* GenericImage_FindHandlerByExt_(NativeStringSpan* extension, int bitmapType)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::FindHandlerByExt(extension, bitmapType);
+        return GenericImage::FindHandlerByExt(*extension, bitmapType);
     });
 }
 
@@ -633,10 +633,10 @@ ALTERNET_UI_API void* GenericImage_FindHandlerByBitmapType_(int bitmapType)
     });
 }
 
-ALTERNET_UI_API void* GenericImage_FindHandlerByMime_(const char16_t* mimetype)
+ALTERNET_UI_API void* GenericImage_FindHandlerByMime_(NativeStringSpan* mimetype)
 {
     return MarshalExceptions<void*>([&](){
-        return GenericImage::FindHandlerByMime(mimetype);
+        return GenericImage::FindHandlerByMime(*mimetype);
     });
 }
 
@@ -647,17 +647,17 @@ ALTERNET_UI_API void GenericImage_InsertHandler_(void* handler)
     });
 }
 
-ALTERNET_UI_API c_bool GenericImage_RemoveHandler_(const char16_t* name)
+ALTERNET_UI_API c_bool GenericImage_RemoveHandler_(NativeStringSpan* name)
 {
     return MarshalExceptions<c_bool>([&](){
-        return GenericImage::RemoveHandler(name);
+        return GenericImage::RemoveHandler(*name);
     });
 }
 
-ALTERNET_UI_API int GenericImage_GetImageCountInFile_(const char16_t* filename, int bitmapType)
+ALTERNET_UI_API int GenericImage_GetImageCountInFile_(NativeStringSpan* filename, int bitmapType)
 {
     return MarshalExceptions<int>([&](){
-        return GenericImage::GetImageCountInFile(filename, bitmapType);
+        return GenericImage::GetImageCountInFile(*filename, bitmapType);
     });
 }
 

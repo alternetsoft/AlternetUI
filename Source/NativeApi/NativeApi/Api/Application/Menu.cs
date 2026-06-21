@@ -7,10 +7,10 @@ namespace NativeApi.Api
     public class Menu
     {
         // Used to detect localized Help menu titles
-        public string MacHelpMenuTitleName { get; }
+        public NativeStringSpan MacHelpMenuTitleName { get; }
 
         // Used to identify the Window menu
-        public string MacWindowMenuTitleName { get; }
+        public NativeStringSpan MacWindowMenuTitleName { get; }
 
         public void MacSetCommonMenuBar(IntPtr menuBar) { }
 
@@ -18,40 +18,40 @@ namespace NativeApi.Api
 
         public static IntPtr GetMainMenu(Window window) => throw new Exception();
 
-        public static IntPtr FindMenuItem(Window window, string id) => throw new Exception();
+        public static IntPtr FindMenuItem(Window window, NativeStringSpan id) => throw new Exception();
 
         public static void SetMainMenu(Window window, IntPtr menu) => throw new Exception();
 
-        public static bool MainMenuAppend(IntPtr menuHandle, IntPtr menu, string text)
+        public static bool MainMenuAppend(IntPtr menuHandle, IntPtr menu, NativeStringSpan text)
             => throw new Exception();
 
-        public static void MainMenuSetEnabled(IntPtr menuHandle, string childId, bool enable)
+        public static void MainMenuSetEnabled(IntPtr menuHandle, NativeStringSpan childId, bool enable)
             => throw new Exception();
 
-        public static IntPtr MainMenuGetSubMenu(IntPtr menuHandle, string childId)
+        public static IntPtr MainMenuGetSubMenu(IntPtr menuHandle, NativeStringSpan childId)
             => throw new Exception();
 
-        public static IntPtr MainMenuRemove(IntPtr menuHandle, string childId) => throw new Exception();
+        public static IntPtr MainMenuRemove(IntPtr menuHandle, NativeStringSpan childId) => throw new Exception();
 
-        public static bool MainMenuInsert(IntPtr menuHandle, string childId, IntPtr menu, string title)
+        public static bool MainMenuInsert(IntPtr menuHandle, NativeStringSpan childId, IntPtr menu, NativeStringSpan title)
             => throw new Exception();
 
-        public static IntPtr MainMenuReplace(IntPtr menuHandle, string childId, IntPtr menu, string title)
+        public static IntPtr MainMenuReplace(IntPtr menuHandle, NativeStringSpan childId, IntPtr menu, NativeStringSpan title)
             => throw new Exception();
 
-        public static void MainMenuSetText(IntPtr menuHandle, string childId, string label)
+        public static void MainMenuSetText(IntPtr menuHandle, NativeStringSpan childId, NativeStringSpan label)
             => throw new Exception();
 
         /* Create menu and menu items */
 
-        public static IntPtr CreateMainMenu(string id) => throw new Exception();
-        public static IntPtr CreateContextMenu(string id) => throw new Exception();
+        public static IntPtr CreateMainMenu(NativeStringSpan id) => throw new Exception();
+        public static IntPtr CreateContextMenu(NativeStringSpan id) => throw new Exception();
 
         public static IntPtr CreateMenuItem(
             MenuItemType itemType,
-            string id,
-            string title,
-            string help,
+            NativeStringSpan id,
+            NativeStringSpan title,
+            NativeStringSpan help,
             IntPtr menuHandle)
             => throw new Exception();
 
@@ -70,12 +70,12 @@ namespace NativeApi.Api
         public static MenuItemType GetMenuItemType(IntPtr handle) => default;
         public static void SetMenuItemBitmap(IntPtr handle, Image? value) { }
         public static void SetMenuItemEnabled(IntPtr handle, bool value) { }
-        public static void SetMenuItemRole(IntPtr handle, string role) { }
+        public static void SetMenuItemRole(IntPtr handle, NativeStringSpan role) { }
 
         public static void SetMenuItemText(
             IntPtr handle,
-            string value,
-            string rightValue) { }
+            NativeStringSpan value,
+            NativeStringSpan rightValue) { }
 
         public static void SetMenuItemChecked(IntPtr handle, bool value) { }
         public static void SetMenuItemSubMenu(IntPtr handle, IntPtr subMenuHandle) { }
@@ -85,8 +85,8 @@ namespace NativeApi.Api
         /* Work with menu */
 
         public static void MenuAddItem(IntPtr handle, IntPtr itemHandle) { }
-        public static void MenuRemoveItem(IntPtr handle, string childId) { }
-        public static bool MenuInsertItem(IntPtr handle, string childId, IntPtr itemHandle)
+        public static void MenuRemoveItem(IntPtr handle, NativeStringSpan childId) { }
+        public static bool MenuInsertItem(IntPtr handle, NativeStringSpan childId, IntPtr itemHandle)
             => throw new Exception();
 
         public static void Show(

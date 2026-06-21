@@ -33,7 +33,7 @@ namespace Alternet::UI
     struct ListViewItemLabelEditEventData
     {
         int64_t itemIndex;
-        char16_t* label;
+        NativeStringSpan label;
         c_bool editCancelled;
     };
     #pragma pack(pop)
@@ -49,7 +49,7 @@ namespace Alternet::UI
     struct TreeViewItemLabelEditEventData
     {
         void* item;
-        char16_t* label;
+        NativeStringSpan label;
         c_bool editCancelled;
     };
     #pragma pack(pop)
@@ -57,12 +57,12 @@ namespace Alternet::UI
     #pragma pack(push, 1)
     struct WebBrowserEventData
     {
-        char16_t* Url;
-        char16_t* Target;
+        NativeStringSpan Url;
+        NativeStringSpan Target;
         int ActionFlags;
-        char16_t* MessageHandler;
+        NativeStringSpan MessageHandler;
         c_bool IsError;
-        char16_t* Text;
+        NativeStringSpan Text;
         int IntVal;
         void* ClientData;
     };

@@ -85,9 +85,10 @@ NativeApi.TextBoxTextAttr_SetBackgroundColor_(attr, ref colBack_Native);
             NativeApi.TextBoxTextAttr_SetFontWeight_(attr, fontWeight);
         }
         
-        public static void SetFontFaceName(System.IntPtr attr, string faceName)
+        public static void SetFontFaceName(System.IntPtr attr, Alternet.UI.NativeStringSpan faceName)
         {
-            NativeApi.TextBoxTextAttr_SetFontFaceName_(attr, faceName);
+            var faceName_Native = faceName.ToNative();
+NativeApi.TextBoxTextAttr_SetFontFaceName_(attr, ref faceName_Native);
         }
         
         public static void SetFontUnderlined(System.IntPtr attr, bool underlined)
@@ -126,9 +127,10 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             return NativeApi.TextBoxTextAttr_GetAlignment_(attr);
         }
         
-        public static void SetURL(System.IntPtr attr, string url)
+        public static void SetURL(System.IntPtr attr, Alternet.UI.NativeStringSpan url)
         {
-            NativeApi.TextBoxTextAttr_SetURL_(attr, url);
+            var url_Native = url.ToNative();
+NativeApi.TextBoxTextAttr_SetURL_(attr, ref url_Native);
         }
         
         public static void SetFlags(System.IntPtr attr, long flags)
@@ -161,9 +163,10 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             NativeApi.TextBoxTextAttr_SetBulletNumber_(attr, n);
         }
         
-        public static void SetBulletText(System.IntPtr attr, string text)
+        public static void SetBulletText(System.IntPtr attr, Alternet.UI.NativeStringSpan text)
         {
-            NativeApi.TextBoxTextAttr_SetBulletText_(attr, text);
+            var text_Native = text.ToNative();
+NativeApi.TextBoxTextAttr_SetBulletText_(attr, ref text_Native);
         }
         
         public static void SetPageBreak(System.IntPtr attr, bool pageBreak)
@@ -171,29 +174,34 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             NativeApi.TextBoxTextAttr_SetPageBreak_(attr, pageBreak);
         }
         
-        public static void SetCharacterStyleName(System.IntPtr attr, string name)
+        public static void SetCharacterStyleName(System.IntPtr attr, Alternet.UI.NativeStringSpan name)
         {
-            NativeApi.TextBoxTextAttr_SetCharacterStyleName_(attr, name);
+            var name_Native = name.ToNative();
+NativeApi.TextBoxTextAttr_SetCharacterStyleName_(attr, ref name_Native);
         }
         
-        public static void SetParagraphStyleName(System.IntPtr attr, string name)
+        public static void SetParagraphStyleName(System.IntPtr attr, Alternet.UI.NativeStringSpan name)
         {
-            NativeApi.TextBoxTextAttr_SetParagraphStyleName_(attr, name);
+            var name_Native = name.ToNative();
+NativeApi.TextBoxTextAttr_SetParagraphStyleName_(attr, ref name_Native);
         }
         
-        public static void SetListStyleName(System.IntPtr attr, string name)
+        public static void SetListStyleName(System.IntPtr attr, Alternet.UI.NativeStringSpan name)
         {
-            NativeApi.TextBoxTextAttr_SetListStyleName_(attr, name);
+            var name_Native = name.ToNative();
+NativeApi.TextBoxTextAttr_SetListStyleName_(attr, ref name_Native);
         }
         
-        public static void SetBulletFont(System.IntPtr attr, string bulletFont)
+        public static void SetBulletFont(System.IntPtr attr, Alternet.UI.NativeStringSpan bulletFont)
         {
-            NativeApi.TextBoxTextAttr_SetBulletFont_(attr, bulletFont);
+            var bulletFont_Native = bulletFont.ToNative();
+NativeApi.TextBoxTextAttr_SetBulletFont_(attr, ref bulletFont_Native);
         }
         
-        public static void SetBulletName(System.IntPtr attr, string name)
+        public static void SetBulletName(System.IntPtr attr, Alternet.UI.NativeStringSpan name)
         {
-            NativeApi.TextBoxTextAttr_SetBulletName_(attr, name);
+            var name_Native = name.ToNative();
+NativeApi.TextBoxTextAttr_SetBulletName_(attr, ref name_Native);
         }
         
         public static void SetTextEffects(System.IntPtr attr, int effects)
@@ -251,7 +259,7 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             return NativeApi.TextBoxTextAttr_GetFontStrikethrough_(attr);
         }
         
-        public static string GetFontFaceName(System.IntPtr attr)
+        public static Alternet.UI.NativeStringSpan GetFontFaceName(System.IntPtr attr)
         {
             return NativeApi.TextBoxTextAttr_GetFontFaceName_(attr);
         }
@@ -286,12 +294,12 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             return NativeApi.TextBoxTextAttr_GetBulletNumber_(attr);
         }
         
-        public static string GetBulletText(System.IntPtr attr)
+        public static Alternet.UI.NativeStringSpan GetBulletText(System.IntPtr attr)
         {
             return NativeApi.TextBoxTextAttr_GetBulletText_(attr);
         }
         
-        public static string GetURL(System.IntPtr attr)
+        public static Alternet.UI.NativeStringSpan GetURL(System.IntPtr attr)
         {
             return NativeApi.TextBoxTextAttr_GetURL_(attr);
         }
@@ -547,7 +555,7 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             public static extern void TextBoxTextAttr_SetFontWeight_(System.IntPtr attr, int fontWeight);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetFontFaceName_(System.IntPtr attr, string faceName);
+            public static extern void TextBoxTextAttr_SetFontFaceName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan faceName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_SetFontUnderlined_(System.IntPtr attr, bool underlined);
@@ -571,7 +579,7 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             public static extern int TextBoxTextAttr_GetAlignment_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetURL_(System.IntPtr attr, string url);
+            public static extern void TextBoxTextAttr_SetURL_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan url);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_SetFlags_(System.IntPtr attr, long flags);
@@ -592,25 +600,25 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             public static extern void TextBoxTextAttr_SetBulletNumber_(System.IntPtr attr, int n);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletText_(System.IntPtr attr, string text);
+            public static extern void TextBoxTextAttr_SetBulletText_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_SetPageBreak_(System.IntPtr attr, bool pageBreak);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetCharacterStyleName_(System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetCharacterStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetParagraphStyleName_(System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetParagraphStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetListStyleName_(System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetListStyleName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletFont_(System.IntPtr attr, string bulletFont);
+            public static extern void TextBoxTextAttr_SetBulletFont_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan bulletFont);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBoxTextAttr_SetBulletName_(System.IntPtr attr, string name);
+            public static extern void TextBoxTextAttr_SetBulletName_(System.IntPtr attr, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBoxTextAttr_SetTextEffects_(System.IntPtr attr, int effects);
@@ -646,7 +654,7 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             public static extern bool TextBoxTextAttr_GetFontStrikethrough_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBoxTextAttr_GetFontFaceName_(System.IntPtr attr);
+            public static extern Alternet.UI.NativeStringSpan TextBoxTextAttr_GetFontFaceName_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TextBoxTextAttr_GetFontFamily_(System.IntPtr attr);
@@ -667,10 +675,10 @@ NativeApi.TextBoxTextAttr_SetFontUnderlinedEx_(attr, type, ref colour_Native);
             public static extern int TextBoxTextAttr_GetBulletNumber_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBoxTextAttr_GetBulletText_(System.IntPtr attr);
+            public static extern Alternet.UI.NativeStringSpan TextBoxTextAttr_GetBulletText_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBoxTextAttr_GetURL_(System.IntPtr attr);
+            public static extern Alternet.UI.NativeStringSpan TextBoxTextAttr_GetURL_(System.IntPtr attr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TextBoxTextAttr_GetTextEffects_(System.IntPtr attr);

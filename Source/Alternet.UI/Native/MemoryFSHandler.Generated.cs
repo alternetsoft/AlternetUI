@@ -23,29 +23,38 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static void RemoveFile(string filename)
+        public static void RemoveFile(Alternet.UI.NativeStringSpan filename)
         {
-            NativeApi.MemoryFSHandler_RemoveFile_(filename);
+            var filename_Native = filename.ToNative();
+NativeApi.MemoryFSHandler_RemoveFile_(ref filename_Native);
         }
         
-        public static void AddTextFileWithMimeType(string filename, string textdata, string mimetype)
+        public static void AddTextFileWithMimeType(Alternet.UI.NativeStringSpan filename, Alternet.UI.NativeStringSpan textdata, Alternet.UI.NativeStringSpan mimetype)
         {
-            NativeApi.MemoryFSHandler_AddTextFileWithMimeType_(filename, textdata, mimetype);
+            var filename_Native = filename.ToNative();
+var textdata_Native = textdata.ToNative();
+var mimetype_Native = mimetype.ToNative();
+NativeApi.MemoryFSHandler_AddTextFileWithMimeType_(ref filename_Native, ref textdata_Native, ref mimetype_Native);
         }
         
-        public static void AddTextFile(string filename, string textdata)
+        public static void AddTextFile(Alternet.UI.NativeStringSpan filename, Alternet.UI.NativeStringSpan textdata)
         {
-            NativeApi.MemoryFSHandler_AddTextFile_(filename, textdata);
+            var filename_Native = filename.ToNative();
+var textdata_Native = textdata.ToNative();
+NativeApi.MemoryFSHandler_AddTextFile_(ref filename_Native, ref textdata_Native);
         }
         
-        public static void AddFile(string filename, System.IntPtr binarydata, int size)
+        public static void AddFile(Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size)
         {
-            NativeApi.MemoryFSHandler_AddFile_(filename, binarydata, size);
+            var filename_Native = filename.ToNative();
+NativeApi.MemoryFSHandler_AddFile_(ref filename_Native, binarydata, size);
         }
         
-        public static void AddFileWithMimeType(string filename, System.IntPtr binarydata, int size, string mimetype)
+        public static void AddFileWithMimeType(Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size, Alternet.UI.NativeStringSpan mimetype)
         {
-            NativeApi.MemoryFSHandler_AddFileWithMimeType_(filename, binarydata, size, mimetype);
+            var filename_Native = filename.ToNative();
+var mimetype_Native = mimetype.ToNative();
+NativeApi.MemoryFSHandler_AddFileWithMimeType_(ref filename_Native, binarydata, size, ref mimetype_Native);
         }
         
         
@@ -58,19 +67,19 @@ namespace Alternet.UI.Native
             public static extern IntPtr MemoryFSHandler_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_RemoveFile_(string filename);
+            public static extern void MemoryFSHandler_RemoveFile_(ref Alternet.UI.NativeStringSpan filename);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddTextFileWithMimeType_(string filename, string textdata, string mimetype);
+            public static extern void MemoryFSHandler_AddTextFileWithMimeType_(ref Alternet.UI.NativeStringSpan filename, ref Alternet.UI.NativeStringSpan textdata, ref Alternet.UI.NativeStringSpan mimetype);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddTextFile_(string filename, string textdata);
+            public static extern void MemoryFSHandler_AddTextFile_(ref Alternet.UI.NativeStringSpan filename, ref Alternet.UI.NativeStringSpan textdata);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddFile_(string filename, System.IntPtr binarydata, int size);
+            public static extern void MemoryFSHandler_AddFile_(ref Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void MemoryFSHandler_AddFileWithMimeType_(string filename, System.IntPtr binarydata, int size, string mimetype);
+            public static extern void MemoryFSHandler_AddFileWithMimeType_(ref Alternet.UI.NativeStringSpan filename, System.IntPtr binarydata, int size, ref Alternet.UI.NativeStringSpan mimetype);
             
         }
     }

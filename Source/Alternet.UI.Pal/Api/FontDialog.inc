@@ -13,14 +13,14 @@ void SetEnableEffects(bool value);
 int GetRestrictSelection();
 void SetRestrictSelection(int value);
 
-string GetResultFontName();
+NativeStringSpan GetResultFontName();
 
 float GetResultFontSizeInPoints();
 
 FontStyle GetResultFontStyle();
 
-optional<string> GetTitle();
-void SetTitle(optional<string> value);
+NativeStringSpan GetTitle();
+void SetTitle(const NativeStringSpan& value);
 
 void SetColor(const Color& color);
 uint8_t GetColorR();
@@ -30,7 +30,7 @@ uint8_t GetColorA();
 uint8_t GetColorState();
 ModalResult ShowModal(Window* owner);
 void SetRange(int minRange, int maxRange);
-void SetInitialFont(GenericFontFamily genericFamily, optional<string> familyName, float emSizeInPoints, FontStyle style);
+void SetInitialFont(GenericFontFamily genericFamily, const NativeStringSpan& familyName, float emSizeInPoints, FontStyle style);
 
 public:
 FontDialog();

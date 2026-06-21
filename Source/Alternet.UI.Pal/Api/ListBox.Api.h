@@ -71,10 +71,10 @@ ALTERNET_UI_API c_bool ListBox_IsSorted_(ListBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool ListBox_SetStringSelection_(ListBox* obj, const char16_t* s, c_bool select)
+ALTERNET_UI_API c_bool ListBox_SetStringSelection_(ListBox* obj, NativeStringSpan* s, c_bool select)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->SetStringSelection(s, select);
+        return obj->SetStringSelection(*s, select);
     });
 }
 
@@ -85,10 +85,10 @@ ALTERNET_UI_API void ListBox_SetItemSelection_(ListBox* obj, int index, c_bool s
     });
 }
 
-ALTERNET_UI_API int ListBox_FindString_(ListBox* obj, const char16_t* s, c_bool bCase)
+ALTERNET_UI_API int ListBox_FindString_(ListBox* obj, NativeStringSpan* s, c_bool bCase)
 {
     return MarshalExceptions<int>([&](){
-        return obj->FindString(s, bCase);
+        return obj->FindString(*s, bCase);
     });
 }
 
@@ -113,10 +113,10 @@ ALTERNET_UI_API int ListBox_HitTest_(ListBox* obj, PointD* point)
     });
 }
 
-ALTERNET_UI_API char16_t* ListBox_GetString_(ListBox* obj, uint32_t n)
+ALTERNET_UI_API NativeStringSpan_C ListBox_GetString_(ListBox* obj, uint32_t n)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetString(n));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetString(n);
     });
 }
 
@@ -148,10 +148,10 @@ ALTERNET_UI_API void ListBox_SetFirstItem_(ListBox* obj, int n)
     });
 }
 
-ALTERNET_UI_API void ListBox_SetFirstItemStr_(ListBox* obj, const char16_t* s)
+ALTERNET_UI_API void ListBox_SetFirstItemStr_(ListBox* obj, NativeStringSpan* s)
 {
     MarshalExceptions<void>([&](){
-        obj->SetFirstItemStr(s);
+        obj->SetFirstItemStr(*s);
     });
 }
 
@@ -162,10 +162,10 @@ ALTERNET_UI_API void ListBox_SetSelection_(ListBox* obj, int n)
     });
 }
 
-ALTERNET_UI_API void ListBox_SetString_(ListBox* obj, uint32_t n, const char16_t* s)
+ALTERNET_UI_API void ListBox_SetString_(ListBox* obj, uint32_t n, NativeStringSpan* s)
 {
     MarshalExceptions<void>([&](){
-        obj->SetString(n, s);
+        obj->SetString(n, *s);
     });
 }
 
@@ -183,17 +183,17 @@ ALTERNET_UI_API void ListBox_Delete_(ListBox* obj, uint32_t n)
     });
 }
 
-ALTERNET_UI_API int ListBox_Append_(ListBox* obj, const char16_t* s)
+ALTERNET_UI_API int ListBox_Append_(ListBox* obj, NativeStringSpan* s)
 {
     return MarshalExceptions<int>([&](){
-        return obj->Append(s);
+        return obj->Append(*s);
     });
 }
 
-ALTERNET_UI_API int ListBox_Insert_(ListBox* obj, const char16_t* item, uint32_t pos)
+ALTERNET_UI_API int ListBox_Insert_(ListBox* obj, NativeStringSpan* item, uint32_t pos)
 {
     return MarshalExceptions<int>([&](){
-        return obj->Insert(item, pos);
+        return obj->Insert(*item, pos);
     });
 }
 

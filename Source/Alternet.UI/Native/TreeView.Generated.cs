@@ -359,10 +359,11 @@ NativeApi.TreeView_SetItemBackgroundColor_(handle, item, ref color_Native);
             return NativeApi.TreeView_GetItemCount_(NativePointer, parentItem);
         }
         
-        public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool parentIsExpanded)
+        public System.IntPtr InsertItem(System.IntPtr parentItem, System.IntPtr insertAfter, Alternet.UI.NativeStringSpan text, int imageIndex, bool parentIsExpanded)
         {
             CheckDisposed();
-            return NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, text, imageIndex, parentIsExpanded);
+            var text_Native = text.ToNative();
+return NativeApi.TreeView_InsertItem_(NativePointer, parentItem, insertAfter, ref text_Native, imageIndex, parentIsExpanded);
         }
         
         public void RemoveItem(System.IntPtr item)
@@ -450,13 +451,14 @@ return NativeApi.TreeView_ItemHitTest_(NativePointer, ref point_Native);
             return NativeApi.TreeView_IsItemFocused_(NativePointer, item);
         }
         
-        public void SetItemText(System.IntPtr item, string text)
+        public void SetItemText(System.IntPtr item, Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.TreeView_SetItemText_(NativePointer, item, text);
+            var text_Native = text.ToNative();
+NativeApi.TreeView_SetItemText_(NativePointer, item, ref text_Native);
         }
         
-        public string GetItemText(System.IntPtr item)
+        public Alternet.UI.NativeStringSpan GetItemText(System.IntPtr item)
         {
             CheckDisposed();
             return NativeApi.TreeView_GetItemText_(NativePointer, item);
@@ -759,7 +761,7 @@ return NativeApi.TreeView_ItemHitTest_(NativePointer, ref point_Native);
             public static extern int TreeView_GetItemCount_(IntPtr obj, System.IntPtr parentItem);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr TreeView_InsertItem_(IntPtr obj, System.IntPtr parentItem, System.IntPtr insertAfter, string text, int imageIndex, bool parentIsExpanded);
+            public static extern System.IntPtr TreeView_InsertItem_(IntPtr obj, System.IntPtr parentItem, System.IntPtr insertAfter, ref Alternet.UI.NativeStringSpan text, int imageIndex, bool parentIsExpanded);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_RemoveItem_(IntPtr obj, System.IntPtr item);
@@ -804,10 +806,10 @@ return NativeApi.TreeView_ItemHitTest_(NativePointer, ref point_Native);
             public static extern bool TreeView_IsItemFocused_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TreeView_SetItemText_(IntPtr obj, System.IntPtr item, string text);
+            public static extern void TreeView_SetItemText_(IntPtr obj, System.IntPtr item, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TreeView_GetItemText_(IntPtr obj, System.IntPtr item);
+            public static extern Alternet.UI.NativeStringSpan TreeView_GetItemText_(IntPtr obj, System.IntPtr item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TreeView_SetItemImageIndex_(IntPtr obj, System.IntPtr item, int imageIndex);

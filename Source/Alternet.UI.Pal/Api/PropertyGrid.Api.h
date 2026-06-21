@@ -50,31 +50,31 @@ ALTERNET_UI_API void* PropertyGrid_GetEventProperty_(PropertyGrid* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetEventPropertyName_(PropertyGrid* obj)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetEventPropertyName_(PropertyGrid* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetEventPropertyName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEventPropertyName();
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetEventValidationFailureMessage_(PropertyGrid* obj)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetEventValidationFailureMessage_(PropertyGrid* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetEventValidationFailureMessage());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEventValidationFailureMessage();
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetEventValidationFailureMessage_(PropertyGrid* obj, const char16_t* value)
+ALTERNET_UI_API void PropertyGrid_SetEventValidationFailureMessage_(PropertyGrid* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetEventValidationFailureMessage(value);
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetNameAsLabel_()
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetNameAsLabel_()
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(PropertyGrid::GetNameAsLabel());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return PropertyGrid::GetNameAsLabel();
     });
 }
 
@@ -169,24 +169,24 @@ ALTERNET_UI_API void PropertyGrid_ColorDatabaseSetGlobal_(void* handle)
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_ColorDatabaseAdd_(void* handle, const char16_t* name, Color* color)
+ALTERNET_UI_API void PropertyGrid_ColorDatabaseAdd_(void* handle, NativeStringSpan* name, Color* color)
 {
     MarshalExceptions<void>([&](){
-        PropertyGrid::ColorDatabaseAdd(handle, name, *color);
+        PropertyGrid::ColorDatabaseAdd(handle, *name, *color);
     });
 }
 
-ALTERNET_UI_API Color_C PropertyGrid_ColorDatabaseFind_(void* handle, const char16_t* name)
+ALTERNET_UI_API Color_C PropertyGrid_ColorDatabaseFind_(void* handle, NativeStringSpan* name)
 {
     return MarshalExceptions<Color_C>([&](){
-        return PropertyGrid::ColorDatabaseFind(handle, name);
+        return PropertyGrid::ColorDatabaseFind(handle, *name);
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_ColorDatabaseFindName_(void* handle, Color* color)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_ColorDatabaseFindName_(void* handle, Color* color)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(PropertyGrid::ColorDatabaseFindName(handle, *color));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return PropertyGrid::ColorDatabaseFindName(handle, *color);
     });
 }
 
@@ -197,10 +197,10 @@ ALTERNET_UI_API void PropertyGrid_KnownColorsClear_()
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(const char16_t* name, const char16_t* title, Color* value, int knownColor)
+ALTERNET_UI_API void PropertyGrid_KnownColorsAdd_(NativeStringSpan* name, NativeStringSpan* title, Color* value, int knownColor)
 {
     MarshalExceptions<void>([&](){
-        PropertyGrid::KnownColorsAdd(name, title, *value, knownColor);
+        PropertyGrid::KnownColorsAdd(*name, *title, *value, knownColor);
     });
 }
 
@@ -211,10 +211,10 @@ ALTERNET_UI_API void PropertyGrid_KnownColorsApply_()
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_KnownColorsSetCustomColorTitle_(const char16_t* value)
+ALTERNET_UI_API void PropertyGrid_KnownColorsSetCustomColorTitle_(NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        PropertyGrid::KnownColorsSetCustomColorTitle(value);
+        PropertyGrid::KnownColorsSetCustomColorTitle(*value);
     });
 }
 
@@ -568,10 +568,10 @@ ALTERNET_UI_API void PropertyGrid_SetSplitterPosition_(PropertyGrid* obj, int ne
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetUnspecifiedValueText_(PropertyGrid* obj, int argFlags)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetUnspecifiedValueText_(PropertyGrid* obj, int argFlags)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetUnspecifiedValueText(argFlags));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetUnspecifiedValueText(argFlags);
     });
 }
 
@@ -610,10 +610,10 @@ ALTERNET_UI_API uint32_t PropertyGrid_GetCommonValueCount_(PropertyGrid* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetCommonValueLabel_(PropertyGrid* obj, uint32_t i)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetCommonValueLabel_(PropertyGrid* obj, uint32_t i)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetCommonValueLabel(i));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetCommonValueLabel(i);
     });
 }
 
@@ -659,10 +659,10 @@ ALTERNET_UI_API int PropertyGrid_GetSpacingY_(PropertyGrid* obj)
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetupTextCtrlValue_(PropertyGrid* obj, const char16_t* text)
+ALTERNET_UI_API void PropertyGrid_SetupTextCtrlValue_(PropertyGrid* obj, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->SetupTextCtrlValue(text);
+        obj->SetupTextCtrlValue(*text);
     });
 }
 
@@ -743,87 +743,87 @@ ALTERNET_UI_API SizeI_C PropertyGrid_GetImageSize_(PropertyGrid* obj, void* p, i
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateStringProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+ALTERNET_UI_API void* PropertyGrid_CreateStringProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, NativeStringSpan* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateStringProperty(label, name, value);
+        return obj->CreateStringProperty(*label, *name, *value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateFilenameProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+ALTERNET_UI_API void* PropertyGrid_CreateFilenameProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, NativeStringSpan* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateFilenameProperty(label, name, value);
+        return obj->CreateFilenameProperty(*label, *name, *value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateDirProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+ALTERNET_UI_API void* PropertyGrid_CreateDirProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, NativeStringSpan* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateDirProperty(label, name, value);
+        return obj->CreateDirProperty(*label, *name, *value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateImageFilenameProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+ALTERNET_UI_API void* PropertyGrid_CreateImageFilenameProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, NativeStringSpan* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateImageFilenameProperty(label, name, value);
+        return obj->CreateImageFilenameProperty(*label, *name, *value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateSystemColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color* value, uint32_t kind)
+ALTERNET_UI_API void* PropertyGrid_CreateSystemColorProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, Color* value, uint32_t kind)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateSystemColorProperty(label, name, *value, kind);
+        return obj->CreateSystemColorProperty(*label, *name, *value, kind);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateCursorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, int value)
+ALTERNET_UI_API void* PropertyGrid_CreateCursorProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, int value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateCursorProperty(label, name, value);
+        return obj->CreateCursorProperty(*label, *name, value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateBoolProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, c_bool value)
+ALTERNET_UI_API void* PropertyGrid_CreateBoolProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, c_bool value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateBoolProperty(label, name, value);
+        return obj->CreateBoolProperty(*label, *name, value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateIntProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, int64_t value)
+ALTERNET_UI_API void* PropertyGrid_CreateIntProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, int64_t value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateIntProperty(label, name, value);
+        return obj->CreateIntProperty(*label, *name, value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateFloatProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, double value)
+ALTERNET_UI_API void* PropertyGrid_CreateFloatProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, double value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateFloatProperty(label, name, value);
+        return obj->CreateFloatProperty(*label, *name, value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateUIntProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, uint64_t value)
+ALTERNET_UI_API void* PropertyGrid_CreateUIntProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, uint64_t value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateUIntProperty(label, name, value);
+        return obj->CreateUIntProperty(*label, *name, value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateLongStringProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, const char16_t* value)
+ALTERNET_UI_API void* PropertyGrid_CreateLongStringProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, NativeStringSpan* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateLongStringProperty(label, name, value);
+        return obj->CreateLongStringProperty(*label, *name, *value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateDateProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, DateTime* value)
+ALTERNET_UI_API void* PropertyGrid_CreateDateProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, DateTime* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateDateProperty(label, name, *value);
+        return obj->CreateDateProperty(*label, *name, *value);
     });
 }
 
@@ -841,24 +841,24 @@ ALTERNET_UI_API void* PropertyGrid_Append_(PropertyGrid* obj, void* property)
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateEditEnumProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, void* choices, const char16_t* value)
+ALTERNET_UI_API void* PropertyGrid_CreateEditEnumProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, void* choices, NativeStringSpan* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateEditEnumProperty(label, name, choices, value);
+        return obj->CreateEditEnumProperty(*label, *name, choices, *value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateEnumProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, void* choices, int value)
+ALTERNET_UI_API void* PropertyGrid_CreateEnumProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, void* choices, int value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateEnumProperty(label, name, choices, value);
+        return obj->CreateEnumProperty(*label, *name, choices, value);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateFlagsProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, void* choices, int value)
+ALTERNET_UI_API void* PropertyGrid_CreateFlagsProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, void* choices, int value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateFlagsProperty(label, name, choices, value);
+        return obj->CreateFlagsProperty(*label, *name, choices, value);
     });
 }
 
@@ -897,10 +897,10 @@ ALTERNET_UI_API c_bool PropertyGrid_ExpandAll_(PropertyGrid* obj, c_bool expand)
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreatePropCategory_(PropertyGrid* obj, const char16_t* label, const char16_t* name)
+ALTERNET_UI_API void* PropertyGrid_CreatePropCategory_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreatePropCategory(label, name);
+        return obj->CreatePropCategory(*label, *name);
     });
 }
 
@@ -911,31 +911,31 @@ ALTERNET_UI_API void* PropertyGrid_GetFirst_(PropertyGrid* obj, int flags)
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetProperty_(PropertyGrid* obj, const char16_t* name)
+ALTERNET_UI_API void* PropertyGrid_GetProperty_(PropertyGrid* obj, NativeStringSpan* name)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->GetProperty(name);
+        return obj->GetProperty(*name);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetPropertyByLabel_(PropertyGrid* obj, const char16_t* label)
+ALTERNET_UI_API void* PropertyGrid_GetPropertyByLabel_(PropertyGrid* obj, NativeStringSpan* label)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->GetPropertyByLabel(label);
+        return obj->GetPropertyByLabel(*label);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetPropertyByName_(PropertyGrid* obj, const char16_t* name)
+ALTERNET_UI_API void* PropertyGrid_GetPropertyByName_(PropertyGrid* obj, NativeStringSpan* name)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->GetPropertyByName(name);
+        return obj->GetPropertyByName(*name);
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetPropertyByNameAndSubName_(PropertyGrid* obj, const char16_t* name, const char16_t* subname)
+ALTERNET_UI_API void* PropertyGrid_GetPropertyByNameAndSubName_(PropertyGrid* obj, NativeStringSpan* name, NativeStringSpan* subname)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->GetPropertyByNameAndSubName(name, subname);
+        return obj->GetPropertyByNameAndSubName(*name, *subname);
     });
 }
 
@@ -967,24 +967,24 @@ ALTERNET_UI_API void PropertyGrid_RegisterAdditionalEditors_()
     });
 }
 
-ALTERNET_UI_API c_bool PropertyGrid_RestoreEditableState_(PropertyGrid* obj, const char16_t* src, int restoreStates)
+ALTERNET_UI_API c_bool PropertyGrid_RestoreEditableState_(PropertyGrid* obj, NativeStringSpan* src, int restoreStates)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->RestoreEditableState(src, restoreStates);
+        return obj->RestoreEditableState(*src, restoreStates);
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_SaveEditableState_(PropertyGrid* obj, int includedStates)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_SaveEditableState_(PropertyGrid* obj, int includedStates)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->SaveEditableState(includedStates));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->SaveEditableState(includedStates);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetBoolChoices_(const char16_t* trueChoice, const char16_t* falseChoice)
+ALTERNET_UI_API void PropertyGrid_SetBoolChoices_(NativeStringSpan* trueChoice, NativeStringSpan* falseChoice)
 {
     MarshalExceptions<void>([&](){
-        PropertyGrid::SetBoolChoices(trueChoice, falseChoice);
+        PropertyGrid::SetBoolChoices(*trueChoice, *falseChoice);
     });
 }
 
@@ -1016,10 +1016,10 @@ ALTERNET_UI_API void PropertyGrid_RefreshProperty_(PropertyGrid* obj, void* p)
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_CreateColorProperty_(PropertyGrid* obj, const char16_t* label, const char16_t* name, Color* value)
+ALTERNET_UI_API void* PropertyGrid_CreateColorProperty_(PropertyGrid* obj, NativeStringSpan* label, NativeStringSpan* name, Color* value)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->CreateColorProperty(label, name, *value);
+        return obj->CreateColorProperty(*label, *name, *value);
     });
 }
 
@@ -1121,10 +1121,10 @@ ALTERNET_UI_API void* PropertyGrid_GetPropertyClientData_(PropertyGrid* obj, voi
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyHelpString_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetPropertyHelpString_(PropertyGrid* obj, void* id)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPropertyHelpString(id));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPropertyHelpString(id);
     });
 }
 
@@ -1135,10 +1135,10 @@ ALTERNET_UI_API void* PropertyGrid_GetPropertyImage_(PropertyGrid* obj, void* id
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyLabel_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetPropertyLabel_(PropertyGrid* obj, void* id)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPropertyLabel(id));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPropertyLabel(id);
     });
 }
 
@@ -1156,10 +1156,10 @@ ALTERNET_UI_API void* PropertyGrid_GetPropertyValueAsVariant_(PropertyGrid* obj,
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyValueAsString_(PropertyGrid* obj, void* id)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetPropertyValueAsString_(PropertyGrid* obj, void* id)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPropertyValueAsString(id));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPropertyValueAsString(id);
     });
 }
 
@@ -1345,24 +1345,24 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyEditorByName_(PropertyGrid* obj, vo
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyLabel_(PropertyGrid* obj, void* id, const char16_t* newproplabel)
+ALTERNET_UI_API void PropertyGrid_SetPropertyLabel_(PropertyGrid* obj, void* id, NativeStringSpan* newproplabel)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyLabel(id, newproplabel);
+        obj->SetPropertyLabel(id, *newproplabel);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyName_(PropertyGrid* obj, void* id, const char16_t* newName)
+ALTERNET_UI_API void PropertyGrid_SetPropertyName_(PropertyGrid* obj, void* id, NativeStringSpan* newName)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyName(id, newName);
+        obj->SetPropertyName(id, *newName);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyHelpString_(PropertyGrid* obj, void* id, const char16_t* helpString)
+ALTERNET_UI_API void PropertyGrid_SetPropertyHelpString_(PropertyGrid* obj, void* id, NativeStringSpan* helpString)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyHelpString(id, helpString);
+        obj->SetPropertyHelpString(id, *helpString);
     });
 }
 
@@ -1401,10 +1401,10 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsBool_(PropertyGrid* obj, voi
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsStr_(PropertyGrid* obj, void* id, const char16_t* value)
+ALTERNET_UI_API void PropertyGrid_SetPropertyValueAsStr_(PropertyGrid* obj, void* id, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyValueAsStr(id, value);
+        obj->SetPropertyValueAsStr(id, *value);
     });
 }
 
@@ -1436,10 +1436,10 @@ ALTERNET_UI_API void PropertyGrid_SortChildren_(PropertyGrid* obj, void* id, int
     });
 }
 
-ALTERNET_UI_API void* PropertyGrid_GetEditorByName_(const char16_t* editorName)
+ALTERNET_UI_API void* PropertyGrid_GetEditorByName_(NativeStringSpan* editorName)
 {
     return MarshalExceptions<void*>([&](){
-        return PropertyGrid::GetEditorByName(editorName);
+        return PropertyGrid::GetEditorByName(*editorName);
     });
 }
 
@@ -1450,17 +1450,17 @@ ALTERNET_UI_API c_bool PropertyGrid_ChangePropertyValue_(PropertyGrid* obj, void
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyAttribute_(PropertyGrid* obj, void* id, const char16_t* attrName, void* variant, int64_t argFlags)
+ALTERNET_UI_API void PropertyGrid_SetPropertyAttribute_(PropertyGrid* obj, void* id, NativeStringSpan* attrName, void* variant, int64_t argFlags)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyAttribute(id, attrName, variant, argFlags);
+        obj->SetPropertyAttribute(id, *attrName, variant, argFlags);
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, const char16_t* attrName, void* variant)
+ALTERNET_UI_API void PropertyGrid_SetPropertyAttributeAll_(PropertyGrid* obj, NativeStringSpan* attrName, void* variant)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyAttributeAll(attrName, variant);
+        obj->SetPropertyAttributeAll(*attrName, variant);
     });
 }
 

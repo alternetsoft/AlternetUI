@@ -31,10 +31,10 @@ ALTERNET_UI_API int UnmanagedDataObject_GetFormatsItemCount_(UnmanagedDataObject
     });
 }
 
-ALTERNET_UI_API char16_t* UnmanagedDataObject_GetFormatsItemAt_(UnmanagedDataObject* obj, void* array, int index)
+ALTERNET_UI_API NativeStringSpan_C UnmanagedDataObject_GetFormatsItemAt_(UnmanagedDataObject* obj, void* array, int index)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetFormatsItemAt(array, index));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetFormatsItemAt(array, index);
     });
 }
 
@@ -45,52 +45,52 @@ ALTERNET_UI_API void UnmanagedDataObject_CloseFormatsArray_(UnmanagedDataObject*
     });
 }
 
-ALTERNET_UI_API char16_t* UnmanagedDataObject_GetStringData_(UnmanagedDataObject* obj, const char16_t* format)
+ALTERNET_UI_API NativeStringSpan_C UnmanagedDataObject_GetStringData_(UnmanagedDataObject* obj, NativeStringSpan* format)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetStringData(format));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetStringData(*format);
     });
 }
 
-ALTERNET_UI_API char16_t* UnmanagedDataObject_GetFileNamesData_(UnmanagedDataObject* obj, const char16_t* format)
+ALTERNET_UI_API NativeStringSpan_C UnmanagedDataObject_GetFileNamesData_(UnmanagedDataObject* obj, NativeStringSpan* format)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetFileNamesData(format));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetFileNamesData(*format);
     });
 }
 
-ALTERNET_UI_API UnmanagedStream* UnmanagedDataObject_GetStreamData_(UnmanagedDataObject* obj, const char16_t* format)
+ALTERNET_UI_API UnmanagedStream* UnmanagedDataObject_GetStreamData_(UnmanagedDataObject* obj, NativeStringSpan* format)
 {
     return MarshalExceptions<UnmanagedStream*>([&](){
-        return obj->GetStreamData(format);
+        return obj->GetStreamData(*format);
     });
 }
 
-ALTERNET_UI_API void UnmanagedDataObject_SetStringData_(UnmanagedDataObject* obj, const char16_t* format, const char16_t* value)
+ALTERNET_UI_API void UnmanagedDataObject_SetStringData_(UnmanagedDataObject* obj, NativeStringSpan* format, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetStringData(format, value);
+        obj->SetStringData(*format, *value);
     });
 }
 
-ALTERNET_UI_API void UnmanagedDataObject_SetFileNamesData_(UnmanagedDataObject* obj, const char16_t* format, const char16_t* value)
+ALTERNET_UI_API void UnmanagedDataObject_SetFileNamesData_(UnmanagedDataObject* obj, NativeStringSpan* format, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetFileNamesData(format, value);
+        obj->SetFileNamesData(*format, *value);
     });
 }
 
-ALTERNET_UI_API void UnmanagedDataObject_SetStreamData_(UnmanagedDataObject* obj, const char16_t* format, void* value)
+ALTERNET_UI_API void UnmanagedDataObject_SetStreamData_(UnmanagedDataObject* obj, NativeStringSpan* format, void* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetStreamData(format, value);
+        obj->SetStreamData(*format, value);
     });
 }
 
-ALTERNET_UI_API c_bool UnmanagedDataObject_GetDataPresent_(UnmanagedDataObject* obj, const char16_t* format)
+ALTERNET_UI_API c_bool UnmanagedDataObject_GetDataPresent_(UnmanagedDataObject* obj, NativeStringSpan* format)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->GetDataPresent(format);
+        return obj->GetDataPresent(*format);
     });
 }
 

@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string ReportedUrl
+        public Alternet.UI.NativeStringSpan ReportedUrl
         {
             get
             {
@@ -72,7 +72,7 @@ namespace Alternet.UI.Native
             NativeApi.RichTextBox_InitFileHandlers_();
         }
         
-        public string GetRange(long from, long to)
+        public Alternet.UI.NativeStringSpan GetRange(long from, long to)
         {
             CheckDisposed();
             return NativeApi.RichTextBox_GetRange_(NativePointer, from, to);
@@ -84,7 +84,7 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_GetLineLength_(NativePointer, lineNo);
         }
         
-        public string GetLineText(long lineNo)
+        public Alternet.UI.NativeStringSpan GetLineText(long lineNo)
         {
             CheckDisposed();
             return NativeApi.RichTextBox_GetLineText_(NativePointer, lineNo);
@@ -120,22 +120,23 @@ namespace Alternet.UI.Native
             return NativeApi.RichTextBox_IsMultiLine_(NativePointer);
         }
         
-        public string GetStringSelection()
+        public Alternet.UI.NativeStringSpan GetStringSelection()
         {
             CheckDisposed();
             return NativeApi.RichTextBox_GetStringSelection_(NativePointer);
         }
         
-        public string GetFilename()
+        public Alternet.UI.NativeStringSpan GetFilename()
         {
             CheckDisposed();
             return NativeApi.RichTextBox_GetFilename_(NativePointer);
         }
         
-        public void SetFilename(string filename)
+        public void SetFilename(Alternet.UI.NativeStringSpan filename)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetFilename_(NativePointer, filename);
+            var filename_Native = filename.ToNative();
+NativeApi.RichTextBox_SetFilename_(NativePointer, ref filename_Native);
         }
         
         public void SetDelayedLayoutThreshold(long threshold)
@@ -282,10 +283,11 @@ namespace Alternet.UI.Native
             NativeApi.RichTextBox_Clear_(NativePointer);
         }
         
-        public void Replace(long from, long to, string value)
+        public void Replace(long from, long to, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_Replace_(NativePointer, from, to, value);
+            var value_Native = value.ToNative();
+NativeApi.RichTextBox_Replace_(NativePointer, from, to, ref value_Native);
         }
         
         public void Remove(long from, long to)
@@ -294,16 +296,18 @@ namespace Alternet.UI.Native
             NativeApi.RichTextBox_Remove_(NativePointer, from, to);
         }
         
-        public bool LoadFile(string file, int type)
+        public bool LoadFile(Alternet.UI.NativeStringSpan file, int type)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_LoadFile_(NativePointer, file, type);
+            var file_Native = file.ToNative();
+return NativeApi.RichTextBox_LoadFile_(NativePointer, ref file_Native, type);
         }
         
-        public bool SaveFile(string file, int type)
+        public bool SaveFile(Alternet.UI.NativeStringSpan file, int type)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SaveFile_(NativePointer, file, type);
+            var file_Native = file.ToNative();
+return NativeApi.RichTextBox_SaveFile_(NativePointer, ref file_Native, type);
         }
         
         public void SetHandlerFlags(int flags)
@@ -336,16 +340,18 @@ namespace Alternet.UI.Native
             NativeApi.RichTextBox_SetMaxLength_(NativePointer, len);
         }
         
-        public void WriteText(string text)
+        public void WriteText(Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_WriteText_(NativePointer, text);
+            var text_Native = text.ToNative();
+NativeApi.RichTextBox_WriteText_(NativePointer, ref text_Native);
         }
         
-        public void AppendText(string text)
+        public void AppendText(Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_AppendText_(NativePointer, text);
+            var text_Native = text.ToNative();
+NativeApi.RichTextBox_AppendText_(NativePointer, ref text_Native);
         }
         
         public long XYToPosition(long x, long y)
@@ -1625,7 +1631,7 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern void RichTextBox_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetReportedUrl_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_LoadFromStream_(IntPtr obj, IntPtr stream, int type);
@@ -1640,13 +1646,13 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern void RichTextBox_InitFileHandlers_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetRange_(IntPtr obj, long from, long to);
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetRange_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int RichTextBox_GetLineLength_(IntPtr obj, long lineNo);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetLineText_(IntPtr obj, long lineNo);
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetLineText_(IntPtr obj, long lineNo);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int RichTextBox_GetNumberOfLines_(IntPtr obj);
@@ -1664,13 +1670,13 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern bool RichTextBox_IsMultiLine_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetStringSelection_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetStringSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetFilename_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetFilename_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetFilename_(IntPtr obj, string filename);
+            public static extern void RichTextBox_SetFilename_(IntPtr obj, ref Alternet.UI.NativeStringSpan filename);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void RichTextBox_SetDelayedLayoutThreshold_(IntPtr obj, long threshold);
@@ -1745,16 +1751,16 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern void RichTextBox_Clear_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_Replace_(IntPtr obj, long from, long to, string value);
+            public static extern void RichTextBox_Replace_(IntPtr obj, long from, long to, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void RichTextBox_Remove_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_LoadFile_(IntPtr obj, string file, int type);
+            public static extern bool RichTextBox_LoadFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan file, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SaveFile_(IntPtr obj, string file, int type);
+            public static extern bool RichTextBox_SaveFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan file, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void RichTextBox_SetHandlerFlags_(IntPtr obj, int flags);
@@ -1772,10 +1778,10 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern void RichTextBox_SetMaxLength_(IntPtr obj, ulong len);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_WriteText_(IntPtr obj, string text);
+            public static extern void RichTextBox_WriteText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_AppendText_(IntPtr obj, string text);
+            public static extern void RichTextBox_AppendText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long RichTextBox_XYToPosition_(IntPtr obj, long x, long y);

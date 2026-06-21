@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string? Text
+        public Alternet.UI.NativeStringSpan Text
         {
             get
             {
@@ -211,10 +211,10 @@ namespace Alternet.UI.Native
             public static extern IntPtr NotifyIcon_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? NotifyIcon_GetText_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan NotifyIcon_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NotifyIcon_SetText_(IntPtr obj, string? value);
+            public static extern void NotifyIcon_SetText_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr NotifyIcon_GetIcon_(IntPtr obj);

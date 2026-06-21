@@ -189,7 +189,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string Name
+        public Alternet.UI.NativeStringSpan Name
         {
             get
             {
@@ -385,7 +385,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string? ToolTip
+        public Alternet.UI.NativeStringSpan ToolTip
         {
             get
             {
@@ -1028,10 +1028,11 @@ return NativeApi.Control_DeviceToScreen_(NativePointer, ref point_Native);
             NativeApi.Control_Destroy_(NativePointer);
         }
         
-        public void SaveScreenshot(string fileName)
+        public void SaveScreenshot(Alternet.UI.NativeStringSpan fileName)
         {
             CheckDisposed();
-            NativeApi.Control_SaveScreenshot_(NativePointer, fileName);
+            var fileName_Native = fileName.ToNative();
+NativeApi.Control_SaveScreenshot_(NativePointer, ref fileName_Native);
         }
         
         public void SendSizeEvent()
@@ -1339,10 +1340,10 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern void Control_SetLayoutDirection_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Control_GetName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Control_GetName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetName_(IntPtr obj, string value);
+            public static extern void Control_SetName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetId_(IntPtr obj);
@@ -1402,10 +1403,10 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern IntPtr Control_GetParentRefCounted_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? Control_GetToolTip_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Control_GetToolTip_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetToolTip_(IntPtr obj, string? value);
+            public static extern void Control_SetToolTip_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetAllowDrop_(IntPtr obj);
@@ -1693,7 +1694,7 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern void Control_Destroy_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SaveScreenshot_(IntPtr obj, string fileName);
+            public static extern void Control_SaveScreenshot_(IntPtr obj, ref Alternet.UI.NativeStringSpan fileName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SendSizeEvent_(IntPtr obj);

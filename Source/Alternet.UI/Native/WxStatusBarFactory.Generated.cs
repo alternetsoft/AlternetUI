@@ -38,19 +38,21 @@ namespace Alternet.UI.Native
             return NativeApi.WxStatusBarFactory_GetFieldsCount_(handle);
         }
         
-        public static void SetStatusText(System.IntPtr handle, string text, int number)
+        public static void SetStatusText(System.IntPtr handle, Alternet.UI.NativeStringSpan text, int number)
         {
-            NativeApi.WxStatusBarFactory_SetStatusText_(handle, text, number);
+            var text_Native = text.ToNative();
+NativeApi.WxStatusBarFactory_SetStatusText_(handle, ref text_Native, number);
         }
         
-        public static string GetStatusText(System.IntPtr handle, int number)
+        public static Alternet.UI.NativeStringSpan GetStatusText(System.IntPtr handle, int number)
         {
             return NativeApi.WxStatusBarFactory_GetStatusText_(handle, number);
         }
         
-        public static void PushStatusText(System.IntPtr handle, string text, int number)
+        public static void PushStatusText(System.IntPtr handle, Alternet.UI.NativeStringSpan text, int number)
         {
-            NativeApi.WxStatusBarFactory_PushStatusText_(handle, text, number);
+            var text_Native = text.ToNative();
+NativeApi.WxStatusBarFactory_PushStatusText_(handle, ref text_Native, number);
         }
         
         public static void PopStatusText(System.IntPtr handle, int number)
@@ -122,13 +124,13 @@ namespace Alternet.UI.Native
             public static extern int WxStatusBarFactory_GetFieldsCount_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxStatusBarFactory_SetStatusText_(System.IntPtr handle, string text, int number);
+            public static extern void WxStatusBarFactory_SetStatusText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text, int number);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WxStatusBarFactory_GetStatusText_(System.IntPtr handle, int number);
+            public static extern Alternet.UI.NativeStringSpan WxStatusBarFactory_GetStatusText_(System.IntPtr handle, int number);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxStatusBarFactory_PushStatusText_(System.IntPtr handle, string text, int number);
+            public static extern void WxStatusBarFactory_PushStatusText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text, int number);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxStatusBarFactory_PopStatusText_(System.IntPtr handle, int number);

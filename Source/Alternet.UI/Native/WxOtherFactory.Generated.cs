@@ -30,9 +30,10 @@ var sz_Native = sz.ToNative();
 NativeApi.WxOtherFactory_TestPopupWindow_(parent, ref pos_Native, ref sz_Native);
         }
         
-        public static System.IntPtr CreateToolTip(string tip)
+        public static System.IntPtr CreateToolTip(Alternet.UI.NativeStringSpan tip)
         {
-            return NativeApi.WxOtherFactory_CreateToolTip_(tip);
+            var tip_Native = tip.ToNative();
+return NativeApi.WxOtherFactory_CreateToolTip_(ref tip_Native);
         }
         
         public static void DeleteToolTip(System.IntPtr handle)
@@ -40,7 +41,7 @@ NativeApi.WxOtherFactory_TestPopupWindow_(parent, ref pos_Native, ref sz_Native)
             NativeApi.WxOtherFactory_DeleteToolTip_(handle);
         }
         
-        public static string ToolTipGetTip(System.IntPtr handle)
+        public static Alternet.UI.NativeStringSpan ToolTipGetTip(System.IntPtr handle)
         {
             return NativeApi.WxOtherFactory_ToolTipGetTip_(handle);
         }
@@ -50,9 +51,10 @@ NativeApi.WxOtherFactory_TestPopupWindow_(parent, ref pos_Native, ref sz_Native)
             return NativeApi.WxOtherFactory_ToolTipGetWindow_(handle);
         }
         
-        public static void ToolTipSetTip(System.IntPtr handle, string tip)
+        public static void ToolTipSetTip(System.IntPtr handle, Alternet.UI.NativeStringSpan tip)
         {
-            NativeApi.WxOtherFactory_ToolTipSetTip_(handle, tip);
+            var tip_Native = tip.ToNative();
+NativeApi.WxOtherFactory_ToolTipSetTip_(handle, ref tip_Native);
         }
         
         public static void ToolTipEnable(bool flag)
@@ -90,9 +92,10 @@ NativeApi.WxOtherFactory_TestPopupWindow_(parent, ref pos_Native, ref sz_Native)
             return NativeApi.WxOtherFactory_CreateCursor2_(cursorId);
         }
         
-        public static System.IntPtr CreateCursor3(string cursorName, int type, int hotSpotX, int hotSpotY)
+        public static System.IntPtr CreateCursor3(Alternet.UI.NativeStringSpan cursorName, int type, int hotSpotX, int hotSpotY)
         {
-            return NativeApi.WxOtherFactory_CreateCursor3_(cursorName, type, hotSpotX, hotSpotY);
+            var cursorName_Native = cursorName.ToNative();
+return NativeApi.WxOtherFactory_CreateCursor3_(ref cursorName_Native, type, hotSpotX, hotSpotY);
         }
         
         public static System.IntPtr CreateCursor4(Image image, int hotSpotX, int hotSpotY)
@@ -246,7 +249,7 @@ return NativeApi.WxOtherFactory_DisplayGetFromPoint_(ref pt_Native);
             return NativeApi.WxOtherFactory_DisplayGetStdPPI_();
         }
         
-        public static string DisplayGetName(System.IntPtr handle)
+        public static Alternet.UI.NativeStringSpan DisplayGetName(System.IntPtr handle)
         {
             return NativeApi.WxOtherFactory_DisplayGetName_(handle);
         }
@@ -334,15 +337,21 @@ return NativeApi.WxOtherFactory_DisplayGetFromPoint_(ref pt_Native);
             NativeApi.WxOtherFactory_Bell_();
         }
         
-        public static string GetTextFromUser(string message, string caption, string defaultValue, System.IntPtr parent, int x, int y, bool centre)
+        public static Alternet.UI.NativeStringSpan GetTextFromUser(Alternet.UI.NativeStringSpan message, Alternet.UI.NativeStringSpan caption, Alternet.UI.NativeStringSpan defaultValue, System.IntPtr parent, int x, int y, bool centre)
         {
-            return NativeApi.WxOtherFactory_GetTextFromUser_(message, caption, defaultValue, parent, x, y, centre);
+            var message_Native = message.ToNative();
+var caption_Native = caption.ToNative();
+var defaultValue_Native = defaultValue.ToNative();
+return NativeApi.WxOtherFactory_GetTextFromUser_(ref message_Native, ref caption_Native, ref defaultValue_Native, parent, x, y, centre);
         }
         
-        public static long GetNumberFromUser(string message, string prompt, string caption, long value, long min, long max, System.IntPtr parent, Alternet.Drawing.PointI pos)
+        public static long GetNumberFromUser(Alternet.UI.NativeStringSpan message, Alternet.UI.NativeStringSpan prompt, Alternet.UI.NativeStringSpan caption, long value, long min, long max, System.IntPtr parent, Alternet.Drawing.PointI pos)
         {
-            var pos_Native = pos.ToNative();
-return NativeApi.WxOtherFactory_GetNumberFromUser_(message, prompt, caption, value, min, max, parent, ref pos_Native);
+            var message_Native = message.ToNative();
+var prompt_Native = prompt.ToNative();
+var caption_Native = caption.ToNative();
+var pos_Native = pos.ToNative();
+return NativeApi.WxOtherFactory_GetNumberFromUser_(ref message_Native, ref prompt_Native, ref caption_Native, value, min, max, parent, ref pos_Native);
         }
         
         public static int RendererDrawHeaderButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams)
@@ -483,13 +492,14 @@ NativeApi.WxOtherFactory_RendererDrawRadioBitmap_(renderer, win, dc.NativePointe
 NativeApi.WxOtherFactory_RendererDrawGauge_(renderer, win, dc.NativePointer, ref rect_Native, value, max, flags);
         }
         
-        public static void RendererDrawItemText(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, string text, Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode)
+        public static void RendererDrawItemText(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.UI.NativeStringSpan text, Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode)
         {
-            var rect_Native = rect.ToNative();
-NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, text, ref rect_Native, align, flags, ellipsizeMode);
+            var text_Native = text.ToNative();
+var rect_Native = rect.ToNative();
+NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, ref text_Native, ref rect_Native, align, flags, ellipsizeMode);
         }
         
-        public static string RendererGetVersion(System.IntPtr renderer)
+        public static Alternet.UI.NativeStringSpan RendererGetVersion(System.IntPtr renderer)
         {
             return NativeApi.WxOtherFactory_RendererGetVersion_(renderer);
         }
@@ -534,14 +544,17 @@ NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, 
             NativeApi.WxOtherFactory_FsWatcherDelete_(handle);
         }
         
-        public static bool FsWatcherAdd(System.IntPtr handle, string path, int events)
+        public static bool FsWatcherAdd(System.IntPtr handle, Alternet.UI.NativeStringSpan path, int events)
         {
-            return NativeApi.WxOtherFactory_FsWatcherAdd_(handle, path, events);
+            var path_Native = path.ToNative();
+return NativeApi.WxOtherFactory_FsWatcherAdd_(handle, ref path_Native, events);
         }
         
-        public static bool FsWatcherAddTree(System.IntPtr handle, string path, int events, string filter)
+        public static bool FsWatcherAddTree(System.IntPtr handle, Alternet.UI.NativeStringSpan path, int events, Alternet.UI.NativeStringSpan filter)
         {
-            return NativeApi.WxOtherFactory_FsWatcherAddTree_(handle, path, events, filter);
+            var path_Native = path.ToNative();
+var filter_Native = filter.ToNative();
+return NativeApi.WxOtherFactory_FsWatcherAddTree_(handle, ref path_Native, events, ref filter_Native);
         }
         
         public static int FsWatcherGetWatchedPathsCount(System.IntPtr handle)
@@ -549,9 +562,10 @@ NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, 
             return NativeApi.WxOtherFactory_FsWatcherGetWatchedPathsCount_(handle);
         }
         
-        public static bool FsWatcherRemove(System.IntPtr handle, string path)
+        public static bool FsWatcherRemove(System.IntPtr handle, Alternet.UI.NativeStringSpan path)
         {
-            return NativeApi.WxOtherFactory_FsWatcherRemove_(handle, path);
+            var path_Native = path.ToNative();
+return NativeApi.WxOtherFactory_FsWatcherRemove_(handle, ref path_Native);
         }
         
         public static bool FsWatcherRemoveAll(System.IntPtr handle)
@@ -559,9 +573,10 @@ NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, 
             return NativeApi.WxOtherFactory_FsWatcherRemoveAll_(handle);
         }
         
-        public static bool FsWatcherRemoveTree(System.IntPtr handle, string path)
+        public static bool FsWatcherRemoveTree(System.IntPtr handle, Alternet.UI.NativeStringSpan path)
         {
-            return NativeApi.WxOtherFactory_FsWatcherRemoveTree_(handle, path);
+            var path_Native = path.ToNative();
+return NativeApi.WxOtherFactory_FsWatcherRemoveTree_(handle, ref path_Native);
         }
         
         public static void FsWatcherSetOwner(System.IntPtr handle, System.IntPtr handler)
@@ -574,9 +589,10 @@ NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, 
             return NativeApi.WxOtherFactory_SoundCreate_();
         }
         
-        public static System.IntPtr SoundCreate2(string fileName, bool isResource)
+        public static System.IntPtr SoundCreate2(Alternet.UI.NativeStringSpan fileName, bool isResource)
         {
-            return NativeApi.WxOtherFactory_SoundCreate2_(fileName, isResource);
+            var fileName_Native = fileName.ToNative();
+return NativeApi.WxOtherFactory_SoundCreate2_(ref fileName_Native, isResource);
         }
         
         public static System.IntPtr SoundCreate4(ulong size, System.IntPtr data)
@@ -589,9 +605,10 @@ NativeApi.WxOtherFactory_RendererDrawItemText_(renderer, win, dc.NativePointer, 
             NativeApi.WxOtherFactory_SoundDelete_(handle);
         }
         
-        public static bool SoundPlay2(string filename, uint flags)
+        public static bool SoundPlay2(Alternet.UI.NativeStringSpan filename, uint flags)
         {
-            return NativeApi.WxOtherFactory_SoundPlay2_(filename, flags);
+            var filename_Native = filename.ToNative();
+return NativeApi.WxOtherFactory_SoundPlay2_(ref filename_Native, flags);
         }
         
         public static bool SoundPlay(System.IntPtr handle, uint flags)
@@ -665,14 +682,16 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             return NativeApi.WxOtherFactory_UIActionSimulatorMouseUp_(handle, button);
         }
         
-        public static bool UIActionSimulatorSelect(System.IntPtr handle, string text)
+        public static bool UIActionSimulatorSelect(System.IntPtr handle, Alternet.UI.NativeStringSpan text)
         {
-            return NativeApi.WxOtherFactory_UIActionSimulatorSelect_(handle, text);
+            var text_Native = text.ToNative();
+return NativeApi.WxOtherFactory_UIActionSimulatorSelect_(handle, ref text_Native);
         }
         
-        public static bool UIActionSimulatorText(System.IntPtr handle, string text)
+        public static bool UIActionSimulatorText(System.IntPtr handle, Alternet.UI.NativeStringSpan text)
         {
-            return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, text);
+            var text_Native = text.ToNative();
+return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, ref text_Native);
         }
         
         public static void UIActionSimulatorYield()
@@ -693,19 +712,19 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern void WxOtherFactory_TestPopupWindow_(System.IntPtr parent, ref Alternet.Drawing.PointI pos, ref Alternet.Drawing.SizeI sz);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateToolTip_(string tip);
+            public static extern System.IntPtr WxOtherFactory_CreateToolTip_(ref Alternet.UI.NativeStringSpan tip);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_DeleteToolTip_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WxOtherFactory_ToolTipGetTip_(System.IntPtr handle);
+            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_ToolTipGetTip_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_ToolTipGetWindow_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_ToolTipSetTip_(System.IntPtr handle, string tip);
+            public static extern void WxOtherFactory_ToolTipSetTip_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan tip);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_ToolTipEnable_(bool flag);
@@ -729,7 +748,7 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern System.IntPtr WxOtherFactory_CreateCursor2_(int cursorId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_CreateCursor3_(string cursorName, int type, int hotSpotX, int hotSpotY);
+            public static extern System.IntPtr WxOtherFactory_CreateCursor3_(ref Alternet.UI.NativeStringSpan cursorName, int type, int hotSpotX, int hotSpotY);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_CreateCursor4_(IntPtr image, int hotSpotX, int hotSpotY);
@@ -822,7 +841,7 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern Alternet.Drawing.SizeI WxOtherFactory_DisplayGetStdPPI_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WxOtherFactory_DisplayGetName_(System.IntPtr handle);
+            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_DisplayGetName_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI WxOtherFactory_DisplayGetPPI_(System.IntPtr handle);
@@ -873,10 +892,10 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern void WxOtherFactory_Bell_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WxOtherFactory_GetTextFromUser_(string message, string caption, string defaultValue, System.IntPtr parent, int x, int y, bool centre);
+            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_GetTextFromUser_(ref Alternet.UI.NativeStringSpan message, ref Alternet.UI.NativeStringSpan caption, ref Alternet.UI.NativeStringSpan defaultValue, System.IntPtr parent, int x, int y, bool centre);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern long WxOtherFactory_GetNumberFromUser_(string message, string prompt, string caption, long value, long min, long max, System.IntPtr parent, ref Alternet.Drawing.PointI pos);
+            public static extern long WxOtherFactory_GetNumberFromUser_(ref Alternet.UI.NativeStringSpan message, ref Alternet.UI.NativeStringSpan prompt, ref Alternet.UI.NativeStringSpan caption, long value, long min, long max, System.IntPtr parent, ref Alternet.Drawing.PointI pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxOtherFactory_RendererDrawHeaderButton_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams);
@@ -951,10 +970,10 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern void WxOtherFactory_RendererDrawGauge_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.Drawing.RectI rect, int value, int max, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WxOtherFactory_RendererDrawItemText_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, string text, ref Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode);
+            public static extern void WxOtherFactory_RendererDrawItemText_(System.IntPtr renderer, System.IntPtr win, IntPtr dc, ref Alternet.UI.NativeStringSpan text, ref Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WxOtherFactory_RendererGetVersion_(System.IntPtr renderer);
+            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_RendererGetVersion_(System.IntPtr renderer);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_MemoryAlloc_(ulong size);
@@ -981,22 +1000,22 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern void WxOtherFactory_FsWatcherDelete_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherAdd_(System.IntPtr handle, string path, int events);
+            public static extern bool WxOtherFactory_FsWatcherAdd_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path, int events);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherAddTree_(System.IntPtr handle, string path, int events, string filter);
+            public static extern bool WxOtherFactory_FsWatcherAddTree_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path, int events, ref Alternet.UI.NativeStringSpan filter);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WxOtherFactory_FsWatcherGetWatchedPathsCount_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherRemove_(System.IntPtr handle, string path);
+            public static extern bool WxOtherFactory_FsWatcherRemove_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_FsWatcherRemoveAll_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_FsWatcherRemoveTree_(System.IntPtr handle, string path);
+            public static extern bool WxOtherFactory_FsWatcherRemoveTree_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan path);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_FsWatcherSetOwner_(System.IntPtr handle, System.IntPtr handler);
@@ -1005,7 +1024,7 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern System.IntPtr WxOtherFactory_SoundCreate_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WxOtherFactory_SoundCreate2_(string fileName, bool isResource);
+            public static extern System.IntPtr WxOtherFactory_SoundCreate2_(ref Alternet.UI.NativeStringSpan fileName, bool isResource);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WxOtherFactory_SoundCreate4_(ulong size, System.IntPtr data);
@@ -1014,7 +1033,7 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern void WxOtherFactory_SoundDelete_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_SoundPlay2_(string filename, uint flags);
+            public static extern bool WxOtherFactory_SoundPlay2_(ref Alternet.UI.NativeStringSpan filename, uint flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_SoundPlay_(System.IntPtr handle, uint flags);
@@ -1059,10 +1078,10 @@ return NativeApi.WxOtherFactory_UIActionSimulatorMouseMove_(handle, ref point_Na
             public static extern bool WxOtherFactory_UIActionSimulatorMouseUp_(System.IntPtr handle, int button);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorSelect_(System.IntPtr handle, string text);
+            public static extern bool WxOtherFactory_UIActionSimulatorSelect_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WxOtherFactory_UIActionSimulatorText_(System.IntPtr handle, string text);
+            public static extern bool WxOtherFactory_UIActionSimulatorText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WxOtherFactory_UIActionSimulatorYield_();

@@ -21,30 +21,30 @@ namespace NativeApi.Api
         public bool HasBorder { get; set; }
         public bool IsSelected(int n) => default;
         public bool IsSorted() => default;
-        public bool SetStringSelection(string s, bool select) => default;
+        public bool SetStringSelection(NativeStringSpan s, bool select) => default;
 
         public void SetItemSelection(int index, bool select) { }
 
-        public int FindString(string s, bool bCase = false) => default;
+        public int FindString(NativeStringSpan s, bool bCase = false) => default;
         public int GetCountPerPage() => default;
         public int GetTopItem() => default;
         public int HitTest(PointD point) => default;
-        public string GetString(uint n) => default;
+        public NativeStringSpan GetString(uint n) => default;
         public uint GetCount() => default;
         public void Deselect(int n) { }
         public void EnsureVisible(int n) { }
         public void SetFirstItem(int n) { }
-        public void SetFirstItemStr(string s) { }
+        public void SetFirstItemStr(NativeStringSpan s) { }
         public void SetSelection(int n) { }
-        public void SetString(uint n, string s) { }
+        public void SetString(uint n, NativeStringSpan s) { }
 
         public void Clear() { }
 
         public void Delete(uint n) { }
         
-        public int Append(string s) => default;
+        public int Append(NativeStringSpan s) => default;
 
-        public int Insert(string item, uint pos) => default;
+        public int Insert(NativeStringSpan item, uint pos) => default;
 
         public int GetSelectionsCount() => default;
 

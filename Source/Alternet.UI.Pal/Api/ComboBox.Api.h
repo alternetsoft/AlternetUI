@@ -29,14 +29,14 @@ ALTERNET_UI_API void ComboBox_SetAllowMouseWheel_(ComboBox* obj, c_bool value)
     });
 }
 
-ALTERNET_UI_API char16_t* ComboBox_GetEmptyTextHint_(ComboBox* obj)
+ALTERNET_UI_API NativeStringSpan_C ComboBox_GetEmptyTextHint_(ComboBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetEmptyTextHint());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEmptyTextHint();
     });
 }
 
-ALTERNET_UI_API void ComboBox_SetEmptyTextHint_(ComboBox* obj, const char16_t* value)
+ALTERNET_UI_API void ComboBox_SetEmptyTextHint_(ComboBox* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetEmptyTextHint(value);
@@ -246,10 +246,10 @@ ALTERNET_UI_API void* ComboBox_CreateItemsInsertion_(ComboBox* obj)
     });
 }
 
-ALTERNET_UI_API void ComboBox_AddItemToInsertion_(ComboBox* obj, void* insertion, const char16_t* item)
+ALTERNET_UI_API void ComboBox_AddItemToInsertion_(ComboBox* obj, void* insertion, NativeStringSpan* item)
 {
     MarshalExceptions<void>([&](){
-        obj->AddItemToInsertion(insertion, item);
+        obj->AddItemToInsertion(insertion, *item);
     });
 }
 
@@ -260,10 +260,10 @@ ALTERNET_UI_API void ComboBox_CommitItemsInsertion_(ComboBox* obj, void* inserti
     });
 }
 
-ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, const char16_t* value)
+ALTERNET_UI_API void ComboBox_InsertItem_(ComboBox* obj, int index, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->InsertItem(index, value);
+        obj->InsertItem(index, *value);
     });
 }
 
@@ -295,10 +295,10 @@ ALTERNET_UI_API void ComboBox_SelectAllText_(ComboBox* obj)
     });
 }
 
-ALTERNET_UI_API void ComboBox_SetItem_(ComboBox* obj, int index, const char16_t* value)
+ALTERNET_UI_API void ComboBox_SetItem_(ComboBox* obj, int index, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetItem(index, value);
+        obj->SetItem(index, *value);
     });
 }
 

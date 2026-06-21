@@ -49,7 +49,7 @@ namespace NativeApi.Api
         public int GetItemCount(IntPtr parentItem) => throw new Exception();
 
         public IntPtr InsertItem(IntPtr parentItem, IntPtr insertAfter,
-            string text, int imageIndex, bool parentIsExpanded) =>
+            NativeStringSpan text, int imageIndex, bool parentIsExpanded) =>
             throw new Exception();
 
         public void RemoveItem(IntPtr item) => throw new Exception();
@@ -104,8 +104,8 @@ namespace NativeApi.Api
         public void SetFocused(IntPtr item, bool value) => throw new Exception();
         public new bool IsItemFocused(IntPtr item) => throw new Exception();
 
-        public void SetItemText(IntPtr item, string text) => throw new Exception();
-        public string GetItemText(IntPtr item) => throw new Exception();
+        public void SetItemText(IntPtr item, NativeStringSpan text) => throw new Exception();
+        public NativeStringSpan GetItemText(IntPtr item) => throw new Exception();
 
         public void SetItemImageIndex(IntPtr item, int imageIndex) =>
             throw new Exception();

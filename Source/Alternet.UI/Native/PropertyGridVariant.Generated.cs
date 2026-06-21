@@ -53,17 +53,18 @@ namespace Alternet.UI.Native
             NativeApi.PropertyGridVariant_Clear_(handle);
         }
         
-        public static string GetValueType(System.IntPtr handle)
+        public static Alternet.UI.NativeStringSpan GetValueType(System.IntPtr handle)
         {
             return NativeApi.PropertyGridVariant_GetValueType_(handle);
         }
         
-        public static bool IsType(System.IntPtr handle, string type)
+        public static bool IsType(System.IntPtr handle, Alternet.UI.NativeStringSpan type)
         {
-            return NativeApi.PropertyGridVariant_IsType_(handle, type);
+            var type_Native = type.ToNative();
+return NativeApi.PropertyGridVariant_IsType_(handle, ref type_Native);
         }
         
-        public static string MakeString(System.IntPtr handle)
+        public static Alternet.UI.NativeStringSpan MakeString(System.IntPtr handle)
         {
             return NativeApi.PropertyGridVariant_MakeString_(handle);
         }
@@ -108,7 +109,7 @@ namespace Alternet.UI.Native
             return NativeApi.PropertyGridVariant_GetDateTime_(handle);
         }
         
-        public static string GetString(System.IntPtr handle)
+        public static Alternet.UI.NativeStringSpan GetString(System.IntPtr handle)
         {
             return NativeApi.PropertyGridVariant_GetString_(handle);
         }
@@ -160,9 +161,10 @@ NativeApi.PropertyGridVariant_SetColor_(handle, ref val_Native, kind);
 NativeApi.PropertyGridVariant_SetDateTime_(handle, ref val_Native);
         }
         
-        public static void SetString(System.IntPtr handle, string value)
+        public static void SetString(System.IntPtr handle, Alternet.UI.NativeStringSpan value)
         {
-            NativeApi.PropertyGridVariant_SetString_(handle, value);
+            var value_Native = value.ToNative();
+NativeApi.PropertyGridVariant_SetString_(handle, ref value_Native);
         }
         
         public static uint GetLastColorKind()
@@ -198,13 +200,13 @@ NativeApi.PropertyGridVariant_SetDateTime_(handle, ref val_Native);
             public static extern void PropertyGridVariant_Clear_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGridVariant_GetValueType_(System.IntPtr handle);
+            public static extern Alternet.UI.NativeStringSpan PropertyGridVariant_GetValueType_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGridVariant_IsType_(System.IntPtr handle, string type);
+            public static extern bool PropertyGridVariant_IsType_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGridVariant_MakeString_(System.IntPtr handle);
+            public static extern Alternet.UI.NativeStringSpan PropertyGridVariant_MakeString_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color PropertyGridVariant_GetColor_(System.IntPtr handle);
@@ -231,7 +233,7 @@ NativeApi.PropertyGridVariant_SetDateTime_(handle, ref val_Native);
             public static extern NativeApiTypes.DateTime PropertyGridVariant_GetDateTime_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGridVariant_GetString_(System.IntPtr handle);
+            public static extern Alternet.UI.NativeStringSpan PropertyGridVariant_GetString_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridVariant_SetColor_(System.IntPtr handle, ref NativeApiTypes.Color val, uint kind);
@@ -261,7 +263,7 @@ NativeApi.PropertyGridVariant_SetDateTime_(handle, ref val_Native);
             public static extern void PropertyGridVariant_SetDateTime_(System.IntPtr handle, ref NativeApiTypes.DateTime val);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridVariant_SetString_(System.IntPtr handle, string value);
+            public static extern void PropertyGridVariant_SetString_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern uint PropertyGridVariant_GetLastColorKind_();

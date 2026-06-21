@@ -119,10 +119,10 @@ ALTERNET_UI_API RectD_C DrawingContext_GetClippingBox_(DrawingContext* obj)
     });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, void* text, int charLength, PointD* location, Font* font, Color* foreColor, Brush* backColor, float angle, c_bool useBrush)
+ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, NativeStringSpan* text, PointD* location, Font* font, Color* foreColor, Brush* backColor, float angle, c_bool useBrush)
 {
     MarshalExceptions<void>([&](){
-        obj->DrawText(text, charLength, *location, font, *foreColor, backColor, angle, useBrush);
+        obj->DrawText(*text, *location, font, *foreColor, backColor, angle, useBrush);
     });
 }
 
@@ -147,10 +147,10 @@ ALTERNET_UI_API void DrawingContext_ImageFromGenericImageDC_(Image* image, void*
     });
 }
 
-ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, void* text, int charLength, Font* font, void* control)
+ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, NativeStringSpan* text, Font* font, void* control)
 {
     return MarshalExceptions<SizeD_C>([&](){
-        return obj->GetTextExtentSimple(text, charLength, font, control);
+        return obj->GetTextExtentSimple(*text, font, control);
     });
 }
 

@@ -4,8 +4,8 @@ public:
 bool GetOriginAtMargins();
 void SetOriginAtMargins(bool value);
 
-string GetDocumentName();
-void SetDocumentName(const string& value);
+NativeStringSpan GetDocumentName();
+void SetDocumentName(const NativeStringSpan& value);
 
 PrinterSettings* GetPrinterSettings();
 

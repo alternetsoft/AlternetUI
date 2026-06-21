@@ -165,14 +165,14 @@ ALTERNET_UI_API void Control_SetLayoutDirection_(Control* obj, int value)
     });
 }
 
-ALTERNET_UI_API char16_t* Control_GetName_(Control* obj)
+ALTERNET_UI_API NativeStringSpan_C Control_GetName_(Control* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetName();
     });
 }
 
-ALTERNET_UI_API void Control_SetName_(Control* obj, const char16_t* value)
+ALTERNET_UI_API void Control_SetName_(Control* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetName(value);
@@ -312,17 +312,17 @@ ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* Control_GetToolTip_(Control* obj)
+ALTERNET_UI_API NativeStringSpan_C Control_GetToolTip_(Control* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetToolTip());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetToolTip();
     });
 }
 
-ALTERNET_UI_API void Control_SetToolTip_(Control* obj, const char16_t* value)
+ALTERNET_UI_API void Control_SetToolTip_(Control* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetToolTip(ToOptional(value));
+        obj->SetToolTip(value);
     });
 }
 
@@ -991,10 +991,10 @@ ALTERNET_UI_API void Control_Destroy_(Control* obj)
     });
 }
 
-ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, const char16_t* fileName)
+ALTERNET_UI_API void Control_SaveScreenshot_(Control* obj, NativeStringSpan* fileName)
 {
     MarshalExceptions<void>([&](){
-        obj->SaveScreenshot(fileName);
+        obj->SaveScreenshot(*fileName);
     });
 }
 

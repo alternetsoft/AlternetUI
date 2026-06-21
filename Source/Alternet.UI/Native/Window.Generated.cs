@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string Title
+        public Alternet.UI.NativeStringSpan Title
         {
             get
             {
@@ -370,10 +370,10 @@ NativeApi.Window_SetMaxSize_(NativePointer, ref size_Native);
             public static extern IntPtr Window_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Window_GetTitle_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Window_GetTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetTitle_(IntPtr obj, string value);
+            public static extern void Window_SetTitle_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetShowInTaskbar_(IntPtr obj);

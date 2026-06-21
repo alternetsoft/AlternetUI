@@ -158,7 +158,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string? PrinterName
+        public Alternet.UI.NativeStringSpan PrinterName
         {
             get
             {
@@ -193,7 +193,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string? PrintFileName
+        public Alternet.UI.NativeStringSpan PrintFileName
         {
             get
             {
@@ -272,10 +272,10 @@ namespace Alternet.UI.Native
             public static extern void PrinterSettings_SetPrintToFile_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? PrinterSettings_GetPrinterName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan PrinterSettings_GetPrinterName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrinterSettings_SetPrinterName_(IntPtr obj, string? value);
+            public static extern void PrinterSettings_SetPrinterName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PrinterSettings_GetIsValid_(IntPtr obj);
@@ -284,10 +284,10 @@ namespace Alternet.UI.Native
             public static extern bool PrinterSettings_GetIsDefaultPrinter_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? PrinterSettings_GetPrintFileName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan PrinterSettings_GetPrintFileName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrinterSettings_SetPrintFileName_(IntPtr obj, string? value);
+            public static extern void PrinterSettings_SetPrintFileName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
         }
     }

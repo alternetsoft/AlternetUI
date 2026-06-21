@@ -6,12 +6,12 @@ namespace NativeApi.Api
 {
     public class MemoryFSHandler
     {
-        public static void RemoveFile(string filename) => throw new Exception();
-        public static void AddTextFileWithMimeType(string filename, String textdata,
-            string mimetype) => throw new Exception();
-        public static void AddTextFile(string filename, string textdata) => throw new Exception();
-        public static void AddFile(string filename, IntPtr binarydata, int size) => throw new Exception();
-        public static void AddFileWithMimeType(string filename, 
-            IntPtr binarydata, int size, string mimetype) => throw new Exception();
+        public static void RemoveFile(NativeStringSpan filename) => throw new Exception();
+        public static void AddTextFileWithMimeType(NativeStringSpan filename, NativeStringSpan textdata,
+            NativeStringSpan mimetype) => throw new Exception();
+        public static void AddTextFile(NativeStringSpan filename, NativeStringSpan textdata) => throw new Exception();
+        public static void AddFile(NativeStringSpan filename, IntPtr binarydata, int size) => throw new Exception();
+        public static void AddFileWithMimeType(NativeStringSpan filename, 
+            IntPtr binarydata, int size, NativeStringSpan mimetype) => throw new Exception();
     }
 }

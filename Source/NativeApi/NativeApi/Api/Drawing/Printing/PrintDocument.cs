@@ -9,7 +9,7 @@ namespace NativeApi.Api
     public class PrintDocument
     {
         public bool OriginAtMargins { get => throw new Exception(); set => throw new Exception(); }
-        public string DocumentName { get => throw new Exception(); set => throw new Exception(); }
+        public NativeStringSpan DocumentName { get => throw new Exception(); set => throw new Exception(); }
         public PrinterSettings PrinterSettings { get => throw new Exception(); }
         public PageSettings PageSettings { get => throw new Exception(); }
 

@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string? InitialDirectory
+        public Alternet.UI.NativeStringSpan InitialDirectory
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string? Title
+        public Alternet.UI.NativeStringSpan Title
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string? DirectoryName
+        public Alternet.UI.NativeStringSpan DirectoryName
         {
             get
             {
@@ -84,22 +84,22 @@ namespace Alternet.UI.Native
             public static extern IntPtr SelectDirectoryDialog_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? SelectDirectoryDialog_GetInitialDirectory_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan SelectDirectoryDialog_GetInitialDirectory_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SelectDirectoryDialog_SetInitialDirectory_(IntPtr obj, string? value);
+            public static extern void SelectDirectoryDialog_SetInitialDirectory_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? SelectDirectoryDialog_GetTitle_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan SelectDirectoryDialog_GetTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SelectDirectoryDialog_SetTitle_(IntPtr obj, string? value);
+            public static extern void SelectDirectoryDialog_SetTitle_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string? SelectDirectoryDialog_GetDirectoryName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan SelectDirectoryDialog_GetDirectoryName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SelectDirectoryDialog_SetDirectoryName_(IntPtr obj, string? value);
+            public static extern void SelectDirectoryDialog_SetDirectoryName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.ModalResult SelectDirectoryDialog_ShowModal_(IntPtr obj, IntPtr owner);

@@ -13,9 +13,9 @@ namespace NativeApi.Api
 
         public static void Delete(IntPtr handle) { }
 
-        public static void Add(IntPtr handle, string text, int value) {}
+        public static void Add(IntPtr handle, NativeStringSpan text, int value) {}
 
-        public static void SetLabel(IntPtr handle, uint ind, string value) { }
+        public static void SetLabel(IntPtr handle, uint ind, NativeStringSpan value) { }
         public static void SetFgCol(IntPtr handle, uint ind, Color color){}
         public static void SetFont(IntPtr handle, uint ind, IntPtr font){}
         public static void SetBgCol(IntPtr handle, uint ind, Color color){}
@@ -29,7 +29,7 @@ namespace NativeApi.Api
         public static void SetFontFromItem(IntPtr handle, uint ind, IntPtr handle2, uint ind2) { }
 
         // Returns label of item.
-        public static string GetLabel(IntPtr handle, uint ind) => default;
+        public static NativeStringSpan GetLabel(IntPtr handle, uint ind) => default;
 
         // Returns number of items.
         public static uint GetCount(IntPtr handle) => default;
@@ -38,12 +38,12 @@ namespace NativeApi.Api
         public static int GetValue(IntPtr handle, uint ind) => default;
 
         // Returns index of item with given label.
-        public static int GetLabelIndex(IntPtr handle, string str) => default;
+        public static int GetLabelIndex(IntPtr handle, NativeStringSpan str) => default;
 
         // Returns index of item with given value.
         public static int GetValueIndex(IntPtr handle, int val) => default;
 
-        public static void Insert(IntPtr handle, int index, string text, int value) { }
+        public static void Insert(IntPtr handle, int index, NativeStringSpan text, int value) { }
 
         // Returns false if this is a constant empty set of choices,
         // which should not be modified.

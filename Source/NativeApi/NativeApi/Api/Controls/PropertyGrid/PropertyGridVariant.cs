@@ -18,9 +18,9 @@ namespace NativeApi.Api
         public static bool Unshare(IntPtr handle) => throw new Exception();
         public static void MakeNull(IntPtr handle) => throw new Exception();
         public static void Clear(IntPtr handle) => throw new Exception();
-        public static string GetValueType(IntPtr handle) => throw new Exception();
-        public static bool IsType(IntPtr handle, string type) => throw new Exception();
-        public static string MakeString(IntPtr handle) => throw new Exception();
+        public static NativeStringSpan GetValueType(IntPtr handle) => throw new Exception();
+        public static bool IsType(IntPtr handle, NativeStringSpan type) => throw new Exception();
+        public static NativeStringSpan MakeString(IntPtr handle) => throw new Exception();
 
         public static Color GetColor(IntPtr handle) => throw new Exception();
         public static double GetDouble(IntPtr handle) => throw new Exception();
@@ -32,7 +32,7 @@ namespace NativeApi.Api
         public static long GetLong(IntPtr handle) => throw new Exception();
         public static ulong GetULong(IntPtr handle) => throw new Exception();
         public static Alternet.UI.DateTime GetDateTime(IntPtr handle) => throw new Exception();
-        public static string GetString(IntPtr handle) => throw new Exception();
+        public static NativeStringSpan GetString(IntPtr handle) => throw new Exception();
 
         public static void SetColor(IntPtr handle, Color val, uint kind) { }
         public static void SetDouble(IntPtr handle, double val) { }
@@ -44,7 +44,7 @@ namespace NativeApi.Api
         public static void SetShort(IntPtr handle, short val) => throw new Exception();
         public static void SetDateTime(IntPtr handle, Alternet.UI.DateTime val) =>
             throw new Exception();
-        public static void SetString(IntPtr handle, string value) => throw new Exception();
+        public static void SetString(IntPtr handle, NativeStringSpan value) => throw new Exception();
 
         public static uint GetLastColorKind() => default;
     }

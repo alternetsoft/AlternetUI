@@ -20,14 +20,14 @@ namespace NativeApi.Api
         public static IntPtr ColorDatabaseCreate() => default;
         public static void ColorDatabaseDelete(IntPtr handle) { }
         public static void ColorDatabaseSetGlobal(IntPtr handle) { }
-        public static void ColorDatabaseAdd(IntPtr handle, string name, Color color) { }
-        public static Color ColorDatabaseFind(IntPtr handle, string name) => default;
-        public static string ColorDatabaseFindName(IntPtr handle, Color color) => default;
+        public static void ColorDatabaseAdd(IntPtr handle, NativeStringSpan name, Color color) { }
+        public static Color ColorDatabaseFind(IntPtr handle, NativeStringSpan name) => default;
+        public static NativeStringSpan ColorDatabaseFindName(IntPtr handle, Color color) => default;
 
         public static void KnownColorsClear() { }
-        public static void KnownColorsAdd(string name, string title, Color value, int knownColor) { }
+        public static void KnownColorsAdd(NativeStringSpan name, NativeStringSpan title, Color value, int knownColor) { }
         public static void KnownColorsApply() { }
-        public static void KnownColorsSetCustomColorTitle(string value) { }
+        public static void KnownColorsSetCustomColorTitle(NativeStringSpan value) { }
 
         public IntPtr GetPropertyValidator(IntPtr prop) => default;
         public void SetPropertyValidator(IntPtr prop, IntPtr validator) { }
@@ -38,8 +38,8 @@ namespace NativeApi.Api
         public IntPtr EventPropValue { get; }
         public int EventColumn { get; }
         public IntPtr EventProperty { get; }
-        public string EventPropertyName { get; }
-        public string EventValidationFailureMessage { get; set; }
+        public NativeStringSpan EventPropertyName { get; }
+        public NativeStringSpan EventValidationFailureMessage { get; set; }
 
         public event EventHandler? Selected;
 
@@ -73,7 +73,7 @@ namespace NativeApi.Api
 
         public event EventHandler? ColEndDrag;
 
-        public static string NameAsLabel { get; }
+        public static NativeStringSpan NameAsLabel { get; }
         public bool HasBorder { get; set; }
 
         public static IntPtr CreateEx(long styles) => default;
@@ -174,7 +174,7 @@ namespace NativeApi.Api
 
         public void SetSplitterPosition(int newXPos, int col = 0) => throw new Exception();
 
-        public string GetUnspecifiedValueText(int argFlags = 0) => throw new Exception();
+        public NativeStringSpan GetUnspecifiedValueText(int argFlags = 0) => throw new Exception();
 
         public void SetVirtualWidth(int width) => throw new Exception();
 
@@ -186,7 +186,7 @@ namespace NativeApi.Api
 
         public uint GetCommonValueCount() => throw new Exception();
 
-        public string GetCommonValueLabel(uint i) => throw new Exception();
+        public NativeStringSpan GetCommonValueLabel(uint i) => throw new Exception();
 
         public int GetUnspecifiedCommonValue() => throw new Exception();
 
@@ -200,7 +200,7 @@ namespace NativeApi.Api
 
         public int GetSpacingY() => throw new Exception();
 
-        public void SetupTextCtrlValue(string text) => throw new Exception();
+        public void SetupTextCtrlValue(NativeStringSpan text) => throw new Exception();
 
         public bool UnfocusEditor() => throw new Exception();
 

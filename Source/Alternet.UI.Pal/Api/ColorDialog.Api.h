@@ -16,17 +16,17 @@ ALTERNET_UI_API ColorDialog* ColorDialog_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t* ColorDialog_GetTitle_(ColorDialog* obj)
+ALTERNET_UI_API NativeStringSpan_C ColorDialog_GetTitle_(ColorDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetTitle());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
     });
 }
 
-ALTERNET_UI_API void ColorDialog_SetTitle_(ColorDialog* obj, const char16_t* value)
+ALTERNET_UI_API void ColorDialog_SetTitle_(ColorDialog* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetTitle(ToOptional(value));
+        obj->SetTitle(value);
     });
 }
 

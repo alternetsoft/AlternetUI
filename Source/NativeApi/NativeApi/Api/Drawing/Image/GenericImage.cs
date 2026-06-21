@@ -38,12 +38,12 @@ namespace NativeApi.Api
         public static IntPtr CreateImageWithSize(int width, int height, bool clear = true) => default;
 
         // Creates an image from a file.
-        public static IntPtr CreateImageFromFileWithBitmapType(string name,
+        public static IntPtr CreateImageFromFileWithBitmapType(NativeStringSpan name,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/,
             int index = -1) => default;
 
         // Creates an image from a file using MIME-types to specify the type.
-        public static IntPtr CreateImageFromFileWithMimeType(string name, string mimetype,
+        public static IntPtr CreateImageFromFileWithMimeType(NativeStringSpan name, NativeStringSpan mimetype,
             int index = -1) => default;
 
         // Creates an image from a stream.
@@ -52,7 +52,7 @@ namespace NativeApi.Api
 
         // Creates an image from a stream using MIME-types to specify the type.
         public static IntPtr CreateImageFromStreamWithMimeType(InputStream stream,
-            string mimetype,
+            NativeStringSpan mimetype,
             int index = -1) => default;
 
         // Creates an image from data in memory.
@@ -86,10 +86,10 @@ namespace NativeApi.Api
             byte mg, byte mb) => default;
 
         // Sets a user-defined option.
-        public static void SetOptionString(IntPtr handle, string name, string value) { }
+        public static void SetOptionString(IntPtr handle, NativeStringSpan name, NativeStringSpan value) { }
 
         // Sets a user-defined option. 
-        public static void SetOptionInt(IntPtr handle, string name, int value) { }
+        public static void SetOptionInt(IntPtr handle, NativeStringSpan name, int value) { }
 
         // Sets the color of the pixel at the given x and y coordinate.
         public static void SetRGB(IntPtr handle, int x, int y, byte r, byte g, byte b) { }
@@ -240,10 +240,10 @@ namespace NativeApi.Api
         public static SizeI GetSize(IntPtr handle) => default;
 
         // Gets a user-defined string-valued option.
-        public static string GetOptionString(IntPtr handle, string name) => default;
+        public static NativeStringSpan GetOptionString(IntPtr handle, NativeStringSpan name) => default;
 
         // Gets a user-defined integer-valued option.
-        public static int GetOptionInt(IntPtr handle, string name) => default;
+        public static int GetOptionInt(IntPtr handle, NativeStringSpan name) => default;
 
         // Returns a sub image of the current one as long as the rect belongs entirely to the image.
         public static IntPtr GetSubImage(IntPtr handle, RectI rect) => default;
@@ -258,7 +258,7 @@ namespace NativeApi.Api
         public static bool HasMask(IntPtr handle) => default;
 
         // Returns true if the given option is present.
-        public static bool HasOption(IntPtr handle, string name) => default;
+        public static bool HasOption(IntPtr handle, NativeStringSpan name) => default;
 
         // Returns true if image data is present.
         public static bool IsOk(IntPtr handle) => default;
@@ -274,29 +274,29 @@ namespace NativeApi.Api
             int bitmapType /*= wxBITMAP_TYPE_ANY*/, int index = -1) => default;
 
         // Loads an image from a file.
-        public static bool LoadFileWithBitmapType(IntPtr handle, string name,
+        public static bool LoadFileWithBitmapType(IntPtr handle, NativeStringSpan name,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/, int index = -1) => default;
 
         // Loads an image from a file.
-        public static bool LoadFileWithMimeType(IntPtr handle, string name, string mimetype,
+        public static bool LoadFileWithMimeType(IntPtr handle, NativeStringSpan name, NativeStringSpan mimetype,
             int index = -1) => default;
 
         // Loads an image from an input stream.
         public static bool LoadStreamWithMimeType(IntPtr handle, InputStream stream,
-            string mimetype, int index = -1) => default;
+            NativeStringSpan mimetype, int index = -1) => default;
 
         // Saves an image in the given stream.
         public static bool SaveStreamWithMimeType(IntPtr handle, OutputStream stream,
-            string mimetype) => default;
+            NativeStringSpan mimetype) => default;
 
         // Saves an image in the named file.
-        public static bool SaveFileWithBitmapType(IntPtr handle, string name, int bitmapType) => default;
+        public static bool SaveFileWithBitmapType(IntPtr handle, NativeStringSpan name, int bitmapType) => default;
 
         // Saves an image in the named file.
-        public static bool SaveFileWithMimeType(IntPtr handle, string name, string mimetype) => default;
+        public static bool SaveFileWithMimeType(IntPtr handle, NativeStringSpan name, NativeStringSpan mimetype) => default;
 
         // Saves an image in the named file.
-        public static bool SaveFile(IntPtr handle, string name) => default;
+        public static bool SaveFile(IntPtr handle, NativeStringSpan name) => default;
 
         // Saves an image in the given stream.
         public static bool SaveStreamWithBitmapType(IntPtr handle, OutputStream stream,
@@ -304,7 +304,7 @@ namespace NativeApi.Api
 
         // Returns true if at least one of the available image handlers can read the file
         // with the given name.
-        public static bool CanRead(string filename) => default; // real static
+        public static bool CanRead(NativeStringSpan filename) => default; // real static
 
         // Returns true if at least one of the available image handlers can read the data in
         // the given stream.
@@ -315,7 +315,7 @@ namespace NativeApi.Api
 
         // Iterates all registered wxImageHandler objects, and returns a string containing
         // file extension masks suitable for passing to file open/save dialog boxes.
-        public static String GetImageExtWildcard() => default;// real static
+        public static NativeStringSpan GetImageExtWildcard() => default;// real static
 
         // Register an image handler.
         public static void AddHandler(IntPtr handler) { }// real static
@@ -324,26 +324,26 @@ namespace NativeApi.Api
         public static void CleanUpHandlers() { }// real static
 
         // Finds the handler with the given name.
-        public static IntPtr FindHandlerByName(string name) => default;// real static
+        public static IntPtr FindHandlerByName(NativeStringSpan name) => default;// real static
 
         // Finds the handler associated with the given extension and type.
-        public static IntPtr FindHandlerByExt(string extension, int bitmapType) => default;// real static
+        public static IntPtr FindHandlerByExt(NativeStringSpan extension, int bitmapType) => default;// real static
 
         // Finds the handler associated with the given image type.
         public static IntPtr FindHandlerByBitmapType(int bitmapType) => default;// real static
 
         // Finds the handler associated with the given MIME type.
-        public static IntPtr FindHandlerByMime(string mimetype) => default;// real static
+        public static IntPtr FindHandlerByMime(NativeStringSpan mimetype) => default;// real static
 
         //Adds a handler at the start of the static list of format handlers.
         public static void InsertHandler(IntPtr handler) { }// real static
 
         //Finds the handler with the given name, and removes it.
-        public static bool RemoveHandler(string name) => default;// real static
+        public static bool RemoveHandler(NativeStringSpan name) => default;// real static
 
         // If the image file contains more than one image and the image handler is capable of
         // retrieving these individually, this function will return the number of available images.
-        public static int GetImageCountInFile(string filename,
+        public static int GetImageCountInFile(NativeStringSpan filename,
             int bitmapType /*= wxBITMAP_TYPE_ANY*/) => default;// real static
 
         // If the image stream contains more than one image and the image handler is capable of

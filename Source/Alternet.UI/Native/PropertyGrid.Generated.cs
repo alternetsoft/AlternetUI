@@ -69,7 +69,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string EventPropertyName
+        public Alternet.UI.NativeStringSpan EventPropertyName
         {
             get
             {
@@ -79,7 +79,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string EventValidationFailureMessage
+        public Alternet.UI.NativeStringSpan EventValidationFailureMessage
         {
             get
             {
@@ -94,7 +94,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public static string NameAsLabel
+        public static Alternet.UI.NativeStringSpan NameAsLabel
         {
             get
             {
@@ -191,18 +191,20 @@ return NativeApi.PropertyGrid_GetHitTestProp_(NativePointer, ref point_Native);
             NativeApi.PropertyGrid_ColorDatabaseSetGlobal_(handle);
         }
         
-        public static void ColorDatabaseAdd(System.IntPtr handle, string name, Alternet.Drawing.Color color)
+        public static void ColorDatabaseAdd(System.IntPtr handle, Alternet.UI.NativeStringSpan name, Alternet.Drawing.Color color)
         {
-            var color_Native = color.ToNative();
-NativeApi.PropertyGrid_ColorDatabaseAdd_(handle, name, ref color_Native);
+            var name_Native = name.ToNative();
+var color_Native = color.ToNative();
+NativeApi.PropertyGrid_ColorDatabaseAdd_(handle, ref name_Native, ref color_Native);
         }
         
-        public static Alternet.Drawing.Color ColorDatabaseFind(System.IntPtr handle, string name)
+        public static Alternet.Drawing.Color ColorDatabaseFind(System.IntPtr handle, Alternet.UI.NativeStringSpan name)
         {
-            return NativeApi.PropertyGrid_ColorDatabaseFind_(handle, name);
+            var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_ColorDatabaseFind_(handle, ref name_Native);
         }
         
-        public static string ColorDatabaseFindName(System.IntPtr handle, Alternet.Drawing.Color color)
+        public static Alternet.UI.NativeStringSpan ColorDatabaseFindName(System.IntPtr handle, Alternet.Drawing.Color color)
         {
             var color_Native = color.ToNative();
 return NativeApi.PropertyGrid_ColorDatabaseFindName_(handle, ref color_Native);
@@ -213,10 +215,12 @@ return NativeApi.PropertyGrid_ColorDatabaseFindName_(handle, ref color_Native);
             NativeApi.PropertyGrid_KnownColorsClear_();
         }
         
-        public static void KnownColorsAdd(string name, string title, Alternet.Drawing.Color value, int knownColor)
+        public static void KnownColorsAdd(Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan title, Alternet.Drawing.Color value, int knownColor)
         {
-            var value_Native = value.ToNative();
-NativeApi.PropertyGrid_KnownColorsAdd_(name, title, ref value_Native, knownColor);
+            var name_Native = name.ToNative();
+var title_Native = title.ToNative();
+var value_Native = value.ToNative();
+NativeApi.PropertyGrid_KnownColorsAdd_(ref name_Native, ref title_Native, ref value_Native, knownColor);
         }
         
         public static void KnownColorsApply()
@@ -224,9 +228,10 @@ NativeApi.PropertyGrid_KnownColorsAdd_(name, title, ref value_Native, knownColor
             NativeApi.PropertyGrid_KnownColorsApply_();
         }
         
-        public static void KnownColorsSetCustomColorTitle(string value)
+        public static void KnownColorsSetCustomColorTitle(Alternet.UI.NativeStringSpan value)
         {
-            NativeApi.PropertyGrid_KnownColorsSetCustomColorTitle_(value);
+            var value_Native = value.ToNative();
+NativeApi.PropertyGrid_KnownColorsSetCustomColorTitle_(ref value_Native);
         }
         
         public System.IntPtr GetPropertyValidator(System.IntPtr prop)
@@ -537,7 +542,7 @@ NativeApi.PropertyGrid_SetSelectionTextColor_(NativePointer, ref col_Native);
             NativeApi.PropertyGrid_SetSplitterPosition_(NativePointer, newXPos, col);
         }
         
-        public string GetUnspecifiedValueText(int argFlags)
+        public Alternet.UI.NativeStringSpan GetUnspecifiedValueText(int argFlags)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetUnspecifiedValueText_(NativePointer, argFlags);
@@ -573,7 +578,7 @@ NativeApi.PropertyGrid_SetSelectionTextColor_(NativePointer, ref col_Native);
             return NativeApi.PropertyGrid_GetCommonValueCount_(NativePointer);
         }
         
-        public string GetCommonValueLabel(uint i)
+        public Alternet.UI.NativeStringSpan GetCommonValueLabel(uint i)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetCommonValueLabel_(NativePointer, i);
@@ -614,10 +619,11 @@ NativeApi.PropertyGrid_SetSelectionTextColor_(NativePointer, ref col_Native);
             return NativeApi.PropertyGrid_GetSpacingY_(NativePointer);
         }
         
-        public void SetupTextCtrlValue(string text)
+        public void SetupTextCtrlValue(Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetupTextCtrlValue_(NativePointer, text);
+            var text_Native = text.ToNative();
+NativeApi.PropertyGrid_SetupTextCtrlValue_(NativePointer, ref text_Native);
         }
         
         public bool UnfocusEditor()
@@ -686,78 +692,107 @@ NativeApi.PropertyGrid_SetSelectionTextColor_(NativePointer, ref col_Native);
             return NativeApi.PropertyGrid_GetImageSize_(NativePointer, p, item);
         }
         
-        public System.IntPtr CreateStringProperty(string label, string name, string value)
+        public System.IntPtr CreateStringProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateStringProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateStringProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native);
         }
         
-        public System.IntPtr CreateFilenameProperty(string label, string name, string value)
+        public System.IntPtr CreateFilenameProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateFilenameProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateFilenameProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native);
         }
         
-        public System.IntPtr CreateDirProperty(string label, string name, string value)
+        public System.IntPtr CreateDirProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateDirProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateDirProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native);
         }
         
-        public System.IntPtr CreateImageFilenameProperty(string label, string name, string value)
+        public System.IntPtr CreateImageFilenameProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateImageFilenameProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateImageFilenameProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native);
         }
         
-        public System.IntPtr CreateSystemColorProperty(string label, string name, Alternet.Drawing.Color value, uint kind)
+        public System.IntPtr CreateSystemColorProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, Alternet.Drawing.Color value, uint kind)
         {
             CheckDisposed();
-            var value_Native = value.ToNative();
-return NativeApi.PropertyGrid_CreateSystemColorProperty_(NativePointer, label, name, ref value_Native, kind);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateSystemColorProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native, kind);
         }
         
-        public System.IntPtr CreateCursorProperty(string label, string name, int value)
+        public System.IntPtr CreateCursorProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, int value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateCursorProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreateCursorProperty_(NativePointer, ref label_Native, ref name_Native, value);
         }
         
-        public System.IntPtr CreateBoolProperty(string label, string name, bool value)
+        public System.IntPtr CreateBoolProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, bool value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateBoolProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreateBoolProperty_(NativePointer, ref label_Native, ref name_Native, value);
         }
         
-        public System.IntPtr CreateIntProperty(string label, string name, long value)
+        public System.IntPtr CreateIntProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, long value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateIntProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreateIntProperty_(NativePointer, ref label_Native, ref name_Native, value);
         }
         
-        public System.IntPtr CreateFloatProperty(string label, string name, double value)
+        public System.IntPtr CreateFloatProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, double value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateFloatProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreateFloatProperty_(NativePointer, ref label_Native, ref name_Native, value);
         }
         
-        public System.IntPtr CreateUIntProperty(string label, string name, ulong value)
+        public System.IntPtr CreateUIntProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, ulong value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateUIntProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreateUIntProperty_(NativePointer, ref label_Native, ref name_Native, value);
         }
         
-        public System.IntPtr CreateLongStringProperty(string label, string name, string value)
+        public System.IntPtr CreateLongStringProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateLongStringProperty_(NativePointer, label, name, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateLongStringProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native);
         }
         
-        public System.IntPtr CreateDateProperty(string label, string name, DateTime value)
+        public System.IntPtr CreateDateProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, DateTime value)
         {
             CheckDisposed();
-            var value_Native = value.ToNative();
-return NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, ref value_Native);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native);
         }
         
         public void Clear()
@@ -772,22 +807,29 @@ return NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, re
             return NativeApi.PropertyGrid_Append_(NativePointer, property);
         }
         
-        public System.IntPtr CreateEditEnumProperty(string label, string name, System.IntPtr choices, string value)
+        public System.IntPtr CreateEditEnumProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, System.IntPtr choices, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateEditEnumProperty_(NativePointer, label, name, choices, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateEditEnumProperty_(NativePointer, ref label_Native, ref name_Native, choices, ref value_Native);
         }
         
-        public System.IntPtr CreateEnumProperty(string label, string name, System.IntPtr choices, int value)
+        public System.IntPtr CreateEnumProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateEnumProperty_(NativePointer, label, name, choices, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreateEnumProperty_(NativePointer, ref label_Native, ref name_Native, choices, value);
         }
         
-        public System.IntPtr CreateFlagsProperty(string label, string name, System.IntPtr choices, int value)
+        public System.IntPtr CreateFlagsProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreateFlagsProperty_(NativePointer, label, name, choices, value);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreateFlagsProperty_(NativePointer, ref label_Native, ref name_Native, choices, value);
         }
         
         public bool ClearSelection(bool validation)
@@ -820,10 +862,12 @@ return NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, re
             return NativeApi.PropertyGrid_ExpandAll_(NativePointer, expand);
         }
         
-        public System.IntPtr CreatePropCategory(string label, string name)
+        public System.IntPtr CreatePropCategory(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_CreatePropCategory_(NativePointer, label, name);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_CreatePropCategory_(NativePointer, ref label_Native, ref name_Native);
         }
         
         public System.IntPtr GetFirst(int flags)
@@ -832,28 +876,33 @@ return NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, re
             return NativeApi.PropertyGrid_GetFirst_(NativePointer, flags);
         }
         
-        public System.IntPtr GetProperty(string name)
+        public System.IntPtr GetProperty(Alternet.UI.NativeStringSpan name)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_GetProperty_(NativePointer, name);
+            var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_GetProperty_(NativePointer, ref name_Native);
         }
         
-        public System.IntPtr GetPropertyByLabel(string label)
+        public System.IntPtr GetPropertyByLabel(Alternet.UI.NativeStringSpan label)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_GetPropertyByLabel_(NativePointer, label);
+            var label_Native = label.ToNative();
+return NativeApi.PropertyGrid_GetPropertyByLabel_(NativePointer, ref label_Native);
         }
         
-        public System.IntPtr GetPropertyByName(string name)
+        public System.IntPtr GetPropertyByName(Alternet.UI.NativeStringSpan name)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_GetPropertyByName_(NativePointer, name);
+            var name_Native = name.ToNative();
+return NativeApi.PropertyGrid_GetPropertyByName_(NativePointer, ref name_Native);
         }
         
-        public System.IntPtr GetPropertyByNameAndSubName(string name, string subname)
+        public System.IntPtr GetPropertyByNameAndSubName(Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan subname)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_GetPropertyByNameAndSubName_(NativePointer, name, subname);
+            var name_Native = name.ToNative();
+var subname_Native = subname.ToNative();
+return NativeApi.PropertyGrid_GetPropertyByNameAndSubName_(NativePointer, ref name_Native, ref subname_Native);
         }
         
         public System.IntPtr GetSelection()
@@ -878,21 +927,24 @@ return NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, re
             NativeApi.PropertyGrid_RegisterAdditionalEditors_();
         }
         
-        public bool RestoreEditableState(string src, int restoreStates)
+        public bool RestoreEditableState(Alternet.UI.NativeStringSpan src, int restoreStates)
         {
             CheckDisposed();
-            return NativeApi.PropertyGrid_RestoreEditableState_(NativePointer, src, restoreStates);
+            var src_Native = src.ToNative();
+return NativeApi.PropertyGrid_RestoreEditableState_(NativePointer, ref src_Native, restoreStates);
         }
         
-        public string SaveEditableState(int includedStates)
+        public Alternet.UI.NativeStringSpan SaveEditableState(int includedStates)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_SaveEditableState_(NativePointer, includedStates);
         }
         
-        public static void SetBoolChoices(string trueChoice, string falseChoice)
+        public static void SetBoolChoices(Alternet.UI.NativeStringSpan trueChoice, Alternet.UI.NativeStringSpan falseChoice)
         {
-            NativeApi.PropertyGrid_SetBoolChoices_(trueChoice, falseChoice);
+            var trueChoice_Native = trueChoice.ToNative();
+var falseChoice_Native = falseChoice.ToNative();
+NativeApi.PropertyGrid_SetBoolChoices_(ref trueChoice_Native, ref falseChoice_Native);
         }
         
         public bool SetColumnProportion(uint column, int proportion)
@@ -919,11 +971,13 @@ return NativeApi.PropertyGrid_CreateDateProperty_(NativePointer, label, name, re
             NativeApi.PropertyGrid_RefreshProperty_(NativePointer, p);
         }
         
-        public System.IntPtr CreateColorProperty(string label, string name, Alternet.Drawing.Color value)
+        public System.IntPtr CreateColorProperty(Alternet.UI.NativeStringSpan label, Alternet.UI.NativeStringSpan name, Alternet.Drawing.Color value)
         {
             CheckDisposed();
-            var value_Native = value.ToNative();
-return NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, label, name, ref value_Native);
+            var label_Native = label.ToNative();
+var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+return NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, ref label_Native, ref name_Native, ref value_Native);
         }
         
         public void SetPropertyReadOnly(System.IntPtr id, bool set, int flags)
@@ -1010,7 +1064,7 @@ return NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, label, name, r
             return NativeApi.PropertyGrid_GetPropertyClientData_(NativePointer, id);
         }
         
-        public string GetPropertyHelpString(System.IntPtr id)
+        public Alternet.UI.NativeStringSpan GetPropertyHelpString(System.IntPtr id)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetPropertyHelpString_(NativePointer, id);
@@ -1022,7 +1076,7 @@ return NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, label, name, r
             return NativeApi.PropertyGrid_GetPropertyImage_(NativePointer, id);
         }
         
-        public string GetPropertyLabel(System.IntPtr id)
+        public Alternet.UI.NativeStringSpan GetPropertyLabel(System.IntPtr id)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetPropertyLabel_(NativePointer, id);
@@ -1040,7 +1094,7 @@ return NativeApi.PropertyGrid_CreateColorProperty_(NativePointer, label, name, r
             return NativeApi.PropertyGrid_GetPropertyValueAsVariant_(NativePointer, id);
         }
         
-        public string GetPropertyValueAsString(System.IntPtr id)
+        public Alternet.UI.NativeStringSpan GetPropertyValueAsString(System.IntPtr id)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetPropertyValueAsString_(NativePointer, id);
@@ -1204,22 +1258,25 @@ NativeApi.PropertyGrid_SetPropertyTextColor_(NativePointer, id, ref col_Native, 
             NativeApi.PropertyGrid_SetPropertyEditorByName_(NativePointer, id, editorName);
         }
         
-        public void SetPropertyLabel(System.IntPtr id, string newproplabel)
+        public void SetPropertyLabel(System.IntPtr id, Alternet.UI.NativeStringSpan newproplabel)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyLabel_(NativePointer, id, newproplabel);
+            var newproplabel_Native = newproplabel.ToNative();
+NativeApi.PropertyGrid_SetPropertyLabel_(NativePointer, id, ref newproplabel_Native);
         }
         
-        public void SetPropertyName(System.IntPtr id, string newName)
+        public void SetPropertyName(System.IntPtr id, Alternet.UI.NativeStringSpan newName)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyName_(NativePointer, id, newName);
+            var newName_Native = newName.ToNative();
+NativeApi.PropertyGrid_SetPropertyName_(NativePointer, id, ref newName_Native);
         }
         
-        public void SetPropertyHelpString(System.IntPtr id, string helpString)
+        public void SetPropertyHelpString(System.IntPtr id, Alternet.UI.NativeStringSpan helpString)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyHelpString_(NativePointer, id, helpString);
+            var helpString_Native = helpString.ToNative();
+NativeApi.PropertyGrid_SetPropertyHelpString_(NativePointer, id, ref helpString_Native);
         }
         
         public bool SetPropertyMaxLength(System.IntPtr id, int maxLen)
@@ -1252,10 +1309,11 @@ NativeApi.PropertyGrid_SetPropertyTextColor_(NativePointer, id, ref col_Native, 
             NativeApi.PropertyGrid_SetPropertyValueAsBool_(NativePointer, id, value);
         }
         
-        public void SetPropertyValueAsStr(System.IntPtr id, string value)
+        public void SetPropertyValueAsStr(System.IntPtr id, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyValueAsStr_(NativePointer, id, value);
+            var value_Native = value.ToNative();
+NativeApi.PropertyGrid_SetPropertyValueAsStr_(NativePointer, id, ref value_Native);
         }
         
         public void SetPropertyValueAsVariant(System.IntPtr id, System.IntPtr variant)
@@ -1283,9 +1341,10 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             NativeApi.PropertyGrid_SortChildren_(NativePointer, id, flags);
         }
         
-        public static System.IntPtr GetEditorByName(string editorName)
+        public static System.IntPtr GetEditorByName(Alternet.UI.NativeStringSpan editorName)
         {
-            return NativeApi.PropertyGrid_GetEditorByName_(editorName);
+            var editorName_Native = editorName.ToNative();
+return NativeApi.PropertyGrid_GetEditorByName_(ref editorName_Native);
         }
         
         public bool ChangePropertyValue(System.IntPtr id, System.IntPtr variant)
@@ -1294,16 +1353,18 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             return NativeApi.PropertyGrid_ChangePropertyValue_(NativePointer, id, variant);
         }
         
-        public void SetPropertyAttribute(System.IntPtr id, string attrName, System.IntPtr variant, long argFlags)
+        public void SetPropertyAttribute(System.IntPtr id, Alternet.UI.NativeStringSpan attrName, System.IntPtr variant, long argFlags)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyAttribute_(NativePointer, id, attrName, variant, argFlags);
+            var attrName_Native = attrName.ToNative();
+NativeApi.PropertyGrid_SetPropertyAttribute_(NativePointer, id, ref attrName_Native, variant, argFlags);
         }
         
-        public void SetPropertyAttributeAll(string attrName, System.IntPtr variant)
+        public void SetPropertyAttributeAll(Alternet.UI.NativeStringSpan attrName, System.IntPtr variant)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, attrName, variant);
+            var attrName_Native = attrName.ToNative();
+NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, ref attrName_Native, variant);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -1457,16 +1518,16 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern System.IntPtr PropertyGrid_GetEventProperty_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetEventPropertyName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventPropertyName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetEventValidationFailureMessage_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventValidationFailureMessage_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetEventValidationFailureMessage_(IntPtr obj, string value);
+            public static extern void PropertyGrid_SetEventValidationFailureMessage_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetNameAsLabel_();
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetNameAsLabel_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_GetHasBorder_(IntPtr obj);
@@ -1508,25 +1569,25 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern void PropertyGrid_ColorDatabaseSetGlobal_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_ColorDatabaseAdd_(System.IntPtr handle, string name, ref NativeApiTypes.Color color);
+            public static extern void PropertyGrid_ColorDatabaseAdd_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern NativeApiTypes.Color PropertyGrid_ColorDatabaseFind_(System.IntPtr handle, string name);
+            public static extern NativeApiTypes.Color PropertyGrid_ColorDatabaseFind_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_ColorDatabaseFindName_(System.IntPtr handle, ref NativeApiTypes.Color color);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_ColorDatabaseFindName_(System.IntPtr handle, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_KnownColorsClear_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_KnownColorsAdd_(string name, string title, ref NativeApiTypes.Color value, int knownColor);
+            public static extern void PropertyGrid_KnownColorsAdd_(ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan title, ref NativeApiTypes.Color value, int knownColor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_KnownColorsApply_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_KnownColorsSetCustomColorTitle_(string value);
+            public static extern void PropertyGrid_KnownColorsSetCustomColorTitle_(ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetPropertyValidator_(IntPtr obj, System.IntPtr prop);
@@ -1679,7 +1740,7 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern void PropertyGrid_SetSplitterPosition_(IntPtr obj, int newXPos, int col);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetUnspecifiedValueText_(IntPtr obj, int argFlags);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetUnspecifiedValueText_(IntPtr obj, int argFlags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetVirtualWidth_(IntPtr obj, int width);
@@ -1697,7 +1758,7 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern uint PropertyGrid_GetCommonValueCount_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetCommonValueLabel_(IntPtr obj, uint i);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetCommonValueLabel_(IntPtr obj, uint i);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int PropertyGrid_GetUnspecifiedCommonValue_(IntPtr obj);
@@ -1718,7 +1779,7 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern int PropertyGrid_GetSpacingY_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetupTextCtrlValue_(IntPtr obj, string text);
+            public static extern void PropertyGrid_SetupTextCtrlValue_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_UnfocusEditor_(IntPtr obj);
@@ -1754,40 +1815,40 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern Alternet.Drawing.SizeI PropertyGrid_GetImageSize_(IntPtr obj, System.IntPtr p, int item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateStringProperty_(IntPtr obj, string label, string name, string value);
+            public static extern System.IntPtr PropertyGrid_CreateStringProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateFilenameProperty_(IntPtr obj, string label, string name, string value);
+            public static extern System.IntPtr PropertyGrid_CreateFilenameProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateDirProperty_(IntPtr obj, string label, string name, string value);
+            public static extern System.IntPtr PropertyGrid_CreateDirProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateImageFilenameProperty_(IntPtr obj, string label, string name, string value);
+            public static extern System.IntPtr PropertyGrid_CreateImageFilenameProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateSystemColorProperty_(IntPtr obj, string label, string name, ref NativeApiTypes.Color value, uint kind);
+            public static extern System.IntPtr PropertyGrid_CreateSystemColorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color value, uint kind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateCursorProperty_(IntPtr obj, string label, string name, int value);
+            public static extern System.IntPtr PropertyGrid_CreateCursorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateBoolProperty_(IntPtr obj, string label, string name, bool value);
+            public static extern System.IntPtr PropertyGrid_CreateBoolProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateIntProperty_(IntPtr obj, string label, string name, long value);
+            public static extern System.IntPtr PropertyGrid_CreateIntProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, long value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateFloatProperty_(IntPtr obj, string label, string name, double value);
+            public static extern System.IntPtr PropertyGrid_CreateFloatProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, double value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateUIntProperty_(IntPtr obj, string label, string name, ulong value);
+            public static extern System.IntPtr PropertyGrid_CreateUIntProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ulong value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateLongStringProperty_(IntPtr obj, string label, string name, string value);
+            public static extern System.IntPtr PropertyGrid_CreateLongStringProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateDateProperty_(IntPtr obj, string label, string name, ref NativeApiTypes.DateTime value);
+            public static extern System.IntPtr PropertyGrid_CreateDateProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.DateTime value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_Clear_(IntPtr obj);
@@ -1796,13 +1857,13 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern System.IntPtr PropertyGrid_Append_(IntPtr obj, System.IntPtr property);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateEditEnumProperty_(IntPtr obj, string label, string name, System.IntPtr choices, string value);
+            public static extern System.IntPtr PropertyGrid_CreateEditEnumProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateEnumProperty_(IntPtr obj, string label, string name, System.IntPtr choices, int value);
+            public static extern System.IntPtr PropertyGrid_CreateEnumProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateFlagsProperty_(IntPtr obj, string label, string name, System.IntPtr choices, int value);
+            public static extern System.IntPtr PropertyGrid_CreateFlagsProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, System.IntPtr choices, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_ClearSelection_(IntPtr obj, bool validation);
@@ -1820,22 +1881,22 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern bool PropertyGrid_ExpandAll_(IntPtr obj, bool expand);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreatePropCategory_(IntPtr obj, string label, string name);
+            public static extern System.IntPtr PropertyGrid_CreatePropCategory_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetFirst_(IntPtr obj, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetProperty_(IntPtr obj, string name);
+            public static extern System.IntPtr PropertyGrid_GetProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyByLabel_(IntPtr obj, string label);
+            public static extern System.IntPtr PropertyGrid_GetPropertyByLabel_(IntPtr obj, ref Alternet.UI.NativeStringSpan label);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyByName_(IntPtr obj, string name);
+            public static extern System.IntPtr PropertyGrid_GetPropertyByName_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetPropertyByNameAndSubName_(IntPtr obj, string name, string subname);
+            public static extern System.IntPtr PropertyGrid_GetPropertyByNameAndSubName_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan subname);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetSelection_(IntPtr obj);
@@ -1850,13 +1911,13 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern void PropertyGrid_RegisterAdditionalEditors_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool PropertyGrid_RestoreEditableState_(IntPtr obj, string src, int restoreStates);
+            public static extern bool PropertyGrid_RestoreEditableState_(IntPtr obj, ref Alternet.UI.NativeStringSpan src, int restoreStates);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_SaveEditableState_(IntPtr obj, int includedStates);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_SaveEditableState_(IntPtr obj, int includedStates);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetBoolChoices_(string trueChoice, string falseChoice);
+            public static extern void PropertyGrid_SetBoolChoices_(ref Alternet.UI.NativeStringSpan trueChoice, ref Alternet.UI.NativeStringSpan falseChoice);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_SetColumnProportion_(IntPtr obj, uint column, int proportion);
@@ -1871,7 +1932,7 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern void PropertyGrid_RefreshProperty_(IntPtr obj, System.IntPtr p);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, string label, string name, ref NativeApiTypes.Color value);
+            public static extern System.IntPtr PropertyGrid_CreateColorProperty_(IntPtr obj, ref Alternet.UI.NativeStringSpan label, ref Alternet.UI.NativeStringSpan name, ref NativeApiTypes.Color value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyReadOnly_(IntPtr obj, System.IntPtr id, bool set, int flags);
@@ -1916,13 +1977,13 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern System.IntPtr PropertyGrid_GetPropertyClientData_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyHelpString_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetPropertyImage_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyLabel_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_GetPropertyParent_(IntPtr obj, System.IntPtr id);
@@ -1931,7 +1992,7 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern System.IntPtr PropertyGrid_GetPropertyValueAsVariant_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyValueAsString_(IntPtr obj, System.IntPtr id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long PropertyGrid_GetPropertyValueAsLong_(IntPtr obj, System.IntPtr id);
@@ -2012,13 +2073,13 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern void PropertyGrid_SetPropertyEditorByName_(IntPtr obj, System.IntPtr id, string editorName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyLabel_(IntPtr obj, System.IntPtr id, string newproplabel);
+            public static extern void PropertyGrid_SetPropertyLabel_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan newproplabel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyName_(IntPtr obj, System.IntPtr id, string newName);
+            public static extern void PropertyGrid_SetPropertyName_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan newName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyHelpString_(IntPtr obj, System.IntPtr id, string helpString);
+            public static extern void PropertyGrid_SetPropertyHelpString_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan helpString);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_SetPropertyMaxLength_(IntPtr obj, System.IntPtr id, int maxLen);
@@ -2036,7 +2097,7 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern void PropertyGrid_SetPropertyValueAsBool_(IntPtr obj, System.IntPtr id, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyValueAsStr_(IntPtr obj, System.IntPtr id, string value);
+            public static extern void PropertyGrid_SetPropertyValueAsStr_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyValueAsVariant_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
@@ -2051,16 +2112,16 @@ NativeApi.PropertyGrid_SetPropertyValueAsDateTime_(NativePointer, id, ref value_
             public static extern void PropertyGrid_SortChildren_(IntPtr obj, System.IntPtr id, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGrid_GetEditorByName_(string editorName);
+            public static extern System.IntPtr PropertyGrid_GetEditorByName_(ref Alternet.UI.NativeStringSpan editorName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_ChangePropertyValue_(IntPtr obj, System.IntPtr id, System.IntPtr variant);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyAttribute_(IntPtr obj, System.IntPtr id, string attrName, System.IntPtr variant, long argFlags);
+            public static extern void PropertyGrid_SetPropertyAttribute_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan attrName, System.IntPtr variant, long argFlags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, string attrName, System.IntPtr variant);
+            public static extern void PropertyGrid_SetPropertyAttributeAll_(IntPtr obj, ref Alternet.UI.NativeStringSpan attrName, System.IntPtr variant);
             
         }
     }

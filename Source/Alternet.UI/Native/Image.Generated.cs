@@ -218,11 +218,12 @@ namespace Alternet.UI.Native
 return NativeApi.Image_LoadSvgFromStream_(NativePointer, stream.NativePointer, width, height, ref color_Native);
         }
         
-        public bool LoadSvgFromString(string s, int width, int height, Alternet.Drawing.Color color)
+        public bool LoadSvgFromString(Alternet.UI.NativeStringSpan s, int width, int height, Alternet.Drawing.Color color)
         {
             CheckDisposed();
-            var color_Native = color.ToNative();
-return NativeApi.Image_LoadSvgFromString_(NativePointer, s, width, height, ref color_Native);
+            var s_Native = s.ToNative();
+var color_Native = color.ToNative();
+return NativeApi.Image_LoadSvgFromString_(NativePointer, ref s_Native, width, height, ref color_Native);
         }
         
         public void Initialize(Alternet.Drawing.SizeI size, int depth)
@@ -245,16 +246,18 @@ NativeApi.Image_InitializeFromImage_(NativePointer, source.NativePointer, ref si
             NativeApi.Image_CopyFrom_(NativePointer, otherImage.NativePointer);
         }
         
-        public bool SaveToStream(OutputStream stream, string format)
+        public bool SaveToStream(OutputStream stream, Alternet.UI.NativeStringSpan format)
         {
             CheckDisposed();
-            return NativeApi.Image_SaveToStream_(NativePointer, stream.NativePointer, format);
+            var format_Native = format.ToNative();
+return NativeApi.Image_SaveToStream_(NativePointer, stream.NativePointer, ref format_Native);
         }
         
-        public bool SaveToFile(string fileName)
+        public bool SaveToFile(Alternet.UI.NativeStringSpan fileName)
         {
             CheckDisposed();
-            return NativeApi.Image_SaveToFile_(NativePointer, fileName);
+            var fileName_Native = fileName.ToNative();
+return NativeApi.Image_SaveToFile_(NativePointer, ref fileName_Native);
         }
         
         public System.IntPtr ConvertToGenericImage()
@@ -281,16 +284,18 @@ NativeApi.Image_InitializeFromImage_(NativePointer, source.NativePointer, ref si
             return NativeApi.Image_ResetAlpha_(NativePointer);
         }
         
-        public bool LoadFile(string name, int type)
+        public bool LoadFile(Alternet.UI.NativeStringSpan name, int type)
         {
             CheckDisposed();
-            return NativeApi.Image_LoadFile_(NativePointer, name, type);
+            var name_Native = name.ToNative();
+return NativeApi.Image_LoadFile_(NativePointer, ref name_Native, type);
         }
         
-        public bool SaveFile(string name, int type)
+        public bool SaveFile(Alternet.UI.NativeStringSpan name, int type)
         {
             CheckDisposed();
-            return NativeApi.Image_SaveFile_(NativePointer, name, type);
+            var name_Native = name.ToNative();
+return NativeApi.Image_SaveFile_(NativePointer, ref name_Native, type);
         }
         
         public bool SaveStream(OutputStream stream, int type)
@@ -433,7 +438,7 @@ return NativeApi.Image_Rescale_(NativePointer, ref sizeNeeded_Native);
             public static extern bool Image_LoadSvgFromStream_(IntPtr obj, IntPtr stream, int width, int height, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadSvgFromString_(IntPtr obj, string s, int width, int height, ref NativeApiTypes.Color color);
+            public static extern bool Image_LoadSvgFromString_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, int width, int height, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Image_Initialize_(IntPtr obj, ref Alternet.Drawing.SizeI size, int depth);
@@ -445,10 +450,10 @@ return NativeApi.Image_Rescale_(NativePointer, ref sizeNeeded_Native);
             public static extern void Image_CopyFrom_(IntPtr obj, IntPtr otherImage);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_SaveToStream_(IntPtr obj, IntPtr stream, string format);
+            public static extern bool Image_SaveToStream_(IntPtr obj, IntPtr stream, ref Alternet.UI.NativeStringSpan format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_SaveToFile_(IntPtr obj, string fileName);
+            public static extern bool Image_SaveToFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan fileName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Image_ConvertToGenericImage_(IntPtr obj);
@@ -463,10 +468,10 @@ return NativeApi.Image_Rescale_(NativePointer, ref sizeNeeded_Native);
             public static extern bool Image_ResetAlpha_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_LoadFile_(IntPtr obj, string name, int type);
+            public static extern bool Image_LoadFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Image_SaveFile_(IntPtr obj, string name, int type);
+            public static extern bool Image_SaveFile_(IntPtr obj, ref Alternet.UI.NativeStringSpan name, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Image_SaveStream_(IntPtr obj, IntPtr stream, int type);

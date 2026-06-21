@@ -26,18 +26,18 @@ namespace NativeApi.Api
         
         public bool HasBorder { get; set; }
 
-        public string ReportedUrl { get; }
+        public NativeStringSpan ReportedUrl { get; }
 
         public event EventHandler? TextEnter;
         public event EventHandler? TextUrl;
 
-        public string GetRange(long from, long to) => default;
+        public NativeStringSpan GetRange(long from, long to) => default;
 
         // Returns the length of the specified line in characters.
         public int GetLineLength(long lineNo) => default;
 
         // Returns the text for the given line.
-        public string GetLineText(long lineNo) => default;
+        public NativeStringSpan GetLineText(long lineNo) => default;
 
         // Returns the number of lines in the buffer.
         public int GetNumberOfLines() => default;
@@ -56,13 +56,13 @@ namespace NativeApi.Api
         public bool IsMultiLine() => default;
 
         // Returns the text within the current selection range, if any.    
-        public string GetStringSelection() => default;
+        public NativeStringSpan GetStringSelection() => default;
 
         // Gets the current filename associated with the control.    
-        public string GetFilename() => default;
+        public NativeStringSpan GetFilename() => default;
 
         // Sets the current filename.    
-        public void SetFilename(string filename) { }
+        public void SetFilename(NativeStringSpan filename) { }
 
         // Sets the size of the buffer beyond which layout is delayed during resizing.
         // This optimizes sizing for large buffers. The default is 20000.
@@ -144,17 +144,17 @@ namespace NativeApi.Api
         public void Clear() { }
 
         // Replaces the content in the specified range with the string specified by @a value.
-        public void Replace(long from, long to, string value) { }
+        public void Replace(long from, long to, NativeStringSpan value) { }
 
         // Removes the content in the specified range.    
         public void Remove(long from, long to) { }
 
-        public bool LoadFile(string file, int type) => default;
+        public bool LoadFile(NativeStringSpan file, int type) => default;
 
         // Saves the buffer content using the given type.
         // If the specified type is wxRICHTEXT_TYPE_ANY, the type is deduced from
         // the filename extension.    
-        public bool SaveFile(string file, int type) => default;
+        public bool SaveFile(NativeStringSpan file, int type) => default;
 
         // Sets flags that change the behaviour of loading or saving.
         // See the documentation for each handler class to see what flags are
@@ -177,10 +177,10 @@ namespace NativeApi.Api
         public void SetMaxLength(ulong len) { }
 
         // Writes text at the current position.    
-        public void WriteText(string text) { }
+        public void WriteText(NativeStringSpan text) { }
 
         // Sets the insertion point to the end of the buffer and writes the text.    
-        public void AppendText(string text) { }
+        public void AppendText(NativeStringSpan text) { }
 
         // Translates from column and line number to position.    
         public long XYToPosition(long x, long y) => default;

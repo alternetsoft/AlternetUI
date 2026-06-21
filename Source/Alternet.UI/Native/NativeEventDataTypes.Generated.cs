@@ -29,7 +29,7 @@ namespace Alternet.UI.Native
     class ListViewItemLabelEditEventData
     {
         public long itemIndex;
-        public string label;
+        public NativeApiTypes.NativeStringSpan label;
         public bool editCancelled;
     }
     
@@ -43,19 +43,19 @@ namespace Alternet.UI.Native
     class TreeViewItemLabelEditEventData
     {
         public System.IntPtr item;
-        public string label;
+        public NativeApiTypes.NativeStringSpan label;
         public bool editCancelled;
     }
     
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     class WebBrowserEventData
     {
-        public string Url;
-        public string Target;
+        public NativeApiTypes.NativeStringSpan Url;
+        public NativeApiTypes.NativeStringSpan Target;
         public int ActionFlags;
-        public string MessageHandler;
+        public NativeApiTypes.NativeStringSpan MessageHandler;
         public bool IsError;
-        public string Text;
+        public NativeApiTypes.NativeStringSpan Text;
         public int IntVal;
         public System.IntPtr ClientData;
     }

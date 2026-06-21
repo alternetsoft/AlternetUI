@@ -22,7 +22,7 @@ namespace NativeApi.Api
 
         public void SetMaxSize(SizeD size) { }
 
-        public string Title { get; set; }
+        public NativeStringSpan Title { get; set; }
         public bool ShowInTaskbar { get; set; }
         public bool MinimizeEnabled { get; set; }
         public bool MaximizeEnabled { get; set; }

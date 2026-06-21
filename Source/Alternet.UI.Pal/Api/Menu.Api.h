@@ -18,17 +18,17 @@ ALTERNET_UI_API Menu* Menu_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t* Menu_GetMacHelpMenuTitleName_(Menu* obj)
+ALTERNET_UI_API NativeStringSpan_C Menu_GetMacHelpMenuTitleName_(Menu* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetMacHelpMenuTitleName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetMacHelpMenuTitleName();
     });
 }
 
-ALTERNET_UI_API char16_t* Menu_GetMacWindowMenuTitleName_(Menu* obj)
+ALTERNET_UI_API NativeStringSpan_C Menu_GetMacWindowMenuTitleName_(Menu* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetMacWindowMenuTitleName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetMacWindowMenuTitleName();
     });
 }
 
@@ -60,10 +60,10 @@ ALTERNET_UI_API void* Menu_GetMainMenu_(Window* window)
     });
 }
 
-ALTERNET_UI_API void* Menu_FindMenuItem_(Window* window, const char16_t* id)
+ALTERNET_UI_API void* Menu_FindMenuItem_(Window* window, NativeStringSpan* id)
 {
     return MarshalExceptions<void*>([&](){
-        return Menu::FindMenuItem(window, id);
+        return Menu::FindMenuItem(window, *id);
     });
 }
 
@@ -74,73 +74,73 @@ ALTERNET_UI_API void Menu_SetMainMenu_(Window* window, void* menu)
     });
 }
 
-ALTERNET_UI_API c_bool Menu_MainMenuAppend_(void* menuHandle, void* menu, const char16_t* text)
+ALTERNET_UI_API c_bool Menu_MainMenuAppend_(void* menuHandle, void* menu, NativeStringSpan* text)
 {
     return MarshalExceptions<c_bool>([&](){
-        return Menu::MainMenuAppend(menuHandle, menu, text);
+        return Menu::MainMenuAppend(menuHandle, menu, *text);
     });
 }
 
-ALTERNET_UI_API void Menu_MainMenuSetEnabled_(void* menuHandle, const char16_t* childId, c_bool enable)
+ALTERNET_UI_API void Menu_MainMenuSetEnabled_(void* menuHandle, NativeStringSpan* childId, c_bool enable)
 {
     MarshalExceptions<void>([&](){
-        Menu::MainMenuSetEnabled(menuHandle, childId, enable);
+        Menu::MainMenuSetEnabled(menuHandle, *childId, enable);
     });
 }
 
-ALTERNET_UI_API void* Menu_MainMenuGetSubMenu_(void* menuHandle, const char16_t* childId)
+ALTERNET_UI_API void* Menu_MainMenuGetSubMenu_(void* menuHandle, NativeStringSpan* childId)
 {
     return MarshalExceptions<void*>([&](){
-        return Menu::MainMenuGetSubMenu(menuHandle, childId);
+        return Menu::MainMenuGetSubMenu(menuHandle, *childId);
     });
 }
 
-ALTERNET_UI_API void* Menu_MainMenuRemove_(void* menuHandle, const char16_t* childId)
+ALTERNET_UI_API void* Menu_MainMenuRemove_(void* menuHandle, NativeStringSpan* childId)
 {
     return MarshalExceptions<void*>([&](){
-        return Menu::MainMenuRemove(menuHandle, childId);
+        return Menu::MainMenuRemove(menuHandle, *childId);
     });
 }
 
-ALTERNET_UI_API c_bool Menu_MainMenuInsert_(void* menuHandle, const char16_t* childId, void* menu, const char16_t* title)
+ALTERNET_UI_API c_bool Menu_MainMenuInsert_(void* menuHandle, NativeStringSpan* childId, void* menu, NativeStringSpan* title)
 {
     return MarshalExceptions<c_bool>([&](){
-        return Menu::MainMenuInsert(menuHandle, childId, menu, title);
+        return Menu::MainMenuInsert(menuHandle, *childId, menu, *title);
     });
 }
 
-ALTERNET_UI_API void* Menu_MainMenuReplace_(void* menuHandle, const char16_t* childId, void* menu, const char16_t* title)
+ALTERNET_UI_API void* Menu_MainMenuReplace_(void* menuHandle, NativeStringSpan* childId, void* menu, NativeStringSpan* title)
 {
     return MarshalExceptions<void*>([&](){
-        return Menu::MainMenuReplace(menuHandle, childId, menu, title);
+        return Menu::MainMenuReplace(menuHandle, *childId, menu, *title);
     });
 }
 
-ALTERNET_UI_API void Menu_MainMenuSetText_(void* menuHandle, const char16_t* childId, const char16_t* label)
+ALTERNET_UI_API void Menu_MainMenuSetText_(void* menuHandle, NativeStringSpan* childId, NativeStringSpan* label)
 {
     MarshalExceptions<void>([&](){
-        Menu::MainMenuSetText(menuHandle, childId, label);
+        Menu::MainMenuSetText(menuHandle, *childId, *label);
     });
 }
 
-ALTERNET_UI_API void* Menu_CreateMainMenu_(const char16_t* id)
+ALTERNET_UI_API void* Menu_CreateMainMenu_(NativeStringSpan* id)
 {
     return MarshalExceptions<void*>([&](){
-        return Menu::CreateMainMenu(id);
+        return Menu::CreateMainMenu(*id);
     });
 }
 
-ALTERNET_UI_API void* Menu_CreateContextMenu_(const char16_t* id)
+ALTERNET_UI_API void* Menu_CreateContextMenu_(NativeStringSpan* id)
 {
     return MarshalExceptions<void*>([&](){
-        return Menu::CreateContextMenu(id);
+        return Menu::CreateContextMenu(*id);
     });
 }
 
-ALTERNET_UI_API void* Menu_CreateMenuItem_(MenuItemType itemType, const char16_t* id, const char16_t* title, const char16_t* help, void* menuHandle)
+ALTERNET_UI_API void* Menu_CreateMenuItem_(MenuItemType itemType, NativeStringSpan* id, NativeStringSpan* title, NativeStringSpan* help, void* menuHandle)
 {
     return MarshalExceptions<void*>([&](){
-        return Menu::CreateMenuItem(itemType, id, title, help, menuHandle);
+        return Menu::CreateMenuItem(itemType, *id, *title, *help, menuHandle);
     });
 }
 
@@ -193,17 +193,17 @@ ALTERNET_UI_API void Menu_SetMenuItemEnabled_(void* handle, c_bool value)
     });
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemRole_(void* handle, const char16_t* role)
+ALTERNET_UI_API void Menu_SetMenuItemRole_(void* handle, NativeStringSpan* role)
 {
     MarshalExceptions<void>([&](){
-        Menu::SetMenuItemRole(handle, role);
+        Menu::SetMenuItemRole(handle, *role);
     });
 }
 
-ALTERNET_UI_API void Menu_SetMenuItemText_(void* handle, const char16_t* value, const char16_t* rightValue)
+ALTERNET_UI_API void Menu_SetMenuItemText_(void* handle, NativeStringSpan* value, NativeStringSpan* rightValue)
 {
     MarshalExceptions<void>([&](){
-        Menu::SetMenuItemText(handle, value, rightValue);
+        Menu::SetMenuItemText(handle, *value, *rightValue);
     });
 }
 
@@ -235,17 +235,17 @@ ALTERNET_UI_API void Menu_MenuAddItem_(void* handle, void* itemHandle)
     });
 }
 
-ALTERNET_UI_API void Menu_MenuRemoveItem_(void* handle, const char16_t* childId)
+ALTERNET_UI_API void Menu_MenuRemoveItem_(void* handle, NativeStringSpan* childId)
 {
     MarshalExceptions<void>([&](){
-        Menu::MenuRemoveItem(handle, childId);
+        Menu::MenuRemoveItem(handle, *childId);
     });
 }
 
-ALTERNET_UI_API c_bool Menu_MenuInsertItem_(void* handle, const char16_t* childId, void* itemHandle)
+ALTERNET_UI_API c_bool Menu_MenuInsertItem_(void* handle, NativeStringSpan* childId, void* itemHandle)
 {
     return MarshalExceptions<c_bool>([&](){
-        return Menu::MenuInsertItem(handle, childId, itemHandle);
+        return Menu::MenuInsertItem(handle, *childId, itemHandle);
     });
 }
 

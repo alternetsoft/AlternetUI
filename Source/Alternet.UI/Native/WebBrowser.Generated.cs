@@ -157,7 +157,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string SelectedSource
+        public Alternet.UI.NativeStringSpan SelectedSource
         {
             get
             {
@@ -167,7 +167,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string SelectedText
+        public Alternet.UI.NativeStringSpan SelectedText
         {
             get
             {
@@ -177,7 +177,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string PageSource
+        public Alternet.UI.NativeStringSpan PageSource
         {
             get
             {
@@ -187,7 +187,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string PageText
+        public Alternet.UI.NativeStringSpan PageText
         {
             get
             {
@@ -227,7 +227,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string UserAgent
+        public Alternet.UI.NativeStringSpan UserAgent
         {
             get
             {
@@ -297,46 +297,59 @@ namespace Alternet.UI.Native
             
         }
         
-        public static System.IntPtr CreateWebBrowser(string url)
+        public static System.IntPtr CreateWebBrowser(Alternet.UI.NativeStringSpan url)
         {
-            return NativeApi.WebBrowser_CreateWebBrowser_(url);
+            var url_Native = url.ToNative();
+return NativeApi.WebBrowser_CreateWebBrowser_(ref url_Native);
         }
         
-        public static void SetDefaultUserAgent(string value)
+        public static void SetDefaultUserAgent(Alternet.UI.NativeStringSpan value)
         {
-            NativeApi.WebBrowser_SetDefaultUserAgent_(value);
+            var value_Native = value.ToNative();
+NativeApi.WebBrowser_SetDefaultUserAgent_(ref value_Native);
         }
         
-        public static void SetDefaultScriptMesageName(string value)
+        public static void SetDefaultScriptMesageName(Alternet.UI.NativeStringSpan value)
         {
-            NativeApi.WebBrowser_SetDefaultScriptMesageName_(value);
+            var value_Native = value.ToNative();
+NativeApi.WebBrowser_SetDefaultScriptMesageName_(ref value_Native);
         }
         
-        public static void SetDefaultFSNameMemory(string value)
+        public static void SetDefaultFSNameMemory(Alternet.UI.NativeStringSpan value)
         {
-            NativeApi.WebBrowser_SetDefaultFSNameMemory_(value);
+            var value_Native = value.ToNative();
+NativeApi.WebBrowser_SetDefaultFSNameMemory_(ref value_Native);
         }
         
-        public static void SetDefaultFSNameArchive(string value)
+        public static void SetDefaultFSNameArchive(Alternet.UI.NativeStringSpan value)
         {
-            NativeApi.WebBrowser_SetDefaultFSNameArchive_(value);
+            var value_Native = value.ToNative();
+NativeApi.WebBrowser_SetDefaultFSNameArchive_(ref value_Native);
         }
         
-        public string DoCommand(string cmdName, string cmdParam1, string cmdParam2)
+        public Alternet.UI.NativeStringSpan DoCommand(Alternet.UI.NativeStringSpan cmdName, Alternet.UI.NativeStringSpan cmdParam1, Alternet.UI.NativeStringSpan cmdParam2)
         {
             CheckDisposed();
-            return NativeApi.WebBrowser_DoCommand_(NativePointer, cmdName, cmdParam1, cmdParam2);
+            var cmdName_Native = cmdName.ToNative();
+var cmdParam1_Native = cmdParam1.ToNative();
+var cmdParam2_Native = cmdParam2.ToNative();
+return NativeApi.WebBrowser_DoCommand_(NativePointer, ref cmdName_Native, ref cmdParam1_Native, ref cmdParam2_Native);
         }
         
-        public static string DoCommandGlobal(string cmdName, string cmdParam1, string cmdParam2)
+        public static Alternet.UI.NativeStringSpan DoCommandGlobal(Alternet.UI.NativeStringSpan cmdName, Alternet.UI.NativeStringSpan cmdParam1, Alternet.UI.NativeStringSpan cmdParam2)
         {
-            return NativeApi.WebBrowser_DoCommandGlobal_(cmdName, cmdParam1, cmdParam2);
+            var cmdName_Native = cmdName.ToNative();
+var cmdParam1_Native = cmdParam1.ToNative();
+var cmdParam2_Native = cmdParam2.ToNative();
+return NativeApi.WebBrowser_DoCommandGlobal_(ref cmdName_Native, ref cmdParam1_Native, ref cmdParam2_Native);
         }
         
-        public void SetVirtualHostNameToFolderMapping(string hostName, string folderPath, int accessKind)
+        public void SetVirtualHostNameToFolderMapping(Alternet.UI.NativeStringSpan hostName, Alternet.UI.NativeStringSpan folderPath, int accessKind)
         {
             CheckDisposed();
-            NativeApi.WebBrowser_SetVirtualHostNameToFolderMapping_(NativePointer, hostName, folderPath, accessKind);
+            var hostName_Native = hostName.ToNative();
+var folderPath_Native = folderPath.ToNative();
+NativeApi.WebBrowser_SetVirtualHostNameToFolderMapping_(NativePointer, ref hostName_Native, ref folderPath_Native, accessKind);
         }
         
         public System.IntPtr GetNativeBackend()
@@ -447,22 +460,25 @@ namespace Alternet.UI.Native
             NativeApi.WebBrowser_RemoveAllUserScripts_(NativePointer);
         }
         
-        public bool AddScriptMessageHandler(string name)
+        public bool AddScriptMessageHandler(Alternet.UI.NativeStringSpan name)
         {
             CheckDisposed();
-            return NativeApi.WebBrowser_AddScriptMessageHandler_(NativePointer, name);
+            var name_Native = name.ToNative();
+return NativeApi.WebBrowser_AddScriptMessageHandler_(NativePointer, ref name_Native);
         }
         
-        public bool RemoveScriptMessageHandler(string name)
+        public bool RemoveScriptMessageHandler(Alternet.UI.NativeStringSpan name)
         {
             CheckDisposed();
-            return NativeApi.WebBrowser_RemoveScriptMessageHandler_(NativePointer, name);
+            var name_Native = name.ToNative();
+return NativeApi.WebBrowser_RemoveScriptMessageHandler_(NativePointer, ref name_Native);
         }
         
-        public void RunScriptAsync(string javascript, System.IntPtr clientData)
+        public void RunScriptAsync(Alternet.UI.NativeStringSpan javascript, System.IntPtr clientData)
         {
             CheckDisposed();
-            NativeApi.WebBrowser_RunScriptAsync_(NativePointer, javascript, clientData);
+            var javascript_Native = javascript.ToNative();
+NativeApi.WebBrowser_RunScriptAsync_(NativePointer, ref javascript_Native, clientData);
         }
         
         public void CreateBackend()
@@ -476,45 +492,51 @@ namespace Alternet.UI.Native
             return NativeApi.WebBrowser_GetBackendOS_();
         }
         
-        public static void SetEdgePath(string path)
+        public static void SetEdgePath(Alternet.UI.NativeStringSpan path)
         {
-            NativeApi.WebBrowser_SetEdgePath_(path);
+            var path_Native = path.ToNative();
+NativeApi.WebBrowser_SetEdgePath_(ref path_Native);
         }
         
-        public string GetCurrentTitle()
+        public Alternet.UI.NativeStringSpan GetCurrentTitle()
         {
             CheckDisposed();
             return NativeApi.WebBrowser_GetCurrentTitle_(NativePointer);
         }
         
-        public string GetCurrentURL()
+        public Alternet.UI.NativeStringSpan GetCurrentURL()
         {
             CheckDisposed();
             return NativeApi.WebBrowser_GetCurrentURL_(NativePointer);
         }
         
-        public void LoadURL(string url)
+        public void LoadURL(Alternet.UI.NativeStringSpan url)
         {
             CheckDisposed();
-            NativeApi.WebBrowser_LoadURL_(NativePointer, url);
+            var url_Native = url.ToNative();
+NativeApi.WebBrowser_LoadURL_(NativePointer, ref url_Native);
         }
         
-        public string RunScript(string javascript)
+        public Alternet.UI.NativeStringSpan RunScript(Alternet.UI.NativeStringSpan javascript)
         {
             CheckDisposed();
-            return NativeApi.WebBrowser_RunScript_(NativePointer, javascript);
+            var javascript_Native = javascript.ToNative();
+return NativeApi.WebBrowser_RunScript_(NativePointer, ref javascript_Native);
         }
         
-        public void SetPage(string text, string baseUrl)
+        public void SetPage(Alternet.UI.NativeStringSpan text, Alternet.UI.NativeStringSpan baseUrl)
         {
             CheckDisposed();
-            NativeApi.WebBrowser_SetPage_(NativePointer, text, baseUrl);
+            var text_Native = text.ToNative();
+var baseUrl_Native = baseUrl.ToNative();
+NativeApi.WebBrowser_SetPage_(NativePointer, ref text_Native, ref baseUrl_Native);
         }
         
-        public bool AddUserScript(string javascript, int injectionTime)
+        public bool AddUserScript(Alternet.UI.NativeStringSpan javascript, int injectionTime)
         {
             CheckDisposed();
-            return NativeApi.WebBrowser_AddUserScript_(NativePointer, javascript, injectionTime);
+            var javascript_Native = javascript.ToNative();
+return NativeApi.WebBrowser_AddUserScript_(NativePointer, ref javascript_Native, injectionTime);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -672,16 +694,16 @@ namespace Alternet.UI.Native
             public static extern bool WebBrowser_GetHasSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_GetSelectedSource_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetSelectedSource_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_GetSelectedText_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetSelectedText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_GetPageSource_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetPageSource_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_GetPageText_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetPageText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WebBrowser_GetAccessToDevToolsEnabled_(IntPtr obj);
@@ -696,10 +718,10 @@ namespace Alternet.UI.Native
             public static extern void WebBrowser_SetPreferredColorScheme_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_GetUserAgent_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetUserAgent_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetUserAgent_(IntPtr obj, string value);
+            public static extern void WebBrowser_SetUserAgent_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WebBrowser_GetContextMenuEnabled_(IntPtr obj);
@@ -723,28 +745,28 @@ namespace Alternet.UI.Native
             public static extern bool WebBrowser_GetIsEdge_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr WebBrowser_CreateWebBrowser_(string url);
+            public static extern System.IntPtr WebBrowser_CreateWebBrowser_(ref Alternet.UI.NativeStringSpan url);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultUserAgent_(string value);
+            public static extern void WebBrowser_SetDefaultUserAgent_(ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultScriptMesageName_(string value);
+            public static extern void WebBrowser_SetDefaultScriptMesageName_(ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultFSNameMemory_(string value);
+            public static extern void WebBrowser_SetDefaultFSNameMemory_(ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultFSNameArchive_(string value);
+            public static extern void WebBrowser_SetDefaultFSNameArchive_(ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_DoCommand_(IntPtr obj, string cmdName, string cmdParam1, string cmdParam2);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_DoCommand_(IntPtr obj, ref Alternet.UI.NativeStringSpan cmdName, ref Alternet.UI.NativeStringSpan cmdParam1, ref Alternet.UI.NativeStringSpan cmdParam2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_DoCommandGlobal_(string cmdName, string cmdParam1, string cmdParam2);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_DoCommandGlobal_(ref Alternet.UI.NativeStringSpan cmdName, ref Alternet.UI.NativeStringSpan cmdParam1, ref Alternet.UI.NativeStringSpan cmdParam2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetVirtualHostNameToFolderMapping_(IntPtr obj, string hostName, string folderPath, int accessKind);
+            public static extern void WebBrowser_SetVirtualHostNameToFolderMapping_(IntPtr obj, ref Alternet.UI.NativeStringSpan hostName, ref Alternet.UI.NativeStringSpan folderPath, int accessKind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WebBrowser_GetNativeBackend_(IntPtr obj);
@@ -801,13 +823,13 @@ namespace Alternet.UI.Native
             public static extern void WebBrowser_RemoveAllUserScripts_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_AddScriptMessageHandler_(IntPtr obj, string name);
+            public static extern bool WebBrowser_AddScriptMessageHandler_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_RemoveScriptMessageHandler_(IntPtr obj, string name);
+            public static extern bool WebBrowser_RemoveScriptMessageHandler_(IntPtr obj, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_RunScriptAsync_(IntPtr obj, string javascript, System.IntPtr clientData);
+            public static extern void WebBrowser_RunScriptAsync_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript, System.IntPtr clientData);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_CreateBackend_(IntPtr obj);
@@ -816,25 +838,25 @@ namespace Alternet.UI.Native
             public static extern int WebBrowser_GetBackendOS_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetEdgePath_(string path);
+            public static extern void WebBrowser_SetEdgePath_(ref Alternet.UI.NativeStringSpan path);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_GetCurrentTitle_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetCurrentTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_GetCurrentURL_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetCurrentURL_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_LoadURL_(IntPtr obj, string url);
+            public static extern void WebBrowser_LoadURL_(IntPtr obj, ref Alternet.UI.NativeStringSpan url);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WebBrowser_RunScript_(IntPtr obj, string javascript);
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_RunScript_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetPage_(IntPtr obj, string text, string baseUrl);
+            public static extern void WebBrowser_SetPage_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, ref Alternet.UI.NativeStringSpan baseUrl);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool WebBrowser_AddUserScript_(IntPtr obj, string javascript, int injectionTime);
+            public static extern bool WebBrowser_AddUserScript_(IntPtr obj, ref Alternet.UI.NativeStringSpan javascript, int injectionTime);
             
         }
     }

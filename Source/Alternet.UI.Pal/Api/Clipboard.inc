@@ -5,7 +5,7 @@ UnmanagedDataObject* GetDataObject();
 void SetDataObject(UnmanagedDataObject* value);
 bool Flush();
 bool IsIntFormatSupported(int format);
-bool IsStrFormatSupported(const string& format);
+bool IsStrFormatSupported(const NativeStringSpan& format);
 
 public:
 Clipboard();

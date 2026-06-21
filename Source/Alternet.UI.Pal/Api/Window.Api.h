@@ -17,14 +17,14 @@ ALTERNET_UI_API Window* Window_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t* Window_GetTitle_(Window* obj)
+ALTERNET_UI_API NativeStringSpan_C Window_GetTitle_(Window* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetTitle());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
     });
 }
 
-ALTERNET_UI_API void Window_SetTitle_(Window* obj, const char16_t* value)
+ALTERNET_UI_API void Window_SetTitle_(Window* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetTitle(value);

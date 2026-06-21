@@ -19,21 +19,21 @@ ALTERNET_UI_API Application* Application_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t* Application_GetEventArgString_(Application* obj)
+ALTERNET_UI_API NativeStringSpan_C Application_GetEventArgString_(Application* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetEventArgString());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEventArgString();
     });
 }
 
-ALTERNET_UI_API char16_t* Application_GetName_(Application* obj)
+ALTERNET_UI_API NativeStringSpan_C Application_GetName_(Application* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetName();
     });
 }
 
-ALTERNET_UI_API void Application_SetName_(Application* obj, const char16_t* value)
+ALTERNET_UI_API void Application_SetName_(Application* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetName(value);
@@ -61,56 +61,56 @@ ALTERNET_UI_API Clipboard* Application_GetClipboard_(Application* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* Application_GetDisplayName_(Application* obj)
+ALTERNET_UI_API NativeStringSpan_C Application_GetDisplayName_(Application* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetDisplayName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetDisplayName();
     });
 }
 
-ALTERNET_UI_API void Application_SetDisplayName_(Application* obj, const char16_t* value)
+ALTERNET_UI_API void Application_SetDisplayName_(Application* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetDisplayName(value);
     });
 }
 
-ALTERNET_UI_API char16_t* Application_GetAppClassName_(Application* obj)
+ALTERNET_UI_API NativeStringSpan_C Application_GetAppClassName_(Application* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetAppClassName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetAppClassName();
     });
 }
 
-ALTERNET_UI_API void Application_SetAppClassName_(Application* obj, const char16_t* value)
+ALTERNET_UI_API void Application_SetAppClassName_(Application* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetAppClassName(value);
     });
 }
 
-ALTERNET_UI_API char16_t* Application_GetVendorName_(Application* obj)
+ALTERNET_UI_API NativeStringSpan_C Application_GetVendorName_(Application* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetVendorName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetVendorName();
     });
 }
 
-ALTERNET_UI_API void Application_SetVendorName_(Application* obj, const char16_t* value)
+ALTERNET_UI_API void Application_SetVendorName_(Application* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetVendorName(value);
     });
 }
 
-ALTERNET_UI_API char16_t* Application_GetVendorDisplayName_(Application* obj)
+ALTERNET_UI_API NativeStringSpan_C Application_GetVendorDisplayName_(Application* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetVendorDisplayName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetVendorDisplayName();
     });
 }
 
-ALTERNET_UI_API void Application_SetVendorDisplayName_(Application* obj, const char16_t* value)
+ALTERNET_UI_API void Application_SetVendorDisplayName_(Application* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetVendorDisplayName(value);
@@ -138,10 +138,10 @@ ALTERNET_UI_API c_bool Application_GetInvokeRequired_(Application* obj)
     });
 }
 
-ALTERNET_UI_API void Application_SetGtkCss_(c_bool inject, const char16_t* css)
+ALTERNET_UI_API void Application_SetGtkCss_(c_bool inject, NativeStringSpan* css)
 {
     MarshalExceptions<void>([&](){
-        Application::SetGtkCss(inject, css);
+        Application::SetGtkCss(inject, *css);
     });
 }
 
@@ -166,10 +166,10 @@ ALTERNET_UI_API void Application_ThrowError_(int value)
     });
 }
 
-ALTERNET_UI_API void Application_SetSystemOptionInt_(const char16_t* name, int value)
+ALTERNET_UI_API void Application_SetSystemOptionInt_(NativeStringSpan* name, int value)
 {
     MarshalExceptions<void>([&](){
-        Application::SetSystemOptionInt(name, value);
+        Application::SetSystemOptionInt(*name, value);
     });
 }
 
@@ -299,10 +299,10 @@ ALTERNET_UI_API void Application_SetExitOnFrameDelete_(Application* obj, c_bool 
     });
 }
 
-ALTERNET_UI_API c_bool Application_SetNativeTheme_(Application* obj, const char16_t* theme)
+ALTERNET_UI_API c_bool Application_SetNativeTheme_(Application* obj, NativeStringSpan* theme)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->SetNativeTheme(theme);
+        return obj->SetNativeTheme(*theme);
     });
 }
 
@@ -320,10 +320,10 @@ ALTERNET_UI_API void Application_SetUseBestVisual_(Application* obj, c_bool flag
     });
 }
 
-ALTERNET_UI_API char16_t* Application_GetCustomData_(Application* obj, const char16_t* key)
+ALTERNET_UI_API NativeStringSpan_C Application_GetCustomData_(Application* obj, NativeStringSpan* key)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetCustomData(key));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetCustomData(*key);
     });
 }
 

@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public System.String[] Formats
+        public Alternet.UI.NativeStringSpan[] Formats
         {
             get
             {
@@ -32,7 +32,7 @@ namespace Alternet.UI.Native
                 try
                 {
                     var count = NativeApi.UnmanagedDataObject_GetFormatsItemCount_(NativePointer, array);
-                    var result = new System.Collections.Generic.List<string>(count);
+                    var result = new System.Collections.Generic.List<Alternet.UI.NativeStringSpan>(count);
                     for (int i = 0; i < count; i++)
                     {
                         var n = NativeApi.UnmanagedDataObject_GetFormatsItemAt_(NativePointer, array, i);
@@ -49,49 +49,58 @@ namespace Alternet.UI.Native
             
         }
         
-        public string GetStringData(string format)
+        public Alternet.UI.NativeStringSpan GetStringData(Alternet.UI.NativeStringSpan format)
         {
             CheckDisposed();
-            return NativeApi.UnmanagedDataObject_GetStringData_(NativePointer, format);
+            var format_Native = format.ToNative();
+return NativeApi.UnmanagedDataObject_GetStringData_(NativePointer, ref format_Native);
         }
         
-        public string GetFileNamesData(string format)
+        public Alternet.UI.NativeStringSpan GetFileNamesData(Alternet.UI.NativeStringSpan format)
         {
             CheckDisposed();
-            return NativeApi.UnmanagedDataObject_GetFileNamesData_(NativePointer, format);
+            var format_Native = format.ToNative();
+return NativeApi.UnmanagedDataObject_GetFileNamesData_(NativePointer, ref format_Native);
         }
         
-        public UnmanagedStream GetStreamData(string format)
+        public UnmanagedStream GetStreamData(Alternet.UI.NativeStringSpan format)
         {
             CheckDisposed();
-            var _nnn = NativeApi.UnmanagedDataObject_GetStreamData_(NativePointer, format);
+            var format_Native = format.ToNative();
+var _nnn = NativeApi.UnmanagedDataObject_GetStreamData_(NativePointer, ref format_Native);
             var _mmm = NativeObject.GetFromNativePointer<UnmanagedStream>(_nnn, p => new UnmanagedStream(p))!;
             ReleaseNativeObjectPointer(_nnn);
             return _mmm;
         }
         
-        public void SetStringData(string format, string value)
+        public void SetStringData(Alternet.UI.NativeStringSpan format, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.UnmanagedDataObject_SetStringData_(NativePointer, format, value);
+            var format_Native = format.ToNative();
+var value_Native = value.ToNative();
+NativeApi.UnmanagedDataObject_SetStringData_(NativePointer, ref format_Native, ref value_Native);
         }
         
-        public void SetFileNamesData(string format, string value)
+        public void SetFileNamesData(Alternet.UI.NativeStringSpan format, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.UnmanagedDataObject_SetFileNamesData_(NativePointer, format, value);
+            var format_Native = format.ToNative();
+var value_Native = value.ToNative();
+NativeApi.UnmanagedDataObject_SetFileNamesData_(NativePointer, ref format_Native, ref value_Native);
         }
         
-        public void SetStreamData(string format, InputStream value)
+        public void SetStreamData(Alternet.UI.NativeStringSpan format, InputStream value)
         {
             CheckDisposed();
-            NativeApi.UnmanagedDataObject_SetStreamData_(NativePointer, format, value.NativePointer);
+            var format_Native = format.ToNative();
+NativeApi.UnmanagedDataObject_SetStreamData_(NativePointer, ref format_Native, value.NativePointer);
         }
         
-        public bool GetDataPresent(string format)
+        public bool GetDataPresent(Alternet.UI.NativeStringSpan format)
         {
             CheckDisposed();
-            return NativeApi.UnmanagedDataObject_GetDataPresent_(NativePointer, format);
+            var format_Native = format.ToNative();
+return NativeApi.UnmanagedDataObject_GetDataPresent_(NativePointer, ref format_Native);
         }
         
         public bool GetNativeDataPresent(int format)
@@ -116,31 +125,31 @@ namespace Alternet.UI.Native
             public static extern int UnmanagedDataObject_GetFormatsItemCount_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string UnmanagedDataObject_GetFormatsItemAt_(IntPtr obj, System.IntPtr array, int index);
+            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFormatsItemAt_(IntPtr obj, System.IntPtr array, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void UnmanagedDataObject_CloseFormatsArray_(IntPtr obj, System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string UnmanagedDataObject_GetStringData_(IntPtr obj, string format);
+            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetStringData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string UnmanagedDataObject_GetFileNamesData_(IntPtr obj, string format);
+            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFileNamesData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr UnmanagedDataObject_GetStreamData_(IntPtr obj, string format);
+            public static extern IntPtr UnmanagedDataObject_GetStreamData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void UnmanagedDataObject_SetStringData_(IntPtr obj, string format, string value);
+            public static extern void UnmanagedDataObject_SetStringData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void UnmanagedDataObject_SetFileNamesData_(IntPtr obj, string format, string value);
+            public static extern void UnmanagedDataObject_SetFileNamesData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void UnmanagedDataObject_SetStreamData_(IntPtr obj, string format, IntPtr value);
+            public static extern void UnmanagedDataObject_SetStreamData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool UnmanagedDataObject_GetDataPresent_(IntPtr obj, string format);
+            public static extern bool UnmanagedDataObject_GetDataPresent_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool UnmanagedDataObject_GetNativeDataPresent_(IntPtr obj, int format);

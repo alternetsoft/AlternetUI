@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string DocumentName
+        public Alternet.UI.NativeStringSpan DocumentName
         {
             get
             {
@@ -246,10 +246,10 @@ namespace Alternet.UI.Native
             public static extern void PrintDocument_SetOriginAtMargins_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PrintDocument_GetDocumentName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan PrintDocument_GetDocumentName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintDocument_SetDocumentName_(IntPtr obj, string value);
+            public static extern void PrintDocument_SetDocumentName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintDocument_GetPrinterSettings_(IntPtr obj);

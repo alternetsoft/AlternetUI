@@ -19,7 +19,7 @@ namespace NativeApi.Api
         public void ShowPopup() { }
 
         public bool AllowMouseWheel { get; set; }
-        public string EmptyTextHint { get; set; }
+        public NativeStringSpan EmptyTextHint { get; set; }
         public bool HasBorder { get; set; }
         public int ItemsCount { get; }
         public bool IsEditable { get; set; }
@@ -47,14 +47,14 @@ namespace NativeApi.Api
         public void DefaultOnDrawItem() { }
 
         public IntPtr CreateItemsInsertion() => default;
-        public void AddItemToInsertion(IntPtr insertion, string item) { }
+        public void AddItemToInsertion(IntPtr insertion, NativeStringSpan item) { }
         public void CommitItemsInsertion(IntPtr insertion, int index) { }
-        public void InsertItem(int index, string value) { }
+        public void InsertItem(int index, NativeStringSpan value) { }
         public void RemoveItemAt(int index) { }
         public void ClearItems() { }
         public void SelectTextRange(int start, int length) { }
         public void SelectAllText() { }
 
-        public void SetItem(int index, string value) {}
+        public void SetItem(int index, NativeStringSpan value) {}
     }
 }

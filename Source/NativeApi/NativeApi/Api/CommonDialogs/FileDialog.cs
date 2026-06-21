@@ -63,19 +63,19 @@ namespace NativeApi.Api
 
         public FileDialogMode Mode { get; set; }
 
-        public string? InitialDirectory { get; set; }
+        public NativeStringSpan InitialDirectory { get; set; }
 
-        public string? Title { get; set; }
+        public NativeStringSpan Title { get; set; }
 
-        public string? Filter { get; set; }
+        public NativeStringSpan Filter { get; set; }
 
         public int SelectedFilterIndex { get; set; }
 
-        public string? FileName { get; set; }
+        public NativeStringSpan FileName { get; set; }
 
         public bool AllowMultipleSelection { get; set; }
 
-        public string[] FileNames { get; }
+        public NativeStringSpan[] FileNames { get; }
 
         public ModalResult ShowModal(Window? owner) => throw new Exception();
     }

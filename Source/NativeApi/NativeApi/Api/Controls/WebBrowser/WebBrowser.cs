@@ -8,19 +8,19 @@ namespace NativeApi.Api
 {
     public class WebBrowser : Control
     {
-        public static IntPtr CreateWebBrowser(string url) => default;
+        public static IntPtr CreateWebBrowser(NativeStringSpan url) => default;
 
         public static bool IsEdgeBackendEnabled { get; set; }
 
         public bool HasBorder { get; set; }
 
-        public static void SetDefaultUserAgent(string value) => 
+        public static void SetDefaultUserAgent(NativeStringSpan value) => 
             throw new Exception();
-        public static void SetDefaultScriptMesageName(string value) 
+        public static void SetDefaultScriptMesageName(NativeStringSpan value) 
             => throw new Exception();
-        public static void SetDefaultFSNameMemory(string value) => 
+        public static void SetDefaultFSNameMemory(NativeStringSpan value) => 
             throw new Exception();
-        public static void SetDefaultFSNameArchive(string value) => 
+        public static void SetDefaultFSNameArchive(NativeStringSpan value) => 
             throw new Exception();
 
         public bool CanGoBack { get; }
@@ -33,28 +33,28 @@ namespace NativeApi.Api
         public bool CanPaste { get; }
         public float ZoomFactor { get; set; }
         public bool HasSelection { get; }
-        public string SelectedSource { get => throw new Exception(); }
-        public string SelectedText { get => throw new Exception(); }
-        public string PageSource { get => throw new Exception(); }
-        public string PageText { get => throw new Exception(); }
+        public NativeStringSpan SelectedSource { get => throw new Exception(); }
+        public NativeStringSpan SelectedText { get => throw new Exception(); }
+        public NativeStringSpan PageSource { get => throw new Exception(); }
+        public NativeStringSpan PageText { get => throw new Exception(); }
         public bool AccessToDevToolsEnabled { get; set; }
         public int PreferredColorScheme { get; set; }
         
-        public string UserAgent 
+        public NativeStringSpan UserAgent 
         { 
             get => throw new Exception(); 
             set => throw new Exception(); 
         }
         public bool ContextMenuEnabled { get; set; }
 
-        public string DoCommand(string cmdName, string cmdParam1, 
-            string cmdParam2) => throw new Exception();
-        public static string DoCommandGlobal(string cmdName, string cmdParam1, 
-            string cmdParam2) => throw new Exception();
+        public NativeStringSpan DoCommand(NativeStringSpan cmdName, NativeStringSpan cmdParam1, 
+            NativeStringSpan cmdParam2) => throw new Exception();
+        public static NativeStringSpan DoCommandGlobal(NativeStringSpan cmdName, NativeStringSpan cmdParam1, 
+            NativeStringSpan cmdParam2) => throw new Exception();
 
         public void SetVirtualHostNameToFolderMapping(
-            string hostName, 
-            string folderPath, 
+            NativeStringSpan hostName, 
+            NativeStringSpan folderPath, 
             int accessKind) => throw new Exception();
 
         public IntPtr GetNativeBackend() => throw new Exception();
@@ -75,26 +75,26 @@ namespace NativeApi.Api
         public void Redo() => throw new Exception();
         public void Print() => throw new Exception();
         public void RemoveAllUserScripts() => throw new Exception();
-        public bool AddScriptMessageHandler(string name) => throw new Exception();
-        public bool RemoveScriptMessageHandler(string name) => throw new Exception();
-        public void RunScriptAsync(string javascript, IntPtr clientData) 
+        public bool AddScriptMessageHandler(NativeStringSpan name) => throw new Exception();
+        public bool RemoveScriptMessageHandler(NativeStringSpan name) => throw new Exception();
+        public void RunScriptAsync(NativeStringSpan javascript, IntPtr clientData) 
             => throw new Exception();
         public void CreateBackend() => throw new Exception();
 
         public static int GetBackendOS() => throw new Exception();
-        public static void SetEdgePath(string path) => throw new Exception();
+        public static void SetEdgePath(NativeStringSpan path) => throw new Exception();
 
         public bool Editable { get; set; }
         public int Zoom { get; set; }
 
         public bool IsEdge { get; }
 
-        public string GetCurrentTitle() => throw new Exception();
-        public string GetCurrentURL() => throw new Exception();
-        public void LoadURL(string url) => throw new Exception();
-        public string RunScript(string javascript) => throw new Exception();
-        public void SetPage(string text, string baseUrl) => throw new Exception();
-        public bool AddUserScript(string javascript, int injectionTime) 
+        public NativeStringSpan GetCurrentTitle() => throw new Exception();
+        public NativeStringSpan GetCurrentURL() => throw new Exception();
+        public void LoadURL(NativeStringSpan url) => throw new Exception();
+        public NativeStringSpan RunScript(NativeStringSpan javascript) => throw new Exception();
+        public void SetPage(NativeStringSpan text, NativeStringSpan baseUrl) => throw new Exception();
+        public bool AddUserScript(NativeStringSpan javascript, int injectionTime) 
             => throw new Exception();
 
         public event NativeEventHandler<WebBrowserEventData>? Navigating;

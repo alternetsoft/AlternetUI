@@ -23,7 +23,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static System.String[] Families
+        public static Alternet.UI.NativeStringSpan[] Families
         {
             get
             {
@@ -31,7 +31,7 @@ namespace Alternet.UI.Native
                 try
                 {
                     var count = NativeApi.Font_GetFamiliesItemCount_(array);
-                    var result = new System.Collections.Generic.List<string>(count);
+                    var result = new System.Collections.Generic.List<Alternet.UI.NativeStringSpan>(count);
                     for (int i = 0; i < count; i++)
                     {
                         var n = NativeApi.Font_GetFamiliesItemAt_(array, i);
@@ -48,7 +48,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string Name
+        public Alternet.UI.NativeStringSpan Name
         {
             get
             {
@@ -152,10 +152,11 @@ namespace Alternet.UI.Native
             return NativeApi.Font_GetWeight_(NativePointer);
         }
         
-        public void Initialize(Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style)
+        public void Initialize(Alternet.Drawing.GenericFontFamily genericFamily, Alternet.UI.NativeStringSpan familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style)
         {
             CheckDisposed();
-            NativeApi.Font_Initialize_(NativePointer, genericFamily, familyName, emSizeInPoints, style);
+            var familyName_Native = familyName.ToNative();
+NativeApi.Font_Initialize_(NativePointer, genericFamily, ref familyName_Native, emSizeInPoints, style);
         }
         
         public void InitializeWithDefaultFont()
@@ -176,12 +177,13 @@ namespace Alternet.UI.Native
             NativeApi.Font_InitializeFromFont_(NativePointer, font.NativePointer);
         }
         
-        public static bool IsFamilyValid(string fontFamily)
+        public static bool IsFamilyValid(Alternet.UI.NativeStringSpan fontFamily)
         {
-            return NativeApi.Font_IsFamilyValid_(fontFamily);
+            var fontFamily_Native = fontFamily.ToNative();
+return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
         }
         
-        public static string GetGenericFamilyName(Alternet.Drawing.GenericFontFamily genericFamily)
+        public static Alternet.UI.NativeStringSpan GetGenericFamilyName(Alternet.Drawing.GenericFontFamily genericFamily)
         {
             return NativeApi.Font_GetGenericFamilyName_(genericFamily);
         }
@@ -208,7 +210,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Font_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Font_GetName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Font_GetName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern float Font_GetSizeInPoints_(IntPtr obj);
@@ -226,7 +228,7 @@ namespace Alternet.UI.Native
             public static extern int Font_GetFamiliesItemCount_(System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Font_GetFamiliesItemAt_(System.IntPtr array, int index);
+            public static extern Alternet.UI.NativeStringSpan Font_GetFamiliesItemAt_(System.IntPtr array, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_CloseFamiliesArray_(System.IntPtr array);
@@ -265,7 +267,7 @@ namespace Alternet.UI.Native
             public static extern int Font_GetWeight_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Font_Initialize_(IntPtr obj, Alternet.Drawing.GenericFontFamily genericFamily, string? familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style);
+            public static extern void Font_Initialize_(IntPtr obj, Alternet.Drawing.GenericFontFamily genericFamily, ref Alternet.UI.NativeStringSpan familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Font_InitializeWithDefaultFont_(IntPtr obj);
@@ -277,10 +279,10 @@ namespace Alternet.UI.Native
             public static extern void Font_InitializeFromFont_(IntPtr obj, IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Font_IsFamilyValid_(string fontFamily);
+            public static extern bool Font_IsFamilyValid_(ref Alternet.UI.NativeStringSpan fontFamily);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Font_GetGenericFamilyName_(Alternet.Drawing.GenericFontFamily genericFamily);
+            public static extern Alternet.UI.NativeStringSpan Font_GetGenericFamilyName_(Alternet.Drawing.GenericFontFamily genericFamily);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_IsEqualTo_(IntPtr obj, IntPtr other);

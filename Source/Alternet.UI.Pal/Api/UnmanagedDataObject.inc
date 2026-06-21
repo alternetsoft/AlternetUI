@@ -3,15 +3,15 @@
 public:
 void* OpenFormatsArray();
 int GetFormatsItemCount(void* array);
-string GetFormatsItemAt(void* array, int index);
+NativeStringSpan GetFormatsItemAt(void* array, int index);
 void CloseFormatsArray(void* array);
-string GetStringData(const string& format);
-string GetFileNamesData(const string& format);
-UnmanagedStream* GetStreamData(const string& format);
-void SetStringData(const string& format, const string& value);
-void SetFileNamesData(const string& format, const string& value);
-void SetStreamData(const string& format, void* value);
-bool GetDataPresent(const string& format);
+NativeStringSpan GetStringData(const NativeStringSpan& format);
+NativeStringSpan GetFileNamesData(const NativeStringSpan& format);
+UnmanagedStream* GetStreamData(const NativeStringSpan& format);
+void SetStringData(const NativeStringSpan& format, const NativeStringSpan& value);
+void SetFileNamesData(const NativeStringSpan& format, const NativeStringSpan& value);
+void SetStreamData(const NativeStringSpan& format, void* value);
+bool GetDataPresent(const NativeStringSpan& format);
 bool GetNativeDataPresent(int format);
 
 public:

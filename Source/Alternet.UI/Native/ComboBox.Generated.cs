@@ -39,7 +39,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string EmptyTextHint
+        public Alternet.UI.NativeStringSpan EmptyTextHint
         {
             get
             {
@@ -282,10 +282,11 @@ namespace Alternet.UI.Native
             return NativeApi.ComboBox_CreateItemsInsertion_(NativePointer);
         }
         
-        public void AddItemToInsertion(System.IntPtr insertion, string item)
+        public void AddItemToInsertion(System.IntPtr insertion, Alternet.UI.NativeStringSpan item)
         {
             CheckDisposed();
-            NativeApi.ComboBox_AddItemToInsertion_(NativePointer, insertion, item);
+            var item_Native = item.ToNative();
+NativeApi.ComboBox_AddItemToInsertion_(NativePointer, insertion, ref item_Native);
         }
         
         public void CommitItemsInsertion(System.IntPtr insertion, int index)
@@ -294,10 +295,11 @@ namespace Alternet.UI.Native
             NativeApi.ComboBox_CommitItemsInsertion_(NativePointer, insertion, index);
         }
         
-        public void InsertItem(int index, string value)
+        public void InsertItem(int index, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.ComboBox_InsertItem_(NativePointer, index, value);
+            var value_Native = value.ToNative();
+NativeApi.ComboBox_InsertItem_(NativePointer, index, ref value_Native);
         }
         
         public void RemoveItemAt(int index)
@@ -324,10 +326,11 @@ namespace Alternet.UI.Native
             NativeApi.ComboBox_SelectAllText_(NativePointer);
         }
         
-        public void SetItem(int index, string value)
+        public void SetItem(int index, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.ComboBox_SetItem_(NativePointer, index, value);
+            var value_Native = value.ToNative();
+NativeApi.ComboBox_SetItem_(NativePointer, index, ref value_Native);
         }
         
         static GCHandle eventCallbackGCHandle;
@@ -421,10 +424,10 @@ namespace Alternet.UI.Native
             public static extern void ComboBox_SetAllowMouseWheel_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string ComboBox_GetEmptyTextHint_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan ComboBox_GetEmptyTextHint_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetEmptyTextHint_(IntPtr obj, string value);
+            public static extern void ComboBox_SetEmptyTextHint_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool ComboBox_GetHasBorder_(IntPtr obj);
@@ -514,13 +517,13 @@ namespace Alternet.UI.Native
             public static extern System.IntPtr ComboBox_CreateItemsInsertion_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_AddItemToInsertion_(IntPtr obj, System.IntPtr insertion, string item);
+            public static extern void ComboBox_AddItemToInsertion_(IntPtr obj, System.IntPtr insertion, ref Alternet.UI.NativeStringSpan item);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_CommitItemsInsertion_(IntPtr obj, System.IntPtr insertion, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_InsertItem_(IntPtr obj, int index, string value);
+            public static extern void ComboBox_InsertItem_(IntPtr obj, int index, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_RemoveItemAt_(IntPtr obj, int index);
@@ -535,7 +538,7 @@ namespace Alternet.UI.Native
             public static extern void ComboBox_SelectAllText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetItem_(IntPtr obj, int index, string value);
+            public static extern void ComboBox_SetItem_(IntPtr obj, int index, ref Alternet.UI.NativeStringSpan value);
             
         }
     }

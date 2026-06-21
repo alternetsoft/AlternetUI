@@ -16,13 +16,13 @@ namespace NativeApi.Api
 
         public event EventHandler? ControlRecreated { add => throw new Exception(); remove => throw new Exception(); }
 
-        public void InsertItemAt(long index, string text, long columnIndex, int imageIndex) => throw new Exception();
+        public void InsertItemAt(long index, NativeStringSpan text, long columnIndex, int imageIndex) => throw new Exception();
 
         public void RemoveItemAt(long index) => throw new Exception();
 
         public void ClearItems() => throw new Exception();
 
-        public void InsertColumnAt(long index, string header, float width, ListViewColumnWidthMode widthMode) => throw new Exception();
+        public void InsertColumnAt(long index, NativeStringSpan header, float width, ListViewColumnWidthMode widthMode) => throw new Exception();
         
         public void RemoveColumnAt(long index) => throw new Exception();
 
@@ -71,10 +71,10 @@ namespace NativeApi.Api
         public event NativeEventHandler<ListViewItemLabelEditEventData>? BeforeItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
         public event NativeEventHandler<ListViewItemLabelEditEventData>? AfterItemLabelEdit { add => throw new Exception(); remove => throw new Exception(); }
 
-        public void SetItemText(long itemIndex, long columnIndex, string text) => throw new Exception();
+        public void SetItemText(long itemIndex, long columnIndex, NativeStringSpan text) => throw new Exception();
         public void SetItemImageIndex(long itemIndex, long columnIndex, int imageIndex) => throw new Exception();
 
         public void SetColumnWidth(long columnIndex, float fixedWidth, ListViewColumnWidthMode widthMode) => throw new Exception();
-        public void SetColumnTitle(long columnIndex, string text) => throw new Exception();
+        public void SetColumnTitle(long columnIndex, NativeStringSpan text) => throw new Exception();
     }
 }

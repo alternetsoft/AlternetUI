@@ -54,7 +54,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public string ReportedUrl
+        public Alternet.UI.NativeStringSpan ReportedUrl
         {
             get
             {
@@ -224,7 +224,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string EmptyTextHint
+        public Alternet.UI.NativeStringSpan EmptyTextHint
         {
             get
             {
@@ -340,7 +340,7 @@ namespace Alternet.UI.Native
             return NativeApi.TextBox_GetLineLength_(NativePointer, lineNo);
         }
         
-        public string GetLineText(long lineNo)
+        public Alternet.UI.NativeStringSpan GetLineText(long lineNo)
         {
             CheckDisposed();
             return NativeApi.TextBox_GetLineText_(NativePointer, lineNo);
@@ -418,10 +418,11 @@ namespace Alternet.UI.Native
             NativeApi.TextBox_Cut_(NativePointer);
         }
         
-        public void AppendText(string text)
+        public void AppendText(Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.TextBox_AppendText_(NativePointer, text);
+            var text_Native = text.ToNative();
+NativeApi.TextBox_AppendText_(NativePointer, ref text_Native);
         }
         
         public long GetInsertionPoint()
@@ -448,10 +449,11 @@ namespace Alternet.UI.Native
             NativeApi.TextBox_Remove_(NativePointer, from, to);
         }
         
-        public void Replace(long from, long to, string value)
+        public void Replace(long from, long to, Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.TextBox_Replace_(NativePointer, from, to, value);
+            var value_Native = value.ToNative();
+NativeApi.TextBox_Replace_(NativePointer, from, to, ref value_Native);
         }
         
         public void SetInsertionPoint(long pos)
@@ -496,19 +498,20 @@ namespace Alternet.UI.Native
             NativeApi.TextBox_Undo_(NativePointer);
         }
         
-        public void WriteText(string text)
+        public void WriteText(Alternet.UI.NativeStringSpan text)
         {
             CheckDisposed();
-            NativeApi.TextBox_WriteText_(NativePointer, text);
+            var text_Native = text.ToNative();
+NativeApi.TextBox_WriteText_(NativePointer, ref text_Native);
         }
         
-        public string GetRange(long from, long to)
+        public Alternet.UI.NativeStringSpan GetRange(long from, long to)
         {
             CheckDisposed();
             return NativeApi.TextBox_GetRange_(NativePointer, from, to);
         }
         
-        public string GetStringSelection()
+        public Alternet.UI.NativeStringSpan GetStringSelection()
         {
             CheckDisposed();
             return NativeApi.TextBox_GetStringSelection_(NativePointer);
@@ -621,7 +624,7 @@ namespace Alternet.UI.Native
             public static extern void TextBox_SetTextAlign_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBox_GetReportedUrl_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan TextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_GetEditControlOnly_(IntPtr obj);
@@ -681,10 +684,10 @@ namespace Alternet.UI.Native
             public static extern bool TextBox_GetIsEmpty_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBox_GetEmptyTextHint_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan TextBox_GetEmptyTextHint_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetEmptyTextHint_(IntPtr obj, string value);
+            public static extern void TextBox_SetEmptyTextHint_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_GetHideSelection_(IntPtr obj);
@@ -729,7 +732,7 @@ namespace Alternet.UI.Native
             public static extern int TextBox_GetLineLength_(IntPtr obj, long lineNo);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBox_GetLineText_(IntPtr obj, long lineNo);
+            public static extern Alternet.UI.NativeStringSpan TextBox_GetLineText_(IntPtr obj, long lineNo);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TextBox_GetNumberOfLines_(IntPtr obj);
@@ -768,7 +771,7 @@ namespace Alternet.UI.Native
             public static extern void TextBox_Cut_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_AppendText_(IntPtr obj, string text);
+            public static extern void TextBox_AppendText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern long TextBox_GetInsertionPoint_(IntPtr obj);
@@ -783,7 +786,7 @@ namespace Alternet.UI.Native
             public static extern void TextBox_Remove_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_Replace_(IntPtr obj, long from, long to, string value);
+            public static extern void TextBox_Replace_(IntPtr obj, long from, long to, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SetInsertionPoint_(IntPtr obj, long pos);
@@ -807,13 +810,13 @@ namespace Alternet.UI.Native
             public static extern void TextBox_Undo_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_WriteText_(IntPtr obj, string text);
+            public static extern void TextBox_WriteText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBox_GetRange_(IntPtr obj, long from, long to);
+            public static extern Alternet.UI.NativeStringSpan TextBox_GetRange_(IntPtr obj, long from, long to);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string TextBox_GetStringSelection_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan TextBox_GetStringSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_EmptyUndoBuffer_(IntPtr obj);

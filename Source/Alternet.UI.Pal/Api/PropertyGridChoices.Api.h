@@ -29,17 +29,17 @@ ALTERNET_UI_API void PropertyGridChoices_Delete_(void* handle)
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_Add_(void* handle, const char16_t* text, int value)
+ALTERNET_UI_API void PropertyGridChoices_Add_(void* handle, NativeStringSpan* text, int value)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridChoices::Add(handle, text, value);
+        PropertyGridChoices::Add(handle, *text, value);
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_SetLabel_(void* handle, uint32_t ind, const char16_t* value)
+ALTERNET_UI_API void PropertyGridChoices_SetLabel_(void* handle, uint32_t ind, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridChoices::SetLabel(handle, ind, value);
+        PropertyGridChoices::SetLabel(handle, ind, *value);
     });
 }
 
@@ -106,10 +106,10 @@ ALTERNET_UI_API void PropertyGridChoices_SetFontFromItem_(void* handle, uint32_t
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGridChoices_GetLabel_(void* handle, uint32_t ind)
+ALTERNET_UI_API NativeStringSpan_C PropertyGridChoices_GetLabel_(void* handle, uint32_t ind)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(PropertyGridChoices::GetLabel(handle, ind));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return PropertyGridChoices::GetLabel(handle, ind);
     });
 }
 
@@ -127,10 +127,10 @@ ALTERNET_UI_API int PropertyGridChoices_GetValue_(void* handle, uint32_t ind)
     });
 }
 
-ALTERNET_UI_API int PropertyGridChoices_GetLabelIndex_(void* handle, const char16_t* str)
+ALTERNET_UI_API int PropertyGridChoices_GetLabelIndex_(void* handle, NativeStringSpan* str)
 {
     return MarshalExceptions<int>([&](){
-        return PropertyGridChoices::GetLabelIndex(handle, str);
+        return PropertyGridChoices::GetLabelIndex(handle, *str);
     });
 }
 
@@ -141,10 +141,10 @@ ALTERNET_UI_API int PropertyGridChoices_GetValueIndex_(void* handle, int val)
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_Insert_(void* handle, int index, const char16_t* text, int value)
+ALTERNET_UI_API void PropertyGridChoices_Insert_(void* handle, int index, NativeStringSpan* text, int value)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridChoices::Insert(handle, index, text, value);
+        PropertyGridChoices::Insert(handle, index, *text, value);
     });
 }
 

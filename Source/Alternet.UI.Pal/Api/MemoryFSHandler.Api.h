@@ -15,38 +15,38 @@ ALTERNET_UI_API MemoryFSHandler* MemoryFSHandler_Create_()
     });
 }
 
-ALTERNET_UI_API void MemoryFSHandler_RemoveFile_(const char16_t* filename)
+ALTERNET_UI_API void MemoryFSHandler_RemoveFile_(NativeStringSpan* filename)
 {
     MarshalExceptions<void>([&](){
-        MemoryFSHandler::RemoveFile(filename);
+        MemoryFSHandler::RemoveFile(*filename);
     });
 }
 
-ALTERNET_UI_API void MemoryFSHandler_AddTextFileWithMimeType_(const char16_t* filename, const char16_t* textdata, const char16_t* mimetype)
+ALTERNET_UI_API void MemoryFSHandler_AddTextFileWithMimeType_(NativeStringSpan* filename, NativeStringSpan* textdata, NativeStringSpan* mimetype)
 {
     MarshalExceptions<void>([&](){
-        MemoryFSHandler::AddTextFileWithMimeType(filename, textdata, mimetype);
+        MemoryFSHandler::AddTextFileWithMimeType(*filename, *textdata, *mimetype);
     });
 }
 
-ALTERNET_UI_API void MemoryFSHandler_AddTextFile_(const char16_t* filename, const char16_t* textdata)
+ALTERNET_UI_API void MemoryFSHandler_AddTextFile_(NativeStringSpan* filename, NativeStringSpan* textdata)
 {
     MarshalExceptions<void>([&](){
-        MemoryFSHandler::AddTextFile(filename, textdata);
+        MemoryFSHandler::AddTextFile(*filename, *textdata);
     });
 }
 
-ALTERNET_UI_API void MemoryFSHandler_AddFile_(const char16_t* filename, void* binarydata, int size)
+ALTERNET_UI_API void MemoryFSHandler_AddFile_(NativeStringSpan* filename, void* binarydata, int size)
 {
     MarshalExceptions<void>([&](){
-        MemoryFSHandler::AddFile(filename, binarydata, size);
+        MemoryFSHandler::AddFile(*filename, binarydata, size);
     });
 }
 
-ALTERNET_UI_API void MemoryFSHandler_AddFileWithMimeType_(const char16_t* filename, void* binarydata, int size, const char16_t* mimetype)
+ALTERNET_UI_API void MemoryFSHandler_AddFileWithMimeType_(NativeStringSpan* filename, void* binarydata, int size, NativeStringSpan* mimetype)
 {
     MarshalExceptions<void>([&](){
-        MemoryFSHandler::AddFileWithMimeType(filename, binarydata, size, mimetype);
+        MemoryFSHandler::AddFileWithMimeType(*filename, binarydata, size, *mimetype);
     });
 }
 

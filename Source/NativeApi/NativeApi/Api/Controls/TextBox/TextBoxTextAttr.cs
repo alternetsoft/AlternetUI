@@ -35,7 +35,7 @@ namespace NativeApi.Api
             throw new Exception();
         public static void SetFontWeight(IntPtr attr, int fontWeight) => 
             throw new Exception();
-        public static void SetFontFaceName(IntPtr attr, string faceName) => 
+        public static void SetFontFaceName(IntPtr attr, NativeStringSpan faceName) => 
             throw new Exception();
         public static void SetFontUnderlined(IntPtr attr, bool underlined) => 
             throw new Exception();
@@ -49,7 +49,7 @@ namespace NativeApi.Api
         public static Color GetTextColor(IntPtr attr) => throw new Exception();
         public static Color GetBackgroundColor(IntPtr attr) => throw new Exception();
         public static int GetAlignment(IntPtr attr) => throw new Exception();
-        public static void SetURL(IntPtr attr, string url) => throw new Exception();
+        public static void SetURL(IntPtr attr, NativeStringSpan url) => throw new Exception();
         public static void SetFlags(IntPtr attr, long flags) => throw new Exception();
         public static void SetParagraphSpacingAfter(IntPtr attr, int spacing) =>
             throw new Exception();
@@ -61,19 +61,19 @@ namespace NativeApi.Api
             throw new Exception();
         public static void SetBulletNumber(IntPtr attr, int n) =>
             throw new Exception();
-        public static void SetBulletText(IntPtr attr, string text) =>
+        public static void SetBulletText(IntPtr attr, NativeStringSpan text) =>
             throw new Exception();
         public static void SetPageBreak(IntPtr attr, bool pageBreak) =>
             throw new Exception();
-        public static void SetCharacterStyleName(IntPtr attr, string name) =>
+        public static void SetCharacterStyleName(IntPtr attr, NativeStringSpan name) =>
             throw new Exception();
-        public static void SetParagraphStyleName(IntPtr attr, string name) =>
+        public static void SetParagraphStyleName(IntPtr attr, NativeStringSpan name) =>
             throw new Exception();
-        public static void SetListStyleName(IntPtr attr, string name) =>
+        public static void SetListStyleName(IntPtr attr, NativeStringSpan name) =>
             throw new Exception();
-        public static void SetBulletFont(IntPtr attr, string bulletFont) =>
+        public static void SetBulletFont(IntPtr attr, NativeStringSpan bulletFont) =>
             throw new Exception();
-        public static void SetBulletName(IntPtr attr, string name) =>
+        public static void SetBulletName(IntPtr attr, NativeStringSpan name) =>
             throw new Exception();
         public static void SetTextEffects(IntPtr attr, int effects) =>
             throw new Exception();
@@ -89,7 +89,7 @@ namespace NativeApi.Api
         public static int GetUnderlineType(IntPtr attr) => throw new Exception();
         public static Color GetUnderlineColor(IntPtr attr) => throw new Exception();
         public static bool GetFontStrikethrough(IntPtr attr) => throw new Exception();
-        public static string GetFontFaceName(IntPtr attr) => throw new Exception();
+        public static NativeStringSpan GetFontFaceName(IntPtr attr) => throw new Exception();
         public static int GetFontFamily(IntPtr attr) => throw new Exception();
         public static int GetParagraphSpacingAfter(IntPtr attr) =>
             throw new Exception();
@@ -98,8 +98,8 @@ namespace NativeApi.Api
         public static int GetLineSpacing(IntPtr attr) => throw new Exception();
         public static int GetBulletStyle(IntPtr attr) => throw new Exception();
         public static int GetBulletNumber(IntPtr attr) => throw new Exception();
-        public static string GetBulletText(IntPtr attr) => throw new Exception();
-        public static string GetURL(IntPtr attr) => throw new Exception();
+        public static NativeStringSpan GetBulletText(IntPtr attr) => throw new Exception();
+        public static NativeStringSpan GetURL(IntPtr attr) => throw new Exception();
         public static int GetTextEffects(IntPtr attr) => throw new Exception();
         public static int GetTextEffectFlags(IntPtr attr) => throw new Exception();
         public static int GetOutlineLevel(IntPtr attr) => throw new Exception();

@@ -99,10 +99,10 @@ ALTERNET_UI_API void TextBoxTextAttr_SetFontWeight_(void* attr, int fontWeight)
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetFontFaceName_(void* attr, const char16_t* faceName)
+ALTERNET_UI_API void TextBoxTextAttr_SetFontFaceName_(void* attr, NativeStringSpan* faceName)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetFontFaceName(attr, faceName);
+        TextBoxTextAttr::SetFontFaceName(attr, *faceName);
     });
 }
 
@@ -155,10 +155,10 @@ ALTERNET_UI_API int TextBoxTextAttr_GetAlignment_(void* attr)
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetURL_(void* attr, const char16_t* url)
+ALTERNET_UI_API void TextBoxTextAttr_SetURL_(void* attr, NativeStringSpan* url)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetURL(attr, url);
+        TextBoxTextAttr::SetURL(attr, *url);
     });
 }
 
@@ -204,10 +204,10 @@ ALTERNET_UI_API void TextBoxTextAttr_SetBulletNumber_(void* attr, int n)
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletText_(void* attr, const char16_t* text)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletText_(void* attr, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetBulletText(attr, text);
+        TextBoxTextAttr::SetBulletText(attr, *text);
     });
 }
 
@@ -218,38 +218,38 @@ ALTERNET_UI_API void TextBoxTextAttr_SetPageBreak_(void* attr, c_bool pageBreak)
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetCharacterStyleName_(void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetCharacterStyleName_(void* attr, NativeStringSpan* name)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetCharacterStyleName(attr, name);
+        TextBoxTextAttr::SetCharacterStyleName(attr, *name);
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetParagraphStyleName_(void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetParagraphStyleName_(void* attr, NativeStringSpan* name)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetParagraphStyleName(attr, name);
+        TextBoxTextAttr::SetParagraphStyleName(attr, *name);
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetListStyleName_(void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetListStyleName_(void* attr, NativeStringSpan* name)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetListStyleName(attr, name);
+        TextBoxTextAttr::SetListStyleName(attr, *name);
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletFont_(void* attr, const char16_t* bulletFont)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletFont_(void* attr, NativeStringSpan* bulletFont)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetBulletFont(attr, bulletFont);
+        TextBoxTextAttr::SetBulletFont(attr, *bulletFont);
     });
 }
 
-ALTERNET_UI_API void TextBoxTextAttr_SetBulletName_(void* attr, const char16_t* name)
+ALTERNET_UI_API void TextBoxTextAttr_SetBulletName_(void* attr, NativeStringSpan* name)
 {
     MarshalExceptions<void>([&](){
-        TextBoxTextAttr::SetBulletName(attr, name);
+        TextBoxTextAttr::SetBulletName(attr, *name);
     });
 }
 
@@ -330,10 +330,10 @@ ALTERNET_UI_API c_bool TextBoxTextAttr_GetFontStrikethrough_(void* attr)
     });
 }
 
-ALTERNET_UI_API char16_t* TextBoxTextAttr_GetFontFaceName_(void* attr)
+ALTERNET_UI_API NativeStringSpan_C TextBoxTextAttr_GetFontFaceName_(void* attr)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(TextBoxTextAttr::GetFontFaceName(attr));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return TextBoxTextAttr::GetFontFaceName(attr);
     });
 }
 
@@ -379,17 +379,17 @@ ALTERNET_UI_API int TextBoxTextAttr_GetBulletNumber_(void* attr)
     });
 }
 
-ALTERNET_UI_API char16_t* TextBoxTextAttr_GetBulletText_(void* attr)
+ALTERNET_UI_API NativeStringSpan_C TextBoxTextAttr_GetBulletText_(void* attr)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(TextBoxTextAttr::GetBulletText(attr));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return TextBoxTextAttr::GetBulletText(attr);
     });
 }
 
-ALTERNET_UI_API char16_t* TextBoxTextAttr_GetURL_(void* attr)
+ALTERNET_UI_API NativeStringSpan_C TextBoxTextAttr_GetURL_(void* attr)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(TextBoxTextAttr::GetURL(attr));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return TextBoxTextAttr::GetURL(attr);
     });
 }
 

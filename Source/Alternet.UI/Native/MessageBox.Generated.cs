@@ -22,9 +22,11 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static Alternet.UI.DialogResult Show(Window? owner, string text, string? caption, Alternet.UI.MessageBoxButtons buttons, Alternet.UI.MessageBoxIcon icon, Alternet.UI.MessageBoxDefaultButton defaultButton)
+        public static Alternet.UI.DialogResult Show(Window? owner, Alternet.UI.NativeStringSpan text, Alternet.UI.NativeStringSpan caption, Alternet.UI.MessageBoxButtons buttons, Alternet.UI.MessageBoxIcon icon, Alternet.UI.MessageBoxDefaultButton defaultButton)
         {
-            return NativeApi.MessageBoxObj_Show_(owner?.NativePointer ?? IntPtr.Zero, text, caption, buttons, icon, defaultButton);
+            var text_Native = text.ToNative();
+var caption_Native = caption.ToNative();
+return NativeApi.MessageBoxObj_Show_(owner?.NativePointer ?? IntPtr.Zero, ref text_Native, ref caption_Native, buttons, icon, defaultButton);
         }
         
         
@@ -34,7 +36,7 @@ namespace Alternet.UI.Native
             static NativeApi() => Initialize();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.DialogResult MessageBoxObj_Show_(IntPtr owner, string text, string? caption, Alternet.UI.MessageBoxButtons buttons, Alternet.UI.MessageBoxIcon icon, Alternet.UI.MessageBoxDefaultButton defaultButton);
+            public static extern Alternet.UI.DialogResult MessageBoxObj_Show_(IntPtr owner, ref Alternet.UI.NativeStringSpan text, ref Alternet.UI.NativeStringSpan caption, Alternet.UI.MessageBoxButtons buttons, Alternet.UI.MessageBoxIcon icon, Alternet.UI.MessageBoxDefaultButton defaultButton);
             
         }
     }

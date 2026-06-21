@@ -4,8 +4,8 @@ public:
 bool GetAllowMouseWheel();
 void SetAllowMouseWheel(bool value);
 
-string GetEmptyTextHint();
-void SetEmptyTextHint(const string& value);
+NativeStringSpan GetEmptyTextHint();
+void SetEmptyTextHint(const NativeStringSpan& value);
 
 bool GetHasBorder();
 void SetHasBorder(bool value);
@@ -51,14 +51,14 @@ int DefaultOnMeasureItem();
 void DefaultOnDrawBackground();
 void DefaultOnDrawItem();
 void* CreateItemsInsertion();
-void AddItemToInsertion(void* insertion, const string& item);
+void AddItemToInsertion(void* insertion, const NativeStringSpan& item);
 void CommitItemsInsertion(void* insertion, int index);
-void InsertItem(int index, const string& value);
+void InsertItem(int index, const NativeStringSpan& value);
 void RemoveItemAt(int index);
 void ClearItems();
 void SelectTextRange(int start, int length);
 void SelectAllText();
-void SetItem(int index, const string& value);
+void SetItem(int index, const NativeStringSpan& value);
 
 public:
 

@@ -8,7 +8,7 @@ namespace NativeApi.Api
     public class ListViewItemLabelEditEventData : NativeEventData
     {
         public long itemIndex;
-        public string label;
+        public NativeStringSpan label;
         public bool editCancelled;
     }
 }

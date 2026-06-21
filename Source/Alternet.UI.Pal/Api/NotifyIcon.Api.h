@@ -16,17 +16,17 @@ ALTERNET_UI_API NotifyIcon* NotifyIcon_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t* NotifyIcon_GetText_(NotifyIcon* obj)
+ALTERNET_UI_API NativeStringSpan_C NotifyIcon_GetText_(NotifyIcon* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetText());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetText();
     });
 }
 
-ALTERNET_UI_API void NotifyIcon_SetText_(NotifyIcon* obj, const char16_t* value)
+ALTERNET_UI_API void NotifyIcon_SetText_(NotifyIcon* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetText(ToOptional(value));
+        obj->SetText(value);
     });
 }
 

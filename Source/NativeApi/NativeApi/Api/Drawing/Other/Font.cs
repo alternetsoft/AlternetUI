@@ -19,18 +19,18 @@ namespace NativeApi.Api
         public static void SetDefaultEncoding(int encoding) { }
         public int GetWeight() => default;
 
-        public void Initialize(GenericFontFamily genericFamily, string? familyName,
+        public void Initialize(GenericFontFamily genericFamily, NativeStringSpan familyName,
             float emSizeInPoints, FontStyle style) => throw new Exception();
         public void InitializeWithDefaultFont() => throw new Exception();
         public void InitializeWithDefaultMonoFont() => throw new Exception();
         public void InitializeFromFont(Font font) { }
 
-        public static bool IsFamilyValid(string fontFamily) => throw new Exception();
-        public static string GetGenericFamilyName(GenericFontFamily genericFamily) => throw new Exception();
+        public static bool IsFamilyValid(NativeStringSpan fontFamily) => throw new Exception();
+        public static NativeStringSpan GetGenericFamilyName(GenericFontFamily genericFamily) => throw new Exception();
 
-        public static string[] Families { get => throw new Exception(); }
+        public static NativeStringSpan[] Families { get => throw new Exception(); }
 
-        public string Name { get => throw new Exception(); }
+        public NativeStringSpan Name { get => throw new Exception(); }
         public float SizeInPoints { get => throw new Exception(); }
         public FontStyle Style { get => throw new Exception(); }
 

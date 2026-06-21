@@ -26,12 +26,12 @@ namespace NativeApi.Api
 
         public bool PrintToFile { get => throw new Exception(); set => throw new Exception(); }
 
-        public string? PrinterName { get => throw new Exception(); set => throw new Exception(); }
+        public NativeStringSpan PrinterName { get => throw new Exception(); set => throw new Exception(); }
 
         public bool IsValid { get => throw new Exception(); }
 
         public bool IsDefaultPrinter { get => throw new Exception(); }
 
-        public string? PrintFileName { get => throw new Exception(); set => throw new Exception(); }
+        public NativeStringSpan PrintFileName { get => throw new Exception(); set => throw new Exception(); }
     }
 }

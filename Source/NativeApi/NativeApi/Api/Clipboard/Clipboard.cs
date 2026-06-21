@@ -12,6 +12,6 @@ namespace NativeApi.Api
 
         public bool IsIntFormatSupported(int format) => default;
 
-        public bool IsStrFormatSupported(string format) => default;
+        public bool IsStrFormatSupported(NativeStringSpan format) => default;
     }
 }

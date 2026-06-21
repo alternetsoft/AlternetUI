@@ -27,14 +27,14 @@ namespace NativeApi.Api
 
         public void SetInitialFont(
             GenericFontFamily genericFamily,
-            string? familyName,
+            NativeStringSpan familyName,
             float emSizeInPoints,
             FontStyle style) => throw new Exception();
 
-        public string ResultFontName { get; }
+        public NativeStringSpan ResultFontName { get; }
         public float ResultFontSizeInPoints { get; }
         public FontStyle ResultFontStyle { get; }
 
-        public string? Title { get ; set; }
+        public NativeStringSpan Title { get ; set; }
     }
 }

@@ -22,27 +22,27 @@ void SetShowHiddenFiles(bool value);
 FileDialogMode GetMode();
 void SetMode(FileDialogMode value);
 
-optional<string> GetInitialDirectory();
-void SetInitialDirectory(optional<string> value);
+NativeStringSpan GetInitialDirectory();
+void SetInitialDirectory(const NativeStringSpan& value);
 
-optional<string> GetTitle();
-void SetTitle(optional<string> value);
+NativeStringSpan GetTitle();
+void SetTitle(const NativeStringSpan& value);
 
-optional<string> GetFilter();
-void SetFilter(optional<string> value);
+NativeStringSpan GetFilter();
+void SetFilter(const NativeStringSpan& value);
 
 int GetSelectedFilterIndex();
 void SetSelectedFilterIndex(int value);
 
-optional<string> GetFileName();
-void SetFileName(optional<string> value);
+NativeStringSpan GetFileName();
+void SetFileName(const NativeStringSpan& value);
 
 bool GetAllowMultipleSelection();
 void SetAllowMultipleSelection(bool value);
 
 void* OpenFileNamesArray();
 int GetFileNamesItemCount(void* array);
-optional<string> GetFileNamesItemAt(void* array, int index);
+NativeStringSpan GetFileNamesItemAt(void* array, int index);
 void CloseFileNamesArray(void* array);
 ModalResult ShowModal(Window* owner);
 

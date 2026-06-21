@@ -33,10 +33,10 @@ ALTERNET_UI_API void RichTextBox_SetHasBorder_(RichTextBox* obj, c_bool value)
     });
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetReportedUrl_(RichTextBox* obj)
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetReportedUrl_(RichTextBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetReportedUrl());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetReportedUrl();
     });
 }
 
@@ -68,10 +68,10 @@ ALTERNET_UI_API void RichTextBox_InitFileHandlers_()
     });
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetRange_(RichTextBox* obj, int64_t from, int64_t to)
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetRange_(RichTextBox* obj, int64_t from, int64_t to)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetRange(from, to));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetRange(from, to);
     });
 }
 
@@ -82,10 +82,10 @@ ALTERNET_UI_API int RichTextBox_GetLineLength_(RichTextBox* obj, int64_t lineNo)
     });
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetLineText_(RichTextBox* obj, int64_t lineNo)
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetLineText_(RichTextBox* obj, int64_t lineNo)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetLineText(lineNo));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetLineText(lineNo);
     });
 }
 
@@ -124,24 +124,24 @@ ALTERNET_UI_API c_bool RichTextBox_IsMultiLine_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetStringSelection_(RichTextBox* obj)
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetStringSelection_(RichTextBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetStringSelection());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetStringSelection();
     });
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetFilename_(RichTextBox* obj)
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetFilename_(RichTextBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetFilename());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetFilename();
     });
 }
 
-ALTERNET_UI_API void RichTextBox_SetFilename_(RichTextBox* obj, const char16_t* filename)
+ALTERNET_UI_API void RichTextBox_SetFilename_(RichTextBox* obj, NativeStringSpan* filename)
 {
     MarshalExceptions<void>([&](){
-        obj->SetFilename(filename);
+        obj->SetFilename(*filename);
     });
 }
 
@@ -313,10 +313,10 @@ ALTERNET_UI_API void RichTextBox_Clear_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API void RichTextBox_Replace_(RichTextBox* obj, int64_t from, int64_t to, const char16_t* value)
+ALTERNET_UI_API void RichTextBox_Replace_(RichTextBox* obj, int64_t from, int64_t to, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->Replace(from, to, value);
+        obj->Replace(from, to, *value);
     });
 }
 
@@ -327,17 +327,17 @@ ALTERNET_UI_API void RichTextBox_Remove_(RichTextBox* obj, int64_t from, int64_t
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_LoadFile_(RichTextBox* obj, const char16_t* file, int type)
+ALTERNET_UI_API c_bool RichTextBox_LoadFile_(RichTextBox* obj, NativeStringSpan* file, int type)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->LoadFile(file, type);
+        return obj->LoadFile(*file, type);
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_SaveFile_(RichTextBox* obj, const char16_t* file, int type)
+ALTERNET_UI_API c_bool RichTextBox_SaveFile_(RichTextBox* obj, NativeStringSpan* file, int type)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->SaveFile(file, type);
+        return obj->SaveFile(*file, type);
     });
 }
 
@@ -376,17 +376,17 @@ ALTERNET_UI_API void RichTextBox_SetMaxLength_(RichTextBox* obj, uint64_t len)
     });
 }
 
-ALTERNET_UI_API void RichTextBox_WriteText_(RichTextBox* obj, const char16_t* text)
+ALTERNET_UI_API void RichTextBox_WriteText_(RichTextBox* obj, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->WriteText(text);
+        obj->WriteText(*text);
     });
 }
 
-ALTERNET_UI_API void RichTextBox_AppendText_(RichTextBox* obj, const char16_t* text)
+ALTERNET_UI_API void RichTextBox_AppendText_(RichTextBox* obj, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->AppendText(text);
+        obj->AppendText(*text);
     });
 }
 

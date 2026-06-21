@@ -141,17 +141,17 @@ ALTERNET_UI_API void PrinterSettings_SetPrintToFile_(PrinterSettings* obj, c_boo
     });
 }
 
-ALTERNET_UI_API char16_t* PrinterSettings_GetPrinterName_(PrinterSettings* obj)
+ALTERNET_UI_API NativeStringSpan_C PrinterSettings_GetPrinterName_(PrinterSettings* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPrinterName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPrinterName();
     });
 }
 
-ALTERNET_UI_API void PrinterSettings_SetPrinterName_(PrinterSettings* obj, const char16_t* value)
+ALTERNET_UI_API void PrinterSettings_SetPrinterName_(PrinterSettings* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPrinterName(ToOptional(value));
+        obj->SetPrinterName(value);
     });
 }
 
@@ -169,17 +169,17 @@ ALTERNET_UI_API c_bool PrinterSettings_GetIsDefaultPrinter_(PrinterSettings* obj
     });
 }
 
-ALTERNET_UI_API char16_t* PrinterSettings_GetPrintFileName_(PrinterSettings* obj)
+ALTERNET_UI_API NativeStringSpan_C PrinterSettings_GetPrintFileName_(PrinterSettings* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPrintFileName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPrintFileName();
     });
 }
 
-ALTERNET_UI_API void PrinterSettings_SetPrintFileName_(PrinterSettings* obj, const char16_t* value)
+ALTERNET_UI_API void PrinterSettings_SetPrintFileName_(PrinterSettings* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPrintFileName(ToOptional(value));
+        obj->SetPrintFileName(value);
     });
 }
 

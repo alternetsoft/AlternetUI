@@ -44,10 +44,10 @@ ALTERNET_UI_API c_bool Clipboard_IsIntFormatSupported_(Clipboard* obj, int forma
     });
 }
 
-ALTERNET_UI_API c_bool Clipboard_IsStrFormatSupported_(Clipboard* obj, const char16_t* format)
+ALTERNET_UI_API c_bool Clipboard_IsStrFormatSupported_(Clipboard* obj, NativeStringSpan* format)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->IsStrFormatSupported(format);
+        return obj->IsStrFormatSupported(*format);
     });
 }
 

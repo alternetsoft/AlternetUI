@@ -198,10 +198,10 @@ ALTERNET_UI_API void ListView_CloseSelectedIndicesArray_(ListView* obj, void* ar
     });
 }
 
-ALTERNET_UI_API void ListView_InsertItemAt_(ListView* obj, int64_t index, const char16_t* text, int64_t columnIndex, int imageIndex)
+ALTERNET_UI_API void ListView_InsertItemAt_(ListView* obj, int64_t index, NativeStringSpan* text, int64_t columnIndex, int imageIndex)
 {
     MarshalExceptions<void>([&](){
-        obj->InsertItemAt(index, text, columnIndex, imageIndex);
+        obj->InsertItemAt(index, *text, columnIndex, imageIndex);
     });
 }
 
@@ -219,10 +219,10 @@ ALTERNET_UI_API void ListView_ClearItems_(ListView* obj)
     });
 }
 
-ALTERNET_UI_API void ListView_InsertColumnAt_(ListView* obj, int64_t index, const char16_t* header, float width, ListViewColumnWidthMode widthMode)
+ALTERNET_UI_API void ListView_InsertColumnAt_(ListView* obj, int64_t index, NativeStringSpan* header, float width, ListViewColumnWidthMode widthMode)
 {
     MarshalExceptions<void>([&](){
-        obj->InsertColumnAt(index, header, width, widthMode);
+        obj->InsertColumnAt(index, *header, width, widthMode);
     });
 }
 
@@ -310,10 +310,10 @@ ALTERNET_UI_API void ListView_EnsureItemVisible_(ListView* obj, int64_t itemInde
     });
 }
 
-ALTERNET_UI_API void ListView_SetItemText_(ListView* obj, int64_t itemIndex, int64_t columnIndex, const char16_t* text)
+ALTERNET_UI_API void ListView_SetItemText_(ListView* obj, int64_t itemIndex, int64_t columnIndex, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->SetItemText(itemIndex, columnIndex, text);
+        obj->SetItemText(itemIndex, columnIndex, *text);
     });
 }
 
@@ -331,10 +331,10 @@ ALTERNET_UI_API void ListView_SetColumnWidth_(ListView* obj, int64_t columnIndex
     });
 }
 
-ALTERNET_UI_API void ListView_SetColumnTitle_(ListView* obj, int64_t columnIndex, const char16_t* text)
+ALTERNET_UI_API void ListView_SetColumnTitle_(ListView* obj, int64_t columnIndex, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->SetColumnTitle(columnIndex, text);
+        obj->SetColumnTitle(columnIndex, *text);
     });
 }
 

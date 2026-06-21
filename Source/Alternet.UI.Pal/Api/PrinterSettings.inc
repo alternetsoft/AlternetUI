@@ -28,15 +28,15 @@ void SetCopies(int value);
 bool GetPrintToFile();
 void SetPrintToFile(bool value);
 
-optional<string> GetPrinterName();
-void SetPrinterName(optional<string> value);
+NativeStringSpan GetPrinterName();
+void SetPrinterName(const NativeStringSpan& value);
 
 bool GetIsValid();
 
 bool GetIsDefaultPrinter();
 
-optional<string> GetPrintFileName();
-void SetPrintFileName(optional<string> value);
+NativeStringSpan GetPrintFileName();
+void SetPrintFileName(const NativeStringSpan& value);
 
 
 public:

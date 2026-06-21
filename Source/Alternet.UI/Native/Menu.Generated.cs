@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public string MacHelpMenuTitleName
+        public Alternet.UI.NativeStringSpan MacHelpMenuTitleName
         {
             get
             {
@@ -34,7 +34,7 @@ namespace Alternet.UI.Native
             
         }
         
-        public string MacWindowMenuTitleName
+        public Alternet.UI.NativeStringSpan MacWindowMenuTitleName
         {
             get
             {
@@ -73,9 +73,10 @@ namespace Alternet.UI.Native
             return NativeApi.Menu_GetMainMenu_(window.NativePointer);
         }
         
-        public static System.IntPtr FindMenuItem(Window window, string id)
+        public static System.IntPtr FindMenuItem(Window window, Alternet.UI.NativeStringSpan id)
         {
-            return NativeApi.Menu_FindMenuItem_(window.NativePointer, id);
+            var id_Native = id.ToNative();
+return NativeApi.Menu_FindMenuItem_(window.NativePointer, ref id_Native);
         }
         
         public static void SetMainMenu(Window window, System.IntPtr menu)
@@ -83,54 +84,69 @@ namespace Alternet.UI.Native
             NativeApi.Menu_SetMainMenu_(window.NativePointer, menu);
         }
         
-        public static bool MainMenuAppend(System.IntPtr menuHandle, System.IntPtr menu, string text)
+        public static bool MainMenuAppend(System.IntPtr menuHandle, System.IntPtr menu, Alternet.UI.NativeStringSpan text)
         {
-            return NativeApi.Menu_MainMenuAppend_(menuHandle, menu, text);
+            var text_Native = text.ToNative();
+return NativeApi.Menu_MainMenuAppend_(menuHandle, menu, ref text_Native);
         }
         
-        public static void MainMenuSetEnabled(System.IntPtr menuHandle, string childId, bool enable)
+        public static void MainMenuSetEnabled(System.IntPtr menuHandle, Alternet.UI.NativeStringSpan childId, bool enable)
         {
-            NativeApi.Menu_MainMenuSetEnabled_(menuHandle, childId, enable);
+            var childId_Native = childId.ToNative();
+NativeApi.Menu_MainMenuSetEnabled_(menuHandle, ref childId_Native, enable);
         }
         
-        public static System.IntPtr MainMenuGetSubMenu(System.IntPtr menuHandle, string childId)
+        public static System.IntPtr MainMenuGetSubMenu(System.IntPtr menuHandle, Alternet.UI.NativeStringSpan childId)
         {
-            return NativeApi.Menu_MainMenuGetSubMenu_(menuHandle, childId);
+            var childId_Native = childId.ToNative();
+return NativeApi.Menu_MainMenuGetSubMenu_(menuHandle, ref childId_Native);
         }
         
-        public static System.IntPtr MainMenuRemove(System.IntPtr menuHandle, string childId)
+        public static System.IntPtr MainMenuRemove(System.IntPtr menuHandle, Alternet.UI.NativeStringSpan childId)
         {
-            return NativeApi.Menu_MainMenuRemove_(menuHandle, childId);
+            var childId_Native = childId.ToNative();
+return NativeApi.Menu_MainMenuRemove_(menuHandle, ref childId_Native);
         }
         
-        public static bool MainMenuInsert(System.IntPtr menuHandle, string childId, System.IntPtr menu, string title)
+        public static bool MainMenuInsert(System.IntPtr menuHandle, Alternet.UI.NativeStringSpan childId, System.IntPtr menu, Alternet.UI.NativeStringSpan title)
         {
-            return NativeApi.Menu_MainMenuInsert_(menuHandle, childId, menu, title);
+            var childId_Native = childId.ToNative();
+var title_Native = title.ToNative();
+return NativeApi.Menu_MainMenuInsert_(menuHandle, ref childId_Native, menu, ref title_Native);
         }
         
-        public static System.IntPtr MainMenuReplace(System.IntPtr menuHandle, string childId, System.IntPtr menu, string title)
+        public static System.IntPtr MainMenuReplace(System.IntPtr menuHandle, Alternet.UI.NativeStringSpan childId, System.IntPtr menu, Alternet.UI.NativeStringSpan title)
         {
-            return NativeApi.Menu_MainMenuReplace_(menuHandle, childId, menu, title);
+            var childId_Native = childId.ToNative();
+var title_Native = title.ToNative();
+return NativeApi.Menu_MainMenuReplace_(menuHandle, ref childId_Native, menu, ref title_Native);
         }
         
-        public static void MainMenuSetText(System.IntPtr menuHandle, string childId, string label)
+        public static void MainMenuSetText(System.IntPtr menuHandle, Alternet.UI.NativeStringSpan childId, Alternet.UI.NativeStringSpan label)
         {
-            NativeApi.Menu_MainMenuSetText_(menuHandle, childId, label);
+            var childId_Native = childId.ToNative();
+var label_Native = label.ToNative();
+NativeApi.Menu_MainMenuSetText_(menuHandle, ref childId_Native, ref label_Native);
         }
         
-        public static System.IntPtr CreateMainMenu(string id)
+        public static System.IntPtr CreateMainMenu(Alternet.UI.NativeStringSpan id)
         {
-            return NativeApi.Menu_CreateMainMenu_(id);
+            var id_Native = id.ToNative();
+return NativeApi.Menu_CreateMainMenu_(ref id_Native);
         }
         
-        public static System.IntPtr CreateContextMenu(string id)
+        public static System.IntPtr CreateContextMenu(Alternet.UI.NativeStringSpan id)
         {
-            return NativeApi.Menu_CreateContextMenu_(id);
+            var id_Native = id.ToNative();
+return NativeApi.Menu_CreateContextMenu_(ref id_Native);
         }
         
-        public static System.IntPtr CreateMenuItem(Alternet.UI.MenuItemType itemType, string id, string title, string help, System.IntPtr menuHandle)
+        public static System.IntPtr CreateMenuItem(Alternet.UI.MenuItemType itemType, Alternet.UI.NativeStringSpan id, Alternet.UI.NativeStringSpan title, Alternet.UI.NativeStringSpan help, System.IntPtr menuHandle)
         {
-            return NativeApi.Menu_CreateMenuItem_(itemType, id, title, help, menuHandle);
+            var id_Native = id.ToNative();
+var title_Native = title.ToNative();
+var help_Native = help.ToNative();
+return NativeApi.Menu_CreateMenuItem_(itemType, ref id_Native, ref title_Native, ref help_Native, menuHandle);
         }
         
         public static void DestroyMainMenu(System.IntPtr menuHandle)
@@ -168,14 +184,17 @@ namespace Alternet.UI.Native
             NativeApi.Menu_SetMenuItemEnabled_(handle, value);
         }
         
-        public static void SetMenuItemRole(System.IntPtr handle, string role)
+        public static void SetMenuItemRole(System.IntPtr handle, Alternet.UI.NativeStringSpan role)
         {
-            NativeApi.Menu_SetMenuItemRole_(handle, role);
+            var role_Native = role.ToNative();
+NativeApi.Menu_SetMenuItemRole_(handle, ref role_Native);
         }
         
-        public static void SetMenuItemText(System.IntPtr handle, string value, string rightValue)
+        public static void SetMenuItemText(System.IntPtr handle, Alternet.UI.NativeStringSpan value, Alternet.UI.NativeStringSpan rightValue)
         {
-            NativeApi.Menu_SetMenuItemText_(handle, value, rightValue);
+            var value_Native = value.ToNative();
+var rightValue_Native = rightValue.ToNative();
+NativeApi.Menu_SetMenuItemText_(handle, ref value_Native, ref rightValue_Native);
         }
         
         public static void SetMenuItemChecked(System.IntPtr handle, bool value)
@@ -198,14 +217,16 @@ namespace Alternet.UI.Native
             NativeApi.Menu_MenuAddItem_(handle, itemHandle);
         }
         
-        public static void MenuRemoveItem(System.IntPtr handle, string childId)
+        public static void MenuRemoveItem(System.IntPtr handle, Alternet.UI.NativeStringSpan childId)
         {
-            NativeApi.Menu_MenuRemoveItem_(handle, childId);
+            var childId_Native = childId.ToNative();
+NativeApi.Menu_MenuRemoveItem_(handle, ref childId_Native);
         }
         
-        public static bool MenuInsertItem(System.IntPtr handle, string childId, System.IntPtr itemHandle)
+        public static bool MenuInsertItem(System.IntPtr handle, Alternet.UI.NativeStringSpan childId, System.IntPtr itemHandle)
         {
-            return NativeApi.Menu_MenuInsertItem_(handle, childId, itemHandle);
+            var childId_Native = childId.ToNative();
+return NativeApi.Menu_MenuInsertItem_(handle, ref childId_Native, itemHandle);
         }
         
         public static void Show(System.IntPtr menuHandle, Control control, Alternet.Drawing.PointD position)
@@ -294,10 +315,10 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             public static extern IntPtr Menu_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Menu_GetMacHelpMenuTitleName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Menu_GetMacHelpMenuTitleName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string Menu_GetMacWindowMenuTitleName_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan Menu_GetMacWindowMenuTitleName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern string Menu_GetEventMenuItemId_();
@@ -312,40 +333,40 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             public static extern System.IntPtr Menu_GetMainMenu_(IntPtr window);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_FindMenuItem_(IntPtr window, string id);
+            public static extern System.IntPtr Menu_FindMenuItem_(IntPtr window, ref Alternet.UI.NativeStringSpan id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_SetMainMenu_(IntPtr window, System.IntPtr menu);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_MainMenuAppend_(System.IntPtr menuHandle, System.IntPtr menu, string text);
+            public static extern bool Menu_MainMenuAppend_(System.IntPtr menuHandle, System.IntPtr menu, ref Alternet.UI.NativeStringSpan text);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MainMenuSetEnabled_(System.IntPtr menuHandle, string childId, bool enable);
+            public static extern void Menu_MainMenuSetEnabled_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, bool enable);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_MainMenuGetSubMenu_(System.IntPtr menuHandle, string childId);
+            public static extern System.IntPtr Menu_MainMenuGetSubMenu_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_MainMenuRemove_(System.IntPtr menuHandle, string childId);
+            public static extern System.IntPtr Menu_MainMenuRemove_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_MainMenuInsert_(System.IntPtr menuHandle, string childId, System.IntPtr menu, string title);
+            public static extern bool Menu_MainMenuInsert_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr menu, ref Alternet.UI.NativeStringSpan title);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_MainMenuReplace_(System.IntPtr menuHandle, string childId, System.IntPtr menu, string title);
+            public static extern System.IntPtr Menu_MainMenuReplace_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr menu, ref Alternet.UI.NativeStringSpan title);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MainMenuSetText_(System.IntPtr menuHandle, string childId, string label);
+            public static extern void Menu_MainMenuSetText_(System.IntPtr menuHandle, ref Alternet.UI.NativeStringSpan childId, ref Alternet.UI.NativeStringSpan label);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateMainMenu_(string id);
+            public static extern System.IntPtr Menu_CreateMainMenu_(ref Alternet.UI.NativeStringSpan id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateContextMenu_(string id);
+            public static extern System.IntPtr Menu_CreateContextMenu_(ref Alternet.UI.NativeStringSpan id);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType, string id, string title, string help, System.IntPtr menuHandle);
+            public static extern System.IntPtr Menu_CreateMenuItem_(Alternet.UI.MenuItemType itemType, ref Alternet.UI.NativeStringSpan id, ref Alternet.UI.NativeStringSpan title, ref Alternet.UI.NativeStringSpan help, System.IntPtr menuHandle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_DestroyMainMenu_(System.IntPtr menuHandle);
@@ -369,10 +390,10 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             public static extern void Menu_SetMenuItemEnabled_(System.IntPtr handle, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemRole_(System.IntPtr handle, string role);
+            public static extern void Menu_SetMenuItemRole_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan role);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_SetMenuItemText_(System.IntPtr handle, string value, string rightValue);
+            public static extern void Menu_SetMenuItemText_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan value, ref Alternet.UI.NativeStringSpan rightValue);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_SetMenuItemChecked_(System.IntPtr handle, bool value);
@@ -387,10 +408,10 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             public static extern void Menu_MenuAddItem_(System.IntPtr handle, System.IntPtr itemHandle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Menu_MenuRemoveItem_(System.IntPtr handle, string childId);
+            public static extern void Menu_MenuRemoveItem_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan childId);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_MenuInsertItem_(System.IntPtr handle, string childId, System.IntPtr itemHandle);
+            public static extern bool Menu_MenuInsertItem_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan childId, System.IntPtr itemHandle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_Show_(System.IntPtr menuHandle, IntPtr control, ref Alternet.Drawing.PointD position);

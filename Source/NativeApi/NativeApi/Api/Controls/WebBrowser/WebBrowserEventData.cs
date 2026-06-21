@@ -10,12 +10,12 @@ namespace NativeApi.Api
 {
     public class WebBrowserEventData : NativeEventData
     {
-        public string Url;
-        public string Target;
+        public NativeStringSpan Url;
+        public NativeStringSpan Target;
         public int ActionFlags;
-        public string MessageHandler;
+        public NativeStringSpan MessageHandler;
         public bool IsError;
-        public string Text;
+        public NativeStringSpan Text;
         public int IntVal;
         public IntPtr ClientData;
     }

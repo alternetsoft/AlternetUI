@@ -8,22 +8,22 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_app.html
     public class Application
     {
-        public static void SetGtkCss(bool inject, string css) { }
+        public static void SetGtkCss(bool inject, NativeStringSpan css) { }
         
         public PropertyUpdateResult SetAppearance(ApplicationAppearance appearance)
             => default;
 
         public static void GetEventIdentifiers(int[] eventIdentifiers) { }
 
-        public string EventArgString { get; }
+        public NativeStringSpan EventArgString { get; }
 
         public static void ThrowError(int value) { }
 
-        public static void SetSystemOptionInt(string name, int value) { }
+        public static void SetSystemOptionInt(NativeStringSpan name, int value) { }
 
         public Application() => throw new Exception();
 
-        public string Name { get; set; }
+        public NativeStringSpan Name { get; set; }
 
         public void Run(Window window) { }
 
@@ -43,10 +43,10 @@ namespace NativeApi.Api
         public Keyboard Keyboard { get; }
         public Mouse Mouse { get; }
         public Clipboard Clipboard { get; }
-        public string DisplayName { get; set; }
-        public string AppClassName { get; set; }
-        public string VendorName { get; set; }
-        public string VendorDisplayName { get; set; }
+        public NativeStringSpan DisplayName { get; set; }
+        public NativeStringSpan AppClassName { get; set; }
+        public NativeStringSpan VendorName { get; set; }
+        public NativeStringSpan VendorDisplayName { get; set; }
 
         public bool InUixmlPreviewerMode { get; set; }
 
@@ -101,7 +101,7 @@ namespace NativeApi.Api
         public void SetExitOnFrameDelete(bool flag) { }
 
         // Allows runtime switching of the UI environment theme.  
-        public bool SetNativeTheme(string theme) => default;
+        public bool SetNativeTheme(NativeStringSpan theme) => default;
 
         // Sets the 'top' window.  
         public void SetTopWindow(IntPtr window) { }
@@ -110,6 +110,6 @@ namespace NativeApi.Api
         // visual on systems that support several visual on the same display.  
         public void SetUseBestVisual(bool flag, bool forceTrueColor = false) { }
 
-        public string GetCustomData(string key) => default;
+        public NativeStringSpan GetCustomData(NativeStringSpan key) => default;
     }
 }

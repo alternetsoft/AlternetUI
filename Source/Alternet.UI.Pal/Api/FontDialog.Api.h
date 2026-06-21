@@ -72,10 +72,10 @@ ALTERNET_UI_API void FontDialog_SetRestrictSelection_(FontDialog* obj, int value
     });
 }
 
-ALTERNET_UI_API char16_t* FontDialog_GetResultFontName_(FontDialog* obj)
+ALTERNET_UI_API NativeStringSpan_C FontDialog_GetResultFontName_(FontDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetResultFontName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetResultFontName();
     });
 }
 
@@ -93,17 +93,17 @@ ALTERNET_UI_API FontStyle FontDialog_GetResultFontStyle_(FontDialog* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* FontDialog_GetTitle_(FontDialog* obj)
+ALTERNET_UI_API NativeStringSpan_C FontDialog_GetTitle_(FontDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetTitle());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
     });
 }
 
-ALTERNET_UI_API void FontDialog_SetTitle_(FontDialog* obj, const char16_t* value)
+ALTERNET_UI_API void FontDialog_SetTitle_(FontDialog* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetTitle(ToOptional(value));
+        obj->SetTitle(value);
     });
 }
 
@@ -163,10 +163,10 @@ ALTERNET_UI_API void FontDialog_SetRange_(FontDialog* obj, int minRange, int max
     });
 }
 
-ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFamily genericFamily, const char16_t* familyName, float emSizeInPoints, FontStyle style)
+ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFamily genericFamily, NativeStringSpan* familyName, float emSizeInPoints, FontStyle style)
 {
     MarshalExceptions<void>([&](){
-        obj->SetInitialFont(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+        obj->SetInitialFont(genericFamily, *familyName, emSizeInPoints, style);
     });
 }
 

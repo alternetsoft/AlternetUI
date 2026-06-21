@@ -11,41 +11,41 @@ namespace NativeApi.Api
     //https://docs.wxwidgets.org/3.2/classwx_property_grid.html
     public partial class PropertyGrid : Control
     {
-        public IntPtr CreateStringProperty(string label, string name, string value) =>
+        public IntPtr CreateStringProperty(NativeStringSpan label, NativeStringSpan name, NativeStringSpan value) =>
             throw new Exception();
 
 
-        public IntPtr CreateFilenameProperty(string label, string name, string value) =>
+        public IntPtr CreateFilenameProperty(NativeStringSpan label, NativeStringSpan name, NativeStringSpan value) =>
             throw new Exception();
 
-        public IntPtr CreateDirProperty(string label, string name, string value) =>
+        public IntPtr CreateDirProperty(NativeStringSpan label, NativeStringSpan name, NativeStringSpan value) =>
             throw new Exception();
 
-        public IntPtr CreateImageFilenameProperty(string label, string name, string value) =>
+        public IntPtr CreateImageFilenameProperty(NativeStringSpan label, NativeStringSpan name, NativeStringSpan value) =>
             throw new Exception();
 
-        public IntPtr CreateSystemColorProperty(string label, string name,
+        public IntPtr CreateSystemColorProperty(NativeStringSpan label, NativeStringSpan name,
             Color value, uint kind) => default;
 
-        public IntPtr CreateCursorProperty(string label, string name, int value) =>
+        public IntPtr CreateCursorProperty(NativeStringSpan label, NativeStringSpan name, int value) =>
             throw new Exception();
 
-        public IntPtr CreateBoolProperty(string label, string name, bool value = false) =>
+        public IntPtr CreateBoolProperty(NativeStringSpan label, NativeStringSpan name, bool value = false) =>
             throw new Exception();
 
-        public IntPtr CreateIntProperty(string label, string name, long value = 0) =>
+        public IntPtr CreateIntProperty(NativeStringSpan label, NativeStringSpan name, long value = 0) =>
             throw new Exception();
 
-        public IntPtr CreateFloatProperty(string label, string name, double value = 0.0) =>
+        public IntPtr CreateFloatProperty(NativeStringSpan label, NativeStringSpan name, double value = 0.0) =>
             throw new Exception();
 
-        public IntPtr CreateUIntProperty(string label, string name, ulong value = 0) =>
+        public IntPtr CreateUIntProperty(NativeStringSpan label, NativeStringSpan name, ulong value = 0) =>
             throw new Exception();
 
-        public IntPtr CreateLongStringProperty(string label, string name, string value) =>
+        public IntPtr CreateLongStringProperty(NativeStringSpan label, NativeStringSpan name, NativeStringSpan value) =>
             throw new Exception();
 
-        public IntPtr CreateDateProperty(string label, string name, Alternet.UI.DateTime value) =>
+        public IntPtr CreateDateProperty(NativeStringSpan label, NativeStringSpan name, Alternet.UI.DateTime value) =>
             throw new Exception();
 
         public void Clear() => throw new Exception();
@@ -53,20 +53,20 @@ namespace NativeApi.Api
         public IntPtr Append(IntPtr property) => throw new Exception();
 
         public IntPtr CreateEditEnumProperty(
-            string label,
-            string name,
+            NativeStringSpan label,
+            NativeStringSpan name,
             IntPtr choices,
-            string value) => throw new Exception();
+            NativeStringSpan value) => throw new Exception();
 
         public IntPtr CreateEnumProperty(
-            string label,
-            string name,
+            NativeStringSpan label,
+            NativeStringSpan name,
             IntPtr choices,
             int value = 0) => throw new Exception();
 
         public IntPtr CreateFlagsProperty(
-            string label,
-            string name,
+            NativeStringSpan label,
+            NativeStringSpan name,
             IntPtr choices,
             int value = 0) => throw new Exception();
 
@@ -81,18 +81,18 @@ namespace NativeApi.Api
         public bool ExpandAll(bool expand = true) => throw new Exception();
 
         public IntPtr CreatePropCategory(
-            string label,
-            string name) => throw new Exception();
+            NativeStringSpan label,
+            NativeStringSpan name) => throw new Exception();
 
         public IntPtr GetFirst(int flags) => throw new Exception();
 
-        public IntPtr GetProperty(string name) => throw new Exception();
+        public IntPtr GetProperty(NativeStringSpan name) => throw new Exception();
 
-        public IntPtr GetPropertyByLabel(string label) => throw new Exception();
+        public IntPtr GetPropertyByLabel(NativeStringSpan label) => throw new Exception();
 
-        public IntPtr GetPropertyByName(string name) => throw new Exception();
+        public IntPtr GetPropertyByName(NativeStringSpan name) => throw new Exception();
 
-        public IntPtr GetPropertyByNameAndSubName(string name, string subname) =>
+        public IntPtr GetPropertyByNameAndSubName(NativeStringSpan name, NativeStringSpan subname) =>
             throw new Exception();
 
         public IntPtr GetSelection() => throw new Exception();
@@ -103,12 +103,12 @@ namespace NativeApi.Api
 
         public static void RegisterAdditionalEditors() => throw new Exception();
 
-        public bool RestoreEditableState(string src, int restoreStates) =>
+        public bool RestoreEditableState(NativeStringSpan src, int restoreStates) =>
             throw new Exception();
 
-        public string SaveEditableState(int includedStates) => throw new Exception();
+        public NativeStringSpan SaveEditableState(int includedStates) => throw new Exception();
 
-        public static void SetBoolChoices(string trueChoice, string falseChoice) =>
+        public static void SetBoolChoices(NativeStringSpan trueChoice, NativeStringSpan falseChoice) =>
             throw new Exception();
 
         public bool SetColumnProportion(uint column, int proportion) => throw new Exception();
@@ -119,7 +119,7 @@ namespace NativeApi.Api
 
         public void RefreshProperty(IntPtr p) => throw new Exception();
 
-        public IntPtr CreateColorProperty(string label, string name, Color value) =>
+        public IntPtr CreateColorProperty(NativeStringSpan label, NativeStringSpan name, Color value) =>
             throw new Exception();
 
         public void SetPropertyReadOnly(IntPtr id, bool set, int flags) =>
@@ -152,17 +152,17 @@ namespace NativeApi.Api
 
         public IntPtr GetPropertyClientData(IntPtr id) => throw new Exception();
 
-        public string GetPropertyHelpString(IntPtr id) => throw new Exception();
+        public NativeStringSpan GetPropertyHelpString(IntPtr id) => throw new Exception();
 
         public IntPtr GetPropertyImage(IntPtr id) => throw new Exception();
 
-        public string GetPropertyLabel(IntPtr id) => throw new Exception();
+        public NativeStringSpan GetPropertyLabel(IntPtr id) => throw new Exception();
 
         public IntPtr GetPropertyParent(IntPtr id) => throw new Exception();
 
         public IntPtr GetPropertyValueAsVariant(IntPtr id) => throw new Exception();
 
-        public string GetPropertyValueAsString(IntPtr id) => throw new Exception();
+        public NativeStringSpan GetPropertyValueAsString(IntPtr id) => throw new Exception();
 
         public long GetPropertyValueAsLong(IntPtr id) => throw new Exception();
 
@@ -228,13 +228,13 @@ namespace NativeApi.Api
         public void SetPropertyEditorByName(IntPtr id, string editorName) =>
             throw new Exception();
 
-        public void SetPropertyLabel(IntPtr id, string newproplabel) =>
+        public void SetPropertyLabel(IntPtr id, NativeStringSpan newproplabel) =>
             throw new Exception();
 
-        public void SetPropertyName(IntPtr id, string newName) =>
+        public void SetPropertyName(IntPtr id, NativeStringSpan newName) =>
             throw new Exception();
 
-        public void SetPropertyHelpString(IntPtr id, string helpString) =>
+        public void SetPropertyHelpString(IntPtr id, NativeStringSpan helpString) =>
             throw new Exception();
 
         public bool SetPropertyMaxLength(IntPtr id, int maxLen) =>
@@ -252,7 +252,7 @@ namespace NativeApi.Api
         public void SetPropertyValueAsBool(IntPtr id, bool value) =>
             throw new Exception();
 
-        public void SetPropertyValueAsStr(IntPtr id, string value) =>
+        public void SetPropertyValueAsStr(IntPtr id, NativeStringSpan value) =>
             throw new Exception();
 
         public void SetPropertyValueAsVariant(IntPtr id, IntPtr variant) =>
@@ -265,15 +265,15 @@ namespace NativeApi.Api
 
         public void SortChildren(IntPtr id, int flags = 0) => throw new Exception();
 
-        public static IntPtr GetEditorByName(string editorName) => throw new Exception();
+        public static IntPtr GetEditorByName(NativeStringSpan editorName) => throw new Exception();
 
         public bool ChangePropertyValue(IntPtr id, IntPtr variant) =>
             throw new Exception();
 
-        public void SetPropertyAttribute(IntPtr id, string attrName, IntPtr variant,
+        public void SetPropertyAttribute(IntPtr id, NativeStringSpan attrName, IntPtr variant,
             long argFlags = 0) => throw new Exception();
 
-        public void SetPropertyAttributeAll(string attrName, IntPtr variant) =>
+        public void SetPropertyAttributeAll(NativeStringSpan attrName, IntPtr variant) =>
             throw new Exception();
     }
 }

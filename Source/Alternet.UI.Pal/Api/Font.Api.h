@@ -15,10 +15,10 @@ ALTERNET_UI_API Font* Font_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t* Font_GetName_(Font* obj)
+ALTERNET_UI_API NativeStringSpan_C Font_GetName_(Font* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetName();
     });
 }
 
@@ -57,10 +57,10 @@ ALTERNET_UI_API int Font_GetFamiliesItemCount_(void* array)
     });
 }
 
-ALTERNET_UI_API char16_t* Font_GetFamiliesItemAt_(void* array, int index)
+ALTERNET_UI_API NativeStringSpan_C Font_GetFamiliesItemAt_(void* array, int index)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(Font::GetFamiliesItemAt(array, index));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return Font::GetFamiliesItemAt(array, index);
     });
 }
 
@@ -148,10 +148,10 @@ ALTERNET_UI_API int Font_GetWeight_(Font* obj)
     });
 }
 
-ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, const char16_t* familyName, float emSizeInPoints, FontStyle style)
+ALTERNET_UI_API void Font_Initialize_(Font* obj, GenericFontFamily genericFamily, NativeStringSpan* familyName, float emSizeInPoints, FontStyle style)
 {
     MarshalExceptions<void>([&](){
-        obj->Initialize(genericFamily, ToOptional(familyName), emSizeInPoints, style);
+        obj->Initialize(genericFamily, *familyName, emSizeInPoints, style);
     });
 }
 
@@ -176,17 +176,17 @@ ALTERNET_UI_API void Font_InitializeFromFont_(Font* obj, Font* font)
     });
 }
 
-ALTERNET_UI_API c_bool Font_IsFamilyValid_(const char16_t* fontFamily)
+ALTERNET_UI_API c_bool Font_IsFamilyValid_(NativeStringSpan* fontFamily)
 {
     return MarshalExceptions<c_bool>([&](){
-        return Font::IsFamilyValid(fontFamily);
+        return Font::IsFamilyValid(*fontFamily);
     });
 }
 
-ALTERNET_UI_API char16_t* Font_GetGenericFamilyName_(GenericFontFamily genericFamily)
+ALTERNET_UI_API NativeStringSpan_C Font_GetGenericFamilyName_(GenericFontFamily genericFamily)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(Font::GetGenericFamilyName(genericFamily));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return Font::GetGenericFamilyName(genericFamily);
     });
 }
 

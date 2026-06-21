@@ -9,10 +9,10 @@
 
 using namespace Alternet::UI;
 
-ALTERNET_UI_API DialogResult MessageBoxObj_Show_(Window* owner, const char16_t* text, const char16_t* caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
+ALTERNET_UI_API DialogResult MessageBoxObj_Show_(Window* owner, NativeStringSpan* text, NativeStringSpan* caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton)
 {
     return MarshalExceptions<DialogResult>([&](){
-        return MessageBoxObj::Show(owner, text, ToOptional(caption), buttons, icon, defaultButton);
+        return MessageBoxObj::Show(owner, *text, *caption, buttons, icon, defaultButton);
     });
 }
 

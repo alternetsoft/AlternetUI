@@ -66,13 +66,13 @@ namespace NativeApi.Api
 
         public bool LoadFromStream(InputStream stream) => default;
         public bool LoadSvgFromStream(InputStream stream, int width, int height, Color color) => default;
-        public bool LoadSvgFromString(string s, int width, int height, Color color) => default;
+        public bool LoadSvgFromString(NativeStringSpan s, int width, int height, Color color) => default;
 
         public void Initialize(SizeI size, int depth) { }
         public void InitializeFromImage(Image source, SizeI size) { }
         public void CopyFrom(Image otherImage) { }
-        public bool SaveToStream(OutputStream stream, string format) => default;
-        public bool SaveToFile(string fileName) => default;
+        public bool SaveToStream(OutputStream stream, NativeStringSpan format) => default;
+        public bool SaveToFile(NativeStringSpan fileName) => default;
 
         public IntPtr ConvertToGenericImage() => default;
         public void LoadFromGenericImage(IntPtr image, int depth = -1) { }
@@ -91,9 +91,9 @@ namespace NativeApi.Api
         public int PixelWidth { get; }
         public int PixelHeight { get; }
 
-        public bool LoadFile(string name, int type /*= wxBITMAP_DEFAULT_TYPE*/) => default;
+        public bool LoadFile(NativeStringSpan name, int type /*= wxBITMAP_DEFAULT_TYPE*/) => default;
 
-        public bool SaveFile(string name, int type) => default;
+        public bool SaveFile(NativeStringSpan name, int type) => default;
 
         public bool SaveStream(OutputStream stream, int type) => default;
 

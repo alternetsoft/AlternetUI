@@ -17,17 +17,17 @@ ALTERNET_UI_API PrintPreviewDialog* PrintPreviewDialog_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t* PrintPreviewDialog_GetTitle_(PrintPreviewDialog* obj)
+ALTERNET_UI_API NativeStringSpan_C PrintPreviewDialog_GetTitle_(PrintPreviewDialog* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetTitle());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
     });
 }
 
-ALTERNET_UI_API void PrintPreviewDialog_SetTitle_(PrintPreviewDialog* obj, const char16_t* value)
+ALTERNET_UI_API void PrintPreviewDialog_SetTitle_(PrintPreviewDialog* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetTitle(ToOptional(value));
+        obj->SetTitle(value);
     });
 }
 

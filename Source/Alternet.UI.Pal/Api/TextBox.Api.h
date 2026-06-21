@@ -43,10 +43,10 @@ ALTERNET_UI_API void TextBox_SetTextAlign_(TextBox* obj, int value)
     });
 }
 
-ALTERNET_UI_API char16_t* TextBox_GetReportedUrl_(TextBox* obj)
+ALTERNET_UI_API NativeStringSpan_C TextBox_GetReportedUrl_(TextBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetReportedUrl());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetReportedUrl();
     });
 }
 
@@ -183,14 +183,14 @@ ALTERNET_UI_API c_bool TextBox_GetIsEmpty_(TextBox* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* TextBox_GetEmptyTextHint_(TextBox* obj)
+ALTERNET_UI_API NativeStringSpan_C TextBox_GetEmptyTextHint_(TextBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetEmptyTextHint());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEmptyTextHint();
     });
 }
 
-ALTERNET_UI_API void TextBox_SetEmptyTextHint_(TextBox* obj, const char16_t* value)
+ALTERNET_UI_API void TextBox_SetEmptyTextHint_(TextBox* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetEmptyTextHint(value);
@@ -295,10 +295,10 @@ ALTERNET_UI_API int TextBox_GetLineLength_(TextBox* obj, int64_t lineNo)
     });
 }
 
-ALTERNET_UI_API char16_t* TextBox_GetLineText_(TextBox* obj, int64_t lineNo)
+ALTERNET_UI_API NativeStringSpan_C TextBox_GetLineText_(TextBox* obj, int64_t lineNo)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetLineText(lineNo));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetLineText(lineNo);
     });
 }
 
@@ -386,10 +386,10 @@ ALTERNET_UI_API void TextBox_Cut_(TextBox* obj)
     });
 }
 
-ALTERNET_UI_API void TextBox_AppendText_(TextBox* obj, const char16_t* text)
+ALTERNET_UI_API void TextBox_AppendText_(TextBox* obj, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->AppendText(text);
+        obj->AppendText(*text);
     });
 }
 
@@ -421,10 +421,10 @@ ALTERNET_UI_API void TextBox_Remove_(TextBox* obj, int64_t from, int64_t to)
     });
 }
 
-ALTERNET_UI_API void TextBox_Replace_(TextBox* obj, int64_t from, int64_t to, const char16_t* value)
+ALTERNET_UI_API void TextBox_Replace_(TextBox* obj, int64_t from, int64_t to, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->Replace(from, to, value);
+        obj->Replace(from, to, *value);
     });
 }
 
@@ -477,24 +477,24 @@ ALTERNET_UI_API void TextBox_Undo_(TextBox* obj)
     });
 }
 
-ALTERNET_UI_API void TextBox_WriteText_(TextBox* obj, const char16_t* text)
+ALTERNET_UI_API void TextBox_WriteText_(TextBox* obj, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->WriteText(text);
+        obj->WriteText(*text);
     });
 }
 
-ALTERNET_UI_API char16_t* TextBox_GetRange_(TextBox* obj, int64_t from, int64_t to)
+ALTERNET_UI_API NativeStringSpan_C TextBox_GetRange_(TextBox* obj, int64_t from, int64_t to)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetRange(from, to));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetRange(from, to);
     });
 }
 
-ALTERNET_UI_API char16_t* TextBox_GetStringSelection_(TextBox* obj)
+ALTERNET_UI_API NativeStringSpan_C TextBox_GetStringSelection_(TextBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetStringSelection());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetStringSelection();
     });
 }
 

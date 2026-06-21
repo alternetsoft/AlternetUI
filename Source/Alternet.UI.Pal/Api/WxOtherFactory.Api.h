@@ -25,10 +25,10 @@ ALTERNET_UI_API void WxOtherFactory_TestPopupWindow_(void* parent, PointI* pos, 
     });
 }
 
-ALTERNET_UI_API void* WxOtherFactory_CreateToolTip_(const char16_t* tip)
+ALTERNET_UI_API void* WxOtherFactory_CreateToolTip_(NativeStringSpan* tip)
 {
     return MarshalExceptions<void*>([&](){
-        return WxOtherFactory::CreateToolTip(tip);
+        return WxOtherFactory::CreateToolTip(*tip);
     });
 }
 
@@ -39,10 +39,10 @@ ALTERNET_UI_API void WxOtherFactory_DeleteToolTip_(void* handle)
     });
 }
 
-ALTERNET_UI_API char16_t* WxOtherFactory_ToolTipGetTip_(void* handle)
+ALTERNET_UI_API NativeStringSpan_C WxOtherFactory_ToolTipGetTip_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(WxOtherFactory::ToolTipGetTip(handle));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WxOtherFactory::ToolTipGetTip(handle);
     });
 }
 
@@ -53,10 +53,10 @@ ALTERNET_UI_API void* WxOtherFactory_ToolTipGetWindow_(void* handle)
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_ToolTipSetTip_(void* handle, const char16_t* tip)
+ALTERNET_UI_API void WxOtherFactory_ToolTipSetTip_(void* handle, NativeStringSpan* tip)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::ToolTipSetTip(handle, tip);
+        WxOtherFactory::ToolTipSetTip(handle, *tip);
     });
 }
 
@@ -109,10 +109,10 @@ ALTERNET_UI_API void* WxOtherFactory_CreateCursor2_(int cursorId)
     });
 }
 
-ALTERNET_UI_API void* WxOtherFactory_CreateCursor3_(const char16_t* cursorName, int type, int hotSpotX, int hotSpotY)
+ALTERNET_UI_API void* WxOtherFactory_CreateCursor3_(NativeStringSpan* cursorName, int type, int hotSpotX, int hotSpotY)
 {
     return MarshalExceptions<void*>([&](){
-        return WxOtherFactory::CreateCursor3(cursorName, type, hotSpotX, hotSpotY);
+        return WxOtherFactory::CreateCursor3(*cursorName, type, hotSpotX, hotSpotY);
     });
 }
 
@@ -326,10 +326,10 @@ ALTERNET_UI_API SizeI_C WxOtherFactory_DisplayGetStdPPI_()
     });
 }
 
-ALTERNET_UI_API char16_t* WxOtherFactory_DisplayGetName_(void* handle)
+ALTERNET_UI_API NativeStringSpan_C WxOtherFactory_DisplayGetName_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(WxOtherFactory::DisplayGetName(handle));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WxOtherFactory::DisplayGetName(handle);
     });
 }
 
@@ -445,17 +445,17 @@ ALTERNET_UI_API void WxOtherFactory_Bell_()
     });
 }
 
-ALTERNET_UI_API char16_t* WxOtherFactory_GetTextFromUser_(const char16_t* message, const char16_t* caption, const char16_t* defaultValue, void* parent, int x, int y, c_bool centre)
+ALTERNET_UI_API NativeStringSpan_C WxOtherFactory_GetTextFromUser_(NativeStringSpan* message, NativeStringSpan* caption, NativeStringSpan* defaultValue, void* parent, int x, int y, c_bool centre)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(WxOtherFactory::GetTextFromUser(message, caption, defaultValue, parent, x, y, centre));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WxOtherFactory::GetTextFromUser(*message, *caption, *defaultValue, parent, x, y, centre);
     });
 }
 
-ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(const char16_t* message, const char16_t* prompt, const char16_t* caption, int64_t value, int64_t min, int64_t max, void* parent, PointI* pos)
+ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(NativeStringSpan* message, NativeStringSpan* prompt, NativeStringSpan* caption, int64_t value, int64_t min, int64_t max, void* parent, PointI* pos)
 {
     return MarshalExceptions<int64_t>([&](){
-        return WxOtherFactory::GetNumberFromUser(message, prompt, caption, value, min, max, parent, *pos);
+        return WxOtherFactory::GetNumberFromUser(*message, *prompt, *caption, value, min, max, parent, *pos);
     });
 }
 
@@ -627,17 +627,17 @@ ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, DrawingContext* dc, const char16_t* text, RectI* rect, int align, int flags, int ellipsizeMode)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, DrawingContext* dc, NativeStringSpan* text, RectI* rect, int align, int flags, int ellipsizeMode)
 {
     MarshalExceptions<void>([&](){
-        WxOtherFactory::RendererDrawItemText(renderer, win, dc, text, *rect, align, flags, ellipsizeMode);
+        WxOtherFactory::RendererDrawItemText(renderer, win, dc, *text, *rect, align, flags, ellipsizeMode);
     });
 }
 
-ALTERNET_UI_API char16_t* WxOtherFactory_RendererGetVersion_(void* renderer)
+ALTERNET_UI_API NativeStringSpan_C WxOtherFactory_RendererGetVersion_(void* renderer)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(WxOtherFactory::RendererGetVersion(renderer));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WxOtherFactory::RendererGetVersion(renderer);
     });
 }
 
@@ -697,17 +697,17 @@ ALTERNET_UI_API void WxOtherFactory_FsWatcherDelete_(void* handle)
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAdd_(void* handle, const char16_t* path, int events)
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAdd_(void* handle, NativeStringSpan* path, int events)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::FsWatcherAdd(handle, path, events);
+        return WxOtherFactory::FsWatcherAdd(handle, *path, events);
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAddTree_(void* handle, const char16_t* path, int events, const char16_t* filter)
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherAddTree_(void* handle, NativeStringSpan* path, int events, NativeStringSpan* filter)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::FsWatcherAddTree(handle, path, events, filter);
+        return WxOtherFactory::FsWatcherAddTree(handle, *path, events, *filter);
     });
 }
 
@@ -718,10 +718,10 @@ ALTERNET_UI_API int WxOtherFactory_FsWatcherGetWatchedPathsCount_(void* handle)
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemove_(void* handle, const char16_t* path)
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemove_(void* handle, NativeStringSpan* path)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::FsWatcherRemove(handle, path);
+        return WxOtherFactory::FsWatcherRemove(handle, *path);
     });
 }
 
@@ -732,10 +732,10 @@ ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemoveAll_(void* handle)
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemoveTree_(void* handle, const char16_t* path)
+ALTERNET_UI_API c_bool WxOtherFactory_FsWatcherRemoveTree_(void* handle, NativeStringSpan* path)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::FsWatcherRemoveTree(handle, path);
+        return WxOtherFactory::FsWatcherRemoveTree(handle, *path);
     });
 }
 
@@ -753,10 +753,10 @@ ALTERNET_UI_API void* WxOtherFactory_SoundCreate_()
     });
 }
 
-ALTERNET_UI_API void* WxOtherFactory_SoundCreate2_(const char16_t* fileName, c_bool isResource)
+ALTERNET_UI_API void* WxOtherFactory_SoundCreate2_(NativeStringSpan* fileName, c_bool isResource)
 {
     return MarshalExceptions<void*>([&](){
-        return WxOtherFactory::SoundCreate2(fileName, isResource);
+        return WxOtherFactory::SoundCreate2(*fileName, isResource);
     });
 }
 
@@ -774,10 +774,10 @@ ALTERNET_UI_API void WxOtherFactory_SoundDelete_(void* handle)
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_SoundPlay2_(const char16_t* filename, uint32_t flags)
+ALTERNET_UI_API c_bool WxOtherFactory_SoundPlay2_(NativeStringSpan* filename, uint32_t flags)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::SoundPlay2(filename, flags);
+        return WxOtherFactory::SoundPlay2(*filename, flags);
     });
 }
 
@@ -879,17 +879,17 @@ ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorMouseUp_(void* handle, in
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorSelect_(void* handle, const char16_t* text)
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorSelect_(void* handle, NativeStringSpan* text)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::UIActionSimulatorSelect(handle, text);
+        return WxOtherFactory::UIActionSimulatorSelect(handle, *text);
     });
 }
 
-ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorText_(void* handle, const char16_t* text)
+ALTERNET_UI_API c_bool WxOtherFactory_UIActionSimulatorText_(void* handle, NativeStringSpan* text)
 {
     return MarshalExceptions<c_bool>([&](){
-        return WxOtherFactory::UIActionSimulatorText(handle, text);
+        return WxOtherFactory::UIActionSimulatorText(handle, *text);
     });
 }
 

@@ -57,24 +57,24 @@ ALTERNET_UI_API void PropertyGridVariant_Clear_(void* handle)
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGridVariant_GetValueType_(void* handle)
+ALTERNET_UI_API NativeStringSpan_C PropertyGridVariant_GetValueType_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(PropertyGridVariant::GetValueType(handle));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return PropertyGridVariant::GetValueType(handle);
     });
 }
 
-ALTERNET_UI_API c_bool PropertyGridVariant_IsType_(void* handle, const char16_t* type)
+ALTERNET_UI_API c_bool PropertyGridVariant_IsType_(void* handle, NativeStringSpan* type)
 {
     return MarshalExceptions<c_bool>([&](){
-        return PropertyGridVariant::IsType(handle, type);
+        return PropertyGridVariant::IsType(handle, *type);
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGridVariant_MakeString_(void* handle)
+ALTERNET_UI_API NativeStringSpan_C PropertyGridVariant_MakeString_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(PropertyGridVariant::MakeString(handle));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return PropertyGridVariant::MakeString(handle);
     });
 }
 
@@ -134,10 +134,10 @@ ALTERNET_UI_API DateTime_C PropertyGridVariant_GetDateTime_(void* handle)
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGridVariant_GetString_(void* handle)
+ALTERNET_UI_API NativeStringSpan_C PropertyGridVariant_GetString_(void* handle)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(PropertyGridVariant::GetString(handle));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return PropertyGridVariant::GetString(handle);
     });
 }
 
@@ -204,10 +204,10 @@ ALTERNET_UI_API void PropertyGridVariant_SetDateTime_(void* handle, DateTime* va
     });
 }
 
-ALTERNET_UI_API void PropertyGridVariant_SetString_(void* handle, const char16_t* value)
+ALTERNET_UI_API void PropertyGridVariant_SetString_(void* handle, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        PropertyGridVariant::SetString(handle, value);
+        PropertyGridVariant::SetString(handle, *value);
     });
 }
 

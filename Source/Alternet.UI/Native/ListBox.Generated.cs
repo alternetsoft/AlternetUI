@@ -74,10 +74,11 @@ namespace Alternet.UI.Native
             return NativeApi.ListBox_IsSorted_(NativePointer);
         }
         
-        public bool SetStringSelection(string s, bool select)
+        public bool SetStringSelection(Alternet.UI.NativeStringSpan s, bool select)
         {
             CheckDisposed();
-            return NativeApi.ListBox_SetStringSelection_(NativePointer, s, select);
+            var s_Native = s.ToNative();
+return NativeApi.ListBox_SetStringSelection_(NativePointer, ref s_Native, select);
         }
         
         public void SetItemSelection(int index, bool select)
@@ -86,10 +87,11 @@ namespace Alternet.UI.Native
             NativeApi.ListBox_SetItemSelection_(NativePointer, index, select);
         }
         
-        public int FindString(string s, bool bCase)
+        public int FindString(Alternet.UI.NativeStringSpan s, bool bCase)
         {
             CheckDisposed();
-            return NativeApi.ListBox_FindString_(NativePointer, s, bCase);
+            var s_Native = s.ToNative();
+return NativeApi.ListBox_FindString_(NativePointer, ref s_Native, bCase);
         }
         
         public int GetCountPerPage()
@@ -111,7 +113,7 @@ namespace Alternet.UI.Native
 return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
         }
         
-        public string GetString(uint n)
+        public Alternet.UI.NativeStringSpan GetString(uint n)
         {
             CheckDisposed();
             return NativeApi.ListBox_GetString_(NativePointer, n);
@@ -141,10 +143,11 @@ return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
             NativeApi.ListBox_SetFirstItem_(NativePointer, n);
         }
         
-        public void SetFirstItemStr(string s)
+        public void SetFirstItemStr(Alternet.UI.NativeStringSpan s)
         {
             CheckDisposed();
-            NativeApi.ListBox_SetFirstItemStr_(NativePointer, s);
+            var s_Native = s.ToNative();
+NativeApi.ListBox_SetFirstItemStr_(NativePointer, ref s_Native);
         }
         
         public void SetSelection(int n)
@@ -153,10 +156,11 @@ return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
             NativeApi.ListBox_SetSelection_(NativePointer, n);
         }
         
-        public void SetString(uint n, string s)
+        public void SetString(uint n, Alternet.UI.NativeStringSpan s)
         {
             CheckDisposed();
-            NativeApi.ListBox_SetString_(NativePointer, n, s);
+            var s_Native = s.ToNative();
+NativeApi.ListBox_SetString_(NativePointer, n, ref s_Native);
         }
         
         public void Clear()
@@ -171,16 +175,18 @@ return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
             NativeApi.ListBox_Delete_(NativePointer, n);
         }
         
-        public int Append(string s)
+        public int Append(Alternet.UI.NativeStringSpan s)
         {
             CheckDisposed();
-            return NativeApi.ListBox_Append_(NativePointer, s);
+            var s_Native = s.ToNative();
+return NativeApi.ListBox_Append_(NativePointer, ref s_Native);
         }
         
-        public int Insert(string item, uint pos)
+        public int Insert(Alternet.UI.NativeStringSpan item, uint pos)
         {
             CheckDisposed();
-            return NativeApi.ListBox_Insert_(NativePointer, item, pos);
+            var item_Native = item.ToNative();
+return NativeApi.ListBox_Insert_(NativePointer, ref item_Native, pos);
         }
         
         public int GetSelectionsCount()
@@ -315,13 +321,13 @@ return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
             public static extern bool ListBox_IsSorted_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool ListBox_SetStringSelection_(IntPtr obj, string s, bool select);
+            public static extern bool ListBox_SetStringSelection_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, bool select);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_SetItemSelection_(IntPtr obj, int index, bool select);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_FindString_(IntPtr obj, string s, bool bCase);
+            public static extern int ListBox_FindString_(IntPtr obj, ref Alternet.UI.NativeStringSpan s, bool bCase);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_GetCountPerPage_(IntPtr obj);
@@ -333,7 +339,7 @@ return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
             public static extern int ListBox_HitTest_(IntPtr obj, ref Alternet.Drawing.PointD point);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string ListBox_GetString_(IntPtr obj, uint n);
+            public static extern Alternet.UI.NativeStringSpan ListBox_GetString_(IntPtr obj, uint n);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern uint ListBox_GetCount_(IntPtr obj);
@@ -348,13 +354,13 @@ return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
             public static extern void ListBox_SetFirstItem_(IntPtr obj, int n);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetFirstItemStr_(IntPtr obj, string s);
+            public static extern void ListBox_SetFirstItemStr_(IntPtr obj, ref Alternet.UI.NativeStringSpan s);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_SetSelection_(IntPtr obj, int n);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ListBox_SetString_(IntPtr obj, uint n, string s);
+            public static extern void ListBox_SetString_(IntPtr obj, uint n, ref Alternet.UI.NativeStringSpan s);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ListBox_Clear_(IntPtr obj);
@@ -363,10 +369,10 @@ return NativeApi.ListBox_HitTest_(NativePointer, ref point_Native);
             public static extern void ListBox_Delete_(IntPtr obj, uint n);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_Append_(IntPtr obj, string s);
+            public static extern int ListBox_Append_(IntPtr obj, ref Alternet.UI.NativeStringSpan s);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int ListBox_Insert_(IntPtr obj, string item, uint pos);
+            public static extern int ListBox_Insert_(IntPtr obj, ref Alternet.UI.NativeStringSpan item, uint pos);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int ListBox_GetSelectionsCount_(IntPtr obj);

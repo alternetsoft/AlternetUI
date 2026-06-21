@@ -16,13 +16,12 @@ namespace NativeApi.Api
         public static IntPtr CreateStatusBar(IntPtr window, long style) => default;
 
         public static int GetFieldsCount(IntPtr handle) => default;
-        public static void SetStatusText(IntPtr handle, string text, int number = 0) { }
-        public static string GetStatusText(IntPtr handle, int number = 0) => default;
+        public static void SetStatusText(IntPtr handle, NativeStringSpan text, int number = 0) { }
+        public static NativeStringSpan GetStatusText(IntPtr handle, int number = 0) => default;
 
         // change the currently shown text to the new one and save the current
         // value to be restored by the next call to PopStatusText()
-        public static void PushStatusText(IntPtr handle, string text, int number = 0){}
-
+        public static void PushStatusText(IntPtr handle, NativeStringSpan text, int number = 0){}
         public static void PopStatusText(IntPtr handle, int number = 0) { }
 
         // Sets the widths of the fields in the status line.

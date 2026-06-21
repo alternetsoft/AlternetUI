@@ -178,10 +178,10 @@ ALTERNET_UI_API c_bool Image_LoadSvgFromStream_(Image* obj, void* stream, int wi
     });
 }
 
-ALTERNET_UI_API c_bool Image_LoadSvgFromString_(Image* obj, const char16_t* s, int width, int height, Color* color)
+ALTERNET_UI_API c_bool Image_LoadSvgFromString_(Image* obj, NativeStringSpan* s, int width, int height, Color* color)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->LoadSvgFromString(s, width, height, *color);
+        return obj->LoadSvgFromString(*s, width, height, *color);
     });
 }
 
@@ -206,17 +206,17 @@ ALTERNET_UI_API void Image_CopyFrom_(Image* obj, Image* otherImage)
     });
 }
 
-ALTERNET_UI_API c_bool Image_SaveToStream_(Image* obj, void* stream, const char16_t* format)
+ALTERNET_UI_API c_bool Image_SaveToStream_(Image* obj, void* stream, NativeStringSpan* format)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->SaveToStream(stream, format);
+        return obj->SaveToStream(stream, *format);
     });
 }
 
-ALTERNET_UI_API c_bool Image_SaveToFile_(Image* obj, const char16_t* fileName)
+ALTERNET_UI_API c_bool Image_SaveToFile_(Image* obj, NativeStringSpan* fileName)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->SaveToFile(fileName);
+        return obj->SaveToFile(*fileName);
     });
 }
 
@@ -248,17 +248,17 @@ ALTERNET_UI_API c_bool Image_ResetAlpha_(Image* obj)
     });
 }
 
-ALTERNET_UI_API c_bool Image_LoadFile_(Image* obj, const char16_t* name, int type)
+ALTERNET_UI_API c_bool Image_LoadFile_(Image* obj, NativeStringSpan* name, int type)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->LoadFile(name, type);
+        return obj->LoadFile(*name, type);
     });
 }
 
-ALTERNET_UI_API c_bool Image_SaveFile_(Image* obj, const char16_t* name, int type)
+ALTERNET_UI_API c_bool Image_SaveFile_(Image* obj, NativeStringSpan* name, int type)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->SaveFile(name, type);
+        return obj->SaveFile(*name, type);
     });
 }
 

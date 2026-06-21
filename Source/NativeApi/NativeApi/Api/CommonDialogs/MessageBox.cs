@@ -8,8 +8,8 @@ namespace NativeApi.Api
     {
         public static DialogResult Show(
             Window? owner,
-            string text,
-            string? caption,
+            NativeStringSpan text,
+            NativeStringSpan caption,
             MessageBoxButtons buttons,
             MessageBoxIcon icon,
             MessageBoxDefaultButton defaultButton) => throw new Exception();

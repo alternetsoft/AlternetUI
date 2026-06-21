@@ -4,9 +4,9 @@ public:
 static void DeleteStatusBar(void* handle);
 static void* CreateStatusBar(void* window, int64_t style);
 static int GetFieldsCount(void* handle);
-static void SetStatusText(void* handle, const string& text, int number);
-static string GetStatusText(void* handle, int number);
-static void PushStatusText(void* handle, const string& text, int number);
+static void SetStatusText(void* handle, const NativeStringSpan& text, int number);
+static NativeStringSpan GetStatusText(void* handle, int number);
+static void PushStatusText(void* handle, const NativeStringSpan& text, int number);
 static void PopStatusText(void* handle, int number);
 static void SetStatusWidths(void* handle, int* widths, int widthsCount);
 static void SetFieldsCount(void* handle, int number);

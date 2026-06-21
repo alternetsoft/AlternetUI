@@ -26,11 +26,11 @@ namespace NativeApi.Api
 
         // =================== ToolTip
 
-        public static IntPtr CreateToolTip(string tip) => default;
+        public static IntPtr CreateToolTip(NativeStringSpan tip) => default;
         public static void DeleteToolTip(IntPtr handle) { }
-        public static string ToolTipGetTip(IntPtr handle) => default;
+        public static NativeStringSpan ToolTipGetTip(IntPtr handle) => default;
         public static IntPtr ToolTipGetWindow(IntPtr handle) => default;
-        public static void ToolTipSetTip(IntPtr handle, string tip) { }
+        public static void ToolTipSetTip(IntPtr handle, NativeStringSpan tip) { }
 
         // Enable or disable tooltips globally. 
         // May not be supported on all platforms(eg. wxCocoa).
@@ -60,7 +60,7 @@ namespace NativeApi.Api
 
         public static IntPtr CreateCursor2(int cursorId) => default; // wxStockCursor     
 
-        public static IntPtr CreateCursor3(string cursorName, int type,
+        public static IntPtr CreateCursor3(NativeStringSpan cursorName, int type,
             int hotSpotX = 0, int hotSpotY = 0) => default; // =wxCURSOR_DEFAULT_TYPE
 
         public static IntPtr CreateCursor4(Image image, int hotSpotX = 0, int hotSpotY = 0) => default;
@@ -152,7 +152,7 @@ namespace NativeApi.Api
         public static SizeI DisplayGetStdPPI() => default;
 
         // Returns the display's name.
-        public static string DisplayGetName(IntPtr handle) => default;
+        public static NativeStringSpan DisplayGetName(IntPtr handle) => default;
 
         // Returns display resolution in pixels per inch.
         public static SizeI DisplayGetPPI(IntPtr handle) => default;
@@ -208,10 +208,10 @@ namespace NativeApi.Api
         // #include <wx/utils.h> 
         public static void Bell() { }
 
-        public static string GetTextFromUser(string message, string caption, string defaultValue,
+        public static NativeStringSpan GetTextFromUser(NativeStringSpan message, NativeStringSpan caption, NativeStringSpan defaultValue,
             IntPtr parent, int x = -1, int y = -1, bool centre = true) => default;
 
-        public static long GetNumberFromUser(string message, string prompt, string caption,
+        public static long GetNumberFromUser(NativeStringSpan message, NativeStringSpan prompt, NativeStringSpan caption,
             long value, long min, long max, IntPtr parent, PointI pos) => default;
 
         // ===================
@@ -395,14 +395,14 @@ namespace NativeApi.Api
         // Draw text using the appropriate color for normal and selected states.
         public static void RendererDrawItemText(IntPtr renderer, IntPtr win,
             DrawingContext dc,
-            string text,
+            NativeStringSpan text,
             RectI rect,
             int align /*= wxALIGN_LEFT | wxALIGN_TOP*/,
             int flags /*= 0*/,
             int ellipsizeMode /*= wxELLIPSIZE_END*/)
         { }
 
-        public static string RendererGetVersion(IntPtr renderer) => default;
+        public static NativeStringSpan RendererGetVersion(IntPtr renderer) => default;
 
         // ===================
 
@@ -529,7 +529,7 @@ dest
         /// Note that on platforms that use symbolic links, you should consider
         /// the possibility that path is a symlink. 
         /// </remarks>
-        public static bool FsWatcherAdd(IntPtr handle, string path, int events) => default;
+        public static bool FsWatcherAdd(IntPtr handle, NativeStringSpan path, int events) => default;
 
         /// <summary>
         /// This is the same as Add(), but also recursively adds every file/directory in
@@ -546,7 +546,7 @@ dest
         /// (e.g. the root directory) as it calls Add() for each subdirectory, potentially
         /// creating a lot of watches and taking a long time to execute.
         /// </remarks>
-        public static bool FsWatcherAddTree(IntPtr handle, string path, int events, string filter) => default;
+        public static bool FsWatcherAddTree(IntPtr handle, NativeStringSpan path, int events, NativeStringSpan filter) => default;
 
         /// <summary>
         /// Returns the number of currently watched paths.
@@ -559,7 +559,7 @@ dest
         /// </summary>
         /// <param name="path">Path to remove.</param>
         /// <returns></returns>
-        public static bool FsWatcherRemove(IntPtr handle, string path) => default;
+        public static bool FsWatcherRemove(IntPtr handle, NativeStringSpan path) => default;
 
         /// <summary>
         /// Clears the list of currently watched paths.
@@ -573,7 +573,7 @@ dest
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public static bool FsWatcherRemoveTree(IntPtr handle, string path) => default;
+        public static bool FsWatcherRemoveTree(IntPtr handle, NativeStringSpan path) => default;
 
         /// <summary>
         /// Associates the file system watcher with the given handler object.
@@ -593,7 +593,7 @@ dest
         // Call IsOk() to determine whether this succeeded.
         // fileName    - The filename or Windows resource.
         // isResource  - true if fileName is a resource, false if it is a filename.
-        public static IntPtr SoundCreate2(string fileName, bool isResource = false ) => default;
+        public static IntPtr SoundCreate2(NativeStringSpan fileName, bool isResource = false ) => default;
 
         // Constructs a wave object from in-memory data.
         // size	- Size of the buffer pointer to by data.
@@ -617,7 +617,7 @@ dest
         // wxSOUND_ASYNC: Sound is played asynchronously, Play returns immediately.
         // wxSOUND_ASYNC|wxSOUND_LOOP: Sound is played asynchronously and loops until another
         // sound is played, Stop() is called or the program terminates.
-        public static bool SoundPlay2(string filename, uint flags /*= wxSOUND_ASYNC*/) => default;
+        public static bool SoundPlay2(NativeStringSpan filename, uint flags /*= wxSOUND_ASYNC*/) => default;
 
         public static bool SoundPlay(IntPtr handle, uint flags /*= wxSOUND_ASYNC*/) => default;
 
@@ -697,14 +697,14 @@ dest
         // Returns true if the item text was successfully selected or false if
         // the currently focused window is not one of the controls allowing
         // item selection or if the item with the given text was not found in it.
-        public static bool UIActionSimulatorSelect(IntPtr handle, string text) => default;
+        public static bool UIActionSimulatorSelect(IntPtr handle, NativeStringSpan text) => default;
 
         // Emulate typing in the keys representing the given string.
         // Currently only the ASCII letters are universally supported.
         // Digits and punctuation characters can be used with the standard QWERTY (US) keyboard
         // layout but may not work with other layouts.
         // text - The string, containing only US ASCII characters, to type.
-        public static bool UIActionSimulatorText(IntPtr handle, string text) => default;
+        public static bool UIActionSimulatorText(IntPtr handle, NativeStringSpan text) => default;
 
         public static void UIActionSimulatorYield() { }
 

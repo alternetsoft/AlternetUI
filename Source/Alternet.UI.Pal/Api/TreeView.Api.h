@@ -345,10 +345,10 @@ ALTERNET_UI_API int TreeView_GetItemCount_(TreeView* obj, void* parentItem)
     });
 }
 
-ALTERNET_UI_API void* TreeView_InsertItem_(TreeView* obj, void* parentItem, void* insertAfter, const char16_t* text, int imageIndex, c_bool parentIsExpanded)
+ALTERNET_UI_API void* TreeView_InsertItem_(TreeView* obj, void* parentItem, void* insertAfter, NativeStringSpan* text, int imageIndex, c_bool parentIsExpanded)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->InsertItem(parentItem, insertAfter, text, imageIndex, parentIsExpanded);
+        return obj->InsertItem(parentItem, insertAfter, *text, imageIndex, parentIsExpanded);
     });
 }
 
@@ -450,17 +450,17 @@ ALTERNET_UI_API c_bool TreeView_IsItemFocused_(TreeView* obj, void* item)
     });
 }
 
-ALTERNET_UI_API void TreeView_SetItemText_(TreeView* obj, void* item, const char16_t* text)
+ALTERNET_UI_API void TreeView_SetItemText_(TreeView* obj, void* item, NativeStringSpan* text)
 {
     MarshalExceptions<void>([&](){
-        obj->SetItemText(item, text);
+        obj->SetItemText(item, *text);
     });
 }
 
-ALTERNET_UI_API char16_t* TreeView_GetItemText_(TreeView* obj, void* item)
+ALTERNET_UI_API NativeStringSpan_C TreeView_GetItemText_(TreeView* obj, void* item)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetItemText(item));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetItemText(item);
     });
 }
 

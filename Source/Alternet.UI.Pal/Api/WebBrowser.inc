@@ -28,13 +28,13 @@ void SetZoomFactor(float value);
 
 bool GetHasSelection();
 
-string GetSelectedSource();
+NativeStringSpan GetSelectedSource();
 
-string GetSelectedText();
+NativeStringSpan GetSelectedText();
 
-string GetPageSource();
+NativeStringSpan GetPageSource();
 
-string GetPageText();
+NativeStringSpan GetPageText();
 
 bool GetAccessToDevToolsEnabled();
 void SetAccessToDevToolsEnabled(bool value);
@@ -42,8 +42,8 @@ void SetAccessToDevToolsEnabled(bool value);
 int GetPreferredColorScheme();
 void SetPreferredColorScheme(int value);
 
-string GetUserAgent();
-void SetUserAgent(const string& value);
+NativeStringSpan GetUserAgent();
+void SetUserAgent(const NativeStringSpan& value);
 
 bool GetContextMenuEnabled();
 void SetContextMenuEnabled(bool value);
@@ -56,14 +56,14 @@ void SetZoom(int value);
 
 bool GetIsEdge();
 
-static void* CreateWebBrowser(const string& url);
-static void SetDefaultUserAgent(const string& value);
-static void SetDefaultScriptMesageName(const string& value);
-static void SetDefaultFSNameMemory(const string& value);
-static void SetDefaultFSNameArchive(const string& value);
-string DoCommand(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
-static string DoCommandGlobal(const string& cmdName, const string& cmdParam1, const string& cmdParam2);
-void SetVirtualHostNameToFolderMapping(const string& hostName, const string& folderPath, int accessKind);
+static void* CreateWebBrowser(const NativeStringSpan& url);
+static void SetDefaultUserAgent(const NativeStringSpan& value);
+static void SetDefaultScriptMesageName(const NativeStringSpan& value);
+static void SetDefaultFSNameMemory(const NativeStringSpan& value);
+static void SetDefaultFSNameArchive(const NativeStringSpan& value);
+NativeStringSpan DoCommand(const NativeStringSpan& cmdName, const NativeStringSpan& cmdParam1, const NativeStringSpan& cmdParam2);
+static NativeStringSpan DoCommandGlobal(const NativeStringSpan& cmdName, const NativeStringSpan& cmdParam1, const NativeStringSpan& cmdParam2);
+void SetVirtualHostNameToFolderMapping(const NativeStringSpan& hostName, const NativeStringSpan& folderPath, int accessKind);
 void* GetNativeBackend();
 void GoBack();
 void GoForward();
@@ -82,18 +82,18 @@ void Undo();
 void Redo();
 void Print();
 void RemoveAllUserScripts();
-bool AddScriptMessageHandler(const string& name);
-bool RemoveScriptMessageHandler(const string& name);
-void RunScriptAsync(const string& javascript, void* clientData);
+bool AddScriptMessageHandler(const NativeStringSpan& name);
+bool RemoveScriptMessageHandler(const NativeStringSpan& name);
+void RunScriptAsync(const NativeStringSpan& javascript, void* clientData);
 void CreateBackend();
 static int GetBackendOS();
-static void SetEdgePath(const string& path);
-string GetCurrentTitle();
-string GetCurrentURL();
-void LoadURL(const string& url);
-string RunScript(const string& javascript);
-void SetPage(const string& text, const string& baseUrl);
-bool AddUserScript(const string& javascript, int injectionTime);
+static void SetEdgePath(const NativeStringSpan& path);
+NativeStringSpan GetCurrentTitle();
+NativeStringSpan GetCurrentURL();
+void LoadURL(const NativeStringSpan& url);
+NativeStringSpan RunScript(const NativeStringSpan& javascript);
+void SetPage(const NativeStringSpan& text, const NativeStringSpan& baseUrl);
+bool AddUserScript(const NativeStringSpan& javascript, int injectionTime);
 
 public:
 

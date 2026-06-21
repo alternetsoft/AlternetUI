@@ -7,7 +7,7 @@ void SetTextWrap(int value);
 int GetTextAlign();
 void SetTextAlign(int value);
 
-string GetReportedUrl();
+NativeStringSpan GetReportedUrl();
 
 bool GetEditControlOnly();
 void SetEditControlOnly(bool value);
@@ -41,8 +41,8 @@ bool GetCanUndo();
 
 bool GetIsEmpty();
 
-string GetEmptyTextHint();
-void SetEmptyTextHint(const string& value);
+NativeStringSpan GetEmptyTextHint();
+void SetEmptyTextHint(const NativeStringSpan& value);
 
 bool GetHideSelection();
 void SetHideSelection(bool value);
@@ -64,7 +64,7 @@ void SetHideVertScrollbar(bool value);
 
 static void* CreateTextBox(void* validator);
 int GetLineLength(int64_t lineNo);
-string GetLineText(int64_t lineNo);
+NativeStringSpan GetLineText(int64_t lineNo);
 int GetNumberOfLines();
 PointI PositionToXY(int64_t pos);
 PointD PositionToCoords(int64_t pos);
@@ -77,12 +77,12 @@ bool SetStyle(int64_t start, int64_t end, void* style);
 void Clear();
 void Copy();
 void Cut();
-void AppendText(const string& text);
+void AppendText(const NativeStringSpan& text);
 int64_t GetInsertionPoint();
 void Paste();
 void Redo();
 void Remove(int64_t from, int64_t to);
-void Replace(int64_t from, int64_t to, const string& value);
+void Replace(int64_t from, int64_t to, const NativeStringSpan& value);
 void SetInsertionPoint(int64_t pos);
 void SetInsertionPointEnd();
 void SetMaxLength(uint64_t len);
@@ -90,9 +90,9 @@ void SetSelection(int64_t from, int64_t to);
 void SelectAll();
 void SelectNone();
 void Undo();
-void WriteText(const string& text);
-string GetRange(int64_t from, int64_t to);
-string GetStringSelection();
+void WriteText(const NativeStringSpan& text);
+NativeStringSpan GetRange(int64_t from, int64_t to);
+NativeStringSpan GetStringSelection();
 void EmptyUndoBuffer();
 bool IsValidPosition(int64_t pos);
 int64_t GetLastPosition();

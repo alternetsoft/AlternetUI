@@ -34,8 +34,8 @@ void SetBorderStyle(int value);
 int GetLayoutDirection();
 void SetLayoutDirection(int value);
 
-string GetName();
-void SetName(const string& value);
+NativeStringSpan GetName();
+void SetName(const NativeStringSpan& value);
 
 int GetId();
 void SetId(int value);
@@ -72,8 +72,8 @@ bool GetCanAcceptFocus();
 
 Control* GetParentRefCounted();
 
-optional<string> GetToolTip();
-void SetToolTip(optional<string> value);
+NativeStringSpan GetToolTip();
+void SetToolTip(const NativeStringSpan& value);
 
 bool GetAllowDrop();
 void SetAllowDrop(bool value);
@@ -181,7 +181,7 @@ void FocusNextControl(bool forward, bool nested);
 void BeginInit();
 void EndInit();
 void Destroy();
-void SaveScreenshot(const string& fileName);
+void SaveScreenshot(const NativeStringSpan& fileName);
 void SendSizeEvent();
 void SendMouseDownEvent(int x, int y);
 void SendMouseUpEvent(int x, int y);

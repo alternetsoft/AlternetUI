@@ -39,10 +39,10 @@ void* OpenSelectedIndicesArray();
 int GetSelectedIndicesItemCount(void* array);
 int64_t GetSelectedIndicesItemAt(void* array, int index);
 void CloseSelectedIndicesArray(void* array);
-void InsertItemAt(int64_t index, const string& text, int64_t columnIndex, int imageIndex);
+void InsertItemAt(int64_t index, const NativeStringSpan& text, int64_t columnIndex, int imageIndex);
 void RemoveItemAt(int64_t index);
 void ClearItems();
-void InsertColumnAt(int64_t index, const string& header, float width, ListViewColumnWidthMode widthMode);
+void InsertColumnAt(int64_t index, const NativeStringSpan& header, float width, ListViewColumnWidthMode widthMode);
 void RemoveColumnAt(int64_t index);
 void ClearSelected();
 void SetSelected(int64_t index, bool value);
@@ -55,10 +55,10 @@ void BeginLabelEdit(int64_t itemIndex);
 RectD GetItemBounds(int64_t itemIndex, ListViewItemBoundsPortion portion);
 void Clear();
 void EnsureItemVisible(int64_t itemIndex);
-void SetItemText(int64_t itemIndex, int64_t columnIndex, const string& text);
+void SetItemText(int64_t itemIndex, int64_t columnIndex, const NativeStringSpan& text);
 void SetItemImageIndex(int64_t itemIndex, int64_t columnIndex, int imageIndex);
 void SetColumnWidth(int64_t columnIndex, float fixedWidth, ListViewColumnWidthMode widthMode);
-void SetColumnTitle(int64_t columnIndex, const string& text);
+void SetColumnTitle(int64_t columnIndex, const NativeStringSpan& text);
 
 public:
 

@@ -36,24 +36,24 @@ ALTERNET_UI_API int WxStatusBarFactory_GetFieldsCount_(void* handle)
     });
 }
 
-ALTERNET_UI_API void WxStatusBarFactory_SetStatusText_(void* handle, const char16_t* text, int number)
+ALTERNET_UI_API void WxStatusBarFactory_SetStatusText_(void* handle, NativeStringSpan* text, int number)
 {
     MarshalExceptions<void>([&](){
-        WxStatusBarFactory::SetStatusText(handle, text, number);
+        WxStatusBarFactory::SetStatusText(handle, *text, number);
     });
 }
 
-ALTERNET_UI_API char16_t* WxStatusBarFactory_GetStatusText_(void* handle, int number)
+ALTERNET_UI_API NativeStringSpan_C WxStatusBarFactory_GetStatusText_(void* handle, int number)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(WxStatusBarFactory::GetStatusText(handle, number));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WxStatusBarFactory::GetStatusText(handle, number);
     });
 }
 
-ALTERNET_UI_API void WxStatusBarFactory_PushStatusText_(void* handle, const char16_t* text, int number)
+ALTERNET_UI_API void WxStatusBarFactory_PushStatusText_(void* handle, NativeStringSpan* text, int number)
 {
     MarshalExceptions<void>([&](){
-        WxStatusBarFactory::PushStatusText(handle, text, number);
+        WxStatusBarFactory::PushStatusText(handle, *text, number);
     });
 }
 

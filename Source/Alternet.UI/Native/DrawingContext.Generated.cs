@@ -134,12 +134,13 @@ NativeApi.DrawingContext_SetClippingRect_(NativePointer, ref rect_Native);
             return NativeApi.DrawingContext_GetClippingBox_(NativePointer);
         }
         
-        public void DrawText(System.IntPtr text, int charLength, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Brush backColor, float angle, bool useBrush)
+        public void DrawText(Alternet.UI.NativeStringSpan text, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Brush backColor, float angle, bool useBrush)
         {
             CheckDisposed();
-            var location_Native = location.ToNative();
+            var text_Native = text.ToNative();
+var location_Native = location.ToNative();
 var foreColor_Native = foreColor.ToNative();
-NativeApi.DrawingContext_DrawText_(NativePointer, text, charLength, ref location_Native, font.NativePointer, ref foreColor_Native, backColor.NativePointer, angle, useBrush);
+NativeApi.DrawingContext_DrawText_(NativePointer, ref text_Native, ref location_Native, font.NativePointer, ref foreColor_Native, backColor.NativePointer, angle, useBrush);
         }
         
         public Alternet.Drawing.SizeI GetDpi()
@@ -158,10 +159,11 @@ NativeApi.DrawingContext_DrawText_(NativePointer, text, charLength, ref location
             NativeApi.DrawingContext_ImageFromGenericImageDC_(image.NativePointer, source, dc.NativePointer);
         }
         
-        public Alternet.Drawing.SizeD GetTextExtentSimple(System.IntPtr text, int charLength, Font font, System.IntPtr control)
+        public Alternet.Drawing.SizeD GetTextExtentSimple(Alternet.UI.NativeStringSpan text, Font font, System.IntPtr control)
         {
             CheckDisposed();
-            return NativeApi.DrawingContext_GetTextExtentSimple_(NativePointer, text, charLength, font.NativePointer, control);
+            var text_Native = text.ToNative();
+return NativeApi.DrawingContext_GetTextExtentSimple_(NativePointer, ref text_Native, font.NativePointer, control);
         }
         
         public static DrawingContext FromImage(Image image)
@@ -443,7 +445,7 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             public static extern Alternet.Drawing.RectD DrawingContext_GetClippingBox_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawText_(IntPtr obj, System.IntPtr text, int charLength, ref Alternet.Drawing.PointD location, IntPtr font, ref NativeApiTypes.Color foreColor, IntPtr backColor, float angle, bool useBrush);
+            public static extern void DrawingContext_DrawText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, ref Alternet.Drawing.PointD location, IntPtr font, ref NativeApiTypes.Color foreColor, IntPtr backColor, float angle, bool useBrush);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI DrawingContext_GetDpi_(IntPtr obj);
@@ -455,7 +457,7 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             public static extern void DrawingContext_ImageFromGenericImageDC_(IntPtr image, System.IntPtr source, IntPtr dc);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.Drawing.SizeD DrawingContext_GetTextExtentSimple_(IntPtr obj, System.IntPtr text, int charLength, IntPtr font, System.IntPtr control);
+            public static extern Alternet.Drawing.SizeD DrawingContext_GetTextExtentSimple_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, IntPtr font, System.IntPtr control);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr DrawingContext_FromImage_(IntPtr image);

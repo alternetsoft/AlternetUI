@@ -32,14 +32,14 @@ ALTERNET_UI_API void PrintDocument_SetOriginAtMargins_(PrintDocument* obj, c_boo
     });
 }
 
-ALTERNET_UI_API char16_t* PrintDocument_GetDocumentName_(PrintDocument* obj)
+ALTERNET_UI_API NativeStringSpan_C PrintDocument_GetDocumentName_(PrintDocument* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetDocumentName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetDocumentName();
     });
 }
 
-ALTERNET_UI_API void PrintDocument_SetDocumentName_(PrintDocument* obj, const char16_t* value)
+ALTERNET_UI_API void PrintDocument_SetDocumentName_(PrintDocument* obj, NativeStringSpan value)
 {
     MarshalExceptions<void>([&](){
         obj->SetDocumentName(value);

@@ -38,14 +38,17 @@ namespace Alternet.UI.Native
             return NativeApi.GenericImage_CreateImageWithSize_(width, height, clear);
         }
         
-        public static System.IntPtr CreateImageFromFileWithBitmapType(string name, int bitmapType, int index)
+        public static System.IntPtr CreateImageFromFileWithBitmapType(Alternet.UI.NativeStringSpan name, int bitmapType, int index)
         {
-            return NativeApi.GenericImage_CreateImageFromFileWithBitmapType_(name, bitmapType, index);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_CreateImageFromFileWithBitmapType_(ref name_Native, bitmapType, index);
         }
         
-        public static System.IntPtr CreateImageFromFileWithMimeType(string name, string mimetype, int index)
+        public static System.IntPtr CreateImageFromFileWithMimeType(Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan mimetype, int index)
         {
-            return NativeApi.GenericImage_CreateImageFromFileWithMimeType_(name, mimetype, index);
+            var name_Native = name.ToNative();
+var mimetype_Native = mimetype.ToNative();
+return NativeApi.GenericImage_CreateImageFromFileWithMimeType_(ref name_Native, ref mimetype_Native, index);
         }
         
         public static System.IntPtr CreateImageFromStreamWithBitmapData(InputStream stream, int bitmapType, int index)
@@ -53,9 +56,10 @@ namespace Alternet.UI.Native
             return NativeApi.GenericImage_CreateImageFromStreamWithBitmapData_(stream.NativePointer, bitmapType, index);
         }
         
-        public static System.IntPtr CreateImageFromStreamWithMimeType(InputStream stream, string mimetype, int index)
+        public static System.IntPtr CreateImageFromStreamWithMimeType(InputStream stream, Alternet.UI.NativeStringSpan mimetype, int index)
         {
-            return NativeApi.GenericImage_CreateImageFromStreamWithMimeType_(stream.NativePointer, mimetype, index);
+            var mimetype_Native = mimetype.ToNative();
+return NativeApi.GenericImage_CreateImageFromStreamWithMimeType_(stream.NativePointer, ref mimetype_Native, index);
         }
         
         public static System.IntPtr CreateImageWithSizeAndData(int width, int height, System.IntPtr data, bool static_data)
@@ -103,14 +107,17 @@ namespace Alternet.UI.Native
             return NativeApi.GenericImage_SetMaskFromImage_(handle, image, mr, mg, mb);
         }
         
-        public static void SetOptionString(System.IntPtr handle, string name, string value)
+        public static void SetOptionString(System.IntPtr handle, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan value)
         {
-            NativeApi.GenericImage_SetOptionString_(handle, name, value);
+            var name_Native = name.ToNative();
+var value_Native = value.ToNative();
+NativeApi.GenericImage_SetOptionString_(handle, ref name_Native, ref value_Native);
         }
         
-        public static void SetOptionInt(System.IntPtr handle, string name, int value)
+        public static void SetOptionInt(System.IntPtr handle, Alternet.UI.NativeStringSpan name, int value)
         {
-            NativeApi.GenericImage_SetOptionInt_(handle, name, value);
+            var name_Native = name.ToNative();
+NativeApi.GenericImage_SetOptionInt_(handle, ref name_Native, value);
         }
         
         public static void SetRGB(System.IntPtr handle, int x, int y, byte r, byte g, byte b)
@@ -333,14 +340,16 @@ return NativeApi.GenericImage_Size_(handle, ref size_Native, ref pos_Native, red
             return NativeApi.GenericImage_GetSize_(handle);
         }
         
-        public static string GetOptionString(System.IntPtr handle, string name)
+        public static Alternet.UI.NativeStringSpan GetOptionString(System.IntPtr handle, Alternet.UI.NativeStringSpan name)
         {
-            return NativeApi.GenericImage_GetOptionString_(handle, name);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_GetOptionString_(handle, ref name_Native);
         }
         
-        public static int GetOptionInt(System.IntPtr handle, string name)
+        public static int GetOptionInt(System.IntPtr handle, Alternet.UI.NativeStringSpan name)
         {
-            return NativeApi.GenericImage_GetOptionInt_(handle, name);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_GetOptionInt_(handle, ref name_Native);
         }
         
         public static System.IntPtr GetSubImage(System.IntPtr handle, Alternet.Drawing.RectI rect)
@@ -364,9 +373,10 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             return NativeApi.GenericImage_HasMask_(handle);
         }
         
-        public static bool HasOption(System.IntPtr handle, string name)
+        public static bool HasOption(System.IntPtr handle, Alternet.UI.NativeStringSpan name)
         {
-            return NativeApi.GenericImage_HasOption_(handle, name);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_HasOption_(handle, ref name_Native);
         }
         
         public static bool IsOk(System.IntPtr handle)
@@ -384,39 +394,48 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             return NativeApi.GenericImage_LoadStreamWithBitmapType_(handle, stream.NativePointer, bitmapType, index);
         }
         
-        public static bool LoadFileWithBitmapType(System.IntPtr handle, string name, int bitmapType, int index)
+        public static bool LoadFileWithBitmapType(System.IntPtr handle, Alternet.UI.NativeStringSpan name, int bitmapType, int index)
         {
-            return NativeApi.GenericImage_LoadFileWithBitmapType_(handle, name, bitmapType, index);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_LoadFileWithBitmapType_(handle, ref name_Native, bitmapType, index);
         }
         
-        public static bool LoadFileWithMimeType(System.IntPtr handle, string name, string mimetype, int index)
+        public static bool LoadFileWithMimeType(System.IntPtr handle, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan mimetype, int index)
         {
-            return NativeApi.GenericImage_LoadFileWithMimeType_(handle, name, mimetype, index);
+            var name_Native = name.ToNative();
+var mimetype_Native = mimetype.ToNative();
+return NativeApi.GenericImage_LoadFileWithMimeType_(handle, ref name_Native, ref mimetype_Native, index);
         }
         
-        public static bool LoadStreamWithMimeType(System.IntPtr handle, InputStream stream, string mimetype, int index)
+        public static bool LoadStreamWithMimeType(System.IntPtr handle, InputStream stream, Alternet.UI.NativeStringSpan mimetype, int index)
         {
-            return NativeApi.GenericImage_LoadStreamWithMimeType_(handle, stream.NativePointer, mimetype, index);
+            var mimetype_Native = mimetype.ToNative();
+return NativeApi.GenericImage_LoadStreamWithMimeType_(handle, stream.NativePointer, ref mimetype_Native, index);
         }
         
-        public static bool SaveStreamWithMimeType(System.IntPtr handle, OutputStream stream, string mimetype)
+        public static bool SaveStreamWithMimeType(System.IntPtr handle, OutputStream stream, Alternet.UI.NativeStringSpan mimetype)
         {
-            return NativeApi.GenericImage_SaveStreamWithMimeType_(handle, stream.NativePointer, mimetype);
+            var mimetype_Native = mimetype.ToNative();
+return NativeApi.GenericImage_SaveStreamWithMimeType_(handle, stream.NativePointer, ref mimetype_Native);
         }
         
-        public static bool SaveFileWithBitmapType(System.IntPtr handle, string name, int bitmapType)
+        public static bool SaveFileWithBitmapType(System.IntPtr handle, Alternet.UI.NativeStringSpan name, int bitmapType)
         {
-            return NativeApi.GenericImage_SaveFileWithBitmapType_(handle, name, bitmapType);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_SaveFileWithBitmapType_(handle, ref name_Native, bitmapType);
         }
         
-        public static bool SaveFileWithMimeType(System.IntPtr handle, string name, string mimetype)
+        public static bool SaveFileWithMimeType(System.IntPtr handle, Alternet.UI.NativeStringSpan name, Alternet.UI.NativeStringSpan mimetype)
         {
-            return NativeApi.GenericImage_SaveFileWithMimeType_(handle, name, mimetype);
+            var name_Native = name.ToNative();
+var mimetype_Native = mimetype.ToNative();
+return NativeApi.GenericImage_SaveFileWithMimeType_(handle, ref name_Native, ref mimetype_Native);
         }
         
-        public static bool SaveFile(System.IntPtr handle, string name)
+        public static bool SaveFile(System.IntPtr handle, Alternet.UI.NativeStringSpan name)
         {
-            return NativeApi.GenericImage_SaveFile_(handle, name);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_SaveFile_(handle, ref name_Native);
         }
         
         public static bool SaveStreamWithBitmapType(System.IntPtr handle, OutputStream stream, int type)
@@ -424,9 +443,10 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             return NativeApi.GenericImage_SaveStreamWithBitmapType_(handle, stream.NativePointer, type);
         }
         
-        public static bool CanRead(string filename)
+        public static bool CanRead(Alternet.UI.NativeStringSpan filename)
         {
-            return NativeApi.GenericImage_CanRead_(filename);
+            var filename_Native = filename.ToNative();
+return NativeApi.GenericImage_CanRead_(ref filename_Native);
         }
         
         public static bool CanReadStream(InputStream stream)
@@ -439,7 +459,7 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             return NativeApi.GenericImage_GetDefaultLoadFlags_();
         }
         
-        public static string GetImageExtWildcard()
+        public static Alternet.UI.NativeStringSpan GetImageExtWildcard()
         {
             return NativeApi.GenericImage_GetImageExtWildcard_();
         }
@@ -454,14 +474,16 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             NativeApi.GenericImage_CleanUpHandlers_();
         }
         
-        public static System.IntPtr FindHandlerByName(string name)
+        public static System.IntPtr FindHandlerByName(Alternet.UI.NativeStringSpan name)
         {
-            return NativeApi.GenericImage_FindHandlerByName_(name);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_FindHandlerByName_(ref name_Native);
         }
         
-        public static System.IntPtr FindHandlerByExt(string extension, int bitmapType)
+        public static System.IntPtr FindHandlerByExt(Alternet.UI.NativeStringSpan extension, int bitmapType)
         {
-            return NativeApi.GenericImage_FindHandlerByExt_(extension, bitmapType);
+            var extension_Native = extension.ToNative();
+return NativeApi.GenericImage_FindHandlerByExt_(ref extension_Native, bitmapType);
         }
         
         public static System.IntPtr FindHandlerByBitmapType(int bitmapType)
@@ -469,9 +491,10 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             return NativeApi.GenericImage_FindHandlerByBitmapType_(bitmapType);
         }
         
-        public static System.IntPtr FindHandlerByMime(string mimetype)
+        public static System.IntPtr FindHandlerByMime(Alternet.UI.NativeStringSpan mimetype)
         {
-            return NativeApi.GenericImage_FindHandlerByMime_(mimetype);
+            var mimetype_Native = mimetype.ToNative();
+return NativeApi.GenericImage_FindHandlerByMime_(ref mimetype_Native);
         }
         
         public static void InsertHandler(System.IntPtr handler)
@@ -479,14 +502,16 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             NativeApi.GenericImage_InsertHandler_(handler);
         }
         
-        public static bool RemoveHandler(string name)
+        public static bool RemoveHandler(Alternet.UI.NativeStringSpan name)
         {
-            return NativeApi.GenericImage_RemoveHandler_(name);
+            var name_Native = name.ToNative();
+return NativeApi.GenericImage_RemoveHandler_(ref name_Native);
         }
         
-        public static int GetImageCountInFile(string filename, int bitmapType)
+        public static int GetImageCountInFile(Alternet.UI.NativeStringSpan filename, int bitmapType)
         {
-            return NativeApi.GenericImage_GetImageCountInFile_(filename, bitmapType);
+            var filename_Native = filename.ToNative();
+return NativeApi.GenericImage_GetImageCountInFile_(ref filename_Native, bitmapType);
         }
         
         public static int GetImageCountInStream(InputStream stream, int bitmapType)
@@ -563,16 +588,16 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             public static extern System.IntPtr GenericImage_CreateImageWithSize_(int width, int height, bool clear);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_CreateImageFromFileWithBitmapType_(string name, int bitmapType, int index);
+            public static extern System.IntPtr GenericImage_CreateImageFromFileWithBitmapType_(ref Alternet.UI.NativeStringSpan name, int bitmapType, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_CreateImageFromFileWithMimeType_(string name, string mimetype, int index);
+            public static extern System.IntPtr GenericImage_CreateImageFromFileWithMimeType_(ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan mimetype, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_CreateImageFromStreamWithBitmapData_(IntPtr stream, int bitmapType, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_CreateImageFromStreamWithMimeType_(IntPtr stream, string mimetype, int index);
+            public static extern System.IntPtr GenericImage_CreateImageFromStreamWithMimeType_(IntPtr stream, ref Alternet.UI.NativeStringSpan mimetype, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_CreateImageWithSizeAndData_(int width, int height, System.IntPtr data, bool static_data);
@@ -602,10 +627,10 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             public static extern bool GenericImage_SetMaskFromImage_(System.IntPtr handle, System.IntPtr image, byte mr, byte mg, byte mb);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_SetOptionString_(System.IntPtr handle, string name, string value);
+            public static extern void GenericImage_SetOptionString_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void GenericImage_SetOptionInt_(System.IntPtr handle, string name, int value);
+            public static extern void GenericImage_SetOptionInt_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_SetRGB_(System.IntPtr handle, int x, int y, byte r, byte g, byte b);
@@ -737,10 +762,10 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             public static extern Alternet.Drawing.SizeI GenericImage_GetSize_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string GenericImage_GetOptionString_(System.IntPtr handle, string name);
+            public static extern Alternet.UI.NativeStringSpan GenericImage_GetOptionString_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int GenericImage_GetOptionInt_(System.IntPtr handle, string name);
+            public static extern int GenericImage_GetOptionInt_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_GetSubImage_(System.IntPtr handle, ref Alternet.Drawing.RectI rect);
@@ -755,7 +780,7 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             public static extern bool GenericImage_HasMask_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_HasOption_(System.IntPtr handle, string name);
+            public static extern bool GenericImage_HasOption_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool GenericImage_IsOk_(System.IntPtr handle);
@@ -767,31 +792,31 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             public static extern bool GenericImage_LoadStreamWithBitmapType_(System.IntPtr handle, IntPtr stream, int bitmapType, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_LoadFileWithBitmapType_(System.IntPtr handle, string name, int bitmapType, int index);
+            public static extern bool GenericImage_LoadFileWithBitmapType_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, int bitmapType, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_LoadFileWithMimeType_(System.IntPtr handle, string name, string mimetype, int index);
+            public static extern bool GenericImage_LoadFileWithMimeType_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan mimetype, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_LoadStreamWithMimeType_(System.IntPtr handle, IntPtr stream, string mimetype, int index);
+            public static extern bool GenericImage_LoadStreamWithMimeType_(System.IntPtr handle, IntPtr stream, ref Alternet.UI.NativeStringSpan mimetype, int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_SaveStreamWithMimeType_(System.IntPtr handle, IntPtr stream, string mimetype);
+            public static extern bool GenericImage_SaveStreamWithMimeType_(System.IntPtr handle, IntPtr stream, ref Alternet.UI.NativeStringSpan mimetype);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_SaveFileWithBitmapType_(System.IntPtr handle, string name, int bitmapType);
+            public static extern bool GenericImage_SaveFileWithBitmapType_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, int bitmapType);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_SaveFileWithMimeType_(System.IntPtr handle, string name, string mimetype);
+            public static extern bool GenericImage_SaveFileWithMimeType_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name, ref Alternet.UI.NativeStringSpan mimetype);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_SaveFile_(System.IntPtr handle, string name);
+            public static extern bool GenericImage_SaveFile_(System.IntPtr handle, ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool GenericImage_SaveStreamWithBitmapType_(System.IntPtr handle, IntPtr stream, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_CanRead_(string filename);
+            public static extern bool GenericImage_CanRead_(ref Alternet.UI.NativeStringSpan filename);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool GenericImage_CanReadStream_(IntPtr stream);
@@ -800,7 +825,7 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             public static extern int GenericImage_GetDefaultLoadFlags_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string GenericImage_GetImageExtWildcard_();
+            public static extern Alternet.UI.NativeStringSpan GenericImage_GetImageExtWildcard_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_AddHandler_(System.IntPtr handler);
@@ -809,25 +834,25 @@ return NativeApi.GenericImage_GetSubImage_(handle, ref rect_Native);
             public static extern void GenericImage_CleanUpHandlers_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByName_(string name);
+            public static extern System.IntPtr GenericImage_FindHandlerByName_(ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByExt_(string extension, int bitmapType);
+            public static extern System.IntPtr GenericImage_FindHandlerByExt_(ref Alternet.UI.NativeStringSpan extension, int bitmapType);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr GenericImage_FindHandlerByBitmapType_(int bitmapType);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr GenericImage_FindHandlerByMime_(string mimetype);
+            public static extern System.IntPtr GenericImage_FindHandlerByMime_(ref Alternet.UI.NativeStringSpan mimetype);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void GenericImage_InsertHandler_(System.IntPtr handler);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool GenericImage_RemoveHandler_(string name);
+            public static extern bool GenericImage_RemoveHandler_(ref Alternet.UI.NativeStringSpan name);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int GenericImage_GetImageCountInFile_(string filename, int bitmapType);
+            public static extern int GenericImage_GetImageCountInFile_(ref Alternet.UI.NativeStringSpan filename, int bitmapType);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int GenericImage_GetImageCountInStream_(IntPtr stream, int bitmapType);

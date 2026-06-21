@@ -16,7 +16,7 @@ namespace NativeApi.Api
         public event EventHandler? TextUrl;
         public event EventHandler? TextMaxLength;
 
-        public string ReportedUrl { get; }
+        public NativeStringSpan ReportedUrl { get; }
 
         public bool EditControlOnly { get; set; }
 
@@ -32,7 +32,7 @@ namespace NativeApi.Api
 
         public int GetLineLength(long lineNo) => throw new Exception();
 
-        public string GetLineText(long lineNo) => throw new Exception();
+        public NativeStringSpan GetLineText(long lineNo) => throw new Exception();
 
         public int GetNumberOfLines() => throw new Exception();
 
@@ -63,7 +63,7 @@ namespace NativeApi.Api
         public void Copy() => throw new Exception();
         public void Cut() => throw new Exception();
 
-        public void AppendText(string text) => throw new Exception();
+        public void AppendText(NativeStringSpan text) => throw new Exception();
 
         public long GetInsertionPoint() => throw new Exception();
 
@@ -72,7 +72,7 @@ namespace NativeApi.Api
 
         public void Remove(long from, long to) => throw new Exception();
 
-        public void Replace(long from, long to, string value) => throw new Exception();
+        public void Replace(long from, long to, NativeStringSpan value) => throw new Exception();
 
         public void SetInsertionPoint(long pos) => throw new Exception();
 
@@ -85,15 +85,15 @@ namespace NativeApi.Api
         public void SelectAll() => throw new Exception();
         public void SelectNone() => throw new Exception();
 
-        public string EmptyTextHint { get; set; }
+        public NativeStringSpan EmptyTextHint { get; set; }
 
         public void Undo() => throw new Exception();
 
-        public void WriteText(string text) => throw new Exception();
+        public void WriteText(NativeStringSpan text) => throw new Exception();
 
-        public string GetRange(long from, long to) => throw new Exception();
+        public NativeStringSpan GetRange(long from, long to) => throw new Exception();
 
-        public string GetStringSelection() => throw new Exception();
+        public NativeStringSpan GetStringSelection() => throw new Exception();
 
         public void EmptyUndoBuffer() => throw new Exception();
 

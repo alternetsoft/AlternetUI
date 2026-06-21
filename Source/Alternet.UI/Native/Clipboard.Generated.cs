@@ -50,10 +50,11 @@ namespace Alternet.UI.Native
             return NativeApi.Clipboard_IsIntFormatSupported_(NativePointer, format);
         }
         
-        public bool IsStrFormatSupported(string format)
+        public bool IsStrFormatSupported(Alternet.UI.NativeStringSpan format)
         {
             CheckDisposed();
-            return NativeApi.Clipboard_IsStrFormatSupported_(NativePointer, format);
+            var format_Native = format.ToNative();
+return NativeApi.Clipboard_IsStrFormatSupported_(NativePointer, ref format_Native);
         }
         
         
@@ -78,7 +79,7 @@ namespace Alternet.UI.Native
             public static extern bool Clipboard_IsIntFormatSupported_(IntPtr obj, int format);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Clipboard_IsStrFormatSupported_(IntPtr obj, string format);
+            public static extern bool Clipboard_IsStrFormatSupported_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);
             
         }
     }
