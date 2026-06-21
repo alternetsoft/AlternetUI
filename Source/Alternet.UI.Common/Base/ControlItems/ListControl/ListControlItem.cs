@@ -1127,57 +1127,92 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Measures item size for the specified <paramref name="item"/> and <paramref name="container"/>.
+        /// </summary>
+        /// <param name="container">The item container.</param>
+        /// <param name="dc">The graphics context used to measure the item's text.</param>
+        /// <param name="itemIndex">The index of the item.</param>
+        /// <param name="item">The item to measure.</param>
+        /// <param name="measureParams">Parameters used to measure item's size.</param>
+        /// <returns>The measured item size.</returns>
+        public static MeasureItemSizeResult MeasureMultiColumnItemSize(
+            IListControlItemContainer container,
+            Graphics dc,
+            int? itemIndex,
+            ListControlItem? item = null,
+            MeasureItemSizeParams? measureParams = null)
+        {
+            if (!container.HasColumns || item is null || !item.HasCells)
+                return MeasureSingleColumnItemSize(container, dc, itemIndex, item, measureParams);
+
+            MeasureItemSizeResult result = new();
+            result.ItemIndex = itemIndex;
+            result.Item = item;
+
+            var columnSeparatorWidth = GetColumnSeparatorWidth(container);
+            var columnCount = container.Columns.Count;
+            var useColumnWidth = measureParams?.UseColumnWidth ?? true;
+            var requestCellSize = measureParams?.RequestCellSize ?? false;
+
+            for (int i = 0; i < columnCount; i++)
+            {
+                var cell = item.GetCell(i);
+                var suggestedWidth = container.Columns[i].SuggestedWidth;
+                MeasureItemSizeResult cellSize = new();
+
+                if (cell is null)
+                {
+                    cellSize.Size = new SizeD(suggestedWidth, 0);
+                }
+                else
+                {
+                    cellSize = MeasureSingleColumnItemSize(container, dc, null, cell, measureParams);
+                    if (useColumnWidth)
+                    {
+                        cellSize.Width = suggestedWidth;
+                    }
+                }
+
+                cellSize.ItemIndex = i;
+                cellSize.Item = cell;
+
+                if (requestCellSize)
+                {
+                    result.Cells.Add(cellSize);
+                }
+
+                result.Width += cellSize.Width;
+                result.Height = Math.Max(result.Height, cellSize.Height);
+            }
+
+            if (columnCount > 1)
+            {
+                result.Width += columnSeparatorWidth * (columnCount - 1);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Default method which measures item size.
         /// </summary>
         /// <param name="container">Item container.</param>
         /// <param name="dc">Graphics context used to measure item's text.</param>
         /// <param name="itemIndex">Index of the item.</param>
-        public static SizeD DefaultMeasureItemSize(
+        /// <param name="measureParams">Parameters used to measure item's size.</param>
+        /// <returns>Measured item size.</returns>
+        public static MeasureItemSizeResult DefaultMeasureItemSize(
             IListControlItemContainer container,
             Graphics dc,
-            int itemIndex)
+            int itemIndex,
+            MeasureItemSizeParams? measureParams = null)
         {
             var item = container.GetItem(itemIndex);
 
-            if (container.HasColumns && item is not null && item.HasCells)
-                return InternalMultiColumn();
+            if (container.HasColumns)
+                return MeasureMultiColumnItemSize(container, dc, itemIndex, item, measureParams);
             else
-                return MeasureSingleColumnItemSize(container, dc, itemIndex, item);
-
-            SizeD InternalMultiColumn()
-            {
-                SizeD result = SizeD.Empty;
-
-                var columnSeparatorWidth = GetColumnSeparatorWidth(container);
-                var columnCount = container.Columns.Count;
-
-                for (int i = 0; i < columnCount; i++)
-                {
-                    var cell = item.GetCell(i);
-                    var suggestedWidth = container.Columns[i].SuggestedWidth;
-                    SizeD cellSize;
-
-                    if (cell is null)
-                    {
-                        cellSize = new SizeD(suggestedWidth, 0);
-                    }
-                    else
-                    {
-                        cellSize = MeasureSingleColumnItemSize(container, dc, null, cell);
-                        cellSize.Width = suggestedWidth;
-                    }
-
-                    result.Width += cellSize.Width;
-                    result.Height = Math.Max(result.Height, cellSize.Height);
-                }
-
-                if (columnCount > 1)
-                {
-                    result.Width += columnSeparatorWidth * (columnCount - 1);
-                }
-
-                return result;
-            }
+                return MeasureSingleColumnItemSize(container, dc, itemIndex, item, measureParams);
         }
 
         /// <summary>
@@ -1212,7 +1247,8 @@ namespace Alternet.UI
             }
             else
             {
-                s = container?.GetItemText(itemIndex.Value, forDisplay) ?? DefaultGetItemText(item, forDisplay, formatProvider);
+                s = container?.GetItemText(itemIndex.Value, forDisplay)
+                    ?? DefaultGetItemText(item, forDisplay, formatProvider);
             }
 
             return s;
@@ -1264,38 +1300,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Measures the size required to display a single item in a single-column list control, including text, images,
+        /// Measures the size required to display a single item in a single-column list control,
+        /// including text, images,
         /// and margins.
         /// </summary>
         /// <remarks>If both itemIndex and item are null, the method returns SizeD.Empty. The measurement
         /// accounts for images, checkboxes, text (including multi-line text), and control-specific margins. The
         /// returned size ensures that all visual elements of the item are fully accommodated.</remarks>
-        /// <param name="formatProvider">An object that supplies culture-specific formatting information,
-        /// or null to use the current culture. If container is specified, it's format provider is used. Optional.</param>
-        /// <param name="container">The item container that provides access to item data, text, and layout defaults.</param>
+        /// <param name="measureParams">Parameters used to measure item's size.</param>
+        /// <param name="container">The item container that provides access to item data, text,
+        /// and layout defaults.</param>
         /// <param name="dc">The graphics context used for measuring text and images.</param>
-        /// <param name="itemIndex">The zero-based index of the item to measure, or null to use the provided item directly.</param>
+        /// <param name="itemIndex">The zero-based index of the item to measure, or null
+        /// to use the provided item directly.</param>
         /// <param name="item">The item to measure, or null to resolve the item using the specified index.</param>
-        /// <returns>A SizeD structure representing the width and height required to display the item, including any images and
+        /// <returns>A SizeD structure representing the width and height required
+        /// to display the item, including any images and
         /// margins.</returns>
-        public static SizeD MeasureSingleColumnItemSize(
+        public static MeasureItemSizeResult MeasureSingleColumnItemSize(
             IListControlItemContainer container,
             Graphics dc,
             int? itemIndex,
             ListControlItem? item = null,
-            IFormatProvider? formatProvider = null)
+            MeasureItemSizeParams? measureParams = null)
         {
-            string s = GetItemText(container, itemIndex, item, forDisplay: true, formatProvider);
+            string s = GetItemText(container, itemIndex, item, forDisplay: true, measureParams?.FormatProvider);
 
             if (itemIndex is null)
             {
                 if (item is null)
-                    return SizeD.Empty;
+                    return new();
             }
             else
             {
                 item ??= container.GetItem(itemIndex.Value);
             }
+
+            MeasureItemSizeResult result = new();
+            result.ItemIndex = itemIndex;
+            result.Item = item;
 
             var flags = item?.LabelFlags ?? DrawLabelFlags.None;
 
@@ -1403,7 +1446,9 @@ namespace Alternet.UI
             var minItemHeight = ListControlItem.GetMinHeight(item, container);
             size.Height = MathUtils.RoundUpAndIncrementIfOdd(Math.Max(size.Height, minItemHeight));
 
-            return size;
+            result.Size = size;
+
+            return result;
         }
 
         /// <summary>
@@ -2899,184 +2944,6 @@ namespace Alternet.UI
                         BorderSettings.DebugBorder);
                 }
             }
-        }
-
-        /// <summary>
-        /// Represents data related to a container for a <see cref="ListControlItem"/>.
-        /// </summary>
-        public struct ContainerRelatedData
-        {
-            /// <summary>
-            /// Gets or sets a value indicating whether the item is selected.
-            /// </summary>
-            public bool IsSelected;
-
-            private FlagsAndAttributesStruct attr = new();
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ContainerRelatedData"/> struct.
-            /// </summary>
-            public ContainerRelatedData()
-            {
-            }
-
-            /// <summary>
-            /// <inheritdoc cref="BaseObjectWithAttr.Tag"/>
-            /// </summary>
-            [Browsable(false)]
-            public object? Tag { get; set; }
-
-            /// <summary>
-            /// <inheritdoc cref="BaseObjectWithAttr.IntFlags"/>
-            /// </summary>
-            [Browsable(false)]
-            public ICustomIntFlags IntFlags
-            {
-                get
-                {
-                    return IntFlagsAndAttributes;
-                }
-            }
-
-            /// <summary>
-            /// <inheritdoc cref="BaseObjectWithAttr.IntFlagsAndAttributes"/>
-            /// </summary>
-            [Browsable(false)]
-            public IIntFlagsAndAttributes IntFlagsAndAttributes
-            {
-                get
-                {
-                    return attr.IntFlagsAndAttributes;
-                }
-            }
-
-            /// <summary>
-            /// <inheritdoc cref="BaseObjectWithAttr.FlagsAndAttributes"/>
-            /// </summary>
-            [Browsable(false)]
-            public IFlagsAndAttributes FlagsAndAttributes
-            {
-                get
-                {
-                    return attr.FlagsAndAttributes;
-                }
-            }
-
-            /// <summary>
-            /// <inheritdoc cref="BaseObjectWithAttr.CustomFlags"/>
-            /// </summary>
-            [Browsable(false)]
-            public ICustomFlags<string> CustomFlags => FlagsAndAttributes.Flags;
-
-            /// <summary>
-            /// <inheritdoc cref="BaseObjectWithAttr.CustomAttr"/>
-            /// </summary>
-            [Browsable(false)]
-            public ICustomAttributes<string, object> CustomAttr => FlagsAndAttributes.Attr;
-
-            /// <summary>
-            /// <inheritdoc cref="BaseObjectWithAttr.IntAttr"/>
-            /// </summary>
-            [Browsable(false)]
-            public ICustomAttributes<int, object> IntAttr
-            {
-                get
-                {
-                    return IntFlagsAndAttributes.Attr;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Contains information about the checkbox associated with a <see cref="ListControlItem"/>.
-        /// </summary>
-        public class ItemCheckBoxInfo : BaseObject
-        {
-            /// <summary>
-            /// Gets or sets the rectangle that defines the bounds of the item.
-            /// </summary>
-            public RectD Bounds;
-
-            /// <summary>
-            /// Gets or sets the visual state of the checkbox.
-            /// </summary>
-            public VisualControlState PartState;
-
-            /// <summary>
-            /// Gets or sets the size of the checkbox.
-            /// </summary>
-            public SizeD CheckSize;
-
-            /// <summary>
-            /// Represents the dimensions of the check image as a <see cref="SizeD"/> structure.
-            /// </summary>
-            public SizeD CheckImageSize;
-
-            /// <summary>
-            /// Gets or sets the rectangle that defines the position and size of the checkbox.
-            /// </summary>
-            public RectD CheckRect;
-
-            /// <summary>
-            /// Gets or sets the rectangle that defines the position and size of the text.
-            /// </summary>
-            public RectD TextRect;
-
-            /// <summary>
-            /// Gets or sets the state of the checkbox.
-            /// </summary>
-            public CheckState CheckState;
-
-            /// <summary>
-            /// Gets or sets the SVG image used when the checkbox is unchecked.
-            /// </summary>
-            public SvgImage? ImageUnchecked;
-
-            /// <summary>
-            /// Gets or sets the SVG image used when the checkbox is checked.
-            /// </summary>
-            public SvgImage? ImageChecked;
-
-            /// <summary>
-            /// Gets or sets the SVG image used when the checkbox is in an indeterminate state.
-            /// </summary>
-            public SvgImage? ImageIndeterminate;
-
-            /// <summary>
-            /// Gets or sets the color of the SVG image.
-            /// </summary>
-            public Color? SvgImageColor;
-
-            /// <summary>
-            /// Gets or sets the color used to draw the checkbox. If not set, the checkbox may use
-            /// a default color defined by the container or theme.
-            /// This property is not used when checkbox images are provided, as the images will be
-            /// drawn in their original colors.
-            /// However, if the checkbox is drawn using default rendering (without custom images),
-            /// this color will be applied to the checkbox elements.
-            /// </summary>
-            public Color? Color;
-
-            /// <summary>
-            /// Gets or sets the visual state of the SVG image.
-            /// </summary>
-            public VisualControlState SvgState { get; set; } = VisualControlState.Normal;
-
-            /// <summary>
-            /// Gets or sets a value indicating whether the checkbox is visible.
-            /// </summary>
-            public bool IsCheckBoxVisible;
-
-            /// <summary>
-            /// Gets or sets whether to draw the checkbox as a radio button.
-            /// </summary>
-            public bool IsRadioButton;
-
-            /// <summary>
-            /// Gets or sets a value indicating whether to keep text padding
-            /// even when the checkbox is not visible.
-            /// </summary>
-            public bool KeepTextPaddingWithoutCheckBox;
         }
     }
 }

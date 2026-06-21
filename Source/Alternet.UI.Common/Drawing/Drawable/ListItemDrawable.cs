@@ -60,7 +60,7 @@ namespace Alternet.Drawing
                 return SizeD.Empty;
 
             var result = ListControlItem.DefaultMeasureItemSize(Container, Container.Control.MeasureCanvas, 0);
-            result += Item.ForegroundMargin.Size;
+            result.Size += Item.ForegroundMargin.Size;
 
             var checkBoxInfo = Item.GetCheckBoxInfo(Container, (PointD.Empty, result));
 
