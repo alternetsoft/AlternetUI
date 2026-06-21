@@ -21,9 +21,9 @@ namespace Alternet::UI
 
         long GetStyle();
 
-        optional<string> _initialDirectory;
-        optional<string> _title;
-        optional<string> _directoryName;
+        wxString _initialDirectory;
+        wxString _title;
+        wxString _directoryName;
 
         Window* _owner = nullptr;
 

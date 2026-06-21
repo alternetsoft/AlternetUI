@@ -649,10 +649,11 @@ return NativeApi.RichTextBox_BeginTextColour_(NativePointer, ref colour_Native);
             return NativeApi.RichTextBox_EndNumberedBullet_(NativePointer);
         }
         
-        public bool BeginSymbolBullet(string symbol, int leftIndent, int leftSubIndent, int bulletStyle)
+        public bool BeginSymbolBullet(Alternet.UI.NativeStringSpan symbol, int leftIndent, int leftSubIndent, int bulletStyle)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginSymbolBullet_(NativePointer, symbol, leftIndent, leftSubIndent, bulletStyle);
+            var symbol_Native = symbol.ToNative();
+return NativeApi.RichTextBox_BeginSymbolBullet_(NativePointer, ref symbol_Native, leftIndent, leftSubIndent, bulletStyle);
         }
         
         public bool EndSymbolBullet()
@@ -661,10 +662,11 @@ return NativeApi.RichTextBox_BeginTextColour_(NativePointer, ref colour_Native);
             return NativeApi.RichTextBox_EndSymbolBullet_(NativePointer);
         }
         
-        public bool BeginStandardBullet(string bulletName, int leftIndent, int leftSubIndent, int bulletStyle)
+        public bool BeginStandardBullet(Alternet.UI.NativeStringSpan bulletName, int leftIndent, int leftSubIndent, int bulletStyle)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginStandardBullet_(NativePointer, bulletName, leftIndent, leftSubIndent, bulletStyle);
+            var bulletName_Native = bulletName.ToNative();
+return NativeApi.RichTextBox_BeginStandardBullet_(NativePointer, ref bulletName_Native, leftIndent, leftSubIndent, bulletStyle);
         }
         
         public bool EndStandardBullet()
@@ -673,10 +675,11 @@ return NativeApi.RichTextBox_BeginTextColour_(NativePointer, ref colour_Native);
             return NativeApi.RichTextBox_EndStandardBullet_(NativePointer);
         }
         
-        public bool BeginCharacterStyle(string characterStyle)
+        public bool BeginCharacterStyle(Alternet.UI.NativeStringSpan characterStyle)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginCharacterStyle_(NativePointer, characterStyle);
+            var characterStyle_Native = characterStyle.ToNative();
+return NativeApi.RichTextBox_BeginCharacterStyle_(NativePointer, ref characterStyle_Native);
         }
         
         public bool EndCharacterStyle()
@@ -685,10 +688,11 @@ return NativeApi.RichTextBox_BeginTextColour_(NativePointer, ref colour_Native);
             return NativeApi.RichTextBox_EndCharacterStyle_(NativePointer);
         }
         
-        public bool BeginParagraphStyle(string paragraphStyle)
+        public bool BeginParagraphStyle(Alternet.UI.NativeStringSpan paragraphStyle)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginParagraphStyle_(NativePointer, paragraphStyle);
+            var paragraphStyle_Native = paragraphStyle.ToNative();
+return NativeApi.RichTextBox_BeginParagraphStyle_(NativePointer, ref paragraphStyle_Native);
         }
         
         public bool EndParagraphStyle()
@@ -697,10 +701,11 @@ return NativeApi.RichTextBox_BeginTextColour_(NativePointer, ref colour_Native);
             return NativeApi.RichTextBox_EndParagraphStyle_(NativePointer);
         }
         
-        public bool BeginListStyle(string listStyle, int level, int number)
+        public bool BeginListStyle(Alternet.UI.NativeStringSpan listStyle, int level, int number)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginListStyle_(NativePointer, listStyle, level, number);
+            var listStyle_Native = listStyle.ToNative();
+return NativeApi.RichTextBox_BeginListStyle_(NativePointer, ref listStyle_Native, level, number);
         }
         
         public bool EndListStyle()
@@ -709,10 +714,12 @@ return NativeApi.RichTextBox_BeginTextColour_(NativePointer, ref colour_Native);
             return NativeApi.RichTextBox_EndListStyle_(NativePointer);
         }
         
-        public bool BeginURL(string url, string characterStyle)
+        public bool BeginURL(Alternet.UI.NativeStringSpan url, Alternet.UI.NativeStringSpan characterStyle)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginURL_(NativePointer, url, characterStyle);
+            var url_Native = url.ToNative();
+var characterStyle_Native = characterStyle.ToNative();
+return NativeApi.RichTextBox_BeginURL_(NativePointer, ref url_Native, ref characterStyle_Native);
         }
         
         public bool EndURL()
@@ -951,16 +958,17 @@ return NativeApi.RichTextBox_PrepareContextMenu_(NativePointer, menu, ref pt_Nat
             return NativeApi.RichTextBox_EditProperties_(NativePointer, richObj, parentWindow);
         }
         
-        public string GetPropertiesMenuLabel(System.IntPtr richObj)
+        public Alternet.UI.NativeStringSpan GetPropertiesMenuLabel(System.IntPtr richObj)
         {
             CheckDisposed();
             return NativeApi.RichTextBox_GetPropertiesMenuLabel_(NativePointer, richObj);
         }
         
-        public bool BeginBatchUndo(string cmdName)
+        public bool BeginBatchUndo(Alternet.UI.NativeStringSpan cmdName)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginBatchUndo_(NativePointer, cmdName);
+            var cmdName_Native = cmdName.ToNative();
+return NativeApi.RichTextBox_BeginBatchUndo_(NativePointer, ref cmdName_Native);
         }
         
         public bool EndBatchUndo()
@@ -1029,10 +1037,11 @@ return NativeApi.RichTextBox_PrepareContextMenu_(NativePointer, menu, ref pt_Nat
             NativeApi.RichTextBox_EnableVirtualAttributes_(NativePointer, b);
         }
         
-        public void DoWriteText(string value, int flags)
+        public void DoWriteText(Alternet.UI.NativeStringSpan value, int flags)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_DoWriteText_(NativePointer, value, flags);
+            var value_Native = value.ToNative();
+NativeApi.RichTextBox_DoWriteText_(NativePointer, ref value_Native, flags);
         }
         
         public bool ExtendSelection(long oldPosition, long newPosition, int flags)
@@ -1212,16 +1221,17 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             NativeApi.RichTextBox_SetDelayedImageProcessingTime_(NativePointer, t);
         }
         
-        public string GetValue()
+        public Alternet.UI.NativeStringSpan GetValue()
         {
             CheckDisposed();
             return NativeApi.RichTextBox_GetValue_(NativePointer);
         }
         
-        public void SetValue(string value)
+        public void SetValue(Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
-            NativeApi.RichTextBox_SetValue_(NativePointer, value);
+            var value_Native = value.ToNative();
+NativeApi.RichTextBox_SetValue_(NativePointer, ref value_Native);
         }
         
         public void SetLineHeight(int height)
@@ -1361,10 +1371,11 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             return NativeApi.RichTextBox_SetListStyle_(NativePointer, startRange, endRange, def, flags, startFrom, specifiedLevel);
         }
         
-        public bool SetListStyle2(long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel)
+        public bool SetListStyle2(long startRange, long endRange, Alternet.UI.NativeStringSpan defName, int flags, int startFrom, int specifiedLevel)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_SetListStyle2_(NativePointer, startRange, endRange, defName, flags, startFrom, specifiedLevel);
+            var defName_Native = defName.ToNative();
+return NativeApi.RichTextBox_SetListStyle2_(NativePointer, startRange, endRange, ref defName_Native, flags, startFrom, specifiedLevel);
         }
         
         public bool ClearListStyle(long startRange, long endRange, int flags)
@@ -1379,10 +1390,11 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             return NativeApi.RichTextBox_NumberList_(NativePointer, startRange, endRange, def, flags, startFrom, specifiedLevel);
         }
         
-        public bool NumberList2(long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel)
+        public bool NumberList2(long startRange, long endRange, Alternet.UI.NativeStringSpan defName, int flags, int startFrom, int specifiedLevel)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_NumberList2_(NativePointer, startRange, endRange, defName, flags, startFrom, specifiedLevel);
+            var defName_Native = defName.ToNative();
+return NativeApi.RichTextBox_NumberList2_(NativePointer, startRange, endRange, ref defName_Native, flags, startFrom, specifiedLevel);
         }
         
         public bool PromoteList(int promoteBy, long startRange, long endRange, System.IntPtr def, int flags, int specifiedLevel)
@@ -1391,10 +1403,11 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             return NativeApi.RichTextBox_PromoteList_(NativePointer, promoteBy, startRange, endRange, def, flags, specifiedLevel);
         }
         
-        public bool PromoteList2(int promoteBy, long startRange, long endRange, string defName, int flags, int specifiedLevel)
+        public bool PromoteList2(int promoteBy, long startRange, long endRange, Alternet.UI.NativeStringSpan defName, int flags, int specifiedLevel)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_PromoteList2_(NativePointer, promoteBy, startRange, endRange, defName, flags, specifiedLevel);
+            var defName_Native = defName.ToNative();
+return NativeApi.RichTextBox_PromoteList2_(NativePointer, promoteBy, startRange, endRange, ref defName_Native, flags, specifiedLevel);
         }
         
         public bool Delete(long startRange, long endRange)
@@ -1523,10 +1536,11 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             return NativeApi.RichTextBox_WriteImage_(NativePointer, bitmap.NativePointer, bitmapType, textAttr);
         }
         
-        public bool WriteImage2(string filename, int bitmapType, System.IntPtr textAttr)
+        public bool WriteImage2(Alternet.UI.NativeStringSpan filename, int bitmapType, System.IntPtr textAttr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteImage2_(NativePointer, filename, bitmapType, textAttr);
+            var filename_Native = filename.ToNative();
+return NativeApi.RichTextBox_WriteImage2_(NativePointer, ref filename_Native, bitmapType, textAttr);
         }
         
         public bool WriteImage3(System.IntPtr imageBlock, System.IntPtr textAttr)
@@ -1535,10 +1549,11 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             return NativeApi.RichTextBox_WriteImage3_(NativePointer, imageBlock, textAttr);
         }
         
-        public System.IntPtr WriteField(string fieldType, System.IntPtr properties, System.IntPtr textAttr)
+        public System.IntPtr WriteField(Alternet.UI.NativeStringSpan fieldType, System.IntPtr properties, System.IntPtr textAttr)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_WriteField_(NativePointer, fieldType, properties, textAttr);
+            var fieldType_Native = fieldType.ToNative();
+return NativeApi.RichTextBox_WriteField_(NativePointer, ref fieldType_Native, properties, textAttr);
         }
         
         public bool CanDeleteRange(System.IntPtr container, long startRange, long endRange)
@@ -1931,37 +1946,37 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern bool RichTextBox_EndNumberedBullet_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginSymbolBullet_(IntPtr obj, string symbol, int leftIndent, int leftSubIndent, int bulletStyle);
+            public static extern bool RichTextBox_BeginSymbolBullet_(IntPtr obj, ref Alternet.UI.NativeStringSpan symbol, int leftIndent, int leftSubIndent, int bulletStyle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndSymbolBullet_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginStandardBullet_(IntPtr obj, string bulletName, int leftIndent, int leftSubIndent, int bulletStyle);
+            public static extern bool RichTextBox_BeginStandardBullet_(IntPtr obj, ref Alternet.UI.NativeStringSpan bulletName, int leftIndent, int leftSubIndent, int bulletStyle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndStandardBullet_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginCharacterStyle_(IntPtr obj, string characterStyle);
+            public static extern bool RichTextBox_BeginCharacterStyle_(IntPtr obj, ref Alternet.UI.NativeStringSpan characterStyle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndCharacterStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginParagraphStyle_(IntPtr obj, string paragraphStyle);
+            public static extern bool RichTextBox_BeginParagraphStyle_(IntPtr obj, ref Alternet.UI.NativeStringSpan paragraphStyle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndParagraphStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginListStyle_(IntPtr obj, string listStyle, int level, int number);
+            public static extern bool RichTextBox_BeginListStyle_(IntPtr obj, ref Alternet.UI.NativeStringSpan listStyle, int level, int number);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndListStyle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginURL_(IntPtr obj, string url, string characterStyle);
+            public static extern bool RichTextBox_BeginURL_(IntPtr obj, ref Alternet.UI.NativeStringSpan url, ref Alternet.UI.NativeStringSpan characterStyle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndURL_(IntPtr obj);
@@ -2081,10 +2096,10 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern bool RichTextBox_EditProperties_(IntPtr obj, System.IntPtr richObj, System.IntPtr parentWindow);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetPropertiesMenuLabel_(IntPtr obj, System.IntPtr richObj);
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetPropertiesMenuLabel_(IntPtr obj, System.IntPtr richObj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginBatchUndo_(IntPtr obj, string cmdName);
+            public static extern bool RichTextBox_BeginBatchUndo_(IntPtr obj, ref Alternet.UI.NativeStringSpan cmdName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndBatchUndo_(IntPtr obj);
@@ -2120,7 +2135,7 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern void RichTextBox_EnableVirtualAttributes_(IntPtr obj, bool b);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_DoWriteText_(IntPtr obj, string value, int flags);
+            public static extern void RichTextBox_DoWriteText_(IntPtr obj, ref Alternet.UI.NativeStringSpan value, int flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_ExtendSelection_(IntPtr obj, long oldPosition, long newPosition, int flags);
@@ -2210,10 +2225,10 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern void RichTextBox_SetDelayedImageProcessingTime_(IntPtr obj, long t);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string RichTextBox_GetValue_(IntPtr obj);
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetValue_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void RichTextBox_SetValue_(IntPtr obj, string value);
+            public static extern void RichTextBox_SetValue_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void RichTextBox_SetLineHeight_(IntPtr obj, int height);
@@ -2285,7 +2300,7 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern bool RichTextBox_SetListStyle_(IntPtr obj, long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_SetListStyle2_(IntPtr obj, long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel);
+            public static extern bool RichTextBox_SetListStyle2_(IntPtr obj, long startRange, long endRange, ref Alternet.UI.NativeStringSpan defName, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_ClearListStyle_(IntPtr obj, long startRange, long endRange, int flags);
@@ -2294,13 +2309,13 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern bool RichTextBox_NumberList_(IntPtr obj, long startRange, long endRange, System.IntPtr def, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_NumberList2_(IntPtr obj, long startRange, long endRange, string defName, int flags, int startFrom, int specifiedLevel);
+            public static extern bool RichTextBox_NumberList2_(IntPtr obj, long startRange, long endRange, ref Alternet.UI.NativeStringSpan defName, int flags, int startFrom, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_PromoteList_(IntPtr obj, int promoteBy, long startRange, long endRange, System.IntPtr def, int flags, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_PromoteList2_(IntPtr obj, int promoteBy, long startRange, long endRange, string defName, int flags, int specifiedLevel);
+            public static extern bool RichTextBox_PromoteList2_(IntPtr obj, int promoteBy, long startRange, long endRange, ref Alternet.UI.NativeStringSpan defName, int flags, int specifiedLevel);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_Delete_(IntPtr obj, long startRange, long endRange);
@@ -2366,13 +2381,13 @@ return NativeApi.RichTextBox_GetCaretPositionForIndex_(NativePointer, position, 
             public static extern bool RichTextBox_WriteImage_(IntPtr obj, IntPtr bitmap, int bitmapType, System.IntPtr textAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_WriteImage2_(IntPtr obj, string filename, int bitmapType, System.IntPtr textAttr);
+            public static extern bool RichTextBox_WriteImage2_(IntPtr obj, ref Alternet.UI.NativeStringSpan filename, int bitmapType, System.IntPtr textAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_WriteImage3_(IntPtr obj, System.IntPtr imageBlock, System.IntPtr textAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr RichTextBox_WriteField_(IntPtr obj, string fieldType, System.IntPtr properties, System.IntPtr textAttr);
+            public static extern System.IntPtr RichTextBox_WriteField_(IntPtr obj, ref Alternet.UI.NativeStringSpan fieldType, System.IntPtr properties, System.IntPtr textAttr);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_CanDeleteRange_(IntPtr obj, System.IntPtr container, long startRange, long endRange);

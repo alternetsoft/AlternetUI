@@ -82,7 +82,7 @@ namespace Alternet::UI
 		Attr(attr)->SetFontWeight((wxFontWeight)fontWeight);
 	}
 
-	void TextBoxTextAttr::SetFontFaceName(void* attr, const string& faceName)
+	void TextBoxTextAttr::SetFontFaceName(void* attr, const NativeStringSpan& faceName)
 	{
 		Attr(attr)->SetFontFaceName(wxStr(faceName));
 	}
@@ -124,7 +124,7 @@ namespace Alternet::UI
 		return Attr(attr)->GetAlignment();
 	}
 
-	void TextBoxTextAttr::SetURL(void* attr, const string& url)
+	void TextBoxTextAttr::SetURL(void* attr, const NativeStringSpan& url)
 	{
 		Attr(attr)->SetURL(wxStr(url));
 	}
@@ -159,7 +159,7 @@ namespace Alternet::UI
 		Attr(attr)->SetBulletNumber(n);
 	}
 
-	void TextBoxTextAttr::SetBulletText(void* attr, const string& text)
+	void TextBoxTextAttr::SetBulletText(void* attr, const NativeStringSpan& text)
 	{
 		Attr(attr)->SetBulletText(wxStr(text));
 	}
@@ -169,27 +169,27 @@ namespace Alternet::UI
 		Attr(attr)->SetPageBreak(pageBreak);
 	}
 
-	void TextBoxTextAttr::SetCharacterStyleName(void* attr, const string& name)
+	void TextBoxTextAttr::SetCharacterStyleName(void* attr, const NativeStringSpan& name)
 	{
 		Attr(attr)->SetCharacterStyleName(wxStr(name));
 	}
 	
-	void TextBoxTextAttr::SetParagraphStyleName(void* attr, const string& name)
+	void TextBoxTextAttr::SetParagraphStyleName(void* attr, const NativeStringSpan& name)
 	{
 		Attr(attr)->SetParagraphStyleName(wxStr(name));
 	}
 
-	void TextBoxTextAttr::SetListStyleName(void* attr, const string& name)
+	void TextBoxTextAttr::SetListStyleName(void* attr, const NativeStringSpan& name)
 	{
 		Attr(attr)->SetListStyleName(wxStr(name));
 	}
 
-	void TextBoxTextAttr::SetBulletFont(void* attr, const string& bulletFont)
+	void TextBoxTextAttr::SetBulletFont(void* attr, const NativeStringSpan& bulletFont)
 	{
 		Attr(attr)->SetBulletFont(wxStr(bulletFont));
 	}
 
-	void TextBoxTextAttr::SetBulletName(void* attr, const string& name)
+	void TextBoxTextAttr::SetBulletName(void* attr, const NativeStringSpan& name)
 	{
 		Attr(attr)->SetBulletName(wxStr(name));
 	}
@@ -249,9 +249,10 @@ namespace Alternet::UI
 		return Attr(attr)->GetFontStrikethrough();
 	}
 
-	string TextBoxTextAttr::GetFontFaceName(void* attr)
+	NativeStringSpan TextBoxTextAttr::GetFontFaceName(void* attr)
 	{
-		return wxStr(Attr(attr)->GetFontFaceName());
+		_containerStatic = Attr(attr)->GetFontFaceName();
+		return wxStr(_containerStatic);
 	}
 
 	int TextBoxTextAttr::GetFontFamily(void* attr)
@@ -284,14 +285,16 @@ namespace Alternet::UI
 		return Attr(attr)->GetBulletNumber();
 	}
 
-	string TextBoxTextAttr::GetBulletText(void* attr)
+	NativeStringSpan TextBoxTextAttr::GetBulletText(void* attr)
 	{
-		return wxStr(Attr(attr)->GetBulletText());
+		_containerStatic = Attr(attr)->GetBulletText();
+		return wxStr(_containerStatic);
 	}
 
-	string TextBoxTextAttr::GetURL(void* attr)
+	NativeStringSpan TextBoxTextAttr::GetURL(void* attr)
 	{
-		return wxStr(Attr(attr)->GetURL());
+		_containerStatic = Attr(attr)->GetURL();
+		return wxStr(_containerStatic);
 	}
 
 	int TextBoxTextAttr::GetTextEffects(void* attr)

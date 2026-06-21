@@ -33,12 +33,12 @@ namespace Alternet::UI
 	NativeStringSpan TextBox::GetText()
 	{
 		_textValue = GetTextCtrl()->GetValue();
-		return WxToStringSpan(_textValue);
+		return wxStr(_textValue);
 	}
 
 	void TextBox::SetText(const NativeStringSpan& value)
 	{
-		GetTextCtrl()->SetValue(StringSpanToWx(value));
+		GetTextCtrl()->SetValue(wxStr(value));
 	}
 
 	TextBox::TextBox(void* validator) : TextBox()
@@ -315,16 +315,16 @@ namespace Alternet::UI
 
 		auto url = GetTextCtrl()->GetValue().Mid(start, delta).Clone();
 
-		_eventUrl = wxStr(url);
+		_eventUrl = url;
 
 		// Application::Log("OnTextUrl.GetString:" + event.GetString());
 
 		RaiseEvent(TextBoxEvent::TextUrl);
 	}
 
-	string TextBox::GetReportedUrl()
+	NativeStringSpan TextBox::GetReportedUrl()
 	{
-		return _eventUrl;
+		return wxStr(_eventUrl);
 	}
 
 	void TextBox::OnTextMaxLength(wxCommandEvent& event)
@@ -435,9 +435,10 @@ namespace Alternet::UI
 		return GetTextCtrl()->GetLineLength(lineNo);
 	}
 
-	string TextBox::GetLineText(int64_t lineNo)
+	NativeStringSpan TextBox::GetLineText(int64_t lineNo)
 	{
-		return wxStr(GetTextCtrl()->GetLineText(lineNo));
+		_container = GetTextCtrl()->GetLineText(lineNo);
+		return wxStr(_container);
 	}
 
 	int TextBox::GetNumberOfLines()
@@ -486,7 +487,7 @@ namespace Alternet::UI
 		GetTextCtrl()->Cut();
 	}
 
-	void TextBox::AppendText(const string& text)
+	void TextBox::AppendText(const NativeStringSpan& text)
 	{
 		GetTextCtrl()->AppendText(wxStr(text));
 	}
@@ -511,7 +512,7 @@ namespace Alternet::UI
 		GetTextCtrl()->Remove(from, to);
 	}
 
-	void TextBox::Replace(int64_t from, int64_t to, const string& value)
+	void TextBox::Replace(int64_t from, int64_t to, const NativeStringSpan& value)
 	{
 		GetTextCtrl()->Replace(from, to, wxStr(value));
 	}
@@ -551,19 +552,21 @@ namespace Alternet::UI
 		GetTextCtrl()->Undo();
 	}
 
-	void TextBox::WriteText(const string& text)
+	void TextBox::WriteText(const NativeStringSpan& text)
 	{
 		GetTextCtrl()->WriteText(wxStr(text));
 	}
 
-	string TextBox::GetRange(int64_t from, int64_t to)
+	NativeStringSpan TextBox::GetRange(int64_t from, int64_t to)
 	{
-		return wxStr(GetTextCtrl()->GetRange(from, to));
+		_container = GetTextCtrl()->GetRange(from, to);
+		return wxStr(_container);
 	}
 
-	string TextBox::GetStringSelection()
+	NativeStringSpan TextBox::GetStringSelection()
 	{
-		return wxStr(GetTextCtrl()->GetStringSelection());
+		_container = GetTextCtrl()->GetStringSelection();
+		return wxStr(_container);
 	}
 
 	void TextBox::EmptyUndoBuffer()
@@ -597,12 +600,13 @@ namespace Alternet::UI
 		return selectionTo;
 	}
 
-	string TextBox::GetEmptyTextHint()
+	NativeStringSpan TextBox::GetEmptyTextHint()
 	{
-		return wxStr(GetTextCtrl()->GetHint());
+		_container = GetTextCtrl()->GetHint();
+		return wxStr(_container);
 	}
 
-	void TextBox::SetEmptyTextHint(const string& value)
+	void TextBox::SetEmptyTextHint(const NativeStringSpan& value)
 	{
 		GetTextCtrl()->SetHint(wxStr(value));
 	}

@@ -232,7 +232,7 @@ scrollbar.horizontal{
         GenericImage::EnsureImageHandlersInitialized();
 
         if (s_current != nullptr)
-            throwExInvalidOpWithInfo(wxStr("Application::Application"));
+            throwExInvalidOpWithInfo("Application::Application");
         s_current = this;
 
 #ifdef __WXMSW__    
@@ -279,7 +279,7 @@ scrollbar.horizontal{
     void Application::SetGtkCss(bool inject, const NativeStringSpan& css)
     {
         _injectGtkCss = inject;
-        _gtkCss = StringSpanToWx(css);
+        _gtkCss = wxStr(css);
     }
 
     void Application::GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount)
@@ -389,7 +389,7 @@ scrollbar.horizontal{
 
     bool Application::SetNativeTheme(const NativeStringSpan& theme)
     {
-        return _app->SetNativeTheme(StringSpanToWx(theme));
+        return _app->SetNativeTheme(wxStr(theme));
     }
 
     void Application::SetTopWindow(void* window)
@@ -435,55 +435,55 @@ scrollbar.horizontal{
     NativeStringSpan Application::GetDisplayName() 
     {
         _container = _app->GetAppDisplayName();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
 
     void Application::SetDisplayName(const NativeStringSpan& value) 
     {
-        _app->SetAppDisplayName(StringSpanToWx(value));
+        _app->SetAppDisplayName(wxStr(value));
     }
 
     NativeStringSpan Application::GetAppClassName() 
     {
         _container = _app->GetClassName();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
     void Application::SetAppClassName(const NativeStringSpan& value)
     {
-        _app->SetClassName(StringSpanToWx(value));
+        _app->SetClassName(wxStr(value));
     }
 
     NativeStringSpan Application::GetVendorName()
     {
         _container = _app->GetVendorName();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
 
     void Application::SetVendorName(const NativeStringSpan& value)
     {
-        _app->SetVendorName(StringSpanToWx(value));
+        _app->SetVendorName(wxStr(value));
     }
 
     NativeStringSpan Application::GetVendorDisplayName()
     {
         _container = _app->GetVendorDisplayName();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
 
     void Application::SetVendorDisplayName(const NativeStringSpan& value)
     {
-        _app->SetVendorDisplayName(StringSpanToWx(value));
+        _app->SetVendorDisplayName(wxStr(value));
     }
 
     NativeStringSpan Application::GetName()
     {
         _container = _app->GetAppName();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
 
     void Application::SetName(const NativeStringSpan& value)
     {
-        _app->SetAppName(StringSpanToWx(value));
+        _app->SetAppName(wxStr(value));
     }
 
     void Application::RaiseIdle()
@@ -532,7 +532,7 @@ scrollbar.horizontal{
 
     NativeStringSpan Application::GetEventArgString()
     {
-        return WxToStringSpan(_eventArgString);
+        return wxStr(_eventArgString);
     }
 
     void Application::Log(const wxString& msg)
@@ -555,7 +555,7 @@ scrollbar.horizontal{
 
     void Application::SetSystemOptionInt(const NativeStringSpan& name, int value)
     {
-        wxSystemOptions::SetOption(StringSpanToWx(name), value);
+        wxSystemOptions::SetOption(wxStr(name), value);
     }
 
     void Application::ProcessPendingEvents()
@@ -570,7 +570,7 @@ scrollbar.horizontal{
 
     void Application::ThrowError(int value)
     {
-        throwExInvalidOpWithInfo(wxStr("Sample exception"));
+        throwExInvalidOpWithInfo("Sample exception");
         //throw value;
     }
 
@@ -780,13 +780,13 @@ public:
 
     NativeStringSpan Application::GetCustomData(const NativeStringSpan& key)
     {
-        auto wx = StringSpanToWx(key);
+        auto wx = wxStr(key);
 
         if (wx == "wx.PortAndVersion")
         {
             _container = GetPortAndVersion();
 
-            return WxToStringSpan(_container);
+            return wxStr(_container);
         }
 
 		return NativeStringSpan();

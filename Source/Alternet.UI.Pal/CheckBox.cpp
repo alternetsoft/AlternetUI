@@ -13,12 +13,12 @@ namespace Alternet::UI
     NativeStringSpan CheckBox::GetText()
     {
         _textValue = GetCheckBox()->GetLabel();
-        return WxToStringSpan(_textValue);
+        return wxStr(_textValue);
     }
 
     void CheckBox::SetText(const NativeStringSpan& value)
     {
-        auto wx = StringSpanToWx(value);
+        auto wx = wxStr(value);
         GetCheckBox()->SetLabel(wx);
     }
 

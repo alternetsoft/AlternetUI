@@ -97,7 +97,7 @@ namespace NativeApi.Api
 
         public IntPtr GetSelection() => throw new Exception();
 
-        public string GetPropertyName(IntPtr property) => throw new Exception();
+        public NativeStringSpan GetPropertyName(IntPtr property) => throw new Exception();
 
         public static void InitAllTypeHandlers() => throw new Exception();
 
@@ -225,7 +225,7 @@ namespace NativeApi.Api
         public void SetPropertyEditor(IntPtr id, IntPtr editor) =>
             throw new Exception();
 
-        public void SetPropertyEditorByName(IntPtr id, string editorName) =>
+        public void SetPropertyEditorByName(IntPtr id, NativeStringSpan editorName) =>
             throw new Exception();
 
         public void SetPropertyLabel(IntPtr id, NativeStringSpan newproplabel) =>

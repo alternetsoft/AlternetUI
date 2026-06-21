@@ -214,7 +214,7 @@ namespace Alternet::UI
 
     void ListBox::SetFirstItemStr(const NativeStringSpan& s)
     {
-        GetListBoxBase()->SetFirstItem(StringSpanToWx(s));
+        GetListBoxBase()->SetFirstItem(wxStr(s));
     }
 
     void ListBox::SetSelection(int n)
@@ -229,18 +229,18 @@ namespace Alternet::UI
 
     bool ListBox::SetStringSelection(const NativeStringSpan& s, bool select)
     {
-        return GetListBoxBase()->SetStringSelection(StringSpanToWx(s), select);
+        return GetListBoxBase()->SetStringSelection(wxStr(s), select);
     }
 
     void ListBox::SetString(uint32_t n, const NativeStringSpan& s)
     {
-		GetItemContainer()->SetString(n, StringSpanToWx(s));
+		GetItemContainer()->SetString(n, wxStr(s));
     }
 
     NativeStringSpan ListBox::GetString(uint32_t n)
     {
         _container = GetItemContainer()->GetString(n);
-		return WxToStringSpan(_container);
+		return wxStr(_container);
     }
 
     uint32_t ListBox::GetCount()
@@ -255,17 +255,17 @@ namespace Alternet::UI
 
     int ListBox::Append(const NativeStringSpan& s)
     {
-		return GetItemContainer()->Append(StringSpanToWx(s));
+		return GetItemContainer()->Append(wxStr(s));
     }
 
     int ListBox::Insert(const NativeStringSpan& item, uint32_t pos)
     {
-		return GetItemContainer()->Insert(StringSpanToWx(item), pos);
+		return GetItemContainer()->Insert(wxStr(item), pos);
     }
 
     int ListBox::FindString(const NativeStringSpan& s, bool bCase)
     {
-		return GetItemContainer()->FindString(StringSpanToWx(s), bCase);
+		return GetItemContainer()->FindString(wxStr(s), bCase);
     }
 
     int ListBox::HitTest(const PointD& point)

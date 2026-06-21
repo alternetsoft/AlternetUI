@@ -115,7 +115,7 @@ namespace Alternet::UI
 
         return WxToStringSpan(_container);
 #else
-        return WxToStringSpan("");
+        return wxStr("");
 #endif
     }
 
@@ -126,13 +126,13 @@ namespace Alternet::UI
 
         return WxToStringSpan(_container);
 #else
-        return WxToStringSpan("");
+        return wxStr("");
 #endif
     }
 
     NativeStringSpan Menu::GetEventMenuItemId()
     {
-        return WxToStringSpan(_eventMenuItemId);
+        return wxStr(_eventMenuItemId);
     }
 
     bool Menu::GetEventMenuItemChecked()
@@ -146,28 +146,28 @@ namespace Alternet::UI
 
         if (wxAlternetMenuItem* item = wxDynamicCast(obj, wxAlternetMenuItem))
         {
-            return WxToStringSpan(item->_id);
+            return wxStr(item->_id);
         }
         else
             if (wxAlternetMenu* menu = wxDynamicCast(obj, wxAlternetMenu))
             {
-                return WxToStringSpan(menu->_id);
+                return wxStr(menu->_id);
             }
             else
                 if (wxAlternetMenuBar* bar = wxDynamicCast(obj, wxAlternetMenuBar))
                 {
-                    return WxToStringSpan(bar->_id);
+                    return wxStr(bar->_id);
                 }
                 else
                 {
-                    return WxToStringSpan("");
+                    return wxStr("");
                 }
     }
 
     void* Menu::CreateContextMenu(const NativeStringSpan& id)
     {
         auto result = new wxAlternetMenu();
-		result->_id = StringSpanToWx(id);
+		result->_id = wxStr(id);
 
 		return result;
     }
@@ -175,7 +175,7 @@ namespace Alternet::UI
     void* Menu::CreateMainMenu(const NativeStringSpan& id)
     {
         auto result = new wxAlternetMenuBar();
-        result->_id = StringSpanToWx(id);
+        result->_id = wxStr(id);
         return result;
     }
 
@@ -203,11 +203,11 @@ namespace Alternet::UI
         auto result = new wxAlternetMenuItem(
             nullptr,
             kind == wxITEM_SEPARATOR ? wxID_SEPARATOR : IdManager::AllocateId(),
-            CoerceMenuText(StringSpanToWx(title)),
-            CoerceMenuHelp(StringSpanToWx(help)),
+            CoerceMenuText(wxStr(title)),
+            CoerceMenuHelp(wxStr(help)),
             kind,
             nullptr);
-        result->_id = StringSpanToWx(id);
+        result->_id = wxStr(id);
         return result;
     }
 
@@ -327,7 +327,7 @@ namespace Alternet::UI
     void Menu::SetMenuItemText(void* handle, const NativeStringSpan& value, const NativeStringSpan& rightValue)
     {
         auto item = (wxAlternetMenuItem*)handle;
-        auto text = CoerceMenuText(StringSpanToWx(value));
+        auto text = CoerceMenuText(wxStr(value));
 
         auto accel = item->GetAccel();
 
@@ -347,7 +347,7 @@ namespace Alternet::UI
     {
         auto item = (wxAlternetMenuItem*)handle;
 
-        auto newRole = StringSpanToWx(role);
+        auto newRole = wxStr(role);
 
         if (item->_role == newRole)
             return;
@@ -412,7 +412,7 @@ namespace Alternet::UI
         if (newItem->ownerMenu != nullptr)
             return false;
 
-        auto pos = menu->GetItemIndex(StringSpanToWx(childId));
+        auto pos = menu->GetItemIndex(wxStr(childId));
 
         if (pos < 0)
             return false;
@@ -427,7 +427,7 @@ namespace Alternet::UI
         if (menu == nullptr)
             return;
 
-        auto item = menu->GetItemById(StringSpanToWx(childId));
+        auto item = menu->GetItemById(wxStr(childId));
 
         if (item == nullptr)
             return;
@@ -451,7 +451,7 @@ namespace Alternet::UI
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;
 		auto alternetMenu = (wxAlternetMenu*)menu;
-        auto coercedText = CoerceMenuText(StringSpanToWx(text));
+        auto coercedText = CoerceMenuText(wxStr(text));
         auto result = menuBar->Append(alternetMenu, coercedText);
         if (!result)
 			return false;
@@ -463,7 +463,7 @@ namespace Alternet::UI
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;
 
-        auto pos = menuBar->GetItemIndex(StringSpanToWx(childId));
+        auto pos = menuBar->GetItemIndex(wxStr(childId));
         if (pos == wxNOT_FOUND)
             return;
 
@@ -474,7 +474,7 @@ namespace Alternet::UI
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;
 
-        auto pos = menuBar->GetItemIndex(StringSpanToWx(childId));
+        auto pos = menuBar->GetItemIndex(wxStr(childId));
         if (pos == wxNOT_FOUND)
             return nullptr;
 
@@ -486,7 +486,7 @@ namespace Alternet::UI
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;
 
-        auto pos = menuBar->GetItemIndex(StringSpanToWx(childId));
+        auto pos = menuBar->GetItemIndex(wxStr(childId));
         if (pos == wxNOT_FOUND)
             return nullptr;
 
@@ -505,12 +505,12 @@ namespace Alternet::UI
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;
 
-        auto pos = menuBar->GetItemIndex(StringSpanToWx(childId));
+        auto pos = menuBar->GetItemIndex(wxStr(childId));
         if (pos == wxNOT_FOUND)
             return false;
 
 		auto alternetMenu = (wxAlternetMenu*)menu;
-        auto coercedText = CoerceMenuText(StringSpanToWx(title));
+        auto coercedText = CoerceMenuText(wxStr(title));
         auto result = menuBar->Insert(pos, alternetMenu, coercedText);
         
         if (!result)
@@ -544,7 +544,7 @@ namespace Alternet::UI
         wxAlternetMenuBar* alternetMenu = wxDynamicCast(oldValue, wxAlternetMenuBar);
         if (alternetMenu == nullptr)
 			return nullptr;
-		return alternetMenu->GetMenuItemById(StringSpanToWx(id));
+		return alternetMenu->GetMenuItemById(wxStr(id));
     }
 
     void Menu::SetMainMenu(Window* window, void* menu)
@@ -577,12 +577,12 @@ namespace Alternet::UI
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;
 
-        auto pos = menuBar->GetItemIndex(StringSpanToWx(childId));
+        auto pos = menuBar->GetItemIndex(wxStr(childId));
         if (pos == wxNOT_FOUND)
             return nullptr;
 
 		auto alternetMenu = (wxAlternetMenu*)menu;
-        auto coercedText = CoerceMenuText(StringSpanToWx(title));
+        auto coercedText = CoerceMenuText(wxStr(title));
         auto oldSubMenu = menuBar->Replace(pos, alternetMenu, coercedText);
         if (oldSubMenu != nullptr)
         {
@@ -597,11 +597,11 @@ namespace Alternet::UI
     {
         auto menuBar = (wxAlternetMenuBar*)menuHandle;
 
-        auto pos = menuBar->GetItemIndex(StringSpanToWx(childId));
+        auto pos = menuBar->GetItemIndex(wxStr(childId));
         if (pos == wxNOT_FOUND)
 			return;
 
-		auto coercedText = CoerceMenuText(StringSpanToWx(label));
+		auto coercedText = CoerceMenuText(wxStr(label));
 		menuBar->SetMenuLabel(pos, coercedText);
     }
 }

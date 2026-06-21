@@ -22,7 +22,7 @@ namespace Alternet::UI
         }
     }
 
-    /*static*/ optional<string> UnmanagedDataObject::TryGetText(wxDataObjectComposite* dataObject)
+    /*static*/ optional<wxString> UnmanagedDataObject::TryGetText(wxDataObjectComposite* dataObject)
     {
         wxTextDataObject* object = nullptr;
 
@@ -38,7 +38,7 @@ namespace Alternet::UI
         if (object == nullptr)
             return nullopt;
 
-        return wxStr(object->GetText());
+        return object->GetText();
     }
 
     /*static*/ std::vector<wxDataFormat> UnmanagedDataObject::GetTextDataFormats()
@@ -73,7 +73,7 @@ namespace Alternet::UI
         return object->GetFilenames();
     }
 
-    /*static*/ optional<string> UnmanagedDataObject::TryGetFilesString(
+    /*static*/ optional<wxString> UnmanagedDataObject::TryGetFilesString(
         wxDataObjectComposite* dataObject)
     {
         auto fileNames = TryGetFiles(dataObject);
@@ -91,7 +91,7 @@ namespace Alternet::UI
                 result.Append("|");
         }
 
-        return wxStr(result);
+        return result;
     }
 
     /*static*/ optional<wxBitmap> UnmanagedDataObject::TryGetBitmap(wxDataObjectComposite* dataObject)
@@ -123,22 +123,24 @@ namespace Alternet::UI
 #endif
     }
 
-    bool UnmanagedDataObject::GetDataPresent(const string& format)
+    bool UnmanagedDataObject::GetDataPresent(const NativeStringSpan& format)
     {
-        if (format == DataFormats::Text)
+		auto wxFormat = wxStr(format);
+
+        if (wxFormat == DataFormats::Text)
         {
             for(auto format : GetTextDataFormats())
                 if (_dataObject->IsSupportedFormat(format))
                     return true;
         }
 
-        if (format == DataFormats::Files)
+        if (wxFormat == DataFormats::Files)
             return _dataObject->IsSupportedFormat(wxDF_FILENAME);
 
-        if (format == DataFormats::Bitmap)
+        if (wxFormat == DataFormats::Bitmap)
             return _dataObject->IsSupportedFormat(GetBitmapDataFormat());
 
-        auto frmt = wxDataFormat(wxStr(format));
+        auto frmt = wxDataFormat(wxFormat);
         return _dataObject->IsSupportedFormat(frmt);
     }
 
@@ -157,20 +159,20 @@ namespace Alternet::UI
 
     void* UnmanagedDataObject::OpenFormatsArray()
     {
-        auto result = new std::vector<string>();
+        auto result = new std::vector<NativeStringSpan>();
 
-        if (GetDataPresent(DataFormats::Text))
-            result->push_back(DataFormats::Text);
+        if (GetDataPresent(wxStr(DataFormats::Text)))
+            result->push_back(wxStr(DataFormats::Text));
 
-        if (GetDataPresent(DataFormats::Files))
-            result->push_back(DataFormats::Files);
+        if (GetDataPresent(wxStr(DataFormats::Files)))
+            result->push_back(wxStr(DataFormats::Files));
 
-        if (GetDataPresent(DataFormats::Bitmap))
-            result->push_back(DataFormats::Bitmap);
+        if (GetDataPresent(wxStr(DataFormats::Bitmap)))
+            result->push_back(wxStr(DataFormats::Bitmap));
 
         /*
-        if (GetDataPresent(DataFormats::Persistent))
-            result->push_back(DataFormats::Persistent);
+        if (GetDataPresent(wxStr(DataFormats::Persistent)))
+            result->push_back(wxStr(DataFormats::Persistent));
         */
 
         auto fmtCount = _dataObject->GetFormatCount();
@@ -194,49 +196,53 @@ namespace Alternet::UI
 
     int UnmanagedDataObject::GetFormatsItemCount(void* array)
     {
-        return ((std::vector<string>*)array)->size();
+        return ((std::vector<NativeStringSpan>*)array)->size();
     }
 
-    string UnmanagedDataObject::GetFormatsItemAt(void* array, int index)
+    NativeStringSpan UnmanagedDataObject::GetFormatsItemAt(void* array, int index)
     {
-        return (*((std::vector<string>*)array))[index];
+        return (*((std::vector<NativeStringSpan>*)array))[index];
     }
 
     void UnmanagedDataObject::CloseFormatsArray(void* array)
     {
-        delete (std::vector<string>*)array;
+        delete (std::vector<NativeStringSpan>*)array;
     }
 
-    string UnmanagedDataObject::GetStringData(const string& format)
+    NativeStringSpan UnmanagedDataObject::GetStringData(const NativeStringSpan& format)
     {
+		auto wxFormat = wxStr(format);
+
         if (!GetDataPresent(format))
-            throwExInvalidArg(format, FormatNotPresentErrorMessage);
+            throwExInvalidArg(wxFormat, FormatNotPresentErrorMessage);
 
         auto text = TryGetText(_dataObject);
         if (text.has_value())
-            return text.value();
+            return wxStr(text.value());
 
         throwExNoInfo;
     }
 
-    string UnmanagedDataObject::GetFileNamesData(const string& format)
+    NativeStringSpan UnmanagedDataObject::GetFileNamesData(const NativeStringSpan& format)
     {
+		auto wxFormat = wxStr(format);
+
         if (!GetDataPresent(format))
-            throwExInvalidArg(format, FormatNotPresentErrorMessage);
+            throwExInvalidArg(wxFormat, FormatNotPresentErrorMessage);
 
         auto fileNames = TryGetFilesString(_dataObject);
         if (fileNames.has_value())
-            return fileNames.value();
+            return wxStr(fileNames.value());
 
         throwExNoInfo;
     }
 
-    UnmanagedStream* UnmanagedDataObject::GetStreamData(const string& format)
+    UnmanagedStream* UnmanagedDataObject::GetStreamData(const NativeStringSpan& format)
     {
         if (!GetDataPresent(format))
             return nullptr;
 
-        if (format == DataFormats::Bitmap)
+        if (wxStr(format) == DataFormats::Bitmap)
         {
             auto bitmap = TryGetBitmap(_dataObject);
             if (bitmap.has_value())
@@ -249,9 +255,9 @@ namespace Alternet::UI
             }
         }
 
-        if (format == DataFormats::Persistent)
+        if (wxStr(format) == DataFormats::Persistent)
         {
-            auto fmt = wxDataFormat(wxStr(DataFormats::Persistent));
+            auto fmt = wxDataFormat(DataFormats::Persistent);
             if (_dataObject->IsSupportedFormat(fmt))
             {
                 auto dobject = static_cast<wxCustomDataObject*>(_dataObject->GetObject(fmt));
@@ -269,16 +275,16 @@ namespace Alternet::UI
         return nullptr;
     }
 
-    void UnmanagedDataObject::SetStringData(const string& format, const string& value)
+    void UnmanagedDataObject::SetStringData(const NativeStringSpan& format, const NativeStringSpan& value)
     {
         auto textData = new wxTextDataObject(wxStr(value));
-        if (format != DataFormats::Text)
+        if (wxStr(format) != DataFormats::Text)
             textData->SetFormat(wxDataFormat(wxStr(format)));
 
         _dataObject->Add(textData);
     }
 
-    void UnmanagedDataObject::SetFileNamesData(const string& format, const string& value)
+    void UnmanagedDataObject::SetFileNamesData(const NativeStringSpan& format, const NativeStringSpan& value)
     {
         auto fileData = new wxFileDataObject();
 
@@ -289,18 +295,18 @@ namespace Alternet::UI
             fileData->AddFile(fileName);
         }
 
-        if (format != DataFormats::Files)
+        if (wxStr(format) != DataFormats::Files)
             fileData->SetFormat(wxDataFormat(wxStr(format)));
 
         _dataObject->Add(fileData);
     }
 
-    void UnmanagedDataObject::SetStreamData(const string& format, void* value)
+    void UnmanagedDataObject::SetStreamData(const NativeStringSpan& format, void* value)
     {
         InputStream inputStream(value);
         ManagedInputStream managedInputStream(&inputStream);
 
-        if (format == DataFormats::Bitmap)
+        if (wxStr(format) == DataFormats::Bitmap)
         {
             auto bitmap = wxBitmap(managedInputStream);
             auto bitmapData = new wxBitmapDataObject(bitmap);

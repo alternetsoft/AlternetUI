@@ -302,7 +302,7 @@ return NativeApi.WxOtherFactory_DisplayGetFromPoint_(ref pt_Native);
             return NativeApi.WxOtherFactory_SystemSettingsGetMetric_(index, win);
         }
         
-        public static string SystemAppearanceGetName()
+        public static Alternet.UI.NativeStringSpan SystemAppearanceGetName()
         {
             return NativeApi.WxOtherFactory_SystemAppearanceGetName_();
         }
@@ -871,7 +871,7 @@ return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, ref text_Native);
             public static extern int WxOtherFactory_SystemSettingsGetMetric_(int index, System.IntPtr win);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string WxOtherFactory_SystemAppearanceGetName_();
+            public static extern Alternet.UI.NativeStringSpan WxOtherFactory_SystemAppearanceGetName_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_SystemAppearanceIsDark_();

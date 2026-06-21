@@ -183,8 +183,8 @@ namespace NativeApi.Api
         // Gets a system-dependent metric.
         public static int SystemSettingsGetMetric(int index, IntPtr win = default) => default;
 
-        // Returns the name if available or empty string otherwise.
-        public static string SystemAppearanceGetName() => default;
+        // Returns the name if available or empty str otherwise.
+        public static NativeStringSpan SystemAppearanceGetName() => default;
 
         // Return true if the current system there is explicitly recognized as
         // being a dark theme or if the default window background is dark.

@@ -47,8 +47,8 @@ namespace Alternet::UI
         auto wxOwner = owner != nullptr ? owner->GetWxWindow() : nullptr;
 
         auto wxResult = wxMessageBox2(
-            StringSpanToWx(text),
-            StringSpanToWx(caption),
+            wxStr(text),
+            wxStr(caption),
             style,
             wxOwner);
 
@@ -136,7 +136,7 @@ namespace Alternet::UI
             result = DialogResult::Cancel;
             break;
         default:
-            throwEx(u"Unexpected wxMessageBox value.");
+            throwEx("Unexpected wxMessageBox value.");
         }
 
         return result;

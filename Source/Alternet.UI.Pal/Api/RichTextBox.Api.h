@@ -733,10 +733,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndNumberedBullet_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginSymbolBullet_(RichTextBox* obj, const char16_t* symbol, int leftIndent, int leftSubIndent, int bulletStyle)
+ALTERNET_UI_API c_bool RichTextBox_BeginSymbolBullet_(RichTextBox* obj, NativeStringSpan* symbol, int leftIndent, int leftSubIndent, int bulletStyle)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginSymbolBullet(symbol, leftIndent, leftSubIndent, bulletStyle);
+        return obj->BeginSymbolBullet(*symbol, leftIndent, leftSubIndent, bulletStyle);
     });
 }
 
@@ -747,10 +747,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndSymbolBullet_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginStandardBullet_(RichTextBox* obj, const char16_t* bulletName, int leftIndent, int leftSubIndent, int bulletStyle)
+ALTERNET_UI_API c_bool RichTextBox_BeginStandardBullet_(RichTextBox* obj, NativeStringSpan* bulletName, int leftIndent, int leftSubIndent, int bulletStyle)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginStandardBullet(bulletName, leftIndent, leftSubIndent, bulletStyle);
+        return obj->BeginStandardBullet(*bulletName, leftIndent, leftSubIndent, bulletStyle);
     });
 }
 
@@ -761,10 +761,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndStandardBullet_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginCharacterStyle_(RichTextBox* obj, const char16_t* characterStyle)
+ALTERNET_UI_API c_bool RichTextBox_BeginCharacterStyle_(RichTextBox* obj, NativeStringSpan* characterStyle)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginCharacterStyle(characterStyle);
+        return obj->BeginCharacterStyle(*characterStyle);
     });
 }
 
@@ -775,10 +775,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndCharacterStyle_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginParagraphStyle_(RichTextBox* obj, const char16_t* paragraphStyle)
+ALTERNET_UI_API c_bool RichTextBox_BeginParagraphStyle_(RichTextBox* obj, NativeStringSpan* paragraphStyle)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginParagraphStyle(paragraphStyle);
+        return obj->BeginParagraphStyle(*paragraphStyle);
     });
 }
 
@@ -789,10 +789,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndParagraphStyle_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginListStyle_(RichTextBox* obj, const char16_t* listStyle, int level, int number)
+ALTERNET_UI_API c_bool RichTextBox_BeginListStyle_(RichTextBox* obj, NativeStringSpan* listStyle, int level, int number)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginListStyle(listStyle, level, number);
+        return obj->BeginListStyle(*listStyle, level, number);
     });
 }
 
@@ -803,10 +803,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndListStyle_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginURL_(RichTextBox* obj, const char16_t* url, const char16_t* characterStyle)
+ALTERNET_UI_API c_bool RichTextBox_BeginURL_(RichTextBox* obj, NativeStringSpan* url, NativeStringSpan* characterStyle)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginURL(url, characterStyle);
+        return obj->BeginURL(*url, *characterStyle);
     });
 }
 
@@ -1083,17 +1083,17 @@ ALTERNET_UI_API c_bool RichTextBox_EditProperties_(RichTextBox* obj, void* richO
     });
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetPropertiesMenuLabel_(RichTextBox* obj, void* richObj)
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetPropertiesMenuLabel_(RichTextBox* obj, void* richObj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPropertiesMenuLabel(richObj));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPropertiesMenuLabel(richObj);
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginBatchUndo_(RichTextBox* obj, const char16_t* cmdName)
+ALTERNET_UI_API c_bool RichTextBox_BeginBatchUndo_(RichTextBox* obj, NativeStringSpan* cmdName)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginBatchUndo(cmdName);
+        return obj->BeginBatchUndo(*cmdName);
     });
 }
 
@@ -1174,10 +1174,10 @@ ALTERNET_UI_API void RichTextBox_EnableVirtualAttributes_(RichTextBox* obj, c_bo
     });
 }
 
-ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, const char16_t* value, int flags)
+ALTERNET_UI_API void RichTextBox_DoWriteText_(RichTextBox* obj, NativeStringSpan* value, int flags)
 {
     MarshalExceptions<void>([&](){
-        obj->DoWriteText(value, flags);
+        obj->DoWriteText(*value, flags);
     });
 }
 
@@ -1384,17 +1384,17 @@ ALTERNET_UI_API void RichTextBox_SetDelayedImageProcessingTime_(RichTextBox* obj
     });
 }
 
-ALTERNET_UI_API char16_t* RichTextBox_GetValue_(RichTextBox* obj)
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetValue_(RichTextBox* obj)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetValue());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetValue();
     });
 }
 
-ALTERNET_UI_API void RichTextBox_SetValue_(RichTextBox* obj, const char16_t* value)
+ALTERNET_UI_API void RichTextBox_SetValue_(RichTextBox* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetValue(value);
+        obj->SetValue(*value);
     });
 }
 
@@ -1559,10 +1559,10 @@ ALTERNET_UI_API c_bool RichTextBox_SetListStyle_(RichTextBox* obj, int64_t start
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_SetListStyle2_(RichTextBox* obj, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int startFrom, int specifiedLevel)
+ALTERNET_UI_API c_bool RichTextBox_SetListStyle2_(RichTextBox* obj, int64_t startRange, int64_t endRange, NativeStringSpan* defName, int flags, int startFrom, int specifiedLevel)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->SetListStyle2(startRange, endRange, defName, flags, startFrom, specifiedLevel);
+        return obj->SetListStyle2(startRange, endRange, *defName, flags, startFrom, specifiedLevel);
     });
 }
 
@@ -1580,10 +1580,10 @@ ALTERNET_UI_API c_bool RichTextBox_NumberList_(RichTextBox* obj, int64_t startRa
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_NumberList2_(RichTextBox* obj, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int startFrom, int specifiedLevel)
+ALTERNET_UI_API c_bool RichTextBox_NumberList2_(RichTextBox* obj, int64_t startRange, int64_t endRange, NativeStringSpan* defName, int flags, int startFrom, int specifiedLevel)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->NumberList2(startRange, endRange, defName, flags, startFrom, specifiedLevel);
+        return obj->NumberList2(startRange, endRange, *defName, flags, startFrom, specifiedLevel);
     });
 }
 
@@ -1594,10 +1594,10 @@ ALTERNET_UI_API c_bool RichTextBox_PromoteList_(RichTextBox* obj, int promoteBy,
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_PromoteList2_(RichTextBox* obj, int promoteBy, int64_t startRange, int64_t endRange, const char16_t* defName, int flags, int specifiedLevel)
+ALTERNET_UI_API c_bool RichTextBox_PromoteList2_(RichTextBox* obj, int promoteBy, int64_t startRange, int64_t endRange, NativeStringSpan* defName, int flags, int specifiedLevel)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->PromoteList2(promoteBy, startRange, endRange, defName, flags, specifiedLevel);
+        return obj->PromoteList2(promoteBy, startRange, endRange, *defName, flags, specifiedLevel);
     });
 }
 
@@ -1748,10 +1748,10 @@ ALTERNET_UI_API c_bool RichTextBox_WriteImage_(RichTextBox* obj, Image* bitmap, 
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_WriteImage2_(RichTextBox* obj, const char16_t* filename, int bitmapType, void* textAttr)
+ALTERNET_UI_API c_bool RichTextBox_WriteImage2_(RichTextBox* obj, NativeStringSpan* filename, int bitmapType, void* textAttr)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->WriteImage2(filename, bitmapType, textAttr);
+        return obj->WriteImage2(*filename, bitmapType, textAttr);
     });
 }
 
@@ -1762,10 +1762,10 @@ ALTERNET_UI_API c_bool RichTextBox_WriteImage3_(RichTextBox* obj, void* imageBlo
     });
 }
 
-ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, const char16_t* fieldType, void* properties, void* textAttr)
+ALTERNET_UI_API void* RichTextBox_WriteField_(RichTextBox* obj, NativeStringSpan* fieldType, void* properties, void* textAttr)
 {
     return MarshalExceptions<void*>([&](){
-        return obj->WriteField(fieldType, properties, textAttr);
+        return obj->WriteField(*fieldType, properties, textAttr);
     });
 }
 

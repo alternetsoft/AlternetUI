@@ -12,7 +12,7 @@ namespace Alternet::UI
             if (_nextAvailableId == INT_MAX)
             {
                 if (_freedIds.empty())
-                    throwEx(u"Cannot allocate an ID. No available IDs left.");
+                    throwEx("Cannot allocate an ID. No available IDs left.");
 
                 auto id = _freedIds.top();
                 _freedIds.pop();

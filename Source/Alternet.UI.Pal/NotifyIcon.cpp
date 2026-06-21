@@ -145,7 +145,7 @@ namespace Alternet::UI
 
     NativeStringSpan NotifyIcon::GetText()
     {
-        return WxToStringSpan(_text);
+        return wxStr(_text);
     }
 
     bool NotifyIcon::GetIsAvailable()
@@ -169,7 +169,7 @@ namespace Alternet::UI
 
     void NotifyIcon::SetText(const NativeStringSpan& value)
     {
-        _text = StringSpanToWx(value);
+        _text = wxStr(value);
 
         if (_taskBarIcon == nullptr)
             RecreateTaskBarIconIfNeeded();

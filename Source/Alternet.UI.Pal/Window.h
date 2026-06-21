@@ -160,8 +160,8 @@ protected:
         void OnMaximize(wxMaximizeEvent& event);
         void OnIconize(wxIconizeEvent& event);
 
-        string RetrieveTitle();
-        void ApplyTitle(const string& value);
+        wxString RetrieveTitle();
+        void ApplyTitle(const wxString& value);
 
         long GetWindowStyle();
 
@@ -192,7 +192,7 @@ protected:
 
         DelayedFlags<Window, DelayedWindowFlags> _delayedFlags;
         FlagsAccessor<WindowFlags> _winFlags;
-        DelayedValue<Window, string> _title;
+        DelayedValue<Window, wxString> _title;
         WindowState _state = WindowState::Normal;
         IconSet* _icon = nullptr;
         WindowState _lastState = WindowState::Normal;

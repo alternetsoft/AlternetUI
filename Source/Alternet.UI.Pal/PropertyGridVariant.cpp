@@ -45,19 +45,21 @@ namespace Alternet::UI
 		return ToVar(handle).Unshare();
 	}
 
-	string PropertyGridVariant::GetValueType(void* handle)
+	NativeStringSpan PropertyGridVariant::GetValueType(void* handle)
 	{
-		return wxStr(ToVar(handle).GetType());
+		_containerStatic = ToVar(handle).GetType();
+		return wxStr(_containerStatic);
 	}
 
-	bool PropertyGridVariant::IsType(void* handle, const string& type)
+	bool PropertyGridVariant::IsType(void* handle, const NativeStringSpan& type)
 	{
 		return ToVar(handle).IsType(wxStr(type));
 	}
 
-	string PropertyGridVariant::MakeString(void* handle) 
+	NativeStringSpan PropertyGridVariant::MakeString(void* handle)
 	{
-		return wxStr(ToVar(handle).MakeString());
+		_containerStatic = ToVar(handle).MakeString();
+		return wxStr(_containerStatic);
 	}
 
 	uint32_t PropertyGridVariant::GetLastColorKind()
@@ -156,9 +158,10 @@ namespace Alternet::UI
 		return dt2;
 	}
 
-	string PropertyGridVariant::GetString(void* handle) 
+	NativeStringSpan PropertyGridVariant::GetString(void* handle) 
 	{
-		return wxStr(ToVar(handle).GetString());
+		_containerStatic = ToVar(handle).GetString();
+		return wxStr(_containerStatic);
 	}
 
 	void PropertyGridVariant::SetDouble(void* handle, double val) 
@@ -220,7 +223,7 @@ namespace Alternet::UI
 		FromVariant(handle, v);
 	}
 
-	void PropertyGridVariant::SetString(void* handle, const string& value) 
+	void PropertyGridVariant::SetString(void* handle, const NativeStringSpan& value) 
 	{
 		wxVariant v = wxStr(value);
 		FromVariant(handle, v);

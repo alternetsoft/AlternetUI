@@ -23,8 +23,8 @@ namespace Alternet::UI
         bool _collate = false;
         int _copies = 1;
         bool _printToFile = false;
-        optional<string> _printerName;
+        optional<wxString> _printerName;
         Duplex _duplex = Duplex::Simplex;
-        optional<string> _printFileName;
+        optional<wxString> _printFileName;
     };
 }

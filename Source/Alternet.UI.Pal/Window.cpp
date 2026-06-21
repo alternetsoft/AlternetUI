@@ -50,7 +50,7 @@ namespace Alternet::UI
             &Control::IsWxWindowCreated,
             {
             }),
-        _title(*this, u"", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
+        _title(*this, "", &Control::IsWxWindowCreated, &Window::RetrieveTitle, 
             &Window::ApplyTitle)
     {
         _flags.Set(ControlFlags::UserPaint, true);
@@ -145,24 +145,24 @@ namespace Alternet::UI
         Control::OnBeforeDestroyWxWindow();
     }
             
-    string Window::GetTitle()
+    NativeStringSpan Window::GetTitle()
     {
-        return _title.Get();
+        return wxStr(_title.Get());
     }
 
-    void Window::SetTitle(const string& value)
+    void Window::SetTitle(const NativeStringSpan& value)
     {
-        _title.Set(value);
+        _title.Set(wxStr(value));
     }
 
-    string Window::RetrieveTitle()
+    wxString Window::RetrieveTitle()
     {
-        return wxStr(GetTopLevelWindow()->GetTitle());
+        return GetTopLevelWindow()->GetTitle();
     }
 
-    void Window::ApplyTitle(const string& value)
+    void Window::ApplyTitle(const wxString& value)
     {
-        GetTopLevelWindow()->SetTitle(wxStr(value));
+        GetTopLevelWindow()->SetTitle(value);
     }
 
     bool Window::GetIsPopupWindow()

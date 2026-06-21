@@ -237,7 +237,7 @@ namespace Alternet::UI
 		m_simplePopup->Popup();
 	}
 
-	void* WxOtherFactory::CreateToolTip(const string& tip)
+	void* WxOtherFactory::CreateToolTip(const NativeStringSpan& tip)
 	{
 		return new wxToolTip(wxStr(tip));
 	}
@@ -247,9 +247,10 @@ namespace Alternet::UI
 		delete (wxToolTip*)handle;
 	}
 
-	string WxOtherFactory::ToolTipGetTip(void* handle)
+	NativeStringSpan WxOtherFactory::ToolTipGetTip(void* handle)
 	{
-		return wxStr(((wxToolTip*)handle)->GetTip());
+		_containerStatic = ((wxToolTip*)handle)->GetTip();
+		return wxStr(_containerStatic);
 	}
 
 	void* WxOtherFactory::ToolTipGetWindow(void* handle)
@@ -257,7 +258,7 @@ namespace Alternet::UI
 		return ((wxToolTip*)handle)->GetWindow();
 	}
 
-	void WxOtherFactory::ToolTipSetTip(void* handle, const string& tip)
+	void WxOtherFactory::ToolTipSetTip(void* handle, const NativeStringSpan& tip)
 	{
 		((wxToolTip*)handle)->SetTip(wxStr(tip));
 	}
@@ -336,7 +337,7 @@ namespace Alternet::UI
 		}
 	}
 
-	void* WxOtherFactory::CreateCursor3(const string& cursorName, int type,
+	void* WxOtherFactory::CreateCursor3(const NativeStringSpan& cursorName, int type,
 		int hotSpotX, int hotSpotY)
 	{
 		if (type == -1)
@@ -509,9 +510,10 @@ namespace Alternet::UI
 		return wxDisplay::GetStdPPI();
 	}
 
-	string WxOtherFactory::DisplayGetName(void* handle)
+	NativeStringSpan WxOtherFactory::DisplayGetName(void* handle)
 	{
-		return wxStr(((wxDisplay*)handle)->GetName());
+		_containerStatic = ((wxDisplay*)handle)->GetName();
+		return wxStr(_containerStatic);
 	}
 
 	Int32Size WxOtherFactory::DisplayGetPPI(void* handle)
@@ -559,9 +561,10 @@ namespace Alternet::UI
 		return wxSystemSettings::GetMetric((wxSystemMetric)index, (wxWindow*)win);
 	}
 
-	string WxOtherFactory::SystemAppearanceGetName()
+	NativeStringSpan WxOtherFactory::SystemAppearanceGetName()
 	{
-		return wxStr(wxSystemSettings::GetAppearance().GetName());
+		_containerStatic = wxSystemSettings::GetAppearance().GetName();
+		return wxStr(_containerStatic);
 	}
 
 	Font* WxOtherFactory::SystemSettingsGetFont(int index)
@@ -684,15 +687,16 @@ namespace Alternet::UI
 		return -1;
 	}
 
-	string WxOtherFactory::GetTextFromUser(const string& message,
-		const string& caption, const string& defaultValue, void* parent, int x, int y, bool centre)
+	NativeStringSpan WxOtherFactory::GetTextFromUser(const NativeStringSpan& message,
+		const NativeStringSpan& caption, const NativeStringSpan& defaultValue, void* parent, int x, int y, bool centre)
 	{
-		return wxStr(wxGetTextFromUser2(wxStr(message),
-			wxStr(caption), wxStr(defaultValue), (wxWindow*)parent, x, y, centre));
+		_containerStatic = wxGetTextFromUser2(wxStr(message),
+			wxStr(caption), wxStr(defaultValue), (wxWindow*)parent, x, y, centre);
+		return wxStr(_containerStatic);
 	}
 
-	int64_t WxOtherFactory::GetNumberFromUser(const string& message, const string& prompt,
-		const string& caption, int64_t value, int64_t min, int64_t max, void* parent,
+	int64_t WxOtherFactory::GetNumberFromUser(const NativeStringSpan& message, const NativeStringSpan& prompt,
+		const NativeStringSpan& caption, int64_t value, int64_t min, int64_t max, void* parent,
 		const Int32Point& pos)
 	{
 		return wxGetNumberFromUser2(wxStr(message), wxStr(prompt),
@@ -767,18 +771,19 @@ namespace Alternet::UI
 		wxRendererNative::Get().DrawGauge((wxWindow*)win, *dc->GetDC(), rect, value, max,flags);
 	}
 
-	void WxOtherFactory::RendererDrawItemText(void* renderer, void* win, DrawingContext* dc, const string& text,
+	void WxOtherFactory::RendererDrawItemText(void* renderer, void* win, DrawingContext* dc, const NativeStringSpan& text,
 		const Int32Rect& rect, int align, int flags, int ellipsizeMode)
 	{
 		wxRendererNative::Get().DrawItemText((wxWindow*)win, *dc->GetDC(), wxStr(text), rect, align,
 			flags,(wxEllipsizeMode) ellipsizeMode);
 	}
 
-	string WxOtherFactory::RendererGetVersion(void* renderer)
+	NativeStringSpan WxOtherFactory::RendererGetVersion(void* renderer)
 	{
 		auto version = wxRendererNative::Get().GetVersion();
 		auto result = std::to_string(version.version) + "." + std::to_string(version.age);
-		return wxStr(result);
+		_containerStatic = result;
+		return wxStr(_containerStatic);
 	}
 
 	int WxOtherFactory::RendererDrawHeaderButton(void* renderer, void* win, DrawingContext* dc,
@@ -910,13 +915,13 @@ namespace Alternet::UI
 		delete (wxFileSystemWatcher*)handle;
 	}
 
-	bool WxOtherFactory::FsWatcherAdd(void* handle, const string& path, int events)
+	bool WxOtherFactory::FsWatcherAdd(void* handle, const NativeStringSpan& path, int events)
 	{
 		return ((wxFileSystemWatcher*)handle)->Add(wxStr(path), events);
 	}
 
 	bool WxOtherFactory::FsWatcherAddTree(
-		void* handle, const string& path, int events, const string& filter)
+		void* handle, const NativeStringSpan& path, int events, const NativeStringSpan& filter)
 	{
 		return ((wxFileSystemWatcher*)handle)->AddTree(wxStr(path), events, wxStr(filter));
 	}
@@ -926,7 +931,7 @@ namespace Alternet::UI
 		return ((wxFileSystemWatcher*)handle)->GetWatchedPathsCount();
 	}
 	
-	bool WxOtherFactory::FsWatcherRemove(void* handle, const string& path)
+	bool WxOtherFactory::FsWatcherRemove(void* handle, const NativeStringSpan& path)
 	{
 		return ((wxFileSystemWatcher*)handle)->Remove(wxStr(path));
 	}
@@ -936,7 +941,7 @@ namespace Alternet::UI
 		return ((wxFileSystemWatcher*)handle)->RemoveAll();
 	}
 
-	bool WxOtherFactory::FsWatcherRemoveTree(void* handle, const string& path)
+	bool WxOtherFactory::FsWatcherRemoveTree(void* handle, const NativeStringSpan& path)
 	{
 		return ((wxFileSystemWatcher*)handle)->RemoveTree(wxStr(path));
 	}
@@ -958,7 +963,7 @@ namespace Alternet::UI
 		return new wxSound();
 	}
 	
-	void* WxOtherFactory::SoundCreate2(const string& fileName, bool isResource)
+	void* WxOtherFactory::SoundCreate2(const NativeStringSpan& fileName, bool isResource)
 	{
 		return new wxSound(wxStr(fileName), isResource);
 	}
@@ -973,7 +978,7 @@ namespace Alternet::UI
 		delete (wxSound*)handle;
 	}
 
-	bool WxOtherFactory::SoundPlay2(const string& filename, uint32_t flags)
+	bool WxOtherFactory::SoundPlay2(const NativeStringSpan& filename, uint32_t flags)
 	{
 		return wxSound::Play(wxStr(filename), flags);
 	}
@@ -1051,12 +1056,12 @@ namespace Alternet::UI
 		return ((wxUIActionSimulator*)handle)->MouseUp(button);
 	}
 
-	bool WxOtherFactory::UIActionSimulatorSelect(void* handle, const string& text)
+	bool WxOtherFactory::UIActionSimulatorSelect(void* handle, const NativeStringSpan& text)
 	{
 		return ((wxUIActionSimulator*)handle)->Select(wxStr(text));
 	}
 
-	bool WxOtherFactory::UIActionSimulatorText(void* handle, const string& text)
+	bool WxOtherFactory::UIActionSimulatorText(void* handle, const NativeStringSpan& text)
 	{
 		return ((wxUIActionSimulator*)handle)->Text(wxStr(text));
 	}

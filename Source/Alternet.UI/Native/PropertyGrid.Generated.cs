@@ -911,7 +911,7 @@ return NativeApi.PropertyGrid_GetPropertyByNameAndSubName_(NativePointer, ref na
             return NativeApi.PropertyGrid_GetSelection_(NativePointer);
         }
         
-        public string GetPropertyName(System.IntPtr property)
+        public Alternet.UI.NativeStringSpan GetPropertyName(System.IntPtr property)
         {
             CheckDisposed();
             return NativeApi.PropertyGrid_GetPropertyName_(NativePointer, property);
@@ -1252,10 +1252,11 @@ NativeApi.PropertyGrid_SetPropertyTextColor_(NativePointer, id, ref col_Native, 
             NativeApi.PropertyGrid_SetPropertyEditor_(NativePointer, id, editor);
         }
         
-        public void SetPropertyEditorByName(System.IntPtr id, string editorName)
+        public void SetPropertyEditorByName(System.IntPtr id, Alternet.UI.NativeStringSpan editorName)
         {
             CheckDisposed();
-            NativeApi.PropertyGrid_SetPropertyEditorByName_(NativePointer, id, editorName);
+            var editorName_Native = editorName.ToNative();
+NativeApi.PropertyGrid_SetPropertyEditorByName_(NativePointer, id, ref editorName_Native);
         }
         
         public void SetPropertyLabel(System.IntPtr id, Alternet.UI.NativeStringSpan newproplabel)
@@ -1902,7 +1903,7 @@ NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, ref attrName_Nati
             public static extern System.IntPtr PropertyGrid_GetSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern string PropertyGrid_GetPropertyName_(IntPtr obj, System.IntPtr property);
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetPropertyName_(IntPtr obj, System.IntPtr property);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_InitAllTypeHandlers_();
@@ -2070,7 +2071,7 @@ NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, ref attrName_Nati
             public static extern void PropertyGrid_SetPropertyEditor_(IntPtr obj, System.IntPtr id, System.IntPtr editor);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetPropertyEditorByName_(IntPtr obj, System.IntPtr id, string editorName);
+            public static extern void PropertyGrid_SetPropertyEditorByName_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan editorName);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyLabel_(IntPtr obj, System.IntPtr id, ref Alternet.UI.NativeStringSpan newproplabel);

@@ -23,7 +23,7 @@ namespace Alternet::UI
     void Font::Initialize(GenericFontFamily genericFamily,
         const NativeStringSpan& familyName, Coord emSize, FontStyle style)
     {
-        _font = InitializeWxFont(genericFamily, StringSpanToWx(familyName), emSize, style);
+        _font = InitializeWxFont(genericFamily, wxStr(familyName), emSize, style);
     }
 
     wxFont Font::InitializeWxFont(GenericFontFamily genericFamily, 
@@ -80,7 +80,7 @@ namespace Alternet::UI
     NativeStringSpan Font::GetName()
     {
 		_container = _font.GetFaceName();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
 
     FontStyle Font::GetStyle()
@@ -172,7 +172,7 @@ namespace Alternet::UI
     NativeStringSpan Font::GetDescription()
     {
         _container = _font.GetNativeFontInfoUserDesc();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
 
     bool Font::IsEqualTo(Font* other)
@@ -186,7 +186,7 @@ namespace Alternet::UI
     NativeStringSpan Font::Serialize()
     {
         _container = _font.GetNativeFontInfoDesc();
-        return WxToStringSpan(_container);
+        return wxStr(_container);
     }
 
     /*static*/ wxFontFamily Font::GetWxFontFamily(GenericFontFamily genericFamily)
@@ -219,7 +219,7 @@ namespace Alternet::UI
     /*static*/ NativeStringSpan Font::GetFamiliesItemAt(void* array, int index)
     {
         _containerStatic = ((wxArrayString*)array)->Item(index);
-        return WxToStringSpan(_containerStatic);
+        return wxStr(_containerStatic);
     }
 
     /*static*/ void Font::CloseFamiliesArray(void* array)
@@ -232,21 +232,21 @@ namespace Alternet::UI
 #ifdef __WXOSX_COCOA__
         // the wx function will return false for this.
         // This is a family name of the macOS system font.
-        if (fontFamily == u".AppleSystemUIFont")
+        if (wxStr(fontFamily) == ".AppleSystemUIFont")
             return true; 
 #endif
 
-        return wxFontEnumerator::IsValidFacename(StringSpanToWx(fontFamily));
+        return wxFontEnumerator::IsValidFacename(wxStr(fontFamily));
     }
 
     /*static*/ NativeStringSpan Font::GetGenericFamilyName(GenericFontFamily genericFamily)
     {
         if (genericFamily == GenericFontFamily::None)
-            throwExInvalidArg(genericFamily, u"genericFamily cannot be None");
+            throwExInvalidArg(genericFamily, "genericFamily cannot be None");
 
         wxFontInfo fontInfo;
         fontInfo.Family(GetWxFontFamily(genericFamily));
         _containerStatic = wxFont(fontInfo).GetFaceName();
-        return WxToStringSpan(_containerStatic);
+        return wxStr(_containerStatic);
     }
 }

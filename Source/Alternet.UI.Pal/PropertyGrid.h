@@ -38,8 +38,8 @@ namespace Alternet::UI
         wxPGVFBFlags _eventValidationFailureBehavior = wxPGVFBFlags::Null;
         int _eventColumn = 0;
         void* _eventProperty = nullptr;
-        string _eventPropertyName = wxStr(wxEmptyString);
-        string _eventValidationFailureMessage = wxStr(wxEmptyString);
+        wxString _eventPropertyName = wxEmptyString;
+        wxString _eventValidationFailureMessage = wxEmptyString;
 
         void OnButton(wxCommandEvent& event);
         void FromEventData(PropertyGridEvent evType, wxPropertyGridEvent& event);

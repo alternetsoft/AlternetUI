@@ -6,14 +6,14 @@ namespace Alternet::UI
         const NativeStringSpan& familyName, Coord emSizeInPoints, FontStyle style)
     {
         _genericFamily = genericFamily;
-        _familyName = StringSpanToWx(familyName);
+        _familyName = wxStr(familyName);
         _fontSizeInPoints = emSizeInPoints;
         _fontStyle = style;
     }
 
     NativeStringSpan FontDialog::GetResultFontName() 
     {
-        return WxToStringSpan(_familyName);
+        return wxStr(_familyName);
     }
 
     Coord FontDialog::GetResultFontSizeInPoints() 
@@ -174,12 +174,12 @@ namespace Alternet::UI
 
     NativeStringSpan FontDialog::GetTitle()
     {
-        return WxToStringSpan(_title);
+        return wxStr(_title);
     }
 
     void FontDialog::SetTitle(const NativeStringSpan& value)
     {
-        _title = StringSpanToWx(value);
+        _title = wxStr(value);
         GetDialog()->SetTitle(_title);
     }
 

@@ -363,12 +363,12 @@ namespace Alternet::UI
     NativeStringSpan Control::GetName()
     {
         _name = GetWxWindow()->GetName();
-        return WxToStringSpan(_name);
+        return wxStr(_name);
     }
 
     void Control::SetName(const NativeStringSpan& value)
     {
-        GetWxWindow()->SetName(StringSpanToWx(value));
+        GetWxWindow()->SetName(wxStr(value));
     }
 
     int Control::GetBorderStyle()
@@ -443,7 +443,7 @@ namespace Alternet::UI
 
     void Control::SaveScreenshot(const NativeStringSpan& fileName)
     {
-        UI::SaveScreenshot(GetWxWindow(), StringSpanToWx(fileName));
+        UI::SaveScreenshot(GetWxWindow(), wxStr(fileName));
     }
 
     void Control::OnDestroy(wxWindowDestroyEvent& event)
@@ -727,7 +727,7 @@ namespace Alternet::UI
     void Control::BeginInit()
     {
         if (_flags.IsSet(ControlFlags::InitInProgress))
-            throwExInvalidOpWithInfo(wxStr("Control::BeginInit"));
+            throwExInvalidOpWithInfo("Control::BeginInit");
 
         _flags.Set(ControlFlags::InitInProgress, true);
 
@@ -737,7 +737,7 @@ namespace Alternet::UI
     void Control::EndInit()
     {
         if (!_flags.IsSet(ControlFlags::InitInProgress))
-            throwExInvalidOpWithInfo(wxStr("Control::EndInit"));
+            throwExInvalidOpWithInfo("Control::EndInit");
 
         _flags.Set(ControlFlags::InitInProgress, false);
 
@@ -857,7 +857,7 @@ namespace Alternet::UI
             CreateWxWindow();
 
         if (_wxWindow == nullptr)
-            throwExInvalidOpWithInfo(wxStr("Control::GetWxWindow"));
+            throwExInvalidOpWithInfo("Control::GetWxWindow");
 
         return _wxWindow;
     }
@@ -891,12 +891,12 @@ namespace Alternet::UI
 
     NativeStringSpan Control::GetToolTip()
     {
-        return WxToStringSpan(_toolTip);
+        return wxStr(_toolTip);
     }
 
     void Control::SetToolTip(const NativeStringSpan& value)
     {
-        _toolTip = StringSpanToWx(value);
+        _toolTip = wxStr(value);
 
         if (IsWxWindowCreated())
             ApplyToolTip();
@@ -907,7 +907,7 @@ namespace Alternet::UI
     void Control::ApplyToolTip()
     {
         if (_wxWindow == nullptr)
-            throwExInvalidOpWithInfo(wxStr("Control::ApplyToolTip"));
+            throwExInvalidOpWithInfo("Control::ApplyToolTip");
 
         if (_toolTip.empty())
             _wxWindow->UnsetToolTip();
@@ -1246,7 +1246,7 @@ namespace Alternet::UI
     void Control::EndUpdate()
     {
         if (_beginUpdateCount <= 0)
-            throwEx(u"EndUpdate() without matching BeginUpdate()");
+            throwEx("EndUpdate() without matching BeginUpdate()");
 
         _beginUpdateCount--;
         if (_beginUpdateCount == 0)
@@ -2197,12 +2197,12 @@ namespace Alternet::UI
 
     NativeStringSpan Control::GetText()
     {
-        return WxToStringSpan(_textValue);
+        return wxStr(_textValue);
     }
 
     void Control::SetText(const NativeStringSpan& value)
     {
-        auto wx = StringSpanToWx(value);
+        auto wx = wxStr(value);
         _textValue = wx;
     }
 

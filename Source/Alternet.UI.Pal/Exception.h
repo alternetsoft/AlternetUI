@@ -15,27 +15,27 @@ namespace Alternet::UI
         class Origin
         {
         public:
-            std::string functionName;
-            std::string sourceFileName;
+            wxString functionName;
+            wxString sourceFileName;
             int sourceLineNumber;
         };
 
-        Exception(const string& message_, int errorCode_, const optional<Origin>& origin_)
+        Exception(const wxString& message_, int errorCode_, const optional<Origin>& origin_)
             : message(message_), errorCode(errorCode_), origin(origin_)
         {
             if(_logMessageProc != nullptr)
-                _logMessageProc(wxStr(ToString()));
+                _logMessageProc(ToString());
         }
         ~Exception() {}
 
-        inline const string& GetMessageText() const { return message; }
+        inline const wxString& GetMessageText() const { return message; }
         inline int GetErrorCode() const { return errorCode; }
         inline optional<Origin> GetOrigin() const { return origin; }
 
-        inline string ToString() const
+        inline wxString ToString() const
         {
             wxString sb;
-            sb.Append(wxStr(message));
+            sb.Append(message);
             if (origin.has_value())
             {
                 auto& o = origin.value();
@@ -48,12 +48,12 @@ namespace Alternet::UI
                     Append(".");
             }
 
-            return wxStr(sb);
+            return sb;
         }
 
     private:
         int errorCode = 0;
-        string message;
+        wxString message;
         optional<Origin> origin;
     };
 
@@ -61,7 +61,7 @@ namespace Alternet::UI
     {
     public:
         InvalidOperationException(
-            const string& message_, int errorCode_, const optional<Origin>& origin_)
+            const wxString& message_, int errorCode_, const optional<Origin>& origin_)
             : Exception(message_, errorCode_, origin_)
         {
         }
@@ -70,25 +70,25 @@ namespace Alternet::UI
     class ThreadStateException : public Exception
     {
     public:
-        ThreadStateException(const string& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
+        ThreadStateException(const wxString& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
     };
 
     class FormatException : public Exception
     {
     public:
-        FormatException(const string& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
+        FormatException(const wxString& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
     };
 
     class ArgumentNullException : public Exception
     {
     public:
-        ArgumentNullException(const string& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
+        ArgumentNullException(const wxString& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
     };
 
     class ArgumentException : public Exception
     {
     public:
-        ArgumentException(const string& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
+        ArgumentException(const wxString& message_, int errorCode_, const optional<Origin>& origin_) : Exception(message_, errorCode_, origin_) {}
     };
 }
 
@@ -123,15 +123,14 @@ namespace _PreprocessorDetail
 
 #define throwEx(message) throw Alternet::UI::Exception((message), 0, ExceptionOrigin)
 #define throwExTyped(exceptionType, message) throw exceptionType((message), 0, ExceptionOrigin)
-#define throwExNoInfo throw Alternet::UI::Exception(u"", 0, ExceptionOrigin)
-#define throwExInvalidArgNoInfo(argument) throw Alternet::UI::ArgumentException(string(u"Invalid argument: ") + (u###argument), 0, ExceptionOrigin)
-#define throwExInvalidArg(argument, message) throw Alternet::UI::ArgumentException(string(message) + string(u". Argument name: ") + (u###argument), 0, ExceptionOrigin)
-#define throwExInvalidArgEnumValue(argument) throw Alternet::UI::ArgumentException(string(u"Unexpected enum value. Argument name: ") + (u###argument), 0, ExceptionOrigin)
-#define throwExInvalidOp throw Alternet::UI::InvalidOperationException(u"", 0, ExceptionOrigin)
-#define throwExInvalidOpWithInfo(message) throw Alternet::UI::InvalidOperationException(string(message), 0, ExceptionOrigin)
+#define throwExNoInfo throw Alternet::UI::Exception("", 0, ExceptionOrigin)
+#define throwExInvalidArgNoInfo(argument) throw Alternet::UI::ArgumentException("Invalid argument: " + ###argument, 0, ExceptionOrigin)
+#define throwExInvalidArg(argument, message) throw Alternet::UI::ArgumentException(message + ". Argument name: " + ###argument, 0, ExceptionOrigin)
+#define throwExInvalidArgEnumValue(argument) throw Alternet::UI::ArgumentException("Unexpected enum value. Argument name: " + ###argument, 0, ExceptionOrigin)
+#define throwExInvalidOp throw Alternet::UI::InvalidOperationException("", 0, ExceptionOrigin)
+#define throwExInvalidOpWithInfo(message) throw Alternet::UI::InvalidOperationException(message, 0, ExceptionOrigin)
 
-
-#define DebugLogInvalidArg(argument, message) Alternet::UI::Application::Log(string(message) + string(u". Argument name: ") + (u###argument))
+#define DebugLogInvalidArg(argument, message) Alternet::UI::Application::Log(message + ". Argument name: " + ###argument)
 
 
 #ifdef PLATFORM_WINDOWS

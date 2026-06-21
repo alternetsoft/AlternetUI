@@ -122,12 +122,12 @@ namespace Alternet::UI
     NativeStringSpan Button::GetText()
     {
         _textValue = GetButton()->GetLabel();
-        return WxToStringSpan(_textValue);
+        return wxStr(_textValue);
     }
 
     void Button::SetText(const NativeStringSpan& value)
     {
-        GetButton()->SetLabel(StringSpanToWx(value));
+        GetButton()->SetLabel(wxStr(value));
     }
 
     bool Button::GetExactFit()

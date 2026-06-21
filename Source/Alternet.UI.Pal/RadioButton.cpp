@@ -13,12 +13,12 @@ namespace Alternet::UI
     NativeStringSpan RadioButton::GetText()
     {
         _textValue = GetRadioButton()->GetLabel();
-        return WxToStringSpan(_textValue);
+        return wxStr(_textValue);
     }
 
     void RadioButton::SetText(const NativeStringSpan& value)
     {
-        GetRadioButton()->SetLabel(StringSpanToWx(value));
+        GetRadioButton()->SetLabel(wxStr(value));
     }
 
     class wxRadioButton2 : public wxRadioButton, public wxWidgetExtender

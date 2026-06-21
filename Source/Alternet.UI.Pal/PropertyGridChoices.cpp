@@ -12,7 +12,7 @@ namespace Alternet::UI
 	void PropertyGridChoices::SetLabel(void* handle, uint32_t ind, const NativeStringSpan& value)
 	{
 		wxPGChoiceEntry& item = Item(handle, ind);
-		item.SetText(StringSpanToWx(value));
+		item.SetText(wxStr(value));
 	}
 
 	void* PropertyGridChoices::GetFont(void* handle, uint32_t ind)
@@ -97,7 +97,7 @@ namespace Alternet::UI
 	{
 		PropertyGridChoices* instance = Choices(handle);
 
-		instance->choices.Add(StringSpanToWx(text), value);
+		instance->choices.Add(wxStr(text), value);
 	}
 
 	NativeStringSpan PropertyGridChoices::GetLabel(void* handle, uint32_t ind)
@@ -106,7 +106,7 @@ namespace Alternet::UI
 
 		_containerStatic = instance->choices.GetLabel(ind);
 
-		return WxToStringSpan(_containerStatic);
+		return wxStr(_containerStatic);
 	}
 
 	uint32_t PropertyGridChoices::GetCount(void* handle)
@@ -124,7 +124,7 @@ namespace Alternet::UI
 	int PropertyGridChoices::GetLabelIndex(void* handle, const NativeStringSpan& str)
 	{
 		PropertyGridChoices* instance = Choices(handle);
-		return instance->choices.Index(StringSpanToWx(str));
+		return instance->choices.Index(wxStr(str));
 	}
 
 	int PropertyGridChoices::GetValueIndex(void* handle, int val)
@@ -137,7 +137,7 @@ namespace Alternet::UI
 	{
 		PropertyGridChoices* instance = Choices(handle);
 
-		wxPGChoiceEntry entry = wxPGChoiceEntry(StringSpanToWx(text), value);
+		wxPGChoiceEntry entry = wxPGChoiceEntry(wxStr(text), value);
 
 		instance->choices.Insert(entry, index);
 	}

@@ -145,12 +145,12 @@ namespace Alternet::UI
 
     NativeStringSpan FileDialog::GetInitialDirectory()
     {
-        return WxToStringSpan(_initialDirectory);
+        return wxStr(_initialDirectory);
     }
 
     void FileDialog::SetInitialDirectory(const NativeStringSpan& value)
     {
-        auto _newInitialDirectory = StringSpanToWx(value);
+        auto _newInitialDirectory = wxStr(value);
         if (_initialDirectory == _newInitialDirectory)
             return;
         _initialDirectory = _newInitialDirectory;
@@ -159,12 +159,12 @@ namespace Alternet::UI
 
     NativeStringSpan FileDialog::GetTitle()
     {
-        return WxToStringSpan(_title);
+        return wxStr(_title);
     }
 
     void FileDialog::SetTitle(const NativeStringSpan& value)
     {
-        auto _newTitle = StringSpanToWx(value);
+        auto _newTitle = wxStr(value);
         if (_title == _newTitle)
             return;
         _title = _newTitle;
@@ -173,12 +173,12 @@ namespace Alternet::UI
 
     NativeStringSpan FileDialog::GetFilter()
     {
-        return WxToStringSpan(_filter);
+        return wxStr(_filter);
     }
 
     void FileDialog::SetFilter(const NativeStringSpan& value)
     {
-        auto _newFilter = StringSpanToWx(value);
+        auto _newFilter = wxStr(value);
         if (_filter == _newFilter)
             return;
         _filter = _newFilter;
@@ -204,19 +204,19 @@ namespace Alternet::UI
         {
             wxArrayString paths;
             GetDialog()->GetPaths(paths);
-            _fileNameResult = paths.GetCount() == 0 ? "" : paths[0];
+            _fileNameResult = paths.GetCount() == 0 ? wxString("") : paths[0];
         }
         else
         {
             _fileNameResult = GetDialog()->GetPath();
         }
 
-        return WxToStringSpan(_fileNameResult);
+        return wxStr(_fileNameResult);
     }
 
     void FileDialog::SetFileName(const NativeStringSpan& value)
     {
-        auto _newFileName = StringSpanToWx(value);
+        auto _newFileName = wxStr(value);
         if (_fileName == _newFileName)
             return;
         _fileName = _newFileName;
@@ -253,7 +253,7 @@ namespace Alternet::UI
     {
         auto paths = (wxArrayString*)array;
         _fileNameResult = (*paths)[index];
-        return WxToStringSpan(_fileNameResult);
+        return wxStr(_fileNameResult);
     }
 
     void FileDialog::CloseFileNamesArray(void* array)

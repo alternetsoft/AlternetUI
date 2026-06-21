@@ -7,30 +7,30 @@ namespace Alternet::UI
 	
 	void MemoryFSHandler::RemoveFile(const NativeStringSpan& filename)
 	{	
-		wxMemoryFSHandler::RemoveFile(StringSpanToWx(filename));
+		wxMemoryFSHandler::RemoveFile(wxStr(filename));
 	}
 	
 	void MemoryFSHandler::AddTextFileWithMimeType(const NativeStringSpan& filename,
 		const NativeStringSpan& textdata, const NativeStringSpan& mimetype)
 	{ 
-		wxMemoryFSHandler::AddFileWithMimeType(StringSpanToWx(filename),
-			StringSpanToWx(textdata), StringSpanToWx(mimetype));
+		wxMemoryFSHandler::AddFileWithMimeType(wxStr(filename),
+			wxStr(textdata), wxStr(mimetype));
 	}
 	
 	void MemoryFSHandler::AddTextFile(const NativeStringSpan& filename, const NativeStringSpan& textdata)
 	{
-		wxMemoryFSHandler::AddFile(StringSpanToWx(filename), StringSpanToWx(textdata));
+		wxMemoryFSHandler::AddFile(wxStr(filename), wxStr(textdata));
 	}
 	
 	void MemoryFSHandler::AddFile(const NativeStringSpan& filename, void* binarydata, int size)
 	{
-		wxMemoryFSHandler::AddFile(StringSpanToWx(filename), binarydata, size);
+		wxMemoryFSHandler::AddFile(wxStr(filename), binarydata, size);
 	}
 	
 	void MemoryFSHandler::AddFileWithMimeType(const NativeStringSpan& filename, void* binarydata, 
 		int size, const NativeStringSpan& mimetype)
 	{
-		wxMemoryFSHandler::AddFileWithMimeType(StringSpanToWx(filename), binarydata, size, StringSpanToWx(mimetype));
+		wxMemoryFSHandler::AddFileWithMimeType(wxStr(filename), binarydata, size, wxStr(mimetype));
 	}
 	
 	MemoryFSHandler::MemoryFSHandler()

@@ -11,7 +11,7 @@ namespace Alternet::UI
             
             int64_t GetLength()
             {
-                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo(wxStr("Length"));
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo("Length");
                 auto trampoline = (TGetLength)trampolineLocatorCallback(Trampoline::GetLength);
                 return trampoline(objectHandle);
             }
@@ -20,7 +20,7 @@ namespace Alternet::UI
             
             bool GetIsOK()
             {
-                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo(wxStr("IsOK"));
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo("IsOK");
                 auto trampoline = (TGetIsOK)trampolineLocatorCallback(Trampoline::GetIsOK);
                 return trampoline(objectHandle);
             }
@@ -29,7 +29,7 @@ namespace Alternet::UI
             
             bool GetIsSeekable()
             {
-                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo(wxStr("IsSeekable"));
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo("IsSeekable");
                 auto trampoline = (TGetIsSeekable)trampolineLocatorCallback(Trampoline::GetIsSeekable);
                 return trampoline(objectHandle);
             }
@@ -38,14 +38,14 @@ namespace Alternet::UI
             
             int64_t GetPosition()
             {
-                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo(wxStr("Position"));
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo("Position");
                 auto trampoline = (TGetPosition)trampolineLocatorCallback(Trampoline::GetPosition);
                 return trampoline(objectHandle);
             }
             typedef int64_t (*TGetPosition)(void* objectHandle);
             void SetPosition(int64_t value)
             {
-                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo(wxStr("Position"));
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo("Position");
                 auto trampoline = (TSetPosition)trampolineLocatorCallback(Trampoline::SetPosition);
                 trampoline(objectHandle, value);
             }
@@ -53,7 +53,7 @@ namespace Alternet::UI
             
             void* Read(void* buffer, void* length)
             {
-                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo(wxStr("Read"));
+                if (trampolineLocatorCallback == nullptr) throwExInvalidOpWithInfo("Read");
                 auto trampoline = (TRead)trampolineLocatorCallback(Trampoline::Read);
                 return trampoline(objectHandle, buffer, length);
             }

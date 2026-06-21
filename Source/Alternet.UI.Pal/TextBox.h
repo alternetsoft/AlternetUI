@@ -37,7 +37,7 @@ namespace Alternet::UI
         bool _noHideSel = false;
         int _textAlign = 0;
         int _textWrap = 0;
-        string _eventUrl = wxStr(wxEmptyString);
+        wxString _eventUrl = wxEmptyString;
 
         wxTextCtrl* GetTextCtrl();
 

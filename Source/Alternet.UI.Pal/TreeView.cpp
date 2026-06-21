@@ -207,7 +207,7 @@ namespace Alternet::UI
 	}
 
 	void* TreeView::InsertItem(void* parentItem, void* insertAfter,
-		const string& text, int imageIndex, bool parentIsExpanded)
+		const NativeStringSpan& text, int imageIndex, bool parentIsExpanded)
 	{
 		wxTreeItemId item;
 
@@ -431,8 +431,8 @@ namespace Alternet::UI
 
 		data.editCancelled = event.IsEditCancelled();
 		data.item = event.GetItem();
-		auto label = wxStr(event.GetLabel());
-		data.label = const_cast<char16_t*>(label.c_str());
+		auto wxLabel = event.GetLabel();
+		data.label = wxStr(wxLabel);
 
 		auto result = RaiseEventWithPointerResult(e, &data);
 
@@ -452,14 +452,15 @@ namespace Alternet::UI
 		OnItemLabelEditEvent(event, TreeViewEvent::AfterItemLabelEdit);
 	}
 
-	void TreeView::SetItemText(void* item, const string& text)
+	void TreeView::SetItemText(void* item, const NativeStringSpan& text)
 	{
 		GetTreeCtrl()->SetItemText(item, wxStr(text));
 	}
 
-	string TreeView::GetItemText(void* item)
+	NativeStringSpan TreeView::GetItemText(void* item)
 	{
-		return wxStr(GetTreeCtrl()->GetItemText(item));
+		_container = GetTreeCtrl()->GetItemText(item);
+		return wxStr(_container);
 	}
 
 	void TreeView::SetItemImageIndex(void* item, int imageIndex)

@@ -23,7 +23,7 @@ namespace Alternet::UI
         wxClipboardLocker clipboardLocker;
         if (!clipboardLocker)
             return false;
-        auto fmt = StringSpanToWx(format);
+        auto fmt = wxStr(format);
         auto dataFmt = wxDataFormat(fmt);
         auto result = wxTheClipboard->IsSupported(dataFmt);
         return result;
@@ -90,18 +90,18 @@ namespace Alternet::UI
         }*/
     }
 
-    optional<string> Clipboard::TryGetText()
+    NativeStringSpan Clipboard::TryGetText()
     {
         wxTextDataObject data;
         if (!wxTheClipboard->GetData(data))
-            return nullopt;
-
-        return wxStr(data.GetText());
+            return NativeStringSpan();
+		_container = data.GetText();
+        return wxStr(_container);
     }
 
-    optional<string> Clipboard::TryGetFiles()
+    NativeStringSpan Clipboard::TryGetFiles()
     {
-        return optional<string>();
+        return NativeStringSpan();
     }
 
     optional<wxBitmap> Clipboard::TryGetBitmap()
@@ -131,7 +131,7 @@ namespace Alternet::UI
         else
             delete bitmapData;
 
-        wxDataFormat dataFormat = wxDataFormat(wxStr(DataFormats::Persistent));
+        wxDataFormat dataFormat = wxDataFormat(DataFormats::Persistent);
         auto customData = new wxCustomDataObject(dataFormat);
         if (wxTheClipboard->GetData(*customData))
             result->Add(customData);

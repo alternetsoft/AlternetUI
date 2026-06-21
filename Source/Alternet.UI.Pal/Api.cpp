@@ -57,4 +57,3 @@
 #include "Api/PrintPreviewDialog.Api.h"
 #include "Api/Mouse.Api.h"
 #include "Api/WxOtherFactory.Api.h"
-#include "Api/WxStatusBarFactory.Api.h"

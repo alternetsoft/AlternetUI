@@ -946,10 +946,10 @@ ALTERNET_UI_API void* PropertyGrid_GetSelection_(PropertyGrid* obj)
     });
 }
 
-ALTERNET_UI_API char16_t* PropertyGrid_GetPropertyName_(PropertyGrid* obj, void* property)
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetPropertyName_(PropertyGrid* obj, void* property)
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(obj->GetPropertyName(property));
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPropertyName(property);
     });
 }
 
@@ -1338,10 +1338,10 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyEditor_(PropertyGrid* obj, void* id
     });
 }
 
-ALTERNET_UI_API void PropertyGrid_SetPropertyEditorByName_(PropertyGrid* obj, void* id, const char16_t* editorName)
+ALTERNET_UI_API void PropertyGrid_SetPropertyEditorByName_(PropertyGrid* obj, void* id, NativeStringSpan* editorName)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPropertyEditorByName(id, editorName);
+        obj->SetPropertyEditorByName(id, *editorName);
     });
 }
 

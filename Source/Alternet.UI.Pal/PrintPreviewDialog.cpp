@@ -47,7 +47,7 @@ namespace Alternet::UI
 
         if (_document == nullptr)
             throwExInvalidOpWithInfo(
-                u"Cannot show the print preview dialog when the document is null.");
+                "Cannot show the print preview dialog when the document is null.");
 
         _state = new State();
 
@@ -60,12 +60,12 @@ namespace Alternet::UI
 
         _state->printPreview = new wxPrintPreview(_state->previewPrintout, nullptr, &printData);
         if (!_state->printPreview->IsOk())
-            throwEx(u"Print preview failed.");
+            throwEx("Print preview failed.");
 
         _state->frame = new wxPreviewFrame(
             _state->printPreview,
             owner == nullptr ? ParkingWindow::GetWindow() : owner->GetWxWindow(),
-            wxStr(_title.value_or(u"Print Preview")),
+            wxStr(_title.value_or("Print Preview")),
             wxDefaultPosition,
             wxSize(800, 600));
         

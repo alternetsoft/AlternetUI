@@ -14,7 +14,7 @@ namespace Alternet::UI
 
         wxDataObjectComposite* GetDataObjectComposite();
 
-        static optional<string> TryGetText(wxDataObjectComposite* dataObject);
+        static optional<wxString> TryGetText(wxDataObjectComposite* dataObject);
         static optional<wxArrayString> TryGetFiles(wxDataObjectComposite* dataObject);
         static optional<wxBitmap> TryGetBitmap(wxDataObjectComposite* dataObject);
 
@@ -23,20 +23,20 @@ namespace Alternet::UI
     private:
         wxDataObjectComposite* _dataObject = nullptr;
 
-        static optional<string> TryGetFilesString(wxDataObjectComposite* dataObject);
+        static optional<wxString> TryGetFilesString(wxDataObjectComposite* dataObject);
 
         static wxDataFormat GetBitmapDataFormat();
         static std::vector<wxDataFormat> GetTextDataFormats();
 
-        const char16_t* FormatNotPresentErrorMessage
-            = u"The specified format is not present in this data object.";
+        const wxString FormatNotPresentErrorMessage
+            = "The specified format is not present in this data object.";
     };
 
     namespace DataFormats
     {
-        const string Text = u"Text";
-        const string Files = u"Files";
-        const string Bitmap = u"Bitmap";
-        const string Persistent = u"AlternetUI10PersistentObject";
+        const wxString Text = "Text";
+        const wxString Files = "Files";
+        const wxString Bitmap = "Bitmap";
+        const wxString Persistent = "AlternetUI10PersistentObject";
     }
 }

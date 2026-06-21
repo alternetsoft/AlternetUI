@@ -109,14 +109,14 @@ namespace Alternet::UI
         return !RaiseEvent(PrintDocumentEvent::PrintPage);
     }
 
-    string PrintDocument::GetDocumentName()
+    NativeStringSpan PrintDocument::GetDocumentName()
     {
-        return _documentName;
+        return wxStr(_documentName);
     }
 
-    void PrintDocument::SetDocumentName(const string& value)
+    void PrintDocument::SetDocumentName(const NativeStringSpan& value)
     {
-        _documentName = value;
+        _documentName = wxStr(value);
     }
 
     PrinterSettings* PrintDocument::GetPrinterSettings()
@@ -153,7 +153,7 @@ namespace Alternet::UI
     {
         if (_printout != nullptr)
             throwExInvalidOpWithInfo(
-                u"Another printing operation for this PrintDocument is in progress.");
+                "Another printing operation for this PrintDocument is in progress.");
 
         _printout = dynamic_cast<Printout*>(CreatePrintout());
 
@@ -331,15 +331,15 @@ namespace Alternet::UI
 
         auto printerSettings = GetPrinterSettingsCore();
 
-        auto printerName = wxStr(printerSettings->GetPrinterName().value_or(u""));
+        auto printerName = wxStr(printerSettings->GetPrinterName());
 
         data.SetPrinterName(printerName);
 
         auto pageSettings = GetPageSettingsCore();
 
-        if (printerSettings->GetPrintFileName() != nullopt)
+        if (wxStr(printerSettings->GetPrintFileName()) != "")
         {
-            auto printFileName = wxStr(printerSettings->GetPrintFileName().value());
+            auto printFileName = wxStr(printerSettings->GetPrintFileName());
             data.SetFilename(printFileName);
         }
 
@@ -512,10 +512,8 @@ namespace Alternet::UI
         auto printerSettings = GetPrinterSettingsCore();
         auto pageSettings = GetPageSettingsCore();
 
-        printerSettings->SetPrinterName(data.GetPrinterName() == ""
-            ? nullopt : optional<string>(wxStr(data.GetPrinterName())));
-        printerSettings->SetPrintFileName(data.GetFilename() == ""
-            ? nullopt : optional<string>(wxStr(data.GetFilename())));
+        printerSettings->SetPrinterName(printerSettings->GetPrinterName());
+        printerSettings->SetPrintFileName(printerSettings->GetPrintFileName());
         printerSettings->SetDuplex(GetDuplexMode(data.GetDuplex()));
         pageSettings->SetColor(data.GetColour());
         pageSettings->SetLandscape(data.GetOrientation() == wxPrintOrientation::wxLANDSCAPE);

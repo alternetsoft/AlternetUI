@@ -55,7 +55,7 @@ static bool SystemSettingsHasFeature(int index);
 static Font* SystemSettingsGetFont(int index);
 static Color SystemSettingsGetColor(int index);
 static int SystemSettingsGetMetric(int index, void* win);
-static string SystemAppearanceGetName();
+static NativeStringSpan SystemAppearanceGetName();
 static bool SystemAppearanceIsDark();
 static bool SystemAppearanceIsUsingDarkBackground();
 static bool IsBusyCursor();

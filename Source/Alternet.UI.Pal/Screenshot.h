@@ -7,10 +7,10 @@ namespace Alternet::UI
     int SaveScreenshot(wxWindow* xWindow, wxString fileName)
     {
         if (!fileName.MakeLower().EndsWith(".bmp"))
-            throwEx(u"Only .bmp file format is supported for screenshots.");
+            throwEx("Only .bmp file format is supported for screenshots.");
 
 #ifndef __WXMSW__
-        throwEx(u"Only Widows OS is supported for screenshots.");
+        throwEx("Only Widows OS is supported for screenshots.");
 #else
         // Source: https://docs.microsoft.com/en-us/windows/win32/gdi/capturing-an-image?redirectedfrom=MSDN
 
@@ -47,7 +47,7 @@ namespace Alternet::UI
         hdcMemDC = CreateCompatibleDC(hdcWindow);
 
         if (!hdcMemDC)
-            throwEx(u"CreateCompatibleDC has failed");
+            throwEx("CreateCompatibleDC has failed");
 
         // Get the client area for size calculation.
         RECT rcClient;
@@ -85,7 +85,7 @@ namespace Alternet::UI
 
         if (!hbmScreen)
         {
-            throwEx(u"CreateCompatibleBitmap Failed");
+            throwEx("CreateCompatibleBitmap Failed");
         }
 
         // Select the compatible bitmap into the compatible memory DC.
@@ -101,7 +101,7 @@ namespace Alternet::UI
                 rcClient.left, rcClient.top,
                 SRCCOPY))
             {
-                throwEx(u"BitBlt has failed");
+                throwEx("BitBlt has failed");
             }
         }
         else 
@@ -140,7 +140,7 @@ namespace Alternet::UI
         // have greater overhead than HeapAlloc.
         hDIB = GlobalAlloc(GHND, dwBmpSize);
         if (hDIB == NULL)
-            throwEx(u"GlobalAlloc has failed");
+            throwEx("GlobalAlloc has failed");
 
         lpbitmap = (char*)GlobalLock(hDIB);
 

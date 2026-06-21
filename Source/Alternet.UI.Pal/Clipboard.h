@@ -13,8 +13,8 @@ namespace Alternet::UI
 
     private:
 
-        optional<string> TryGetText();
-        optional<string> TryGetFiles();
+        NativeStringSpan TryGetText();
+        NativeStringSpan TryGetFiles();
         optional<wxBitmap> TryGetBitmap();
 
         wxDataObjectComposite* GetCompositeDataObjectFromClipboard();

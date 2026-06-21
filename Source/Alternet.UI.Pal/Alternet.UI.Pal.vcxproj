@@ -408,7 +408,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WxAlternet\wxAlternetColourProperty.cpp" />
     <ClCompile Include="WxOtherFactory.cpp" />
-    <ClCompile Include="WxStatusBarFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ApiUtils.h" />
@@ -484,7 +483,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="Api\WebBrowser.Api.h" />
     <ClInclude Include="Api\Window.Api.h" />
     <ClInclude Include="Api\WxOtherFactory.Api.h" />
-    <ClInclude Include="Api\WxStatusBarFactory.Api.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Brush.h" />
     <ClInclude Include="Button.h" />
@@ -569,7 +567,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="WxAlternet\wxAlternetLogFormatter.h" />
     <ClInclude Include="WxAlternet\wxAlternetRendererNative.h" />
     <ClInclude Include="WxOtherFactory.h" />
-    <ClInclude Include="WxStatusBarFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Api\Application.inc" />
@@ -633,7 +630,6 @@ VS_VERSION_INFO VERSIONINFO
     <None Include="Api\WebBrowser.inc" />
     <None Include="Api\Window.inc" />
     <None Include="Api\WxOtherFactory.inc" />
-    <None Include="Api\WxStatusBarFactory.inc" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Alternet.UI.Pal.rc" />

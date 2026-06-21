@@ -143,7 +143,7 @@ namespace NativeApi.Api
         // Clears the buffer content, leaving a single empty paragraph. Cannot be undone.    
         public void Clear() { }
 
-        // Replaces the content in the specified range with the string specified by @a value.
+        // Replaces the content in the specified range with the str specified by @a value.
         public void Replace(long from, long to, NativeStringSpan value) { }
 
         // Removes the content in the specified range.    
@@ -372,34 +372,34 @@ namespace NativeApi.Api
         // Begins applying a symbol bullet, using a character from the current font.
         // See BeginNumberedBullet() for an explanation of how indentation is used
         // to render the bulleted paragraph.
-        public bool BeginSymbolBullet(string symbol, int leftIndent, int leftSubIndent,
+        public bool BeginSymbolBullet(NativeStringSpan symbol, int leftIndent, int leftSubIndent,
             int bulletStyle) => default;//= wxTEXT_ATTR_BULLET_STYLE_SYMBOL
 
         // Ends applying a symbol bullet.
         public bool EndSymbolBullet() => default;
 
         // Begins applying a symbol bullet.
-        public bool BeginStandardBullet(string bulletName, int leftIndent,
+        public bool BeginStandardBullet(NativeStringSpan bulletName, int leftIndent,
             int leftSubIndent, int bulletStyle) => default; // = wxTEXT_ATTR_BULLET_STYLE_STANDARD
 
         // Begins applying a standard bullet.    
         public bool EndStandardBullet() => default;
 
         // Begins using the named character style.
-        public bool BeginCharacterStyle(string characterStyle) => default;
+        public bool BeginCharacterStyle(NativeStringSpan characterStyle) => default;
 
         // Ends application of a named character style.    
         public bool EndCharacterStyle() => default;
 
         // Begins applying the named paragraph style.    
-        public bool BeginParagraphStyle(string paragraphStyle) => default;
+        public bool BeginParagraphStyle(NativeStringSpan paragraphStyle) => default;
 
         // Ends application of a named paragraph style.    
         public bool EndParagraphStyle() => default;
 
         // Begins using a specified list style.
         // Optionally, you can also pass a level and a number.    
-        public bool BeginListStyle(string listStyle, int level = 1, int number = 1) => default;
+        public bool BeginListStyle(NativeStringSpan listStyle, int level = 1, int number = 1) => default;
 
         // Ends using a specified list style.    
         public bool EndListStyle() => default;
@@ -407,7 +407,7 @@ namespace NativeApi.Api
         // Begins applying wxTEXT_ATTR_URL to the content.
         // Pass a URL and optionally, a character style to apply, since it is common
         // to mark a URL with a familiar style such as blue text with underlining.
-        public bool BeginURL(string url, string characterStyle = default) => default;
+        public bool BeginURL(NativeStringSpan url, NativeStringSpan characterStyle = default) => default;
 
         // Ends applying a URL.
         public bool EndURL() => default;
@@ -544,10 +544,10 @@ namespace NativeApi.Api
         public bool EditProperties(IntPtr richObj, IntPtr parentWindow) => default;
 
         // Gets the object's properties menu label.    
-        public string GetPropertiesMenuLabel(IntPtr richObj) => default;
+        public NativeStringSpan GetPropertiesMenuLabel(IntPtr richObj) => default;
 
         // Starts batching undo history for commands.
-        public bool BeginBatchUndo(string cmdName) => default;
+        public bool BeginBatchUndo(NativeStringSpan cmdName) => default;
 
         // Ends batching undo command history.    
         public bool EndBatchUndo() => default;
@@ -583,7 +583,7 @@ namespace NativeApi.Api
         public void EnableVirtualAttributes(bool b) { }
 
         // Write text
-        public void DoWriteText(string value, int flags = 0) { }
+        public void DoWriteText(NativeStringSpan value, int flags = 0) { }
 
         // Helper function for extending the selection, returning <c>true</c> if the selection
         // was changed. Selections are in caret positions.    
@@ -696,10 +696,10 @@ namespace NativeApi.Api
         public void SetDelayedImageProcessingTime(long t) { }
 
         // Returns the content of the entire control as a string.    
-        public string GetValue() => default;
+        public NativeStringSpan GetValue() => default;
 
         // Replaces existing content with the given text.    
-        public void SetValue(string value) { }
+        public void SetValue(NativeStringSpan value) { }
 
         // Set the line increment height in pixels
         public void SetLineHeight(int height) { }
@@ -808,7 +808,7 @@ namespace NativeApi.Api
         //   as the level for all paragraphs, otherwise the current indentation will be used.    
         public bool SetListStyle(long startRange, long endRange, IntPtr def, int flags,
             int startFrom = 1, int specifiedLevel = -1) => default; //= wxRICHTEXT_SETSTYLE_WITH_UNDO
-        public bool SetListStyle2(long startRange, long endRange, string defName,
+        public bool SetListStyle2(long startRange, long endRange, NativeStringSpan defName,
             int flags, int startFrom = 1, int specifiedLevel = -1) => default;//= wxRICHTEXT_SETSTYLE_WITH_UNDO
 
         // Clears the list style from the given range, clearing list-related attributes
@@ -830,8 +830,8 @@ namespace NativeApi.Api
         public bool NumberList(long startRange, long endRange,
             IntPtr def, int flags, int startFrom = 1,
             int specifiedLevel = -1) => default;// = wxRICHTEXT_SETSTYLE_WITH_UNDO, def = default
-        public bool NumberList2(long startRange, long endRange,
-            string defName, int flags, int startFrom = 1,
+        public bool NumberList2(long startRange, long endRange, NativeStringSpan defName,
+            int flags, int startFrom = 1,
             int specifiedLevel = -1) => default;// = wxRICHTEXT_SETSTYLE_WITH_UNDO
 
         // Promotes or demotes the paragraphs in the given range.
@@ -848,7 +848,7 @@ namespace NativeApi.Api
         public bool PromoteList(int promoteBy, long startRange, long endRange,
             IntPtr def, int flags, int specifiedLevel = -1) => default; // def = default, = wxRICHTEXT_SETSTYLE_WITH_UNDO
         public bool PromoteList2(int promoteBy, long startRange, long endRange,
-            string defName, int flags, int specifiedLevel = -1) => default; //= wxRICHTEXT_SETSTYLE_WITH_UNDO
+            NativeStringSpan defName, int flags, int specifiedLevel = -1) => default; //= wxRICHTEXT_SETSTYLE_WITH_UNDO
 
         // Deletes the content within the given range.
         public bool Delete(long startRange, long endRange) => default;
@@ -962,7 +962,7 @@ namespace NativeApi.Api
                                 IntPtr textAttr = default) => default;   // =  = wxBITMAP_TYPE_PNG
 
         // Loads an image from a file and writes it at the current insertion point.    
-        public bool WriteImage2(string filename, int bitmapType,
+        public bool WriteImage2(NativeStringSpan filename, int bitmapType,
                                 IntPtr textAttr = default) => default;
 
         // Writes an image block at the current insertion point.
@@ -975,7 +975,7 @@ namespace NativeApi.Api
         //       Extra data for the field.
         //  @param textAttr
         //      Optional attributes.
-        public IntPtr WriteField(string fieldType, IntPtr properties,
+        public IntPtr WriteField(NativeStringSpan fieldType, IntPtr properties,
                                 IntPtr textAttr = default) => default;
 
         // Can we delete this range?

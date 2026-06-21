@@ -41,7 +41,7 @@ namespace Alternet::UI
         
         auto text = UnmanagedDataObject::TryGetText(composite);
         if (text.has_value() && text.value().size() > 0)
-            newComposite->Add(new wxTextDataObject(wxStr(text.value())));
+            newComposite->Add(new wxTextDataObject(text.value()));
 
         auto files = UnmanagedDataObject::TryGetFiles(composite);
         if (files.has_value() && files.value().Count() > 0)

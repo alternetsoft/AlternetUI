@@ -15,7 +15,7 @@ namespace Alternet::UI
 
     private:
         PrintDocument* _document = nullptr;
-        optional<string> _title;
+        optional<wxString> _title;
 
         struct State
         {

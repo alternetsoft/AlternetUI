@@ -28,7 +28,7 @@ namespace Alternet::UI
         void AddRef()
         {
             if (_referenceCount < 0)
-                throwEx(u"Reference count cannot be less than 0");
+                throwEx("Reference count cannot be less than 0");
 
             _referenceCount++;
         }
@@ -38,7 +38,7 @@ namespace Alternet::UI
             _referenceCount--;
 
             if (_referenceCount < 0)
-                throwEx(u"Reference count cannot be less than 0");
+                throwEx("Reference count cannot be less than 0");
 
             if (_referenceCount == 0)
                 delete this;

@@ -109,12 +109,12 @@ namespace Alternet::UI
 
     void ComboBox::SetItem(int index, const NativeStringSpan& value)
     {
-        GetItemContainer()->SetString(index, StringSpanToWx(value));
+        GetItemContainer()->SetString(index, wxStr(value));
     }
 
     void ComboBox::InsertItem(int index, const NativeStringSpan& value)
     {
-        GetItemContainer()->Insert(StringSpanToWx(value), index);
+        GetItemContainer()->Insert(wxStr(value), index);
     }
 
     void* ComboBox::CreateItemsInsertion()
@@ -125,7 +125,7 @@ namespace Alternet::UI
     void ComboBox::AddItemToInsertion(void* insertion, const NativeStringSpan& item)
     {
         auto strings = (wxArrayString*)insertion;
-        strings->Add(StringSpanToWx(item));
+        strings->Add(wxStr(item));
     }
 
     void ComboBox::CommitItemsInsertion(void* insertion, int index)
@@ -410,12 +410,12 @@ namespace Alternet::UI
     NativeStringSpan ComboBox::GetText()
     {
         _textValue = GetComboBox()->GetValue();
-        return WxToStringSpan(_textValue);
+        return wxStr(_textValue);
     }
 
     void ComboBox::SetText(const NativeStringSpan& value)
     {
-        GetComboBox()->SetValue(StringSpanToWx(value));
+        GetComboBox()->SetValue(wxStr(value));
     }
 
     void ComboBox::OnWxWindowCreated()
@@ -442,12 +442,12 @@ namespace Alternet::UI
     NativeStringSpan ComboBox::GetEmptyTextHint()
     {
 		_hint = GetComboBox()->GetHint();
-        return WxToStringSpan(_hint);
+        return wxStr(_hint);
     }
 
     void ComboBox::SetEmptyTextHint(const NativeStringSpan& value)
     {
-        GetComboBox()->SetHint(StringSpanToWx(value));
+        GetComboBox()->SetHint(wxStr(value));
     }
 
     int ComboBox::GetOwnerDrawStyle()

@@ -72,7 +72,7 @@ namespace ApiGenerator.Native
             var modifiers = GetModifiers(property);
             w.WriteLine();
 
-            var throwText = $"throwExInvalidOpWithInfo(wxStr(\"{name}\"))";
+            var throwText = $"throwExInvalidOpWithInfo(\"{name}\")";
 
             if (property.GetMethod != null)
             {
@@ -135,7 +135,7 @@ namespace ApiGenerator.Native
             var returnTypeName = types.GetTypeName(
                 method.ReturnParameter.ToContextualParameter(),
                 TypeUsage.Return);
-            var throwText = $"throwExInvalidOpWithInfo(wxStr(\"{name}\"))";
+            var throwText = $"throwExInvalidOpWithInfo(\"{name}\")";
 
             var signatureParameters = new StringBuilder();
             var callParameters = new StringBuilder();

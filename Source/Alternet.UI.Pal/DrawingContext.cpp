@@ -566,7 +566,7 @@ namespace Alternet::UI
         wxGraphicsFont gFont = _graphicsContext->CreateFont(font->GetWxFont(), wxForeColor);
         _graphicsContext->SetFont(gFont);
 
-        auto wxText = StringSpanToWx(text);
+        auto wxText = wxStr(text);
 
         if (useBrush)
         {
@@ -609,7 +609,7 @@ namespace Alternet::UI
 
         _graphicsContext->SetFont(wxf, *wxBLACK);
 
-        auto wText = StringSpanToWx(text);
+        auto wText = wxStr(text);
 
         _graphicsContext->GetTextExtent(wText, &width, &height, nullptr, nullptr);
         

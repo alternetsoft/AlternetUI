@@ -67,7 +67,7 @@ namespace Alternet::UI
                 return;
 
             auto w = GetWxColumnWidth(width, widthMode);
-            listView->InsertColumn(index, StringSpanToWx(header), 0, w);
+            listView->InsertColumn(index, wxStr(header), 0, w);
         }
     }
 
@@ -87,7 +87,7 @@ namespace Alternet::UI
         int imageIndex)
     {
         wxListItem item;
-        item.SetText(StringSpanToWx(value));
+        item.SetText(wxStr(value));
         item.SetColumn(columnIndex);
         item.SetId(index);
         item.SetImage(imageIndex);
@@ -259,7 +259,7 @@ namespace Alternet::UI
 
         _container = label;
 
-        data.label = WxToStringSpan(_container);
+        data.label = wxStr(_container);
 
         auto result = RaiseEventWithPointerResult(e, &data);
 
@@ -310,7 +310,7 @@ namespace Alternet::UI
 
         wxListItem item;
         item.SetMask(wxLIST_MASK_TEXT);
-        item.SetText(StringSpanToWx(title));
+        item.SetText(wxStr(title));
 
         GetListView()->SetColumn(columnIndex, item);
     }
@@ -331,7 +331,7 @@ namespace Alternet::UI
             item.SetColumn(columnIndex);
             item.SetId(itemIndex);
             item.SetMask(wxLIST_MASK_TEXT);
-            item.SetText(StringSpanToWx(text));
+            item.SetText(wxStr(text));
             listView->SetItem(item);
         }
     }

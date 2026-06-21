@@ -39,7 +39,7 @@ namespace Alternet::UI
 		wxAlternetColourProperty::gs_wxColourProperty_choicesCache.Clear();
 	}
 
-	void PropertyGrid::KnownColorsAdd(const string& name, const string& title,
+	void PropertyGrid::KnownColorsAdd(const NativeStringSpan& name, const NativeStringSpan& title,
 		const Color& value, int knownColor)
 	{
 		auto wxtitle = wxStr(title);
@@ -51,7 +51,7 @@ namespace Alternet::UI
 
 	wxString PropertyGrid::CustomColorTitle = "Custom";
 
-	void PropertyGrid::KnownColorsSetCustomColorTitle(const string& value)
+	void PropertyGrid::KnownColorsSetCustomColorTitle(const NativeStringSpan& value)
 	{
 		CustomColorTitle = wxStr(value);
 	}
@@ -104,7 +104,7 @@ namespace Alternet::UI
 		GetPropGrid()->SetExtraStyle(value);
 	}
 
-	string PropertyGrid::GetNameAsLabel()
+	NativeStringSpan PropertyGrid::GetNameAsLabel()
 	{
 		return wxStr(wxPG_LABEL);
 	}
@@ -162,12 +162,12 @@ namespace Alternet::UI
 
 		if (prop == nullptr)
 		{
-			_eventPropertyName = wxStr(wxEmptyString);
+			_eventPropertyName = wxEmptyString;
 			_eventValue->variant = wxVariant();
 		}
 		else
 		{
-			_eventPropertyName = wxStr(prop->GetName());
+			_eventPropertyName = prop->GetName();
 			_eventValue->variant = prop->GetValue();
 		}
 
@@ -296,7 +296,7 @@ namespace Alternet::UI
 		if (evType == PropertyGridEvent::Changing)
 		{
 			event.SetValidationFailureBehavior(_eventValidationFailureBehavior);
-			event.SetValidationFailureMessage(wxStr(_eventValidationFailureMessage));
+			event.SetValidationFailureMessage(_eventValidationFailureMessage);
 		}
 	}
 
@@ -310,11 +310,11 @@ namespace Alternet::UI
 		if (evType == PropertyGridEvent::Changing)
 		{
 			_eventValidationFailureBehavior = event.GetValidationFailureBehavior();
-			_eventValidationFailureMessage = wxStr(event.GetValidationInfo().GetFailureMessage());
+			_eventValidationFailureMessage = event.GetValidationInfo().GetFailureMessage();
 		}
 		_eventColumn = event.GetColumn();
 		_eventProperty = event.GetProperty();
-		_eventPropertyName = wxStr(event.GetPropertyName());
+		_eventPropertyName = event.GetPropertyName();
 		_eventValue->variant = event.GetPropertyValue();
 	}
 
@@ -354,18 +354,18 @@ namespace Alternet::UI
 		}
 	}
 
-	void* PropertyGrid::CreateStringProperty(const string& label, const string& name,
-		const string& value)
+	void* PropertyGrid::CreateStringProperty(const NativeStringSpan& label, const NativeStringSpan& name,
+		const NativeStringSpan& value)
 	{
 		return new wxStringProperty(wxStr(label), wxStr(name), wxStr(value));
 	}
 
-	void* PropertyGrid::CreateBoolProperty(const string& label, const string& name, bool value)
+	void* PropertyGrid::CreateBoolProperty(const NativeStringSpan& label, const NativeStringSpan& name, bool value)
 	{
 		return new wxBoolProperty(wxStr(label), wxStr(name), value);
 	}
 
-	void* PropertyGrid::CreateIntProperty(const string& label, const string& name, int64_t value)
+	void* PropertyGrid::CreateIntProperty(const NativeStringSpan& label, const NativeStringSpan& name, int64_t value)
 	{
 		return new wxIntProperty(wxStr(label), wxStr(name), (long)value);
 	}
@@ -393,23 +393,23 @@ namespace Alternet::UI
 		return result;
 	}
 
-	void* PropertyGrid::CreateFloatProperty(const string& label, const string& name, double value)
+	void* PropertyGrid::CreateFloatProperty(const NativeStringSpan& label, const NativeStringSpan& name, double value)
 	{
 		return new wxFloatProperty2(wxStr(label), wxStr(name), value);
 	}
 
-	void* PropertyGrid::CreateUIntProperty(const string& label, const string& name, uint64_t value)
+	void* PropertyGrid::CreateUIntProperty(const NativeStringSpan& label, const NativeStringSpan& name, uint64_t value)
 	{
 		return new wxUIntProperty(wxStr(label), wxStr(name), (unsigned long)value);
 	}
 
-	void* PropertyGrid::CreateLongStringProperty(const string& label, const string& name,
-		const string& value)
+	void* PropertyGrid::CreateLongStringProperty(const NativeStringSpan& label, const NativeStringSpan& name,
+		const NativeStringSpan& value)
 	{
 		return new wxLongStringProperty(wxStr(label), wxStr(name), wxStr(value));
 	}
 
-	void* PropertyGrid::CreateDateProperty(const string& label, const string& name,
+	void* PropertyGrid::CreateDateProperty(const NativeStringSpan& label, const NativeStringSpan& name,
 		const DateTime& value)
 	{
 		wxDateTime dt = value;
@@ -451,15 +451,15 @@ namespace Alternet::UI
 		return GetPropGrid()->ExpandAll(expand);
 	}
 
-	void* PropertyGrid::CreateEditEnumProperty(const string& label, const string& name,
-		void* choices, const string& value)
+	void* PropertyGrid::CreateEditEnumProperty(const NativeStringSpan& label, const NativeStringSpan& name,
+		void* choices, const NativeStringSpan& value)
 	{
 		auto pgc = (PropertyGridChoices*)choices;
 
 		return new wxEditEnumProperty(wxStr(label), wxStr(name), pgc->choices, wxStr(value));
 	}
 
-	void* PropertyGrid::CreateEnumProperty(const string& label, const string& name,
+	void* PropertyGrid::CreateEnumProperty(const NativeStringSpan& label, const NativeStringSpan& name,
 		void* choices, int value)
 	{
 		auto pgc = (PropertyGridChoices*)choices;
@@ -467,25 +467,25 @@ namespace Alternet::UI
 		return new wxEnumProperty(wxStr(label), wxStr(name), pgc->choices, value);
 	}
 
-	void* PropertyGrid::CreateFilenameProperty(const string& label, const string& name,
-		const string& value)
+	void* PropertyGrid::CreateFilenameProperty(const NativeStringSpan& label, const NativeStringSpan& name,
+		const NativeStringSpan& value)
 	{
 		return new wxFileProperty(wxStr(label), wxStr(name), wxStr(value));
 	}
 
-	void* PropertyGrid::CreateDirProperty(const string& label, const string& name,
-		const string& value)
+	void* PropertyGrid::CreateDirProperty(const NativeStringSpan& label, const NativeStringSpan& name,
+		const NativeStringSpan& value)
 	{
 		return new wxDirProperty(wxStr(label), wxStr(name), wxStr(value));
 	}
 
-	void* PropertyGrid::CreateImageFilenameProperty(const string& label, const string& name,
-		const string& value)
+	void* PropertyGrid::CreateImageFilenameProperty(const NativeStringSpan& label, const NativeStringSpan& name,
+		const NativeStringSpan& value)
 	{
 		return new wxImageFileProperty(wxStr(label), wxStr(name), wxStr(value));
 	}
 
-	void* PropertyGrid::CreateSystemColorProperty(const string& label, const string& name,
+	void* PropertyGrid::CreateSystemColorProperty(const NativeStringSpan& label, const NativeStringSpan& name,
 		const Color& value, uint32_t kind)
 	{
 		wxColor wxc = value;
@@ -493,19 +493,19 @@ namespace Alternet::UI
 		return new wxAlternetSystemColourProperty(wxStr(label), wxStr(name), wxProp);
 	}
 
-	void* PropertyGrid::CreateCursorProperty(const string& label, const string& name, int value)
+	void* PropertyGrid::CreateCursorProperty(const NativeStringSpan& label, const NativeStringSpan& name, int value)
 	{
 		return new wxCursorProperty(wxStr(label), wxStr(name), value);
 	}
 
-	void* PropertyGrid::CreateColorProperty(const string& label, const string& name,
+	void* PropertyGrid::CreateColorProperty(const NativeStringSpan& label, const NativeStringSpan& name,
 		const Color& value)
 	{
 		wxColor wxc = value;
 		return new wxAlternetColourProperty(wxStr(label), wxStr(name), wxc);
 	}
 
-	void* PropertyGrid::CreateFlagsProperty(const string& label, const string& name,
+	void* PropertyGrid::CreateFlagsProperty(const NativeStringSpan& label, const NativeStringSpan& name,
 		void* choices, int value)
 	{
 		auto pgc = (PropertyGridChoices*)choices;
@@ -513,7 +513,7 @@ namespace Alternet::UI
 		return new wxFlagsProperty(wxStr(label), wxStr(name), pgc->choices, value);
 	}
 
-	void PropertyGrid::SetBoolChoices(const string& trueChoice, const string& falseChoice)
+	void PropertyGrid::SetBoolChoices(const NativeStringSpan& trueChoice, const NativeStringSpan& falseChoice)
 	{
 		wxPropertyGrid::SetBoolChoices(wxStr(trueChoice), wxStr(falseChoice));
 	}
@@ -528,7 +528,7 @@ namespace Alternet::UI
 		wxPropertyGrid::RegisterAdditionalEditors();
 	}
 
-	void* PropertyGrid::CreatePropCategory(const string& label, const string& name)
+	void* PropertyGrid::CreatePropCategory(const NativeStringSpan& label, const NativeStringSpan& name)
 	{
 		return new wxPropertyCategory(wxStr(label), wxStr(name));
 	}
@@ -538,22 +538,22 @@ namespace Alternet::UI
 		return GetPropGridInterface()->GetFirst(flags);
 	}
 
-	void* PropertyGrid::GetProperty(const string& name)
+	void* PropertyGrid::GetProperty(const NativeStringSpan& name)
 	{
 		return GetPropGrid()->GetProperty(wxStr(name));
 	}
 
-	void* PropertyGrid::GetPropertyByLabel(const string& label)
+	void* PropertyGrid::GetPropertyByLabel(const NativeStringSpan& label)
 	{
 		return GetPropGrid()->GetPropertyByLabel(wxStr(label));
 	}
 
-	void* PropertyGrid::GetPropertyByName(const string& name)
+	void* PropertyGrid::GetPropertyByName(const NativeStringSpan& name)
 	{
 		return GetPropGrid()->GetPropertyByName(wxStr(name));
 	}
 
-	void* PropertyGrid::GetPropertyByNameAndSubName(const string& name, const string& subname)
+	void* PropertyGrid::GetPropertyByNameAndSubName(const NativeStringSpan& name, const NativeStringSpan& subname)
 	{
 		return GetPropGrid()->GetPropertyByName(wxStr(name), wxStr(subname));
 	}
@@ -563,19 +563,21 @@ namespace Alternet::UI
 		return GetPropGrid()->GetSelection();
 	}
 
-	string PropertyGrid::GetPropertyName(void* property)
+	NativeStringSpan PropertyGrid::GetPropertyName(void* property)
 	{
-		return wxStr(GetPropGrid()->GetPropertyName((wxPGProperty*)property));
+		_container = GetPropGrid()->GetPropertyName((wxPGProperty*)property);
+		return wxStr(_container);
 	}
 
-	bool PropertyGrid::RestoreEditableState(const string& src, int restoreStates)
+	bool PropertyGrid::RestoreEditableState(const NativeStringSpan& src, int restoreStates)
 	{
 		return GetPropGrid()->RestoreEditableState(wxStr(src), restoreStates);
 	}
 
-	string PropertyGrid::SaveEditableState(int includedStates)
+	NativeStringSpan PropertyGrid::SaveEditableState(int includedStates)
 	{
-		return wxStr(GetPropGrid()->SaveEditableState(includedStates));
+		_container = GetPropGrid()->SaveEditableState(includedStates);
+		return wxStr(_container);
 	}
 
 	bool PropertyGrid::SetColumnProportion(uint32_t column, int proportion)
@@ -603,19 +605,19 @@ namespace Alternet::UI
 		_propArg = wxPGPropArgCls((wxPGProperty*)id);
 	}
 
-	void PropertyGrid::SetPropertyLabel(void* id, const string& newproplabel)
+	void PropertyGrid::SetPropertyLabel(void* id, const NativeStringSpan& newproplabel)
 	{
 		ToPropArg(id);
 		GetPropGrid()->SetPropertyLabel(_propArg, wxStr(newproplabel));
 	}
 
-	void PropertyGrid::SetPropertyName(void* id, const string& newName)
+	void PropertyGrid::SetPropertyName(void* id, const NativeStringSpan& newName)
 	{
 		ToPropArg(id);
 		GetPropGrid()->SetPropertyName(_propArg, wxStr(newName));
 	}
 
-	void PropertyGrid::SetPropertyHelpString(void* id, const string& helpString)
+	void PropertyGrid::SetPropertyHelpString(void* id, const NativeStringSpan& helpString)
 	{
 		ToPropArg(id);
 		GetPropGrid()->SetPropertyHelpString(_propArg, wxStr(helpString));
@@ -651,7 +653,7 @@ namespace Alternet::UI
 		GetPropGrid()->SetPropertyValue(_propArg, value);
 	}
 
-	void PropertyGrid::SetPropertyValueAsStr(void* id, const string& value)
+	void PropertyGrid::SetPropertyValueAsStr(void* id, const NativeStringSpan& value)
 	{
 		ToPropArg(id);
 		GetPropGrid()->SetPropertyValue(_propArg, wxStr(value));
@@ -674,7 +676,7 @@ namespace Alternet::UI
 		GetPropGrid()->SortChildren(_propArg, (wxPGPropertyValuesFlags)flags);
 	}
 
-	/*static*/ void* PropertyGrid::GetEditorByName(const string& editorName)
+	/*static*/ void* PropertyGrid::GetEditorByName(const NativeStringSpan& editorName)
 	{
 		return wxPropertyGrid::GetEditorByName(wxStr(editorName));
 	}
@@ -763,10 +765,11 @@ namespace Alternet::UI
 		return GetPropGrid()->GetPropertyClientData(_propArg);
 	}
 
-	string PropertyGrid::GetPropertyHelpString(void* id)
+	NativeStringSpan PropertyGrid::GetPropertyHelpString(void* id)
 	{
 		ToPropArg(id);
-		return wxStr(GetPropGrid()->GetPropertyHelpString(_propArg));
+		_container = GetPropGrid()->GetPropertyHelpString(_propArg);
+		return wxStr(_container);
 	}
 
 	void* PropertyGrid::GetPropertyImage(void* id)
@@ -775,10 +778,11 @@ namespace Alternet::UI
 		return GetPropGrid()->GetPropertyImage(_propArg);
 	}
 
-	string PropertyGrid::GetPropertyLabel(void* id)
+	NativeStringSpan PropertyGrid::GetPropertyLabel(void* id)
 	{
 		ToPropArg(id);
-		return wxStr(GetPropGrid()->GetPropertyLabel(_propArg));
+		_container = GetPropGrid()->GetPropertyLabel(_propArg);
+		return wxStr(_container);
 	}
 
 	void* PropertyGrid::GetPropertyParent(void* id)
@@ -796,10 +800,11 @@ namespace Alternet::UI
 		return result;
 	}
 
-	string PropertyGrid::GetPropertyValueAsString(void* id)
+	NativeStringSpan PropertyGrid::GetPropertyValueAsString(void* id)
 	{
 		ToPropArg(id);
-		return wxStr(GetPropGrid()->GetPropertyValueAsString(_propArg));
+		_container = GetPropGrid()->GetPropertyValueAsString(_propArg);
+		return wxStr(_container);
 	}
 
 	int64_t PropertyGrid::GetPropertyValueAsLong(void* id)
@@ -952,7 +957,7 @@ namespace Alternet::UI
 		GetPropGrid()->SetPropertyEditor(_propArg, (wxPGEditor*)editor);
 	}
 
-	void PropertyGrid::SetPropertyEditorByName(void* id, const string& editorName)
+	void PropertyGrid::SetPropertyEditorByName(void* id, const NativeStringSpan& editorName)
 	{
 		ToPropArg(id);
 		GetPropGrid()->SetPropertyEditor(_propArg, wxStr(editorName));
@@ -978,24 +983,27 @@ namespace Alternet::UI
 		return _eventProperty;
 	}
 
-	string PropertyGrid::GetEventPropertyName()
+	NativeStringSpan PropertyGrid::GetEventPropertyName()
 	{
-		return _eventPropertyName;
+		_container = _eventPropertyName;
+		return wxStr(_container);
 	}
 
-	string PropertyGrid::GetEventValidationFailureMessage()
+	NativeStringSpan PropertyGrid::GetEventValidationFailureMessage()
 	{
-		return _eventValidationFailureMessage;
+		_container = _eventValidationFailureMessage;
+		return wxStr(_container);
 	}
 
-	void PropertyGrid::SetEventValidationFailureMessage(const string& value)
+	void PropertyGrid::SetEventValidationFailureMessage(const NativeStringSpan& value)
 	{
-		_eventValidationFailureMessage = value;
+		_eventValidationFailureMessage = wxStr(value);
 	}
 
-	string PropertyGrid::GetUnspecifiedValueText(int argFlags)
+	NativeStringSpan PropertyGrid::GetUnspecifiedValueText(int argFlags)
 	{
-		return wxStr(GetPropGrid()->GetUnspecifiedValueText((wxPGPropValFormatFlags)argFlags));
+		_container = GetPropGrid()->GetUnspecifiedValueText((wxPGPropValFormatFlags)argFlags);
+		return wxStr(_container);
 	}
 
 	void PropertyGrid::SetVirtualWidth(int width)
@@ -1023,9 +1031,10 @@ namespace Alternet::UI
 		return GetPropGrid()->GetCommonValueCount();
 	}
 
-	string PropertyGrid::GetCommonValueLabel(uint32_t i)
+	NativeStringSpan PropertyGrid::GetCommonValueLabel(uint32_t i)
 	{
-		return wxStr(GetPropGrid()->GetCommonValueLabel(i));
+		_container = GetPropGrid()->GetCommonValueLabel(i);
+		return wxStr(_container);
 	}
 
 	int PropertyGrid::GetUnspecifiedCommonValue()
@@ -1058,7 +1067,7 @@ namespace Alternet::UI
 		return GetPropGrid()->GetSpacingY();
 	}
 
-	void PropertyGrid::SetupTextCtrlValue(const string& text)
+	void PropertyGrid::SetupTextCtrlValue(const NativeStringSpan& text)
 	{
 		GetPropGrid()->SetupTextCtrlValue(wxStr(text));
 	}
@@ -1361,7 +1370,7 @@ namespace Alternet::UI
 		return GetPropGrid()->ChangePropertyValue(_propArg, v);
 	}
 
-	void PropertyGrid::SetPropertyAttribute(void* id, const string& attrName, 
+	void PropertyGrid::SetPropertyAttribute(void* id, const NativeStringSpan& attrName, 
 		void* variant, int64_t argFlags)
 	{
 		ToPropArg(id);
@@ -1377,7 +1386,7 @@ namespace Alternet::UI
 		GetPropGrid()->SetPropertyValue(_propArg, v);
 	}
 
-	void PropertyGrid::SetPropertyAttributeAll(const string& attrName, void* variant)
+	void PropertyGrid::SetPropertyAttributeAll(const NativeStringSpan& attrName, void* variant)
 	{
 		wxVariant v = PropertyGridVariant::ToVar(variant);
 		GetPropGrid()->SetPropertyAttributeAll(wxStr(attrName), v);
@@ -1421,19 +1430,20 @@ namespace Alternet::UI
 		wxTheColourDatabase = (wxColourDatabase*)handle;
 	}
 
-	void PropertyGrid::ColorDatabaseAdd(void* handle, const string& name, const Color& color)
+	void PropertyGrid::ColorDatabaseAdd(void* handle, const NativeStringSpan& name, const Color& color)
 	{
 		((wxColourDatabase*)handle)->AddColour(wxStr(name), color);
 	}
 
-	Color PropertyGrid::ColorDatabaseFind(void* handle, const string& name)
+	Color PropertyGrid::ColorDatabaseFind(void* handle, const NativeStringSpan& name)
 	{
 		return ((wxColourDatabase*)handle)->Find(wxStr(name));
 	}
 
-	string PropertyGrid::ColorDatabaseFindName(void* handle, const Color& color)
+	NativeStringSpan PropertyGrid::ColorDatabaseFindName(void* handle, const Color& color)
 	{
-		return wxStr(((wxColourDatabase*)handle)->FindName(color));
+		_containerStatic = ((wxColourDatabase*)handle)->FindName(color);
+		return wxStr(_containerStatic);
 	}
 
 	PointI PropertyGrid::CalcUnscrolledPosition(const PointI& point)

@@ -396,10 +396,10 @@ ALTERNET_UI_API int WxOtherFactory_SystemSettingsGetMetric_(int index, void* win
     });
 }
 
-ALTERNET_UI_API char16_t* WxOtherFactory_SystemAppearanceGetName_()
+ALTERNET_UI_API NativeStringSpan_C WxOtherFactory_SystemAppearanceGetName_()
 {
-    return MarshalExceptions<char16_t*>([&](){
-        return AllocPInvokeReturnString(WxOtherFactory::SystemAppearanceGetName());
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WxOtherFactory::SystemAppearanceGetName();
     });
 }
 

@@ -17,8 +17,8 @@ namespace Alternet::UI
 
         _dialog = new wxDirDialog(
             owner,
-            wxStr(_title.value_or(u"")),
-            wxStr(_initialDirectory.value_or(u"")),
+            _title,
+            _initialDirectory,
             GetStyle(),
             wxDefaultPosition,
             wxDefaultSize,
@@ -30,38 +30,38 @@ namespace Alternet::UI
         return wxDD_DEFAULT_STYLE;
     }
 
-    optional<string> SelectDirectoryDialog::GetInitialDirectory()
+    NativeStringSpan SelectDirectoryDialog::GetInitialDirectory()
     {
-        return _initialDirectory;
+        return wxStr(_initialDirectory);
     }
 
-    void SelectDirectoryDialog::SetInitialDirectory(optional<string> value)
+    void SelectDirectoryDialog::SetInitialDirectory(const NativeStringSpan& value)
     {
-        _initialDirectory = value;
+        _initialDirectory = wxStr(value);
         RecreateDialog();
     }
 
-    optional<string> SelectDirectoryDialog::GetTitle()
+    NativeStringSpan SelectDirectoryDialog::GetTitle()
     {
-        return _title;
+        return wxStr(_title);
     }
 
-    void SelectDirectoryDialog::SetTitle(optional<string> value)
+    void SelectDirectoryDialog::SetTitle(const NativeStringSpan& value)
     {
-        _title = value;
+        _title = wxStr(value);
         RecreateDialog();
     }
 
-    optional<string> SelectDirectoryDialog::GetDirectoryName()
+    NativeStringSpan SelectDirectoryDialog::GetDirectoryName()
     {
-        auto value = wxStr(GetDialog()->GetPath());
-        return value == u"" ? nullopt : optional<string>(value);
+        _directoryName = GetDialog()->GetPath();
+        return wxStr(_directoryName);
     }
 
-    void SelectDirectoryDialog::SetDirectoryName(optional<string> value)
+    void SelectDirectoryDialog::SetDirectoryName(const NativeStringSpan& value)
     {
-        _directoryName = value;
-        GetDialog()->SetPath(wxStr(value.value_or(u"")));
+        _directoryName = wxStr(value);
+        GetDialog()->SetPath(_directoryName);
     }
 
     ModalResult SelectDirectoryDialog::ShowModal(Window* owner)

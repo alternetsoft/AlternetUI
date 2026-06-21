@@ -116,7 +116,7 @@ namespace Alternet::UI
     NativeStringSpan GroupBox::GetText()
     {
         _textValue = GetStaticBox()->GetLabel();
-        return WxToStringSpan(_textValue);
+        return wxStr(_textValue);
     }
 
     void GroupBox::RecreateWxWindowIfNeeded()
@@ -128,6 +128,6 @@ namespace Alternet::UI
 
     void GroupBox::SetText(const NativeStringSpan& value)
     {
-        GetStaticBox()->SetLabel(StringSpanToWx(value));
+        GetStaticBox()->SetLabel(wxStr(value));
     }
 }

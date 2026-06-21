@@ -56,9 +56,9 @@ namespace Alternet::UI
 		return result;
 	}
 
-	string RichTextBox::GetReportedUrl()
+	NativeStringSpan RichTextBox::GetReportedUrl()
 	{
-		return _eventUrl;
+		return wxStr(_eventUrl);
 	}
 
 	void RichTextBox::OnTextUrl(wxTextUrlEvent& event)
@@ -208,12 +208,13 @@ namespace Alternet::UI
 		GetTextCtrl()->SetDelayedImageProcessingTime(t);
 	}
 
-	string RichTextBox::GetValue()
+	NativeStringSpan RichTextBox::GetValue()
 	{
-		return wxStr(GetTextCtrl()->GetValue());
+		_container = GetTextCtrl()->GetValue();
+		return wxStr(_container);
 	}
 
-	void RichTextBox::SetValue(const string& value)
+	void RichTextBox::SetValue(const NativeStringSpan& value)
 	{
 		GetTextCtrl()->SetValue(wxStr(value));
 	}
@@ -405,7 +406,7 @@ namespace Alternet::UI
 	}
 
 	bool RichTextBox::SetListStyle2(int64_t startRange, int64_t endRange,
-		const string& defName, int flags, int startFrom, int specifiedLevel)
+		const NativeStringSpan& defName, int flags, int startFrom, int specifiedLevel)
 	{
 		wxRichTextRange range = wxRichTextRange(startRange, endRange);
 		return GetTextCtrl()->SetListStyle(range,
@@ -427,7 +428,7 @@ namespace Alternet::UI
 	}
 
 	bool RichTextBox::NumberList2(int64_t startRange, int64_t endRange,
-		const string& defName, int flags, int startFrom, int specifiedLevel)
+		const NativeStringSpan& defName, int flags, int startFrom, int specifiedLevel)
 	{
 		wxRichTextRange range = wxRichTextRange(startRange, endRange);
 		return GetTextCtrl()->NumberList(range,
@@ -443,7 +444,7 @@ namespace Alternet::UI
 	}
 
 	bool RichTextBox::PromoteList2(int promoteBy, int64_t startRange, int64_t endRange,
-		const string& defName, int flags, int specifiedLevel)
+		const NativeStringSpan& defName, int flags, int specifiedLevel)
 	{
 		wxRichTextRange range = wxRichTextRange(startRange, endRange);
 		return GetTextCtrl()->PromoteList(promoteBy, range,
@@ -545,7 +546,7 @@ namespace Alternet::UI
 		return GetTextCtrl()->SetProperties(range, *s, flags);
 	}
 
-	bool RichTextBox::WriteImage2(const string& filename, int bitmapType, void* textAttr)
+	bool RichTextBox::WriteImage2(const NativeStringSpan& filename, int bitmapType, void* textAttr)
 	{
 		if(textAttr == nullptr)
 			return GetTextCtrl()->WriteImage(wxStr(filename), (wxBitmapType)bitmapType);
@@ -613,7 +614,7 @@ namespace Alternet::UI
 		return GetTextCtrl()->EndNumberedBullet();
 	}
 
-	bool RichTextBox::BeginSymbolBullet(const string& symbol, int leftIndent,
+	bool RichTextBox::BeginSymbolBullet(const NativeStringSpan& symbol, int leftIndent,
 		int leftSubIndent, int bulletStyle)
 	{
 		return GetTextCtrl()->BeginSymbolBullet(wxStr(symbol), leftIndent,
@@ -625,7 +626,7 @@ namespace Alternet::UI
 		return GetTextCtrl()->EndSymbolBullet();
 	}
 
-	bool RichTextBox::BeginStandardBullet(const string& bulletName,
+	bool RichTextBox::BeginStandardBullet(const NativeStringSpan& bulletName,
 		int leftIndent, int leftSubIndent, int bulletStyle)
 	{
 		return GetTextCtrl()->BeginStandardBullet(wxStr(bulletName),
@@ -637,7 +638,7 @@ namespace Alternet::UI
 		return GetTextCtrl()->EndStandardBullet();
 	}
 
-	bool RichTextBox::BeginCharacterStyle(const string& characterStyle)
+	bool RichTextBox::BeginCharacterStyle(const NativeStringSpan& characterStyle)
 	{
 		return GetTextCtrl()->BeginCharacterStyle(wxStr(characterStyle));
 	}
@@ -647,7 +648,7 @@ namespace Alternet::UI
 		return GetTextCtrl()->EndCharacterStyle();
 	}
 
-	bool RichTextBox::BeginParagraphStyle(const string& paragraphStyle)
+	bool RichTextBox::BeginParagraphStyle(const NativeStringSpan& paragraphStyle)
 	{
 		return GetTextCtrl()->BeginParagraphStyle(wxStr(paragraphStyle));
 	}
@@ -657,7 +658,7 @@ namespace Alternet::UI
 		return GetTextCtrl()->EndParagraphStyle();
 	}
 
-	bool RichTextBox::BeginListStyle(const string& listStyle, int level, int number)
+	bool RichTextBox::BeginListStyle(const NativeStringSpan& listStyle, int level, int number)
 	{
 		return GetTextCtrl()->BeginListStyle(wxStr(listStyle), level, number);
 	}
@@ -667,7 +668,7 @@ namespace Alternet::UI
 		return GetTextCtrl()->EndListStyle();
 	}
 
-	bool RichTextBox::BeginURL(const string& url, const string& characterStyle)
+	bool RichTextBox::BeginURL(const NativeStringSpan& url, const NativeStringSpan& characterStyle)
 	{
 		return GetTextCtrl()->BeginURL(wxStr(url), wxStr(characterStyle));
 	}
@@ -878,12 +879,13 @@ namespace Alternet::UI
 		return GetTextCtrl()->EditProperties((wxRichTextObject*)richObj, (wxWindow*)parentWindow);
 	}
 
-	string RichTextBox::GetPropertiesMenuLabel(void* richObj)
+	NativeStringSpan RichTextBox::GetPropertiesMenuLabel(void* richObj)
 	{
-		return wxStr(GetTextCtrl()->GetPropertiesMenuLabel((wxRichTextObject*)richObj));
+		_container = GetTextCtrl()->GetPropertiesMenuLabel((wxRichTextObject*)richObj);
+		return wxStr(_container);
 	}
 
-	bool RichTextBox::BeginBatchUndo(const string& cmdName)
+	bool RichTextBox::BeginBatchUndo(const NativeStringSpan& cmdName)
 	{
 		return GetTextCtrl()->BeginBatchUndo(wxStr(cmdName));
 	}
@@ -943,7 +945,7 @@ namespace Alternet::UI
 		GetTextCtrl()->EnableVirtualAttributes(b);
 	}
 
-	void RichTextBox::DoWriteText(const string& value, int flags)
+	void RichTextBox::DoWriteText(const NativeStringSpan& value, int flags)
 	{
 		GetTextCtrl()->DoWriteText(wxStr(value), flags);
 	}
@@ -993,9 +995,10 @@ namespace Alternet::UI
 		return GetTextCtrl()->FindNextWordPosition(direction);
 	}
 
-	string RichTextBox::GetRange(int64_t from, int64_t to)
+	NativeStringSpan RichTextBox::GetRange(int64_t from, int64_t to)
 	{
-		return wxStr(GetTextCtrl()->GetRange(from, to));
+		_container = GetTextCtrl()->GetRange(from, to);
+		return wxStr(_container);
 	}
 
 	int RichTextBox::GetLineLength(int64_t lineNo)
@@ -1003,9 +1006,10 @@ namespace Alternet::UI
 		return GetTextCtrl()->GetLineLength(lineNo);
 	}
 
-	string RichTextBox::GetLineText(int64_t lineNo)
+	NativeStringSpan RichTextBox::GetLineText(int64_t lineNo)
 	{
-		return wxStr(GetTextCtrl()->GetLineText(lineNo));
+		_container = GetTextCtrl()->GetLineText(lineNo);
+		return wxStr(_container);
 	}
 
 	int RichTextBox::GetNumberOfLines()
@@ -1033,17 +1037,19 @@ namespace Alternet::UI
 		return GetTextCtrl()->IsMultiLine();
 	}
 
-	string RichTextBox::GetStringSelection()
+	NativeStringSpan RichTextBox::GetStringSelection()
 	{
-		return wxStr(GetTextCtrl()->GetStringSelection());
+		_container = GetTextCtrl()->GetStringSelection();
+		return wxStr(_container);
 	}
 
-	string RichTextBox::GetFilename()
+	NativeStringSpan RichTextBox::GetFilename()
 	{
-		return wxStr(GetTextCtrl()->GetFilename());
+		_container = GetTextCtrl()->GetFilename();
+		return wxStr(_container);
 	}
 
-	void RichTextBox::SetFilename(const string& filename)
+	void RichTextBox::SetFilename(const NativeStringSpan& filename)
 	{
 		GetTextCtrl()->SetFilename(wxStr(filename));
 	}
@@ -1168,7 +1174,7 @@ namespace Alternet::UI
 		GetTextCtrl()->Clear();
 	}
 
-	void RichTextBox::Replace(int64_t from, int64_t to, const string& value)
+	void RichTextBox::Replace(int64_t from, int64_t to, const NativeStringSpan& value)
 	{
 		GetTextCtrl()->Replace(from, to, wxStr(value));
 	}
@@ -1178,7 +1184,7 @@ namespace Alternet::UI
 		GetTextCtrl()->Remove(from, to);
 	}
 
-	bool RichTextBox::LoadFile(const string& file, int type)
+	bool RichTextBox::LoadFile(const NativeStringSpan& file, int type)
 	{
 		return GetTextCtrl()->LoadFile(wxStr(file), type);
 	}
@@ -1191,7 +1197,7 @@ namespace Alternet::UI
 		wxRichTextBuffer::AddHandler(new wxRichTextHTMLHandler);
 	}
 
-	bool RichTextBox::SaveFile(const string& file, int type)
+	bool RichTextBox::SaveFile(const NativeStringSpan& file, int type)
 	{
 		return GetTextCtrl()->SaveFile(wxStr(file), type);
 	}
@@ -1221,12 +1227,12 @@ namespace Alternet::UI
 		GetTextCtrl()->SetMaxLength(len);
 	}
 
-	void RichTextBox::WriteText(const string& text)
+	void RichTextBox::WriteText(const NativeStringSpan& text)
 	{
 		GetTextCtrl()->WriteText(wxStr(text));
 	}
 
-	void RichTextBox::AppendText(const string& text)
+	void RichTextBox::AppendText(const NativeStringSpan& text)
 	{
 		GetTextCtrl()->AppendText(wxStr(text));
 	}
@@ -1494,7 +1500,7 @@ namespace Alternet::UI
 		GetTextCtrl()->SetSelection(*s);
 	}
 
-	void* RichTextBox::WriteField(const string& fieldType, void* properties, void* textAttr)
+	void* RichTextBox::WriteField(const NativeStringSpan& fieldType, void* properties, void* textAttr)
 	{
 		wxRichTextAttr* s = (wxRichTextAttr*)textAttr;
 		wxRichTextProperties* p = (wxRichTextProperties*)properties;

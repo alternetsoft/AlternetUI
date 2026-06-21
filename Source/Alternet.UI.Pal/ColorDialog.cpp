@@ -57,12 +57,12 @@ namespace Alternet::UI
 
     NativeStringSpan ColorDialog::GetTitle()
     {
-        return WxToStringSpan(_title);
+        return wxStr(_title);
     }
 
     void ColorDialog::SetTitle(const NativeStringSpan& value)
     {
-        _title = StringSpanToWx(value);
+        _title = wxStr(value);
         GetDialog()->SetTitle(_title);
     }
 

@@ -85,12 +85,12 @@ namespace Alternet::UI
 
 	void* GenericImage::CreateImageFromFileWithBitmapType(const NativeStringSpan& name, int bitmapType, int index)
 	{
-		return new GenericImage(wxImage(StringSpanToWx(name), (wxBitmapType)bitmapType, index));
+		return new GenericImage(wxImage(wxStr(name), (wxBitmapType)bitmapType, index));
 	}
 
 	void* GenericImage::CreateImageFromFileWithMimeType(const NativeStringSpan& name, const NativeStringSpan& mimetype, int index)
 	{
-		return new GenericImage(wxImage(StringSpanToWx(name), StringSpanToWx(mimetype), index));
+		return new GenericImage(wxImage(wxStr(name), wxStr(mimetype), index));
 	}
 
 	void* GenericImage::CreateImageFromStreamWithBitmapData(void* stream, int bitmapType, int index)
@@ -105,7 +105,7 @@ namespace Alternet::UI
 	{
 		InputStream inputStream(stream);
 		ManagedInputStream managedInputStream(&inputStream);
-		auto image = wxImage(managedInputStream, StringSpanToWx(mimetype), index);
+		auto image = wxImage(managedInputStream, wxStr(mimetype), index);
 		return new GenericImage(image);
 	}
 
@@ -159,12 +159,12 @@ namespace Alternet::UI
 
 	void GenericImage::SetOptionString(void* handle, const NativeStringSpan& name, const NativeStringSpan& value)
 	{
-		((GenericImage*)handle)->_image.SetOption(StringSpanToWx(name), StringSpanToWx(value));
+		((GenericImage*)handle)->_image.SetOption(wxStr(name), wxStr(value));
 	}
 
 	void GenericImage::SetOptionInt(void* handle, const NativeStringSpan& name, int value)
 	{
-		((GenericImage*)handle)->_image.SetOption(StringSpanToWx(name), value);
+		((GenericImage*)handle)->_image.SetOption(wxStr(name), value);
 	}
 
 	void GenericImage::SetRGB(void* handle, int x, int y, uint8_t r, uint8_t g, uint8_t b)
@@ -393,13 +393,13 @@ namespace Alternet::UI
 
 	NativeStringSpan GenericImage::GetOptionString(void* handle, const NativeStringSpan& name)
 	{
-		_containerStatic = ((GenericImage*)handle)->_image.GetOption(StringSpanToWx(name));
-		return WxToStringSpan(_containerStatic);
+		_containerStatic = ((GenericImage*)handle)->_image.GetOption(wxStr(name));
+		return wxStr(_containerStatic);
 	}
 
 	int GenericImage::GetOptionInt(void* handle, const NativeStringSpan& name)
 	{
-		return ((GenericImage*)handle)->_image.GetOptionInt(StringSpanToWx(name));
+		return ((GenericImage*)handle)->_image.GetOptionInt(wxStr(name));
 	}
 
 	void* GenericImage::GetSubImage(void* handle, const Int32Rect& rect)
@@ -425,7 +425,7 @@ namespace Alternet::UI
 
 	bool GenericImage::HasOption(void* handle, const NativeStringSpan& name)
 	{
-		return ((GenericImage*)handle)->_image.HasOption(StringSpanToWx(name));
+		return ((GenericImage*)handle)->_image.HasOption(wxStr(name));
 	}
 
 	bool GenericImage::IsOk(void* handle)
@@ -448,15 +448,15 @@ namespace Alternet::UI
 
 	bool GenericImage::LoadFileWithBitmapType(void* handle, const NativeStringSpan& name, int bitmapType, int index)
 	{
-		return ((GenericImage*)handle)->_image.LoadFile(StringSpanToWx(name),
+		return ((GenericImage*)handle)->_image.LoadFile(wxStr(name),
 			(wxBitmapType)bitmapType, index);
 	}
 
 	bool GenericImage::LoadFileWithMimeType(void* handle, const NativeStringSpan& name,
 		const NativeStringSpan& mimetype, int index)
 	{
-		return ((GenericImage*)handle)->_image.LoadFile(StringSpanToWx(name),
-			StringSpanToWx(mimetype), index);
+		return ((GenericImage*)handle)->_image.LoadFile(wxStr(name),
+			wxStr(mimetype), index);
 	}
 
 	bool GenericImage::LoadStreamWithMimeType(void* handle, void* stream,
@@ -466,29 +466,29 @@ namespace Alternet::UI
 		ManagedInputStream managedInputStream(&inputStream);
 
 		return ((GenericImage*)handle)->_image.LoadFile(managedInputStream,
-			StringSpanToWx(mimetype), index);
+			wxStr(mimetype), index);
 	}
 
 	bool GenericImage::SaveStreamWithMimeType(void* handle, void* stream, const NativeStringSpan& mimetype)
 	{
 		OutputStream outputStream(stream);
 		ManagedOutputStream managedOutputStream(&outputStream);
-		return ((GenericImage*)handle)->_image.SaveFile(managedOutputStream, StringSpanToWx(mimetype));
+		return ((GenericImage*)handle)->_image.SaveFile(managedOutputStream, wxStr(mimetype));
 	}
 
 	bool GenericImage::SaveFileWithBitmapType(void* handle, const NativeStringSpan& name, int bitmapType)
 	{
-		return ((GenericImage*)handle)->_image.SaveFile(StringSpanToWx(name), (wxBitmapType)bitmapType);
+		return ((GenericImage*)handle)->_image.SaveFile(wxStr(name), (wxBitmapType)bitmapType);
 	}
 
 	bool GenericImage::SaveFileWithMimeType(void* handle, const NativeStringSpan& name, const NativeStringSpan& mimetype)
 	{
-		return ((GenericImage*)handle)->_image.SaveFile(StringSpanToWx(name), StringSpanToWx(mimetype));
+		return ((GenericImage*)handle)->_image.SaveFile(wxStr(name), wxStr(mimetype));
 	}
 
 	bool GenericImage::SaveFile(void* handle, const NativeStringSpan& name)
 	{
-		return ((GenericImage*)handle)->_image.SaveFile(StringSpanToWx(name));
+		return ((GenericImage*)handle)->_image.SaveFile(wxStr(name));
 	}
 
 	bool GenericImage::SaveStreamWithBitmapType(void* handle, void* stream, int type)
@@ -500,7 +500,7 @@ namespace Alternet::UI
 
 	bool GenericImage::CanRead(const NativeStringSpan& filename)
 	{
-		return wxImage::CanRead(StringSpanToWx(filename));
+		return wxImage::CanRead(wxStr(filename));
 	}
 
 	bool GenericImage::CanReadStream(void* stream)
@@ -519,7 +519,7 @@ namespace Alternet::UI
 	NativeStringSpan GenericImage::GetImageExtWildcard()
 	{
 		_containerStatic = wxImage::GetImageExtWildcard();
-		return WxToStringSpan(_containerStatic);
+		return wxStr(_containerStatic);
 	}
 
 	void GenericImage::AddHandler(void* handler)
@@ -534,12 +534,12 @@ namespace Alternet::UI
 
 	void* GenericImage::FindHandlerByName(const NativeStringSpan& name)
 	{
-		return wxImage::FindHandler(StringSpanToWx(name));
+		return wxImage::FindHandler(wxStr(name));
 	}
 
 	void* GenericImage::FindHandlerByExt(const NativeStringSpan& extension, int bitmapType)
 	{
-		return wxImage::FindHandler(StringSpanToWx(extension), (wxBitmapType)bitmapType);
+		return wxImage::FindHandler(wxStr(extension), (wxBitmapType)bitmapType);
 	}
 
 	void* GenericImage::FindHandlerByBitmapType(int bitmapType)
@@ -549,7 +549,7 @@ namespace Alternet::UI
 
 	void* GenericImage::FindHandlerByMime(const NativeStringSpan& mimetype)
 	{
-		return wxImage::FindHandlerMime(StringSpanToWx(mimetype));
+		return wxImage::FindHandlerMime(wxStr(mimetype));
 	}
 
 	void GenericImage::InsertHandler(void* handler)
@@ -559,12 +559,12 @@ namespace Alternet::UI
 
 	bool GenericImage::RemoveHandler(const NativeStringSpan& name)
 	{
-		return wxImage::RemoveHandler(StringSpanToWx(name));
+		return wxImage::RemoveHandler(wxStr(name));
 	}
 
 	int GenericImage::GetImageCountInFile(const NativeStringSpan& filename, int bitmapType)
 	{
-		return wxImage::GetImageCount(StringSpanToWx(filename), (wxBitmapType)bitmapType);;
+		return wxImage::GetImageCount(wxStr(filename), (wxBitmapType)bitmapType);;
 	}
 
 	int GenericImage::GetImageCountInStream(void* stream, int bitmapType)
