@@ -17,9 +17,14 @@ namespace Alternet.UI
         }
 
         public WxMainMenu(string id, MainMenu menu)
-            : this(Native.Menu.CreateMainMenu(id))
+            : this(CreateHandle(id))
         {
             menu.AddHostObject(this);
+        }
+
+        public static object CreateHandle(string id)
+        {
+            return NativeStringSpan.InvokeWithResult(id, span => Native.Menu.CreateMainMenu(span));
         }
 
         /// <summary>
@@ -101,7 +106,10 @@ namespace Alternet.UI
             var submenuPtr = menu.AsPointer;
             if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
                 return false;
-            return Native.Menu.MainMenuInsert(menuHandlePtr, childId, submenuPtr, title);
+            return NativeStringSpan.InvokeWithResult(childId, title, (childSpan, titleSpan) =>
+            {
+                return Native.Menu.MainMenuInsert(menuHandlePtr, childSpan, submenuPtr, titleSpan);
+            });
         }
 
         public virtual void Delete()
@@ -122,7 +130,10 @@ namespace Alternet.UI
             var submenuPtr = menu.AsPointer;
             if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
                 return new WxContextMenu(IntPtr.Zero);
-            var replacedPtr = Native.Menu.MainMenuReplace(menuHandlePtr, childId, submenuPtr, title);
+            var replacedPtr = NativeStringSpan.InvokeWithResult(childId, title, (childSpan, titleSpan) =>
+            {
+                return Native.Menu.MainMenuReplace(menuHandlePtr, childSpan, submenuPtr, titleSpan);
+            });
             return new WxContextMenu(replacedPtr);
         }
 
@@ -131,7 +142,11 @@ namespace Alternet.UI
             var menuHandlePtr = AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return;
-            Native.Menu.MainMenuSetText(menuHandlePtr, childId, label);
+
+            NativeStringSpan.Invoke(childId, label, (childSpan, labelSpan) =>
+            {
+                Native.Menu.MainMenuSetText(menuHandlePtr, childSpan, labelSpan);
+            });
         }
     }
 }

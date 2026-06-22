@@ -284,7 +284,10 @@ namespace Alternet.UI
         {
             if (ToolTipWindow.IsRichToolTip(value))
                 return;
-            NativeControl.ToolTip = value?.ToString();
+            NativeStringSpan.Invoke(value?.ToString(), span =>
+            {
+                NativeControl.SetToolTip(span);
+            });
         }
 
         public void Lower()
@@ -373,7 +376,10 @@ namespace Alternet.UI
 
         public void SaveScreenshot(string fileName)
         {
-            NativeControl.SaveScreenshot(fileName);
+            NativeStringSpan.Invoke(fileName, span =>
+            {
+                NativeControl.SaveScreenshot(span);
+            });
         }
 
         public bool IsTransparentBackgroundSupported()

@@ -117,12 +117,15 @@ namespace Alternet.UI
 
         public void SetBackend(WebBrowserBackend value)
         {
-            WxWebBrowserHandlerApi.WebBrowser_SetBackend_((int)value);
+            Native.WebBrowser.SetBackend((int)value);
         }
 
         public void SetDefaultPage(string url)
         {
-            WxWebBrowserHandlerApi.WebBrowser_SetDefaultPage_(url);
+            NativeStringSpan.Invoke(url, span =>
+            {
+                Native.WebBrowser.SetDefaultPage(span);
+            });
         }
 
         public IControlHandler CreateWebBrowserHandler(WebBrowser control)

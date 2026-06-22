@@ -81,7 +81,13 @@ namespace Alternet.UI
         public string Title
         {
             get => NativeControl.GetTitle().ToString();
-            set => NativeControl.Title = value;
+            set
+            {
+                NativeStringSpan.Invoke(value, span =>
+                {
+                    NativeControl.SetTitle(span);
+                });
+            }
         }
 
         public WindowState State

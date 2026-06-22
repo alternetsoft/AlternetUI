@@ -81,8 +81,8 @@ namespace Alternet.UI
 
             var s = "WindowsForms10PersistentObject";
 
-            var persistentSupported = WxApplicationHandler.NativeClipboard
-                .IsStrFormatSupported(s);
+            var persistentSupported = NativeStringSpan.InvokeWithResult(s, span => WxApplicationHandler.NativeClipboard
+                .IsStrFormatSupported(span));
             if(persistentSupported)
                 App.Log($"Clipboard contains format: {s}");
 
@@ -99,7 +99,8 @@ namespace Alternet.UI
 
         public bool HasFormat(string format)
         {
-            var result = WxApplicationHandler.NativeClipboard.IsStrFormatSupported(format);
+            var result = NativeStringSpan.InvokeWithResult(format, span => WxApplicationHandler.NativeClipboard
+                .IsStrFormatSupported(span));
             return result;
         }
     }

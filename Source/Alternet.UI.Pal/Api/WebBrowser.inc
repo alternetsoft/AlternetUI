@@ -56,7 +56,7 @@ static bool IsBackendEdgeAvailable();
 static bool IsBackendWebKitAvailable();
 static void SetBackend(int value);
 static NativeStringSpan GetLibraryVersionString();
-void SetDefaultPage(const NativeStringSpan& value);
+static void SetDefaultPage(const NativeStringSpan& value);
 int GetZoomType();
 static void* CreateWebBrowser(const NativeStringSpan& url);
 static void SetDefaultUserAgent(const NativeStringSpan& value);

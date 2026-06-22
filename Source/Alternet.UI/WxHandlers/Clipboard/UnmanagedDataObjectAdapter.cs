@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 using Alternet.Drawing;
@@ -18,13 +19,25 @@ namespace Alternet.UI
         public object? GetData(string format)
         {
             if (format == DataFormats.Text)
-                return dataObject.GetStringData(format);
+            {
+                return NativeStringSpan.InvokeWithResult(format, dataObject.GetStringData);
+            }
 
             if (format == DataFormats.Files)
-                return dataObject.GetFileNamesData(format).Split('|');
+            {
+                return NativeStringSpan.InvokeWithResult(format, span =>
+                {
+                    return dataObject.GetFileNamesData(span).ToString().Split('|');
+                });
+            }
 
             if (format == DataFormats.Bitmap)
-                return new Bitmap(new UnmanagedStreamAdapter(dataObject.GetStreamData(format)));
+            {
+                return NativeStringSpan.InvokeWithResult(format, span =>
+                {
+                    return new Bitmap(new UnmanagedStreamAdapter(dataObject.GetStreamData(span)));
+                });
+            }
 
             if (format == DataFormats.Serializable)
             {
@@ -79,12 +92,17 @@ namespace Alternet.UI
             if (format == DataFormats.Serializable)
                 format = DataFormats.AlternetUISerializable;
 
-            return dataObject.GetDataPresent(format);
+            return NativeStringSpan.InvokeWithResult(format, s => dataObject.GetDataPresent(s));
         }
 
         public string[] GetFormats()
         {
-            return dataObject.Formats;
+            List<string> formats = new ();
+            foreach (var format in dataObject.Formats)
+            {
+                formats.Add(format);
+            }
+            return formats.ToArray();
         }
 
         public void SetData(string format, object data)
@@ -106,7 +124,7 @@ namespace Alternet.UI
 
         public bool HasFormat(string format)
         {
-            return dataObject.GetDataPresent(format);
+            return NativeStringSpan.InvokeWithResult(format, s => dataObject.GetDataPresent(s));
         }
     }
 }

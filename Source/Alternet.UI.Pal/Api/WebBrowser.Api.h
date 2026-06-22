@@ -274,10 +274,10 @@ ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetLibraryVersionString_()
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetDefaultPage_(WebBrowser* obj, NativeStringSpan* value)
+ALTERNET_UI_API void WebBrowser_SetDefaultPage_(NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetDefaultPage(*value);
+        WebBrowser::SetDefaultPage(*value);
     });
 }
 

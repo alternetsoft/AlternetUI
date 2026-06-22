@@ -30,9 +30,16 @@ namespace Alternet.UI
             BitmapType type,
             int hotSpotX = 0,
             int hotSpotY = 0)
-            : base(UI.Native.WxOtherFactory
-                  .CreateCursor3(cursorName, (int)type, hotSpotX, hotSpotY), true)
+            : base(CreateCursor(cursorName, type, hotSpotX, hotSpotY), true)
         {
+        }
+
+        public static IntPtr CreateCursor(string cursorName, BitmapType type, int hotSpotX = 0, int hotSpotY = 0)
+        {
+            return NativeStringSpan.InvokeWithResult(cursorName, span =>
+            {
+                return UI.Native.WxOtherFactory.CreateCursor3(span, (int)type, hotSpotX, hotSpotY);
+            });
         }
 
         public WxCursorHandler(

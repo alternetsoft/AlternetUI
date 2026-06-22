@@ -100,7 +100,7 @@ namespace Alternet.UI
                 var itemPtr = AsPointer;
                 if (itemPtr == IntPtr.Zero)
                     return;
-                Native.Menu.SetMenuItemRole(itemPtr, value);
+                NativeStringSpan.Invoke(value, s => Native.Menu.SetMenuItemRole(itemPtr, s));
             }
         }
 
@@ -185,7 +185,7 @@ namespace Alternet.UI
             var itemPtr = AsPointer;
             if (itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.SetMenuItemText(itemPtr, value, rightValue);
+            NativeStringSpan.Invoke(value, rightValue, (s, r) => Native.Menu.SetMenuItemText(itemPtr, s, r));
         }
 
         public virtual void Delete()

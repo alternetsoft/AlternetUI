@@ -101,7 +101,10 @@ namespace Alternet.UI
 
         public ITextBoxTextAttr SetFontFaceName(string faceName)
         {
-            Native.TextBoxTextAttr.SetFontFaceName(Handle, faceName);
+            NativeStringSpan.Invoke(faceName, faceNameSpan =>
+            {
+                Native.TextBoxTextAttr.SetFontFaceName(Handle, faceNameSpan);
+            });
             return this;
         }
 
@@ -125,8 +128,10 @@ namespace Alternet.UI
 
         public ITextBoxTextAttr SetBulletText(string text)
         {
-
-            Native.TextBoxTextAttr.SetBulletText(Handle, text);
+            NativeStringSpan.Invoke(text, textSpan =>
+            {
+                Native.TextBoxTextAttr.SetBulletText(Handle, textSpan);
+            });
             return this;
         }
 
@@ -213,7 +218,10 @@ namespace Alternet.UI
 
         public ITextBoxTextAttr SetURL(string url)
         {
-            Native.TextBoxTextAttr.SetURL(Handle, url);
+            NativeStringSpan.Invoke(url, urlSpan =>
+            {
+                Native.TextBoxTextAttr.SetURL(Handle, urlSpan);
+            });
             return this;
         }
 
@@ -237,31 +245,46 @@ namespace Alternet.UI
 
         public ITextBoxTextAttr SetCharacterStyleName(string name)
         {
-            Native.TextBoxTextAttr.SetCharacterStyleName(Handle, name);
+            NativeStringSpan.Invoke(name, nameSpan =>
+            {
+                Native.TextBoxTextAttr.SetCharacterStyleName(Handle, nameSpan);
+            });
             return this;
         }
 
         public ITextBoxTextAttr SetParagraphStyleName(string name)
         {
-            Native.TextBoxTextAttr.SetParagraphStyleName(Handle, name);
+            NativeStringSpan.Invoke(name, nameSpan =>
+            {
+                Native.TextBoxTextAttr.SetParagraphStyleName(Handle, nameSpan);
+            });
             return this;
         }
 
         public ITextBoxTextAttr SetListStyleName(string name)
         {
-            Native.TextBoxTextAttr.SetListStyleName(Handle, name);
+            NativeStringSpan.Invoke(name, nameSpan =>
+            {
+                Native.TextBoxTextAttr.SetListStyleName(Handle, nameSpan);
+            });
             return this;
         }
 
         public ITextBoxTextAttr SetBulletFont(string bulletFont)
         {
-            Native.TextBoxTextAttr.SetBulletFont(Handle, bulletFont);
+            NativeStringSpan.Invoke(bulletFont, bulletFontSpan =>
+            {
+                Native.TextBoxTextAttr.SetBulletFont(Handle, bulletFontSpan);
+            });
             return this;
         }
 
         public ITextBoxTextAttr SetBulletName(string name)
         {
-            Native.TextBoxTextAttr.SetBulletName(Handle, name);
+            NativeStringSpan.Invoke(name, nameSpan =>
+            {
+                Native.TextBoxTextAttr.SetBulletName(Handle, nameSpan);
+            });
             return this;
         }
 

@@ -302,11 +302,10 @@ return NativeApi.WebBrowser_Find_(NativePointer, ref text_Native, flags);
             return NativeApi.WebBrowser_GetLibraryVersionString_();
         }
         
-        public void SetDefaultPage(Alternet.UI.NativeStringSpan value)
+        public static void SetDefaultPage(Alternet.UI.NativeStringSpan value)
         {
-            CheckDisposed();
             var value_Native = value.ToNative();
-NativeApi.WebBrowser_SetDefaultPage_(NativePointer, ref value_Native);
+NativeApi.WebBrowser_SetDefaultPage_(ref value_Native);
         }
         
         public int GetZoomType()
@@ -815,7 +814,7 @@ return NativeApi.WebBrowser_AddUserScript_(NativePointer, ref javascript_Native,
             public static extern Alternet.UI.NativeStringSpan WebBrowser_GetLibraryVersionString_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetDefaultPage_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            public static extern void WebBrowser_SetDefaultPage_(ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int WebBrowser_GetZoomType_(IntPtr obj);

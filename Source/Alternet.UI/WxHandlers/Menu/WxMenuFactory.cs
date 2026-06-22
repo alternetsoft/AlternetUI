@@ -329,7 +329,11 @@ namespace Alternet.UI
             var handler = window.Handler as WxWindowHandler;
             if (handler?.NativeControl is not UI.Native.Window nativeWindow)
                 return null;
-            var itemPtr = Native.Menu.FindMenuItem(nativeWindow, id);
+            var itemPtr = NativeStringSpan.InvokeWithResult(id, idSpan =>
+            {
+                return Native.Menu.FindMenuItem(nativeWindow, idSpan);
+            });
+
             if (itemPtr == IntPtr.Zero)
                 return null;
             return new WxMenuItem(itemPtr);
@@ -340,7 +344,12 @@ namespace Alternet.UI
             var handler = window.Handler as WxWindowHandler;
             if (handler?.NativeControl is not UI.Native.Window nativeWindow)
                 return null;
-            var itemPtr = Native.Menu.FindMenuItem(nativeWindow, id);
+
+            var itemPtr = NativeStringSpan.InvokeWithResult(id, idSpan =>
+            {
+                return Native.Menu.FindMenuItem(nativeWindow, idSpan);
+            });
+
             if (itemPtr == IntPtr.Zero)
                 return null;
             return new WxMenuItem(itemPtr);
@@ -492,7 +501,7 @@ namespace Alternet.UI
 
         protected virtual void OnNativeMenuDestroying()
         {
-            var menu = Menu.MenuFromStringId(Native.Menu.EventMenuItemId);
+            var menu = Menu.MenuFromStringId(Native.Menu.GetEventMenuItemId());
 
             if (menu is null)
                 return;
@@ -512,22 +521,22 @@ namespace Alternet.UI
 
         protected virtual void OnNativeMenuClosed()
         {
-            RaiseMenuClosed(new StringEventArgs(Native.Menu.EventMenuItemId));
+            RaiseMenuClosed(new StringEventArgs(Native.Menu.GetEventMenuItemId()));
         }
 
         protected virtual void OnNativeMenuOpened()
         {
-            RaiseMenuOpened(new StringEventArgs(Native.Menu.EventMenuItemId));
+            RaiseMenuOpened(new StringEventArgs(Native.Menu.GetEventMenuItemId()));
         }
 
         protected virtual void OnNativeMenuHighlight()
         {
-            RaiseMenuHighlight(new StringEventArgs(Native.Menu.EventMenuItemId));
+            RaiseMenuHighlight(new StringEventArgs(Native.Menu.GetEventMenuItemId()));
         }
 
         protected virtual void OnNativeMenuClick()
         {
-            var menu = Menu.MenuFromStringId(Native.Menu.EventMenuItemId);
+            var menu = Menu.MenuFromStringId(Native.Menu.GetEventMenuItemId());
 
             if (menu is MenuItem menuItem)
             {

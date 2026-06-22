@@ -30,7 +30,7 @@ namespace NativeApi.Api
 
         public static NativeStringSpan GetLibraryVersionString() => default;
 
-        public void SetDefaultPage(NativeStringSpan value) { }
+        public static void SetDefaultPage(NativeStringSpan value) { }
 
         public int GetZoomType() => default;
 
