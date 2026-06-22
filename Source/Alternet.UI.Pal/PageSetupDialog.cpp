@@ -142,7 +142,7 @@ namespace Alternet::UI
     ModalResult PageSetupDialog::ShowModal(Window* owner)
     {
         if (_document == nullptr)
-            throwExInvalidOpWithInfo(u"Cannot show the page setup dialog when the document is null.");
+            throwExInvalidOpWithInfo("Cannot show the page setup dialog when the document is null.");
 
         auto data = _document->GetPageSetupDialogData();
         ApplyProperties(data);

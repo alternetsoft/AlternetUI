@@ -89,13 +89,6 @@ ALTERNET_UI_API NativeStringSpan_C Application_GetEventArgString_(Application* o
     });
 }
 
-ALTERNET_UI_API void Application_SetEventArgString_(Application* obj, NativeStringSpan* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetEventArgString(*value);
-    });
-}
-
 ALTERNET_UI_API void Application_ThrowError_(int value)
 {
     MarshalExceptions<void>([&](){

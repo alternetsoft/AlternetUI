@@ -16,7 +16,6 @@ static void SetGtkCss(bool inject, const NativeStringSpan& css);
 PropertyUpdateResult SetAppearance(ApplicationAppearance appearance);
 static void GetEventIdentifiers(int* eventIdentifiers, int eventIdentifiersCount);
 NativeStringSpan GetEventArgString();
-void SetEventArgString(const NativeStringSpan& value);
 static void ThrowError(int value);
 static void SetSystemOptionInt(const NativeStringSpan& name, int value);
 NativeStringSpan GetName();

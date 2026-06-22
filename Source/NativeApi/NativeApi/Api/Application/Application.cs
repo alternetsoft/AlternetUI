@@ -16,8 +16,6 @@ namespace NativeApi.Api
         public static void GetEventIdentifiers(int[] eventIdentifiers) { }
 
         public NativeStringSpan GetEventArgString() => default;
-        public void SetEventArgString(NativeStringSpan value) { }
-
         public static void ThrowError(int value) { }
 
         public static void SetSystemOptionInt(NativeStringSpan name, int value) { }

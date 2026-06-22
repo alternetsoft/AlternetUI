@@ -111,13 +111,6 @@ NativeApi.Application_SetGtkCss_(inject, ref css_Native);
             return NativeApi.Application_GetEventArgString_(NativePointer);
         }
         
-        public void SetEventArgString(Alternet.UI.NativeStringSpan value)
-        {
-            CheckDisposed();
-            var value_Native = value.ToNative();
-NativeApi.Application_SetEventArgString_(NativePointer, ref value_Native);
-        }
-        
         public static void ThrowError(int value)
         {
             NativeApi.Application_ThrowError_(value);
@@ -484,9 +477,6 @@ return NativeApi.Application_GetCustomData_(NativePointer, ref key_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan Application_GetEventArgString_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetEventArgString_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_ThrowError_(int value);

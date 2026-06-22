@@ -83,7 +83,7 @@ namespace Alternet::UI
     ModalResult PrintDialog::ShowModal(Window* owner)
     {
         if (_document == nullptr)
-            throwExInvalidOpWithInfo(u"Cannot show the print dialog when the document is null.");
+            throwExInvalidOpWithInfo("Cannot show the print dialog when the document is null.");
 
         auto data = _document->GetPrintDialogData();
         ApplyProperties(data);
