@@ -339,34 +339,6 @@ NativeApi.WebBrowser_SetDefaultFSNameArchive_(ref value_Native);
             return NativeApi.WebBrowser_GetPageText_(NativePointer);
         }
         
-        public void SetSelectedSource(Alternet.UI.NativeStringSpan value)
-        {
-            CheckDisposed();
-            var value_Native = value.ToNative();
-NativeApi.WebBrowser_SetSelectedSource_(NativePointer, ref value_Native);
-        }
-        
-        public void SetSelectedText(Alternet.UI.NativeStringSpan value)
-        {
-            CheckDisposed();
-            var value_Native = value.ToNative();
-NativeApi.WebBrowser_SetSelectedText_(NativePointer, ref value_Native);
-        }
-        
-        public void SetPageSource(Alternet.UI.NativeStringSpan value)
-        {
-            CheckDisposed();
-            var value_Native = value.ToNative();
-NativeApi.WebBrowser_SetPageSource_(NativePointer, ref value_Native);
-        }
-        
-        public void SetPageText(Alternet.UI.NativeStringSpan value)
-        {
-            CheckDisposed();
-            var value_Native = value.ToNative();
-NativeApi.WebBrowser_SetPageText_(NativePointer, ref value_Native);
-        }
-        
         public Alternet.UI.NativeStringSpan GetUserAgent()
         {
             CheckDisposed();
@@ -826,18 +798,6 @@ return NativeApi.WebBrowser_AddUserScript_(NativePointer, ref javascript_Native,
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan WebBrowser_GetPageText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetSelectedSource_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetSelectedText_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetPageSource_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void WebBrowser_SetPageText_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan WebBrowser_GetUserAgent_(IntPtr obj);

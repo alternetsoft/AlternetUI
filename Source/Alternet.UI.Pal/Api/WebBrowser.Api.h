@@ -309,34 +309,6 @@ ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetPageText_(WebBrowser* obj)
     });
 }
 
-ALTERNET_UI_API void WebBrowser_SetSelectedSource_(WebBrowser* obj, NativeStringSpan* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetSelectedSource(*value);
-    });
-}
-
-ALTERNET_UI_API void WebBrowser_SetSelectedText_(WebBrowser* obj, NativeStringSpan* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetSelectedText(*value);
-    });
-}
-
-ALTERNET_UI_API void WebBrowser_SetPageSource_(WebBrowser* obj, NativeStringSpan* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetPageSource(*value);
-    });
-}
-
-ALTERNET_UI_API void WebBrowser_SetPageText_(WebBrowser* obj, NativeStringSpan* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetPageText(*value);
-    });
-}
-
 ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetUserAgent_(WebBrowser* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){

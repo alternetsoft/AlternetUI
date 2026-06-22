@@ -64,11 +64,6 @@ namespace NativeApi.Api
         public NativeStringSpan GetPageSource() => throw new Exception();
         public NativeStringSpan GetPageText() => throw new Exception();
 
-        public void SetSelectedSource(NativeStringSpan value) => throw new Exception();
-        public void SetSelectedText(NativeStringSpan value) => throw new Exception();
-        public void SetPageSource(NativeStringSpan value) => throw new Exception();
-        public void SetPageText(NativeStringSpan value) => throw new Exception();
-
         public bool AccessToDevToolsEnabled { get; set; }
         public int PreferredColorScheme { get; set; }
         
