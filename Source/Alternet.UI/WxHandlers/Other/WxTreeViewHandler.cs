@@ -330,7 +330,10 @@ namespace Alternet.UI
             var p = GetHandleFromItem(item);
             if (p == IntPtr.Zero)
                 return;
-            NativeControl.SetItemText(p, text);
+            NativeStringSpan.Invoke(text, (span) =>
+            {
+                NativeControl.SetItemText(p, span);
+            });
         }
 
         public void SetItemImageIndex(
@@ -519,13 +522,16 @@ namespace Alternet.UI
 
             var isRootChild = item.IsRootChild;
 
-            var handle = NativeControl.InsertItem(
-                            isRootChild ?
-                            NativeControl.RootItem : GetHandleFromItem(item.Parent!),
-                            insertAfter,
-                            item.Text,
-                            item.ImageIndex ?? Control.ImageIndex ?? -1,
-                            isRootChild ? false : item.Parent?.IsExpanded ?? false);
+            var handle = NativeStringSpan.InvokeWithResult(item.Text, (span) =>
+            {
+                return NativeControl.InsertItem(
+                                isRootChild ?
+                                NativeControl.RootItem : GetHandleFromItem(item.Parent!),
+                                insertAfter,
+                                span,
+                                item.ImageIndex ?? Control.ImageIndex ?? -1,
+                                isRootChild ? false : item.Parent?.IsExpanded ?? false);
+            });
 
             NativeControl.itemsByHandles.Add(handle, item);
             item.Handle = handle;

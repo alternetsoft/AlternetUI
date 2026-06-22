@@ -213,7 +213,10 @@ namespace Alternet.UI
 
             set
             {
-                NativeControl.SetEmptyTextHint(value);
+                NativeStringSpan.Invoke(value, span =>
+                {
+                    NativeControl.SetEmptyTextHint(span);
+                });
             }
         }
 
@@ -328,7 +331,10 @@ namespace Alternet.UI
 
         public void AppendText(string text)
         {
-            NativeControl.AppendText(text);
+            NativeStringSpan.Invoke(text, span =>
+            {
+                NativeControl.AppendText(span);
+            });
         }
 
         public long GetInsertionPoint()
@@ -353,7 +359,10 @@ namespace Alternet.UI
 
         public void Replace(long from, long to, string value)
         {
-            NativeControl.Replace(from, to, value);
+            NativeStringSpan.Invoke(value, span =>
+            {
+                NativeControl.Replace(from, to, span);
+            });
         }
 
         public void SetInsertionPoint(long pos)
@@ -437,7 +446,10 @@ namespace Alternet.UI
 
         public void WriteText(string text)
         {
-            NativeControl.WriteText(text);
+            NativeStringSpan.Invoke(text, span =>
+            {
+                NativeControl.WriteText(span);
+            });
         }
 
         public string GetRange(long from, long to)

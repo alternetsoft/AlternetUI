@@ -19,7 +19,10 @@ namespace Alternet.UI
 
             KnownColorStrings.CustomChanged += (s, e) =>
             {
-                Native.PropertyGrid.KnownColorsSetCustomColorTitle(KnownColorStrings.Default.Custom);
+                NativeStringSpan.Invoke(KnownColorStrings.Default.Custom, span =>
+                {
+                    Native.PropertyGrid.KnownColorsSetCustomColorTitle(span);
+                });
             };
         }
 
@@ -70,7 +73,10 @@ namespace Alternet.UI
         string IPropertyGridHandler.EventValidationFailureMessage
         {
             get => NativeControl.GetEventValidationFailureMessage();
-            set => NativeControl.SetEventValidationFailureMessage(value);
+            set => NativeStringSpan.Invoke(value, span =>
+            {
+                NativeControl.SetEventValidationFailureMessage(span);
+            });
         }
 
         public override bool HasBorder
@@ -228,7 +234,11 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(name))
                 return null;
-            var result = NativeControl.GetProperty(name!);
+            var result = NativeStringSpan.InvokeWithResult(name, span =>
+            {
+                return NativeControl.GetProperty(span);
+            });
+
             return PtrToItem(result);
         }
 
@@ -241,7 +251,11 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(label))
                 return null;
-            var result = NativeControl.GetPropertyByLabel(label!);
+            var result = NativeStringSpan.InvokeWithResult(label, span =>
+            {
+                return NativeControl.GetPropertyByLabel(span);
+            });
+
             return PtrToItem(result);
         }
 
@@ -254,7 +268,11 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(name))
                 return null;
-            var result = NativeControl.GetPropertyByName(name!);
+            var result = NativeStringSpan.InvokeWithResult(name, span =>
+            {
+                return NativeControl.GetPropertyByName(span);
+            });
+
             return PtrToItem(result);
         }
 
@@ -704,7 +722,10 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return;
-            NativeControl.SetPropertyEditorByName(ptr.Value, editorName);
+            NativeStringSpan.Invoke(editorName, span =>
+            {
+                NativeControl.SetPropertyEditorByName(ptr.Value, span);
+            });
         }
 
         void IPropertyGridHandler.SetPropertyLabel(IPropertyGridItem id, string newproplabel)
@@ -712,7 +733,10 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return;
-            NativeControl.SetPropertyLabel(ptr.Value, newproplabel);
+            NativeStringSpan.Invoke(newproplabel, span =>
+            {
+                NativeControl.SetPropertyLabel(ptr.Value, span);
+            });
         }
 
         void IPropertyGridHandler.SetPropertyName(IPropertyGridItem id, string newName)
@@ -720,7 +744,10 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return;
-            NativeControl.SetPropertyName(ptr.Value, newName);
+            NativeStringSpan.Invoke(newName, span =>
+            {
+                NativeControl.SetPropertyName(ptr.Value, span);
+            });
         }
 
         void IPropertyGridHandler.SetPropertyHelpString(IPropertyGridItem id, string helpString)
@@ -728,7 +755,10 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return;
-            NativeControl.SetPropertyHelpString(ptr.Value, helpString);
+            NativeStringSpan.Invoke(helpString, span =>
+            {
+                NativeControl.SetPropertyHelpString(ptr.Value, span);
+            });
         }
 
         bool IPropertyGridHandler.SetPropertyMaxLength(IPropertyGridItem id, int maxLen)
@@ -776,7 +806,10 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return;
-            NativeControl.SetPropertyValueAsStr(ptr.Value, value);
+            NativeStringSpan.Invoke(value, span =>
+            {
+                NativeControl.SetPropertyValueAsStr(ptr.Value, span);
+            });
         }
 
         void IPropertyGridHandler.SetPropertyValueAsVariant(
@@ -842,16 +875,22 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return;
-            NativeControl.SetPropertyAttribute(
-                ptr.Value,
-                attrName,
-                VariantToHandle(variant),
-                (int)argFlags);
+            NativeStringSpan.Invoke(attrName, span =>
+            {
+                NativeControl.SetPropertyAttribute(
+                    ptr.Value,
+                    span,
+                    VariantToHandle(variant),
+                    (int)argFlags);
+            });
         }
 
         void IPropertyGridHandler.SetPropertyAttributeAll(string attrName, IPropertyGridVariant variant)
         {
-            NativeControl.SetPropertyAttributeAll(attrName, VariantToHandle(variant));
+            NativeStringSpan.Invoke(attrName, span =>
+            {
+                NativeControl.SetPropertyAttributeAll(span, VariantToHandle(variant));
+            });
         }
 
         int IPropertyGridHandler.GetSplitterPosition(int splitterIndex)
@@ -1026,7 +1065,10 @@ namespace Alternet.UI
 
         void IPropertyGridHandler.SetupTextCtrlValue(string text)
         {
-            NativeControl.SetupTextCtrlValue(text);
+            NativeStringSpan.Invoke(text, span =>
+            {
+                NativeControl.SetupTextCtrlValue(span);
+            });
         }
 
         bool IPropertyGridHandler.UnfocusEditor()
@@ -1224,7 +1266,10 @@ namespace Alternet.UI
 
         bool IPropertyGridHandler.RestoreEditableState(string src, PropertyGridEditableState restoreStates)
         {
-            return NativeControl.RestoreEditableState(src, (int)restoreStates);
+            return NativeStringSpan.InvokeWithResult(src, span =>
+            {
+                return NativeControl.RestoreEditableState(span, (int)restoreStates);
+            });
         }
 
         string IPropertyGridHandler.SaveEditableState(PropertyGridEditableState includedStates)
@@ -1479,7 +1524,10 @@ namespace Alternet.UI
 
         internal static IntPtr GetEditorByName(string editorName)
         {
-            return Native.PropertyGrid.GetEditorByName(editorName);
+            return NativeStringSpan.InvokeWithResult(editorName, span =>
+            {
+                return Native.PropertyGrid.GetEditorByName(span);
+            });
         }
 
         internal override Native.Control CreateNativeControl()
@@ -1526,7 +1574,10 @@ namespace Alternet.UI
 
         internal void SetupTextCtrlValue(string text)
         {
-            NativeControl.SetupTextCtrlValue(text);
+            NativeStringSpan.Invoke(text, span =>
+            {
+                NativeControl.SetupTextCtrlValue(span);
+            });
         }
 
         internal void EndAddChildren(IPropertyGridItem prop)

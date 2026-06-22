@@ -156,12 +156,18 @@ namespace Alternet.UI
 
         public void SetColumnTitle(long columnIndex, string title)
         {
-            NativeControl.SetColumnTitle(columnIndex, title);
+            NativeStringSpan.Invoke(title, span =>
+            {
+                NativeControl.SetColumnTitle(columnIndex, span);
+            });
         }
 
         public void SetItemText(long itemIndex, long columnIndex, string text)
         {
-            NativeControl.SetItemText(itemIndex, columnIndex, text);
+            NativeStringSpan.Invoke(text, span =>
+            {
+                NativeControl.SetItemText(itemIndex, columnIndex, span);
+            });
         }
 
         public void SetItemImageIndex(
@@ -366,7 +372,10 @@ namespace Alternet.UI
                 else
                     imageIndex = cell.ImageIndex ?? -1;
 
-                NativeControl.InsertItemAt(itemIndex, cell.Text, columnIndex, imageIndex);
+                NativeStringSpan.Invoke(cell.Text, span =>
+                {
+                    NativeControl.InsertItemAt(itemIndex, span, columnIndex, imageIndex);
+                });
             }
         }
 
@@ -410,11 +419,14 @@ namespace Alternet.UI
             {
                 var col = Control.Columns[i];
 
-                NativeControl.InsertColumnAt(
-                    i,
-                    col.Title,
-                    col.Width,
-                    CoerceWidthMode(col.WidthMode));
+                NativeStringSpan.Invoke(col.Title, span =>
+                {
+                    NativeControl.InsertColumnAt(
+                        i,
+                        span,
+                        col.Width,
+                        CoerceWidthMode(col.WidthMode));
+                });
             }
         }
 
@@ -422,11 +434,14 @@ namespace Alternet.UI
         {
             if (clearing == 0)
             {
-                NativeControl.InsertColumnAt(
-                    index,
-                    item.Title,
-                    item.Width,
-                    CoerceWidthMode(item.WidthMode));
+                NativeStringSpan.Invoke(item.Title, span =>
+                {
+                    NativeControl.InsertColumnAt(
+                        index,
+                        span,
+                        item.Width,
+                        CoerceWidthMode(item.WidthMode));
+                });
 
                 ApplyColumnsChangeToItems();
             }
