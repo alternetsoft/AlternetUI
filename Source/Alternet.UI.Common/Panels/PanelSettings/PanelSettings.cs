@@ -270,7 +270,7 @@ namespace Alternet.UI
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
         public static object? DefaultItemToButtonControl(PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateControl<Button>(item, control);
+            var result = CreateOrUpdateControl<StdButton>(item, control);
             UpdateText(item, result);
 
             result.ClickAction = () =>
