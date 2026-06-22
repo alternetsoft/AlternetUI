@@ -17,7 +17,8 @@ namespace NativeApi.Api
         public event EventHandler? Click;
         public event EventHandler? Created;
 
-        public NativeStringSpan Text { get; set; }
+        public NativeStringSpan GetText() => throw new Exception();
+        public void SetText(NativeStringSpan value) => throw new Exception();
         public Image? Icon { get; set; }
         public void ShowPopup(IntPtr menuHandle) { }
 

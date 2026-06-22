@@ -4,9 +4,6 @@ public:
 bool GetOriginAtMargins();
 void SetOriginAtMargins(bool value);
 
-NativeStringSpan GetDocumentName();
-void SetDocumentName(const NativeStringSpan& value);
-
 PrinterSettings* GetPrinterSettings();
 
 PageSettings* GetPageSettings();
@@ -18,6 +15,8 @@ void SetPrintPage_HasMorePages(bool value);
 
 int GetPrintPage_PageNumber();
 
+NativeStringSpan GetDocumentName();
+void SetDocumentName(const NativeStringSpan& value);
 void Print();
 RectD GetPrintPage_MarginBounds();
 RectD GetPrintPage_PhysicalPageBounds();

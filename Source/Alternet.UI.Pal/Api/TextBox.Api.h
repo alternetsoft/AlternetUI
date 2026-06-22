@@ -43,13 +43,6 @@ ALTERNET_UI_API void TextBox_SetTextAlign_(TextBox* obj, int value)
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C TextBox_GetReportedUrl_(TextBox* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetReportedUrl();
-    });
-}
-
 ALTERNET_UI_API c_bool TextBox_GetEditControlOnly_(TextBox* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -183,20 +176,6 @@ ALTERNET_UI_API c_bool TextBox_GetIsEmpty_(TextBox* obj)
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C TextBox_GetEmptyTextHint_(TextBox* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetEmptyTextHint();
-    });
-}
-
-ALTERNET_UI_API void TextBox_SetEmptyTextHint_(TextBox* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetEmptyTextHint(value);
-    });
-}
-
 ALTERNET_UI_API c_bool TextBox_GetHideSelection_(TextBox* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -285,6 +264,13 @@ ALTERNET_UI_API void* TextBox_CreateTextBox_(void* validator)
 {
     return MarshalExceptions<void*>([&](){
         return TextBox::CreateTextBox(validator);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C TextBox_GetReportedUrl_(TextBox* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetReportedUrl();
     });
 }
 
@@ -467,6 +453,20 @@ ALTERNET_UI_API void TextBox_SelectNone_(TextBox* obj)
 {
     MarshalExceptions<void>([&](){
         obj->SelectNone();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C TextBox_GetEmptyTextHint_(TextBox* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEmptyTextHint();
+    });
+}
+
+ALTERNET_UI_API void TextBox_SetEmptyTextHint_(TextBox* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetEmptyTextHint(*value);
     });
 }
 

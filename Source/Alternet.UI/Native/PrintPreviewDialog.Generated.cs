@@ -23,21 +23,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.NativeStringSpan Title
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrintPreviewDialog_GetTitle_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrintPreviewDialog_SetTitle_(NativePointer, value);
-            }
-        }
-        
         public PrintDocument? Document
         {
             get
@@ -56,6 +41,19 @@ namespace Alternet.UI.Native
             }
         }
         
+        public Alternet.UI.NativeStringSpan GetTitle()
+        {
+            CheckDisposed();
+            return NativeApi.PrintPreviewDialog_GetTitle_(NativePointer);
+        }
+        
+        public void SetTitle(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.PrintPreviewDialog_SetTitle_(NativePointer, ref value_Native);
+        }
+        
         public void ShowModal(Window? owner)
         {
             CheckDisposed();
@@ -72,16 +70,16 @@ namespace Alternet.UI.Native
             public static extern IntPtr PrintPreviewDialog_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PrintPreviewDialog_GetTitle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintPreviewDialog_SetTitle_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintPreviewDialog_GetDocument_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintPreviewDialog_SetDocument_(IntPtr obj, IntPtr value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan PrintPreviewDialog_GetTitle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintPreviewDialog_SetTitle_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintPreviewDialog_ShowModal_(IntPtr obj, IntPtr owner);

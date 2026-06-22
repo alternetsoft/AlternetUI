@@ -7,10 +7,10 @@ namespace NativeApi.Api
     public class Menu
     {
         // Used to detect localized Help menu titles
-        public NativeStringSpan MacHelpMenuTitleName { get; }
+        public NativeStringSpan GetMacHelpMenuTitleName() => throw new Exception();
 
         // Used to identify the Window menu
-        public NativeStringSpan MacWindowMenuTitleName { get; }
+        public NativeStringSpan GetMacWindowMenuTitleName() => throw new Exception();
 
         public void MacSetCommonMenuBar(IntPtr menuBar) { }
 
@@ -103,7 +103,7 @@ namespace NativeApi.Api
         public event EventHandler? MenuClosed;
         public event EventHandler? MenuDestroying;
 
-        public static NativeStringSpan EventMenuItemId { get; }
+        public static NativeStringSpan GetEventMenuItemId() => throw new Exception();
         public static bool EventMenuItemChecked { get; }
     }
 }

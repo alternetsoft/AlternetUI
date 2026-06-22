@@ -100,62 +100,6 @@ ALTERNET_UI_API void FileDialog_SetShowHiddenFiles_(FileDialog* obj, c_bool valu
     });
 }
 
-ALTERNET_UI_API FileDialogMode FileDialog_GetMode_(FileDialog* obj)
-{
-    return MarshalExceptions<FileDialogMode>([&](){
-        return obj->GetMode();
-    });
-}
-
-ALTERNET_UI_API void FileDialog_SetMode_(FileDialog* obj, FileDialogMode value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetMode(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C FileDialog_GetInitialDirectory_(FileDialog* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetInitialDirectory();
-    });
-}
-
-ALTERNET_UI_API void FileDialog_SetInitialDirectory_(FileDialog* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetInitialDirectory(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C FileDialog_GetTitle_(FileDialog* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetTitle();
-    });
-}
-
-ALTERNET_UI_API void FileDialog_SetTitle_(FileDialog* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetTitle(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C FileDialog_GetFilter_(FileDialog* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetFilter();
-    });
-}
-
-ALTERNET_UI_API void FileDialog_SetFilter_(FileDialog* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetFilter(value);
-    });
-}
-
 ALTERNET_UI_API int FileDialog_GetSelectedFilterIndex_(FileDialog* obj)
 {
     return MarshalExceptions<int>([&](){
@@ -170,17 +114,17 @@ ALTERNET_UI_API void FileDialog_SetSelectedFilterIndex_(FileDialog* obj, int val
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C FileDialog_GetFileName_(FileDialog* obj)
+ALTERNET_UI_API FileDialogMode FileDialog_GetMode_(FileDialog* obj)
 {
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetFileName();
+    return MarshalExceptions<FileDialogMode>([&](){
+        return obj->GetMode();
     });
 }
 
-ALTERNET_UI_API void FileDialog_SetFileName_(FileDialog* obj, NativeStringSpan value)
+ALTERNET_UI_API void FileDialog_SetMode_(FileDialog* obj, FileDialogMode value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetFileName(value);
+        obj->SetMode(value);
     });
 }
 
@@ -223,6 +167,62 @@ ALTERNET_UI_API void FileDialog_CloseFileNamesArray_(FileDialog* obj, void* arra
 {
     MarshalExceptions<void>([&](){
         obj->CloseFileNamesArray(array);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C FileDialog_GetInitialDirectory_(FileDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetInitialDirectory();
+    });
+}
+
+ALTERNET_UI_API void FileDialog_SetInitialDirectory_(FileDialog* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetInitialDirectory(*value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C FileDialog_GetTitle_(FileDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
+    });
+}
+
+ALTERNET_UI_API void FileDialog_SetTitle_(FileDialog* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetTitle(*value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C FileDialog_GetFilter_(FileDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetFilter();
+    });
+}
+
+ALTERNET_UI_API void FileDialog_SetFilter_(FileDialog* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetFilter(*value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C FileDialog_GetFileName_(FileDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetFileName();
+    });
+}
+
+ALTERNET_UI_API void FileDialog_SetFileName_(FileDialog* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetFileName(*value);
     });
 }
 

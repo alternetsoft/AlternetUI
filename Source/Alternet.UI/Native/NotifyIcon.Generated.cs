@@ -24,21 +24,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.NativeStringSpan Text
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.NotifyIcon_GetText_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.NotifyIcon_SetText_(NativePointer, value);
-            }
-        }
-        
         public Image? Icon
         {
             get
@@ -99,6 +84,19 @@ namespace Alternet.UI.Native
                 return NativeApi.NotifyIcon_GetIsOk_(NativePointer);
             }
             
+        }
+        
+        public Alternet.UI.NativeStringSpan GetText()
+        {
+            CheckDisposed();
+            return NativeApi.NotifyIcon_GetText_(NativePointer);
+        }
+        
+        public void SetText(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.NotifyIcon_SetText_(NativePointer, ref value_Native);
         }
         
         public void ShowPopup(System.IntPtr menuHandle)
@@ -211,12 +209,6 @@ namespace Alternet.UI.Native
             public static extern IntPtr NotifyIcon_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan NotifyIcon_GetText_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void NotifyIcon_SetText_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr NotifyIcon_GetIcon_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -236,6 +228,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool NotifyIcon_GetIsOk_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan NotifyIcon_GetText_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void NotifyIcon_SetText_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void NotifyIcon_ShowPopup_(IntPtr obj, System.IntPtr menuHandle);

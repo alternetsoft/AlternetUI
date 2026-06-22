@@ -24,35 +24,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.NativeStringSpan MacHelpMenuTitleName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Menu_GetMacHelpMenuTitleName_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.UI.NativeStringSpan MacWindowMenuTitleName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Menu_GetMacWindowMenuTitleName_(NativePointer);
-            }
-            
-        }
-        
-        public static Alternet.UI.NativeStringSpan EventMenuItemId
-        {
-            get
-            {
-                return NativeApi.Menu_GetEventMenuItemId_();
-            }
-            
-        }
-        
         public static bool EventMenuItemChecked
         {
             get
@@ -60,6 +31,18 @@ namespace Alternet.UI.Native
                 return NativeApi.Menu_GetEventMenuItemChecked_();
             }
             
+        }
+        
+        public Alternet.UI.NativeStringSpan GetMacHelpMenuTitleName()
+        {
+            CheckDisposed();
+            return NativeApi.Menu_GetMacHelpMenuTitleName_(NativePointer);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetMacWindowMenuTitleName()
+        {
+            CheckDisposed();
+            return NativeApi.Menu_GetMacWindowMenuTitleName_(NativePointer);
         }
         
         public void MacSetCommonMenuBar(System.IntPtr menuBar)
@@ -235,6 +218,11 @@ return NativeApi.Menu_MenuInsertItem_(handle, ref childId_Native, itemHandle);
 NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
         }
         
+        public static Alternet.UI.NativeStringSpan GetEventMenuItemId()
+        {
+            return NativeApi.Menu_GetEventMenuItemId_();
+        }
+        
         static GCHandle eventCallbackGCHandle;
         public static Menu? GlobalObject;
         
@@ -315,16 +303,13 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             public static extern IntPtr Menu_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool Menu_GetEventMenuItemChecked_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan Menu_GetMacHelpMenuTitleName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan Menu_GetMacWindowMenuTitleName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Menu_GetEventMenuItemId_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Menu_GetEventMenuItemChecked_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_MacSetCommonMenuBar_(IntPtr obj, System.IntPtr menuBar);
@@ -415,6 +400,9 @@ NativeApi.Menu_Show_(menuHandle, control.NativePointer, ref position_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Menu_Show_(System.IntPtr menuHandle, IntPtr control, ref Alternet.Drawing.PointD position);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Menu_GetEventMenuItemId_();
             
         }
     }

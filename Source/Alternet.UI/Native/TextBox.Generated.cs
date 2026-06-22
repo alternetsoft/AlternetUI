@@ -54,16 +54,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.NativeStringSpan ReportedUrl
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.TextBox_GetReportedUrl_(NativePointer);
-            }
-            
-        }
-        
         public bool EditControlOnly
         {
             get
@@ -224,21 +214,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.UI.NativeStringSpan EmptyTextHint
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.TextBox_GetEmptyTextHint_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.TextBox_SetEmptyTextHint_(NativePointer, value);
-            }
-        }
-        
         public bool HideSelection
         {
             get
@@ -332,6 +307,12 @@ namespace Alternet.UI.Native
         public static System.IntPtr CreateTextBox(System.IntPtr validator)
         {
             return NativeApi.TextBox_CreateTextBox_(validator);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetReportedUrl()
+        {
+            CheckDisposed();
+            return NativeApi.TextBox_GetReportedUrl_(NativePointer);
         }
         
         public int GetLineLength(long lineNo)
@@ -492,6 +473,19 @@ NativeApi.TextBox_Replace_(NativePointer, from, to, ref value_Native);
             NativeApi.TextBox_SelectNone_(NativePointer);
         }
         
+        public Alternet.UI.NativeStringSpan GetEmptyTextHint()
+        {
+            CheckDisposed();
+            return NativeApi.TextBox_GetEmptyTextHint_(NativePointer);
+        }
+        
+        public void SetEmptyTextHint(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.TextBox_SetEmptyTextHint_(NativePointer, ref value_Native);
+        }
+        
         public void Undo()
         {
             CheckDisposed();
@@ -624,9 +618,6 @@ NativeApi.TextBox_WriteText_(NativePointer, ref text_Native);
             public static extern void TextBox_SetTextAlign_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBox_GetReportedUrl_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_GetEditControlOnly_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -684,12 +675,6 @@ NativeApi.TextBox_WriteText_(NativePointer, ref text_Native);
             public static extern bool TextBox_GetIsEmpty_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan TextBox_GetEmptyTextHint_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void TextBox_SetEmptyTextHint_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool TextBox_GetHideSelection_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -727,6 +712,9 @@ NativeApi.TextBox_WriteText_(NativePointer, ref text_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr TextBox_CreateTextBox_(System.IntPtr validator);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan TextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int TextBox_GetLineLength_(IntPtr obj, long lineNo);
@@ -805,6 +793,12 @@ NativeApi.TextBox_WriteText_(NativePointer, ref text_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_SelectNone_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan TextBox_GetEmptyTextHint_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void TextBox_SetEmptyTextHint_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void TextBox_Undo_(IntPtr obj);

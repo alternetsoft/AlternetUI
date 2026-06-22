@@ -16,20 +16,6 @@ ALTERNET_UI_API ColorDialog* ColorDialog_Create_()
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C ColorDialog_GetTitle_(ColorDialog* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetTitle();
-    });
-}
-
-ALTERNET_UI_API void ColorDialog_SetTitle_(ColorDialog* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetTitle(value);
-    });
-}
-
 ALTERNET_UI_API ModalResult ColorDialog_ShowModal_(ColorDialog* obj, Window* owner)
 {
     return MarshalExceptions<ModalResult>([&](){
@@ -76,6 +62,20 @@ ALTERNET_UI_API uint8_t ColorDialog_GetColorState_(ColorDialog* obj)
 {
     return MarshalExceptions<uint8_t>([&](){
         return obj->GetColorState();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C ColorDialog_GetTitle_(ColorDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
+    });
+}
+
+ALTERNET_UI_API void ColorDialog_SetTitle_(ColorDialog* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetTitle(*value);
     });
 }
 

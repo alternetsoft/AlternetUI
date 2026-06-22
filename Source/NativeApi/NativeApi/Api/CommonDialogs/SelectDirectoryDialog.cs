@@ -7,10 +7,13 @@ namespace NativeApi.Api
     {
         public ModalResult ShowModal(Window? owner) => throw new Exception();
 
-        public NativeStringSpan InitialDirectory { get => throw new Exception(); set => throw new Exception(); }
+        public NativeStringSpan GetInitialDirectory() => throw new Exception();
+        public void SetInitialDirectory(NativeStringSpan value) => throw new Exception();
 
-        public NativeStringSpan Title { get => throw new Exception(); set => throw new Exception(); }
+        public NativeStringSpan GetTitle() => throw new Exception();
+        public void SetTitle(NativeStringSpan value) => throw new Exception();
 
-        public NativeStringSpan DirectoryName { get => throw new Exception(); set => throw new Exception(); }
+        public NativeStringSpan GetDirectoryName() => throw new Exception();
+        public void SetDirectoryName(NativeStringSpan value) => throw new Exception();
     }
 }

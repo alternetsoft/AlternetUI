@@ -39,16 +39,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.NativeStringSpan ReportedUrl
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.RichTextBox_GetReportedUrl_(NativePointer);
-            }
-            
-        }
-        
         public bool LoadFromStream(InputStream stream, int type)
         {
             CheckDisposed();
@@ -70,6 +60,12 @@ namespace Alternet.UI.Native
         public static void InitFileHandlers()
         {
             NativeApi.RichTextBox_InitFileHandlers_();
+        }
+        
+        public Alternet.UI.NativeStringSpan GetReportedUrl()
+        {
+            CheckDisposed();
+            return NativeApi.RichTextBox_GetReportedUrl_(NativePointer);
         }
         
         public Alternet.UI.NativeStringSpan GetRange(long from, long to)
@@ -1646,9 +1642,6 @@ return NativeApi.RichTextBox_WriteField_(NativePointer, ref fieldType_Native, pr
             public static extern void RichTextBox_SetHasBorder_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetReportedUrl_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_LoadFromStream_(IntPtr obj, IntPtr stream, int type);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1659,6 +1652,9 @@ return NativeApi.RichTextBox_WriteField_(NativePointer, ref fieldType_Native, pr
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void RichTextBox_InitFileHandlers_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan RichTextBox_GetReportedUrl_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan RichTextBox_GetRange_(IntPtr obj, long from, long to);

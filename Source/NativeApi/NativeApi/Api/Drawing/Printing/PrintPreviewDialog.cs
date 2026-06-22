@@ -5,7 +5,8 @@ namespace NativeApi.Api
 {
     public class PrintPreviewDialog
     {
-        public NativeStringSpan Title { get; set; }
+        public NativeStringSpan GetTitle() => throw new Exception();
+        public void SetTitle(NativeStringSpan value) => throw new Exception();
         public void ShowModal(Window? owner) => throw new Exception();
         public PrintDocument? Document { get => throw new Exception(); set => throw new Exception(); }
     }

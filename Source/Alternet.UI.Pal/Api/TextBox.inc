@@ -7,8 +7,6 @@ void SetTextWrap(int value);
 int GetTextAlign();
 void SetTextAlign(int value);
 
-NativeStringSpan GetReportedUrl();
-
 bool GetEditControlOnly();
 void SetEditControlOnly(bool value);
 
@@ -41,9 +39,6 @@ bool GetCanUndo();
 
 bool GetIsEmpty();
 
-NativeStringSpan GetEmptyTextHint();
-void SetEmptyTextHint(const NativeStringSpan& value);
-
 bool GetHideSelection();
 void SetHideSelection(bool value);
 
@@ -63,6 +58,7 @@ bool GetHideVertScrollbar();
 void SetHideVertScrollbar(bool value);
 
 static void* CreateTextBox(void* validator);
+NativeStringSpan GetReportedUrl();
 int GetLineLength(int64_t lineNo);
 NativeStringSpan GetLineText(int64_t lineNo);
 int GetNumberOfLines();
@@ -89,6 +85,8 @@ void SetMaxLength(uint64_t len);
 void SetSelection(int64_t from, int64_t to);
 void SelectAll();
 void SelectNone();
+NativeStringSpan GetEmptyTextHint();
+void SetEmptyTextHint(const NativeStringSpan& value);
 void Undo();
 void WriteText(const NativeStringSpan& text);
 NativeStringSpan GetRange(int64_t from, int64_t to);

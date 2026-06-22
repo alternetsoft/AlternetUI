@@ -39,21 +39,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.NativeStringSpan EmptyTextHint
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.ComboBox_GetEmptyTextHint_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.ComboBox_SetEmptyTextHint_(NativePointer, value);
-            }
-        }
-        
         public bool HasBorder
         {
             get
@@ -246,6 +231,19 @@ namespace Alternet.UI.Native
             NativeApi.ComboBox_ShowPopup_(NativePointer);
         }
         
+        public Alternet.UI.NativeStringSpan GetEmptyTextHint()
+        {
+            CheckDisposed();
+            return NativeApi.ComboBox_GetEmptyTextHint_(NativePointer);
+        }
+        
+        public void SetEmptyTextHint(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.ComboBox_SetEmptyTextHint_(NativePointer, ref value_Native);
+        }
+        
         public Alternet.Drawing.RectI GetEventRect()
         {
             CheckDisposed();
@@ -424,12 +422,6 @@ NativeApi.ComboBox_SetItem_(NativePointer, index, ref value_Native);
             public static extern void ComboBox_SetAllowMouseWheel_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan ComboBox_GetEmptyTextHint_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void ComboBox_SetEmptyTextHint_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool ComboBox_GetHasBorder_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -497,6 +489,12 @@ NativeApi.ComboBox_SetItem_(NativePointer, index, ref value_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void ComboBox_ShowPopup_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan ComboBox_GetEmptyTextHint_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void ComboBox_SetEmptyTextHint_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectI ComboBox_GetEventRect_(IntPtr obj);

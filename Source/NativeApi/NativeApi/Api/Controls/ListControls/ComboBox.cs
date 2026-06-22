@@ -19,7 +19,8 @@ namespace NativeApi.Api
         public void ShowPopup() { }
 
         public bool AllowMouseWheel { get; set; }
-        public NativeStringSpan EmptyTextHint { get; set; }
+        public NativeStringSpan GetEmptyTextHint() => throw new Exception();
+        public void SetEmptyTextHint(NativeStringSpan value) => throw new Exception();
         public bool HasBorder { get; set; }
         public int ItemsCount { get; }
         public bool IsEditable { get; set; }

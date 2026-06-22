@@ -72,13 +72,6 @@ ALTERNET_UI_API void FontDialog_SetRestrictSelection_(FontDialog* obj, int value
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C FontDialog_GetResultFontName_(FontDialog* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetResultFontName();
-    });
-}
-
 ALTERNET_UI_API float FontDialog_GetResultFontSizeInPoints_(FontDialog* obj)
 {
     return MarshalExceptions<float>([&](){
@@ -90,20 +83,6 @@ ALTERNET_UI_API FontStyle FontDialog_GetResultFontStyle_(FontDialog* obj)
 {
     return MarshalExceptions<FontStyle>([&](){
         return obj->GetResultFontStyle();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C FontDialog_GetTitle_(FontDialog* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetTitle();
-    });
-}
-
-ALTERNET_UI_API void FontDialog_SetTitle_(FontDialog* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetTitle(value);
     });
 }
 
@@ -167,6 +146,27 @@ ALTERNET_UI_API void FontDialog_SetInitialFont_(FontDialog* obj, GenericFontFami
 {
     MarshalExceptions<void>([&](){
         obj->SetInitialFont(genericFamily, *familyName, emSizeInPoints, style);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C FontDialog_GetResultFontName_(FontDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetResultFontName();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C FontDialog_GetTitle_(FontDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
+    });
+}
+
+ALTERNET_UI_API void FontDialog_SetTitle_(FontDialog* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetTitle(*value);
     });
 }
 

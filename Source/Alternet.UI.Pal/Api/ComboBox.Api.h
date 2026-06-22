@@ -29,20 +29,6 @@ ALTERNET_UI_API void ComboBox_SetAllowMouseWheel_(ComboBox* obj, c_bool value)
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C ComboBox_GetEmptyTextHint_(ComboBox* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetEmptyTextHint();
-    });
-}
-
-ALTERNET_UI_API void ComboBox_SetEmptyTextHint_(ComboBox* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetEmptyTextHint(value);
-    });
-}
-
 ALTERNET_UI_API c_bool ComboBox_GetHasBorder_(ComboBox* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -201,6 +187,20 @@ ALTERNET_UI_API void ComboBox_ShowPopup_(ComboBox* obj)
 {
     MarshalExceptions<void>([&](){
         obj->ShowPopup();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C ComboBox_GetEmptyTextHint_(ComboBox* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEmptyTextHint();
+    });
+}
+
+ALTERNET_UI_API void ComboBox_SetEmptyTextHint_(ComboBox* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetEmptyTextHint(*value);
     });
 }
 

@@ -31,10 +31,11 @@ namespace NativeApi.Api
             float emSizeInPoints,
             FontStyle style) => throw new Exception();
 
-        public NativeStringSpan ResultFontName { get; }
         public float ResultFontSizeInPoints { get; }
         public FontStyle ResultFontStyle { get; }
 
-        public NativeStringSpan Title { get ; set; }
+        public NativeStringSpan GetResultFontName() => throw new Exception();
+        public NativeStringSpan GetTitle() => throw new Exception();
+        public void SetTitle(NativeStringSpan value) => throw new Exception();
     }
 }

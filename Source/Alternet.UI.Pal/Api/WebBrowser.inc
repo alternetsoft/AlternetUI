@@ -28,22 +28,11 @@ void SetZoomFactor(float value);
 
 bool GetHasSelection();
 
-NativeStringSpan GetSelectedSource();
-
-NativeStringSpan GetSelectedText();
-
-NativeStringSpan GetPageSource();
-
-NativeStringSpan GetPageText();
-
 bool GetAccessToDevToolsEnabled();
 void SetAccessToDevToolsEnabled(bool value);
 
 int GetPreferredColorScheme();
 void SetPreferredColorScheme(int value);
-
-NativeStringSpan GetUserAgent();
-void SetUserAgent(const NativeStringSpan& value);
 
 bool GetContextMenuEnabled();
 void SetContextMenuEnabled(bool value);
@@ -68,6 +57,16 @@ static void SetDefaultUserAgent(const NativeStringSpan& value);
 static void SetDefaultScriptMesageName(const NativeStringSpan& value);
 static void SetDefaultFSNameMemory(const NativeStringSpan& value);
 static void SetDefaultFSNameArchive(const NativeStringSpan& value);
+NativeStringSpan GetSelectedSource();
+NativeStringSpan GetSelectedText();
+NativeStringSpan GetPageSource();
+NativeStringSpan GetPageText();
+void SetSelectedSource(const NativeStringSpan& value);
+void SetSelectedText(const NativeStringSpan& value);
+void SetPageSource(const NativeStringSpan& value);
+void SetPageText(const NativeStringSpan& value);
+NativeStringSpan GetUserAgent();
+void SetUserAgent(const NativeStringSpan& value);
 NativeStringSpan DoCommand(const NativeStringSpan& cmdName, const NativeStringSpan& cmdParam1, const NativeStringSpan& cmdParam2);
 static NativeStringSpan DoCommandGlobal(const NativeStringSpan& cmdName, const NativeStringSpan& cmdParam1, const NativeStringSpan& cmdParam2);
 void SetVirtualHostNameToFolderMapping(const NativeStringSpan& hostName, const NativeStringSpan& folderPath, int accessKind);

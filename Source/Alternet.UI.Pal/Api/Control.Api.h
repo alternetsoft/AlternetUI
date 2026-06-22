@@ -165,20 +165,6 @@ ALTERNET_UI_API void Control_SetLayoutDirection_(Control* obj, int value)
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C Control_GetName_(Control* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetName();
-    });
-}
-
-ALTERNET_UI_API void Control_SetName_(Control* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetName(value);
-    });
-}
-
 ALTERNET_UI_API int Control_GetId_(Control* obj)
 {
     return MarshalExceptions<int>([&](){
@@ -309,20 +295,6 @@ ALTERNET_UI_API Control* Control_GetParentRefCounted_(Control* obj)
 {
     return MarshalExceptions<Control*>([&](){
         return obj->GetParentRefCounted();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Control_GetToolTip_(Control* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetToolTip();
-    });
-}
-
-ALTERNET_UI_API void Control_SetToolTip_(Control* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetToolTip(value);
     });
 }
 
@@ -676,6 +648,20 @@ ALTERNET_UI_API void Control_SetCursor_(Control* obj, void* handle)
     });
 }
 
+ALTERNET_UI_API NativeStringSpan_C Control_GetName_(Control* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetName();
+    });
+}
+
+ALTERNET_UI_API void Control_SetName_(Control* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetName(*value);
+    });
+}
+
 ALTERNET_UI_API NativeStringSpan_C Control_GetText_(Control* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
@@ -687,6 +673,20 @@ ALTERNET_UI_API void Control_SetText_(Control* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
         obj->SetText(*value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Control_GetToolTip_(Control* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetToolTip();
+    });
+}
+
+ALTERNET_UI_API void Control_SetToolTip_(Control* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetToolTip(*value);
     });
 }
 

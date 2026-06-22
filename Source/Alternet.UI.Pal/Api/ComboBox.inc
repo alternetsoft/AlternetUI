@@ -4,9 +4,6 @@ public:
 bool GetAllowMouseWheel();
 void SetAllowMouseWheel(bool value);
 
-NativeStringSpan GetEmptyTextHint();
-void SetEmptyTextHint(const NativeStringSpan& value);
-
 bool GetHasBorder();
 void SetHasBorder(bool value);
 
@@ -45,6 +42,8 @@ void SetEventCalled(bool value);
 
 void DismissPopup();
 void ShowPopup();
+NativeStringSpan GetEmptyTextHint();
+void SetEmptyTextHint(const NativeStringSpan& value);
 RectI GetEventRect();
 int DefaultOnMeasureItemWidth();
 int DefaultOnMeasureItem();

@@ -30,11 +30,11 @@ namespace NativeApi.Api
 
         public static NativeStringSpan[] Families { get => throw new Exception(); }
 
-        public NativeStringSpan Name { get => throw new Exception(); }
+        public NativeStringSpan GetName() => throw new Exception();
         public float SizeInPoints { get => throw new Exception(); }
         public FontStyle Style { get => throw new Exception(); }
 
-        public NativeStringSpan Description { get => throw new Exception(); }
+        public NativeStringSpan GetDescription() => throw new Exception();
         public bool IsEqualTo(Font other) => throw new Exception();
         public NativeStringSpan Serialize() => throw new Exception();
     }

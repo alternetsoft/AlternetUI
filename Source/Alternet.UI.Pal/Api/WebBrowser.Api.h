@@ -120,34 +120,6 @@ ALTERNET_UI_API c_bool WebBrowser_GetHasSelection_(WebBrowser* obj)
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetSelectedSource_(WebBrowser* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetSelectedSource();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetSelectedText_(WebBrowser* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetSelectedText();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetPageSource_(WebBrowser* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetPageSource();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetPageText_(WebBrowser* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetPageText();
-    });
-}
-
 ALTERNET_UI_API c_bool WebBrowser_GetAccessToDevToolsEnabled_(WebBrowser* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -173,20 +145,6 @@ ALTERNET_UI_API void WebBrowser_SetPreferredColorScheme_(WebBrowser* obj, int va
 {
     MarshalExceptions<void>([&](){
         obj->SetPreferredColorScheme(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetUserAgent_(WebBrowser* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetUserAgent();
-    });
-}
-
-ALTERNET_UI_API void WebBrowser_SetUserAgent_(WebBrowser* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetUserAgent(value);
     });
 }
 
@@ -320,6 +278,76 @@ ALTERNET_UI_API void WebBrowser_SetDefaultFSNameArchive_(NativeStringSpan* value
 {
     MarshalExceptions<void>([&](){
         WebBrowser::SetDefaultFSNameArchive(*value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetSelectedSource_(WebBrowser* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetSelectedSource();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetSelectedText_(WebBrowser* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetSelectedText();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetPageSource_(WebBrowser* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPageSource();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetPageText_(WebBrowser* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPageText();
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetSelectedSource_(WebBrowser* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetSelectedSource(*value);
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetSelectedText_(WebBrowser* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetSelectedText(*value);
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetPageSource_(WebBrowser* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetPageSource(*value);
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetPageText_(WebBrowser* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetPageText(*value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetUserAgent_(WebBrowser* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetUserAgent();
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetUserAgent_(WebBrowser* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetUserAgent(*value);
     });
 }
 

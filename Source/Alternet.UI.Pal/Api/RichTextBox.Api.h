@@ -33,13 +33,6 @@ ALTERNET_UI_API void RichTextBox_SetHasBorder_(RichTextBox* obj, c_bool value)
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetReportedUrl_(RichTextBox* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetReportedUrl();
-    });
-}
-
 ALTERNET_UI_API c_bool RichTextBox_LoadFromStream_(RichTextBox* obj, void* stream, int type)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -65,6 +58,13 @@ ALTERNET_UI_API void RichTextBox_InitFileHandlers_()
 {
     MarshalExceptions<void>([&](){
         RichTextBox::InitFileHandlers();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C RichTextBox_GetReportedUrl_(RichTextBox* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetReportedUrl();
     });
 }
 

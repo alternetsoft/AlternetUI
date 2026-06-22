@@ -16,7 +16,7 @@ namespace NativeApi.Api
         public event EventHandler? TextUrl;
         public event EventHandler? TextMaxLength;
 
-        public NativeStringSpan ReportedUrl { get; }
+        public NativeStringSpan GetReportedUrl() => throw new Exception();
 
         public bool EditControlOnly { get; set; }
 
@@ -85,7 +85,8 @@ namespace NativeApi.Api
         public void SelectAll() => throw new Exception();
         public void SelectNone() => throw new Exception();
 
-        public NativeStringSpan EmptyTextHint { get; set; }
+        public NativeStringSpan GetEmptyTextHint() => throw new Exception();
+        public void SetEmptyTextHint(NativeStringSpan value) => throw new Exception();
 
         public void Undo() => throw new Exception();
 

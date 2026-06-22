@@ -4,12 +4,11 @@ public:
 bool GetHasBorder();
 void SetHasBorder(bool value);
 
-NativeStringSpan GetReportedUrl();
-
 bool LoadFromStream(void* stream, int type);
 bool SaveToStream(void* stream, int type);
 bool ApplyStyleToSelection(void* style, int flags);
 static void InitFileHandlers();
+NativeStringSpan GetReportedUrl();
 NativeStringSpan GetRange(int64_t from, int64_t to);
 int GetLineLength(int64_t lineNo);
 NativeStringSpan GetLineText(int64_t lineNo);

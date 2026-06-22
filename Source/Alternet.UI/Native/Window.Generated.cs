@@ -24,21 +24,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.NativeStringSpan Title
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Window_GetTitle_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Window_SetTitle_(NativePointer, value);
-            }
-        }
-        
         public bool ShowInTaskbar
         {
             get
@@ -294,6 +279,19 @@ NativeApi.Window_SetMinSize_(NativePointer, ref size_Native);
 NativeApi.Window_SetMaxSize_(NativePointer, ref size_Native);
         }
         
+        public Alternet.UI.NativeStringSpan GetTitle()
+        {
+            CheckDisposed();
+            return NativeApi.Window_GetTitle_(NativePointer);
+        }
+        
+        public void SetTitle(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Window_SetTitle_(NativePointer, ref value_Native);
+        }
+        
         public void Close()
         {
             CheckDisposed();
@@ -368,12 +366,6 @@ NativeApi.Window_SetMaxSize_(NativePointer, ref size_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Window_Create_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Window_GetTitle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetTitle_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Window_GetShowInTaskbar_(IntPtr obj);
@@ -476,6 +468,12 @@ NativeApi.Window_SetMaxSize_(NativePointer, ref size_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetMaxSize_(IntPtr obj, ref Alternet.Drawing.SizeD size);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Window_GetTitle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Window_SetTitle_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_Close_(IntPtr obj);

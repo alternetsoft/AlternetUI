@@ -23,55 +23,49 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.NativeStringSpan InitialDirectory
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.SelectDirectoryDialog_GetInitialDirectory_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.SelectDirectoryDialog_SetInitialDirectory_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan Title
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.SelectDirectoryDialog_GetTitle_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.SelectDirectoryDialog_SetTitle_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan DirectoryName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.SelectDirectoryDialog_GetDirectoryName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.SelectDirectoryDialog_SetDirectoryName_(NativePointer, value);
-            }
-        }
-        
         public Alternet.UI.ModalResult ShowModal(Window? owner)
         {
             CheckDisposed();
             return NativeApi.SelectDirectoryDialog_ShowModal_(NativePointer, owner?.NativePointer ?? IntPtr.Zero);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetInitialDirectory()
+        {
+            CheckDisposed();
+            return NativeApi.SelectDirectoryDialog_GetInitialDirectory_(NativePointer);
+        }
+        
+        public void SetInitialDirectory(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.SelectDirectoryDialog_SetInitialDirectory_(NativePointer, ref value_Native);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetTitle()
+        {
+            CheckDisposed();
+            return NativeApi.SelectDirectoryDialog_GetTitle_(NativePointer);
+        }
+        
+        public void SetTitle(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.SelectDirectoryDialog_SetTitle_(NativePointer, ref value_Native);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetDirectoryName()
+        {
+            CheckDisposed();
+            return NativeApi.SelectDirectoryDialog_GetDirectoryName_(NativePointer);
+        }
+        
+        public void SetDirectoryName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.SelectDirectoryDialog_SetDirectoryName_(NativePointer, ref value_Native);
         }
         
         
@@ -84,25 +78,25 @@ namespace Alternet.UI.Native
             public static extern IntPtr SelectDirectoryDialog_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.ModalResult SelectDirectoryDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan SelectDirectoryDialog_GetInitialDirectory_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SelectDirectoryDialog_SetInitialDirectory_(IntPtr obj, Alternet.UI.NativeStringSpan value);
+            public static extern void SelectDirectoryDialog_SetInitialDirectory_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan SelectDirectoryDialog_GetTitle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SelectDirectoryDialog_SetTitle_(IntPtr obj, Alternet.UI.NativeStringSpan value);
+            public static extern void SelectDirectoryDialog_SetTitle_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan SelectDirectoryDialog_GetDirectoryName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void SelectDirectoryDialog_SetDirectoryName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.ModalResult SelectDirectoryDialog_ShowModal_(IntPtr obj, IntPtr owner);
+            public static extern void SelectDirectoryDialog_SetDirectoryName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
         }
     }

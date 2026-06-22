@@ -189,21 +189,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.NativeStringSpan Name
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetName_(NativePointer, value);
-            }
-        }
-        
         public int Id
         {
             get
@@ -383,21 +368,6 @@ namespace Alternet.UI.Native
                 return _mmm;
             }
             
-        }
-        
-        public Alternet.UI.NativeStringSpan ToolTip
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Control_GetToolTip_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetToolTip_(NativePointer, value);
-            }
         }
         
         public bool AllowDrop
@@ -741,6 +711,19 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
             NativeApi.Control_SetCursor_(NativePointer, handle);
         }
         
+        public Alternet.UI.NativeStringSpan GetName()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetName_(NativePointer);
+        }
+        
+        public void SetName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Control_SetName_(NativePointer, ref value_Native);
+        }
+        
         public Alternet.UI.NativeStringSpan GetText()
         {
             CheckDisposed();
@@ -752,6 +735,19 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
             CheckDisposed();
             var value_Native = value.ToNative();
 NativeApi.Control_SetText_(NativePointer, ref value_Native);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetToolTip()
+        {
+            CheckDisposed();
+            return NativeApi.Control_GetToolTip_(NativePointer);
+        }
+        
+        public void SetToolTip(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Control_SetToolTip_(NativePointer, ref value_Native);
         }
         
         public Alternet.Drawing.RectD GetBounds()
@@ -1340,12 +1336,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern void Control_SetLayoutDirection_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Control_GetName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_GetId_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1401,12 +1391,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_GetParentRefCounted_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Control_GetToolTip_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetToolTip_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Control_GetAllowDrop_(IntPtr obj);
@@ -1559,10 +1543,22 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern void Control_SetCursor_(IntPtr obj, System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Control_GetName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan Control_GetText_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetText_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Control_GetToolTip_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetToolTip_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD Control_GetBounds_(IntPtr obj);

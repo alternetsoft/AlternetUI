@@ -32,20 +32,6 @@ ALTERNET_UI_API void PrintDocument_SetOriginAtMargins_(PrintDocument* obj, c_boo
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C PrintDocument_GetDocumentName_(PrintDocument* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetDocumentName();
-    });
-}
-
-ALTERNET_UI_API void PrintDocument_SetDocumentName_(PrintDocument* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetDocumentName(value);
-    });
-}
-
 ALTERNET_UI_API PrinterSettings* PrintDocument_GetPrinterSettings_(PrintDocument* obj)
 {
     return MarshalExceptions<PrinterSettings*>([&](){
@@ -85,6 +71,20 @@ ALTERNET_UI_API int PrintDocument_GetPrintPage_PageNumber_(PrintDocument* obj)
 {
     return MarshalExceptions<int>([&](){
         return obj->GetPrintPage_PageNumber();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C PrintDocument_GetDocumentName_(PrintDocument* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetDocumentName();
+    });
+}
+
+ALTERNET_UI_API void PrintDocument_SetDocumentName_(PrintDocument* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetDocumentName(*value);
     });
 }
 

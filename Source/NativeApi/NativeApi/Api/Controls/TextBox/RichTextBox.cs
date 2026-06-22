@@ -26,7 +26,7 @@ namespace NativeApi.Api
         
         public bool HasBorder { get; set; }
 
-        public NativeStringSpan ReportedUrl { get; }
+        public NativeStringSpan GetReportedUrl() => throw new Exception();
 
         public event EventHandler? TextEnter;
         public event EventHandler? TextUrl;

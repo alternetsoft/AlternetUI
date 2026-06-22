@@ -16,6 +16,13 @@ ALTERNET_UI_API SelectDirectoryDialog* SelectDirectoryDialog_Create_()
     });
 }
 
+ALTERNET_UI_API ModalResult SelectDirectoryDialog_ShowModal_(SelectDirectoryDialog* obj, Window* owner)
+{
+    return MarshalExceptions<ModalResult>([&](){
+        return obj->ShowModal(owner);
+    });
+}
+
 ALTERNET_UI_API NativeStringSpan_C SelectDirectoryDialog_GetInitialDirectory_(SelectDirectoryDialog* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
@@ -23,10 +30,10 @@ ALTERNET_UI_API NativeStringSpan_C SelectDirectoryDialog_GetInitialDirectory_(Se
     });
 }
 
-ALTERNET_UI_API void SelectDirectoryDialog_SetInitialDirectory_(SelectDirectoryDialog* obj, NativeStringSpan value)
+ALTERNET_UI_API void SelectDirectoryDialog_SetInitialDirectory_(SelectDirectoryDialog* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetInitialDirectory(value);
+        obj->SetInitialDirectory(*value);
     });
 }
 
@@ -37,10 +44,10 @@ ALTERNET_UI_API NativeStringSpan_C SelectDirectoryDialog_GetTitle_(SelectDirecto
     });
 }
 
-ALTERNET_UI_API void SelectDirectoryDialog_SetTitle_(SelectDirectoryDialog* obj, NativeStringSpan value)
+ALTERNET_UI_API void SelectDirectoryDialog_SetTitle_(SelectDirectoryDialog* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetTitle(value);
+        obj->SetTitle(*value);
     });
 }
 
@@ -51,17 +58,10 @@ ALTERNET_UI_API NativeStringSpan_C SelectDirectoryDialog_GetDirectoryName_(Selec
     });
 }
 
-ALTERNET_UI_API void SelectDirectoryDialog_SetDirectoryName_(SelectDirectoryDialog* obj, NativeStringSpan value)
+ALTERNET_UI_API void SelectDirectoryDialog_SetDirectoryName_(SelectDirectoryDialog* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetDirectoryName(value);
-    });
-}
-
-ALTERNET_UI_API ModalResult SelectDirectoryDialog_ShowModal_(SelectDirectoryDialog* obj, Window* owner)
-{
-    return MarshalExceptions<ModalResult>([&](){
-        return obj->ShowModal(owner);
+        obj->SetDirectoryName(*value);
     });
 }
 

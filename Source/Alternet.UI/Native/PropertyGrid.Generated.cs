@@ -69,40 +69,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.UI.NativeStringSpan EventPropertyName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PropertyGrid_GetEventPropertyName_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.UI.NativeStringSpan EventValidationFailureMessage
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PropertyGrid_GetEventValidationFailureMessage_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PropertyGrid_SetEventValidationFailureMessage_(NativePointer, value);
-            }
-        }
-        
-        public static Alternet.UI.NativeStringSpan NameAsLabel
-        {
-            get
-            {
-                return NativeApi.PropertyGrid_GetNameAsLabel_();
-            }
-            
-        }
-        
         public bool HasBorder
         {
             get
@@ -250,6 +216,30 @@ NativeApi.PropertyGrid_KnownColorsSetCustomColorTitle_(ref value_Native);
         {
             CheckDisposed();
             NativeApi.PropertyGrid_SetPropertyFlag_(NativePointer, prop, flag, value);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetEventPropertyName()
+        {
+            CheckDisposed();
+            return NativeApi.PropertyGrid_GetEventPropertyName_(NativePointer);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetEventValidationFailureMessage()
+        {
+            CheckDisposed();
+            return NativeApi.PropertyGrid_GetEventValidationFailureMessage_(NativePointer);
+        }
+        
+        public void SetEventValidationFailureMessage(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.PropertyGrid_SetEventValidationFailureMessage_(NativePointer, ref value_Native);
+        }
+        
+        public static Alternet.UI.NativeStringSpan GetNameAsLabel()
+        {
+            return NativeApi.PropertyGrid_GetNameAsLabel_();
         }
         
         public static System.IntPtr CreateEx(long styles)
@@ -1519,18 +1509,6 @@ NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, ref attrName_Nati
             public static extern System.IntPtr PropertyGrid_GetEventProperty_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventPropertyName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventValidationFailureMessage_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGrid_SetEventValidationFailureMessage_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetNameAsLabel_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PropertyGrid_GetHasBorder_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1598,6 +1576,18 @@ NativeApi.PropertyGrid_SetPropertyAttributeAll_(NativePointer, ref attrName_Nati
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGrid_SetPropertyFlag_(IntPtr obj, System.IntPtr prop, int flag, bool value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventPropertyName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetEventValidationFailureMessage_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PropertyGrid_SetEventValidationFailureMessage_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan PropertyGrid_GetNameAsLabel_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGrid_CreateEx_(long styles);

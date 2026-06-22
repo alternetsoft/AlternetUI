@@ -38,8 +38,9 @@ namespace NativeApi.Api
         public IntPtr EventPropValue { get; }
         public int EventColumn { get; }
         public IntPtr EventProperty { get; }
-        public NativeStringSpan EventPropertyName { get; }
-        public NativeStringSpan EventValidationFailureMessage { get; set; }
+        public NativeStringSpan GetEventPropertyName() => throw new Exception();
+        public NativeStringSpan GetEventValidationFailureMessage() => throw new Exception();
+        public void SetEventValidationFailureMessage(NativeStringSpan value) => throw new Exception();
 
         public event EventHandler? Selected;
 
@@ -73,7 +74,7 @@ namespace NativeApi.Api
 
         public event EventHandler? ColEndDrag;
 
-        public static NativeStringSpan NameAsLabel { get; }
+        public static NativeStringSpan GetNameAsLabel() => throw new Exception();
         public bool HasBorder { get; set; }
 
         public static IntPtr CreateEx(long styles) => default;

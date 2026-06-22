@@ -16,20 +16,6 @@ ALTERNET_UI_API NotifyIcon* NotifyIcon_Create_()
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C NotifyIcon_GetText_(NotifyIcon* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetText();
-    });
-}
-
-ALTERNET_UI_API void NotifyIcon_SetText_(NotifyIcon* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetText(value);
-    });
-}
-
 ALTERNET_UI_API Image* NotifyIcon_GetIcon_(NotifyIcon* obj)
 {
     return MarshalExceptions<Image*>([&](){
@@ -76,6 +62,20 @@ ALTERNET_UI_API c_bool NotifyIcon_GetIsOk_(NotifyIcon* obj)
 {
     return MarshalExceptions<c_bool>([&](){
         return obj->GetIsOk();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C NotifyIcon_GetText_(NotifyIcon* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetText();
+    });
+}
+
+ALTERNET_UI_API void NotifyIcon_SetText_(NotifyIcon* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetText(*value);
     });
 }
 

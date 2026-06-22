@@ -113,66 +113,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public FileDialogMode Mode
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.FileDialog_GetMode_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.FileDialog_SetMode_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan InitialDirectory
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.FileDialog_GetInitialDirectory_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.FileDialog_SetInitialDirectory_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan Title
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.FileDialog_GetTitle_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.FileDialog_SetTitle_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan Filter
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.FileDialog_GetFilter_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.FileDialog_SetFilter_(NativePointer, value);
-            }
-        }
-        
         public int SelectedFilterIndex
         {
             get
@@ -188,18 +128,18 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.NativeStringSpan FileName
+        public FileDialogMode Mode
         {
             get
             {
                 CheckDisposed();
-                return NativeApi.FileDialog_GetFileName_(NativePointer);
+                return NativeApi.FileDialog_GetMode_(NativePointer);
             }
             
             set
             {
                 CheckDisposed();
-                NativeApi.FileDialog_SetFileName_(NativePointer, value);
+                NativeApi.FileDialog_SetMode_(NativePointer, value);
             }
         }
         
@@ -242,6 +182,58 @@ namespace Alternet.UI.Native
                 }
             }
             
+        }
+        
+        public Alternet.UI.NativeStringSpan GetInitialDirectory()
+        {
+            CheckDisposed();
+            return NativeApi.FileDialog_GetInitialDirectory_(NativePointer);
+        }
+        
+        public void SetInitialDirectory(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.FileDialog_SetInitialDirectory_(NativePointer, ref value_Native);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetTitle()
+        {
+            CheckDisposed();
+            return NativeApi.FileDialog_GetTitle_(NativePointer);
+        }
+        
+        public void SetTitle(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.FileDialog_SetTitle_(NativePointer, ref value_Native);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetFilter()
+        {
+            CheckDisposed();
+            return NativeApi.FileDialog_GetFilter_(NativePointer);
+        }
+        
+        public void SetFilter(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.FileDialog_SetFilter_(NativePointer, ref value_Native);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetFileName()
+        {
+            CheckDisposed();
+            return NativeApi.FileDialog_GetFileName_(NativePointer);
+        }
+        
+        public void SetFileName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.FileDialog_SetFileName_(NativePointer, ref value_Native);
         }
         
         public Alternet.UI.ModalResult ShowModal(Window? owner)
@@ -296,40 +288,16 @@ namespace Alternet.UI.Native
             public static extern void FileDialog_SetShowHiddenFiles_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern FileDialogMode FileDialog_GetMode_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetMode_(IntPtr obj, FileDialogMode value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan FileDialog_GetInitialDirectory_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetInitialDirectory_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan FileDialog_GetTitle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetTitle_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan FileDialog_GetFilter_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetFilter_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int FileDialog_GetSelectedFilterIndex_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void FileDialog_SetSelectedFilterIndex_(IntPtr obj, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan FileDialog_GetFileName_(IntPtr obj);
+            public static extern FileDialogMode FileDialog_GetMode_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void FileDialog_SetFileName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
+            public static extern void FileDialog_SetMode_(IntPtr obj, FileDialogMode value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool FileDialog_GetAllowMultipleSelection_(IntPtr obj);
@@ -348,6 +316,30 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void FileDialog_CloseFileNamesArray_(IntPtr obj, System.IntPtr array);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan FileDialog_GetInitialDirectory_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetInitialDirectory_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan FileDialog_GetTitle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetTitle_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan FileDialog_GetFilter_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetFilter_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan FileDialog_GetFileName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void FileDialog_SetFileName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.ModalResult FileDialog_ShowModal_(IntPtr obj, IntPtr owner);

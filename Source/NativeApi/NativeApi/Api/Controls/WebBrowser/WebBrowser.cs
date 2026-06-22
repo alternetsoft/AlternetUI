@@ -8,7 +8,6 @@ namespace NativeApi.Api
 {
     public class WebBrowser : Control
     {
-
         public int Find(NativeStringSpan text, int flags) => default;
 
         public static void CrtSetDbgFlag(int value) => throw new Exception();
@@ -60,18 +59,22 @@ namespace NativeApi.Api
         public bool CanPaste { get; }
         public float ZoomFactor { get; set; }
         public bool HasSelection { get; }
-        public NativeStringSpan SelectedSource { get => throw new Exception(); }
-        public NativeStringSpan SelectedText { get => throw new Exception(); }
-        public NativeStringSpan PageSource { get => throw new Exception(); }
-        public NativeStringSpan PageText { get => throw new Exception(); }
+        public NativeStringSpan GetSelectedSource() => throw new Exception();
+        public NativeStringSpan GetSelectedText() => throw new Exception();
+        public NativeStringSpan GetPageSource() => throw new Exception();
+        public NativeStringSpan GetPageText() => throw new Exception();
+
+        public void SetSelectedSource(NativeStringSpan value) => throw new Exception();
+        public void SetSelectedText(NativeStringSpan value) => throw new Exception();
+        public void SetPageSource(NativeStringSpan value) => throw new Exception();
+        public void SetPageText(NativeStringSpan value) => throw new Exception();
+
         public bool AccessToDevToolsEnabled { get; set; }
         public int PreferredColorScheme { get; set; }
         
-        public NativeStringSpan UserAgent 
-        { 
-            get => throw new Exception(); 
-            set => throw new Exception(); 
-        }
+        public NativeStringSpan GetUserAgent() => throw new Exception();
+        public void SetUserAgent(NativeStringSpan value) => throw new Exception();
+
         public bool ContextMenuEnabled { get; set; }
 
         public NativeStringSpan DoCommand(NativeStringSpan cmdName, NativeStringSpan cmdParam1, 

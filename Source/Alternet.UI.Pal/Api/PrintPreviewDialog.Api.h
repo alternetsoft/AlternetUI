@@ -17,20 +17,6 @@ ALTERNET_UI_API PrintPreviewDialog* PrintPreviewDialog_Create_()
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C PrintPreviewDialog_GetTitle_(PrintPreviewDialog* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetTitle();
-    });
-}
-
-ALTERNET_UI_API void PrintPreviewDialog_SetTitle_(PrintPreviewDialog* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetTitle(value);
-    });
-}
-
 ALTERNET_UI_API PrintDocument* PrintPreviewDialog_GetDocument_(PrintPreviewDialog* obj)
 {
     return MarshalExceptions<PrintDocument*>([&](){
@@ -42,6 +28,20 @@ ALTERNET_UI_API void PrintPreviewDialog_SetDocument_(PrintPreviewDialog* obj, Pr
 {
     MarshalExceptions<void>([&](){
         obj->SetDocument(value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C PrintPreviewDialog_GetTitle_(PrintPreviewDialog* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
+    });
+}
+
+ALTERNET_UI_API void PrintPreviewDialog_SetTitle_(PrintPreviewDialog* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetTitle(*value);
     });
 }
 

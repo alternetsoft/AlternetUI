@@ -10,13 +10,6 @@ int GetEventColumn();
 
 void* GetEventProperty();
 
-NativeStringSpan GetEventPropertyName();
-
-NativeStringSpan GetEventValidationFailureMessage();
-void SetEventValidationFailureMessage(const NativeStringSpan& value);
-
-static NativeStringSpan GetNameAsLabel();
-
 bool GetHasBorder();
 void SetHasBorder(bool value);
 
@@ -43,6 +36,10 @@ static void KnownColorsSetCustomColorTitle(const NativeStringSpan& value);
 void* GetPropertyValidator(void* prop);
 void SetPropertyValidator(void* prop, void* validator);
 void SetPropertyFlag(void* prop, int flag, bool value);
+NativeStringSpan GetEventPropertyName();
+NativeStringSpan GetEventValidationFailureMessage();
+void SetEventValidationFailureMessage(const NativeStringSpan& value);
+static NativeStringSpan GetNameAsLabel();
 static void* CreateEx(int64_t styles);
 void AddActionTrigger(int action, int keycode, int modifiers);
 void DedicateKey(int keycode);

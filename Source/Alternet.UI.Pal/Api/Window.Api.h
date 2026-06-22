@@ -17,20 +17,6 @@ ALTERNET_UI_API Window* Window_Create_()
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C Window_GetTitle_(Window* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetTitle();
-    });
-}
-
-ALTERNET_UI_API void Window_SetTitle_(Window* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetTitle(value);
-    });
-}
-
 ALTERNET_UI_API c_bool Window_GetShowInTaskbar_(Window* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -266,6 +252,20 @@ ALTERNET_UI_API void Window_SetMaxSize_(Window* obj, SizeD* size)
 {
     MarshalExceptions<void>([&](){
         obj->SetMaxSize(*size);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Window_GetTitle_(Window* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetTitle();
+    });
+}
+
+ALTERNET_UI_API void Window_SetTitle_(Window* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetTitle(*value);
     });
 }
 

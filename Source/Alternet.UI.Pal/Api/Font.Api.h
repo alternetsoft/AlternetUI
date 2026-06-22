@@ -15,13 +15,6 @@ ALTERNET_UI_API Font* Font_Create_()
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C Font_GetName_(Font* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetName();
-    });
-}
-
 ALTERNET_UI_API float Font_GetSizeInPoints_(Font* obj)
 {
     return MarshalExceptions<float>([&](){
@@ -33,13 +26,6 @@ ALTERNET_UI_API FontStyle Font_GetStyle_(Font* obj)
 {
     return MarshalExceptions<FontStyle>([&](){
         return obj->GetStyle();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Font_GetDescription_(Font* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetDescription();
     });
 }
 
@@ -187,6 +173,20 @@ ALTERNET_UI_API NativeStringSpan_C Font_GetGenericFamilyName_(GenericFontFamily 
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
         return Font::GetGenericFamilyName(genericFamily);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Font_GetName_(Font* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetName();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Font_GetDescription_(Font* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetDescription();
     });
 }
 

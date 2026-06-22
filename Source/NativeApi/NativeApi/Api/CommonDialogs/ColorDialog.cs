@@ -16,6 +16,7 @@ namespace NativeApi.Api
         public byte GetColorA() => throw new Exception();
         public byte GetColorState() => throw new Exception();
 
-        public NativeStringSpan Title { get => throw new Exception(); set => throw new Exception(); }
+        public NativeStringSpan GetTitle() => throw new Exception();
+        public void SetTitle(NativeStringSpan value) => throw new Exception();
     }
 }

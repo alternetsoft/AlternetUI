@@ -48,16 +48,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.UI.NativeStringSpan Name
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Font_GetName_(NativePointer);
-            }
-            
-        }
-        
         public float SizeInPoints
         {
             get
@@ -74,16 +64,6 @@ namespace Alternet.UI.Native
             {
                 CheckDisposed();
                 return NativeApi.Font_GetStyle_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.UI.NativeStringSpan Description
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Font_GetDescription_(NativePointer);
             }
             
         }
@@ -188,6 +168,18 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             return NativeApi.Font_GetGenericFamilyName_(genericFamily);
         }
         
+        public Alternet.UI.NativeStringSpan GetName()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetName_(NativePointer);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetDescription()
+        {
+            CheckDisposed();
+            return NativeApi.Font_GetDescription_(NativePointer);
+        }
+        
         public bool IsEqualTo(Font other)
         {
             CheckDisposed();
@@ -210,16 +202,10 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             public static extern IntPtr Font_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Font_GetName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern float Font_GetSizeInPoints_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.FontStyle Font_GetStyle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Font_GetDescription_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Font_OpenFamiliesArray_();
@@ -283,6 +269,12 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan Font_GetGenericFamilyName_(Alternet.Drawing.GenericFontFamily genericFamily);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Font_GetName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Font_GetDescription_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_IsEqualTo_(IntPtr obj, IntPtr other);

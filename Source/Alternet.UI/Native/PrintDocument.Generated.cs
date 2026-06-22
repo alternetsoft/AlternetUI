@@ -39,21 +39,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.NativeStringSpan DocumentName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrintDocument_GetDocumentName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrintDocument_SetDocumentName_(NativePointer, value);
-            }
-        }
-        
         public PrinterSettings PrinterSettings
         {
             get
@@ -116,6 +101,19 @@ namespace Alternet.UI.Native
                 return NativeApi.PrintDocument_GetPrintPage_PageNumber_(NativePointer);
             }
             
+        }
+        
+        public Alternet.UI.NativeStringSpan GetDocumentName()
+        {
+            CheckDisposed();
+            return NativeApi.PrintDocument_GetDocumentName_(NativePointer);
+        }
+        
+        public void SetDocumentName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.PrintDocument_SetDocumentName_(NativePointer, ref value_Native);
         }
         
         public void Print()
@@ -246,12 +244,6 @@ namespace Alternet.UI.Native
             public static extern void PrintDocument_SetOriginAtMargins_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PrintDocument_GetDocumentName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrintDocument_SetDocumentName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr PrintDocument_GetPrinterSettings_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -268,6 +260,12 @@ namespace Alternet.UI.Native
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int PrintDocument_GetPrintPage_PageNumber_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan PrintDocument_GetDocumentName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrintDocument_SetDocumentName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PrintDocument_Print_(IntPtr obj);

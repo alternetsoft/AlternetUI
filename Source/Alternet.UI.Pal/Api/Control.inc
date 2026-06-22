@@ -34,9 +34,6 @@ void SetBorderStyle(int value);
 int GetLayoutDirection();
 void SetLayoutDirection(int value);
 
-NativeStringSpan GetName();
-void SetName(const NativeStringSpan& value);
-
 int GetId();
 void SetId(int value);
 
@@ -71,9 +68,6 @@ bool GetIsFocusable();
 bool GetCanAcceptFocus();
 
 Control* GetParentRefCounted();
-
-NativeStringSpan GetToolTip();
-void SetToolTip(const NativeStringSpan& value);
 
 bool GetAllowDrop();
 void SetAllowDrop(bool value);
@@ -136,8 +130,12 @@ static float DrawingDPIScaleFactor(void* window);
 static float DrawingToDip(int value, void* window);
 static float DrawingFromDipF(float value, void* window);
 void SetCursor(void* handle);
+NativeStringSpan GetName();
+void SetName(const NativeStringSpan& value);
 virtual NativeStringSpan GetText();
 virtual void SetText(const NativeStringSpan& value);
+NativeStringSpan GetToolTip();
+void SetToolTip(const NativeStringSpan& value);
 virtual RectD GetBounds();
 void* GetDrawingContext(bool native);
 virtual RectI GetBoundsI();

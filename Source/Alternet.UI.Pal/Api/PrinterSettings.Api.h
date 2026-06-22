@@ -141,20 +141,6 @@ ALTERNET_UI_API void PrinterSettings_SetPrintToFile_(PrinterSettings* obj, c_boo
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C PrinterSettings_GetPrinterName_(PrinterSettings* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetPrinterName();
-    });
-}
-
-ALTERNET_UI_API void PrinterSettings_SetPrinterName_(PrinterSettings* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetPrinterName(value);
-    });
-}
-
 ALTERNET_UI_API c_bool PrinterSettings_GetIsValid_(PrinterSettings* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -169,6 +155,20 @@ ALTERNET_UI_API c_bool PrinterSettings_GetIsDefaultPrinter_(PrinterSettings* obj
     });
 }
 
+ALTERNET_UI_API NativeStringSpan_C PrinterSettings_GetPrinterName_(PrinterSettings* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetPrinterName();
+    });
+}
+
+ALTERNET_UI_API void PrinterSettings_SetPrinterName_(PrinterSettings* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetPrinterName(*value);
+    });
+}
+
 ALTERNET_UI_API NativeStringSpan_C PrinterSettings_GetPrintFileName_(PrinterSettings* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
@@ -176,10 +176,10 @@ ALTERNET_UI_API NativeStringSpan_C PrinterSettings_GetPrintFileName_(PrinterSett
     });
 }
 
-ALTERNET_UI_API void PrinterSettings_SetPrintFileName_(PrinterSettings* obj, NativeStringSpan value)
+ALTERNET_UI_API void PrinterSettings_SetPrintFileName_(PrinterSettings* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){
-        obj->SetPrintFileName(value);
+        obj->SetPrintFileName(*value);
     });
 }
 

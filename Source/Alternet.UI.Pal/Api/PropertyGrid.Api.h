@@ -50,34 +50,6 @@ ALTERNET_UI_API void* PropertyGrid_GetEventProperty_(PropertyGrid* obj)
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetEventPropertyName_(PropertyGrid* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetEventPropertyName();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetEventValidationFailureMessage_(PropertyGrid* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetEventValidationFailureMessage();
-    });
-}
-
-ALTERNET_UI_API void PropertyGrid_SetEventValidationFailureMessage_(PropertyGrid* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetEventValidationFailureMessage(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetNameAsLabel_()
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return PropertyGrid::GetNameAsLabel();
-    });
-}
-
 ALTERNET_UI_API c_bool PropertyGrid_GetHasBorder_(PropertyGrid* obj)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -236,6 +208,34 @@ ALTERNET_UI_API void PropertyGrid_SetPropertyFlag_(PropertyGrid* obj, void* prop
 {
     MarshalExceptions<void>([&](){
         obj->SetPropertyFlag(prop, flag, value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetEventPropertyName_(PropertyGrid* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEventPropertyName();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetEventValidationFailureMessage_(PropertyGrid* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEventValidationFailureMessage();
+    });
+}
+
+ALTERNET_UI_API void PropertyGrid_SetEventValidationFailureMessage_(PropertyGrid* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetEventValidationFailureMessage(*value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C PropertyGrid_GetNameAsLabel_()
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return PropertyGrid::GetNameAsLabel();
     });
 }
 

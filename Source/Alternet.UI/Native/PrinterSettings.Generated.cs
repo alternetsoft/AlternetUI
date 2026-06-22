@@ -158,21 +158,6 @@ namespace Alternet.UI.Native
             }
         }
         
-        public Alternet.UI.NativeStringSpan PrinterName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrinterSettings_GetPrinterName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrinterSettings_SetPrinterName_(NativePointer, value);
-            }
-        }
-        
         public bool IsValid
         {
             get
@@ -193,19 +178,30 @@ namespace Alternet.UI.Native
             
         }
         
-        public Alternet.UI.NativeStringSpan PrintFileName
+        public Alternet.UI.NativeStringSpan GetPrinterName()
         {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.PrinterSettings_GetPrintFileName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.PrinterSettings_SetPrintFileName_(NativePointer, value);
-            }
+            CheckDisposed();
+            return NativeApi.PrinterSettings_GetPrinterName_(NativePointer);
+        }
+        
+        public void SetPrinterName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.PrinterSettings_SetPrinterName_(NativePointer, ref value_Native);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetPrintFileName()
+        {
+            CheckDisposed();
+            return NativeApi.PrinterSettings_GetPrintFileName_(NativePointer);
+        }
+        
+        public void SetPrintFileName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.PrinterSettings_SetPrintFileName_(NativePointer, ref value_Native);
         }
         
         
@@ -272,22 +268,22 @@ namespace Alternet.UI.Native
             public static extern void PrinterSettings_SetPrintToFile_(IntPtr obj, bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan PrinterSettings_GetPrinterName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrinterSettings_SetPrinterName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PrinterSettings_GetIsValid_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool PrinterSettings_GetIsDefaultPrinter_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan PrinterSettings_GetPrinterName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void PrinterSettings_SetPrinterName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan PrinterSettings_GetPrintFileName_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PrinterSettings_SetPrintFileName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
+            public static extern void PrinterSettings_SetPrintFileName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
         }
     }

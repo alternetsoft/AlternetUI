@@ -18,6 +18,13 @@ ALTERNET_UI_API Menu* Menu_Create_()
     });
 }
 
+ALTERNET_UI_API c_bool Menu_GetEventMenuItemChecked_()
+{
+    return MarshalExceptions<c_bool>([&](){
+        return Menu::GetEventMenuItemChecked();
+    });
+}
+
 ALTERNET_UI_API NativeStringSpan_C Menu_GetMacHelpMenuTitleName_(Menu* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
@@ -29,20 +36,6 @@ ALTERNET_UI_API NativeStringSpan_C Menu_GetMacWindowMenuTitleName_(Menu* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
         return obj->GetMacWindowMenuTitleName();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Menu_GetEventMenuItemId_()
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return Menu::GetEventMenuItemId();
-    });
-}
-
-ALTERNET_UI_API c_bool Menu_GetEventMenuItemChecked_()
-{
-    return MarshalExceptions<c_bool>([&](){
-        return Menu::GetEventMenuItemChecked();
     });
 }
 
@@ -253,6 +246,13 @@ ALTERNET_UI_API void Menu_Show_(void* menuHandle, Control* control, PointD* posi
 {
     MarshalExceptions<void>([&](){
         Menu::Show(menuHandle, control, *position);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Menu_GetEventMenuItemId_()
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return Menu::GetEventMenuItemId();
     });
 }
 

@@ -78,7 +78,8 @@ namespace NativeApi.Api
 
         public int BorderStyle { get; set; }
         public int LayoutDirection { get; set; }
-        public NativeStringSpan Name { get; set; }
+        public NativeStringSpan GetName() => default;
+        public void SetName(NativeStringSpan value) { }
         public int Id { get; set; }
 
         public int EventOldDpi { get; }
@@ -131,7 +132,8 @@ namespace NativeApi.Api
         public bool IsFocusable { get; }
         public bool CanAcceptFocus { get; }
         public Control? ParentRefCounted { get; }
-        public NativeStringSpan ToolTip { get; set; }
+        public NativeStringSpan GetToolTip() => default;
+        public void SetToolTip(NativeStringSpan value) { }
         public bool AllowDrop { get; set; }
         public virtual RectD GetBounds() => default;
 

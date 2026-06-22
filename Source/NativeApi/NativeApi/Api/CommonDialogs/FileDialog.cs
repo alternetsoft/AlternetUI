@@ -61,17 +61,21 @@ namespace NativeApi.Api
         /// </summary>
         public bool ShowHiddenFiles { get; set; }
 
-        public FileDialogMode Mode { get; set; }
-
-        public NativeStringSpan InitialDirectory { get; set; }
-
-        public NativeStringSpan Title { get; set; }
-
-        public NativeStringSpan Filter { get; set; }
-
         public int SelectedFilterIndex { get; set; }
 
-        public NativeStringSpan FileName { get; set; }
+        public FileDialogMode Mode { get; set; }
+
+        public NativeStringSpan GetInitialDirectory() => throw new Exception();
+        public void SetInitialDirectory(NativeStringSpan value) => throw new Exception();
+
+        public NativeStringSpan GetTitle() => throw new Exception();
+        public void SetTitle(NativeStringSpan value) => throw new Exception();
+
+        public NativeStringSpan GetFilter() => throw new Exception();
+        public void SetFilter(NativeStringSpan value) => throw new Exception();
+
+        public NativeStringSpan GetFileName() => throw new Exception();
+        public void SetFileName(NativeStringSpan value) => throw new Exception();
 
         public bool AllowMultipleSelection { get; set; }
 
