@@ -78,7 +78,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             SizeD gridDesiredSize;
             ExtendedData extData = ExtData;

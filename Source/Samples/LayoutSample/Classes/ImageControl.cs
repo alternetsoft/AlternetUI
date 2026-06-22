@@ -62,7 +62,7 @@ namespace LayoutSample
             return result;
         }
 
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             return GetZoomedImageSize();
         }

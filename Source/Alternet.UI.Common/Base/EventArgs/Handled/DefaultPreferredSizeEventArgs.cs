@@ -37,6 +37,12 @@ namespace Alternet.UI
         public SizeD AvailableSize => Context.AvailableSize;
 
         /// <summary>
+        /// Gets or sets the default preferred size. This value is calculated by the library
+        /// and can be used as a starting point for the preferred size calculation.
+        /// </summary>
+        public SizeD DefaultPreferredSize { get; set; }
+
+        /// <summary>
         /// Gets the context that determines the preferred size calculation behavior.
         /// </summary>
         public PreferredSizeContext Context { get; set; }

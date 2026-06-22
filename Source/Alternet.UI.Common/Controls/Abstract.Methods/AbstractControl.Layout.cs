@@ -128,6 +128,45 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets preferred size of the control based on its layout and child controls.
+        /// If you need to change default behavior, override <see cref="GetPreferredSizeInternal"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="PreferredSizeContext"/> providing
+        /// the available size and other layout information.</param>
+        /// <returns>A <see cref="SizeD"/> representing the preferred width and height of
+        /// a rectangle, in device-independent units.</returns>
+        public SizeD GetPreferredSize(PreferredSizeContext context)
+        {
+            var layoutType = Layout ?? GetDefaultLayout();
+            var hasGlobal = StaticControlEvents.HasRequestPreferredSizeHandlers;
+            var hasLocal = RequestPreferredSize != null;
+
+            var defaultPreferredSize = GetPreferredSizeInternal(context);
+
+            if (hasGlobal || hasLocal)
+            {
+                var e = new DefaultPreferredSizeEventArgs(layoutType, context);
+                e.DefaultPreferredSize = defaultPreferredSize;
+
+                if (hasLocal)
+                {
+                    RequestPreferredSize?.Invoke(this, e);
+                    if (e.Handled && e.Result != SizeD.MinusOne)
+                        return e.Result;
+                }
+
+                if (hasGlobal)
+                {
+                    StaticControlEvents.RaiseRequestPreferredSize(this, e);
+                    if (e.Handled && e.Result != SizeD.MinusOne)
+                        return e.Result;
+                }
+            }
+
+            return defaultPreferredSize;
+        }
+
+        /// <summary>
         /// Retrieves the size of a rectangular area into which a control can
         /// be fitted, in device-independent units.
         /// </summary>
@@ -135,19 +174,13 @@ namespace Alternet.UI
         /// the available size and other layout information.</param>
         /// <returns>A <see cref="SizeD"/> representing the preferred width and height of
         /// a rectangle, in device-independent units.</returns>
-        public virtual SizeD GetPreferredSize(PreferredSizeContext context)
+        protected virtual SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             var layoutType = Layout ?? GetDefaultLayout();
 
-            if (StaticControlEvents.HasRequestPreferredSizeHandlers)
-            {
-                var e = new DefaultPreferredSizeEventArgs(layoutType, context);
-                StaticControlEvents.RaiseRequestPreferredSize(this, e);
-                if (e.Handled && e.Result != SizeD.MinusOne)
-                    return e.Result;
-            }
+            var defaultPreferredSize = GetLayoutManager().OnGetPreferredSize(this, context, layoutType);
 
-            return GetLayoutManager().OnGetPreferredSize(this, context, layoutType);
+            return defaultPreferredSize;
         }
 
         /// <summary>

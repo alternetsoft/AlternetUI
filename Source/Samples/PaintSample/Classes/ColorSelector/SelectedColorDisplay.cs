@@ -23,7 +23,7 @@ namespace PaintSample
             }
         }
 
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             return (50, 50);
         }

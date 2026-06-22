@@ -65,7 +65,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             return SuggestedSize;
         }

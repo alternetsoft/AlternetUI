@@ -14,6 +14,11 @@ namespace Alternet.UI
         private EventHandler? click;
 
         /// <summary>
+        /// Occurs when preferred size of the control is requested by the layout system.
+        /// </summary>
+        public event EventHandler<DefaultPreferredSizeEventArgs>? RequestPreferredSize;
+
+        /// <summary>
         /// Occurs when the <see cref="LayoutMaxSize"/> property has changed.
         /// </summary>
         public event EventHandler? LayoutMaxSizeChanged;

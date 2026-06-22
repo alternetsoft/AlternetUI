@@ -1801,12 +1801,6 @@ namespace Alternet.UI
             ResetImages();
         }
 
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
-        {
-            return base.GetPreferredSize(context);
-        }
-
         /// <summary>
         /// Loads normal and disabled image from the specified file or resource url.
         /// Loaded images assigned to <see cref="ImageSet"/> and

@@ -2254,12 +2254,6 @@ namespace Alternet.UI
             item.ShortcutKeys = value;
         }
 
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
-        {
-            return base.GetPreferredSize(context);
-        }
-
         /// <summary>
         /// Moves toolbar to the bottom of the container. This is done
         /// by setting it's <see cref="AbstractControl.VerticalAlignment"/> to

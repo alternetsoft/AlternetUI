@@ -16,7 +16,8 @@ namespace Alternet.UI
     /// consistency across related controls. Many methods return the current instance to support fluent call chaining.
     /// Some operations require the contained controls to implement specific interfaces, such as IControlAndLabel, for
     /// certain features to be available.</remarks>
-    /// <typeparam name="T">The type of controls contained in the set. Must derive from <see cref="AbstractControl"/>.</typeparam>
+    /// <typeparam name="T">The type of controls contained in the set.
+    /// Must derive from <see cref="AbstractControl"/>.</typeparam>
     public partial class ControlSet<T>
         where T : AbstractControl
     {
@@ -521,7 +522,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This method ensures that the control's suggested size is adjusted whenever its size
         /// changes, respecting the maximum width and height specified by the <see cref="MaxSize"/> property. If either
-        /// dimension of <see cref="MaxSize"/> is less than or equal to zero, that dimension is considered unbounded and
+        /// dimension of <see cref="MaxSize"/> is less than or equal to zero,
+        /// that dimension is considered unbounded and
         /// will not restrict the suggested size.</remarks>
         /// <returns>The current instance of the <see cref="ControlSet{T}"/> to allow for method chaining.</returns>
         public virtual ControlSet<T> MaxSizeOnChanged()
@@ -538,14 +540,15 @@ namespace Alternet.UI
             return this;
         }
 
-
         /// <summary>
         /// Registers an event handler to be invoked when the size of any item in the control set changes.
         /// </summary>
         /// <remarks>This method attaches the specified event handler to the SizeChanged event of every
-        /// control contained in the set. Use this to respond to dynamic layout changes or to update related UI elements
+        /// control contained in the set. Use this to respond to dynamic
+        /// layout changes or to update related UI elements
         /// when the size of any contained control changes.</remarks>
-        /// <param name="value">The event handler to associate with the SizeChanged event of each item in the control set.
+        /// <param name="value">The event handler to associate
+        /// with the SizeChanged event of each item in the control set.
         /// Cannot be null.</param>
         /// <returns>The current instance of the ControlSet, enabling method chaining.</returns>
         public virtual ControlSet<T> SizeChanged(EventHandler value)
@@ -980,7 +983,8 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a set of controls that can be managed as a group.
     /// This class provides methods to apply common properties and actions
-    /// to all controls in the set, such as setting visibility, enabling/disabling, adjusting layout properties, and more.
+    /// to all controls in the set, such as setting visibility, enabling/disabling,
+    /// adjusting layout properties, and more.
     /// </summary>
     public partial class ControlSet : ControlSet<AbstractControl>
     {

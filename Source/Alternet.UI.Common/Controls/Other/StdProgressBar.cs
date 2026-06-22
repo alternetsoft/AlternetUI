@@ -1061,7 +1061,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             var width = NormalBorder.Width;
             return Internal() + (width.Horizontal, width.Vertical);

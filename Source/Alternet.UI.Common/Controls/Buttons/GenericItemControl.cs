@@ -810,7 +810,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             UpdateItemImage();
 
@@ -823,7 +823,7 @@ namespace Alternet.UI
             if (result != SizeD.Empty)
                 return result + Padding.Size;
 
-            return base.GetPreferredSize(context);
+            return base.GetPreferredSizeInternal(context);
         }
 
         /// <inheritdoc/>

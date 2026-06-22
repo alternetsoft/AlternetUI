@@ -94,11 +94,11 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
             // Ensure the group box label is included in the size.
             var nativeControlSize = GetBestSizeWithPadding(context);
-            var calculatedSize = base.GetPreferredSize(context);
+            var calculatedSize = base.GetPreferredSizeInternal(context);
 
             return new SizeD(
                 Math.Max(nativeControlSize.Width, calculatedSize.Width),

@@ -854,12 +854,6 @@ namespace Alternet.UI
             return ResetTitle().ResetText().SetIcon(image);
         }
 
-        /// <inheritdoc/>
-        public override SizeD GetPreferredSize(PreferredSizeContext context)
-        {
-            return base.GetPreferredSize(context);
-        }
-
         /// <summary>
         /// Creates an image filled with tooltip data (icon, title, message, border, etc.).
         /// </summary>
