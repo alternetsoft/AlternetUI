@@ -43,7 +43,15 @@ namespace ApiGenerator.Managed
 
         private static void WriteField(IndentedTextWriter w, Types types, FieldInfo field)
         {
-            w.WriteLine("public " + types.GetTypeName(field.FieldType.ToContextualType()) + " " + field.Name + ";");
+            var st = field.FieldType.ToContextualType();
+            var s = types.GetTypeName(st);
+
+            if (s == "NativeApiTypes.NativeStringSpan")
+            {
+                s = "NativeStringSpan";
+            }
+
+            w.WriteLine("public " + s + " " + field.Name + ";");
         }
     }
 }
