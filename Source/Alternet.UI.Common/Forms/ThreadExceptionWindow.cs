@@ -16,7 +16,8 @@ namespace Alternet.UI
     /// <summary>
     ///  Implements a window that is displayed when an exception occurs in
     ///  the application. When 'Continue' button is clicked, the window is closed with 'Accepted' result
-    ///  and the application continues running. When 'Quit' button is clicked, the window is closed with 'Canceled' result
+    ///  and the application continues running. When 'Quit' button is clicked,
+    ///  the window is closed with 'Canceled' result
     ///  and the application is closed.
     /// </summary>
     public partial class ThreadExceptionWindow : DialogWindow
@@ -33,11 +34,11 @@ namespace Alternet.UI
         private bool isDetailed;
         private TextBox? messageTextBox;
         
-        private Button detailsButton;
-        private Button continueButton;
-        private Button copyButton;
-        private Button quitButton;
-        private Button throwButton;
+        private StdButton detailsButton;
+        private StdButton continueButton;
+        private StdButton copyButton;
+        private StdButton quitButton;
+        private StdButton throwButton;
 
         private Label instructionsLabel;
         private Label exceptionHeaderLabel;
@@ -148,31 +149,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the "Details" button control, which can be used to show or hide detailed information about the exception when clicked.
+        /// Gets the "Details" button control, which can be used to show or hide detailed
+        /// information about the exception when clicked.
         /// </summary>
-        public Button DetailsButton => detailsButton;
+        public StdButton DetailsButton => detailsButton;
 
         /// <summary>
         /// Gets the "Continue" button control, which can be used to allow
         /// the user to continue running the application after an exception has occurred when clicked.
         /// </summary>
-        public Button ContinueButton => continueButton;
+        public StdButton ContinueButton => continueButton;
 
         /// <summary>
         /// Gets the "Copy" button control, which can be used to copy exception information to clipboard when clicked.
         /// </summary>
-        public Button CopyButton => copyButton;
+        public StdButton CopyButton => copyButton;
 
         /// <summary>
         /// Gets the "Throw" button control, which can be used to throw the exception
         /// to be handled by the development environment or default exception handler when clicked.
         /// </summary>
-        public Button ThrowButton => throwButton;
+        public StdButton ThrowButton => throwButton;
 
         /// <summary>
-        /// Gets the "Quit" button control, which can be used to allow the user to quit the application after an exception has occurred when clicked.
+        /// Gets the "Quit" button control, which can be used to allow the user to quit the
+        /// application after an exception has occurred when clicked.
         /// </summary>
-        public Button QuitButton => quitButton;
+        public StdButton QuitButton => quitButton;
 
         /// <summary>
         /// Gets or sets additional information related to the exception.
@@ -467,19 +470,19 @@ namespace Alternet.UI
             var buttonContainer = new HorizontalStackPanel();
             buttonContainer.Padding = 10;
 
-            detailsButton = new Button
+            detailsButton = new StdButton
             {
                 Text = CommonStrings.Default.ButtonDetails,
                 Parent = buttonContainer,
             };
 
-            copyButton = new Button
+            copyButton = new StdButton
             {
                 Text = CommonStrings.Default.ButtonCopy,
                 Parent = buttonContainer,
             };
 
-            continueButton = new Button
+            continueButton = new StdButton
             {
                 Text = CommonStrings.Default.ButtonContinue,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -487,7 +490,7 @@ namespace Alternet.UI
                 Parent = buttonContainer,
             };
 
-            throwButton = new Button
+            throwButton = new StdButton
             {
                 Text = CommonStrings.Default.ButtonThrow,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -495,7 +498,7 @@ namespace Alternet.UI
                 Parent = buttonContainer,
             };
 
-            quitButton = new Button
+            quitButton = new StdButton
             {
                 Text = CommonStrings.Default.ButtonQuit,
                 IsDefault = true,
