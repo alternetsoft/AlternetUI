@@ -1,12 +1,8 @@
 ﻿<Panel x:Class="ControlsSample.ButtonPage"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto" />
-      <RowDefinition Height="Auto" />
-    </Grid.RowDefinitions>
-
+  <VerticalStackPanel>
+  
     <VerticalStackPanel Padding="10" Grid.Row="0">
 
       <HorizontalStackPanel>
@@ -82,11 +78,11 @@
 
     </VerticalStackPanel>
 
-    <Panel Grid.Row="1" Margin="10" Layout="Horizontal">
-      <StdButton Name="button" VerticalAlignment="Center"  IsTextLocalized="true"
+    <Panel Grid.Row="1" Margin="10" Layout="Horizontal" VerticalAlignment="Fill">
+      <StdButton Name="button" VerticalAlignment="Top"  IsTextLocalized="true" MarginTop="10"
               HorizontalAlignment="Center" Click="Button_Click"/>
-      <StdButton Name="button2" VerticalAlignment="Center" Text="Secondary Button"
-              HorizontalAlignment="Center"/>
+      <StdButton Name="button2" VerticalAlignment="Bottom" Text="Secondary Button"
+              HorizontalAlignment="Right"/>
     </Panel>
-  </Grid>
+  </VerticalStackPanel>
 </Panel>
