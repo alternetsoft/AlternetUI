@@ -52,6 +52,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override SKCanvas Canvas
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
         public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
             throw new NotImplementedException();

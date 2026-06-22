@@ -69,6 +69,15 @@ namespace Alternet.Drawing
         {
             get => dc;
         }
+        
+        public override SKCanvas Canvas
+        {
+            get => Alternet.Skia.SkiaHelper.NullCanvas;
+
+            set
+            {
+            }
+        }
 
         /// <inheritdoc/>
         public override void RoundedRectangle(

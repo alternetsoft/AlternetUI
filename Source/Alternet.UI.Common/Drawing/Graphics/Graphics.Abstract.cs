@@ -15,6 +15,18 @@ namespace Alternet.Drawing
         public abstract bool IsOk { get; }
 
         /// <summary>
+        /// Gets a value indicating whether the SkiaSharp canvas is supported via <see cref="Canvas"/> property.
+        /// If false, the <see cref="Canvas"/> property will throw an exception if accessed.
+        /// </summary>
+        public bool SkiaEnabled => BackendType == GraphicsBackendType.SkiaSharp;
+
+        /// <summary>
+        /// Gets the SkiaSharp canvas associated with this Graphics object.
+        /// Use <see cref="SkiaEnabled"/> to check if this property is supported before accessing it.
+        /// </summary>
+        public abstract SKCanvas Canvas { get; set; }
+
+        /// <summary>
         /// Gets or sets the interpolation mode associated with this <see cref="Graphics"/>.
         /// </summary>
         /// <value>One of the <see cref="InterpolationMode"/> values.</value>
@@ -37,7 +49,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Creates <see cref="IGraphicsPathHandler"/> provider.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The <see cref="IGraphicsPathHandler"/> provider.</returns>
         public abstract IGraphicsPathHandler CreateGraphicsPathHandler();
 
         /// <summary>

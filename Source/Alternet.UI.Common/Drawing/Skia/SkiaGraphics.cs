@@ -118,7 +118,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets <see cref="SKCanvas"/>  where drawing will be performed.
         /// </summary>
-        public SKCanvas Canvas
+        public override SKCanvas Canvas
         {
             get => canvas;
 
