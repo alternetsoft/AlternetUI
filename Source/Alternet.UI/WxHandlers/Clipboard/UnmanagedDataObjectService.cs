@@ -49,9 +49,9 @@ namespace Alternet.UI
 
             if (format == DataFormats.Text || data is string)
             {
-                dataObject.SetStringData(
-                    format,
-                    (string)ClipboardUtils.SetDataTransform(format, data));
+                var transformedData = (string)ClipboardUtils.SetDataTransform(format, data);
+
+                dataObject.SetStringData(format, transformedData);
                 return;
             }
 

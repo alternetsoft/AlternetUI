@@ -109,7 +109,10 @@ namespace Alternet.UI
 
         void IRichTextBox.SetValue(string value)
         {
-            NativeControl.SetValue(value);
+            NativeUtils.Invoke(value, span =>
+            {
+                NativeControl.SetValue(span);
+            });
         }
 
         bool IRichTextBox.IsModified()
@@ -384,7 +387,10 @@ namespace Alternet.UI
 
         bool IRichTextBox.BeginCharacterStyle(string characterStyle)
         {
-            return NativeControl.BeginCharacterStyle(characterStyle);
+            return NativeUtils.Invoke(characterStyle, span =>
+            {
+                return NativeControl.BeginCharacterStyle(span);
+            });
         }
 
         bool IRichTextBox.EndCharacterStyle()
@@ -394,7 +400,10 @@ namespace Alternet.UI
 
         bool IRichTextBox.BeginParagraphStyle(string paragraphStyle)
         {
-            return NativeControl.BeginParagraphStyle(paragraphStyle);
+            return NativeUtils.Invoke(paragraphStyle, span =>
+            {
+                return NativeControl.BeginParagraphStyle(span);
+            });
         }
 
         bool IRichTextBox.EndParagraphStyle()
@@ -404,7 +413,10 @@ namespace Alternet.UI
 
         bool IRichTextBox.BeginListStyle(string listStyle, int level, int number)
         {
-            return NativeControl.BeginListStyle(listStyle, level, number);
+            return NativeUtils.Invoke(listStyle, span =>
+            {
+                return NativeControl.BeginListStyle(span, level, number);
+            }); 
         }
 
         bool IRichTextBox.EndListStyle()
@@ -539,7 +551,10 @@ namespace Alternet.UI
 
         bool IRichTextBox.BeginBatchUndo(string cmdName)
         {
-            return NativeControl.BeginBatchUndo(cmdName);
+            return NativeUtils.Invoke(cmdName, span =>
+            {
+                return NativeControl.BeginBatchUndo(span);
+            });
         }
 
         bool IRichTextBox.EndBatchUndo()
@@ -599,7 +614,10 @@ namespace Alternet.UI
 
         void IRichTextBox.DoWriteText(string value, TextBoxSetValueFlags flags)
         {
-            NativeControl.DoWriteText(value, (int)flags);
+            NativeUtils.Invoke(value, span =>
+            {
+                NativeControl.DoWriteText(span, (int)flags);
+            });
         }
 
         bool IRichTextBox.ExtendSelection(
@@ -807,7 +825,10 @@ namespace Alternet.UI
 
         public void AppendText(string text)
         {
-            NativeControl.AppendText(text);
+            NativeUtils.Invoke(text, span =>
+            {
+                NativeControl.AppendText(span);
+            });
         }
 
         public long GetInsertionPoint()
@@ -832,7 +853,10 @@ namespace Alternet.UI
 
         public void Replace(long from, long to, string value)
         {
-            NativeControl.Replace(from, to, value);
+            NativeUtils.Invoke(value, span =>
+            {
+                NativeControl.Replace(from, to, span);
+            });
         }
 
         public void SetInsertionPoint(long pos)
@@ -995,11 +1019,14 @@ namespace Alternet.UI
             int leftSubIndent,
             TextBoxTextAttrBulletStyle bulletStyle = TextBoxTextAttrBulletStyle.Standard)
         {
-            return NativeControl.BeginStandardBullet(
-                bulletName,
-                leftIndent,
-                leftSubIndent,
-                (int)bulletStyle);
+            return NativeUtils.Invoke(bulletName, span =>
+            {
+                return NativeControl.BeginStandardBullet(
+                    span,
+                    leftIndent,
+                    leftSubIndent,
+                    (int)bulletStyle);
+            });
         }
 
         /// <summary>
@@ -1049,7 +1076,10 @@ namespace Alternet.UI
         /// </remarks>
         public bool SaveToFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
-            return NativeControl.SaveFile(file, (int)type);
+            return NativeUtils.Invoke(file, span =>
+            {
+                return NativeControl.SaveFile(span, (int)type);
+            });
         }
 
         /// <summary>
@@ -1090,7 +1120,10 @@ namespace Alternet.UI
         /// </remarks>
         public bool LoadFromFile(string file, RichTextFileType type = RichTextFileType.Any)
         {
-            return NativeControl.LoadFile(file, (int)type);
+            return NativeUtils.Invoke(file, span =>
+            {
+                return NativeControl.LoadFile(span, (int)type);
+            });
         }
 
         /// <summary>
@@ -1181,11 +1214,14 @@ namespace Alternet.UI
             int leftSubIndent,
             TextBoxTextAttrBulletStyle bulletStyle = TextBoxTextAttrBulletStyle.Symbol)
         {
-            return NativeControl.BeginSymbolBullet(
-                symbol,
-                leftIndent,
-                leftSubIndent,
-                (int)bulletStyle);
+            return NativeUtils.Invoke(symbol, span =>
+            {
+                return NativeControl.BeginSymbolBullet(
+                    span,
+                    leftIndent,
+                    leftSubIndent,
+                    (int)bulletStyle);
+            });
         }
 
         /// <summary>
@@ -1275,13 +1311,16 @@ namespace Alternet.UI
             int startFrom = 1,
             int specifiedLevel = -1)
         {
-            return NativeControl.NumberList2(
-                startRange,
-                endRange,
-                defName,
-                (int)flags,
-                startFrom,
-                specifiedLevel);
+            return NativeUtils.Invoke(defName, span =>
+            {
+                return NativeControl.NumberList2(
+                    startRange,
+                    endRange,
+                    span,
+                    (int)flags,
+                    startFrom,
+                    specifiedLevel);
+            });
         }
 
         /// <summary>
@@ -1306,13 +1345,16 @@ namespace Alternet.UI
             int startFrom = 1,
             int specifiedLevel = -1)
         {
-            return NativeControl.SetListStyle2(
-                startRange,
-                endRange,
-                defName,
-                (int)flags,
-                startFrom,
-                specifiedLevel);
+            return NativeUtils.Invoke(defName, span =>
+            {
+                return NativeControl.SetListStyle2(
+                    startRange,
+                    endRange,
+                    span,
+                    (int)flags,
+                    startFrom,
+                    specifiedLevel);
+            });
         }
 
         /// <summary>
@@ -1378,13 +1420,16 @@ namespace Alternet.UI
             RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo,
             int specifiedLevel = -1)
         {
-            return NativeControl.PromoteList2(
-                promoteBy,
-                startRange,
-                endRange,
-                defName,
-                (int)flags,
-                specifiedLevel);
+            return NativeUtils.Invoke(defName, span =>
+            {
+                return NativeControl.PromoteList2(
+                    promoteBy,
+                    startRange,
+                    endRange,
+                    span,
+                    (int)flags,
+                    specifiedLevel);
+            });
         }
 
         /// <summary>
@@ -1474,7 +1519,10 @@ namespace Alternet.UI
 
         public void WriteText(string text)
         {
-            NativeControl.WriteText(text);
+            NativeUtils.Invoke(text, span =>
+            {
+                NativeControl.WriteText(span);
+            });
         }
 
         public string GetRange(long from, long to)
@@ -1545,10 +1593,13 @@ namespace Alternet.UI
             IntPtr properties,
             IntPtr textAttr = default)
         {
-            return NativeControl.WriteField(
-                fieldType,
-                properties,
-                textAttr);
+            return NativeUtils.Invoke(fieldType, span =>
+            {
+                return NativeControl.WriteField(
+                    span,
+                    properties,
+                    textAttr);
+            });
         }
 
         /// <summary>
@@ -2003,7 +2054,10 @@ namespace Alternet.UI
         /// <param name="filename"></param>
         public void SetFileName(string filename)
         {
-            NativeControl.SetFilename(filename);
+            NativeUtils.Invoke(filename, span =>
+            {
+                NativeControl.SetFilename(span);
+            });
         }
 
         /// <summary>
@@ -2069,8 +2123,17 @@ namespace Alternet.UI
             ITextBoxRichAttr? textAttr = null)
         {
             if (textAttr is WxTextBoxRichAttr s)
-                return NativeControl.WriteImage2(filename, (int)bitmapType, s.Handle);
-            return NativeControl.WriteImage2(filename, (int)bitmapType, default);
+            {
+                return NativeUtils.Invoke(filename, span =>
+                {
+                    return NativeControl.WriteImage2(span, (int)bitmapType, s.Handle);
+                });
+            }
+
+            return NativeUtils.Invoke(filename, span =>
+            {
+                return NativeControl.WriteImage2(span, (int)bitmapType, default);
+            });
         }
 
         /// <summary>

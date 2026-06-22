@@ -25,36 +25,10 @@ namespace Alternet.Drawing
             if (text.Length == 0)
                 return SizeD.Empty;
 
-            if (App.IsWindowsOS)
+            return StringUtils.InvokeWithResult(text, span =>
             {
-                unsafe
-                {
-                    fixed (char* p = text)
-                    {
-                        var result = dc.GetTextExtentSimple(
-                            (IntPtr)p,
-                            text.Length,
-                            (UI.Native.Font)font.Handler,
-                            default);
-                        return result;
-                    }
-                }
-            }
-            else
-            {
-                SizeD result = SizeD.Empty;
-
-                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
-                {
-                    result = dc.GetTextExtentSimple(
-                        ptr,
-                        length,
-                        (UI.Native.Font)font.Handler,
-                        default);
-                });
-
-                return result;
-            }
+                return dc.GetTextExtentSimple(span, (UI.Native.Font)font.Handler, default);
+            });
         }
 
         /// <inheritdoc/>
@@ -138,39 +112,17 @@ namespace Alternet.Drawing
 
             font = TransformFontSizeToNative(font);
 
-            if (App.IsWindowsOS)
+            StringUtils.Invoke(text, span =>
             {
-                unsafe
-                {
-                    fixed (char* p = text)
-                    {
-                        dc.DrawText(
-                            (IntPtr)p,
-                            text.Length,
-                            TransformPointToNative(location),
-                            (UI.Native.Font)font.Handler,
-                            foreColor,
-                            brush,
-                            MathUtils.ToRadians(angle) + angle2,
-                            useBrush);
-                    }
-                }
-            }
-            else
-            {
-                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
-                {
-                    dc.DrawText(
-                        ptr,
-                        length,
-                        TransformPointToNative(location),
-                        (UI.Native.Font)font.Handler,
-                        foreColor,
-                        brush,
-                        MathUtils.ToRadians(angle) + angle2,
-                        useBrush);
-                });
-            }
+                dc.DrawText(
+                    span,
+                    TransformPointToNative(location),
+                    (UI.Native.Font)font.Handler,
+                    foreColor,
+                    brush,
+                    MathUtils.ToRadians(angle) + angle2,
+                    useBrush);
+            });
         }
 
         protected virtual bool GetNoTransformToNative()
