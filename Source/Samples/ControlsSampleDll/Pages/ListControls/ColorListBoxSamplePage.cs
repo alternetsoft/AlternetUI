@@ -26,7 +26,7 @@ namespace ControlsSample
             MinChildMargin = 5,
         };
 
-        private readonly Button setColorButton = new(GenericStrings.SetColor)
+        private readonly StdButton setColorButton = new(GenericStrings.SetColor)
         {
             HorizontalAlignment = HorizontalAlignment.Left,
         };

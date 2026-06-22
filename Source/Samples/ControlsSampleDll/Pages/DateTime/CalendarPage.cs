@@ -71,15 +71,15 @@ namespace ControlsSample
                 buttonPanel.Margin = 5;
                 tabControl.Add(buttonPanel);
 
-                var setDayColorsButton = new Button($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
+                var setDayColorsButton = new StdButton($"{GenericStrings.DaysStyle} (5, 7)", SetDayColors);
                 setDayColorsButton.Enabled = useGenericCheckBox.IsChecked;
                 setDayColorsButton.Margin = 5;
                 buttonPanel.Children.Add(setDayColorsButton);
 
-                var markDaysButton = new Button($"{GenericStrings.MarkDays} (2, 3)", MarkDays);
-                var selectTodayButton = new Button(GenericStrings.Today, calendar.SelectToday);
-                var clearMarksButton = new Button("Clear marks", ()=>calendar.MarkAll(false));
-                var clearStylesButton = new Button("Clear styles", calendar.ResetAttrAll);
+                var markDaysButton = new StdButton($"{GenericStrings.MarkDays} (2, 3)", MarkDays);
+                var selectTodayButton = new StdButton(GenericStrings.Today, calendar.SelectToday);
+                var clearMarksButton = new StdButton("Clear marks", ()=>calendar.MarkAll(false));
+                var clearStylesButton = new StdButton("Clear styles", calendar.ResetAttrAll);
 
                 new ControlSet(
                     markDaysButton,
@@ -94,16 +94,16 @@ namespace ControlsSample
                 rangePanel.Title = "Range";
                 tabControl.Add(rangePanel);
                 
-                var rangeAnyDateButton = new Button(
+                var rangeAnyDateButton = new StdButton(
                     $"{GenericStrings.Allow} {GenericStrings.AnyDate}",
                     RangeAnyDate_Click);
-                var rangeTomorrowButton = new Button(
+                var rangeTomorrowButton = new StdButton(
                     $"{GenericStrings.Allow} <= {GenericStrings.Tomorrow}",
                     RangeTomorrow_Click);
-                var rangeYesterdayButton = new Button(
+                var rangeYesterdayButton = new StdButton(
                     $"{GenericStrings.Allow} >= {GenericStrings.Yesterday}",
                     RangeYesterday_Click);
-                var rangeYesterdayTomorrowButton = new Button(
+                var rangeYesterdayTomorrowButton = new StdButton(
                     $"{GenericStrings.Allow} {GenericStrings.Yesterday}..{GenericStrings.Tomorrow}",
                     RangeYesterdayTomorrow_Click);
 
@@ -115,9 +115,9 @@ namespace ControlsSample
 
                 // Other initializations
 
-                useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(Button.Enabled));
-                useGenericCheckBox.BindBoolProp(sequentialMonthSelectCheckBox, nameof(Button.Enabled));
-                useGenericCheckBox.BindBoolProp(showSurroundWeeksCheckBox, nameof(Button.Enabled));
+                useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(StdButton.Enabled));
+                useGenericCheckBox.BindBoolProp(sequentialMonthSelectCheckBox, nameof(StdButton.Enabled));
+                useGenericCheckBox.BindBoolProp(showSurroundWeeksCheckBox, nameof(StdButton.Enabled));
 
                 useGenericCheckBox.CheckedChanged += Generic_CheckedChanged;
 

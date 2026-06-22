@@ -22,9 +22,9 @@
           <Label Text="Hour Format:" Margin="0,0,0,5"/>
           <EnumPicker Name="hourFormatPicker" Margin="0,0,0,5" />
 
-          <Button Text="Set Now" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
+          <StdButton Text="Set Now" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonSetNow"/>
-          <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
+          <StdButton Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
             Click="HasBorderButton_Click" Visible="true"/>
 
         </VerticalStackPanel>

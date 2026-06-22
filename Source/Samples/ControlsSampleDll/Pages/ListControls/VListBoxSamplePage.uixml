@@ -7,16 +7,16 @@
 
     <StackPanel Orientation="Vertical" Padding="10" Name="vertPanel1" Title="Options"
                 HorizontalAlignment = "Left">
-      <Button Text="Last Item Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
+      <StdButton Text="Last Item Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
           Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-      <Button Text="Select Item: 2" Name="selectItemAtIndex2Button" IsTextLocalized="true"
+      <StdButton Text="Select Item: 2" Name="selectItemAtIndex2Button" IsTextLocalized="true"
           Margin="0,3,0,0" Click="SelectItemAtIndex2Button_Click" />
-      <Button Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button" IsTextLocalized="true"
+      <StdButton Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button" IsTextLocalized="true"
           Margin="0,3,0,0" Click="SelectItemAtIndices2And4Button_Click"
               Enabled="false"/>
-      <Button Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0" IsTextLocalized="true"
+      <StdButton Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0" IsTextLocalized="true"
           Click="DeselectAllButton_Click" />
-      <Button Text="Has Border" Name="hasBorderButton" Margin="0,3,0,0" IsTextLocalized="true"
+      <StdButton Text="Has Border" Name="hasBorderButton" Margin="0,3,0,0" IsTextLocalized="true"
           Click="HasBorderButton_Click" />
       <CheckBox Margin="0,3,0,0" Text="CheckBox Visible"
                 Name="showCheckBoxesCheckBox"  IsTextLocalized="true"/>

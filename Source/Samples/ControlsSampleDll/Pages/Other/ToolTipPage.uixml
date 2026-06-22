@@ -5,19 +5,19 @@
         Layout="Vertical" Padding="10">
 
   <HorizontalStackPanel>
-    <Button Text="Show" Name="showToolTipButton" IsTextLocalized="true"
+    <StdButton Text="Show" Name="showToolTipButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"/>
-    <Button Text="Hide" Name="hideToolTipButton" IsTextLocalized="true"
+    <StdButton Text="Hide" Name="hideToolTipButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
-    <Button Text="Simple" Name="showSimpleButton" IsTextLocalized="true"
+    <StdButton Text="Simple" Name="showSimpleButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
-    <Button Text="Image" Name="showImageButton" IsTextLocalized="true"
+    <StdButton Text="Image" Name="showImageButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
-    <Button Text="Template" Name="showTemplateButton" IsTextLocalized="true"
+    <StdButton Text="Template" Name="showTemplateButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
   </HorizontalStackPanel>
@@ -30,7 +30,7 @@
         <TextBox Text="Message Title" Name="tooltipTitleTextBox"
                  Margin="0,0,0,0" IsTextLocalized="true" HorizontalAlignment="Fill"
                  VerticalAlignment="Center"/>
-        <Button Text="Toggle" Name="resetTitleButton" IsTextLocalized="true"
+        <StdButton Text="Toggle" Name="resetTitleButton" IsTextLocalized="true"
                 VerticalAlignment="Center"
                 Margin="5,0,0,0" HorizontalAlignment="Right"/>
       </HorizontalStackPanel>
@@ -42,7 +42,7 @@
                  Margin="0,0,0,0" IsTextLocalized="true"  HorizontalAlignment="Fill"
                           SuggestedHeight = "100"
                  VerticalAlignment="Center"/>
-        <Button Text="Toggle" Name="resetTextButton" IsTextLocalized="true"
+        <StdButton Text="Toggle" Name="resetTextButton" IsTextLocalized="true"
                 VerticalAlignment="Center"
                 Margin="5,0,0,0" HorizontalAlignment="Right"/>
       </HorizontalStackPanel>

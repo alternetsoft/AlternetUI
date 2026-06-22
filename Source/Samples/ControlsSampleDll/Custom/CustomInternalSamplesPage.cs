@@ -19,7 +19,7 @@ namespace Alternet.UI
             Padding = 5,
         };
 
-        private readonly Button runButton = new()
+        private readonly StdButton runButton = new()
         {
             Text = "Run Sample",
             Margin = (0, 0, 0, 5),

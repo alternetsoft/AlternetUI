@@ -26,7 +26,7 @@ namespace ControlsSample
 
             Layout = LayoutStyle.Vertical;
 
-            var button = new Button
+            var button = new StdButton
             {
                 Text = "Show Popup ToolBar",
                 Margin = 10,
@@ -38,7 +38,7 @@ namespace ControlsSample
                 popupToolBar.ShowPopup(button);
             };
 
-            var button2 = new Button
+            var button2 = new StdButton
             {
                 Text = "Show Context Menu",
                 Margin = 10,
@@ -46,7 +46,7 @@ namespace ControlsSample
                 DropDownMenu = contextMenu,
             };
 
-            var button3 = new Button
+            var button3 = new StdButton
             {
                 Text = "Show Context Menu in Popup ToolBar",
                 Margin = 10,

@@ -13,11 +13,11 @@ namespace ControlsSample
         {
             Layout = LayoutStyle.Vertical;
 
-            var beepButton = new Button("Play Beep", () => SystemSounds.Beep.Play());
-            var asteriskButton = new Button("Play Asterisk", () => SystemSounds.Asterisk.Play());
-            var exclamationButton = new Button("Play Exclamation", () => SystemSounds.Exclamation.Play());
-            var handButton = new Button("Play Hand", () => SystemSounds.Hand.Play());
-            var questionButton = new Button("Play Question", () => SystemSounds.Question.Play());
+            var beepButton = new StdButton("Play Beep", () => SystemSounds.Beep.Play());
+            var asteriskButton = new StdButton("Play Asterisk", () => SystemSounds.Asterisk.Play());
+            var exclamationButton = new StdButton("Play Exclamation", () => SystemSounds.Exclamation.Play());
+            var handButton = new StdButton("Play Hand", () => SystemSounds.Hand.Play());
+            var questionButton = new StdButton("Play Question", () => SystemSounds.Question.Play());
 
             new ControlSet(beepButton, asteriskButton, exclamationButton, handButton, questionButton)
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left)

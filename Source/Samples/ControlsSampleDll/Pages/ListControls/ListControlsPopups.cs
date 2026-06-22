@@ -18,25 +18,25 @@ namespace ControlsSample
             Padding = 10,
         };
 
-        private readonly Button showPopupListBoxButton = new()
+        private readonly StdButton showPopupListBoxButton = new()
         {
             Text = $"{GenericStrings.ShowPopupWith} ListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        private readonly Button showPopupColorListBoxButton = new()
+        private readonly StdButton showPopupColorListBoxButton = new()
         {
             Text = $"{GenericStrings.ShowPopupWith} ColorListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        private readonly Button showPopupVListBoxButton = new()
+        private readonly StdButton showPopupVListBoxButton = new()
         {
             Text = $"{GenericStrings.ShowPopupWith} VirtualListBox",
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        private readonly Button showPopupCheckListBoxButton = new()
+        private readonly StdButton showPopupCheckListBoxButton = new()
         {
             Text = $"{GenericStrings.ShowPopupWith} CheckListBox",
             HorizontalAlignment = HorizontalAlignment.Left,

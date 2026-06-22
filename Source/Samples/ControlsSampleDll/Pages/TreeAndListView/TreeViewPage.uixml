@@ -18,38 +18,38 @@
         <VerticalStackPanel Name="stackPanel1" Padding="10" Title="Actions" IsTitleLocalized="true">
 
           <Grid RowCount="5" ColumnCount="2">
-            <Button RowIndex="0" ColumnIndex="0" IsTextLocalized="true"
+            <StdButton RowIndex="0" ColumnIndex="0" IsTextLocalized="true"
                     Text="Add" Name="addItemButton" Click="AddItemButton_Click" />
-            <Button RowIndex="0" ColumnIndex="1" IsTextLocalized="true"
+            <StdButton RowIndex="0" ColumnIndex="1" IsTextLocalized="true"
                     Text="Remove" Name="removeItemButton"
                     Click="RemoveItemButton_Click" />
 
-            <Button RowIndex="1" ColumnIndex="0"
+            <StdButton RowIndex="1" ColumnIndex="0"
                     Text="Add 1000" Name="addManyItemsButton" Margin="0,3,0,0"
                     Click="AddManyItemsButton_Click" IsTextLocalized="true" />
-            <Button RowIndex="1" ColumnIndex="1"
+            <StdButton RowIndex="1" ColumnIndex="1"
                     Text="Clear" Margin="0,3,0,0" IsTextLocalized="true"
                   Name="clearButton" Click="ClearItemsButton_Click"/>
 
-            <Button RowIndex="2" ColumnIndex="0" IsTextLocalized="true"
+            <StdButton RowIndex="2" ColumnIndex="0" IsTextLocalized="true"
                     Text="Expand All" Name="expandAllButton" Margin="0,3,0,0"
                     Click="ExpandAllButton_Click" />
-            <Button RowIndex="2" ColumnIndex="1" IsTextLocalized="true"
+            <StdButton RowIndex="2" ColumnIndex="1" IsTextLocalized="true"
                     Text="Collapse All" Name="collapseAllButton" Margin="0,3,0,0"
                     Click="CollapseAllButton_Click" />
 
-            <Button RowIndex="3" ColumnIndex="0" IsTextLocalized="true"
+            <StdButton RowIndex="3" ColumnIndex="0" IsTextLocalized="true"
                     Text="Expand" Name="expandAllChildrenButton" Margin="0,3,0,0"
                     Click="ExpandAllChildrenButton_Click" />
-            <Button RowIndex="3" ColumnIndex="1" IsTextLocalized="true"
+            <StdButton RowIndex="3" ColumnIndex="1" IsTextLocalized="true"
                     Text="Collapse" Name="collapseAllChildrenButton" Margin="0,3,0,0"
                     Click="CollapseAllChildrenButton_Click" />
 
-            <Button RowIndex="4" ColumnIndex="0"
+            <StdButton RowIndex="4" ColumnIndex="0"
                     Text="Edit Label" IsTextLocalized="true"
                     Name="beginSelectedLabelEditingButton" Margin="0,3,0,0"
                     Click="BeginSelectedLabelEditingButton_Click" Enabled="False" />
-            <Button RowIndex="4" ColumnIndex="1" IsTextLocalized="true"
+            <StdButton RowIndex="4" ColumnIndex="1" IsTextLocalized="true"
                     Text="Edit..." Margin="0,3,0,0" Name="editorButton" IsEnabled="False"
                     Click="EditorButton_Click"/>
           </Grid>
@@ -58,16 +58,16 @@
             <Label Text="Last Item:" Margin="0,0,0,10" IsTextLocalized="true"/>
 
             <Panel Layout="Horizontal" Margin="5,0,0,0">
-              <Button Text="Make Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
+              <StdButton Text="Make Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
                       Margin="0,0,0,0" Click="EnsureLastItemVisibleButton_Click" />
-              <Button Text="To View" Name="scrollLastItemIntoViewButton" IsTextLocalized="true"
+              <StdButton Text="To View" Name="scrollLastItemIntoViewButton" IsTextLocalized="true"
                       Margin="0,0,0,0" Click="ScrollLastItemIntoViewButton_Click" />
             </Panel>
 
             <Panel Layout="Horizontal" Margin="5,3,0,0">
-              <Button Text="Focus" Name="focusLastItemButton" IsTextLocalized="true" 
+              <StdButton Text="Focus" Name="focusLastItemButton" IsTextLocalized="true" 
                         Click="FocusLastItemButton_Click" />
-              <Button Text="Modify" Name="modifyLastItemButton" IsTextLocalized="true"
+              <StdButton Text="Modify" Name="modifyLastItemButton" IsTextLocalized="true"
                       Click="ModifyLastItemButton_Click" />
             </Panel>
           </Panel>
@@ -101,7 +101,7 @@
                     Margin="0,5,0,0" IsTextLocalized="true"
                     CheckedChanged="FullRowSelectCheckBox_CheckedChanged"
                     IsChecked="False" />
-          <Button Text="Has Border" Margin="0,5,0,5" Name="hasBorderButton" IsTextLocalized="true"
+          <StdButton Text="Has Border" Margin="0,5,0,5" Name="hasBorderButton" IsTextLocalized="true"
                   HorizontalAlignment="Left" Click="HasBorderButton_Click"/>
         </VerticalStackPanel>
 
@@ -109,7 +109,7 @@
 
         <VerticalStackPanel Name="stackPanel3" Visible="false" Title="Events"
                             Padding="10" IsTitleLocalized="true">
-          <Button Text="Log Selected" Margin="0,3,0,0" IsTextLocalized="true"
+          <StdButton Text="Log Selected" Margin="0,3,0,0" IsTextLocalized="true"
                   Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
           <TabControl Margin="0,3,0,3" >
             <VerticalStackPanel Title="Cancel Events" Padding="3"  IsTitleLocalized="true">
@@ -131,7 +131,7 @@
 
         <VerticalStackPanel Name="stackPanel4" Visible="false" Padding="10"
                             Title="Popup"  IsTitleLocalized="true">
-          <Button Text="Show TreeView Popup" Margin="10" IsTextLocalized="true"
+          <StdButton Text="Show TreeView Popup" Margin="10" IsTextLocalized="true"
                   Name="showPopupButton" Click="ShowPopupButton_Click"/>
         </VerticalStackPanel>
         <!-- ========================= -->

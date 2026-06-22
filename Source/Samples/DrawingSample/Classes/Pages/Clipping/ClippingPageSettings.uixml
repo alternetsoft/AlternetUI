@@ -7,7 +7,7 @@
     <EnumPicker Name="clipOperationComboBox"
               ValueChanged="ClipOperationComboBox_Changed"/>
 
-    <Button Name="resetButton" Text="Reset" IsTextLocalized="true"
+    <StdButton Name="resetButton" Text="Reset" IsTextLocalized="true"
             Click="ResetButton_Click" Margin="0,20,0,0"/>
   </StackPanel>
 </Panel>

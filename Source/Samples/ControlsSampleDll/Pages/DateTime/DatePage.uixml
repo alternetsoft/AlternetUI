@@ -17,27 +17,27 @@
       <TabControl Name="tabControl2" Margin="10,5,5,5">
 
         <VerticalStackPanel Margin="5" Title="Actions" MinChildMargin="5">
-          <Button Text="Date Formats" Margin="0,0,0,5" IsTextLocalized="true"
+          <StdButton Text="Date Formats" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonDateFormats"/>
-          <Button Text="Clear Date" Margin="0,0,0,5" IsTextLocalized="true"
+          <StdButton Text="Clear Date" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonClearDate"/>
-          <Button Text="Set Date/Time" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
+          <StdButton Text="Set Date/Time" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonSetNow"/>
-          <Button Text="Set Date" Click="SetNowDate_Click" Margin="0,0,0,5" IsTextLocalized="true"
+          <StdButton Text="Set Date" Click="SetNowDate_Click" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonSetOnlyDate"/>
-          <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
+          <StdButton Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
             Click="HasBorderButton_Click" Visible="true"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5" Title="Range" Padding="5" MinChildMargin="5">
             <Label Text="Allow Date Range:" Margin="0,0,0,5"/>
-            <Button Text="Any Date" Margin="0,0,0,5" IsTextLocalized="true"
+            <StdButton Text="Any Date" Margin="0,0,0,5" IsTextLocalized="true"
                     Click="RangeAnyDate_Click" Name="buttonAnyDate"/>
-            <Button Text="Allow &lt;= Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
+            <StdButton Text="Allow &lt;= Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
                     Click="RangeTomorrow_Click" Name="buttonRangeTomorrow"/>
-            <Button Text="Allow &gt;= Yesterday" Margin="0,0,0,5" IsTextLocalized="true"
+            <StdButton Text="Allow &gt;= Yesterday" Margin="0,0,0,5" IsTextLocalized="true"
                     Click="RangeYesterday_Click" Name="buttonRangeYesterday"/>
-            <Button Text="Yesterday..Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
+            <StdButton Text="Yesterday..Tomorrow" Margin="0,0,0,5" IsTextLocalized="true"
                     Click="RangeYesterdayTomorrow_Click" Name="buttonRangeYesterdayTomorrow"/>
         </VerticalStackPanel>
 

@@ -105,9 +105,9 @@
     </Grid>
 
     <HorizontalStackPanel>
-      <Button Text="+" Margin="0,5,5,5" Name="increaseAllButton"
+      <StdButton Text="+" Margin="0,5,5,5" Name="increaseAllButton"
               Click="IncreaseAllButton_Click"  IsTextLocalized="true"/>
-      <Button Text="-" Margin="0,5,5,5" Name="decreaseAllButton"
+      <StdButton Text="-" Margin="0,5,5,5" Name="decreaseAllButton"
               Click="DecreaseAllButton_Click"  IsTextLocalized="true"/>
       <CheckBox Text="Indeterminate" Margin="20,5,5,5" Name="indeterminateCheckBox"
                 IsTextLocalized="true" CheckedChanged="IndeterminateCheckBox_CheckedChanged" />

@@ -52,7 +52,7 @@ namespace ControlsSample
 
             var stackPanel = new VerticalStackPanel(this);
 
-            var playButton = new Button("Play", Play);
+            var playButton = new StdButton("Play", Play);
             var stopButton = new Button("Stop", Stop);
 
             new ControlSet(playButton, stopButton)

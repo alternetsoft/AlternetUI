@@ -15,8 +15,8 @@
 
         <StackPanel Orientation="Vertical" Margin="5" MinChildMargin="5" HasBorder="true">
           <Label Text="Clipboard" />
-          <Button Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" />
-          <Button Text="Paste" Name="pasteButton"
+          <StdButton Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" />
+          <StdButton Text="Paste" Name="pasteButton"
                   Click="PasteButton_Click" IsTextLocalized="true" />
         </StackPanel>
 

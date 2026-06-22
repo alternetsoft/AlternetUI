@@ -29,7 +29,7 @@
     </HorizontalStackPanel>
 
     <HorizontalStackPanel>
-      <Button Text="Change Value" Name="changeValueButton" Margin="5"  IsTextLocalized="true"/>
+      <StdButton Text="Change Value" Name="changeValueButton" Margin="5"  IsTextLocalized="true"/>
     </HorizontalStackPanel>
   </StackPanel>
   </Panel>

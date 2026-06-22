@@ -32,11 +32,11 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Margin="10,5,5,5">
-          <Button Text="Increase All" Margin="0,0,0,5" Name="increaseAllButton"
+          <StdButton Text="Increase All" Margin="0,0,0,5" Name="increaseAllButton"
                   Click="IncreaseAllButton_Click" IsTextLocalized="true" />
-          <Button Text="Decrease All" Margin="0,0,0,5" Name="decreaseAllButton"
+          <StdButton Text="Decrease All" Margin="0,0,0,5" Name="decreaseAllButton"
                   Click="DecreaseAllButton_Click" IsTextLocalized="true" />
-          <Button Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
+          <StdButton Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
                   Click="HasBorderButton_Click" Visible="false" IsTextLocalized="true"/>
         </StackPanel>
       </HorizontalStackPanel>

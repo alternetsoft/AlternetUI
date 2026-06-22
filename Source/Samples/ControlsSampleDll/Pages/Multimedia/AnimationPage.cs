@@ -28,10 +28,10 @@ namespace ControlsSample
             Margin = 5,
         };
 
-        private readonly Button playButton;
-        private readonly Button stopButton;
-        private readonly Button infoButton;
-        private readonly Button showFrameButton;
+        private readonly StdButton playButton;
+        private readonly StdButton stopButton;
+        private readonly StdButton infoButton;
+        private readonly StdButton showFrameButton;
 
         static AnimationPage()
         {
@@ -105,10 +105,10 @@ namespace ControlsSample
 
             var stackPanel = new VerticalStackPanel(this);
 
-            playButton = new Button("Play", () => { animation.Play(); });
-            stopButton = new Button("Stop", animation.Stop);
-            infoButton = new Button("Info", ShowInfo);
-            showFrameButton = new Button("Frame 0", ShowFrame);
+            playButton = new StdButton("Play", () => { animation.Play(); });
+            stopButton = new StdButton("Stop", animation.Stop);
+            infoButton = new StdButton("Info", ShowInfo);
+            showFrameButton = new StdButton("Frame 0", ShowFrame);
 
             new ControlSet(playButton, stopButton, infoButton, showFrameButton)
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left)

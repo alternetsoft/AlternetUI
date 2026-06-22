@@ -26,36 +26,36 @@
                       VerticalAlignment="Stretch" Name="stackPanel1">
 
           <HorizontalStackPanel>
-            <Button Text="Add" Name="addItemButton" IsTextLocalized="true"
+            <StdButton Text="Add" Name="addItemButton" IsTextLocalized="true"
                     Margin="0,3,0,0" Click="AddItemButton_Click"/>
-            <Button Text="Remove" Name="removeItemButton" IsTextLocalized="true"
+            <StdButton Text="Remove" Name="removeItemButton" IsTextLocalized="true"
                     Margin="3,3,0,0" Click="RemoveItemButton_Click"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Text="Add 1000" Name="addManyItemsButton"
+            <StdButton Text="Add 1000" Name="addManyItemsButton"
                     Margin="0,3,0,0" IsTextLocalized="true"
                     Click="AddManyItemsButton_Click"/>
-            <Button Text="Clear" Name="ClearButton" Margin="3,3,0,0"
+            <StdButton Text="Clear" Name="ClearButton" Margin="3,3,0,0"
                     Click="ClearButton_Click" IsTextLocalized="true"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Name="editItemsButton" Text="Items..." Margin="0,3,0,0"
+            <StdButton Name="editItemsButton" Text="Items..." Margin="0,3,0,0"
                     Click="EditItemsButton_Click" IsTextLocalized="true"/>
-            <Button Name="editColumnsButton" Text="Columns..." Margin="3,3,0,0"
+            <StdButton Name="editColumnsButton" Text="Columns..." Margin="3,3,0,0"
                     Click="EditColumnsButton_Click" IsTextLocalized="true"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Text="Add Column" Name="AddColumnButton" Margin="0,3,0,0"
+            <StdButton Text="Add Column" Name="AddColumnButton" Margin="0,3,0,0"
                     Click="AddColumnButton_Click" Visible="false" IsTextLocalized="true"/>
-            <Button Text="Modify Column" Name="ModifyColumnTitleButton" IsTextLocalized="true"
+            <StdButton Text="Modify Column" Name="ModifyColumnTitleButton" IsTextLocalized="true"
                 Margin="3,3,0,0" Click="ModifyColumnTitleButton_Click" Visible="false"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
-            <Button Text="Edit Selected" IsTextLocalized="true"
+            <StdButton Text="Edit Selected" IsTextLocalized="true"
                     Name="beginSelectedLabelEditingButton"
                     Margin="0,3,0,0"
                     Click="BeginSelectedLabelEditingButton_Click"
@@ -65,18 +65,18 @@
           <Panel  Padding="5" Margin="0,10,0,0" Layout="Vertical">
             <Label Text="Last Item:" Margin="0,0,0,10" IsTextLocalized="true"/>
             <HorizontalStackPanel  Margin="5,0,0,0">
-              <Button Text="Show" Margin="0,0,0,0" IsTextLocalized="true"
+              <StdButton Text="Show" Margin="0,0,0,0" IsTextLocalized="true"
                       Name="ensureLastItemVisibleButton"
                       Click="EnsureLastItemVisibleButton_Click" />
-              <Button Text="Modify" Name="modifyLastItemButton"
+              <StdButton Text="Modify" Name="modifyLastItemButton"
                       Margin="3,0,0,0" IsTextLocalized="true"
                   Click="ModifyLastItemButton_Click" />
             </HorizontalStackPanel>
             <HorizontalStackPanel Margin="5,0,0,0">
-              <Button Text="Focus" Name="focusLastItemButton" IsTextLocalized="true"
+              <StdButton Text="Focus" Name="focusLastItemButton" IsTextLocalized="true"
                       Margin="0,3,0,0"
                   Click="FocusLastItemButton_Click" />
-              <Button Text="Add Sibling" Name="addLastItemSiblingButton" IsTextLocalized="true"
+              <StdButton Text="Add Sibling" Name="addLastItemSiblingButton" IsTextLocalized="true"
                       Margin="3,3,0,0" Enabled="true"
                       Click="AddLastItemSiblingButton_Click" />
             </HorizontalStackPanel>
@@ -130,10 +130,10 @@
             </VerticalStackPanel>
           </TabControl>
 
-          <Button Text="Log Selected" Margin="0,5,0,0" IsTextLocalized="true"
+          <StdButton Text="Log Selected" Margin="0,5,0,0" IsTextLocalized="true"
                   Name="viewSelectedButton" Click="Button_SelectionChanged"/>
 
-          <Button Text="Has Border" Margin="0,5,0,0" Name="hasBorderButton" IsTextLocalized="true"
+          <StdButton Text="Has Border" Margin="0,5,0,0" Name="hasBorderButton" IsTextLocalized="true"
                   Click="HasBorderButton_Click"/>
 
           <CheckBox Text="Log Bounds on Click" IsTextLocalized="true"
