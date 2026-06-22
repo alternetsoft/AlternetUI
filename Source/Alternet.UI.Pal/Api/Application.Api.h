@@ -19,27 +19,6 @@ ALTERNET_UI_API Application* Application_Create_()
     });
 }
 
-ALTERNET_UI_API NativeStringSpan_C Application_GetEventArgString_(Application* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetEventArgString();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Application_GetName_(Application* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetName();
-    });
-}
-
-ALTERNET_UI_API void Application_SetName_(Application* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetName(value);
-    });
-}
-
 ALTERNET_UI_API Keyboard* Application_GetKeyboard_(Application* obj)
 {
     return MarshalExceptions<Keyboard*>([&](){
@@ -58,62 +37,6 @@ ALTERNET_UI_API Clipboard* Application_GetClipboard_(Application* obj)
 {
     return MarshalExceptions<Clipboard*>([&](){
         return obj->GetClipboard();
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Application_GetDisplayName_(Application* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetDisplayName();
-    });
-}
-
-ALTERNET_UI_API void Application_SetDisplayName_(Application* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetDisplayName(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Application_GetAppClassName_(Application* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetAppClassName();
-    });
-}
-
-ALTERNET_UI_API void Application_SetAppClassName_(Application* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetAppClassName(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Application_GetVendorName_(Application* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetVendorName();
-    });
-}
-
-ALTERNET_UI_API void Application_SetVendorName_(Application* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetVendorName(value);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Application_GetVendorDisplayName_(Application* obj)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetVendorDisplayName();
-    });
-}
-
-ALTERNET_UI_API void Application_SetVendorDisplayName_(Application* obj, NativeStringSpan value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetVendorDisplayName(value);
     });
 }
 
@@ -159,6 +82,20 @@ ALTERNET_UI_API void Application_GetEventIdentifiers_(int* eventIdentifiers, int
     });
 }
 
+ALTERNET_UI_API NativeStringSpan_C Application_GetEventArgString_(Application* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetEventArgString();
+    });
+}
+
+ALTERNET_UI_API void Application_SetEventArgString_(Application* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetEventArgString(*value);
+    });
+}
+
 ALTERNET_UI_API void Application_ThrowError_(int value)
 {
     MarshalExceptions<void>([&](){
@@ -173,10 +110,80 @@ ALTERNET_UI_API void Application_SetSystemOptionInt_(NativeStringSpan* name, int
     });
 }
 
+ALTERNET_UI_API NativeStringSpan_C Application_GetName_(Application* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetName();
+    });
+}
+
+ALTERNET_UI_API void Application_SetName_(Application* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetName(*value);
+    });
+}
+
 ALTERNET_UI_API void Application_Run_(Application* obj, Window* window)
 {
     MarshalExceptions<void>([&](){
         obj->Run(window);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Application_GetDisplayName_(Application* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetDisplayName();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Application_GetAppClassName_(Application* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetAppClassName();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Application_GetVendorName_(Application* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetVendorName();
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Application_GetVendorDisplayName_(Application* obj)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return obj->GetVendorDisplayName();
+    });
+}
+
+ALTERNET_UI_API void Application_SetDisplayName_(Application* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetDisplayName(*value);
+    });
+}
+
+ALTERNET_UI_API void Application_SetAppClassName_(Application* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetAppClassName(*value);
+    });
+}
+
+ALTERNET_UI_API void Application_SetVendorName_(Application* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetVendorName(*value);
+    });
+}
+
+ALTERNET_UI_API void Application_SetVendorDisplayName_(Application* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetVendorDisplayName(*value);
     });
 }
 

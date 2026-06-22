@@ -15,7 +15,8 @@ namespace NativeApi.Api
 
         public static void GetEventIdentifiers(int[] eventIdentifiers) { }
 
-        public NativeStringSpan EventArgString { get; }
+        public NativeStringSpan GetEventArgString() => default;
+        public void SetEventArgString(NativeStringSpan value) { }
 
         public static void ThrowError(int value) { }
 
@@ -23,7 +24,8 @@ namespace NativeApi.Api
 
         public Application() => throw new Exception();
 
-        public NativeStringSpan Name { get; set; }
+        public NativeStringSpan GetName() => throw new Exception();
+        public void SetName(NativeStringSpan value) { }
 
         public void Run(Window window) { }
 
@@ -43,10 +45,16 @@ namespace NativeApi.Api
         public Keyboard Keyboard { get; }
         public Mouse Mouse { get; }
         public Clipboard Clipboard { get; }
-        public NativeStringSpan DisplayName { get; set; }
-        public NativeStringSpan AppClassName { get; set; }
-        public NativeStringSpan VendorName { get; set; }
-        public NativeStringSpan VendorDisplayName { get; set; }
+        public NativeStringSpan GetDisplayName() => default;
+        public NativeStringSpan GetAppClassName() => default;
+        public NativeStringSpan GetVendorName() => default;
+        public NativeStringSpan GetVendorDisplayName() => default;
+
+        public void SetDisplayName(NativeStringSpan value) { }
+        public void SetAppClassName(NativeStringSpan value) { }
+        public void SetVendorName(NativeStringSpan value) { }
+        public void SetVendorDisplayName(NativeStringSpan value) { }
+
 
         public bool InUixmlPreviewerMode { get; set; }
 

@@ -24,31 +24,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.NativeStringSpan EventArgString
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Application_GetEventArgString_(NativePointer);
-            }
-            
-        }
-        
-        public Alternet.UI.NativeStringSpan Name
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Application_GetName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Application_SetName_(NativePointer, value);
-            }
-        }
-        
         public Keyboard Keyboard
         {
             get
@@ -86,66 +61,6 @@ namespace Alternet.UI.Native
                 return _mmm;
             }
             
-        }
-        
-        public Alternet.UI.NativeStringSpan DisplayName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Application_GetDisplayName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Application_SetDisplayName_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan AppClassName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Application_GetAppClassName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Application_SetAppClassName_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan VendorName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Application_GetVendorName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Application_SetVendorName_(NativePointer, value);
-            }
-        }
-        
-        public Alternet.UI.NativeStringSpan VendorDisplayName
-        {
-            get
-            {
-                CheckDisposed();
-                return NativeApi.Application_GetVendorDisplayName_(NativePointer);
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Application_SetVendorDisplayName_(NativePointer, value);
-            }
         }
         
         public bool InUixmlPreviewerMode
@@ -190,6 +105,19 @@ NativeApi.Application_SetGtkCss_(inject, ref css_Native);
             NativeApi.Application_GetEventIdentifiers_(eventIdentifiers, eventIdentifiers.Length);
         }
         
+        public Alternet.UI.NativeStringSpan GetEventArgString()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetEventArgString_(NativePointer);
+        }
+        
+        public void SetEventArgString(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Application_SetEventArgString_(NativePointer, ref value_Native);
+        }
+        
         public static void ThrowError(int value)
         {
             NativeApi.Application_ThrowError_(value);
@@ -201,10 +129,75 @@ NativeApi.Application_SetGtkCss_(inject, ref css_Native);
 NativeApi.Application_SetSystemOptionInt_(ref name_Native, value);
         }
         
+        public Alternet.UI.NativeStringSpan GetName()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetName_(NativePointer);
+        }
+        
+        public void SetName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Application_SetName_(NativePointer, ref value_Native);
+        }
+        
         public void Run(Window window)
         {
             CheckDisposed();
             NativeApi.Application_Run_(NativePointer, window.NativePointer);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetDisplayName()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetDisplayName_(NativePointer);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetAppClassName()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetAppClassName_(NativePointer);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetVendorName()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetVendorName_(NativePointer);
+        }
+        
+        public Alternet.UI.NativeStringSpan GetVendorDisplayName()
+        {
+            CheckDisposed();
+            return NativeApi.Application_GetVendorDisplayName_(NativePointer);
+        }
+        
+        public void SetDisplayName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Application_SetDisplayName_(NativePointer, ref value_Native);
+        }
+        
+        public void SetAppClassName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Application_SetAppClassName_(NativePointer, ref value_Native);
+        }
+        
+        public void SetVendorName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Application_SetVendorName_(NativePointer, ref value_Native);
+        }
+        
+        public void SetVendorDisplayName(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.Application_SetVendorDisplayName_(NativePointer, ref value_Native);
         }
         
         public System.IntPtr GetTopWindow()
@@ -463,15 +456,6 @@ return NativeApi.Application_GetCustomData_(NativePointer, ref key_Native);
             public static extern IntPtr Application_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetEventArgString_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_GetKeyboard_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -479,30 +463,6 @@ return NativeApi.Application_GetCustomData_(NativePointer, ref key_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Application_GetClipboard_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetDisplayName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetDisplayName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetAppClassName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetAppClassName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetVendorName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetVendorName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Application_GetVendorDisplayName_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Application_SetVendorDisplayName_(IntPtr obj, Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Application_GetInUixmlPreviewerMode_(IntPtr obj);
@@ -523,13 +483,49 @@ return NativeApi.Application_GetCustomData_(NativePointer, ref key_Native);
             public static extern void Application_GetEventIdentifiers_(System.Int32[] eventIdentifiers, int eventIdentifiersCount);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Application_GetEventArgString_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetEventArgString_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_ThrowError_(int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_SetSystemOptionInt_(ref Alternet.UI.NativeStringSpan name, int value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Application_GetName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Application_Run_(IntPtr obj, IntPtr window);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Application_GetDisplayName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Application_GetAppClassName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Application_GetVendorName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Application_GetVendorDisplayName_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetDisplayName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetAppClassName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetVendorName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Application_SetVendorDisplayName_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Application_GetTopWindow_(IntPtr obj);
