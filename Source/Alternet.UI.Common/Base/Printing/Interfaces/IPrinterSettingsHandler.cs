@@ -38,8 +38,9 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PrinterSettings.PrintToFile"/>
         bool PrintToFile { get; set; }
 
-        /// <inheritdoc cref="PrinterSettings.PrinterName"/>
-        string? PrinterName { get; set; }
+        string? GetPrinterName();
+
+        void SetPrinterName(string? value);
 
         /// <inheritdoc cref="PrinterSettings.IsValid"/>
         bool IsValid { get; }

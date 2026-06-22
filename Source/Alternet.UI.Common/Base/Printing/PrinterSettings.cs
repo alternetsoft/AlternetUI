@@ -293,12 +293,12 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return Handler.PrinterName;
+                return Handler.GetPrinterName();
             }
 
             set
             {
-                Handler.PrinterName = value;
+                Handler.SetPrinterName(value);
             }
         }
 

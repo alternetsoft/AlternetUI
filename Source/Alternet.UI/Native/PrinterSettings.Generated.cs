@@ -6,6 +6,8 @@ using System;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Security;
+
+using Alternet.Drawing.Printing;
 namespace Alternet.UI.Native
 {
     internal partial class PrinterSettings : NativeObject, Alternet.Drawing.Printing.IPrinterSettingsHandler
@@ -203,8 +205,27 @@ NativeApi.PrinterSettings_SetPrinterName_(NativePointer, ref value_Native);
             var value_Native = value.ToNative();
 NativeApi.PrinterSettings_SetPrintFileName_(NativePointer, ref value_Native);
         }
-        
-        
+
+        string? IPrinterSettingsHandler.GetPrinterName()
+        {
+            return GetPrinterName();
+        }
+
+        void IPrinterSettingsHandler.SetPrinterName(string? value)
+        {
+            NativeUtils.Invoke(value, v => SetPrinterName(v));
+        }
+
+        string? IPrinterSettingsHandler.GetPrintFileName()
+        {
+            return GetPrintFileName();
+        }
+
+        void IPrinterSettingsHandler.SetPrintFileName(string? value)
+        {
+            NativeUtils.Invoke(value, v => SetPrintFileName(v));
+        }
+
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
         {
