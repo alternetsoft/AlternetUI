@@ -27,6 +27,12 @@
       "commandLineArgs": "-IsDark=false",
       "requireExactSource": false,
       "nativeDebugging": true
+    },
+    "UseLegacyPaint": {
+      "commandName": "Project",
+      "commandLineArgs": "-UseLegacyPaint=true",
+      "requireExactSource": false,
+      "nativeDebugging": true
     }
   }
 }

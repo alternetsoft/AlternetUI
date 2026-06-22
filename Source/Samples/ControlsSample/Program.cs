@@ -83,6 +83,12 @@ namespace ControlsSample
             var testBadFont = false;
 
             var isDark = CommandLineArgs.ParseAndGetIsDarkOrNull();
+            var useLegacyPaint = CommandLineArgs.ParseAndGetBoolOrNull("-UseLegacyPaint");
+
+            if (useLegacyPaint.HasValue)
+            {
+                AbstractControl.RenderingFlags = ControlRenderingFlags.None;
+            }
 
             if (isDark.HasValue)
             {

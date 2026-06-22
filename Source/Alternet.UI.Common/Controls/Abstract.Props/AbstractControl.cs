@@ -31,7 +31,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the rendering flags used for the control painting.
         /// </summary>
-        public static readonly ControlRenderingFlags RenderingFlags = ControlRenderingFlags.UseSkiaSharp;
+        public static ControlRenderingFlags RenderingFlags = ControlRenderingFlags.UseSkiaSharp;
 
         /// <summary>
         /// Gets or sets default value for <see cref="ParentFont"/> property.
