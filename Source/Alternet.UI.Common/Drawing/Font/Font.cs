@@ -738,7 +738,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return Handler.Name;
+                return Handler.GetName();
             }
         }
 
@@ -1490,7 +1490,7 @@ namespace Alternet.Drawing
         {
             var result = ToUserString(GetStyle(font), font.GetWeight());
 
-            string face = font.Name;
+            string face = font.GetName();
             if (!string.IsNullOrEmpty(face))
             {
                 if (face.ContainsSpace() || face.ContainsSemicolon() || face.ContainsComma())

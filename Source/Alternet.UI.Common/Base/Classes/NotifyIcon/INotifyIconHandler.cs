@@ -13,8 +13,9 @@ namespace Alternet.UI
     /// </summary>
     public interface INotifyIconHandler : IDisposable
     {
-        /// <inheritdoc cref="NotifyIcon.Text"/>
-        string? Text { get; set; }
+        string? GetText();
+
+        void SetText(string? value);
 
         /// <summary>
         /// Gets or sets action which is called when notify icon is clicked.

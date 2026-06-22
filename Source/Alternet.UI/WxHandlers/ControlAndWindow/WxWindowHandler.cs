@@ -80,7 +80,7 @@ namespace Alternet.UI
 
         public string Title
         {
-            get => NativeControl.Title;
+            get => NativeControl.GetTitle().ToString();
             set => NativeControl.Title = value;
         }
 

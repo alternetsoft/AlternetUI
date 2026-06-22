@@ -135,13 +135,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return Handler.Text;
+                return Handler.GetText();
             }
 
             set
             {
                 CheckDisposed();
-                Handler.Text = value;
+                Handler.SetText(value);
             }
         }
 

@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// </remarks>
         public string AppDisplayName
         {
-            get => NativeApplication?.DisplayName ?? string.Empty;
+            get => NativeApplication?.GetDisplayName().ToString() ?? string.Empty;
 
             set
             {
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// </remarks>
         public string AppClassName
         {
-            get => NativeApplication?.AppClassName ?? string.Empty;
+            get => NativeApplication?.GetAppClassName().ToString() ?? string.Empty;
 
             set
             {
@@ -86,7 +86,7 @@ namespace Alternet.UI
         /// </remarks>
         public string VendorName
         {
-            get => NativeApplication?.VendorName ?? string.Empty;
+            get => NativeApplication?.GetVendorName().ToString() ?? string.Empty;
 
             set
             {
@@ -121,7 +121,7 @@ namespace Alternet.UI
         /// </remarks>
         public string VendorDisplayName
         {
-            get => NativeApplication?.VendorDisplayName ?? string.Empty;
+            get => NativeApplication?.GetVendorDisplayName().ToString() ?? string.Empty;
 
             set
             {
@@ -179,7 +179,7 @@ namespace Alternet.UI
 
         public string GetAppearanceName()
         {
-            return Native.WxOtherFactory.SystemAppearanceGetName();
+            return Native.WxOtherFactory.SystemAppearanceGetName().ToString();
         }
 
         public bool GetAppearanceIsDark()

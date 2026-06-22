@@ -94,10 +94,7 @@ namespace Alternet.UI
 
             set
             {
-                StringUtils.InvokeWithNativeText(value, (s) =>
-                {
-                    NativeControl.SetText(s);
-                });
+                StringUtils.InvokeWithNativeText(value, NativeControl.SetText);
             }
         }
 

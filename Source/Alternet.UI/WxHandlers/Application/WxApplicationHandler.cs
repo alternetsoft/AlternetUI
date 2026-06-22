@@ -73,8 +73,10 @@ namespace Alternet.UI
 
             Native.Application.GlobalObject = nativeApplication;
             nativeApplication.LogMessage += OnNativeApplicationLogMessage;
-            nativeApplication.Name = Path.GetFileNameWithoutExtension(
+
+            var nm = Path.GetFileNameWithoutExtension(
                 Process.GetCurrentProcess()?.MainModule?.FileName!);
+            StringUtils.InvokeWithNativeText(nm, nativeApplication.SetName);
 
             keyboardInputProvider = new WxKeyboardInputProvider(
                 nativeApplication.Keyboard);
@@ -86,15 +88,6 @@ namespace Alternet.UI
         /// </summary>
         public WxApplicationHandler()
         {
-            /*
-            if (DebugUtils.IsDebugDefined)
-            {
-                LogUtils.RegisterLogAction(
-                    "Log mapping: Key <-> WxWidgetsKeyCode",
-                    WxKeyboardHandler.KeyAndWxMapping.LogToFile);
-            }
-            */
-
             if (!App.IsWindowsOS)
                 Caret.UseGeneric = true;
         }
@@ -127,7 +120,7 @@ namespace Alternet.UI
         /// <returns>A string representing the version of the WxWidgets library.</returns>
         public static string GetWxWidgetsVersion()
         {
-            var wxWidgets = WxWebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
+            var wxWidgets = Native.WebBrowser.GetLibrary();
             var s = wxWidgets.ToLower().Replace("wxwidgets ", string.Empty);
             return s;
         }
@@ -198,7 +191,7 @@ namespace Alternet.UI
 
         internal static Native.Mouse NativeMouse => nativeApplication.Mouse;
 
-        internal static string EventArgString => nativeApplication.EventArgString;
+        internal static string EventArgString => nativeApplication.GetEventArgString().ToString();
 
         /// <summary>
         /// Gets pointer to WxWidget control.
@@ -224,7 +217,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual string GetCustomData(string key)
         {
-            return nativeApplication.GetCustomData(key);
+            return nativeApplication.GetCustomData(key).ToString();
         }
 
         /// <inheritdoc/>
@@ -299,7 +292,7 @@ namespace Alternet.UI
 
         private static void OnNativeApplicationLogMessage()
         {
-            var s = nativeApplication.EventArgString;
+            var s = nativeApplication.GetEventArgString().ToString();
 
             App.LogNativeMessage(s, LogItemKind.Information);
         }
@@ -342,7 +335,7 @@ namespace Alternet.UI
 
         private static void OnNativeApplicationAssertFailure()
         {
-            var s = NativeApplication.EventArgString;
+            var s = NativeApplication.GetEventArgString().ToString();
 
             App.LogNativeMessage(s, LogItemKind.Warning);
         }
@@ -436,7 +429,7 @@ namespace Alternet.UI
         {
             get
             {
-                return WxMenuFactory.NativeMenu?.MacHelpMenuTitleName;
+                return WxMenuFactory.NativeMenu?.GetMacHelpMenuTitleName().ToString();
             }
         }
 
@@ -444,7 +437,7 @@ namespace Alternet.UI
         {
             get
             {
-                return WxMenuFactory.NativeMenu?.MacWindowMenuTitleName;
+                return WxMenuFactory.NativeMenu?.GetMacWindowMenuTitleName().ToString();
             }
         }
 
@@ -497,7 +490,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual void CrtSetDbgFlag(int value)
         {
-            WxWebBrowserHandlerApi.WebBrowser_CrtSetDbgFlag_(value);
+            Native.WebBrowser.CrtSetDbgFlag(value);
         }
 
         /// <inheritdoc/>

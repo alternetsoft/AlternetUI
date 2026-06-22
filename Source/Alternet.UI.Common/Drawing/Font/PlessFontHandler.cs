@@ -27,7 +27,7 @@ namespace Alternet.Drawing
         /// <param name="sizeInPoints"></param>
         public PlessFontHandler(string name, Coord sizeInPoints)
         {
-            this.Name = name;
+            SetName(name);
             this.SizeInPoints = sizeInPoints;
         }
 
@@ -39,29 +39,27 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual string Description
+        public virtual string GetDescription()
         {
-            get
-            {
-                return Serialize();
-            }
+            return Serialize();
         }
 
         /// <inheritdoc/>
-        public virtual string Name
+        public virtual string GetName()
         {
-            get
-            {
-                return name;
-            }
-
-            set
-            {
-                if (name == value)
-                    return;
-                name = value;
-                Changed();
-            }
+            return name;
+        }
+        
+        /// <summary>
+        /// Sets font name.
+        /// </summary>
+        /// <param name="value"></param>
+        public virtual void SetName(string value)
+        {
+            if (name == value)
+                return;
+            name = value;
+            Changed();
         }
 
         /// <summary>

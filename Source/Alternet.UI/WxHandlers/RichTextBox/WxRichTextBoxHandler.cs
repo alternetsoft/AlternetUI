@@ -75,7 +75,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.ReportedUrl;
+                return NativeControl.GetReportedUrl();
             }
         }
 

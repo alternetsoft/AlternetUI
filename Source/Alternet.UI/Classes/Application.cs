@@ -61,7 +61,7 @@ namespace Alternet.UI
                     var s = WxGlobalSettings.Linux.GtkCss;
                     if (s != null)
                     {
-                        Native.Application.SetGtkCss(true, s);
+                        StringUtils.InvokeWithNativeText(s, (s)=> Native.Application.SetGtkCss(true, s));
                     }
                 }
             }

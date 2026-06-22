@@ -44,6 +44,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Operator to convert a <see cref="NativeStringSpan"/> to a <see cref="string"/>.
+        /// </summary>
+        /// <param name="span">The value to convert.</param>
+        public static implicit operator string(NativeStringSpan span)
+        {
+            return ToManagedString(span);
+        }
+
+        /// <summary>
         /// Converts the native string span to a managed string.
         /// </summary>
         /// <returns>The managed string representation of the native string span.</returns>
@@ -67,7 +76,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public readonly override string ToString()
         {
-            return $"Pointer: {Pointer.ToInt64():X}, Length: {Length}";
+            return ToManagedString(this);
         }
     }
 }

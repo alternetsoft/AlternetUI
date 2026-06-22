@@ -14,9 +14,14 @@ namespace Alternet.UI
     public interface IDialogHandler : IDisposable
     {
         /// <summary>
-        /// Gets or sets the dialog window title.
+        /// Gets the dialog window title.
         /// </summary>
-        string? Title { get; set; }
+        string? GetTitle();
+
+        /// <summary>
+        /// Sets the dialog window title.
+        /// </summary>
+        void SetTitle(string? value);
 
         /// <summary>
         /// Gets or sets whether or not to show the dialog window help.

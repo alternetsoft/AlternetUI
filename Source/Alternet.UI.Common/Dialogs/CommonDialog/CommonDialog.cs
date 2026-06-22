@@ -19,13 +19,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return Handler.Title;
+                return Handler.GetTitle();
             }
 
             set
             {
                 CheckDisposed();
-                Handler.Title = value;
+                Handler.SetTitle(value);
             }
         }
 

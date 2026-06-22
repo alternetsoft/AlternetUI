@@ -53,7 +53,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.ReportedUrl;
+                return NativeControl.GetReportedUrl();
             }
         }
 
@@ -208,12 +208,12 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.EmptyTextHint;
+                return NativeControl.GetEmptyTextHint();
             }
 
             set
             {
-                NativeControl.EmptyTextHint = value;
+                NativeControl.SetEmptyTextHint(value);
             }
         }
 

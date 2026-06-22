@@ -106,7 +106,7 @@ namespace Alternet.UI
         {
             get
             {
-                var zoomType = WxWebBrowserHandlerApi.WebBrowser_GetZoomType_(NativeControl.NativePointer);
+                var zoomType = NativeControl.GetZoomType();
                 WebBrowserZoomType result =
                     (WebBrowserZoomType)Enum.ToObject(typeof(WebBrowserZoomType), zoomType);
                 return result;
@@ -114,8 +114,8 @@ namespace Alternet.UI
 
             set
             {
-                if (WxWebBrowserHandlerApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value))
-                    WxWebBrowserHandlerApi.WebBrowser_SetZoomType_(NativeControl.NativePointer, (int)value);
+                if (NativeControl.CanSetZoomType((int)value))
+                    NativeControl.SetZoomType((int)value);
             }
         }
 
@@ -127,7 +127,10 @@ namespace Alternet.UI
             return Native.WebBrowser.DoCommandGlobal(cmdName, cmdParam1!, cmdParam2!);
         }
 
-        public void LoadURL(string url) => NativeControl.LoadURL(url);
+        public void LoadURL(string url)
+        {
+            NativeControl.LoadURL(url);
+        }
 
         public string GetCurrentTitle() => NativeControl.GetCurrentTitle();
 
@@ -231,7 +234,7 @@ namespace Alternet.UI
 
         public bool CanSetZoomType(WebBrowserZoomType value)
         {
-            return WxWebBrowserHandlerApi.WebBrowser_CanSetZoomType_(NativeControl.NativePointer, (int)value);
+            return NativeControl.CanSetZoomType((int)value);
         }
 
         public void Undo() => NativeControl.Undo();
@@ -258,7 +261,7 @@ namespace Alternet.UI
             prm ??= new ();
 
             var flags = (WebBrowserSearchFlags)prm;
-            int result = WxWebBrowserHandlerApi.WebBrowser_Find_(NativePointer, text, (int)flags);
+            int result = NativeControl.Find(text, (int)flags);
             return result;
         }
 
@@ -293,13 +296,13 @@ namespace Alternet.UI
         }
 
         internal static bool IsBackendIEAvailable()
-            => WxWebBrowserHandlerApi.WebBrowser_IsBackendIEAvailable_();
+            => Native.WebBrowser.IsBackendIEAvailable();
 
         internal static bool IsBackendEdgeAvailable()
-            => WxWebBrowserHandlerApi.WebBrowser_IsBackendEdgeAvailable_();
+            => Native.WebBrowser.IsBackendEdgeAvailable();
 
         internal static bool IsBackendWebKitAvailable()
-            => WxWebBrowserHandlerApi.WebBrowser_IsBackendWebKitAvailable_();
+            => Native.WebBrowser.IsBackendWebKitAvailable();
 
         internal override Native.Control CreateNativeControl()
         {
@@ -325,7 +328,7 @@ namespace Alternet.UI
             public NativeWebBrowser(string url)
                  : base()
             {
-                SetNativePointer(NativeApi.WebBrowser_CreateWebBrowser_(url));
+                SetNativePointer(Native.WebBrowser.CreateWebBrowser(url));
             }
         }
     }

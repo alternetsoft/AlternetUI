@@ -17,12 +17,12 @@ namespace Alternet.Drawing
         /// Gets a description string that represents the font.
         /// </summary>
         /// <returns></returns>
-        string Description { get; }
+        string GetDescription();
 
         /// <summary>
         /// Gets name of the font.
         /// </summary>
-        string Name { get; }
+        string GetName();
 
         /// <summary>
         /// Gets the em-size, in points, of the font.

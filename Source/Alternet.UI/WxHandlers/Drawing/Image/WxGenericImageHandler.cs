@@ -145,33 +145,6 @@ namespace Alternet.Drawing
         {
         }
 
-        public WxGenericImageHandler(SizeI size, bool clear = false)
-            : base(
-                  UI.Native.GenericImage.CreateImageWithSize(size.Width, size.Height, clear),
-                  true)
-        {
-        }
-
-        public WxGenericImageHandler(
-            string fileName,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1)
-            : base(
-                  UI.Native.GenericImage.CreateImageFromFileWithBitmapType(
-                    fileName,
-                    (int)bitmapType,
-                    index),
-                  true)
-        {
-        }
-
-        public WxGenericImageHandler(string name, string mimetype, int index = -1)
-            : base(
-                  UI.Native.GenericImage.CreateImageFromFileWithMimeType(name, mimetype, index),
-                  true)
-        {
-        }
-
         public WxGenericImageHandler(
             Stream stream,
             BitmapType bitmapType = BitmapType.Any,
@@ -180,19 +153,6 @@ namespace Alternet.Drawing
                   UI.Native.GenericImage.CreateImageFromStreamWithBitmapData(
                       new UI.Native.InputStream(stream),
                       (int)bitmapType,
-                      index),
-                  true)
-        {
-        }
-
-        public WxGenericImageHandler(
-            Stream stream,
-            string mimeType,
-            int index = -1)
-            : base(
-                  UI.Native.GenericImage.CreateImageFromStreamWithMimeType(
-                      new UI.Native.InputStream(stream),
-                      mimeType,
                       index),
                   true)
         {
@@ -254,57 +214,9 @@ namespace Alternet.Drawing
             UI.Native.GenericImage.SetMaskColor(Handle, rgb.R, rgb.G, rgb.B);
         }
 
-        /// <inheritdoc/>
-        public void SetOptionAsString(string name, string value)
-        {
-            UI.Native.GenericImage.SetOptionString(Handle, name, value);
-        }
-
-        public void SetOptionAsInt(string name, int value)
-        {
-            UI.Native.GenericImage.SetOptionInt(Handle, name, value);
-        }
-
         public void SetRGB(int x, int y, RGBValue rgb)
         {
             UI.Native.GenericImage.SetRGB(Handle, x, y, rgb.R, rgb.G, rgb.B);
-        }
-
-        public void SetRGBRect(RGBValue rgb, RectI? rect = null)
-        {
-            rect ??= RectI.Create(Width, Height);
-            UI.Native.GenericImage.SetRGBRect(Handle, rect.Value, rgb.R, rgb.G, rgb.B);
-        }
-
-        public void SetImageType(BitmapType type)
-        {
-            UI.Native.GenericImage.SetImageType(Handle, (int)type);
-        }
-
-        public bool Reset(int width, int height, bool clear = false)
-        {
-            return UI.Native.GenericImage.CreateFreshImage(Handle, width, height, clear);
-        }
-
-        public void Clear(byte value = 0)
-        {
-            UI.Native.GenericImage.Clear(Handle, value);
-        }
-
-        public void Reset()
-        {
-            UI.Native.GenericImage.DestroyImageData(Handle);
-        }
-
-        public Color FindFirstUnusedColor(RGBValue? startRGB = null)
-        {
-            var value = startRGB ?? new(1, 0, 0);
-
-            return UI.Native.GenericImage.FindFirstUnusedColor(
-                Handle,
-                value.R,
-                value.G,
-                value.B);
         }
 
         public void InitAlpha()
@@ -439,31 +351,6 @@ namespace Alternet.Drawing
             return UI.Native.GenericImage.GetMaskBlue(Handle);
         }
 
-        public string GetOptionAsString(string name)
-        {
-            return UI.Native.GenericImage.GetOptionString(Handle, name);
-        }
-
-        public int GetOptionAsInt(string name)
-        {
-            return UI.Native.GenericImage.GetOptionInt(Handle, name);
-        }
-
-        public BitmapType GetImageType()
-        {
-            return (BitmapType)UI.Native.GenericImage.GetImageType(Handle);
-        }
-
-        public bool HasOption(string name)
-        {
-            return UI.Native.GenericImage.HasOption(Handle, name);
-        }
-
-        public bool IsTransparent(int x, int y, byte threshold)
-        {
-            return UI.Native.GenericImage.IsTransparent(Handle, x, y, threshold);
-        }
-
         public bool LoadFromStream(
             Stream stream,
             BitmapType bitmapType = BitmapType.Any,
@@ -475,62 +362,6 @@ namespace Alternet.Drawing
                 inputStream,
                 (int)bitmapType,
                 index);
-        }
-
-        public bool LoadFromFile(
-            string filename,
-            BitmapType bitmapType = BitmapType.Any,
-            int index = -1)
-        {
-            return UI.Native.GenericImage.LoadFileWithBitmapType(
-                Handle,
-                filename,
-                (int)bitmapType,
-                index);
-        }
-
-        public bool LoadFromFile(
-            string name,
-            string mimetype,
-            int index = -1)
-        {
-            return UI.Native.GenericImage.LoadFileWithMimeType(Handle, name, mimetype, index);
-        }
-
-        public bool LoadFromStream(
-            Stream stream,
-            string mimetype,
-            int index = -1)
-        {
-            var inputStream = new UI.Native.InputStream(stream);
-            return UI.Native.GenericImage.LoadStreamWithMimeType(Handle, inputStream, mimetype, index);
-        }
-
-        public bool SaveToStream(Stream stream, string mimetype)
-        {
-            var outputStream = new UI.Native.OutputStream(stream);
-            return UI.Native.GenericImage.SaveStreamWithMimeType(Handle, outputStream, mimetype);
-        }
-
-        public bool SaveToFile(string filename, BitmapType bitmapType)
-        {
-            return UI.Native.GenericImage.SaveFileWithBitmapType(Handle, filename, (int)bitmapType);
-        }
-
-        public bool SaveToFile(string filename, string mimetype)
-        {
-            return UI.Native.GenericImage.SaveFileWithMimeType(Handle, filename, mimetype);
-        }
-
-        public bool SaveToFile(string filename)
-        {
-            return UI.Native.GenericImage.SaveFile(Handle, filename);
-        }
-
-        public bool SaveToStream(Stream stream, BitmapType type)
-        {
-            var outputStream = new UI.Native.OutputStream(stream);
-            return UI.Native.GenericImage.SaveStreamWithBitmapType(Handle, outputStream, (int)type);
         }
 
         public void SetNativeData(

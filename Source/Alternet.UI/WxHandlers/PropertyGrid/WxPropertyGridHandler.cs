@@ -69,8 +69,8 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.EventValidationFailureMessage
         {
-            get => NativeControl.EventValidationFailureMessage;
-            set => NativeControl.EventValidationFailureMessage = value;
+            get => NativeControl.GetEventValidationFailureMessage();
+            set => NativeControl.SetEventValidationFailureMessage(value);
         }
 
         public override bool HasBorder
@@ -98,7 +98,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.EventPropertyName
         {
-            get => NativeControl.EventPropertyName;
+            get => NativeControl.GetEventPropertyName();
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.GetPropNameAsLabel()
         {
-            return Native.PropertyGrid.NameAsLabel;
+            return Native.PropertyGrid.GetNameAsLabel();
         }
 
         ulong IPropertyGridHandler.GetPropertyValueAsULong(IPropertyGridItem id)

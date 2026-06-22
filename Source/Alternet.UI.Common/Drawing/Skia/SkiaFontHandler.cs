@@ -18,7 +18,7 @@ namespace Alternet.Drawing
         /// <param name="sizeInPoints">Font size in points.</param>
         public SkiaFontHandler(string name, Coord sizeInPoints)
         {
-            this.Name = name;
+            SetName(name);
             this.SizeInPoints = sizeInPoints;
         }
 
