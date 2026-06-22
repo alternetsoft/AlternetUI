@@ -23,19 +23,43 @@ namespace Alternet.UI
         /// <inheritdoc cref="FileDialog.ShowHiddenFiles"/>
         bool ShowHiddenFiles { get; set; }
 
+        /// <summary>
+        /// Gets initial directory for the file dialog.
+        /// </summary>
+        /// <returns></returns>
         string? GetInitialDirectory();
 
+        /// <summary>
+        /// Sets initial directory for the file dialog.
+        /// </summary>
+        /// <param name="value">The initial directory.</param>
         void SetInitialDirectory(string? value);
 
+        /// <summary>
+        /// Gets file name filter for the file dialog.
+        /// </summary>
+        /// <returns>The file name filter.</returns>
         string? GetFilter();
 
+        /// <summary>
+        /// Sets file name filter for the file dialog.
+        /// </summary>
+        /// <param name="value">The file name filter.</param>
         void SetFilter(string? value);
 
         /// <inheritdoc cref="FileDialog.SelectedFilterIndex"/>
         int SelectedFilterIndex { get; set; }
 
+        /// <summary>
+        /// Gets the file name for the file dialog.
+        /// </summary>
+        /// <returns>The file name.</returns>
         string? GetFileName();
-        
+
+        /// <summary>
+        /// Sets the file name for the file dialog.
+        /// </summary>
+        /// <param name="value">The file name.</param>
         void SetFileName(string? value);
     }
 }

@@ -13,8 +13,16 @@ namespace Alternet.UI
     /// </summary>
     public interface INotifyIconHandler : IDisposable
     {
+        /// <summary>
+        /// Gets the text associated with the notify icon.
+        /// </summary>
+        /// <returns>The text associated with the notify icon.</returns>
         string? GetText();
 
+        /// <summary>
+        /// Sets the text associated with the notify icon.
+        /// </summary>
+        /// <param name="value">The text to set.</param>
         void SetText(string? value);
 
         /// <summary>

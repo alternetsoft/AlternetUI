@@ -24,8 +24,16 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PrintDocument.OriginAtMargins"/>
         bool OriginAtMargins { get; set; }
 
+        /// <summary>
+        /// Gets document name.
+        /// </summary>
+        /// <returns></returns>
         string GetDocumentName();
 
+        /// <summary>
+        /// Sets document name.
+        /// </summary>
+        /// <param name="name"></param>
         void SetDocumentName(string name);
 
         /// <inheritdoc cref="PrintDocument.PrinterSettings"/>

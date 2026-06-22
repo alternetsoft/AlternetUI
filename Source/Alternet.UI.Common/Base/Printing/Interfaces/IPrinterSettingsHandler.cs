@@ -38,8 +38,16 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PrinterSettings.PrintToFile"/>
         bool PrintToFile { get; set; }
 
+        /// <summary>
+        /// Gets the name of the printer.
+        /// </summary>
+        /// <returns>The name of the printer.</returns>
         string? GetPrinterName();
 
+        /// <summary>
+        /// Sets the name of the printer.
+        /// </summary>
+        /// <param name="value">The name of the printer.</param>
         void SetPrinterName(string? value);
 
         /// <inheritdoc cref="PrinterSettings.IsValid"/>
@@ -48,9 +56,16 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PrinterSettings.IsDefaultPrinter"/>
         bool IsDefaultPrinter { get; }
 
-        /// <inheritdoc cref="PrinterSettings.PrintFileName"/>
+        /// <summary>
+        /// Gets the file name of the print file.
+        /// </summary>
+        /// <returns>The file name of the print file.</returns>
         string? GetPrintFileName();
 
+        /// <summary>
+        /// Sets the file name of the print file.
+        /// </summary>
+        /// <param name="value">The file name of the print file.</param>
         void SetPrintFileName(string? value);
     }
 }
