@@ -73,6 +73,29 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Calls the specified action with a <see cref="NativeStringSpan"/> representation of the given string.
+        /// </summary>
+        /// <param name="s">The string to convert to a native string span.</param>
+        /// <param name="action">The action to invoke with the native string span.</param>
+        public static void Invoke(string s, Action<NativeStringSpan> action)
+        {
+            StringUtils.InvokeWithNativeText(s, action);
+        }
+
+        /// <summary>
+        /// Calls the specified function with a <see cref="NativeStringSpan"/> representation
+        /// of the given string and returns the result.
+        /// </summary>
+        /// <typeparam name="T">The type of the result returned by the callback.</typeparam>
+        /// <param name="s">The string to convert to a native string span.</param>
+        /// <param name="callback">The function to invoke with the native string span.</param>
+        /// <returns>The result returned by the callback.</returns>
+        public static T InvokeWithResult<T>(string s, Func<NativeStringSpan, T> callback)
+        {
+            return StringUtils.InvokeWithResult(s, callback);
+        }
+
         /// <inheritdoc/>
         public readonly override string ToString()
         {

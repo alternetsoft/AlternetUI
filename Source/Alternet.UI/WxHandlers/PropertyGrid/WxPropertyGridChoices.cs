@@ -125,7 +125,10 @@ namespace Alternet.UI
 
         public void SetLabel(int index, string value)
         {
-            Native.PropertyGridChoices.SetLabel(handle, (uint)index, value);
+            NativeStringSpan.Invoke(value, span =>
+            {
+                Native.PropertyGridChoices.SetLabel(handle, (uint)index, span);
+            });
             ChoicesChanged();
         }
 
@@ -165,7 +168,10 @@ namespace Alternet.UI
 
         public int GetLabelIndex(string str)
         {
-            return Native.PropertyGridChoices.GetLabelIndex(handle, str);
+            return NativeStringSpan.InvokeWithResult(str, span =>
+            {
+                return Native.PropertyGridChoices.GetLabelIndex(handle, span);
+            });
         }
 
         public int GetValueIndex(int val)
@@ -205,10 +211,13 @@ namespace Alternet.UI
         public int Add(string? text, int value)
         {
             text ??= string.Empty;
-            Native.PropertyGridChoices.Add(
-                handle,
-                text,
-                value);
+            NativeStringSpan.Invoke(text, span =>
+            {
+                Native.PropertyGridChoices.Add(
+                    handle,
+                    span,
+                    value);
+            });
             ChoicesChanged();
             return Count - 1;
         }
@@ -229,11 +238,14 @@ namespace Alternet.UI
 
         public void Insert(int index, string text, int value)
         {
-            Native.PropertyGridChoices.Insert(
-                handle,
-                index,
-                text,
-                value);
+            NativeStringSpan.Invoke(text, span =>
+            {
+                Native.PropertyGridChoices.Insert(
+                    handle,
+                    index,
+                    span,
+                    value);
+            });
             ChoicesChanged();
         }
 

@@ -76,7 +76,10 @@ namespace Alternet.UI
             {
                 NativeControl.Clear();
                 foreach (var item in Control.Items)
-                    NativeControl.Append(Control.GetItemText(item));
+                    NativeStringSpan.Invoke(Control.GetItemText(item), span =>
+                    {
+                        NativeControl.Append(span);
+                    });
             }
             finally
             {
@@ -144,12 +147,18 @@ namespace Alternet.UI
 
         public bool SetStringSelection(string s, bool select)
         {
-            return NativeControl.SetStringSelection(s, select);
+            return NativeStringSpan.InvokeWithResult(s, span =>
+            {
+                return NativeControl.SetStringSelection(span, select);
+            });
         }
 
         public int FindString(string s, bool bCase = false)
         {
-            return NativeControl.FindString(s, bCase);
+            return NativeStringSpan.InvokeWithResult(s, span =>
+            {
+                return NativeControl.FindString(span, bCase);
+            });
         }
 
         public int GetCountPerPage()
@@ -196,7 +205,10 @@ namespace Alternet.UI
 
         public void SetFirstItemStr(string s)
         {
-            NativeControl.SetFirstItemStr(s);
+            NativeStringSpan.Invoke(s, span =>
+            {
+                NativeControl.SetFirstItemStr(span);
+            });
         }
 
         public void SetSelection(int n)
@@ -206,7 +218,10 @@ namespace Alternet.UI
 
         public void SetString(int n, string s)
         {
-            NativeControl.SetString((uint)n, s);
+            NativeStringSpan.Invoke(s, span =>
+            {
+                NativeControl.SetString((uint)n, span);
+            });
         }
 
         public void Clear()
@@ -221,12 +236,18 @@ namespace Alternet.UI
 
         public int Append(string s)
         {
-            return NativeControl.Append(s);
+            return NativeStringSpan.InvokeWithResult(s, span =>
+            {
+                return NativeControl.Append(span);
+            });
         }
 
         public int Insert(string item, int pos)
         {
-            return NativeControl.Insert(item, (uint)pos);
+            return NativeStringSpan.InvokeWithResult(item, span =>
+            {
+                return NativeControl.Insert(span, (uint)pos);
+            });
         }
 
         public int GetSelectionsCount()

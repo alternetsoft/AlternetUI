@@ -44,13 +44,16 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.EmptyTextHint;
+                return NativeControl.GetEmptyTextHint();
             }
 
             set
             {
                 value ??= string.Empty;
-                NativeControl.EmptyTextHint = value;
+                NativeStringSpan.Invoke(value, span =>
+                {
+                    NativeControl.SetEmptyTextHint(span);
+                });
             }
         }
 
@@ -111,9 +114,12 @@ namespace Alternet.UI
             var insertion = NativeControl.CreateItemsInsertion();
             for (var i = 0; i < items.Count; i++)
             {
-                NativeControl.AddItemToInsertion(
-                    insertion,
-                    Control.GetItemText(control.Items[i], false));
+                NativeStringSpan.Invoke(Control.GetItemText(control.Items[i], false), span =>
+                {
+                    NativeControl.AddItemToInsertion(
+                        insertion,
+                        span);
+                });
             }
 
             NativeControl.CommitItemsInsertion(insertion, 0);
@@ -195,7 +201,10 @@ namespace Alternet.UI
                 var item = e.NewItems?[0];
                 var index = e.NewStartingIndex;
                 var text = Control.GetItemText(item, false);
-                NativeControl.SetItem(index, text);
+                NativeStringSpan.Invoke(text, span =>
+                {
+                    NativeControl.SetItem(index, span);
+                });
                 InvalidateBestSize();
             }
         }
@@ -240,7 +249,10 @@ namespace Alternet.UI
                 return;
             if (!Control.Items.RangeOpInProgress)
             {
-                NativeControl.InsertItem(index, Control.GetItemText(item, false));
+                NativeStringSpan.Invoke(Control.GetItemText(item, false), span =>
+                {
+                    NativeControl.InsertItem(index, span);
+                });
                 InvalidateBestSize();
             }
         }
@@ -261,9 +273,12 @@ namespace Alternet.UI
             var insertion = NativeControl.CreateItemsInsertion();
             foreach (var item in items)
             {
-                NativeControl.AddItemToInsertion(
-                    insertion,
-                    Control.GetItemText(item, false));
+                NativeStringSpan.Invoke(Control.GetItemText(item, false), span =>
+                {
+                    NativeControl.AddItemToInsertion(
+                        insertion,
+                        span);
+                });
             }
 
             NativeControl.CommitItemsInsertion(insertion, index);

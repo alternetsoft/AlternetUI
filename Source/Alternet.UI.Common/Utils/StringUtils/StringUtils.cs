@@ -362,6 +362,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Invokes <paramref name="callback"/> with a pointer to the native representation
+        /// of the string <paramref name="text"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the result returned by the callback.</typeparam>
+        /// <param name="text">The text to be converted to native representation.</param>
+        /// <param name="callback">The callback to invoke with the native pointer and length.</param>
+        /// <returns>The result returned by the callback.</returns>
+        public static T InvokeWithResult<T>(ReadOnlySpan<char> text, Func<NativeStringSpan, T> callback)
+        {
+            if (App.IsWindowsOS)
+            {
+                unsafe
+                {
+                    fixed (char* p = text)
+                    {
+                        return callback(new NativeStringSpan((IntPtr)p, text.Length));
+                    }
+                }
+            }
+            else
+            {
+                T result = default!;
+
+                SkiaHelper.InvokeWithUTF8Span(text, (ptr, length) =>
+                {
+                    result = callback(new NativeStringSpan(ptr, length));
+                });
+
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Limits the length of text to a defined length.
         /// </summary>
         /// <param name="text">The source text.</param>
