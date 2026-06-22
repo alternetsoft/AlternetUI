@@ -25,6 +25,51 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Calls the specified function with a <see cref="NativeStringSpan"/> representation of the
+        /// string parameters and returns the result.
+        /// </summary>
+        /// <param name="s1">The first string to convert to a native string span.</param>
+        /// <param name="s2">The second string to convert to a native string span.</param>
+        /// <param name="callback">The function to invoke with the native string spans.</param>
+        /// <returns>The result returned by the callback.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T InvokeWithResult<T>(
+                  string? s1,
+                  string? s2,
+                  Func<NativeStringSpan, NativeStringSpan, T> callback)
+        {
+            return NativeStringSpan.InvokeWithResult(s1, s2, callback);
+        }
+
+        /// <summary>
+        /// Calls the specified function with a <see cref="NativeStringSpan"/> representation of the
+        /// string parameters and returns the result.
+        /// </summary>
+        /// <param name="s1">The first string to convert to a native string span.</param>
+        /// <param name="s2">The second string to convert to a native string span.</param>
+        /// <param name="s3">The third string to convert to a native string span.</param>
+        /// <param name="callback">The function to invoke with the native string spans.</param>
+        /// <returns>The result returned by the callback.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static T InvokeWithResult<T>(
+                  string? s1,
+                  string? s2,
+                  string? s3,
+                  Func<NativeStringSpan, NativeStringSpan, NativeStringSpan, T> callback)
+        {
+            return StringUtils.InvokeWithResult(s1 ?? string.Empty, span =>
+            {
+                return StringUtils.InvokeWithResult(s2 ?? string.Empty, span2 =>
+                {
+                    return StringUtils.InvokeWithResult(s3 ?? string.Empty, span3 =>
+                    {
+                        return callback(span, span2, span3);
+                    });
+                });
+            });
+        }
+
+        /// <summary>
         /// Calls the specified action with a <see cref="NativeStringSpan"/> representation of the given string.
         /// </summary>
         /// <param name="s">The string to convert to a native string span.</param>

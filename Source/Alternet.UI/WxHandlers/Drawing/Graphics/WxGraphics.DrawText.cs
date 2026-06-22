@@ -112,7 +112,7 @@ namespace Alternet.Drawing
 
             font = TransformFontSizeToNative(font);
 
-            StringUtils.Invoke(text, span =>
+            StringUtils.InvokeWithNativeText(text, span =>
             {
                 dc.DrawText(
                     span,
