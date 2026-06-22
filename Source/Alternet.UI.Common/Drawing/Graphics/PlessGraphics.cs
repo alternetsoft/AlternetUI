@@ -20,8 +20,6 @@ namespace Alternet.Drawing
         /// </summary>
         public static readonly Graphics Default = new PlessGraphics();
 
-        private SKCanvas? canvas;
-
         /// <inheritdoc/>
         public override GraphicsBackendType BackendType => GraphicsBackendType.WxWidgets;
 
