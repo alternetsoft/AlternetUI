@@ -272,6 +272,36 @@ return NativeApi.WebBrowser_Find_(NativePointer, ref text_Native, flags);
             return NativeApi.WebBrowser_CanSetZoomType_(NativePointer, type);
         }
         
+        public static Alternet.UI.NativeStringSpan GetBackendVersionString(int backend)
+        {
+            return NativeApi.WebBrowser_GetBackendVersionString_(backend);
+        }
+        
+        public static bool IsBackendIEAvailable()
+        {
+            return NativeApi.WebBrowser_IsBackendIEAvailable_();
+        }
+        
+        public static bool IsBackendEdgeAvailable()
+        {
+            return NativeApi.WebBrowser_IsBackendEdgeAvailable_();
+        }
+        
+        public static bool IsBackendWebKitAvailable()
+        {
+            return NativeApi.WebBrowser_IsBackendWebKitAvailable_();
+        }
+        
+        public static void SetBackend(int value)
+        {
+            NativeApi.WebBrowser_SetBackend_(value);
+        }
+        
+        public static Alternet.UI.NativeStringSpan GetLibraryVersionString()
+        {
+            return NativeApi.WebBrowser_GetLibraryVersionString_();
+        }
+        
         public void SetDefaultPage(Alternet.UI.NativeStringSpan value)
         {
             CheckDisposed();
@@ -765,6 +795,24 @@ return NativeApi.WebBrowser_AddUserScript_(NativePointer, ref javascript_Native,
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WebBrowser_CanSetZoomType_(IntPtr obj, int type);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetBackendVersionString_(int backend);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WebBrowser_IsBackendIEAvailable_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WebBrowser_IsBackendEdgeAvailable_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WebBrowser_IsBackendWebKitAvailable_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetBackend_(int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan WebBrowser_GetLibraryVersionString_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void WebBrowser_SetDefaultPage_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);

@@ -146,9 +146,9 @@ namespace Alternet::UI
         WebBrowser::DefaultFSNameArchive = wxStr(value);
     }
 
-    void WebBrowser::SetBackend(WebBrowserBackend value)
+    void WebBrowser::SetBackend(int value)
     {
-        WebBrowser::DefaultBackend = value;
+        WebBrowser::DefaultBackend = (WebBrowserBackend)value;
     }
     
     bool WebBrowser::IsBackendWebKitAvailable()
@@ -206,10 +206,11 @@ namespace Alternet::UI
         GetWebViewCtrl()->EnableHistory(enable);
     }
     
-    wxString WebBrowser::GetLibraryVersionString()
+    NativeStringSpan WebBrowser::GetLibraryVersionString()
     {
         wxVersionInfo version = wxGetLibraryVersionInfo();
-        return version.GetVersionString();
+		_containerStatic = version.GetVersionString();
+        return wxStr(_containerStatic);
     }
     
     wxString WebBrowser::WebViewBackendNameFromId(WebBrowserBackend id)
@@ -895,12 +896,12 @@ namespace Alternet::UI
         GetWebViewCtrl()->SetPage(wxStr(html), wxStr(baseUrl));
     }
     
-    wxString WebBrowser::GetBackendVersionString(WebBrowserBackend id)
+    NativeStringSpan WebBrowser::GetBackendVersionString(int id)
     {
-        auto backend = WebViewBackendNameFromId(id);
+        auto backend = WebViewBackendNameFromId((WebBrowserBackend)id);
         wxVersionInfo info = wxWebView::GetBackendVersionInfo(backend);
-        auto s = info.GetVersionString();
-        return s;
+        _containerStatic = info.GetVersionString();
+        return wxStr(_containerStatic);
     }
     
     void WebBrowser::SelectAll()

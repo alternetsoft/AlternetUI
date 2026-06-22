@@ -87,5 +87,10 @@ namespace Alternet.UI.Native
             WebBrowserEventArgs ea = CreateArgs(e, WebBrowserEvent.BeforeBrowserCreate);
             (UIControl as UI.WebBrowser)?.RaiseBeforeBrowserCreate(ea);
         }
+
+        internal void SetUserAgent(string value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

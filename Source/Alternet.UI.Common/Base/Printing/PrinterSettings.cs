@@ -338,12 +338,12 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return Handler.PrintFileName;
+                return Handler.GetPrintFileName();
             }
 
             set
             {
-                Handler.PrintFileName = value;
+                Handler.SetPrintFileName(value);
             }
         }
 
@@ -355,7 +355,8 @@ namespace Alternet.Drawing.Printing
         /// validity, default status, file printing options, page ranges, duplex mode, collation, and copy count. It is
         /// useful for troubleshooting or auditing printer configuration. The output format and destination depend on
         /// the implementation of <see cref="ILogWriter"/>.</remarks>
-        /// <param name="log">The log writer to which the printer settings will be written. If <paramref name="log"/> is <see
+        /// <param name="log">The log writer to which the printer settings will be written.
+        /// If <paramref name="log"/> is <see
         /// langword="null"/>, the default debug log writer is used.</param>
         public virtual void Log(ILogWriter? log = null)
         {

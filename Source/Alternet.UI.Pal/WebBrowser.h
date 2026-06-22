@@ -60,12 +60,7 @@ namespace Alternet::UI
         WebBrowser(const wxString& url);
 
         static bool IsBackendAvailable(const wxString& value);
-        static bool IsBackendIEAvailable();
-        static bool IsBackendEdgeAvailable();
-        static bool IsBackendWebKitAvailable();
         static void SetBackend(WebBrowserBackend value);
-        static wxString GetBackendVersionString(WebBrowserBackend id);
-        static wxString GetLibraryVersionString();
 
         virtual void OnSizeChanged(wxSizeEvent& event) override;
 

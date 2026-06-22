@@ -30,13 +30,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return Handler.DirectoryName;
+                return Handler.GetDirectoryName();
             }
 
             set
             {
                 CheckDisposed();
-                Handler.DirectoryName = value;
+                Handler.SetDirectoryName(value);
             }
         }
 
@@ -48,13 +48,13 @@ namespace Alternet.UI
             get
             {
                 CheckDisposed();
-                return Handler.InitialDirectory;
+                return Handler.GetInitialDirectory();
             }
 
             set
             {
                 CheckDisposed();
-                Handler.InitialDirectory = value;
+                Handler.SetInitialDirectory(value);
             }
         }
 

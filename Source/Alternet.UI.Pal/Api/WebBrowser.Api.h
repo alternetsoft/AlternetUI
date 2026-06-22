@@ -232,6 +232,48 @@ ALTERNET_UI_API c_bool WebBrowser_CanSetZoomType_(WebBrowser* obj, int type)
     });
 }
 
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetBackendVersionString_(int backend)
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WebBrowser::GetBackendVersionString(backend);
+    });
+}
+
+ALTERNET_UI_API c_bool WebBrowser_IsBackendIEAvailable_()
+{
+    return MarshalExceptions<c_bool>([&](){
+        return WebBrowser::IsBackendIEAvailable();
+    });
+}
+
+ALTERNET_UI_API c_bool WebBrowser_IsBackendEdgeAvailable_()
+{
+    return MarshalExceptions<c_bool>([&](){
+        return WebBrowser::IsBackendEdgeAvailable();
+    });
+}
+
+ALTERNET_UI_API c_bool WebBrowser_IsBackendWebKitAvailable_()
+{
+    return MarshalExceptions<c_bool>([&](){
+        return WebBrowser::IsBackendWebKitAvailable();
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetBackend_(int value)
+{
+    MarshalExceptions<void>([&](){
+        WebBrowser::SetBackend(value);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C WebBrowser_GetLibraryVersionString_()
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return WebBrowser::GetLibraryVersionString();
+    });
+}
+
 ALTERNET_UI_API void WebBrowser_SetDefaultPage_(WebBrowser* obj, NativeStringSpan* value)
 {
     MarshalExceptions<void>([&](){

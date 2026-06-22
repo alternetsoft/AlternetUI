@@ -32,8 +32,14 @@ namespace Alternet.UI
 
         public string UserAgent
         {
-            get => NativeControl.UserAgent;
-            set => NativeControl.UserAgent = value;
+            get => NativeControl.GetUserAgent();
+            set
+            {
+                NativeStringSpan.Invoke(value, span =>
+                {
+                    NativeControl.SetUserAgent(span);
+                });
+            }
         }
 
         public bool ContextMenuEnabled
@@ -46,7 +52,7 @@ namespace Alternet.UI
         {
             get
             {
-                int v = WxWebBrowserHandlerApi.WebBrowser_GetBackend_(NativePointer);
+                int v = NativeControl.GetBackend();
                 return (WebBrowserBackend)Enum.ToObject(typeof(WebBrowserBackend), v);
             }
         }
@@ -57,9 +63,9 @@ namespace Alternet.UI
 
         public bool HasSelection => NativeControl.HasSelection;
 
-        public string SelectedText => NativeControl.SelectedText;
+        public string SelectedText => NativeControl.GetSelectedText();
 
-        public string SelectedSource => NativeControl.SelectedSource;
+        public string SelectedSource => NativeControl.GetSelectedSource();
 
         public bool CanCut => NativeControl.CanCut;
 
@@ -73,9 +79,9 @@ namespace Alternet.UI
 
         public bool IsBusy => NativeControl.IsBusy;
 
-        public string PageSource => NativeControl.PageSource;
+        public string PageSource => NativeControl.GetPageSource();
 
-        public string PageText => NativeControl.PageText;
+        public string PageText => NativeControl.GetPageText();
 
         public float ZoomFactor
         {
@@ -129,7 +135,7 @@ namespace Alternet.UI
 
         public void LoadURL(string url)
         {
-            NativeControl.LoadURL(url);
+            NativeStringSpan.Invoke(url, urlSpan => NativeControl.LoadURL(urlSpan));
         }
 
         public string GetCurrentTitle() => NativeControl.GetCurrentTitle();
@@ -180,7 +186,8 @@ namespace Alternet.UI
         {
             const string magicResult = "3140D0CF550442968B792551E6DCBEC1";
 
-            result = NativeControl.RunScript(javascript);
+            result = NativeStringSpan.InvokeWithResult(javascript, span => NativeControl.RunScript(span));
+
             if (result.StartsWith(magicResult))
             {
                 result = result.Remove(0, magicResult.Length);
@@ -195,10 +202,13 @@ namespace Alternet.UI
             string folderPath,
             WebBrowserHostResourceAccessKind accessKind)
         {
-            NativeControl.SetVirtualHostNameToFolderMapping(
-                hostName,
-                folderPath,
-                (int)accessKind);
+            NativeStringSpan.Invoke(hostName, folderPath, (hostSpan, folderSpan) =>
+            {
+                NativeControl.SetVirtualHostNameToFolderMapping(
+                    hostSpan,
+                    folderSpan,
+                    (int)accessKind);
+            });
         }
 
         public void RunScriptAsync(string javascript, IntPtr? clientData = null)
@@ -221,15 +231,21 @@ namespace Alternet.UI
                 return;
             }
 
-            if (clientData == null)
-                NativeControl.RunScriptAsync(javascript, IntPtr.Zero);
-            else
-                NativeControl.RunScriptAsync(javascript, (IntPtr)clientData);
+            NativeStringSpan.Invoke(javascript, span =>
+            {
+                if (clientData == null)
+                    NativeControl.RunScriptAsync(span, IntPtr.Zero);
+                else
+                    NativeControl.RunScriptAsync(span, (IntPtr)clientData);
+            });
         }
 
         public void NavigateToString(string html, string? baseUrl = null)
         {
-            NativeControl.SetPage(html, baseUrl!);
+            NativeStringSpan.Invoke(html, baseUrl, (htmlSpan, baseUrlSpan) =>
+            {
+                NativeControl.SetPage(htmlSpan, baseUrlSpan);
+            });
         }
 
         public bool CanSetZoomType(WebBrowserZoomType value)
@@ -261,7 +277,12 @@ namespace Alternet.UI
             prm ??= new ();
 
             var flags = (WebBrowserSearchFlags)prm;
-            int result = NativeControl.Find(text, (int)flags);
+
+            int result = NativeStringSpan.InvokeWithResult(text, (span) =>
+            {
+                return NativeControl.Find(span, (int)flags);
+            });
+
             return result;
         }
 
@@ -274,12 +295,18 @@ namespace Alternet.UI
 
         public bool AddScriptMessageHandler(string name)
         {
-            return NativeControl.AddScriptMessageHandler(name);
+            return NativeStringSpan.InvokeWithResult(name, (span) =>
+            {
+                return NativeControl.AddScriptMessageHandler(span);
+            });
         }
 
         public bool RemoveScriptMessageHandler(string name)
         {
-            return NativeControl.RemoveScriptMessageHandler(name);
+            return NativeStringSpan.InvokeWithResult(name, (span) =>
+            {
+                return NativeControl.RemoveScriptMessageHandler(span);
+            });
         }
 
         public bool AddUserScript(string javascript, bool injectDocStart)
@@ -292,7 +319,10 @@ namespace Alternet.UI
             if (injectDocStart)
                 injectionTime = wxWEBVIEW_INJECT_AT_DOCUMENT_START;
 
-            return NativeControl.AddUserScript(javascript, injectionTime);
+            return NativeStringSpan.InvokeWithResult(javascript, (span) =>
+            {
+                return NativeControl.AddUserScript(span, injectionTime);
+            });
         }
 
         internal static bool IsBackendIEAvailable()
@@ -328,7 +358,10 @@ namespace Alternet.UI
             public NativeWebBrowser(string url)
                  : base()
             {
-                SetNativePointer(Native.WebBrowser.CreateWebBrowser(url));
+                NativeStringSpan.Invoke(url, urlSpan =>
+                {
+                    SetNativePointer(Native.WebBrowser.CreateWebBrowser(urlSpan));
+                });
             }
         }
     }

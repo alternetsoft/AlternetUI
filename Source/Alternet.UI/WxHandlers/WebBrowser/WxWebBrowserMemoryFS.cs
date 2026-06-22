@@ -34,7 +34,7 @@ namespace Alternet.UI
 
         public bool Remove(string filename)
         {
-            Native.MemoryFSHandler.RemoveFile(filename);
+            NativeStringSpan.Invoke(filename, Native.MemoryFSHandler.RemoveFile);
             return true;
         }
 
@@ -44,18 +44,27 @@ namespace Alternet.UI
             string? mimetype = null)
         {
             if(mimetype is null)
-                Native.MemoryFSHandler.AddTextFile(filename, textdata);
+                NativeStringSpan.Invoke(filename, textdata, Native.MemoryFSHandler.AddTextFile);
             else
+            {
                 Native.MemoryFSHandler.AddTextFileWithMimeType(filename, textdata, mimetype);
+            }
             return true;
         }
 
         public bool Add(string filename, IntPtr binarydata, int size, string? mimetype = null)
         {
             if(mimetype is null)
-                Native.MemoryFSHandler.AddFile(filename, binarydata, size);
+            {
+                NativeStringSpan.Invoke(filename, span => Native.MemoryFSHandler.AddFile(span, binarydata, size));
+            }
             else
-                Native.MemoryFSHandler.AddFileWithMimeType(filename, binarydata, size, mimetype);
+            {
+                NativeStringSpan.Invoke(filename, mimetype ,(span1, span2) =>
+                {
+                    Native.MemoryFSHandler.AddFileWithMimeType(span1, binarydata, size, span2);
+                });
+            }
             return true;
         }
 

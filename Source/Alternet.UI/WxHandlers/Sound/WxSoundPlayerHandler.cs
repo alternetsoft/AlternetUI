@@ -9,8 +9,16 @@ namespace Alternet.UI
     internal class WxSoundPlayerHandler : DisposableObject<IntPtr>, ISoundPlayerHandler
     {
         public WxSoundPlayerHandler(string fileName)
-            : base(Native.WxOtherFactory.SoundCreate2(fileName, false), true)
+            : base(CreateNative(fileName), true)
         {
+        }
+
+        public static IntPtr CreateNative(string fileName)
+        {
+            return NativeStringSpan.InvokeWithResult(fileName, fileNameSpan =>
+            {
+                return Native.WxOtherFactory.SoundCreate2(fileNameSpan, false);
+            });
         }
 
         public bool IsOk

@@ -18,17 +18,17 @@ namespace NativeApi.Api
 
         public bool CanSetZoomType(int type) => default;
 
-        internal static NativeStringSpan GetBackendVersionString(int backend) => default;
+        public static NativeStringSpan GetBackendVersionString(int backend) => default;
 
-        internal static bool IsBackendIEAvailable() => default;
+        public static bool IsBackendIEAvailable() => default;
 
-        internal static bool IsBackendEdgeAvailable() => default;
+        public static bool IsBackendEdgeAvailable() => default;
 
-        internal static bool IsBackendWebKitAvailable() => default;
+        public static bool IsBackendWebKitAvailable() => default;
 
-        internal static void SetBackend(int value) {}
+        public static void SetBackend(int value) {}
 
-        internal static NativeStringSpan GetLibraryVersionString() => default;
+        public static NativeStringSpan GetLibraryVersionString() => default;
 
         public void SetDefaultPage(NativeStringSpan value) { }
 

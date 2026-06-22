@@ -125,6 +125,7 @@ namespace Alternet.UI
 
         public ITextBoxTextAttr SetBulletText(string text)
         {
+
             Native.TextBoxTextAttr.SetBulletText(Handle, text);
             return this;
         }

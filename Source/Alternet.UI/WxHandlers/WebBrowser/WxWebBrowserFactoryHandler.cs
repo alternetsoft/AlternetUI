@@ -23,22 +23,34 @@ namespace Alternet.UI
 
         public void SetDefaultUserAgent(string value)
         {
-            Native.WebBrowser.SetDefaultUserAgent(value);
+            NativeStringSpan.Invoke(value, span =>
+            {
+                Native.WebBrowser.SetDefaultUserAgent(span);
+            });
         }
 
         public void SetDefaultScriptMesageName(string value)
         {
-            Native.WebBrowser.SetDefaultScriptMesageName(value);
+            NativeStringSpan.Invoke(value, span =>
+            {
+                Native.WebBrowser.SetDefaultScriptMesageName(span);
+            });
         }
 
         public void SetDefaultFSNameMemory(string value)
         {
-            Native.WebBrowser.SetDefaultFSNameMemory(value);
+            NativeStringSpan.Invoke(value, span =>
+            {
+                Native.WebBrowser.SetDefaultFSNameMemory(span);
+            });
         }
 
         public void SetDefaultFSNameArchive(string value)
         {
-            Native.WebBrowser.SetDefaultFSNameArchive(value);
+            NativeStringSpan.Invoke(value, span =>
+            {
+                Native.WebBrowser.SetDefaultFSNameArchive(span);
+            });
         }
 
         public WebBrowserBackendOS GetBackendOS()
@@ -67,12 +79,15 @@ namespace Alternet.UI
 
         public void SetEdgePath(string path)
         {
-            Native.WebBrowser.SetEdgePath(path);
+            NativeStringSpan.Invoke(path, span =>
+            {
+                Native.WebBrowser.SetEdgePath(span);
+            });
         }
 
         public string GetBackendVersionString(WebBrowserBackend value)
         {
-            return WxWebBrowserHandlerApi.WebBrowser_GetBackendVersionString_((int)value);
+            return Native.WebBrowser.GetBackendVersionString((int)value);
         }
 
         public void ThrowError(int errorId)
@@ -82,7 +97,7 @@ namespace Alternet.UI
 
         public string GetLibraryVersionString()
         {
-            return WxWebBrowserHandlerApi.WebBrowser_GetLibraryVersionString_();
+            return Native.WebBrowser.GetLibraryVersionString();
         }
 
         public bool IsBackendAvailable(WebBrowserBackend value)
