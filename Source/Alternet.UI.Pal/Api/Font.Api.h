@@ -29,34 +29,6 @@ ALTERNET_UI_API FontStyle Font_GetStyle_(Font* obj)
     });
 }
 
-ALTERNET_UI_API void* Font_OpenFamiliesArray_()
-{
-    return MarshalExceptions<void*>([&](){
-        return Font::OpenFamiliesArray();
-    });
-}
-
-ALTERNET_UI_API int Font_GetFamiliesItemCount_(void* array)
-{
-    return MarshalExceptions<int>([&](){
-        return Font::GetFamiliesItemCount(array);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C Font_GetFamiliesItemAt_(void* array, int index)
-{
-    return MarshalExceptions<NativeStringSpan_C>([&](){
-        return Font::GetFamiliesItemAt(array, index);
-    });
-}
-
-ALTERNET_UI_API void Font_CloseFamiliesArray_(void* array)
-{
-    MarshalExceptions<void>([&](){
-        Font::CloseFamiliesArray(array);
-    });
-}
-
 ALTERNET_UI_API SizeI_C Font_GetPixelSize_(Font* obj)
 {
     return MarshalExceptions<SizeI_C>([&](){
@@ -173,6 +145,13 @@ ALTERNET_UI_API NativeStringSpan_C Font_GetGenericFamilyName_(GenericFontFamily 
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
         return Font::GetGenericFamilyName(genericFamily);
+    });
+}
+
+ALTERNET_UI_API NativeStringSpan_C Font_GetFamilies_()
+{
+    return MarshalExceptions<NativeStringSpan_C>([&](){
+        return Font::GetFamilies();
     });
 }
 

@@ -23,31 +23,6 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static Alternet.UI.NativeStringSpan[] Families
-        {
-            get
-            {
-                var array = NativeApi.Font_OpenFamiliesArray_();
-                try
-                {
-                    var count = NativeApi.Font_GetFamiliesItemCount_(array);
-                    var result = new System.Collections.Generic.List<Alternet.UI.NativeStringSpan>(count);
-                    for (int i = 0; i < count; i++)
-                    {
-                        var n = NativeApi.Font_GetFamiliesItemAt_(array, i);
-                        var item = n;
-                        result.Add(item);
-                    }
-                    return result.ToArray();
-                }
-                finally
-                {
-                    NativeApi.Font_CloseFamiliesArray_(array);
-                }
-            }
-            
-        }
-        
         public float SizeInPoints
         {
             get
@@ -168,6 +143,11 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             return NativeApi.Font_GetGenericFamilyName_(genericFamily);
         }
         
+        public static Alternet.UI.NativeStringSpan GetFamilies()
+        {
+            return NativeApi.Font_GetFamilies_();
+        }
+        
         public Alternet.UI.NativeStringSpan GetName()
         {
             CheckDisposed();
@@ -206,18 +186,6 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.FontStyle Font_GetStyle_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Font_OpenFamiliesArray_();
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int Font_GetFamiliesItemCount_(System.IntPtr array);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan Font_GetFamiliesItemAt_(System.IntPtr array, int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Font_CloseFamiliesArray_(System.IntPtr array);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI Font_GetPixelSize_(IntPtr obj);
@@ -269,6 +237,9 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan Font_GetGenericFamilyName_(Alternet.Drawing.GenericFontFamily genericFamily);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern Alternet.UI.NativeStringSpan Font_GetFamilies_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan Font_GetName_(IntPtr obj);

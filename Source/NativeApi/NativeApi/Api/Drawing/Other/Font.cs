@@ -28,7 +28,7 @@ namespace NativeApi.Api
         public static bool IsFamilyValid(NativeStringSpan fontFamily) => throw new Exception();
         public static NativeStringSpan GetGenericFamilyName(GenericFontFamily genericFamily) => throw new Exception();
 
-        public static NativeStringSpan[] Families { get => throw new Exception(); }
+        public static NativeStringSpan GetFamilies() => throw new Exception();
 
         public NativeStringSpan GetName() => throw new Exception();
         public float SizeInPoints { get => throw new Exception(); }

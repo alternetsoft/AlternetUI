@@ -5,10 +5,6 @@ float GetSizeInPoints();
 
 FontStyle GetStyle();
 
-static void* OpenFamiliesArray();
-static int GetFamiliesItemCount(void* array);
-static NativeStringSpan GetFamiliesItemAt(void* array, int index);
-static void CloseFamiliesArray(void* array);
 SizeI GetPixelSize();
 bool IsUsingSizeInPixels();
 int GetNumericWeight();
@@ -26,6 +22,7 @@ void InitializeWithDefaultMonoFont();
 void InitializeFromFont(Font* font);
 static bool IsFamilyValid(const NativeStringSpan& fontFamily);
 static NativeStringSpan GetGenericFamilyName(GenericFontFamily genericFamily);
+static NativeStringSpan GetFamilies();
 NativeStringSpan GetName();
 NativeStringSpan GetDescription();
 bool IsEqualTo(Font* other);

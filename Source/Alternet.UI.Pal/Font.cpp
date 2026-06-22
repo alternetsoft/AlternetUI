@@ -205,26 +205,11 @@ namespace Alternet::UI
         }
     }
 
-    /*static*/ void* Font::OpenFamiliesArray()
+    /*static*/ NativeStringSpan Font::GetFamilies()
     {
         auto facenames = wxFontEnumerator::GetFacenames();
-        return new wxArrayString(facenames);
-    }
-
-    /*static*/ int Font::GetFamiliesItemCount(void* array)
-    {
-        return ((wxArrayString*)array)->GetCount();
-    }
-
-    /*static*/ NativeStringSpan Font::GetFamiliesItemAt(void* array, int index)
-    {
-        _containerStatic = ((wxArrayString*)array)->Item(index);
+        _containerStatic = ArrayStringToString(facenames);
         return wxStr(_containerStatic);
-    }
-
-    /*static*/ void Font::CloseFamiliesArray(void* array)
-    {
-        delete (wxArrayString*)array;
     }
 
     /*static*/ bool Font::IsFamilyValid(const NativeStringSpan& fontFamily)

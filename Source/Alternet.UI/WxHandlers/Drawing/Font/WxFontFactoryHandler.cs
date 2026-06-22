@@ -49,10 +49,8 @@ namespace Alternet.Drawing
 
         public IEnumerable<string> GetFontFamiliesNames()
         {
-            foreach(var item in UI.Native.Font.Families)
-            {
-                yield return item;
-            }
+            var result = NativeUtils.ToStringArray(UI.Native.Font.GetFamilies());
+            return result;
         }
 
         public string GetFontFamilyName(GenericFontFamily genericFamily)

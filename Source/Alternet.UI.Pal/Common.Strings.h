@@ -63,6 +63,17 @@ namespace Alternet::UI
         return value16;
     }
 
+    inline const wxString ArrayStringToString(const wxArrayString& items)
+    {
+        wxString joined;
+        for (size_t i = 0; i < items.size(); ++i)
+        {
+            joined.append(items[i]);
+            joined += L'\0';
+        }
+        return joined;
+    }
+
     inline const NativeStringSpan_C wxStr(const wxString& s)
     {
         int length = static_cast<int>(s.length());

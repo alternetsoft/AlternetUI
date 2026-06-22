@@ -118,9 +118,22 @@ namespace Alternet.UI
         /// <param name="s">The string to convert to a native string span.</param>
         /// <param name="action">The action to invoke with the native string span.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void Invoke(string s, Action<NativeStringSpan>? action)
+        public static void Invoke(string? s, Action<NativeStringSpan>? action)
         {
             NativeStringSpan.Invoke(s, action);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="NativeStringSpan"/> containing multiple null-terminated
+        /// strings into an array of strings.
+        /// </summary>
+        /// <param name="span">The <see cref="NativeStringSpan"/> to convert.</param>
+        /// <returns>An array of strings.</returns>
+        public static string[] ToStringArray(NativeStringSpan span)
+        {
+            var s = span.ToString();
+            string[] result = s.Split('\0', StringSplitOptions.RemoveEmptyEntries);
+            return result;
         }
     }
 }
