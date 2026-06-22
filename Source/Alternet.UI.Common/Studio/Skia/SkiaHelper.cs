@@ -1135,29 +1135,35 @@ namespace Alternet.Common.Skia
             SKPaint foreColor,
             SKPaint? backColor = null)
         {
-            if (s.Length == 0)
-                return;
-
-            float x = location.X;
-            float y = location.Y;
-
-            var offsetX = 0;
-            var offsetY = MathF.Abs(font.Metrics.Top);
-
-            if (backColor is not null)
+            try
             {
-                var measureResult = font.MeasureText(s);
+                if (s.Length == 0)
+                    return;
 
-                var rect = SKRect.Create(
-                    measureResult,
-                    MathF.Abs(font.Metrics.Top) + MathF.Abs(font.Metrics.Bottom));
-                rect.Offset(x, y);
+                float x = location.X;
+                float y = location.Y;
 
-                canvas.DrawRect(rect, backColor);
+                var offsetX = 0;
+                var offsetY = MathF.Abs(font.Metrics.Top);
+
+                if (backColor is not null)
+                {
+                    var measureResult = font.MeasureText(s);
+
+                    var rect = SKRect.Create(
+                        measureResult,
+                        MathF.Abs(font.Metrics.Top) + MathF.Abs(font.Metrics.Bottom));
+                    rect.Offset(x, y);
+
+                    canvas.DrawRect(rect, backColor);
+                }
+
+                using var blob = SKTextBlob.Create(s, font);
+                canvas.DrawText(blob, x + offsetX, y + offsetY, foreColor);
             }
-
-            using var blob = SKTextBlob.Create(s, font);
-            canvas.DrawText(blob, x + offsetX, y + offsetY, foreColor);
+            catch (Exception ex)
+            {
+            }
         }
 
         /// <summary>

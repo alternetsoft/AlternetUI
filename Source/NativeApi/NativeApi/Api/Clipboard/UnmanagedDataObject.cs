@@ -5,7 +5,7 @@ namespace NativeApi.Api
 {
     public class UnmanagedDataObject
     {
-        public NativeStringSpan[] Formats => throw new Exception();
+        public NativeStringSpan Formats => throw new Exception();
 
         public NativeStringSpan GetStringData(NativeStringSpan format) => throw new Exception();
 

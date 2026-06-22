@@ -79,7 +79,7 @@ namespace NativeApi.Api
 
         public bool AllowMultipleSelection { get; set; }
 
-        public NativeStringSpan[] FileNames { get; }
+        public NativeStringSpan FileNames { get; }
 
         public ModalResult ShowModal(Window? owner) => throw new Exception();
     }

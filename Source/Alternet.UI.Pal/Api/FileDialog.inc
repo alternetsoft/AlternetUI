@@ -28,10 +28,8 @@ void SetMode(FileDialogMode value);
 bool GetAllowMultipleSelection();
 void SetAllowMultipleSelection(bool value);
 
-void* OpenFileNamesArray();
-int GetFileNamesItemCount(void* array);
-NativeStringSpan GetFileNamesItemAt(void* array, int index);
-void CloseFileNamesArray(void* array);
+NativeStringSpan GetFileNames();
+
 NativeStringSpan GetInitialDirectory();
 void SetInitialDirectory(const NativeStringSpan& value);
 NativeStringSpan GetTitle();

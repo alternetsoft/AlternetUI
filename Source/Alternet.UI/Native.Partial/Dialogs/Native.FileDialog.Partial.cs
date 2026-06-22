@@ -10,7 +10,15 @@ namespace Alternet.UI.Native
         : Alternet.UI.IOpenFileDialogHandler, Alternet.UI.ISaveFileDialogHandler
     {
         public bool ShowHelp { get; set; }
-        string[] IOpenFileDialogHandler.FileNames { get; }
+        
+        string[] IOpenFileDialogHandler.FileNames
+        {
+            get
+            {
+                var nativeFileNames = NativeUtils.ToStringArray(FileNames);
+                return nativeFileNames;
+            }
+        }
 
         public Alternet.UI.ModalResult ShowModal(Alternet.UI.Window? owner)
         {

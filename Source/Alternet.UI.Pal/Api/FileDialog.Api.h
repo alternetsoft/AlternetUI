@@ -142,31 +142,10 @@ ALTERNET_UI_API void FileDialog_SetAllowMultipleSelection_(FileDialog* obj, c_bo
     });
 }
 
-ALTERNET_UI_API void* FileDialog_OpenFileNamesArray_(FileDialog* obj)
-{
-    return MarshalExceptions<void*>([&](){
-        return obj->OpenFileNamesArray();
-    });
-}
-
-ALTERNET_UI_API int FileDialog_GetFileNamesItemCount_(FileDialog* obj, void* array)
-{
-    return MarshalExceptions<int>([&](){
-        return obj->GetFileNamesItemCount(array);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C FileDialog_GetFileNamesItemAt_(FileDialog* obj, void* array, int index)
+ALTERNET_UI_API NativeStringSpan_C FileDialog_GetFileNames_(FileDialog* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetFileNamesItemAt(array, index);
-    });
-}
-
-ALTERNET_UI_API void FileDialog_CloseFileNamesArray_(FileDialog* obj, void* array)
-{
-    MarshalExceptions<void>([&](){
-        obj->CloseFileNamesArray(array);
+        return obj->GetFileNames();
     });
 }
 

@@ -236,30 +236,12 @@ namespace Alternet::UI
         RecreateDialog();
     }
 
-    void* FileDialog::OpenFileNamesArray()
+    NativeStringSpan FileDialog::GetFileNames()
     {
-        auto paths = new wxArrayString();
-        GetDialog()->GetPaths(*paths);
-        return paths;
-    }
-
-    int FileDialog::GetFileNamesItemCount(void* array)
-    {
-        auto paths = (wxArrayString*)array;
-        return paths->GetCount();
-    }
-
-    NativeStringSpan FileDialog::GetFileNamesItemAt(void* array, int index)
-    {
-        auto paths = (wxArrayString*)array;
-        _fileNameResult = (*paths)[index];
-        return wxStr(_fileNameResult);
-    }
-
-    void FileDialog::CloseFileNamesArray(void* array)
-    {
-        auto paths = (wxArrayString*)array;
-        delete paths;
+        auto paths = wxArrayString();
+        GetDialog()->GetPaths(paths);
+        _containerStatic = ArrayStringToString(paths);
+        return wxStr(_containerStatic);
     }
 
     ModalResult FileDialog::ShowModal(Window* owner)

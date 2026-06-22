@@ -97,12 +97,8 @@ namespace Alternet.UI
 
         public string[] GetFormats()
         {
-            List<string> formats = new ();
-            foreach (var format in dataObject.Formats)
-            {
-                formats.Add(format);
-            }
-            return formats.ToArray();
+            var nativeFormats = NativeUtils.ToStringArray(dataObject.Formats);
+            return nativeFormats;
         }
 
         public void SetData(string format, object data)

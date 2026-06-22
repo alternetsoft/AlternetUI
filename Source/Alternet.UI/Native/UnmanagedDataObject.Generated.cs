@@ -23,28 +23,12 @@ namespace Alternet.UI.Native
         {
         }
         
-        public Alternet.UI.NativeStringSpan[] Formats
+        public Alternet.UI.NativeStringSpan Formats
         {
             get
             {
                 CheckDisposed();
-                var array = NativeApi.UnmanagedDataObject_OpenFormatsArray_(NativePointer);
-                try
-                {
-                    var count = NativeApi.UnmanagedDataObject_GetFormatsItemCount_(NativePointer, array);
-                    var result = new System.Collections.Generic.List<Alternet.UI.NativeStringSpan>(count);
-                    for (int i = 0; i < count; i++)
-                    {
-                        var n = NativeApi.UnmanagedDataObject_GetFormatsItemAt_(NativePointer, array, i);
-                        var item = n;
-                        result.Add(item);
-                    }
-                    return result.ToArray();
-                }
-                finally
-                {
-                    NativeApi.UnmanagedDataObject_CloseFormatsArray_(NativePointer, array);
-                }
+                return NativeApi.UnmanagedDataObject_GetFormats_(NativePointer);
             }
             
         }
@@ -119,16 +103,7 @@ return NativeApi.UnmanagedDataObject_GetDataPresent_(NativePointer, ref format_N
             public static extern IntPtr UnmanagedDataObject_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr UnmanagedDataObject_OpenFormatsArray_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern int UnmanagedDataObject_GetFormatsItemCount_(IntPtr obj, System.IntPtr array);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFormatsItemAt_(IntPtr obj, System.IntPtr array, int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void UnmanagedDataObject_CloseFormatsArray_(IntPtr obj, System.IntPtr array);
+            public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetFormats_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan UnmanagedDataObject_GetStringData_(IntPtr obj, ref Alternet.UI.NativeStringSpan format);

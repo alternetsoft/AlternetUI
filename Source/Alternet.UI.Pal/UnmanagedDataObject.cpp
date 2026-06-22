@@ -157,18 +157,18 @@ namespace Alternet::UI
         return m_format > 0 && m_format < wxDF_PRIVATE;
     }
 
-    void* UnmanagedDataObject::OpenFormatsArray()
+    NativeStringSpan UnmanagedDataObject::GetFormats()
     {
-        auto result = new std::vector<NativeStringSpan>();
+        auto result = wxArrayString();
 
         if (GetDataPresent(wxStr(DataFormats::Text)))
-            result->push_back(wxStr(DataFormats::Text));
+            result.Add(DataFormats::Text);
 
         if (GetDataPresent(wxStr(DataFormats::Files)))
-            result->push_back(wxStr(DataFormats::Files));
+            result.Add(DataFormats::Files);
 
         if (GetDataPresent(wxStr(DataFormats::Bitmap)))
-            result->push_back(wxStr(DataFormats::Bitmap));
+            result.Add(DataFormats::Bitmap);
 
         /*
         if (GetDataPresent(wxStr(DataFormats::Persistent)))
@@ -186,27 +186,11 @@ namespace Alternet::UI
             if (IsStandardDataFormat(formats[n]))
                 continue;
             auto st = formats[n].GetId();
-            result->push_back(wxStr(st));
+            result.Add(st);
         }
 
-        delete[] formats;
-
-        return result;
-    }
-
-    int UnmanagedDataObject::GetFormatsItemCount(void* array)
-    {
-        return ((std::vector<NativeStringSpan>*)array)->size();
-    }
-
-    NativeStringSpan UnmanagedDataObject::GetFormatsItemAt(void* array, int index)
-    {
-        return (*((std::vector<NativeStringSpan>*)array))[index];
-    }
-
-    void UnmanagedDataObject::CloseFormatsArray(void* array)
-    {
-        delete (std::vector<NativeStringSpan>*)array;
+        _containerStatic = ArrayStringToString(result);
+        return wxStr(_containerStatic);
     }
 
     NativeStringSpan UnmanagedDataObject::GetStringData(const NativeStringSpan& format)
@@ -218,7 +202,10 @@ namespace Alternet::UI
 
         auto text = TryGetText(_dataObject);
         if (text.has_value())
-            return wxStr(text.value());
+        {
+            _container = text.value();
+            return wxStr(_container);
+        }
 
         throwExNoInfo;
     }
@@ -232,7 +219,10 @@ namespace Alternet::UI
 
         auto fileNames = TryGetFilesString(_dataObject);
         if (fileNames.has_value())
-            return wxStr(fileNames.value());
+        {
+            _containerStatic = fileNames.value();
+            return wxStr(_containerStatic);
+        }
 
         throwExNoInfo;
     }

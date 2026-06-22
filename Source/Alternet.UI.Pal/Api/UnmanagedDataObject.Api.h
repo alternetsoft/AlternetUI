@@ -17,31 +17,10 @@ ALTERNET_UI_API UnmanagedDataObject* UnmanagedDataObject_Create_()
     });
 }
 
-ALTERNET_UI_API void* UnmanagedDataObject_OpenFormatsArray_(UnmanagedDataObject* obj)
-{
-    return MarshalExceptions<void*>([&](){
-        return obj->OpenFormatsArray();
-    });
-}
-
-ALTERNET_UI_API int UnmanagedDataObject_GetFormatsItemCount_(UnmanagedDataObject* obj, void* array)
-{
-    return MarshalExceptions<int>([&](){
-        return obj->GetFormatsItemCount(array);
-    });
-}
-
-ALTERNET_UI_API NativeStringSpan_C UnmanagedDataObject_GetFormatsItemAt_(UnmanagedDataObject* obj, void* array, int index)
+ALTERNET_UI_API NativeStringSpan_C UnmanagedDataObject_GetFormats_(UnmanagedDataObject* obj)
 {
     return MarshalExceptions<NativeStringSpan_C>([&](){
-        return obj->GetFormatsItemAt(array, index);
-    });
-}
-
-ALTERNET_UI_API void UnmanagedDataObject_CloseFormatsArray_(UnmanagedDataObject* obj, void* array)
-{
-    MarshalExceptions<void>([&](){
-        obj->CloseFormatsArray(array);
+        return obj->GetFormats();
     });
 }
 
