@@ -135,7 +135,7 @@ namespace Alternet.UI
         /// the available size and other layout information.</param>
         /// <returns>A <see cref="SizeD"/> representing the preferred width and height of
         /// a rectangle, in device-independent units.</returns>
-        public SizeD GetPreferredSize(PreferredSizeContext context)
+        public virtual SizeD GetPreferredSize(PreferredSizeContext context)
         {
             var layoutType = Layout ?? GetDefaultLayout();
             var hasGlobal = StaticControlEvents.HasRequestPreferredSizeHandlers;
@@ -314,7 +314,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the size of the area which is used for intersection of vertical and horizontal scrollbars, in device-independent units.
+        /// Gets the size of the area which is used for intersection of vertical
+        /// and horizontal scrollbars, in device-independent units.
         /// </summary>
         /// <returns>The size of the scrollbar corner area.</returns>
         public virtual SizeD GetScrollBarCornerSize()
@@ -341,7 +342,8 @@ namespace Alternet.UI
         /// true.</remarks>
         /// <param name="includeMargins">true to include each child's right
         /// and bottom margins in the calculation; otherwise, false.</param>
-        /// <returns>A SizeD representing the maximum right and bottom coordinates of all child controls. The values include
+        /// <returns>A SizeD representing the maximum right and bottom coordinates of all child controls.
+        /// The values include
         /// margins if specified.</returns>
         public virtual SizeD GetChildrenMaxRightBottom(bool includeMargins)
         {
