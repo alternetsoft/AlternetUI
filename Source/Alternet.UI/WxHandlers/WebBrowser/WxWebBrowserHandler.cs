@@ -130,7 +130,11 @@ namespace Alternet.UI
         public static string? DoCommandGlobal(string cmdName, params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
-            return Native.WebBrowser.DoCommandGlobal(cmdName, cmdParam1!, cmdParam2!);
+
+            return NativeUtils.Invoke(cmdName, cmdParam1!, cmdParam2!, (s1, s2, s3) =>
+            {
+                return Native.WebBrowser.DoCommandGlobal(s1, s2, s3);
+            });
         }
 
         public void LoadURL(string url)
@@ -147,7 +151,11 @@ namespace Alternet.UI
         public string? DoCommand(string cmdName, params object?[] args)
         {
             ArgsToDoCommandParams(args, out string? cmdParam1, out string? cmdParam2);
-            return NativeControl.DoCommand(cmdName, cmdParam1!, cmdParam2!);
+
+            return NativeUtils.Invoke(cmdName, cmdParam1!, cmdParam2!, (s1, s2, s3) =>
+            {
+                return NativeControl.DoCommand(s1, s2, s3);
+            });
         }
 
         public bool GoBack()

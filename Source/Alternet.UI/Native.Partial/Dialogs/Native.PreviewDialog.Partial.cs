@@ -27,5 +27,15 @@ namespace Alternet.UI.Native
             ShowModal(GetNativeWindow(owner));
             return Alternet.UI.ModalResult.Accepted;
         }
+
+        string? IDialogHandler.GetTitle()
+        {
+            return GetTitle();
+        }
+
+        void IDialogHandler.SetTitle(string? value)
+        {
+            NativeUtils.Invoke(value ?? string.Empty, s => SetTitle(s));
+        }
     }
 }

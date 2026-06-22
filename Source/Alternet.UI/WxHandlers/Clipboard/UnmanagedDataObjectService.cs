@@ -51,13 +51,14 @@ namespace Alternet.UI
             {
                 var transformedData = (string)ClipboardUtils.SetDataTransform(format, data);
 
-                dataObject.SetStringData(format, transformedData);
+                NativeUtils.Invoke(format, transformedData, (s, s2) => dataObject.SetStringData(s, s2));
                 return;
             }
 
             if (format == DataFormats.Files || data is FileInfo[])
             {
-                dataObject.SetFileNamesData(format, string.Join("|", GetFileNames(data)));
+                NativeUtils.Invoke(format, string.Join("|", GetFileNames(data)), (s, s2)
+                    => dataObject.SetFileNamesData(s, s2));
                 return;
             }
 

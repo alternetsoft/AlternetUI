@@ -41,12 +41,19 @@ namespace Alternet.UI
                 itemType = MenuItemType.Check;
             }
 
-            Handle = Native.Menu.CreateMenuItem(
-                itemType,
+            Handle = NativeUtils.Invoke(
                 item.UniqueId.ToString(),
                 item.Text,
                 string.Empty,
-                IntPtr.Zero);
+                (s1, s2, s3) =>
+                {
+                    return Handle = Native.Menu.CreateMenuItem(
+                        itemType,
+                        s1,
+                        s2,
+                        s3,
+                        IntPtr.Zero);
+                });
 
             item.AddHostObject(this);
 

@@ -226,7 +226,7 @@ namespace Alternet.UI
 
             set
             {
-                Native.PropertyGridVariant.SetString(handle, value);
+                NativeUtils.Invoke(value, (v) => Native.PropertyGridVariant.SetString(handle, v));
             }
         }
 
@@ -243,7 +243,10 @@ namespace Alternet.UI
 
         public void MakeNull() => Native.PropertyGridVariant.MakeNull(handle);
 
-        public bool IsType(string type) => Native.PropertyGridVariant.IsType(handle, type);
+        public bool IsType(string type)
+        {
+            return NativeUtils.Invoke(type, (t) => Native.PropertyGridVariant.IsType(handle, t));
+        }
 
         public override string ToString() => Native.PropertyGridVariant.MakeString(handle);
 

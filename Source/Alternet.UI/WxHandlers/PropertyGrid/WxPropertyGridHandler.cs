@@ -118,7 +118,11 @@ namespace Alternet.UI
         public PropertyGridItemHandle CreateColorProperty(string label, string name, Color value)
         {
             KnownColorsAdd();
-            return CreateHandle(NativeControl.CreateColorProperty(label, name, value));
+
+            return NativeUtils.Invoke(label, name, (labelSpan, nameSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateColorProperty(labelSpan, nameSpan, value));
+            });
         }
 
         public PropertyGridItemHandle CreateHandle(IntPtr ptr)
@@ -133,7 +137,11 @@ namespace Alternet.UI
         {
             KnownColorsAdd();
             uint kind = GetColorKind(value);
-            return CreateHandle(NativeControl.CreateSystemColorProperty(label, name, value, kind));
+
+            return NativeUtils.Invoke(label, name, (labelSpan, nameSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateSystemColorProperty(labelSpan, nameSpan, value, kind));
+            });
         }
 
         /// <summary>
@@ -287,7 +295,10 @@ namespace Alternet.UI
         {
             if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(subname))
                 return null;
-            var result = NativeControl.GetPropertyByNameAndSubName(name!, subname!);
+            var result = NativeUtils.Invoke(name, subname, (nameSpan, subnameSpan) =>
+            {
+                return NativeControl.GetPropertyByNameAndSubName(nameSpan, subnameSpan);
+            });
             return PtrToItem(result);
         }
 
@@ -362,7 +373,10 @@ namespace Alternet.UI
         /// <param name="falseChoice"></param>
         public void SetBoolChoices(string trueChoice, string falseChoice)
         {
-            Native.PropertyGrid.SetBoolChoices(trueChoice, falseChoice);
+            NativeUtils.Invoke(trueChoice, falseChoice, (trueChoiceSpan, falseChoiceSpan) =>
+            {
+                Native.PropertyGrid.SetBoolChoices(trueChoiceSpan, falseChoiceSpan);
+            });
         }
 
         public bool IsSmallScreen()
@@ -1137,7 +1151,10 @@ namespace Alternet.UI
             string name,
             string value)
         {
-            return CreateHandle(NativeControl.CreateStringProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, value, (labelSpan, nameSpan, valueSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateStringProperty(labelSpan, nameSpan, valueSpan));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateFilenameProperty(
@@ -1145,67 +1162,105 @@ namespace Alternet.UI
             string name,
             string value)
         {
-            return CreateHandle(NativeControl.CreateFilenameProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, value, (labelSpan, nameSpan, valueSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateFilenameProperty(labelSpan, nameSpan, valueSpan));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateDirProperty(string label, string name, string value)
         {
-            return CreateHandle(NativeControl.CreateDirProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, value, (labelSpan, nameSpan, valueSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateDirProperty(labelSpan, nameSpan, valueSpan));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateImageFilenameProperty(string label, string name, string value)
         {
-            return CreateHandle(NativeControl.CreateImageFilenameProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, value, (labelSpan, nameSpan, valueSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateImageFilenameProperty(labelSpan, nameSpan, valueSpan));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateCursorProperty(string label, string name, int value)
         {
-            return CreateHandle(NativeControl.CreateCursorProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, (labelSpan, nameSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateCursorProperty(labelSpan, nameSpan, value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateBoolProperty(string label, string name, bool value)
         {
-            return CreateHandle(NativeControl.CreateBoolProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, (labelSpan, nameSpan) =>
+            {
+                return CreateHandle(NativeControl.CreateBoolProperty(labelSpan, nameSpan, value));
+            });
         }
-
         PropertyGridItemHandle IPropertyGridHandler.CreateIntProperty(string label, string name, long value)
         {
-            return CreateHandle(NativeControl.CreateIntProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, (label, name) =>
+            {
+                return CreateHandle(NativeControl.CreateIntProperty(label, name, value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateFloatProperty(string label, string name, double value)
         {
-            return CreateHandle(NativeControl.CreateFloatProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, (label, name) =>
+            {
+                return CreateHandle(NativeControl.CreateFloatProperty(label, name, value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateUIntProperty(string label, string name, ulong value)
         {
-            return CreateHandle(NativeControl.CreateUIntProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, (label, name) =>
+            {
+                return CreateHandle(NativeControl.CreateUIntProperty(label, name, value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateLongStringProperty(string label, string name, string value)
         {
-            return CreateHandle(NativeControl.CreateLongStringProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, value, (label, name, value) =>
+            {
+                return CreateHandle(NativeControl.CreateLongStringProperty(label, name, value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateDateProperty(string label, string name, DateTime value)
         {
-            return CreateHandle(NativeControl.CreateDateProperty(label, name, value));
+            return NativeUtils.Invoke(label, name, (label, name) =>
+            {
+                return CreateHandle(NativeControl.CreateDateProperty(label, name, value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateEditEnumProperty(string label, string name, IPropertyGridChoices choices, string value)
         {
-            return CreateHandle(NativeControl.CreateEditEnumProperty(label, name, ChoicesToPtr(choices), value));
+            return NativeUtils.Invoke(label, name, value, (label, name, value) =>
+            {
+                return CreateHandle(NativeControl.CreateEditEnumProperty(label, name, ChoicesToPtr(choices), value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateEnumProperty(string label, string name, IPropertyGridChoices choices, int value)
         {
-            return CreateHandle(NativeControl.CreateEnumProperty(label, name, ChoicesToPtr(choices), value));
+            return NativeUtils.Invoke(label, name, (label, name) =>
+            {
+                return CreateHandle(NativeControl.CreateEnumProperty(label, name, ChoicesToPtr(choices), value));
+            });
         }
 
         PropertyGridItemHandle IPropertyGridHandler.CreateFlagsProperty(string label, string name, IPropertyGridChoices choices, int value)
         {
-            return CreateHandle(NativeControl.CreateFlagsProperty(label, name, ChoicesToPtr(choices), value));
+            return NativeUtils.Invoke(label, name, (label, name) =>
+            {
+                return CreateHandle(NativeControl.CreateFlagsProperty(label, name, ChoicesToPtr(choices), value));
+            });
         }
 
         public nint ChoicesToPtr(IPropertyGridChoices choices)
@@ -1215,7 +1270,10 @@ namespace Alternet.UI
 
         PropertyGridItemHandle IPropertyGridHandler.CreatePropCategory(string label, string name)
         {
-            return CreateHandle(NativeControl.CreatePropCategory(label, name));
+            return NativeUtils.Invoke(label, name, (label, name) =>
+            {
+                return CreateHandle(NativeControl.CreatePropCategory(label, name));
+            });
         }
 
         void IPropertyGridHandler.Clear()
@@ -1514,7 +1572,10 @@ namespace Alternet.UI
             Color value,
             KnownColor knownColor)
         {
-            Native.PropertyGrid.KnownColorsAdd(name, title, value, (int)knownColor);
+            NativeUtils.Invoke(name, title, (name, title) =>
+            {
+                Native.PropertyGrid.KnownColorsAdd(name, title, value, (int)knownColor);
+            });
         }
 
         internal static void KnownColorsApply()

@@ -426,7 +426,10 @@ namespace Alternet.UI
 
         bool IRichTextBox.BeginURL(string url, string? characterStyle)
         {
-            return NativeControl.BeginURL(url, characterStyle ?? string.Empty);
+            return NativeUtils.Invoke(url, characterStyle ?? string.Empty, (s1, s2) =>
+            {
+                return NativeControl.BeginURL(s1, s2);
+            });
         }
 
         bool IRichTextBox.EndURL()

@@ -47,7 +47,10 @@ namespace Alternet.UI
                 NativeStringSpan.Invoke(filename, textdata, Native.MemoryFSHandler.AddTextFile);
             else
             {
-                Native.MemoryFSHandler.AddTextFileWithMimeType(filename, textdata, mimetype);
+                NativeUtils.Invoke(filename, textdata, mimetype, (s1, s2, s3) =>
+                {
+                    Native.MemoryFSHandler.AddTextFileWithMimeType(s1, s2, s3);
+                });
             }
             return true;
         }

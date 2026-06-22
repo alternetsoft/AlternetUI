@@ -28,7 +28,7 @@ namespace Alternet.UI
 
         public WxContextMenu(ContextMenu menu)
         {
-            Handle = Native.Menu.CreateContextMenu(menu.UniqueId.ToString());
+            Handle = NativeUtils.Invoke(menu.UniqueId.ToString(), Native.Menu.CreateContextMenu);
             menu.AddHostObject(this);
 
             if (menu.HasItems)
@@ -61,7 +61,10 @@ namespace Alternet.UI
             var itemPtr = itemHandle.AsPointer;
             if (menuPtr == IntPtr.Zero || itemPtr == IntPtr.Zero)
                 return;
-            Native.Menu.MenuInsertItem(menuPtr, posId, itemPtr);
+            NativeUtils.Invoke(posId, s =>
+            {
+                Native.Menu.MenuInsertItem(menuPtr, s, itemPtr);
+            });
         }
 
         public virtual void Add(WxMenuItem itemHandle)
@@ -78,7 +81,7 @@ namespace Alternet.UI
             var menuPtr = AsPointer;
             if (menuPtr == IntPtr.Zero)
                 return;
-            Native.Menu.MenuRemoveItem(menuPtr, id);
+            NativeUtils.Invoke(id, s => Native.Menu.MenuRemoveItem(menuPtr, s));
         }
 
         public virtual void Delete()
