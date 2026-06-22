@@ -50,31 +50,22 @@ namespace Alternet::UI
 
         void ProcessDefaultsOnCreate(bool before);
     public:
-        WebBrowserBackend GetBackend();
-
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
         wxWebView* GetWebViewCtrl();
 
-        void RegisterHandlerZip(const string& schemeName);
-        void RegisterHandlerMemory(const string& schemeName);
+        void RegisterHandlerZip(const wxString& schemeName);
+        void RegisterHandlerMemory(const wxString& schemeName);
 
-        WebBrowser(string url);
+        WebBrowser(const wxString& url);
 
-        static void SetDefaultPage(const string& value);
-        static bool IsBackendAvailable(const string& value);
+        static bool IsBackendAvailable(const wxString& value);
         static bool IsBackendIEAvailable();
         static bool IsBackendEdgeAvailable();
         static bool IsBackendWebKitAvailable();
         static void SetBackend(WebBrowserBackend value);
-        static string GetBackendVersionString(WebBrowserBackend id);
-        static string GetLibraryVersionString();
-
-        bool CanSetZoomType(wxWebViewZoomType type);
-        wxWebViewZoomType GetZoomType();
-        void SetZoomType(wxWebViewZoomType zoomType);
-
-        int Find(const string& text, int flags);
+        static wxString GetBackendVersionString(WebBrowserBackend id);
+        static wxString GetLibraryVersionString();
 
         virtual void OnSizeChanged(wxSizeEvent& event) override;
 
@@ -84,6 +75,10 @@ namespace Alternet::UI
 
     private:
         wxString _defaultPage;
+        wxString _urlContainer;
+        wxString _textContainer;
+        wxString _targetContainer;
+        wxString _messageHandlerContainer;
 
         void OnBeforeBrowserCreate(wxWebViewEvent& event);
         void OnNavigating(wxWebViewEvent& event);

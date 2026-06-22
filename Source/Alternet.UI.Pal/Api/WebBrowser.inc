@@ -56,6 +56,13 @@ void SetZoom(int value);
 
 bool GetIsEdge();
 
+int Find(const NativeStringSpan& text, int flags);
+static void CrtSetDbgFlag(int value);
+int GetBackend();
+void SetZoomType(int zoomType);
+bool CanSetZoomType(int type);
+void SetDefaultPage(const NativeStringSpan& value);
+int GetZoomType();
 static void* CreateWebBrowser(const NativeStringSpan& url);
 static void SetDefaultUserAgent(const NativeStringSpan& value);
 static void SetDefaultScriptMesageName(const NativeStringSpan& value);

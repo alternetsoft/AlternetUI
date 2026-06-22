@@ -242,7 +242,7 @@ namespace Alternet::UI
     /*static*/ NativeStringSpan Font::GetGenericFamilyName(GenericFontFamily genericFamily)
     {
         if (genericFamily == GenericFontFamily::None)
-            throwExInvalidArg(genericFamily, "genericFamily cannot be None");
+            throwEx("genericFamily cannot be None");
 
         wxFontInfo fontInfo;
         fontInfo.Family(GetWxFontFamily(genericFamily));

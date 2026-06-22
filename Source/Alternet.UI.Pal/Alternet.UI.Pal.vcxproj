@@ -403,7 +403,6 @@ VS_VERSION_INFO VERSIONINFO
     <ClCompile Include="UnmanagedDataObject.cpp" />
     <ClCompile Include="UnmanagedStream.cpp" />
     <ClCompile Include="WebBrowser.cpp" />
-    <ClCompile Include="WebBrowserApiPal.cpp" />
     <ClCompile Include="WindowsVisualThemeSupport.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WxAlternet\wxAlternetColourProperty.cpp" />

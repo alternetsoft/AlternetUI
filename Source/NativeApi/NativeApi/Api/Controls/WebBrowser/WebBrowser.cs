@@ -8,6 +8,33 @@ namespace NativeApi.Api
 {
     public class WebBrowser : Control
     {
+
+        public int Find(NativeStringSpan text, int flags) => default;
+
+        public static void CrtSetDbgFlag(int value) => throw new Exception();
+
+        public int GetBackend() => default;
+
+        public void SetZoomType(int zoomType) => throw new Exception();
+
+        public bool CanSetZoomType(int type) => default;
+
+        internal static NativeStringSpan GetBackendVersionString(int backend) => default;
+
+        internal static bool IsBackendIEAvailable() => default;
+
+        internal static bool IsBackendEdgeAvailable() => default;
+
+        internal static bool IsBackendWebKitAvailable() => default;
+
+        internal static void SetBackend(int value) {}
+
+        internal static NativeStringSpan GetLibraryVersionString() => default;
+
+        public void SetDefaultPage(NativeStringSpan value) { }
+
+        public int GetZoomType() => default;
+
         public static IntPtr CreateWebBrowser(NativeStringSpan url) => default;
 
         public static bool IsEdgeBackendEnabled { get; set; }

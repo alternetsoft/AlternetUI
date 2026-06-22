@@ -100,38 +100,38 @@ namespace Alternet::UI
         _printToFile = value;
     }
 
-    optional<string> PrinterSettings::GetPrinterName()
+    NativeStringSpan PrinterSettings::GetPrinterName()
     {
-        return _printerName;
+        return wxStr(_printerName);
     }
 
-    void PrinterSettings::SetPrinterName(optional<string> value)
+    void PrinterSettings::SetPrinterName(const NativeStringSpan& value)
     {
-        _printerName = value;
+        _printerName = wxStr(value);
     }
 
     bool PrinterSettings::GetIsValid()
     {
-        if (_printerName == nullopt)
+        if (_printerName.empty())
             return true;
 
         wxPrintData data;
-        data.SetPrinterName(wxStr(_printerName.value()));
+        data.SetPrinterName(_printerName);
         return data.IsOk();
     }
 
     bool PrinterSettings::GetIsDefaultPrinter()
     {
-        return _printerName == nullopt;
+        return _printerName.empty();
     }
 
-    optional<string> PrinterSettings::GetPrintFileName()
+    NativeStringSpan PrinterSettings::GetPrintFileName()
     {
-        return _printFileName;
+        return wxStr(_printFileName);
     }
 
-    void PrinterSettings::SetPrintFileName(optional<string> value)
+    void PrinterSettings::SetPrintFileName(const NativeStringSpan& value)
     {
-        _printFileName = value;
+        _printFileName = wxStr(value);
     }
 }

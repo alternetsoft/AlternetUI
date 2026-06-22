@@ -70,18 +70,7 @@ namespace Alternet::UI
 		if (ev.Moving())
 			return;
 
-	/*	if (!ev.LeftDown())
-			return;*/
-/*
-		long start = event.GetURLStart();
-		long end = event.GetURLEnd();
-		long delta = end - start;
-  */
-		/*LogEvent(event);*/
-
-	/*	auto url = GetTextCtrl()->GetValue().Mid(start, delta).Clone();*/
-
-		_eventUrl = wxStr(event.GetString());
+		_eventUrl = event.GetString();
 
 		RaiseEvent(RichTextBoxEvent::TextUrl);
 	}

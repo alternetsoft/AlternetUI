@@ -297,6 +297,49 @@ namespace Alternet.UI.Native
             
         }
         
+        public int Find(Alternet.UI.NativeStringSpan text, int flags)
+        {
+            CheckDisposed();
+            var text_Native = text.ToNative();
+return NativeApi.WebBrowser_Find_(NativePointer, ref text_Native, flags);
+        }
+        
+        public static void CrtSetDbgFlag(int value)
+        {
+            NativeApi.WebBrowser_CrtSetDbgFlag_(value);
+        }
+        
+        public int GetBackend()
+        {
+            CheckDisposed();
+            return NativeApi.WebBrowser_GetBackend_(NativePointer);
+        }
+        
+        public void SetZoomType(int zoomType)
+        {
+            CheckDisposed();
+            NativeApi.WebBrowser_SetZoomType_(NativePointer, zoomType);
+        }
+        
+        public bool CanSetZoomType(int type)
+        {
+            CheckDisposed();
+            return NativeApi.WebBrowser_CanSetZoomType_(NativePointer, type);
+        }
+        
+        public void SetDefaultPage(Alternet.UI.NativeStringSpan value)
+        {
+            CheckDisposed();
+            var value_Native = value.ToNative();
+NativeApi.WebBrowser_SetDefaultPage_(NativePointer, ref value_Native);
+        }
+        
+        public int GetZoomType()
+        {
+            CheckDisposed();
+            return NativeApi.WebBrowser_GetZoomType_(NativePointer);
+        }
+        
         public static System.IntPtr CreateWebBrowser(Alternet.UI.NativeStringSpan url)
         {
             var url_Native = url.ToNative();
@@ -743,6 +786,27 @@ return NativeApi.WebBrowser_AddUserScript_(NativePointer, ref javascript_Native,
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WebBrowser_GetIsEdge_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WebBrowser_Find_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, int flags);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_CrtSetDbgFlag_(int value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WebBrowser_GetBackend_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetZoomType_(IntPtr obj, int zoomType);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern bool WebBrowser_CanSetZoomType_(IntPtr obj, int type);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void WebBrowser_SetDefaultPage_(IntPtr obj, ref Alternet.UI.NativeStringSpan value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern int WebBrowser_GetZoomType_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr WebBrowser_CreateWebBrowser_(ref Alternet.UI.NativeStringSpan url);

@@ -30,14 +30,14 @@ namespace Alternet::UI
             _document->AddRef();
     }
 
-    optional<string> PrintPreviewDialog::GetTitle()
+    NativeStringSpan PrintPreviewDialog::GetTitle()
     {
-        return _title;
+        return wxStr(_title);
     }
 
-    void PrintPreviewDialog::SetTitle(optional<string> value)
+    void PrintPreviewDialog::SetTitle(const NativeStringSpan& value)
     {
-        _title = value;
+        _title = wxStr(value);
     }
 
     void PrintPreviewDialog::ShowModal(Window* owner)
@@ -62,10 +62,14 @@ namespace Alternet::UI
         if (!_state->printPreview->IsOk())
             throwEx("Print preview failed.");
 
+        auto ttl = _title;
+		if (ttl.empty())
+			ttl = "Print Preview";
+
         _state->frame = new wxPreviewFrame(
             _state->printPreview,
             owner == nullptr ? ParkingWindow::GetWindow() : owner->GetWxWindow(),
-            wxStr(_title.value_or("Print Preview")),
+            ttl,
             wxDefaultPosition,
             wxSize(800, 600));
         

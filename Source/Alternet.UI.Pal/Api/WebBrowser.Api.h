@@ -239,6 +239,55 @@ ALTERNET_UI_API c_bool WebBrowser_GetIsEdge_(WebBrowser* obj)
     });
 }
 
+ALTERNET_UI_API int WebBrowser_Find_(WebBrowser* obj, NativeStringSpan* text, int flags)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->Find(*text, flags);
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_CrtSetDbgFlag_(int value)
+{
+    MarshalExceptions<void>([&](){
+        WebBrowser::CrtSetDbgFlag(value);
+    });
+}
+
+ALTERNET_UI_API int WebBrowser_GetBackend_(WebBrowser* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetBackend();
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetZoomType_(WebBrowser* obj, int zoomType)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetZoomType(zoomType);
+    });
+}
+
+ALTERNET_UI_API c_bool WebBrowser_CanSetZoomType_(WebBrowser* obj, int type)
+{
+    return MarshalExceptions<c_bool>([&](){
+        return obj->CanSetZoomType(type);
+    });
+}
+
+ALTERNET_UI_API void WebBrowser_SetDefaultPage_(WebBrowser* obj, NativeStringSpan* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetDefaultPage(*value);
+    });
+}
+
+ALTERNET_UI_API int WebBrowser_GetZoomType_(WebBrowser* obj)
+{
+    return MarshalExceptions<int>([&](){
+        return obj->GetZoomType();
+    });
+}
+
 ALTERNET_UI_API void* WebBrowser_CreateWebBrowser_(NativeStringSpan* url)
 {
     return MarshalExceptions<void*>([&](){

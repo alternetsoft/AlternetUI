@@ -62,6 +62,7 @@ namespace Alternet::UI
 
         switch (buttons)
         {
+        default:
         case MessageBoxButtons::OK:
             style |= wxOK;
             break;
@@ -74,8 +75,6 @@ namespace Alternet::UI
         case MessageBoxButtons::YesNo:
             style |= wxYES_NO;
             break;
-        default:
-            throwExInvalidArgEnumValue(buttons);
         }
 
         switch (icon)

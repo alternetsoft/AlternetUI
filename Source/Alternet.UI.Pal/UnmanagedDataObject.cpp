@@ -214,7 +214,7 @@ namespace Alternet::UI
 		auto wxFormat = wxStr(format);
 
         if (!GetDataPresent(format))
-            throwExInvalidArg(wxFormat, FormatNotPresentErrorMessage);
+            throwEx(FormatNotPresentErrorMessage);
 
         auto text = TryGetText(_dataObject);
         if (text.has_value())
@@ -228,7 +228,7 @@ namespace Alternet::UI
 		auto wxFormat = wxStr(format);
 
         if (!GetDataPresent(format))
-            throwExInvalidArg(wxFormat, FormatNotPresentErrorMessage);
+            throwEx(FormatNotPresentErrorMessage);
 
         auto fileNames = TryGetFilesString(_dataObject);
         if (fileNames.has_value())

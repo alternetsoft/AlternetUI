@@ -29,7 +29,7 @@ namespace Alternet::UI
         bool IsCursorSuppressed() override { return true; }
 
     private:
-        string _eventUrl = wxStr(wxEmptyString);
+        wxString _eventUrl = wxEmptyString;
         bool hasBorder = true;
     };
 }

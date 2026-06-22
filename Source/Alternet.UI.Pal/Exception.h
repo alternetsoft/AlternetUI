@@ -124,13 +124,12 @@ namespace _PreprocessorDetail
 #define throwEx(message) throw Alternet::UI::Exception((message), 0, ExceptionOrigin)
 #define throwExTyped(exceptionType, message) throw exceptionType((message), 0, ExceptionOrigin)
 #define throwExNoInfo throw Alternet::UI::Exception("", 0, ExceptionOrigin)
-#define throwExInvalidArgNoInfo(argument) throw Alternet::UI::ArgumentException("Invalid argument: " + ###argument, 0, ExceptionOrigin)
-#define throwExInvalidArg(argument, message) throw Alternet::UI::ArgumentException(message + ". Argument name: " + ###argument, 0, ExceptionOrigin)
-#define throwExInvalidArgEnumValue(argument) throw Alternet::UI::ArgumentException("Unexpected enum value. Argument name: " + ###argument, 0, ExceptionOrigin)
+#define throwExInvalidArgNoInfo(argument) throw Alternet::UI::ArgumentException("Invalid argument: " + argument, 0, ExceptionOrigin)
+#define throwExInvalidArgEnumValue(argument) throw Alternet::UI::ArgumentException("Unexpected enum value. Argument name: " + argument, 0, ExceptionOrigin)
 #define throwExInvalidOp throw Alternet::UI::InvalidOperationException("", 0, ExceptionOrigin)
 #define throwExInvalidOpWithInfo(message) throw Alternet::UI::InvalidOperationException(message, 0, ExceptionOrigin)
 
-#define DebugLogInvalidArg(argument, message) Alternet::UI::Application::Log(message + ". Argument name: " + ###argument)
+#define DebugLogInvalidArg(argument, message) Alternet::UI::Application::Log(message + ". Argument name: " + argument)
 
 
 #ifdef PLATFORM_WINDOWS
