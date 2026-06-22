@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -15,9 +16,9 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Containers)]
     public partial class PanelOkCancelButtons : StackPanel
     {
-        private Button? applyButton;
-        private Button? cancelButton;
-        private Button? okButton;
+        private StdButton? applyButton;
+        private StdButton? cancelButton;
+        private StdButton? okButton;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelOkCancelButtons"/> class.
@@ -78,11 +79,17 @@ namespace Alternet.UI
                 VerticalAlignment = UI.VerticalAlignment.Center;
 
                 if (prm.IsOkButtonCreated)
+                {
                     OkButton.Required();
+                }
                 if (prm.IsCancelButtonCreated)
+                {
                     CancelButton.Required();
+                }
                 if (prm.IsApplyButtonCreated)
+                {
                     ApplyButton.Required();
+                }
             }
             finally
             {
@@ -134,10 +141,64 @@ namespace Alternet.UI
         public Action? ButtonClickedAction { get; set; }
 
         /// <summary>
+        /// Gets or sets the 'Apply' button text.
+        /// </summary>
+        public virtual string ApplyButtonText
+        {
+            get
+            {
+                if (applyButton == null)
+                    return CommonStrings.Default.ButtonApply;
+                return ApplyButton.Text;
+            }
+
+            set
+            {
+                ApplyButton.Text = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the 'Cancel' button text.
+        /// </summary>
+        public virtual string CancelButtonText
+        {
+            get
+            {
+                if (cancelButton is null)
+                    return CommonStrings.Default.ButtonCancel;
+                return CancelButton.Text;
+            }
+
+            set
+            {
+                CancelButton.Text = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the 'Ok' button text.
+        /// </summary>
+        public virtual string OkButtonText
+        {
+            get
+            {
+                if (okButton is null)
+                    return CommonStrings.Default.ButtonOk;
+                return OkButton.Text;
+            }
+
+            set
+            {
+                OkButton.Text = value;
+            }
+        }
+
+        /// <summary>
         /// Gets 'Ok' button.
         /// </summary>
         [Browsable(false)]
-        public Button OkButton
+        public StdButton OkButton
         {
             get
             {
@@ -158,7 +219,7 @@ namespace Alternet.UI
         /// Gets 'Cancel' button.
         /// </summary>
         [Browsable(false)]
-        public Button CancelButton
+        public StdButton CancelButton
         {
             get
             {
@@ -179,7 +240,7 @@ namespace Alternet.UI
         /// Gets 'Apply' button.
         /// </summary>
         [Browsable(false)]
-        public Button ApplyButton
+        public StdButton ApplyButton
         {
             get
             {
@@ -254,13 +315,13 @@ namespace Alternet.UI
         /// Gets an enumerable collection of buttons that are currently visible.
         /// </summary>
         [Browsable(false)]
-        public virtual IEnumerable<Button> VisibleButtons
+        public virtual IEnumerable<StdButton> VisibleButtons
         {
             get
             {
                 foreach (var child in Children)
                 {
-                    if (child is Button btn && btn.IsVisible)
+                    if (child is StdButton btn && btn.IsVisible)
                         yield return btn;
                 }
             }
@@ -374,11 +435,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="button">The button to set as the default.
         /// If <see langword="null"/>, all buttons will be unset as default.</param>
-        public virtual void SetDefaultButtonExclusive(Button? button)
+        public virtual void SetDefaultButtonExclusive(StdButton? button)
         {
             foreach (var child in Children)
             {
-                if (child is Button btn)
+                if (child is StdButton btn)
                 {
                     btn.IsDefault = btn == button;
                 }
@@ -396,11 +457,11 @@ namespace Alternet.UI
         /// <param name="button">The button to be set as the exclusive cancel button.
         /// If <see langword="null"/>, no button will be set as the
         /// cancel button.</param>
-        public virtual void SetCancelButtonExclusive(Button? button)
+        public virtual void SetCancelButtonExclusive(StdButton? button)
         {
             foreach (var child in Children)
             {
-                if (child is Button btn)
+                if (child is StdButton btn)
                 {
                     btn.IsCancel = btn == button;
                 }
@@ -427,9 +488,9 @@ namespace Alternet.UI
         /// is out of range of the visible buttons.</remarks>
         /// <param name="index">The zero-based index of the button to retrieve.
         /// Must be within the range of visible buttons.</param>
-        /// <returns>The <see cref="Button"/> at the specified index if it exists;
+        /// <returns>The <see cref="StdButton"/> at the specified index if it exists;
         /// otherwise, <see langword="null"/>.</returns>
-        public virtual Button? GetVisibleButton(int index)
+        public virtual StdButton? GetVisibleButton(int index)
         {
             var visibleButtons = VisibleButtons.ToArray();
 
@@ -485,7 +546,7 @@ namespace Alternet.UI
         /// otherwise, <see langword="false"/>.</returns>
         public virtual bool SetDefaultButtonExclusive(MessageBoxDefaultButton value)
         {
-            switch(value)
+            switch (value)
             {
                 case MessageBoxDefaultButton.Button1:
                     return SetDefaultButtonExclusive(0);
@@ -518,7 +579,7 @@ namespace Alternet.UI
         {
             var btn = Internal();
 
-            if(btn is not null)
+            if (btn is not null)
             {
                 SetCancelButtonExclusive(btn.Value);
             }
@@ -529,7 +590,7 @@ namespace Alternet.UI
 
             KnownButton? Internal()
             {
-                if(buttons.Length == 1)
+                if (buttons.Length == 1)
                 {
                     return buttons[0];
                 }
@@ -715,11 +776,11 @@ namespace Alternet.UI
         /// <param name="button">The identifier of the known button to search for.</param>
         /// <returns>A <see cref="Button"/> object that matches the specified identifier,
         /// or <see langword="null"/> if no matching button is found.</returns>
-        public virtual Button? GetButton(KnownButton button)
+        public virtual StdButton? GetButton(KnownButton button)
         {
             foreach (var child in Children)
             {
-                if (child is Button btn
+                if (child is StdButton btn
                     && btn.CustomAttr.GetAttribute<KnownButton>("KnownButton") == button)
                     return btn;
             }
@@ -736,11 +797,11 @@ namespace Alternet.UI
         /// <returns>A <see cref="Button"/> instance representing the newly added button.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="text"/>
         /// is null or empty.</exception>
-        public virtual Button AddButton(string text, Action? clickAction = null)
+        public virtual StdButton AddButton(string text, Action? clickAction = null)
         {
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("Button text cannot be null or empty.", nameof(text));
-            Button button = CreateButton(text);
+            StdButton button = CreateButton(text);
 
             if (clickAction is not null)
             {
@@ -763,10 +824,10 @@ namespace Alternet.UI
         /// <param name="clickAction">An <see cref="Action"/> to be executed when
         /// the button is clicked.</param>
         /// <returns>A <see cref="Button"/> instance representing the newly added button.</returns>
-        public virtual Button AddButton(KnownButton button, Action? clickAction = null)
+        public virtual StdButton AddButton(KnownButton button, Action? clickAction = null)
         {
             var text = KnownButtons.GetText(button) ?? string.Empty;
-            Button newButton = AddButton(text, clickAction);
+            StdButton newButton = AddButton(text, clickAction);
 
             newButton.Click += (sender, e) =>
             {
@@ -821,7 +882,7 @@ namespace Alternet.UI
         {
             LastButtonClicked = button;
 
-            if(button == KnownButton.Cancel)
+            if (button == KnownButton.Cancel)
                 ApplyModalResult(ModalResult.Canceled);
             else
                 ApplyModalResult(ModalResult.Accepted);
@@ -836,9 +897,9 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">The text for the button.</param>
         /// <returns>A <c>Button</c> instance.</returns>
-        protected virtual Button CreateButton(string text)
+        protected virtual StdButton CreateButton(string text)
         {
-            Button result = new()
+            PanelButton result = new()
             {
                 Text = text,
                 Margin = DefaultButtonMargin,
@@ -891,6 +952,14 @@ namespace Alternet.UI
             /// </summary>
             public CreateParameters()
             {
+            }
+        }
+
+        private class PanelButton : StdButton
+        {
+            protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
+            {
+                return base.GetPreferredSizeInternal(context);
             }
         }
     }
