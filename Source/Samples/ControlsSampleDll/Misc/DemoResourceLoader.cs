@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace ControlsSample
 {
-    internal static class DemoResourceLoader
+    public static class DemoResourceLoader
     {
         private static ImageLists? imageLists;
 
@@ -17,7 +17,7 @@ namespace ControlsSample
             return imageLists;
         }
 
-        internal static ControlStateImages LoadButtonImages(
+        public static ControlStateImages LoadButtonImages(
             AbstractControl? control,
             string? url = null,
             SizeI? size = null)

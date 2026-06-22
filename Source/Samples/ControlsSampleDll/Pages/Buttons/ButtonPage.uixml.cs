@@ -9,7 +9,7 @@ using Alternet.UI;
 namespace ControlsSample
 {
     [IsCsLocalized(true)]
-    internal partial class ButtonPage : Panel
+    public partial class ButtonPage : Panel
     {
         private readonly Label labelBackColor = new(GenericStrings.BackColor)
         {

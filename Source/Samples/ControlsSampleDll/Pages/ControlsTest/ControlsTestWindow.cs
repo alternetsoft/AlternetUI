@@ -45,14 +45,7 @@ namespace ControlsSample
 
             if (!App.IsMaui)
             {
-                AddPage<NativeSliderPage>("Native Slider");
-                AddPage<NativeTreeViewPage>("Native TreeView");
                 AddPage<PopupToolBarPage>("Popup ToolBar");
-                AddPage<NativeProgressBarPage>("Native ProgressBar");
-
-                AddPage<NativeButtonPage>("Native Button");
-                AddPage<NativeCheckBoxesPage>("Native CheckBox");
-                AddPage<NativeRadioButtonsPage>("Native RadioButton");
             }
 
             /*
