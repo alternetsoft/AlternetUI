@@ -18,20 +18,20 @@
                     Name="allowAllStatesForUserCheckBox" IsTextLocalized="true"/>
         </StackPanel>
         <HorizontalStackPanel>
-          <Button Text="IsChecked = false" Margin="5" Name="isCheckedFalseButton" 
+          <StdButton Text="IsChecked = false" Margin="5" Name="isCheckedFalseButton" 
                   IsTextLocalized="true"/>
-          <Button Text="IsChecked = true" Margin="5" Name="isCheckedTrueButton"
+          <StdButton Text="IsChecked = true" Margin="5" Name="isCheckedTrueButton"
                   IsTextLocalized="true"/>
         </HorizontalStackPanel>
         <HorizontalStackPanel>
-          <Button Text="State = Unchecked" Margin="5"
+          <StdButton Text="State = Unchecked" Margin="5"
                   Name="checkStateUncheckedButton" IsTextLocalized="true"/>
-          <Button Text="State = Checked" Margin="5"
+          <StdButton Text="State = Checked" Margin="5"
                   Name="checkStateCheckedButton" IsTextLocalized="true"/>
         </HorizontalStackPanel>
         <HorizontalStackPanel>
-          <Button Text="Text = empty" Margin="5" Name="textEmptyButton" IsTextLocalized="true"/>
-          <Button Text="State = Indeterm" Margin="5"
+          <StdButton Text="Text = empty" Margin="5" Name="textEmptyButton" IsTextLocalized="true"/>
+          <StdButton Text="State = Indeterm" Margin="5"
                   Name="checkStateIndeterminateButton" IsTextLocalized="true"/>
         </HorizontalStackPanel>
       </VerticalStackPanel>

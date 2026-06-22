@@ -4,8 +4,8 @@
         Title="Examples.StackPanel">
     <!-- <CreateUixmlDeclaration> -->
     <StackPanel Name="stackPanel" Margin="16,16,16,254" Orientation="Vertical">
-      <Button Text="Sample button 1" Name="addItemButton" Margin="8"/>
-      <Button Text="Sample button 2" Name="removeItemButton" Margin="8"/>
+      <StdButton Text="Sample button 1" Name="addItemButton" Margin="8"/>
+      <StdButton Text="Sample button 2" Name="removeItemButton" Margin="8"/>
     </StackPanel>
     <!-- </CreateUixmlDeclaration> -->
 </Window>
