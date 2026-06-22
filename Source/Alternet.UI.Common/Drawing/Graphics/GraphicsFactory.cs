@@ -368,11 +368,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SKPaint DefaultPenToPaint(Pen pen)
         {
-            return CreatePaint(
-                pen.Color,
-                pen.LineCap,
-                pen.LineJoin,
-                pen.Width);
+            return CreatePaint(pen.PenInfo);
         }
 
         /// <summary>
@@ -380,22 +376,48 @@ namespace Alternet.Drawing
         /// </summary>
         /// <remarks>The returned <see cref="SKPaint"/> is preconfigured for stroke drawing, with the
         /// <see cref="SKPaint.IsStroke"/> property set to <see langword="true"/>.</remarks>
-        /// <param name="color">The color of the stroke.</param>
-        /// <param name="lineCap">The style of the stroke's end caps.</param>
-        /// <param name="lineJoin">The style of the stroke's joins between line segments.</param>
-        /// <param name="width">The width of the stroke.</param>
+        /// <param name="pen">The <see cref="PenInfo"/> instance containing the stroke properties.</param>
         /// <returns>A configured <see cref="SKPaint"/> instance with the specified stroke properties.</returns>
-        public static SKPaint CreatePaint(
-            SKColor color,
-            LineCap lineCap,
-            LineJoin lineJoin,
-            Coord width)
+        public static SKPaint CreatePaint(in PenInfo pen)
         {
-            var paint = SkiaHelper.CreateStrokePaint(color);
-            paint.StrokeCap = lineCap.ToSkia();
-            paint.StrokeJoin = lineJoin.ToSkia();
-            paint.StrokeWidth = width;
+            var paint = SkiaHelper.CreateStrokePaint(pen.Color);
+            paint.StrokeCap = pen.LineCap.ToSkia();
+            paint.StrokeJoin = pen.LineJoin.ToSkia();
+            paint.StrokeWidth = pen.Width;
             paint.IsStroke = true;
+
+            switch (pen.DashStyle)
+            {
+                case DashStyle.Solid:
+                    break;
+
+                default:
+                    var effect = Pen.DashPatterns[pen.DashStyle];
+
+                    if(effect != null)
+                    {
+                        if (pen.Width == 1.0f)
+                        {
+                            paint.PathEffect = SKPathEffect.CreateDash(effect, 0);
+                        }
+                        else
+                        {
+                            var scaledEffect = new float[effect.Length];
+                            for (int i = 0; i < effect.Length; i++)
+                            {
+                                scaledEffect[i] = effect[i] * pen.Width;
+                            }
+                            paint.PathEffect = SKPathEffect.CreateDash(scaledEffect, 0);
+                        }
+                    }
+                    break;
+
+                case DashStyle.Custom:
+                    if (pen.DashPattern != null)
+                        paint.PathEffect = SKPathEffect.CreateDash(pen.DashPattern, 0);
+                    break;
+            }
+
             return paint;
         }
 

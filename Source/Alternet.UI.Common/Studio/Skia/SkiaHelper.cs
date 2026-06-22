@@ -1163,6 +1163,7 @@ namespace Alternet.Common.Skia
             }
             catch (Exception ex)
             {
+                Debug.Assert(false, $"DrawText failed: {ex.Message}");
             }
         }
 

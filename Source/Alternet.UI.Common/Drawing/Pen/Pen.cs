@@ -16,14 +16,27 @@ namespace Alternet.Drawing
     /// </remarks>
     public class Pen : HandledObject<IPenHandler>, IEquatable<Pen>
     {
+        /// <summary>
+        /// Gets or sets the dash patterns for dashed lines.
+        /// Change this property to customize the dash pattern of the pen
+        /// which is specified by the <see cref="DashStyle"/> property.
+        /// </summary>
+        public static EnumArray<DashStyle, float[]?> DashPatterns = new();
+
         private static Pen? defaultPen;
 
-        private Color color;
-        private DashStyle dashStyle;
-        private LineCap lineCap;
-        private LineJoin lineJoin;
-        private Coord width;
+        private PenInfo penInfo = new();
+
         private SKPaint? paint;
+
+        static Pen()
+        {
+            DashPatterns[DashStyle.Solid] = null;
+            DashPatterns[DashStyle.Dash] = new float[] { 4, 2 };
+            DashPatterns[DashStyle.Dot] = new float[] { 1, 1 };
+            DashPatterns[DashStyle.DashDot] = new float[] { 4, 2, 1, 2 };
+            DashPatterns[DashStyle.DashDotDot] = new float[] { 4, 2, 1, 2, 1, 2 };
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pen"/> class with the specified
@@ -121,11 +134,11 @@ namespace Alternet.Drawing
             bool immutable)
             : base(immutable)
         {
-            this.color = color;
-            this.width = width;
-            this.dashStyle = dashStyle;
-            this.lineCap = lineCap;
-            this.lineJoin = lineJoin;
+            penInfo.Color = color;
+            penInfo.Width = width;
+            penInfo.DashStyle = dashStyle;
+            penInfo.LineCap = lineCap;
+            penInfo.LineJoin = lineJoin;
         }
 
         /// <summary>
@@ -150,13 +163,28 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual Color Color
         {
-            get => color;
+            get => penInfo.Color;
 
             set
             {
-                if (color == value || Immutable)
+                if (penInfo.Color == value || Immutable)
                     return;
-                color = value;
+                penInfo.Color = value;
+                UpdateRequired = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the dash pattern of this <see cref="Pen"/>.
+        /// </summary>
+        public virtual float[] DashPattern
+        {
+            get => penInfo.DashPattern;
+            set
+            {
+                if (penInfo.DashPattern == value || Immutable)
+                    return;
+                penInfo.DashPattern = value;
                 UpdateRequired = true;
             }
         }
@@ -175,6 +203,25 @@ namespace Alternet.Drawing
             set
             {
                 paint = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets pen information as a single record.
+        /// This record contains all the properties of the pen.
+        /// </summary>
+        public PenInfo PenInfo
+        {
+            get
+            {
+                return penInfo;
+            }
+            set
+            {
+                if (penInfo == value || Immutable)
+                    return;
+                penInfo = value;
+                UpdateRequired = true;
             }
         }
 
@@ -198,13 +245,13 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual DashStyle DashStyle
         {
-            get => dashStyle;
+            get => penInfo.DashStyle;
 
             set
             {
-                if (dashStyle == value || Immutable)
+                if (penInfo.DashStyle == value || Immutable)
                     return;
-                dashStyle = value;
+                penInfo.DashStyle = value;
                 UpdateRequired = true;
             }
         }
@@ -221,13 +268,13 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual LineCap LineCap
         {
-            get => lineCap;
+            get => penInfo.LineCap;
 
             set
             {
-                if (lineCap == value || Immutable)
+                if (penInfo.LineCap == value || Immutable)
                     return;
-                lineCap = value;
+                penInfo.LineCap = value;
                 UpdateRequired = true;
             }
         }
@@ -244,13 +291,13 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual LineJoin LineJoin
         {
-            get => lineJoin;
+            get => penInfo.LineJoin;
 
             set
             {
-                if (lineJoin == value || Immutable)
+                if (penInfo.LineJoin == value || Immutable)
                     return;
-                lineJoin = value;
+                penInfo.LineJoin = value;
                 UpdateRequired = true;
             }
         }
@@ -268,13 +315,13 @@ namespace Alternet.Drawing
         /// </remarks>
         public virtual Coord Width
         {
-            get => width;
+            get => penInfo.Width;
 
             set
             {
-                if (width == value || Immutable)
+                if (penInfo.Width == value || Immutable)
                     return;
-                width = value;
+                penInfo.Width = value;
                 UpdateRequired = true;
             }
         }
@@ -336,7 +383,7 @@ namespace Alternet.Drawing
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
-            return (Color, DashStyle, Width).GetHashCode();
+            return penInfo.GetHashCode();
         }
 
         /// <summary>
@@ -346,16 +393,16 @@ namespace Alternet.Drawing
         {
             if (o == null)
                 return false;
-            return Color == o.Color && DashStyle == o.DashStyle && Width == o.Width;
+            return penInfo.Equals(o.penInfo);
         }
 
         /// <summary>
         /// Returns a string that represents the current object.
         /// </summary>
         /// <returns>A string that represents the current object.</returns>
-        public override string ToString()
+        public override string? ToString()
         {
-            return $"Pen ({Color}, {Width}, {DashStyle})";
+            return penInfo.ToString();
         }
 
         /// <summary>
