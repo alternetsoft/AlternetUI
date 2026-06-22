@@ -53,16 +53,24 @@ namespace PropertyGridSample
                 bool logAddedControls = false;
                 bool logNotAddedControls = false;
 
+                /*
+                ToolBoxAdd<Button>();
+                ToolBoxAdd<ComboBox>();
+                ToolBoxAdd<GroupBox>();
+                ToolBoxAdd<CheckBox>();
+                ToolBoxAdd<RadioButton>();
+                ToolBoxAdd<ProgressBar>();
+                ToolBoxAdd<ListBox>();
+                ToolBoxAdd<CheckedListBox>();
+                ToolBoxAdd<TreeView>();
+                */
+
                 ToolBoxAdd<Border>();
                 ToolBoxAdd<PictureBox>();
-                ToolBoxAdd<Button>();
                 ToolBoxAdd<ToolBar>();
                 ToolBoxAdd<SplittedPanel>();
                 ToolBoxAdd<Calendar>();
-                ToolBoxAdd<CheckBox>();
-                ToolBoxAdd<ComboBox>();
                 ToolBoxAdd<StdComboBox>();
-                ToolBoxAdd<GroupBox>();
                 ToolBoxAdd<HorizontalStackPanel>();
                 ToolBoxAdd<TabControl>();
                 ToolBoxAdd<LinkLabel>();
@@ -72,8 +80,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<NumericUpDown>();
                 ToolBoxAdd<Panel>();
                 ToolBoxAdd<PanelOkCancelButtons>();
-                ToolBoxAdd<ProgressBar>();
-                ToolBoxAdd<RadioButton>();
                 ToolBoxAdd<RichTextBox>();
                 ToolBoxAdd<FindReplaceControl>();
                 ToolBoxAdd<StdSlider>();
@@ -106,11 +112,8 @@ namespace PropertyGridSample
                 ToolBoxAdd<ColorPicker>();
                 ToolBoxAdd<TextBoxWithListPopup>();
                 ToolBoxAdd<CardPanelHeader>();
-                ToolBoxAdd<TreeView>();
                 ToolBoxAdd<StdTreeView>();
-                ToolBoxAdd<ListBox>();
                 ToolBoxAdd<Label>();
-                ToolBoxAdd<CheckedListBox>();
                 ToolBoxAdd<FileListBox>();
                 ToolBoxAdd<FontListBox>();
                 ToolBoxAdd<GenericItemControl>();

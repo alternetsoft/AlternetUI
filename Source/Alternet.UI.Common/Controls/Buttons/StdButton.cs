@@ -83,11 +83,15 @@ namespace Alternet.UI
 
             Borders?.SetAllExceptNormal(
                 (state) => Borders.Normal?.Clone(),
-                VisualControlStates.Hovered | VisualControlStates.Pressed | VisualControlStates.Disabled | VisualControlStates.Focused);
+                VisualControlStates.Hovered | VisualControlStates.Pressed
+                | VisualControlStates.Disabled | VisualControlStates.Focused);
 
             MinimumSize = DefaultMinSize;
             Padding = DefaultPadding;
             Item.HorizontalAlignment = HorizontalAlignment.Center;
+
+            HorizontalAlignment = HorizontalAlignment.Stretch;
+            VerticalAlignment = VerticalAlignment.Stretch;
 
             SetColorTheme();
         }
