@@ -33,7 +33,7 @@ namespace Alternet.UI
     /// handler, and whenever the application data changes in size. It will adjust
     /// the view, object and page size according to the size of the window and the size of the data.
     /// </remarks>
-    [ControlCategory(KnownControlCategory.Common)]
+    [ControlCategory(KnownControlCategory.Native)]
     public partial class ScrollBar : Control
     {
         private readonly AltPositionInfo pos = new();

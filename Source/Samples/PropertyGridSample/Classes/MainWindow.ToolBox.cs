@@ -64,6 +64,10 @@ namespace PropertyGridSample
                 ToolBoxAdd<CheckedListBox>();
                 ToolBoxAdd<TreeView>();
                 */
+                /*
+                This is commented out because Slider control doesn't work property on Windows when dark mode is enabled.
+                ToolBoxAdd<Alternet.UI.Slider>();
+                */
 
                 ToolBoxAdd<Border>();
                 ToolBoxAdd<PictureBox>();
@@ -123,6 +127,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<ShapeControl>();
                 ToolBoxAdd<ResizableBorder>();
                 ToolBoxAdd<ResizableWindowBorder>();
+                ToolBoxAdd<StdCheckListBox>();
 
                 void ToolBoxAdd<T>()
                 {
@@ -130,12 +135,6 @@ namespace PropertyGridSample
                 }
 
                 /*
-                This is commented out because Slider control doesn't work property on Windows when dark mode is enabled.
-                ToolBoxAdd<Alternet.UI.Slider>();
-                */
-
-                /*
-                ToolBoxAdd<StdCheckListBox>();
                 ToolBoxAdd<Alternet.UI.HiddenBorder>();
                 ToolBoxAdd<Alternet.UI.VerticalLine>();
                 ToolBoxAdd<Alternet.UI.ContainerControl>();
@@ -163,18 +162,13 @@ namespace PropertyGridSample
                 ToolBoxAdd<Alternet.UI.ValueEditorUInt32>();
                 ToolBoxAdd<Alternet.UI.ValueEditorUInt64>();
                 ToolBoxAdd<Alternet.UI.HeaderLabel>();
-                ToolBoxAdd<Alternet.UI.Grid>();
-                ToolBoxAdd<Alternet.UI.LayoutPanel>();
                 ToolBoxAdd<Alternet.UI.SplittedTreeAndCards>();
                 ToolBoxAdd<Alternet.UI.ScrollViewer>();
-                ToolBoxAdd<Alternet.UI.PanelListBoxAndCards>();
-                ToolBoxAdd<Alternet.UI.PanelTreeAndCards>();
                 ToolBoxAdd<Alternet.UI.SplittedControlsPanel>();
                 ToolBoxAdd<Alternet.UI.Splitter>();
                 ToolBoxAdd<Alternet.UI.ColorComboBox>();
                 ToolBoxAdd<Alternet.UI.FontComboBox>();
                 ToolBoxAdd<Alternet.UI.ListBoxHeader>();
-                ToolBoxAdd<Alternet.UI.ActionsListBox>();
                 ToolBoxAdd<Alternet.UI.LogListBox>();
                 ToolBoxAdd<Alternet.UI.VirtualCheckListBox>();
                 ToolBoxAdd<Alternet.UI.AnimationPlayer>();
@@ -186,20 +180,12 @@ namespace PropertyGridSample
                 ToolBoxAdd<Alternet.UI.PreviewTextFile>();
                 ToolBoxAdd<Alternet.UI.PreviewUixml>();
                 ToolBoxAdd<Alternet.UI.PreviewUixmlSplitted>();
-                ToolBoxAdd<Alternet.UI.PropertyGrid>();
-                ToolBoxAdd<Alternet.UI.HScrollBar>();
-                ToolBoxAdd<Alternet.UI.VScrollBar>();
                 ToolBoxAdd<Alternet.UI.FontSizePicker>();
                 ToolBoxAdd<Alternet.UI.SpeedButtonWithListPopup>();
                 ToolBoxAdd<Alternet.UI.SpeedDateButton>();
                 ToolBoxAdd<Alternet.UI.SpeedEnumButton>();
                 ToolBoxAdd<Alternet.UI.WebBrowser>();
-                ToolBoxAdd<Alternet.UI.PanelFormSelector>();
-                ToolBoxAdd<Alternet.UI.PanelMultilineTextBox>();
-                ToolBoxAdd<Alternet.UI.PanelRichTextBox>();
                 ToolBoxAdd<Alternet.UI.PanelSettings>();
-                ToolBoxAdd<Alternet.UI.PanelWebBrowser>();
-                ToolBoxAdd<Alternet.UI.PanelWithToolBar>();
                 */
 
                 if (DebugUtils.IsDebugDefined)
