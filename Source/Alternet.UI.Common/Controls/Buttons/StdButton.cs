@@ -21,16 +21,18 @@ namespace Alternet.UI
         public static bool DefaultIsBoldWhenIsd = false;
 
         /// <summary>
-        /// Represents the default padding value which is applied to <see cref="StdButton"/> controls in the constructor.
+        /// Represents the default padding value which is applied to <see cref="StdButton"/>
+        /// controls in the constructor.
         /// </summary>
-        /// <remarks>This static field provides a standard padding size that is applied to <see cref="StdButton"/> controls
+        /// <remarks>This static field provides a standard padding size that is applied
+        /// to <see cref="StdButton"/> controls
         /// to ensure consistent spacing across components.</remarks>
         public static Thickness DefaultPadding = 4;
 
         /// <summary>
         /// Represents the default minimum size for the component, expressed as a SizeD structure.
         /// </summary>
-        public static SizeD DefaultMinSize = 32;
+        public static SizeD DefaultMinSize = (64, 32);
 
         /// <summary>
         /// Specifies the default corner radius,
