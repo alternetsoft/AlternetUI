@@ -38,12 +38,12 @@ namespace Alternet.UI
             if (data == null)
                 return;
 
-            if(format == DataFormats.Rtf && data is string stringData)
+            if (format == DataFormats.Rtf && data is string stringData)
             {
                 using var stream = new MemoryStream();
                 StreamUtils.StringToStream(stream, stringData, Encoding.ASCII);
                 stream.Position = 0;
-                dataObject.SetStreamData(format, new Native.InputStream(stream));
+                NativeUtils.Invoke(format, s => dataObject.SetStreamData(s, new Native.InputStream(stream)));
                 return;
             }
 
@@ -67,22 +67,22 @@ namespace Alternet.UI
                 using var stream = new MemoryStream();
                 image.Save(stream, ImageFormat.Png);
                 stream.Position = 0;
-                dataObject.SetStreamData(format, new Native.InputStream(stream));
+                NativeUtils.Invoke(format, s => dataObject.SetStreamData(s, new Native.InputStream(stream)));
                 return;
             }
 
-            if(format == DataFormats.Serializable)
+            if (format == DataFormats.Serializable)
             {
                 using var stream = new MemoryStream();
                 DataObject.SerializeDataObject(stream, data);
                 stream.Position = 0;
-                dataObject.SetStreamData(
+                NativeUtils.Invoke(
                     DataFormats.AlternetUISerializable,
-                    new Native.InputStream(stream));
+                    s => dataObject.SetStreamData(s, new Native.InputStream(stream)));
                 return;
             }
 
-            if(data is Stream streamData)
+            if (data is Stream streamData)
             {
                 if (streamData.CanSeek)
                 {
@@ -95,7 +95,7 @@ namespace Alternet.UI
                             "UnmanagedDataObjectService.SetData: Stream doesn't support seeking"));
                 }
 
-                dataObject.SetStreamData(format, new Native.InputStream(streamData));
+                NativeUtils.Invoke(format, s => dataObject.SetStreamData(s, new Native.InputStream(streamData)));
                 return;
             }
 

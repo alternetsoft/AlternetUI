@@ -54,5 +54,15 @@ namespace Alternet.UI.Native
         {
             return ShowModal(GetNativeWindow(owner));
         }
+
+        string? IDialogHandler.GetTitle()
+        {
+            return Title;
+        }
+
+        void IDialogHandler.SetTitle(string? value)
+        {
+            Title = value;
+        }
     }
 }

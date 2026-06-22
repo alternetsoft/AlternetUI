@@ -22,12 +22,12 @@ namespace Alternet.UI
         /// </remarks>
         public string AppName
         {
-            get => NativeApplication?.Name ?? string.Empty;
+            get => NativeApplication?.GetName().ToString() ?? string.Empty;
 
             set
             {
                 if (NativeApplication is not null)
-                    NativeApplication.Name = value;
+                    NativeUtils.Invoke(value, NativeApplication.SetName);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Alternet.UI
             set
             {
                 if (NativeApplication is not null)
-                    NativeApplication.DisplayName = value;
+                    NativeUtils.Invoke(value, NativeApplication.SetDisplayName);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Alternet.UI
             set
             {
                 if (NativeApplication is not null)
-                    NativeApplication.AppClassName = value;
+                    NativeUtils.Invoke(value, NativeApplication.SetAppClassName);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Alternet.UI
             set
             {
                 if (NativeApplication is not null)
-                    NativeApplication.VendorName = value;
+                    NativeUtils.Invoke(value, NativeApplication.SetVendorName);
             }
         }
 
@@ -126,7 +126,7 @@ namespace Alternet.UI
             set
             {
                 if (NativeApplication is not null)
-                    NativeApplication.VendorDisplayName = value;
+                    NativeUtils.Invoke(value, NativeApplication.SetVendorDisplayName);
             }
         }
 
@@ -145,7 +145,7 @@ namespace Alternet.UI
 
         public void SetSystemOption(string name, int value)
         {
-            Native.Application.SetSystemOptionInt(name, value);
+            NativeUtils.Invoke(name, s => Native.Application.SetSystemOptionInt(s, value));
         }
 
         public UIPlatformKind GetPlatformKind()
@@ -199,7 +199,10 @@ namespace Alternet.UI
         /// <returns><c>true</c> if operation was successful, <c>false</c> otherwise.</returns>
         public bool SetNativeTheme(string theme)
         {
-            return NativeApplication?.SetNativeTheme(theme) ?? false;
+            if(NativeApplication is null)
+                return false;
+
+            return NativeUtils.Invoke(theme, s => NativeApplication.SetNativeTheme(s));
         }
 
         /// <summary>

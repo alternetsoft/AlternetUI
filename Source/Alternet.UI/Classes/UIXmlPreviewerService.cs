@@ -141,7 +141,8 @@ namespace Alternet.UI.Integration
                     = Path.Combine(screenshotsDirectory, Guid.NewGuid().ToString("N") + ".bmp");
 
                 var wxHandler = window.Handler as WxControlHandler;
-                wxHandler?.NativeControl.SaveScreenshot(targetFilePath);
+
+                NativeStringSpan.Invoke(targetFilePath, (s) => wxHandler?.NativeControl.SaveScreenshot(s));
 
                 return targetFilePath;
             }

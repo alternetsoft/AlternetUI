@@ -120,7 +120,7 @@ namespace Alternet.UI
         /// <returns>A string representing the version of the WxWidgets library.</returns>
         public static string GetWxWidgetsVersion()
         {
-            var wxWidgets = Native.WebBrowser.GetLibrary();
+            var wxWidgets = Native.WebBrowser.GetLibraryVersionString().ToString();
             var s = wxWidgets.ToLower().Replace("wxwidgets ", string.Empty);
             return s;
         }
@@ -217,7 +217,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual string GetCustomData(string key)
         {
-            return nativeApplication.GetCustomData(key).ToString();
+            return NativeUtils.Invoke(key, s => nativeApplication.GetCustomData(s));
         }
 
         /// <inheritdoc/>

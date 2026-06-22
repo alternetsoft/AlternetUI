@@ -192,7 +192,11 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SendSelect(string text)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorSelect(Handle, text);
+            var result = NativeUtils.Invoke(text, s =>
+            {
+                return Native.WxOtherFactory.UIActionSimulatorSelect(Handle, s);
+            });
+
             ExecuteCommand();
             return result;
         }
@@ -209,7 +213,11 @@ namespace Alternet.UI
         /// </remarks>
         public virtual bool SendText(string text)
         {
-            var result = Native.WxOtherFactory.UIActionSimulatorText(Handle, text);
+            var result = NativeUtils.Invoke(text, s =>
+            {
+                return Native.WxOtherFactory.UIActionSimulatorText(Handle, s);
+            });
+
             ExecuteCommand();
             return result;
         }

@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
 {
     internal partial class PrintDialog : Alternet.Drawing.Printing.IPrintDialogHandler
     {
-        public string? Title { get; set; }
+        private string? title;
 
         public void ShowAsync(Alternet.UI.Window? owner, Action<bool>? onClose)
         {
@@ -25,6 +25,16 @@ namespace Alternet.UI.Native
         public Alternet.UI.ModalResult ShowModal(Alternet.UI.Window? owner)
         {
             return ShowModal(GetNativeWindow(owner));
+        }
+
+        string? IDialogHandler.GetTitle()
+        {
+            return title;
+        }
+
+        void IDialogHandler.SetTitle(string? value)
+        {
+            title = value;
         }
     }
 }

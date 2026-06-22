@@ -41,7 +41,7 @@ namespace Alternet.UI
 
             if (format == DataFormats.Serializable)
             {
-                var nativeStream = dataObject.GetStreamData(DataFormats.AlternetUISerializable);
+                var nativeStream = NativeUtils.Invoke(DataFormats.AlternetUISerializable, dataObject.GetStreamData);
                 if (nativeStream is null)
                     return null;
                 var stream = new UnmanagedStreamAdapter(nativeStream);

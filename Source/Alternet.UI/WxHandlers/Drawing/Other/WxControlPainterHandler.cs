@@ -859,15 +859,18 @@ namespace Alternet.Drawing
 
             void InternalDraw(Graphics tempDc, RectI tempRect)
             {
-                Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
-                    default,
-                    WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
-                    text,
-                    tempRect,
-                    (int)align,
-                    (int)flags,
-                    (int)ellipsizeMode);
+                NativeUtils.Invoke(text, s =>
+                {
+                    Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
+                        default,
+                        WxApplicationHandler.WxWidget(control),
+                        (UI.Native.DrawingContext)tempDc.NativeObject,
+                        s,
+                        tempRect,
+                        (int)align,
+                        (int)flags,
+                        (int)ellipsizeMode);
+                });
             }
         }
 

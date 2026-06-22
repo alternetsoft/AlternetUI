@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -78,8 +79,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">The string to convert to a native string span.</param>
         /// <param name="action">The action to invoke with the native string span.</param>
-        public static void Invoke(string? s, Action<NativeStringSpan> action)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Invoke(string? s, Action<NativeStringSpan>? action)
         {
+            if (action is null)
+                return;
             StringUtils.InvokeWithNativeText(s ?? string.Empty, action);
         }
 
@@ -90,8 +94,11 @@ namespace Alternet.UI
         /// <param name="s1">The first string to convert to a native string span.</param>
         /// <param name="s2">The second string to convert to a native string span.</param>
         /// <param name="action">The action to invoke with the native string spans.</param>
-        public static void Invoke(string? s1, string? s2, Action<NativeStringSpan, NativeStringSpan> action)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void Invoke(string? s1, string? s2, Action<NativeStringSpan, NativeStringSpan>? action)
         {
+            if (action is null)
+                return;
             StringUtils.InvokeWithNativeText(s1 ?? string.Empty, span =>
             {
                 StringUtils.InvokeWithNativeText(s2 ?? string.Empty, span2 =>
@@ -109,6 +116,7 @@ namespace Alternet.UI
         /// <param name="s2">The second string to convert to a native string span.</param>
         /// <param name="callback">The function to invoke with the native string spans.</param>
         /// <returns>The result returned by the callback.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T InvokeWithResult<T>(
             string? s1,
             string? s2,
@@ -131,6 +139,7 @@ namespace Alternet.UI
         /// <param name="s">The string to convert to a native string span.</param>
         /// <param name="callback">The function to invoke with the native string span.</param>
         /// <returns>The result returned by the callback.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static T InvokeWithResult<T>(string? s, Func<NativeStringSpan, T> callback)
         {
             return StringUtils.InvokeWithResult(s ?? string.Empty, callback);

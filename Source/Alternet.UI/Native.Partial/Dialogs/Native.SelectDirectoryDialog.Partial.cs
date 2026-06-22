@@ -19,5 +19,36 @@ namespace Alternet.UI.Native
         {
             return ShowModal(GetNativeWindow(owner));
         }
+
+        string? ISelectDirectoryDialogHandler.GetDirectoryName()
+        {
+            return GetDirectoryName();
+        }
+
+        string? ISelectDirectoryDialogHandler.GetInitialDirectory()
+        {
+            return GetInitialDirectory();
+        }
+
+        string? IDialogHandler.GetTitle()
+        {
+            return GetTitle();
+        }
+
+        void ISelectDirectoryDialogHandler.SetDirectoryName(string? value)
+        {
+            NativeStringSpan.Invoke(value, s => SetDirectoryName(s));
+
+        }
+
+        void ISelectDirectoryDialogHandler.SetInitialDirectory(string? value)
+        {
+            NativeStringSpan.Invoke(value, s => SetInitialDirectory(s));
+        }
+
+        void IDialogHandler.SetTitle(string? value)
+        {
+            NativeStringSpan.Invoke(value, s => SetTitle(s));
+        }
     }
 }
