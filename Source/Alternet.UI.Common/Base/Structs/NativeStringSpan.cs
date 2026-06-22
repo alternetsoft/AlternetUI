@@ -48,7 +48,7 @@ namespace Alternet.UI
         /// Operator to convert a <see cref="NativeStringSpan"/> to a <see cref="string"/>.
         /// </summary>
         /// <param name="span">The value to convert.</param>
-        public static implicit operator string(NativeStringSpan span)
+        public static explicit operator string(NativeStringSpan span)
         {
             return ToManagedString(span);
         }

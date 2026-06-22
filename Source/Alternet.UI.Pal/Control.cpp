@@ -135,26 +135,17 @@ namespace Alternet::UI
 
     bool wxWindow2::AcceptsFocus() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocus();
-        else
-            return _owner->_acceptsFocus;
+        return true;
     }
 
     bool wxWindow2::AcceptsFocusFromKeyboard() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocusFromKeyboard();
-        else
-            return _owner->_acceptsFocusFromKeyboard;
+        return true;
     }
 
     bool wxWindow2::AcceptsFocusRecursively() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocusRecursively();
-        else
-            return _owner->_acceptsFocusRecursively;
+        return true;
     }
 
     /*static*/ Control::ControlsByWxWindowsMap Control::s_controlsByWxWindowsMap;
@@ -946,36 +937,19 @@ namespace Alternet::UI
 
     void Control::SetFocusFlags(bool canSelect, bool tabStop, bool canSelectChildren)
     {
-        if (_acceptsFocus == canSelect && GetTabStop() == tabStop)
-            return;
-        _acceptsFocus = canSelect;
-        _acceptsFocusFromKeyboard = tabStop;
-        _acceptsFocusRecursively = canSelect;
-        SetTabStop(tabStop);
     }
 
     void Control::SetAcceptsFocus(bool value)
     {
-        if (_acceptsFocus == value)
-            return;
-        _acceptsFocus = value;
-        RecreateWxWindowIfNeeded();
     }
 
     bool Control::GetAcceptsFocusAll()
     {
-        return GetAcceptsFocus() && GetAcceptsFocusFromKeyboard() && GetAcceptsFocusRecursively();
+        return true;
     }
 
     void Control::SetAcceptsFocusAll(bool value)
     {
-        if (_acceptsFocus == value && _acceptsFocusFromKeyboard == value
-            && _acceptsFocusRecursively == value)
-            return;
-        _acceptsFocus = value;
-        _acceptsFocusFromKeyboard = value;
-        _acceptsFocusRecursively = value;
-        RecreateWxWindowIfNeeded();
     }
 
     bool Control::GetAcceptsFocusFromKeyboard()
@@ -986,10 +960,6 @@ namespace Alternet::UI
 
     void Control::SetAcceptsFocusFromKeyboard(bool value)
     {
-        if (_acceptsFocusFromKeyboard == value)
-            return;
-        _acceptsFocusFromKeyboard = value;
-        RecreateWxWindowIfNeeded();
     }
 
     bool Control::GetAcceptsFocusRecursively()
@@ -1000,10 +970,6 @@ namespace Alternet::UI
 
     void Control::SetAcceptsFocusRecursively(bool value)
     {
-        if (_acceptsFocusRecursively == value)
-            return;
-        _acceptsFocusRecursively = value;
-        RecreateWxWindowIfNeeded();
     }
 
     void Control::SetAllowDoubleBuffered(bool allow)
@@ -2308,50 +2274,32 @@ namespace Alternet::UI
 
     bool wxScrolledCanvas2::AcceptsFocus() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocus();
-        else
-            return _owner->_acceptsFocus;
+        return true;
     }
 
     bool wxScrolledCanvas2::AcceptsFocusFromKeyboard() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocusFromKeyboard();
-        else
-            return _owner->_acceptsFocusFromKeyboard;
+        return true;
     }
 
     bool wxScrolledCanvas2::AcceptsFocusRecursively() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocusRecursively();
-        else
-            return _owner->_acceptsFocusRecursively;
+        return true;
     }
 
     bool wxScrolledWindow2::AcceptsFocus() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocus();
-        else
-            return _owner->_acceptsFocus;
+        return true;
     }
 
     bool wxScrolledWindow2::AcceptsFocusFromKeyboard() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocusFromKeyboard();
-        else
-            return _owner->_acceptsFocusFromKeyboard;
+        return true;
     }
 
     bool wxScrolledWindow2::AcceptsFocusRecursively() const
     {
-        if (_owner == nullptr)
-            return wxWindow::AcceptsFocusRecursively();
-        else
-            return _owner->_acceptsFocusRecursively;
+        return true;
     }
 
     void Control::SetScrollBar(ScrollBarOrientation orientation,

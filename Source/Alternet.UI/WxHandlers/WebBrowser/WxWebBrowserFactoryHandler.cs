@@ -87,7 +87,7 @@ namespace Alternet.UI
 
         public string GetBackendVersionString(WebBrowserBackend value)
         {
-            return Native.WebBrowser.GetBackendVersionString((int)value);
+            return Native.WebBrowser.GetBackendVersionString((int)value).ToString();
         }
 
         public void ThrowError(int errorId)
@@ -97,7 +97,7 @@ namespace Alternet.UI
 
         public string GetLibraryVersionString()
         {
-            return Native.WebBrowser.GetLibraryVersionString();
+            return Native.WebBrowser.GetLibraryVersionString().ToString();
         }
 
         public bool IsBackendAvailable(WebBrowserBackend value)

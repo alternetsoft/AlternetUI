@@ -10,7 +10,7 @@ namespace Alternet.UI.Native
     {
         string? Alternet.Drawing.Printing.IPrinterSettingsHandler.GetPrinterName()
         {
-            return GetPrinterName();
+            return GetPrinterName().ToString();
         }
 
         void Alternet.Drawing.Printing.IPrinterSettingsHandler.SetPrinterName(string? value)
@@ -20,7 +20,7 @@ namespace Alternet.UI.Native
 
         string? Alternet.Drawing.Printing.IPrinterSettingsHandler.GetPrintFileName()
         {
-            return GetPrintFileName();
+            return GetPrintFileName().ToString();
         }
 
         void Alternet.Drawing.Printing.IPrinterSettingsHandler.SetPrintFileName(string? value)

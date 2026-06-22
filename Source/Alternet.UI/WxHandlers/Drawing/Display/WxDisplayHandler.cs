@@ -30,7 +30,7 @@ namespace Alternet.UI
 
         public string GetName()
         {
-            return UI.Native.WxOtherFactory.DisplayGetName(Handle);
+            return UI.Native.WxOtherFactory.DisplayGetName(Handle).ToString();
         }
 
         public SizeI GetDPI()

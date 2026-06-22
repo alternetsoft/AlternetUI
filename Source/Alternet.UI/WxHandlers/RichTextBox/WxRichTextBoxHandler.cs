@@ -75,7 +75,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.GetReportedUrl();
+                return NativeControl.GetReportedUrl().ToString();
             }
         }
 
@@ -104,7 +104,7 @@ namespace Alternet.UI
 
         string IRichTextBox.GetValue()
         {
-            return NativeControl.GetValue();
+            return NativeControl.GetValue().ToString();
         }
 
         void IRichTextBox.SetValue(string value)
@@ -788,7 +788,7 @@ namespace Alternet.UI
 
         public string GetLineText(long lineNo)
         {
-            return NativeControl.GetLineText(lineNo);
+            return NativeControl.GetLineText(lineNo).ToString();
         }
 
         public int GetNumberOfLines()
@@ -1530,12 +1530,12 @@ namespace Alternet.UI
 
         public string GetRange(long from, long to)
         {
-            return NativeControl.GetRange(from, to);
+            return NativeControl.GetRange(from, to).ToString();
         }
 
         public string GetStringSelection()
         {
-            return NativeControl.GetStringSelection();
+            return NativeControl.GetStringSelection().ToString();
         }
 
         public long GetLastPosition()
@@ -2048,7 +2048,7 @@ namespace Alternet.UI
         /// </summary>
         public string GetFileName()
         {
-            return NativeControl.GetFilename();
+            return NativeControl.GetFilename().ToString();
         }
 
         /// <summary>
@@ -2076,7 +2076,7 @@ namespace Alternet.UI
         /// </summary>
         public string GetPropertiesMenuLabel(IntPtr richObj)
         {
-            return NativeControl.GetPropertiesMenuLabel(richObj);
+            return NativeControl.GetPropertiesMenuLabel(richObj).ToString();
         }
 
         /// <summary>

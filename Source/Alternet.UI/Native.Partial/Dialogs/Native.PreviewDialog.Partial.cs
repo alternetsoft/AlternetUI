@@ -30,7 +30,7 @@ namespace Alternet.UI.Native
 
         string? IDialogHandler.GetTitle()
         {
-            return GetTitle();
+            return GetTitle().ToString();
         }
 
         void IDialogHandler.SetTitle(string? value)

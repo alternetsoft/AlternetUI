@@ -44,7 +44,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.GetEmptyTextHint();
+                return NativeControl.GetEmptyTextHint().ToString();
             }
 
             set

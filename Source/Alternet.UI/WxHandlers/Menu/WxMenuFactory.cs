@@ -501,7 +501,7 @@ namespace Alternet.UI
 
         protected virtual void OnNativeMenuDestroying()
         {
-            var menu = Menu.MenuFromStringId(Native.Menu.GetEventMenuItemId());
+            var menu = Menu.MenuFromStringId(Native.Menu.GetEventMenuItemId().ToString());
 
             if (menu is null)
                 return;
@@ -521,22 +521,22 @@ namespace Alternet.UI
 
         protected virtual void OnNativeMenuClosed()
         {
-            RaiseMenuClosed(new StringEventArgs(Native.Menu.GetEventMenuItemId()));
+            RaiseMenuClosed(new StringEventArgs(Native.Menu.GetEventMenuItemId().ToString()));
         }
 
         protected virtual void OnNativeMenuOpened()
         {
-            RaiseMenuOpened(new StringEventArgs(Native.Menu.GetEventMenuItemId()));
+            RaiseMenuOpened(new StringEventArgs(Native.Menu.GetEventMenuItemId().ToString()));
         }
 
         protected virtual void OnNativeMenuHighlight()
         {
-            RaiseMenuHighlight(new StringEventArgs(Native.Menu.GetEventMenuItemId()));
+            RaiseMenuHighlight(new StringEventArgs(Native.Menu.GetEventMenuItemId().ToString()));
         }
 
         protected virtual void OnNativeMenuClick()
         {
-            var menu = Menu.MenuFromStringId(Native.Menu.GetEventMenuItemId());
+            var menu = Menu.MenuFromStringId(Native.Menu.GetEventMenuItemId().ToString());
 
             if (menu is MenuItem menuItem)
             {

@@ -221,7 +221,7 @@ namespace Alternet.UI
         {
             get
             {
-                return Native.PropertyGridVariant.GetString(handle);
+                return Native.PropertyGridVariant.GetString(handle).ToString()  ;
             }
 
             set
@@ -232,7 +232,7 @@ namespace Alternet.UI
 
         public bool IsNull => Native.PropertyGridVariant.IsNull(handle);
 
-        public string ValueType => Native.PropertyGridVariant.GetValueType(handle);
+        public string ValueType => Native.PropertyGridVariant.GetValueType(handle).ToString();
 
         public void Clear()
         {
@@ -248,7 +248,7 @@ namespace Alternet.UI
             return NativeUtils.Invoke(type, (t) => Native.PropertyGridVariant.IsType(handle, t));
         }
 
-        public override string ToString() => Native.PropertyGridVariant.MakeString(handle);
+        public override string ToString() => Native.PropertyGridVariant.MakeString(handle).ToString();
 
         public void SetCompatibleValue(object? value, PropertyInfo p)
         {

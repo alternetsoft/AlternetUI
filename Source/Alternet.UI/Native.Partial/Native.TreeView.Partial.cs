@@ -96,7 +96,7 @@ namespace Alternet.UI.Native
 
             var ea = new TreeViewEditEventArgs(
                 item,
-                e.Data.editCancelled ? null : e.Data.label);
+                e.Data.editCancelled ? null : e.Data.label.ToString());
             uiControl.RaiseBeforeLabelEdit(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
@@ -112,14 +112,14 @@ namespace Alternet.UI.Native
                 return;
             var ea = new TreeViewEditEventArgs(
                 item,
-                e.Data.editCancelled ? null : e.Data.label);
+                e.Data.editCancelled ? null : e.Data.label.ToString());
 
             uiControl.RaiseAfterLabelEdit(ea);
 
             if (!e.Data.editCancelled && !ea.Cancel)
             {
                 skipSetItemText = true;
-                ea.Item.Text = e.Data.label;
+                ea.Item.Text = e.Data.label.ToString();
                 skipSetItemText = false;
             }
 

@@ -57,7 +57,7 @@ namespace Alternet.Drawing
         {
             if(App.IsMacOS)
                 return SkiaUtils.GetFontFamilyName(genericFamily);
-            return UI.Native.Font.GetGenericFamilyName(genericFamily);
+            return UI.Native.Font.GetGenericFamilyName(genericFamily).ToString();
         }
 
         public bool IsFontFamilyValid(string name)

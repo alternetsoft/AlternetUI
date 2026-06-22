@@ -32,7 +32,7 @@ namespace Alternet.UI
 
         public string UserAgent
         {
-            get => NativeControl.GetUserAgent();
+            get => NativeControl.GetUserAgent().ToString();
             set
             {
                 NativeStringSpan.Invoke(value, span =>
@@ -63,9 +63,9 @@ namespace Alternet.UI
 
         public bool HasSelection => NativeControl.HasSelection;
 
-        public string SelectedText => NativeControl.GetSelectedText();
+        public string SelectedText => NativeControl.GetSelectedText().ToString();
 
-        public string SelectedSource => NativeControl.GetSelectedSource();
+        public string SelectedSource => NativeControl.GetSelectedSource().ToString();
 
         public bool CanCut => NativeControl.CanCut;
 
@@ -79,9 +79,9 @@ namespace Alternet.UI
 
         public bool IsBusy => NativeControl.IsBusy;
 
-        public string PageSource => NativeControl.GetPageSource();
+        public string PageSource => NativeControl.GetPageSource().ToString();
 
-        public string PageText => NativeControl.GetPageText();
+        public string PageText => NativeControl.GetPageText().ToString();
 
         public float ZoomFactor
         {
@@ -133,7 +133,7 @@ namespace Alternet.UI
 
             return NativeUtils.Invoke(cmdName, cmdParam1!, cmdParam2!, (s1, s2, s3) =>
             {
-                return Native.WebBrowser.DoCommandGlobal(s1, s2, s3);
+                return Native.WebBrowser.DoCommandGlobal(s1, s2, s3).ToString();
             });
         }
 
@@ -142,9 +142,9 @@ namespace Alternet.UI
             NativeStringSpan.Invoke(url, urlSpan => NativeControl.LoadURL(urlSpan));
         }
 
-        public string GetCurrentTitle() => NativeControl.GetCurrentTitle();
+        public string GetCurrentTitle() => NativeControl.GetCurrentTitle().ToString();
 
-        public string GetCurrentURL() => NativeControl.GetCurrentURL();
+        public string GetCurrentURL() => NativeControl.GetCurrentURL().ToString()   ;
 
         public IntPtr GetNativeBackend() => NativeControl.GetNativeBackend();
 
@@ -154,7 +154,7 @@ namespace Alternet.UI
 
             return NativeUtils.Invoke(cmdName, cmdParam1!, cmdParam2!, (s1, s2, s3) =>
             {
-                return NativeControl.DoCommand(s1, s2, s3);
+                return NativeControl.DoCommand(s1, s2, s3).ToString();
             });
         }
 
@@ -194,7 +194,7 @@ namespace Alternet.UI
         {
             const string magicResult = "3140D0CF550442968B792551E6DCBEC1";
 
-            result = NativeStringSpan.InvokeWithResult(javascript, span => NativeControl.RunScript(span));
+            result = NativeStringSpan.InvokeWithResult(javascript, span => NativeControl.RunScript(span)).ToString();
 
             if (result.StartsWith(magicResult))
             {

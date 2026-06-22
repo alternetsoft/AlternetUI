@@ -13,14 +13,14 @@ namespace Alternet.UI.Native
         {
             var result = new WebBrowserEventArgs();
 
-            result.Url = e.Data.Url;
-            result.TargetFrameName = e.Data.Target;
+            result.Url = e.Data.Url.ToString();
+            result.TargetFrameName = e.Data.Target.ToString();
             result.NavigationAction = (WebBrowserNavigationAction)Enum.ToObject(
                 typeof(WebBrowserNavigationAction), e.Data.ActionFlags);
-            result.MessageHandler = e.Data.MessageHandler;
+            result.MessageHandler = e.Data.MessageHandler.ToString();
             result.IsError = e.Data.IsError;
             result.EventType = eventType.ToString();
-            result.Text = e.Data.Text;
+            result.Text = e.Data.Text.ToString();
             result.IntVal = e.Data.IntVal;
             result.ClientData = e.Data.ClientData;
 

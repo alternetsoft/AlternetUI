@@ -173,7 +173,7 @@ namespace Alternet.UI
 
         public string GetFontFaceName()
         {
-            return Native.TextBoxTextAttr.GetFontFaceName(Handle);
+            return Native.TextBoxTextAttr.GetFontFaceName(Handle).ToString();
         }
 
         public int GetParagraphSpacingAfter()
@@ -198,12 +198,12 @@ namespace Alternet.UI
 
         public string GetBulletText()
         {
-            return Native.TextBoxTextAttr.GetBulletText(Handle);
+            return Native.TextBoxTextAttr.GetBulletText(Handle).ToString();
         }
 
         public string GetURL()
         {
-            return Native.TextBoxTextAttr.GetURL(Handle);
+            return Native.TextBoxTextAttr.GetURL(Handle).ToString();
         }
 
         public Color GetTextColor()

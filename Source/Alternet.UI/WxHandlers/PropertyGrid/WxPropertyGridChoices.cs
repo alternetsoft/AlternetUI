@@ -158,7 +158,7 @@ namespace Alternet.UI
 
         public string GetLabel(int ind)
         {
-            return Native.PropertyGridChoices.GetLabel(handle, (uint)ind);
+            return Native.PropertyGridChoices.GetLabel(handle, (uint)ind).ToString();
         }
 
         public int GetValue(int ind)

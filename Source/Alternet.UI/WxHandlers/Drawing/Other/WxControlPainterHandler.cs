@@ -951,7 +951,7 @@ namespace Alternet.Drawing
         /// </summary>
         public string GetVersion()
         {
-            return Alternet.UI.Native.WxOtherFactory.RendererGetVersion(default);
+            return Alternet.UI.Native.WxOtherFactory.RendererGetVersion(default).ToString();
         }
 
         /// <summary>

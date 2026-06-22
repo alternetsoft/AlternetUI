@@ -157,10 +157,6 @@ namespace Alternet::UI
 
         Window* GetParentWindow();
 
-        bool _acceptsFocus = true;
-        bool _acceptsFocusFromKeyboard = true;
-        bool _acceptsFocusRecursively = true;
-
         virtual void ShowCore();
         virtual void HideCore();
         void ApplyVisible(bool value);

@@ -84,7 +84,7 @@ namespace Alternet.UI
                 var ptr = AsPointer;
                 if (ptr == IntPtr.Zero)
                     return string.Empty;
-                return Native.Menu.GetMenuId(ptr);
+                return Native.Menu.GetMenuId(ptr).ToString();
             }
         }
 

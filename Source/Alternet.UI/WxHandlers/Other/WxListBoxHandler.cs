@@ -180,7 +180,7 @@ namespace Alternet.UI
         {
             if (n < 0 || n >= GetCount())
                 return string.Empty;
-            return NativeControl.GetString((uint)n);
+            return NativeControl.GetString((uint)n).ToString();
         }
 
         public int GetCount()

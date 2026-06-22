@@ -53,7 +53,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.GetReportedUrl();
+                return NativeControl.GetReportedUrl().ToString();
             }
         }
 
@@ -208,7 +208,7 @@ namespace Alternet.UI
         {
             get
             {
-                return NativeControl.GetEmptyTextHint();
+                return NativeControl.GetEmptyTextHint().ToString();
             }
 
             set
@@ -266,7 +266,7 @@ namespace Alternet.UI
 
         public string GetLineText(long lineNo)
         {
-            return NativeControl.GetLineText(lineNo);
+            return NativeControl.GetLineText(lineNo).ToString();
         }
 
         public int GetNumberOfLines()
@@ -454,12 +454,12 @@ namespace Alternet.UI
 
         public string GetRange(long from, long to)
         {
-            return NativeControl.GetRange(from, to);
+            return NativeControl.GetRange(from, to).ToString();
         }
 
         public string GetStringSelection()
         {
-            return NativeControl.GetStringSelection();
+            return NativeControl.GetStringSelection().ToString();
         }
 
         public void EmptyUndoBuffer()

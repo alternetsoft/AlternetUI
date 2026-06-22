@@ -44,7 +44,7 @@ namespace Alternet.UI.Native
         {
             var ea = new ListViewItemLabelEditEventArgs(
                 e.Data.itemIndex,
-                e.Data.editCancelled ? null : e.Data.label);
+                e.Data.editCancelled ? null : e.Data.label.ToString());
             (UIControl as UI.ListView)?.RaiseBeforeLabelEdit(ea);
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;
         }
@@ -57,15 +57,13 @@ namespace Alternet.UI.Native
 
             var ea = new ListViewItemLabelEditEventArgs(
                 e.Data.itemIndex,
-                e.Data.editCancelled ? null : e.Data.label);
+                e.Data.editCancelled ? null : e.Data.label.ToString());
 
             uiControl.RaiseAfterLabelEdit(ea);
 
             if (!e.Data.editCancelled && !ea.Cancel)
             {
-                /*skipSetItemText = true;*/
-                uiControl.Items[(int)e.Data.itemIndex].Text = e.Data.label;
-                /*skipSetItemText = false;*/
+                uiControl.Items[(int)e.Data.itemIndex].Text = e.Data.label.ToString();
             }
 
             e.Result = ea.Cancel ? (IntPtr)1 : IntPtr.Zero;

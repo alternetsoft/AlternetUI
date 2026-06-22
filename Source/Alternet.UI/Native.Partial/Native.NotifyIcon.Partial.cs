@@ -100,7 +100,7 @@ namespace Alternet.UI.Native
 
         string? INotifyIconHandler.GetText()
         {
-            return GetText();
+            return GetText().ToString();
         }
     }
 }

@@ -13,17 +13,17 @@ namespace Alternet.UI.Native
     {
         string IFontHandler.GetName()
         {
-            return GetName();
+            return GetName().ToString();
         }
 
         string IFontHandler.GetDescription()
         {
-            return GetDescription();
+            return GetDescription().ToString();
         }
 
         string IFontHandler.Serialize()
         {
-            return Serialize();
+            return Serialize().ToString();
         }
 
         /// <summary>

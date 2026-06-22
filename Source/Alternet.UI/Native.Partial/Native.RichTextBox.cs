@@ -14,7 +14,7 @@ namespace Alternet.UI.Native
         
         public void OnPlatformEventTextUrl()
         {
-            var url = GetReportedUrl();
+            var url = GetReportedUrl().ToString();
             (UIControl as UI.RichTextBox)?.OnTextUrl(new UrlEventArgs(url));
         }
     }

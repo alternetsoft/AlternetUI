@@ -32,7 +32,7 @@ namespace Alternet.UI.Native
 
         string? IFileDialogHandler.GetInitialDirectory()
         {
-            return GetInitialDirectory();
+            return GetInitialDirectory().ToString();
         }
 
         void IFileDialogHandler.SetInitialDirectory(string? value)
@@ -42,7 +42,7 @@ namespace Alternet.UI.Native
 
         string? IFileDialogHandler.GetFilter()
         {
-            return GetFilter();
+            return GetFilter().ToString();
         }
 
         void IFileDialogHandler.SetFilter(string? value)
@@ -52,7 +52,7 @@ namespace Alternet.UI.Native
 
         string? IFileDialogHandler.GetFileName()
         {
-            return GetFileName();
+            return GetFileName().ToString();
         }
 
         void IFileDialogHandler.SetFileName(string? value)
@@ -62,7 +62,7 @@ namespace Alternet.UI.Native
 
         string? IDialogHandler.GetTitle()
         {
-            return GetTitle();
+            return GetTitle().ToString();
         }
 
         void IDialogHandler.SetTitle(string? value)

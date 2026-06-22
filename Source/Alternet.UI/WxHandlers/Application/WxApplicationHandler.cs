@@ -217,7 +217,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public virtual string GetCustomData(string key)
         {
-            return NativeUtils.Invoke(key, s => nativeApplication.GetCustomData(s));
+            return NativeUtils.Invoke(key, s => nativeApplication.GetCustomData(s).ToString());
         }
 
         /// <inheritdoc/>

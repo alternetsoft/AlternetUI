@@ -22,17 +22,17 @@ namespace Alternet.UI.Native
 
         string? ISelectDirectoryDialogHandler.GetDirectoryName()
         {
-            return GetDirectoryName();
+            return GetDirectoryName().ToString();
         }
 
         string? ISelectDirectoryDialogHandler.GetInitialDirectory()
         {
-            return GetInitialDirectory();
+            return GetInitialDirectory().ToString();
         }
 
         string? IDialogHandler.GetTitle()
         {
-            return GetTitle();
+            return GetTitle().ToString();
         }
 
         void ISelectDirectoryDialogHandler.SetDirectoryName(string? value)

@@ -82,14 +82,14 @@ namespace Alternet.UI.Native
 
             fontInfo.Style = ResultFontStyle;
             fontInfo.SizeInPoints = ResultFontSizeInPoints;
-            fontInfo.Name = GetResultFontName();
+            fontInfo.Name = GetResultFontName().ToString();
 
             return result;
         }
 
         string? IDialogHandler.GetTitle()
         {
-            return GetTitle();
+            return GetTitle().ToString();
         }
 
         public void SetTitle(string? value)

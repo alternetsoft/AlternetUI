@@ -72,7 +72,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.EventValidationFailureMessage
         {
-            get => NativeControl.GetEventValidationFailureMessage();
+            get => NativeControl.GetEventValidationFailureMessage().ToString();
             set => NativeStringSpan.Invoke(value, span =>
             {
                 NativeControl.SetEventValidationFailureMessage(span);
@@ -104,7 +104,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.EventPropertyName
         {
-            get => NativeControl.GetEventPropertyName();
+            get => NativeControl.GetEventPropertyName().ToString();
         }
 
         /// <summary>
@@ -499,7 +499,7 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return string.Empty;
-            return NativeControl.GetPropertyHelpString(ptr.Value);
+            return NativeControl.GetPropertyHelpString(ptr.Value).ToString();
         }
 
         string IPropertyGridHandler.GetPropertyLabel(IPropertyGridItem id)
@@ -507,7 +507,7 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return string.Empty;
-            return NativeControl.GetPropertyLabel(ptr.Value);
+            return NativeControl.GetPropertyLabel(ptr.Value).ToString();
         }
 
         string IPropertyGridHandler.GetPropertyValueAsString(IPropertyGridItem id)
@@ -515,7 +515,7 @@ namespace Alternet.UI
             var ptr = ItemToPtr(id);
             if (ptr is null)
                 return string.Empty;
-            return NativeControl.GetPropertyValueAsString(ptr.Value);
+            return NativeControl.GetPropertyValueAsString(ptr.Value).ToString();
         }
 
         long IPropertyGridHandler.GetPropertyValueAsLong(IPropertyGridItem id)
@@ -528,7 +528,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.GetPropNameAsLabel()
         {
-            return Native.PropertyGrid.GetNameAsLabel();
+            return Native.PropertyGrid.GetNameAsLabel().ToString();
         }
 
         ulong IPropertyGridHandler.GetPropertyValueAsULong(IPropertyGridItem id)
@@ -1019,7 +1019,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.GetUnspecifiedValueText(PropertyGridValueFormatFlags argFlags)
         {
-            return NativeControl.GetUnspecifiedValueText((int)argFlags);
+            return NativeControl.GetUnspecifiedValueText((int)argFlags).ToString();
         }
 
         void IPropertyGridHandler.SetVirtualWidth(int width)
@@ -1049,7 +1049,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.GetCommonValueLabel(int i)
         {
-            return NativeControl.GetCommonValueLabel((uint)i);
+            return NativeControl.GetCommonValueLabel((uint)i).ToString();
         }
 
         int IPropertyGridHandler.GetUnspecifiedCommonValue()
@@ -1319,7 +1319,7 @@ namespace Alternet.UI
             var ptr = ItemToPtr(property);
             if (ptr is null)
                 return string.Empty;
-            return NativeControl.GetPropertyName(ptr.Value);
+            return NativeControl.GetPropertyName(ptr.Value).ToString();
         }
 
         bool IPropertyGridHandler.RestoreEditableState(string src, PropertyGridEditableState restoreStates)
@@ -1332,7 +1332,7 @@ namespace Alternet.UI
 
         string IPropertyGridHandler.SaveEditableState(PropertyGridEditableState includedStates)
         {
-            return NativeControl.SaveEditableState((int)includedStates);
+            return NativeControl.SaveEditableState((int)includedStates).ToString();
         }
 
         bool IPropertyGridHandler.SetColumnProportion(int column, int proportion)

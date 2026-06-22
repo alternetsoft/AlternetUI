@@ -9,26 +9,17 @@ namespace Alternet::UI
 {
     bool wxButton2::AcceptsFocus() const
     {
-        if (_owner == nullptr)
-            return wxButton::AcceptsFocus();
-        else
-            return _owner->_acceptsFocus;
+        return true;
     }
 
     bool wxButton2::AcceptsFocusFromKeyboard() const
     {
-        if (_owner == nullptr)
-            return wxButton::AcceptsFocusFromKeyboard();
-        else
-            return _owner->_acceptsFocusFromKeyboard;
+        return true;
     }
 
     bool wxButton2::AcceptsFocusRecursively() const
     {
-        if (_owner == nullptr)
-            return wxButton::AcceptsFocusRecursively();
-        else
-            return _owner->_acceptsFocusRecursively;
+        return true;
     }
 
 #ifdef __WXOSX_COCOA__            

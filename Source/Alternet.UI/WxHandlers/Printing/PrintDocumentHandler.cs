@@ -39,7 +39,7 @@ namespace Alternet.Drawing.Printing
             }
         }
 
-        public void SetDocumentName(string name)
+        void IPrintDocumentHandler.SetDocumentName(string name)
         {
             NativeStringSpan.Invoke(name, span =>
             {
@@ -49,7 +49,7 @@ namespace Alternet.Drawing.Printing
 
         string IPrintDocumentHandler.GetDocumentName()
         {
-            return GetDocumentName();
+            return GetDocumentName().ToString();
         }
     }
 }
