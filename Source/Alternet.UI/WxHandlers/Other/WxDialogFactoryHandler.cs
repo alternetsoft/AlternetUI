@@ -81,53 +81,5 @@ namespace Alternet.UI
         {
             WindowTextInput.GetLongFromUserAsync(prm);
         }
-
-        /// <summary>
-        /// Shows a dialog asking the user for numeric input.
-        /// </summary>
-        internal void NativeGetNumberFromUserAsync(LongFromUserParams prm)
-        {
-            var handle = WxApplicationHandler.WxWidget(prm.Parent);
-
-            long minValue = MathUtils.ValueOrMin(prm.MinValue);
-            long maxValue;
-            long value = MathUtils.ValueOrMin(prm.DefaultValue);
-
-            if (prm.MaxValue is null || prm.MaxValue < 0)
-                maxValue = long.MaxValue;
-            else
-                maxValue = prm.MaxValue.Value;
-
-            var result = Native.WxOtherFactory.GetNumberFromUser(
-                string.Empty,
-                prm.SafeMessage,
-                prm.SafeTitle,
-                value,
-                minValue,
-                maxValue,
-                handle,
-                (-1, -1));
-            if (result < 0)
-                prm.RaiseActions(null);
-            else
-                prm.RaiseActions(result);
-        }
-
-        internal void NativeGetTextFromUserAsync(TextFromUserParams prm)
-        {
-            var handle = WxApplicationHandler.WxWidget(prm.Parent);
-            var result = Native.WxOtherFactory.GetTextFromUser(
-                prm.SafeMessage,
-                prm.SafeTitle,
-                prm.SafeDefaultValueAsString,
-                handle,
-                -1,
-                -1,
-                true);
-            if (result == DialogCancelGuid)
-                prm.RaiseActions(null);
-            else
-                prm.RaiseActions(result);
-        }
     }
 }

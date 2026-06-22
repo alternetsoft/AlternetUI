@@ -152,14 +152,14 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.InitialDirectory;
+                return Handler.GetInitialDirectory();
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.InitialDirectory = value;
+                Handler.SetInitialDirectory(value);
             }
         }
 
@@ -188,14 +188,14 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.Filter;
+                return Handler.GetFilter();
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.Filter = value;
+                Handler.SetFilter(value);
             }
         }
 
@@ -245,14 +245,14 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return default;
-                return Handler.FileName;
+                return Handler.GetFileName();
             }
 
             set
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.FileName = value;
+                Handler.SetFileName(value);
             }
         }
 

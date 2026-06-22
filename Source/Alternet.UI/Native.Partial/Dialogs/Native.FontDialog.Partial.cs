@@ -69,19 +69,32 @@ namespace Alternet.UI.Native
             var genericFamily = fontInfo.FontFamily.GenericFamily
                 ?? Alternet.Drawing.GenericFontFamily.None;
 
-            SetInitialFont(
-                genericFamily,
-                fontName,
-                fontInfo.SizeInPoints,
-                style);
+            NativeStringSpan.Invoke(fontName, span =>
+            {
+                SetInitialFont(
+                    genericFamily,
+                    span,
+                    fontInfo.SizeInPoints,
+                    style);
+            });
 
             var result = ShowModal(nativeOwner);
 
             fontInfo.Style = ResultFontStyle;
             fontInfo.SizeInPoints = ResultFontSizeInPoints;
-            fontInfo.Name = ResultFontName;
+            fontInfo.Name = GetResultFontName();
 
             return result;
+        }
+
+        string? IDialogHandler.GetTitle()
+        {
+            return GetTitle();
+        }
+
+        public void SetTitle(string? value)
+        {
+            NativeStringSpan.Invoke(value, SetTitle);
         }
     }
 }

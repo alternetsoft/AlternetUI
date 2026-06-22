@@ -23,16 +23,19 @@ namespace Alternet.UI
         /// <inheritdoc cref="FileDialog.ShowHiddenFiles"/>
         bool ShowHiddenFiles { get; set; }
 
-        /// <inheritdoc cref="FileDialog.InitialDirectory"/>
-        string? InitialDirectory { get; set; }
+        string? GetInitialDirectory();
 
-        /// <inheritdoc cref="FileDialog.Filter"/>
-        string? Filter { get; set; }
+        void SetInitialDirectory(string? value);
+
+        string? GetFilter();
+
+        void SetFilter(string? value);
 
         /// <inheritdoc cref="FileDialog.SelectedFilterIndex"/>
         int SelectedFilterIndex { get; set; }
 
-        /// <inheritdoc cref="FileDialog.FileName"/>
-        string? FileName { get; set; }
+        string? GetFileName();
+        
+        void SetFileName(string? value);
     }
 }

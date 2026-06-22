@@ -78,9 +78,49 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="s">The string to convert to a native string span.</param>
         /// <param name="action">The action to invoke with the native string span.</param>
-        public static void Invoke(string s, Action<NativeStringSpan> action)
+        public static void Invoke(string? s, Action<NativeStringSpan> action)
         {
-            StringUtils.InvokeWithNativeText(s, action);
+            StringUtils.InvokeWithNativeText(s ?? string.Empty, action);
+        }
+
+        /// <summary>
+        /// Calls the specified action with a <see cref="NativeStringSpan"/> representation of the
+        /// string parameters.
+        /// </summary>
+        /// <param name="s1">The first string to convert to a native string span.</param>
+        /// <param name="s2">The second string to convert to a native string span.</param>
+        /// <param name="action">The action to invoke with the native string spans.</param>
+        public static void Invoke(string? s1, string? s2, Action<NativeStringSpan, NativeStringSpan> action)
+        {
+            StringUtils.InvokeWithNativeText(s1 ?? string.Empty, span =>
+            {
+                StringUtils.InvokeWithNativeText(s2 ?? string.Empty, span2 =>
+                {
+                    action(span, span2);
+                });
+            });
+        }
+
+        /// <summary>
+        /// Calls the specified function with a <see cref="NativeStringSpan"/> representation of the
+        /// string parameters and returns the result.
+        /// </summary>
+        /// <param name="s1">The first string to convert to a native string span.</param>
+        /// <param name="s2">The second string to convert to a native string span.</param>
+        /// <param name="callback">The function to invoke with the native string spans.</param>
+        /// <returns>The result returned by the callback.</returns>
+        public static T InvokeWithResult<T>(
+            string? s1,
+            string? s2,
+            Func<NativeStringSpan, NativeStringSpan, T> callback)
+        {
+            return StringUtils.InvokeWithResult(s1 ?? string.Empty, span =>
+            {
+                return StringUtils.InvokeWithResult(s2 ?? string.Empty, span2 =>
+                {
+                    return callback(span, span2);
+                });
+            });
         }
 
         /// <summary>
@@ -91,9 +131,9 @@ namespace Alternet.UI
         /// <param name="s">The string to convert to a native string span.</param>
         /// <param name="callback">The function to invoke with the native string span.</param>
         /// <returns>The result returned by the callback.</returns>
-        public static T InvokeWithResult<T>(string s, Func<NativeStringSpan, T> callback)
+        public static T InvokeWithResult<T>(string? s, Func<NativeStringSpan, T> callback)
         {
-            return StringUtils.InvokeWithResult(s, callback);
+            return StringUtils.InvokeWithResult(s ?? string.Empty, callback);
         }
 
         /// <inheritdoc/>

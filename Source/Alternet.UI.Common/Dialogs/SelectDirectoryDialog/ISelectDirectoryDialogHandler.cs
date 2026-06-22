@@ -11,10 +11,12 @@ namespace Alternet.UI
     /// </summary>
     public interface ISelectDirectoryDialogHandler : IDialogHandler
     {
-        /// <inheritdoc cref="SelectDirectoryDialog.InitialDirectory"/>
-        string? InitialDirectory { get; set; }
+        string? GetInitialDirectory();
 
-        /// <inheritdoc cref="SelectDirectoryDialog.DirectoryName"/>
-        string? DirectoryName { get; set; }
+        void SetInitialDirectory(string? value);
+
+        string? GetDirectoryName();
+
+        void SetDirectoryName(string? value);
     }
 }

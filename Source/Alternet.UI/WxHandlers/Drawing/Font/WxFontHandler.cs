@@ -11,6 +11,21 @@ namespace Alternet.UI.Native
 {
     internal partial class Font : IFontHandler
     {
+        string IFontHandler.GetName()
+        {
+            return GetName();
+        }
+
+        string IFontHandler.GetDescription()
+        {
+            return GetDescription();
+        }
+
+        string IFontHandler.Serialize()
+        {
+            return Serialize();
+        }
+
         /// <summary>
         /// Gets whether font is using size in pixels.
         /// </summary>
@@ -20,11 +35,14 @@ namespace Alternet.UI.Native
         void IFontHandler.Update(Alternet.Drawing.Font font, IFontHandler.FontParams prm)
         {
             Alternet.Drawing.Font.CoerceFontParams(prm);
-            Initialize(
-               prm.GenericFamily ?? 0,
-               prm.FamilyName,
-               prm.Size,
-               prm.Style);
+            NativeStringSpan.Invoke(prm.FamilyName, span =>
+            {
+                Initialize(
+                   prm.GenericFamily ?? 0,
+                   span,
+                   prm.Size,
+                   prm.Style);
+            });
         }
 
         bool IFontHandler.Equals(Alternet.Drawing.Font font)

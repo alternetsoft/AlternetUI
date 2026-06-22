@@ -287,15 +287,6 @@ namespace Alternet.Drawing
         {
             return new WxGenericImageHandler(stream, bitmapType, index);
         }
-
-        public IGenericImageHandler CreateGenericImageHandler(
-            Stream stream,
-            string mimeType,
-            int index = -1)
-        {
-            return new WxGenericImageHandler(stream, mimeType, index);
-        }
-
         public IGenericImageHandler CreateGenericImageHandler(
             int width,
             int height,

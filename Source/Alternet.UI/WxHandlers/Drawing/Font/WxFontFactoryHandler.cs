@@ -49,7 +49,10 @@ namespace Alternet.Drawing
 
         public IEnumerable<string> GetFontFamiliesNames()
         {
-            return UI.Native.Font.Families;
+            foreach(var item in UI.Native.Font.Families)
+            {
+                yield return item;
+            }
         }
 
         public string GetFontFamilyName(GenericFontFamily genericFamily)
@@ -61,7 +64,10 @@ namespace Alternet.Drawing
 
         public bool IsFontFamilyValid(string name)
         {
-            return UI.Native.Font.IsFamilyValid(name);
+            return NativeStringSpan.InvokeWithResult(name, span =>
+            {
+                return UI.Native.Font.IsFamilyValid(span);
+            });
         }
 
         public void SetDefaultFont(Font value)

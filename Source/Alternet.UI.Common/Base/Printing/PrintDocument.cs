@@ -100,12 +100,12 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return Handler.DocumentName;
+                return Handler.GetDocumentName();
             }
 
             set
             {
-                Handler.DocumentName = value ?? string.Empty;
+                Handler.SetDocumentName(value ?? string.Empty);
             }
         }
 

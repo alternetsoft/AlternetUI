@@ -48,6 +48,8 @@ namespace Alternet.Drawing.Printing
         bool IsDefaultPrinter { get; }
 
         /// <inheritdoc cref="PrinterSettings.PrintFileName"/>
-        string? PrintFileName { get; set; }
+        string? GetPrintFileName();
+
+        void SetPrintFileName(string? value);
     }
 }

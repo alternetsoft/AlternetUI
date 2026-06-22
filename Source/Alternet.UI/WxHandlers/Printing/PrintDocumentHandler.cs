@@ -38,5 +38,18 @@ namespace Alternet.Drawing.Printing
                 return new WxGraphics(PrintPage_DrawingContext);
             }
         }
+
+        public void SetDocumentName(string name)
+        {
+            NativeStringSpan.Invoke(name, span =>
+            {
+                SetDocumentName(span);
+            });
+        }
+
+        string IPrintDocumentHandler.GetDocumentName()
+        {
+            return GetDocumentName();
+        }
     }
 }

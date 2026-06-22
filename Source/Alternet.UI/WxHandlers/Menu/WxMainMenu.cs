@@ -48,7 +48,11 @@ namespace Alternet.UI
             var submenuPtr = submenu.AsPointer;
             if (menuHandlePtr == IntPtr.Zero || submenuPtr == IntPtr.Zero)
                 return false;
-            return Native.Menu.MainMenuAppend(menuHandlePtr, submenuPtr, text);
+
+            return NativeStringSpan.InvokeWithResult(text, span =>
+            {
+                return Native.Menu.MainMenuAppend(menuHandlePtr, submenuPtr, span);
+            });
         }
 
         public virtual void SetEnabled(string childId, bool enable)
@@ -56,7 +60,10 @@ namespace Alternet.UI
             var menuHandlePtr = AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return;
-            Native.Menu.MainMenuSetEnabled(menuHandlePtr, childId, enable);
+            NativeStringSpan.Invoke(childId, span =>
+            {
+                Native.Menu.MainMenuSetEnabled(menuHandlePtr, span, enable);
+            });
         }
 
         public virtual WxContextMenu GetSubMenu(string childId)
@@ -64,7 +71,12 @@ namespace Alternet.UI
             var menuHandlePtr = AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return new WxContextMenu(IntPtr.Zero);
-            var submenuPtr = Native.Menu.MainMenuGetSubMenu(menuHandlePtr, childId);
+
+            var submenuPtr = NativeStringSpan.InvokeWithResult(childId, span =>
+            {
+                return Native.Menu.MainMenuGetSubMenu(menuHandlePtr, span);
+            });
+
             return new WxContextMenu(submenuPtr);
         }
 
@@ -73,7 +85,10 @@ namespace Alternet.UI
             var menuHandlePtr = AsPointer;
             if (menuHandlePtr == IntPtr.Zero)
                 return new WxContextMenu(IntPtr.Zero);
-            var submenuPtr = Native.Menu.MainMenuRemove(menuHandlePtr, childId);
+            var submenuPtr = NativeStringSpan.InvokeWithResult(childId, span =>
+            {
+                return Native.Menu.MainMenuRemove(menuHandlePtr, span);
+            });
             return new WxContextMenu(submenuPtr);
         }
 

@@ -85,9 +85,22 @@ namespace Alternet.UI.Native
             SetPopupMenu(wxMenu.AsPointer);
         }
 
+        public void SetText(string? value)
+        {
+            NativeStringSpan.Invoke(value ?? string.Empty, span =>
+            {
+                SetText(span);
+            });
+        }
+
         protected override void DisposeManaged()
         {
             base.DisposeManaged();
+        }
+
+        string? INotifyIconHandler.GetText()
+        {
+            return GetText();
         }
     }
 }

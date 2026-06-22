@@ -77,12 +77,6 @@ namespace Alternet.UI.Native
             LoadFromGenericImage(Alternet.Drawing.WxGenericImageHandler.GetPtr(image), depth);
         }
 
-        public bool SaveToStream(Stream stream, Alternet.Drawing.ImageFormat format, int quality)
-        {
-            var outputStream = new UI.Native.OutputStream(stream);
-            return SaveToStream(outputStream, format.ToString());
-        }
-
         /// <inheritdoc/>
         public SKBitmap ToSkia(bool assignPixels = true)
         {
@@ -111,20 +105,10 @@ namespace Alternet.UI.Native
         {
         }
 
-        public bool Load(string name, BitmapType type)
-        {
-            return LoadFile(name, (int)type);
-        }
-
         public bool LoadFromStream(Stream stream, BitmapType type)
         {
             using var inputStream = new UI.Native.InputStream(stream);
             return LoadStream(inputStream, (int)type);
-        }
-
-        public bool SaveToFile(string name, BitmapType type, int quality)
-        {
-            return SaveToFile(name);
         }
 
         public bool SaveToStream(Stream stream, BitmapType type, int quality)

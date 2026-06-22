@@ -61,5 +61,18 @@ namespace Alternet.UI.Native
         {
             DefaultShowAsync(owner, onClose, ShowModal);
         }
+
+        string? IDialogHandler.GetTitle()
+        {
+            return GetTitle();
+        }
+
+        public void SetTitle(string? value)
+        {
+            NativeStringSpan.Invoke(value ?? string.Empty, span =>
+            {
+                SetTitle(span);
+            });
+        }
     }
 }
