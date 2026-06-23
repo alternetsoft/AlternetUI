@@ -798,7 +798,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this method to ensure consistent rounding on all corners of the element. Passing
         /// <see langword="null"/> will clear any previously set corner radius.</remarks>
-        /// <param name="value">The corner radius to apply to all corners, specified as a <see langword="Coord"/>. Specify <see
+        /// <param name="value">The corner radius to apply to all corners, specified
+        /// as a <see langword="Coord"/>. Specify <see
         /// langword="null"/> to remove any applied corner radius and revert to the default.</param>
         public void SetUniformCornerRadius(Coord? value)
         {

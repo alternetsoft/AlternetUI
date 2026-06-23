@@ -40,7 +40,7 @@ namespace Alternet.UI
         /// Use of percentage is determined by the value of <see cref="DefaultCornerRadiusIsPercent"/> field.
         /// If percentage is used, the actual corner radius will be calculated as a percentage of the control's size.
         /// </summary>
-        public static float DefaultCornerRadius = 35;
+        public static float DefaultCornerRadius = 30;
 
         /// <summary>
         /// Indicates whether the default corner radius is specified as a percentage of the element's dimensions.

@@ -209,6 +209,7 @@ namespace Alternet.UI
         /// Logical level is defined as the number of logical parents between the element
         /// and the root of the logical tree.
         /// </summary>
+        [Browsable(false)]
         public virtual int LogicalLevel
         {
             get
