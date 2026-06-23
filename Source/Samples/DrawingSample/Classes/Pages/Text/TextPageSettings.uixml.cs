@@ -39,8 +39,6 @@ namespace DrawingSample
                 propertyGrid.Visible = DebugUtils.IsDebugDefined;
 
                 propGrid.Setup(gridControls);
-
-                propertyGrid.CreateStyle = propertyGrid.CreateStyle | PropertyGridCreateStyle.SplitterAutoCenter;
             });
         }
 
@@ -90,17 +88,8 @@ namespace DrawingSample
 
             void AddProperty(object obj, string name, string? label = null)
             {
-                var prop = propertyGrid.CreateProperty(label, name, obj, name);
-                propertyGrid.Add(prop);
+                propertyGrid.AddInput(label ?? name, obj, name);
             }
-
-            propertyGrid.ApplyFlags = PropertyGridApplyFlags.SetValueAndReloadAll;
-
-            propertyGrid.FitColumns();
-            propertyGrid.PropertyChanged += (s, e) =>
-            {
-                page.InvalidateParagraphs();
-            };
 
             toggleTextButton.Click += (s, e) =>
             {
