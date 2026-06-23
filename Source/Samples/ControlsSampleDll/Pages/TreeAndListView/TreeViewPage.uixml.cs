@@ -25,7 +25,7 @@ namespace ControlsSample
                     ensureLastItemVisibleButton,
                     scrollLastItemIntoViewButton,
                     focusLastItemButton,
-                    modifyLastItemButton).SuggestedWidthToMax();
+                    modifyLastItemButton).MinWidth(150);
 
                 var imageLists = DemoResourceLoader.LoadImageLists();
 

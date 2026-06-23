@@ -94,6 +94,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the maximum preferred size among all controls in the set.
+        /// <see cref="AbstractControl.GetPreferredSize()"/> is called for each control
+        /// to determine its preferred size, and the maximum width
+        /// and height are returned as a <see cref="Size"/> object.
+        /// </summary>
+        public virtual SizeD MaxPreferredSize
+        {
+            get
+            {
+                SizeD result = SizeD.Empty;
+                foreach (var item in items)
+                    result = SizeD.Max(result, item.GetPreferredSize());
+                return result;
+            }
+        }
+
+        /// <summary>
         /// Gets the maximum inner label width among all controls in the set.
         /// Control must implement <see cref="IControlAndLabel"/> interface in order
         /// to allow this method to work.
@@ -388,6 +405,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets minimum width for all the controls to the maximum preferred size in the set.
+        /// </summary>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet<T> MinWidthToMaxPreferred()
+        {
+            var v = MaxPreferredSize.Width;
+            return MinWidth(v);
+        }
+
+        /// <summary>
         /// Sets suggested width for all the controls to the max value in the set.
         /// </summary>
         /// <returns>Returns this object instance for use in the call sequences.</returns>
@@ -531,7 +558,7 @@ namespace Alternet.UI
             SizeChanged((s, e) =>
             {
                 var maxSize = MaxSize;
-                SizeD size = new SizeD(
+                SizeD size = new (
                     maxSize.Width > 0 ? maxSize.Width : float.NaN,
                     maxSize.Height > 0 ? maxSize.Height : float.NaN);
                 SuggestedSize(size);

@@ -21,7 +21,7 @@ namespace ControlsSample
 
             new ControlSet(beepButton, asteriskButton, exclamationButton, handButton, questionButton)
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left)
-            .Parent(this).SuggestedWidthToMax();
+            .Parent(this).MinWidthToMaxPreferred();
         }
     }
 }

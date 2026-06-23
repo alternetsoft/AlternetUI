@@ -60,7 +60,7 @@ namespace ControlsSample
                 showPopupVListBoxButton,
                 showPopupListBoxButton,
                 showPopupCheckListBoxButton,
-                showPopupColorListBoxButton).Parent(panel).Margin(10).MaxWidthOnSizeChanged();
+                showPopupColorListBoxButton).Parent(panel).Margin(10).MinWidth(250);
 
             showPopupListBoxButton.Click += ShowPopupListBoxButton_Click;
             showPopupCheckListBoxButton.Click += ShowPopupCheckListBoxButton_Click;

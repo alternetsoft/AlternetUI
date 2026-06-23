@@ -94,6 +94,8 @@ Environment.NewLine + Environment.NewLine +
 
             showMessageBoxButton.ContextMenuStrip.Add("Toggle message box text",
                 () => ToggleText(ref messageBoxText, "Message Box Text"));
+
+            Group(showSaveFileDialogButton, showSelectDirectoryDialogButton).MinWidthToMaxPreferred();
         }
 
         private void ToggleText(ref string toggledText, string text)

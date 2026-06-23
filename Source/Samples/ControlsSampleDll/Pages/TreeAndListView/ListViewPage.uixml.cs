@@ -29,7 +29,7 @@ namespace ControlsSample
                 modifyLastItemButton,
                 focusLastItemButton,
                 addLastItemSiblingButton);
-            lastItemButtons.SuggestedWidthToMax();
+            lastItemButtons.MinWidthToMaxPreferred();
 
             ControlSet buttons = new(
                 addItemButton,
@@ -41,7 +41,7 @@ namespace ControlsSample
                 editItemsButton,
                 editColumnsButton,
                 beginSelectedLabelEditingButton);
-            buttons.SuggestedWidthToMax();
+            buttons.MinWidthToMaxPreferred();
 
             var imageLists = DemoResourceLoader.LoadImageLists();
             listView.SmallImageList = imageLists.Small;

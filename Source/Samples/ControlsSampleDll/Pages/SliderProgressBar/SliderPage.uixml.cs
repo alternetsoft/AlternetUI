@@ -69,6 +69,8 @@ namespace ControlsSample
             {
                 e.FormattedValue = $"{e.Value} km";
             };
+
+            Group(increaseAllButton, decreaseAllButton, hasBorderButton, toggleColorsButton).MinWidth(130);
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)

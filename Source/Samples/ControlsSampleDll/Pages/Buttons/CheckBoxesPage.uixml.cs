@@ -23,7 +23,7 @@ namespace ControlsSample
               textEmptyButton,
               checkStateCheckedButton,
               checkStateIndeterminateButton);
-            buttons.SuggestedWidthToMax();
+            buttons.MinWidth(200);
 
             isCheckedFalseButton.Click += IsCheckedFalseButton_Click;
             isCheckedTrueButton.Click += IsCheckedTrueButton_Click;

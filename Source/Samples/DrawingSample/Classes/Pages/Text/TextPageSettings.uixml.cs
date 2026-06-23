@@ -39,7 +39,14 @@ namespace DrawingSample
                 propertyGrid.Visible = DebugUtils.IsDebugDefined;
 
                 propGrid.Setup(gridControls);
+
+                propertyGrid.CreateStyle = propertyGrid.CreateStyle | PropertyGridCreateStyle.SplitterAutoCenter;
             });
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
         }
 
         public void Initialize(TextPage page)
