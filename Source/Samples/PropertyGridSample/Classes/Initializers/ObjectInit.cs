@@ -163,6 +163,7 @@ Environment.NewLine + Environment.NewLine +
                 (c as StatusBar)!.Panels.Add(new("text2"));
             });
 
+            /*
             Actions.Add(typeof(CheckBox), (c) =>
             {
                 (c as CheckBox)!.Text = "CheckBox";
@@ -172,6 +173,7 @@ Environment.NewLine + Environment.NewLine +
             {
                 (c as RadioButton)!.Text = "RadioButton";
             });
+            */
 
             Actions.Add(typeof(StdTreeView), (c) =>
             {
@@ -187,6 +189,7 @@ Environment.NewLine + Environment.NewLine +
                 InitListView(listView);
             });
 
+            /*
             Actions.Add(typeof(GroupBox), (c) =>
             {
                 GroupBox groupBox = (c as GroupBox)!;
@@ -202,6 +205,7 @@ Environment.NewLine + Environment.NewLine +
                 CheckBox checkBox = new("CheckBox 1");
                 checkBox.Parent = groupBox;
             });
+            */
 
             Actions.Add(typeof(Panel), InitPanel);
 

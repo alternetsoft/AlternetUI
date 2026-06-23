@@ -726,7 +726,9 @@ namespace MenuSample
             object? sender,
             EventArgs e)
         {
-            toolbar.TextVisible = (sender as CheckBox)?.IsChecked ?? true;
+            if(sender is not StdCheckBox checkBox)
+                return;
+            toolbar.TextVisible = checkBox.IsChecked;
             VerticalCheckBox_Changed(null, EventArgs.Empty);
         }
 
@@ -787,7 +789,9 @@ namespace MenuSample
             object? sender,
             EventArgs e)
         {
-            toolbar.ImageVisible = (sender as CheckBox)?.IsChecked ?? true;
+            if (sender is not StdCheckBox checkBox)
+                return;
+            toolbar.ImageVisible = checkBox.IsChecked;
         }
 
         private void ToolbarDropDownMenuItem_Click(object? sender, EventArgs e)

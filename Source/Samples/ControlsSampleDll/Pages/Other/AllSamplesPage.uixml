@@ -22,7 +22,7 @@
       <StdButton Text="Build Pal" Name="buildPalButton" Margin="0,0,0,5" Enabled="false"
               IsTextLocalized="true" Visible="false"
               Click="BuildPalButton_Click" HorizontalAlignment="Left"/>
-      <CheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5" IsTextLocalized="true"
+      <StdCheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5" IsTextLocalized="true"
               Enabled="true" Visible="true"/>
     </VerticalStackPanel>
   </HorizontalStackPanel>

@@ -45,7 +45,7 @@
 
           </HorizontalStackPanel>
 
-          <CheckBox Text="Log Mouse Move" Name="logMoveCheckBox" IsTextLocalized="true"/>
+          <StdCheckBox Text="Log Mouse Move" Name="logMoveCheckBox" IsTextLocalized="true"/>
 
           <LogListBox Name="lb" Margin="5"  SuggestedHeight="200"/>
 

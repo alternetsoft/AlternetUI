@@ -19,7 +19,7 @@ namespace ControlsSample
         private readonly StdButton showPopupButton = new("Show Calendar Popup");
 
         [IsTextLocalized(true)]
-        private readonly CheckBox UseGenericCheckBox = new("Use Generic");
+        private readonly StdCheckBox UseGenericCheckBox = new("Use Generic");
 
         private readonly PopupCalendar popupCalendar = new();
 

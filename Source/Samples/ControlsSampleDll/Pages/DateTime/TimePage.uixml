@@ -17,7 +17,7 @@
       <TabControl Name="tabControl2" Margin="10,5,5,5">
 
         <VerticalStackPanel Margin="5" Title="Options" MinChildMargin="5">
-          <CheckBox Name="showSecondsCheckBox" Margin="0,0,0,5" IsChecked="True"
+          <StdCheckBox Name="showSecondsCheckBox" Margin="0,0,0,5" IsChecked="True"
                     Text="Show Seconds" IsTextLocalized="true"/>
           <Label Text="Hour Format:" Margin="0,0,0,5"/>
           <EnumPicker Name="hourFormatPicker" Margin="0,0,0,5" />

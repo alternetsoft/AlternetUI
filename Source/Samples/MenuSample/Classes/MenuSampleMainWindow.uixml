@@ -144,19 +144,19 @@
         </StackPanel>
 
         <StackPanel Margin="10,0,0,0">
-          <CheckBox Text="No divider" Name="noDividerCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="No divider" Name="noDividerCheckBox" IsTextLocalized="true"
               CheckedChanged="NoDividerCheckBox_Changed" IsChecked="False"
               Margin="5,5,0,5"/>
-          <CheckBox Text="Vertical" Name="verticalCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Vertical" Name="verticalCheckBox" IsTextLocalized="true"
               CheckedChanged="VerticalCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <CheckBox Text="Is Bottom" Name="isBottomCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Is Bottom" Name="isBottomCheckBox" IsTextLocalized="true"
               CheckedChanged="IsBottomCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <CheckBox Text="Show text" Name="showToolbarTextCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Show text" Name="showToolbarTextCheckBox" IsTextLocalized="true"
               CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
                     Margin="5,5,0,5" IsChecked="True" />
-          <CheckBox Text="Show images" Name="showToolbarImagesCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Show images" Name="showToolbarImagesCheckBox" IsTextLocalized="true"
               CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
               Margin="5,5,0,5" IsChecked="True"/>
         </StackPanel>

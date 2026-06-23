@@ -629,7 +629,7 @@ namespace Alternet.UI
             PanelSettingsItem item,
             object? control)
         {
-            var checkBox = CreateOrUpdateControl<CheckBox>(item, control);
+            var checkBox = CreateOrUpdateControl<StdCheckBox>(item, control);
             UpdateText(item, checkBox);
 
             if (item.Value is bool isChecked)

@@ -13,7 +13,7 @@
 			<StackPanel Orientation="Vertical" Margin="5" Grid.Column="0"
                         MinChildMargin="5">
               <Label Text="Settings:" />
-				<CheckBox Text="Origin At Margin" Name="originAtMarginCheckBox" 
+				<StdCheckBox Text="Origin At Margin" Name="originAtMarginCheckBox" 
                   IsChecked="True" CheckedChanged="OriginAtMarginCheckBox_CheckedChanged" 
                   Margin="0,0,0,5"/>
 				<Label Text="Print Document Name:" VerticalAlignment="Center" Margin="0,0,0,5"/>
@@ -26,7 +26,7 @@
 				<Label Text="Page Margin:" VerticalAlignment="Center" Margin="0,0,0,5"/>
 				<TextBox Text="10,10,10,10" Name="pageMarginTextBox" Margin="0,0,0,5" 
                    VerticalAlignment="Center" TextChanged="PageMarginTextBox_TextChanged"/>
-				<CheckBox Text="Print in Color" Name="printInColorCheckBox" 
+				<StdCheckBox Text="Print in Color" Name="printInColorCheckBox" 
                    Margin="0,0,0,5" IsChecked="True" />
 			</StackPanel>	
 

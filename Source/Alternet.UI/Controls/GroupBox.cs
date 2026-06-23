@@ -108,7 +108,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateGroupBoxHandler(this);
+            return new WxControlHandler<GroupBox, Native.GroupBox>();
         }
     }
 }

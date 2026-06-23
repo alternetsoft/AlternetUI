@@ -115,9 +115,9 @@
           <StdButton Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="RemoveRowFromGridButton_Click"
                   Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
-          <CheckBox Text="Show Horizontal" Name="showHorizontalCheckBox" IsChecked="true" Margin="0,0,0,5"
+          <StdCheckBox Text="Show Horizontal" Name="showHorizontalCheckBox" IsChecked="true" Margin="0,0,0,5"
                     Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"/>
-          <CheckBox Text="Show Vertical" Name="showVerticalCheckBox" IsChecked="true" Margin="0,0,0,5"
+          <StdCheckBox Text="Show Vertical" Name="showVerticalCheckBox" IsChecked="true" Margin="0,0,0,5"
                     Grid.Column="0" Grid.Row="7" Grid.ColumnSpan="2"/>
         </Grid>
       </StackPanel>

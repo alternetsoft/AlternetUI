@@ -135,8 +135,11 @@ namespace LayoutSample
         {
             if (subjectPanel == null)
                 return;
+            if(sender is not StdCheckBox checkBox)
+                return;
 
-            subjectPanel.Orientation = ((CheckBox)sender!).IsChecked ? StackPanelOrientation.Horizontal : StackPanelOrientation.Vertical;
+            subjectPanel.Orientation = checkBox.IsChecked
+                ? StackPanelOrientation.Horizontal : StackPanelOrientation.Vertical;
         }
     }
 }

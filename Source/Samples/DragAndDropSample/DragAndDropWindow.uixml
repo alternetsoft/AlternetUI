@@ -46,24 +46,24 @@
         <StackPanel Orientation="Vertical" Margin="5"
                     MinWidth="100" MinChildMargin="5" HasBorder="true">
           <Label Text="Drop Effects:"/>
-          <CheckBox Text="Move" Name="moveDropEffectCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Move" Name="moveDropEffectCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <CheckBox Text="Copy" Name="copyDropEffectCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Copy" Name="copyDropEffectCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <CheckBox Text="Link" Name="linkDropEffectCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Link" Name="linkDropEffectCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="5" MinWidth="200"
                     HasBorder="true" MinChildMargin="5">
           <Label Text="Include Formats:"/>
-          <CheckBox Text="Text" Name="textFormatCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Text" Name="textFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <CheckBox Text="Files" Name="filesFormatCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Files" Name="filesFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <CheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <CheckBox Text="Serializable" Name="serializableFormatCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Serializable" Name="serializableFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
         </StackPanel>
 

@@ -42,11 +42,6 @@ namespace PropertyGridSample
             {
                 List<Type> noTicks = new();
 
-                if (App.IsMacOS)
-                {
-                    noTicks.Add(typeof(CheckBox));
-                }
-
                 noTicks.Add(typeof(ResizableBorder));
                 noTicks.Add(typeof(ResizableWindowBorder));
 

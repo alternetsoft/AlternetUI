@@ -87,15 +87,15 @@
 
         <VerticalStackPanel VerticalAlignment="Stretch" Name="stackPanel2" Title="Settings"
                             Visible="false" Padding="10" IsTitleLocalized="true">
-          <CheckBox Text="Multiple Selection" IsTextLocalized="true"
+          <StdCheckBox Text="Multiple Selection" IsTextLocalized="true"
                     Name="allowMultipleSelectionCheckBox"
                     IsChecked="True" Margin="0,5,0,0"
                     CheckedChanged= "AllowMultipleSelectionCheckBox_CheckedChanged"/>
-          <CheckBox Text="Allow Label Edit" Name="allowLabelEditingCheckBox"
+          <StdCheckBox Text="Allow Label Edit" Name="allowLabelEditingCheckBox"
                     Margin="0,5,0,0" IsTextLocalized="true"
                     CheckedChanged= "AllowLabelEditingCheckBox_CheckedChanged"
                     IsChecked="True" />
-          <CheckBox Text="Column Header" IsTextLocalized="true"
+          <StdCheckBox Text="Column Header" IsTextLocalized="true"
               Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0"
               IsChecked="True"
               CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
@@ -121,10 +121,10 @@
 
           <TabControl Margin="0,5,0,5" >
             <VerticalStackPanel Title="Cancel Events" Padding="5"  >
-              <CheckBox Text="Before Label Edit" IsTextLocalized="true"
+              <StdCheckBox Text="Before Label Edit" IsTextLocalized="true"
                         Name="cancelBeforeLabelEditEventsCheckBox"
                         Margin="5" IsChecked="False" />
-              <CheckBox Text="After Label Edit" IsTextLocalized="true"
+              <StdCheckBox Text="After Label Edit" IsTextLocalized="true"
                         Name="cancelAfterLabelEditEventsCheckBox"
                         Margin="5" IsChecked="False" />
             </VerticalStackPanel>
@@ -136,7 +136,7 @@
           <StdButton Text="Has Border" Margin="0,5,0,0" Name="hasBorderButton" IsTextLocalized="true"
                   Click="HasBorderButton_Click"/>
 
-          <CheckBox Text="Log Bounds on Click" IsTextLocalized="true"
+          <StdCheckBox Text="Log Bounds on Click" IsTextLocalized="true"
                     Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0"
               IsChecked="False" />
 

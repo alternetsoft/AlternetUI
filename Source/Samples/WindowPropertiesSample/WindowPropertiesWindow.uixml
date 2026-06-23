@@ -26,9 +26,9 @@
               Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
           <StdButton Name="addOwnedWindow" Click="AddOwnedWindow_Click" IsTextLocalized="true"
               Text="Create Owned" Margin="0,0,0,5" IsEnabled="true"/>
-          <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"
+          <StdCheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"
                     IsTextLocalized="true" IsEnabled="true"/>
-          <CheckBox Text="Cancel Closing" Name="cancelClosingCheckBox"
+          <StdCheckBox Text="Cancel Closing" Name="cancelClosingCheckBox"
                     Margin="0,0,0,5" IsTextLocalized="true" />
 
           <HorizontalStackPanel>
@@ -58,32 +58,32 @@
     <!-- ========================= -->
     <HorizontalStackPanel Name="settingsPanel" Visible="false" Title="Settings">
       <StackPanel Padding="10" >
-        <CheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox" IsTextLocalized="true"
+        <StdCheckBox Text="Show In Taskbar" Name="showInTaskBarCheckBox" IsTextLocalized="true"
                   CheckedChanged="ShowInTaskBarCheckBox_CheckedChanged"
             IsChecked="True" Margin="0,0,0,5"/>
-        <CheckBox Text="Can Minimize" Name="minimizeEnabledCheckBox" IsTextLocalized="true"
+        <StdCheckBox Text="Can Minimize" Name="minimizeEnabledCheckBox" IsTextLocalized="true"
                   CheckedChanged="MinimizeEnabledCheckBox_CheckedChanged"
             IsChecked="True" Margin="0,0,0,5"/>
-        <CheckBox Text="Can Maximize" Name="maximizeEnabledCheckBox" IsTextLocalized="true"
+        <StdCheckBox Text="Can Maximize" Name="maximizeEnabledCheckBox" IsTextLocalized="true"
                   CheckedChanged="MaximizeEnabledCheckBox_CheckedChanged"
             IsChecked="True" Margin="0,0,0,5"/>
-        <CheckBox Text="Can Close" Name="closeEnabledCheckBox" IsTextLocalized="true"
+        <StdCheckBox Text="Can Close" Name="closeEnabledCheckBox" IsTextLocalized="true"
                   CheckedChanged="CloseEnabledCheckBox_CheckedChanged"
             IsChecked="True" Margin="0,0,0,5"/>
 
-        <CheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
+        <StdCheckBox Text="Always On Top" Name="alwaysOnTopCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
           CheckedChanged="AlwaysOnTopCheckBox_CheckedChanged" IsChecked="False" />
       </StackPanel>
 
       <StackPanel Padding="10" >
-        <CheckBox Text="Tool Window" Name="isToolWindowCheckBox"
+        <StdCheckBox Text="Tool Window" Name="isToolWindowCheckBox"
                   Margin="0,0,0,5" IsTextLocalized="true"
                   CheckedChanged="IsToolWindowCheckBox_CheckedChanged" IsChecked="False"/>
-        <CheckBox Text="Resizable" Name="resizableCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
+        <StdCheckBox Text="Resizable" Name="resizableCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
                   CheckedChanged="ResizableCheckBox_CheckedChanged" IsChecked="True"/>
-        <CheckBox Text="Has Border" Name="hasBorderCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
+        <StdCheckBox Text="Has Border" Name="hasBorderCheckBox" Margin="0,0,0,5" IsTextLocalized="true"
                   CheckedChanged="HasBorderCheckBox_CheckedChanged" IsChecked="True"/>
-        <CheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox"
+        <StdCheckBox Text="Has Title Bar" Name="hasTitleBarCheckBox"
                   Margin="0,0,0,5" IsTextLocalized="true"
                   CheckedChanged="HasTitleBarCheckBox_CheckedChanged" IsChecked="True"/>
       </StackPanel>
@@ -92,7 +92,7 @@
         <Label Text="Window State:" Margin="0,0,0,3" IsTextLocalized="true" />
         <EnumPicker Name="stateComboBox"
             ValueChanged="StateComboBox_SelectedItemChanged"/>
-        <CheckBox Text="Hide Window" Name="hideWindowCheckBox"
+        <StdCheckBox Text="Hide Window" Name="hideWindowCheckBox"
                   Margin="0,10,0,0" IsTextLocalized="true"
             CheckedChanged="HideWindowCheckBox_CheckedChanged"/>
       </StackPanel>

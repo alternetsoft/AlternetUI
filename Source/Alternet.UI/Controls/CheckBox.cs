@@ -285,7 +285,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateCheckBoxHandler(this);
+            return new WxCheckBoxHandler();
         }
 
         /// <summary>

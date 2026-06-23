@@ -23,11 +23,6 @@ namespace Alternet.UI
             return new HandlerForDisposed();
         }
 
-        IControlHandler IControlFactoryHandler.CreateCheckBoxHandler(CheckBox control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IPropertyGridChoices IControlFactoryHandler.CreateChoices()
         {
             throw new NotImplementedException();
@@ -43,22 +38,12 @@ namespace Alternet.UI
             return new MauiControlHandler();
         }
 
-        IControlHandler IControlFactoryHandler.CreateGroupBoxHandler(GroupBox control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IControlHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
         {
             return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreatePropertyGridHandler(PropertyGrid control)
-        {
-            return new HandlerForDisposed();
-        }
-
-        IControlHandler IControlFactoryHandler.CreateRadioButtonHandler(RadioButton control)
         {
             return new HandlerForDisposed();
         }

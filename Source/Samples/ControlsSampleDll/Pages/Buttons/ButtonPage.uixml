@@ -49,29 +49,29 @@
 
       <HorizontalStackPanel Margin="5,0,0,0">
         <VerticalStackPanel Margin="0,0,0,0">
-          <CheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" IsTextLocalized="true" />
-          <CheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0"
+          <StdCheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" IsTextLocalized="true" />
+          <StdCheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0"
                     IsChecked="True" IsTextLocalized="true" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <CheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
-          <CheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
+          <StdCheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
+          <StdCheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <CheckBox Text="Border" Name="hasBorderCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Border" Name="hasBorderCheckBox" IsTextLocalized="true"
                     IsChecked="True" Margin="0,10,0,0" />
-          <CheckBox Text="TabStop" Name="tabStopCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="TabStop" Name="tabStopCheckBox" IsTextLocalized="true"
                     IsChecked="True" Margin="0,10,0,0" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <CheckBox Text="Show Text" Name="showTextCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Show Text" Name="showTextCheckBox" IsTextLocalized="true"
                     IsChecked="True" Margin="0,10,0,0" />
-          <CheckBox Text="Debug Corners" Name="debugCornersCheckBox"
+          <StdCheckBox Text="Debug Corners" Name="debugCornersCheckBox"
                     IsChecked="False" Margin="0,10,0,0" />
-          <CheckBox Text="Exact Fit" IsChecked="False" IsTextLocalized="true"
+          <StdCheckBox Text="Exact Fit" IsChecked="False" IsTextLocalized="true"
                     Name="exactFitCheckBox" Margin="0,10,0,0" IsVisible="false" />
         </VerticalStackPanel>
       </HorizontalStackPanel>

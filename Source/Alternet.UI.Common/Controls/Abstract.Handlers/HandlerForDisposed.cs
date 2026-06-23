@@ -13,10 +13,8 @@ namespace Alternet.UI
     /// </summary>
     public class HandlerForDisposed : PlessControlHandler,
         ICalendarHandler,
-        ICheckBoxHandler,
         IComboBoxHandler,
         IListViewHandler,
-        IRadioButtonHandler,
         IRichTextBox,
         IScrollBarHandler,
         ITextBoxHandler,

@@ -16,7 +16,7 @@ namespace ControlsSample
             SuggestedWidth = 200,
         };
 
-        private readonly CheckBox textVisibleCheckBox = new(GenericStrings.TextVisible)
+        private readonly StdCheckBox textVisibleCheckBox = new(GenericStrings.TextVisible)
         {
             IsChecked = true,
         };

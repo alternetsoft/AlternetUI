@@ -911,10 +911,10 @@ namespace Alternet.UI
         {
             foreach (var item in items)
             {
-                if (item is CheckBox checkBox)
+                if (item is StdCheckBox checkBox)
                     checkBox.CheckedChanged += evt;
                 else
-                if (item is RadioButton radioButton)
+                if (item is StdRadioButton radioButton)
                     radioButton.CheckedChanged += evt;
             }
 

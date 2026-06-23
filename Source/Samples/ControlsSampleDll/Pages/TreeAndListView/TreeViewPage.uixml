@@ -78,26 +78,26 @@
 
         <VerticalStackPanel Name="stackPanel2" Visible="false" Title="Settings" IsTitleLocalized="true"
                             Padding="10">
-          <CheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
+          <StdCheckBox Text="Allow Edit Label" Name="allowLabelEditingCheckBox"
                     Margin="0,5,0,0" IsTextLocalized="true" IsEnabled="false"
                     CheckedChanged="AllowLabelEditingCheckBox_CheckedChanged"
                     IsChecked="False" />
-          <CheckBox Text="Multiple Selection" IsTextLocalized="true"
+          <StdCheckBox Text="Multiple Selection" IsTextLocalized="true"
                     Name="allowMultipleSelectionCheckBox" Margin="0,5,0,0"
                     CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged" />
-          <CheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,5,0,0" IsTextLocalized="true"
+          <StdCheckBox Text="Enabled" Name="enabledCheckBox" Margin="0,5,0,0" IsTextLocalized="true"
                     CheckedChanged="EnabledCheckBox_CheckedChanged" IsChecked="True" />
-          <CheckBox Text="Show Root Lines" Name="showRootLinesCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Show Root Lines" Name="showRootLinesCheckBox" IsTextLocalized="true"
                     Margin="0,5,0,0"
                     CheckedChanged="ShowRootLinesCheckBox_CheckedChanged"
                     IsChecked="True" IsEnabled="false"/>
-          <CheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0" IsTextLocalized="true"
+          <StdCheckBox Text="Show Lines" Name="showLinesCheckBox" Margin="0,5,0,0" IsTextLocalized="true"
                     CheckedChanged="ShowLinesCheckBox_CheckedChanged"
                     IsChecked="False" IsEnabled="false"/>
-          <CheckBox Text="Show Expand Button" Name="showExpandButtonsCheckBox" IsTextLocalized="true"
+          <StdCheckBox Text="Show Expand Button" Name="showExpandButtonsCheckBox" IsTextLocalized="true"
                     Margin="0,5,0,0" CheckedChanged="ShowExpandButtons_CheckedChanged"
                     IsChecked="True" />
-          <CheckBox Text="Full Row Select" Name="fullRowSelectCheckBox"
+          <StdCheckBox Text="Full Row Select" Name="fullRowSelectCheckBox"
                     Margin="0,5,0,0" IsTextLocalized="true"
                     CheckedChanged="FullRowSelectCheckBox_CheckedChanged"
                     IsChecked="False" />
@@ -113,15 +113,15 @@
                   Name="viewSelectedButton" Click="TreeView_SelectionChanged"/>
           <TabControl Margin="0,3,0,3" >
             <VerticalStackPanel Title="Cancel Events" Padding="3"  IsTitleLocalized="true">
-              <CheckBox Text="Before Expand" Name="cancelBeforeExpandEventsCheckBox"
+              <StdCheckBox Text="Before Expand" Name="cancelBeforeExpandEventsCheckBox"
                         IsChecked="False"  IsTextLocalized="true"/>
-              <CheckBox Text="Before Collapse" Name="cancelBeforeCollapseEventsCheckBox"
+              <StdCheckBox Text="Before Collapse" Name="cancelBeforeCollapseEventsCheckBox"
                         Margin="0,5,0,0" IsTextLocalized="true"
                         IsChecked="False" />
-              <CheckBox Text="Before Label Edit" Name="cancelBeforeLabelEditEventsCheckBox"
+              <StdCheckBox Text="Before Label Edit" Name="cancelBeforeLabelEditEventsCheckBox"
                         Margin="0,5,0,0" IsTextLocalized="true"
                         IsChecked="False" />
-              <CheckBox Text="After Label Edit" Name="cancelAfterLabelEditEventsCheckBox"
+              <StdCheckBox Text="After Label Edit" Name="cancelAfterLabelEditEventsCheckBox"
                         Margin="0,5,0,0"
                         IsChecked="False" />
             </VerticalStackPanel>

@@ -12,17 +12,17 @@
 
       <Panel Title="File and Directory" Margin="10" IsTitleLocalized="true" >
         <StackPanel>
-          <CheckBox Text="Set Initial Dir to User Home Dir" IsTextLocalized="true"
+          <StdCheckBox Text="Set Initial Dir to User Home Dir" IsTextLocalized="true"
             Name="setInitialDirectoryCheckBox" Margin="5" />
 
-          <CheckBox Text="Set Title to 'Custom Title'" IsTextLocalized="true"
+          <StdCheckBox Text="Set Title to 'Custom Title'" IsTextLocalized="true"
                     Name="setCustomTitleCheckBox" Margin="5" />
 
-          <CheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" IsTextLocalized="true" />
+          <StdCheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" IsTextLocalized="true" />
 
           <Border Margin="10" Layout="Vertical" >
               <Label Text="Open File Dialog:" Margin="5"/>
-              <CheckBox Text="Allow Multiple Selection" IsTextLocalized="true"
+              <StdCheckBox Text="Allow Multiple Selection" IsTextLocalized="true"
                   Name="allowMultipleSelectionCheckBox" Margin="5" />
               <StdButton Text="Show Open File Dialog" Name="showOpenFileDialogButton"
                       IsTextLocalized="true"

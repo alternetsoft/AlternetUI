@@ -37,29 +37,29 @@ namespace ControlsSample
                 checkboxPanel.Title = GenericStrings.Options;
                 tabControl.Add(checkboxPanel);
 
-                var showHolidaysCheckBox = new CheckBox(GenericStrings.ShowHolidays);
+                var showHolidaysCheckBox = new StdCheckBox(GenericStrings.ShowHolidays);
                 showHolidaysCheckBox.Parent = checkboxPanel;
                 showHolidaysCheckBox.BindBoolProp(calendar, nameof(Calendar.ShowHolidays));
 
-                var noMonthChangeCheckBox = new CheckBox(GenericStrings.NoMonthChange);
+                var noMonthChangeCheckBox = new StdCheckBox(GenericStrings.NoMonthChange);
                 noMonthChangeCheckBox.Parent = checkboxPanel;
                 noMonthChangeCheckBox.BindBoolProp(calendar, nameof(Calendar.NoMonthChange));
 
-                var useGenericCheckBox = new CheckBox(GenericStrings.UseGeneric);
+                var useGenericCheckBox = new StdCheckBox(GenericStrings.UseGeneric);
                 useGenericCheckBox.Parent = checkboxPanel;
                 useGenericCheckBox.BindBoolProp(calendar, nameof(Calendar.UseGeneric));
 
-                var sequentialMonthSelectCheckBox = new CheckBox(GenericStrings.SequentalMonthSelect);
+                var sequentialMonthSelectCheckBox = new StdCheckBox(GenericStrings.SequentalMonthSelect);
                 sequentialMonthSelectCheckBox.Parent = checkboxPanel;
                 sequentialMonthSelectCheckBox.BindBoolProp(calendar, nameof(Calendar.SequentialMonthSelect));
                 sequentialMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
-                var showSurroundWeeksCheckBox = new CheckBox(GenericStrings.ShowSurroundWeeks);
+                var showSurroundWeeksCheckBox = new StdCheckBox(GenericStrings.ShowSurroundWeeks);
                 showSurroundWeeksCheckBox.Parent = checkboxPanel;
                 showSurroundWeeksCheckBox.BindBoolProp(calendar, nameof(Calendar.ShowSurroundWeeks));
                 showSurroundWeeksCheckBox.Enabled = useGenericCheckBox.IsChecked;
 
-                var weekNumbersCheckBox = new CheckBox(GenericStrings.WeekNumbers);
+                var weekNumbersCheckBox = new StdCheckBox(GenericStrings.WeekNumbers);
                 weekNumbersCheckBox.Parent = checkboxPanel;
                 weekNumbersCheckBox.BindBoolProp(calendar, nameof(Calendar.ShowWeekNumbers));
                 checkboxPanel.ChildrenSet.Margin(3);

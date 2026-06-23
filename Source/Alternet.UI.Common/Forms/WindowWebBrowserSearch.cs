@@ -13,17 +13,17 @@ namespace Alternet.UI
     /// </summary>
     public partial class WindowWebBrowserSearch : Window
     {
-        private readonly CheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
-        private readonly CheckBox findEntireWordCheckBox
+        private readonly StdCheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
+        private readonly StdCheckBox findEntireWordCheckBox
             = new(CommonStrings.Default.FindOptionMatchWholeWord);
 
-        private readonly CheckBox findMatchCaseCheckBox
+        private readonly StdCheckBox findMatchCaseCheckBox
             = new(CommonStrings.Default.FindOptionMatchCase);
 
-        private readonly CheckBox findHighlightResultCheckBox
+        private readonly StdCheckBox findHighlightResultCheckBox
             = new(CommonStrings.Default.FindOptionHighlight);
 
-        private readonly CheckBox findBackwardsCheckBox
+        private readonly StdCheckBox findBackwardsCheckBox
             = new(CommonStrings.Default.FindOptionBackwards);
 
         private readonly VerticalStackPanel findPanel = new()

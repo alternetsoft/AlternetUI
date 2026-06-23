@@ -19,28 +19,6 @@ namespace Alternet.UI
         IControlHandler CreatePanelHandler(ContainerControl control);
 
         /// <summary>
-        /// Creates <see cref="ICheckBoxHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateCheckBoxHandler(CheckBox control);
-
-        /// <summary>
-        /// Creates <see cref="IControlHandler"/> interface provider
-        /// for the <see cref="GroupBox"/>.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateGroupBoxHandler(GroupBox control);
-
-        /// <summary>
-        /// Creates <see cref="IRadioButtonHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateRadioButtonHandler(RadioButton control);
-
-        /// <summary>
         /// Creates <see cref="ITextBoxHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

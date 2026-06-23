@@ -144,7 +144,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateRadioButtonHandler(this);
+            return new WxRadioButtonHandler();
         }
 
         /// <summary>

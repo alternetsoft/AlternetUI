@@ -109,7 +109,7 @@
               Click="IncreaseAllButton_Click"  IsTextLocalized="true"/>
       <StdButton Text="-" Margin="0,5,5,5" Name="decreaseAllButton"
               Click="DecreaseAllButton_Click"  IsTextLocalized="true"/>
-      <CheckBox Text="Indeterminate" Margin="20,5,5,5" Name="indeterminateCheckBox"
+      <StdCheckBox Text="Indeterminate" Margin="20,5,5,5" Name="indeterminateCheckBox"
                 IsTextLocalized="true" CheckedChanged="IndeterminateCheckBox_CheckedChanged" />
     </HorizontalStackPanel>
   </StackPanel>

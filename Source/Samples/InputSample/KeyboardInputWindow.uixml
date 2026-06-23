@@ -23,11 +23,11 @@
              Name="messageLabel" IsTextLocalized="true"/>
     </StackPanel>
 
-    <CheckBox Text="Form Key Preview" Name="checkBoxKeyPreview" Margin="5"/>
-    <CheckBox Text="Key Handled in Form" Name="checkBoxHandledInForm" Margin="5"/>
-    <CheckBox Text="Key Handled in Hello Button" Name="checkBoxHandledInButton" Margin="5"/>
-    <CheckBox Text="Key Handled in StackPanel" Name="checkBoxHandledInStackPanel" Margin="5"/>
-    <CheckBox Text="Log Repeated Keys" Name="checkBoxLogRepeated" Margin="5"/>
+    <StdCheckBox Text="Form Key Preview" Name="checkBoxKeyPreview" Margin="5"/>
+    <StdCheckBox Text="Key Handled in Form" Name="checkBoxHandledInForm" Margin="5"/>
+    <StdCheckBox Text="Key Handled in Hello Button" Name="checkBoxHandledInButton" Margin="5"/>
+    <StdCheckBox Text="Key Handled in StackPanel" Name="checkBoxHandledInStackPanel" Margin="5"/>
+    <StdCheckBox Text="Log Repeated Keys" Name="checkBoxLogRepeated" Margin="5"/>
 
     <TextBoxAndButton
       Name="buttonInfo" Margin="5" Enabled="false" SuggestedWidth="400"

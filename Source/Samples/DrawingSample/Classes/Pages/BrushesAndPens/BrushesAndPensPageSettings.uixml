@@ -11,9 +11,9 @@
     </HorizontalStackPanel>
 
     <HorizontalStackPanel>
-      <CheckBox Name="rectanglesIncludedCheckBox" Text="Rectangles"
+      <StdCheckBox Name="rectanglesIncludedCheckBox" Text="Rectangles"
                 Margin="0,0,0,5" IsTextLocalized="true"/>
-      <CheckBox Name="ellipsesIncludedCheckBox" Text="Ellipses"
+      <StdCheckBox Name="ellipsesIncludedCheckBox" Text="Ellipses"
                 Margin="0,0,0,5" IsTextLocalized="true"/>
     </HorizontalStackPanel>
 

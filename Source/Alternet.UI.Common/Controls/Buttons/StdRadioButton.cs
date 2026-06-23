@@ -9,9 +9,10 @@ namespace Alternet.UI
     /// paired with other <see cref="StdRadioButton"/> controls.
     /// <see cref="StdRadioButton"/> represents a generic radio button control.
     /// This control is implemented inside the library and can be used in the
-    /// same way as a regular native <see cref="RadioButton"/> control. <see cref="StdRadioButton"/> is used when you need
-    /// to have the same look and behavior for all platforms. <see cref="StdRadioButton"/> provides many additional features,
-    /// which are not available in the native <see cref="RadioButton"/> control.
+    /// same way as a regular native radio button control. <see cref="StdRadioButton"/> is used when you need
+    /// to have the same look and behavior for all platforms. <see cref="StdRadioButton"/>
+    /// provides many additional features,
+    /// which are not available in the native radio button control.
     /// </summary>
     /// <remarks>
     /// <para>

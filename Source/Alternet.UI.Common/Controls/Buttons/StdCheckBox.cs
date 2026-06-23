@@ -7,9 +7,9 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a generic check box control. This control is implemented inside the library and can be used in the
-    /// same way as a regular native <see cref="CheckBox"/> control. <see cref="StdCheckBox"/> is used when you need
+    /// same way as a regular native check box control. <see cref="StdCheckBox"/> is used when you need
     /// to have the same code for all platforms. <see cref="StdCheckBox"/> provides many additional features,
-    /// which are not available in the native <see cref="CheckBox"/> control.
+    /// which are not available in the native check box control.
     /// </summary>
     /// <remarks>
     /// Use a <see cref="StdCheckBox"/> to give the user an option, such as true/false or yes/no.
@@ -141,7 +141,8 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.CheckBox;
 
         /// <summary>
-        /// Configures the control to use accent color for focused border. This method is called in the constructor, so the
+        /// Configures the control to use accent color for focused border.
+        /// This method is called in the constructor, so the
         /// control will use accent color for focused border by default.
         /// </summary>
         public virtual void ConfigureAccentFocusedBorder()
@@ -156,6 +157,35 @@ namespace Alternet.UI
                 VisualControlStates.Hovered | VisualControlStates.Pressed | VisualControlStates.Disabled);
 
             Borders.Focused = BorderSettings.AccentBorder.Clone();
+        }
+
+        /// <summary>
+        /// Binds property specified with <paramref name="instance"/> and
+        /// <paramref name="propName"/> to the <see cref="StdCheckBox"/>.
+        /// After binding <see cref="StdCheckBox"/> will edit the specified property.
+        /// </summary>
+        /// <param name="instance">Object.</param>
+        /// <param name="propName">Property name.</param>
+        /// <remarks>Property must have the <see cref="bool"/> type. Value of the bound
+        /// property will be changed automatically after
+        /// <c>IsChecked</c> is changed.</remarks>
+        public virtual StdCheckBox BindBoolProp(object instance, string propName)
+        {
+            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
+            if (propInfo is null)
+                return this;
+            object? result = propInfo?.GetValue(instance, null);
+            IsChecked = result is true;
+
+            CheckedChanged += Editor_CheckedChanged;
+
+            void Editor_CheckedChanged(object? sender, EventArgs e)
+            {
+                var value = (sender as StdCheckBox)?.IsChecked;
+                propInfo?.SetValue(instance, value);
+            }
+
+            return this;
         }
 
         /// <inheritdoc/>
