@@ -60,7 +60,7 @@ namespace Alternet.UI
         public GridLength(Coord value = 0, GridUnitType type = GridUnitType.Auto)
         {
             if (MathUtils.IsNaN(value) || Coord.IsInfinity(value))
-                throw new ArgumentException();
+                throw new ArgumentException(nameof(value));
 
             unitValue = (type == GridUnitType.Auto) ? 1 : value;
             unitType = type;
