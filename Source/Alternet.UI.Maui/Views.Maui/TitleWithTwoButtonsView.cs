@@ -34,6 +34,12 @@ namespace Alternet.Maui
             FontAttributes = FontAttributes.Bold,
         };
 
+        private readonly ImageButton backButton = new()
+        {
+            Margin = new Thickness(5, 5, 5, 5),
+            IsVisible = true,
+        };
+
         private readonly ImageButton settingsButton = new()
         {
             Margin = new Thickness(5, 5, 5, 5),
@@ -53,9 +59,12 @@ namespace Alternet.Maui
         /// </summary>
         public TitleWithTwoButtonsView()
         {
-            Grid.SetColumn(label, 0);
-            Grid.SetColumn(keyboardButton, 1);
-            Grid.SetColumn(settingsButton, 2);
+            BackButton.IsVisible = false;
+
+            Grid.SetColumn(label, 1);
+            Grid.SetColumn(backButton, 0);
+            Grid.SetColumn(keyboardButton, 2);
+            Grid.SetColumn(settingsButton, 3);
 
             grid.RowDefinitions = new()
             {
@@ -64,6 +73,7 @@ namespace Alternet.Maui
 
             grid.ColumnDefinitions = new()
             {
+                new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) },
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
                 new ColumnDefinition { Width = new GridLength(1, GridUnitType.Auto) },
@@ -93,6 +103,24 @@ namespace Alternet.Maui
             keyboardButton.HorizontalOptions = LayoutOptions.End;
             keyboardButton.VerticalOptions = LayoutOptions.Center;
             grid.Children.Add(keyboardButton);
+
+            ToolTipProperties.SetText(backButton, "Return to the previous page");
+            backButton.Aspect = Aspect.Center;
+            backButton.BackgroundColor = Colors.Transparent;
+            Alternet.UI.MauiUtils
+                .SetButtonImage(backButton, Alternet.UI.KnownSvgImages.ImgArrowLeft, size);
+            backButton.HorizontalOptions = LayoutOptions.End;
+            backButton.VerticalOptions = LayoutOptions.Center;
+            grid.Children.Add(backButton);
+
+            BackButton.Clicked += (s, e) =>
+            {
+                if (UseBackButtonDefaultAction)
+                {
+                    if (Navigation?.NavigationStack.Count > 1)
+                        Navigation?.PopAsync();
+                }
+            };
 
             Content = grid;
         }
@@ -133,9 +161,19 @@ namespace Alternet.Maui
         public ImageButton SettingsButton => settingsButton;
 
         /// <summary>
+        /// Gets 'Back' button.
+        /// </summary>
+        public ImageButton BackButton => backButton;
+
+        /// <summary>
         /// Gets 'Show Keyboard' button.
         /// </summary>
         public ImageButton KeyboardButton => keyboardButton;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the default action of the back button is used.
+        /// </summary>
+        public bool UseBackButtonDefaultAction { get; set; } = true;
 
         /// <summary>
         /// Gets label view which contains title text.
