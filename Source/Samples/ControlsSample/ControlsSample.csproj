@@ -31,6 +31,7 @@
     <ItemGroup>
         <ProjectReference Include="..\ControlsSampleDll\ControlsSampleDll.csproj" />
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
+        <ProjectReference Include="..\ApiDocDll\ApiDocDll.csproj" />
     </ItemGroup>
 
 

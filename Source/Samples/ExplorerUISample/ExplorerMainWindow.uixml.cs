@@ -94,7 +94,7 @@ namespace ExplorerUISample
                 progressLabel.Margin = 10;
                 progressLabel.Parent = panel;
 
-                var progressBar = new ProgressBar()
+                var progressBar = new StdProgressBar()
                 {
                     Margin = (10,0,10,10),
                     Parent = panel,

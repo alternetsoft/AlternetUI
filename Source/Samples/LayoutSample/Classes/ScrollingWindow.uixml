@@ -130,10 +130,10 @@
       <StackPanel Orientation="Vertical" Name="imageStackPanel">
         <HorizontalStackPanel Name="topImageToolBarPanel" MinChildMargin="10">
           <Label Text="Zoom:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
-          <Button Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
-          <Button Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-" Margin="0,0,5,0"/>
-          <Button Name="zoomMinButton" Click="ZoomMinButtonClick" Text="Min" Margin="0,0,5,0"/>
-          <Button Name="zoomMaxButton" Click="ZoomMaxButtonClick" Text="Max" Margin="0,0,5,0"/>
+          <StdButton Name="zoomPlusButton" Click="ZoomPlusButtonClick" Text="+" Margin="0,0,5,0"/>
+          <StdButton Name="zoomMinusButton" Click="ZoomMinusButtonClick" Text="-" Margin="0,0,5,0"/>
+          <StdButton Name="zoomMinButton" Click="ZoomMinButtonClick" Text="Min" Margin="0,0,5,0"/>
+          <StdButton Name="zoomMaxButton" Click="ZoomMaxButtonClick" Text="Max" Margin="0,0,5,0"/>
         </HorizontalStackPanel>
 
         <Border SuggestedSize="250,250" HorizontalAlignment="Left"
@@ -144,10 +144,10 @@
 
         <HorizontalStackPanel Margin="0,10,0,0" VerticalAlignment="Bottom" Name="bottomImageToolBarPanel">
           <Label Text="Image Container:" IsTextLocalized="true" Margin="0,0,5,0" VerticalAlignment="Center"/>
-          <Button Name="widthPlusButton" Click="WidthPlusButtonClick" Text="W+"/>
-          <Button Name="widthMinusButton" Click="WidthMinusButtonClick" Text="W-"/>
-          <Button Name="heightPlusButton" Click="HeightPlusButtonClick" Text="H+"/>
-          <Button Name="heightMinusButton" Click="HeightMinusButtonClick" Text="H-"/>
+          <StdButton Name="widthPlusButton" Click="WidthPlusButtonClick" Text="W+"/>
+          <StdButton Name="widthMinusButton" Click="WidthMinusButtonClick" Text="W-"/>
+          <StdButton Name="heightPlusButton" Click="HeightPlusButtonClick" Text="H+"/>
+          <StdButton Name="heightMinusButton" Click="HeightMinusButtonClick" Text="H-"/>
         </HorizontalStackPanel>
 
       </StackPanel>

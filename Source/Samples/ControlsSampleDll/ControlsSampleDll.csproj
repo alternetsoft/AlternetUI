@@ -97,7 +97,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Alternet.UI.Common\Alternet.UI.Common.csproj" />
-    <ProjectReference Include="..\ApiDocDll\ApiDocDll.csproj" />
   </ItemGroup>
 
   <!-- ================================================ -->

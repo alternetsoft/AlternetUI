@@ -50,7 +50,6 @@ namespace PropertyGridSample
             InitTestsPictureBox();
             InitTestsListBox();
             InitTestsStdTreeView();
-            InitTestsTreeView();
             InitTestsListView();
             InitTestsButton();
             InitTestsSpeedButton();
@@ -219,7 +218,7 @@ namespace PropertyGridSample
 
         internal void InitTestsButton()
         {
-            AddControlAction<Button>("Set Command", (c) =>
+            AddControlAction<StdButton>("Set Command", (c) =>
             {
                 c.Command = NamedCommands.CommandAppLog;
                 c.CommandParameter = "Button.Command executed";
@@ -340,24 +339,14 @@ namespace PropertyGridSample
                 ObjectInit.AddManyItems(c);
             });
 
-            AddControlAction<ListBox>("Add 100 items", (c) =>
-            {
-                ObjectInit.AddManyItems(c, 100);
-            });
-
-            AddControlAction<CheckedListBox>("Recreate Native Window", (c) =>
+            AddControlAction<StdCheckListBox>("Recreate Native Window", (c) =>
             {
                 c.Handler.RecreateWindow();
             });
 
-            AddControlAction<ListBox>("Recreate Native Window", (c) =>
+            AddControlAction<StdListBox>("Recreate Native Window", (c) =>
             {
                 c.Handler.RecreateWindow();
-            });
-
-            AddControlAction<CheckedListBox>("Toggle selected item checked", (c) =>
-            {
-                c.SetItemChecked(c.SelectedIndex, !c.GetItemChecked(c.SelectedIndex));
             });
 
             AddControlAction<VirtualListBox>("Set dark theme", (c) =>

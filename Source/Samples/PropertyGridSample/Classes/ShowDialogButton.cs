@@ -7,7 +7,7 @@ using Alternet.UI;
 
 namespace PropertyGridSample
 {
-    internal class ShowDialogButton : Button
+    internal class ShowDialogButton : StdButton
     {
         public ShowDialogButton()
         {

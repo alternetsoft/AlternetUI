@@ -172,6 +172,7 @@ namespace PropertyGridSample
             }
         }
 
+        /*
         public static void AddManyItems(ListBox listBox, int numItems)
         {
             listBox.DoInsideUpdate(() =>
@@ -184,6 +185,7 @@ namespace PropertyGridSample
 
             listBox.SelectLastItem();
         }
+        */
 
         public static void AddManyItems(VirtualListBox listBox)
         {
@@ -228,6 +230,7 @@ namespace PropertyGridSample
             }
         }
 
+        /*
         public static void InitCheckedListBox(object control)
         {
             InitListBox(control);
@@ -238,6 +241,7 @@ namespace PropertyGridSample
                 LogItems("ListBox CheckedItemsChanged", listBox.CheckedItems);
             };
         }
+        */
 
         public static void LogItems(string prefix, IReadOnlyList<object?> items)
         {
@@ -251,6 +255,7 @@ namespace PropertyGridSample
             }
         }
 
+        /*
         public static void InitListBox(object control)
         {
             if (control is not ListBox listBox)
@@ -262,6 +267,7 @@ namespace PropertyGridSample
 
             listBox.SelectedIndexChanged += (s, e) => LogItems("ListBox SelectedIndexChanged", listBox.SelectedItems);
         }
+        */
 
         public static void InitStdListBox(object control)
         {

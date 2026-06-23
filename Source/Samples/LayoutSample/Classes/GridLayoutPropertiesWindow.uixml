@@ -81,7 +81,7 @@
           </Border>
 
           <Border Grid.Column="2" Grid.Row="2">
-            <Button Text="Button" Name="subjectButton"/>
+            <StdButton Text="Button" Name="subjectButton"/>
           </Border>
 
           <Border Grid.Column="3" Grid.Row="2">

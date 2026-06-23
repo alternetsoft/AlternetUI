@@ -57,6 +57,7 @@ namespace PropertyGridSample
             });
         }
 
+        /*
         void InitTestsTreeView()
         {
             AddControlAction<TreeView>("SelectedItem: ExpandAll", (c) =>
@@ -78,6 +79,7 @@ namespace PropertyGridSample
                 item4.IsSelected = !item4.IsSelected;
             });
         }
+        */
 
         void TestTreeViewLoadPngFromResource(StdTreeView control)
         {

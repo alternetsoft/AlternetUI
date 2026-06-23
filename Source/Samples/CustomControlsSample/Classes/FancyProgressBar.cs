@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="ProgressBar"/> with custom painted fancy look.
     /// </summary>
-    public partial class FancyProgressBar : ProgressBar
+    public partial class FancyProgressBar : StdProgressBar
     {
         private readonly Font font = Control.DefaultFont;
         private readonly Pen pointerPen1 = new((Color)"#FC4154", 3);

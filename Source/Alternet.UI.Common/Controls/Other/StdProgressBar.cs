@@ -100,7 +100,7 @@ namespace Alternet.UI
         private int minimum = 0;
         private int val = 0;
         private int tickFrequency = 1;
-        private SliderOrientation orientation;
+        private ProgressBarOrientation orientation;
         private SliderTickStyle tickStyle;
         private WeakReferenceValue<AbstractControl> valueDisplay = new();
         private string? valueFormat;
@@ -561,7 +561,7 @@ namespace Alternet.UI
         /// from bottom to top as the
         /// <see cref="Value"/> increases.
         /// </remarks>
-        public virtual SliderOrientation Orientation
+        public virtual ProgressBarOrientation Orientation
         {
             get => orientation;
             set
@@ -574,7 +574,7 @@ namespace Alternet.UI
 
                 PerformLayoutAndInvalidate(() =>
                 {
-                    var isHorizontal = value == SliderOrientation.Horizontal;
+                    var isHorizontal = value == ProgressBarOrientation.Horizontal;
                     var dockStyle = isHorizontal ? DockStyle.Left : DockStyle.Top;
 
                     if (isHorizontal)
@@ -603,10 +603,10 @@ namespace Alternet.UI
         [Browsable(false)]
         public bool IsHorizontal
         {
-            get => Orientation == SliderOrientation.Horizontal;
+            get => Orientation == ProgressBarOrientation.Horizontal;
             set
             {
-                Orientation = value ? SliderOrientation.Horizontal : SliderOrientation.Vertical;
+                Orientation = value ? ProgressBarOrientation.Horizontal : ProgressBarOrientation.Vertical;
             }
         }
 
@@ -616,15 +616,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public bool IsVertical
         {
-            get => Orientation == SliderOrientation.Vertical;
+            get => Orientation == ProgressBarOrientation.Vertical;
             set
             {
-                Orientation = value ? SliderOrientation.Vertical : SliderOrientation.Horizontal;
+                Orientation = value ? ProgressBarOrientation.Vertical : ProgressBarOrientation.Horizontal;
             }
         }
 
         /// <summary>
-        /// Gets or sets a value indicating how to display the tick marks on the slider.
+        /// Gets or sets a value indicating how to display the tick marks on the progress bar.
         /// </summary>
         /// <value>
         /// One of the <see cref="SliderTickStyle"/> values. The default is

@@ -25,7 +25,6 @@ namespace ControlsSample
             
             AddIfDebug("Controls Test Window", () => new ControlsTestWindow());           
 
-            Add("Documentation Samples", () => new ApiDoc.MainWindowSimple());
             Add("Preview File Sample", () => new PreviewSample.PreviewSampleWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.ExplorerMainWindow());
             Add("Printing Sample", () => new PrintingSample.PrintingMainWindow());
