@@ -16,15 +16,15 @@
 
       <Border Margin="5" IsTextLocalized="true" HorizontalAlignment="Fill">
         <StackPanel Padding="10" >
-          <Button Text="Create Window" Name="createAndShowWindowButton"
+          <StdButton Text="Create Window" Name="createAndShowWindowButton"
               Click="CreateAndShowWindowButton_Click" IsTextLocalized="true"
               Margin="0,0,0,5" />
-          <Button Text="Create Mini Frame" Name="createAndShowMiniFrameButton"
+          <StdButton Text="Create Mini Frame" Name="createAndShowMiniFrameButton"
               Click="CreateAndShowMiniFrameButton_Click" IsTextLocalized="true"
               Margin="0,0,0,5" />
-          <Button Text="Create Dialog" Name="createAndShowModalWindowButton" IsTextLocalized="true"
+          <StdButton Text="Create Dialog" Name="createAndShowModalWindowButton" IsTextLocalized="true"
               Click="CreateAndShowModalWindowButton_Click" Margin="0,0,0,5"/>
-          <Button Name="addOwnedWindow" Click="AddOwnedWindow_Click" IsTextLocalized="true"
+          <StdButton Name="addOwnedWindow" Click="AddOwnedWindow_Click" IsTextLocalized="true"
               Text="Create Owned" Margin="0,0,0,5" IsEnabled="true"/>
           <CheckBox Text="Set Owner" Name="setOwnerCheckBox" Margin="0,0,0,5"
                     IsTextLocalized="true" IsEnabled="true"/>
@@ -45,12 +45,12 @@
             <Label Text="Active window title:" Margin="0,0,0,3" IsTextLocalized="true" />
             <Label Name="activeWindowTitleLabel" Margin="0,0,0,3"/>
             <Label Name="isWindowActiveLabel" Margin="0,0,0,3"/>
-            <Button Name="activateButton" Click="ActivateButton_Click"
+            <StdButton Name="activateButton" Click="ActivateButton_Click"
                     Text="Activate" IsTextLocalized="true" />
           </StackPanel>
         </Border>
 
-        <Button Text="All Properties..." IsTextLocalized="true"
+        <StdButton Text="All Properties..." IsTextLocalized="true"
                 Name="propertiesButton" Click="PropertiesButton_Click"/>
       </VerticalStackPanel>
       
@@ -99,12 +99,12 @@
 
       <VerticalStackPanel Padding="5">
         <HorizontalStackPanel  Margin="0,0,0,5">
-          <Button Text="Icon 1" Name="setIcon1Button"
+          <StdButton Text="Icon 1" Name="setIcon1Button"
                   Click="SetIcon1Button_Click" IsTextLocalized="true" />
-          <Button Text="Icon 2" Name="setIcon2Button"
+          <StdButton Text="Icon 2" Name="setIcon2Button"
                   Click="SetIcon2Button_Click" IsTextLocalized="true" />
         </HorizontalStackPanel>
-        <Button Text="Clear Icon" Name="clearIconButton" IsTextLocalized="true"
+        <StdButton Text="Clear Icon" Name="clearIconButton" IsTextLocalized="true"
                 Click="ClearIconButton_Click" Margin="0,0,0,5"/>
       </VerticalStackPanel>
     </HorizontalStackPanel>
@@ -115,14 +115,14 @@
       <Border Margin="5" IsTitleLocalized="true" Padding="10" Layout="Vertical" 
               VerticalAlignment="Top">
         <Label Text="Bounds" Margin="0,0,0,5"/>
-        <Button Name="setSizeButton" Click="SetSizeButton_Click"
+        <StdButton Name="setSizeButton" Click="SetSizeButton_Click"
             Text="Size = (300, 300)" Margin="0,0,0,5" IsTextLocalized="true" />
-        <Button Name="increaseLocationButton" Click="IncreaseLocationButton_Click"
+        <StdButton Name="increaseLocationButton" Click="IncreaseLocationButton_Click"
             Text="Location += (10, 10)" Margin="0,0,0,5" IsTextLocalized="true" />
-        <Button Name="setBoundsButton" Click="SetBoundsButton_Click"
+        <StdButton Name="setBoundsButton" Click="SetBoundsButton_Click"
             Text="Bounds = (0, 0, 400, 400)" IsTextLocalized="true"
             Margin="0,0,0,5"/>
-        <Button Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click"
+        <StdButton Name="setMinMaxSizeButton" Click="SetMinMaxSizeButton_Click"
             Text="Set MinMax Size" Margin="0,0,0,5" IsTextLocalized="true" />
         <Label Name="currentBoundsLabel" Margin="0,0,0,10" Visible="false"/>
       </Border>
@@ -130,7 +130,7 @@
       <Border Margin="5" IsTitleLocalized="true" 
                 VerticalAlignment="Top" Padding="10" Layout="Vertical">
             <EnumPicker Name="sizeToContentModeComboBox" VerticalAlignment="Center"/>
-            <Button Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
+            <StdButton Name="setSizeToContentButton" Click="SetSizeToContentButton_Click"
                 Text="Set Size to Content" VerticalAlignment="Center" IsTextLocalized="true" />
       </Border>
 

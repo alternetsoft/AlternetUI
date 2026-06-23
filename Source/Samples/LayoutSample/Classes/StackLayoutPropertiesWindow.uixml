@@ -10,9 +10,9 @@
 
         <StackPanel Orientation="Vertical" Padding="5" Title="Container"
                     Name="containerStackPanel" Visible="true">
-          <Button Text="Increase Margin" Name="increaseContainerMarginButton" IsTextLocalized="true"
+          <StdButton Text="Increase Margin" Name="increaseContainerMarginButton" IsTextLocalized="true"
                   Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
-          <Button Text="Increase Padding" Name="increaseContainerPaddingButton" IsTextLocalized="true"
+          <StdButton Text="Increase Padding" Name="increaseContainerPaddingButton" IsTextLocalized="true"
                   Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
 
           <CheckBox Text="Horizontal Layout" IsTextLocalized="true"
@@ -23,9 +23,9 @@
 
         <StackPanel Orientation="Vertical" Title="Button"
                     Padding="5" Name="buttonPanel" Visible="false">
-          <Button Text="Increase Margin" Name="increaseButtonMarginButton" IsTextLocalized="true"
+          <StdButton Text="Increase Margin" Name="increaseButtonMarginButton" IsTextLocalized="true"
                   Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
-          <Button Text="Increase Padding" Name="increaseButtonPaddingButton" IsTextLocalized="true"
+          <StdButton Text="Increase Padding" Name="increaseButtonPaddingButton" IsTextLocalized="true"
                   Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
         </StackPanel>
 
@@ -35,7 +35,7 @@
                 Margin="15" HorizontalAlignment="Fill" Padding="15">
         <StackPanel Orientation="Vertical" Name="subjectPanel">
           <Label Text="Before" IsTextLocalized="true" Margin="5"/>
-          <Button Text="Button" IsTextLocalized="true" Name="subjectButton" Margin="5"/>
+          <StdButton Text="Button" IsTextLocalized="true" Name="subjectButton" Margin="5"/>
           <Label Text="After" IsTextLocalized="true" Margin="5"/>
         </StackPanel>
       </Border>

@@ -52,14 +52,14 @@
                     ValueChanged="StackPanelHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="2" />
 
-          <Button Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
+          <StdButton Text="Add Control" Name="addControlToStackPanelButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="AddControlToStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
 
-          <Button Text="Remove Control" Name="removeControlFromStackPanelButton" Margin="0,0,0,5"
+          <StdButton Text="Remove Control" Name="removeControlFromStackPanelButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="RemoveControlFromStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
-          <Button Text="Min Controls" Name ="minControlsStackButton" Margin="0,0,0,5"
+          <StdButton Text="Min Controls" Name ="minControlsStackButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="MinControlsStackPanelButton_Click"
                   Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
 
@@ -100,19 +100,19 @@
                     ValueChanged="GridHorizontalAlignmentComboBox_SelectedItemChanged"
                     Grid.Column="1" Grid.Row="1" />
 
-          <Button Text="Add Column" Name="addColumnToGridButton" Margin="0,0,0,5"
+          <StdButton Text="Add Column" Name="addColumnToGridButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="AddColumnToGridButton_Click"
                   Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2"/>
 
-          <Button Text="Remove Column" Name="removeColumnFromGridButton" Margin="0,0,0,5"
+          <StdButton Text="Remove Column" Name="removeColumnFromGridButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="RemoveColumnFromGridButton_Click"
                   Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2"/>
 
-          <Button Text="Add Row" Name="addRowToGridButton" Margin="0,0,0,5"
+          <StdButton Text="Add Row" Name="addRowToGridButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="AddRowToGridButton_Click"
                   Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"/>
 
-          <Button Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
+          <StdButton Text="Remove Row" Name="removeRowFromGridButton" Margin="0,0,0,5"
                   IsTextLocalized="true" Click="RemoveRowFromGridButton_Click"
                   Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"/>
           <CheckBox Text="Show Horizontal" Name="showHorizontalCheckBox" IsChecked="true" Margin="0,0,0,5"

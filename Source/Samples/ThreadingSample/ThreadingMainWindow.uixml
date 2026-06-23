@@ -20,11 +20,11 @@
 
       <Border Padding="5" MinChildMargin="5" Layout="Vertical">
         <Label Text="Using async/await"/>
-        <Button
+        <StdButton
           Text="Start long-running operation" IsTextLocalized="true"
           Name="startLongOperationButton"
           Click="StartLongOperationButton_Click"/>
-        <ProgressBar Grid.Row="1" Name="longOperationProgressBar"
+        <StdProgressBar Grid.Row="1" Name="longOperationProgressBar"
                      HorizontalAlignment="Stretch"/>
       </Border>
 

@@ -17,7 +17,7 @@
       <StdSlider Minimum="0" Maximum="100" Value="25"
               TickFrequency="25" Name="slider1"
           VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
-      <ProgressBar Name="progressBar1"
+      <StdProgressBar Name="progressBar1"
         Minimum="0" Maximum="100"
           VerticalAlignment="Center" Margin="0,0,10,0" SuggestedWidth="200"/>
       <Label VerticalAlignment="Center" Name="intValueLabel" IsTextLocalized="true" />

@@ -18,7 +18,7 @@
                 >
         <StackPanel Orientation="Vertical"
                     Padding="5" InputTransparent="true">
-          <Button Name="helloButton" Text="Say Hello" IsTextLocalized="true"
+          <StdButton Name="helloButton" Text="Say Hello" IsTextLocalized="true"
                   Margin="10" Click="HelloButton_Click"
                   MouseMove="HelloButton_MouseMove"
                   MouseDown="HelloButton_MouseDown"
