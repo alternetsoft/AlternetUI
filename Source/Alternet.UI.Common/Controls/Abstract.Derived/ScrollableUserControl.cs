@@ -13,11 +13,6 @@ namespace Alternet.UI
     public partial class ScrollableUserControl : UserControl
     {
         /// <summary>
-        /// Indicates whether the list box controls use internal scrollbars.
-        /// </summary>
-        public static bool DefaultUseInternalScrollBars;
-
-        /// <summary>
         /// Specifies the default border style for controls.
         /// By default, it equals <see cref="ControlBorderStyle.Theme"/>.
         /// </summary>
@@ -29,7 +24,6 @@ namespace Alternet.UI
         /// </summary>
         public static int DefaultHorizontalScrollBarLargeIncrement = 4;
 
-        private bool hasInternalScrollBars;
         private ScrollBarSettings? horizontalScrollBarSettings;
         private ScrollBarSettings? verticalScrollBarSettings;
         private InteriorDrawable? interior;
@@ -39,14 +33,6 @@ namespace Alternet.UI
 
         static ScrollableUserControl()
         {
-            // We use internal scrollbars:
-            // 1. On MAUI because native scrollbars are not supported.
-            // 2. On Linux because native scrollbars are not good enough.
-            // 3. Everywhere else by default because we want to have the same behavior on all platforms.
-            // 4. On Windows with OpenGL because native scrollbars do not work with OpenGL.
-            // 5. On Windows because native scrollbars do not change it's color when
-            // system color theme changes.
-            DefaultUseInternalScrollBars = App.IsMaui || App.IsLinuxOS || true;
         }
 
         /// <summary>
@@ -54,9 +40,6 @@ namespace Alternet.UI
         /// </summary>
         public ScrollableUserControl()
         {
-            var useOpenGL = RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL);
-            hasInternalScrollBars = useOpenGL || DefaultUseInternalScrollBars;
-
             OnHasInternalScrollBarsChanged();
             SetInternalScrollBarsImmutable();
         }
@@ -118,29 +101,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether the control uses internal scrollbars.
+        /// Gets whether the control uses internal scrollbars.
         /// </summary>
-        public virtual bool UseInternalScrollBars
+        public bool UseInternalScrollBars
         {
             get
             {
-                return hasInternalScrollBars;
-            }
-
-            set
-            {
-                var useOpenGL = RenderingFlags.HasFlag(ControlRenderingFlags.UseOpenGL);
-                if (useOpenGL)
-                    value = true;
-
-                if (hasInternalScrollBars == value)
-                    return;
-                if (internalScrollBarsImmutable)
-                    return;
-
-                hasInternalScrollBars = value;
-                OnHasInternalScrollBarsChanged();
-                UpdateScrollBars(true);
+                return true;
             }
         }
 

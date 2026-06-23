@@ -134,8 +134,6 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
-            listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars || App.IsWindowsOS;
-
             var item = listBox.GetItem(1);
 
             if (item is not null)

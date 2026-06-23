@@ -50,8 +50,6 @@ namespace ControlsSample
             textVisibleCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.TextVisible));
             comboBox.MinWidth = 150;
             comboBox.ValueChanged += ComboBox_SelectedItemChanged;
-
-            listBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars;
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)

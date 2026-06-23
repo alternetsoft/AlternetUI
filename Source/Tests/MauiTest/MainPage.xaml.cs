@@ -40,9 +40,6 @@ public partial class MainPage : ContentPage
 
         skiaContainer.BackgroundColor = Colors.Cornsilk;
 
-        skiaContainer.Interior.Required();
-        skiaContainer.Interior.HorzScrollBar?.SetVisible(false);
-
         skiaContainer.Control = customDrawControl;
 
         panel.BackgroundColor = Colors.CornflowerBlue;

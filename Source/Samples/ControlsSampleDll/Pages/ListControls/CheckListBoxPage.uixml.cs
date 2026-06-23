@@ -57,8 +57,6 @@ namespace ControlsSample
             allowMultipleSelectionCheckBox.IsChecked =
                 checkListBox.SelectionMode == ListBoxSelectionMode.Multiple;
             App.LogIf($"CheckListBoxDemo: Constructor done", false);
-
-            checkListBox.HasBorder = VirtualListBox.DefaultUseInternalScrollBars;
         }
 
         private void RadioButtonItemChanged(
@@ -122,13 +120,6 @@ namespace ControlsSample
                 IndicesToStr(checkListBox.SelectedIndices);
             App.Log(
                 $"CheckListBox: SelectionChanged. Selected: ({selectedIndicesStr})");
-        }
-
-        private void UseInternalScrollBars_CheckedChanged(
-            object? sender,
-            EventArgs e)
-        {
-            checkListBox.UseInternalScrollBars = useInternalScrollBars.IsChecked;
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(

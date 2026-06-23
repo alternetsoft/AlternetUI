@@ -29,7 +29,6 @@ namespace Alternet.UI
     {
         private SwipeGestureRecognizer? swipeGesture;
         private PanGestureRecognizer? panGesture;
-        private InteriorDrawable? interior;
         private SkiaGraphics? graphics;
         private Alternet.UI.AbstractControl? control;
         private bool currentIsDark;
@@ -57,8 +56,6 @@ namespace Alternet.UI
             MauiApplicationHandler.RegisterThemeChangedHandler();
 
             RequireDoubleTapGesture();
-            
-            /* IgnorePixelScaling = true;*/
         }
 
         /// <summary>
@@ -76,22 +73,6 @@ namespace Alternet.UI
         /// Gets swipe gesture created after call to <see cref="RequireSwipeGesture"/>.
         /// </summary>
         public SwipeGestureRecognizer? SwipeGesture => swipeGesture;
-
-        /// <summary>
-        /// Gets control interior element (border and scrollbars).
-        /// </summary>
-        public virtual InteriorDrawable Interior
-        {
-            get
-            {
-                if (interior is null)
-                {
-                    interior = new();
-                }
-
-                return interior;
-            }
-        }
 
         /// <summary>
         /// Gets or sets whether 'DrawImage' methods draw unscaled image. Default is <c>true</c>.
@@ -123,15 +104,7 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
-                    if (interior is not null)
-                    {
-                        control.RemoveNotification(interior.Notification);
-                        control.SystemColorsChanged -= OnControlSystemColorsChanged;
-
-                        var scrollBar = interior.VertScrollBar;
-
-                        scrollBar?.AfterPaint = null;
-                    }
+                    control.SystemColorsChanged -= OnControlSystemColorsChanged;
 
                     var handler = (control as Control)?.Handler as MauiControlHandler;
 
@@ -146,18 +119,7 @@ namespace Alternet.UI
 
                 if (control is not null)
                 {
-                    if (interior is not null && !control.HasOwnInterior)
-                    {
-                        control.AddNotification(interior.Notification);
-                        control.SystemColorsChanged += OnControlSystemColorsChanged;
-
-                        var scrollBar = interior.VertScrollBar;
-
-                        if (scrollBar is not null && control is ScrollableUserControl scrollable)
-                        {
-                            scrollBar.AfterPaint = scrollable.AfterVertScrollBarPaint;
-                        }
-                    }
+                    control.SystemColorsChanged += OnControlSystemColorsChanged;
 
                     var handler = (control as Control)?.Handler as MauiControlHandler;
 
@@ -353,9 +315,6 @@ namespace Alternet.UI
             if (control is null)
                 return;
             SystemSettings.ResetColors();
-
-            if (!control.HasOwnInterior)
-                Interior.UpdateThemeMetrics();
 
             Invalidate();
         }
@@ -674,13 +633,6 @@ namespace Alternet.UI
             if (control is null)
                 return;
 
-            if (interior is not null)
-            {
-                interior.UpdateThemeMetrics(control.IsDarkBackground);
-                interior.VertPosition = control.VertScrollBarInfo;
-                interior.HorzPosition = control.HorzScrollBarInfo;
-            }
-
             var dc = e.Surface.Canvas;
 
             control.ResetScaleFactor();
@@ -732,13 +684,6 @@ namespace Alternet.UI
                 {
                     dc.RestoreToCount(saved2);
                 }
-
-#pragma warning disable
-                if (interior is not null)
-                {
-                    interior.Draw(control, graphics);
-                }
-#pragma warning restore
 
                 graphics.UseUnscaledDrawImage = false;
 
@@ -811,19 +756,7 @@ namespace Alternet.UI
 
             RectD newBounds = (0, 0, (Coord)newWidth, (Coord)newHeight);
 
-            if (interior is null)
-            {
-                SetControlBounds(newBounds);
-            }
-            else
-            {
-                interior.Bounds = newBounds;
-
-                var rectangles = interior.GetLayoutRectangles(control);
-                var clientRect = rectangles[InteriorDrawable.HitTestResult.ClientRect];
-
-                SetControlBounds(clientRect);
-            }
+            SetControlBounds(newBounds);            
 
             void SetControlBounds(RectD newBounds)
             {
