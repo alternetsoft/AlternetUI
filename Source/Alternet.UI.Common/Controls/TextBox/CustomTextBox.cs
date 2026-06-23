@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 using Alternet.UI.Localization;
 
@@ -761,7 +762,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SetErrorTextFromDataType()
         {
-            if(DataType is null)
+            if (DataType is null)
             {
                 ValidatorErrorText = null;
                 return;
@@ -1318,10 +1319,7 @@ namespace Alternet.UI
             {
                 converter = StringConverters.Default.CreateAdapter(TypeConverter);
 
-                if (converter is null)
-                {
-                    converter = StringConverters.Default.CreateAdapterForTypeConverter(type);
-                }
+                converter ??= StringConverters.Default.CreateAdapterForTypeConverter(type);
 
                 usedTypeConverter = converter is not null;
             }
@@ -1441,15 +1439,22 @@ namespace Alternet.UI
             {
                 if (AutoShowError && reporter is AbstractControl reporterControl)
                 {
-                    if(reporterControl != this)
+                    if (reporterControl != this)
                     {
                         Post(() =>
                         {
-                            if(DisposingOrDisposed || reporterControl.DisposingOrDisposed)
+                            if (DisposingOrDisposed || reporterControl.DisposingOrDisposed)
                                 return;
                             reporterControl.Visible = showError;
                         });
                     }
+                }
+
+                if (showError)
+                {
+                }
+                else
+                {
                 }
 
                 reporter?.SetErrorStatus(this, showError, hint);
