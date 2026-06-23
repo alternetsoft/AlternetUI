@@ -185,8 +185,6 @@
     <Project Path="../../../../AlternetStudio/Source/Common/Python/Alternet.Common.Python.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Common/TypeScript/Alternet.Common.TypeScript.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Libraries.AlternetUI/Scripter.Integration.AlternetUI/Alternet.Scripter.Integration.AlternetUI.csproj" />
-    <Project Path="../../../../AlternetStudio/Source/Libraries.External/ClrDebug/ClrDebug.SourceGenerator/ClrDebug.SourceGenerator.csproj" />
-    <Project Path="../../../../AlternetStudio/Source/Libraries.External/ClrDebug/ClrDebug/ClrDebug.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Scripter.Python/Alternet.Scripter.Python.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Scripter.Python/Debugger/Alternet.Scripter.Python.Debugger.csproj" />
     <Project Path="../../../../AlternetStudio/Source/Scripter.Python/Scripter.Python.Embedded/Alternet.Scripter.Python.Embedded.csproj" />
