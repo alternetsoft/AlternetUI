@@ -339,7 +339,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateProgressBarHandler(this);
+            return new WxProgressBarHandler();
         }
 
         /// <summary>

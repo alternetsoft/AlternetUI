@@ -418,11 +418,11 @@ namespace Alternet.UI
         /// Gets the default button from the collection of child buttons.
         /// </summary>
         /// <returns>The default button if found; otherwise, null.</returns>
-        public virtual Button? GetDefaultButton()
+        public virtual StdButton? GetDefaultButton()
         {
             foreach (var child in Children)
             {
-                if (child is Button btn && btn.IsDefault && btn.IsVisible)
+                if (child is StdButton btn && btn.IsDefault && btn.IsVisible)
                     return btn;
             }
 
@@ -451,7 +451,7 @@ namespace Alternet.UI
         /// of child buttons.
         /// </summary>
         /// <remarks>This method iterates through all child elements and sets the
-        /// <see cref="Button.IsCancel"/> property to <see langword="true"/> for
+        /// <see cref="StdButton.IsCancel"/> property to <see langword="true"/> for
         /// the specified button, and <see langword="false"/> for all other buttons.
         /// Only one button can be designated as the cancel button at a time.</remarks>
         /// <param name="button">The button to be set as the exclusive cancel button.
@@ -618,7 +618,7 @@ namespace Alternet.UI
                 for (int i = Children.Count - 1; i >= 0; i--)
                 {
                     var child = Children[i];
-                    if (child is not Button btn)
+                    if (child is not StdButton btn)
                         continue;
                     var value = btn.CustomAttr.GetAttribute("KnownButton");
 
@@ -710,7 +710,7 @@ namespace Alternet.UI
                 for (int i = Children.Count - 1; i >= 0; i--)
                 {
                     var child = Children[i];
-                    if (child is not Button btn)
+                    if (child is not StdButton btn)
                         continue;
                     var knownButton = btn.CustomAttr.GetAttribute<KnownButton>("KnownButton");
 
@@ -724,7 +724,7 @@ namespace Alternet.UI
 
                 int Comparison(AbstractControl x, AbstractControl y)
                 {
-                    if (x is Button btnX && y is Button btnY)
+                    if (x is StdButton btnX && y is StdButton btnY)
                     {
                         var knownButtonX = btnX.CustomAttr.GetAttribute<KnownButton>("KnownButton");
                         var knownButtonY = btnY.CustomAttr.GetAttribute<KnownButton>("KnownButton");
@@ -774,7 +774,7 @@ namespace Alternet.UI
         /// specified known button identifier.
         /// </summary>
         /// <param name="button">The identifier of the known button to search for.</param>
-        /// <returns>A <see cref="Button"/> object that matches the specified identifier,
+        /// <returns>A <see cref="StdButton"/> object that matches the specified identifier,
         /// or <see langword="null"/> if no matching button is found.</returns>
         public virtual StdButton? GetButton(KnownButton button)
         {
@@ -794,7 +794,7 @@ namespace Alternet.UI
         /// <param name="text">The text to display on the button. Cannot be null or empty.</param>
         /// <param name="clickAction">The action to execute when the button is clicked.
         /// Can be null.</param>
-        /// <returns>A <see cref="Button"/> instance representing the newly added button.</returns>
+        /// <returns>A <see cref="StdButton"/> instance representing the newly added button.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="text"/>
         /// is null or empty.</exception>
         public virtual StdButton AddButton(string text, Action? clickAction = null)
@@ -823,7 +823,7 @@ namespace Alternet.UI
         /// the type of button to add.</param>
         /// <param name="clickAction">An <see cref="Action"/> to be executed when
         /// the button is clicked.</param>
-        /// <returns>A <see cref="Button"/> instance representing the newly added button.</returns>
+        /// <returns>A <see cref="StdButton"/> instance representing the newly added button.</returns>
         public virtual StdButton AddButton(KnownButton button, Action? clickAction = null)
         {
             var text = KnownButtons.GetText(button) ?? string.Empty;

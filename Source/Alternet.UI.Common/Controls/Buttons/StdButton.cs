@@ -7,9 +7,9 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a generic button control. This control is implemented inside the library and can be used in the
-    /// same way as a regular native <see cref="Button"/> control. <see cref="StdButton"/> is used when you need
+    /// same way as a regular native button control. <see cref="StdButton"/> is used when you need
     /// to have the same code for all platforms. <see cref="StdButton"/> provides many additional features,
-    /// which are not available in the native <see cref="Button"/> control.
+    /// which are not available in the native button control.
     /// </summary>
     [ControlCategory(KnownControlCategory.Common)]
     public partial class StdButton : GenericItemControl, INotifyPropertyChanged, IDialogButtonRoles
@@ -186,12 +186,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether a <see cref="Button"/> is
+        /// Gets or sets a value that indicates whether a <see cref="StdButton"/> is
         /// the default button. In a modal dialog,
         /// a user invokes the default button by pressing the ENTER key.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the <see cref="Button"/> is the default
+        /// <see langword="true"/> if the <see cref="StdButton"/> is the default
         /// button; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
@@ -300,12 +300,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether a <see cref="Button"/>
+        /// Gets or sets a value that indicates whether a <see cref="StdButton"/>
         /// is a 'Cancel' button. In a modal dialog, a
         /// user can activate the 'Cancel' button by pressing the ESC key.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the <see cref="Button"/> is a 'Cancel'
+        /// <see langword="true"/> if the <see cref="StdButton"/> is a 'Cancel'
         /// button; otherwise, <see langword="false"/>.
         /// The default is <see langword="false"/>.
         /// </value>

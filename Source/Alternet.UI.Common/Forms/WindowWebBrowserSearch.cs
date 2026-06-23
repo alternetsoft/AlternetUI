@@ -38,9 +38,9 @@ namespace Alternet.UI
             Margin = 5,
         };
 
-        private readonly Button findButton = new(CommonStrings.Default.ButtonFind);
-        private readonly Button findClearButton = new(CommonStrings.Default.ButtonClear);
-        private readonly Button closeButton = new(CommonStrings.Default.ButtonCancel);
+        private readonly StdButton findButton = new(CommonStrings.Default.ButtonFind);
+        private readonly StdButton findClearButton = new(CommonStrings.Default.ButtonClear);
+        private readonly StdButton closeButton = new(CommonStrings.Default.ButtonCancel);
 
         private WebBrowserFindParams findParams;
 
@@ -50,7 +50,8 @@ namespace Alternet.UI
         /// <remarks>This constructor configures the window for use as a search dialog within a web
         /// browser context. It sets up the window's appearance, default button behaviors, and initializes controls
         /// based on the provided or default search parameters.</remarks>
-        /// <param name="prm">The search parameters to initialize the window with. If null, default parameters are used.</param>
+        /// <param name="prm">The search parameters to initialize the window with.
+        /// If null, default parameters are used.</param>
         public WindowWebBrowserSearch(WebBrowserFindParams? prm = null)
         {
             prm ??= new();

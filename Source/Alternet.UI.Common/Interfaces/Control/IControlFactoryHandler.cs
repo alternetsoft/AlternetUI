@@ -10,14 +10,7 @@ namespace Alternet.UI
     /// Contains methods which create controls of the different types.
     /// </summary>
     public interface IControlFactoryHandler : IDisposable
-    {
-        /// <summary>
-        /// Creates platform control for the list box.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateListBoxHandler(ListBox control);
-
+    {        
         /// <summary>
         /// Creates platform control for the <see cref="Panel"/>.
         /// </summary>
@@ -31,21 +24,6 @@ namespace Alternet.UI
         /// <param name="control">Owner.</param>
         /// <returns></returns>
         IControlHandler CreateCheckBoxHandler(CheckBox control);
-
-        /// <summary>
-        /// Creates <see cref="IButtonHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler? CreateButtonHandler(Button control);
-
-        /// <summary>
-        /// Creates <see cref="IControlHandler"/> interface provider.
-        /// for the <see cref="ProgressBar"/>.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateProgressBarHandler(ProgressBar control);
 
         /// <summary>
         /// Creates <see cref="IControlHandler"/> interface provider

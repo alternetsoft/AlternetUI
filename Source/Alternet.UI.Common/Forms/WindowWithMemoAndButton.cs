@@ -17,14 +17,14 @@ namespace Alternet.UI
             ReadOnly = true,
         };
 
-        private readonly Button copyButton = new()
+        private readonly StdButton copyButton = new()
         {
             Text = CommonStrings.Default.ButtonCopy,
             HorizontalAlignment = UI.HorizontalAlignment.Left,
             Margin = new Thickness(0, 10, 0, 0),
         };
 
-        private readonly Button closeButton = new()
+        private readonly StdButton closeButton = new()
         {
             Text = CommonStrings.Default.ButtonClose,
             HorizontalAlignment = UI.HorizontalAlignment.Right,
@@ -49,12 +49,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the button used to initiate a copy to clipboard operation.
         /// </summary>
-        public Button CopyButton => copyButton;
+        public StdButton CopyButton => copyButton;
 
         /// <summary>
         /// Gets the button that closes the dialog.
         /// </summary>
-        public Button CloseButton => closeButton;
+        public StdButton CloseButton => closeButton;
 
         /// <summary>
         /// Displays a dialog window with the specified title and details.

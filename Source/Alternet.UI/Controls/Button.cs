@@ -546,7 +546,7 @@ namespace Alternet.UI
             if (UseGeneric)
                 return CreateGenericHandler();
 
-            var result = ControlFactory.Handler.CreateButtonHandler(this);
+            IControlHandler result = new WxButtonHandler();
             result ??= CreateGenericHandler();
             return result;
 

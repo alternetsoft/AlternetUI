@@ -18,7 +18,7 @@ namespace Alternet.UI
         public static string DefaultMessage = "Please wait until the operation is complete";
 
         private readonly Label messageLabel;
-        private readonly ProgressBar progressBar;
+        private readonly StdProgressBar progressBar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProgressDialog"/> class
@@ -53,7 +53,7 @@ namespace Alternet.UI
                 Margin = (0, 0, 0, 10),
             };
 
-            progressBar = new ProgressBar
+            progressBar = new StdProgressBar
             {
                 MinHeight = 10,
                 MinWidth = 200,
@@ -78,7 +78,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the progress bar control used in the progress dialog.
         /// </summary>
-        public ProgressBar ProgressBar => progressBar;
+        public StdProgressBar ProgressBar => progressBar;
 
         /// <summary>
         /// Gets or sets the message displayed in the progress dialog.

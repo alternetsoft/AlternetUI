@@ -24,7 +24,7 @@ namespace Alternet.UI
             Margin = (10, 0, 0, 0),
         };
 
-        private readonly Button openButton = new()
+        private readonly StdButton openButton = new()
         {
             Text = "Open",
             Margin = (0, 0, 0, 5),
@@ -68,7 +68,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets "Open" button.
         /// </summary>
-        public Button OpenButton => openButton;
+        public StdButton OpenButton => openButton;
 
         /// <summary>
         /// Gets control with the list of forms.

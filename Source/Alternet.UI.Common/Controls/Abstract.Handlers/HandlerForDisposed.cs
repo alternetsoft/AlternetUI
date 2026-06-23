@@ -12,7 +12,6 @@ namespace Alternet.UI
     /// This is dummy handler used for the disposed controls in some cases.
     /// </summary>
     public class HandlerForDisposed : PlessControlHandler,
-        IButtonHandler,
         ICalendarHandler,
         ICheckBoxHandler,
         IComboBoxHandler,

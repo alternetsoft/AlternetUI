@@ -81,7 +81,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
             Actions.Add(typeof(GenericWrappedTextControl), InitGenericWrappedTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
-            Actions.Add(typeof(Button), InitButton);
             Actions.Add(typeof(StdButton), InitStdButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
@@ -90,11 +89,15 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(VirtualListBox), InitVListBox);
             Actions.Add(typeof(FileListBox), InitFileListBox);
             Actions.Add(typeof(StdListBox), InitStdListBox);
-            Actions.Add(typeof(ListBox), InitListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);
             Actions.Add(typeof(StdComboBox), InitStdComboBox);
             Actions.Add(typeof(StdCheckListBox), InitCheckListBox);
+
+            /*
+            Actions.Add(typeof(Button), InitButton);
+            Actions.Add(typeof(ListBox), InitListBox);
             Actions.Add(typeof(CheckedListBox), InitCheckedListBox);
+            */
 
             Actions.Add(typeof(UserControl), (c) =>
             {
@@ -136,7 +139,7 @@ Environment.NewLine + Environment.NewLine +
                 SetBackgrounds(border);
 
                 border.Layout = LayoutStyle.Vertical;
-                Button button = new();
+                StdButton button = new();
                 button.Text = "Click me";
                 button.Parent = border;
                 button.Click += Button_Click;
@@ -173,13 +176,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(StdTreeView), (c) =>
             {
                 StdTreeView treeView = (c as StdTreeView)!;
-                treeView.SuggestedSize = defaultListSize;
-                InitVirtualTreeControl(treeView);
-            });
-
-            Actions.Add(typeof(TreeView), (c) =>
-            {
-                TreeView treeView = (c as TreeView)!;
                 treeView.SuggestedSize = defaultListSize;
                 InitVirtualTreeControl(treeView);
             });
@@ -242,6 +238,14 @@ Environment.NewLine + Environment.NewLine +
                 control.SuggestedSize = defaultListHeight;
             });
 
+            /*
+            Actions.Add(typeof(TreeView), (c) =>
+            {
+                TreeView treeView = (c as TreeView)!;
+                treeView.SuggestedSize = defaultListSize;
+                InitVirtualTreeControl(treeView);
+            });
+
             Actions.Add(typeof(ProgressBar), (c) =>
             {
                 ProgressBar control = (c as ProgressBar)!;
@@ -261,6 +265,7 @@ Environment.NewLine + Environment.NewLine +
                 }
 
             });
+            */
 
             Actions.Add(typeof(StdProgressBar), (c) =>
             {
@@ -556,7 +561,7 @@ Environment.NewLine + Environment.NewLine +
 
             for (int i = 1; i < 4; i++)
             {
-                var button = new Button()
+                var button = new StdButton()
                 {
                     Text = s + " Button " + i.ToString(),
                     Margin = 5,
@@ -569,7 +574,7 @@ Environment.NewLine + Environment.NewLine +
 
             static void Button_Click(object? sender, EventArgs e)
             {
-                App.Log($"Button '{(sender as Button)?.Text}' Click");
+                App.Log($"Button '{(sender as StdButton)?.Text}' Click");
             }
         }
 
@@ -609,7 +614,7 @@ Environment.NewLine + Environment.NewLine +
             panel.HasBorder = true;
 
 #pragma warning disable
-            Button OkButton = new()
+            StdButton OkButton = new()
             {
                 Text = "1",
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
@@ -619,7 +624,7 @@ Environment.NewLine + Environment.NewLine +
                 Parent = panel,
             };
 
-            Button CancelButton = new()
+            StdButton CancelButton = new()
             {
                 Text = "2",
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
@@ -629,7 +634,7 @@ Environment.NewLine + Environment.NewLine +
                 Parent = panel,
             };
 
-            Button ApplyButton = new()
+            StdButton ApplyButton = new()
             {
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
                 Text = "3",
@@ -712,6 +717,7 @@ Environment.NewLine + Environment.NewLine +
 
         }
 
+/*
         public static void InitVirtualTreeControl(TreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
@@ -722,7 +728,7 @@ Environment.NewLine + Environment.NewLine +
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
             AddItems(control, 10);
         }
-
+*/
         public static void InitVirtualTreeControl(StdTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
@@ -790,6 +796,7 @@ Environment.NewLine + Environment.NewLine +
             }
         }
 
+/*
         public static void AddItems(TreeView treeView, int count)
         {
             treeView.BeginUpdate();
@@ -828,6 +835,7 @@ Environment.NewLine + Environment.NewLine +
                 treeView.EndUpdate();
             }
         }
+*/
 
         private static ImageLists LoadImageListsCore()
         {

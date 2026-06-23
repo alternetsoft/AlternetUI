@@ -8,11 +8,6 @@ namespace Alternet.UI
 {
     internal partial class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
-        public IControlHandler CreateListBoxHandler(ListBox control)
-        {
-            throw new NotImplementedException();
-        }
-
         public IControlHandler CreateOpenGLControlHandler(AbstractControl control)
         {
             return new MauiControlHandler();
@@ -21,11 +16,6 @@ namespace Alternet.UI
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
             return new MauiControlHandler();
-        }
-
-        IControlHandler? IControlFactoryHandler.CreateButtonHandler(Button control)
-        {
-            return null;
         }
 
         IControlHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
@@ -59,11 +49,6 @@ namespace Alternet.UI
         }
 
         IControlHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
-        {
-            return new HandlerForDisposed();
-        }
-
-        IControlHandler IControlFactoryHandler.CreateProgressBarHandler(ProgressBar control)
         {
             return new HandlerForDisposed();
         }

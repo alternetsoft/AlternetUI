@@ -572,7 +572,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateListBoxHandler(this);
+            return new WxListBoxHandler();
         }
 
         /// <inheritdoc/>

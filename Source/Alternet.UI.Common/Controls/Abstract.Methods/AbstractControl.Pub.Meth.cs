@@ -464,7 +464,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This method is useful, for example, when you need to get
-        /// all <see cref="Button"/> or <see cref="CheckBox"/> child controls.
+        /// all child controls of a specific type.
         /// </remarks>
         public virtual IEnumerable<T> ChildrenOfType<T>()
             where T : AbstractControl
