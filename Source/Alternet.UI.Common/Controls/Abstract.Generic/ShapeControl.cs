@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
@@ -27,6 +28,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the <see cref="ShapeDrawable"/> that is used to draw shapes on the control.
         /// </summary>
+        [Browsable(false)]
         public ShapeDrawable Drawable => drawable;
 
         /// <summary>
@@ -40,6 +42,51 @@ namespace Alternet.UI
                 if (ShapeType == value)
                     return;
                 drawable.ShapeType = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the corner radius for rounded rectangles.
+        /// </summary>
+        public Coord CornerRadius
+        {
+            get => drawable.CornerRadius;
+            set
+            {
+                if (CornerRadius == value)
+                    return;
+                drawable.CornerRadius = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the start angle for arc shapes, in degrees.
+        /// </summary>
+        public Coord StartAngle
+        {
+            get => drawable.StartAngle;
+            set
+            {
+                if(StartAngle == value)
+                    return;
+                drawable.StartAngle = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the sweep angle for arc shapes, in degrees.
+        /// </summary>
+        public Coord SweepAngle
+        {
+            get => drawable.SweepAngle;
+            set
+            {
+                if (SweepAngle == value)
+                    return;
+                drawable.SweepAngle = value;
                 Invalidate();
             }
         }
@@ -135,7 +182,11 @@ namespace Alternet.UI
             if (!drawable.Visible || drawable.ShapeType == DrawingShapeType.None)
                 return;
 
-            drawable.Bounds = e.ClipRectangle;
+            var r = e.ClipRectangle;
+
+            r = r.DeflatedWithPadding(Padding);
+
+            drawable.Bounds = r;
 
             if (drawable.Bounds.SizeIsEmpty)
                 return;
