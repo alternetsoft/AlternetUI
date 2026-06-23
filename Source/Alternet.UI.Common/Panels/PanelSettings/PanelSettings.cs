@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
 
 using Alternet.Base.Collections;
@@ -16,6 +17,12 @@ namespace Alternet.UI
     /// </summary>
     public partial class PanelSettings : HiddenBorder
     {
+        /// <summary>
+        /// Gets or sets a default dictionary of type converters for the settings panel items.
+        /// The type converter is used to convert the item value to and from string representation.
+        /// </summary>
+        public static BaseDictionary<Type, Type> DefaultTypeConverters = new ();
+
         /// <summary>
         /// Gets or sets default horizontal line margin.
         /// </summary>
@@ -49,6 +56,8 @@ namespace Alternet.UI
         static PanelSettings()
         {
             RegisterDefaultConversions(RegisterConversion);
+
+            DefaultTypeConverters.Add(typeof(float), typeof(SingleConverter));
         }
 
         /// <summary>
@@ -76,11 +85,13 @@ namespace Alternet.UI
         /// Encapsulates a method that is used when item is converted to the control.
         /// </summary>
         /// <param name="item">Item for the conversion.</param>
+        /// <param name="sender">Sender of the event.</param>
         /// <param name="createdControl">If not Null, contains previously created control.
         /// In this case you need only to update control's properties. If passed control is not
         /// of the desired type, just create new control.</param>
-        /// <returns></returns>
+        /// <returns>The created or updated control.</returns>
         public delegate object? ItemToControlDelegate(
+            PanelSettings sender,
             PanelSettingsItem item,
             object? createdControl);
 
@@ -109,6 +120,12 @@ namespace Alternet.UI
                 autoCreate = value;
             }
         }
+
+        /// <summary>
+        /// Gets or sets a dictionary of type converters for the settings panel items.
+        /// The type converter is used to convert the item value to and from string representation.
+        /// </summary>
+        public virtual BaseDictionary<Type, Type>? TypeConverters { get; set; }
 
         /// <summary>
         /// Gets collection of the items. Each of the items defines individual
@@ -148,9 +165,10 @@ namespace Alternet.UI
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToLineControl(PanelSettingsItem item, object? control)
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        public static object? DefaultItemToLineControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var spacer = CreateOrUpdateControl<HorizontalLine>(item, control);
+            var spacer = CreateOrUpdateControl<HorizontalLine>(sender, item, control);
             spacer.MarginTop = DefaultHorizontalLineMargin;
             spacer.MarginBottom = DefaultHorizontalLineMargin;
             return spacer;
@@ -165,9 +183,10 @@ namespace Alternet.UI
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToSpacerControl(PanelSettingsItem item, object? control)
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        public static object? DefaultItemToSpacerControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var spacer = CreateOrUpdateControl<Spacer>(item, control);
+            var spacer = CreateOrUpdateControl<Spacer>(sender, item, control);
             spacer.SuggestedSize = DefaultSpacerSize;
             return spacer;
         }
@@ -181,11 +200,12 @@ namespace Alternet.UI
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToLabelControl(PanelSettingsItem item, object? control)
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        public static object? DefaultItemToLabelControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateControl<Label>(item, control);
+            var result = CreateOrUpdateControl<Label>(sender, item, control);
             result.HorizontalAlignment = HorizontalAlignment.Left;
-            UpdateText(item, result);
+            UpdateText(sender, item, result);
             return result;
         }
 
@@ -198,10 +218,11 @@ namespace Alternet.UI
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToLinkLabelControl(PanelSettingsItem item, object? control)
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        public static object? DefaultItemToLinkLabelControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateControl<LinkLabel>(item, control);
-            UpdateText(item, result);
+            var result = CreateOrUpdateControl<LinkLabel>(sender, item, control);
+            UpdateText(sender, item, result);
 
             result.HorizontalAlignment = HorizontalAlignment.Left;
             result.LinkClicked -= LinkLabelClicked;
@@ -223,14 +244,15 @@ namespace Alternet.UI
         /// Default conversion method from <see cref="PanelSettingsItemKind.Enum"/> item
         /// to the appropriate control.
         /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
         /// <param name="item">Item to convert.</param>
         /// <param name="control">The existing control which properties should
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToEnumControl(PanelSettingsItem item, object? control)
+        public static object? DefaultItemToEnumControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateEnumEdit(item, control);
+            var result = CreateOrUpdateEnumEdit(sender, item, control);
             return result;
         }
 
@@ -238,24 +260,25 @@ namespace Alternet.UI
         /// Default conversion method from <see cref="PanelSettingsItemKind.Value"/> item
         /// to the appropriate control.
         /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
         /// <param name="item">Item to convert.</param>
         /// <param name="control">The existing control which properties should
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToValueControl(PanelSettingsItem item, object? control)
+        public static object? DefaultItemToValueControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
             if (item.ValueType == typeof(bool))
             {
-                return CreateOrUpdateCheckBox(item, control);
+                return CreateOrUpdateCheckBox(sender, item, control);
             }
 
             if (item.ValueType == typeof(Color))
             {
-                return CreateOrUpdateColorEdit(item, control);
+                return CreateOrUpdateColorEdit(sender, item, control);
             }
 
-            var result = CreateOrUpdateInput(item, control);
+            var result = CreateOrUpdateInput(sender, item, control);
             return result;
         }
 
@@ -263,15 +286,16 @@ namespace Alternet.UI
         /// Default conversion method from <see cref="PanelSettingsItemKind.Button"/> item
         /// to the appropriate control.
         /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
         /// <param name="item">Item to convert.</param>
         /// <param name="control">The existing control which properties should
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToButtonControl(PanelSettingsItem item, object? control)
+        public static object? DefaultItemToButtonControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateControl<StdButton>(item, control);
-            UpdateText(item, result);
+            var result = CreateOrUpdateControl<StdButton>(sender, item, control);
+            UpdateText(sender, item, result);
 
             result.ClickAction = () =>
             {
@@ -292,10 +316,11 @@ namespace Alternet.UI
         /// <param name="control">The existing control which properties should
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToSelectorControl(PanelSettingsItem item, object? control)
+        public static object? DefaultItemToSelectorControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateSelector(item, control, false);
+            var result = CreateOrUpdateSelector(sender, item, control, false);
             return result;
         }
 
@@ -307,10 +332,11 @@ namespace Alternet.UI
         /// <param name="control">The existing control which properties should
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToEditableSelector(PanelSettingsItem item, object? control)
+        public static object? DefaultItemToEditableSelector(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateSelector(item, control, true);
+            var result = CreateOrUpdateSelector(sender, item, control, true);
             return result;
         }
 
@@ -619,18 +645,19 @@ namespace Alternet.UI
             var conversion = GetRegisteredConversion(item.Kind);
             if (conversion is null)
                 return;
-            var obj = conversion(item, null);
+            var obj = conversion(this, item, null);
             if (obj is not AbstractControl control)
                 return;
             control.Parent = this;
         }
 
         private static object? CreateOrUpdateCheckBox(
+            PanelSettings sender,
             PanelSettingsItem item,
             object? control)
         {
-            var checkBox = CreateOrUpdateControl<StdCheckBox>(item, control);
-            UpdateText(item, checkBox);
+            var checkBox = CreateOrUpdateControl<StdCheckBox>(sender, item, control);
+            UpdateText(sender, item, checkBox);
 
             if (item.Value is bool isChecked)
                 checkBox.Checked = isChecked;
@@ -647,14 +674,16 @@ namespace Alternet.UI
         }
 
         private static object? CreateOrUpdateColorEdit(
+            PanelSettings sender,
             PanelSettingsItem item,
             object? control)
         {
             var result
-                = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(item, control);
+                = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(sender, item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
-            UpdateText(item, result.Label);
+            UpdateText(sender, item, result.Label);
             result.MainControl.HasBtnComboBox = false;
+            result.MainControl.Buttons.Visible = false;
 
             var colorEditor = result.MainControl;
             colorEditor.ButtonClick -= ButtonClick;
@@ -680,14 +709,16 @@ namespace Alternet.UI
         }
 
         private static object? CreateOrUpdateEnumEdit(
+            PanelSettings sender,
             PanelSettingsItem item,
             object? control)
         {
             var result
-                = CreateOrUpdateControl<ControlAndLabel<EnumPickerAndButton, Label>>(item, control);
+                = CreateOrUpdateControl<ControlAndLabel<EnumPickerAndButton, Label>>(sender, item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
             result.MainControl.HasBtnComboBox = false;
-            UpdateText(item, result.Label);
+            result.MainControl.Buttons.Visible = false;
+            UpdateText(sender, item, result.Label);
 
             var enumEditor = result.MainControl;
             enumEditor.ButtonClick -= ButtonClick;
@@ -714,16 +745,18 @@ namespace Alternet.UI
         }
 
         private static object? CreateOrUpdateInput(
+            PanelSettings sender,
             PanelSettingsItem item,
             object? control)
         {
             var result
-                = CreateOrUpdateControl<ControlAndLabel<TextBoxAndButton, Label>>(item, control);
+                = CreateOrUpdateControl<ControlAndLabel<TextBoxAndButton, Label>>(sender, item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
-            UpdateText(item, result.Label);
+            UpdateText(sender, item, result.Label);
 
             var textBox = result.MainControl;
             textBox.HasBtnComboBox = false;
+            textBox.Buttons.Visible = false;
 
             textBox.TextBox.SetValidator(item.ValueType, false);
             textBox.TextBox.AutoShowError = true;
@@ -734,23 +767,55 @@ namespace Alternet.UI
             textBox.DelayedTextChanged -= TextChanged;
             textBox.DelayedTextChanged += TextChanged;
 
-            void TextChanged(object? sender, EventArgs e)
+            void TextChanged(object? control, EventArgs e)
             {
-                item.Value = textBox.TextBox.TextAsValue;
+                var previousValue = item.Value;
+
+                try
+                {
+                    if (item.ValueType is not null)
+                    {
+                        var dictionary = sender.TypeConverters ?? DefaultTypeConverters;
+
+                        var found = dictionary.TryGetValue(item.ValueType, out var converter);
+
+                        if (found && converter is not null)
+                        {
+                            var converterInstance = Activator.CreateInstance(converter);
+
+                            if (converterInstance is TypeConverter typeConverter)
+                            {
+                                var convertedValue = typeConverter.ConvertFromString(textBox.TextBox.Text);
+                                item.Value = convertedValue;
+                                return;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        item.Value = textBox.TextBox.TextAsValue;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    item.Value = previousValue;
+                    sender.RaiseProcessException(new ThrowExceptionEventArgs(ex));
+                }
             }
 
             return result;
         }
 
         private static object? CreateOrUpdateSelector(
+            PanelSettings sender,
             PanelSettingsItem item,
             object? control,
             bool isEditable)
         {
             var result
-                = CreateOrUpdateControl<ControlAndLabel<ComboBoxAndButton, Label>>(item, control);
+                = CreateOrUpdateControl<ControlAndLabel<ComboBoxAndButton, Label>>(sender, item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
-            UpdateText(item, result.Label);
+            UpdateText(sender, item, result.Label);
 
             var comboBox = result.MainControl;
 
@@ -779,23 +844,23 @@ namespace Alternet.UI
             return result;
         }
 
-        private static void UpdateCommonProps(PanelSettingsItem item, AbstractControl control)
+        private static void UpdateCommonProps(PanelSettings sender, PanelSettingsItem item, AbstractControl control)
         {
             control.Visible = item.IsVisible;
             control.Enabled = item.IsEnabled;
         }
 
-        private static void UpdateText(PanelSettingsItem item, AbstractControl control)
+        private static void UpdateText(PanelSettings sender, PanelSettingsItem item, AbstractControl control)
         {
             var text = item.Label?.ToString() ?? string.Empty;
             control.Text = text;
         }
 
-        private static T CreateOrUpdateControl<T>(PanelSettingsItem item, object? control)
+        private static T CreateOrUpdateControl<T>(PanelSettings sender, PanelSettingsItem item, object? control)
             where T : AbstractControl, new()
         {
             T? typedControl = control as T ?? new T();
-            UpdateCommonProps(item, typedControl);
+            UpdateCommonProps(sender, item, typedControl);
             return typedControl;
         }
 
