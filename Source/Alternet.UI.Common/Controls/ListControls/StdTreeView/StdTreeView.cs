@@ -2170,7 +2170,8 @@ namespace Alternet.UI
         /// <summary>
         /// Raises the event that occurs when the visibility of a header column changes.
         /// </summary>
-        /// <param name="sender">The source of the event, typically the control whose header column visibility has changed.</param>
+        /// <param name="sender">The source of the event, typically the control
+        /// whose header column visibility has changed.</param>
         /// <param name="e">An object containing data related to the header column visibility change.</param>
         protected virtual void OnHeaderColumnVisibleChanged(object? sender, ListBoxHeader.ColumnEventArgs e)
         {
@@ -2235,7 +2236,8 @@ namespace Alternet.UI
         /// Raises the event that occurs when a column is inserted into the header.
         /// </summary>
         /// <remarks>Override this method to provide custom handling when a column is inserted into the
-        /// header. This method is called after a column has been added and can be used to perform additional processing
+        /// header. This method is called after a column has been added and
+        /// can be used to perform additional processing
         /// or to raise related events.</remarks>
         /// <param name="sender">The source of the event, typically the control that raised the event.</param>
         /// <param name="e">A <see cref="ListBoxHeader.ColumnEventArgs"/> that

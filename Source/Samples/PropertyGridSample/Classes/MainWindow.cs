@@ -196,7 +196,10 @@ namespace PropertyGridSample
 
             App.AddIdleTask(() =>
             {
-                ToolBox.SelectFirstItemAndScroll();
+                ToolBox.FirstItem?.Expand();
+                var itemIndex = ToolBox.ListBox.FindAndSelect("UI.StdButton", 0, true, true);
+                if(itemIndex < 0)
+                    ToolBox.SelectedItem = ToolBox.FirstItem?.FirstItem;
             });
 
             toolBoxFilterEdit.DelayedTextChanged += (s, e) =>

@@ -228,9 +228,13 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes this control for the search text editing.
         /// </summary>
-        public virtual void InitSearchEdit(SvgImage? image = null, string? emptyTextHint = null, UI.KnownButton? clearButton = null)
+        public virtual void InitSearchEdit(
+            SvgImage? image = null,
+            string? emptyTextHint = null,
+            UI.KnownButton? clearButton = null)
         {
-            InitWithImageAndClearButton(image ?? KnownSvgImages.ImgSearch, emptyTextHint ?? EmptyTextHints.FindEdit, clearButton);
+            InitWithImageAndClearButton(
+                image ?? KnownSvgImages.ImgSearch, emptyTextHint ?? EmptyTextHints.FindEdit, clearButton);
         }
 
         /// <summary>

@@ -281,13 +281,7 @@ namespace PropertyGridSample
 
                 ToolBox.RootItem.Sort();
 
-                ControlListBoxItem item = new(typeof(WelcomePage))
-                {
-                    Text = "Welcome Page",
-                };
-                ToolBox.RootItem.Insert(0, item);
-
-                item = new(typeof(SettingsControl))
+                ControlListBoxItem item = new(typeof(SettingsControl))
                 {
                     PropInstance = PropertyGridSettings.Default,
                     EventInstance = new object(),
