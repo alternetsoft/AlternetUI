@@ -946,64 +946,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default method for calculating preferred size.
-        /// </summary>
-        public virtual SizeD GetDefaultPreferredSize(
-            SizeD availableSize,
-            bool withPadding,
-            Func<SizeD, SizeD> func)
-        {
-            if (HasBorder)
-            {
-                var width = NormalBorder.Width;
-                return InternalGetPreferredSize() + width.Size;
-            }
-            else
-            {
-                return InternalGetPreferredSize();
-            }
-
-            SizeD InternalGetPreferredSize()
-            {
-                var suggested = SuggestedSize;
-
-                var isNanSuggestedWidth = suggested.IsNanWidth;
-                var isNanSuggestedHeight = suggested.IsNanHeight;
-
-                var containerSize = suggested;
-
-                if (!isNanSuggestedWidth && !isNanSuggestedHeight)
-                {
-                    return containerSize;
-                }
-
-                if (isNanSuggestedWidth)
-                    containerSize.Width = availableSize.Width;
-
-                if (isNanSuggestedHeight)
-                    containerSize.Height = availableSize.Height;
-
-                var paddingSize = Padding.Size;
-
-                containerSize -= paddingSize;
-
-                var measured = func(containerSize);
-
-                if (!isNanSuggestedWidth)
-                    measured.Width = suggested.Width;
-                else
-                    measured.Width += paddingSize.Width;
-
-                if (!isNanSuggestedHeight)
-                    measured.Height = suggested.Height;
-                else
-                    measured.Height += paddingSize.Height;
-
-                return measured;
-            }
-        }
-
-        /// <summary>
         /// Called when the value of the <see cref="Image"/> property changes.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs"/> that contains the event

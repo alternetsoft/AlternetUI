@@ -814,16 +814,21 @@ namespace Alternet.UI
         {
             UpdateItemImage();
 
-            var specifiedWidth = SuggestedWidth;
-            var specifiedHeight = SuggestedHeight;
-            if (!Coord.IsNaN(specifiedWidth) && !Coord.IsNaN(specifiedHeight))
-                return new SizeD(specifiedWidth, specifiedHeight);
+            if (context.AvailableSize.AnyIsEmptyOrNegative)
+                return SizeD.Empty;
 
-            var result = itemDrawable.GetPreferredSize();
-            if (result != SizeD.Empty)
-                return result + Padding.Size;
+            var result = GetDefaultPreferredSize(
+                        context.AvailableSize,
+                        withPadding: true,
+                        (size) =>
+                        {
+                            var result = itemDrawable.GetPreferredSize();
+                            return result;
+                        });
 
-            return base.GetPreferredSizeInternal(context);
+            result = result.Ceiling();
+
+            return result;
         }
 
         /// <inheritdoc/>

@@ -143,17 +143,20 @@ namespace Alternet.UI
             None = 0,
 
             /// <summary>
-            /// When this option is used, the background color of the control is updated to match the color theme being applied.
+            /// When this option is used, the background color of the control is updated
+            /// to match the color theme being applied.
             /// </summary>
             BackColor = 1,
 
             /// <summary>
-            /// When this option is used, the foreground color of the control is updated to match the color theme being applied.
+            /// When this option is used, the foreground color of the control is
+            /// updated to match the color theme being applied.
             /// </summary>
             ForeColor = 2,
 
             /// <summary>
-            /// When this option is used, the border color of the control is updated to match the color theme being applied.
+            /// When this option is used, the border color of the control is updated
+            /// to match the color theme being applied.
             /// </summary>
             BorderColor = 4,
 
@@ -167,7 +170,8 @@ namespace Alternet.UI
         public override ControlTypeId ControlKind => ControlTypeId.Button;
 
         /// <summary>
-        /// Gets or sets a value that determines if the background is drawn using visual styles, if supported.</summary>
+        /// Gets or sets a value that determines if the background is drawn
+        /// using visual styles, if supported.</summary>
         /// Default is True.
         /// <returns>
         /// <see langword="true" /> if the background is drawn using visual styles;
@@ -341,6 +345,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
+            e.Graphics.FillRectangle(Color.Red.AsBrush, e.ClientRectangle);
+
             base.DefaultPaint(e);
         }
 

@@ -81,11 +81,11 @@
           </Border>
 
           <Border Grid.Column="2" Grid.Row="2">
-            <StdButton Text="Button" Name="subjectButton"/>
+            <StdButton Name="subjectButton" Text="Button" Margin="0"/>
           </Border>
 
           <Border Grid.Column="3" Grid.Row="2">
-            <Label Text="(3, 2)" />
+            <Label Text="(3, 2)" HasBorder="false"/>
           </Border>
 
           <Border Grid.Column="1" Grid.Row="3">
@@ -93,7 +93,7 @@
           </Border>
 
           <Border Grid.Column="2" Grid.Row="3">
-            <Label Text="(2, 3)" />
+            <Label Text="(2, 3)" HasBorder="false"/>
           </Border>
 
           <Border Grid.Column="3" Grid.Row="3">
