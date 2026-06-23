@@ -142,7 +142,8 @@ namespace Alternet.UI
         public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
 
         /// <summary>
-        /// Gets or sets action that is called when button is clicked. This is a simplified alternative to <see cref="ButtonClick"/> event.
+        /// Gets or sets action that is called when button is clicked.
+        /// This is a simplified alternative to <see cref="ButtonClick"/> event.
         /// </summary>
         public Action<ControlAndButtonClickEventArgs>? ButtonClickAction;
 

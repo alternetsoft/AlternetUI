@@ -67,9 +67,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the known SVG color used for the inner picture when svg image is used.
-        /// This property is used to determine the color scheme for the inner picture based on predefined color categories.
+        /// This property is used to determine the color scheme for the inner picture
+        /// based on predefined color categories.
         /// In order to set custom color for the inner picture, use <see cref="InnerPictureSvgColor"/> property.
-        /// Setting this property will cause the inner picture to be reinitialized and its layout to be updated to reflect the new color scheme.
+        /// Setting this property will cause the inner picture to be reinitialized and its layout
+        /// to be updated to reflect the new color scheme.
         /// </summary>
         [Browsable(false)]
         public virtual KnownSvgColor InnerPictureKnownSvgColor

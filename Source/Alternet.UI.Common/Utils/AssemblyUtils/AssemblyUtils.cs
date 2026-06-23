@@ -19,7 +19,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Delegate for overriding native library loading. Used in <see cref="AssemblyUtils.NativeLibraryLoadOverride"/> property.
+    /// Delegate for overriding native library loading.
+    /// Used in <see cref="AssemblyUtils.NativeLibraryLoadOverride"/> property.
     /// </summary>
     /// <param name="libraryPath">The path to the native library.</param>
     /// <returns>The handle to the loaded native library.</returns>
@@ -550,7 +551,8 @@ namespace Alternet.UI
         /// the assembly-qualified name when available. This can be useful for logging, diagnostics, or serialization
         /// scenarios where a fully qualified type identifier is needed.</remarks>
         /// <param name="type">The type for which to retrieve the name. Can be null.</param>
-        /// <returns>A string containing the assembly-qualified name, full name, or simple name of the type, in that order of
+        /// <returns>A string containing the assembly-qualified name,
+        /// full name, or simple name of the type, in that order of
         /// preference; or null if the type is null.</returns>
         public static string? GetCompleteTypeName(Type? type)
         {
@@ -2363,7 +2365,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="obj">The object whose public parameterless methods are to be retrieved.</param>
         /// <param name="methodNameFilter">An optional filter to select methods by name.</param>
-        /// <returns>An enumerable of <see cref="MethodInfo"/> representing the public parameterless methods of the object.</returns>
+        /// <returns>An enumerable of <see cref="MethodInfo"/> representing
+        /// the public parameterless methods of the object.</returns>
         public static IEnumerable<MethodInfo> GetPublicParameterlessMethods(object? obj, string? methodNameFilter = null)
         {
             if (obj is null) return [];
@@ -2477,37 +2480,5 @@ namespace Alternet.UI
             var result = Activator.CreateInstance(objType);
             return (T?)result;
         }
-
-        /*
-        public static unsafe bool TryGetRawMetadataViaReflection(
-            Assembly assembly,
-            out byte* blob,
-            out int length)
-        {
-            blob = default;
-            length = 0;
-
-            var tp = Type.GetType("System.Reflection.Metadata.AssemblyExtensions");
-
-            if (tp is null)
-                return false;
-
-            // Get the method info
-            var method =
-                tp.GetMethod("TryGetRawMetadata", BindingFlags.Static | BindingFlags.Public);
-
-            if (method is null)
-                return false;
-
-            object[] parameters = new object[] { assembly, blob, 0 };
-
-            bool result = (bool)method.Invoke(null, parameters);
-
-            blob = (byte*)(IntPtr)parameters[1];
-            length = (int)parameters[2];
-
-            return result;
-        }
-        */
     }
 }
