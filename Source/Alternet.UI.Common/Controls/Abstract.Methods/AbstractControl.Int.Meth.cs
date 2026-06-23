@@ -31,12 +31,6 @@ namespace Alternet.UI
             return SystemSettings.Handler.GetClassDefaultAttributesFont(controlType, renderSize);
         }
 
-        internal void RaiseProcessException(ThrowExceptionEventArgs e)
-        {
-            OnProcessException(e);
-            ProcessException?.Invoke(this, e);
-        }
-
         internal void SetParentInternal(AbstractControl? value)
         {
             parent = value;

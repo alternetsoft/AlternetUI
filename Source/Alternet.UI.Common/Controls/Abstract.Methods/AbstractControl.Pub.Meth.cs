@@ -215,6 +215,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="ProcessException"/> event and <see cref="OnProcessException"/> method.
+        /// </summary>
+        /// <param name="e">The <see cref="ThrowExceptionEventArgs"/> instance containing the event data.</param>
+        public void RaiseProcessException(ThrowExceptionEventArgs e)
+        {
+            OnProcessException(e);
+            ProcessException?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Sorts the child controls of this instance using the specified comparison.
         /// </summary>
         /// <remarks>This method performs the sorting operation only if the instance has child controls.
