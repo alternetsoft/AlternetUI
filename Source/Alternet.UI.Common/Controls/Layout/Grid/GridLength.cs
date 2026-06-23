@@ -125,6 +125,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Conversion operator from <see cref="Coord"/> to <see cref="GridLength"/>.
+        /// </summary>
+        /// <param name="pixels"></param>
+        public static implicit operator GridLength(Coord pixels)
+        {
+            return new GridLength(pixels);
+        }
+
+        /// <summary>
         /// Determines whether two specified instances of <see cref="GridLength"/> are equal.
         /// </summary>
         /// <param name="gl1">The first instance of <see cref="GridLength"/> to compare.</param>

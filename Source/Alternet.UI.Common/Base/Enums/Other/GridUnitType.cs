@@ -15,7 +15,7 @@ namespace Alternet.UI
         Auto = 0,
 
         /// <summary>
-        /// The value is expressed as a pixel.
+        /// The value is expressed as a device-independent pixel.
         /// </summary>
         Pixel,
 
