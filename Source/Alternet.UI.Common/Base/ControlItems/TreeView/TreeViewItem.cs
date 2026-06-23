@@ -94,6 +94,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets first child item or <c>null</c> if there are no items.
+        /// </summary>
+        /// <remarks>
+        /// This property returns the first item even if it is not visible.
+        /// </remarks>
+        [Browsable(false)]
+        public virtual TreeViewItem? FirstItem
+        {
+            get
+            {
+                if (Items.Count == 0)
+                    return null;
+                return Items[0];
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the current item is selected.
         /// </summary>
         /// <remarks>Changing this property updates the selection state
@@ -893,7 +910,8 @@ namespace Alternet.UI
         /// <param name="index">The index of the child item.</param>
         /// <param name="fnCreateItem">A function to create a new item if it does not exist. Optional.
         /// If not specified, <see cref="TreeViewItem"/> will be created.</param>
-        /// <returns>The <see cref="TreeViewItem"/> at the specified index. A result is guaranteed to be not null.</returns>
+        /// <returns>The <see cref="TreeViewItem"/> at the specified index.
+        /// A result is guaranteed to be not null.</returns>
         public virtual TreeViewItem SafeItem(int index, Func<TreeViewItem>? fnCreateItem = null)
         {
             TreeViewItem CreateItem()
