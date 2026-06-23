@@ -345,8 +345,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
-            e.Graphics.FillRectangle(Color.Red.AsBrush, e.ClientRectangle);
-
             base.DefaultPaint(e);
         }
 
