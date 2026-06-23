@@ -15,10 +15,10 @@ namespace Alternet.UI
     public partial class StdButton : GenericItemControl, INotifyPropertyChanged, IDialogButtonRoles
     {
         /// <summary>
-        /// Gets or sets default value of the <see cref="IsBoldWhenIsd"/> property. It indicates whether the
+        /// Gets or sets default value of the <see cref="IsBoldWhenDefault"/> property. It indicates whether the
         /// text is displayed in bold when <see cref="IsDefault"/> property of the control is set to true.
         /// </summary>
-        public static bool DefaultIsBoldWhenIsd = false;
+        public static bool DefaultValueIsBoldWhenDefault = false;
 
         /// <summary>
         /// Represents the default padding value which is applied to <see cref="StdButton"/>
@@ -217,7 +217,7 @@ namespace Alternet.UI
 
                 if (value)
                 {
-                    Item.IsBold = RealFont.IsBold || (IsBoldWhenIsd ?? DefaultIsBoldWhenIsd);
+                    Item.IsBold = RealFont.IsBold || (IsBoldWhenDefault ?? DefaultValueIsBoldWhenDefault);
                 }
                 else
                 {
@@ -230,12 +230,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether the text is displayed in bold when <see cref="IsDefault"/> property of the control is set to true.
-        /// If not set, the value of <see cref="DefaultIsBoldWhenIsd"/> static field is used. This property allows you to specify
-        /// whether the button's text should be rendered in bold font style when the button is marked as the default action in a dialog or form.
+        /// Gets or sets whether the text is displayed in bold when <see cref="IsDefault"/>
+        /// property of the control is set to true.
+        /// If not set, the value of <see cref="DefaultValueIsBoldWhenDefault"/> static field is used.
+        /// This property allows you to specify
+        /// whether the button's text should be rendered in bold font style when the button
+        /// is marked as the default action in a dialog or form.
         /// </summary>
         [Browsable(false)]
-        public virtual bool? IsBoldWhenIsd { get; set; }
+        public virtual bool? IsBoldWhenDefault { get; set; }
 
         /// <inheritdoc/>
         public override Color? BackgroundColor
