@@ -110,8 +110,11 @@ namespace Alternet.UI
         /// Preloads all referenced assemblies in the current application domain.
         /// This method queues the loading of each referenced assembly to the thread pool.
         /// </summary>
-        public static void PreloadReferenced()
+        public static void PreloadReferenced(bool preload = true)
         {
+            if (!preload)
+                return;
+
             try
             {
                 if (preloadReferencedCalled)

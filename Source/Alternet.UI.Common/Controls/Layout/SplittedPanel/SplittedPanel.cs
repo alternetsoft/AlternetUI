@@ -468,6 +468,85 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows web browser in the right panel. If the right panel is not visible, it will be made visible.
+        /// <see cref="EnsureSideBarChild"/> is used to ensure that the right panel is a side bar and
+        /// contains a <see cref="WebBrowser"/> instance.
+        /// </summary>
+        /// <param name="title">The title of the web browser tab.</param>
+        /// <param name="url">The URL to navigate to.</param>
+        /// <param name="preventNavigation">If set to <c>true</c>, navigation to other URLs will be prevented.</param>
+        /// <param name="width">The width of the right panel.</param>
+        /// <remarks>
+        /// Samples:<br/><br/>
+        /// <code>
+        /// ShowWebBrowser("Copilot", @"https://copilot.microsoft.com");
+        /// ShowWebBrowser("GH Copilot", @"https://github.com/copilot");
+        /// ShowWebBrowser("Google", @"https://www.google.com", true);
+        /// </code>
+        /// </remarks>
+        public void ShowWebBrowser(
+            string title,
+            string url,
+            bool preventNavigation = false,
+            float width = 400)
+        {
+            PostAndBusyCursor(() =>
+            {
+                SetPanelWidthAtLeast(SplitPanelPosition.Right, width, true);
+
+                WebBrowser.IsEdgeBackendEnabled = true;
+
+                var browser = EnsureSideBarChild<WebBrowser>(
+                    SplitPanelPosition.Right,
+                    title,
+                    onCreate: (f) =>
+                    {
+                        f.HasBorder = false;
+                        f.EnsureUrlStartsWith(url);
+                        f.Navigated += (s, e) =>
+                        {
+
+                        };
+
+                        if (preventNavigation)
+                        {
+                            f.Navigating += (s, e) =>
+                            {
+                                var newUrl = e.Url;
+                                if (string.IsNullOrEmpty(newUrl))
+                                {
+                                    e.Cancel = true;
+                                    return;
+                                }
+
+                                var newUrlTrimmed = StringUtils.RemoveHttpAndWwwPrefixes(newUrl)?.TrimEnd('/');
+                                var urlTrimmed = StringUtils.RemoveHttpAndWwwPrefixes(url)?.TrimEnd('/');
+
+                                if (!newUrlTrimmed!.StartsWith(urlTrimmed!))
+                                {
+                                    e.Cancel = true;
+                                }
+                            };
+                        }
+
+                        f.NewWindow += (s, e) =>
+                        {
+                            var url = e.Url;
+                            e.Cancel = true;
+                            if (string.IsNullOrEmpty(url))
+                                return;
+                            AppUtils.OpenUrl(url);
+                        };
+                    },
+                    onUpdate: (f) =>
+                    {
+                    },
+                    TabControl.EnsureSideBarChildFlags.MakeVisible
+                    | TabControl.EnsureSideBarChildFlags.CheckTitle);
+            });
+        }
+
+        /// <summary>
         /// Ensures that the height of the specified panel is at least the given value.
         /// </summary>
         /// <remarks>If the current height of the panel is less than the specified value,
@@ -562,6 +641,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or creates a side bar panel at the specified position with the given title.
+        /// </summary>
+        /// <param name="position">The position of the side bar panel.</param>
+        /// <returns>The requested side bar panel.</returns>
+        public virtual SideBarPanel EnsureSideBarPanel(SplitPanelPosition position = SplitPanelPosition.Right)
+        {
+            var sideBar = EnsureChild<SideBarPanel>(position);
+            sideBar.HasCloseButton = true;
+            sideBar.CloseButton.ToolTip = Localization.CommonStrings.Default.ButtonClose;
+            sideBar.CloseButtonClick += (s, e) =>
+            {
+                RightVisible = false;
+            };
+
+            return sideBar;
+        }
+
+        /// <summary>
         /// Ensures that a child control of type <typeparamref name="T"/> exists
         /// within the sidebar panel at the
         /// specified position.
@@ -594,6 +691,35 @@ namespace Alternet.UI
             }
 
             return child;
+        }
+
+        /// <summary>
+        /// Shows folder content at the right side of the split view, allowing users to navigate through directories.
+        /// <see cref="EnsureSideBarChild"/> is used to ensure that the right panel is a side bar and
+        /// contains a <see cref="FileListBox"/> instance.
+        /// </summary>
+        /// <param name="tabTitle">The title of the tab displaying the folder content.</param>
+        /// <param name="fileFilterPredicate">A predicate to filter the files displayed in the folder content.</param>
+        /// <param name="onCreate">An action to execute when creating the folder content control.</param>
+        /// <param name="width">The width of the right panel displaying the folder content.</param>
+        public virtual void ShowFilesAndFolders(
+            string tabTitle,
+            Predicate<string>? fileFilterPredicate,
+            Action<FileListBox> onCreate,
+            float width = 400)
+        {
+            PostAndBusyCursor(() =>
+            {
+                SetPanelWidthAtLeast(SplitPanelPosition.Right, width, true);
+                var fileListBox = EnsureSideBarChild<FileListBox>(
+                    SplitPanelPosition.Right,
+                    tabTitle,
+                    onCreate: onCreate,
+                    onUpdate: (f) =>
+                    {
+                    },
+                    TabControl.EnsureSideBarChildFlags.MakeVisible);
+            });
         }
 
         /// <summary>
