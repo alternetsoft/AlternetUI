@@ -63,18 +63,21 @@ namespace Alternet.Drawing.Printing
             int printerPpiX = dc.GetPPI().Width;    // e.g. 600
             int printerPpiY = dc.GetPPI().Height;
 
-            var widthInches = (float)pageWidthPx / printerPpiX;
-            var heightInches = (float)pageHeightPx / printerPpiY;
-
-            var width96 = widthInches * 96;
-            var height96 = heightInches * 96;        
-
-            var info = new SKImageInfo((int)width96, (int)height96, SKColorType.Bgra8888, SKAlphaType.Premul);
+            var info = new SKImageInfo(pageWidthPx, pageHeightPx, SKColorType.Bgra8888, SKAlphaType.Premul);
             var bitmap = new SKBitmap(info);
 
             graphics = new SkiaGraphics(bitmap);
             canvas = graphics.Canvas;
+
+            float scaleX = (float)printerPpiX / 96f; // 600 / 96 ≈ 6.25
+            float scaleY = (float)printerPpiY / 96f; // 600 / 96 ≈ 6.25
+            canvas.Scale(scaleX, scaleY);
+
             canvas.Clear(SKColors.White);
+
+            graphics.DrawRectangle(
+                new Pen(Color.Black, 1), new RectD(10, 10, 100, 100));
+
 
             return true;
         }
@@ -95,7 +98,7 @@ namespace Alternet.Drawing.Printing
             {
                 var image = (Image)graphics.Bitmap;
 
-                image.Save("E:\\test.png");
+               image.Save("E:\\test.png");
 
                 SkiaUtils.SaveBitmapToPng(graphics.Bitmap, "E:\\test_skia.png");
 
