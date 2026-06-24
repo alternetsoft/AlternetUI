@@ -352,6 +352,7 @@ VS_VERSION_INFO VERSIONINFO
     <ClCompile Include="Control.cpp" />
     <ClCompile Include="DrawingContext.cpp" />
     <ClCompile Include="DropTarget.cpp" />
+    <ClCompile Include="EventAwareObject.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="FileDialog.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -419,6 +420,7 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="Api\Clipboard.Api.h" />
     <ClInclude Include="Api\ColorDialog.Api.h" />
     <ClInclude Include="Api\ComboBox.Api.h" />
+    <ClInclude Include="Api\EventAwareObject.Api.h" />
     <ClInclude Include="Api\Exceptions.Api.h" />
     <ClInclude Include="Api\Control.Api.h" />
     <ClInclude Include="Api\DrawingContext.Api.h" />
@@ -498,6 +500,7 @@ VS_VERSION_INFO VERSIONINFO
     <ClInclude Include="DrawingContext.h" />
     <ClInclude Include="DropTarget.h" />
     <ClInclude Include="ErrorDiagnostics.h" />
+    <ClInclude Include="EventAwareObject.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="ExceptionsMarshal.h" />
@@ -578,6 +581,7 @@ VS_VERSION_INFO VERSIONINFO
     <None Include="Api\ComboBox.inc" />
     <None Include="Api\Control.inc" />
     <None Include="Api\DrawingContext.inc" />
+    <None Include="Api\EventAwareObject.inc" />
     <None Include="Api\FileDialog.inc" />
     <None Include="Api\Font.inc" />
     <None Include="Api\FontDialog.inc" />

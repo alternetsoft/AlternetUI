@@ -8,7 +8,7 @@ namespace NativeApi.Api
 {
     using Coord = float;
 
-    public abstract class Control
+    public abstract class Control : EventAwareObject
     {
         public IntPtr GetCGContextRef() { return default; }
 

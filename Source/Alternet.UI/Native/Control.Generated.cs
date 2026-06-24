@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Security;
 namespace Alternet.UI.Native
 {
-    internal abstract partial class Control : NativeObject
+    internal abstract partial class Control : EventAwareObject
     {
         internal object? handler;
         static Control()

@@ -1,4 +1,5 @@
 #include "Api/Application.Api.h"
+#include "Api/EventAwareObject.Api.h"
 #include "Api/Keyboard.Api.h"
 #include "Api/Menu.Api.h"
 #include "Api/NotifyIcon.Api.h"

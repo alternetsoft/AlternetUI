@@ -7,8 +7,6 @@ namespace Alternet.UI.Native
 {
     internal partial class ComboBox
     {
-        private ComboBoxItemPaintEventArgs? paintEventArgs;
-
         [Flags]
         private enum DrawItemFlags
         {
