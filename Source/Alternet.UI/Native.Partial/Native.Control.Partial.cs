@@ -74,16 +74,7 @@ namespace Alternet.UI.Native
             if (uiControl is null)
                 return;
 
-            var skia = AbstractControl.RenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp);
-
-            if (skia)
-            {
-                SkiaPaint();
-            }
-            else
-            {
-                DefaultPaint();
-            }
+            SkiaPaint();
         }
 
         public virtual void OnPlatformEventMouseEnter()
@@ -271,11 +262,6 @@ namespace Alternet.UI.Native
                 RaiseDragAndDropEvent(ea, UIControl.RaiseDragEnter);
         }
 
-        protected Drawing.Graphics CreateDefaultGraphics()
-        {
-            return Handler?.OpenPaintDrawingContext() ?? Alternet.Drawing.PlessGraphics.Default;
-        }
-
         [Conditional("DEBUG")]
         protected void ReportUsedGraphics(string s)
         {
@@ -283,36 +269,6 @@ namespace Alternet.UI.Native
                 return;
             reportedUsedGraphics = true;
             App.Log("Use graphics engine: " + s);
-        }
-
-        protected void DefaultPaint()
-        {
-            ReportUsedGraphics("Default");
-
-            var uiControl = UIControl;
-
-            if (uiControl is null)
-                return;
-
-            KnownRunTimeTrackers.DefaultPaintStart(uiControl);
-
-            var r = uiControl.ClientRectangle;
-
-            var e = new PaintEventArgs(CreateDefaultGraphics, clipRect: r, clientRect: r);
-
-            try
-            {
-                uiControl.RaisePaint(e);
-            }
-            finally
-            {
-                if (e.GraphicsAllocated)
-                {
-                    e.Graphics.Dispose();
-                }
-            }
-
-            KnownRunTimeTrackers.DefaultPaintStop(uiControl);
         }
 
         protected void SkiaPaintMsw()
@@ -329,8 +285,15 @@ namespace Alternet.UI.Native
             var scaleFactor = uiControl.ScaleFactor;
             var clientRectI = clientRect.PixelFromDip(scaleFactor);
 
-            using var nativeGraphics = CreateDefaultGraphics();
-            var hdc = nativeGraphics.GetHdc();
+            var dcPointer = GetDrawingContext(false);
+
+            if (dcPointer == IntPtr.Zero)
+                return;
+
+            var dc = new Native.DrawingContext(IntPtr.Zero);
+            dc.SetNativePointerWeak(dcPointer);
+
+            var hdc = dc.GetHandle();
 
             Alternet.Drawing.Graphics? publicGraphics = null;
 
@@ -363,7 +326,6 @@ namespace Alternet.UI.Native
             finally
             {
                 CreateGraphicsFunc = null;
-                nativeGraphics.ReleaseHdc(hdc);
             }
 
             KnownRunTimeTrackers.SkiaPaintStop(uiControl);
@@ -422,10 +384,15 @@ namespace Alternet.UI.Native
 
                 canvasLock.Dispose();
 
-                using var dc = CreateDefaultGraphics();
+                var dcPointer = GetDrawingContext(false);
 
-                dc.DrawImage(bitmap, clientRect.Location);
+                if (dcPointer == IntPtr.Zero)
+                    return;
 
+                var dc = new Native.DrawingContext(IntPtr.Zero);
+                dc.SetNativePointerWeak(dcPointer);
+
+                throw new NotImplementedException("Need to implement using SkiaSharp");
             }
             finally
             {

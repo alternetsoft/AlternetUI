@@ -19,7 +19,7 @@ namespace Alternet.Drawing
     /// <see cref="HatchBrush" />.
     /// </remarks>
     [TypeConverter(typeof(BrushConverter))]
-    public class Brush : HandledObject<IBrushHandler>, IEquatable<Brush>
+    public class Brush : ImmutableObject, IEquatable<Brush>
     {
         /// <summary>
         /// Gets transparent brush.
@@ -30,14 +30,16 @@ namespace Alternet.Drawing
 
         private Pen? asPen;
         private SKPaint? paint;
+        private bool updateRequired;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Brush"/> class.
         /// </summary>
         /// <param name="immutable">Whether this brush is immutable.</param>
         protected Brush(bool immutable)
-            : base(immutable)
         {
+            if (immutable)
+                SetImmutable();
         }
 
         /// <summary>
@@ -100,15 +102,15 @@ namespace Alternet.Drawing
         public virtual Color AsColor => Color.Black;
 
         /// <inheritdoc/>
-        protected override bool UpdateRequired
+        protected virtual bool UpdateRequired
         {
-            get => base.UpdateRequired;
+            get => updateRequired;
 
             set
             {
                 if (UpdateRequired == value)
                     return;
-                base.UpdateRequired = value;
+                updateRequired = value;
                 if (value)
                 {
                     SafeDispose(ref paint);
@@ -185,12 +187,6 @@ namespace Alternet.Drawing
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => base.GetHashCode();
 
-        /// <inheritdoc/>
-        protected override IBrushHandler CreateHandler()
-        {
-            return GraphicsFactory.Handler.CreateTransparentBrushHandler(this);
-        }
-
         /// <summary>
         /// Creates <see cref="SKPaint"/> for this brush.
         /// </summary>
@@ -199,11 +195,6 @@ namespace Alternet.Drawing
         {
             SKPaint result = SkiaHelper.CreateFillPaint(AsColor);
             return result;
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateHandler()
-        {
         }
     }
 }

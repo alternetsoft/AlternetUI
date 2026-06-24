@@ -550,17 +550,12 @@ namespace Alternet.Drawing
         public static Graphics FromImage(Image image)
         {
             DebugImageAssert(image);
-            return GraphicsFactory.Handler.CreateGraphicsFromImage(image);
-        }
 
-        /// <summary>
-        /// Creates <see cref="Graphics"/> that can be used to paint on the screen.
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Graphics FromScreen()
-        {
-            return GraphicsFactory.Handler.CreateGraphicsFromScreen();
+            if(image.Handler is not SkiaImageHandler handler)
+                throw new Exception("Image handler is not SkiaSharpImageHandler");
+            var bitmap = handler.Bitmap;
+            var result = SkiaUtils.CreateBitmapCanvas(bitmap, image.ScaleFactor);
+            return result;
         }
 
         /// <summary>

@@ -23,72 +23,16 @@ namespace Alternet.Drawing
         public bool IsOpenGLAvailable { get; }
 
         /// <summary>
-        /// Creates memory drawing context.
-        /// </summary>
-        /// <param name="prm">The parameters for creating the measurement canvas.</param>
-        /// <returns></returns>
-        Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams prm);
-
-        /// <summary>
-        /// Creates memory drawing context.
-        /// </summary>
-        /// <param name="image">Surface on which drawing is performed.</param>
-        /// <returns></returns>
-        Graphics CreateMemoryCanvas(Image image);
-
-        /// <summary>
         /// Creates <see cref="IFontFactoryHandler"/> provider.
         /// </summary>
         /// <returns></returns>
         IFontFactoryHandler CreateFontFactoryHandler();
 
         /// <summary>
-        /// Creates transparent brush handler.
-        /// </summary>
-        /// <returns></returns>
-        IBrushHandler CreateTransparentBrushHandler(Brush brush);
-
-        /// <summary>
-        /// Creates hatch brush handler.
-        /// </summary>
-        /// <returns></returns>
-        IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush);
-
-        /// <summary>
-        /// Creates linear gradient brush handler.
-        /// </summary>
-        /// <returns></returns>
-        ILinearGradientBrushHandler CreateLinearGradientBrushHandler(LinearGradientBrush brush);
-
-        /// <summary>
-        /// Creates radial gradient brush handler.
-        /// </summary>
-        /// <returns></returns>
-        IRadialGradientBrushHandler CreateRadialGradientBrushHandler(RadialGradientBrush brush);
-
-        /// <summary>
         /// Creates <see cref="IPenHandler"/> provider.
         /// </summary>
         /// <returns></returns>
         IPenHandler CreatePenHandler(Pen pen);
-
-        /// <summary>
-        /// Creates solid brush handler.
-        /// </summary>
-        /// <returns></returns>
-        ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush);
-
-        /// <summary>
-        /// Creates texture brush handler.
-        /// </summary>
-        /// <returns></returns>
-        ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush);
-
-        /// <summary>
-        /// Creates drawing context which allows to draw on screen.
-        /// </summary>
-        /// <returns></returns>
-        Graphics CreateGraphicsFromScreen();
 
         /// <summary>
         /// Creates <see cref="IRegionHandler"/> provider.
@@ -130,13 +74,6 @@ namespace Alternet.Drawing
         /// <param name="kind">Image format kind.</param>
         /// <returns></returns>
         ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind);
-
-        /// <summary>
-        /// Creates drawing context for the specified image.
-        /// </summary>
-        /// <param name="image">Image on which drawing will be performed.</param>
-        /// <returns></returns>
-        Graphics CreateGraphicsFromImage(Image image);
 
         /// <summary>
         /// Creates <see cref="IImageHandler"/> provider.

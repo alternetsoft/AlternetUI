@@ -177,18 +177,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override IBrushHandler CreateHandler()
-        {
-            return GraphicsFactory.Handler.CreateRadialGradientBrushHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateHandler()
-        {
-            ((IRadialGradientBrushHandler)Handler).Update(this);
-        }
-
-        /// <inheritdoc/>
         protected override SKShader CreateSkiaShader()
         {
             SKShader result;

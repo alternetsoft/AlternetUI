@@ -71,22 +71,10 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override IBrushHandler CreateHandler()
-        {
-            return GraphicsFactory.Handler.CreateTextureBrushHandler(this);
-        }
-
-        /// <inheritdoc/>
         protected override SKPaint CreateSkiaPaint()
         {
             var result = base.CreateSkiaPaint();
             return result;
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateHandler()
-        {
-            ((ITextureBrushHandler)Handler).Update(this);
         }
     }
 }

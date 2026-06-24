@@ -63,21 +63,10 @@ namespace Alternet.UI.Native
 
         public void OnPlatformEventDrawItem()
         {
-            var uiControl = UIControl as UI.ComboBox;
-            if (uiControl?.ItemPainter is null)
-                return;
-            DrawItem(false);
-            EventCalled = true;
         }
 
         public void OnPlatformEventDrawItemBackground()
         {
-            var uiControl = UIControl as UI.ComboBox;
-
-            if (uiControl?.ItemPainter is null)
-                return;
-            DrawItem(true);
-            EventCalled = true;
         }
 
         public void OnPlatformEventAfterShowPopup()
@@ -90,55 +79,6 @@ namespace Alternet.UI.Native
         {
             var uiControl = UIControl as UI.ComboBox;
             uiControl?.RaiseDropDownClosed();
-        }
-
-        private void DrawItem(ComboBoxItemPaintEventArgs prm)
-        {
-            var uiControl = UIControl as UI.ComboBox;
-            uiControl?.ItemPainter?.Paint(uiControl, prm);
-        }
-
-        private void DrawItem(bool drawBackground)
-        {
-            if (UIControl is not UI.ComboBox uiControl)
-                return;
-
-            var flags = (DrawItemFlags)EventFlags;
-            var isPaintingControl = flags.HasFlag(DrawItemFlags.PaintingControl);
-
-            var ptr = Native.Control.OpenDrawingContextForDC(EventDc, false);
-            var dc = new Drawing.WxGraphics(ptr);
-
-            var rect = uiControl.PixelToDip(GetEventRect());
-
-            void DefaultPaintMethod()
-            {
-                if (drawBackground)
-                    DefaultOnDrawBackground();
-                else
-                    DefaultOnDrawItem();
-            }
-
-            if (paintEventArgs is null)
-            {
-                paintEventArgs = new ComboBoxItemPaintEventArgs(uiControl, dc, rect);
-            }
-            else
-            {
-                paintEventArgs.Graphics = dc;
-                paintEventArgs.ClientRectangle = rect;
-            }
-
-            const int ItemIndexNotFound = -1;
-            paintEventArgs.DefaultPaintAction = DefaultPaintMethod;
-            paintEventArgs.IsSelected = flags.HasFlag(DrawItemFlags.PaintingSelected);
-            paintEventArgs.IsPaintingControl = isPaintingControl;
-            paintEventArgs.IsIndexNotFound = EventItem == ItemIndexNotFound;
-            paintEventArgs.ItemIndex = EventItem;
-            paintEventArgs.IsPaintingBackground = drawBackground;
-            DrawItem(paintEventArgs);
-            paintEventArgs.Graphics = null!;
-            dc.Dispose();
         }
     }
 }

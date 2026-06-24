@@ -35,7 +35,8 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return new WxGraphics(PrintPage_DrawingContext);
+                throw new NotImplementedException("Need to implement using SkiaSharp");
+                // return new WxGraphics(PrintPage_DrawingContext);
             }
         }
 

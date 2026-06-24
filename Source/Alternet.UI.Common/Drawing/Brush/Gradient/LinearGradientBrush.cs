@@ -184,17 +184,5 @@ namespace Alternet.Drawing
 
             return result;
         }
-
-        /// <inheritdoc/>
-        protected override IBrushHandler CreateHandler()
-        {
-            return GraphicsFactory.Handler.CreateLinearGradientBrushHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateHandler()
-        {
-            ((ILinearGradientBrushHandler)Handler).Update(this);
-        }
     }
 }

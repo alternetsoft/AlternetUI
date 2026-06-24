@@ -83,18 +83,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override IBrushHandler CreateHandler()
-        {
-            return GraphicsFactory.Handler.CreateHatchBrushHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateHandler()
-        {
-            ((IHatchBrushHandler)Handler).Update(this);
-        }
-
-        /// <inheritdoc/>
         protected override SKPaint CreateSkiaPaint()
         {
             return base.CreateSkiaPaint();

@@ -88,17 +88,5 @@ namespace Alternet.Drawing
             CheckDisposed();
             return Color == o.Color;
         }
-
-        /// <inheritdoc/>
-        protected override IBrushHandler CreateHandler()
-        {
-            return GraphicsFactory.Handler.CreateSolidBrushHandler(this);
-        }
-
-        /// <inheritdoc/>
-        protected override void UpdateHandler()
-        {
-            ((ISolidBrushHandler)Handler).Update(this);
-        }
     }
 }

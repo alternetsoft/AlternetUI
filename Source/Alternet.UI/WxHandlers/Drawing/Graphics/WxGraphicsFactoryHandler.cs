@@ -61,24 +61,6 @@ namespace Alternet.Drawing
             }
         }
 
-        public Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams prm)
-        {
-            if (prm.ControlRenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp))
-            {
-                return SkiaUtils.CreateMeasureCanvas(prm.ScaleFactor);
-            }
-            else
-            {
-                return new WxGraphics(UI.Native.DrawingContext.CreateMemoryDC(prm.ScaleFactor));
-            }
-        }
-
-        public Graphics CreateMemoryCanvas(Image image)
-        {
-            return new WxGraphics(UI.Native.DrawingContext.CreateMemoryDCFromImage(
-                (UI.Native.Image)image.Handler));
-        }
-
         public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
         {
             switch (kind)
@@ -105,28 +87,6 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public IBrushHandler CreateTransparentBrushHandler(Brush brush)
             => new UI.Native.Brush();
-
-        /// <inheritdoc/>
-        public IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
-            => new UI.Native.HatchBrush();
-
-        /// <inheritdoc/>
-        public ILinearGradientBrushHandler CreateLinearGradientBrushHandler(
-            LinearGradientBrush brush)
-            => new UI.Native.LinearGradientBrush();
-
-        /// <inheritdoc/>
-        public IRadialGradientBrushHandler CreateRadialGradientBrushHandler(
-            RadialGradientBrush brush)
-            => new UI.Native.RadialGradientBrush();
-
-        /// <inheritdoc/>
-        public ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
-            => new UI.Native.SolidBrush();
-
-        /// <inheritdoc/>
-        public ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
-            => new UI.Native.TextureBrush();
 
         public IGraphicsPathHandler CreateGraphicsPathHandler(Graphics graphics)
         {
@@ -211,17 +171,6 @@ namespace Alternet.Drawing
         public IImageContainer? CreateIconSetHandler()
         {
             return new UI.Native.IconSet();
-        }
-
-        public Graphics CreateGraphicsFromScreen()
-        {
-            return new WxGraphics(UI.Native.DrawingContext.FromScreen());
-        }
-
-        public Graphics CreateGraphicsFromImage(Image image)
-        {
-            return new WxGraphics(
-                UI.Native.DrawingContext.FromImage((UI.Native.Image)image.Handler));
         }
 
         public IImageHandler CreateImageHandler()

@@ -263,19 +263,11 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics GetOrCreateMemoryCanvas(Graphics.CanvasCreateParams prm)
         {
-            var result = MemoryCanvases.GetOrCreate(prm, () => CreateMemoryCanvas(prm));
+            var result = MemoryCanvases.GetOrCreate(prm, () =>
+            {
+                return CreateMemoryCanvas(prm);
+            });
             return result;
-        }
-
-        /// <summary>
-        /// Creates memory canvas for the specified image.
-        /// </summary>
-        /// <param name="image">Image on which canvas is created.</param>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Graphics CreateMemoryCanvas(Image image)
-        {
-            return Handler.CreateMemoryCanvas(image);
         }
 
         /// <summary>
@@ -287,7 +279,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Graphics CreateMemoryCanvas(Graphics.CanvasCreateParams prm)
         {
-            return Handler.CreateMemoryCanvas(prm);
+            return SkiaUtils.CreateMeasureCanvas(prm.ScaleFactor);
         }
 
         /// <summary>

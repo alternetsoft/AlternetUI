@@ -458,19 +458,6 @@ namespace Alternet.UI
             return NativeControl.GetPreferredSize(context.AvailableSize);
         }
 
-        public virtual Graphics OpenPaintDrawingContext()
-        {
-            var dcPointer = NativeControl.GetDrawingContext(false);
-
-            if (dcPointer == IntPtr.Zero)
-                return new PlessGraphics();
-
-            var dc = new Native.DrawingContext(IntPtr.Zero);
-            dc.SetNativePointerWeak(dcPointer);
-
-            return new WxGraphics(dc);
-        }
-
         public virtual void OnNativeControlDestroyed()
         {
             if (needDispose)
