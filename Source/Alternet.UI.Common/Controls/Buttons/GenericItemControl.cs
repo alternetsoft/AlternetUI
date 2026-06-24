@@ -1153,6 +1153,8 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
+            base.OnMouseLeftButtonDown(e);
+
             if (DisposingOrDisposed || !Enabled)
                 return;
 

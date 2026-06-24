@@ -278,15 +278,6 @@ namespace Alternet.UI
                     position.Value);
             eventArgs.DeviceType = deviceType;
 
-            /*
-            var isContinuation = SetLastUsedMouseEventSnapshot(eventArgs, ref lastUsedMouseUpArgsSnapshot);
-
-            if (isContinuation)
-            {
-                eventArgs.ClickCount = lastUsedMouseUpArgsSnapshot.ClickCount;
-            }
-            */
-
             currentTarget.RaiseMouseUp(eventArgs);
         }
 
