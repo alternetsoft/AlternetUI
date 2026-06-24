@@ -313,21 +313,6 @@ namespace Alternet.UI
             }
         }
 
-        public virtual Graphics OpenPaintDrawingContext()
-        {
-            return PlessGraphics.Default;
-        }
-
-        public virtual int PixelFromDip(Coord value)
-        {
-            return GraphicsFactory.PixelFromDip(value, Control?.ScaleFactor);
-        }
-
-        public virtual Coord PixelToDip(int value)
-        {
-            return GraphicsFactory.PixelToDip(value, Control?.ScaleFactor);
-        }
-
         public virtual void Raise()
         {
         }
@@ -396,10 +381,6 @@ namespace Alternet.UI
         public virtual void Invalidate()
         {
             InvalidateContainer();
-        }
-
-        public virtual void SetRenderingFlags(ControlRenderingFlags flags)
-        {
         }
 
         public virtual Graphics CreateDrawingContext()

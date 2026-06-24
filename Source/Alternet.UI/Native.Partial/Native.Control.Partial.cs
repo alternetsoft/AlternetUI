@@ -336,7 +336,7 @@ namespace Alternet.UI.Native
 
             CreateGraphicsFunc = () =>
             {
-                return publicGraphics ?? new Alternet.Drawing.PlessGraphics();
+                return publicGraphics ?? Alternet.Drawing.PlessGraphics.Default;
             };
 
             try

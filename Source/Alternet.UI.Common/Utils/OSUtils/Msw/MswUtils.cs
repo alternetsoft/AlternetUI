@@ -24,9 +24,10 @@ namespace Alternet.UI
     /// </summary>
     public static class MswUtils
     {
+        private static readonly Lazy<Color?> accentColor = new(GetAccentColor);
+
         private static bool consoleAllocated = false;
         private static IDictionary<string, string>? cursorRegistryInfo;
-        private static Lazy<Color?> accentColor = new (GetAccentColor);
 
         private const string CursorKeyPath = @"Control Panel\Cursors";
 
@@ -301,7 +302,9 @@ namespace Alternet.UI
         internal static string[] GetLoadedLibraries()
         {
             List<string> libraries = new();
+#pragma warning disable
             int pid = Process.GetCurrentProcess().Id;
+#pragma warning restore
             IntPtr hProcess = NativeMethods.OpenProcess(0x0410, false, (uint)pid);
 
             IntPtr[] modules = new IntPtr[1024];
@@ -785,7 +788,7 @@ namespace Alternet.UI
             /// </summary>
             /// <param name="name"></param>
             /// <returns></returns>
-            [DllImport("opengl32.dll")]
+            [DllImport("opengl32.dll", CharSet = CharSet.Unicode)]
             public static extern IntPtr wglGetProcAddress(string name);
 
             /// <summary>
@@ -916,7 +919,7 @@ namespace Alternet.UI
             /// <param name="flags"></param>
             /// <param name="template"></param>
             /// <returns></returns>
-            [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport("Kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern SafeFileHandle CreateFile(
                 string fileName,
                 [MarshalAs(UnmanagedType.U4)] uint fileAccess,
@@ -980,7 +983,7 @@ namespace Alternet.UI
             /// ordinal value of the function, specified as a string.</param>
             /// <returns>A pointer to the function or variable if the operation succeeds;
             /// otherwise, <see cref="IntPtr.Zero"/>.</returns>
-            [DllImport("kernel32.dll", SetLastError = true)]
+            [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
 
             /// <summary>
@@ -1159,7 +1162,7 @@ namespace Alternet.UI
             /// the property name.</param>
             /// <returns><see langword="true"/> if the property is set successfully;
             /// otherwise, <see langword="false"/>.</returns>
-            [DllImport(User32, SetLastError = true, CharSet = CharSet.Auto)]
+            [DllImport(User32, SetLastError = true, CharSet = CharSet.Unicode)]
             public static extern bool SetProp(
                 IntPtr window,
                 string propertyName,
@@ -1253,7 +1256,7 @@ namespace Alternet.UI
             /// in characters.</param>
             /// <returns>The length, in characters, of the string copied to the buffer,
             /// or zero on failure.</returns>
-            [DllImport("psapi.dll")]
+            [DllImport("psapi.dll", CharSet = CharSet.Unicode)]
             public static extern uint GetModuleFileNameEx(
                 IntPtr hProcess,
                 IntPtr hModule,
@@ -1594,7 +1597,7 @@ namespace Alternet.UI
                 /// ignored. Exists to keep structure readonly semantics simple.</param>
                 public HighContrastData(object? _ = null)
                 {
-                    size = (uint)Marshal.SizeOf(typeof(HighContrastData));
+                    size = (uint)Marshal.SizeOf<HighContrastData>();
                     flags = 0;
                     schemeNamePointer = IntPtr.Zero;
                 }

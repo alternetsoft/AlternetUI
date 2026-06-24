@@ -10,28 +10,10 @@ namespace Alternet.UI
     {
         private bool canSelect = true;
 
-        private bool tabStop = true;
-
-        private bool acceptsFocusRecursively = true;
-
         public virtual bool CanSelect
         {
             get => canSelect;
         }
-
-        public virtual bool TabStop
-        {
-            get => tabStop;
-
-            set
-            {
-                tabStop = value;
-            }
-        }
-
-        public Action? GotFocus { get; set; }
-
-        public Action? LostFocus { get; set; }
 
         public virtual bool IsFocused
         {
@@ -61,17 +43,6 @@ namespace Alternet.UI
                 return false;
             container.SetFocusIfPossible();
             return container.IsFocused;
-        }
-
-        public virtual void FocusNextControl(bool forward = true, bool nested = true)
-        {
-        }
-
-        public virtual void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
-        {
-            this.canSelect = canSelect;
-            this.tabStop = tabStop;
-            this.acceptsFocusRecursively = acceptsFocusRecursively;
         }
     }
 }

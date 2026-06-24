@@ -182,3 +182,6 @@ dotnet_diagnostic.SYSLIB1045.severity = none
 dotnet_diagnostic.CA1806.severity = none
 
 dotnet_diagnostic.IDE0031.severity = none
+
+# IDE0270: Use coalesce expression
+dotnet_diagnostic.IDE0270.severity = none
