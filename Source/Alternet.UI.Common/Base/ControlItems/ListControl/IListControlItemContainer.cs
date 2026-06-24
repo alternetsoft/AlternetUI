@@ -13,6 +13,11 @@ namespace Alternet.UI
     public interface IListControlItemContainer
     {
         /// <summary>
+        /// Gets debug identifier of the list control item defaults.
+        /// </summary>
+        string? DebugIdentifier { get; }
+
+        /// <summary>
         /// Gets the unchecked state image for the checkbox.
         /// </summary>
         SvgImage? CheckImageUnchecked { get; }

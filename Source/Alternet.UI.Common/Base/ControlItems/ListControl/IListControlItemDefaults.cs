@@ -129,5 +129,10 @@ namespace Alternet.UI
         /// Gets or sets whether to draw selection background under image.
         /// </summary>
         bool SelectionUnderImage { get; set; }
+
+        /// <summary>
+        /// Gets debug identifier of the list control item defaults.
+        /// </summary>
+        string? DebugIdentifier { get; }
     }
 }

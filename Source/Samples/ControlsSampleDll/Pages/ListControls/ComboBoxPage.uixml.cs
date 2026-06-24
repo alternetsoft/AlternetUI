@@ -80,7 +80,7 @@ namespace ControlsSample
             if (ownerDraw)
             {
                 PropertyGridSample.ObjectInit.
-                    AddDefaultOwnerDrawItems(comboBox, (s) =>
+                    AddDefaultOwnerDrawItemsForListBox(comboBox, (s) =>
                     {
                         items.Add(s);
                     }, false);

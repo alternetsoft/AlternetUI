@@ -146,7 +146,7 @@ namespace ControlsSample
                 AddItems(treeView, 5);
                 treeView.AddSeparator();
 
-                PropertyGridSample.ObjectInit.AddDefaultOwnerDrawItems(
+                PropertyGridSample.ObjectInit.AddDefaultOwnerDrawItemsForTreeView(
                 treeView,
                 item =>
                 {

@@ -86,7 +86,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
             Actions.Add(typeof(TabControl), InitGenericTabControl);
-            Actions.Add(typeof(VirtualListBox), InitVListBox);
+            Actions.Add(typeof(VirtualListBox), InitListBoxItems);
             Actions.Add(typeof(FileListBox), InitFileListBox);
             Actions.Add(typeof(StdListBox), InitStdListBox);
             Actions.Add(typeof(ComboBox), InitComboBox);

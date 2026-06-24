@@ -174,7 +174,7 @@ namespace ControlsSample
         {
             if (popupVListBox.MainControl.Count == 0)
             {
-                PropertyGridSample.ObjectInit.InitVListBox(popupVListBox.MainControl);
+                PropertyGridSample.ObjectInit.InitListBoxItems(popupVListBox.MainControl);
                 popupVListBox.MainControl.SelectFirstItem();
             }
             popupVListBox.ShowPopup(showPopupVListBoxButton);

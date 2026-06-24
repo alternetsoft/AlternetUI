@@ -467,11 +467,15 @@ namespace Alternet.UI
         public virtual bool? CheckBoxVisible
         {
             get => checkBoxVisible;
-            set => checkBoxVisible = value;
+            set
+            {
+                checkBoxVisible = value;
+            }
         }
 
         /// <summary>
-        /// Gets or sets margin around the check box. This property is used only if check box is visible for the item.
+        /// Gets or sets margin around the check box.
+        /// This property is used only if check box is visible for the item.
         /// </summary>
         public virtual Thickness CheckBoxMargin { get; set; }
 
@@ -2738,7 +2742,9 @@ namespace Alternet.UI
             RectD rect)
         {
             ListControlItem.ItemCheckBoxInfo result = new();
+      
             result.IsCheckBoxVisible = GetShowCheckBox(container);
+
             result.PartState = IsContainerEnabled(container)
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);

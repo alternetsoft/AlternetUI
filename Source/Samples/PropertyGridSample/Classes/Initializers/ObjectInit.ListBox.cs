@@ -77,13 +77,13 @@ namespace PropertyGridSample
             item.LabelFlags = DrawLabelFlags.TextHasBold;
         }
 
-        public static void SetDefaultOwnerDrawItems(
+        public static void SetDefaultOwnerDrawItemsForListBox(
             VirtualListBox control,
             bool addLong = true)
         {
             ListSource items = new();
 
-            AddDefaultOwnerDrawItems(
+            AddDefaultOwnerDrawItemsForListBox(
                 control,
                 (item) =>
                 {
@@ -94,7 +94,86 @@ namespace PropertyGridSample
             control.SetItemsFast(items, VirtualListBox.SetItemsKind.ChangeField);
         }
 
-        public static void AddDefaultOwnerDrawItems(
+        public static void AddDefaultOwnerDrawItemsForListBox(
+            Control control,
+            Action<ListControlItem> addAction,
+            bool addLong = true)
+        {
+            var svgImageSize = 24; /* image sizes are always in pixels */
+
+            ListControlItem item = new();
+            item.DisplayText = "This is display text";
+            item.Text = "This is some text";
+            item.CheckBoxVisible = true;
+            item.Image = Image.FromUrlCached(PhotoUrl);
+            addAction(item);
+
+            item = new();
+            item.Text = "Bold item (right, vert center)";
+            item.Alignment = (HorizontalAlignment.Right, VerticalAlignment.Center);
+            item.FontStyle = FontStyle.Bold;
+            item.MinHeight = control.PixelToDip(svgImageSize) * 3;
+            item.SvgImage = KnownSvgImages.ImgBold;
+            item.SvgImageSize = svgImageSize;
+            addAction(item);
+
+            addAction(CreateGreenBoldItem());
+
+            item = new();
+            item.Text = "H = 60 (bottom, center)";
+            item.CheckBoxVisible = false;
+            item.MinHeight = 60;
+            item.Alignment = (HorizontalAlignment.Center, VerticalAlignment.Bottom);
+            item.Image = Image.FromUrlCached(PencilUrl);
+            item.DisabledImage = item.Image?.ToGrayScale();
+            item.ForegroundColor = Color.Indigo;
+            item.BackgroundColor = Color.LightSkyBlue;
+            addAction(item);
+
+            item = new();
+            item.FontStyle = FontStyle.Underline;
+            item.CheckState = CheckState.Checked;
+            item.Text = "Underlined item";
+            item.ToolTip = "Custom tooltip for item";
+            item.IsToolTipVisible = true;
+            addAction(item);
+
+            item = new();
+            item.Font = Control.DefaultFont.Scaled(1.5f);
+            item.Text = "Custom Font";
+            addAction(item);
+
+            item = new();
+            item.Text = "Custom border";
+            item.Alignment = HVAlignment.Center;
+            item.CheckBoxVisible = false;
+            item.Border = new();
+            item.Border.Color = LightDarkColors.Red;
+            item.Border.UniformCornerRadius = 25;
+            item.Border.UniformRadiusIsPercent = true;
+            addAction(item);
+
+            if (addLong)
+            {
+                item = new();
+                item.Text = LoremIpsumSmall;
+                addAction(item);
+            }
+
+            addAction(new ListControlSeparatorItem());
+
+            for (int i = 0; i < 150; i++)
+            {
+                ListControlItem newItem = new($"Item {i}");
+
+                if (i == 128)
+                    newItem.DisplayText = newItem.Text + ": dd";
+
+                addAction(newItem);
+            }
+        }
+
+        public static void AddDefaultOwnerDrawItemsForTreeView(
             Control control,
             Action<TreeViewItem> addAction,
             bool addLong = true)
@@ -104,6 +183,7 @@ namespace PropertyGridSample
             TreeViewItem item = new();
             item.DisplayText = "This is display text";
             item.Text = "This is some text";
+            item.CheckBoxVisible = true;
             item.Image = Image.FromUrlCached(PhotoUrl);
             addAction(item);
 
@@ -208,12 +288,12 @@ namespace PropertyGridSample
             listBox.SelectInitialFolder();
         }
 
-        public static void InitVListBox(object control)
+        public static void InitListBoxItems(object control)
         {
             if (control is not VirtualListBox listBox)
                 return;
 
-            SetDefaultOwnerDrawItems(listBox);
+            SetDefaultOwnerDrawItemsForListBox(listBox);
 
             listBox.HorizontalScrollbar = true;
             listBox.Count = 200;

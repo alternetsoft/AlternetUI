@@ -28,7 +28,7 @@ namespace ControlsSample
 
         public VListBoxSamplePage()
         {
-            PropertyGridSample.ObjectInit.AddDefaultOwnerDrawItems(listBox, (s) =>
+            PropertyGridSample.ObjectInit.AddDefaultOwnerDrawItemsForListBox(listBox, (s) =>
             {
                 items1.Add(s);
             });
@@ -44,10 +44,11 @@ namespace ControlsSample
 
             Title = "Virtual";
 
+            listBox.DebugIdentifier = "DemoListBox";
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
             findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
             findText.TextChanged += FindText_TextChanged;
-            PropertyGridSample.ObjectInit.InitVListBox(listBox);
+            PropertyGridSample.ObjectInit.InitListBoxItems(listBox);
 
             splitter.TargetMode = SplitterTargetMode.NextVisibleSibling;
             Children.Prepend(splitter);

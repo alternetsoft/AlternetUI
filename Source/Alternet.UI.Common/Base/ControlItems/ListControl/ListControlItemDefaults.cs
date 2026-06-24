@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.Drawing;
@@ -52,6 +53,10 @@ namespace Alternet.UI
                 SetProperty(ref selectionUnderImage, value, nameof(SelectionUnderImage));
             }
         }
+
+        /// <inheritdoc/>
+        [Browsable(false)]
+        public string? DebugIdentifier { get; set; }
 
         /// <inheritdoc/>
         public virtual SizeI? SvgImageSize
