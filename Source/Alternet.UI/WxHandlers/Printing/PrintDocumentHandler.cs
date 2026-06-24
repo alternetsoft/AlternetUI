@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Alternet.Drawing;
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing.Printing
 {
     internal class PrintDocumentHandler : UI.Native.PrintDocument, IPrintDocumentHandler
@@ -35,8 +37,31 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                throw new NotImplementedException("Need to implement using SkiaSharp");
-                // return new WxGraphics(PrintPage_DrawingContext);
+                var bounds1 = ((IPrintDocumentHandler)this).PageBounds;
+                var bounds2 = ((IPrintDocumentHandler)this).PrintablePageBounds;
+                var clientRect = bounds2;
+                var dc = PrintPage_DrawingContext;
+                var hdc = dc.GetHandle();
+                var dpi = dc.GetDpi();
+                var scaleFactor = GraphicsFactory.ScaleFactorFromDpi(dpi.Width);
+                var clientRectI = clientRect.PixelFromDip(scaleFactor);
+
+                var canvas = SkiaUtils.CreateBitmapCanvas(clientRect.Size, scaleFactor, true);
+                canvas.Canvas.Clear(SKColors.Transparent);
+
+                canvas.Disposed += (s, e) =>
+                {
+                    if (canvas.Bitmap is null)
+                        return;
+
+                    var image = (Image)canvas.Bitmap;
+                    dc.DrawImageAtPoint(
+                        (UI.Native.Image)image.Handler,
+                        clientRectI.Location,
+                        false);
+                };
+
+                return canvas;
             }
         }
 
