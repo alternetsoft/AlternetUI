@@ -56,13 +56,12 @@ internal static class MswPrinterUtils
         {
             if (EnumPrinters(flags, null!, level, pPrinters, cbNeeded, out cbNeeded, out cReturned))
             {
-                int offset = pPrinters.ToInt32();
                 int structSize = Marshal.SizeOf(typeof(PRINTER_INFO_4));
 
                 for (int i = 0; i < cReturned; i++)
                 {
-                    IntPtr currentPtr = new IntPtr(offset + i * structSize);
-                    PRINTER_INFO_4 pi4 = (PRINTER_INFO_4)Marshal.PtrToStructure(currentPtr, typeof(PRINTER_INFO_4))!;
+                    IntPtr currentPtr = IntPtr.Add(pPrinters, i * structSize);
+                    var pi4 = Marshal.PtrToStructure<PRINTER_INFO_4>(currentPtr)!;
                     printers.Add(pi4.pPrinterName);
                 }
             }
