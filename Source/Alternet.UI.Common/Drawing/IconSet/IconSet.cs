@@ -169,7 +169,8 @@ namespace Alternet.Drawing
         /// Gets effective system small icon size, taking into account
         /// the <see cref="SmallSystemIconWidthOverride"/> and <see cref="SmallSystemIconHeightOverride"/>.
         /// </summary>
-        public static SizeI EffectiveSmallSystemIconSize => new(EffectiveSmallSystemIconWidth, EffectiveSmallSystemIconHeight);
+        public static SizeI EffectiveSmallSystemIconSize
+            => new(EffectiveSmallSystemIconWidth, EffectiveSmallSystemIconHeight);
 
         /// <summary>
         /// Gets effective system icon size, taking into account
@@ -193,6 +194,12 @@ namespace Alternet.Drawing
                 url = value;
             }
         }
+
+        /// <summary>
+        /// Operator to convert string url with icon data to <see cref="IconSet"/>.
+        /// </summary>
+        /// <param name="url">The url of the icon data.</param>
+        public static implicit operator IconSet?(string? url) => FromUrlOrNull(url);
 
         /// <summary>
         /// Creates <see cref="IconSet"/> instance from
@@ -229,7 +236,7 @@ namespace Alternet.Drawing
         /// <paramref name="url"/> can include assembly name. Example:
         /// "embres:Alternet.UI.Resources.Svg.IconName.ico?assembly=Alternet.UI"
         /// </remarks>
-        public static IconSet? FromUrl(string url)
+        public static IconSet FromUrl(string? url)
         {
             using var stream = ResourceLoader.StreamFromUrlOrDefault(url);
             var result = new IconSet(stream);
@@ -243,7 +250,7 @@ namespace Alternet.Drawing
         /// No exceptions are raised.
         /// If DEBUG is defined, exception info is logged.
         /// </remarks>
-        public static IconSet? FromUrlOrNull(string url)
+        public static IconSet? FromUrlOrNull(string? url)
         {
             try
             {
