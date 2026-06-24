@@ -579,12 +579,15 @@ namespace Alternet.UI
             AbstractControl? originalTarget,
             AbstractControl? currentTarget)
         {
-            if (currentTarget is null || originalTarget is not Control originalTargetControl)
+            if (currentTarget is null)
+                return;
+
+            if (originalTarget is not Control originalTargetControl)
                 return;
 
             if (!currentTarget.IsPlatformControl)
             {
-                originalTargetControl.UpdateCursor(currentTarget.Cursor);
+                originalTargetControl.UpdateCursor(currentTarget.Cursor ?? Cursors.Default);
             }
             else
             {
