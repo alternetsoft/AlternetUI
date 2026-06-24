@@ -97,10 +97,7 @@ namespace Alternet.UI.Build.Tasks
             var metadata = inputFile.GetMetadata("ResourceName")
                 ?? throw new InvalidOperationException("No resource name specified");
 
-            var document = new UIXmlDocument(
-                metadata,
-                stream,
-                WellKnownApiInfo.Provider);
+            var document = new UIXmlDocument(metadata, stream);
 
             var output = CSharpUIXmlCodeGenerator.Generate(document, this, inputFile);
 

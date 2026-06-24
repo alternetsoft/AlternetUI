@@ -1,26 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>12.0</LangVersion>
       <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
-    <EmbeddedResource Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
-    <None Remove="Alternet.UI.Build.Tasks.ApiInfoCollector\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<None Remove="WellKnownApiInfo.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Include="..\Tools\Language\IsExternalInit.cs" Link="IsExternalInit.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Include="WellKnownApiInfo.xml" LogicalName="WellKnownApiInfo.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,33 +14,6 @@
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.14.28" PrivateAssets="all" />
     <PackageReference Include="System.ValueTuple" Version="4.6.1" />
   </ItemGroup>
-
-  <!-- ================================================= -->
-  <Target Name="EmbedWellKnownApiInfo" BeforeTargets="PrepareForBuild" Condition="false and '$(TargetFramework)' != ''">
-    <PropertyGroup>
-      <ApiInfoXmlFilePath>$(IntermediateOutputPath)\WellKnownApiInfo.xml</ApiInfoXmlFilePath>
-      <ApiInfoCollectorToolPath>$(MSBuildThisFileDirectory)\Alternet.UI.Build.Tasks.ApiInfoCollector\bin\$(Configuration)\net6.0\Alternet.UI.Build.Tasks.ApiInfoCollector</ApiInfoCollectorToolPath>
-      <ApiInfoCollectorInputAssemblyPath>$(MSBuildThisFileDirectory)\..\Alternet.UI\bin\$(Configuration)\net6.0\Alternet.UI.dll</ApiInfoCollectorInputAssemblyPath>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>"$(ApiInfoCollectorToolPath).exe" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
-    </PropertyGroup>
-    <PropertyGroup Condition="!$([MSBuild]::IsOsPlatform('Windows'))">
-      <ApiInfoCollectorCommand>dotnet "$(ApiInfoCollectorToolPath).dll" "$(ApiInfoCollectorInputAssemblyPath)" "$(ApiInfoXmlFilePath)"</ApiInfoCollectorCommand>
-    </PropertyGroup>
-
-    <Message Text="============================" />
-    <Message Text="$(ApiInfoCollectorCommand)" />
-    <Message Text="============================" />
-    <Exec Command="$(ApiInfoCollectorCommand)" Condition="true" />
-    <!-- ================================================= -->
-
-    <ItemGroup Condition="true">
-      <EmbeddedResource Include="$(ApiInfoXmlFilePath)" LogicalName="WellKnownApiInfo.xml" />
-      <FileWrites Include="$(ApiInfoXmlFilePath)" />
-    </ItemGroup>
-  </Target>
 
   <Import Project="$(MSBuildThisFileDirectory)\..\Alternet.UI.Common\SignDll.proj" />
 

@@ -18,7 +18,6 @@ namespace Alternet.UI.Build.Tasks
         private static readonly XName classAttributeName = (XNamespace)UIXmlNamespace + "Class";
         private readonly Stream xmlContent;
         private readonly string xmlContentAsString;
-        private readonly ApiInfoProvider apiInfoProvider;
         private readonly XDocument document;
 
         private XDocument? sanitizedDocument;
@@ -29,18 +28,15 @@ namespace Alternet.UI.Build.Tasks
 
         private string? classNamespaceName;
 
-        private IReadOnlyList<EventBinding>? eventBindings;
-
         private IReadOnlyList<NamedObject>? namedObjects;
 
-        public UIXmlDocument(string resourceName, Stream xmlContent, ApiInfoProvider apiInfoProvider)
+        public UIXmlDocument(string resourceName, Stream xmlContent)
         {
             ResourceName = resourceName;
             this.xmlContent = xmlContent;
 
             xmlContentAsString = new StreamReader(xmlContent, System.Text.Encoding.UTF8).ReadToEnd();
 
-            this.apiInfoProvider = apiInfoProvider;
             document = XDocument.Parse(xmlContentAsString);
 
             xmlContent.Position = 0;
@@ -65,10 +61,6 @@ namespace Alternet.UI.Build.Tasks
         }
 
         public IReadOnlyList<NamedObject> NamedObjects => namedObjects ??= GetNamedObjects().ToArray();
-
-        public IReadOnlyList<EventBinding> EventBindings
-            => eventBindings ??= GetEventBindings(apiInfoProvider, document)
-            .Select(x => x.Binding).ToArray();
 
         private static bool IsValidIdentifier(string text)
         {
@@ -240,16 +232,7 @@ namespace Alternet.UI.Build.Tasks
                 attribute.Remove();
             }
 
-            void RemoveEventAttributes()
-            {
-                var attributes
-                    = GetEventBindings(apiInfoProvider, document).Select(x => x.Attribute).ToArray();
-                foreach (var attribute in attributes)
-                    attribute.Remove();
-            }
-
             RemoveClassAttribute();
-            RemoveEventAttributes();
 
             return document;
         }

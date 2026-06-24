@@ -14,41 +14,37 @@
       <StackPanel Orientation="Horizontal">
 
         <StackPanel Orientation="Vertical" Margin="5" MinChildMargin="5">
-          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="15" />
-          <Label Text="Clipboard"  IsBold="true" HorizontalAlignment="Center"/>
-          <StdButton Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" />
-          <StdButton Text="Paste" Name="pasteButton"
+          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
+          <Label Text="Clipboard"  IsBold="true" HorizontalAlignment="Center" Margin="5"/>
+          <StdButton Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" Margin="5"/>
+          <StdButton Text="Paste" Name="pasteButton" Margin="5"
                   Click="PasteButton_Click" IsTextLocalized="true" />
         </StackPanel>
 
-        <Panel Margin="5" HasBorder="false">
-          <Panel SuggestedWidth="120" VerticalAlignment="Stretch" Padding="2"
-                  Name="dragSource"
+          <Panel SuggestedWidth="120" VerticalAlignment="Stretch"
+                  Name="dragSource" MinChildMargin="5" Margin="5"
                   MouseDown="DragSource_MouseDown"
                   MouseMove="DragSource_MouseMove"
                   MouseUp="DragSource_MouseUp">
-            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="15" />
+            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
             <Label Text="Drag Me" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
           </Panel>
-        </Panel>
 
-        <Panel Margin="5" HasBorder="false">
-          <Panel SuggestedWidth="120" VerticalAlignment="Stretch" Padding="2"
-                AllowDrop="True" Name="dropTarget"
+          <Panel SuggestedWidth="120" VerticalAlignment="Stretch" Margin="5" HasBorder="false"
+                AllowDrop="True" Name="dropTarget" MinChildMargin="5"
                 DragDrop="DropTarget_DragDrop"
                 DragOver="DropTarget_DragOver"
                 DragEnter="DropTarget_DragEnter"
                 DragLeave="DropTarget_DragLeave">
-            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="15" />
+            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
             <Label Text="Drop Here" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
           </Panel>
-        </Panel>
 
         <StackPanel Orientation="Vertical" Margin="5"
                     MinWidth="100" MinChildMargin="5" HasBorder="false">
-          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="15" />
+          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
           <Label Text="Drop Effects" IsBold="true" HorizontalAlignment="Center"/>
           <StdCheckBox Text="Move" Name="moveDropEffectCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
@@ -60,7 +56,7 @@
 
         <StackPanel Orientation="Vertical" Margin="5" MinWidth="200"
                     HasBorder="false" MinChildMargin="5">
-          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="20 " />
+          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
           <Label Text="Include Formats"  IsBold="true" HorizontalAlignment="Center"/>
           <StdCheckBox Text="Text" Name="textFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>

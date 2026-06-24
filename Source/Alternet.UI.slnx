@@ -73,10 +73,6 @@
     </Project>
   </Folder>
   <Folder Name="/04. Tools/Build/">
-    <Project Path="Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.ApiInfoCollector/Alternet.UI.Build.Tasks.ApiInfoCollector.csproj">
-      <BuildType Solution="DLL Debug|*" Project="Debug" />
-      <BuildType Solution="DLL Release|*" Project="Release" />
-    </Project>
     <Project Path="Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.csproj">
       <BuildType Solution="DLL Debug|*" Project="Debug" />
       <BuildType Solution="DLL Release|*" Project="Release" />

@@ -50,8 +50,7 @@ namespace Alternet.UI.Build.Tasks
             using var stream = File.OpenRead(inputFile.ItemSpec);
             var document = new UIXmlDocument(
                 inputFile.GetMetadata("ResourceName") ?? throw new InvalidOperationException("No resource name specified"),
-                stream,
-                WellKnownApiInfo.Provider);
+                stream);
 
             document.SanitizedDocument.Save(targetPath);
 

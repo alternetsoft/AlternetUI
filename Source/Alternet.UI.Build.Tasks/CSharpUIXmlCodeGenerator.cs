@@ -86,13 +86,6 @@ using System;
 
                 foreach (var namedObject in namedObjects)
                     w.WriteLine($"{namedObject.Name} ??= ({namedObject.TypeFullName})FindElement(\"{namedObject.Name}\");");
-
-                /*
-                w.WriteLine();
-                */
-
-                foreach (var eventBinding in document.EventBindings)
-                    WriteEventBinding(w, eventBinding, task, taskItem);
             }
 
             w.WriteLine();
@@ -141,7 +134,7 @@ using System;
             int quoteCount = Math.Max(3, maxRun + 1);
 
             // Opening/closing quote sequence
-            string quotes = new string('\"', quoteCount);
+            string quotes = new ('\"', quoteCount);
 
             // For raw string literals, if the content starts or ends with a newline,
             // the indentation rules may matter; here we emit it simply with newlines preserved.
