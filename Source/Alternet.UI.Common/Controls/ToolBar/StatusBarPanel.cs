@@ -11,7 +11,8 @@ namespace Alternet.UI
     /// Represents a panel in a <see cref="StatusBar"/> control. A status bar can contain multiple panels,
     /// each of which can display text, images, or other content. The <see cref="StatusBarPanel"/> class
     /// provides properties and methods to customize the appearance and behavior of each panel.
-    /// Use <see cref="BarPanel.Kind"/> property to specify the type of the panel, such as text, image, separator, etc.
+    /// Use <see cref="BarPanel.Kind"/> property to specify the type
+    /// of the panel, such as text, image, separator, etc.
     /// </summary>
     public partial class StatusBarPanel : BarPanel
     {

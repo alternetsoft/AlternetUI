@@ -9,8 +9,10 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a control that is typically used to display information about the current
-    /// state of the application, such as the status of a document, the position of the cursor, or other contextual information.
-    /// It is derived from the <see cref="ToolBar"/> class and can contain not only simple text panels but also other types of controls,
+    /// state of the application, such as the status of a document,
+    /// the position of the cursor, or other contextual information.
+    /// It is derived from the <see cref="ToolBar"/> class and can contain not only simple text
+    /// panels but also other types of controls,
     /// such as speed buttons, images, combo boxes, progress bars, and other interactive elements.
     /// Use <see cref="ToolBar.Panels"/> property to add and manage the panels within the status bar.
     /// </summary>
@@ -45,6 +47,8 @@ namespace Alternet.UI
         public StatusBar()
         {
             MinHeight = DefaultMinHeight;
+            MaxHeight = DefaultMinHeight;
+            ItemSize = DefaultMinHeight;
 
             ParentBackColor = false;
             ParentForeColor = false;
@@ -403,6 +407,18 @@ namespace Alternet.UI
         public virtual void Clear()
         {
             Panels.Clear();
+        }
+
+        /// <inheritdoc/>
+        public override bool UpdatePanelControl(BarPanel panel)
+        {
+            var result = base.UpdatePanelControl(panel);
+            var control = panel.GetControl();
+            if (control != null)
+            {
+                control.MaxHeight = MaxHeight;
+            }
+            return result;
         }
 
         /// <summary>

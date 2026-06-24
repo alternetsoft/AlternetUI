@@ -20,7 +20,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates a new instance of a tool separator item for use in a toolbar.
-        /// Override this method to provide custom initialization for the created <see cref="ToolBarSeparatorItem"/> control.
+        /// Override this method to provide custom initialization
+        /// for the created <see cref="ToolBarSeparatorItem"/> control.
         /// </summary>
         /// <remarks>This method is intended to be overridden in derived classes
         /// to customize the creation of the tool separator item.
@@ -47,7 +48,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates control for use in the toolbar as a label.
-        /// Override to create customized label controls. By default returns a new instance of <see cref="Label"/> class.
+        /// Override to create customized label controls.
+        /// By default returns a new instance of <see cref="Label"/> class.
         /// </summary>
         /// <returns>A new instance of <see cref="Label"/> representing
         /// a label in the toolbar.</returns>
@@ -171,7 +173,7 @@ namespace Alternet.UI
             {
                 panelControl.CustomAttr.SetAttribute(BarPanelIdPropName, item.UniqueId);
                 item.RaiseControlCreated();
-                UpdatePanelControl(item, panelControl);
+                UpdatePanelControl(item);
             }
 
             return panelControl;

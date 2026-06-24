@@ -227,7 +227,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the image displayed in the panel. This property is applicable when the panel's <see cref="Kind"/>
+        /// Gets or sets the image displayed in the panel. This property
+        /// is applicable when the panel's <see cref="Kind"/>
         /// is set to <see cref="BarPanelKind.PictureBox"/> or <see cref="BarPanelKind.SpeedButton"/>.
         /// </summary>
         public virtual ImageSet? ImageSet
@@ -262,7 +263,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the image displayed in the panel. This property is applicable when the panel's <see cref="Kind"/>
+        /// Gets or sets the image displayed in the panel.
+        /// This property is applicable when the panel's <see cref="Kind"/>
         /// is set to <see cref="BarPanelKind.PictureBox"/> or <see cref="BarPanelKind.SpeedButton"/>.
         /// </summary>
         public virtual Image? Image
@@ -488,7 +490,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the panel automatically fills the available space on the bar as the bar is resized.
+        /// Gets or sets a value indicating whether the panel automatically
+        /// fills the available space on the bar as the bar is resized.
         /// </summary>
         /// <returns>
         /// true if the panel automatically fills the available space on the bar
@@ -563,7 +566,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control used to display the panel.
         /// </summary>
-        /// <returns>The <see cref="AbstractControl"/> used to display the panel, or <c>null</c> if not found.</returns>
+        /// <returns>The <see cref="AbstractControl"/> used to display
+        /// the panel, or <c>null</c> if not found.</returns>
         public AbstractControl? GetControl()
         {
             if (Bar is null || !Bar.HasChildren)
@@ -682,6 +686,11 @@ namespace Alternet.UI
                         var insertIndex = Bar.GetPanelControlInsertIndex(this);
                         Bar.Children.Insert(insertIndex, newControl);
                     }
+                }
+
+                if (newControl is not null)
+                {
+                    Bar.UpdatePanelControl(this);
                 }
             }
         }
