@@ -32,15 +32,6 @@ namespace Alternet.UI
         private static Cursor? watchCursor;
         private static Cursor? hSplitCursor;
         private static Cursor? vSplitCursor;
-        /*private static Cursor? rightArrowCursor;*/
-        /*private static Cursor? bullseyeCursor;*/
-        /*private static Cursor? magnifierCursor;*/
-        /*private static Cursor? paintBrushCursor;*/
-        /*private static Cursor? pencilCursor;*/
-        /*private static Cursor? pointLeftCursor;*/
-        /*private static Cursor? pointRightCursor;*/
-        /*private static Cursor? sprayCanCursor;*/
-        /*private static Cursor? blankCursor;*/
 
         /// <summary>
         /// A value indicating that no cursor should be displayed.

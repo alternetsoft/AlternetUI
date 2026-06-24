@@ -195,7 +195,7 @@ namespace Alternet.UI
         public override string? ToString()
         {
             if (cursorType is not null)
-                return Enum.GetName(typeof(Cursor), cursorType);
+                return Enum.GetName<CursorType>(cursorType.Value);
             return base.ToString();
         }
 
