@@ -33,11 +33,11 @@
                   Margin="0,3,0,0" Click="UncheckAllButton_Click" />
           <StdButton Text="Has Border" Name="hasBorderButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="HasBorderButton_Click" />
-          <StdButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
-                  Margin="0,3,0,3" Click="EditorButton_Click" />
           <StdCheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
                     Margin="0,3,0,3" IsChecked="true" IsTextLocalized="true"
                     CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
+          <StdButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
+                  Margin="0,3,0,3" Click="EditorButton_Click" IsVisible="false"/>
         </StackPanel>
 
       </StackPanel>

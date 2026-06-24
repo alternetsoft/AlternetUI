@@ -46,7 +46,7 @@
           <StdButton Text="Items[2] = 'hello'" Name="buttonItemsEqHello" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="SetItem_Click"/>
           <StdButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
-                Margin="0,3,0,0" Click="Editor_Click"/>
+                Margin="0,3,0,0" Click="Editor_Click" IsVisible="false"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="0,0,0,5" Padding="0,0,5,5">

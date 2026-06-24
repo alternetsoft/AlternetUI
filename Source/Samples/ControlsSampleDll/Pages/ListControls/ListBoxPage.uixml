@@ -33,8 +33,6 @@
       </StackPanel>
       
       <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-        <StdButton Text="Edit Items..." Margin="0,0,0,10" IsTextLocalized="true"
-            Click="EditorButton_Click" Name="buttonEditItems"/>
         <StdCheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" 
                   IsTextLocalized="true"
             Margin="0,0,0,5" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
@@ -43,6 +41,8 @@
                   Margin="0,0,0,5" IsTextLocalized="true"/>
         <Label Text="Find Text" Margin="0,0,0,5" IsTextLocalized="true"/>
         <TextBox Name="findText" Margin="0,0,0,5"/>
+        <StdButton Text="Edit Items..." Margin="0,0,0,10" IsTextLocalized="true"
+            Click="EditorButton_Click" Name="buttonEditItems" IsVisible="false"/>
       </StackPanel>
     </StackPanel>
 

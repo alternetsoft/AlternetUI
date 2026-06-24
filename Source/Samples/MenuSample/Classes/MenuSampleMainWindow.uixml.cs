@@ -290,7 +290,7 @@ namespace MenuSample
 
                 var nextKind = panel.Kind + 1;
 
-                if (!Enum.IsDefined(typeof(BarPanelKind), nextKind))
+                if (!Enum.IsDefined<BarPanelKind>(nextKind))
                     nextKind = 0;
                 panel.Kind = (BarPanelKind)nextKind;
             });
@@ -331,6 +331,15 @@ namespace MenuSample
             AddImagePanel();
             AddCustomControlSliderPanel();
             AddCustomControlColorButtonPanel();
+
+            var panel = new StatusBarPanel(BarPanelKind.Separator);
+            GetBar().Panels.Add(panel);
+
+            if (fillStatusBarPanel.Control is not null)
+            {
+                fillStatusBarPanel.Control.Background
+                    = new HatchBrush(BrushHatchStyle.DiagonalCross, fillStatusBarPanel.Control.ForeColor);
+            }
         }
 
         private void MenuItem_Highlighted(object? sender, EventArgs e)
@@ -531,7 +540,7 @@ namespace MenuSample
             var button = new SpeedColorButton()
             {
                 ToolTip = "Speed color button",
-                VerticalAlignment = VerticalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Stretch,
             };
             return button;
         }

@@ -60,9 +60,11 @@
     <StatusBar>
       <StatusBarPanel Text="Ready" Name="readyStatusBarPanel"/>
       <StatusBarPanel Kind="Separator"/>
-      <StatusBarPanel Text="TextBtn" Name="textBtnStatusBarPanel" ControlClicked="TextBtnStatusBarPanel_ControlClicked" Kind="TextButton"/>
-      <StatusBarPanel Kind="Separator"/>
-      <StatusBarPanel Text="This is a panel with border aligned to fill" Spring="true" Style="Normal" Name="fillStatusBarPanel"/>
+      <StatusBarPanel Text="This is a long text panel aligned to fill" Spring="true" Name="fillStatusBarPanel"/>
+      <StatusBarPanel Kind="Separator" HorizontalAlignment="Right"/>
+      <StatusBarPanel Text="Click me" Name="textBtnStatusBarPanel"
+                      ControlClicked="TextBtnStatusBarPanel_ControlClicked"
+                      Kind="TextButton" HorizontalAlignment="Right"/>
     </StatusBar>
   </Window.StatusBar>
 
