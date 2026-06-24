@@ -314,9 +314,20 @@ namespace Alternet.Drawing.Printing
         {
             var result = PrintingFactory.Handler.CreatePrintDocumentHandler();
 
-            result.PrintPage += OnNativePrintDocumentPrintPage;
-            result.BeginPrint += OnNativePrintDocumentBeginPrint;
-            result.EndPrint += OnNativePrintDocumentEndPrint;
+            result.PrintPage += (s, e) =>
+            {
+                OnNativePrintDocumentPrintPage(s, e);
+            };
+            
+            result.BeginPrint += (s, e) =>
+            {
+                OnNativePrintDocumentBeginPrint(s, e);
+            };
+
+            result.EndPrint += (s, e) =>
+            {
+                OnNativePrintDocumentEndPrint(s, e);
+            };
 
             return result;
         }
@@ -329,13 +340,16 @@ namespace Alternet.Drawing.Printing
         /// printing. The cancellation status in <paramref name="e"/> will be updated according to the result of the
         /// print event.</remarks>
         /// <param name="sender">The source of the event, typically the print document or related component.</param>
-        /// <param name="e">A <see cref="CancelEventArgs"/> that contains the event data, including the cancellation status for the
+        /// <param name="e">A <see cref="CancelEventArgs"/> that
+        /// contains the event data, including the cancellation status for the
         /// print operation.</param>
         protected virtual void OnNativePrintDocumentEndPrint(object? sender, CancelEventArgs e)
         {
             var ea = new PrintEventArgs();
             OnEndPrint(ea);
             e.Cancel = ea.Cancel;
+
+            Handler.EndPrinting();
 
             currentDrawingContext = null;
         }
@@ -347,16 +361,20 @@ namespace Alternet.Drawing.Printing
         /// printing. Setting <paramref name="e"/>.Cancel to <see langword="true"/> will abort the print
         /// operation.</remarks>
         /// <param name="sender">The source of the event, typically the print document initiating the operation.</param>
-        /// <param name="e">A <see cref="CancelEventArgs"/> instance that can be used to cancel the print operation.</param>
+        /// <param name="e">A <see cref="CancelEventArgs"/> instance that can be used
+        /// to cancel the print operation.</param>
         protected virtual void OnNativePrintDocumentBeginPrint(object? sender, CancelEventArgs e)
         {
             ThrowIfPrintingInProgress();
 
-            currentDrawingContext = Handler.DrawingContext;
+            if (Handler.StartPrinting(Handler.MarginBounds))
+            {
+                currentDrawingContext = Handler.GetGraphics();
 
-            var ea = new PrintEventArgs();
-            OnBeginPrint(ea);
-            e.Cancel = ea.Cancel;
+                var ea = new PrintEventArgs();
+                OnBeginPrint(ea);
+                e.Cancel = ea.Cancel;
+            }
         }
 
         /// <summary>
@@ -365,10 +383,13 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <remarks>Override this method to customize how print pages are processed during native
         /// printing. The cancellation status of the event is updated based on the print page logic.</remarks>
-        /// <param name="sender">The source of the event, typically the print document object that initiated the print page request.</param>
-        /// <param name="e">A <see cref="CancelEventArgs"/> that contains the event data, including the cancellation flag that can be
+        /// <param name="sender">The source of the event, typically the print document
+        /// object that initiated the print page request.</param>
+        /// <param name="e">A <see cref="CancelEventArgs"/> that contains the event data,
+        /// including the cancellation flag that can be
         /// set to abort printing.</param>
-        /// <exception cref="InvalidOperationException">Thrown if the drawing context required for printing is not available.</exception>
+        /// <exception cref="InvalidOperationException">Thrown if the drawing context
+        /// required for printing is not available.</exception>
         protected virtual void OnNativePrintDocumentPrintPage(object? sender, CancelEventArgs e)
         {
             if (currentDrawingContext == null)

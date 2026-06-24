@@ -13,6 +13,10 @@ namespace Alternet.Drawing.Printing
 {
     internal class PrintDocumentHandler : UI.Native.PrintDocument, IPrintDocumentHandler
     {
+        private SkiaGraphics? canvas;
+        private UI.Native.DrawingContext? dc;
+        private RectD rect;
+
         RectD IPrintDocumentHandler.MarginBounds => GetPrintPage_MarginBounds();
 
         RectD IPrintDocumentHandler.PhysicalPageBounds => GetPrintPage_PhysicalPageBounds();
@@ -33,38 +37,6 @@ namespace Alternet.Drawing.Printing
 
         IPageSettingsHandler IPrintDocumentHandler.PageSettings => PageSettings;
 
-        Graphics IPrintDocumentHandler.DrawingContext
-        {
-            get
-            {
-                var bounds1 = ((IPrintDocumentHandler)this).PageBounds;
-                var bounds2 = ((IPrintDocumentHandler)this).PrintablePageBounds;
-                var clientRect = bounds2;
-                var dc = PrintPage_DrawingContext;
-                var hdc = dc.GetHandle();
-                var dpi = dc.GetDpi();
-                var scaleFactor = GraphicsFactory.ScaleFactorFromDpi(dpi.Width);
-                var clientRectI = clientRect.PixelFromDip(scaleFactor);
-
-                var canvas = SkiaUtils.CreateBitmapCanvas(clientRect.Size, scaleFactor, true);
-                canvas.Canvas.Clear(SKColors.Transparent);
-
-                canvas.Disposed += (s, e) =>
-                {
-                    if (canvas.Bitmap is null)
-                        return;
-
-                    var image = (Image)canvas.Bitmap;
-                    dc.DrawImageAtPoint(
-                        (UI.Native.Image)image.Handler,
-                        clientRectI.Location,
-                        false);
-                };
-
-                return canvas;
-            }
-        }
-
         void IPrintDocumentHandler.SetDocumentName(string name)
         {
             NativeStringSpan.Invoke(name, span =>
@@ -76,6 +48,51 @@ namespace Alternet.Drawing.Printing
         string IPrintDocumentHandler.GetDocumentName()
         {
             return GetDocumentName().ToString();
+        }
+
+        public bool StartPrinting(RectD rect)
+        {
+            if (canvas != null)
+                return false;
+
+            this.rect = rect;
+            dc = PrintPage_DrawingContext;
+            var dpi = dc.GetDpi();
+            var scaleFactor = GraphicsFactory.ScaleFactorFromDpi(dpi.Width);
+
+            canvas = SkiaUtils.CreateBitmapCanvas(rect.Size, scaleFactor, true);
+            canvas.Canvas.Clear(SKColors.Transparent);
+            return true;
+        }
+
+        public Graphics? GetGraphics()
+        {
+            return canvas;
+        }
+
+        public bool EndPrinting()
+        {
+            if (canvas == null)
+                return false;
+
+            var result = false;
+
+            if (canvas.Bitmap is not null && dc is not null)
+            {
+                var image = (Image)canvas.Bitmap;
+                dc.DrawImageAtPoint((UI.Native.Image)image.Handler, rect.Location, false);
+
+                canvas.Dispose();
+                canvas = null;
+                dc = null;
+                rect = default;
+                result = true;
+            }
+            else
+            {
+            }
+
+            return result;
         }
     }
 }

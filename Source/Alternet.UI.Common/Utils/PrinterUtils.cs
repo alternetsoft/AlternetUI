@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 using Alternet.Drawing;
@@ -63,8 +64,9 @@ namespace Alternet.UI
 
                 return null;
             }
-            catch
+            catch (Exception ex)
             {
+                Debug.WriteLine($"Exception in HasPrinters: {ex}");
                 return false;
             }
         }

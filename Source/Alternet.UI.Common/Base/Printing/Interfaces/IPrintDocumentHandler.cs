@@ -42,9 +42,6 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PrintDocument.PageSettings"/>
         IPageSettingsHandler PageSettings { get; }
 
-        /// <inheritdoc cref="PrintPageEventArgs.DrawingContext"/>
-        Graphics DrawingContext { get; }
-
         /// <inheritdoc cref="PrintPageEventArgs.HasMorePages"/>
         bool HasMorePages { get; set; }
 
@@ -65,5 +62,11 @@ namespace Alternet.Drawing.Printing
 
         /// <inheritdoc cref="PrintDocument.Print"/>
         void Print();
+
+        bool StartPrinting(RectD rect);
+
+        bool EndPrinting();
+
+        Graphics? GetGraphics();
     }
 }
