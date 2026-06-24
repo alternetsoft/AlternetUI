@@ -37,7 +37,7 @@ namespace Alternet.UI
             MainPanel.Margin = 0;
             MainControl.Margin = DefaultContentMargin;
             Padding = 0;
-            HasBorder = false;
+            HasBorder = true;
             Resizable = false;
             BottomToolBar.Visible = false;
             HideOnClick = false;

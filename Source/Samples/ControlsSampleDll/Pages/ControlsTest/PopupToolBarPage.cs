@@ -26,16 +26,16 @@ namespace ControlsSample
 
             Layout = LayoutStyle.Vertical;
 
-            var button = new StdButton
+            var showPopupToolBarBtn = new StdButton
             {
                 Text = "Show Popup ToolBar",
                 Margin = 10,
                 Parent = this,
             };
 
-            button.Click += (s, e) =>
+            showPopupToolBarBtn.Click += (s, e) =>
             {
-                popupToolBar.ShowPopup(button);
+                popupToolBar.ShowPopup(showPopupToolBarBtn);
             };
 
             var button2 = new StdButton
@@ -46,14 +46,14 @@ namespace ControlsSample
                 DropDownMenu = contextMenu,
             };
 
-            var button3 = new StdButton
+            var showMenuPopupToolBarBtn = new StdButton
             {
                 Text = "Show Context Menu in Popup ToolBar",
                 Margin = 10,
                 Parent = this,
             };
 
-            button3.Click += (s, e) =>
+            showMenuPopupToolBarBtn.Click += (s, e) =>
             {
                 syncedPopupToolBar.MainControl.DataContext = contextMenu;
                 syncedPopupToolBar.MainControl.ConfigureAsContextMenu();
@@ -62,7 +62,7 @@ namespace ControlsSample
                     DropDownHorizontalAlignment ?? DropDownAlignment.BeforeStart,
                     DropDownVerticalAlignment ?? DropDownAlignment.AfterEnd);
 
-                syncedPopupToolBar.ShowPopup(button3, position);
+                syncedPopupToolBar.ShowPopup(showMenuPopupToolBarBtn, position);
             };
 
             Label label1 = new()
