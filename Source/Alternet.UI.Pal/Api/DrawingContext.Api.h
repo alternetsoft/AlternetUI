@@ -119,6 +119,20 @@ ALTERNET_UI_API RectD_C DrawingContext_GetClippingBox_(DrawingContext* obj)
     });
 }
 
+ALTERNET_UI_API SizeI_C DrawingContext_GetSize_(DrawingContext* obj)
+{
+    return MarshalExceptions<SizeI_C>([&](){
+        return obj->GetSize();
+    });
+}
+
+ALTERNET_UI_API SizeI_C DrawingContext_GetPPI_(DrawingContext* obj)
+{
+    return MarshalExceptions<SizeI_C>([&](){
+        return obj->GetPPI();
+    });
+}
+
 ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, NativeStringSpan* text, PointD* location, Font* font, Color* foreColor, Brush* backColor, float angle, c_bool useBrush)
 {
     MarshalExceptions<void>([&](){

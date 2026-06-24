@@ -20,6 +20,8 @@ void Restore();
 void SetClippingRect(const RectD& rect);
 void SetClippingRegion(Region* region);
 RectD GetClippingBox();
+SizeI GetSize();
+SizeI GetPPI();
 void DrawText(const NativeStringSpan& text, const PointD& location, Font* font, const Color& foreColor, Brush* backColor, float angle, bool useBrush);
 SizeI GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);

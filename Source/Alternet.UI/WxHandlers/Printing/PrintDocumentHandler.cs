@@ -60,10 +60,10 @@ namespace Alternet.Drawing.Printing
             dc = PrintPage_DrawingContext;
 
             // Suppose you have printer page size and DPI
-            int pageWidthPx = dc.GetSize().x;   // printer pixels
-            int pageHeightPx = dc.GetSize().y;
-            int printerDpiX = dc.GetPPI().x;    // e.g. 600
-            int printerDpiY = dc.GetPPI().y;
+            int pageWidthPx = dc.GetSize().Width;   // printer pixels
+            int pageHeightPx = dc.GetSize().Height;
+            int printerDpiX = dc.GetPPI().Width;    // e.g. 600
+            int printerDpiY = dc.GetPPI().Height;
 
             // Choose target DPI for bitmap
             int targetDpi = 300;
@@ -75,15 +75,15 @@ namespace Alternet.Drawing.Printing
             var info = new SKImageInfo(bmpW, bmpH, SKColorType.Bgra8888, SKAlphaType.Premul);
             var bitmap = new SKBitmap(info);
 
-            canvas = new SKCanvas(bitmap);
+            graphics = new SkiaGraphics(bitmap);
+            canvas = graphics.Canvas;
+
             canvas.Clear(SKColors.White);
 
             // Apply scale so drawing in printer units maps to bitmap
             float scaleX = (float)bmpW / pageWidthPx;
             float scaleY = (float)bmpH / pageHeightPx;
             canvas.Scale(scaleX, scaleY);
-
-            graphics = new SkiaGraphics(canvas);
 
             return true;
         }
@@ -103,7 +103,17 @@ namespace Alternet.Drawing.Printing
             if (graphics?.Bitmap is not null && dc is not null)
             {
                 var image = (Image)graphics.Bitmap;
-                dc.DrawImageAtPoint((UI.Native.Image)image.Handler, rect.Location, false);
+
+                var ppi = dc.GetPPI();        // printer DPI, e.g. 600x600
+                var pageSize = dc.GetSize();  // full page in printer pixels
+
+                int targetDpi = 300;
+                int bmpW = pageSize.Width * targetDpi / ppi.Width;
+                int bmpH = pageSize.Height * targetDpi / ppi.Height;
+
+                var r = new RectD(0, 0, bmpW, bmpH);
+
+                dc.DrawImageAtRect((UI.Native.Image)image.Handler, r, false);
 
                 graphics.Dispose();
                 graphics = null;

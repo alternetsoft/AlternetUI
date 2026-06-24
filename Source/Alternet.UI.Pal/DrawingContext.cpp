@@ -41,6 +41,16 @@ namespace Alternet::UI
             wxDELETE(_dc);
     }
 
+    SizeI DrawingContext::GetSize()
+    {
+        return _dc->GetSize();
+    }
+
+    SizeI DrawingContext::GetPPI()
+    {
+		return _dc->GetPPI();
+    }
+
     DrawingContext* DrawingContext::CreateMemoryDC(float scaleFactor)
     {
         auto bitmap = wxBitmap(10, 10);

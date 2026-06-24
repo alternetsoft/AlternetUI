@@ -28,6 +28,10 @@ namespace NativeApi.Api
 
         public RectD GetClippingBox() => default;
 
+        public SizeI GetSize() => default;
+
+        public SizeI GetPPI() => default;
+
         /*
         str The text to draw.
         x The x coordinate position to draw the text at.
