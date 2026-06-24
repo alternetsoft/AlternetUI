@@ -63,26 +63,10 @@
     <File Path="stylecop.json" />
   </Folder>
   <Folder Name="/04. Tools/">
-    <Project Path="Tools/Alternet.UI.RunCmd/Alternet.UI.RunCmd.csproj">
-      <BuildType Solution="DLL Debug|*" Project="Debug" />
-      <BuildType Solution="DLL Release|*" Project="Release" />
-    </Project>
-    <Project Path="Tools/Alternet.UI.RunCmdAdv/Alternet.UI.RunCmdAdv.csproj">
-      <BuildType Solution="DLL Debug|*" Project="Debug" />
-      <BuildType Solution="DLL Release|*" Project="Release" />
-    </Project>
-  </Folder>
-  <Folder Name="/04. Tools/Build/">
     <Project Path="Alternet.UI.Build.Tasks/Alternet.UI.Build.Tasks.csproj">
       <BuildType Solution="DLL Debug|*" Project="Debug" />
       <BuildType Solution="DLL Release|*" Project="Release" />
     </Project>
-    <Project Path="Tools/Alternet.UI.Build.Test/Alternet.UI.Build.Test.csproj">
-      <BuildType Solution="DLL Debug|*" Project="Debug" />
-      <BuildType Solution="DLL Release|*" Project="Release" />
-    </Project>
-  </Folder>
-  <Folder Name="/04. Tools/PreviewFile/">
     <Project Path="Integration/Components/Alternet.UI.Integration.Remoting/Alternet.UI.Integration.Remoting.csproj">
       <BuildType Solution="DLL Debug|*" Project="Debug" />
       <BuildType Solution="DLL Release|*" Project="Release" />
@@ -95,8 +79,18 @@
       <BuildType Solution="DLL Debug|*" Project="Debug" />
       <BuildType Solution="DLL Release|*" Project="Release" />
     </Project>
-  </Folder>
-  <Folder Name="/04. Tools/Versioning/">
+    <Project Path="Tools/Alternet.UI.Build.Test/Alternet.UI.Build.Test.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
+    <Project Path="Tools/Alternet.UI.RunCmd/Alternet.UI.RunCmd.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
+    <Project Path="Tools/Alternet.UI.RunCmdAdv/Alternet.UI.RunCmdAdv.csproj">
+      <BuildType Solution="DLL Debug|*" Project="Debug" />
+      <BuildType Solution="DLL Release|*" Project="Release" />
+    </Project>
     <Project Path="Tools/Versioning/Alternet.UI.Versioning/Alternet.UI.Versioning.csproj">
       <BuildType Solution="DLL Debug|*" Project="Debug" />
       <BuildType Solution="DLL Release|*" Project="Release" />
