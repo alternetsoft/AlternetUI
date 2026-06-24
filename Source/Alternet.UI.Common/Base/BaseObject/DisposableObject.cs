@@ -61,7 +61,8 @@ namespace Alternet.UI
         public static event EventHandler? InstanceDisposed;
 
         /// <summary>
-        /// Occurs when object is disposed.
+        /// Occurs when object is disposed. This is event is raised before any dispose logic is executed.
+        /// You can use this event to perform any operations before the object is disposed.
         /// </summary>
         public event EventHandler? Disposed;
 
