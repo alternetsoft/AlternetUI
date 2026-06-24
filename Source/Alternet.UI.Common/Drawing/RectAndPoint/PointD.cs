@@ -90,6 +90,18 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PointD"/> class using the specified coordinates
+        /// with double precision. Values are converted to float.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the point.</param>
+        /// <param name="y">The y-coordinate of the point.</param>
+        public PointD(double x, double y)
+        {
+            this.x = (float)x;
+            this.y = (float)y;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PointD"/> structure using
         /// the specified <see cref="PointI"/>.
         /// </summary>
