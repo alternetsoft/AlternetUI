@@ -38,6 +38,7 @@ namespace PropertyGridSample
             textBox.TextBox.SuggestedWidth = 200;
         }
 
+        /*
         public static void InitComboBoxAndLabel(object control)
         {
             if (control is not ComboBoxAndLabel textBox)
@@ -51,6 +52,7 @@ namespace PropertyGridSample
             textBox.ComboBox.Add("item 4");
             textBox.ComboBox.Add("item 5");
         }
+        */
 
         public static void InitTextBox(object control)
         {

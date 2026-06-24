@@ -13,7 +13,6 @@ namespace Alternet.UI
     /// </summary>
     public class HandlerForDisposed : PlessControlHandler,
         ICalendarHandler,
-        IComboBoxHandler,
         IListViewHandler,
         IRichTextBox,
         IScrollBarHandler,
@@ -91,8 +90,6 @@ namespace Alternet.UI
         public bool ThreeState { get; set; }
 
         public VirtualListBox? PopupControl { get; set; }
-
-        public ComboBox.OwnerDrawFlags OwnerDrawStyle { get; set; }
 
         public PointI TextMargins { get; }
 

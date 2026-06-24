@@ -155,11 +155,11 @@ namespace Alternet.UI
 
         /// <summary>
         /// Increases height of all <see cref="TextBox"/> controls in the specified
-        /// container to height of the <see cref="ComboBox"/> control, if it
+        /// container to height of the <see cref="StdComboBox"/> control, if it
         /// is present in the container.
         /// </summary>
         /// <remarks>
-        /// Used in Linux where height of the <see cref="ComboBox"/>
+        /// Used in Linux where height of the <see cref="StdComboBox"/>
         /// is bigger than height of the <see cref="TextBox"/>.
         /// </remarks>
         /// <remarks>
@@ -190,7 +190,7 @@ namespace Alternet.UI
                     if (control is TextBox box)
                         textBox = box;
                     else
-                    if (control is ComboBox box1)
+                    if (control is StdComboBox box1)
                         comboBox = box1;
                     else
                         FindTextEditors(control);
@@ -249,7 +249,7 @@ namespace Alternet.UI
                     return;
                 foreach (AbstractControl control in container.Children)
                 {
-                    if (control is TextBox || control is ComboBox)
+                    if (control is TextBox || control is StdComboBox)
                     {
                         if (control.Bounds.Height < maxHeight)
                             editors.Add(control);

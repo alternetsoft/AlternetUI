@@ -22,6 +22,26 @@ namespace Alternet.UI
     public partial class ListControlItem : BaseControlItem, IComparable<ListControlItem>
     {
         /// <summary>
+        /// Gets or sets default color of the image border.
+        /// </summary>
+        public static Color DefaultImageBorderColor = SystemColors.GrayText;
+
+        /// <summary>
+        /// Gets or sets default disabled text color.
+        /// </summary>
+        public static Color DefaultDisabledTextColor = SystemColors.GrayText;
+
+        /// <summary>
+        /// Gets or sets default vertical offset of the item's image for the items with images.
+        /// </summary>
+        public static Coord DefaultImageVerticalOffset = 2;
+
+        /// <summary>
+        /// Gets or sets default distance between image and text in the item.
+        /// </summary>
+        public static Coord DefaultImageTextDistance = 3;
+
+        /// <summary>
         /// Gets id of the null container.
         /// </summary>
         public static readonly ObjectUniqueId NullContainerId = new();
@@ -2215,7 +2235,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public static Coord GetAdditionalImageMargin()
         {
-            var result = ComboBox.DefaultImageVerticalOffset;
+            var result = DefaultImageVerticalOffset;
 
             return result;
         }
@@ -2251,7 +2271,7 @@ namespace Alternet.UI
 
             var itemRect = rect;
 
-            var offsetWidth = centeredImageRect.Width + ComboBox.DefaultImageTextDistance;
+            var offsetWidth = centeredImageRect.Width + DefaultImageTextDistance;
 
             itemRect.X += offsetWidth;
             itemRect.Width -= offsetWidth;
@@ -2259,7 +2279,7 @@ namespace Alternet.UI
             if (isRight)
             {
                 itemRect.X = centeredImageRect.X;
-                centeredImageRect.X = itemRect.Right + ComboBox.DefaultImageTextDistance;
+                centeredImageRect.X = itemRect.Right + DefaultImageTextDistance;
             }
 
             return (centeredImageRect, itemRect);

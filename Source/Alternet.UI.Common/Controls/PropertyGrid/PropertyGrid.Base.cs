@@ -152,11 +152,6 @@ namespace Alternet.UI
                 nameof(ToolBar.Panels),
                 typeof(ListEditSourceForToolBar));
 
-            RegisterCollectionEditor(
-                typeof(ComboBox),
-                nameof(ComboBox.Items),
-                typeof(ListEditSourceForListBox));
-
             /*RegisterCollectionEditor(
                 typeof(TabControl),
                 nameof(TabControl.Pages),

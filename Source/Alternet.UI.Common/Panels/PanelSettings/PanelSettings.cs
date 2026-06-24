@@ -29,7 +29,7 @@ namespace Alternet.UI
         public static Coord DefaultHorizontalLineMargin = 5;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the <see cref="ComboBox"/> mouse
+        /// Gets or sets a value indicating whether the combo box mouse
         /// wheel is allowed by default when it is used in the <see cref="PanelSettings"/>.
         /// </summary>
         public static bool DefaultAllowComboBoxMouseWheel = false;
@@ -152,8 +152,6 @@ namespace Alternet.UI
             register(PanelSettingsItemKind.Enum, DefaultItemToEnumControl);
             register(PanelSettingsItemKind.Value, DefaultItemToValueControl);
             register(PanelSettingsItemKind.Button, DefaultItemToButtonControl);
-            register(PanelSettingsItemKind.Selector, DefaultItemToSelectorControl);
-            register(PanelSettingsItemKind.EditableSelector, DefaultItemToEditableSelector);
         }
 
         /// <summary>
@@ -309,38 +307,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Default conversion method from <see cref="PanelSettingsItemKind.Selector"/> item
-        /// to the appropriate control.
-        /// </summary>
-        /// <param name="item">Item to convert.</param>
-        /// <param name="control">The existing control which properties should
-        /// be updated using item's properties. Can be null, in this case new control
-        /// need to be created.</param>
-        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
-        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToSelectorControl(PanelSettings sender, PanelSettingsItem item, object? control)
-        {
-            var result = CreateOrUpdateSelector(sender, item, control, false);
-            return result;
-        }
-
-        /// <summary>
-        /// Default conversion method from <see cref="PanelSettingsItemKind.EditableSelector"/> item
-        /// to the appropriate control.
-        /// </summary>
-        /// <param name="item">Item to convert.</param>
-        /// <param name="control">The existing control which properties should
-        /// be updated using item's properties. Can be null, in this case new control
-        /// need to be created.</param>
-        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
-        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? DefaultItemToEditableSelector(PanelSettings sender, PanelSettingsItem item, object? control)
-        {
-            var result = CreateOrUpdateSelector(sender, item, control, true);
-            return result;
-        }
-
-        /// <summary>
         /// Registers function which is called when item is converted to the control.
         /// </summary>
         /// <param name="platform">Platform kind.</param>
@@ -470,29 +436,6 @@ namespace Alternet.UI
             PanelSettingsItem item
                 = CreateItemCore(label, PanelSettingsItemKind.Button, null, e);
             item.ClickAction = clickAction;
-            Items.Add(item);
-            return item;
-        }
-
-        /// <summary>
-        /// Adds item with the editor for the nullable value of the specified type.
-        /// </summary>
-        /// <typeparam name="T">Type of the value.</typeparam>
-        /// <param name="label">Text which will be shown next to the editor.</param>
-        /// <param name="valueSource">Source of the value. If Null an internal
-        /// value container is used.</param>
-        /// <param name="pickList">Collection of possible values.</param>
-        /// <param name="e">Additional arguments.</param>
-        /// <returns></returns>
-        public virtual PanelSettingsItem AddSelector<T>(
-            object label,
-            IEnumerable<T> pickList,
-            IValueSource<object>? valueSource = null,
-            CustomEventArgs? e = null)
-        {
-            var item
-                = CreateItemCore(label, PanelSettingsItemKind.Selector, valueSource, e);
-            item.ValueType = typeof(T);
             Items.Add(item);
             return item;
         }
@@ -801,44 +744,6 @@ namespace Alternet.UI
                     item.Value = previousValue;
                     sender.RaiseProcessException(new ThrowExceptionEventArgs(ex));
                 }
-            }
-
-            return result;
-        }
-
-        private static object? CreateOrUpdateSelector(
-            PanelSettings sender,
-            PanelSettingsItem item,
-            object? control,
-            bool isEditable)
-        {
-            var result
-                = CreateOrUpdateControl<ControlAndLabel<ComboBoxAndButton, Label>>(sender, item, control);
-            result.LabelToControl = StackPanelOrientation.Vertical;
-            UpdateText(sender, item, result.Label);
-
-            var comboBox = result.MainControl;
-
-            comboBox.MainControl.AllowMouseWheel = DefaultAllowComboBoxMouseWheel;
-
-            comboBox.IsEditable = isEditable;
-
-            if (comboBox.Items.Count == 0 && item.PickList is not null)
-            {
-                comboBox.DoInsideUpdate(() =>
-                {
-                    comboBox.Items.AddRange(item.PickList);
-                });
-            }
-
-            comboBox.SelectedItem = item.Value;
-
-            comboBox.DelayedTextChanged -= SelectorChanged;
-            comboBox.DelayedTextChanged += SelectorChanged;
-
-            void SelectorChanged(object? sender, EventArgs e)
-            {
-                item.Value = comboBox.SelectedItem;
             }
 
             return result;

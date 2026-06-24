@@ -1209,7 +1209,7 @@ namespace Alternet.UI
         public ObjectUniqueId IdReplaceAll { get; internal set; }
 
         /// <summary>
-        /// Gets <see cref="ComboBox"/> which allows to specify text to find.
+        /// Gets control which allows to specify text to find.
         /// </summary>
         [Browsable(false)]
         public TextBoxWithListPopup FindEdit => findEdit;
@@ -1221,7 +1221,7 @@ namespace Alternet.UI
         public ListPicker ScopeEdit => scopeEdit;
 
         /// <summary>
-        /// Gets <see cref="ComboBox"/> which allows to specify text to replace.
+        /// Gets control which allows to specify text to replace.
         /// </summary>
         [Browsable(false)]
         public TextBoxWithListPopup ReplaceEdit => replaceEdit;

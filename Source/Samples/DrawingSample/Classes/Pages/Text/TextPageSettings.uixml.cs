@@ -1,5 +1,6 @@
 ﻿using Alternet.Drawing;
 using Alternet.UI;
+
 using System;
 
 namespace DrawingSample
@@ -33,7 +34,8 @@ namespace DrawingSample
                     wrappingComboBox).Enabled(false);
 
                 labels.Margin(new(0, 5, 10, 5)).VerticalAlignment(VerticalAlignment.Center);
-                comboBoxes.Margin(new(0, 5, 0, 5)).IsEditable(false);
+                comboBoxes.Margin(new(0, 5, 0, 5));
+
                 var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
 
                 propertyGrid.Visible = DebugUtils.IsDebugDefined;
@@ -104,7 +106,7 @@ namespace DrawingSample
             horizontalAlignmentComboBox.Value = page.HorizontalAlignment;
             horizontalAlignmentComboBox.ValueChanged += (s, e) =>
             {
-                page.HorizontalAlignment = 
+                page.HorizontalAlignment =
                     horizontalAlignmentComboBox.ValueAs<TextHorizontalAlignment>();
             };
 
@@ -172,14 +174,16 @@ namespace DrawingSample
             textWidthLimitSlider.Minimum = page.MinTextWidthLimit;
             textWidthLimitSlider.Maximum = page.MaxTextWidthLimit;
             textWidthLimitSlider.Value = page.TextWidthLimit;
-            textWidthLimitSlider.ValueChanged += (s, e) => {
+            textWidthLimitSlider.ValueChanged += (s, e) =>
+            {
                 page.TextWidthLimit = textWidthLimitSlider.Value;
             };
 
             textHeightValueSlider.Minimum = page.MinTextHeightValue;
             textHeightValueSlider.Maximum = page.MaxTextHeightValue;
-            textHeightValueSlider.Value= page.TextHeightValue;
-            textHeightValueSlider.ValueChanged += (s, e) => {
+            textHeightValueSlider.Value = page.TextHeightValue;
+            textHeightValueSlider.ValueChanged += (s, e) =>
+            {
                 page.TextHeightValue = textHeightValueSlider.Value;
             };
 

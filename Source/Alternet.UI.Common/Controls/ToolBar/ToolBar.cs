@@ -1376,8 +1376,8 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="control">Control to add.</param>
         /// <remarks>
-        /// You can use this method to add <see cref="TextBox"/> or <see cref="ComboBox"/>
-        /// to the toolbar.
+        /// You can use this method to add <see cref="TextBox"/> or other controls to the toolbar.
+        /// The control will be added to the end of the toolbar.
         /// </remarks>
         /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
         public virtual ObjectUniqueId AddControl(AbstractControl control)

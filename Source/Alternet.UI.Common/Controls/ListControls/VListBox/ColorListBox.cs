@@ -181,7 +181,7 @@ namespace Alternet.UI
                 canvas,
                 rect,
                 Color.Empty,
-                ComboBox.DefaultImageBorderColor);
+                ListControlItem.DefaultImageBorderColor);
 
             canvas.FillRectangle(color.AsBrush, colorRect);
         }

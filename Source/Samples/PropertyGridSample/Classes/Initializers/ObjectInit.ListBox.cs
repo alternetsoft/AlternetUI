@@ -376,6 +376,7 @@ namespace PropertyGridSample
             comboBox.SuggestedWidth = 200;
         }
 
+        /*
         public static void InitComboBox(object control)
         {
             if (control is not ComboBox comboBox)
@@ -384,5 +385,6 @@ namespace PropertyGridSample
             comboBox.HorizontalAlignment = HorizontalAlignment.Left;
             comboBox.SuggestedWidth = 200;
         }
+        */
     }
 }

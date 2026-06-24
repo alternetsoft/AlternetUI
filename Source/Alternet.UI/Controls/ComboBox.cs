@@ -51,26 +51,6 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Native)]
     public partial class ComboBox : Control, IListControl, IListControlItemContainer
     {
-        /// <summary>
-        /// Gets or sets default vertical offset of the item's image for the items with images.
-        /// </summary>
-        public static Coord DefaultImageVerticalOffset = 2;
-
-        /// <summary>
-        /// Gets or sets default distance between image and text in the item.
-        /// </summary>
-        public static Coord DefaultImageTextDistance = 3;
-
-        /// <summary>
-        /// Gets or sets default color of the image border.
-        /// </summary>
-        public static Color DefaultImageBorderColor = SystemColors.GrayText;
-
-        /// <summary>
-        /// Gets or sets default disabled text color.
-        /// </summary>
-        public static Color DefaultDisabledTextColor = SystemColors.GrayText;
-
         private bool allowMouseWheel = true;
         private int? selectedIndex;
         private bool isEditable = true;
@@ -843,7 +823,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Color GetDisabledTextColor()
         {
-            return DefaultDisabledTextColor;
+            return ListControlItem.DefaultDisabledTextColor;
         }
 
         /// <summary>
@@ -1015,7 +995,7 @@ namespace Alternet.UI
         public virtual (RectD ImageRect, RectD TextRect) GetItemImageRect(
             ComboBoxItemPaintEventArgs e)
         {
-            var offset = DefaultImageVerticalOffset;
+            var offset = ListControlItem.DefaultImageVerticalOffset;
             if (e.IsPaintingControl)
                 offset++;
             else
@@ -1031,9 +1011,9 @@ namespace Alternet.UI
                 size);
 
             var itemRect = e.ClientRectangle;
-            var horzOffset = imageRect.Right + DefaultImageTextDistance;
+            var horzOffset = imageRect.Right + ListControlItem.DefaultImageTextDistance;
             itemRect.X += horzOffset;
-            itemRect.Width -= imageRect.Right + DefaultImageTextDistance;
+            itemRect.Width -= imageRect.Right + ListControlItem.DefaultImageTextDistance;
 
             return (imageRect, itemRect);
         }
@@ -1077,7 +1057,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateComboBoxHandler(this);
+            return new WxComboBoxHandler();
         }
 
         /// <summary>
@@ -1140,32 +1120,6 @@ namespace Alternet.UI
             else
                 result = savedBestSize.Value;
             return result;
-        }
-
-        /// <summary>
-        /// Default item painter for the owner draw <see cref="ComboBox"/> items.
-        /// </summary>
-        public class DefaultItemPainter : IComboBoxItemPainter
-        {
-            /// <inheritdoc/>
-            public virtual Coord GetHeight(ComboBox sender, int index, Coord defaultHeight)
-            {
-                var size = ListControlItem.DefaultMeasureItemSize(sender, sender.MeasureCanvas, index);
-                return size.Height;
-            }
-
-            /// <inheritdoc/>
-            public virtual Coord GetWidth(ComboBox sender, int index, Coord defaultWidth)
-            {
-                var size = ListControlItem.DefaultMeasureItemSize(sender, sender.MeasureCanvas, index);
-                return size.Width;
-            }
-
-            /// <inheritdoc/>
-            public virtual void Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
-            {
-                sender.DefaultItemPaint(e);
-            }
         }
     }
 }

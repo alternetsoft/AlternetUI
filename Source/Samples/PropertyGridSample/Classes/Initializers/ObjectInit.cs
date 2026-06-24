@@ -75,7 +75,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(TextBoxAndLabel), InitTextBoxAndLabel);
             Actions.Add(typeof(TextBoxAndButton), InitTextBoxAndButton);
             Actions.Add(typeof(RichTextBox), InitRichTextBox);
-            Actions.Add(typeof(ComboBoxAndLabel), InitComboBoxAndLabel);
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
             Actions.Add(typeof(Label), InitGenericLabel);
             Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
@@ -89,11 +88,12 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(VirtualListBox), InitListBoxItems);
             Actions.Add(typeof(FileListBox), InitFileListBox);
             Actions.Add(typeof(StdListBox), InitStdListBox);
-            Actions.Add(typeof(ComboBox), InitComboBox);
             Actions.Add(typeof(StdComboBox), InitStdComboBox);
             Actions.Add(typeof(StdCheckListBox), InitCheckListBox);
 
             /*
+            Actions.Add(typeof(ComboBoxAndLabel), InitComboBoxAndLabel);
+            Actions.Add(typeof(ComboBox), InitComboBox);
             Actions.Add(typeof(Button), InitButton);
             Actions.Add(typeof(ListBox), InitListBox);
             Actions.Add(typeof(CheckedListBox), InitCheckedListBox);

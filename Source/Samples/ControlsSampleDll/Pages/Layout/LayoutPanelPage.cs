@@ -25,7 +25,7 @@ namespace ControlsSample
             HorizontalStackPanel btnPanel = new();
             btnPanel.Visible = false;
 
-            ComboBox comboBox = new();
+            EnumPicker comboBox = new();
             comboBox.Parent = btnPanel;
             comboBox.Margin = 5;
 
@@ -48,7 +48,14 @@ namespace ControlsSample
             var cFill = Create("Control 5", "Dock = Fill");
             LayoutPanel layoutPanel = new();
 
-            comboBox.BindEnumProp(layoutPanel, nameof(LayoutPanel.Layout));
+            comboBox.EnumType = typeof(LayoutStyle);
+
+            comboBox.Value = layoutPanel.Layout;
+
+            comboBox.ValueChanged+=(s,e) =>
+            {
+                layoutPanel.Layout = (LayoutStyle?)(comboBox.Value) ?? layoutPanel.Layout;
+            };
 
             cRight.Dock = DockStyle.Right;
             cLeft.Dock = DockStyle.Left;

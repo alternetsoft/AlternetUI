@@ -58,13 +58,6 @@ namespace Alternet.UI
         IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler();
 
         /// <summary>
-        /// Creates <see cref="IComboBoxHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateComboBoxHandler(ComboBox control);
-
-        /// <summary>
         /// Creates <see cref="IScrollBarHandler"/> interface provider.
         /// </summary>
         /// <param name="control">Owner.</param>

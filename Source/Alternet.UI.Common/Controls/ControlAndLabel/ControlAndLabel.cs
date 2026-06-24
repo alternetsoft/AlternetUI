@@ -13,9 +13,6 @@ namespace Alternet.UI
     /// <summary>
     /// This is the base class for controls which consist of a label and an inner control.
     /// </summary>
-    /// <remarks> You can use <see cref="TextBoxAndLabel"/>,
-    /// <see cref="ComboBoxAndLabel"/> or derive from <see cref="ControlAndLabel{TControl,TLabel}"/>
-    /// in order to implement your own custom labeled control.</remarks>
     /// <typeparam name="TControl">Type of the inner control.</typeparam>
     /// <typeparam name="TLabel">Type of the label.</typeparam>
     [ControlCategory(KnownControlCategory.Hidden)]

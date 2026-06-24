@@ -3,12 +3,11 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ComboBoxPage : Panel, IComboBoxItemPainter
+    internal partial class ComboBoxPage : Panel
     {
         private const bool suppressUpDown = false;
 
         private readonly bool ignoreEvents = false;
-        private readonly IComboBoxItemPainter painter = new ComboBox.DefaultItemPainter();
 
         private int newItemIndex = 0;
 
@@ -177,19 +176,6 @@ namespace ControlsSample
             {
                 LoadDefaultItems(ownerDrawCheckBox.IsChecked);
             });
-
-            /*
-            if (ownerDrawCheckBox.IsChecked)
-            {
-                comboBox.ItemPainter = this;
-                comboBox.OwnerDrawItem = true;
-            }
-            else
-            {
-                comboBox.ItemPainter = null;
-                comboBox.OwnerDrawItem = false;
-            }
-            */
         }
 
         private void AllowTextEditingCheckBox_CheckedChanged(object? sender, EventArgs e)
@@ -260,47 +246,6 @@ namespace ControlsSample
         private void SetTextToOneButton_Click(object? sender, System.EventArgs e)
         {
             comboBox.Text = "One";
-        }
-
-        void IComboBoxItemPainter.Paint(ComboBox sender, ComboBoxItemPaintEventArgs e)
-        {
-            if (!e.IsPaintingControl)
-            {
-                painter.Paint(sender, e);
-                return;
-            }
-
-            e.DefaultPaint();
-            if(e.IsPaintingControl)
-                e.Graphics.FillRectangle(Color.Red.AsBrush, (e.ClientRectangle.Location, (5, 5)));
-            else
-            {
-                var point = e.ClientRectangle.TopRight;
-                point.Offset(-5, 0);
-
-                if (e.IsSelected)
-                {
-                    e.Graphics.FillRectangle(
-                        Color.Yellow.AsBrush,
-                        (point, (10, e.ClientRectangle.Height)));
-                }
-                else
-                {
-                    e.Graphics.FillRectangle(
-                        Color.Green.AsBrush,
-                        (point, (10, e.ClientRectangle.Height)));
-                }
-            }
-        }
-
-        Coord IComboBoxItemPainter.GetHeight(ComboBox sender, int index, Coord defaultHeight)
-        {
-            return painter.GetHeight(sender, index, defaultHeight);
-        }
-
-        Coord IComboBoxItemPainter.GetWidth(ComboBox sender, int index, Coord defaultWidth)
-        {
-            return painter.GetWidth(sender, index, defaultWidth);
         }
     }
 }

@@ -28,11 +28,6 @@ namespace Alternet.UI
             throw new NotImplementedException();
         }
 
-        IControlHandler IControlFactoryHandler.CreateComboBoxHandler(ComboBox control)
-        {
-            return new MauiComboBoxHandler();
-        }
-
         IControlHandler IControlFactoryHandler.CreateControlHandler(AbstractControl control)
         {
             return new MauiControlHandler();

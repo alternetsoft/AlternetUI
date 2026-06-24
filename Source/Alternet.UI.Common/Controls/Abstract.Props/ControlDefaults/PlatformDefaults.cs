@@ -19,7 +19,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets whether to adjust height of <see cref="TextBox"/> controls
-        /// to height of the <see cref="ComboBox"/> control.
+        /// to height of the combo box control.
         /// </summary>
         /// <remarks>
         /// Used in <see cref="TextBoxUtils.AdjustTextBoxesHeight"/>.

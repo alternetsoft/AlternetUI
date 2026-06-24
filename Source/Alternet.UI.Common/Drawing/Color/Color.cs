@@ -1811,7 +1811,7 @@ namespace Alternet.Drawing
             Coord scaleFactor,
             Color? borderColor = null)
         {
-            borderColor ??= ComboBox.DefaultImageBorderColor;
+            borderColor ??= ListControlItem.DefaultImageBorderColor;
 
             var graphics = SkiaUtils.CreateBitmapCanvas(size, scaleFactor, true);
 

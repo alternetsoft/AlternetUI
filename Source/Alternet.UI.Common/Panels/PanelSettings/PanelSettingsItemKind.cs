@@ -45,16 +45,6 @@ namespace Alternet.UI
         Button,
 
         /// <summary>
-        /// Items is selector with the list of values and non-editable text.
-        /// </summary>
-        Selector,
-
-        /// <summary>
-        /// Items is selector with the list of values and editable text.
-        /// </summary>
-        EditableSelector,
-
-        /// <summary>
         /// Item is enumeration selector.
         /// </summary>
         Enum,
