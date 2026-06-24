@@ -22,6 +22,8 @@ void SetClippingRegion(Region* region);
 RectD GetClippingBox();
 SizeI GetSize();
 SizeI GetPPI();
+void DrawBitmapAtPointI(Image* image, int x, int y, bool useMask);
+void DrawBitmapAtRectI(Image* image, const RectI& rect, bool useMask);
 void DrawText(const NativeStringSpan& text, const PointD& location, Font* font, const Color& foreColor, Brush* backColor, float angle, bool useBrush);
 SizeI GetDpi();
 static void ImageFromDrawingContext(Image* image, int width, int height, DrawingContext* dc);

@@ -32,6 +32,10 @@ namespace NativeApi.Api
 
         public SizeI GetPPI() => default;
 
+        public void DrawBitmapAtPointI(Image image, int x, int y, bool useMask = false) { }
+
+        public void DrawBitmapAtRectI(Image image, RectI rect, bool useMask = false) { }
+
         /*
         str The text to draw.
         x The x coordinate position to draw the text at.

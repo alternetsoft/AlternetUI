@@ -58,32 +58,23 @@ namespace Alternet.Drawing.Printing
 
             this.rect = rect;
             dc = PrintPage_DrawingContext;
-
-            // Suppose you have printer page size and DPI
             int pageWidthPx = dc.GetSize().Width;   // printer pixels
             int pageHeightPx = dc.GetSize().Height;
-            int printerDpiX = dc.GetPPI().Width;    // e.g. 600
-            int printerDpiY = dc.GetPPI().Height;
+            int printerPpiX = dc.GetPPI().Width;    // e.g. 600
+            int printerPpiY = dc.GetPPI().Height;
 
-            // Choose target DPI for bitmap
-            int targetDpi = 300;
+            var widthInches = (float)pageWidthPx / printerPpiX;
+            var heightInches = (float)pageHeightPx / printerPpiY;
 
-            // Compute bitmap size
-            int bmpW = pageWidthPx * targetDpi / printerDpiX;
-            int bmpH = pageHeightPx * targetDpi / printerDpiY;
+            var width96 = widthInches * 96;
+            var height96 = heightInches * 96;        
 
-            var info = new SKImageInfo(bmpW, bmpH, SKColorType.Bgra8888, SKAlphaType.Premul);
+            var info = new SKImageInfo((int)width96, (int)height96, SKColorType.Bgra8888, SKAlphaType.Premul);
             var bitmap = new SKBitmap(info);
 
             graphics = new SkiaGraphics(bitmap);
             canvas = graphics.Canvas;
-
             canvas.Clear(SKColors.White);
-
-            // Apply scale so drawing in printer units maps to bitmap
-            float scaleX = (float)bmpW / pageWidthPx;
-            float scaleY = (float)bmpH / pageHeightPx;
-            canvas.Scale(scaleX, scaleY);
 
             return true;
         }
@@ -104,16 +95,11 @@ namespace Alternet.Drawing.Printing
             {
                 var image = (Image)graphics.Bitmap;
 
-                var ppi = dc.GetPPI();        // printer DPI, e.g. 600x600
-                var pageSize = dc.GetSize();  // full page in printer pixels
+                image.Save("E:\\test.png");
 
-                int targetDpi = 300;
-                int bmpW = pageSize.Width * targetDpi / ppi.Width;
-                int bmpH = pageSize.Height * targetDpi / ppi.Height;
+                SkiaUtils.SaveBitmapToPng(graphics.Bitmap, "E:\\test_skia.png");
 
-                var r = new RectD(0, 0, bmpW, bmpH);
-
-                dc.DrawImageAtRect((UI.Native.Image)image.Handler, r, false);
+                dc.DrawBitmapAtPointI((UI.Native.Image)image.Handler, 0, 0, false);
 
                 graphics.Dispose();
                 graphics = null;

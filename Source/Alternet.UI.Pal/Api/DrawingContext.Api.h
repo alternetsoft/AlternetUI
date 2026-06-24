@@ -133,6 +133,20 @@ ALTERNET_UI_API SizeI_C DrawingContext_GetPPI_(DrawingContext* obj)
     });
 }
 
+ALTERNET_UI_API void DrawingContext_DrawBitmapAtPointI_(DrawingContext* obj, Image* image, int x, int y, c_bool useMask)
+{
+    MarshalExceptions<void>([&](){
+        obj->DrawBitmapAtPointI(image, x, y, useMask);
+    });
+}
+
+ALTERNET_UI_API void DrawingContext_DrawBitmapAtRectI_(DrawingContext* obj, Image* image, RectI* rect, c_bool useMask)
+{
+    MarshalExceptions<void>([&](){
+        obj->DrawBitmapAtRectI(image, *rect, useMask);
+    });
+}
+
 ALTERNET_UI_API void DrawingContext_DrawText_(DrawingContext* obj, NativeStringSpan* text, PointD* location, Font* font, Color* foreColor, Brush* backColor, float angle, c_bool useBrush)
 {
     MarshalExceptions<void>([&](){

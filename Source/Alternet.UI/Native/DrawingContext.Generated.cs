@@ -146,6 +146,19 @@ NativeApi.DrawingContext_SetClippingRect_(NativePointer, ref rect_Native);
             return NativeApi.DrawingContext_GetPPI_(NativePointer);
         }
         
+        public void DrawBitmapAtPointI(Image image, int x, int y, bool useMask)
+        {
+            CheckDisposed();
+            NativeApi.DrawingContext_DrawBitmapAtPointI_(NativePointer, image.NativePointer, x, y, useMask);
+        }
+        
+        public void DrawBitmapAtRectI(Image image, Alternet.Drawing.RectI rect, bool useMask)
+        {
+            CheckDisposed();
+            var rect_Native = rect.ToNative();
+NativeApi.DrawingContext_DrawBitmapAtRectI_(NativePointer, image.NativePointer, ref rect_Native, useMask);
+        }
+        
         public void DrawText(Alternet.UI.NativeStringSpan text, Alternet.Drawing.PointD location, Font font, Alternet.Drawing.Color foreColor, Brush backColor, float angle, bool useBrush)
         {
             CheckDisposed();
@@ -461,6 +474,12 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI DrawingContext_GetPPI_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawBitmapAtPointI_(IntPtr obj, IntPtr image, int x, int y, bool useMask);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void DrawingContext_DrawBitmapAtRectI_(IntPtr obj, IntPtr image, ref Alternet.Drawing.RectI rect, bool useMask);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawText_(IntPtr obj, ref Alternet.UI.NativeStringSpan text, ref Alternet.Drawing.PointD location, IntPtr font, ref NativeApiTypes.Color foreColor, IntPtr backColor, float angle, bool useBrush);
