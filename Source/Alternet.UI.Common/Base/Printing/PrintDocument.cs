@@ -15,13 +15,10 @@ namespace Alternet.Drawing.Printing
     /// <see cref="DocumentName"/> and <see cref="PrinterSettings"/>, and call
     /// the <see cref="Print"/> method to start the
     /// printing process. Handle the <see cref="PrintPage"/> event where you
-    /// specify the output to print, by using the
-    /// <see cref="PrintPageEventArgs.DrawingContext"/> property of the
-    /// <see cref="PrintPageEventArgs"/>.
+    /// specify the output to print.
     /// </remarks>
     public class PrintDocument : HandledObject<IPrintDocumentHandler>
     {
-        private Graphics? currentDrawingContext;
         private PrinterSettings? printerSettings;
         private PageSettings? pageSettings;
 
@@ -37,14 +34,7 @@ namespace Alternet.Drawing.Printing
         /// </summary>
         /// <remarks>
         /// <para>
-        /// To specify the output to print, use the <see cref="PrintPageEventArgs.DrawingContext"/>
-        /// property of the <see
-        /// cref="PrintPageEventArgs"/>. For example, to specify a line of text that should be
-        /// printed, draw the text
-        /// using the <see cref="Graphics.DrawText(ReadOnlySpan{char}, Font, Brush, PointD)"/> method.
-        /// </para>
-        /// <para>
-        /// In addition to specifying the output, you can indicate if there are additional pages
+        /// You can indicate if there are additional pages
         /// to print by setting the
         /// <see cref="PrintPageEventArgs.HasMorePages"/> property to <see langword="true"/>.
         /// The default is <see
@@ -174,57 +164,10 @@ namespace Alternet.Drawing.Printing
         }
 
         /// <summary>
-        /// Gets a value indicating whether a print operation is currently in progress.
-        /// </summary>
-        [Browsable(false)]
-        public bool IsCurrentPrinting
-        {
-            get
-            {
-                return currentDrawingContext != null;
-            }
-        }
-
-        /// <summary>
-        /// Gets the current graphics drawing context used for printing operations.
-        /// </summary>
-        /// <remarks>The returned <see cref="Graphics"/> instance may be <see langword="null"/> if no
-        /// drawing context is currently available. This property is typically used to perform custom drawing within the
-        /// rendering surface.</remarks>
-        [Browsable(false)]
-        public Graphics? CurrentDrawingContext
-        {
-            get
-            {
-                return currentDrawingContext;
-            }
-        }
-
-        /// <summary>
-        /// Throws an exception if a printing operation is currently in progress.
-        /// </summary>
-        /// <remarks>Call this method before starting a new printing operation to ensure that no other
-        /// printing process is currently running. This helps prevent conflicts or resource contention caused by
-        /// overlapping print jobs.</remarks>
-        /// <exception cref="InvalidOperationException">Thrown if a printing operation is active when this method is called.</exception>
-        public virtual void ThrowIfPrintingInProgress()
-        {
-            if (IsCurrentPrinting)
-                throw new InvalidOperationException("A printing operation is in progress.");
-        }
-
-        /// <summary>
         /// Starts the document's printing process.
         /// </summary>
-        /// <remarks>
-        /// Specify the output to print by handling the <see cref="PrintPage"/> event and by
-        /// using the
-        /// <see cref="PrintPageEventArgs.DrawingContext"/> included in the
-        /// <see cref="PrintPageEventArgs"/>.
-        /// </remarks>
         public virtual void Print()
         {
-            ThrowIfPrintingInProgress();
             Handler.Print();
         }
 
@@ -348,10 +291,6 @@ namespace Alternet.Drawing.Printing
             var ea = new PrintEventArgs();
             OnEndPrint(ea);
             e.Cancel = ea.Cancel;
-
-            Handler.EndPrinting();
-
-            currentDrawingContext = null;
         }
 
         /// <summary>
@@ -365,16 +304,9 @@ namespace Alternet.Drawing.Printing
         /// to cancel the print operation.</param>
         protected virtual void OnNativePrintDocumentBeginPrint(object? sender, CancelEventArgs e)
         {
-            ThrowIfPrintingInProgress();
-
-            if (Handler.StartPrinting(Handler.MarginBounds))
-            {
-                currentDrawingContext = Handler.GetGraphics();
-
-                var ea = new PrintEventArgs();
-                OnBeginPrint(ea);
-                e.Cancel = ea.Cancel;
-            }
+            var ea = new PrintEventArgs();
+            OnBeginPrint(ea);
+            e.Cancel = ea.Cancel;
         }
 
         /// <summary>
@@ -392,12 +324,21 @@ namespace Alternet.Drawing.Printing
         /// required for printing is not available.</exception>
         protected virtual void OnNativePrintDocumentPrintPage(object? sender, CancelEventArgs e)
         {
-            if (currentDrawingContext == null)
-                throw new InvalidOperationException();
+            var result = Handler.StartPrinting(Handler.MarginBounds);
 
-            var ea = new PrintPageEventArgs(this, currentDrawingContext);
-            OnPrintPage(ea);
-            e.Cancel = ea.Cancel;
+            if (result)
+            {
+                var graphics = Handler.GetGraphics();
+
+                if (graphics != null)
+                {
+                    var ea = new PrintPageEventArgs(this, graphics);
+
+                    OnPrintPage(ea);
+                    e.Cancel = ea.Cancel;
+                    Handler.EndPrinting();
+                }
+            }
         }
-    }
+}
 }

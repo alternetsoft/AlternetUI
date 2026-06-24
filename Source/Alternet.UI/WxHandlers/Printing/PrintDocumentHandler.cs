@@ -13,7 +13,8 @@ namespace Alternet.Drawing.Printing
 {
     internal class PrintDocumentHandler : UI.Native.PrintDocument, IPrintDocumentHandler
     {
-        private SkiaGraphics? canvas;
+        private SkiaGraphics? graphics;
+        private SKCanvas? canvas;
         private UI.Native.DrawingContext? dc;
         private RectD rect;
 
@@ -57,17 +58,39 @@ namespace Alternet.Drawing.Printing
 
             this.rect = rect;
             dc = PrintPage_DrawingContext;
-            var dpi = dc.GetDpi();
-            var scaleFactor = GraphicsFactory.ScaleFactorFromDpi(dpi.Width);
 
-            canvas = SkiaUtils.CreateBitmapCanvas(rect.Size, scaleFactor, true);
-            canvas.Canvas.Clear(SKColors.Transparent);
+            // Suppose you have printer page size and DPI
+            int pageWidthPx = dc.GetSize().x;   // printer pixels
+            int pageHeightPx = dc.GetSize().y;
+            int printerDpiX = dc.GetPPI().x;    // e.g. 600
+            int printerDpiY = dc.GetPPI().y;
+
+            // Choose target DPI for bitmap
+            int targetDpi = 300;
+
+            // Compute bitmap size
+            int bmpW = pageWidthPx * targetDpi / printerDpiX;
+            int bmpH = pageHeightPx * targetDpi / printerDpiY;
+
+            var info = new SKImageInfo(bmpW, bmpH, SKColorType.Bgra8888, SKAlphaType.Premul);
+            var bitmap = new SKBitmap(info);
+
+            canvas = new SKCanvas(bitmap);
+            canvas.Clear(SKColors.White);
+
+            // Apply scale so drawing in printer units maps to bitmap
+            float scaleX = (float)bmpW / pageWidthPx;
+            float scaleY = (float)bmpH / pageHeightPx;
+            canvas.Scale(scaleX, scaleY);
+
+            graphics = new SkiaGraphics(canvas);
+
             return true;
         }
 
         public Graphics? GetGraphics()
         {
-            return canvas;
+            return graphics;
         }
 
         public bool EndPrinting()
@@ -77,11 +100,13 @@ namespace Alternet.Drawing.Printing
 
             var result = false;
 
-            if (canvas.Bitmap is not null && dc is not null)
+            if (graphics?.Bitmap is not null && dc is not null)
             {
-                var image = (Image)canvas.Bitmap;
+                var image = (Image)graphics.Bitmap;
                 dc.DrawImageAtPoint((UI.Native.Image)image.Handler, rect.Location, false);
 
+                graphics.Dispose();
+                graphics = null;
                 canvas.Dispose();
                 canvas = null;
                 dc = null;
