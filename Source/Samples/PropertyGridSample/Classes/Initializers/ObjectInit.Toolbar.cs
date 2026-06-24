@@ -110,7 +110,7 @@ namespace PropertyGridSample
             if (!onlyButtons)
             {
                 var colorPicker = new ColorPicker();
-                colorPicker.VerticalAlignment = VerticalAlignment.Center;
+                colorPicker.VerticalAlignment = VerticalAlignment.Stretch;
                 colorPicker.MinWidth = 100;
 
                 var idEdit = toolbar.AddControl(colorPicker);
