@@ -30,18 +30,23 @@ namespace Alternet.UI
             platformView.PointerPressed -= HandleWinPlatformPointerPressed;
             platformView.PointerWheelChanged -= HandleWinPlatformPointerWheelChanged;
             platformView.PointerReleased -= HandleWinPlatformPointerReleased;
+
             platformView.KeyDown -= HandleWinPlatformKeyDown;
             platformView.KeyUp -= HandleWinPlatformKeyUp;
             platformView.CharacterReceived -= HandleWinPlatformCharacterReceived;
+
             platformView.GotFocus -= HandleWinPlatformGotFocus;
             platformView.LostFocus -= HandleWinPlatformLostFocus;
+
             platformView.DragEnter -= HandleWinPlatformDragEnter;
             platformView.DragLeave -= HandleWinPlatformDragLeave;
             platformView.DragOver -= HandleWinPlatformDragOver;
             platformView.DragStarting -= HandleWinPlatformDragStarting;
             platformView.Drop -= HandleWinPlatformDrop;
             platformView.DropCompleted -= HandleWinPlatformDropCompleted;
+
             platformView.Holding -= HandleWinPlatformHolding;
+
             platformView.Unloaded -= HandleWinPlatformUnloaded;
             platformView.Loaded -= HandleWinPlatformLoaded;
         }
@@ -81,6 +86,7 @@ namespace Alternet.UI
             platformView.PointerPressed += HandleWinPlatformPointerPressed;
             platformView.PointerWheelChanged += HandleWinPlatformPointerWheelChanged;
             platformView.PointerReleased += HandleWinPlatformPointerReleased;
+
             platformView.KeyDown += HandleWinPlatformKeyDown;
             platformView.KeyUp += HandleWinPlatformKeyUp;
             platformView.CharacterReceived += HandleWinPlatformCharacterReceived;
@@ -313,9 +319,16 @@ namespace Alternet.UI
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (Control is null)
+            var position = GetPointerPosition(e);
+
+            if (position == null)
                 return;
-            Control.RaiseMouseLeave(EventArgs.Empty);
+
+            AbstractControl.BubbleMouseLeave(
+                Control,
+                DateUtils.GetCurrentTimestamp(),
+                new Drawing.PointD(position.Value.X, position.Value.Y),
+                out _);
         }
 
         /// <summary>
@@ -327,9 +340,31 @@ namespace Alternet.UI
             object sender,
             Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            if (Control is null)
+            var position = GetPointerPosition(e);
+
+            if (position == null)
                 return;
-            Control.RaiseMouseEnter(EventArgs.Empty);
+
+            AbstractControl.BubbleMouseEnter(
+                Control,
+                DateUtils.GetCurrentTimestamp(),
+                new Drawing.PointD(position.Value.X, position.Value.Y),
+                out _);
+        }
+
+        private Drawing.PointD? GetPointerPosition(Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            if (Control is null)
+                return null;
+
+            var platFormView = GetPlatformView();
+            if (platFormView == null)
+                return null;
+            var point = e.GetCurrentPoint(platFormView);
+            var position = point?.Position;
+            if (position == null)
+                return null;
+            return new Drawing.PointD(position.Value.X, position.Value.Y);
         }
     }
 }

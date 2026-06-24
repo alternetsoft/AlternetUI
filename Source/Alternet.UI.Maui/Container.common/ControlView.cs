@@ -532,7 +532,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when the control's system colors have changed, such as when switching between light and dark themes.
+        /// Called when the control's system colors have changed,
+        /// such as when switching between light and dark themes.
         /// </summary>
         /// <param name="sender">The source of the event. This can be <see langword="null"/>.</param>
         /// <param name="e">The event data associated with the system colors change.</param>

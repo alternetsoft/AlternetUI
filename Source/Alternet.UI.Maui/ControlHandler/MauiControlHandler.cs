@@ -347,8 +347,13 @@ namespace Alternet.UI
 
             var newCursor = MauiWindowsUtils.GetOrCreateSystemCursor(value.KnownCursorType.Value);
 
-            if (newCursor != platformView.InputCursor)
+            if (newCursor == platformView.InputCursor)
+            {
+            }
+            else
+            {
                 platformView.InputCursor = newCursor;
+            }
 #endif
         }
 
@@ -431,6 +436,7 @@ namespace Alternet.UI
         protected override void OnAttach()
         {
         }
+
         protected virtual void OnContainerChanged()
         {
         }
