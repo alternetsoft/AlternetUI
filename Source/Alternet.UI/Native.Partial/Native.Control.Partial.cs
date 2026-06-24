@@ -354,8 +354,9 @@ namespace Alternet.UI.Native
             KnownRunTimeTrackers.SkiaPaintStart(uiControl);
 
             var clientRect = uiControl.ClientRectangle;
-
             var scaleFactor = uiControl.ScaleFactor;
+            var clientRectI = clientRect.PixelFromDip(scaleFactor);
+
             Drawing.DynamicBitmap.CreateOrUpdate(
                 ref dynamicBitmap,
                 clientRect.Size,
@@ -389,10 +390,10 @@ namespace Alternet.UI.Native
                 if (dcPointer == IntPtr.Zero)
                     return;
 
-                var dc = new Native.DrawingContext(IntPtr.Zero);
+                using var dc = new Native.DrawingContext(IntPtr.Zero);
                 dc.SetNativePointerWeak(dcPointer);
 
-                throw new NotImplementedException("Need to implement using SkiaSharp");
+                dc.DrawBitmapAtPointI((UI.Native.Image)bitmap.Handler, clientRectI.X, clientRectI.Y, false);
             }
             finally
             {
