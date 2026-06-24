@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ApiInfo>
-  <Assembly Name="Alternet.UI.Common, Version=1.0.19.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
+  <Assembly Name="Alternet.UI.Common, Version=1.0.20.0, Culture=neutral, PublicKeyToken=7fb0fe57212b4b74">
     <Type Name="XamlX.Runtime.IXamlParentStackProviderV1" />
     <Type Name="XamlX.Runtime.IXamlXmlNamespaceInfoProviderV1" />
     <Type Name="XamlX.Runtime.XamlXmlNamespaceInfoV1" />
@@ -294,6 +294,7 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
+    <Type Name="Alternet.Drawing.PenInfo" />
     <Type Name="Alternet.Drawing.Pens" />
     <Type Name="Alternet.Drawing.PlessPenHandler">
       <Event Name="Disposed" />
@@ -570,6 +571,7 @@
     <Type Name="Alternet.UI.KnownMetrics" />
     <Type Name="Alternet.UI.KnownMimeTypes" />
     <Type Name="Alternet.UI.KnownObjectAttributes" />
+    <Type Name="Alternet.UI.KnownPopupControls" />
     <Type Name="Alternet.UI.KnownProperties" />
     <Type Name="Alternet.UI.KnownTypes" />
     <Type Name="Alternet.UI.BaseMemory" />
@@ -778,7 +780,6 @@
     <Type Name="Alternet.UI.CheckState" />
     <Type Name="Alternet.UI.ControlBackgroundStyle" />
     <Type Name="Alternet.UI.ControlFlags" />
-    <Type Name="Alternet.UI.ControlRefreshOptions" />
     <Type Name="Alternet.UI.ControlRenderingFlags" />
     <Type Name="Alternet.UI.ControlRenderingMode" />
     <Type Name="Alternet.UI.ControlRenderSizeVariant" />
@@ -1122,6 +1123,7 @@
     <Type Name="Alternet.UI.InternalMethodReference`1" />
     <Type Name="Alternet.UI.KnownButtonImage" />
     <Type Name="Alternet.UI.LazyStruct`1" />
+    <Type Name="Alternet.UI.NativeStringSpan" />
     <Type Name="Alternet.UI.ObjectUniqueId" />
     <Type Name="Alternet.UI.PreferredSizeContext" />
     <Type Name="Alternet.UI.PropInstanceAndValue" />
@@ -1148,6 +1150,7 @@
     </Type>
     <Type Name="Alternet.UI.Border">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1245,6 +1248,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericBorder">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1333,6 +1337,7 @@
     </Type>
     <Type Name="Alternet.UI.HiddenBorder">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1420,6 +1425,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HiddenGenericBorder">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1507,6 +1513,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HorizontalLine">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1595,6 +1602,7 @@
     </Type>
     <Type Name="Alternet.UI.ResizableBorder">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1687,6 +1695,7 @@
       <Event Name="MaximizeButtonClick" />
       <Event Name="IconClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1775,6 +1784,7 @@
     </Type>
     <Type Name="Alternet.UI.VerticalLine">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1863,6 +1873,7 @@
     </Type>
     <Type Name="Alternet.UI.ContainerControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -1952,6 +1963,7 @@
     <Type Name="Alternet.UI.DummyScrollEventRouter" />
     <Type Name="Alternet.UI.ErrorPictureBox">
       <Event Name="ImageChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2039,6 +2051,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericContainerControl">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2126,6 +2139,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericPanel">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2214,6 +2228,7 @@
     </Type>
     <Type Name="Alternet.UI.GraphicControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2302,6 +2317,7 @@
     </Type>
     <Type Name="Alternet.UI.PaintActionsControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2390,6 +2406,7 @@
     </Type>
     <Type Name="Alternet.UI.Panel">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2478,6 +2495,7 @@
     </Type>
     <Type Name="Alternet.UI.PictureBox">
       <Event Name="ImageChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2566,6 +2584,7 @@
     </Type>
     <Type Name="Alternet.UI.ScrollableUserControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2654,6 +2673,7 @@
     </Type>
     <Type Name="Alternet.UI.UserControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2742,6 +2762,7 @@
     </Type>
     <Type Name="Alternet.UI.UserControlHelper" />
     <Type Name="Alternet.UI.AbstractControl">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2907,6 +2928,7 @@
     <Type Name="Alternet.UI.IControlNotification" />
     <Type Name="Alternet.UI.StaticControlEvents" />
     <Type Name="Alternet.UI.GenericControl">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -2994,6 +3016,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.GenericWrappedTextControl">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3081,6 +3104,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ShapeControl">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3168,6 +3192,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.Spacer">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3273,6 +3298,7 @@
     <Type Name="Alternet.UI.PerformLayoutReason" />
     <Type Name="Alternet.UI.PaintEventHandler" />
     <Type Name="Alternet.UI.Control">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3360,6 +3386,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.RedControl">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3447,11 +3474,13 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.AllControlDefaults" />
+    <Type Name="Alternet.UI.AllPlatformDefaults" />
     <Type Name="Alternet.UI.ControlDefaults">
       <Event Name="InitDefaults" />
     </Type>
     <Type Name="Alternet.UI.ControlDefaultsId" />
     <Type Name="Alternet.UI.ControlTypeId" />
+    <Type Name="Alternet.UI.PlatformDefaults" />
     <Type Name="Alternet.UI.ControlSet`1" />
     <Type Name="Alternet.UI.ControlSet" />
     <Type Name="Alternet.UI.AllStateColors" />
@@ -3549,8 +3578,6 @@
     </Type>
     <Type Name="Alternet.UI.FontAndColor" />
     <Type Name="Alternet.UI.IControlStateObjectChanged" />
-    <Type Name="Alternet.UI.AllPlatformDefaults" />
-    <Type Name="Alternet.UI.PlatformDefaults" />
     <Type Name="Alternet.UI.BaseControlActivity">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -3581,6 +3608,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ButtonBase">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3669,6 +3697,7 @@
     </Type>
     <Type Name="Alternet.UI.GenericItemControl">
       <Event Name="CheckedChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3758,6 +3787,7 @@
     <Type Name="Alternet.UI.IDialogButtonRoles" />
     <Type Name="Alternet.UI.StdButton">
       <Event Name="CheckedChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3846,6 +3876,7 @@
     </Type>
     <Type Name="Alternet.UI.StdCheckBox">
       <Event Name="CheckedChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -3934,6 +3965,7 @@
     </Type>
     <Type Name="Alternet.UI.StdRadioButton">
       <Event Name="CheckedChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4025,6 +4057,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4115,6 +4148,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4204,6 +4238,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4293,6 +4328,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4379,6 +4415,7 @@
     </Type>
     <Type Name="Alternet.UI.ControlAndPicture">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4470,6 +4507,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4565,6 +4603,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4654,6 +4693,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4744,6 +4784,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4836,6 +4877,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -4926,6 +4968,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5015,6 +5058,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5103,6 +5147,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5191,6 +5236,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5279,6 +5325,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5367,6 +5414,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5455,6 +5503,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5543,6 +5592,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5631,6 +5681,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5719,6 +5770,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5807,6 +5859,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5896,6 +5949,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -5985,6 +6039,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6074,6 +6129,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6162,6 +6218,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6250,6 +6307,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6338,6 +6396,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6426,6 +6485,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6514,6 +6574,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6602,6 +6663,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6691,6 +6753,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6779,6 +6842,7 @@
       <Event Name="TextChanged" />
       <Event Name="DelayedTextChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6873,6 +6937,7 @@
     <Type Name="Alternet.UI.ControlOverlayWithToolTip" />
     <Type Name="Alternet.UI.OverlayToolTipParams" />
     <Type Name="Alternet.UI.CustomDateEdit">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -6961,6 +7026,7 @@
     </Type>
     <Type Name="Alternet.UI.DateTimePicker">
       <Event Name="ValueChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7053,6 +7119,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.HeaderLabel">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7144,6 +7211,7 @@
       <Event Name="BeforeDrawText" />
       <Event Name="AfterDrawText" />
       <Event Name="ImageChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7235,6 +7303,7 @@
       <Event Name="BeforeDrawText" />
       <Event Name="AfterDrawText" />
       <Event Name="ImageChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7324,6 +7393,7 @@
     <Type Name="Alternet.UI.MnemonicMarkerHelper" />
     <Type Name="Alternet.UI.DockedSubPanelContainer">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7418,6 +7488,7 @@
     </Type>
     <Type Name="Alternet.UI.Grid">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7521,6 +7592,7 @@
     </Type>
     <Type Name="Alternet.UI.GripControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7609,6 +7681,7 @@
     </Type>
     <Type Name="Alternet.UI.LayoutPanel">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7697,6 +7770,7 @@
     </Type>
     <Type Name="Alternet.UI.SplittedTreeAndCards">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7785,6 +7859,7 @@
     </Type>
     <Type Name="Alternet.UI.ScrollableCanvasControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7873,6 +7948,7 @@
     </Type>
     <Type Name="Alternet.UI.ScrollViewer">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -7962,6 +8038,7 @@
     <Type Name="Alternet.UI.PanelListBoxAndCards">
       <Event Name="AfterDoubleClickAction" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8051,6 +8128,7 @@
     <Type Name="Alternet.UI.PanelTreeAndCards">
       <Event Name="AfterDoubleClickAction" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8141,6 +8219,7 @@
     <Type Name="Alternet.UI.SplittedControlsPanel">
       <Event Name="AfterDoubleClickAction" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8229,6 +8308,7 @@
     </Type>
     <Type Name="Alternet.UI.SplittedPanel">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8320,6 +8400,7 @@
       <Event Name="SplitterMoving" />
       <Event Name="SplitterMoved" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8409,6 +8490,7 @@
     <Type Name="Alternet.UI.HorizontalStackPanel">
       <Event Name="OrientationChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8498,6 +8580,7 @@
     <Type Name="Alternet.UI.StackPanel">
       <Event Name="OrientationChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8587,6 +8670,7 @@
     <Type Name="Alternet.UI.VerticalStackPanel">
       <Event Name="OrientationChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8697,6 +8781,7 @@
       <Event Name="ColumnSizeChanged" />
       <Event Name="ColumnVisibleChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8791,6 +8876,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8895,6 +8981,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -8994,6 +9081,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9093,6 +9181,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9194,6 +9283,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9297,6 +9387,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9396,6 +9487,7 @@
       <Event Name="BeforeCollapse" />
       <Event Name="ExpandedChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9496,6 +9588,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9595,6 +9688,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9693,6 +9787,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9804,6 +9899,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9903,6 +9999,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -9999,6 +10096,7 @@
       <Event Name="ItemsCollectionChanged" />
       <Event Name="ItemsPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -10192,99 +10290,13 @@
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
     </Type>
-    <Type Name="Alternet.UI.Button">
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
     <Type Name="Alternet.UI.Calendar">
       <Event Name="SelectionChanged" />
       <Event Name="PageChanged" />
       <Event Name="WeekNumberClick" />
       <Event Name="DayHeaderClick" />
       <Event Name="DayDoubleClick" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -10329,183 +10341,6 @@
       <Event Name="Paint" />
       <Event Name="MarginChanged" />
       <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.CheckBox">
-      <Event Name="CheckedChanged" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.CheckedListBox">
-      <Event Name="CheckedItemsChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="TextChanged" />
-      <Event Name="SelectedIndexChanged" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
       <Event Name="Shown" />
@@ -10555,6 +10390,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="IsEditableChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -10648,6 +10484,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="IsEditableChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -10741,6 +10578,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="IsEditableChanged" />
       <Event Name="CustomItemText" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -10785,181 +10623,6 @@
       <Event Name="Paint" />
       <Event Name="MarginChanged" />
       <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.GroupBox">
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.ListBox">
-      <Event Name="PaddingChanged" />
-      <Event Name="TextChanged" />
-      <Event Name="SelectedIndexChanged" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
       <Event Name="VisibleChanged" />
       <Event Name="AfterShow" />
       <Event Name="Shown" />
@@ -11011,6 +10674,7 @@
       <Event Name="ColumnClick" />
       <Event Name="BeforeLabelEdit" />
       <Event Name="AfterLabelEdit" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -11100,381 +10764,8 @@
     <Type Name="Alternet.UI.ListViewColumnEventArgs" />
     <Type Name="Alternet.UI.ListViewHitTestInfo" />
     <Type Name="Alternet.UI.ListViewItemLabelEditEventArgs" />
-    <Type Name="Alternet.UI.ProgressBar">
-      <Event Name="ValueChanged" />
-      <Event Name="MinimumChanged" />
-      <Event Name="OrientationChanged" />
-      <Event Name="MaximumChanged" />
-      <Event Name="IsIndeterminateChanged" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.RadioButton">
-      <Event Name="CheckedChanged" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.Slider">
-      <Event Name="ValueChanged" />
-      <Event Name="MinimumChanged" />
-      <Event Name="OrientationChanged" />
-      <Event Name="TickStyleChanged" />
-      <Event Name="MaximumChanged" />
-      <Event Name="SmallChangeChanged" />
-      <Event Name="LargeChangeChanged" />
-      <Event Name="TickFrequencyChanged" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
-    <Type Name="Alternet.UI.TreeView">
-      <Event Name="SelectionChanged" />
-      <Event Name="SelectionModeChanged" />
-      <Event Name="ItemAdded" />
-      <Event Name="ItemRemoved" />
-      <Event Name="AfterExpand" />
-      <Event Name="AfterCollapse" />
-      <Event Name="BeforeExpand" />
-      <Event Name="BeforeCollapse" />
-      <Event Name="BeforeLabelEdit" />
-      <Event Name="AfterLabelEdit" />
-      <Event Name="ExpandedChanged" />
-      <Event Name="ImageListChanged" />
-      <Event Name="LayoutMaxSizeChanged" />
-      <Event Name="DropDownMenuShowing" />
-      <Event Name="LayoutUpdated" />
-      <Event Name="ContextMenuCreated" />
-      <Event Name="MouseHover" />
-      <Event Name="CellChanged" />
-      <Event Name="ContextMenuShowing" />
-      <Event Name="Activated" />
-      <Event Name="TitleChanged" />
-      <Event Name="ParentBackColorChanged" />
-      <Event Name="MouseMove" />
-      <Event Name="Touch" />
-      <Event Name="MouseDown" />
-      <Event Name="MouseUp" />
-      <Event Name="MouseWheel" />
-      <Event Name="MouseLeftButtonDown" />
-      <Event Name="MouseRightButtonDown" />
-      <Event Name="MouseRightButtonUp" />
-      <Event Name="CustomLayout" />
-      <Event Name="MouseDoubleClick" />
-      <Event Name="DoubleClick" />
-      <Event Name="MouseLeftButtonUp" />
-      <Event Name="HandleCreated" />
-      <Event Name="HandleDestroyed" />
-      <Event Name="Deactivated" />
-      <Event Name="BeforeHandleDestroyed" />
-      <Event Name="GotFocus" />
-      <Event Name="QueryContinueDrag" />
-      <Event Name="KeyDown" />
-      <Event Name="KeyUp" />
-      <Event Name="LostFocus" />
-      <Event Name="TextChanged" />
-      <Event Name="DelayedTextChanged" />
-      <Event Name="KeyPress" />
-      <Event Name="PreviewKeyDown" />
-      <Event Name="VisualStateChanged" />
-      <Event Name="ToolTipChanged" />
-      <Event Name="IsMouseOverChanged" />
-      <Event Name="LongTap" />
-      <Event Name="Click" />
-      <Event Name="ParentChanged" />
-      <Event Name="Paint" />
-      <Event Name="MarginChanged" />
-      <Event Name="PaddingChanged" />
-      <Event Name="VisibleChanged" />
-      <Event Name="AfterShow" />
-      <Event Name="Shown" />
-      <Event Name="AfterHide" />
-      <Event Name="MouseCaptureLost" />
-      <Event Name="MouseCaptureChanged" />
-      <Event Name="HelpRequested" />
-      <Event Name="ProcessException" />
-      <Event Name="MouseEnter" />
-      <Event Name="MouseLeave" />
-      <Event Name="PerformLayoutIgnored" />
-      <Event Name="ChildRemoved" />
-      <Event Name="ChildSizeChanged" />
-      <Event Name="ChildBoundsChanged" />
-      <Event Name="ChildLayoutUpdated" />
-      <Event Name="ChildVisibleChanged" />
-      <Event Name="ChildInserted" />
-      <Event Name="EnabledChanged" />
-      <Event Name="BackgroundChanged" />
-      <Event Name="ForegroundChanged" />
-      <Event Name="FontChanged" />
-      <Event Name="VerticalAlignmentChanged" />
-      <Event Name="HorizontalAlignmentChanged" />
-      <Event Name="SizeChanged" />
-      <Event Name="Resize" />
-      <Event Name="LocationChanged" />
-      <Event Name="BoundsChanged" />
-      <Event Name="DragStart" />
-      <Event Name="DragDrop" />
-      <Event Name="DragOver" />
-      <Event Name="DragEnter" />
-      <Event Name="DragLeave" />
-      <Event Name="DpiChanged" />
-      <Event Name="SystemColorsChanged" />
-      <Event Name="ErrorsChanged" />
-      <Event Name="Invalidated" />
-      <Event Name="Scroll" />
-      <Event Name="DataContextChanged" />
-      <Event Name="NameChanged" />
-      <Event Name="Disposed" />
-      <Event Name="PropertyChanged" />
-    </Type>
     <Type Name="Alternet.UI.AnimationPlayer">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -11563,6 +10854,7 @@
     </Type>
     <Type Name="Alternet.UI.Calculator">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -11654,6 +10946,7 @@
       <Event Name="StringToColor" />
       <Event Name="ColorToString" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -11762,6 +11055,7 @@
       <Event Name="DelayedTextChanged" />
       <Event Name="ButtonClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -11854,6 +11148,7 @@
       <Event Name="TickStyleChanged" />
       <Event Name="MaximumChanged" />
       <Event Name="TickFrequencyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -11943,6 +11238,7 @@
     <Type Name="Alternet.UI.InnerPopupToolBar">
       <Event Name="Closed" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12032,6 +11328,7 @@
     <Type Name="Alternet.UI.InnerPopupTreeView">
       <Event Name="Closed" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12122,6 +11419,7 @@
     <Type Name="Alternet.UI.PopupControl">
       <Event Name="Closed" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12211,6 +11509,7 @@
     <Type Name="Alternet.UI.PopupControl`1">
       <Event Name="Closed" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12300,6 +11599,7 @@
     <Type Name="Alternet.UI.ResizablePopupControl">
       <Event Name="Closed" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12389,6 +11689,7 @@
     <Type Name="Alternet.UI.ResizablePopupControl`1">
       <Event Name="Closed" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12495,6 +11796,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12601,6 +11904,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12707,6 +12012,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12813,6 +12120,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -12919,6 +12228,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13025,6 +12336,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13131,6 +12444,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13237,6 +12552,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13343,6 +12660,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13449,6 +12768,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13555,6 +12876,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13644,6 +12967,7 @@
     <Type Name="Alternet.UI.IFilePreview" />
     <Type Name="Alternet.UI.PreviewFile">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13732,6 +13056,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewFileSplitted">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13820,6 +13145,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewInBrowser">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13908,6 +13234,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewTextFile">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -13996,6 +13323,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewUixml">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14084,6 +13412,7 @@
     </Type>
     <Type Name="Alternet.UI.PreviewUixmlSplitted">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14192,6 +13521,7 @@
       <Event Name="ColDragging" />
       <Event Name="ColEndDrag" />
       <Event Name="PropertyCustomCreate" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14288,6 +13618,7 @@
       <Event Name="CurrentPositionChanged" />
       <Event Name="EnterPressed" />
       <Event Name="TextUrl" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14377,6 +13708,7 @@
     <Type Name="Alternet.UI.HScrollBar">
       <Event Name="ValueChanged" />
       <Event Name="IsVerticalChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14470,6 +13802,7 @@
     <Type Name="Alternet.UI.ScrollBar">
       <Event Name="ValueChanged" />
       <Event Name="IsVerticalChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14564,6 +13897,7 @@
     <Type Name="Alternet.UI.VScrollBar">
       <Event Name="ValueChanged" />
       <Event Name="IsVerticalChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14652,6 +13986,7 @@
     </Type>
     <Type Name="Alternet.UI.ISliderScaleContainer" />
     <Type Name="Alternet.UI.SliderScale">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14749,6 +14084,7 @@
       <Event Name="LargeChangeChanged" />
       <Event Name="TickFrequencyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14840,6 +14176,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -14932,6 +14269,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15024,6 +14362,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15116,6 +14455,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15208,6 +14548,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15296,6 +14637,7 @@
     </Type>
     <Type Name="Alternet.UI.SpeedButton">
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15388,6 +14730,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15480,6 +14823,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15571,6 +14915,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15662,6 +15007,7 @@
       <Event Name="StringToColor" />
       <Event Name="ColorToString" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15753,6 +15099,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15845,6 +15192,7 @@
       <Event Name="ValueChanged" />
       <Event Name="BeforeShowPopup" />
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -15933,6 +15281,7 @@
     </Type>
     <Type Name="Alternet.UI.SpeedTextButton">
       <Event Name="StickyChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16022,6 +15371,7 @@
     <Type Name="Alternet.UI.CardPanel">
       <Event Name="CardPropertyChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16113,6 +15463,7 @@
       <Event Name="BeforeTabClick" />
       <Event Name="TabClick" />
       <Event Name="CloseButtonClick" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16219,6 +15570,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16311,6 +15663,7 @@
       <Event Name="SelectedIndexChanged" />
       <Event Name="SelectedPageChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16400,6 +15753,7 @@
     <Type Name="Alternet.UI.TabControlDrawInterior" />
     <Type Name="Alternet.UI.TabPage">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16487,6 +15841,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControl">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16577,6 +15932,7 @@
     <Type Name="Alternet.UI.TemplateUtils" />
     <Type Name="Alternet.UI.CustomTextBox">
       <Event Name="ErrorStatusChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16672,6 +16028,7 @@
       <Event Name="TextMaxLength" />
       <Event Name="HasBorderChanged" />
       <Event Name="ErrorStatusChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16768,6 +16125,7 @@
       <Event Name="TextMaxLength" />
       <Event Name="HasBorderChanged" />
       <Event Name="ErrorStatusChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16879,6 +16237,7 @@
       <Event Name="OptionMatchWholeWordChanged" />
       <Event Name="OptionUseRegularExpressionsChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -16978,6 +16337,7 @@
     <Type Name="Alternet.UI.StatusBar">
       <Event Name="ToolClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17081,6 +16441,7 @@
     <Type Name="Alternet.UI.ToolBar">
       <Event Name="ToolClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17168,6 +16529,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.ToolBarSeparatorItem">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17256,6 +16618,7 @@
     </Type>
     <Type Name="Alternet.UI.ToolBarSet">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17350,6 +16713,7 @@
     <Type Name="Alternet.UI.RichToolTip">
       <Event Name="ToolTipVisibleChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17459,6 +16823,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17569,6 +16935,7 @@
       <Event Name="Error" />
       <Event Name="NewWindow" />
       <Event Name="DocumentTitleChanged" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17677,6 +17044,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17783,6 +17152,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17889,6 +17260,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -17995,6 +17368,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18105,6 +17480,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18294,6 +17671,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18400,6 +17779,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18506,6 +17887,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18612,6 +17995,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18718,6 +18103,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18824,6 +18211,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -18930,6 +18319,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19036,6 +18427,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19142,6 +18535,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19248,6 +18643,8 @@
       <Event Name="ResizableChanged" />
       <Event Name="HasBorderChanged" />
       <Event Name="HasTitleBarChanged" />
+      <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19348,18 +18745,12 @@
       <Event Name="CollectionChanged" />
     </Type>
     <Type Name="Alternet.UI.IScrollEventRouter" />
-    <Type Name="Alternet.UI.IControlHandler" />
-    <Type Name="Alternet.UI.IButtonHandler" />
     <Type Name="Alternet.UI.ICalendarHandler" />
-    <Type Name="Alternet.UI.ICheckBoxHandler" />
     <Type Name="Alternet.UI.IComboBoxHandler" />
-    <Type Name="Alternet.UI.IListBoxHandler" />
+    <Type Name="Alternet.UI.IControlHandler" />
     <Type Name="Alternet.UI.IListViewHandler" />
-    <Type Name="Alternet.UI.IRadioButtonHandler" />
     <Type Name="Alternet.UI.IScrollBarHandler" />
-    <Type Name="Alternet.UI.ISliderHandler" />
     <Type Name="Alternet.UI.ITextBoxHandler" />
-    <Type Name="Alternet.UI.ITreeViewHandler" />
     <Type Name="Alternet.UI.IWindowHandler" />
     <Type Name="Alternet.UI.IComponentDesigner">
       <Event Name="ObjectPropertyChanged" />
@@ -19426,9 +18817,11 @@
       <Event Name="DragLeave" />
     </Type>
     <Type Name="Alternet.UI.IControlAndLabel" />
+    <Type Name="Alternet.UI.IControlFactoryHandler" />
     <Type Name="Alternet.UI.IControlOverlay" />
     <Type Name="Alternet.UI.IFocusable" />
     <Type Name="Alternet.UI.IGetAsToolTip" />
+    <Type Name="Alternet.UI.IGripControlTarget" />
     <Type Name="Alternet.UI.ILayoutItem" />
     <Type Name="Alternet.UI.IWin32Window" />
     <Type Name="Alternet.UI.IWindow">
@@ -19464,10 +18857,8 @@
     <Type Name="Alternet.UI.IReadOnlyFlags`1" />
     <Type Name="Alternet.UI.IFontAndColor" />
     <Type Name="Alternet.UI.IReadOnlyFontAndColor" />
-    <Type Name="Alternet.UI.IControlFactoryHandler" />
     <Type Name="Alternet.UI.IToolTipFactoryHandler" />
     <Type Name="Alternet.UI.IWebBrowserFactoryHandler" />
-    <Type Name="Alternet.UI.IWxControlFactoryHandler" />
     <Type Name="Alternet.UI.IContextMenuHost" />
     <Type Name="Alternet.UI.IContextMenuProperties" />
     <Type Name="Alternet.UI.IMenuFactory" />
@@ -19534,6 +18925,7 @@
     <Type Name="Alternet.UI.ITextBoxTextAttr" />
     <Type Name="Alternet.UI.PanelFormSelector">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19625,6 +19017,7 @@
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19718,6 +19111,7 @@
       <Event Name="ButtonClicked" />
       <Event Name="OrientationChanged" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19809,6 +19203,7 @@
       <Event Name="FileOpenClick" />
       <Event Name="FileSaveClick" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19897,6 +19292,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelSettings">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -19991,6 +19387,7 @@
     <Type Name="Alternet.UI.PanelSettingsItemKind" />
     <Type Name="Alternet.UI.PanelWebBrowser">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -20079,6 +19476,7 @@
     </Type>
     <Type Name="Alternet.UI.PanelWithToolBar">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -20200,6 +19598,7 @@
     <Type Name="Alternet.UI.IntUtils" />
     <Type Name="Alternet.UI.MathUtils" />
     <Type Name="Alternet.UI.ULongUtils" />
+    <Type Name="Alternet.UI.NativeUtils" />
     <Type Name="Alternet.UI.CpuUtils" />
     <Type Name="Alternet.UI.LibraryLoader" />
     <Type Name="Alternet.UI.LibraryUtils" />
@@ -20248,6 +19647,7 @@
     <Type Name="Alternet.UI.ITestProvideValueTarget" />
     <Type Name="Alternet.UI.ITestUriContext" />
     <Type Name="Alternet.UI.Extensions.EnumExtensionsPrivate" />
+    <Type Name="Alternet.UI.Extensions.ExtensionsInternal" />
     <Type Name="Alternet.UI.Extensions.ExtensionsPublic" />
     <Type Name="Alternet.UI.Extensions.HttpClientExtensions" />
     <Type Name="Alternet.UI.Extensions.BoolBoxes" />
@@ -20306,6 +19706,7 @@
     <Type Name="Alternet.Drawing.NineRects+NineRectsParts" />
     <Type Name="Alternet.Drawing.NineRects+PreviewControl">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -20450,9 +19851,11 @@
     <Type Name="Alternet.UI.DataObject+XmlDictionaryItem" />
     <Type Name="Alternet.UI.Command+CanExecuteDelegate" />
     <Type Name="Alternet.UI.Command+ExecuteDelegate" />
-    <Type Name="Alternet.UI.ListControlItem+BeforeDrawLabelDelegate" />
+    <Type Name="Alternet.UI.ListControlItem+MeasureItemSizeParams" />
+    <Type Name="Alternet.UI.ListControlItem+MeasureItemSizeResult" />
     <Type Name="Alternet.UI.ListControlItem+ContainerRelatedData" />
     <Type Name="Alternet.UI.ListControlItem+ItemCheckBoxInfo" />
+    <Type Name="Alternet.UI.ListControlItem+BeforeDrawLabelDelegate" />
     <Type Name="Alternet.UI.ListViewColumn+ColumnEventType" />
     <Type Name="Alternet.UI.TreeViewItem+EnumExpandedItemsParams" />
     <Type Name="Alternet.UI.KnownShortcuts+FindReplaceControlKeys" />
@@ -20493,6 +19896,7 @@
     <Type Name="Alternet.UI.SplittedTreeAndCards+TreeKind" />
     <Type Name="Alternet.UI.ScrollViewer+ScrollContainer">
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -20584,10 +19988,13 @@
     <Type Name="Alternet.UI.FileListBox+FolderAdditionFlags" />
     <Type Name="Alternet.UI.FileListBox+FolderInfoItem" />
     <Type Name="Alternet.UI.FileListBox+NewItemInfo" />
+    <Type Name="Alternet.UI.StdTreeView+ColumnAutoFitFlags" />
+    <Type Name="Alternet.UI.StdTreeView+PreferredColumnWidthParams" />
     <Type Name="Alternet.UI.ColorListBox+DefaultItemPainter" />
     <Type Name="Alternet.UI.VirtualListBox+ItemToolTipProviderType" />
     <Type Name="Alternet.UI.VirtualListBox+ItemClickFlags" />
     <Type Name="Alternet.UI.VirtualListBox+SetItemsKind" />
+    <Type Name="Alternet.UI.VirtualListBox+MeasureContentSizeResult" />
     <Type Name="Alternet.UI.VirtualListControl+RangeAdditionController`1">
       <Event Name="Disposed" />
       <Event Name="PropertyChanged" />
@@ -20597,8 +20004,6 @@
     <Type Name="Alternet.UI.ColorComboBox+DefaultColorItemPainter" />
     <Type Name="Alternet.UI.ComboBox+OwnerDrawFlags" />
     <Type Name="Alternet.UI.ComboBox+DefaultItemPainter" />
-    <Type Name="Alternet.UI.ListBox+BaseObjectCollection" />
-    <Type Name="Alternet.UI.ListBox+ObjectCollection" />
     <Type Name="Alternet.UI.PopupControl+CloseReason" />
     <Type Name="Alternet.UI.PopupWindow`1+InteriorSizeFlags" />
     <Type Name="Alternet.UI.PreviewFile+PreviewFileRegisterItem" />
@@ -20619,6 +20024,7 @@
       <Event Name="SplitterMoving" />
       <Event Name="SplitterMoved" />
       <Event Name="AfterPaint" />
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -20714,6 +20120,7 @@
     <Type Name="Alternet.UI.TabControlDrawInterior+TabHeaderItemsInteriorDrawParams" />
     <Type Name="Alternet.UI.TabControlDrawInterior+TabControlInteriorDrawParams" />
     <Type Name="Alternet.UI.TemplateControls+RichToolTipTemplate">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -20801,6 +20208,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls+BoldText">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />
@@ -20888,6 +20296,7 @@
       <Event Name="PropertyChanged" />
     </Type>
     <Type Name="Alternet.UI.TemplateControls+BoldText`1">
+      <Event Name="RequestPreferredSize" />
       <Event Name="LayoutMaxSizeChanged" />
       <Event Name="DropDownMenuShowing" />
       <Event Name="LayoutUpdated" />

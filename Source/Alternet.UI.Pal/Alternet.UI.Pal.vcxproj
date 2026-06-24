@@ -44,7 +44,7 @@
     <Company>AlterNET Software</Company>
     <Product>AlterNET UI PAL Library</Product>
     <Copyright>Copyright (c) 2021-2026 AlterNET Software</Copyright>
-    <MyFileVersion>1.0.19.0</MyFileVersion>
+    <MyFileVersion>1.0.20.0</MyFileVersion>
     <MyFileVersionReplaceComma>$([System.Text.RegularExpressions.Regex]::Replace('$(MyFileVersion)', '\.', ','))</MyFileVersionReplaceComma>
     <!-- RC contents in a property using CDATA so < and > are safe -->
     <MyRcContent><![CDATA[

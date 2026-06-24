@@ -1,3 +1,54 @@
+# 1.0.20 (2026 June 24)
+
+- Graphics: SkiaEnabled, Canvas.
+- Add support for custom pen styles in Skia graphics.
+- Improve look of PopupWindow title.
+- Redo painting using SkiaSharp. Do not use WxWidgets graphics by default anymore.
+- Redo string to wxString conversion to avoid usage of deprecated c++ libraries.
+- ShapeControl: CornerRadius, StartAngle, SweepAngle and take into account Padding when drawing shape.
+- GridLength: add conversion from float.
+- PanelSettings: DefaultTypeConverters, TypeConverters
+- PanelSettings: Uses type converters when text to prop value is converted after text edited
+- PanelSettings: Improved exception handling during the validation
+- PanelSettings: Fixed error picture alignment
+- PanelSetitngs instance is passed as a parameter to all registration methods.
+- AbstractControl: RaiseProcessException is now public.
+- Demo layout improvement.
+- TitleWithTwoButtonsView: Add BackButton.
+- Maui: Fix double scrollbar issue
+- StdButton: change default alignment
+- Use std controls in panels and windows included with the library.
+- Use std controls instead of native controls in demos.
+- StdButton: change default min width
+- PanelOKCancelButtons: add new props.
+- AbstractControl.RequestPreferredSize event.
+- Fix Button background on msw.
+- SpeedButton: Fix TabControl theme was ignored previously.
+- ListBoxHeader: Use square borders in title buttons.
+- Window.MakeWithoutTitleBar.
+- Use int coord in Region.
+- Turn on net10.0 for linux builds.
+- Fix Region exception when SkiaSharp rendering is on.
+- ListControlItem: Item measure with options and complex result.
+- StdTreeView:  AutoFitTitleWidth, GetTitleControl, GetTitleControlPreferredWidth.
+- Improve EmployeeFormSample, use StdTreeView there.
+- Add ListControlItem.SetText for cell text.
+- Fix round corner border with background painting.
+- Create KnownPopupControls, PenInfo.
+- AbstractControl.RefreshOnStateChanged.
+- ControlView: Fix control position when border is visible.
+- Fix DateTimePicker painting.
+- Improve pal control double buffered handling.
+- Window is now derived from HiddenBorder.
+- GripControl.Target is now IGripControlTarget.
+- Update to use new SkiaSharp and Maui version.
+- ControlView: change save/restore to keep exact count in paint.
+- ITreeViewItemNotification: Add more params to item added/removed.
+- AbstractControl.IsDarkBackgroundOverride.
+- Disable context menu usage as list popup by default.
+
+---
+
 # 1.0.19 (2026 June 18)
 
 - Add InnerPopupTreeView, ResizablePopupControl controls.
