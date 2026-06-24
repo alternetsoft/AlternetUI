@@ -2990,6 +2990,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when property of the panel was changed.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance whose property changed.</param>
+        public virtual bool UpdatePanelControl(BarPanel panel)
+        {
+            if (panel is null)
+                return false;
+
+            var control = panel?.GetControl();
+
+            if (control == null || panel is null)
+                return false;
+
+            switch (panel.Kind)
+            {
+                default:
+                case BarPanelKind.Text:
+                    UpdateTextPanelControl(panel, control);
+                    break;
+                case BarPanelKind.Separator:
+                    break;
+                case BarPanelKind.PictureBox:
+                    UpdatePictureBoxPanelControl(panel, control);
+                    break;
+                case BarPanelKind.SpeedButton:
+                    UpdateSpeedButtonPanelControl(panel, control);
+                    break;
+                case BarPanelKind.TextButton:
+                    UpdateTextButtonPanelControl(panel, control);
+                    break;
+                case BarPanelKind.ProgressBar:
+                    UpdateProgressBarPanelControl(panel, control);
+                    break;
+                case BarPanelKind.Spacer:
+                    UpdateSpacerPanelControl(panel, control);
+                    break;
+                case BarPanelKind.CustomControl:
+                    UpdateCustomPanelControl(panel, control);
+                    break;
+            }
+
+            control.HorizontalAlignment = panel.HorizontalAlignment;
+            control.ToolTipObject = panel.ToolTip;
+            panel.RaiseControlUpdated();
+
+            return true;
+        }
+
+        /// <summary>
         /// Raises the <see cref="OnToolClick"/> method
         /// and invokes the <see cref="ToolClick"/> event handlers.
         /// </summary>
@@ -3073,133 +3122,125 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Called when property of the panel was changed.
+        /// Updates control which is associated with the speed button panel.
+        /// Properties of the control are updated according to the panel properties.
         /// </summary>
-        /// <param name="panel">The <see cref="BarPanel"/> instance whose property changed.</param>
-        /// <param name="control">The <see cref="AbstractControl"/> associated with the panel.</param>
-        protected virtual bool UpdatePanelControl(BarPanel? panel, AbstractControl? control = null)
+        /// <param name="panel">The <see cref="BarPanel"/> instance.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance to update.</param>
+        protected virtual void UpdateSpeedButtonPanelControl(BarPanel panel, AbstractControl control)
         {
-            if (panel is null)
-                return false;
+            if (control is not SpeedButton speedButton)
+                return;
+            speedButton.Image = panel.Image;
+            speedButton.DisabledImage = panel.DisabledImage;
+            speedButton.SvgImage = panel.SvgImage;
+            speedButton.SvgSize = panel.SvgSize;
+            speedButton.SvgColor = panel.SvgColor;
+            speedButton.ImageSet = panel.ImageSet;
+            speedButton.DisabledImageSet = panel.DisabledImageSet;
+        }
 
-            control ??= panel?.GetControl();
+        /// <summary>
+        /// Updates control which is associated with the text button panel.
+        /// Properties of the control are updated according to the panel properties.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance to update.</param>
+        protected virtual void UpdateTextButtonPanelControl(BarPanel panel, AbstractControl control)
+        {
+            control.Text = panel.Text;
+            control.SuggestedWidth = panel.Width;
+            control.MinWidth = panel.MinWidth;
+            control.MaxWidth = panel.MaxWidth;
+        }
 
-            if (control == null || panel is null)
-                return false;
-
-            switch (panel.Kind)
+        /// <summary>
+        /// Updates control which is associated with the progress bar panel.
+        /// Properties of the control are updated according to the panel properties.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance to update.</param>
+        protected virtual void UpdateProgressBarPanelControl(BarPanel panel, AbstractControl control)
+        {
+            if (float.IsNaN(panel.Width))
             {
-                default:
-                case BarPanelKind.Text:
-                    UpdateTextPanel();
-                    break;
-                case BarPanelKind.Separator:
-                    break;
-                case BarPanelKind.PictureBox:
-                    UpdatePictureBoxPanel();
-                    break;
-                case BarPanelKind.SpeedButton:
-                    UpdateSpeedButtonPanel();
-                    break;
-                case BarPanelKind.TextButton:
-                    UpdateTextButtonPanel();
-                    break;
-                case BarPanelKind.ProgressBar:
-                    UpdateProgressBarPanel();
-                    break;
-                case BarPanelKind.Spacer:
-                    UpdateSpacerPanel();
-                    break;
-                case BarPanelKind.CustomControl:
-                    UpdateControlPanel();
-                    break;
+                control.SuggestedWidth = DefaultProgressBarSize.Width;
             }
-
-            void UpdateSpeedButtonPanel()
+            else
             {
-                if (control is not SpeedButton speedButton)
-                    return;
-                speedButton.Image = panel.Image;
-                speedButton.DisabledImage = panel.DisabledImage;
-                speedButton.SvgImage = panel.SvgImage;
-                speedButton.SvgSize = panel.SvgSize;
-                speedButton.SvgColor = panel.SvgColor;
-                speedButton.ImageSet = panel.ImageSet;
-                speedButton.DisabledImageSet = panel.DisabledImageSet;
-            }
-
-            void UpdateTextButtonPanel()
-            {
-                control.Text = panel.Text;
                 control.SuggestedWidth = panel.Width;
-                control.MinWidth = panel.MinWidth;
-                control.MaxWidth = panel.MaxWidth;
             }
+        }
 
-            void UpdateProgressBarPanel()
+        /// <summary>
+        /// Updates control which is associated with the picture box panel.
+        /// Properties of the control are updated according to the panel properties.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance to update.</param>
+        protected virtual void UpdatePictureBoxPanelControl(BarPanel panel, AbstractControl control)
+        {
+            if (control is not PictureBox pictureBox)
+                return;
+            pictureBox.Image = panel.Image;
+            pictureBox.DisabledImage = panel.DisabledImage;
+            pictureBox.SvgImage = panel.SvgImage;
+            pictureBox.SvgColor = panel.SvgColor;
+            pictureBox.SvgSize = panel.SvgSize;
+            pictureBox.ImageSet = panel.ImageSet;
+            pictureBox.DisabledImageSet = panel.DisabledImageSet;
+        }
+
+        /// <summary>
+        /// Updates control which is associated with the spacer panel.
+        /// Properties of the control are updated according to the panel properties.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance to update.</param>
+        protected virtual void UpdateSpacerPanelControl(BarPanel panel, AbstractControl control)
+        {
+            if (float.IsNaN(panel.Width))
             {
-                if (float.IsNaN(panel.Width))
-                {
-                    control.SuggestedWidth = DefaultProgressBarSize.Width;
-                }
-                else
-                {
-                    control.SuggestedWidth = panel.Width;
-                }
+                control.SuggestedSize = DefaultSpacerSize;
             }
-
-            void UpdatePictureBoxPanel()
+            else
             {
-                if (control is not PictureBox pictureBox)
-                    return;
-                pictureBox.Image = panel.Image;
-                pictureBox.DisabledImage = panel.DisabledImage;
-                pictureBox.SvgImage = panel.SvgImage;
-                pictureBox.SvgColor = panel.SvgColor;
-                pictureBox.SvgSize = panel.SvgSize;
-                pictureBox.ImageSet = panel.ImageSet;
-                pictureBox.DisabledImageSet = panel.DisabledImageSet;
+                control.SuggestedSize = panel.Width;
             }
+        }
 
-            void UpdateSpacerPanel()
+        /// <summary>
+        /// Updates control which is associated with the custom panel.
+        /// Properties of the control are updated according to the panel properties.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance to update.</param>
+        protected virtual void UpdateCustomPanelControl(BarPanel panel, AbstractControl control)
+        {
+        }
+
+        /// <summary>
+        /// Updates control which is associated with the text panel.
+        /// Properties of the control are updated according to the panel properties.
+        /// </summary>
+        /// <param name="panel">The <see cref="BarPanel"/> instance.</param>
+        /// <param name="control">The <see cref="AbstractControl"/> instance to update.</param>
+        protected virtual void UpdateTextPanelControl(BarPanel panel, AbstractControl control)
+        {
+            control.Text = panel.Text;
+            control.SuggestedWidth = panel.Width;
+            control.MinWidth = panel.MinWidth;
+            control.MaxWidth = panel.MaxWidth;
+            control.HasBorder = panel.HasBorder;
+
+            if (panel.HasBorder)
             {
-                if (float.IsNaN(panel.Width))
-                {
-                    control.SuggestedSize = DefaultSpacerSize;
-                }
-                else
-                {
-                    control.SuggestedSize = panel.Width;
-                }
+                control.Padding = DefaultTextPanelPadding;
             }
-
-            void UpdateControlPanel()
+            else
             {
+                control.Padding = DefaultTextPanelPaddingNoBorder;
             }
-
-            void UpdateTextPanel()
-            {
-                control.Text = panel.Text;
-                control.SuggestedWidth = panel.Width;
-                control.MinWidth = panel.MinWidth;
-                control.MaxWidth = panel.MaxWidth;
-                control.HasBorder = panel.HasBorder;
-
-                if (panel.HasBorder)
-                {
-                    control.Padding = DefaultTextPanelPadding;
-                }
-                else
-                {
-                    control.Padding = DefaultTextPanelPaddingNoBorder;
-                }
-            }
-
-            control.HorizontalAlignment = panel.HorizontalAlignment;
-            control.ToolTipObject = panel.ToolTip;
-            panel.RaiseControlUpdated();
-
-            return true;
         }
 
         /// <inheritdoc/>
