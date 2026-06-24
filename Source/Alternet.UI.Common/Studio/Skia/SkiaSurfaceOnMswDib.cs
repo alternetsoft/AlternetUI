@@ -243,7 +243,7 @@ namespace Alternet.Common.Skia
             surfWidth = surfHeight = 0;
         }
 
-        private class NativeMethods
+        internal class NativeMethods
         {
 #pragma warning disable
             public const int BI_RGB = 0;
