@@ -14,7 +14,7 @@ namespace PropertyGridSample
     {
         public static readonly List<Type> LimitedTypesStatic = new();
 
-        private readonly List<Type> LimitedTypes = new();
+        readonly List<Type> LimitedTypes = new();
 
         private T? GetSelectedControl<T>()
         {
@@ -47,22 +47,6 @@ namespace PropertyGridSample
 
                 bool logAddedControls = false;
                 bool logNotAddedControls = false;
-
-                /*
-                ToolBoxAdd<Button>();
-                ToolBoxAdd<ComboBox>();
-                ToolBoxAdd<GroupBox>();
-                ToolBoxAdd<CheckBox>();
-                ToolBoxAdd<RadioButton>();
-                ToolBoxAdd<ProgressBar>();
-                ToolBoxAdd<ListBox>();
-                ToolBoxAdd<CheckedListBox>();
-                ToolBoxAdd<TreeView>();
-                */
-                /*
-                This is commented out because Slider control doesn't work property on Windows when dark mode is enabled.
-                ToolBoxAdd<Alternet.UI.Slider>();
-                */
 
                 ToolBoxAdd<Border>();
                 ToolBoxAdd<PictureBox>();

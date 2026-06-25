@@ -16,19 +16,6 @@ namespace PropertyGridSample
             App.Log(s);
         }
 
-        public static void InitButton(object control)
-        {
-            if (control is not StdButton button)
-                return;
-            button.Text = "Butt&on";
-            button.Click += LogClick;
-            button.StateImages = GetButtonImages(button);
-            button.SetImageMargins(5);
-            button.SuggestedHeight = 100;
-            button.HorizontalAlignment = HorizontalAlignment.Left;
-            button.MouseWheel += Button_MouseWheel;
-        }
-
         public static void InitStdButton(object control)
         {
             if (control is not StdButton button)
@@ -60,7 +47,7 @@ namespace PropertyGridSample
             }
         }
 
-        private static void Button_MouseWheel(object sender, MouseEventArgs e)
+        public static void Button_MouseWheel(object sender, MouseEventArgs e)
         {
             App.Log($"Button MouseWheel: {e.Delta}, {e.Timestamp}");
         }

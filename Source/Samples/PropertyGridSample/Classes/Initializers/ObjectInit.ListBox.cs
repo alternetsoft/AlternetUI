@@ -252,21 +252,6 @@ namespace PropertyGridSample
             }
         }
 
-        /*
-        public static void AddManyItems(ListBox listBox, int numItems)
-        {
-            listBox.DoInsideUpdate(() =>
-            {
-                for (int i = 0; i < numItems; i++)
-                    listBox.Items.Add($"Item #{LogUtils.GenNewId()}");
-
-                App.Log($"Added {numItems} items");
-            });
-
-            listBox.SelectLastItem();
-        }
-        */
-
         public static void AddManyItems(VirtualListBox listBox)
         {
             listBox.DoInsideUpdate(() =>
@@ -284,7 +269,7 @@ namespace PropertyGridSample
         {
             if (control is not FileListBox listBox)
                 return;
-            listBox.SuggestedSize = defaultListSize;
+            listBox.SuggestedSize = DefaultListSize;
             listBox.SelectInitialFolder();
         }
 
@@ -297,7 +282,7 @@ namespace PropertyGridSample
 
             listBox.HorizontalScrollbar = true;
             listBox.Count = 200;
-            listBox.SuggestedSize = defaultListSize;
+            listBox.SuggestedSize = DefaultListSize;
             listBox.CustomItemText += ListBox_CustomItemText;
 
             static void ListBox_CustomItemText(object? sender, GetItemTextEventArgs e)
@@ -309,19 +294,6 @@ namespace PropertyGridSample
                 }
             }
         }
-
-        /*
-        public static void InitCheckedListBox(object control)
-        {
-            InitListBox(control);
-            if (control is not CheckedListBox listBox)
-                return;
-            listBox.CheckedItemsChanged += (s, e) =>
-            {
-                LogItems("ListBox CheckedItemsChanged", listBox.CheckedItems);
-            };
-        }
-        */
 
         public static void LogItems(string prefix, IReadOnlyList<object?> items)
         {
@@ -335,25 +307,11 @@ namespace PropertyGridSample
             }
         }
 
-        /*
-        public static void InitListBox(object control)
-        {
-            if (control is not ListBox listBox)
-                return;
-            listBox.SuggestedSize = defaultListSize;
-
-            foreach (var item in GetTenItems())
-                listBox.Items.Add(item);
-
-            listBox.SelectedIndexChanged += (s, e) => LogItems("ListBox SelectedIndexChanged", listBox.SelectedItems);
-        }
-        */
-
         public static void InitStdListBox(object control)
         {
             if (control is not StdListBox listBox)
                 return;
-            listBox.SuggestedSize = defaultListSize;
+            listBox.SuggestedSize = DefaultListSize;
             listBox.Items.AddRange(GetTenItems());
         }
 
@@ -375,16 +333,5 @@ namespace PropertyGridSample
             comboBox.IsEditable = false;
             comboBox.SuggestedWidth = 200;
         }
-
-        /*
-        public static void InitComboBox(object control)
-        {
-            if (control is not ComboBox comboBox)
-                return;
-            comboBox.Items.AddRange(GetTenItems());
-            comboBox.HorizontalAlignment = HorizontalAlignment.Left;
-            comboBox.SuggestedWidth = 200;
-        }
-        */
     }
 }

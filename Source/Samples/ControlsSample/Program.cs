@@ -124,6 +124,11 @@ namespace ControlsSample
 
             InitSamples();
 
+            if (DebugUtils.IsDebugOnWindows)
+            {
+                NativeControlsRegistration.InitActions();
+            }
+
             LogSimple("InitSamples Done.");
 
             if (testBadFont)

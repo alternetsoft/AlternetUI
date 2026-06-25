@@ -36,7 +36,8 @@ Environment.NewLine + Environment.NewLine +
 "melted politely and hats outgrew heads.";
 
         private static ImageLists? imageLists;
-        private static SizeD defaultListSize = new(defaultListHeight, defaultListHeight);
+        
+        public static SizeD DefaultListSize = new(defaultListHeight, defaultListHeight);
 
         static ObjectInit()
         {
@@ -91,14 +92,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(StdComboBox), InitStdComboBox);
             Actions.Add(typeof(StdCheckListBox), InitCheckListBox);
 
-            /*
-            Actions.Add(typeof(ComboBoxAndLabel), InitComboBoxAndLabel);
-            Actions.Add(typeof(ComboBox), InitComboBox);
-            Actions.Add(typeof(Button), InitButton);
-            Actions.Add(typeof(ListBox), InitListBox);
-            Actions.Add(typeof(CheckedListBox), InitCheckedListBox);
-            */
-
             Actions.Add(typeof(UserControl), (c) =>
             {
                 var control = (c as UserControl)!;
@@ -135,7 +128,7 @@ Environment.NewLine + Environment.NewLine +
                 var border = (c as Border)!;
                 border.ParentBackColor = false;
                 border.ParentForeColor = false;
-                border.SuggestedSize = defaultListSize;
+                border.SuggestedSize = DefaultListSize;
                 SetBackgrounds(border);
 
                 border.Layout = LayoutStyle.Vertical;
@@ -163,49 +156,19 @@ Environment.NewLine + Environment.NewLine +
                 (c as StatusBar)!.Panels.Add(new("text2"));
             });
 
-            /*
-            Actions.Add(typeof(CheckBox), (c) =>
-            {
-                (c as CheckBox)!.Text = "CheckBox";
-            });
-
-            Actions.Add(typeof(RadioButton), (c) =>
-            {
-                (c as RadioButton)!.Text = "RadioButton";
-            });
-            */
-
             Actions.Add(typeof(StdTreeView), (c) =>
             {
                 StdTreeView treeView = (c as StdTreeView)!;
-                treeView.SuggestedSize = defaultListSize;
+                treeView.SuggestedSize = DefaultListSize;
                 InitVirtualTreeControl(treeView);
             });
 
             Actions.Add(typeof(ListView), (c) =>
             {
                 ListView listView = (c as ListView)!;
-                listView.SuggestedSize = defaultListSize;
+                listView.SuggestedSize = DefaultListSize;
                 InitListView(listView);
             });
-
-            /*
-            Actions.Add(typeof(GroupBox), (c) =>
-            {
-                GroupBox groupBox = (c as GroupBox)!;
-                groupBox.Title = "GroupBox";
-                groupBox.SuggestedSize = 150;
-                groupBox.MinChildMargin = 10;
-
-                groupBox.Layout = LayoutStyle.Vertical;
-
-                Label label = new("Label 1");
-                label.Parent = groupBox;
-
-                CheckBox checkBox = new("CheckBox 1");
-                checkBox.Parent = groupBox;
-            });
-            */
 
             Actions.Add(typeof(Panel), InitPanel);
 
@@ -241,35 +204,6 @@ Environment.NewLine + Environment.NewLine +
                 AbstractControl control = (c as AbstractControl)!;
                 control.SuggestedSize = defaultListHeight;
             });
-
-            /*
-            Actions.Add(typeof(TreeView), (c) =>
-            {
-                TreeView treeView = (c as TreeView)!;
-                treeView.SuggestedSize = defaultListSize;
-                InitVirtualTreeControl(treeView);
-            });
-
-            Actions.Add(typeof(ProgressBar), (c) =>
-            {
-                ProgressBar control = (c as ProgressBar)!;
-                control.OrientationChanged += OrientationChanged;
-                control.Value = 50;
-                control.SuggestedWidth = 200;
-
-                static void OrientationChanged(object? sender, EventArgs e)
-                {
-                    if (sender is not ProgressBar control)
-                        return;
-                    if (control.Orientation == ProgressBarOrientation.Vertical)
-                        control.SuggestedSize = (Coord.NaN, 250);
-                    else
-                        control.SuggestedSize = (250, Coord.NaN);
-                    control.PerformLayout();
-                }
-
-            });
-            */
 
             Actions.Add(typeof(StdProgressBar), (c) =>
             {
@@ -582,7 +516,7 @@ Environment.NewLine + Environment.NewLine +
             }
         }
 
-        internal static IEnumerable<object> GetTenItems()
+        public static IEnumerable<object> GetTenItems()
         {
             var items = new List<string>();
 
@@ -721,18 +655,6 @@ Environment.NewLine + Environment.NewLine +
 
         }
 
-/*
-        public static void InitVirtualTreeControl(TreeView control)
-        {
-            if (App.SafeWindow.UseSmallImages)
-                control.ImageList = LoadImageLists().Small;
-            else
-                control.ImageList = LoadImageLists().Large;
-
-            control.HorizontalAlignment = HorizontalAlignment.Stretch;
-            AddItems(control, 10);
-        }
-*/
         public static void InitVirtualTreeControl(StdTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
@@ -799,47 +721,6 @@ Environment.NewLine + Environment.NewLine +
                 treeView.EndUpdate();
             }
         }
-
-/*
-        public static void AddItems(TreeView treeView, int count)
-        {
-            treeView.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    int imageIndex = i % 4;
-                    var item = new TreeViewItem(
-                        "Item " + GenItemIndex(),
-                        imageIndex);
-                    for (int j = 0; j < 3; j++)
-                    {
-                        var childItem = new TreeViewItem(
-                            item.Text + "." + j,
-                            imageIndex);
-                        item.Add(childItem);
-
-                        if (i < 5)
-                        {
-                            for (int k = 0; k < 2; k++)
-                            {
-                                childItem.Add(
-                                    new TreeViewItem(
-                                        item.Text + "." + k,
-                                        imageIndex));
-                            }
-                        }
-                    }
-
-                    treeView.Add(item);
-                }
-            }
-            finally
-            {
-                treeView.EndUpdate();
-            }
-        }
-*/
 
         private static ImageLists LoadImageListsCore()
         {
