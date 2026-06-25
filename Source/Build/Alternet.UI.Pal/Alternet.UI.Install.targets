@@ -2,10 +2,6 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 <!-- ========================================== -->
-<Target Name="UpdateWellKnownApiInfo">
-		<CallTarget Targets="RunAppInfoCollector;BuildAlternetUIBuildTasks"/>
-</Target>
-<!-- ========================================== -->
    <UsingTask TaskName="DeleteBinObjCs" 
 	TaskFactory="RoslynCodeTaskFactory"
     AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
