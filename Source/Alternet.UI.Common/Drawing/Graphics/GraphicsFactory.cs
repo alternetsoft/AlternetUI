@@ -639,7 +639,25 @@ namespace Alternet.Drawing
         /// <param name="value">Value in pixels.</param>
         /// <param name="scaleFactor">Scale factor.</param>
         /// <returns>Converted value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Coord PixelToDip(int value, Coord? scaleFactor = null)
+        {
+            var factor = ScaleFactorOrDefault(scaleFactor);
+
+            if (factor == 1)
+                return value;
+            else
+                return value / factor;
+        }
+
+        /// <summary>
+        /// Converts pixels to device-independent units.
+        /// </summary>
+        /// <param name="value">Value in pixels.</param>
+        /// <param name="scaleFactor">Scale factor.</param>
+        /// <returns>Converted value.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Coord PixelFToDip(float value, Coord? scaleFactor = null)
         {
             var factor = ScaleFactorOrDefault(scaleFactor);
 
@@ -654,6 +672,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="font">Font to convert.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static SKFont DefaultFontToSkiaFont(Font font)
         {
             var info = font.ToSkiaFontInfo();

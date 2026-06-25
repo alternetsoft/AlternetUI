@@ -2681,6 +2681,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts pixels to device-independent units.
+        /// </summary>
+        /// <param name="value">Value in pixels.</param>
+        /// <returns></returns>
+        public virtual Coord PixelFToDip(float value)
+        {
+            return GraphicsFactory.PixelFToDip(value, ScaleFactor);
+        }
+
+        /// <summary>
         /// Invalidates the specified region of the control (adds it to the control's update
         /// region, which is the area that will be repainted at the next paint operation), and
         /// causes a paint message to be sent to the control. Optionally, invalidates the
