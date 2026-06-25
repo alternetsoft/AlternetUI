@@ -21,7 +21,7 @@ namespace Alternet::UI
         static wxChar _inputChar;
         static uint8_t _inputEventCode;
         static bool _inputHandled;
-        static Key _inputKey;
+        static int _inputKey;
         static bool _isRepeat;
 
         static void SetFields(wxKeyEvent& e, uint8_t eventCode);

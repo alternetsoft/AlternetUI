@@ -6,7 +6,7 @@ namespace Alternet::UI
 	wxChar Keyboard::_inputChar;
 	uint8_t Keyboard::_inputEventCode;
 	bool Keyboard::_inputHandled;
-	Key Keyboard::_inputKey;
+	int Keyboard::_inputKey;
 	bool Keyboard::_isRepeat;
 
 	int Keyboard::GetInputChar()
@@ -29,7 +29,7 @@ namespace Alternet::UI
 		_inputHandled = value;
 	}
 
-	Key Keyboard::GetInputKey()
+	int Keyboard::GetInputKey()
 	{
 		return _inputKey;
 	}
@@ -102,11 +102,10 @@ namespace Alternet::UI
 
 	void Keyboard::SetFields(wxKeyEvent& e, uint8_t eventCode)
 	{
-		auto unicodeKey = e.GetUnicodeKey();
-		_inputChar = unicodeKey;
+		_inputChar = e.GetUnicodeKey();
 		_inputEventCode = eventCode;
 		_inputHandled = false;
-		_inputKey = WxKeyToKey(e.GetKeyCode());
+		_inputKey = e.GetKeyCode();
 		_isRepeat = e.IsAutoRepeat();
 	}
 

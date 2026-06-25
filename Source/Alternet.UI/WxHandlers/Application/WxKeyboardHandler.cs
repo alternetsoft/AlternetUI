@@ -11,7 +11,14 @@ namespace Alternet.UI
     /// </summary>
     public class WxKeyboardHandler : DisposableObject, IKeyboardHandler
     {
-        private static AbstractTwoWayEnumMapping<WxWidgetsKeyCode, Key>? keyAndWxMapping;
+        private static AbstractTwoWayEnumMapping<WxWidgetsKeyCode, Key> keyAndWxMapping;
+
+        static WxKeyboardHandler()
+        {
+            keyAndWxMapping =
+                new TwoWayEnumMapping<WxWidgetsKeyCode, Key>(WxWidgetsKeyCode.Max, Key.Max);
+            RegisterKeyMappings();
+        }
 
         /// <inheritdoc/>
         public virtual bool IsValidKey(Key key)
@@ -26,13 +33,6 @@ namespace Alternet.UI
         {
             get
             {
-                if (keyAndWxMapping is null)
-                {
-                    keyAndWxMapping =
-                        new TwoWayEnumMapping<WxWidgetsKeyCode, Key>(WxWidgetsKeyCode.Max, Key.Max);
-                    RegisterKeyMappings();
-                }
-
                 return keyAndWxMapping;
             }
 

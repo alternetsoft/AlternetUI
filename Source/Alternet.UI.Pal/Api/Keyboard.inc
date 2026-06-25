@@ -8,7 +8,7 @@ static uint8_t GetInputEventCode();
 static bool GetInputHandled();
 static void SetInputHandled(bool value);
 
-static Key GetInputKey();
+static int GetInputKey();
 
 static bool GetInputIsRepeat();
 

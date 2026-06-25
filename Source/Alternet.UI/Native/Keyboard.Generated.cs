@@ -55,7 +55,7 @@ namespace Alternet.UI.Native
             }
         }
         
-        public static Alternet.UI.Key InputKey
+        public static int InputKey
         {
             get
             {
@@ -139,7 +139,7 @@ namespace Alternet.UI.Native
             public static extern void Keyboard_SetInputHandled_(bool value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern Alternet.UI.Key Keyboard_GetInputKey_();
+            public static extern int Keyboard_GetInputKey_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Keyboard_GetInputIsRepeat_();

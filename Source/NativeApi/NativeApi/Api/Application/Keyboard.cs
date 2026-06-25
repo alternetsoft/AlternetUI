@@ -18,7 +18,7 @@ namespace NativeApi.Api
 
         public static bool InputHandled { get; set; }
 
-        public static Key InputKey { get; }
+        public static int InputKey { get; }
 
         public static bool InputIsRepeat { get; }
 

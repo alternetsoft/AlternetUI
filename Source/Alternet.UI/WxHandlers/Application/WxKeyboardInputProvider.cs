@@ -27,7 +27,9 @@ namespace Alternet.UI
             const byte InputEventCodeChar = 2;
 
             bool handled = false;
-            Key key = Native.Keyboard.InputKey;
+            var nativeKey = Native.Keyboard.InputKey;
+
+            var key = WxKeyboardHandler.KeyAndWxMapping.Convert((WxWidgetsKeyCode)nativeKey);
 
             switch (Native.Keyboard.InputEventCode)
             {

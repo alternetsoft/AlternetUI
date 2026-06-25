@@ -43,9 +43,9 @@ ALTERNET_UI_API void Keyboard_SetInputHandled_(c_bool value)
     });
 }
 
-ALTERNET_UI_API Key Keyboard_GetInputKey_()
+ALTERNET_UI_API int Keyboard_GetInputKey_()
 {
-    return MarshalExceptions<Key>([&](){
+    return MarshalExceptions<int>([&](){
         return Keyboard::GetInputKey();
     });
 }
