@@ -639,14 +639,9 @@ namespace Alternet::UI
 		return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
 	}
 
-	Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, Font* font, void* control)
+	Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, Font* font)
 	{
 		auto wxf = font->GetWxFont();
-
-		auto wxw = (wxWindow*)control;
-
-		if (wxw == nullptr)
-			wxw = _dc->GetWindow();
 
 		wxDouble height;
 		wxDouble width;
@@ -658,9 +653,6 @@ namespace Alternet::UI
 		_graphicsContext->GetTextExtent(wText, &width, &height, nullptr, nullptr);
 
 		height = std::ceil(height);
-
-		width = toDipF(width, wxw);
-		height = toDipF(height, wxw);
 
 		return Size(width, height);
 	}
