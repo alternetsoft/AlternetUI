@@ -9,6 +9,7 @@ namespace Alternet.UI.Native
     internal partial class Control
     {
         private static bool reportedUsedGraphics = false;
+        private static bool measuredFontSize;
 
         private readonly Alternet.Skia.SkiaSurfaceOnMswDib dibSurface = new();
 
@@ -223,9 +224,9 @@ namespace Alternet.UI.Native
 
         public virtual void OnPlatformEventHandleCreated()
         {
-            if(UIControl is not null)
+            if (UIControl is not null)
             {
-                if(UIControl.ReportedBounds != Alternet.Drawing.RectD.MinusOne)
+                if (UIControl.ReportedBounds != Alternet.Drawing.RectD.MinusOne)
                     SetBounds(UIControl.ReportedBounds);
             }
 
@@ -240,13 +241,13 @@ namespace Alternet.UI.Native
 
         public virtual void OnPlatformEventSystemColorsChanged()
         {
-            if(UIControl == App.MainWindow)
+            if (UIControl == App.MainWindow)
                 SystemSettings.ResetColors();
         }
 
         public virtual void OnPlatformEventDragDrop(NativeEventArgs<DragEventData> ea)
         {
-            if(UIControl is not null)
+            if (UIControl is not null)
                 RaiseDragAndDropEvent(ea, UIControl.RaiseDragDrop);
         }
 
@@ -333,14 +334,24 @@ namespace Alternet.UI.Native
 
         protected void SkiaPaint()
         {
-            if (App.IsWindowsOS)
+            if (App.IsWindowsOS && false)
             {
                 SkiaPaintMsw();
             }
             else
-            {
-                SkiaPaintCrossPlatform();
-            }
+                if (App.IsLinuxOS)
+                {
+                    SkiaPaintLinux();
+                }
+                else
+                {
+                    SkiaPaintCrossPlatform();
+                }
+        }
+
+        protected void SkiaPaintLinux()
+        {
+            SkiaPaintCrossPlatform();
         }
 
         protected void SkiaPaintCrossPlatform()
@@ -376,15 +387,6 @@ namespace Alternet.UI.Native
 
             try
             {
-                using var graphics = CreateGraphicsFunc();
-
-                var e = new PaintEventArgs(() => graphics, clientRect, clientRect);
-                uiControl.RaisePaint(e);
-
-                canvas.Flush();
-
-                canvasLock.Dispose();
-
                 var dcPointer = GetDrawingContext(false);
 
                 if (dcPointer == IntPtr.Zero)
@@ -392,6 +394,43 @@ namespace Alternet.UI.Native
 
                 using var dc = new Native.DrawingContext(IntPtr.Zero);
                 dc.SetNativePointerWeak(dcPointer);
+
+                using var graphics = CreateGraphicsFunc();
+
+                void MeasureFontSize()
+                {
+                    if (!App.IsLinuxOS)
+                        return;
+
+                    var font = UI.Control.DefaultFont;
+                    var measureText = "Wg";
+                    var skiaMeasure = graphics.MeasureText(measureText, font);
+
+                    var nativeMeasure = StringUtils.InvokeWithResult(measureText, span =>
+                    {
+                        return dc.GetTextExtentSimple(span, (UI.Native.Font)font.Handler);
+                    });
+
+                    var nativeHeight = uiControl.PixelFToDip(nativeMeasure.Height);
+                    var skiaHeight = skiaMeasure.Height;
+                    var nativeFontRatio = skiaHeight / nativeHeight;
+
+                    Alternet.Drawing.Font.SkiaFontScaleFactor = nativeFontRatio;
+                    Alternet.Drawing.Font.FontSettingsIteration.Increment();
+                }
+
+                if (!measuredFontSize)
+                {
+                    measuredFontSize = true;
+                    MeasureFontSize();
+                }
+
+                var e = new PaintEventArgs(() => graphics, clientRect, clientRect);
+                uiControl.RaisePaint(e);
+
+                canvas.Flush();
+
+                canvasLock.Dispose();
 
                 dc.DrawBitmapAtPointI((UI.Native.Image)bitmap.Handler, clientRectI.X, clientRectI.Y, false);
             }
@@ -438,4 +477,3 @@ namespace Alternet.UI.Native
     }
 }
 
-    
