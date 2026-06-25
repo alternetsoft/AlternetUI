@@ -32,6 +32,13 @@ namespace Alternet::UI
         inline int GetErrorCode() const { return errorCode; }
         inline optional<Origin> GetOrigin() const { return origin; }
 
+        inline std::u16string ToStdString() const
+        {
+            wxString s = ToString();
+            std::u16string u16(s.wc_str(), s.wc_str() + s.length());
+            return u16;
+        }
+
         inline wxString ToString() const
         {
             wxString sb;

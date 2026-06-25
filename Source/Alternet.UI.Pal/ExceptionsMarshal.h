@@ -34,32 +34,32 @@ template<typename TResult> TResult MarshalExceptions(
     }
     catch (Alternet::UI::InvalidOperationException& e)
     {
-        reportException(ExceptionType::InvalidOperationException, e.ToString().c_str(), e.GetErrorCode());
+        reportException(ExceptionType::InvalidOperationException, e.ToStdString().c_str(), e.GetErrorCode());
         return TResult();
     }
     catch (Alternet::UI::ThreadStateException& e)
     {
-        reportException(ExceptionType::ThreadStateException, e.ToString().c_str(), e.GetErrorCode());
+        reportException(ExceptionType::ThreadStateException, e.ToStdString().c_str(), e.GetErrorCode());
         return TResult();
     }
     catch (Alternet::UI::FormatException & e)
     {
-        reportException(ExceptionType::FormatException, e.ToString().c_str(), e.GetErrorCode());
+        reportException(ExceptionType::FormatException, e.ToStdString().c_str(), e.GetErrorCode());
         return TResult();
     }
     catch (Alternet::UI::ArgumentNullException & e)
     {
-        reportException(ExceptionType::ArgumentNullException, e.ToString().c_str(), e.GetErrorCode());
+        reportException(ExceptionType::ArgumentNullException, e.ToStdString().c_str(), e.GetErrorCode());
         return TResult();
     }
     catch (Alternet::UI::ArgumentException& e)
     {
-        reportException(ExceptionType::ArgumentException, e.ToString().c_str(), e.GetErrorCode());
+        reportException(ExceptionType::ArgumentException, e.ToStdString().c_str(), e.GetErrorCode());
         return TResult();
     }
     catch (Alternet::UI::Exception& e)
     {
-        reportException(ExceptionType::ExternalException, e.ToString().c_str(), e.GetErrorCode());
+        reportException(ExceptionType::ExternalException, e.ToStdString().c_str(), e.GetErrorCode());
         return TResult();
     }
     catch (...)
