@@ -22,6 +22,18 @@ namespace Alternet.Drawing
     public class Font : DisposableObject, IEquatable<Font>
     {
         /// <summary>
+        /// Gets or sets native font scale factor for Skia.
+        /// It is used when conveting <see cref="Font"/> size to <see cref="SKFont"/> size.
+        /// On WxWidgets platform it is initialized when application is started.
+        /// </summary>
+        public static float SkiaFontScaleFactor = 1.0f;
+
+        /// <summary>
+        /// Gets font system iteration count. It is used to detect when system font settings are changed.
+        /// </summary>
+        public static OverflowSafeCounter FontSettingsIteration = new();
+
+        /// <summary>
         /// Gets or sets default font size scaling factor for <see cref="Smaller"/>
         /// and <see cref="Larger"/> methods.
         /// </summary>
@@ -41,6 +53,7 @@ namespace Alternet.Drawing
         private Font? baseFont;
         private FontFamily? fontFamily;
         private ObjectUniqueId? uniqueId;
+        private int savedFontSettingsIteration;
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
@@ -512,12 +525,18 @@ namespace Alternet.Drawing
         {
             get
             {
-                return skiaFont ??= GraphicsFactory.FontToSkiaFont(this);
-            }
+                if (savedFontSettingsIteration != FontSettingsIteration.Value)
+                {
+                    skiaFont = null;
+                }
 
-            set
-            {
-                skiaFont = value;
+                if (skiaFont is null)
+                {
+                    skiaFont = GraphicsFactory.FontToSkiaFont(this);
+                    savedFontSettingsIteration = FontSettingsIteration.Value;
+                }
+
+                return skiaFont;
             }
         }
 
@@ -995,7 +1014,16 @@ namespace Alternet.Drawing
             result.Weight = (SKFontStyleWeight)Weight;
             result.Slant = IsItalic ? SKFontStyleSlant.Italic : SKFontStyleSlant.Upright;
             result.Name = Name;
-            result.SizeInDips = SizeInDips;
+
+            if (SkiaFontScaleFactor == 1.0f)
+            {
+                result.SizeInDips = SizeInDips;
+            }
+            else
+            {
+                result.SizeInDips = SizeInDips / SkiaFontScaleFactor;
+            }
+
             return result;
         }
 
