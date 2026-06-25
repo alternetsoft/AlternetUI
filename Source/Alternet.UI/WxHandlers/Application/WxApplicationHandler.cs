@@ -81,6 +81,11 @@ namespace Alternet.UI
             keyboardInputProvider = new WxKeyboardInputProvider(
                 nativeApplication.Keyboard);
             mouseInputProvider = new WxMouseInputProvider(nativeApplication.Mouse);
+
+            if (App.IsLinuxOS)
+            {
+                InitOnLinux();
+            }
         }
 
         /// <summary>
@@ -145,6 +150,10 @@ namespace Alternet.UI
                 App.Log(@"Delete External\WxWidgets\ sub-folder and call Install script");
                 App.LogSeparator();
             }
+        }
+
+        internal static void InitOnLinux()
+        {
         }
 
         internal static WxEventIdentifiers MapToEventIdentifier(int eventId)
