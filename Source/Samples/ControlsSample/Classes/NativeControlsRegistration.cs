@@ -17,6 +17,8 @@ namespace ControlsSample
 
         public static void InitActions()
         {
+            CustomInternalSamplesPage.Add("Documentation Samples", () => new ApiDoc.MainWindowSimple());
+
             ToolBoxAdd<Button>();
             ToolBoxAdd<ComboBox>();
             ToolBoxAdd<GroupBox>();
