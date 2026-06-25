@@ -3,15 +3,15 @@
 
 namespace Alternet::UI
 {
-	char16_t Keyboard::_inputChar;
+	wxChar Keyboard::_inputChar;
 	uint8_t Keyboard::_inputEventCode;
 	bool Keyboard::_inputHandled;
 	Key Keyboard::_inputKey;
 	bool Keyboard::_isRepeat;
 
-	char16_t Keyboard::GetInputChar()
+	int Keyboard::GetInputChar()
 	{
-		return _inputChar;
+		return static_cast<int>(_inputChar);
 	}
 
 	uint8_t Keyboard::GetInputEventCode()
@@ -103,7 +103,7 @@ namespace Alternet::UI
 	void Keyboard::SetFields(wxKeyEvent& e, uint8_t eventCode)
 	{
 		auto unicodeKey = e.GetUnicodeKey();
-		_inputChar = wcharToChar16(unicodeKey);
+		_inputChar = unicodeKey;
 		_inputEventCode = eventCode;
 		_inputHandled = false;
 		_inputKey = WxKeyToKey(e.GetKeyCode());

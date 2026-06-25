@@ -24,7 +24,7 @@ namespace Alternet.UI.Native
         {
         }
         
-        public static char InputChar
+        public static int InputChar
         {
             get
             {
@@ -127,7 +127,7 @@ namespace Alternet.UI.Native
             public static extern IntPtr Keyboard_Create_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern char Keyboard_GetInputChar_();
+            public static extern int Keyboard_GetInputChar_();
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern byte Keyboard_GetInputEventCode_();

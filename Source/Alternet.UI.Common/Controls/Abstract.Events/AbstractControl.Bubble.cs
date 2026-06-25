@@ -335,7 +335,6 @@ namespace Alternet.UI
         /// <param name="modifiers">The set of modifier keys pressed
         /// at the time when event was received.</param>
         /// <param name="key">Key code.</param>
-        /// <param name="keyChar">Key char.</param>
         /// <param name="repeatCount">Key repeat count.</param>
         /// <param name="handled">Result of the key processing.</param>
         /// <param name="keyStates">The state of the key referenced by the event. Optional.
@@ -345,7 +344,6 @@ namespace Alternet.UI
             ModifierKeys modifiers,
             uint repeatCount,
             out bool handled,
-            char keyChar,
             KeyStates keyStates = KeyStates.Down)
         {
             var control = AbstractControl.FocusedControl;
@@ -387,7 +385,6 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="modifiers">The set of modifier keys pressed
         /// at the time when event was received.</param>
-        /// <param name="keyChar">Key char.</param>
         /// <param name="key">Key code.</param>
         /// <param name="repeatCount">Key repeat count.</param>
         /// <param name="handled">Result of the key processing.</param>
@@ -398,7 +395,6 @@ namespace Alternet.UI
             ModifierKeys modifiers,
             uint repeatCount,
             out bool handled,
-            char keyChar,
             KeyStates keyStates = KeyStates.None)
         {
             var control = AbstractControl.FocusedControl;
@@ -427,8 +423,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="keyChar">Character of the pressed Key.</param>
         /// <param name="handled">Result of the key processing.</param>
-        /// <param name="key">Key code.</param>
-        public static void BubbleTextInput(char keyChar, out bool handled, Key key)
+        public static void BubbleTextInput(char keyChar, out bool handled)
         {
             var control = AbstractControl.FocusedControl;
             if (control is null)

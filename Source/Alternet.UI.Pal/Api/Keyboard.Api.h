@@ -15,9 +15,9 @@ ALTERNET_UI_API Keyboard* Keyboard_Create_()
     });
 }
 
-ALTERNET_UI_API char16_t Keyboard_GetInputChar_()
+ALTERNET_UI_API int Keyboard_GetInputChar_()
 {
-    return MarshalExceptions<char16_t>([&](){
+    return MarshalExceptions<int>([&](){
         return Keyboard::GetInputChar();
     });
 }

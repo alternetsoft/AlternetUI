@@ -18,7 +18,7 @@ namespace Alternet::UI
         static wxAcceleratorEntryFlags ModifierKeysToAcceleratorFlags(ModifierKeys modifierKeys);
 
     private:
-        static char16_t _inputChar;
+        static wxChar _inputChar;
         static uint8_t _inputEventCode;
         static bool _inputHandled;
         static Key _inputKey;

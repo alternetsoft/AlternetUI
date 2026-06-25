@@ -11,7 +11,7 @@ namespace Alternet.UI
         {
             this.nativeKeyboard = nativeKeyboard;
             Native.Keyboard.GlobalObject = nativeKeyboard;
-            nativeKeyboard.KeyPress = NativeKeyboard_KeyPress;
+            nativeKeyboard.KeyPress = OnNativeKeyboardKeyPress;
         }
 
         protected override void DisposeManaged()
@@ -20,38 +20,64 @@ namespace Alternet.UI
             Native.Keyboard.GlobalObject = null;
         }
 
-        private void NativeKeyboard_KeyPress()
+        private void OnNativeKeyboardKeyPress()
         {
             const byte InputEventCodeKeyDown = 0;
             const byte InputEventCodeKeyUp = 1;
             const byte InputEventCodeChar = 2;
 
-            var inputChar = Native.Keyboard.InputChar;
             bool handled = false;
-            var repeatCount = Keyboard.IsRepeatToRepeatCount(Native.Keyboard.InputIsRepeat);
             Key key = Native.Keyboard.InputKey;
 
             switch (Native.Keyboard.InputEventCode)
             {
                 case InputEventCodeKeyDown:
+                    var repeatCount = Keyboard.IsRepeatToRepeatCount(Native.Keyboard.InputIsRepeat);
                     AbstractControl.BubbleKeyDown(
                         key,
                         Keyboard.Modifiers,
                         repeatCount,
-                        out handled,
-                        inputChar);
+                        out handled);
                     break;
                 case InputEventCodeKeyUp:
+                    var repeatCount2 = Keyboard.IsRepeatToRepeatCount(Native.Keyboard.InputIsRepeat);
                     AbstractControl.BubbleKeyUp(
                         key,
                         Keyboard.Modifiers,
-                        repeatCount,
-                        out handled,
-                        inputChar);
+                        repeatCount2,
+                        out handled);
                     break;
                 case InputEventCodeChar:
-                    if (inputChar != 0)
-                        AbstractControl.BubbleTextInput(inputChar, out handled, key);
+                    var inputInt = Native.Keyboard.InputChar;
+                    string inputStr;
+
+                    if (App.IsWindowsOS)
+                    {
+                        var ch = (char)inputInt;
+
+                        if (ch != 0)
+                            AbstractControl.BubbleTextInput(ch, out handled);
+                    }
+                    else
+                    {
+                        inputStr = char.ConvertFromUtf32(inputInt);
+
+                        if (inputStr.Length == 1)
+                        {
+                            var ch = inputStr[0];
+
+                            if (ch != 0)
+                                AbstractControl.BubbleTextInput(ch, out handled);
+                        }
+                        else
+                        {
+                            foreach (var ch in inputStr)
+                            {
+                                AbstractControl.BubbleTextInput(ch, out handled);
+                            }
+                        }
+                    }
+
                     break;
             }
 

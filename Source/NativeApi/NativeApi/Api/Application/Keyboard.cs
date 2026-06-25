@@ -7,7 +7,7 @@ namespace NativeApi.Api
 {
     public class Keyboard
     {
-        public static char InputChar { get; }
+        public static int InputChar { get; }
 
         /*
             0 - key down

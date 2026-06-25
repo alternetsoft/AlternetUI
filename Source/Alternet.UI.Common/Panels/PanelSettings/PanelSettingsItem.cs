@@ -48,9 +48,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a pick list for the case when item is
-        /// <see cref="PanelSettingsItemKind.EditableSelector"/> or
-        /// <see cref="PanelSettingsItemKind.Selector"/>.
+        /// Gets a pick list attached to the item.
         /// </summary>
         public virtual IEnumerable<object>? PickList
         {

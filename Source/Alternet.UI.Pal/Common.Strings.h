@@ -42,6 +42,7 @@ namespace Alternet::UI
         }
     };
 
+    /*
     inline char16_t wcharToChar16(wchar_t value)
     {
         char16_t value16;
@@ -62,6 +63,7 @@ namespace Alternet::UI
 
         return value16;
     }
+    */
 
     inline const wxString ArrayStringToString(const wxArrayString& items)
     {
