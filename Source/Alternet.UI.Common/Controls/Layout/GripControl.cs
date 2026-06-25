@@ -651,15 +651,25 @@ namespace Alternet.UI
         /// Configures the grip control to use it as the top border.
         /// </summary>
         /// <returns>The current instance of <see cref="GripControl"/>.</returns>
-        public virtual GripControl ConfigureAsTopBorder()
+        public virtual GripControl ConfigureAsTopBorder(bool resizable = true)
         {
             SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
             Dock = DockStyle.Top;
             ImageKind = GripControl.GripImageKind.None;
             InvertTopDelta = true;
             InvertHeightDelta = true;
-            MoveAction = GripControl.GripMoveAction.ChangeTop;
-            Cursor = Cursors.SizeNS;
+
+            if (resizable)
+            {
+                MoveAction = GripControl.GripMoveAction.ChangeTop;
+                Cursor = Cursors.SizeNS;
+            }
+            else
+            {
+                MoveAction = GripControl.GripMoveAction.None;
+                Cursor = null;
+            }
+
             return this;
         }
 
@@ -667,13 +677,23 @@ namespace Alternet.UI
         /// Configures the grip control to use it as the bottom border.
         /// </summary>
         /// <returns>The current instance of <see cref="GripControl"/>.</returns>
-        public virtual GripControl ConfigureAsBottomBorder()
+        public virtual GripControl ConfigureAsBottomBorder(bool resizable = true)
         {
             SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
             ImageKind = GripControl.GripImageKind.None;
             Dock = DockStyle.Bottom;
-            Cursor = Cursors.SizeNS;
-            SizeAction = GripControl.GripSizeAction.ChangeHeight;
+
+            if (resizable)
+            {
+                Cursor = Cursors.SizeNS;
+                SizeAction = GripControl.GripSizeAction.ChangeHeight;
+            }
+            else
+            {
+                Cursor = null;
+                SizeAction = GripControl.GripSizeAction.None;
+            }
+
             return this;
         }
 
@@ -681,16 +701,27 @@ namespace Alternet.UI
         /// Configures the grip control to use it as the left border.
         /// </summary>
         /// <returns>The current instance of <see cref="GripControl"/>.</returns>
-        public virtual GripControl ConfigureAsLeftBorder()
+        public virtual GripControl ConfigureAsLeftBorder(bool resizable = true)
         {
             SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
             Dock = DockStyle.Left;
             ImageKind = GripControl.GripImageKind.None;
-            Cursor = Cursors.SizeWE;
-            SizeAction = GripControl.GripSizeAction.ChangeWidth;
             InvertLeftDelta = true;
             InvertWidthDelta = true;
-            MoveAction = GripControl.GripMoveAction.ChangeLeft;
+
+            if (resizable)
+            {
+                Cursor = Cursors.SizeWE;
+                SizeAction = GripControl.GripSizeAction.ChangeWidth;
+                MoveAction = GripControl.GripMoveAction.ChangeLeft;
+            }
+            else
+            {
+                Cursor = null;
+                SizeAction = GripControl.GripSizeAction.None;
+                MoveAction = GripControl.GripMoveAction.None;
+            }
+
             return this;
         }
 
@@ -698,13 +729,23 @@ namespace Alternet.UI
         /// Configures the grip control to use it as the right border.
         /// </summary>
         /// <returns>The current instance of <see cref="GripControl"/>.</returns>
-        public virtual GripControl ConfigureAsRightBorder()
+        public virtual GripControl ConfigureAsRightBorder(bool resizable = true)
         {
             SuggestedSize = AbstractControl.DefaultControlSuggestedSize;
             ImageKind = GripControl.GripImageKind.None;
             Dock = DockStyle.Right;
-            Cursor = Cursors.SizeWE;
-            SizeAction = GripControl.GripSizeAction.ChangeWidth;
+
+            if (resizable)
+            {
+                Cursor = Cursors.SizeWE;
+                SizeAction = GripControl.GripSizeAction.ChangeWidth;
+            }
+            else
+            {
+                Cursor = null;
+                SizeAction = GripControl.GripSizeAction.None;
+            }
+
             return this;
         }
 

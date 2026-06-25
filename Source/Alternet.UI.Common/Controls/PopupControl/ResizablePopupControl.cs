@@ -12,18 +12,47 @@ namespace Alternet.UI
     {
         private ResizableWindowBorder? border;
         private ScrollViewer? scrollViewer;
+        private CreateFlags flags;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ResizablePopupControl"/> class.
         /// </summary>
-        public ResizablePopupControl()
+        public ResizablePopupControl(CreateFlags flags)
         {
+            this.flags = flags;
+        }
+
+        /// <summary>
+        /// Enumerates the flags that can be used to customize the creation of the <see cref="ResizablePopupControl"/>.
+        /// </summary>
+        [Flags]
+        public enum CreateFlags
+        {
+            /// <summary>
+            /// No flags specified. The popup will not have scroll bars and will not be resizable.
+            /// </summary>
+            None = 0,
+            
+            /// <summary>
+            /// The popup can be resized by the user.
+            /// </summary>
+            Resizable = 1,
+
+            /// <summary>
+            /// The popup will have scroll bars if the content exceeds the visible area.
+            /// </summary>
+            Scrollable = 2,
+
+            /// <summary>
+            /// The popup will have both scroll bars and can be resized by the user.
+            /// </summary>
+            ResizableAndScrollable = Resizable | Scrollable,
         }
 
         /// <summary>
         /// Gets the border control of the popup.
         /// </summary>
-        public ResizableWindowBorder BorderControl
+        public virtual ResizableWindowBorder BorderControl
         {
             get
             {
@@ -43,7 +72,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the scroll viewer control of the popup.
         /// </summary>
-        public ScrollViewer ScrollViewer
+        public virtual ScrollViewer ScrollViewer
         {
             get
             {
@@ -51,7 +80,16 @@ namespace Alternet.UI
                 {
                     scrollViewer = new();
                     scrollViewer.VerticalAlignment = VerticalAlignment.Fill;
-                    scrollViewer.Parent = BorderControl.FillPanel;
+
+                    if (flags.HasFlag(CreateFlags.Resizable))
+                    {
+                        scrollViewer.Parent = BorderControl.FillPanel;
+                    }
+                    else
+                    {
+                        scrollViewer.Parent = this;
+                    }
+
                     scrollViewer.ParentBackColor = true;
                     scrollViewer.ParentForeColor = true;
                 }

@@ -18,18 +18,18 @@ namespace Alternet.UI
         /// Creates a new instance of the <see cref="InnerPopupToolBar"/> class.
         /// </summary>
         /// <returns>A new instance of the <see cref="InnerPopupToolBar"/> class.</returns>
-        public virtual InnerPopupToolBar CreateInnerPopupToolBar()
+        public virtual InnerPopupToolBar CreateInnerPopupToolBar(InnerPopupToolBar.CreateFlags flags)
         {
-            return new InnerPopupToolBar();
+            return new InnerPopupToolBar(flags);
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="InnerPopupTreeView"/> class.
         /// </summary>
         /// <returns>A new instance of the <see cref="InnerPopupTreeView"/> class.</returns>
-        public virtual InnerPopupTreeView CreateInnerPopupTreeView()
+        public virtual InnerPopupTreeView CreateInnerPopupTreeView(InnerPopupTreeView.CreateFlags flags)
         {
-            return new InnerPopupTreeView();
+            return new InnerPopupTreeView(flags);
         }
 
         /// <summary>
@@ -55,19 +55,19 @@ namespace Alternet.UI
         /// Creates a new instance of the <see cref="ResizablePopupControl{T}"/> class.
         /// </summary>
         /// <returns>A new instance of the <see cref="ResizablePopupControl{T}"/> class.</returns>
-        public virtual ResizablePopupControl<T> CreateResizablePopupControl<T>(bool useScrollViewer)
+        public virtual ResizablePopupControl<T> CreateResizablePopupControl<T>(ResizablePopupControl.CreateFlags flags)
             where T : AbstractControl, new()
         {
-            return new ResizablePopupControl<T>(useScrollViewer);
+            return new ResizablePopupControl<T>(flags);
         }
 
         /// <summary>
         /// Creates a new instance of the <see cref="ResizablePopupControl"/> class.
         /// </summary>
         /// <returns>A new instance of the <see cref="ResizablePopupControl"/> class.</returns>
-        public virtual ResizablePopupControl CreateResizablePopupControl()
+        public virtual ResizablePopupControl CreateResizablePopupControl(ResizablePopupControl.CreateFlags flags)
         {
-            return new ResizablePopupControl();
+            return new ResizablePopupControl(flags);
         }
     }
 }

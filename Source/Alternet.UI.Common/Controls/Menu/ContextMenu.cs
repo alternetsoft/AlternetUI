@@ -519,7 +519,8 @@ namespace Alternet.UI
 
             if (hostControl is null)
             {
-                hostControl = new InnerPopupToolBar();
+                hostControl = KnownPopupControls.Default.CreateInnerPopupToolBar(
+                    InnerPopupToolBar.CreateFlags.ResizableAndScrollable);
                 hostControl.Content.DataContext = this;
                 hostControl.Content.ConfigureAsContextMenu();
                 AddHostObject(hostControl);

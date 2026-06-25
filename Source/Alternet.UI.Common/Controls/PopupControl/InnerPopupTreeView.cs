@@ -20,8 +20,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="InnerPopupTreeView"/> class.
         /// </summary>
-        public InnerPopupTreeView()
-            : base(useScrollViewer: false)
+        public InnerPopupTreeView(CreateFlags flags)
+            : base(flags)
         {
             Content.HasBorder = false;
             Content.Margin = 10;

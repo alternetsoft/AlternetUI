@@ -24,8 +24,6 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultMinPopupWidth = 200;
 
-        private static InnerPopupToolBar? defaultPopup;
-
         private readonly ControlSubscriber notification = new ();
 
         private WeakReferenceValue<AbstractControl> relatedControl = new();
@@ -33,8 +31,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="InnerPopupToolBar"/> class.
         /// </summary>
-        public InnerPopupToolBar()
-            : base(useScrollViewer: true)
+        public InnerPopupToolBar(CreateFlags flags = CreateFlags.Resizable)
+            : base(flags)
         {
             if (App.IsMaui)
                 FitParentScrollbars = false;
@@ -145,27 +143,6 @@ namespace Alternet.UI
             {
                 Content.Width = ScrollViewer.Content.ClientSize.Width;
             };
-        }
-
-        /// <summary>
-        /// Gets or sets default instance of the <see cref="InnerPopupToolBar"/>.
-        /// </summary>
-        public static InnerPopupToolBar Default
-        {
-            get
-            {
-                if (defaultPopup == null)
-                {
-                    defaultPopup = new ();
-                }
-
-                return defaultPopup;
-            }
-
-            set
-            {
-                defaultPopup = value;
-            }
         }
 
         /// <inheritdoc/>

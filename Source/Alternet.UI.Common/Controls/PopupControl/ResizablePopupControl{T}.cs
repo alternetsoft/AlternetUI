@@ -27,20 +27,30 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ResizablePopupControl{T}"/> class.
         /// </summary>
-        public ResizablePopupControl(bool useScrollViewer)
+        public ResizablePopupControl(CreateFlags flags)
+            : base(flags)
         {
             content = CreateContent();
             content.ParentFont = true;
+
+            bool useScrollViewer = (flags & CreateFlags.Scrollable) != 0;
+            bool canResize = (flags & CreateFlags.Resizable) != 0;
 
             if (useScrollViewer)
             {
                 content.Parent = ScrollViewer.Content;
             }
             else
-            {
-                content.VerticalAlignment = VerticalAlignment.Fill;
-                content.Parent = BorderControl.FillPanel;
-            }
+                if (canResize)
+                {
+                    content.VerticalAlignment = VerticalAlignment.Fill;
+                    content.Parent = BorderControl.FillPanel;
+                }
+                else
+                {
+                    content.VerticalAlignment = VerticalAlignment.Fill;
+                    content.Parent = this;
+                }
         }
 
         /// <summary>

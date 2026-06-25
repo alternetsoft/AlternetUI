@@ -79,12 +79,14 @@ namespace Alternet.UI
         /// This control will be resized when the user drags the grips of the resizable border.
         /// </summary>
         /// <param name="target">The target control to be resized.</param>
-        public virtual void SetResizeTarget(AbstractControl target)
+        public virtual void SetResizeTarget(AbstractControl? target)
         {
             RightGripControl.Target = target;
             LeftGripControl.Target = target;
             TopGripControl.Target = target;
             BottomGripControl.Target = target;
+
+            var isResizable = target != null;
         }
 
         /// <summary>
@@ -124,6 +126,18 @@ namespace Alternet.UI
         protected virtual GripControl CreateGripControl()
         {
             return new GripControl();
+        }
+
+        /// <summary>
+        /// Sets whether the resizable border is enabled or not.
+        /// </summary>
+        /// <param name="resizable">Indicates whether the resizable border is enabled.</param>
+        public virtual void SetResizable(bool resizable)
+        {
+            RightGripControl.ConfigureAsRightBorder(resizable);
+            LeftGripControl.ConfigureAsLeftBorder(resizable);
+            TopGripControl.ConfigureAsTopBorder(resizable);
+            BottomGripControl.ConfigureAsBottomBorder(resizable);
         }
 
         /// <inheritdoc/>
