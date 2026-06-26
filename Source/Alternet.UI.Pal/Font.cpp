@@ -23,7 +23,8 @@ namespace Alternet::UI
     void Font::Initialize(GenericFontFamily genericFamily,
         const NativeStringSpan& familyName, Coord emSize, FontStyle style)
     {
-        _font = InitializeWxFont(genericFamily, wxStr(familyName), emSize, style);
+        auto wxFamilyName = wxStr(familyName);
+        _font = InitializeWxFont(genericFamily, wxFamilyName, emSize, style);
     }
 
     wxFont Font::InitializeWxFont(GenericFontFamily genericFamily, 
@@ -32,7 +33,10 @@ namespace Alternet::UI
         wxFontInfo fontInfo(emSize);
 
         if (genericFamily != GenericFontFamily::None)
-            fontInfo.Family(GetWxFontFamily(genericFamily));
+        {
+            auto wxF = GetWxFontFamily(genericFamily);
+            fontInfo.Family(wxF);
+        }
 
         if (!familyName.empty())
             fontInfo.FaceName(familyName);
