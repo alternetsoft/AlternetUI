@@ -26,8 +26,6 @@ namespace Alternet.Drawing
         /// for the new <see cref="FontInfo"/>.</param>
         /// <param name="emSize">The em-size, in points.</param>
         /// <param name="style">The <see cref="FontStyle"/> of the new font info.</param>
-        /// <exception cref="ArgumentException"><c>emSize</c> is less than or
-        /// equal to 0, evaluates to infinity or is not a valid number.</exception>
         public FontInfo(
             string familyName,
             FontScalar emSize,
@@ -35,6 +33,24 @@ namespace Alternet.Drawing
         {
             Font.CheckSize(emSize);
             Name = familyName;
+            SizeInPoints = emSize;
+            Style = style;
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="FontInfo"/> using a specified font family
+        /// name, size in points and style.
+        /// </summary>
+        /// <param name="family">The <see cref="FontFamily"/> for the new <see cref="FontInfo"/>.</param>
+        /// <param name="emSize">The em-size, in points.</param>
+        /// <param name="style">The <see cref="FontStyle"/> of the new font info.</param>
+        public FontInfo(
+                    FontFamily family,
+                    FontScalar emSize,
+                    FontStyle style = FontStyle.Regular)
+        {
+            Font.CheckSize(emSize);
+            FontFamily = family;
             SizeInPoints = emSize;
             Style = style;
         }
