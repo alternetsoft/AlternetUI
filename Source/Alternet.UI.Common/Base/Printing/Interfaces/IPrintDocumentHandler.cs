@@ -63,10 +63,10 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PrintDocument.Print"/>
         void Print();
 
-        bool StartPrinting(RectD rect);
+        bool StartPage();
 
-        bool EndPrinting();
+        bool EndPage();
 
-        Graphics? GetGraphics();
+        Graphics? GetPageGraphics();
     }
 }

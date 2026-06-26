@@ -197,7 +197,7 @@ namespace PrintingSample
         {
             var document = new PrintDocument
             {
-                OriginAtMargins = originAtMarginCheckBox.IsChecked,
+                OriginAtMargins = false,
                 DocumentName = printDocumentNameTextBox.Text,
             };
 
@@ -269,9 +269,20 @@ namespace PrintingSample
         private void Document_PrintPage(object? sender, PrintPageEventArgs e)
         {
             int pageNumber = e.PageNumber;
+            RectD bounds;
 
-            var bounds = new RectD(new PointD(), originAtMarginCheckBox.IsChecked
-                ? e.MarginBounds.Size : e.PrintablePageBounds.Size);
+            if (originAtMarginCheckBox.IsChecked)
+            {
+                bounds = e.MarginBounds;
+            }
+            else
+            {
+                bounds = e.PageBounds;
+            }
+
+            App.Log($"PageBounds: {e.PageBounds}");
+            App.Log($"MarginBounds: {e.MarginBounds}");
+            App.Log($"PrintablePageBounds: {e.PrintablePageBounds}");
 
             e.DrawingContext.Save();
 

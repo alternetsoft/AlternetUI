@@ -216,7 +216,6 @@ namespace Alternet::UI
         if (_printout == nullptr)
             throwExInvalidOp;
 
-        //return new DrawingContext(_printout->GetDC(), [&]() { _printout->SetDCMapping(); });
         auto dc = new DrawingContext(_printout->GetDC(), false);
         dc->SetDoNotDeleteDC(true); // wxPrintout deletes the wxDC.
         return dc;
@@ -238,13 +237,17 @@ namespace Alternet::UI
         _printout->SetHasMorePages(value);
     }
 
+    // Return the rectangle corresponding to the page margins specified by the
+    // given wxPageSetupDialogData object in the associated wxDC's logical coordinates
+    // for the current user scale and device origin. The page margins are specified with
+    // respect to the edges of the paper on all platforms.
     Rect PrintDocument::GetPrintPage_MarginBounds()
     {
         if (_printout == nullptr)
             throwExInvalidOp;
 
         auto rect = _printout->GetLogicalPageMarginsRect(GetPageSetupDialogData());
-        return toDip(rect, nullptr);
+        return rect;
     }
 
     Rect PrintDocument::GetPrintPage_PhysicalPageBounds()
@@ -257,22 +260,26 @@ namespace Alternet::UI
         return Rect(0, 0, w, h);
     }
 
+    // Return the rectangle corresponding to the paper in the associated
+    // wxDC 's logical coordinates for the current user scale and device origin.
     Rect PrintDocument::GetPrintPage_PageBounds()
     {
         if (_printout == nullptr)
             throwExInvalidOp;
 
         auto rect = _printout->GetLogicalPaperRect();
-        return toDip(rect, nullptr);
+        return rect;
     }
 
+    // Return the rectangle corresponding to the paper in the associated
+    // wxDC 's logical coordinates for the current user scale and device origin.
     Rect PrintDocument::GetPrintPage_PrintablePageBounds()
     {
         if (_printout == nullptr)
             throwExInvalidOp;
 
         auto rect = _printout->GetLogicalPageRect();
-        return toDip(rect, nullptr);
+        return rect;
     }
 
     wxPageSetupDialogData PrintDocument::GetPageSetupDialogData()
@@ -284,9 +291,8 @@ namespace Alternet::UI
         auto margins = Thickness(pageSettings->GetMarginLeft(), pageSettings->GetMarginTop(),
             pageSettings->GetMarginRight(), pageSettings->GetMarginBottom());
 
-        data.SetMarginTopLeft(wxPoint(fromDip(margins.Left, nullptr), fromDip(margins.Top, nullptr)));
-        data.SetMarginBottomRight(wxPoint(fromDip(margins.Right, nullptr),
-            fromDip(margins.Bottom, nullptr)));
+        data.SetMarginTopLeft(wxPoint(margins.Left, margins.Top));
+        data.SetMarginBottomRight(wxPoint(margins.Right, margins.Bottom));
 
         return data;
     }
@@ -492,10 +498,10 @@ namespace Alternet::UI
         auto topLeft = data.GetMarginTopLeft();
         auto bottomRight = data.GetMarginBottomRight();
 
-        pageSettings->SetMarginLeft(toDip(topLeft.x, nullptr));
-        pageSettings->SetMarginRight(toDip(bottomRight.x, nullptr));
-        pageSettings->SetMarginTop(toDip(topLeft.y, nullptr));
-        pageSettings->SetMarginBottom(toDip(bottomRight.y, nullptr));
+        pageSettings->SetMarginLeft(topLeft.x);
+        pageSettings->SetMarginRight(bottomRight.x);
+        pageSettings->SetMarginTop(topLeft.y);
+        pageSettings->SetMarginBottom(bottomRight.y);
     }
 
     PrintRange PrintDocument::GetPrintRangeFromData(wxPrintDialogData& data)

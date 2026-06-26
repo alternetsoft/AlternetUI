@@ -18,6 +18,8 @@ namespace Alternet.Drawing.Printing
     /// </remarks>
     public class PageSettings : HandledObject<IPageSettingsHandler>
     {
+        private bool color = true;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PageSettings"/> class.
         /// </summary>
@@ -42,12 +44,17 @@ namespace Alternet.Drawing.Printing
         {
             get
             {
-                return Handler.Color;
+                return Handler?.Color ?? color;
             }
 
             set
             {
-                Handler.Color = value;
+                if (Handler != null)
+                {
+                    Handler.Color = value;
+                }
+
+                color = value;
             }
         }
 
@@ -157,7 +164,8 @@ namespace Alternet.Drawing.Printing
         /// <remarks>This method outputs the values of the Color, Landscape, Margins, PaperSize, and
         /// PrinterResolution properties. The output is grouped within a section labeled "PageSettings". This method is
         /// typically used for diagnostic or debugging purposes.</remarks>
-        /// <param name="log">The log writer to which the page settings are written. If null, a debug log writer is used.</param>
+        /// <param name="log">The log writer to which the page settings are written.
+        /// If null, a debug log writer is used.</param>
         public virtual void Log(ILogWriter? log = null)
         {
             log ??= LogWriter.Debug;

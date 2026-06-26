@@ -23,7 +23,8 @@ namespace Alternet.Drawing
         /// Gets or sets a delegate that applies custom recoloring to an image for dark mode scenarios.
         /// </summary>
         /// <remarks>If set, this delegate overrides the default dark mode recoloring logic. The delegate
-        /// should accept an input image and return a recolored image suitable for display in dark mode. If the value is
+        /// should accept an input image and return a recolored image suitable for display in dark mode.
+        /// If the value is
         /// null, the default recoloring behavior is used.</remarks>
         public static Func<Image, Bitmap>? RecolorForDarkModeOverride;
 

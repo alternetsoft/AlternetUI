@@ -324,11 +324,11 @@ namespace Alternet.Drawing.Printing
         /// required for printing is not available.</exception>
         protected virtual void OnNativePrintDocumentPrintPage(object? sender, CancelEventArgs e)
         {
-            var result = Handler.StartPrinting(Handler.MarginBounds);
+            var result = Handler.StartPage();
 
             if (result)
             {
-                var graphics = Handler.GetGraphics();
+                var graphics = Handler.GetPageGraphics();
 
                 if (graphics != null)
                 {
@@ -336,7 +336,7 @@ namespace Alternet.Drawing.Printing
 
                     OnPrintPage(ea);
                     e.Cancel = ea.Cancel;
-                    Handler.EndPrinting();
+                    Handler.EndPage();
                 }
             }
         }

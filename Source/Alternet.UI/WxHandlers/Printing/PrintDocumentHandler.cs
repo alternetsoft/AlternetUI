@@ -16,7 +16,7 @@ namespace Alternet.Drawing.Printing
         private SkiaGraphics? graphics;
         private SKCanvas? canvas;
         private UI.Native.DrawingContext? dc;
-        private RectD rect;
+        private SizeD pageScaleFactor = SizeD.One;
 
         RectD IPrintDocumentHandler.MarginBounds => GetPrintPage_MarginBounds();
 
@@ -51,16 +51,15 @@ namespace Alternet.Drawing.Printing
             return GetDocumentName().ToString();
         }
 
-        public bool StartPrinting(RectD rect)
+        public bool StartPage()
         {
             if (canvas != null)
                 return false;
 
-            this.rect = rect;
             dc = PrintPage_DrawingContext;
-            int pageWidthPx = dc.GetSize().Width;   // printer pixels
+            int pageWidthPx = dc.GetSize().Width;
             int pageHeightPx = dc.GetSize().Height;
-            int printerPpiX = dc.GetPPI().Width;    // e.g. 600
+            int printerPpiX = dc.GetPPI().Width;
             int printerPpiY = dc.GetPPI().Height;
 
             var info = new SKImageInfo(pageWidthPx, pageHeightPx, SKColorType.Bgra8888, SKAlphaType.Premul);
@@ -69,25 +68,22 @@ namespace Alternet.Drawing.Printing
             graphics = new SkiaGraphics(bitmap);
             canvas = graphics.Canvas;
 
-            float scaleX = (float)printerPpiX / 96f; // 600 / 96 ≈ 6.25
-            float scaleY = (float)printerPpiY / 96f; // 600 / 96 ≈ 6.25
+            float scaleX = (float)printerPpiX / 96f;
+            float scaleY = (float)printerPpiY / 96f;
+            pageScaleFactor = new SizeD(scaleX, scaleY);
             canvas.Scale(scaleX, scaleY);
 
             canvas.Clear(SKColors.White);
 
-            graphics.DrawRectangle(
-                new Pen(Color.Black, 1), new RectD(10, 10, 100, 100));
-
-
             return true;
         }
 
-        public Graphics? GetGraphics()
+        public Graphics? GetPageGraphics()
         {
             return graphics;
         }
 
-        public bool EndPrinting()
+        public bool EndPage()
         {
             if (canvas == null)
                 return false;
@@ -96,12 +92,20 @@ namespace Alternet.Drawing.Printing
 
             if (graphics?.Bitmap is not null && dc is not null)
             {
-                var image = (Image)graphics.Bitmap;
+                var imageInfo = new SKImageInfo(
+                    (int)(graphics.Bitmap.Width / pageScaleFactor.Width),
+                    (int)(graphics.Bitmap.Height / pageScaleFactor.Height));
 
-               image.Save("E:\\test.png");
+                var sampling = new SKSamplingOptions(SKFilterMode.Linear, SKMipmapMode.None);
 
-                SkiaUtils.SaveBitmapToPng(graphics.Bitmap, "E:\\test_skia.png");
+                var resized = graphics.Bitmap.Resize(imageInfo, sampling);
 
+                var image = (Image)resized;
+
+                /* image.Save("E:\\test.png");*/
+
+                /* SkiaUtils.SaveBitmapToPng(graphics.Bitmap, "E:\\test_skia.png");*/
+                
                 dc.DrawBitmapAtPointI((UI.Native.Image)image.Handler, 0, 0, false);
 
                 graphics.Dispose();
@@ -109,7 +113,6 @@ namespace Alternet.Drawing.Printing
                 canvas.Dispose();
                 canvas = null;
                 dc = null;
-                rect = default;
                 result = true;
             }
             else

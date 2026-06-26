@@ -77,7 +77,8 @@ namespace Alternet.UI
         /// <remarks>This method checks if the application is running on a Windows operating system before
         /// attempting to retrieve the default printer name. If the operating system is not Windows, it returns
         /// null.</remarks>
-        /// <returns>The name of the default printer as a string, or null if the operation fails or if the operating system is
+        /// <returns>The name of the default printer as a string, or null if the operation
+        /// fails or if the operating system is
         /// not Windows.</returns>
         public static string? GetDefaultPrinterName()
         {
@@ -136,7 +137,8 @@ namespace Alternet.UI
         /// as defined by the KnownPaperKind enumeration.</param>
         /// <param name="rasterDpi">The rasterization resolution, in dots per inch (DPI), to use for the calculation.
         /// If null, the default DPI for Skia documents is used.</param>
-        /// <returns>A SizeI structure representing the width and height of the paper in pixels, calculated according to the
+        /// <returns>A SizeI structure representing the width and height of the paper in pixels,
+        /// calculated according to the
         /// specified paper size and DPI.</returns>
         public static SizeI GetPaperSizeForSkiaDocument(PaperKind paperSize, float? rasterDpi = null)
         {
