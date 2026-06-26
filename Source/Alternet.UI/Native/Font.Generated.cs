@@ -43,6 +43,27 @@ namespace Alternet.UI.Native
             
         }
         
+        public static System.IntPtr CreateFontRef(Alternet.Drawing.GenericFontFamily genericFamily, Alternet.UI.NativeStringSpan familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style)
+        {
+            var familyName_Native = familyName.ToNative();
+return NativeApi.Font_CreateFontRef_(genericFamily, ref familyName_Native, emSizeInPoints, style);
+        }
+        
+        public static System.IntPtr CreateFontRefDefault()
+        {
+            return NativeApi.Font_CreateFontRefDefault_();
+        }
+        
+        public static System.IntPtr CreateFontRefDefaultMono()
+        {
+            return NativeApi.Font_CreateFontRefDefaultMono_();
+        }
+        
+        public static void DeleteFontRef(System.IntPtr fontRef)
+        {
+            NativeApi.Font_DeleteFontRef_(fontRef);
+        }
+        
         public Alternet.Drawing.SizeI GetPixelSize()
         {
             CheckDisposed();
@@ -186,6 +207,18 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.FontStyle Font_GetStyle_(IntPtr obj);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Font_CreateFontRef_(Alternet.Drawing.GenericFontFamily genericFamily, ref Alternet.UI.NativeStringSpan familyName, float emSizeInPoints, Alternet.Drawing.FontStyle style);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Font_CreateFontRefDefault_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern System.IntPtr Font_CreateFontRefDefaultMono_();
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Font_DeleteFontRef_(System.IntPtr fontRef);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.SizeI Font_GetPixelSize_(IntPtr obj);

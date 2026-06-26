@@ -20,6 +20,34 @@ namespace Alternet::UI
         _font = wxFont(font->_font);
     }
 
+    void* Font::CreateFontRef(
+        GenericFontFamily genericFamily,
+        const NativeStringSpan& familyName,
+        float emSizeInPoints,
+        FontStyle style)
+    {
+        auto wxFamilyName = wxStr(familyName);
+        auto fontInfo = CreateWxFontInfo(genericFamily, wxFamilyName, emSizeInPoints, style);
+        return new wxFont(fontInfo);
+    }
+
+    void* Font::CreateFontRefDefault()
+    {
+        auto _font = wxSystemSettings::GetFont(wxSystemFont::wxSYS_DEFAULT_GUI_FONT);
+        return new wxFont(_font);
+    }
+
+    void* Font::CreateFontRefDefaultMono()
+    {
+        auto _font = wxSystemSettings::GetFont(wxSystemFont::wxSYS_ANSI_FIXED_FONT);
+        return new wxFont(_font);
+    }
+
+    void Font::DeleteFontRef(void* fontRef)
+    {
+		delete static_cast<wxFont*>(fontRef);
+    }
+
     void Font::Initialize(GenericFontFamily genericFamily,
         const NativeStringSpan& familyName, Coord emSize, FontStyle style)
     {
@@ -27,7 +55,7 @@ namespace Alternet::UI
         _font = InitializeWxFont(genericFamily, wxFamilyName, emSize, style);
     }
 
-    wxFont Font::InitializeWxFont(GenericFontFamily genericFamily, 
+    wxFontInfo Font::CreateWxFontInfo(GenericFontFamily genericFamily,
         wxString familyName, Coord emSize, FontStyle style)
     {
         wxFontInfo fontInfo(emSize);
@@ -53,6 +81,13 @@ namespace Alternet::UI
         if ((style & FontStyle::Underline) != (FontStyle)0)
             fontInfo.Underlined();
 
+        return fontInfo;
+    }
+
+    wxFont Font::InitializeWxFont(GenericFontFamily genericFamily, 
+        wxString familyName, Coord emSize, FontStyle style)
+    {
+        auto fontInfo = CreateWxFontInfo(genericFamily, familyName, emSize, style);
         return wxFont(fontInfo);
     }
 

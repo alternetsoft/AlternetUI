@@ -29,6 +29,34 @@ ALTERNET_UI_API FontStyle Font_GetStyle_(Font* obj)
     });
 }
 
+ALTERNET_UI_API void* Font_CreateFontRef_(GenericFontFamily genericFamily, NativeStringSpan* familyName, float emSizeInPoints, FontStyle style)
+{
+    return MarshalExceptions<void*>([&](){
+        return Font::CreateFontRef(genericFamily, *familyName, emSizeInPoints, style);
+    });
+}
+
+ALTERNET_UI_API void* Font_CreateFontRefDefault_()
+{
+    return MarshalExceptions<void*>([&](){
+        return Font::CreateFontRefDefault();
+    });
+}
+
+ALTERNET_UI_API void* Font_CreateFontRefDefaultMono_()
+{
+    return MarshalExceptions<void*>([&](){
+        return Font::CreateFontRefDefaultMono();
+    });
+}
+
+ALTERNET_UI_API void Font_DeleteFontRef_(void* fontRef)
+{
+    MarshalExceptions<void>([&](){
+        Font::DeleteFontRef(fontRef);
+    });
+}
+
 ALTERNET_UI_API SizeI_C Font_GetPixelSize_(Font* obj)
 {
     return MarshalExceptions<SizeI_C>([&](){

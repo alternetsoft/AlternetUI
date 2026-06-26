@@ -5,6 +5,10 @@ float GetSizeInPoints();
 
 FontStyle GetStyle();
 
+static void* CreateFontRef(GenericFontFamily genericFamily, const NativeStringSpan& familyName, float emSizeInPoints, FontStyle style);
+static void* CreateFontRefDefault();
+static void* CreateFontRefDefaultMono();
+static void DeleteFontRef(void* fontRef);
 SizeI GetPixelSize();
 bool IsUsingSizeInPixels();
 int GetNumericWeight();

@@ -1489,16 +1489,13 @@ namespace Alternet::UI
         EmptyColor = 1,
         NullColor = 2,
         DefaultAttributes = 3,
-        DefaultAttributesTextBox = 4,
-        DefaultAttributesListBox = 5,
-        DefaultAttributesButton = 6,
-        ColorMenu = 7,
-        ColorActiveCaption = 8,
-        ColorInactiveCaption = 9,
-        ColorInfo = 10,
-        ColorWindow = 11,
-        ColorHighlight = 12,
-        ColorButtonFace = 13,
+        ColorMenu = 4,
+        ColorActiveCaption = 5,
+        ColorInactiveCaption = 6,
+        ColorInfo = 7,
+        ColorWindow = 8,
+        ColorHighlight = 9,
+        ColorButtonFace = 10,
     };
     
     enum class FontDialogRestrictSelection

@@ -16,6 +16,8 @@ namespace Alternet::UI
         void SetWxFontInfo(wxFontInfo fontInfo);
 
         static FontStyle GetFontStyle(wxFont font);
+        static wxFontInfo CreateWxFontInfo(GenericFontFamily genericFamily,
+            wxString familyName, Coord emSize, FontStyle style);
         static wxFont InitializeWxFont(GenericFontFamily genericFamily,
             wxString familyName, Coord emSize, FontStyle style);
         static wxFontFamily GetWxFontFamily(GenericFontFamily genericFamily);

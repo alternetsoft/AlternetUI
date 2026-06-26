@@ -7,6 +7,15 @@ namespace NativeApi.Api
     // https://docs.wxwidgets.org/3.2/classwx_font.html
     public class Font
     {
+        public static IntPtr CreateFontRef(
+            GenericFontFamily genericFamily,
+            NativeStringSpan familyName,
+            float emSizeInPoints,
+            FontStyle style) => throw new Exception();
+        public static IntPtr CreateFontRefDefault() => throw new Exception();
+        public static IntPtr CreateFontRefDefaultMono() => throw new Exception();
+        public static void DeleteFontRef(IntPtr fontRef) => throw new Exception();
+
         public SizeI GetPixelSize() => default;
         public bool IsUsingSizeInPixels() => default;
         public int GetNumericWeight() => default;
