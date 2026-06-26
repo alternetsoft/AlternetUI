@@ -10,6 +10,8 @@ namespace Alternet.Drawing
 {
     internal class WxFontFactoryHandler : DisposableObject, IFontFactoryHandler
     {
+        private IFontHandler? defaultFontHandler;
+
         public FontEncoding DefaultFontEncoding
         {
             get => (FontEncoding)UI.Native.Font.GetDefaultEncoding();
@@ -19,6 +21,12 @@ namespace Alternet.Drawing
         public bool AllowNullFontName
         {
             get => false;
+        }
+
+        public Font CreateDefaultFont()
+        {
+            defaultFontHandler ??= CreateDefaultFontHandler();
+            return new Font(defaultFontHandler.GetName(), defaultFontHandler.SizeInPoints);
         }
 
         public IFontHandler CreateDefaultFontHandler()

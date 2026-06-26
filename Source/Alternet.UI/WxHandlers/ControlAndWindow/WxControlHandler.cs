@@ -150,7 +150,56 @@ namespace Alternet.UI
         {
             set
             {
-                NativeControl.SetFont((UI.Native.Font?)value?.Handler);
+                /* NativeControl.SetFont((UI.Native.Font?)value?.Handler);*/
+
+                NativeControl.SetFontRef(GetFontRef(value));
+            }
+        }
+
+        internal class FontRefContainer : DisposableObject
+        {
+            public FontRefContainer(IntPtr fontRef)
+            {
+                FontRef = fontRef;
+            }
+
+            public IntPtr FontRef { get; }
+
+            protected override void DisposeManaged()
+            {
+                Native.Font.DeleteFontRef(FontRef);
+                base.DisposeManaged();
+            }
+        }
+
+        internal static IntPtr GetFontRef(Font? value)
+        {
+            if (value is null)
+            {
+                return IntPtr.Zero;
+            }
+            else
+            {
+                var host = value.GetHostObject<FontRefContainer>();
+                if (host != null)
+                    return host.FontRef;
+
+                IntPtr fontRef = IntPtr.Zero;
+
+                NativeStringSpan.Invoke(value.Name, span =>
+                {
+                    fontRef = Native.Font.CreateFontRef(
+                        value.GenericFamily,
+                        span,
+                        value.SizeInPoints,
+                        value.Style);
+                });
+
+                var container = new FontRefContainer(fontRef);
+
+                value.AddHostObject(container);
+
+                return fontRef;
             }
         }
 

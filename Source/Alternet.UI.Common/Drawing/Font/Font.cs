@@ -54,6 +54,7 @@ namespace Alternet.Drawing
         private FontFamily? fontFamily;
         private ObjectUniqueId? uniqueId;
         private int savedFontSettingsIteration;
+        private GenericFontFamily genericFamily;
 
         /// <summary>
         /// Initializes a new <see cref="Font"/> using a <see cref="FontInfo"/>.
@@ -385,6 +386,8 @@ namespace Alternet.Drawing
              GraphicsUnit unit = GraphicsUnit.Point,
              byte gdiCharSet = 1)
         {
+            this.genericFamily = genericFamily ?? 0;
+
             IFontHandler.FontParams prm = new()
             {
                 GenericFamily = genericFamily,
@@ -464,6 +467,12 @@ namespace Alternet.Drawing
                 return Handler.GetPixelSize(this);
             }
         }
+
+        /// <summary>
+        /// Gets <see cref="GenericFontFamily"/> for this font.
+        /// </summary>
+        [Browsable(false)]
+        public GenericFontFamily GenericFamily => genericFamily;
 
         /// <summary>
         /// Gets the size in dips.
@@ -1552,8 +1561,8 @@ namespace Alternet.Drawing
 
         internal static Font CreateDefaultFont()
         {
-            var nativeFont = FontFactory.Handler.CreateDefaultFontHandler();
-            return new Font(nativeFont);
+            var font = FontFactory.Handler.CreateDefaultFont();
+            return font;
         }
 
         /// <summary>

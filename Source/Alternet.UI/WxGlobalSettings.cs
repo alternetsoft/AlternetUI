@@ -11,17 +11,8 @@ namespace Alternet.UI
     /// </summary>
     public static class WxGlobalSettings
     {
-        /// <summary>
-        /// Gets or sets whether to disable native point and size transformations
-        /// inside the library. When <see cref="InternalGraphicsTransform"/> is True,
-        /// Graphics.Transform is processed inside the library. By default it is False on Windows
-        /// and True on macOs and Linux.
-        /// </summary>
-        public static bool InternalGraphicsTransform;
-
         static WxGlobalSettings()
         {
-            InternalGraphicsTransform = App.IsMacOS;
         }
 
         /// <summary>
@@ -42,7 +33,6 @@ namespace Alternet.UI
         /// </summary>
         public static class Msw
         {
-
         }
 
         /// <summary>

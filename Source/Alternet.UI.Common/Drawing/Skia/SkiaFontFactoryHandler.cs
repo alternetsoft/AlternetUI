@@ -49,6 +49,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates default font
+        /// </summary>
+        /// <returns></returns>
+        public virtual Font CreateDefaultFont()
+        {
+            return new Font(SkiaHelper.DefaultFontName, SkiaHelper.DefaultFontSize);
+        }
+
+        /// <summary>
         /// Creates <see cref="IFontHandler"/> interface provider.
         /// </summary>
         /// <returns></returns>

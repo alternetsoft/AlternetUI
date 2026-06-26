@@ -36,10 +36,10 @@ namespace Alternet.Drawing
         IFontHandler CreateFontHandler();
 
         /// <summary>
-        /// Creates default native font handler.
+        /// Creates default font.
         /// </summary>
         /// <returns></returns>
-        IFontHandler CreateDefaultFontHandler();
+        Font CreateDefaultFont();
 
         /// <summary>
         /// Creates system font specified with <see cref="SystemSettingsFont"/>.
