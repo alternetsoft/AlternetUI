@@ -8,7 +8,7 @@
       <VerticalStackPanel Margin="5" Name="textBoxesPanel" MinChildMargin="5">
         <Label Text="Date:" Margin="0,0,0,5" IsTextLocalized="true"/>
         <DatePicker
-          SuggestedWidth="200" HorizontalAlignment="Left"
+          MinWidth="200" HorizontalAlignment="Left"
           Margin="0,0,0,5" Name="datePicker"
           ValueChanged="DatePicker_DateChanged"/>
         <Label Text="Selected:" Margin="0,10,0,5" Name="dateLabel" IsTextLocalized="true"/>
