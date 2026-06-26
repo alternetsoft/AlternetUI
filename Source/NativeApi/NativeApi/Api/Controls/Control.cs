@@ -164,6 +164,8 @@ namespace NativeApi.Api
         public void SetBackgroundColor(Color value) { }
         public void SetForegroundColor(Color value) { }
 
+        public void SetFontRef(IntPtr value) { }
+
         public void SetFont(Font? value) { }
 
         public static Control? HitTest(PointD screenPoint) => default;

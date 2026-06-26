@@ -1247,6 +1247,22 @@ namespace Alternet::UI
         _flags.Set(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
+    void Control::SetFontRef(void* value)
+    {
+        auto w = GetWxWindow();
+        if (value == nullptr)
+        {
+            w->SetFont(wxNullFont);
+            return;
+        }
+
+        auto wxf = static_cast<wxFont*>(value);
+
+        _font = wxFont(*wxf);
+
+        w->SetFont(_font);
+    }
+
     void Control::SetFont(Font* value)
     {
         auto w = GetWxWindow();

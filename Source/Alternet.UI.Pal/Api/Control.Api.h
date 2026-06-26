@@ -739,6 +739,13 @@ ALTERNET_UI_API void Control_SetForegroundColor_(Control* obj, Color* value)
     });
 }
 
+ALTERNET_UI_API void Control_SetFontRef_(Control* obj, void* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetFontRef(value);
+    });
+}
+
 ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
 {
     MarshalExceptions<void>([&](){

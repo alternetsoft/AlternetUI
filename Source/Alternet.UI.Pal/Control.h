@@ -116,6 +116,7 @@ namespace Alternet::UI
     public:
         bool IsInitInProgress();
 
+        wxFont _font;
         wxCursor _cursor = wxNullCursor;
 
         void OnTextChanged(wxCommandEvent& event);

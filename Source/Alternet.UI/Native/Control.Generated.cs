@@ -786,6 +786,12 @@ NativeApi.Control_SetBackgroundColor_(NativePointer, ref value_Native);
 NativeApi.Control_SetForegroundColor_(NativePointer, ref value_Native);
         }
         
+        public void SetFontRef(System.IntPtr value)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetFontRef_(NativePointer, value);
+        }
+        
         public void SetFont(Font? value)
         {
             CheckDisposed();
@@ -1551,6 +1557,9 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetForegroundColor_(IntPtr obj, ref NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetFontRef_(IntPtr obj, System.IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
