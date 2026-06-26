@@ -69,6 +69,7 @@ namespace Alternet.UI
         private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
         private bool immutableItems;
         private bool isHoverSelectionEnabled;
+        private InnerPopupTextBox? popupTextBox;
 
         static VirtualListBox()
         {
@@ -109,6 +110,13 @@ namespace Alternet.UI
 
             UseScrollActivity = DefaultUseScrollActivity;
         }
+
+        /// <summary>
+        /// Occurs when the text of an item is edited. In the event handler
+        /// you need to apply the new text to the item. The event is raised when the user presses Enter or
+        /// when the editing is finished programmatically.
+        /// </summary>
+        public event EventHandler<ItemTextEditedEventArgs>? ItemTextEdited;
 
         /// <summary>
         /// Occurs when the horizontal scroll offset is changed, for example, when the user scrolls horizontally
@@ -1712,6 +1720,76 @@ namespace Alternet.UI
         {
             var result = HorzGridLinesColor ?? DefaultHorzGridLinesColor;
             return result.LightOrDark(isDark);
+        }
+
+        /// <summary>
+        /// Gets text of the item that can be used in the popup text box
+        /// when user is editing the item. This method is called when
+        /// and user starts editing the item.
+        /// </summary>
+        /// <param name="itemIndex">The index of the item.</param>
+        /// <returns>The text for the item editor.</returns>
+        protected virtual string GetTextForItemEditor(int itemIndex)
+        {
+            return GetItemText(itemIndex, forDisplay: false);
+        }
+
+        /// <summary>
+        /// Sets the text of the item when user has finished editing the item.
+        /// This method is called when the user has finished editing the item in the popup text box.
+        /// By default this method calls <see cref="ItemTextEdited"/> event
+        /// to update the item's text. Note that this method does not update the item's text directly;
+        /// it is the responsibility of the event handler to perform the update.
+        /// </summary>
+        /// <param name="itemIndex">The index of the item.</param>
+        /// <param name="text">The text to set for the item.</param>
+        protected virtual void RaiseItemTextEdited(int itemIndex, string text)
+        {
+            if (ItemTextEdited != null)
+            {
+                var args = new ItemTextEditedEventArgs
+                {
+                    ItemIndex = itemIndex,
+                    Item = GetItem(itemIndex),
+                    NewText = text
+                };
+
+                ItemTextEdited(this, args);
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Shows popup text box for editing the item.
+        /// </summary>
+        /// <param name="itemIndex">The index of the item to edit.
+        /// If null, the selected item will be edited.</param>
+        public virtual void ShowItemEditor(int? itemIndex = null)
+        {
+            itemIndex ??= SelectedIndex;
+
+            if (itemIndex is null)
+                return;
+
+            var rect = GetItemRect(itemIndex.Value);
+
+            if (rect is null)
+                return;
+
+            popupTextBox ??= new InnerPopupTextBox();
+
+            InnerPopupTextBox.ShowAsItemEditorParams prm = new()
+            {
+                ItemRect = rect.Value,
+                ItemContainer = this,
+                GetItemText = () => GetTextForItemEditor(itemIndex.Value),
+                SetItemText = text =>
+                {
+                    RaiseItemTextEdited(itemIndex.Value, text);
+                },
+            };
+
+            popupTextBox.ShowAsItemEditor(prm);
         }
 
         /// <inheritdoc/>

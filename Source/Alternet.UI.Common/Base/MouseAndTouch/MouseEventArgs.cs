@@ -301,6 +301,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets <see cref="HandledEventArgs.Handled"/> to true,
+        /// indicating that the event has been handled. This prevents
+        /// further processing of the event by other subscribers.
+        /// </summary>
+        public void Suppressed()
+        {
+            Handled = true;
+        }
+
+        /// <summary>
         /// Gets string representation of this object.
         /// </summary>
         /// <returns></returns>

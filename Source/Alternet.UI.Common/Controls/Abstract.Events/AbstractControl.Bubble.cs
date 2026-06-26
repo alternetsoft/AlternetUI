@@ -462,7 +462,7 @@ namespace Alternet.UI
                 if (e.Handled)
                     return;
 
-                if (form.KeyPreview)
+                if (form.KeyPreview && AllowFormKeyPreview)
                 {
                     action(form, e);
                     if (e.Handled)

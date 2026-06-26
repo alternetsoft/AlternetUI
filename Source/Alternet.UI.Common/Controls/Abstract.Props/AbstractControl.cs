@@ -529,7 +529,13 @@ namespace Alternet.UI
         /// For example, when the control is hovered or pressed, it changes its visual state.
         /// </summary>
         [Browsable(false)]
-        public virtual bool RefreshOnStateChanged { get; set; }        
+        public virtual bool RefreshOnStateChanged { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether controls allows form to preview the keys.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool AllowFormKeyPreview { get; set; } = true;
 
         /// <summary>
         /// Gets mouse position when mouse down event was received.

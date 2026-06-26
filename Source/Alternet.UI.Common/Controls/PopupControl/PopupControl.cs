@@ -613,10 +613,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Resets <see cref="Closed"/> and <see cref="ClosedAction"/> events.
+        /// </summary>
+        public void ResetClosedEvent()
+        {
+            Closed = null;
+            ClosedAction = null;
+        }
+
+        /// <summary>
         /// Gets maximal size of the popup.
         /// Returns Null if size is not limited.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The maximal size of the popup as a <see cref="SizeD"/> value,
+        /// or <see langword="null"/> if the size is not limited.</returns>
         public virtual SizeD? GetMaxPopupSize()
         {
             if (ContainerSizeOverride is not null)

@@ -142,6 +142,31 @@ namespace ControlsSample
                 item.ToolTip = ButtonPage.CreateRichToolTipParams();
                 item.IsToolTipVisible = true;
             }
+
+            listBox.KeyDown += (s, e) =>
+            {
+                if (e.KeyData == Keys.F2)
+                {
+                    listBox.ShowItemEditor();
+                    e.Suppressed();
+                }
+            };
+
+            listBox.DoubleClick += (s, e) =>
+            {
+                listBox.ShowItemEditor();
+                e.Suppressed();
+            };
+
+            listBox.ItemTextEdited+= (s, e) =>
+            {
+                if (e.Item is not null)
+                {
+                    e.Item.Text = e.NewText;
+                }
+
+                App.LogNameValueReplace("VListBox.ItemTextEdited", e.NewText);
+            };
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)
