@@ -227,42 +227,7 @@ namespace Alternet.UI
             public override Color? ForegroundColor => control.GetDefaultAttributesFgColor();
 
             /// <inheritdoc/>
-            public override Font? Font => control.GetDefaultAttributesFont();
-        }
-
-        /// <summary>
-        /// Allows to get font and color default for the specified <see cref="ControlTypeId"/>.
-        /// </summary>
-        public class ControlStaticDefaultFontAndColor : FontAndColor, IReadOnlyFontAndColor
-        {
-            private readonly ControlTypeId controlType;
-            private readonly ControlRenderSizeVariant renderSize;
-
-            /// <summary>
-            /// Initializes a new instance of the
-            /// <see cref="ControlStaticDefaultFontAndColor"/> class.
-            /// </summary>
-            /// <param name="controlType">Type of the control.</param>
-            /// <param name="renderSize">Render size. Optional.</param>
-            public ControlStaticDefaultFontAndColor(
-                ControlTypeId controlType,
-                ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-            {
-                this.controlType = controlType;
-                this.renderSize = renderSize;
-            }
-
-            /// <inheritdoc/>
-            public override Color? BackgroundColor =>
-                AbstractControl.GetClassDefaultAttributesBgColor(controlType, renderSize);
-
-            /// <inheritdoc/>
-            public override Color? ForegroundColor =>
-                AbstractControl.GetClassDefaultAttributesFgColor(controlType, renderSize);
-
-            /// <inheritdoc/>
-            public override Font? Font =>
-                AbstractControl.GetClassDefaultAttributesFont(controlType, renderSize);
+            public override Font? Font => Control.DefaultFont;
         }
     }
 }

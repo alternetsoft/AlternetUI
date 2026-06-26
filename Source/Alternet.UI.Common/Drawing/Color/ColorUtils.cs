@@ -189,9 +189,7 @@ namespace Alternet.Drawing
         /// <param name="method">Type of the colors to get.</param>
         /// <param name="control">Control instance. Used when <paramref name="method"/>
         /// is <see cref="ResetColorType.DefaultAttributes"/>.</param>
-        /// <param name="renderSize">Rendering size. Used when <paramref name="method"/>
-        /// is <see cref="ResetColorType.DefaultAttributesTextBox"/> or other similar values.
-        /// You can skip this parameter as on most os it is ignored.</param>
+        /// <param name="renderSize">Rendering size.</param>
         /// <returns></returns>
         public static IReadOnlyFontAndColor GetResetColors(
             ResetColorType method,
@@ -208,12 +206,6 @@ namespace Alternet.Drawing
                     return FontAndColor.Empty;
                 case ResetColorType.DefaultAttributes:
                     return control?.GetDefaultFontAndColor() ?? FontAndColor.Null;
-                case ResetColorType.DefaultAttributesTextBox:
-                    return AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.TextBox, renderSize);
-                case ResetColorType.DefaultAttributesListBox:
-                    return AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.ListBox, renderSize);
-                case ResetColorType.DefaultAttributesButton:
-                    return AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.Button, renderSize);
                 case ResetColorType.ColorMenu:
                     return FontAndColor.SystemColorMenu;
                 case ResetColorType.ColorActiveCaption:

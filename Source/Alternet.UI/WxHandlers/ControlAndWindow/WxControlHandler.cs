@@ -148,8 +148,7 @@ namespace Alternet.UI
 
         public Font? Font
         {
-            get => Font.FromInternal(NativeControl.Font);
-            set => NativeControl.Font = (UI.Native.Font?)value?.Handler;
+            set => NativeControl.SetFont((UI.Native.Font?)value?.Handler);
         }
 
         public bool WantChars
@@ -421,11 +420,6 @@ namespace Alternet.UI
         public Color GetDefaultAttributesFgColor()
         {
             return NativeControl.GetDefaultAttributesFgColor();
-        }
-
-        public Font? GetDefaultAttributesFont()
-        {
-            return Font.FromInternal(NativeControl.GetDefaultAttributesFont());
         }
 
         public void Update()

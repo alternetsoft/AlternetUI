@@ -98,35 +98,5 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         UIPlatformKind GetPlatformKind();
-
-        /// <summary>
-        /// Gets default value of the control background color.
-        /// </summary>
-        /// <param name="controlType">Type of control.</param>
-        /// <param name="renderSize">Render Size. Optional.</param>
-        /// <returns></returns>
-        Color GetClassDefaultAttributesBgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
-
-        /// <summary>
-        /// Gets default value of the control foreground color.
-        /// </summary>
-        /// <param name="controlType">Type of control.</param>
-        /// <param name="renderSize">Render Size. Optional.</param>
-        /// <returns></returns>
-        Color GetClassDefaultAttributesFgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
-
-        /// <summary>
-        /// Gets default value of the control font.
-        /// </summary>
-        /// <param name="controlType">Type of control.</param>
-        /// <param name="renderSize">Render Size. Optional.</param>
-        /// <returns></returns>
-        Font? GetClassDefaultAttributesFont(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal);
     }
 }

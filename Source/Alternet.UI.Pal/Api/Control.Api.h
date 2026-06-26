@@ -396,20 +396,6 @@ ALTERNET_UI_API c_bool Control_GetHasWindowCreated_(Control* obj)
     });
 }
 
-ALTERNET_UI_API Font* Control_GetFont_(Control* obj)
-{
-    return MarshalExceptions<Font*>([&](){
-        return obj->GetFont();
-    });
-}
-
-ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetFont(value);
-    });
-}
-
 ALTERNET_UI_API void* Control_GetCGContextRef_(Control* obj)
 {
     return MarshalExceptions<void*>([&](){
@@ -585,13 +571,6 @@ ALTERNET_UI_API Color_C Control_GetDefaultAttributesFgColor_(Control* obj)
     });
 }
 
-ALTERNET_UI_API Font* Control_GetDefaultAttributesFont_(Control* obj)
-{
-    return MarshalExceptions<Font*>([&](){
-        return obj->GetDefaultAttributesFont();
-    });
-}
-
 ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesBgColor_(int controlType, int windowVariant)
 {
     return MarshalExceptions<Color_C>([&](){
@@ -603,13 +582,6 @@ ALTERNET_UI_API Color_C Control_GetClassDefaultAttributesFgColor_(int controlTyp
 {
     return MarshalExceptions<Color_C>([&](){
         return Control::GetClassDefaultAttributesFgColor(controlType, windowVariant);
-    });
-}
-
-ALTERNET_UI_API Font* Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant)
-{
-    return MarshalExceptions<Font*>([&](){
-        return Control::GetClassDefaultAttributesFont(controlType, windowVariant);
     });
 }
 
@@ -764,6 +736,13 @@ ALTERNET_UI_API void Control_SetForegroundColor_(Control* obj, Color* value)
 {
     MarshalExceptions<void>([&](){
         obj->SetForegroundColor(*value);
+    });
+}
+
+ALTERNET_UI_API void Control_SetFont_(Control* obj, Font* value)
+{
+    MarshalExceptions<void>([&](){
+        obj->SetFont(value);
     });
 }
 

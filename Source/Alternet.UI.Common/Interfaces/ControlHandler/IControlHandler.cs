@@ -193,9 +193,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.GetDefaultAttributesFgColor"/>
         Color GetDefaultAttributesFgColor();
 
-        /// <inheritdoc cref="AbstractControl.GetDefaultAttributesFont"/>
-        Font? GetDefaultAttributesFont();
-
         /// <inheritdoc cref="AbstractControl.Update"/>
         void Update();
 

@@ -157,18 +157,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets control's default font and colors as <see cref="IReadOnlyFontAndColor"/>.
-        /// </summary>
-        /// <param name="controlType">Type of the control.</param>
-        /// <param name="renderSize">Render size. Ignored on most operating systems.</param>
-        public static IReadOnlyFontAndColor GetStaticDefaultFontAndColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return new FontAndColor.ControlStaticDefaultFontAndColor(controlType, renderSize);
-        }
-
-        /// <summary>
         /// Returns the currently hovered control, or <see langword="null"/> if
         /// no control is under the mouse.
         /// </summary>
@@ -2723,16 +2711,6 @@ namespace Alternet.UI
         public virtual Color? GetDefaultAttributesFgColor()
         {
             return SystemColors.ControlText;
-        }
-
-        /// <summary>
-        /// Gets font from the default attributes.
-        /// </summary>
-        /// <returns></returns>
-        [Browsable(false)]
-        public virtual Font? GetDefaultAttributesFont()
-        {
-            return null;
         }
 
         /// <summary>

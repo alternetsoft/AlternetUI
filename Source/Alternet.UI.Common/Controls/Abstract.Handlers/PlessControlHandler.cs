@@ -162,11 +162,6 @@ namespace Alternet.UI
             return Control?.Parent?.GetDefaultAttributesFgColor() ?? SystemColors.WindowText;
         }
 
-        Font? IControlHandler.GetDefaultAttributesFont()
-        {
-            return Control?.Parent?.GetDefaultAttributesFont() ?? AbstractControl.DefaultFont;
-        }
-
         nint IControlHandler.GetHandle()
         {
             return Control?.Parent?.GetHandle() ?? default;

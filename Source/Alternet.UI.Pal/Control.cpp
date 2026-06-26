@@ -1247,11 +1247,6 @@ namespace Alternet::UI
         _flags.Set(ControlFlags::DoNotDestroyWxWindow, value);
     }
 
-    Font* Control::GetFont()
-    {
-        return new Font(GetWxWindow()->GetFont());
-    }
-
     void Control::SetFont(Font* value)
     {
         auto w = GetWxWindow();
@@ -2060,11 +2055,6 @@ namespace Alternet::UI
         return GetWxWindow()->GetDefaultAttributes().colFg;
     }
 
-    Font* Control::GetDefaultAttributesFont()
-    {
-        return new Font(GetWxWindow()->GetDefaultAttributes().font);
-    }
-
     enum ControlId
     {
         ControlId_Control = 0,
@@ -2180,11 +2170,6 @@ namespace Alternet::UI
     Color Control::GetClassDefaultAttributesFgColor(int controlType, int windowVariant)
     {
         return GetClassDefaultAttributes(controlType, windowVariant).colFg;
-    }
-
-    Font* Control::GetClassDefaultAttributesFont(int controlType, int windowVariant)
-    {
-        return new Font(GetClassDefaultAttributes(controlType, windowVariant).font);
     }
 
     bool Control::GetWantChars()

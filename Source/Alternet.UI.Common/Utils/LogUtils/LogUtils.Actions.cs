@@ -898,10 +898,6 @@ namespace Alternet.UI
             App.Log($"IsWindows11AtLeast = {App.IsWindows11AtLeast}");
             App.Log($"AppearanceName = {SystemSettings.AppearanceName}");
 
-            var defaultColors = AbstractControl.GetStaticDefaultFontAndColor(ControlTypeId.TextBox);
-            LogUtils.LogColor("TextBox.ForegroundColor (defaults)", defaultColors.ForegroundColor);
-            LogUtils.LogColor("TextBox.BackgroundColor (defaults)", defaultColors.BackgroundColor);
-
             App.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
             App.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
 
@@ -1010,11 +1006,6 @@ namespace Alternet.UI
                 if (prop.FieldType == typeof(Color))
                     LogUtils.LogColor(prop.Name, (Color)prop.GetValue(null)!);
             }
-
-            var bgColor = AbstractControl.GetClassDefaultAttributesBgColor(ControlTypeId.TextBox);
-            var fgColor = AbstractControl.GetClassDefaultAttributesFgColor(ControlTypeId.TextBox);
-            LogUtils.LogColor("TextBox.ClassDefaultBgColor", bgColor);
-            LogUtils.LogColor("TextBox.ClassDefaultFgColor", fgColor);
 
             LogUtils.LogColor("MSW.AccentColor", MswUtils.AccentColor);
         }

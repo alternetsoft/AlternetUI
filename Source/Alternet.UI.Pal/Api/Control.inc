@@ -93,9 +93,6 @@ bool GetIsMouseOver();
 
 bool GetHasWindowCreated();
 
-Font* GetFont();
-void SetFont(Font* value);
-
 void* GetCGContextRef();
 void SetAllowDefaultContextMenu(bool value);
 void SetScrollBar(ScrollBarOrientation orientation, HiddenOrVisible visible, int value, int largeChange, int maximum);
@@ -121,10 +118,8 @@ bool SetBackgroundStyle(int style);
 int GetBackgroundStyle();
 Color GetDefaultAttributesBgColor();
 Color GetDefaultAttributesFgColor();
-Font* GetDefaultAttributesFont();
 static Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant);
 static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant);
-static Font* GetClassDefaultAttributesFont(int controlType, int windowVariant);
 static int DrawingFromDip(float value, void* window);
 static float DrawingDPIScaleFactor(void* window);
 static float DrawingToDip(int value, void* window);
@@ -147,6 +142,7 @@ Color GetBackgroundColor();
 Color GetForegroundColor();
 void SetBackgroundColor(const Color& value);
 void SetForegroundColor(const Color& value);
+void SetFont(Font* value);
 static Control* HitTest(const PointD& screenPoint);
 static Control* GetFocusedControl();
 static void NotifyCaptureLost();

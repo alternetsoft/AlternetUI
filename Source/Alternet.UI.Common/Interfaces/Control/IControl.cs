@@ -1430,11 +1430,5 @@ namespace Alternet.UI
         /// </summary>
         /// <returns></returns>
         Color? GetDefaultAttributesFgColor();
-
-        /// <summary>
-        /// Gets font from the default attributes.
-        /// </summary>
-        /// <returns></returns>
-        Font? GetDefaultAttributesFont();
     }
 }

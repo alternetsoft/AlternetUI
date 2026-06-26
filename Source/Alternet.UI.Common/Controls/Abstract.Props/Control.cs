@@ -584,12 +584,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Font? GetDefaultAttributesFont()
-        {
-            return SafeHandler?.GetDefaultAttributesFont();
-        }
-
-        /// <inheritdoc/>
         [Browsable(false)]
         public override void RaiseBackgroundColorChanged()
         {

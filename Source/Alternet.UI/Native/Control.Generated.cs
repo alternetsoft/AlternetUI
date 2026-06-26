@@ -490,24 +490,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Font? Font
-        {
-            get
-            {
-                CheckDisposed();
-                var _nnn = NativeApi.Control_GetFont_(NativePointer);
-                var _mmm = NativeObject.GetFromNativePointer<Font>(_nnn, p => new Font(p));
-                ReleaseNativeObjectPointer(_nnn);
-                return _mmm;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.Control_SetFont_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-            }
-        }
-        
         public System.IntPtr GetCGContextRef()
         {
             CheckDisposed();
@@ -658,15 +640,6 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
             return NativeApi.Control_GetDefaultAttributesFgColor_(NativePointer);
         }
         
-        public Font GetDefaultAttributesFont()
-        {
-            CheckDisposed();
-            var _nnn = NativeApi.Control_GetDefaultAttributesFont_(NativePointer);
-            var _mmm = NativeObject.GetFromNativePointer<Font>(_nnn, p => new Font(p))!;
-            ReleaseNativeObjectPointer(_nnn);
-            return _mmm;
-        }
-        
         public static Alternet.Drawing.Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant)
         {
             return NativeApi.Control_GetClassDefaultAttributesBgColor_(controlType, windowVariant);
@@ -675,14 +648,6 @@ NativeApi.Control_RefreshRect_(NativePointer, ref rect_Native, eraseBackground);
         public static Alternet.Drawing.Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant)
         {
             return NativeApi.Control_GetClassDefaultAttributesFgColor_(controlType, windowVariant);
-        }
-        
-        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant)
-        {
-            var _nnn = NativeApi.Control_GetClassDefaultAttributesFont_(controlType, windowVariant);
-            var _mmm = NativeObject.GetFromNativePointer<Font>(_nnn, p => new Font(p))!;
-            ReleaseNativeObjectPointer(_nnn);
-            return _mmm;
         }
         
         public static int DrawingFromDip(float value, System.IntPtr window)
@@ -819,6 +784,12 @@ NativeApi.Control_SetBackgroundColor_(NativePointer, ref value_Native);
             CheckDisposed();
             var value_Native = value.ToNative();
 NativeApi.Control_SetForegroundColor_(NativePointer, ref value_Native);
+        }
+        
+        public void SetFont(Font? value)
+        {
+            CheckDisposed();
+            NativeApi.Control_SetFont_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
         }
         
         public static Control? HitTest(Alternet.Drawing.PointD screenPoint)
@@ -1435,12 +1406,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern bool Control_GetHasWindowCreated_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_GetFont_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr Control_GetCGContextRef_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -1516,16 +1481,10 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             public static extern NativeApiTypes.Color Control_GetDefaultAttributesFgColor_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_GetDefaultAttributesFont_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color Control_GetClassDefaultAttributesBgColor_(int controlType, int windowVariant);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color Control_GetClassDefaultAttributesFgColor_(int controlType, int windowVariant);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr Control_GetClassDefaultAttributesFont_(int controlType, int windowVariant);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Control_DrawingFromDip_(float value, System.IntPtr window);
@@ -1592,6 +1551,9 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetForegroundColor_(IntPtr obj, ref NativeApiTypes.Color value);
+            
+            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_HitTest_(ref Alternet.Drawing.PointD screenPoint);

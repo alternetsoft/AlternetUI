@@ -33,21 +33,6 @@ namespace Alternet.UI
         DefaultAttributes,
 
         /// <summary>
-        /// Uses colors from the default attributes record for the <c>TextBox</c> control.
-        /// </summary>
-        DefaultAttributesTextBox,
-
-        /// <summary>
-        /// Uses colors from the default attributes record for the <c>ListBox</c> control.
-        /// </summary>
-        DefaultAttributesListBox,
-
-        /// <summary>
-        /// Uses colors from the default attributes record for the <c>Button</c> control.
-        /// </summary>
-        DefaultAttributesButton,
-
-        /// <summary>
         /// Uses "SystemColors.Menu" for the background color and
         /// "SystemColors.MenuText" for the foreground color.
         /// </summary>

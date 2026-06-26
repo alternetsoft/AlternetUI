@@ -53,14 +53,10 @@ namespace NativeApi.Api
         public int GetBackgroundStyle() => default;
         public Color GetDefaultAttributesBgColor() => default;
         public Color GetDefaultAttributesFgColor() => default;
-        public Font GetDefaultAttributesFont() => default;
         public static Color GetClassDefaultAttributesBgColor(int controlType, int windowVariant)
             => default;
         public static Color GetClassDefaultAttributesFgColor(int controlType, int windowVariant)
             => default;
-        public static Font GetClassDefaultAttributesFont(int controlType, int windowVariant)
-            => default;
-
         public static int DrawingFromDip(Coord value, IntPtr window) => default;
         public static Coord DrawingDPIScaleFactor(IntPtr window) => default;
         public static Coord DrawingToDip(int value, IntPtr window) => default;
@@ -168,7 +164,7 @@ namespace NativeApi.Api
         public void SetBackgroundColor(Color value) { }
         public void SetForegroundColor(Color value) { }
 
-        public Font? Font { get; set; }
+        public void SetFont(Font? value) { }
 
         public static Control? HitTest(PointD screenPoint) => default;
         public static Control? GetFocusedControl() => default;

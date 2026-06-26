@@ -10,27 +10,6 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        internal static Color GetClassDefaultAttributesBgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return SystemSettings.Handler.GetClassDefaultAttributesBgColor(controlType, renderSize);
-        }
-
-        internal static Color GetClassDefaultAttributesFgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return SystemSettings.Handler.GetClassDefaultAttributesFgColor(controlType, renderSize);
-        }
-
-        internal static Font? GetClassDefaultAttributesFont(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return SystemSettings.Handler.GetClassDefaultAttributesFont(controlType, renderSize);
-        }
-
         internal void SetParentInternal(AbstractControl? value)
         {
             parent = value;
