@@ -1781,7 +1781,16 @@ namespace Alternet.UI
             SelectIf(scopeAllOpenDocuments, CanFindInAllOpenDocuments);
             SelectIf(scopeCurrentProject, CanFindInCurrentProject);
             SelectIf(scopeSelectionOnly, CanFindInSelectionOnly);
-            SelectIf(null, true);
+
+            if (selected)
+            {
+                scopeEdit.Enabled = scopeEdit.Items.Count > 1;
+            }
+            else
+            {
+                SelectIf(null, true);
+                scopeEdit.Enabled = false;
+            }
         }
 
         internal class FindReplaceManagerLogger : IFindReplaceConnect
