@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for components that can be loaded from uixml.
     /// </summary>
-    public partial class FrameworkElement : DisposableObject, IComponent
+    public partial class FrameworkElement : HostedDisposableObject, IComponent
     {
         private FrameworkElement? logicalParent;
         private object? dataContext;

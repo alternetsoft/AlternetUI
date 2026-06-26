@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// <typeparam name="T">The type of items contained in the collection.
     /// Must derive from <see cref="FrameworkElement"/>.</typeparam>
     public partial class ItemContainerElement<T>
-        : HostedFrameworkElement, ICollectionObserver<object>
+        : FrameworkElement, ICollectionObserver<object>
         where T : FrameworkElement
     {
         private BaseCollection<T>? items;

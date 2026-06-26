@@ -63,10 +63,20 @@ namespace Alternet.Drawing.Printing
         /// <inheritdoc cref="PrintDocument.Print"/>
         void Print();
 
+        /// <summary>
+        /// Starts printing of the document page.
+        /// </summary>
         bool StartPage();
 
+        /// <summary>
+        /// Ends printing of the document page.
+        /// </summary>
         bool EndPage();
 
+        /// <summary>
+        /// Gets graphics object for the current page.
+        /// </summary>
+        /// <returns>The graphics object for the current page.</returns>
         Graphics? GetPageGraphics();
     }
 }

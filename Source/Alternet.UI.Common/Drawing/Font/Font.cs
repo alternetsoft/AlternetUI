@@ -19,7 +19,7 @@ namespace Alternet.Drawing
     /// style attributes. This class cannot be inherited.
     /// </summary>
     [DebuggerDisplay("{ToInfoString()}")]
-    public class Font : DisposableObject, IEquatable<Font>
+    public class Font : HostedDisposableObject, IEquatable<Font>
     {
         /// <summary>
         /// Gets or sets native font scale factor for Skia.

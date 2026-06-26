@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -6,19 +6,17 @@ using System.Text;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a framework element that keeps track of host objects and
-    /// provides methods to manage them. This class is useful in scenarios where a framework element
-    /// can be hosted within a user interface or needs
-    /// to manage external resources or context-specific objects.
+    /// Represents a disposable object that keeps track of host objects and
+    /// provides methods to manage them. This class is useful in scenarios where an object
+    /// needs to manage external resources or context-specific objects.
     /// </summary>
-    /// <remarks>The <see cref="HostedFrameworkElement"/> class is designed
-    /// to manage a collection of host objects, which can include references
-    /// to native or managed controls. It provides methods to add, remove, retrieve,
+    /// <remarks>The <see cref="HostedDisposableObject"/> class is designed
+    /// to manage a collection of host objects. It provides methods to add, remove, retrieve,
     /// and dispose of these objects.
     /// <para> The collection of host objects is managed internally and can be accessed
     /// via the <see cref="HostObjects"/> property. Derived classes can override the provided
     /// methods to customize the behavior for managing host objects. </para></remarks>
-    public partial class HostedFrameworkElement : FrameworkElement
+    public partial class HostedDisposableObject : DisposableObject
     {
         private IList<object>? hostObjects;
 
@@ -41,7 +39,7 @@ namespace Alternet.UI
         /// from the available host object.
         /// </summary>
         /// <remarks>This method iterates through the collection of host objects
-        /// associated with this instance of <see cref="HostedFrameworkElement"/>
+        /// associated with this instance of <see cref="HostedDisposableObject"/>
         /// and returns the first
         /// host that matches the specified type <typeparamref name="T"/>.
         /// If no matching host object is found, the

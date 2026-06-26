@@ -148,7 +148,10 @@ namespace Alternet.UI
 
         public Font? Font
         {
-            set => NativeControl.SetFont((UI.Native.Font?)value?.Handler);
+            set
+            {
+                NativeControl.SetFont((UI.Native.Font?)value?.Handler);
+            }
         }
 
         public bool WantChars
