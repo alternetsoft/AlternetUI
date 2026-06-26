@@ -34,9 +34,6 @@ namespace Alternet.UI
         public InnerPopupToolBar(CreateFlags flags = CreateFlags.Resizable)
             : base(flags)
         {
-            if (App.IsMaui)
-                FitParentScrollbars = false;
-
             BorderControl.ToolBar.ParentForeColor = true;
             BorderControl.ToolBar.ParentBackColor = true;
 
