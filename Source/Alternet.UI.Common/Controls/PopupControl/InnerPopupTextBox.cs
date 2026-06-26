@@ -78,7 +78,7 @@ namespace Alternet.UI
 
             ClosedAction = () =>
             {
-                Parent?.SetFocusIdle();
+                prm.ItemContainer?.SetFocusIdle();
                 if (PopupResult != ModalResult.Accepted)
                     return;
                 var newText = Content.Text;

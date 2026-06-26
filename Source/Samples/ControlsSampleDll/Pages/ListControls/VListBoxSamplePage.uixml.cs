@@ -158,6 +158,11 @@ namespace ControlsSample
                 e.Suppressed();
             };
 
+            listBox.EditorTextRequested += (s, e) =>
+            {
+                e.Text = $"[{e.Text}]";
+            };
+
             listBox.ItemTextEdited+= (s, e) =>
             {
                 if (e.Item is not null)

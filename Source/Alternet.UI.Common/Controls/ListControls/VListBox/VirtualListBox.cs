@@ -116,7 +116,14 @@ namespace Alternet.UI
         /// you need to apply the new text to the item. The event is raised when the user presses Enter or
         /// when the editing is finished programmatically.
         /// </summary>
-        public event EventHandler<ItemTextEditedEventArgs>? ItemTextEdited;
+        public event EventHandler<ListBoxItemTextEditedEventArgs>? ItemTextEdited;
+
+        /// <summary>
+        /// Occurs when the text of an item is requested for the popup editor. In the event handler
+        /// you need to provide the text for the item which will be assigned to the text box editor.
+        /// The event is raised when the user starts editing an item.   
+        /// </summary>
+        public event EventHandler<ListBoxItemTextRequestEventArgs>? EditorTextRequested;
 
         /// <summary>
         /// Occurs when the horizontal scroll offset is changed, for example, when the user scrolls horizontally
@@ -1725,13 +1732,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets text of the item that can be used in the popup text box
         /// when user is editing the item. This method is called when
-        /// and user starts editing the item.
+        /// the user starts editing the item.
         /// </summary>
         /// <param name="itemIndex">The index of the item.</param>
         /// <returns>The text for the item editor.</returns>
-        protected virtual string GetTextForItemEditor(int itemIndex)
+        protected virtual string RequestTextForItemEditor(int itemIndex)
         {
-            return GetItemText(itemIndex, forDisplay: false);
+            var result = GetItemText(itemIndex, forDisplay: false);
+
+            if (EditorTextRequested is not null)
+            {
+                var e = new ListBoxItemTextRequestEventArgs();
+                e.ItemIndex = itemIndex;
+                e.Item = GetItem(itemIndex);
+                e.Text = result;
+                EditorTextRequested(this, e);
+                result = e.Text;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -1747,7 +1766,7 @@ namespace Alternet.UI
         {
             if (ItemTextEdited != null)
             {
-                var args = new ItemTextEditedEventArgs
+                var args = new ListBoxItemTextEditedEventArgs
                 {
                     ItemIndex = itemIndex,
                     Item = GetItem(itemIndex),
@@ -1782,7 +1801,7 @@ namespace Alternet.UI
             {
                 ItemRect = rect.Value,
                 ItemContainer = this,
-                GetItemText = () => GetTextForItemEditor(itemIndex.Value),
+                GetItemText = () => RequestTextForItemEditor(itemIndex.Value),
                 SetItemText = text =>
                 {
                     RaiseItemTextEdited(itemIndex.Value, text);
