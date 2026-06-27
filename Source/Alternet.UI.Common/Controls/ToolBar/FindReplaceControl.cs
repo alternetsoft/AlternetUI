@@ -52,14 +52,14 @@ namespace Alternet.UI
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        private readonly TextBoxWithListPopup findEdit = new()
+        private readonly EditableListPicker findEdit = new()
         {
             Margin = (2, 0, 2, 0),
             UseContextMenuAsPopup = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
-        private readonly TextBoxWithListPopup replaceEdit = new()
+        private readonly EditableListPicker replaceEdit = new()
         {
             Margin = (2, 0, 2, 0),
             UseContextMenuAsPopup = false,
@@ -167,9 +167,7 @@ namespace Alternet.UI
                     KnownSvgImages.ImgAngleDown,
                     toolTip: CommonStrings.Default.ToggleToSwitchBetweenFindReplace);
 
-                findEdit.MainControl.EmptyTextHint = EmptyTextHints.FindEdit;
-                findEdit.SyncTextAndComboButton();
-                replaceEdit.SyncTextAndComboButton();
+                findEdit.EmptyTextHint = EmptyTextHints.FindEdit;
 
                 findEdit.MinWidth = DefaultMinEditWidth;
                 findEdit.HorizontalAlignment = HorizontalAlignment.Fill;
@@ -208,7 +206,7 @@ namespace Alternet.UI
                 IdReplaceEmptyButton1 = ReplaceToolBar.AddSpeedBtn();
 
                 IdReplaceEdit = ReplaceToolBar.AddControl(replaceEdit);
-                replaceEdit.MainControl.EmptyTextHint = EmptyTextHints.ReplaceEdit;
+                replaceEdit.EmptyTextHint = EmptyTextHints.ReplaceEdit;
 
                 IdReplace = ReplaceToolBar.AddSpeedBtn(
                     text: null,
@@ -597,7 +595,7 @@ namespace Alternet.UI
         /// </summary>
         public string TextToFind
         {
-            get => FindEdit.Text;
+            get => FindEdit.Text ?? string.Empty;
             set => FindEdit.Text = value;
         }
 
@@ -606,7 +604,7 @@ namespace Alternet.UI
         /// </summary>
         public string TextToReplace
         {
-            get => ReplaceEdit.Text;
+            get => ReplaceEdit.Text ?? string.Empty;
             set => ReplaceEdit.Text = value;
         }
 
@@ -671,12 +669,12 @@ namespace Alternet.UI
         {
             get
             {
-                return FindEdit.MainControl.EmptyTextHint;
+                return FindEdit.EmptyTextHint;
             }
 
             set
             {
-                FindEdit.MainControl.EmptyTextHint = value;
+                FindEdit.EmptyTextHint = value;
             }
         }
 
@@ -687,12 +685,12 @@ namespace Alternet.UI
         {
             get
             {
-                return ReplaceEdit.MainControl.EmptyTextHint;
+                return ReplaceEdit.EmptyTextHint;
             }
 
             set
             {
-                ReplaceEdit.MainControl.EmptyTextHint = value;
+                ReplaceEdit.EmptyTextHint = value;
             }
         }
 
@@ -741,18 +739,6 @@ namespace Alternet.UI
                 }
             }
         }
-
-        /// <summary>
-        /// Gets border of the <see cref="FindEdit"/>.
-        /// </summary>
-        [Browsable(false)]
-        public Border FindEditBorder => findEdit;
-
-        /// <summary>
-        /// Gets border of the <see cref="ReplaceEdit"/>.
-        /// </summary>
-        [Browsable(false)]
-        public Border ReplaceEditBorder => replaceEdit;
 
         /// <summary>
         /// Gets border color of the find text editor.
@@ -1212,7 +1198,7 @@ namespace Alternet.UI
         /// Gets control which allows to specify text to find.
         /// </summary>
         [Browsable(false)]
-        public TextBoxWithListPopup FindEdit => findEdit;
+        public EditableListPicker FindEdit => findEdit;
 
         /// <summary>
         /// Gets <see cref="ListPicker"/> which allows to specify text to find.
@@ -1224,7 +1210,7 @@ namespace Alternet.UI
         /// Gets control which allows to specify text to replace.
         /// </summary>
         [Browsable(false)]
-        public TextBoxWithListPopup ReplaceEdit => replaceEdit;
+        public EditableListPicker ReplaceEdit => replaceEdit;
 
         /// <summary>
         /// Gets <see cref="ToolBar"/> with find buttons.
@@ -1489,7 +1475,6 @@ namespace Alternet.UI
         /// </summary>
         public void SelectAllTextInFindEditor()
         {
-            FindEdit.MainControl.SelectAll();
         }
 
         /// <summary>
@@ -1729,7 +1714,7 @@ namespace Alternet.UI
         {
             Post(() =>
             {
-                var s = findEdit.Text;
+                var s = findEdit.Text ?? string.Empty;
                 Manager?.SetFindText(s);
             });
         }
@@ -1744,7 +1729,7 @@ namespace Alternet.UI
         {
             Post(() =>
             {
-                Manager?.SetReplaceText(replaceEdit.Text);
+                Manager?.SetReplaceText(replaceEdit.Text ?? string.Empty);
             });
         }
 
