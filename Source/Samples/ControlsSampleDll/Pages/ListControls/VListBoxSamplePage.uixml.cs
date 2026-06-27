@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Alternet.UI;
 using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class VListBoxSamplePage: Panel
+    internal partial class VListBoxSamplePage : Panel
     {
         private readonly ListSource items1 = new();
         private readonly ListSource items2 = new();
@@ -16,7 +17,7 @@ namespace ControlsSample
         private readonly VirtualListBox listBox = new()
         {
             Dock = DockStyle.Fill,
-            Margin = (0,0,0,5),
+            Margin = (0, 0, 0, 5),
         };
 
         private readonly Splitter splitter = new()
@@ -143,35 +144,26 @@ namespace ControlsSample
                 item.IsToolTipVisible = true;
             }
 
-            listBox.KeyDown += (s, e) =>
-            {
-                if (e.KeyData == Keys.F2)
+            listBox.BindItemEditorToEvents(
+                bind: true,
+                textEdited: (s, e) =>
                 {
-                    listBox.ShowItemEditor();
-                    e.Suppressed();
-                }
-            };
+                    if (e.Item is not null)
+                    {
+                        e.Item.Text = e.NewTextOrDefault;
+                    }
 
-            listBox.DoubleClick += (s, e) =>
-            {
-                listBox.ShowItemEditor();
-                e.Suppressed();
-            };
-
-            listBox.EditorTextRequested += (s, e) =>
-            {
-                e.Text = $"[{e.Text}]";
-            };
-
-            listBox.ItemTextEdited+= (s, e) =>
-            {
-                if (e.Item is not null)
+                    App.LogNameValueReplace("VListBox.ItemTextEdited", e.NewTextOrDefault);
+                },
+                textRequested: (s, e) =>
                 {
-                    e.Item.Text = e.NewText;
-                }
+                    const bool changeItemText = true;
 
-                App.LogNameValueReplace("VListBox.ItemTextEdited", e.NewText);
-            };
+                    if (changeItemText)
+                        e.Text = $"[{e.Text}]";
+                },
+                editKey: Keys.F2,
+                doubleClickToEdit: true);
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)
@@ -216,21 +208,21 @@ namespace ControlsSample
         }
 
         private void ListBox_MouseLeftButtonDown(
-            object? sender, 
+            object? sender,
             MouseEventArgs e)
         {
             if (!cbLogHitTestEvent.Checked)
                 return;
 
             var result = listBox.HitTest(Mouse.GetPosition(listBox));
-            
+
             var item = (result == null ? "<none>" : listBox.GetItem(result.Value)?.ToString());
 
             item ??= result?.ToString() ?? string.Empty;
 
             var splitted = StringUtils.Split(item);
 
-            if(splitted.Length > 1)
+            if (splitted.Length > 1)
                 item = $"{splitted[0]}...";
 
             App.Log($"HitTest result: Item: '{item}'");
@@ -268,7 +260,7 @@ namespace ControlsSample
         }
 
         private void EnsureLastItemVisibleButton_Click(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             // do not need to check count as EnsureVisible does this.
@@ -276,7 +268,7 @@ namespace ControlsSample
         }
 
         private void SelectItemAtIndex2Button_Click(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             listBox.SelectItems(2);
@@ -288,7 +280,7 @@ namespace ControlsSample
         }
 
         private void SelectItemAtIndices2And4Button_Click(
-            object? sender, 
+            object? sender,
             EventArgs e)
         {
             listBox.SelectItems(2, 4);

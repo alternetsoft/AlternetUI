@@ -69,7 +69,6 @@ namespace Alternet.UI
         private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
         private bool immutableItems;
         private bool isHoverSelectionEnabled;
-        private InnerPopupTextBox? popupTextBox;
 
         static VirtualListBox()
         {
@@ -1735,17 +1734,15 @@ namespace Alternet.UI
         /// the user starts editing the item.
         /// </summary>
         /// <param name="itemIndex">The index of the item.</param>
+        /// <param name="item">The item being edited.</param>
         /// <returns>The text for the item editor.</returns>
-        protected virtual string RequestTextForItemEditor(int itemIndex)
+        protected virtual string? RequestTextForItemEditor(int itemIndex, ListControlItem item)
         {
             var result = GetItemText(itemIndex, forDisplay: false);
 
             if (EditorTextRequested is not null)
             {
-                var e = new ListBoxItemTextRequestEventArgs();
-                e.ItemIndex = itemIndex;
-                e.Item = GetItem(itemIndex);
-                e.Text = result;
+                var e = new ListBoxItemTextRequestEventArgs(item, itemIndex, result);
                 EditorTextRequested(this, e);
                 result = e.Text;
             }
@@ -1762,16 +1759,12 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">The index of the item.</param>
         /// <param name="text">The text to set for the item.</param>
-        protected virtual void RaiseItemTextEdited(int itemIndex, string text)
+        /// <param name="item">The item being edited.</param>
+        protected virtual void RaiseItemTextEdited(int itemIndex, ListControlItem item, string? text)
         {
             if (ItemTextEdited != null)
             {
-                var args = new ListBoxItemTextEditedEventArgs
-                {
-                    ItemIndex = itemIndex,
-                    Item = GetItem(itemIndex),
-                    NewText = text
-                };
+                var args = new ListBoxItemTextEditedEventArgs(item, itemIndex, text);
 
                 ItemTextEdited(this, args);
                 Invalidate();
@@ -1790,25 +1783,88 @@ namespace Alternet.UI
             if (itemIndex is null)
                 return;
 
+            var item = GetItem(itemIndex.Value);
+
+            if (item is null)
+                return;
+
             var rect = GetItemRect(itemIndex.Value);
 
             if (rect is null)
                 return;
 
-            popupTextBox ??= new InnerPopupTextBox();
-
             InnerPopupTextBox.ShowAsItemEditorParams prm = new()
             {
                 ItemRect = rect.Value,
                 ItemContainer = this,
-                GetItemText = () => RequestTextForItemEditor(itemIndex.Value),
+                GetItemText = () => RequestTextForItemEditor(itemIndex.Value, item),
                 SetItemText = text =>
                 {
-                    RaiseItemTextEdited(itemIndex.Value, text);
+                    RaiseItemTextEdited(itemIndex.Value, item, text);
                 },
             };
 
-            popupTextBox.ShowAsItemEditor(prm);
+            KnownPopupControls.Default.PopupTextBox.ShowAsItemEditor(prm);
+        }
+
+        /// <summary>
+        /// Binds popup text box as item editor to the specified events of the control.
+        /// </summary>
+        /// <param name="bind">Indicates whether to bind or unbind the events.</param>
+        /// <param name="textRequested">The event handler for text requested event.</param>
+        /// <param name="textEdited">The event handler for text edited event.</param>
+        /// <param name="editKey">The key to trigger editing.</param>
+        /// <param name="doubleClickToEdit">Indicates whether double click triggers editing.</param>
+        public virtual void BindItemEditorToEvents(
+            bool bind,
+            EventHandler<ListBoxItemTextEditedEventArgs> textEdited,
+            EventHandler<ListBoxItemTextRequestEventArgs>? textRequested = null,
+            Keys? editKey = Keys.F2,
+            bool doubleClickToEdit = true)
+        {
+            void InternalOnDoubleClick(object? sender, MouseEventArgs e)
+            {
+                ShowItemEditor();
+                e.Suppressed();
+            }
+
+            void InternalOnKeyDown(object? sender, KeyEventArgs e)
+            {
+                if (editKey is null)
+                    return;
+
+                if (e.KeyData == editKey.Value)
+                {
+                    ShowItemEditor();
+                    e.Suppressed();
+                }
+            }
+
+            void InternalOnTextRequested(object? sender, ListBoxItemTextRequestEventArgs e)
+            {
+                textRequested?.Invoke(sender, e);
+            }
+
+            KeyDown -= InternalOnKeyDown;
+            DoubleClick -= InternalOnDoubleClick;
+            EditorTextRequested -= InternalOnTextRequested;
+            ItemTextEdited -= textEdited;
+
+            if (!bind)
+                return;
+
+            if (editKey is not null)
+            {
+                KeyDown += InternalOnKeyDown;
+            }
+
+            if (doubleClickToEdit)
+            {
+                DoubleClick += InternalOnDoubleClick;
+            }
+
+            EditorTextRequested += InternalOnTextRequested;
+            ItemTextEdited += textEdited;
         }
 
         /// <inheritdoc/>
