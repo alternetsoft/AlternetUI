@@ -1,0 +1,554 @@
+#region Assembly System.Windows.Forms.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+// location unknown
+// Decompiled with ICSharpCode.Decompiler 9.1.0.7988
+#endregion
+
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Private.Windows;
+using System.Runtime.InteropServices;
+using System.Windows.Forms.Primitives.Resources;
+
+using Microsoft.Win32;
+
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.Graphics.Gdi;
+using Windows.Win32.UI.HiDpi;
+using Windows.Win32.UI.WindowsAndMessaging;
+
+namespace System.Windows.Forms;
+
+internal static class ScaleHelper
+{
+    private class DpiAwarenessScope : IDisposable
+    {
+        private readonly bool _dpiAwarenessScopeIsSet;
+
+        private readonly bool _threadHostingBehaviorIsSet;
+
+        private readonly DPI_HOSTING_BEHAVIOR _originalDpiHostingBehavior;
+
+        private readonly DPI_AWARENESS_CONTEXT _originalDpiAwarenessContext;
+
+        public DpiAwarenessScope(DPI_AWARENESS_CONTEXT context, DPI_HOSTING_BEHAVIOR behavior)
+        {
+            if (!OsVersion.IsWindows10_18030rGreater())
+            {
+                return;
+            }
+
+            if (context.IsEquivalent(DPI_AWARENESS_CONTEXT.UNSPECIFIED_DPI_AWARENESS_CONTEXT))
+            {
+                throw new NotSupportedException();
+            }
+
+            _originalDpiAwarenessContext = global::Windows.Win32.PInvoke.GetThreadDpiAwarenessContext();
+            if (!global::Windows.Win32.PInvoke.AreDpiAwarenessContextsEqual(_originalDpiAwarenessContext, context))
+            {
+                if ((nint)global::Windows.Win32.PInvoke.SetThreadDpiAwarenessContext(context) == 0L)
+                {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(), SR.Win32GetThreadsDpiContextFailed);
+                }
+
+                _dpiAwarenessScopeIsSet = true;
+            }
+
+            _originalDpiHostingBehavior = global::Windows.Win32.PInvoke.GetThreadDpiHostingBehavior();
+            if (behavior != _originalDpiHostingBehavior)
+            {
+                _originalDpiHostingBehavior = global::Windows.Win32.PInvoke.SetThreadDpiHostingBehavior(behavior);
+                if (_originalDpiHostingBehavior == DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_INVALID)
+                {
+                    throw new Win32Exception(Marshal.GetLastWin32Error(), string.Format(SR.Win32SetThreadsDpiHostingBehaviorFailed, behavior));
+                }
+
+                _threadHostingBehaviorIsSet = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_threadHostingBehaviorIsSet && global::Windows.Win32.PInvoke.SetThreadDpiHostingBehavior(_originalDpiHostingBehavior) == DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_INVALID)
+            {
+                throw new Win32Exception(Marshal.GetLastWin32Error(), string.Format(SR.Win32SetThreadsDpiHostingBehaviorFailed, _originalDpiHostingBehavior));
+            }
+
+            if (_dpiAwarenessScopeIsSet && (nint)global::Windows.Win32.PInvoke.SetThreadDpiAwarenessContext(_originalDpiAwarenessContext) == IntPtr.Zero)
+            {
+                throw new Win32Exception(Marshal.GetLastWin32Error(), string.Format(SR.Win32SetThreadsDpiContextFailed, _originalDpiAwarenessContext));
+            }
+        }
+    }
+
+    internal const int OneHundredPercentLogicalDpi = 96;
+
+    private static bool s_processPerMonitorAware;
+
+    private static Size? s_logicalSmallSystemIconSize;
+
+    internal static int InitialSystemDpi { get; private set; }
+
+    internal static bool IsThreadPerMonitorV2Aware
+    {
+        get
+        {
+            if (s_processPerMonitorAware)
+            {
+                return global::Windows.Win32.PInvoke.GetThreadDpiAwarenessContextInternal().IsEquivalent(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
+            }
+
+            return false;
+        }
+    }
+
+    internal static bool IsScalingRequirementMet
+    {
+        get
+        {
+            if (!IsScalingRequired)
+            {
+                return s_processPerMonitorAware;
+            }
+
+            return true;
+        }
+    }
+
+    internal static bool IsScalingRequired => InitialSystemDpi != 96;
+
+    internal static Size SystemIconSize => new Size(PInvokeCore.GetSystemMetrics(SYSTEM_METRICS_INDEX.SM_CXICON), PInvokeCore.GetSystemMetrics(SYSTEM_METRICS_INDEX.SM_CYICON));
+
+    internal static Size LogicalSmallSystemIconSize
+    {
+        get
+        {
+            Size valueOrDefault = s_logicalSmallSystemIconSize.GetValueOrDefault();
+            if (!s_logicalSmallSystemIconSize.HasValue)
+            {
+                valueOrDefault = (OsVersion.IsWindows10_1607OrGreater() ? new Size(global::Windows.Win32.PInvoke.GetSystemMetricsForDpi(SYSTEM_METRICS_INDEX.SM_CXSMICON, 96u), global::Windows.Win32.PInvoke.GetSystemMetricsForDpi(SYSTEM_METRICS_INDEX.SM_CXSMICON, 96u)) : new Size(16, 16));
+                s_logicalSmallSystemIconSize = valueOrDefault;
+                return valueOrDefault;
+            }
+
+            return valueOrDefault;
+        }
+    }
+
+    static ScaleHelper()
+    {
+        InitializeStatics();
+    }
+
+    private static void InitializeStatics()
+    {
+        s_processPerMonitorAware = GetPerMonitorAware();
+        InitialSystemDpi = GetSystemDpi();
+        static bool GetPerMonitorAware()
+        {
+            if (!OsVersion.IsWindows10_1607OrGreater())
+            {
+                return false;
+            }
+
+            PROCESS_DPI_AWARENESS value;
+            bool flag = global::Windows.Win32.PInvoke.GetProcessDpiAwareness(HANDLE.Null, out value).Succeeded;
+            if (flag)
+            {
+                flag = value switch
+                {
+                    PROCESS_DPI_AWARENESS.PROCESS_DPI_UNAWARE => false,
+                    PROCESS_DPI_AWARENESS.PROCESS_SYSTEM_DPI_AWARE => false,
+                    PROCESS_DPI_AWARENESS.PROCESS_PER_MONITOR_DPI_AWARE => true,
+                    _ => true,
+                };
+            }
+
+            return flag;
+        }
+
+        static int GetSystemDpi()
+        {
+            if (!OsVersion.IsWindows10_1607OrGreater())
+            {
+                using (GetDcScope scope = GetDcScope.ScreenDC)
+                {
+                    return PInvokeCore.GetDeviceCaps(scope, GET_DEVICE_CAPS_INDEX.LOGPIXELSX);
+                }
+            }
+
+            return (int)global::Windows.Win32.PInvoke.GetDpiForSystem();
+        }
+    }
+
+    internal static Bitmap CopyAndScaleToSize(Bitmap bitmap, Size desiredSize)
+    {
+        return ScaleToSize(bitmap, desiredSize, disposeBitmap: false, alwaysCopy: true);
+    }
+
+    private static Bitmap ScaleToSize(Bitmap bitmap, Size desiredSize, bool disposeBitmap = false, bool alwaysCopy = false)
+    {
+        Size size = bitmap.Size;
+        if (size == desiredSize)
+        {
+            if (alwaysCopy)
+            {
+                Bitmap bitmap2 = new Bitmap(bitmap);
+                if (disposeBitmap)
+                {
+                    bitmap.Dispose();
+                }
+
+                bitmap = bitmap2;
+            }
+
+            return bitmap;
+        }
+
+        InterpolationMode interpolationMode = InterpolationMode.HighQualityBicubic;
+        if (desiredSize.Width % size.Width == 0 && desiredSize.Height % size.Height == 0)
+        {
+            interpolationMode = InterpolationMode.NearestNeighbor;
+        }
+        else if (desiredSize.Width < size.Width && desiredSize.Height < size.Height)
+        {
+            interpolationMode = InterpolationMode.HighQualityBilinear;
+        }
+
+        Bitmap bitmap3 = new Bitmap(desiredSize.Width, desiredSize.Height, bitmap.PixelFormat);
+        using (disposeBitmap ? bitmap : null)
+        {
+            using Graphics graphics = Graphics.FromImage(bitmap3);
+            graphics.InterpolationMode = interpolationMode;
+            RectangleF srcRect = new RectangleF(0f, 0f, bitmap.Size.Width, bitmap.Size.Height);
+            RectangleF destRect = new RectangleF(0f, 0f, desiredSize.Width, desiredSize.Height);
+            srcRect.Offset(-0.5f, -0.5f);
+            graphics.DrawImage(bitmap, destRect, srcRect, GraphicsUnit.Pixel);
+            return bitmap3;
+        }
+    }
+
+    internal static Bitmap ScaleToDpi(Bitmap logicalBitmap, int dpi, bool disposeBitmap = false)
+    {
+        if (dpi != 96)
+        {
+            return ScaleToSize(logicalBitmap, ScaleToDpi(logicalBitmap.Size, dpi), disposeBitmap);
+        }
+
+        return logicalBitmap;
+    }
+
+    internal static Font? ScaleToSystemTextSize(Font? font)
+    {
+        if (font == null || font.IsSystemFont || !OsVersion.IsWindows10_1507OrGreater())
+        {
+            return null;
+        }
+
+        try
+        {
+            using RegistryKey registryKey = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Accessibility");
+            if (registryKey != null && registryKey.GetValue("TextScaleFactor") is int value)
+            {
+                int num = Math.Clamp(value, 100, 225);
+                return (num == 100) ? null : font.WithSize(font.Size * ((float)num / 100f));
+            }
+        }
+        catch
+        {
+        }
+
+        return null;
+    }
+
+    internal static int ScaleToPercent(int value, double percent)
+    {
+        return Math.Max(1, (int)Math.Round((double)value * percent));
+    }
+
+    internal static int ScaleToDpi(int logicalValue, int dpi)
+    {
+        if (dpi == 96)
+        {
+            return logicalValue;
+        }
+
+        return (int)Math.Round((double)dpi / 96.0 * (double)logicalValue);
+    }
+
+    internal static Padding ScaleToDpi(Padding logicalPadding, int dpi)
+    {
+        if (dpi != 96)
+        {
+            return new Padding(ScaleToDpi(logicalPadding.Left, dpi), ScaleToDpi(logicalPadding.Top, dpi), ScaleToDpi(logicalPadding.Right, dpi), ScaleToDpi(logicalPadding.Bottom, dpi));
+        }
+
+        return logicalPadding;
+    }
+
+    internal static int ScaleToInitialSystemDpi(int logicalValue)
+    {
+        return ScaleToDpi(logicalValue, InitialSystemDpi);
+    }
+
+    internal static Size ScaleToDpi(Size logicalSize, int dpi)
+    {
+        if (dpi != 96)
+        {
+            return new Size(ScaleToDpi(logicalSize.Width, dpi), ScaleToDpi(logicalSize.Height, dpi));
+        }
+
+        return logicalSize;
+    }
+
+    internal static Bitmap GetIconResourceAsDefaultSizeBitmap(Type type, string resource)
+    {
+        return GetIconResourceAsBestMatchBitmap(type, resource, Size.Empty);
+    }
+
+    internal static Bitmap GetSmallIconResourceAsBitmap(Type type, string resource, int dpi)
+    {
+        return GetIconResourceAsBitmap(type, resource, ScaleToDpi(LogicalSmallSystemIconSize, dpi));
+    }
+
+    internal static Bitmap GetIconResourceAsBitmap(Type type, string resource, Size size)
+    {
+        if (size.IsEmpty)
+        {
+            size = SystemIconSize;
+        }
+
+        return ScaleToSize(GetIconResourceAsBestMatchBitmap(type, resource, size), size, disposeBitmap: true);
+    }
+
+    internal static Bitmap GetIconResourceAsBestMatchBitmap(Stream resourceStream, Size size)
+    {
+        using Icon icon = new Icon(resourceStream, size.IsEmpty ? SystemIconSize : size);
+        return icon.ToBitmap();
+    }
+
+    internal static Bitmap GetIconResourceAsBestMatchBitmap(Type type, string resource, Size size)
+    {
+        using Stream resourceStream = type.Module.Assembly.GetManifestResourceStream(type, resource) ?? throw new ArgumentException(string.Format(SR.ResourceNotFound, type, resource));
+        return GetIconResourceAsBestMatchBitmap(resourceStream, size);
+    }
+
+    internal static HighDpiMode GetThreadHighDpiMode()
+    {
+        if (OsVersion.IsWindows10_1607OrGreater())
+        {
+            DPI_AWARENESS_CONTEXT threadDpiAwarenessContextInternal = global::Windows.Win32.PInvoke.GetThreadDpiAwarenessContextInternal();
+            if (threadDpiAwarenessContextInternal.IsEquivalent(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE))
+            {
+                return HighDpiMode.SystemAware;
+            }
+
+            if (threadDpiAwarenessContextInternal.IsEquivalent(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE))
+            {
+                return HighDpiMode.DpiUnaware;
+            }
+
+            if (threadDpiAwarenessContextInternal.IsEquivalent(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2))
+            {
+                return HighDpiMode.PerMonitorV2;
+            }
+
+            if (threadDpiAwarenessContextInternal.IsEquivalent(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE))
+            {
+                return HighDpiMode.PerMonitor;
+            }
+
+            if (threadDpiAwarenessContextInternal.IsEquivalent(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED))
+            {
+                return HighDpiMode.DpiUnawareGdiScaled;
+            }
+        }
+        else
+        {
+            if (!OsVersion.IsWindows8_1OrGreater())
+            {
+                if (!global::Windows.Win32.PInvoke.IsProcessDPIAware())
+                {
+                    return HighDpiMode.DpiUnaware;
+                }
+
+                return HighDpiMode.SystemAware;
+            }
+
+            global::Windows.Win32.PInvoke.GetProcessDpiAwareness(HANDLE.Null, out var value);
+            switch (value)
+            {
+                case PROCESS_DPI_AWARENESS.PROCESS_DPI_UNAWARE:
+                    return HighDpiMode.DpiUnaware;
+                case PROCESS_DPI_AWARENESS.PROCESS_SYSTEM_DPI_AWARE:
+                    return HighDpiMode.SystemAware;
+                case PROCESS_DPI_AWARENESS.PROCESS_PER_MONITOR_DPI_AWARE:
+                    return HighDpiMode.PerMonitor;
+            }
+        }
+
+        return HighDpiMode.DpiUnaware;
+    }
+
+    internal static Icon ScaleSmallIconToDpi(Icon icon, int dpi, bool alwaysCreateNew = false)
+    {
+        int currentSystemMetrics = global::Windows.Win32.PInvoke.GetCurrentSystemMetrics(SYSTEM_METRICS_INDEX.SM_CXSMICON, (uint)dpi);
+        int currentSystemMetrics2 = global::Windows.Win32.PInvoke.GetCurrentSystemMetrics(SYSTEM_METRICS_INDEX.SM_CYSMICON, (uint)dpi);
+        if (icon.Width != currentSystemMetrics || icon.Height != currentSystemMetrics2 || alwaysCreateNew)
+        {
+            return new Icon(icon, currentSystemMetrics, currentSystemMetrics2);
+        }
+
+        return icon;
+    }
+
+    internal static bool SetProcessHighDpiMode(HighDpiMode highDpiMode)
+    {
+        bool result = false;
+        if (OsVersion.IsWindows10_1703OrGreater())
+        {
+            result = global::Windows.Win32.PInvoke.SetProcessDpiAwarenessContext(highDpiMode switch
+            {
+                HighDpiMode.SystemAware => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE,
+                HighDpiMode.PerMonitor => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE,
+                HighDpiMode.PerMonitorV2 => global::Windows.Win32.PInvoke.IsValidDpiAwarenessContext(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2) ? DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 : DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE,
+                HighDpiMode.DpiUnawareGdiScaled => global::Windows.Win32.PInvoke.IsValidDpiAwarenessContext(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED) ? DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE_GDISCALED : DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE,
+                _ => DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_UNAWARE,
+            });
+        }
+        else if (OsVersion.IsWindows8_1OrGreater())
+        {
+            PROCESS_DPI_AWARENESS processDpiAwareness;
+            switch (highDpiMode)
+            {
+                case HighDpiMode.DpiUnaware:
+                case HighDpiMode.DpiUnawareGdiScaled:
+                    processDpiAwareness = PROCESS_DPI_AWARENESS.PROCESS_DPI_UNAWARE;
+                    break;
+                case HighDpiMode.SystemAware:
+                    processDpiAwareness = PROCESS_DPI_AWARENESS.PROCESS_SYSTEM_DPI_AWARE;
+                    break;
+                case HighDpiMode.PerMonitor:
+                case HighDpiMode.PerMonitorV2:
+                    processDpiAwareness = PROCESS_DPI_AWARENESS.PROCESS_PER_MONITOR_DPI_AWARE;
+                    break;
+                default:
+                    processDpiAwareness = PROCESS_DPI_AWARENESS.PROCESS_SYSTEM_DPI_AWARE;
+                    break;
+            }
+
+            result = global::Windows.Win32.PInvoke.SetProcessDpiAwareness(processDpiAwareness).Succeeded;
+        }
+        else
+        {
+            switch (highDpiMode)
+            {
+                case HighDpiMode.DpiUnaware:
+                case HighDpiMode.DpiUnawareGdiScaled:
+                    return true;
+                case HighDpiMode.SystemAware:
+                case HighDpiMode.PerMonitor:
+                case HighDpiMode.PerMonitorV2:
+                    result = global::Windows.Win32.PInvoke.SetProcessDPIAware();
+                    break;
+            }
+        }
+
+        InitializeStatics();
+        return result;
+    }
+
+    public static IDisposable EnterDpiAwarenessScope(DPI_AWARENESS_CONTEXT awareness, DPI_HOSTING_BEHAVIOR dpiHosting = DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED)
+    {
+        return new DpiAwarenessScope(awareness, dpiHosting);
+    }
+
+    public static T InvokeInSystemAwareContext<T>(Func<T> func)
+    {
+        using (EnterDpiAwarenessScope(DPI_AWARENESS_CONTEXT.DPI_AWARENESS_CONTEXT_SYSTEM_AWARE))
+        {
+            return func();
+        }
+    }
+}
+#if false // Decompilation log
+'224' items in cache
+------------------
+Resolve: 'System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Runtime, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Runtime.dll'
+------------------
+Resolve: 'System.Runtime.InteropServices, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Runtime.InteropServices, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Runtime.InteropServices.dll'
+------------------
+Resolve: 'System.Private.Windows.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Found single assembly: 'System.Private.Windows.Core, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\10.0.9\ref\net10.0\System.Private.Windows.Core.dll'
+------------------
+Resolve: 'System.Drawing.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Drawing.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Drawing.Primitives.dll'
+------------------
+Resolve: 'System.Drawing.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51'
+Found single assembly: 'System.Drawing.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\10.0.9\ref\net10.0\System.Drawing.Common.dll'
+------------------
+Resolve: 'Microsoft.Win32.Registry, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'Microsoft.Win32.Registry, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\Microsoft.Win32.Registry.dll'
+------------------
+Resolve: 'System.Private.Windows.GdiPlus, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Found single assembly: 'System.Private.Windows.GdiPlus, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\10.0.9\ref\net10.0\System.Private.Windows.GdiPlus.dll'
+------------------
+Resolve: 'System.Collections, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Collections, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Collections.dll'
+------------------
+Resolve: 'System.ComponentModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.ComponentModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.ComponentModel.dll'
+------------------
+Resolve: 'System.ComponentModel.TypeConverter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.ComponentModel.TypeConverter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.ComponentModel.TypeConverter.dll'
+------------------
+Resolve: 'Accessibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
+Found single assembly: 'Accessibility, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\10.0.9\ref\net10.0\Accessibility.dll'
+------------------
+Resolve: 'System.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.ObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.ObjectModel.dll'
+------------------
+Resolve: 'System.ComponentModel.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.ComponentModel.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.ComponentModel.Primitives.dll'
+------------------
+Resolve: 'System.Diagnostics.TraceSource, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Diagnostics.TraceSource, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Diagnostics.TraceSource.dll'
+------------------
+Resolve: 'Microsoft.Win32.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'Microsoft.Win32.Primitives, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\Microsoft.Win32.Primitives.dll'
+------------------
+Resolve: 'System.Memory, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51'
+Found single assembly: 'System.Memory, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Memory.dll'
+------------------
+Resolve: 'System.Threading, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Threading, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Threading.dll'
+------------------
+Resolve: 'System.Linq, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Found single assembly: 'System.Linq, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Linq.dll'
+------------------
+Resolve: 'System.Runtime.CompilerServices.Unsafe, Version=10.0.0.0, Culture=neutral, PublicKeyToken=null'
+Found single assembly: 'System.Runtime.CompilerServices.Unsafe, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'
+Load from: 'C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.9\ref\net10.0\System.Runtime.CompilerServices.Unsafe.dll'
+#endif
