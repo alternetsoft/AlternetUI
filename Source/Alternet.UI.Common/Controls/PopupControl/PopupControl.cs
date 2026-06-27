@@ -93,6 +93,12 @@ namespace Alternet.UI
         public Action? ClosedAction { get; set; }
 
         /// <summary>
+        /// Gets or sets the action to be executed when the popup is about to be closed.
+        /// This action is called just before popup is hidden.
+        /// </summary>
+        public Action? ClosingAction { get; set; }
+
+        /// <summary>
         /// Gets or sets the area that should not be covered by the popup.
         /// </summary>
         public virtual RectD? ExcludedArea { get; set; }
@@ -419,6 +425,8 @@ namespace Alternet.UI
             {
                 return;
             }
+
+            ClosingAction?.Invoke();
 
             Hide();
             Parent = null;

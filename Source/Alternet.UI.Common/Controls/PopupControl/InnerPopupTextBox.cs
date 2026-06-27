@@ -13,6 +13,8 @@ namespace Alternet.UI
     /// </summary>
     public partial class InnerPopupTextBox : PopupControl<TextBox>
     {
+        private ObjectUniqueId? targetControlUniqueId;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InnerPopupTextBox"/> class.
         /// </summary>
@@ -42,6 +44,11 @@ namespace Alternet.UI
             Content.ParentBackColor = true;
             Content.ParentForeColor = true;
         }
+
+        /// <summary>
+        /// Gets the unique identifier of the target control that this popup is associated with.
+        /// </summary>
+        public ObjectUniqueId? TargetControlUniqueId => targetControlUniqueId;
 
         /// <summary>
         /// Defines the parameters for the <see cref="ShowAsItemEditor"/> method.
@@ -84,16 +91,28 @@ namespace Alternet.UI
             public AbstractControl? TargetControl;
 
             /// <summary>
-            /// Gets the function that is called to get initial text for the <see cref="TextBox"/> control.
+            /// Gets or sets the function that is called to get initial text for the <see cref="TextBox"/> control.
             /// </summary>
             public Func<string?>? GetItemText;
 
             /// <summary>
-            /// Gets the function that is called to set the text from the <see cref="TextBox"/>
+            /// Gets or sets the function that is called to set the text from the <see cref="TextBox"/>
             /// control back to the item being edited. This is only
             /// called if the user confirms the edit (e.g., by pressing Enter).
             /// </summary>
             public Action<string?>? SetItemText;
+
+            /// <summary>
+            /// Gets or sets the action that is called when the popup is closed.
+            /// This can be used to perform any cleanup or additional actions after the popup is closed.
+            /// </summary>
+            public Action? Closed;
+
+            /// <summary>
+            /// Gets or sets the action that is called when the popup is closing.
+            /// This can be used to perform any actions before the popup is closed.
+            /// </summary>
+            public Action? Closing;
 
             /// <summary>
             /// Gets or sets a value indicating whether the border should be visible.
@@ -131,6 +150,8 @@ namespace Alternet.UI
             if (prm.ItemContainer is null)
                 return false;
 
+            targetControlUniqueId = prm.TargetControl?.UniqueId;
+
             var popupRect = prm.ItemRect;
 
             ResetClosedEvent();
@@ -140,13 +161,20 @@ namespace Alternet.UI
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
 
-            ClosedAction = () =>
+            ClosingAction = () =>
             {
                 prm.ItemContainer?.SetFocusIdle();
                 if (PopupResult != ModalResult.Accepted)
                     return;
                 var newText = Content.Text;
                 prm.SetItemText?.Invoke(newText);
+
+                prm.Closing?.Invoke();
+            };
+
+            ClosedAction = () =>
+            {
+                prm.Closed?.Invoke();
             };
 
             var preferredSize = GetPreferredSize();

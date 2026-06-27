@@ -30,6 +30,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Occurs when the text is edited. In the event handler
+        /// you need to apply the new text to the item. The event is raised when the user presses Enter or
+        /// when the editing is finished programmatically.
+        /// </summary>
+        public event EventHandler<StringEventArgs>? TextEdited;
+
+        /// <summary>
+        /// Occurs when the text is requested for the editor. In the event handler
+        /// you need to provide the text which will be assigned to the text box editor.
+        /// The event is raised when the user starts editing the text.   
+        /// </summary>
+        public event EventHandler<StringEventArgs>? EditorTextRequested;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the text in the control is editable.
         /// </summary>
         [Browsable(false)]
@@ -40,11 +54,20 @@ namespace Alternet.UI
         /// by <see cref="TextBox"/> control.
         /// </summary>
         [Browsable(false)]
-        internal virtual bool IsEditing
+        public virtual bool IsEditing
         {
             get
             {
-                return false;
+                var popup = KnownPopupControls.Default.GetPopupTextBox();
+
+                if (popup is null)
+                    return false;
+                if (!popup.IsVisible || popup.Parent is null)
+                    return false;
+                if(popup.TargetControlUniqueId != UniqueId)
+                    return false;
+
+                return true;
             }
         }
 
@@ -63,9 +86,15 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void TogglePopupVisible(MouseEventArgs e)
         {
-            if (!Label.Bounds.Contains(e.Location))
+            if (!IsEditable || !Label.Bounds.Contains(e.Location))
             {
-                base.TogglePopupVisible(e);
+                if (IsEditing)
+                {
+                }
+                else
+                {
+                    base.TogglePopupVisible(e);
+                }
             }
         }
 
@@ -79,6 +108,28 @@ namespace Alternet.UI
         public override bool SetFocus()
         {
             return base.SetFocus();
+        }
+
+        /// <summary>
+        /// Sets the text when user has finished editing.
+        /// This method is called when the user has finished editing in the popup text box.
+        /// By default this method calls <see cref="TextEdited"/> event
+        /// to update the text. If event is not assigned, the new text is assigned to the
+        /// <c>Value</c> property.
+        /// </summary>
+        /// <param name="text">The new text.</param>
+        protected virtual void RaiseItemTextEdited(string? text)
+        {
+            if (TextEdited != null)
+            {
+                var args = new StringEventArgs(text ?? string.Empty);
+
+                TextEdited(this, args);
+            }
+            else
+            {
+                Value = text;
+            }
         }
 
         /// <summary>
@@ -99,10 +150,10 @@ namespace Alternet.UI
                 BackColor = backColor,
                 ForeColor = foreColor,
                 HasBorder = false,
-                GetItemText = () => Text,
+                GetItemText = () => RequestTextForItemEditor(),
                 SetItemText = text =>
                 {
-                    Value = text;
+                    RaiseItemTextEdited(text);
                 },
             };
 
@@ -116,6 +167,26 @@ namespace Alternet.UI
             Post(() => {
                 popup.ShowAsItemEditor(prm);
             });
+        }
+
+        /// <summary>
+        /// Gets text that can be used in the text box
+        /// when user is editing the item. This method is called when
+        /// the user starts editing.
+        /// </summary>
+        /// <returns>The text for the editor.</returns>
+        protected virtual string? RequestTextForItemEditor()
+        {
+            var result = Text ?? string.Empty;
+
+            if (EditorTextRequested is not null)
+            {
+                var e = new StringEventArgs(result);
+                EditorTextRequested(this, e);
+                result = e.Value;
+            }
+
+            return result;
         }
 
         /// <inheritdoc/>
