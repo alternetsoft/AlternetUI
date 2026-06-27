@@ -1532,6 +1532,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets height of the text box control. This value can be used as a measurement
+        /// during the layout process.
+        /// </summary>
+        /// <param name="font">The font to be used for measurement.</param>
+        /// <param name="hasBorder">Indicates whether the text box has a border.</param>
+        /// <returns>The height of the text box in dips.</returns>
+        public virtual float GetTextBoxHeight(Font font, bool hasBorder)
+        {
+            var textBox = GetHiddenTextBox(hasBorder);
+            textBox.Font = font;
+            return textBox.Height;
+        }
+
+        /// <summary>
         /// Gets hidden text box for the window for measurement purposes.
         /// </summary>
         /// <param name="hasBorder">Indicates whether the hidden text box should have a border.</param>
@@ -1544,6 +1558,8 @@ namespace Alternet.UI
                 {
                     textBoxWithBorder = new TextBox();
                     textBoxWithBorder.Visible = false;
+                    textBoxWithBorder.ParentFont = false;
+                    textBoxWithBorder.Parent = this;
                 }
 
                 return textBoxWithBorder;
@@ -1555,6 +1571,8 @@ namespace Alternet.UI
                     textBox = new TextBox();
                     textBox.HasBorder = false;
                     textBox.Visible = false;
+                    textBox.ParentFont = false;
+                    textBox.Parent = this;
                 }
                 return textBox;
 

@@ -124,6 +124,13 @@ namespace PropertyGridSample
 
         void InitTestsTextBox()
         {
+            AddControlAction<EditableListPicker>("Log sizes", (c) =>
+            {
+                App.Log($"Hidden TextBox height with border {c.ParentWindow?.GetTextBoxHeight(c.RealFont, true)}");
+                App.Log($"Hidden TextBox height {c.ParentWindow?.GetTextBoxHeight(c.RealFont, false)}");
+                App.Log($"EditableListPicker height {c.Height}");
+            });
+
             AddControlAction<TextBox>("Edit sbyte", (c) =>
             {
                 c.SetValueAndValidator((sbyte)5, true);
