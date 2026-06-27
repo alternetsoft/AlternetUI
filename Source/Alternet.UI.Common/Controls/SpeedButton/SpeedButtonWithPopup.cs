@@ -17,9 +17,20 @@ namespace Alternet.UI
         where TControl : AbstractControl, new()
         where TPopup : PopupWindow<TControl>, new()
     {
+        /// <summary>
+        /// Defines the minimum time interval, in milliseconds, that must elapse 
+        /// after the popup window is closed before it can be reopened.
+        /// </summary>
+        /// <remarks>
+        /// This threshold prevents accidental reopening of the popup due to 
+        /// rapid double-clicks or other quick user interactions.
+        /// </remarks>
+        public static int PopupReopenThresholdMs = 200;
+
         private TPopup? popupWindow;
         private object? data;
         private string popupWindowTitle = string.Empty;
+        private DateTime popupLastClosedAt;
 
         /// <summary>
         /// Initializes a new instance of the
@@ -56,6 +67,24 @@ namespace Alternet.UI
         /// Gets a value indicating whether the popup window has been created.
         /// </summary>
         public virtual bool IsPopupWindowCreated => popupWindow is not null;
+
+        /// <summary>
+        /// Gets the time when the popup window was closed.
+        /// </summary>
+        [Browsable(false)]
+        public DateTime PopupLastClosedAt => popupLastClosedAt;
+
+        /// <summary>
+        /// Gets milliseconds since the popup window was last closed.
+        /// </summary>
+        [Browsable(false)]
+        public virtual long ElapsedFromPopupLastClosed
+        {
+            get
+            {
+                return DateUtils.GetAbsElapsedMilliseconds(popupLastClosedAt);
+            }
+        }
 
         /// <summary>
         /// Gets or sets selected value.
@@ -110,9 +139,13 @@ namespace Alternet.UI
             {
                 if (popupWindow is null)
                 {
-                    popupWindow = new ();
+                    popupWindow = new();
                     popupWindow.Title = popupWindowTitle;
-                    popupWindow.AfterHide += OnPopupWindowClosed;
+                    popupWindow.AfterHide += (s, e) =>
+                    {
+                        popupLastClosedAt = DateTime.Now;
+                        OnPopupWindowClosed(s, e);
+                    };
                 }
 
                 return popupWindow;
@@ -243,20 +276,55 @@ namespace Alternet.UI
         protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
             base.OnMouseDoubleClick(e);
+
+            if (ElapsedFromPopupLastClosed < PopupReopenThresholdMs)
+                return;
+            else
+            {
+            }
+
+            TogglePopupVisible(e);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (ElapsedFromPopupLastClosed < PopupReopenThresholdMs)
+                return;
+            else
+            {
+            }
+
+            TogglePopupVisible(e);
+        }
+
+        /// <summary>
+        /// Toggles the visibility of the popup window.
+        /// </summary>
+        protected virtual void TogglePopupVisible()
+        {
             if (IsPopupWindowCreated && PopupWindow.IsVisible)
                 Invoke(() => PopupWindow.HidePopup(ModalResult.Canceled));
             else
                 Invoke(ShowPopup);
         }
 
+        /// <summary>
+        /// Toggles the visibility of the popup window.
+        /// This method is called when the mouse is clicked on the control.
+        /// </summary>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+        protected virtual void TogglePopupVisible(MouseEventArgs e)
+        {
+            TogglePopupVisible();
+        }
+
         /// <inheritdoc/>
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
-            if(IsPopupWindowCreated && PopupWindow.IsVisible)
-                Invoke(() => PopupWindow.HidePopup(ModalResult.Canceled));
-            else
-                Invoke(ShowPopup);
         }
 
         /// <summary>

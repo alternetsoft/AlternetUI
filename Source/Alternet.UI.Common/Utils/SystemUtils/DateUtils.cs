@@ -17,7 +17,8 @@ namespace Alternet.UI
         /// Gets or sets the designator override for AM/PM formatting in time representations.
         /// </summary>
         /// <remarks>This property allows customization of the AM designator used in date and time
-        /// formatting. If set to null (default value), the default designator will be used based on the current culture
+        /// formatting. If set to null (default value), the default designator
+        /// will be used based on the current culture
         /// settings.</remarks>
         public static string? AmDesignatorOverride;
 
@@ -25,7 +26,8 @@ namespace Alternet.UI
         /// Gets or sets the designator override for PM formatting in time representations.
         /// </summary>
         /// <remarks>This property allows customization of the PM designator used in date and time
-        /// formatting. If set to null (default value), the default designator will be used based on the current culture
+        /// formatting. If set to null (default value), the default designator
+        /// will be used based on the current culture
         /// settings.</remarks>
         public static string? PmDesignatorOverride;
 
@@ -39,13 +41,15 @@ namespace Alternet.UI
         /// Returns the culture-specific AM or PM designator for the specified date and time value.
         /// </summary>
         /// <remarks>If a user-defined override for the AM or PM designator is set, it is used in
-        /// preference to the culture-specific value. If the resulting designator is null, empty, or consists only of
+        /// preference to the culture-specific value. If the resulting designator is null,
+        /// empty, or consists only of
         /// white space, the method defaults to "AM" or "PM" based on the time of day. The returned designator is
         /// trimmed of any leading or trailing white space.</remarks>
         /// <param name="dt">The date and time value for which to determine the AM or PM designator.</param>
         /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
         /// If null, the current culture is used.</param>
-        /// <returns>A string containing the AM or PM designator appropriate for the specified date and time, using any
+        /// <returns>A string containing the AM or PM designator appropriate for the specified
+        /// date and time, using any
         /// user-defined overrides if present.</returns>
         public static string GetAmOrPmDesignator(DateTime dt, IFormatProvider? formatProvider = null)
         {
@@ -194,6 +198,26 @@ namespace Alternet.UI
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static long GetNowInMilliseconds()
             => DateUtils.GetCurrentTimestamp() / TimeSpan.TicksPerMillisecond;
+
+        /// <summary>
+        /// Gets the time in milliseconds for the specified <see cref="DateTime"/>.
+        /// </summary>
+        /// <param name="dt">The date and time value to convert.</param>
+        /// <returns>The equivalent time in milliseconds.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long GetInMilliseconds(DateTime dt)
+            => dt.Ticks / TimeSpan.TicksPerMillisecond;
+
+        /// <summary>
+        /// Gets the time in milliseconds which is the
+        /// difference between the specified <see cref="DateTime"/> and the current time.
+        /// </summary>
+        /// <param name="time">The date and time value to compare with the current time.</param>
+        /// <returns>The elapsed time in milliseconds. Returned value is always non-negative.</returns>
+        public static long GetAbsElapsedMilliseconds(DateTime time)
+        {
+            return Math.Abs(GetNowInMilliseconds() - GetInMilliseconds(time));
+        }
 
         /// <summary>
         /// Gets current time in milliseconds using

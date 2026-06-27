@@ -165,7 +165,7 @@ namespace Alternet.UI
             {
                 items = value;
                 simpleItems = null;
-                if(IsPopupWindowCreated)
+                if (IsPopupWindowCreated)
                 {
                     ListBox.SetItemsFastest(items);
                 }
@@ -293,7 +293,7 @@ namespace Alternet.UI
             foreach (var item in Enum.GetValues(type))
             {
                 var st = item.ToString();
-                if(st is null)
+                if (st is null)
                     continue;
                 Add(new ListControlItem(st, item));
             }
@@ -431,7 +431,7 @@ namespace Alternet.UI
             if (kind == PickerPopupKind.None)
                 return;
 
-            if(App.IsLinuxOS)
+            if (App.IsLinuxOS)
                 kind = PickerPopupKind.ListBox;
 
             RaiseBeforeShowPopup(EventArgs.Empty);
@@ -481,7 +481,7 @@ namespace Alternet.UI
 
                     var s = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
 
-                    if(i == 0 && DefaultExpandDropDownMenuToWidth)
+                    if (i == 0 && DefaultExpandDropDownMenuToWidth)
                     {
                         var itemWidth = popupOwner.MeasureCanvas.MeasureText(s, RealFont).Width;
                         var numOfSpaces = (int)((popupOwner.Width - itemWidth) / spaceWidth);
@@ -525,7 +525,7 @@ namespace Alternet.UI
 
                 int? index = null;
 
-                if(LookupValue is not null)
+                if (LookupValue is not null)
                 {
                     var lookupEventArgs = new BaseEventArgs<int?>();
                     LookupValue(this, lookupEventArgs);
@@ -579,7 +579,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            if(DropDownMenu is not null && DropDownMenu.UniqueId == createdMenuId)
+            if (DropDownMenu is not null && DropDownMenu.UniqueId == createdMenuId)
             {
                 var menu = DropDownMenu;
                 DropDownMenu = null;

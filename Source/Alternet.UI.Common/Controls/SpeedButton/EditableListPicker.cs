@@ -37,5 +37,29 @@ namespace Alternet.UI
         {
             base.OnRemovedFromWindow(parentWindow);
         }
+
+        /// <inheritdoc/>
+        protected override void TogglePopupVisible(MouseEventArgs e)
+        {
+            if (!Label.Bounds.Contains(e.Location))
+            {
+                base.TogglePopupVisible(e);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (Label.Bounds.Contains(e.Location))
+                {
+                    App.Log("EditableListPicker: Label clicked, showing text box popup");
+                    e.Handled = true;
+                }
+            }
+
+            base.OnMouseDown(e);
+        }
     }
 }
