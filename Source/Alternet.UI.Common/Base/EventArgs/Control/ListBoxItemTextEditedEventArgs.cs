@@ -10,17 +10,28 @@ namespace Alternet.UI
     public class ListBoxItemTextEditedEventArgs : ListBoxItemEventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ListBoxItemTextEditedEventArgs"/>
-        /// class with the empty new text.
+        /// Creates a new instance of the <see cref="ListBoxItemTextEditedEventArgs"/> class.
         /// </summary>
-        public ListBoxItemTextEditedEventArgs()
+        /// <param name="item">The item for which the event is raised.</param>
+        /// <param name="itemIndex">The index of the item for which the event is raised.</param>
+        /// <param name="newText">The new text for the item editor.</param>
+        public ListBoxItemTextEditedEventArgs(
+            ListControlItem item,
+            int itemIndex,
+            string? newText)
+            : base(item, itemIndex)
         {
-            NewText = string.Empty;
+            NewText = newText;
         }
 
         /// <summary>
         /// Gets or sets the new text of the item after editing.
         /// </summary>
-        public virtual string NewText { get; set; }
+        public virtual string? NewText { get; set; }
+
+        /// <summary>
+        /// Gets the new text of the item after editing or an empty string if the new text is null.
+        /// </summary>
+        public string NewTextOrDefault => NewText ?? string.Empty;
     }
 }

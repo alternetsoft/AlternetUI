@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// Provides methods and properties to manage an application.
     /// </summary>
     [System.ComponentModel.DesignerCategory("Code")]
-    public partial class App : DisposableObject
+    public partial class App : HostedDisposableObject
     {
         /// <summary>
         /// Gets id of the application thread.

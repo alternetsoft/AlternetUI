@@ -54,14 +54,14 @@ namespace Alternet.UI
             /// <summary>
             /// Gets the function that is called to get initial text for the <see cref="TextBox"/> control.
             /// </summary>
-            public Func<string>? GetItemText;
+            public Func<string?>? GetItemText;
 
             /// <summary>
             /// Gets the function that is called to set the text from the <see cref="TextBox"/>
             /// control back to the item being edited. This is only
             /// called if the user confirms the edit (e.g., by pressing Enter).
             /// </summary>
-            public Action<string>? SetItemText;
+            public Action<string?>? SetItemText;
         }
 
         /// <summary>
