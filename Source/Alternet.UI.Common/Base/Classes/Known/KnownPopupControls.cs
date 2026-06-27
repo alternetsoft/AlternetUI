@@ -18,6 +18,8 @@ namespace Alternet.UI
         /// </summary>
         public static KnownPopupControls Default { get; set; } = new ();
 
+        private InnerPopupTextBox? popupTextBox;
+
         /// <summary>
         /// Gets instance of <see cref="InnerPopupTextBox"/> control.
         /// If it is not created yet, it will be created using <see cref="CreateInnerPopupTextBox"/> method.
@@ -26,13 +28,11 @@ namespace Alternet.UI
         /// <see cref="VirtualListBox"/> controls share
         /// the same instance of <see cref="InnerPopupTextBox"/> for editing their items.
         /// </summary>
-        /// <param name="sender">The control which requests the popup text box.</param>
-        /// <param name="hasBorder">Indicates whether the popup text box should have a border.</param>
         /// <returns>The instance of <see cref="InnerPopupTextBox"/> control or <c>null</c>
         /// if it cannot be created.</returns>
-        public virtual InnerPopupTextBox? GetPopupTextBox(AbstractControl sender, bool hasBorder)
+        public virtual InnerPopupTextBox? GetPopupTextBox()
         {
-            var result = sender.ParentWindow?.GetPopupTextBox(hasBorder);
+            var result = popupTextBox ??= CreateInnerPopupTextBox();
             return result;
         }
 
@@ -41,10 +41,9 @@ namespace Alternet.UI
         /// Override this method to provide a custom implementation of <see cref="InnerPopupTextBox"/>.
         /// </summary>
         /// <returns>A new instance of the <see cref="InnerPopupTextBox"/> control.</returns>
-        public virtual InnerPopupTextBox CreateInnerPopupTextBox(bool hasBorder)      
+        public virtual InnerPopupTextBox CreateInnerPopupTextBox()      
         {
             var result = new InnerPopupTextBox();
-            result.HasBorder = hasBorder;
             return result;
         }
 

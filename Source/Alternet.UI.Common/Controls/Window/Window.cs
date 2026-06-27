@@ -37,8 +37,8 @@ namespace Alternet.UI
         private WeakReferenceValue<Window> owner;
         private int? oldDisplay;
         private AbstractControl? statusBar;
-        private InnerPopupTextBox? popupTextBox;
-        private InnerPopupTextBox? popupTextBoxWithBorder;
+        private TextBox? textBox;
+        private TextBox? textBoxWithBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -1532,27 +1532,32 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets popup text box for the window.
+        /// Gets hidden text box for the window for measurement purposes.
         /// </summary>
-        /// <param name="hasBorder">Indicates whether the popup text box should have a border.</param>
-        /// <returns>The instance of <see cref="InnerPopupTextBox"/> control.</returns>
-        public virtual InnerPopupTextBox GetPopupTextBox(bool hasBorder)
+        /// <param name="hasBorder">Indicates whether the hidden text box should have a border.</param>
+        /// <returns>The instance of <see cref="TextBox"/> control.</returns>
+        public virtual TextBox GetHiddenTextBox(bool hasBorder)
         {
             if (hasBorder)
             {
-                if(popupTextBoxWithBorder is null)
+                if (textBoxWithBorder is null)
                 {
-                    popupTextBoxWithBorder = KnownPopupControls.Default.CreateInnerPopupTextBox(hasBorder: true);
+                    textBoxWithBorder = new TextBox();
+                    textBoxWithBorder.Visible = false;
                 }
-                return popupTextBoxWithBorder;
+
+                return textBoxWithBorder;
             }
             else
             {
-                if(popupTextBox is null)
+                if (textBox is null)
                 {
-                    popupTextBox = KnownPopupControls.Default.CreateInnerPopupTextBox(hasBorder:false);
+                    textBox = new TextBox();
+                    textBox.HasBorder = false;
+                    textBox.Visible = false;
                 }
-                return popupTextBox;
+                return textBox;
+
             }
         }
 

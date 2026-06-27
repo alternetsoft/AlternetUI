@@ -1785,7 +1785,7 @@ namespace Alternet.UI
             var prm = CreateItemEditorParams(itemIndex);
             if (prm is null)
                 return false;
-            var popup = KnownPopupControls.Default.GetPopupTextBox(this, hasBorder: true);
+            var popup = KnownPopupControls.Default.GetPopupTextBox();
             
             if(popup is null)
                 return false;
@@ -1819,6 +1819,7 @@ namespace Alternet.UI
                 return null;
             InnerPopupTextBox.ShowAsItemEditorParams prm = new()
             {
+                HasBorder = true,
                 ItemRect = rect.Value,
                 ItemContainer = this,
                 GetItemText = () => RequestTextForItemEditor(itemIndex.Value, item),

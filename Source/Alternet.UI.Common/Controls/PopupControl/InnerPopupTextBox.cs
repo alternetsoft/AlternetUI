@@ -70,6 +70,11 @@ namespace Alternet.UI
             /// called if the user confirms the edit (e.g., by pressing Enter).
             /// </summary>
             public Action<string?>? SetItemText;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the border should be visible.
+            /// </summary>
+            public bool HasBorder = true;
         }
 
         /// <summary>
@@ -84,6 +89,7 @@ namespace Alternet.UI
             var popupRect = prm.ItemRect;
 
             ResetClosedEvent();
+            HasBorder = prm.HasBorder;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
 
