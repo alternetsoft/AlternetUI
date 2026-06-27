@@ -71,6 +71,22 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets empty text hint displayed in the control when the text is empty.
+        /// </summary>
+        public virtual string? EmptyTextHint
+        {
+            get
+            {
+                return Label.EmptyTextHint;
+            }
+
+            set
+            {
+                Label.EmptyTextHint = value;
+            }
+        }
+
         /// <inheritdoc/>
         protected override void OnInsertedToWindow(Window parentWindow)
         {
@@ -145,12 +161,14 @@ namespace Alternet.UI
             backColor ??= DefaultColors.ControlBackColor.Current;
             foreColor ??= DefaultColors.ControlForeColor.Current;
 
+            var s = RequestTextForItemEditor();
+
             InnerPopupTextBox.ShowAsItemEditorParams prm = new()
             {
                 BackColor = backColor,
                 ForeColor = foreColor,
                 HasBorder = false,
-                GetItemText = () => RequestTextForItemEditor(),
+                GetItemText = () => s,
                 SetItemText = text =>
                 {
                     RaiseItemTextEdited(text);

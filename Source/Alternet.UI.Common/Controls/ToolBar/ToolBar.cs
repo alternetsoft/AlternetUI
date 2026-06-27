@@ -418,7 +418,7 @@ namespace Alternet.UI
                     yield break;
                 foreach (var item in Children)
                 {
-                    if (item is SpeedButton speedButton)
+                    if (item is SpeedButton speedButton && HandleAsSpeedButton(speedButton))
                     {
                         yield return speedButton;
                     }
@@ -1795,7 +1795,7 @@ namespace Alternet.UI
                 {
                     HorizontalAlignment = HorizontalAlignment.Fill;
 
-                    if (item is SpeedButton speedButton)
+                    if (item is SpeedButton speedButton && HandleAsSpeedButton(speedButton))
                     {
                         speedButton.ConfigureAsMenuItem();
                     }
@@ -3427,7 +3427,7 @@ namespace Alternet.UI
             {
                 foreach (var item in Children)
                 {
-                    if (item is SpeedButton || item is PictureBox)
+                    if (HandleAsSpeedButton(item) || item is PictureBox)
                     {
                         var size = GetItemSuggestedSize(item);
                         item.SuggestedSize = size;
@@ -3512,6 +3512,16 @@ namespace Alternet.UI
         protected override bool GetDefaultParentForeColor()
         {
             return false;
+        }
+
+        /// <summary>
+        /// Gets whether the controls should be handled like speed button.
+        /// </summary>
+        /// <param name="control">The control to check.</param>
+        /// <returns></returns>
+        protected virtual bool HandleAsSpeedButton(AbstractControl control)
+        {
+            return (control is SpeedButton speedButton) && speedButton.CustomFlags["CreatedByToolBar"] == true;
         }
 
         /// <summary>

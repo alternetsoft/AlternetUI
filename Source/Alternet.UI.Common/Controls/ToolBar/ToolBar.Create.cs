@@ -15,6 +15,7 @@ namespace Alternet.UI
         protected virtual PictureBox CreatePictureBox()
         {
             var result = new PictureBox();
+            result.CustomFlags["CreatedByToolBar"] = true;
             return result;
         }
 
@@ -31,6 +32,7 @@ namespace Alternet.UI
         protected virtual ToolBarSeparatorItem CreateToolSeparator()
         {
             ToolBarSeparatorItem border = new();
+            border.CustomFlags["CreatedByToolBar"] = true;
             return border;
         }
 
@@ -43,6 +45,7 @@ namespace Alternet.UI
         protected virtual Spacer CreateToolSpacer()
         {
             Spacer spacer = new();
+            spacer.CustomFlags["CreatedByToolBar"] = true;
             return spacer;
         }
 
@@ -55,7 +58,9 @@ namespace Alternet.UI
         /// a label in the toolbar.</returns>
         protected virtual AbstractControl CreateToolLabel()
         {
-            return new Label();
+            var label = new Label();
+            label.CustomFlags["CreatedByToolBar"] = true;
+            return label;
         }
 
         /// <summary>
@@ -66,9 +71,15 @@ namespace Alternet.UI
         /// a speed button in the toolbar.</returns>
         protected virtual SpeedButton CreateToolSpeedButton()
         {
+            SpeedButton result;
             if (customButtonType is null)
-                return new SpeedButton();
-            return (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedButton();
+                result = new SpeedButton();
+            else
+                result = (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedButton();
+
+            result.CustomFlags["CreatedByToolBar"] = true;
+
+            return result;
         }
 
         /// <summary>
@@ -79,9 +90,16 @@ namespace Alternet.UI
         /// a speed text button in the toolbar.</returns>
         protected virtual SpeedButton CreateToolSpeedTextButton()
         {
+            SpeedButton result;
+
             if (customButtonType is null)
-                return new SpeedTextButton();
-            return (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedTextButton();
+                result = new SpeedTextButton();
+            else
+                result = (SpeedButton?)Activator.CreateInstance(customButtonType) ?? new SpeedTextButton();
+
+            result.CustomFlags["CreatedByToolBar"] = true;
+
+            return result;
         }
 
         /// <summary>

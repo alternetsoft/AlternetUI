@@ -20,6 +20,7 @@ namespace PropertyGridSample
             findReplace.HasBorder = true;
             findReplace.ReplaceVisible = true;
             findReplace.Manager = findReplace.CreateLogger();
+            findReplace.TextToFind = "some text";
 
             findReplace.FindEdit.SimpleItems.Add("Item 1");
             findReplace.FindEdit.SimpleItems.Add("Item 2");

@@ -170,9 +170,7 @@ namespace Alternet.UI
         {
             get
             {
-                string s = GetValueAsString(Value) ?? " ";
-                if (string.IsNullOrEmpty(s))
-                    s = " ";
+                string s = GetValueAsString(Value) ?? string.Empty;
                 return s;
             }
 

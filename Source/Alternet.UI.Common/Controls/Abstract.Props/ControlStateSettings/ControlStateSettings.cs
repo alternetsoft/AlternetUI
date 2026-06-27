@@ -160,31 +160,55 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets background in the normal state equal to background in the hovered state.
+        /// Sets background in the destination state equal to background in the source state.
+        /// This method assigns all background related properties (brushes, images, and SVG images)
+        /// in the destination state to match those in the source state.
+        /// </summary>
+        /// <param name="sourceState">The source state from which to copy the background settings.</param>
+        /// <param name="destState">The destination state to which the background settings will be applied.</param>
+        public virtual void AssignBackground(VisualControlState sourceState, VisualControlState destState)
+        {
+            if (Backgrounds is not null)
+            {
+                var sourceBackground = Backgrounds.GetObjectOrNull(sourceState);
+
+                Backgrounds.SetObject(sourceBackground, destState);
+            }
+
+            if (BackgroundActions is not null)
+            {
+                BackgroundActions.SetObject(BackgroundActions.GetObjectOrNull(sourceState), destState);
+            }
+
+            if (BackgroundImages is not null)
+            {
+                BackgroundImages.SetObject(BackgroundImages.GetObjectOrNull(sourceState), destState);
+            }
+
+            if (BackgroundSvgImages is not null)
+            {
+                BackgroundSvgImages.SetObject(BackgroundSvgImages.GetObjectOrNull(sourceState), destState);
+            }
+        }
+
+        /// <summary>
+        /// Sets background in the hovered state equal to background in the normal state.
         /// This method assigns all background related properties (brushes, images, and SVG images)
         /// in the hovered state to match those in the normal state.
         /// </summary>
         public virtual void HoveredBackgroundAsNormal()
         {
-            if (Backgrounds is not null)
-            {
-                Backgrounds.Hovered = Backgrounds.Normal;
-            }
+            AssignBackground(sourceState: VisualControlState.Normal, destState: VisualControlState.Hovered);
+        }
 
-            if (BackgroundActions is not null)
-            {
-                BackgroundActions.Hovered = BackgroundActions.Normal;
-            }
-
-            if (BackgroundImages is not null)
-            {
-                BackgroundImages.Hovered = BackgroundImages.Normal;
-            }
-
-            if (BackgroundSvgImages is not null)
-            {
-                BackgroundSvgImages.Hovered = BackgroundSvgImages.Normal;
-            }
+        /// <summary>
+        /// Sets background in the pressed state equal to background in the normal state.
+        /// This method assigns all background related properties (brushes, images, and SVG images)
+        /// in the pressed state to match those in the normal state.
+        /// </summary>
+        public virtual void PressedBackgroundAsNormal()
+        {
+            AssignBackground(sourceState: VisualControlState.Normal, destState: VisualControlState.Pressed);
         }
 
         /// <summary>

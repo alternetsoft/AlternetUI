@@ -155,7 +155,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Sets background in the normal state equal to background in the hovered state.
+        /// Sets background in the pressed state equal to background in the normal state.
+        /// </summary>
+        public virtual void PressedBackgroundAsNormal()
+        {
+            Dark?.PressedBackgroundAsNormal();
+            Light?.PressedBackgroundAsNormal();
+        }
+
+        /// <summary>
+        /// Sets background in the hovered state equal to background in the normal state.
         /// </summary>
         public virtual void HoveredBackgroundAsNormal()
         {

@@ -230,6 +230,7 @@ namespace Alternet.UI
 
             StaticBorderThemeNoHover = StaticBorderTheme.Clone();
             StaticBorderThemeNoHover.HoveredBackgroundAsNormal();
+            StaticBorderThemeNoHover.PressedBackgroundAsNormal();
 
             RoundBorderTheme = StaticBorderTheme.Clone();
             RoundBorderTheme.SetCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
