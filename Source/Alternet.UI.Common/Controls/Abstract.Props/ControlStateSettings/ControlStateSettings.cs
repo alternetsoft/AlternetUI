@@ -8,7 +8,8 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a collection of visual state settings for a control, including background, foreground, images,
-    /// colors, and borders for different control states. It is up to control to decide on how to use these settings when it paints itself
+    /// colors, and borders for different control states. It is up to control
+    /// to decide on how to use these settings when it paints itself
     /// in different states. This class provides a structured way to manage and apply these settings consistently.
     /// </summary>
     /// <remarks>Use this class to customize the appearance of a control based on its visual state, such as
@@ -101,7 +102,13 @@ namespace Alternet.UI
         /// Gets whether <see cref="Backgrounds"/> has settings not only for
         /// <see cref="VisualControlState.Normal"/> control state.
         /// </summary>
-        public bool HasOtherBackgrounds => Backgrounds?.HasOtherStates ?? false;
+        public bool HasOtherBackgrounds
+        {
+            get
+            {
+                return Backgrounds?.HasOtherStates ?? false;
+            }
+        }
 
         /// <summary>
         /// Gets whether <see cref="BackgroundSvgImages"/> has settings not only for
@@ -150,6 +157,34 @@ namespace Alternet.UI
             if (Borders is null)
                 return;
             Borders.Normal = Borders.Hovered;
+        }
+
+        /// <summary>
+        /// Sets background in the normal state equal to background in the hovered state.
+        /// This method assigns all background related properties (brushes, images, and SVG images)
+        /// in the hovered state to match those in the normal state.
+        /// </summary>
+        public virtual void HoveredBackgroundAsNormal()
+        {
+            if (Backgrounds is not null)
+            {
+                Backgrounds.Hovered = Backgrounds.Normal;
+            }
+
+            if (BackgroundActions is not null)
+            {
+                BackgroundActions.Hovered = BackgroundActions.Normal;
+            }
+
+            if (BackgroundImages is not null)
+            {
+                BackgroundImages.Hovered = BackgroundImages.Normal;
+            }
+
+            if (BackgroundSvgImages is not null)
+            {
+                BackgroundSvgImages.Hovered = BackgroundSvgImages.Normal;
+            }
         }
 
         /// <summary>

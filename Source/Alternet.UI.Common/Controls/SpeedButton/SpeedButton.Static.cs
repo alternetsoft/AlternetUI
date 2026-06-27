@@ -74,6 +74,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default color and style settings
         /// for all <see cref="SpeedButton"/> controls
+        /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.StaticBorderNoHover"/>.
+        /// </summary>
+        public static ControlColorAndStyle StaticBorderThemeNoHover;
+
+        /// <summary>
+        /// Gets or sets default color and style settings
+        /// for all <see cref="SpeedButton"/> controls
         /// which have <see cref="UseTheme"/> equal to <see cref="KnownTheme.RoundBorder"/>.
         /// </summary>
         public static ControlColorAndStyle RoundBorderTheme;
@@ -189,6 +196,7 @@ namespace Alternet.UI
         /// Resets color themes of <see cref="SpeedButton"/> to their initial values.
         /// </summary>
         [MemberNotNull(nameof(StaticBorderTheme))]
+        [MemberNotNull(nameof(StaticBorderThemeNoHover))]
         [MemberNotNull(nameof(RoundBorderTheme))]
         [MemberNotNull(nameof(SquareCornersTheme))]
         [MemberNotNull(nameof(StickyBorderTheme))]
@@ -220,6 +228,9 @@ namespace Alternet.UI
             StaticBorderTheme.DisabledBorderAsHovered();
             StaticBorderTheme.SetBorderColor(borderColor);
 
+            StaticBorderThemeNoHover = StaticBorderTheme.Clone();
+            StaticBorderThemeNoHover.HoveredBackgroundAsNormal();
+
             RoundBorderTheme = StaticBorderTheme.Clone();
             RoundBorderTheme.SetCornerRadius(DefaultRoundBorderRadius, DefaultRoundBorderRadiusIsPercent);
 
@@ -229,7 +240,9 @@ namespace Alternet.UI
             ControlColorAndStyle CreateBordered(LightDarkColor? color, BorderCornerRadius? cornerRadius = null)
             {
                 var result = DefaultTheme.Clone();
-                result.SetBorderFromBorder(stateToChange: VisualControlState.Normal, assignFromState: VisualControlState.Hovered);
+                result.SetBorderFromBorder(
+                    stateToChange: VisualControlState.Normal,
+                    assignFromState: VisualControlState.Hovered);
                 result.SetBorderWidth(DefaultStickyBorderWidth);
                 result.SetBorderColor(color);
                 return result;

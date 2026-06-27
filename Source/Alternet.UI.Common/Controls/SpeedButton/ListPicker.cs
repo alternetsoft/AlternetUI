@@ -35,7 +35,6 @@ namespace Alternet.UI
         /// </summary>
         public ListPicker()
         {
-            UseTheme = KnownTheme.StaticBorder;
             UseControlColors(DefaultUseControlColors);
         }
 
@@ -47,6 +46,12 @@ namespace Alternet.UI
         {
             UseControlColors(DefaultUseControlColors);
             base.OnSystemColorsChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override KnownTheme GetDefaultUseTheme()
+        {
+            return KnownTheme.StaticBorder;
         }
     }
 }

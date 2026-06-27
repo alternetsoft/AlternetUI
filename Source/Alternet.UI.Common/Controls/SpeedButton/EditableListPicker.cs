@@ -48,6 +48,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override KnownTheme GetDefaultUseTheme()
+        {
+            return KnownTheme.StaticBorderNoHover;
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)

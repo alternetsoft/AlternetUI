@@ -47,7 +47,7 @@ namespace Alternet.UI
 
         private Action? clickAction;
         private ShortcutInfo? shortcut;
-        private KnownTheme useTheme = DefaultUseTheme;
+        private KnownTheme useTheme;
         private KnownTheme useThemeForSticky = DefaultUseThemeForSticky;
         private ControlColorAndStyle? customTheme;
         private VisualControlState stickyVisualState = VisualControlState.Normal;
@@ -83,6 +83,8 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButton()
         {
+            useTheme = GetDefaultUseTheme();
+
             commandSource = new(this);
 
             IsTransparent = false; // It should be false as control paints hovered background
@@ -1830,6 +1832,8 @@ namespace Alternet.UI
                     return CustomTheme ?? DefaultCustomTheme;
                 case KnownTheme.StaticBorder:
                     return StaticBorderTheme;
+                case KnownTheme.StaticBorderNoHover:
+                    return StaticBorderThemeNoHover;
                 case KnownTheme.StickyBorder:
                     return StickyBorderTheme;
                 case KnownTheme.NoBorder:
@@ -2221,6 +2225,16 @@ namespace Alternet.UI
             pictureSpacer.RaiseSystemColorsChanged(EventArgs.Empty);
             spacer.RaiseSystemColorsChanged(EventArgs.Empty);
             label.RaiseSystemColorsChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Gets default used theme for the control.
+        /// Result of this method is used in the constructor to set <see cref="UseTheme"/> property.
+        /// </summary>
+        /// <returns>The default theme to be used by the control.</returns>
+        protected virtual KnownTheme GetDefaultUseTheme()
+        {
+            return DefaultUseTheme;
         }
 
         /// <summary>

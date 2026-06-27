@@ -153,5 +153,14 @@ namespace Alternet.UI
             Dark?.NormalBorderAsHovered();
             Light?.NormalBorderAsHovered();
         }
+
+        /// <summary>
+        /// Sets background in the normal state equal to background in the hovered state.
+        /// </summary>
+        public virtual void HoveredBackgroundAsNormal()
+        {
+            Dark?.HoveredBackgroundAsNormal();
+            Light?.HoveredBackgroundAsNormal();
+        }
     }
 }

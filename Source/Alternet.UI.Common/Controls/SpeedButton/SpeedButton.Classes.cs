@@ -68,6 +68,11 @@ namespace Alternet.UI
             StaticBorder,
 
             /// <summary>
+            /// Theme <see cref="StaticBorderThemeNoHover"/> is used.
+            /// </summary>
+            StaticBorderNoHover,
+
+            /// <summary>
             /// Theme <see cref="StickyBorderTheme"/> is used.
             /// </summary>
             StickyBorder,
