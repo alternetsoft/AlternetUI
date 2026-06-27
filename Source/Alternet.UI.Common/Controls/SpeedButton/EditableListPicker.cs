@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+
+using Alternet.Drawing;
 
 namespace Alternet.UI
 {
@@ -24,6 +27,25 @@ namespace Alternet.UI
         /// </summary>
         public EditableListPicker()
         {
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is editable.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsEditable { get; set; } = true;
+
+        /// <summary>
+        /// Gets a value indicating whether the text in the control is currently being edited
+        /// by <see cref="TextBox"/> control.
+        /// </summary>
+        [Browsable(false)]
+        internal virtual bool IsEditing
+        {
+            get
+            {
+                return false;
+            }
         }
 
         /// <inheritdoc/>
@@ -54,14 +76,57 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override bool SetFocus()
+        {
+            return base.SetFocus();
+        }
+
+        /// <summary>
+        /// Starts editing the text in the control using popup text box.
+        /// </summary>
+        public virtual void BeginEdit()
+        {
+            var itemRect = Label.Bounds;
+
+            var backColor = GetBackColor(VisualControlState.Normal);
+            var foreColor = GetLabelTextColor(VisualControlState.Normal);
+
+            backColor ??= DefaultColors.ControlBackColor.Current;
+            foreColor ??= DefaultColors.ControlForeColor.Current;
+
+            InnerPopupTextBox.ShowAsItemEditorParams prm = new()
+            {
+                BackColor = backColor,
+                ForeColor = foreColor,
+                HasBorder = false,
+                GetItemText = () => Text,
+                SetItemText = text =>
+                {
+                    Value = text;
+                },
+            };
+
+            prm.SetTargetControl(this, itemRect);
+
+            var popup = KnownPopupControls.Default.GetPopupTextBox();
+
+            if (popup is null)
+                return;
+
+            Post(() => {
+                popup.ShowAsItemEditor(prm);
+            });
+        }
+
+        /// <inheritdoc/>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                if (Label.Bounds.Contains(e.Location))
-                {
-                    App.Log("EditableListPicker: Label clicked, showing text box popup");
+                if (Label.Bounds.Contains(e.Location) && IsEditable)
+                {                    
                     e.Handled = true;
+                    BeginEdit();
                 }
             }
 

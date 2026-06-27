@@ -470,6 +470,9 @@ namespace Alternet.UI
 
                 DropDownMenu.Items.SetCount(Items.Count, () => new MenuItem());
 
+                if (Items.Count == 0)
+                    return;
+
                 var popupOwner = PopupOwner ?? this;
 
                 var spaceWidth = popupOwner.MeasureCanvas.MeasureText(" ", RealFont).Width;
@@ -519,9 +522,15 @@ namespace Alternet.UI
             void ShowListBox()
             {
                 if (Items is null)
+                {
                     ListBox.RemoveAll();
+                    return;
+                }
                 else
                     ListBox.SetItemsFastest(Items);
+
+                if (ListBox.Count == 0)
+                    return;
 
                 int? index = null;
 

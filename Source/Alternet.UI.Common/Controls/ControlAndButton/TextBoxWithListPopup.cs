@@ -22,6 +22,8 @@ namespace Alternet.UI
             HasBtnComboBox = true;
             InnerOuterBorder = InnerOuterSelector.Outer;
             ButtonCombo.PopupOwner = MainControl;
+            ButtonCombo.PopupWindow.HideOnEscape = true;
+            ButtonCombo.PopupWindow.HideOnEnter = true;
         }
 
         /// <summary>

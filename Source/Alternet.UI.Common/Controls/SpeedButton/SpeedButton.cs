@@ -1752,7 +1752,7 @@ namespace Alternet.UI
         /// <summary>
         /// Retrieves the foreground color for the label based on the specified visual state.
         /// </summary>
-        /// <param name="state"></param>
+        /// <param name="state">The visual state for which to retrieve the foreground color.</param>
         /// <returns></returns>
         public virtual Color? GetLabelTextColor(VisualControlState state)
         {
@@ -1764,6 +1764,23 @@ namespace Alternet.UI
             }
 
             return foreColor;
+        }
+
+        /// <summary>
+        /// Retrieves the background color based on the specified visual state.
+        /// </summary>
+        /// <param name="state">The visual state for which to retrieve the background color.</param>
+        /// <returns>The background color for the specified visual state, or null if not found.</returns>
+        public virtual Color? GetBackColor(VisualControlState state)
+        {
+            var backColor = StateObjects?.Colors?.GetObjectOrNull(state)?.BackgroundColor;
+            if (backColor is null)
+            {
+                var theme = GetDefaultTheme()?.DarkOrLight(IsDarkBackground);
+                backColor ??= theme?.Colors?.GetObjectOrNull(state)?.BackgroundColor;
+            }
+
+            return backColor;
         }
 
         /// <inheritdoc/>

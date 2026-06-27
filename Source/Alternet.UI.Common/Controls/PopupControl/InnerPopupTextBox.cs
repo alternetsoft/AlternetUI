@@ -33,6 +33,14 @@ namespace Alternet.UI
 
             Content.KeyDown += OnContentKeyDown;
             Content.KeyPress += OnContentKeyPress;
+
+            ParentForeColor = false;
+            ParentBackColor = false;
+            AutoUpdateColors = false;
+
+            Content.AutoUpdateColors = false;
+            Content.ParentBackColor = true;
+            Content.ParentForeColor = true;
         }
 
         /// <summary>
@@ -48,16 +56,32 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Gets or sets the background color of the popup.
+            /// </summary>
+            public Color? BackColor { get; set; }
+
+            /// <summary>
+            /// Gets or sets the foreground color of the popup.
+            /// </summary>
+            public Color? ForeColor { get; set; }
+
+            /// <summary>
             /// Gets or sets the bounds of the item being edited. This is used to position the popup control.
             /// Rectangle is in client coordinates of the <see cref="ItemContainer"/>.
             /// </summary>
             public RectD ItemRect;
 
             /// <summary>
-            /// Gets or sets the container control that hosts the item being edited.
+            /// Gets or sets the container control that hosts the popup.
             /// This is used to determine the parent control for the popup.
             /// </summary>
             public AbstractControl? ItemContainer;
+
+            /// <summary>
+            /// Gets or sets the target control for which popup is being shown.
+            /// This is different from <see cref="ItemContainer"/> in that it could be a generic control.
+            /// </summary>
+            public AbstractControl? TargetControl;
 
             /// <summary>
             /// Gets the function that is called to get initial text for the <see cref="TextBox"/> control.
@@ -75,6 +99,27 @@ namespace Alternet.UI
             /// Gets or sets a value indicating whether the border should be visible.
             /// </summary>
             public bool HasBorder = true;
+
+            /// <summary>
+            /// Sets target control and item container for the popup.
+            /// This is a convenience method to set both properties at once.
+            /// Item container is determined by the target control's first parent which is a platform control.
+            /// </summary>
+            /// <param name="targetControl">The target control for which the popup is being shown.</param>
+            /// <param name="itemRect">The bounds of the item being edited.</param>
+            public void SetTargetControl(AbstractControl? targetControl, RectD itemRect)
+            {
+                TargetControl = targetControl;
+                ItemContainer = targetControl;
+
+                while (ItemContainer != null && !ItemContainer.IsPlatformControl)
+                {
+                    itemRect.Location += ItemContainer.Location;
+                    ItemContainer = ItemContainer.Parent;
+                }
+
+                ItemRect = itemRect;
+            }
         }
 
         /// <summary>
@@ -89,6 +134,8 @@ namespace Alternet.UI
             var popupRect = prm.ItemRect;
 
             ResetClosedEvent();
+            BackColor = prm.BackColor ?? prm.ItemContainer.BackColor;
+            ForeColor = prm.ForeColor ?? prm.ItemContainer.ForeColor;
             HasBorder = prm.HasBorder;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
@@ -123,6 +170,8 @@ namespace Alternet.UI
 
             Show();
             Content.SetFocusIfPossible();
+            Content.MoveToEndOfText();
+            Content.SelectAll();
             return true;
         }
 

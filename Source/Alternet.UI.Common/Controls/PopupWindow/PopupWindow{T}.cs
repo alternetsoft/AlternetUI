@@ -120,6 +120,7 @@ namespace Alternet.UI
             MainControl.Required();
             Disposed += OnPopupWindowDisposed;
             HideOnDeactivate = true;
+            AllowFormKeyPreview = false;
         }
 
         /// <summary>

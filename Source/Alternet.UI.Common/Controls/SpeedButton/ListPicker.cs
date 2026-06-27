@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial class ListPicker : SpeedButtonWithListPopup
     {
         /// <summary>
+        /// Gets or sets default label padding.
+        /// </summary>
+        public static Thickness DefaultLabelPadding = (3, 0, 3, 0);
+
+        /// <summary>
         /// Gets or sets whether to assign default control colors
         /// in the constructor using <see cref="AbstractControl.UseControlColors"/>.
         /// Default is <c>true</c>.
@@ -35,6 +40,7 @@ namespace Alternet.UI
         /// </summary>
         public ListPicker()
         {
+            Label.Padding = DefaultLabelPadding;
             UseControlColors(DefaultUseControlColors);
         }
 

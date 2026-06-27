@@ -8,12 +8,8 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents a control that can be used to display or edit unformatted text.
+    /// Represents a control that allows the user to input text. 
     /// </summary>
-    /// <remarks>
-    /// With the <see cref="TextBox"/> control, the user can enter text in
-    /// an application.
-    /// </remarks>
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory(KnownControlCategory.Common)]

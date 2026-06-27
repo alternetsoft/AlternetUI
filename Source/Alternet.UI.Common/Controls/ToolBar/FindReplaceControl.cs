@@ -55,14 +55,14 @@ namespace Alternet.UI
         private readonly TextBoxWithListPopup findEdit = new()
         {
             Margin = (2, 0, 2, 0),
-            UseContextMenuAsPopup = true,
+            UseContextMenuAsPopup = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 
         private readonly TextBoxWithListPopup replaceEdit = new()
         {
             Margin = (2, 0, 2, 0),
-            UseContextMenuAsPopup = true,
+            UseContextMenuAsPopup = false,
             VerticalAlignment = VerticalAlignment.Center,
         };
 

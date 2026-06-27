@@ -1819,6 +1819,9 @@ namespace Alternet.UI
                 return null;
             InnerPopupTextBox.ShowAsItemEditorParams prm = new()
             {
+                BackColor = this.RealBackgroundColor,
+                ForeColor = this.RealForegroundColor,
+                TargetControl = this,
                 HasBorder = true,
                 ItemRect = rect.Value,
                 ItemContainer = this,
