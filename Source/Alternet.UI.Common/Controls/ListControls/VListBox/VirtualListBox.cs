@@ -1076,7 +1076,11 @@ namespace Alternet.UI
                 return null;
 
             MeasureItemEventArgs e = new(MeasureCanvas, 0);
-            RectD itemRect = (0, 0, GetPaintRectangle().Width, 0);
+
+            var paintRectangle = GetPaintRectangle();
+
+            RectD itemRect = paintRectangle;
+            itemRect.Height = 0;
 
             while (line <= n)
             {
@@ -1778,23 +1782,38 @@ namespace Alternet.UI
         /// If null, the selected item will be edited.</param>
         public virtual void ShowItemEditor(int? itemIndex = null)
         {
+            var prm = CreateItemEditorParams(itemIndex);
+            if (prm is null)
+                return;
+            KnownPopupControls.Default.PopupTextBox.ShowAsItemEditor(prm.Value);
+        }
+
+        /// <summary>
+        /// Create parameters for the item editor popup text box.
+        /// This method is called when the user starts editing an item.
+        /// You can override this method to customize the parameters for the item editor.
+        /// </summary>
+        /// <param name="itemIndex">The index of the item to edit.</param>
+        /// <returns>The parameters for the item editor popup text box.</returns>
+        protected virtual InnerPopupTextBox.ShowAsItemEditorParams? CreateItemEditorParams(int? itemIndex)
+        {
             itemIndex ??= SelectedIndex;
 
             if (itemIndex is null)
-                return;
+                return null;
 
             var item = GetItem(itemIndex.Value);
 
             if (item is null)
-                return;
+                return null;
 
             var rect = GetItemRect(itemIndex.Value);
 
             if (rect is null)
-                return;
-
+                return null;
             InnerPopupTextBox.ShowAsItemEditorParams prm = new()
             {
+                HasBorder = true,
                 ItemRect = rect.Value,
                 ItemContainer = this,
                 GetItemText = () => RequestTextForItemEditor(itemIndex.Value, item),
@@ -1804,7 +1823,7 @@ namespace Alternet.UI
                 },
             };
 
-            KnownPopupControls.Default.PopupTextBox.ShowAsItemEditor(prm);
+            return prm;
         }
 
         /// <summary>

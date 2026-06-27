@@ -28,6 +28,7 @@ namespace Alternet.UI
             Content.AllowFormKeyPreview = false;
             Content.ProcessEnter = true;
 
+            Content.VerticalAlignment = VerticalAlignment.Center;
             Content.LostFocus += OnContentLostFocus;
 
             Content.KeyDown += OnContentKeyDown;
@@ -39,6 +40,13 @@ namespace Alternet.UI
         /// </summary>
         public struct ShowAsItemEditorParams
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ShowAsItemEditorParams"/> struct.
+            /// </summary>
+            public ShowAsItemEditorParams()
+            {
+            }
+
             /// <summary>
             /// Gets or sets the bounds of the item being edited. This is used to position the popup control.
             /// Rectangle is in client coordinates of the <see cref="ItemContainer"/>.
@@ -62,17 +70,26 @@ namespace Alternet.UI
             /// called if the user confirms the edit (e.g., by pressing Enter).
             /// </summary>
             public Action<string?>? SetItemText;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the popup control should have a border.
+            /// </summary>
+            public bool HasBorder = true;
         }
 
         /// <summary>
         /// Shows the popup control as an item editor for a specified item.
         /// </summary>
         /// <param name="prm">The parameters for showing the item editor.</param>
-        public virtual void ShowAsItemEditor(ShowAsItemEditorParams prm)
+        public virtual bool ShowAsItemEditor(ShowAsItemEditorParams prm)
         {
+            if (prm.ItemContainer is null)
+                return false;
+
             var popupRect = prm.ItemRect;
 
             ResetClosedEvent();
+            HasBorder = prm.HasBorder;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
 
@@ -85,21 +102,28 @@ namespace Alternet.UI
                 prm.SetItemText?.Invoke(newText);
             };
 
-            var preferredSize = Content.GetPreferredSize();
+            var preferredSize = GetPreferredSize();
             var textBoxHeight = preferredSize.Height;
 
-            if (textBoxHeight > popupRect.Height)
+            popupRect.Height = MathF.Max(textBoxHeight, prm.ItemRect.Height);
+
+            if (popupRect.Height != prm.ItemRect.Height)
             {
-                popupRect.Height = textBoxHeight;
-                popupRect.Top = prm.ItemRect.Top - (textBoxHeight - prm.ItemRect.Height) / 2;
-                if (popupRect.Top < ClientRectangle.Top)
-                    popupRect.Top = ClientRectangle.Top;
+                popupRect.Top += (textBoxHeight - prm.ItemRect.Height) / 2;
             }
+
+            var containerRect = prm.ItemContainer.ClientRectangle;
+
+            if (popupRect.Bottom > containerRect.Bottom)
+                popupRect.Bottom = containerRect.Bottom;
+            if (popupRect.Top < containerRect.Top)
+                popupRect.Top = containerRect.Top;
 
             Bounds = popupRect;
 
             Show();
             Content.SetFocusIfPossible();
+            return true;
         }
 
         /// <summary>

@@ -320,7 +320,8 @@ namespace Alternet.UI
         /// <summary>
         /// Retrieves the bounding rectangle of the vertical scroll bar, if present.
         /// </summary>
-        /// <returns>A <see cref="RectD"/> representing the bounds of the vertical scroll bar, or <see langword="null"/> if the
+        /// <returns>A <see cref="RectD"/> representing the bounds of the vertical scroll bar,
+        /// or <see langword="null"/> if the
         /// scroll bar is not available.</returns>
         protected RectD? GetVertScrollBarRectangle()
         {
@@ -375,7 +376,8 @@ namespace Alternet.UI
         /// Retrieves the interior rectangle corresponding to the specified hit test value, if available.
         /// </summary>
         /// <param name="hitTest">The hit test value that identifies which interior rectangle to retrieve.</param>
-        /// <param name="prm">Optional parameters that may be used to determine the layout rectangles for the interior.</param>
+        /// <param name="prm">Optional parameters that may be used to determine
+        /// the layout rectangles for the interior.</param>
         /// <returns>A <see cref="RectD"/> representing the interior rectangle for the given hit test result, or
         /// <see langword="null"/> if no interior is available.</returns>
         protected virtual RectD? GetInteriorRectangle(

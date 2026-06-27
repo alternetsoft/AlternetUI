@@ -432,7 +432,9 @@ namespace Alternet.Drawing
         /// <param name="control">Control which scale factor used to
         /// convert pixels to/from dips.</param>
         /// <returns>Calculated bounds of the different parts of the drawable.</returns>
-        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(AbstractControl control, LayoutRectanglesParams? prm = null)
+        public virtual EnumArray<HitTestResult, RectD> GetLayoutRectangles(
+            AbstractControl control,
+            LayoutRectanglesParams? prm = null)
         {
             var result = new EnumArray<HitTestResult, RectD>();
 
