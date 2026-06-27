@@ -48,6 +48,7 @@ Environment.NewLine + Environment.NewLine +
             AddAction<DatePicker>(InitDatePicker);
             AddAction<TimePicker>(InitTimePicker);
             AddAction<ListPicker>(InitListPicker);
+            AddAction<EditableListPicker>(InitListPicker);            
             AddAction<EnumPicker>(InitEnumPicker);
             AddAction<ColorPicker>(InitColorPicker);
             AddAction<FontNamePicker>(InitFontNamePicker);

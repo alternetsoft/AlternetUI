@@ -25,5 +25,17 @@ namespace Alternet.UI
         public EditableListPicker()
         {
         }
+
+        /// <inheritdoc/>
+        protected override void OnInsertedToWindow(Window parentWindow)
+        {
+            base.OnInsertedToWindow(parentWindow);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnRemovedFromWindow(Window parentWindow)
+        {
+            base.OnRemovedFromWindow(parentWindow);
+        }
     }
 }

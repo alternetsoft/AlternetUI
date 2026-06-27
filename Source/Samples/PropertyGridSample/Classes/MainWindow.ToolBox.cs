@@ -107,6 +107,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<ResizableBorder>();
                 ToolBoxAdd<ResizableWindowBorder>();
                 ToolBoxAdd<StdCheckListBox>();
+                ToolBoxAdd<EditableListPicker>();
 
                 void ToolBoxAdd<T>()
                 {
