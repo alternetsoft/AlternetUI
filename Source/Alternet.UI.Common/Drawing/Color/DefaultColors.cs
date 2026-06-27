@@ -84,6 +84,12 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the empty text hint color. It is used to display the hint
+        /// when the text in the editor is empty.
+        /// </summary>
+        public static LightDarkColor EmptyTextHintColor { get; set; } = new(light: (87, 87, 87), dark: new(87, 87, 87));
+
+        /// <summary>
         /// Gets or sets the accent color used for UI elements, adapting to light and dark themes.
         /// This color can be used to style various controls and components in the application,
         /// providing a consistent look and feel across different themes.

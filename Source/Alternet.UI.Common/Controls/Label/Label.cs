@@ -69,6 +69,7 @@ namespace Alternet.UI
         private bool wordWrap;
         private bool imageVisible = true;
         private bool isTransparent = true;
+        private string? emptyTextHint;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -223,6 +224,24 @@ namespace Alternet.UI
                 else
                     drawLabelFlags &= ~DrawLabelFlags.MeasureTextAsBold;
                 PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an empty text hint that is displayed when the label's text is empty.
+        /// </summary>
+        public virtual string? EmptyTextHint
+        {
+            get => emptyTextHint;
+
+            set
+            {
+                if (emptyTextHint == value)
+                    return;
+                emptyTextHint = value;
+
+                if (Text.Length == 0)
+                    PerformLayoutAndInvalidate();
             }
         }
 
@@ -841,9 +860,14 @@ namespace Alternet.UI
 #pragma warning disable
             var image = GetImage();
 #pragma warning restore
-            var prefix = TextPrefix;
             var labelText = Text;
 
+            if (labelText.Length == 0)
+            {
+                return EmptyTextHint ?? string.Empty;
+            }
+
+            var prefix = TextPrefix;
             var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
             if (textFormat is not null)
                 result = string.Format(textFormat, result);
@@ -971,6 +995,14 @@ namespace Alternet.UI
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override Color GetLabelForeColor(VisualControlState state)
+        {
+            if (Text.Length == 0)
+                return DefaultColors.EmptyTextHintColor;
+            return base.GetLabelForeColor(state);
         }
 
         /// <inheritdoc/>
