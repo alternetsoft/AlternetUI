@@ -24,7 +24,7 @@ namespace Alternet.UI
     /// <seealso cref="IReadOnlyList{T}"/>
     /// <seealso cref="ICollection"/>
     /// <seealso cref="IList"/>
-    public class ListBoxItems : DisposableObject, IListSource<object>
+    public class ListBoxItems : DisposableObject, IListSource<object?>, IList
     {
         private readonly ListSource<ListControlItem>? items;
 
@@ -54,12 +54,12 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when an item is inserted.
         /// </summary>
-        public event CollectionItemChangedHandler<object>? ItemInserted;
+        public event CollectionItemChangedHandler<object?>? ItemInserted;
 
         /// <summary>
         /// Occurs when an item is removed.
         /// </summary>
-        public event CollectionItemChangedHandler<object>? ItemRemoved;
+        public event CollectionItemChangedHandler<object?>? ItemRemoved;
 
         /// <summary>
         /// Occurs when the collection's contents change.
@@ -97,14 +97,30 @@ namespace Alternet.UI
         public bool IsFixedSize => false;
 
         /// <inheritdoc/>
-        public IList AsList => provider().AsList;
+        public IList AsList => this;
+
+        bool IList.IsFixedSize => IsFixedSize;
+        
+        bool IList.IsReadOnly => IsReadOnly;
+
+        int ICollection.Count => Count;
+
+        bool ICollection.IsSynchronized => false;
+
+        object ICollection.SyncRoot => this;
+
+        object? IList.this[int index]
+        {
+            get { return this[index]; }
+            set { this[index] = value; }
+        }
 
         /// <inheritdoc/>
-        public object this[int index]
+        public object? this[int index]
         {
             get
             {
-                return provider().GetItem(index)?.Value!;
+                return provider().GetItem(index)?.Value;
             }
 
             set
@@ -129,7 +145,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void Add(object value)
+        public void Add(object? value)
         {
             ListControlItem item = new();
             item.Value = value;
@@ -144,7 +160,7 @@ namespace Alternet.UI
         /// Each item in the provided collection is individually added.
         /// This method ensures bulk addition while maintaining integrity.
         /// </remarks>
-        public void AddRange(IEnumerable<object> collection)
+        public void AddRange(IEnumerable<object?> collection)
         {
             foreach (var item in collection)
                 Add(item);
@@ -218,21 +234,21 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void CopyTo(object[] array, int arrayIndex)
+        public void CopyTo(object?[] array, int arrayIndex)
         {
             var itm = provider().Select(x => x.Value).ToList();
             itm.CopyTo(array, arrayIndex);
         }
 
         /// <inheritdoc/>
-        public IEnumerator<object> GetEnumerator()
+        public IEnumerator<object?> GetEnumerator()
         {
-            var itm = provider().Select(x => x.Value!);
+            var itm = provider().Select(x => x.Value);
             return itm.GetEnumerator();
         }
 
         /// <inheritdoc/>
-        public void SetCount(int count, Func<object> fnCreateItem)
+        public void SetCount(int count, Func<object?> fnCreateItem)
         {
             provider().SetCount(count, () =>
             {
@@ -243,7 +259,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void SetItem(int index, object value)
+        public void SetItem(int index, object? value)
         {
             var item = provider().GetItem(index);
             if (item != null)
@@ -340,12 +356,53 @@ namespace Alternet.UI
 
         private void OnItemsItemRemoved(object? sender, int index, ListControlItem item)
         {
-            ItemRemoved?.Invoke(this, index, item.Value!);
+            ItemRemoved?.Invoke(this, index, item.Value);
         }
 
         private void OnItemsItemInserted(object? sender, int index, ListControlItem item)
         {
-            ItemInserted?.Invoke(this, index, item.Value!);
+            ItemInserted?.Invoke(this, index, item.Value);
+        }
+
+        int IList.Add(object? value)
+        {
+            Add(value);
+            return Count - 1;
+        }
+
+        void IList.Clear()
+        {
+            Clear();
+        }
+
+        bool IList.Contains(object? value)
+        {
+            return IndexOf(value) >= 0;
+        }
+
+        int IList.IndexOf(object? value)
+        {
+            return IndexOf(value);
+        }
+
+        void IList.Insert(int index, object? value)
+        {
+            Insert(index, value);
+        }
+
+        void IList.Remove(object? value)
+        {
+            Remove(value);
+        }
+
+        void IList.RemoveAt(int index)
+        {
+            RemoveAt(index);
+        }
+
+        void ICollection.CopyTo(Array array, int index)
+        {
+            CopyTo((object?[])array, index);
         }
     }
 }
