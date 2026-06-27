@@ -447,5 +447,21 @@ namespace Alternet.UI
         protected virtual void OnRemovedFromParent(AbstractControl parentControl)
         {
         }
+
+        /// <summary>
+        /// Called when the control is inserted into a window.
+        /// </summary>
+        /// <param name="parentWindow">The window into which this control was inserted. Cannot be null.</param>
+        protected virtual void OnInsertedToWindow(Window parentWindow)
+        {
+        }
+
+        /// <summary>
+        /// Called when the control is removed from a window.
+        /// </summary>
+        /// <param name="parentWindow">The window from which this control was removed. Cannot be null.</param>
+        protected virtual void OnRemovedFromWindow(Window parentWindow)
+        {
+        }
     }
 }
