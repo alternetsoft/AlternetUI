@@ -37,6 +37,8 @@ namespace Alternet.UI
         private WeakReferenceValue<Window> owner;
         private int? oldDisplay;
         private AbstractControl? statusBar;
+        private InnerPopupTextBox? popupTextBox;
+        private InnerPopupTextBox? popupTextBoxWithBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Window"/> class.
@@ -1527,6 +1529,31 @@ namespace Alternet.UI
             {
                 Dispose();
             });
+        }
+
+        /// <summary>
+        /// Gets popup text box for the window.
+        /// </summary>
+        /// <param name="hasBorder">Indicates whether the popup text box should have a border.</param>
+        /// <returns>The instance of <see cref="InnerPopupTextBox"/> control.</returns>
+        public virtual InnerPopupTextBox GetPopupTextBox(bool hasBorder)
+        {
+            if (hasBorder)
+            {
+                if(popupTextBoxWithBorder is null)
+                {
+                    popupTextBoxWithBorder = KnownPopupControls.Default.CreateInnerPopupTextBox(hasBorder: true);
+                }
+                return popupTextBoxWithBorder;
+            }
+            else
+            {
+                if(popupTextBox is null)
+                {
+                    popupTextBox = KnownPopupControls.Default.CreateInnerPopupTextBox(hasBorder:false);
+                }
+                return popupTextBox;
+            }
         }
 
         /// <summary>

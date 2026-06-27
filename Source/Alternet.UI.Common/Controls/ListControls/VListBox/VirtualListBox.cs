@@ -1780,12 +1780,18 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">The index of the item to edit.
         /// If null, the selected item will be edited.</param>
-        public virtual void ShowItemEditor(int? itemIndex = null)
+        public virtual bool ShowItemEditor(int? itemIndex = null)
         {
             var prm = CreateItemEditorParams(itemIndex);
             if (prm is null)
-                return;
-            KnownPopupControls.Default.PopupTextBox.ShowAsItemEditor(prm.Value);
+                return false;
+            var popup = KnownPopupControls.Default.GetPopupTextBox(this, hasBorder: true);
+            
+            if(popup is null)
+                return false;
+
+            popup.ShowAsItemEditor(prm.Value);
+            return true;
         }
 
         /// <summary>
@@ -1813,7 +1819,6 @@ namespace Alternet.UI
                 return null;
             InnerPopupTextBox.ShowAsItemEditorParams prm = new()
             {
-                HasBorder = true,
                 ItemRect = rect.Value,
                 ItemContainer = this,
                 GetItemText = () => RequestTextForItemEditor(itemIndex.Value, item),
