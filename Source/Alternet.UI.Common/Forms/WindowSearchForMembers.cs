@@ -19,7 +19,7 @@ namespace Alternet.UI
         private static int globalCounter;
 
         private readonly int counter;
-        private readonly AbstractControl? statusPanel;
+        private readonly GenericControl? statusPanel;
 
         private readonly TextBoxAndButton textBox = new()
         {
