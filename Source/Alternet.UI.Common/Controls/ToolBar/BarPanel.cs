@@ -145,7 +145,7 @@ namespace Alternet.UI
         /// This property can be changed only when the panel is not attached to a bar.
         /// </summary>
         [Browsable(false)]
-        public virtual AbstractControl? CustomControl
+        public virtual GenericControl? CustomControl
         {
             get
             {
@@ -713,7 +713,7 @@ namespace Alternet.UI
             public int? SvgSize;
             public Image? Image;
             public Image? DisabledImage;
-            public AbstractControl? CustomControl;
+            public GenericControl? CustomControl;
 
             public PanelData()
             {

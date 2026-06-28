@@ -259,7 +259,7 @@ namespace MenuSample
                 return null;
             }
 
-            menu.Add("Add custom control (slider)", AddCustomControlSliderPanel);
+            menu.Add("Add custom control (check box)", AddCustomControlCheckBox);
 
             menu.Add("Add custom control (color button)", AddCustomControlColorButtonPanel);
 
@@ -269,16 +269,16 @@ namespace MenuSample
 
                 if (panel is null)
                 {
-                    AddCustomControlSliderPanel();
+                    AddCustomControlCheckBox();
                     return;
                 }
 
-                if (panel.CustomControl is StdSlider)
+                if (panel.CustomControl is StdCheckBox)
                     panel.CustomControl = CreateSpeedColorButton();
                 if (panel.CustomControl is SpeedColorButton)
                     panel.CustomControl = null;
                 else
-                    panel.CustomControl = CreateSlider();
+                    panel.CustomControl = CreateCheckBox();
             });
 
             menu.Add("Change first panel kind", () =>
@@ -329,7 +329,6 @@ namespace MenuSample
             saveMenuItem.Command = SaveCommand;
 
             AddImagePanel();
-            AddCustomControlSliderPanel();
             AddCustomControlColorButtonPanel();
 
             var panel = new StatusBarPanel(BarPanelKind.Separator);
@@ -374,10 +373,17 @@ namespace MenuSample
             GetStatusBar()?.AddSeparator();
         }
 
-        private void AddCustomControlSliderPanel()
+        private void AddCustomControlStdButton()
         {
             var panel = new StatusBarPanel(BarPanelKind.CustomControl);
-            panel.CustomControl = CreateSlider();
+            panel.CustomControl = CreateStdButton();
+            GetBar().Panels.Add(panel);
+        }
+
+        private void AddCustomControlCheckBox()
+        {
+            var panel = new StatusBarPanel(BarPanelKind.CustomControl);
+            panel.CustomControl = CreateCheckBox();
             GetBar().Panels.Add(panel);
         }
 
@@ -533,6 +539,27 @@ namespace MenuSample
             };
 
             return slider;
+        }
+
+        private StdButton CreateStdButton()
+        {
+            var button = new StdButton()
+            {
+                ToolTip = "StdButton",
+                VerticalAlignment = VerticalAlignment.Stretch,
+            };
+            return button;
+        }
+
+        private StdCheckBox CreateCheckBox()
+        {
+            var button = new StdCheckBox()
+            {
+                Text = "StdCheckBox",
+                VerticalAlignment = VerticalAlignment.Stretch,
+                IsChecked = true,
+            };
+            return button;
         }
 
         private SpeedColorButton CreateSpeedColorButton()
