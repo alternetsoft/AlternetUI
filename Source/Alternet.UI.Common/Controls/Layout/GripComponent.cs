@@ -70,6 +70,7 @@ namespace Alternet.UI
                     interactionControl.MouseMove -= OnMouseMove;
                     interactionControl.MouseUp -= OnMouseUp;
                     interactionControl.MouseCaptureLost -= OnMouseCaptureLost;
+                    interactionControl.Disposed -= OnControlDisposed;
                 }
 
                 interactionControl = value;
@@ -80,6 +81,7 @@ namespace Alternet.UI
                     interactionControl.MouseMove += OnMouseMove;
                     interactionControl.MouseUp += OnMouseUp;
                     interactionControl.MouseCaptureLost += OnMouseCaptureLost;
+                    interactionControl.Disposed += OnControlDisposed;
                 }
             }
         }
@@ -214,25 +216,6 @@ namespace Alternet.UI
             return this;
         }
 
-        /// <inheritdoc/>
-        protected virtual void OnMouseDown(object? sender, MouseEventArgs e)
-        {
-            if(sender is not Control control) return;
-
-            if (e.Button == MouseButtons.Left)
-            {
-                var target = GetTarget();
-
-                if (target != null)
-                {
-                    resizing = true;
-                    mouseDownPos = control.PointToScreen(e.Location);
-                    origTargetBounds = target?.Bounds ?? RectD.Empty;
-                    control.CaptureMouse();
-                }
-            }
-        }
-
         ///<summary>
         /// Gets the effective minimum position delta for moving, considering
         /// the user-defined value and the default value.
@@ -312,7 +295,12 @@ namespace Alternet.UI
             return newSize;
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Handles the MouseMove event for the interaction control.
+        /// This method is called when the mouse is moved.
+        /// </summary>
+        /// <param name="sender">The control that received the mouse move event.</param>
+        /// <param name="e">Event arguments.</param>
         protected virtual void OnMouseMove(object? sender, MouseEventArgs e)
         {
             if(sender is not Control control) return;
@@ -402,7 +390,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Handles the MouseCaptureLost event for the interaction control.
+        /// This method is called when the mouse capture is lost.
+        /// </summary>
+        /// <param name="sender">The control that lost mouse capture.</param>
+        /// <param name="e">Event arguments.</param>
         protected virtual void OnMouseCaptureLost(object? sender, EventArgs e)
         {
             if (resizing)
@@ -411,7 +404,12 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Handles the MouseUp event for the interaction control.
+        /// This method is called when a mouse button is released.
+        /// </summary>
+        /// <param name="sender">The control that received the mouse up event.</param>
+        /// <param name="e">Event arguments.</param>
         protected virtual void OnMouseUp(object? sender, MouseEventArgs e)
         {
             if (sender is not Control control) return;
@@ -421,6 +419,51 @@ namespace Alternet.UI
                 resizing = false;
                 control.ReleaseMouseCapture();
             }
+        }
+
+        /// <summary>
+        /// Handles the MouseDown event for the interaction control.
+        /// This method is called when a mouse button is pressed.
+        /// </summary>
+        /// <param name="sender">The control that received the mouse down event.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnMouseDown(object? sender, MouseEventArgs e)
+        {
+            if (sender is not Control control) return;
+
+            if (e.Button == MouseButtons.Left)
+            {
+                var target = GetTarget();
+
+                if (target != null)
+                {
+                    resizing = true;
+                    mouseDownPos = control.PointToScreen(e.Location);
+                    origTargetBounds = target?.Bounds ?? RectD.Empty;
+                    control.CaptureMouse();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when the interaction control is disposed.
+        /// Override this method to perform any necessary cleanup.
+        /// </summary>
+        /// <param name="sender">The control that is being disposed.</param>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnControlDisposed(object? sender, EventArgs e)
+        {
+            if(sender == interactionControl)
+            {
+                InteractionControl = null;
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            InteractionControl = null;
+            base.DisposeManaged();
         }
 
         /// <summary>
