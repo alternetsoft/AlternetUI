@@ -39,7 +39,11 @@ namespace PaintSample
         private readonly MenuItem saveAsMenuItem;
         private readonly MenuItem exitMenuItem;
         private readonly MenuItem testMenu;
-        private readonly HorizontalStackPanel optionsPlaceholder = new ();
+
+        private readonly HorizontalStackPanel optionsPlaceholder = new()
+        {
+
+        };
 
         private readonly string? baseTitle;
 
