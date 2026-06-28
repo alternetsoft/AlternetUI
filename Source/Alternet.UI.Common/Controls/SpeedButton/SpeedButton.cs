@@ -17,25 +17,9 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class SpeedButton : GenericControl, ICommandSource
     {
-        private readonly Spacer pictureSpacer = new()
-        {
-            Visible = false,
-            Alignment = HVAlignment.Center,
-        };
-
-        private readonly Spacer spacer = new()
-        {
-            SuggestedSize = DefaultImageLabelDistance,
-            Visible = false,
-            Alignment = HVAlignment.Center,
-        };
-
-        private readonly Label label = new()
-        {
-            Visible = false,
-            Alignment = HVAlignment.Center,
-        };
-
+        private readonly GenericControl pictureSpacer;
+        private readonly GenericControl spacer;
+        private readonly Label label;
         private readonly ImageDrawable drawable = new();
 
         private bool sticky;
@@ -83,6 +67,19 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButton()
         {
+            pictureSpacer = CreateInnerPictureSpacer();
+            pictureSpacer.Visible = false;
+            pictureSpacer.Alignment = HVAlignment.Center;
+
+            spacer = CreateInnerSpacer();
+            spacer.SuggestedSize = DefaultImageLabelDistance;
+            spacer.Visible = false;
+            spacer.Alignment = HVAlignment.Center;
+
+            label = CreateInnerLabel();
+            label.Visible = false;
+            label.Alignment = HVAlignment.Center;
+
             useTheme = GetDefaultUseTheme();
 
             commandSource = new(this);
@@ -572,7 +569,7 @@ namespace Alternet.UI
             set
             {
                 base.Enabled = value;
-                PictureBox.Enabled = value;
+                PictureBoxSpacer.Enabled = value;
                 Label.Enabled = value;
             }
         }
@@ -813,24 +810,24 @@ namespace Alternet.UI
                     {
                         if (ImageToText == ImageToText.Horizontal)
                         {
-                            if (PictureBox.HorizontalAlignment == HorizontalAlignment.Right)
+                            if (PictureBoxSpacer.HorizontalAlignment == HorizontalAlignment.Right)
                             {
-                                return new AbstractControl[] { Label, spacer, PictureBox };
+                                return new AbstractControl[] { Label, spacer, PictureBoxSpacer };
                             }
                             else
                             {
-                                return new AbstractControl[] { PictureBox, spacer, Label };
+                                return new AbstractControl[] { PictureBoxSpacer, spacer, Label };
                             }
                         }
                         else
                         {
-                            if (PictureBox.VerticalAlignment == VerticalAlignment.Bottom)
+                            if (PictureBoxSpacer.VerticalAlignment == VerticalAlignment.Bottom)
                             {
-                                return new AbstractControl[] { Label, spacer, PictureBox };
+                                return new AbstractControl[] { Label, spacer, PictureBoxSpacer };
                             }
                             else
                             {
-                                return new AbstractControl[] { PictureBox, spacer, Label };
+                                return new AbstractControl[] { PictureBoxSpacer, spacer, Label };
                             }
                         }
                     }
@@ -840,7 +837,7 @@ namespace Alternet.UI
                 else
                 {
                     if (HasVisibleImage)
-                        return new AbstractControl[] { PictureBox };
+                        return new AbstractControl[] { PictureBoxSpacer };
                     else
                         return Array.Empty<AbstractControl>();
                 }
@@ -1178,10 +1175,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets inner <see cref="PictureBox"/> control.
+        /// Gets inner picture box spacer control.
         /// </summary>
         [Browsable(false)]
-        internal Spacer PictureBox => pictureSpacer;
+        internal GenericControl PictureBoxSpacer => pictureSpacer;
 
         /// <inheritdoc/>
         public override void RaiseFontChanged(EventArgs e)
@@ -1833,7 +1830,7 @@ namespace Alternet.UI
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;
 
-                drawable.Bounds = PictureBox.Bounds;
+                drawable.Bounds = PictureBoxSpacer.Bounds;
                 drawable.Draw(this, e.Graphics);
             }
 
@@ -2222,7 +2219,7 @@ namespace Alternet.UI
         /// when the picture size changes.</remarks>
         protected virtual void PictureSizeChanged()
         {
-            PictureBox.SuggestedSize = drawable.GetPreferredSize(this);
+            PictureBoxSpacer.SuggestedSize = drawable.GetPreferredSize(this);
         }
 
         /// <inheritdoc/>
@@ -2292,6 +2289,35 @@ namespace Alternet.UI
                 firstClickTimer.Start();
                 subscribedClickRepeated = true;
             }
+        }
+
+        /// <summary>
+        /// Creates a new instance of the inner picture spacer used by the control.
+        /// It is used for image layout and spacing within the control.
+        /// </summary>
+        /// <returns>A new instance of the inner picture spacer.</returns>
+        protected virtual GenericControl CreateInnerPictureSpacer()
+        {
+            return new Spacer();
+        }
+
+        /// <summary>
+        /// Creates the inner spacer used within the control for layout purposes.
+        /// It occupies space between the picture and the label, ensuring proper alignment and spacing.
+        /// </summary>
+        /// <returns>A new instance of the inner spacer control.</returns>
+        protected virtual GenericControl CreateInnerSpacer()
+        {
+            return new Spacer();
+        }
+
+        /// <summary>
+        /// Creates a new instance of the inner label used by the control for painting the text.
+        /// </summary>
+        /// <returns>A new instance of the inner label.</returns>
+        protected virtual Label CreateInnerLabel()
+        {
+            return new Label();
         }
     }
 }

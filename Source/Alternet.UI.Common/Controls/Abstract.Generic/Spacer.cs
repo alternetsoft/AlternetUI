@@ -23,7 +23,8 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the Spacer class and assigns the specified parent control.
         /// </summary>
-        /// <param name="parent">The parent control to which this Spacer will be attached. Can be null to indicate no parent.</param>
+        /// <param name="parent">The parent control to which this Spacer will be attached.
+        /// Can be null to indicate no parent.</param>
         public Spacer(AbstractControl? parent)
             : this()
         {
