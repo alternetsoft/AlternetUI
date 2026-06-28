@@ -90,6 +90,18 @@ namespace Alternet.UI
             public RectD ItemRect;
 
             /// <summary>
+            /// Gets or sets whether popup is closed when Escape key is pressed.
+            /// If set to true, the popup is closed when Escape key is pressed.
+            /// </summary>
+            public bool HideOnEscape = true;
+
+            /// <summary>
+            /// Gets or sets whether popup is closed when Enter key is pressed.
+            /// If set to true, the popup is closed when Enter key is pressed.
+            /// </summary>
+            public bool HideOnEnter = true;
+
+            /// <summary>
             /// Gets or sets the container control that hosts the popup.
             /// This is used to determine the parent control for the popup.
             /// </summary>
@@ -167,6 +179,8 @@ namespace Alternet.UI
 
             ResetClosedEvent();
             HideOnClickParent = prm.HideClickOnParent;
+            HideOnEscape = prm.HideOnEscape;
+            HideOnEnter = prm.HideOnEnter;
             BackColor = prm.BackColor ?? prm.ItemContainer.BackColor;
             ForeColor = prm.ForeColor ?? prm.ItemContainer.ForeColor;
             HasBorder = prm.HasBorder;

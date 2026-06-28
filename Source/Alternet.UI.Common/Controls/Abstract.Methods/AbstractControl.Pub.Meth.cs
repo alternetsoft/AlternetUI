@@ -261,8 +261,10 @@ namespace Alternet.UI
         /// <summary>
         /// Calculates the preferred size for the current object, constrained by any applicable size limits.
         /// </summary>
-        /// <param name="context">The context information used to determine the preferred size, including layout constraints and preferences.</param>
-        /// <returns>A SizeD structure representing the preferred size, adjusted to not exceed any defined size limitations.</returns>
+        /// <param name="context">The context information used to determine the preferred size,
+        /// including layout constraints and preferences.</param>
+        /// <returns>A SizeD structure representing the preferred size, adjusted to not exceed
+        /// any defined size limitations.</returns>
         public SizeD GetPreferredSizeLimited(PreferredSizeContext context)
         {
             var preferredSize = GetPreferredSize(context);
@@ -736,12 +738,29 @@ namespace Alternet.UI
 
             var dc = e.Graphics;
 
+            BaseCollection<BorderSettings>? savedInnerBorders = null;
+            var savedInnerBordersVisible = false;
+
+            if (InnerBordersOverride is not null && border is not null)
+            {
+                savedInnerBorders = border.InnerBorders;
+                border.InnerBorders = InnerBordersOverride;
+                savedInnerBordersVisible = border.InnerBorderVisible;
+                border.InnerBorderVisible = true;
+            }
+
             dc.FillBorderRectangle(
                 rect,
                 brush,
                 border,
                 HasBorder && flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder),
                 this);
+
+            if (savedInnerBorders is not null && border is not null)
+            {
+                border.InnerBorders = savedInnerBorders;
+                border.InnerBorderVisible = savedInnerBordersVisible;
+            }
         }
 
         /// <summary>
@@ -3075,11 +3094,11 @@ namespace Alternet.UI
                     weakReferences.RemoveAt(i);
                 }
                 else
-                if (weakRef == element)
-                {
-                    weakReferences.RemoveAt(i);
-                    return true;
-                }
+                    if (weakRef == element)
+                    {
+                        weakReferences.RemoveAt(i);
+                        return true;
+                    }
             }
 
             return false;

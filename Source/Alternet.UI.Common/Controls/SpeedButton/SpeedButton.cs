@@ -1785,6 +1785,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override BorderSettings? GetBorderSettings(VisualControlState state)
+        {
+            return base.GetBorderSettings(state);
+        }
+
+        /// <inheritdoc/>
         public override void DefaultPaint(PaintEventArgs e)
         {
             var state = VisualState;

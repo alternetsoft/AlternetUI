@@ -94,7 +94,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the BorderSettings class with the specified border thickness and optional color.
+        /// Initializes a new instance of the BorderSettings class with
+        /// the specified border thickness and optional color.
         /// </summary>
         /// <param name="left">The thickness of the left border, in device-independent units.</param>
         /// <param name="top">The thickness of the top border, in device-independent units.</param>
@@ -193,8 +194,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets border settings for the accent border. Accent border is used to indicate active or focused elements.
-        /// It uses <see cref="DefaultColors.AccentColor"/> as default color. If you want to have the same accent border on all platforms,
+        /// Gets or sets border settings for the accent border. Accent border is used
+        /// to indicate active or focused elements.
+        /// It uses <see cref="DefaultColors.AccentColor"/> as default color.
+        /// If you want to have the same accent border on all platforms,
         /// set <see cref="DefaultColors.AccentColor"/> to the desired color.
         /// </summary>
         public static BorderSettings AccentBorder
@@ -306,6 +309,11 @@ namespace Alternet.UI
             get
             {
                 return innerBorders ??= new();
+            }
+
+            set
+            {
+                innerBorders = value;
             }
         }
 

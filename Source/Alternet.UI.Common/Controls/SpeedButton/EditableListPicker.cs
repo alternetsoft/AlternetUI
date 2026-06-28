@@ -169,6 +169,8 @@ namespace Alternet.UI
                 ForeColor = foreColor,
                 HideClickOnParent = false,
                 CommitTextOnKeyPress = true,
+                HideOnEscape = false,
+                HideOnEnter = false,
                 HasBorder = false,
                 GetItemText = () => s,
                 SetItemText = text =>
