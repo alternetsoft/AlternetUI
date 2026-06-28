@@ -115,7 +115,7 @@ namespace Alternet.UI
         /// Gets the control in which the panel is displayed.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl? Control
+        public GenericControl? Control
         {
             get
             {
@@ -566,9 +566,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets control used to display the panel.
         /// </summary>
-        /// <returns>The <see cref="AbstractControl"/> used to display
+        /// <returns>The <see cref="GenericControl"/> used to display
         /// the panel, or <c>null</c> if not found.</returns>
-        public AbstractControl? GetControl()
+        public GenericControl? GetControl()
         {
             if (Bar is null || !Bar.HasChildren)
                 return null;
@@ -577,7 +577,7 @@ namespace Alternet.UI
             {
                 var panelId = child.CustomAttr.GetAttribute<ObjectUniqueId>(Bar.BarPanelIdPropName);
                 if (panelId == UniqueId)
-                    return child;
+                    return child as GenericControl;
             }
 
             return null;
