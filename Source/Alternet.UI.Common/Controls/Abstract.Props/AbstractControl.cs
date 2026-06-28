@@ -3067,6 +3067,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets an override value for inner borders.
+        /// If this value is specified, it is used instead of the inner borders in the border settings
+        /// when border is painted.
+        /// </summary>
+        public virtual BaseCollection<BorderSettings>? InnerBordersOverride { get; set; }
+
+        /// <summary>
         /// Gets whether this is control has handler to the platform control.
         /// </summary>
         [Browsable(false)]
