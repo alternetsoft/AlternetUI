@@ -1386,12 +1386,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds existing control to the toolbar.
+        /// </summary>
+        /// <param name="control">Control to add.</param>
+        /// <remarks>
+        /// You can use this method to add <see cref="TextBox"/> or other controls to the toolbar.
+        /// The control will be added to the end of the toolbar.
+        /// </remarks>
+        /// <returns><see cref="ObjectUniqueId"/> of the added item.</returns>
+        public virtual ObjectUniqueId AddControl(GenericControl control)
+        {
+            return InsertControl(Children.Count, control);
+        }
+
+        /// <summary>
         /// Inserts existing control to the toolbar at specified index.
         /// </summary>
         /// <param name="index">The index at which to insert the control.</param>
         /// <param name="control">The control to insert.</param>
         /// <returns><see cref="ObjectUniqueId"/> representing the inserted control.</returns>
         public virtual ObjectUniqueId InsertControl(int index, AbstractControl control)
+        {
+            Children.Insert(index, control);
+            UpdateItemProps(control, ItemKind.Control);
+            return control.UniqueId;
+        }
+
+        /// <summary>
+        /// Inserts existing control to the toolbar at specified index.
+        /// </summary>
+        /// <param name="index">The index at which to insert the control.</param>
+        /// <param name="control">The control to insert.</param>
+        /// <returns><see cref="ObjectUniqueId"/> representing the inserted control.</returns>
+        public virtual ObjectUniqueId InsertControl(int index, GenericControl control)
         {
             Children.Insert(index, control);
             UpdateItemProps(control, ItemKind.Control);
