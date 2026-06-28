@@ -38,7 +38,7 @@ namespace ApiDoc
             };
             InitGenericToolBar(toolbar);
             panel.TopSplitter.Visible = false;
-            panel.TopPanel.Height = toolbar.ItemSize + 6;
+            panel.TopPanel.Height = toolbar.ItemSize + 10;
 
             StdListBox BottomLabel = new()
             {
@@ -67,7 +67,7 @@ namespace ApiDoc
             if (control is not ToolBar toolbar)
                 return;
 
-            toolbar.Margin = (0, 0, 0, 4);
+            toolbar.Margin = (0, 5, 0, 5);
 
             var buttonIdNew = toolbar.AddSpeedBtn(
                 CommonStrings.Default.ButtonNew,
@@ -98,12 +98,14 @@ namespace ApiDoc
             toolbar.AddSpacer();
 
             var idText = toolbar.AddText("text");
+            toolbar.SetToolAlignRight(idText, true);
             toolbar.AddToolAction(idText, ButtonClick);
 
-            var textBox = new TextBox
+            var textBox = new SpeedColorButton
             {
                 VerticalAlignment = VerticalAlignment.Center,
-                SuggestedWidth = 100
+                MaxHeight = toolbar.ItemSize,
+                ImageVisible = false,
             };
 
             var idEdit = toolbar.AddControl(textBox);
