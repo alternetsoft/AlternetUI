@@ -114,6 +114,17 @@ namespace Alternet.UI
             findEdit.Label.DebugIdentifier = "FindEditLabel";
             replaceEdit.DebugIdentifier = "ReplaceEdit";
 
+            replaceEdit.TabPressed += (s, e) =>
+            {
+                findEdit?.BeginEdit();
+            };
+
+            findEdit.TabPressed += (s, e) =>
+            {
+                if (ReplaceVisible)
+                    replaceEdit?.BeginEdit();
+            };
+
             findEdit.BorderColor = FindEditBorderColor;
             replaceEdit.BorderColor = FindEditBorderColor;
             scopeEdit.BorderColor = FindEditBorderColor;

@@ -44,6 +44,12 @@ namespace Alternet.UI
         public event EventHandler<StringEventArgs>? EditorTextRequested;
 
         /// <summary>
+        /// Occurs when the Tab key is pressed. In the event handler
+        /// you can handle the Tab key press event.
+        /// </summary>
+        public event EventHandler? TabPressed;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the text in the control is editable.
         /// </summary>
         [Browsable(false)]
@@ -172,6 +178,8 @@ namespace Alternet.UI
                 HideOnEscape = false,
                 HideOnEnter = false,
                 HasBorder = false,
+                EmptyTextHint = this.EmptyTextHint,
+                TabPressed = () => TabPressed?.Invoke(this, EventArgs.Empty),
                 GetItemText = () => s,
                 SetItemText = text =>
                 {

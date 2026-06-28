@@ -28,6 +28,7 @@ namespace Alternet.UI
             Content.HasBorder = false;
             Content.AllowFormKeyPreview = false;
             Content.ProcessEnter = true;
+            Content.WantTab = true;
 
             Content.VerticalAlignment = VerticalAlignment.Center;
             Content.LostFocus += OnContentLostFocus;
@@ -48,6 +49,11 @@ namespace Alternet.UI
         /// Gets the unique identifier of the target control that this popup is associated with.
         /// </summary>
         public ObjectUniqueId? TargetControlUniqueId => targetControlUniqueId;
+
+        /// <summary>
+        /// Gets or sets the action to be performed when the Tab key is pressed while the popup is active.
+        /// </summary>
+        public Action? TabPressedAction { get; set; }
 
         /// <summary>
         /// Defines the parameters for the <see cref="ShowAsItemEditor"/> method.
@@ -72,6 +78,11 @@ namespace Alternet.UI
             /// the text is commited only when the user presses Enter.
             /// </summary>
             public bool CommitTextOnKeyPress { get; set; }
+
+            /// <summary>
+            /// Gets or sets the action to be performed when the Tab key is pressed while the popup is active.
+            /// </summary>
+            public Action? TabPressed { get; set; }
 
             /// <summary>
             /// Gets or sets the background color of the popup.
@@ -143,6 +154,11 @@ namespace Alternet.UI
             public bool HasBorder = true;
 
             /// <summary>
+            /// Gets or sets empty text hint which is shown in the editor when text is empty.
+            /// </summary>
+            public string? EmptyTextHint { get; set; }
+
+            /// <summary>
             /// Sets target control and item container for the popup.
             /// This is a convenience method to set both properties at once.
             /// Item container is determined by the target control's first parent which is a platform control.
@@ -180,6 +196,7 @@ namespace Alternet.UI
             ResetClosedEvent();
             HideOnClickParent = prm.HideClickOnParent;
             HideOnEscape = prm.HideOnEscape;
+            Content.EmptyTextHint = prm.EmptyTextHint;
             HideOnEnter = prm.HideOnEnter;
             BackColor = prm.BackColor ?? prm.ItemContainer.BackColor;
             ForeColor = prm.ForeColor ?? prm.ItemContainer.ForeColor;
@@ -197,6 +214,8 @@ namespace Alternet.UI
 
             Content.TextChanged -= OnContentTextChanged;
             Content.TextChanged += OnContentTextChanged;
+
+            TabPressedAction = prm.TabPressed;
 
             ClosingAction = () =>
             {
@@ -262,6 +281,12 @@ namespace Alternet.UI
         /// <param name="e">The event data.</param>
         protected virtual void OnContentKeyDown(object? sender, KeyEventArgs e)
         {
+            if (e.Key == Key.Tab)
+            {
+                TabPressedAction?.Invoke();
+                e.Suppressed();
+            }
+
             if (e.Key == Key.Enter && !e.HasModifiers && HideOnEnter)
             {
                 Close(ModalResult.Accepted, new(Key.Enter));
