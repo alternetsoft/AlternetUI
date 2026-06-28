@@ -16,7 +16,8 @@ namespace Alternet.UI
     /// and can be shown by setting the <see cref="InnerPictureVisible"/> property to true.
     /// When the inner picture is shown, it is docked to the right of the control and can display
     /// an image and tooltip to provide additional information to the user. Initalization of the inner picture
-    /// is deferred until it is accessed for the first time, allowing for efficient resource usage when the picture is not needed.
+    /// is deferred until it is accessed for the first time, allowing
+    /// for efficient resource usage when the picture is not needed.
     /// </summary>
     /// <remarks>
     /// <para>

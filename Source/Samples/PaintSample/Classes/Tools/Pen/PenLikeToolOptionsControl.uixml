@@ -1,11 +1,9 @@
 <Panel xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="PaintSample.PenLikeToolOptionsControl"
-		xmlns:local="clr-namespace:PaintSample">
+		xmlns:local="clr-namespace:PaintSample" Layout="Horizontal">
 
-	<StackPanel Orientation="Horizontal">
 		<Label Text="Thickness:" Margin="0,0,5,0" VerticalAlignment="Center"/>
 		<NumericUpDown Name="thicknessNumericUpDown" Minimum="1" Maximum="20" VerticalAlignment="Center"/>
-	</StackPanel>
 	
 </Panel>
