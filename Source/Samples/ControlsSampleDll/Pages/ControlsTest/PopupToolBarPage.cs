@@ -148,7 +148,7 @@ namespace ControlsSample
 
             if (!onlyButtons)
             {
-                var textBox = new TextBox();
+                var textBox = new TextPicker();
                 textBox.VerticalAlignment = VerticalAlignment.Center;
                 textBox.Text = "text1";
                 textBox.MinWidth = 100;
