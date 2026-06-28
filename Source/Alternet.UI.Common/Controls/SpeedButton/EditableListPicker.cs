@@ -150,7 +150,7 @@ namespace Alternet.UI
         /// <c>Value</c> property.
         /// </summary>
         /// <param name="text">The new text.</param>
-        protected virtual void RaiseItemTextEdited(string? text)
+        protected virtual void RaiseTextEdited(string? text)
         {
             if (TextEdited != null)
             {
@@ -202,7 +202,7 @@ namespace Alternet.UI
                 GetItemText = () => s,
                 SetItemText = text =>
                 {
-                    RaiseItemTextEdited(text);
+                    RaiseTextEdited(text);
                 },
             };
 

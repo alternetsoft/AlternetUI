@@ -918,7 +918,7 @@ namespace Alternet.UI
         /// Sets whether button with the specified id is visible.
         /// </summary>
         /// <param name="btn">Known button.</param>
-        /// <param name="svg">Known button.</param>
+        /// <param name="svg">SVG image for the button.</param>
         /// <param name="id">Id of the created button.</param>
         /// <param name="value">Whether button is visible.</param>
         private void SetHasButton(
