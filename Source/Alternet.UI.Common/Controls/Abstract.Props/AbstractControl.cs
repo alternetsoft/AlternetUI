@@ -985,6 +985,10 @@ namespace Alternet.UI
 
             set
             {
+                if (DebugIdentifier == "FindEditLabel")
+                {
+                }
+
                 value ??= string.Empty;
 
                 var forced = StateFlags.HasFlag(ControlFlags.ForceTextChange);

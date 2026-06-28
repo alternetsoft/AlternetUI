@@ -38,9 +38,6 @@ namespace Alternet.UI
         /// </summary>
         public SpeedButtonWithPopup()
         {
-            // Ensure that control occupies space even if value is null.
-            base.Text = " ";
-
             TextVisible = true;
             ShowComboBoxImageAtRight();
             ShowDropDownMenuWhenClicked = false;

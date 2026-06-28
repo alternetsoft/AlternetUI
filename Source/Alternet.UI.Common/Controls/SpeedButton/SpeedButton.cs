@@ -1329,7 +1329,8 @@ namespace Alternet.UI
         /// Sets the icon as the image for the control.
         /// </summary>
         /// <param name="icon">The icon to be set.</param>
-        /// <param name="sizeFallbackOptions">The options to use when the specified icon size is not available.</param>
+        /// <param name="sizeFallbackOptions">The options to use
+        /// when the specified icon size is not available.</param>
         public virtual void SetIconAsImage(
             IconSet? icon,
             ImageSizeFallbackOptions? sizeFallbackOptions = null)

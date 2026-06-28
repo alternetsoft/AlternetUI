@@ -195,8 +195,10 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the parameters used to control label drawing behavior for the graphics context.
-        /// This is a read-only property that provides access to the current label drawing parameters, which include
-        /// information such as text alignment, word wrap settings, and other rendering options. Do not modify the returned
+        /// This is a read-only property that provides access to the current
+        /// label drawing parameters, which include
+        /// information such as text alignment, word wrap settings, and other
+        /// rendering options. Do not modify the returned
         /// object directly; instead, use the <see cref="UpdateDrawLabelParams(UpdateDrawLabelParamsDelegate)"/> method
         /// to update the drawing parameters safely.
         /// </summary>
@@ -862,16 +864,20 @@ namespace Alternet.UI
 #pragma warning restore
             var labelText = Text;
 
-            if (labelText.Length == 0)
+            if (labelText.Length > 0)
             {
-                return EmptyTextHint ?? string.Empty;
+                var prefix = TextPrefix;
+                var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
+                if (textFormat is not null)
+                    result = string.Format(textFormat, result);
+                return result;
             }
 
-            var prefix = TextPrefix;
-            var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
-            if (textFormat is not null)
-                result = string.Format(textFormat, result);
-            return result;
+            labelText = EmptyTextHint ?? string.Empty;
+
+            if (labelText.Length == 0)
+                return StringUtils.OneSpace;
+            return labelText;
         }
 
         /// <summary>

@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public static KnownPopupControls Default { get; set; } = new ();
 
-        private InnerPopupTextBox? popupTextBox;
+        private readonly List<InnerPopupTextBox> popupTextBoxes = new ();
 
         /// <summary>
         /// Gets instance of <see cref="InnerPopupTextBox"/> control.
@@ -32,7 +32,14 @@ namespace Alternet.UI
         /// if it cannot be created.</returns>
         public virtual InnerPopupTextBox? GetPopupTextBox()
         {
-            var result = popupTextBox ??= CreateInnerPopupTextBox();
+            foreach (var popupTextBox in popupTextBoxes)
+            {
+                if (popupTextBox.Parent is null)
+                    return popupTextBox;
+            }
+
+            var result = CreateInnerPopupTextBox();
+            popupTextBoxes.Add(result);
             return result;
         }
 
