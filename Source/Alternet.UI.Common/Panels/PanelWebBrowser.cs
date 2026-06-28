@@ -612,14 +612,17 @@ namespace Alternet.UI
         /// Initializes the control and configures its layout, toolbar, panel, and web browser event handlers.
         /// </summary>
         /// <remarks>This method sets up the initial state of the control, including assigning parent
-        /// relationships, layout styles, and subscribing to web browser events. Override this method in a derived class
-        /// to customize initialization behavior. This method is typically called during control construction or setup
+        /// relationships, layout styles, and subscribing to web browser events.
+        /// Override this method in a derived class
+        /// to customize initialization behavior. This method is typically
+        /// called during control construction or setup
         /// and should not be called directly by user code.</remarks>
         protected virtual void Initialize()
         {
             UrlMapping.Add("g", "https://www.google.com");
 
             Layout = LayoutStyle.Vertical;
+            toolBar.Margin = (0, 5, 0, 5);
             toolBar.Parent = this;
 
             panel.VerticalAlignment = VerticalAlignment.Fill;
