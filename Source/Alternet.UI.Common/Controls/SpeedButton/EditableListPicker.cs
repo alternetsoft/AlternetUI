@@ -50,6 +50,23 @@ namespace Alternet.UI
         public event EventHandler? TabPressed;
 
         /// <summary>
+        /// Occurs when the Enter key is pressed. In the event handler
+        /// you can handle the Enter key press event.
+        /// </summary>
+        public event EventHandler? EnterPressed;
+
+        /// <summary>
+        /// Occurs when the Escape key is pressed. In the event handler
+        /// you can handle the Escape key press event.
+        /// </summary>
+        public event EventHandler? EscapePressed;
+        
+        /// <summary>
+        /// Occurs when a key is pressed in the inplace editor.
+        /// </summary>
+        public event EventHandler<KeyEventArgs>? EditorKeyDown;
+
+        /// <summary>
         /// Gets or sets a value indicating whether the text in the control is editable.
         /// </summary>
         [Browsable(false)]
@@ -132,6 +149,13 @@ namespace Alternet.UI
             return base.SetFocus();
         }
 
+        /// <inheritdoc/>
+        public override void ShowPopup()
+        {
+            if (ImageVisible)
+                base.ShowPopup();
+        }
+
         /// <summary>
         /// Sets the text when user has finished editing.
         /// This method is called when the user has finished editing in the popup text box.
@@ -152,6 +176,12 @@ namespace Alternet.UI
             {
                 Value = text;
             }
+        }
+
+        /// <inheritdoc/>
+        public override void UpdateBaseText()
+        {
+            base.UpdateBaseText();
         }
 
         /// <summary>
@@ -180,6 +210,9 @@ namespace Alternet.UI
                 HasBorder = false,
                 EmptyTextHint = this.EmptyTextHint,
                 TabPressed = () => TabPressed?.Invoke(this, EventArgs.Empty),
+                EnterPressed = () => EnterPressed?.Invoke(this, EventArgs.Empty),
+                EscapePressed = () => EscapePressed?.Invoke(this, EventArgs.Empty),
+                KeyDown = (s, e) => EditorKeyDown?.Invoke(this, e),
                 GetItemText = () => s,
                 SetItemText = text =>
                 {

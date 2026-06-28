@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// Gets or sets value as <see cref="string"/>.
         /// </summary>
         [Browsable(false)]
-        public new string? Text
+        public override string Text
         {
             get
             {
@@ -173,6 +173,7 @@ namespace Alternet.UI
 
             set
             {
+                Value = value;
             }
         }
 
@@ -264,7 +265,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void UpdateBaseText()
         {
-            base.Text = Text ?? " ";
+            base.Text = Text ?? string.Empty;
         }
 
         /// <inheritdoc/>

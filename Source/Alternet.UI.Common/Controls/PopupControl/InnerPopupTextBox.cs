@@ -56,6 +56,21 @@ namespace Alternet.UI
         public Action? TabPressedAction { get; set; }
 
         /// <summary>
+        /// Gets or sets the action to be performed when the Enter key is pressed while the popup is active.
+        /// </summary>
+        public Action? EnterPressedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action to be performed when the Escape key is pressed while the popup is active.
+        /// </summary>
+        public Action? EscapePressedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets the action to be performed when a key is pressed while the popup is active.
+        /// </summary>
+        public KeyEventHandler? ContentKeyDownAction { get; set; }
+
+        /// <summary>
         /// Defines the parameters for the <see cref="ShowAsItemEditor"/> method.
         /// </summary>
         public struct ShowAsItemEditorParams
@@ -83,6 +98,21 @@ namespace Alternet.UI
             /// Gets or sets the action to be performed when the Tab key is pressed while the popup is active.
             /// </summary>
             public Action? TabPressed { get; set; }
+
+            /// <summary>
+            /// Gets or sets the action to be performed when the Enter key is pressed while the popup is active.
+            /// </summary>
+            public Action? EnterPressed { get; set; }
+
+            /// <summary>
+            /// Gets or sets the action to be performed when the Escape key is pressed while the popup is active.
+            /// </summary>
+            public Action? EscapePressed { get; set; }
+
+            /// <summary>
+            /// Gets or sets the action to be performed when a key is pressed while the popup is active.
+            /// </summary>
+            public KeyEventHandler? KeyDown { get; set; }
 
             /// <summary>
             /// Gets or sets the background color of the popup.
@@ -216,6 +246,9 @@ namespace Alternet.UI
             Content.TextChanged += OnContentTextChanged;
 
             TabPressedAction = prm.TabPressed;
+            EnterPressedAction = prm.EnterPressed;
+            EscapePressedAction = prm.EscapePressed;
+            ContentKeyDownAction = prm.KeyDown;
 
             ClosingAction = () =>
             {
@@ -281,6 +314,11 @@ namespace Alternet.UI
         /// <param name="e">The event data.</param>
         protected virtual void OnContentKeyDown(object? sender, KeyEventArgs e)
         {
+            ContentKeyDownAction?.Invoke(sender, e);
+
+            if (e.Handled)
+                return;
+
             if (e.Key == Key.Tab)
             {
                 TabPressedAction?.Invoke();
@@ -289,12 +327,14 @@ namespace Alternet.UI
 
             if (e.Key == Key.Enter && !e.HasModifiers && HideOnEnter)
             {
+                EnterPressedAction?.Invoke();
                 Close(ModalResult.Accepted, new(Key.Enter));
                 e.Suppressed();
             }
 
             if (e.Key == Key.Escape && !e.HasModifiers && HideOnEscape)
             {
+                EscapePressedAction?.Invoke();
                 Close(ModalResult.Canceled, new(Key.Escape));
                 e.Suppressed();
             }
