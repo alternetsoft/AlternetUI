@@ -111,6 +111,7 @@ namespace Alternet.UI
         public FindReplaceControl()
         {
             findEdit.Label.DebugIdentifier = "FindEditLabel";
+            replaceEdit.DebugIdentifier = "ReplaceEdit";
 
             findEdit.BorderColor = FindEditBorderColor;
             replaceEdit.BorderColor = FindEditBorderColor;

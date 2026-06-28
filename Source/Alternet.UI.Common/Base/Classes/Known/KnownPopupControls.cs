@@ -30,8 +30,15 @@ namespace Alternet.UI
         /// </summary>
         /// <returns>The instance of <see cref="InnerPopupTextBox"/> control or <c>null</c>
         /// if it cannot be created.</returns>
-        public virtual InnerPopupTextBox? GetPopupTextBox()
+        public virtual InnerPopupTextBox? GetPopupTextBox(bool hidePopups = true)
         {
+            foreach (var popupTextBox in popupTextBoxes)
+            {
+                if (popupTextBox.Parent is null)
+                    continue;
+                popupTextBox.Close(ModalResult.Canceled, new(PopupControl.CloseReason.Other));
+            }
+
             foreach (var popupTextBox in popupTextBoxes)
             {
                 if (popupTextBox.Parent is null)

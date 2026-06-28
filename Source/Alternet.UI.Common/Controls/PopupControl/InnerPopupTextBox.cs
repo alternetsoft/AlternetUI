@@ -24,7 +24,6 @@ namespace Alternet.UI
             FitIntoParent = false;
             HideOnEscape = true;
             HideOnEnter = true;
-            HideOnClickParent = true;
             CancelOnLostFocus = true;
             Content.HasBorder = false;
             Content.AllowFormKeyPreview = false;
@@ -61,6 +60,18 @@ namespace Alternet.UI
             public ShowAsItemEditorParams()
             {
             }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the popup should hide when clicking on the parent control.
+            /// </summary>
+            public bool HideClickOnParent { get; set; } = true;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether text should be committed each time the text changes.
+            /// If set to true, the text is commited on each text change. If false,
+            /// the text is commited only when the user presses Enter.
+            /// </summary>
+            public bool CommitTextOnKeyPress { get; set; }
 
             /// <summary>
             /// Gets or sets the background color of the popup.
@@ -155,21 +166,36 @@ namespace Alternet.UI
             var popupRect = prm.ItemRect;
 
             ResetClosedEvent();
+            HideOnClickParent = prm.HideClickOnParent;
             BackColor = prm.BackColor ?? prm.ItemContainer.BackColor;
             ForeColor = prm.ForeColor ?? prm.ItemContainer.ForeColor;
             HasBorder = prm.HasBorder;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
 
+            void OnContentTextChanged(object? sender, EventArgs e)
+            {
+                if (!prm.CommitTextOnKeyPress)
+                    return;
+                var newText = Content.Text;
+                prm.SetItemText?.Invoke(newText);
+            }
+
+            Content.TextChanged -= OnContentTextChanged;
+            Content.TextChanged += OnContentTextChanged;
+
             ClosingAction = () =>
             {
+                Content.TextChanged -= OnContentTextChanged;
+
                 prm.ItemContainer?.SetFocusIdle();
+
+                prm.Closing?.Invoke();
+
                 if (PopupResult != ModalResult.Accepted)
                     return;
                 var newText = Content.Text;
                 prm.SetItemText?.Invoke(newText);
-
-                prm.Closing?.Invoke();
             };
 
             ClosedAction = () =>
@@ -222,13 +248,13 @@ namespace Alternet.UI
         /// <param name="e">The event data.</param>
         protected virtual void OnContentKeyDown(object? sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && !e.HasModifiers)
+            if (e.Key == Key.Enter && !e.HasModifiers && HideOnEnter)
             {
                 Close(ModalResult.Accepted, new(Key.Enter));
                 e.Suppressed();
             }
 
-            if (e.Key == Key.Escape && !e.HasModifiers)
+            if (e.Key == Key.Escape && !e.HasModifiers && HideOnEscape)
             {
                 Close(ModalResult.Canceled, new(Key.Escape));
                 e.Suppressed();

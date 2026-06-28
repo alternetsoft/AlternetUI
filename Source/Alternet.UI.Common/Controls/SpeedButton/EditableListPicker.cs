@@ -167,6 +167,8 @@ namespace Alternet.UI
             {
                 BackColor = backColor,
                 ForeColor = foreColor,
+                HideClickOnParent = false,
+                CommitTextOnKeyPress = true,
                 HasBorder = false,
                 GetItemText = () => s,
                 SetItemText = text =>
@@ -213,7 +215,7 @@ namespace Alternet.UI
             if (e.Button == MouseButtons.Left)
             {
                 if (Label.Bounds.Contains(e.Location) && IsEditable)
-                {                    
+                {
                     e.Handled = true;
                     BeginEdit();
                 }
