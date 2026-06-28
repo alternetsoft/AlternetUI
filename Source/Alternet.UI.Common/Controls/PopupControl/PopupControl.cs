@@ -648,7 +648,7 @@ namespace Alternet.UI
                 return null;
 
             var cornerSize = FitParentScrollbars ? GetContainerScrollbarSize() : 0;
-            var result = p.ClientSize - cornerSize;
+            var result = p.GetOverlayRectangle().Size - cornerSize;
             result.Width -= cornerSize.Width;
 
             return result;
