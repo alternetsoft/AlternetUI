@@ -322,6 +322,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
+            lastMouseMovePos = e.Location;
             UpdateMouseEventTarget(this);
             Mouse.RaiseMoved(this, e);
 

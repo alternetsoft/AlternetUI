@@ -1785,7 +1785,7 @@ namespace Alternet.UI
             var prm = CreateItemEditorParams(itemIndex);
             if (prm is null)
                 return false;
-            var popup = KnownPopupControls.Default.GetPopupTextBox();
+            var popup = KnownPopupControls.Default.GetOrCreatePopupTextBox();
             
             if(popup is null)
                 return false;

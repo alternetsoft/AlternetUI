@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="EditableListPicker"/> behaves like a combo box, but it is <see cref="SpeedButton"/>
     /// descendant, so it can be used in toolbars and other places where a button is needed.
     /// <see cref="EditableListPicker"/> doesn't have an internal text box, but it uses
-    /// a text box popup provided by <see cref="KnownPopupControls.GetPopupTextBox"/>.
+    /// a text box popup provided by <see cref="KnownPopupControls.GetOrCreatePopupTextBox"/>.
     /// This text box is shown as a popup window when the user starts to edit the text.
     /// <see cref="EditableListPicker"/> is a generic control and is not attached to any native control of the
     /// operating system. It is implemented using other controls, so it can be used in any environment where 
@@ -81,16 +81,7 @@ namespace Alternet.UI
         {
             get
             {
-                var popup = KnownPopupControls.Default.GetPopupTextBox();
-
-                if (popup is null)
-                    return false;
-                if (!popup.IsVisible || popup.Parent is null)
-                    return false;
-                if(popup.TargetControlUniqueId != UniqueId)
-                    return false;
-
-                return true;
+                return KnownPopupControls.Default.HasActivePopupTextBox(UniqueId);
             }
         }
 
@@ -127,20 +118,15 @@ namespace Alternet.UI
         {
             if (!IsEditable || !Label.Bounds.Contains(e.Location))
             {
-                if (IsEditing)
-                {
-                }
-                else
-                {
-                    base.TogglePopupVisible(e);
-                }
+                KnownPopupControls.Default.CloseActivePopupTextBox(UniqueId);
+                base.TogglePopupVisible(e);
             }
         }
 
         /// <inheritdoc/>
         protected override KnownTheme GetDefaultUseTheme()
         {
-            return KnownTheme.StaticBorderNoHover;
+            return KnownTheme.StaticBorder;
         }
 
         /// <inheritdoc/>
@@ -222,7 +208,7 @@ namespace Alternet.UI
 
             prm.SetTargetControl(this, itemRect);
 
-            var popup = KnownPopupControls.Default.GetPopupTextBox();
+            var popup = KnownPopupControls.Default.GetOrCreatePopupTextBox();
 
             if (popup is null)
                 return;

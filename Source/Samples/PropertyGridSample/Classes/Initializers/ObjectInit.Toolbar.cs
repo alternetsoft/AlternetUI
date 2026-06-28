@@ -25,6 +25,10 @@ namespace PropertyGridSample
             findReplace.FindEdit.SimpleItems.Add("Item 1");
             findReplace.FindEdit.SimpleItems.Add("Item 2");
             findReplace.FindEdit.SimpleItems.Add("Item 3");
+
+            findReplace.ReplaceEdit.SimpleItems.Add("Item 4");
+            findReplace.ReplaceEdit.SimpleItems.Add("Item 5");
+            findReplace.ReplaceEdit.SimpleItems.Add("Item 6");
         }
 
         public static void InitGenericToolBarSet(object control)

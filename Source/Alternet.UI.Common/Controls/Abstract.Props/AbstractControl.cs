@@ -109,6 +109,7 @@ namespace Alternet.UI
         private CaretInfo? caretInfo;
         private MouseEventArgs? dragEventArgs;
         private PointD lastMouseDownPos;
+        private PointD lastMouseMovePos;
         private IComponentDesigner? designer;
         private ControlCollection? children;
         private object? title;
@@ -542,6 +543,12 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public PointD LastMouseDownPos => lastMouseDownPos;
+
+        /// <summary>
+        /// Gets mouse position when mouse move event was received.
+        /// </summary>
+        [Browsable(false)]
+        public PointD LastMouseMovePos => lastMouseMovePos;
 
         /// <summary>
         /// Gets a value indicating whether the form has been shown at least once.

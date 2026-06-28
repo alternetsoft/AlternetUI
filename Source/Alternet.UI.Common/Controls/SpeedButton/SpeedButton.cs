@@ -1209,7 +1209,7 @@ namespace Alternet.UI
 
                 if (shortcutText is not null)
                 {
-                    s += " " + shortcutText;
+                    s += StringUtils.OneSpace + shortcutText;
                 }
 
                 return s;
