@@ -64,13 +64,13 @@ namespace ApiDoc
             var idText = toolbar.AddText("text");
             toolbar.AddToolAction(idText, ButtonClick);
 
-            var textBox = new TextBox
+            var colorButton = new SpeedColorButton()
             {
                 VerticalAlignment = VerticalAlignment.Center,
-                SuggestedWidth = 300,
+                ImageVisible = false,
             };
 
-            var idEdit = toolbar.AddControl(textBox);
+            var idEdit = toolbar.AddControl(colorButton);
 
             var itemPicture = toolbar.AddPicture(
                 KnownSvgImages.ImgMessageBoxWarning,
