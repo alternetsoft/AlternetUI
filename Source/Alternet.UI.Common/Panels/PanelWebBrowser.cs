@@ -41,7 +41,7 @@ namespace Alternet.UI
         {
         };
 
-        private readonly TextBox urlTextBox = new()
+        private readonly TextPicker urlTextBox = new()
         {
             MinWidth = 350,
             HorizontalAlignment = HorizontalAlignment.Fill,
@@ -111,7 +111,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets dictionary for URL mappings which is used in <see cref="LoadUrl(string?)"/> method.
         /// By default mapping "g" => "https://www.google.com" is defined.
-        /// It means when you call LoadUrl("g") or enter "g" in the URL bar, it will be translated to LoadUrl("https://www.google.com").
+        /// It means when you call LoadUrl("g") or enter "g" in the URL bar,
+        /// it will be translated to LoadUrl("https://www.google.com").
         /// This allows you to define short aliases for frequently used URLs.
         /// </summary>
         [Browsable(false)]
@@ -222,10 +223,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="TextBox"/> control used for url editing.
+        /// Gets <see cref="TextPicker"/> control used for url editing.
         /// </summary>
         [Browsable(false)]
-        public TextBox UrlTextBox => urlTextBox;
+        public TextPicker UrlTextBox => urlTextBox;
 
         /// <summary>
         /// Gets whether IE backend is currently used.
@@ -385,14 +386,15 @@ namespace Alternet.UI
 
             toolBar.SetToolDropDownMenu(buttonIdMoreActions, MoreActionsMenu);
 
-            urlTextBox.KeyDown += OnTextBoxKeyDown;
+            urlTextBox.EditorKeyDown += OnTextBoxKeyDown;
         }
 
         /// <summary>
         /// Handles the event that occurs when the web browser has finished loading content.
         /// </summary>
         /// <param name="sender">The source of the event, typically the web browser control.</param>
-        /// <param name="e">A WebBrowserEventArgs object that contains event data related to the web browser load event.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains event data
+        /// related to the web browser load event.</param>
         protected virtual void OnWebBrowserLoaded(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
@@ -407,7 +409,8 @@ namespace Alternet.UI
         /// classes. This method is called when the web browser control signals that a new window should be opened, such
         /// as when a link with target='_blank' is activated.</remarks>
         /// <param name="sender">The source of the event, typically the web browser control.</param>
-        /// <param name="e">A WebBrowserEventArgs object that contains the event data, including the URL to be loaded in the new window.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data,
+        /// including the URL to be loaded in the new window.</param>
         protected virtual void OnWebBrowserNewWindow(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
@@ -419,7 +422,8 @@ namespace Alternet.UI
         /// Handles the event that occurs when the web browser's document title changes.
         /// </summary>
         /// <param name="sender">The source of the event, typically the web browser control.</param>
-        /// <param name="e">A WebBrowserEventArgs object that contains the event data, including the new document title.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data,
+        /// including the new document title.</param>
         protected virtual void OnWebBrowserTitleChanged(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
@@ -441,7 +445,8 @@ namespace Alternet.UI
         /// Handles the event that occurs when the web browser enters or exits full-screen mode.
         /// </summary>
         /// <param name="sender">The source of the event, typically the web browser control.</param>
-        /// <param name="e">A WebBrowserEventArgs object that contains data related to the full-screen state change.</param>
+        /// <param name="e">A WebBrowserEventArgs object that contains data related
+        /// to the full-screen state change.</param>
         protected virtual void OnWebBrowserFullScreenChanged(object? sender, WebBrowserEventArgs e)
         {
             if (LogEvents)
@@ -479,7 +484,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Override this method to provide custom error handling logic for web browser events in
         /// derived classes.</remarks>
-        /// <param name="sender">The source of the event, typically the web browser control that encountered the error.</param>
+        /// <param name="sender">The source of the event, typically the web browser
+        /// control that encountered the error.</param>
         /// <param name="e">A WebBrowserEventArgs object that contains the event data related to the error.</param>
         protected virtual void OnWebBrowserError(object? sender, WebBrowserEventArgs e)
         {
@@ -494,7 +500,8 @@ namespace Alternet.UI
         /// occurs. Setting the Cancel property of the event arguments to <see langword="true"/> will prevent the
         /// navigation.</remarks>
         /// <param name="sender">The source of the event, typically the web browser control.</param>
-        /// <param name="e">A WebBrowserEventArgs object that contains the event data, including navigation details and the ability to
+        /// <param name="e">A WebBrowserEventArgs object that contains the event data,
+        /// including navigation details and the ability to
         /// cancel navigation.</param>
         protected virtual void OnWebBrowserNavigating(object? sender, WebBrowserEventArgs e)
         {
@@ -510,11 +517,13 @@ namespace Alternet.UI
         /// <remarks>Override this method to customize the behavior when a key is pressed in the TextBox.
         /// The default implementation loads the URL when the Enter key is detected.</remarks>
         /// <param name="sender">The source of the event, typically the TextBox control.</param>
-        /// <param name="e">A KeyEventArgs that contains the event data, including information about the pressed key.</param>
+        /// <param name="e">A KeyEventArgs that contains the event data,
+        /// including information about the pressed key.</param>
         protected virtual void OnTextBoxKeyDown(object? sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
+                e.Suppressed();
                 var s = urlTextBox.Text;
 
                 LoadUrl(s);
@@ -535,7 +544,8 @@ namespace Alternet.UI
         /// <summary>
         /// Loads the specified URL or performs a search if the input is not a valid URL.
         /// </summary>
-        /// <param name="s">The URL to load, or a search query if the string is not a valid URL. If the value is null, the default page
+        /// <param name="s">The URL to load, or a search query if the string is not a valid URL.
+        /// If the value is null, the default page
         /// is loaded.</param>
         protected virtual void LoadUrl(string? s)
         {
