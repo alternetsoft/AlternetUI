@@ -61,6 +61,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates the buttons of the <see cref="StdIntPicker"/> control.
+        /// </summary>
+        public enum ButtonKind
+        {
+            /// <summary>
+            /// The plus button.
+            /// </summary>
+            Plus,
+
+            /// <summary>
+            /// The minus button.
+            /// </summary>
+            Minus,
+        }
+
+        /// <summary>
         /// Occurs when the <see cref="Value"/> property has been changed in some way.
         /// </summary>
         /// <remarks>For the <see cref="ValueChanged"/> event to occur, the
@@ -92,13 +108,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when button is clicked.
         /// </summary>
-        public event EventHandler<ControlAndButtonClickEventArgs>? ButtonClick;
+        public event EventHandler<ClickEventArgs>? ButtonClick;
 
         /// <summary>
         /// Gets or sets action that is called when button is clicked.
         /// This is a simplified alternative to <see cref="ButtonClick"/> event.
         /// </summary>
-        public Action<ControlAndButtonClickEventArgs>? ButtonClickAction;
+        public Action<ClickEventArgs>? ButtonClickAction;
 
         /// <summary>
         /// Gets 'Plus' button if it is available.
@@ -416,17 +432,17 @@ namespace Alternet.UI
         /// Increments or decrements value by <see cref="SmallChange"/> or <see cref="LargeChange"/>
         /// depending on whether the Ctrl key is pressed.
         /// </summary>
-        /// <param name="e">An <see cref="ControlAndButtonClickEventArgs"/> that contains the event data.</param>
-        public virtual void OnButtonClick(ControlAndButtonClickEventArgs e)
+        /// <param name="e">An <see cref="ClickEventArgs"/> that contains the event data.</param>
+        public virtual void OnButtonClick(ClickEventArgs e)
         {
             var change = Keyboard.IsControlPressed ? LargeChange : SmallChange;
 
-            if (e.IsButtonMinus(this))
+            if (e.ButtonKind == ButtonKind.Minus)
             {
                 IncrementValue(-change);
             }
             else
-                if (e.IsButtonPlus(this))
+                if (e.ButtonKind == ButtonKind.Plus)
                 {
                     IncrementValue(change);
                 }
@@ -471,7 +487,7 @@ namespace Alternet.UI
         /// <summary>
         /// Raises <see cref="ButtonClick"/> event and calls <see cref="OnButtonClick"/> method.
         /// </summary>
-        public void RaiseButtonClick(ControlAndButtonClickEventArgs e)
+        public void RaiseButtonClick(ClickEventArgs e)
         {
             ButtonClick?.Invoke(this, e);
             ButtonClickAction?.Invoke(e);
@@ -557,8 +573,10 @@ namespace Alternet.UI
 
                     void ClickAction(object? s, EventArgs e)
                     {
-                        ControlAndButtonClickEventArgs args = new();
-                        args.ButtonId = (s as AbstractControl)?.UniqueId;
+                        var buttonId = (s as AbstractControl)?.UniqueId;
+                        var buttonKind = buttonId == IdButtonMinus ? ButtonKind.Minus : ButtonKind.Plus;
+                        ClickEventArgs args = new(buttonKind);
+                        args.ButtonId = buttonId;
                         RaiseButtonClick(args);
                     }
 
@@ -725,6 +743,50 @@ namespace Alternet.UI
             var newText = Value.ToString();
             Text = newText;
             textPicker.Value = newText;
+        }
+
+        /// <summary>
+        /// Represents event arguments for the button click event.
+        /// </summary>
+        public class ClickEventArgs : HandledEventArgs
+        {
+            /// <summary>
+            /// Creates a new instance of the <see cref="ClickEventArgs"/> class.
+            /// </summary>
+            public ClickEventArgs(ButtonKind buttonKind)
+            {
+                ButtonKind = buttonKind;
+            }
+
+            /// <summary>
+            /// Gets or sets kind of the clicked button.
+            /// </summary>
+            public ButtonKind ButtonKind { get; set; }
+
+            /// <summary>
+            /// Gets id of the clicked button.
+            /// </summary>
+            public ObjectUniqueId? ButtonId { get; set; }
+
+            /// <summary>
+            /// Determines if the button is a plus button.
+            /// </summary>
+            public virtual bool IsButtonPlus(AbstractControl buttonOwner)
+            {
+                if (buttonOwner is ControlAndButton controlAndButton)
+                    return ButtonId == controlAndButton.IdButtonPlus;
+                return false;
+            }
+
+            /// <summary>
+            /// Determines if the button is a minus button.
+            /// </summary>
+            public virtual bool IsButtonMinus(AbstractControl buttonOwner)
+            {
+                if (buttonOwner is ControlAndButton controlAndButton)
+                    return ButtonId == controlAndButton.IdButtonMinus;
+                return false;
+            }
         }
     }
 }
