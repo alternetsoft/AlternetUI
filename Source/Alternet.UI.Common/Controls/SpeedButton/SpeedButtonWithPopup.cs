@@ -107,6 +107,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the position of the popup window relative to the button.
+        /// </summary>
+        [Browsable(false)]
+        public virtual HVDropDownAlignment? PopupWindowPosition { get; set; }
+
+        /// <summary>
         /// Gets or sets the title of the popup window.
         /// </summary>
         public virtual string PopupWindowTitle
@@ -205,7 +211,7 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
             RaiseBeforeShowPopup(EventArgs.Empty);
-            PopupWindow.ShowPopup(PopupOwner ?? this);
+            PopupWindow.ShowPopup(PopupOwner ?? this, PopupWindowPosition);
         }
 
         /// <summary>
