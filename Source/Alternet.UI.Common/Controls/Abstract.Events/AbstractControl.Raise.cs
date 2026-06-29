@@ -1178,8 +1178,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises <see cref="VisibleChanged"/> event and <see cref="OnVisibleChanged"/>
-        /// method.
+        /// Raises <see cref="VisibleChanging"/> event and <see cref="OnVisibleChanging"/> method.
+        /// </summary>
+        [Browsable(false)]
+        public virtual void RaiseVisibleChanging(EventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            OnVisibleChanging(e);
+            VisibleChanging?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Raises <see cref="VisibleChanged"/> event and <see cref="OnVisibleChanged"/> method.
         /// </summary>
         [Browsable(false)]
         public virtual void RaiseVisibleChanged(EventArgs e)

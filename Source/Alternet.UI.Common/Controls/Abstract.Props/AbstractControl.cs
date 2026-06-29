@@ -1792,7 +1792,7 @@ namespace Alternet.UI
             {
                 if (visible == value)
                     return;
-
+                RaiseVisibleChanging(EventArgs.Empty);
                 visible = value;
                 RaiseVisibleChanged(EventArgs.Empty);
             }

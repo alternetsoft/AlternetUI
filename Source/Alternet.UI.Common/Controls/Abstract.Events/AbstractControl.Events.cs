@@ -357,6 +357,12 @@ namespace Alternet.UI
         public event EventHandler? VisibleChanged;
 
         /// <summary>
+        /// Occurs when the value of the <see cref="Visible"/> property is about to change.
+        /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
+        public event EventHandler? VisibleChanging;
+
+        /// <summary>
         /// Occurs after control was shown.
         /// </summary>
         [Category(KnownMemberCategory.Appearance)]
