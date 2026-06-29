@@ -125,6 +125,11 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets <see cref="SKBitmap"/> on which this image is based.
+        /// </summary>
+        public SKBitmap SkiaBitmap => ((SkiaImageHandler)Handler).Bitmap;
+
+        /// <summary>
         /// Gets or sets source url of this image. This is informational property and
         /// doesn't reload the image.
         /// </summary>
@@ -893,12 +898,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="alpha">Lightness (0..200).</param>
         /// <returns></returns>
-        public virtual Image ChangeLightness(int alpha)
+        public virtual Bitmap ChangeLightness(int alpha)
         {
-            var image = (SKBitmap)this;
-            SkiaUtils.ChangeLightness(image, alpha);
-            var result = (Image)image;
-            return result;
+            var imageCopy = SkiaBitmap.Copy();
+            SkiaUtils.ChangeLightness(imageCopy, alpha);
+            return Bitmap.FromSkia(imageCopy);
         }
 
         /// <summary>
@@ -906,11 +910,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="brightness">Brightness. Default is 255.</param>
         /// <returns></returns>
-        public virtual Image ConvertToDisabled(byte brightness = 255)
+        public virtual Bitmap ConvertToDisabled(byte brightness = 255)
         {
-            var image = (SKBitmap)this;
-            SkiaUtils.ChangeToDisabled(image, brightness);
-            return (Image)image;
+            var imageCopy = SkiaBitmap.Copy();
+            SkiaUtils.ChangeToDisabled(imageCopy, brightness);
+            return Bitmap.FromSkia(imageCopy);
         }
 
         /// <summary>
@@ -926,11 +930,13 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Scales the current size of the image by the specified scale factor.
-        /// If scale factor is less than 1, the image will be scaled down; if it is greater than 1, the image will be scaled up.
+        /// If scale factor is less than 1, the image will be scaled down; if it is greater than 1,
+        /// the image will be scaled up.
         /// </summary>
         /// <remarks>If the object is immutable, the size will not be changed and the method returns
         /// false.</remarks>
-        /// <param name="scaleFactor">The factor by which to scale the width and height. Must be a positive value.</param>
+        /// <param name="scaleFactor">The factor by which to scale the width and height.
+        /// Must be a positive value.</param>
         /// <returns>true if the size was successfully scaled; otherwise, false.</returns>
         public virtual bool Scale(float scaleFactor)
         {
@@ -1030,9 +1036,9 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image WithConvertedColors(Func<ColorStruct, ColorStruct> func)
         {
-            var generic = (SKBitmap)this;
-            SkiaUtils.ConvertColors(generic, func);
-            return (Image)generic;
+            var imageCopy = SkiaBitmap.Copy();
+            SkiaUtils.ConvertColors(imageCopy, func);
+            return Bitmap.FromSkia(imageCopy);
         }
 
         /// <summary>
@@ -1062,7 +1068,8 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates a version of the image optimized for display in dark mode environments by adjusting its colors for
+        /// Creates a version of the image optimized for display in dark mode
+        /// environments by adjusting its colors for
         /// improved visibility and aesthetics.
         /// </summary>
         /// <remarks>This method applies lighter color transformations to enhance the image's appearance
@@ -1075,7 +1082,7 @@ namespace Alternet.Drawing
             if (RecolorForDarkModeOverride != null)
                 return RecolorForDarkModeOverride(this);
 
-            var skia = (SKBitmap)this;
+            var skia = SkiaBitmap.Copy();
 
             ColorStruct ConvertPixel(ColorStruct color)
             {
