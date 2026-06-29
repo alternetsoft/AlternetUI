@@ -1,3 +1,37 @@
+# 1.0.21 (2026 June 29)
+
+- New controls: StdIntPicker, EditableListPicker, TextPicker, InnerPopupTextBox.
+- New components: GripComponent.
+- PopupWindow: Fix popup position if it is outside the screen to fit the screen.
+- SpeedButtonWithPopup: Add PopupWindowPosition property.
+- PopupCalendar: Fix incorrect default popup size.
+- Control: VisibleChanging, OnVisibleChanging.
+- SpeedButton.CreateInnerLabel, Label.EmptyTextHint.
+- PanelWebBrowser: Fix tool bar layout.
+- PanelWebBrowser: Use TextPicker in the toolbar and fix Enter key.
+- FindReplaceControl: Use EditableListPicker as find/replace editors.
+- AbstractControl.InnerBordersOverride.
+- PopupControl: Fix popup position do not cover scrollbars.
+- ListBoxItems: Fix exception when used as IList.
+- SpeedButtonWithPopup: Fix popup not closed when clicked on the control.
+- Window.GetTextBoxHeight.
+- FindReplaceControl: Fixed enabled/disabled scope editor when no single scope is allowed.
+- VirtualListBox.EditorTextRequested.
+- VirtualListBox: Implement item text editing.
+- Fix InnerPopupToolBar overlaps scrollbar on maui.
+- Printing now uses SkiaSharp.
+- Determine SkiaFontScaleFactor on startup to avoid font size difference on Linux.
+- Font: SkiaFontScaleFactor,  FontSettingsIteration.
+- Create OverflowSafeCounter.
+- Move input key conversion to managed code (now keys are processed faster).
+- MswPrinterUtils: Fix exception in get printer names.
+- SplittedPanel: ShowWebBrowser, EnsureSideBarPanel, ShowFilesAndFolders.
+- Maui: Fix cursor for non-platform controls.
+- Cursor: Fix exception in ToString.
+- ShapeControl: use std border color if pen not specified.
+
+---
+
 # 1.0.20 (2026 June 24)
 
 - Graphics: SkiaEnabled, Canvas.
