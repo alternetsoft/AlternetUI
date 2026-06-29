@@ -24,7 +24,6 @@ namespace Alternet.UI
             Title = CommonStrings.Default.WindowTitleSelectDate;
             HideOnClick = false;
             HideOnDoubleClick = false;
-            SetSizeToContent();
         }
 
         /// <summary>
@@ -57,6 +56,16 @@ namespace Alternet.UI
             };
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnVisibleChanging(EventArgs e)
+        {
+            base.OnVisibleChanging(e);
+            if (!Visible)
+            {
+                SetSizeToContent();
+            }
         }
 
         /// <inheritdoc/>

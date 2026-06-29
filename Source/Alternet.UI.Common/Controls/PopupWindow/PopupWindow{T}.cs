@@ -116,9 +116,7 @@ namespace Alternet.UI
             bottomToolBar.VerticalAlignment = UI.VerticalAlignment.Bottom;
             bottomToolBar.ResumeLayout();
             bottomToolBar.Parent = mainPanel;
-            Deactivated += OnPopupDeactivated;
             MainControl.Required();
-            Disposed += OnPopupWindowDisposed;
             HideOnDeactivate = true;
             AllowFormKeyPreview = false;
         }
@@ -926,22 +924,27 @@ namespace Alternet.UI
             base.OnKeyDown(e);
         }
 
-        private void OnOkButtonClick()
+        /// <summary>
+        /// Called when the OK button is clicked.
+        /// </summary>
+        protected virtual void OnOkButtonClick()
         {
             HidePopup(ModalResult.Accepted);
         }
 
-        private void OnCancelButtonClick()
+        /// <summary>
+        /// Called when the Cancel button is clicked.
+        /// </summary>
+        protected virtual void OnCancelButtonClick()
         {
             HidePopup(ModalResult.Canceled);
         }
 
-        private void OnPopupWindowDisposed(object? sender, EventArgs e)
+        /// <inheritdoc/>
+        protected override void OnDeactivated(EventArgs e)
         {
-        }
+            base.OnDeactivated(e);
 
-        private void OnPopupDeactivated(object? sender, EventArgs e)
-        {
             if (HideOnDeactivate && Visible)
             {
                 Post(() => HidePopup(ModalResult.Canceled, focusOwner: false));
