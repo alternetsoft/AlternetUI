@@ -8,11 +8,6 @@ namespace Alternet.UI
 {
     internal partial class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
-        public IControlHandler CreateOpenGLControlHandler(AbstractControl control)
-        {
-            return new MauiControlHandler();
-        }
-
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
             return new MauiControlHandler();
@@ -31,11 +26,6 @@ namespace Alternet.UI
         IControlHandler IControlFactoryHandler.CreateControlHandler(AbstractControl control)
         {
             return new MauiControlHandler();
-        }
-
-        IControlHandler IControlFactoryHandler.CreateListViewHandler(ListView control)
-        {
-            return new HandlerForDisposed();
         }
 
         IControlHandler IControlFactoryHandler.CreatePropertyGridHandler(PropertyGrid control)
