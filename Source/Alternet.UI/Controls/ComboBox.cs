@@ -300,9 +300,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ComboBox;
-
         /// <summary>
         /// Gets or sets the index specifying the currently selected item.
         /// </summary>

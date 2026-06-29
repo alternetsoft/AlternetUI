@@ -51,9 +51,6 @@ namespace Alternet.UI
         /// of the painting process.</remarks>
         public event PaintEventHandler? AfterPaint;
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.UserPaintControl;
-
         /// <summary>
         /// Gets or sets the type of scroll bars displayed in the control.
         /// </summary>

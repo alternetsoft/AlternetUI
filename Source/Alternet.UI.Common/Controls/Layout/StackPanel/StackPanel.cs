@@ -87,9 +87,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.StackPanel;
-
-        /// <inheritdoc/>
         [Browsable(false)]
         public override string Text
         {

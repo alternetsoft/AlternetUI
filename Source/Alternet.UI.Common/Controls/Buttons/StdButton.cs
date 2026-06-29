@@ -166,9 +166,6 @@ namespace Alternet.UI
             All = BackColor | ForeColor | BorderColor,
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Button;
-
         /// <summary>
         /// Gets or sets a value that determines if the background is drawn
         /// using visual styles, if supported.</summary>

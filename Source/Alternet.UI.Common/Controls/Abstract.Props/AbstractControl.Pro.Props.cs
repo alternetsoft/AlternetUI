@@ -37,14 +37,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (minMargin == null)
-                {
-                    var value = AllPlatformDefaults.
-                        GetAsThickness(ControlKind, ControlDefaultsId.MinMargin);
-                    minMargin = value;
-                }
-
-                return minMargin.Value;
+                return Thickness.Empty;
             }
         }
 
@@ -56,13 +49,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (minPadding == null)
-                {
-                    minPadding = AllPlatformDefaults.
-                        GetAsThickness(ControlKind, ControlDefaultsId.MinPadding);
-                }
-
-                return minPadding.Value;
+                return Thickness.Empty;
             }
         }
     }

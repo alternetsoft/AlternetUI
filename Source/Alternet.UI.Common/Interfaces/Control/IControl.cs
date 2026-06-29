@@ -795,11 +795,6 @@ namespace Alternet.UI
         bool Focused { get; }
 
         /// <summary>
-        /// Returns control identifier.
-        /// </summary>
-        ControlTypeId ControlKind { get; }
-
-        /// <summary>
         /// Converts device-independent units to pixels.
         /// </summary>
         /// <param name="value">Value in device-independent units.</param>

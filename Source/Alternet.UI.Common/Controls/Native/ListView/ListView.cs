@@ -49,10 +49,6 @@ namespace Alternet.UI
         /// </summary>
         public ListView()
         {
-            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(ControlKind);
-
-            if (hasBorder is not null)
-                HasBorder = hasBorder.Value;
         }
 
         /// <summary>
@@ -144,9 +140,6 @@ namespace Alternet.UI
         {
             get => suspendEventsCounter > 0;
         }
-
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ListView;
 
         /// <summary>
         /// Gets or sets a value indicating whether the user can edit the labels of items in the

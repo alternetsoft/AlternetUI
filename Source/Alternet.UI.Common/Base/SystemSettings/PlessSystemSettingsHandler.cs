@@ -114,30 +114,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual Color GetClassDefaultAttributesBgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return SystemColors.Window;
-        }
-
-        /// <inheritdoc/>
-        public virtual Color GetClassDefaultAttributesFgColor(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return SystemColors.WindowText;
-        }
-
-        /// <inheritdoc/>
-        public virtual Font? GetClassDefaultAttributesFont(
-            ControlTypeId controlType,
-            ControlRenderSizeVariant renderSize = ControlRenderSizeVariant.Normal)
-        {
-            return null;
-        }
-
-        /// <inheritdoc/>
         public virtual ColorStruct? GetColor(KnownSystemColor index)
         {
             return null;

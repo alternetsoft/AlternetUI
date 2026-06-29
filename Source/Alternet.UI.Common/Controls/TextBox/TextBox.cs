@@ -269,9 +269,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual ModifierKeys? AutoUrlModifiers { get; set; }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.TextBox;
-
         /// <summary>
         /// Gets or sets a value indicating whether this is a multiline text
         /// box control.

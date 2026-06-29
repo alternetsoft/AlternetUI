@@ -137,8 +137,6 @@ namespace Alternet.UI
 
         private Thickness margin;
         private Thickness padding;
-        private Thickness? minMargin;
-        private Thickness? minPadding;
         private Thickness? minChildMargin;
 
         private object? toolTip;
@@ -161,10 +159,10 @@ namespace Alternet.UI
         /// </summary>
         public AbstractControl()
         {
+            margin = MinMargin;
+            padding = MinPadding;
             visible = GetDefaultVisible();
             font = DefaultFont;
-            var defaults = GetDefaults(ControlKind);
-            defaults.RaiseInitDefaults(this);
             OnCreateControl();
             Designer?.RaiseCreated(this, EventArgs.Empty);
             RaiseNotifications((n) => n.AfterCreate(this, EventArgs.Empty));
@@ -2721,8 +2719,6 @@ namespace Alternet.UI
         {
             get
             {
-                if (minMargin == null)
-                    margin.ApplyMin(MinMargin);
                 if (Parent is not null && Parent.MinChildMargin is not null)
                 {
                     var result = margin;
@@ -2768,8 +2764,6 @@ namespace Alternet.UI
         {
             get
             {
-                if (minPadding == null)
-                    padding.ApplyMin(MinPadding);
                 return padding;
             }
 
@@ -3930,12 +3924,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual RectD ClientRectangle => new(PointD.Empty, ClientSize);
-
-        /// <summary>
-        /// Returns control identifier.
-        /// </summary>
-        [Browsable(false)]
-        public virtual ControlTypeId ControlKind => ControlTypeId.Control;
 
         /// <summary>
         /// Gets absolute position of the control. Returned value is <see cref="Location"/>

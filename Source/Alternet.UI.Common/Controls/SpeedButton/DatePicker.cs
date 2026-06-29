@@ -40,9 +40,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Other;
-
-        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             base.OnSystemColorsChanged(e);

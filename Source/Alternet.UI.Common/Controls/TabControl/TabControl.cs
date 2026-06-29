@@ -162,9 +162,6 @@ namespace Alternet.UI
             CheckTitle = 1 << 1,
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.TabControl;
-
         /// <summary>
         /// Gets an enumerable collection of header buttons associated with the tabs in the control.
         /// </summary>

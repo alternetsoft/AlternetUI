@@ -137,9 +137,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.CheckBox;
-
         /// <summary>
         /// Configures the control to use accent color for focused border.
         /// This method is called in the constructor, so the

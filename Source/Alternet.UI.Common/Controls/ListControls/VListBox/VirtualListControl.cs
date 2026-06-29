@@ -402,9 +402,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ListBox;
-
         /// <summary>
         /// Gets or sets a value indicating whether checkbox will
         /// allow three check states rather than two.

@@ -126,9 +126,6 @@ namespace Alternet.UI
         /// </summary>
         public event EventHandler? TickFrequencyChanged;
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Slider;
-
         /// <summary>
         /// Gets or sets a value indicating the horizontal or vertical orientation of the slider.
         /// </summary>

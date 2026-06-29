@@ -55,9 +55,6 @@ namespace Alternet.UI
             Title = title ?? string.Empty;
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.TabPage;
-
         /// <summary>
         /// Gets the zero-based index of the page within the <see cref="TabControl"/> control,
         /// or <see langword="null"/> if the item is not associated with

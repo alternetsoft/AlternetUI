@@ -158,9 +158,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ProgressBar;
-
         /// <summary>
         /// Gets or sets the minimum allowed value for the progress bar control.
         /// </summary>

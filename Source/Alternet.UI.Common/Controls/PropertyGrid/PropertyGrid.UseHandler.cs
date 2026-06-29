@@ -365,9 +365,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.PropertyGrid;
-
         /// <summary>
         /// Gets control handler.
         /// </summary>

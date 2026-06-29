@@ -69,9 +69,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.GroupBox;
-
-        /// <inheritdoc/>
         public override object? TitleAsObject
         {
             get => base.TitleAsObject;

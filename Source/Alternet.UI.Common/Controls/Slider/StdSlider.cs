@@ -344,9 +344,6 @@ namespace Alternet.UI
             set => defaultSecondarySpacerColor = value;
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Slider;
-
         /// <summary>
         /// Gets or sets whether spacer background colors are automatically updated
         /// with the default spacer colors.

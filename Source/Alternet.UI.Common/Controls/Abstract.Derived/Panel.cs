@@ -51,9 +51,6 @@ namespace Alternet.UI
             ParentForeColor = true;
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Panel;
-
         [Browsable(false)]
         internal new string Text
         {

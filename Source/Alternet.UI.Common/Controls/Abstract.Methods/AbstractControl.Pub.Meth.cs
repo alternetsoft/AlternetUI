@@ -173,14 +173,6 @@ namespace Alternet.UI
         public static int NewGroupIndex() => groupIndexCounter++;
 
         /// <summary>
-        /// Gets <see cref="ControlDefaults"/> fof the specified <see cref="ControlTypeId"/>.
-        /// </summary>
-        /// <param name="controlId"></param>
-        /// <returns></returns>
-        public static ControlDefaults GetDefaults(ControlTypeId controlId) =>
-            AllPlatformDefaults.PlatformCurrent.Controls[controlId];
-
-        /// <summary>
         /// Called by the child control when its property is changed.
         /// </summary>
         /// <param name="child">Child control.</param>

@@ -64,9 +64,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.RadioButton;
-
-        /// <inheritdoc/>
         public override void RaiseCheckedChanged()
         {
             if (DisposingOrDisposed)

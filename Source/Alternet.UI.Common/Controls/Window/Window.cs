@@ -1182,9 +1182,6 @@ namespace Alternet.UI
         /// </summary>
         public WindowCloseAction? CloseAction { get; set; }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.Window;
-
         /// <inheritdoc />
         public override IEnumerable<FrameworkElement> LogicalChildrenCollection
         {

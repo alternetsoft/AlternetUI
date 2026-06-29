@@ -215,9 +215,6 @@ namespace Alternet.UI
             set => IsChecked = value;
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.CheckBox;
-
         [Browsable(false)]
         internal new LayoutStyle? Layout
         {

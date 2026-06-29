@@ -36,9 +36,6 @@ namespace Alternet.UI
             ParentForeColor = true;
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.LayoutPanel;
-
         [Browsable(false)]
         internal new LayoutStyle? Layout
         {

@@ -38,9 +38,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ColorPicker;
-
-        /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
             UseControlColors(DefaultUseControlColors);

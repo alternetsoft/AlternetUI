@@ -358,10 +358,6 @@ namespace Alternet.UI
             if (Control is null)
                 return;
 
-            bool? hasBorder = AllPlatformDefaults.GetHasBorderOverride(Control.ControlKind);
-            if (hasBorder is not null)
-                HasBorder = hasBorder.Value;
-
             ApplyItems();
             ApplyImageList();
             ApplySelectionMode();

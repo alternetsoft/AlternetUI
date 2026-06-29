@@ -50,9 +50,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ScrollViewer;
-
         /// <summary>
         /// Gets the collection of child controls within the scroll container,
         /// which represents the content of the scroll viewer.

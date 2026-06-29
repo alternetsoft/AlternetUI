@@ -98,9 +98,6 @@ namespace Alternet.UI
         [Browsable(false)]
         public new IRadioButtonHandler Handler => (IRadioButtonHandler)base.Handler;
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.RadioButton;
-
         [Browsable(false)]
         internal new string Title
         {

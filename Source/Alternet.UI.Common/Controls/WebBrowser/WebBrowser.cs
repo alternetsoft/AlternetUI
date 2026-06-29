@@ -327,10 +327,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        [Browsable(false)]
-        public override ControlTypeId ControlKind => ControlTypeId.WebBrowser;
-
         /// <summary>
         /// Gets default url (the first loaded url).
         /// </summary>

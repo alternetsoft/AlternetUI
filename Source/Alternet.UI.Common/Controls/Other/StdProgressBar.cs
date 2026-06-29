@@ -269,9 +269,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override ControlTypeId ControlKind => ControlTypeId.ProgressBar;
-
         /// <summary>
         /// Gets or sets a value indicating whether the slider control automatically sizes itself.
         /// If slider is horizontal and is set to auto-size, it will adjust its height automatically.
