@@ -2797,7 +2797,7 @@ namespace Alternet.UI
         /// <param name="target">The target control which is being resized by the sizing grip.</param>
         /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
         public virtual GripControl AddSizingGrip(
-            AbstractControl? target,
+            IGripControlTarget? target,
             GripControlKind kind = GripControlKind.SizeGripRight)
         {
             return AddSizingGrip(() => target, kind);
@@ -2819,10 +2819,13 @@ namespace Alternet.UI
         /// <summary>
         /// Adds a sizing grip to the toolbar, allowing users to resize the toolbar by dragging the grip.
         /// </summary>
-        /// <param name="targetProvider">A function that provides the target control which is being resized by the sizing grip.</param>
+        /// <param name="targetProvider">A function that provides the target control
+        /// which is being resized by the sizing grip.</param>
         /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
         /// <returns>The newly created <see cref="GripControl"/> instance.</returns>
-        public virtual GripControl AddSizingGrip(Func<AbstractControl?>? targetProvider, GripControlKind kind = GripControlKind.SizeGripRight)
+        public virtual GripControl AddSizingGrip(
+            Func<IGripControlTarget?>? targetProvider,
+            GripControlKind kind = GripControlKind.SizeGripRight)
         {
             var sizingGrip = new GripControl()
             {
