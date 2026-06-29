@@ -14,6 +14,10 @@ namespace Alternet.UI
         /// </summary>
         public StdListView()
         {
+            ListBox.GridLinesDisplayMode = ListViewGridLinesDisplayMode.Vertical;
+            ListBox.CheckBoxVisible = false;
+            IsHeaderVisible = true;
+            TreeButtons = TreeViewButtonsKind.Null;
         }
     }
 }

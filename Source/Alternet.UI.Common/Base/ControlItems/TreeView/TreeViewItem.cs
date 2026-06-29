@@ -822,6 +822,22 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Retrieves a column by its name from the owner tree view.
+        /// </summary>
+        /// <param name="name">The name of the column to retrieve.</param>
+        /// <returns>The <see cref="ListControlColumn"/> with the specified name,
+        /// or <c>null</c> if not found.</returns>
+        public virtual ListControlColumn? ColumnByName(string name)
+        {
+            var owner = Owner;
+
+            if (owner == null)
+                return null;
+
+            return owner.ColumnByName(name);
+        }
+
+        /// <summary>
         /// Creates a new instance of <see cref="TreeViewItem"/>.
         /// </summary>
         /// <returns>A new <see cref="TreeViewItem"/> instance.</returns>
@@ -987,6 +1003,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Starts a batch update operation, allowing multiple changes to be made
+        /// to the tree control without triggering
+        /// immediate redraws or notifications. This can improve performance when making multiple updates.
+        /// </summary>
+        public virtual void BeginUpdate()
+        {
+            Owner?.BeginUpdate();
+        }
+
+        /// <summary>
+        /// Ends a batch update operation, applying all changes made
+        /// since the last call to <see cref="BeginUpdate"/>.
+        /// </summary>
+        public virtual void EndUpdate()
+        {
+            Owner?.EndUpdate();
+        }
+
+        /// <summary>
         /// Sets child items of this tree control item to the specified collection.
         /// </summary>
         /// <param name="items">The items to set.</param>
@@ -995,7 +1030,7 @@ namespace Alternet.UI
             SmartInvoke(Internal);
             void Internal()
             {
-                Owner?.BeginUpdate();
+                BeginUpdate();
                 try
                 {
                     Clear();
@@ -1003,7 +1038,7 @@ namespace Alternet.UI
                 }
                 finally
                 {
-                    Owner?.EndUpdate();
+                    EndUpdate();
                 }
             }
         }
@@ -1192,7 +1227,7 @@ namespace Alternet.UI
 
             void Internal()
             {
-                Owner?.BeginUpdate();
+                BeginUpdate();
                 try
                 {
                     action();
@@ -1201,7 +1236,7 @@ namespace Alternet.UI
                 }
                 finally
                 {
-                    Owner?.EndUpdate();
+                    EndUpdate();
                 }
             }
         }
@@ -1217,7 +1252,7 @@ namespace Alternet.UI
             {
                 if (items is null)
                     return;
-                Owner?.BeginUpdate();
+                BeginUpdate();
                 try
                 {
                     foreach (var item in items)
@@ -1231,7 +1266,7 @@ namespace Alternet.UI
                 }
                 finally
                 {
-                    Owner?.EndUpdate();
+                    EndUpdate();
                 }
             }
         }
@@ -1248,7 +1283,7 @@ namespace Alternet.UI
                 if (items is null || items.Count == 0)
                     return;
 
-                Owner?.BeginUpdate();
+                BeginUpdate();
                 try
                 {
                     for (int i = items.Count - 1; i >= 0; i--)
@@ -1262,7 +1297,7 @@ namespace Alternet.UI
                 }
                 finally
                 {
-                    Owner?.EndUpdate();
+                    EndUpdate();
                 }
             }
         }

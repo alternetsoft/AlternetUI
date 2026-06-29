@@ -1076,14 +1076,13 @@ namespace Alternet.UI
             {
                 var width = contentSize.GetContentWidth(column);
 
-                if (expandColumnToTitle || width <= 0)
+                if (expandColumnToTitle)
                 {
-                    AutoFitTitleWidth(column, StdTreeView.ColumnAutoFitFlags.CanGrow, width);
+                    var columnWidth = GetTitleControlPreferredWidth(column);
+                    width = Math.Max(width, columnWidth);
                 }
-                else
-                {
-                    SetColumnTitleAndContentWidth(column, width);
-                }
+
+                SetColumnTitleAndContentWidth(column, width);
             }
         }
 
@@ -1315,15 +1314,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds a new column to the list control with the specified title, optional width, and optional click handler.
+        /// Adds a new column to the list control with the specified title, optional width,
+        /// and optional click handler.
         /// This method adds a new column to <see cref="Columns"/> and also to the <see cref="Header"/>.
         /// Both the column in the collection and the header column are linked via the
         /// <see cref="ListControlColumn.ColumnKey"/> property.
         /// </summary>
         /// <remarks>The returned column is immediately added to the control and can be further customized
-        /// after creation. If a width is specified, it is used as the column's suggested width. The click handler, if
+        /// after creation. If a width is specified, it is used as the column's suggested width.
+        /// The click handler, if
         /// provided, is associated with the column header.</remarks>
-        /// <param name="title">The display title of the column. Can be null to indicate an unnamed column.</param>
+        /// <param name="title">The display title of the column.
+        /// Can be null to indicate an unnamed column.</param>
         /// <param name="width">The suggested width of the column, or null to use the default width.</param>
         /// <param name="onClick">An optional action to invoke when the column header is clicked.
         /// If null, no click handler is assigned.</param>

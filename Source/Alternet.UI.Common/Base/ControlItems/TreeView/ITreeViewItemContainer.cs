@@ -85,5 +85,13 @@ namespace Alternet.UI
         /// <param name="item">The <see cref="TreeViewItem"/> that was selected or deselected.</param>
         /// <param name="selected">Indicates whether the item is selected.</param>
         void RaiseItemSelectedChanged(UI.TreeViewItem item, bool selected);
+
+        /// <summary>
+        /// Retrieves a column by its name.
+        /// </summary>
+        /// <param name="name">The name of the column to retrieve.</param>
+        /// <returns>The <see cref="ListControlColumn"/> with the specified name,
+        /// or <c>null</c> if not found.</returns>    
+        ListControlColumn? ColumnByName(string name);
     }
 }

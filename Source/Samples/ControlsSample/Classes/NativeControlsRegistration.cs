@@ -11,9 +11,9 @@ namespace ControlsSample
 {
     public static class NativeControlsRegistration
     {
+        /*
         private static int counter = 0;
 
-        /*
         public static void InitTestsListView()
         {
             AddControlAction<ListView>("Clear Columns", (listView) => listView.Columns.Clear());
@@ -283,7 +283,8 @@ namespace ControlsSample
             foreach (var item in ObjectInit.GetTenItems())
                 listBox.Items.Add(item);
 
-            listBox.SelectedIndexChanged += (s, e) => ObjectInit.LogItems("ListBox SelectedIndexChanged", listBox.SelectedItems);
+            listBox.SelectedIndexChanged += (s, e)
+                => ObjectInit.LogItems("ListBox SelectedIndexChanged", listBox.SelectedItems);
         }
 
         public static void InitVirtualTreeControl(TreeView control)

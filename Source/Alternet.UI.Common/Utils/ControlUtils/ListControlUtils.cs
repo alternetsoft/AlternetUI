@@ -25,24 +25,60 @@ namespace Alternet.UI
         /// <remarks>This method clears any existing columns in the tree view and creates two new columns:
         /// 'Name' and 'Data'. Each test item is assigned a unique identifier and may include child items. Updates to
         /// the tree view are batched for improved performance.</remarks>
-        /// <param name="owner">The tree view control that manages the columns and items to which test items will be added.</param>
+        /// <param name="owner">The tree view control that manages the columns and items
+        /// to which test items will be added.</param>
         /// <param name="count">The number of test items to create and add to the tree view.</param>
-        public static void SetTestItemsWithColumns(StdTreeView owner, int count)
+        /// <param name="subItems">Indicates whether to add sub-items to each test item.</param>
+        public static void SetTestItemsWithColumns(StdTreeView owner, int count, bool subItems = true)
         {
-            TreeViewRootItem root = new ();
-            owner.Header.Visible = true;
-
             try
             {
                 owner.BeginUpdate();
 
                 owner.Clear();
                 owner.Columns.Clear();
-                var nameColumn = owner.AddColumn("Name", 200);
-                var dataColumn = owner.AddColumn("Data", 100);
-                var infoColumn = owner.AddColumn("Info", 150);
+                var nameColumn = owner.AddColumn(title: "Name", 200).SetName("Name");
+                var dataColumn = owner.AddColumn(title: "Data", 100).SetName("Data");
+                var infoColumn = owner.AddColumn(title: "Info", 150).SetName("Info");
+
+                owner.Clear();
 
                 owner.Header.Visible = true;
+
+                AddTestItemsWithColumns(owner.RootItem, count, subItems);
+            }
+            finally
+            {
+                owner.EndUpdate();
+            }
+        }
+
+        /// <summary>
+        /// Adds a specified number of test items to the provided tree view
+        /// and initializes three columns, 'Name', 'Data', and 'Info', for each item.
+        /// </summary>
+        /// <param name="count">The number of test items to create and add to the tree view.</param>
+        /// <param name="subItems">Indicates whether to add sub-items to each test item.</param>
+        /// <param name="parent">The parent item to which the test items will be added.
+        /// If null, the items will be added to the root of the tree view.</param>
+        public static void AddTestItemsWithColumns(
+            TreeViewItem parent,
+            int count,
+            bool subItems = true)
+        {
+            try
+            {
+                parent.BeginUpdate();
+
+                var nameColumn = parent.ColumnByName("Name");
+                var dataColumn = parent.ColumnByName("Data");
+                var infoColumn = parent.ColumnByName("Info");
+
+                if(nameColumn == null || dataColumn == null || infoColumn == null)
+                {
+                    App.Alert("Columns 'Name', 'Data', and 'Info' must exist.");
+                    return;
+                }
 
                 void Initialize(TreeViewItem item)
                 {
@@ -61,33 +97,35 @@ namespace Alternet.UI
                     var item = new TreeViewItem();
                     item.Text = "Item " + LogUtils.GenNewId();
                     Initialize(item);
-                    for (int j = 0; j < 10; j++)
-                    {
-                        var childItem = new TreeViewItem();
-                        childItem.Text = "Item " + LogUtils.GenNewId();
-                        Initialize(childItem);
-                        item.Add(childItem);
 
-                        if (i < 10)
+                    if (subItems)
+                    {
+                        for (int j = 0; j < 10; j++)
                         {
-                            for (int k = 0; k < 2; k++)
+                            var childItem = new TreeViewItem();
+                            childItem.Text = "Item " + LogUtils.GenNewId();
+                            Initialize(childItem);
+                            item.Add(childItem);
+
+                            if (i < 10)
                             {
-                                var childOfChildItem = new TreeViewItem();
-                                childOfChildItem.Text = "Item " + LogUtils.GenNewId();
-                                Initialize(childOfChildItem);
-                                childItem.Add(childOfChildItem);
+                                for (int k = 0; k < 2; k++)
+                                {
+                                    var childOfChildItem = new TreeViewItem();
+                                    childOfChildItem.Text = "Item " + LogUtils.GenNewId();
+                                    Initialize(childOfChildItem);
+                                    childItem.Add(childOfChildItem);
+                                }
                             }
                         }
                     }
 
-                    root.Add(item);
+                    parent.Add(item);
                 }
-
-                owner.RootItem = root;
             }
             finally
             {
-                owner.EndUpdate();
+                parent.EndUpdate();
             }
         }
 

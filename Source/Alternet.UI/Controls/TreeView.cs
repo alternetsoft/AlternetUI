@@ -1579,5 +1579,10 @@ namespace Alternet.UI
 
             return changed;
         }
+
+        ListControlColumn? ITreeViewItemContainer.ColumnByName(string name)
+        {
+            return null;
+        }
     }
 }

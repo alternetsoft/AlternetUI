@@ -95,6 +95,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets name of the column and returns the current instance for method chaining.
+        /// </summary>
+        /// <param name="name">The name to set for the column.</param>
+        /// <returns>The current instance of <see cref="ListControlColumn"/>.</returns>
+        public ListControlColumn SetName(string? name)
+        {
+            Name = name;
+            return this;
+        }
+
+        /// <summary>
         /// Retrieves the header column control associated with this instance from the specified header.
         /// </summary>
         /// <param name="header">The header from which to retrieve the column control. Cannot be null.</param>

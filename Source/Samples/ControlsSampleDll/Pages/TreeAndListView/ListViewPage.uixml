@@ -25,9 +25,9 @@
           <HorizontalStackPanel>
             <StdButton Text="Add 1000" Name="addManyItemsButton"
                     Margin="0,3,0,0" IsTextLocalized="true"
-                    Click="AddManyItemsButton_Click" IsEnabled="false"/>
+                    Click="AddManyItemsButton_Click" IsEnabled="true"/>
             <StdButton Text="Clear" Name="ClearButton" Margin="3,3,0,0"
-                    Click="ClearButton_Click" IsTextLocalized="true" IsEnabled="false"/>
+                    Click="ClearButton_Click" IsTextLocalized="true" IsEnabled="true"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>

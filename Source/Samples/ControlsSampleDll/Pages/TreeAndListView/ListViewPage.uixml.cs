@@ -21,11 +21,6 @@ namespace ControlsSample
         {
             InitializeComponent();
             
-            /*
-            listView.SelectionMode = ListViewSelectionMode.Multiple;
-            listView.AllowLabelEdit = true;
-            */
-
             ControlSet lastItemButtons = new(
                 ensureLastItemVisibleButton,
                 modifyLastItemButton,
@@ -45,24 +40,24 @@ namespace ControlsSample
                 beginSelectedLabelEditingButton);
             buttons.MinWidthToMaxPreferred();
 
-            var imageLists = DemoResourceLoader.LoadImageLists();
-            
-            /*
-            listView.SmallImageList = imageLists.Small;
-            listView.LargeImageList = imageLists.Large;
-            */
-
             viewComboBox.EnumType = typeof(ListViewView);
             viewComboBox.Value = ListViewView.Details;
 
             gridLinesComboBox.EnumType = typeof(ListViewGridLinesDisplayMode);
             gridLinesComboBox.Value = ListViewGridLinesDisplayMode.Vertical;
 
-            AddDefaultItems();
-
             columnWidthModeComboBox.EnumType = typeof(ListViewColumnWidthMode);
 
-            /*columnWidthModeComboBox.Value = listView.Columns[0].WidthMode;*/
+            ListControlUtils.SetTestItemsWithColumns(listView, 100, false);
+
+            listView.SetPreferredColumnWidth();
+
+            listView.ListBox.SelectionMode = ListBoxSelectionMode.Multiple;
+
+            /*
+            listView.SelectionMode = ListViewSelectionMode.Multiple;
+            listView.AllowLabelEdit = true;
+            */
         }
 
         private void EditItemsButton_Click(object? sender, System.EventArgs e)
@@ -73,31 +68,6 @@ namespace ControlsSample
         private void EditColumnsButton_Click(object? sender, System.EventArgs e)
         {
             /*DialogFactory.EditColumnsWithListEditor(listView);*/
-        }
-
-        private void InitializeColumns()
-        {
-            /*
-            listView?.Columns.Add(new ListViewColumn("Column One"));
-            listView?.Columns.Add(new ListViewColumn("Column Two"));
-            */
-        }
-
-        private void AddDefaultItems()
-        {
-            /*
-            listView!.View = ListViewView.Details;
-
-            PropertyGridSample.ObjectInit.InitListView(listView);
-
-            listView.Columns[0].WidthMode = ListViewColumnWidthMode.FixedInPercent;
-            listView.Columns[0].Width = 40;
-            listView.Columns[0].MinAutoWidth = 100;
-
-            listView.Columns[1].WidthMode = ListViewColumnWidthMode.FixedInPercent;
-            listView.Columns[1].Width = 40;
-            listView.Columns[1].MinAutoWidth = 100;
-            */
         }
 
         private void ViewComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -137,7 +107,7 @@ namespace ControlsSample
 
         private void AddManyItemsButton_Click(object? sender, EventArgs e)
         {
-            AddItems(1000);
+            ListControlUtils.AddTestItemsWithColumns(listView.RootItem, 1000, false);
         }
 
         private int GenItemIndex()
@@ -396,7 +366,6 @@ namespace ControlsSample
         private void ClearButton_Click(object? sender, System.EventArgs e)
         {
             listView.Clear();
-            InitializeColumns();
         }
 
         private void AddColumnButton_Click(object? sender, System.EventArgs e)
