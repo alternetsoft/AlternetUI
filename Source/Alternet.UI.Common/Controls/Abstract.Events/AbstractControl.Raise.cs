@@ -875,12 +875,6 @@ namespace Alternet.UI
             OnChildInserted(index, childControl);
             ChildInserted?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
 
-            var window = ParentWindow;
-            if (window is not null)
-            {
-                childControl.OnInsertedToWindow(window);
-            }
-
             childControl.OnInsertedToParent(this);
 
             RaiseNotifications((n) => n.AfterChildInserted(this, index, childControl));
@@ -899,12 +893,6 @@ namespace Alternet.UI
                 return;
             OnChildRemoved(childControl);
             ChildRemoved?.Invoke(this, new BaseEventArgs<AbstractControl>(childControl));
-
-            var window = ParentWindow;
-            if(window is not null)
-            {
-                childControl.OnRemovedFromWindow(window);
-            }
 
             childControl.OnRemovedFromParent(this);
 

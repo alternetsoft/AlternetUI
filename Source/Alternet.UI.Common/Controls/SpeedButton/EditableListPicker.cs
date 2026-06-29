@@ -102,18 +102,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnInsertedToWindow(Window parentWindow)
-        {
-            base.OnInsertedToWindow(parentWindow);
-        }
-
-        /// <inheritdoc/>
-        protected override void OnRemovedFromWindow(Window parentWindow)
-        {
-            base.OnRemovedFromWindow(parentWindow);
-        }
-
-        /// <inheritdoc/>
         protected override void TogglePopupVisible(MouseEventArgs e)
         {
             if (!IsEditable || !Label.Bounds.Contains(e.Location))
