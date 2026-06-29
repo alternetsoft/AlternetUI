@@ -14,7 +14,7 @@ namespace Alternet.Drawing
     /// A <see cref="Pen"/> draws a line of specified width and style.
     /// Use the <see cref="DashStyle"/> property to draw several varieties of dashed lines.
     /// </remarks>
-    public class Pen : HandledObject<IPenHandler>, IEquatable<Pen>
+    public class Pen : ImmutableObject, IEquatable<Pen>
     {
         /// <summary>
         /// Gets or sets the dash patterns for dashed lines.
@@ -26,8 +26,8 @@ namespace Alternet.Drawing
         private static Pen? defaultPen;
 
         private PenInfo penInfo = new();
-
         private SKPaint? paint;
+        private bool updateRequired;
 
         static Pen()
         {
@@ -132,13 +132,15 @@ namespace Alternet.Drawing
             LineCap lineCap,
             LineJoin lineJoin,
             bool immutable)
-            : base(immutable)
         {
             penInfo.Color = color;
             penInfo.Width = width;
             penInfo.DashStyle = dashStyle;
             penInfo.LineCap = lineCap;
             penInfo.LineJoin = lineJoin;
+
+            if (immutable)
+                SetImmutable();
         }
 
         /// <summary>
@@ -327,18 +329,18 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        protected override bool UpdateRequired
+        protected virtual bool UpdateRequired
         {
             get
             {
-                return base.UpdateRequired;
+                return updateRequired;
             }
 
             set
             {
                 if (UpdateRequired == value)
                     return;
-                base.UpdateRequired = value;
+                updateRequired = value;
                 if (value)
                 {
                     SafeDispose(ref paint);
@@ -420,23 +422,6 @@ namespace Alternet.Drawing
                 return false;
 
             return Equals(pen);
-        }
-
-        /// <summary>
-        /// Creates native pen.
-        /// </summary>
-        /// <returns></returns>
-        protected override IPenHandler CreateHandler()
-        {
-            return new PlessPenHandler(this);
-        }
-
-        /// <summary>
-        /// Updates native pen.
-        /// </summary>
-        protected override void UpdateHandler()
-        {
-            Handler.Update(this);
         }
     }
 }

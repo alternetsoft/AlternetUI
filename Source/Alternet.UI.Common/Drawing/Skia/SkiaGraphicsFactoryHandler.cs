@@ -20,12 +20,6 @@ namespace Alternet.UI
         public virtual bool IsOpenGLAvailable => false;
 
         /// <inheritdoc/>
-        public virtual IPenHandler CreatePenHandler(Pen pen)
-        {
-            return new PlessPenHandler(pen);
-        }
-
-        /// <inheritdoc/>
         public virtual IFontFactoryHandler CreateFontFactoryHandler()
         {
             return new SkiaFontFactoryHandler();

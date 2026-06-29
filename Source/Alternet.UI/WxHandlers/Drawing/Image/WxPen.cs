@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI.Native
 {
-    internal partial class Pen : Alternet.Drawing.IPenHandler
+    internal partial class Pen
     {
         public void Update(Alternet.Drawing.Pen pen)
         {
