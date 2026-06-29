@@ -122,79 +122,39 @@ namespace ControlsSample
             return newColIndex;
         }
 
-        private void AddItems(int count)
-        {
-            /*
-            if (listView == null)
-                return;
-
-            listView.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    var ix = GenItemIndex();
-                    listView.Items.Add(
-                        new ListViewItem(new[] {
-                            "Item " + ix,
-                            "Some Info " + ix
-                        }, i % 4));
-                }
-            }
-            finally
-            {
-                listView.EndUpdate();
-            }
-            */
-        }
-
-        private void Log(string s)
-        {
-            App.Log(s);
-        }
-
         private void Button_SelectionChanged(object? sender, EventArgs e)
         {
-            /*
-            var i = listView.SelectedIndices.Count > 100;
+            var i = listView.ListBox.SelectedIndices.Count > 100;
             string s = i ? "too many items" :
-                string.Join(",", listView.SelectedIndices);
+                string.Join(",", listView.ListBox.SelectedIndices);
             Log($"ListView: SelectedIndices: ({s})");
 
-            if (listView.SelectedItem != null)
-                Log($"ListView: SelectedItem.Index: {listView.SelectedItem.Index}");
-            */
+            if (listView.ListBox.SelectedItem != null)
+                Log($"ListView: SelectedItem.Index: {listView.ListBox.SelectedIndex}");
         }
 
         private void AllowMultipleSelectionCheckBox_CheckedChanged(
             object? sender, EventArgs e)
         {
-            /*
             if (listView is null)
                 return;
-            listView.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ?
-                ListViewSelectionMode.Multiple : ListViewSelectionMode.Single;
-            */
+            listView.ListBox.SelectionMode = allowMultipleSelectionCheckBox.IsChecked ?
+                ListBoxSelectionMode.Multiple : ListBoxSelectionMode.Single;
         }
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            /*
-            var selectedIndex = listView.SelectedIndex ?? -1;
-            listView.RemoveSelectedItems();
+            var selectedIndex = listView.ListBox.SelectedIndex ?? -1;
+            listView.RemoveSelected();
             if (listView.Items.Count > 0 && selectedIndex >= 0)
-                listView.SelectedIndex =
+                listView.ListBox.SelectedIndex =
                     Math.Min(selectedIndex, listView.Items.Count - 1);
-            */
         }
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            /*
-            var item = new ListViewItem("Item " + GenItemIndex(), 1);
-            listView.Items.Add(item);
-            item.EnsureVisible();
-            */
+            ListControlUtils.AddTestItemsWithColumns(listView.RootItem, 1, false);
+            listView.ListBox.SelectLastItemAndScroll();
         }
 
         /*
@@ -248,20 +208,14 @@ namespace ControlsSample
             */
         }
 
-        /*
-        private ListViewItem? GetLastItem()
+        private TreeViewItem? GetLastItem()
         {
             return listView.Items.LastOrDefault();
         }
-        */
 
-        private void EnsureLastItemVisibleButton_Click(
-            object? sender,
-            System.EventArgs e)
+        private void EnsureLastItemVisibleButton_Click(object? sender, System.EventArgs e)
         {
-            /*
-            GetLastItem()?.EnsureVisible();
-            */
+            listView.ListBox.ScrollToLastRow();
         }
 
         private void HasBorderButton_Click(object sender, System.EventArgs e)
@@ -321,27 +275,20 @@ namespace ControlsSample
 
         private void ModifyLastItemButton_Click(object? sender, System.EventArgs e)
         {
-            /*
             var item = GetLastItem();
             if (item != null)
             {
                 item.EnsureVisible();
 
-                var imageIndex = item.ImageIndex + 1;
-                if (imageIndex >= listView.SmallImageList!.Images.Count)
-                    imageIndex = 0;
-
-                item.ImageIndex = imageIndex;
-
                 var i = 0;
                 foreach (var cell in item.Cells)
                 {
                     cell.Text += i.ToString();
-                    cell.ImageIndex = imageIndex;
                     i++;
                 }
+
+                listView.Invalidate();
             }
-            */
         }
 
         private void AddLastItemSiblingButton_Click(
@@ -370,27 +317,22 @@ namespace ControlsSample
 
         private void AddColumnButton_Click(object? sender, System.EventArgs e)
         {
-            /*
-            listView.Columns.Add(
-                new ListViewColumn($"Column {GenColIndex()}"));
-            */
+            listView.AddColumn($"Column {GenColIndex()}", 100);
         }
 
         private void ModifyColumnTitleButton_Click(
             object? sender,
             System.EventArgs e)
         {
-            /*
-            foreach (var column in listView.Columns)
-                column.Title += column.Index;
-            */
+            foreach (var column in listView.Header.ColumnControls)
+            {
+                column.Text += "A";
+            }
         }
 
         private void ColumnHeaderVisibleCheckBox_CheckedChanged(object? sender, System.EventArgs e)
         {
-            /*
-            listView.ColumnHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
-            */
+            listView.IsHeaderVisible = columnHeaderVisibleCheckBox.IsChecked;
         }
     }
 }
