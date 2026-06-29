@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    internal static partial class ControlsSampleUtils
+    public static partial class ControlsSampleUtils
     {
         private static bool cmdLineNoMfcDedug = false;
 

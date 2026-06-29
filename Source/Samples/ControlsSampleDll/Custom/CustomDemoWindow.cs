@@ -135,8 +135,11 @@ namespace Alternet.UI
             pageContainer?.SetDebugColors();
         }
 
-        public void AddPage(string title, Func<AbstractControl> action)
+        public void AddPage(string title, Func<AbstractControl>? action)
         {
+            if (action is null)
+                return;
+
             if (DebugUtils.DebugLoading)
             {
                 LogUtils.LogToFile($"AddPage {title}");

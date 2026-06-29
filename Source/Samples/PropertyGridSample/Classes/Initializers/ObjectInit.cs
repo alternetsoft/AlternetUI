@@ -164,13 +164,6 @@ Environment.NewLine + Environment.NewLine +
                 InitVirtualTreeControl(treeView);
             });
 
-            Actions.Add(typeof(ListView), (c) =>
-            {
-                ListView listView = (c as ListView)!;
-                listView.SuggestedSize = DefaultListSize;
-                InitListView(listView);
-            });
-
             Actions.Add(typeof(Panel), InitPanel);
 
             Actions.Add(typeof(ResizableWindowBorder), (c) =>
@@ -603,57 +596,6 @@ Environment.NewLine + Environment.NewLine +
 
             contextMenu.Items.Add(menuItem1);
             contextMenu.Items.Add(menuItem2);
-        }
-
-        public static void InitListView(ListView listView)
-        {
-            var imageLists = LoadImageLists();
-            listView.HorizontalAlignment = HorizontalAlignment.Stretch;
-            listView.SmallImageList = imageLists.Small;
-            listView.LargeImageList = imageLists.Large;
-
-            AddDefaultItems();
-
-            void InitializeColumns()
-            {
-                listView?.Columns.Add(new ListViewColumn("Column One"));
-                listView?.Columns.Add(new ListViewColumn("Column Two"));
-            }
-
-            void AddDefaultItems()
-            {
-                listView.View = ListViewView.Details;
-                InitializeColumns();
-                AddItems(50);
-                foreach (var column in listView!.Columns)
-                    column.WidthMode = ListViewColumnWidthMode.AutoSize;
-            }
-
-            void AddItems(int count)
-            {
-                if (listView == null)
-                    return;
-
-                listView.BeginUpdate();
-                try
-                {
-                    for (int i = 0; i < count; i++)
-                    {
-                        var ix = GenItemIndex();
-                        listView.Items.Add(
-                            new ListViewItem(new[] {
-                            "Item " + ix,
-                            "Some Info " + ix
-                            }, i % 4));
-                    }
-                }
-                finally
-                {
-                    listView.EndUpdate();
-                }
-            }
-
-
         }
 
         public static void InitVirtualTreeControl(StdTreeView control)

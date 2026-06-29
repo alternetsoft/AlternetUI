@@ -331,20 +331,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Edits <see cref="ListView.Columns"/> with list editor.
-        /// </summary>
-        /// <param name="control">Control which columns will be edited.</param>
-        public static void EditColumnsWithListEditor(ListView control) =>
-            EditPropertyWithListEditor(control, nameof(ListView.Columns));
-
-        /// <summary>
-        /// Edits <see cref="ListView.Items"/> with list editor.
-        /// </summary>
-        /// <param name="control">Control which items will be edited.</param>
-        public static void EditItemsWithListEditor(ListView control) =>
-            EditPropertyWithListEditor(control, nameof(ListView.Items));
-
-        /// <summary>
         /// Edits <see cref="ToolBar.Panels"/> with list editor.
         /// </summary>
         /// <param name="control">Control which items will be edited.</param>

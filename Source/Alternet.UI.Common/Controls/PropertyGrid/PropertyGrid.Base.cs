@@ -127,6 +127,7 @@ namespace Alternet.UI
                 nameof(ImageSet.Images),
                 null);*/
 
+            /*
             RegisterCollectionEditor(
                 typeof(ListView),
                 nameof(ListView.Items),
@@ -141,6 +142,7 @@ namespace Alternet.UI
                 typeof(ListViewItem),
                 nameof(ListViewItem.Cells),
                 typeof(ListEditSourceForListViewCell));
+            */
 
             RegisterCollectionEditor(
                 typeof(VirtualListBox),

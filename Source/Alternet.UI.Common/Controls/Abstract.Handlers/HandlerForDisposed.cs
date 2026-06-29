@@ -13,7 +13,6 @@ namespace Alternet.UI
     /// </summary>
     public class HandlerForDisposed : PlessControlHandler,
         ICalendarHandler,
-        IListViewHandler,
         IRichTextBox,
         IScrollBarHandler,
         ITextBoxHandler,
@@ -122,8 +121,6 @@ namespace Alternet.UI
         public long? FocusedItemIndex { get; set; }
 
         public bool AllowLabelEdit { get; set; }
-
-        public ListViewItem? TopItem { get; }
 
         public ListViewGridLinesDisplayMode GridLinesDisplayMode { get; set; }
 
@@ -1837,11 +1834,6 @@ namespace Alternet.UI
         }
 
         public long XYToPosition(long x, long y)
-        {
-            return default;
-        }
-
-        ListViewHitTestInfo IListViewHandler.HitTest(PointD point)
         {
             return default;
         }

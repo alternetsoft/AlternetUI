@@ -127,7 +127,7 @@ namespace ControlsSample
                 AddPage("ListBoxes", CreateListControlsPage);
                 AddPage("Buttons", CreateButtonsPage);
                 AddPage("TreeView", CreateTreeViewPage);
-                AddPage("ListView", CreateListViewPage);
+                AddPage("ListView", null);
                 AddPage("DateTime", CreateDateTimePage);
                 AddPage("WebBrowser", CreateWebBrowserPage);
                 AddPage("Number", CreateNumericInputPage);
@@ -294,7 +294,6 @@ namespace ControlsSample
         }
 
         AbstractControl CreateTreeViewPage() => new TreeViewPage();
-        AbstractControl CreateListViewPage() => new ListViewPage();
         AbstractControl CreateTabControlPage() => new TabControlPage();
         AbstractControl CreateNumericInputPage() => new NumericInputPage();
         

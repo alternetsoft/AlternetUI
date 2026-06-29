@@ -9,7 +9,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Base class with properties and methods common to all control items like
-    /// <see cref="TreeViewItem"/>, <see cref="ListViewItem"/> and <see cref="ListControlItem"/>.
+    /// <see cref="TreeViewItem"/> and <see cref="ListControlItem"/>.
     /// </summary>
     public partial class BaseControlItem : DisposableObject
     {

@@ -8,17 +8,17 @@ using static Alternet.UI.ControlsSampleUtils;
 
 namespace ControlsSample
 {
-    internal partial class ListViewPage : Panel
+    internal partial class NativeListViewPage : Panel
     {
         private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
         private int newColIndex = 2;
 
-        static ListViewPage()
+        static NativeListViewPage()
         {
         }
 
-        public ListViewPage()
+        public NativeListViewPage()
         {
             InitializeComponent();
             listView.SelectionMode = ListViewSelectionMode.Multiple;
@@ -64,12 +64,12 @@ namespace ControlsSample
 
         private void EditItemsButton_Click(object? sender, System.EventArgs e)
         {
-            DialogFactory.EditItemsWithListEditor(listView);
+            /* DialogFactory.EditItemsWithListEditor(listView); */
         }
 
         private void EditColumnsButton_Click(object? sender, System.EventArgs e)
         {
-            DialogFactory.EditColumnsWithListEditor(listView);
+            /* DialogFactory.EditColumnsWithListEditor(listView);*/
         }
 
         private void InitializeColumns()
@@ -82,7 +82,7 @@ namespace ControlsSample
         {
             listView!.View = ListViewView.Details;
 
-            PropertyGridSample.ObjectInit.InitListView(listView);
+            NativeControlsRegistration.InitListView(listView);
 
             listView.Columns[0].WidthMode = ListViewColumnWidthMode.FixedInPercent;
             listView.Columns[0].Width = 40;

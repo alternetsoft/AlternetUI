@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI;
 
 using PropertyGridSample;
@@ -10,6 +11,127 @@ namespace ControlsSample
 {
     public static class NativeControlsRegistration
     {
+        private static int counter = 0;
+
+        /*
+        public static void InitTestsListView()
+        {
+            AddControlAction<ListView>("Clear Columns", (listView) => listView.Columns.Clear());
+            AddControlAction<ListView>("Add items with svg images", TestListViewAddSvgImages);
+            AddControlAction<ListView>("Clear", (listView) => listView.Clear());
+            AddControlAction<ListView>("Remove All", (listView) => listView.RemoveAll());
+            AddControlAction<ListView>(
+                "View = Details",
+                (listView) => listView.View = ListViewView.Details);
+            AddControlAction<ListView>(
+                "View = SmallIcon",
+                (listView) => listView.View = ListViewView.SmallIcon);
+            AddControlAction<ListView>(
+                "View = List",
+                (listView) => listView.View = ListViewView.List);
+            AddControlAction<ListView>(
+                "Add Item",
+                (listView) => listView.Items.Add(new($"Item {counter++}", 1)));
+            AddControlAction<ListView>(
+                "Add Column",
+                (listView) => listView.Columns.Add(new($"Column {counter++}")));
+        }
+        */
+
+        public static void TestListViewAddSvgImages(ListView control)
+        {
+            var imgError = KnownColorSvgImages.ImgError;
+            var imgInfo = KnownColorSvgImages.ImgInformation;
+            var imgWarning = KnownColorSvgImages.ImgWarning;
+
+            var size = ImageList.GetSuggestedSize(control.ScaleFactor);
+            ImageList images = new();
+            images.ImageSize = size;
+
+            images.AddSvg(imgError);
+            images.AddSvg(imgInfo);
+            images.AddSvg(imgWarning);
+
+            control.Clear();
+
+            control.View = ListViewView.Details;
+            control.SmallImageList = images;
+
+            ListViewColumn column1 = new("Name");
+            column1.WidthMode = ListViewColumnWidthMode.AutoSize;
+
+            ListViewColumn column2 = new("Description");
+            column1.WidthMode = ListViewColumnWidthMode.AutoSizeHeader;
+
+            control.Columns.Add(column1);
+            control.Columns.Add(column2);
+
+            control.DoInsideUpdate(() =>
+            {
+
+                ListViewItem item1 = new("Error image", 0);
+                ListViewItem item2 = new("Information image", 1);
+                ListViewItem item3 = new("Warning image", 2);
+                control.Items.Add(item1);
+                control.Items.Add(item2);
+                control.Items.Add(item3);
+            });
+
+            column1.RaiseChanged();
+            column2.RaiseChanged();
+        }
+
+        public static void InitListView(ListView listView)
+        {
+            var imageLists = ObjectInit.LoadImageLists();
+            listView.HorizontalAlignment = HorizontalAlignment.Stretch;
+            listView.SmallImageList = imageLists.Small;
+            listView.LargeImageList = imageLists.Large;
+
+            AddDefaultItems();
+
+            void InitializeColumns()
+            {
+                listView?.Columns.Add(new ListViewColumn("Column One"));
+                listView?.Columns.Add(new ListViewColumn("Column Two"));
+            }
+
+            void AddDefaultItems()
+            {
+                listView.View = ListViewView.Details;
+                InitializeColumns();
+                AddItems(50);
+                foreach (var column in listView!.Columns)
+                    column.WidthMode = ListViewColumnWidthMode.AutoSize;
+            }
+
+            void AddItems(int count)
+            {
+                if (listView == null)
+                    return;
+
+                listView.BeginUpdate();
+                try
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        var ix = ObjectInit.GenItemIndex();
+                        listView.Items.Add(
+                            new ListViewItem(new[] {
+                            "Item " + ix,
+                            "Some Info " + ix
+                            }, i % 4));
+                    }
+                }
+                finally
+                {
+                    listView.EndUpdate();
+                }
+            }
+
+
+        }
+
         public static void ToolBoxAdd<T>()
         {
             PropertyGridSample.MainControl.LimitedTypesStatic.Add(typeof(T));
@@ -28,6 +150,7 @@ namespace ControlsSample
             ToolBoxAdd<ListBox>();
             ToolBoxAdd<CheckedListBox>();
             ToolBoxAdd<TreeView>();
+            ToolBoxAdd<ListView>();
 
             /*
             This is commented out because Slider control doesn't work property on Windows when dark mode is enabled.
@@ -43,6 +166,13 @@ namespace ControlsSample
             ObjectInit.Actions.Add(typeof(CheckBox), (c) =>
             {
                 (c as CheckBox)!.Text = "CheckBox";
+            });
+
+            ObjectInit.Actions.Add(typeof(ListView), (c) =>
+            {
+                ListView listView = (c as ListView)!;
+                listView.SuggestedSize = ObjectInit.DefaultListSize;
+                InitListView(listView);
             });
 
             ObjectInit.Actions.Add(typeof(RadioButton), (c) =>

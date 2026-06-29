@@ -1010,7 +1010,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateListViewHandler(this);
+            return new WxListViewHandler();
         }
 
         /// <summary>

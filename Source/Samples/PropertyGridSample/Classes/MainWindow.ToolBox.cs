@@ -58,7 +58,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<TabControl>();
                 ToolBoxAdd<LinkLabel>();
                 ToolBoxAdd<StdListBox>();
-                ToolBoxAdd<ListView>();
                 ToolBoxAdd<MultilineTextBox>();
                 ToolBoxAdd<NumericUpDown>();
                 ToolBoxAdd<Panel>();
