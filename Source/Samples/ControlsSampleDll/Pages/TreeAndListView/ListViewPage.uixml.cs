@@ -10,7 +10,6 @@ namespace ControlsSample
 {
     internal partial class ListViewPage : Panel
     {
-        private bool? slowSettingsEnabled;
         private int newItemIndex = 0;
         private int newColIndex = 2;
 

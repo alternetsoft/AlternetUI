@@ -3,12 +3,7 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         xmlns:local="clr-namespace:ControlsSample;assembly=ControlsSample"
          VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-         Name="mainControl" Padding="10,0,10,0" >
-
-  <Panel VerticalAlignment="Stretch"
-              HorizontalAlignment="Stretch">
-
-    <HorizontalStackPanel>
+         Name="mainControl" Padding="10,0,10,0" Layout="Horizontal">
 
       <!-- ========================= -->
       <StdListView SuggestedWidth="300" Name="listView"/>
@@ -22,57 +17,56 @@
 
           <HorizontalStackPanel>
             <StdButton Text="Add" Name="addItemButton" IsTextLocalized="true"
-                    Margin="0,3,0,0" Click="AddItemButton_Click"/>
+                    Margin="0,3,0,0" Click="AddItemButton_Click" IsEnabled="false"/>
             <StdButton Text="Remove" Name="removeItemButton" IsTextLocalized="true"
-                    Margin="3,3,0,0" Click="RemoveItemButton_Click"/>
+                    Margin="3,3,0,0" Click="RemoveItemButton_Click" IsEnabled="false"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
             <StdButton Text="Add 1000" Name="addManyItemsButton"
                     Margin="0,3,0,0" IsTextLocalized="true"
-                    Click="AddManyItemsButton_Click"/>
+                    Click="AddManyItemsButton_Click" IsEnabled="false"/>
             <StdButton Text="Clear" Name="ClearButton" Margin="3,3,0,0"
-                    Click="ClearButton_Click" IsTextLocalized="true"/>
+                    Click="ClearButton_Click" IsTextLocalized="true" IsEnabled="false"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
             <StdButton Name="editItemsButton" Text="Items..." Margin="0,3,0,0"
-                    Click="EditItemsButton_Click" IsTextLocalized="true"/>
+                    Click="EditItemsButton_Click" IsTextLocalized="true" IsEnabled="false"/>
             <StdButton Name="editColumnsButton" Text="Columns..." Margin="3,3,0,0"
-                    Click="EditColumnsButton_Click" IsTextLocalized="true"/>
+                    Click="EditColumnsButton_Click" IsTextLocalized="true" IsEnabled="false"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
             <StdButton Text="Add Column" Name="AddColumnButton" Margin="0,3,0,0"
-                    Click="AddColumnButton_Click" Visible="false" IsTextLocalized="true"/>
+                    Click="AddColumnButton_Click" Visible="false" IsTextLocalized="true" IsEnabled="false" />
             <StdButton Text="Modify Column" Name="ModifyColumnTitleButton" IsTextLocalized="true"
-                Margin="3,3,0,0" Click="ModifyColumnTitleButton_Click" Visible="false"/>
+                Margin="3,3,0,0" Click="ModifyColumnTitleButton_Click" Visible="false" IsEnabled="false" />
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>
             <StdButton Text="Edit Selected" IsTextLocalized="true"
                     Name="beginSelectedLabelEditingButton"
-                    Margin="0,3,0,0"
-                    Click="BeginSelectedLabelEditingButton_Click"
-                    Enabled="true" />
+                    Margin="0,3,0,0" IsEnabled="false"
+                    Click="BeginSelectedLabelEditingButton_Click"/>
           </HorizontalStackPanel>
 
           <Panel  Padding="5" Margin="0,10,0,0" Layout="Vertical">
             <Label Text="Last Item:" Margin="0,0,0,10" IsTextLocalized="true"/>
             <HorizontalStackPanel  Margin="5,0,0,0">
               <StdButton Text="Show" Margin="0,0,0,0" IsTextLocalized="true"
-                      Name="ensureLastItemVisibleButton"
+                      Name="ensureLastItemVisibleButton" IsEnabled="false"
                       Click="EnsureLastItemVisibleButton_Click" />
-              <StdButton Text="Modify" Name="modifyLastItemButton"
+              <StdButton Text="Modify" Name="modifyLastItemButton" IsEnabled="false"
                       Margin="3,0,0,0" IsTextLocalized="true"
                   Click="ModifyLastItemButton_Click" />
             </HorizontalStackPanel>
             <HorizontalStackPanel Margin="5,0,0,0">
               <StdButton Text="Focus" Name="focusLastItemButton" IsTextLocalized="true"
-                      Margin="0,3,0,0"
+                      Margin="0,3,0,0" IsEnabled="false"
                   Click="FocusLastItemButton_Click" />
               <StdButton Text="Add Sibling" Name="addLastItemSiblingButton" IsTextLocalized="true"
-                      Margin="3,3,0,0" Enabled="true"
+                      Margin="3,3,0,0" Enabled="true" IsEnabled="false"
                       Click="AddLastItemSiblingButton_Click" />
             </HorizontalStackPanel>
           </Panel>
@@ -84,30 +78,30 @@
                             Visible="false" Padding="10" IsTitleLocalized="true">
           <StdCheckBox Text="Multiple Selection" IsTextLocalized="true"
                     Name="allowMultipleSelectionCheckBox"
-                    IsChecked="True" Margin="0,5,0,0"
+                    IsChecked="True" Margin="0,5,0,0" IsEnabled="false"
                     CheckedChanged= "AllowMultipleSelectionCheckBox_CheckedChanged"/>
           <StdCheckBox Text="Allow Label Edit" Name="allowLabelEditingCheckBox"
-                    Margin="0,5,0,0" IsTextLocalized="true"
+                    Margin="0,5,0,0" IsTextLocalized="true" IsEnabled="false"
                     CheckedChanged= "AllowLabelEditingCheckBox_CheckedChanged"
                     IsChecked="True" />
           <StdCheckBox Text="Column Header" IsTextLocalized="true"
               Name="columnHeaderVisibleCheckBox" Margin="0,5,0,0"
-              IsChecked="True"
+              IsChecked="True" IsEnabled="false"
               CheckedChanged="ColumnHeaderVisibleCheckBox_CheckedChanged" />
 
           <Label Text="View:" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"/>
-          <EnumPicker Name="viewComboBox" Margin="0,3,0,0"
+          <EnumPicker Name="viewComboBox" Margin="0,3,0,0" IsEnabled="false"
                     ValueChanged="ViewComboBox_SelectedItemChanged"/>
 
           <Label Text="Lines:" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"/>
           <EnumPicker Name="gridLinesComboBox"
-                    Margin="0,3,0,0"
+                    Margin="0,3,0,0" IsEnabled="false"
                     ValueChanged="GridLinesComboBox_SelectedItemChanged"/>
 
           <Label Text="Column width:" VerticalAlignment="Center"
                  Margin="0,5,0,0" IsTextLocalized="true"/>
           <EnumPicker Name="columnWidthModeComboBox"
-                    Margin="0,3,0,10"
+                    Margin="0,3,0,10" IsEnabled="false"
                     ValueChanged="ColumnWidthModeComboBox_SelectedItemChanged"/>
         </VerticalStackPanel>
         <!-- ========================= -->
@@ -117,27 +111,25 @@
           <TabControl Margin="0,5,0,5" >
             <VerticalStackPanel Title="Cancel Events" Padding="5"  >
               <StdCheckBox Text="Before Label Edit" IsTextLocalized="true"
-                        Name="cancelBeforeLabelEditEventsCheckBox"
+                        Name="cancelBeforeLabelEditEventsCheckBox" IsEnabled="false"
                         Margin="5" IsChecked="False" />
               <StdCheckBox Text="After Label Edit" IsTextLocalized="true"
-                        Name="cancelAfterLabelEditEventsCheckBox"
+                        Name="cancelAfterLabelEditEventsCheckBox" IsEnabled="false"
                         Margin="5" IsChecked="False" />
             </VerticalStackPanel>
           </TabControl>
 
-          <StdButton Text="Log Selected" Margin="0,5,0,0" IsTextLocalized="true"
+          <StdButton Text="Log Selected" Margin="0,5,0,0" IsTextLocalized="true" IsEnabled="false"
                   Name="viewSelectedButton" Click="Button_SelectionChanged"/>
 
           <StdButton Text="Has Border" Margin="0,5,0,0" Name="hasBorderButton" IsTextLocalized="true"
                   Click="HasBorderButton_Click"/>
 
           <StdCheckBox Text="Log Bounds on Click" IsTextLocalized="true"
-                    Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0"
+                    Name="logItemBoundsOnClickCheckBox" Margin="0,5,0,0" IsEnabled="false"
               IsChecked="False" />
 
         </VerticalStackPanel>
         <!-- ========================= -->
       </TabControl>
-    </HorizontalStackPanel>
-  </Panel>
 </Panel>
