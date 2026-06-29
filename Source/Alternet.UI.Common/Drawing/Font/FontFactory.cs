@@ -28,7 +28,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static IFontFactoryHandler Handler
         {
-            get => handler ??= GraphicsFactory.Handler.CreateFontFactoryHandler();
+            get => handler ??= App.Handler.CreateFontFactoryHandler();
 
             set => handler = value;
         }

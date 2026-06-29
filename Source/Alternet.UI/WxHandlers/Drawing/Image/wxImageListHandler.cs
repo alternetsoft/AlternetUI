@@ -31,7 +31,7 @@ namespace Alternet.UI.Native
 
         public bool Add(Alternet.Drawing.Image item)
         {
-            AddImage((UI.Native.Image)item.Handler);
+            AddImage(UI.Application.ToNative(item));
             return true;
         }
     }

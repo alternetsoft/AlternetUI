@@ -47,12 +47,6 @@ namespace Alternet.Drawing
         public abstract object NativeObject { get; }
 
         /// <summary>
-        /// Creates <see cref="IGraphicsPathHandler"/> provider.
-        /// </summary>
-        /// <returns>The <see cref="IGraphicsPathHandler"/> provider.</returns>
-        public abstract IGraphicsPathHandler CreateGraphicsPathHandler();
-
-        /// <summary>
         /// Draws the specified <see cref="SKBitmap"/>, using its original size, at the specified location.
         /// </summary>
         /// <param name="bitmap">The <see cref="SKBitmap"/> to draw.</param>
@@ -65,7 +59,8 @@ namespace Alternet.Drawing
         /// <param name="pen">The <see cref="Pen"/> used to draw the rounded rectangle.</param>
         /// <param name="brush">The <see cref="Brush"/> used to fill the rounded rectangle.</param>
         /// <param name="rectangle">The <see cref="RectD"/> that bounds the rounded rectangle.</param>
-        /// <param name="cornerRadius">The <see cref="Coord"/> that represents the corner radius of the rounded rectangle.</param>
+        /// <param name="cornerRadius">The <see cref="Coord"/> that represents
+        /// the corner radius of the rounded rectangle.</param>
         /// <remarks>
         /// This method works faster than fill and then draw.
         /// </remarks>

@@ -163,12 +163,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override IGraphicsPathHandler CreateGraphicsPathHandler()
-        {
-            return new PlessGraphicsPathHandler();
-        }
-
-        /// <inheritdoc/>
         public override void Ellipse(Pen pen, Brush brush, RectD rectangle)
         {
         }

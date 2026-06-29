@@ -28,11 +28,8 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public GraphicsPath(Graphics drawingContext)
+        public GraphicsPath()
         {
-            if (drawingContext is null)
-                throw new ArgumentNullException(nameof(drawingContext));
-            Handler = drawingContext.CreateGraphicsPathHandler();
         }
 
         /// <summary>
@@ -306,7 +303,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IGraphicsPathHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateGraphicsPathHandler();
+            return new SkiaGraphicsPathHandler();
         }
     }
 }

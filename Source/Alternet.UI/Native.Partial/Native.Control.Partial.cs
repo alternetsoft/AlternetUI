@@ -13,7 +13,7 @@ namespace Alternet.UI.Native
 
         private readonly Alternet.Skia.SkiaSurfaceOnMswDib dibSurface = new();
 
-        private Drawing.DynamicBitmap? dynamicBitmap;
+        private Native.Image.DynamicBitmap? dynamicBitmap;
 
         public AbstractControl? EventUIFocusedControl
         {
@@ -368,7 +368,7 @@ namespace Alternet.UI.Native
             var scaleFactor = uiControl.ScaleFactor;
             var clientRectI = clientRect.PixelFromDip(scaleFactor);
 
-            Drawing.DynamicBitmap.CreateOrUpdate(
+            Native.Image.DynamicBitmap.CreateOrUpdate(
                 ref dynamicBitmap,
                 clientRect.Size,
                 scaleFactor,

@@ -260,7 +260,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IImageListHandler? CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateImageListHandler();
+            return App.Handler.CreateImageListHandler();
         }
 
         /// <summary>

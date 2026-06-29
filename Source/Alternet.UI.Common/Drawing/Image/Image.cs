@@ -83,7 +83,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="handler">Image handler.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected Image(IImageHandler handler)
+        public Image(IImageHandler handler)
         {
             Handler = handler;
         }
@@ -533,17 +533,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Creates images with screen pixels.
-        /// </summary>
-        /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Image? FromScreen()
-        {
-            var handler = GraphicsFactory.Handler.CreateImageHandlerFromScreen();
-            return new Image(handler);
-        }
-
-        /// <summary>
         /// Creates an <see cref="Image" /> from the specified data stream.
         /// </summary>
         /// <param name="stream">
@@ -679,21 +668,9 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Bitmap FromSkia(SKBitmap bitmap)
         {
-            if (App.IsMaui)
-            {
-                var handler = new SkiaImageHandler(bitmap);
-                var result = new Bitmap(handler);
-                return result;
-            }
-            else
-            {
-                if (bitmap.Width == 0 || bitmap.Height == 0)
-                    return new Bitmap();
-
-                var handler = GraphicsFactory.Handler.CreateImageHandler(bitmap.Width, bitmap.Height, bitmap.Pixels);
-                var image = new Bitmap(handler);
-                return image;
-            }
+            var handler = new SkiaImageHandler(bitmap);
+            var result = new Bitmap(handler);
+            return result;
         }
 
         /// <summary>
@@ -1271,7 +1248,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IImageHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateImageHandler();
+            return new SkiaImageHandler();
         }
 
         /// <inheritdoc/>

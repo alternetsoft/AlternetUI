@@ -77,6 +77,36 @@ namespace Alternet.UI
         IKeyboardHandler CreateKeyboardHandler();
 
         /// <summary>
+        /// Gets a value indicating whether OpenGL is available on the current system.
+        /// </summary>
+        public bool IsOpenGLAvailable { get; }
+
+        /// <summary>
+        /// Creates <see cref="IFontFactoryHandler"/> provider.
+        /// </summary>
+        /// <returns></returns>
+        IFontFactoryHandler CreateFontFactoryHandler();
+
+        /// <summary>
+        /// Gets <see cref="ImageBitsFormat"/> for the specified <see cref="ImageBitsFormatKind"/>.
+        /// </summary>
+        /// <param name="kind">Image format kind.</param>
+        /// <returns></returns>
+        ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind);
+
+        /// <summary>
+        /// Creates <see cref="IImageListHandler"/> provider.
+        /// </summary>
+        /// <returns></returns>
+        IImageListHandler? CreateImageListHandler();
+
+        /// <summary>
+        /// Creates <see cref="IconSet"/> handler.
+        /// </summary>
+        /// <returns></returns>
+        IImageContainer? CreateIconSetHandler();
+
+        /// <summary>
         /// Gets attribute value. Returns <c>null</c> if there is no such attribute.
         /// </summary>
         /// <param name="name">Attribute name.</param>
@@ -189,12 +219,6 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="App.ProcessPendingEvents"/>
         void ProcessPendingEvents();
-
-        /// <summary>
-        /// Creates <see cref="IGraphicsFactoryHandler"/> implementation specific to the platform.
-        /// </summary>
-        /// <returns></returns>
-        IGraphicsFactoryHandler CreateGraphicsFactoryHandler();
 
         /// <summary>
         /// Creates <see cref="IPrintingHandler"/> implementation specific to the platform.

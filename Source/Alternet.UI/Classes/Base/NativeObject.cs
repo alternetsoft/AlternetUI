@@ -6,12 +6,10 @@ using System.Security;
 
 namespace Alternet.UI.Native
 {
-    internal class NativeObject : BaseObject, IDisposable
+    internal class NativeObject : DisposableObject
     {
         private static readonly Dictionary<IntPtr, NativeObject>
             InstancesByNativePointers = new();
-
-        private bool disposeHandle = true;
 
         protected NativeObject()
         {
@@ -21,13 +19,6 @@ namespace Alternet.UI.Native
         {
             SetNativePointer(nativePointer);
         }
-
-        ~NativeObject()
-        {
-            Dispose(disposing: false);
-        }
-
-        public bool IsDisposed { get; private set; }
 
         public IntPtr NativePointer { get; private set; }
 
@@ -62,16 +53,10 @@ namespace Alternet.UI.Native
             return (T)w;
         }
 
-        public void Dispose()
-        {
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-
         internal void SetNativePointerWeak(IntPtr nativePointer)
         {
             NativePointer = nativePointer;
-            disposeHandle = false;
+            DisposeHandle = false;
         }
 
         protected static void AddRefNativeObjectPointer(IntPtr value)
@@ -112,38 +97,13 @@ namespace Alternet.UI.Native
             NativePointer = value;
         }
 
-        /// <summary>
-        /// Override to dispose managed resources.
-        /// Here we dispose all used object references.
-        /// </summary>
-        protected virtual void DisposeManaged()
+        protected override void DisposeUnmanaged()
         {
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
+            if (NativePointer != IntPtr.Zero && DisposeHandle)
             {
-                if (disposing)
-                {
-                    DisposeManaged();
-                }
-
-                if (NativePointer != IntPtr.Zero && disposeHandle)
-                {
-                    ReleaseNativeObjectPointer(NativePointer);
-                    SetNativePointer(IntPtr.Zero);
-                }
-
-                IsDisposed = true;
+                ReleaseNativeObjectPointer(NativePointer);
+                SetNativePointer(IntPtr.Zero);
             }
-        }
-
-        [Conditional("DEBUG")]
-        protected void CheckDisposed()
-        {
-            if (IsDisposed)
-                throw new ObjectDisposedException(null);
         }
 
         [SuppressUnmanagedCodeSecurity]

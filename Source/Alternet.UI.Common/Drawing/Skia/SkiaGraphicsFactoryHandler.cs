@@ -14,13 +14,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides a factory for creating graphics-related handlers and objects using SkiaSharp.
     /// </summary>
-    /// <remarks>This class serves as an implementation of <see cref="IGraphicsFactoryHandler"/>
-    /// that leverages SkiaSharp for rendering and graphics operations.
-    /// It provides methods to create various graphics
-    /// handlers, such as pens, brushes, images, and regions,
-    /// as well as utilities for working with graphics contexts
-    /// and canvases.</remarks>
-    public partial class SkiaGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
+    internal partial class SkiaGraphicsFactoryHandler : DisposableObject
     {
         /// <inheritdoc/>
         public virtual bool IsOpenGLAvailable => false;
@@ -167,7 +161,10 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IRegionHandler CreateRegionHandler(ReadOnlySpan<PointD> points, FillMode fillMode, float scaleFactor)
+        public virtual IRegionHandler CreateRegionHandler(
+            ReadOnlySpan<PointD> points,
+            FillMode fillMode,
+            float scaleFactor)
         {
             return new SkiaRegionHandler(points, fillMode, scaleFactor);
         }

@@ -11,20 +11,20 @@ using SkiaSharp;
 
 namespace Alternet.Drawing
 {
-    internal class WxGraphicsFactoryHandler : DisposableObject, IGraphicsFactoryHandler
+    internal class WxGraphicsFactoryHandler : DisposableObject
     {
         static WxGraphicsFactoryHandler()
         {
         }
 
-        enum ImageStaticObjectId
+        internal enum ImageStaticObjectId
         {
             NativePixelFormat = 0,
             AlphaPixelFormat = 1,
             GenericPixelFormat = 2,
         };
 
-        enum ImageStaticPropertyId
+        internal enum ImageStaticPropertyId
         {
             BitsPerPixel = 0,
             HasAlpha = 1,
@@ -61,7 +61,7 @@ namespace Alternet.Drawing
             }
         }
 
-        public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
+        public static ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
         {
             switch (kind)
             {

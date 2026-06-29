@@ -404,12 +404,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
-        {
-            return new WxGraphicsFactoryHandler();
-        }
-
-        /// <inheritdoc/>
         public virtual ICaretHandler CreateCaretHandler()
         {
             if (Caret.UseGeneric)
@@ -449,6 +443,8 @@ namespace Alternet.UI
                 return WxMenuFactory.NativeMenu?.GetMacWindowMenuTitleName().ToString();
             }
         }
+
+        bool IApplicationHandler.IsOpenGLAvailable { get; }
 
         /// <inheritdoc/>
         public virtual IControlPainterHandler CreateControlPainterHandler()
@@ -572,6 +568,30 @@ namespace Alternet.UI
 
             var nativeMenu = new WxMainMenu(menuBar.UniqueId.ToString(), menuBar);
             WxMenuFactory.NativeMenu?.MacSetCommonMenuBar(nativeMenu.AsPointer);
+        }
+
+        /// <inheritdoc/>
+        public IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            return new WxFontFactoryHandler();
+        }
+
+        /// <inheritdoc/>
+        ImageBitsFormat IApplicationHandler.GetImageBitsFormat(ImageBitsFormatKind kind)
+        {
+            return WxGraphicsFactoryHandler.GetImageBitsFormat(kind);
+        }
+
+        /// <inheritdoc/>
+        public IImageListHandler? CreateImageListHandler()
+        {
+            return new UI.Native.ImageList();
+        }
+
+        /// <inheritdoc/>
+        public IImageContainer? CreateIconSetHandler()
+        {
+            return new UI.Native.IconSet();
         }
     }
 }

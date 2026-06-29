@@ -13,7 +13,7 @@ namespace Alternet.Drawing
     /// its attributes.
     /// A <see cref="Bitmap"/> is an object used to work with images defined by pixel data.
     /// </summary>
-    public class Bitmap : Image
+    public partial class Bitmap : Image
     {
         private static Bitmap? empty;
 
@@ -24,7 +24,7 @@ namespace Alternet.Drawing
         /// <param name="bitmapType">Type of the bitmap.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Stream stream, BitmapType bitmapType = BitmapType.Any)
-            : base(GraphicsFactory.Handler.CreateImageHandler())
+            : base(new SkiaImageHandler())
         {
             Load(stream, bitmapType);
         }
@@ -36,7 +36,7 @@ namespace Alternet.Drawing
         /// <param name="stream">The data stream used to load the image.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Stream? stream)
-            : base(GraphicsFactory.Handler.CreateImageHandler())
+            : base(new SkiaImageHandler())
         {
             if (stream is null)
                 return;
@@ -82,7 +82,7 @@ namespace Alternet.Drawing
         /// If this parameter is -1, the display depth of the screen is used.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(SizeI size, int depth = 32)
-            : base(GraphicsFactory.Handler.CreateImageHandler(size, depth))
+            : base(new SkiaImageHandler(size, depth))
         {
         }
 
@@ -93,7 +93,7 @@ namespace Alternet.Drawing
         /// <param name="baseUri">Specifies base url if <paramref name="url"/> is not absolute.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(string? url, Uri? baseUri = null)
-            : base(GraphicsFactory.Handler.CreateImageHandler())
+            : base(new SkiaImageHandler())
         {
             if (string.IsNullOrEmpty(url))
                 return;
@@ -136,7 +136,7 @@ namespace Alternet.Drawing
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Image original)
-            : base(GraphicsFactory.Handler.CreateImageHandler(original))
+            : base(new SkiaImageHandler(original))
         {
         }
 
@@ -149,7 +149,7 @@ namespace Alternet.Drawing
         /// size of the new image.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(Image original, SizeI newSize)
-            : base(GraphicsFactory.Handler.CreateImageHandler(original, newSize))
+            : base(new SkiaImageHandler(original, newSize))
         {
         }
 
@@ -162,7 +162,7 @@ namespace Alternet.Drawing
         /// <param name="dc"><see cref="Graphics"/> from which the scaling factor is inherited.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Bitmap(int width, int height, Graphics dc)
-            : base(GraphicsFactory.Handler.CreateImageHandler(width, height, dc))
+            : base(new SkiaImageHandler(width, height, dc))
         {
         }
 

@@ -428,7 +428,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         protected override IPenHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreatePenHandler(this);
+            return new PlessPenHandler(this);
         }
 
         /// <summary>

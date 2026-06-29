@@ -54,6 +54,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual bool IsOpenGLAvailable { get; }
+
+        /// <inheritdoc/>
         public virtual void ExitMainLoop()
         {
             Environment.Exit(0);
@@ -188,12 +191,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <inheritdoc/>
         public virtual void CrtSetDbgFlag(int value)
         {
         }
@@ -237,6 +234,30 @@ namespace Alternet.UI
         public virtual string GetCustomData(string key)
         {
             return string.Empty;
+        }
+
+        /// <inheritdoc/>
+        public IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public ImageBitsFormat GetImageBitsFormat(ImageBitsFormatKind kind)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public IImageListHandler? CreateImageListHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <inheritdoc/>
+        public IImageContainer? CreateIconSetHandler()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -336,7 +336,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IImageContainer? CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateIconSetHandler();
+            return App.Handler.CreateIconSetHandler();
         }
     }
 }

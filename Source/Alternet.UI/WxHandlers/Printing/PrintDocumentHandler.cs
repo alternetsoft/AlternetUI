@@ -100,13 +100,14 @@ namespace Alternet.Drawing.Printing
 
                 var resized = graphics.Bitmap.Resize(imageInfo, sampling);
 
-                var image = (Image)resized;
-
                 /* image.Save("E:\\test.png");*/
 
                 /* SkiaUtils.SaveBitmapToPng(graphics.Bitmap, "E:\\test_skia.png");*/
                 
-                dc.DrawBitmapAtPointI((UI.Native.Image)image.Handler, 0, 0, false);
+                using var nativeImage = new UI.Native.Image();
+                nativeImage.Assign(resized);
+
+                dc.DrawBitmapAtPointI(nativeImage, 0, 0, false);
 
                 graphics.Dispose();
                 graphics = null;

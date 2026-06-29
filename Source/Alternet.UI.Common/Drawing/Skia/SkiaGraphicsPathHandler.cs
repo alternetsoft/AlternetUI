@@ -13,17 +13,14 @@ namespace Alternet.Drawing
     /// </summary>
     public class SkiaGraphicsPathHandler : DisposableObject, IGraphicsPathHandler
     {
-        private readonly SkiaGraphics graphics;
         private readonly SKPath path = new ();
         private FillMode fillMode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaGraphicsPathHandler"/> class.
         /// </summary>
-        /// <param name="graphics">The <see cref="SkiaGraphics"/> instance associated with this path handler.</param>
-        public SkiaGraphicsPathHandler(SkiaGraphics graphics)
+        public SkiaGraphicsPathHandler()
         {
-            this.graphics = graphics;
         }
 
         /// <summary>

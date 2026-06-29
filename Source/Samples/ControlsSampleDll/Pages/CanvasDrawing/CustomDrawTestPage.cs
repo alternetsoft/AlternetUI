@@ -171,7 +171,7 @@ namespace ControlsSample
 
             var pen = penColor.GetAsPen(penWidth);
 
-            using GraphicsPath path = new (g);
+            using GraphicsPath path = new ();
 
             path.AddRectangle(new (20, 20, 100, 60));
             path.AddEllipse(new (150, 50, 120, 80));
@@ -186,7 +186,7 @@ namespace ControlsSample
 
             var brush = fillColor.AsBrush;
 
-            using GraphicsPath path = new(g);
+            using GraphicsPath path = new();
 
             path.AddRectangle(new (20, 20, 100, 60));
             path.AddEllipse(new (150, 50, 120, 80));

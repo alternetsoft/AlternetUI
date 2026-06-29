@@ -18,7 +18,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region()
         {
-            Handler = GraphicsFactory.Handler.CreateRegionHandler();
+            Handler = new SkiaRegionHandler();
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(RectI rect)
         {
-            Handler = GraphicsFactory.Handler.CreateRegionHandler(rect);
+            Handler = new SkiaRegionHandler(rect);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Region(Region region)
         {
-            Handler = GraphicsFactory.Handler.CreateRegionHandler(region);
+            Handler = new SkiaRegionHandler(region);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Alternet.Drawing
             FillMode fillMode = FillMode.Alternate,
             float scaleFactor = 1.0f)
         {
-            Handler = GraphicsFactory.Handler.CreateRegionHandler(points, fillMode, scaleFactor);
+            Handler = new SkiaRegionHandler(points, fillMode, scaleFactor);
             this.scaleFactor = scaleFactor;
         }
 
@@ -334,7 +334,7 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override IRegionHandler CreateHandler()
         {
-            return GraphicsFactory.Handler.CreateRegionHandler();
+            return new SkiaRegionHandler();
         }
     }
 }

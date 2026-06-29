@@ -77,22 +77,10 @@ namespace Alternet.Drawing
         private static ImageBitsFormat nativeBitsFormat;
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
-        private static IGraphicsFactoryHandler? handler;
         private static bool? isOpenGLAvailable;
 
         static GraphicsFactory()
         {
-        }
-
-        /// <summary>
-        /// Gets or sets <see cref="IGraphicsFactoryHandler"/> object which is used internally
-        /// to perform all the operations.
-        /// </summary>
-        public static IGraphicsFactoryHandler Handler
-        {
-            get => handler ??= App.Handler.CreateGraphicsFactoryHandler();
-
-            set => handler = value;
         }
 
         /// <summary>
@@ -110,7 +98,7 @@ namespace Alternet.Drawing
                 {
                     try
                     {
-                        isOpenGLAvailable = App.IsWindowsOS && Handler.IsOpenGLAvailable;
+                        isOpenGLAvailable = App.IsWindowsOS && App.Handler is not null && App.Handler.IsOpenGLAvailable;
                     }
                     catch (Exception ex)
                     {
@@ -685,9 +673,9 @@ namespace Alternet.Drawing
             if (imageBitsFormatsLoaded)
                 return;
             imageBitsFormatsLoaded = true;
-            nativeBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Native);
-            alphaBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Alpha);
-            genericBitsFormat = Handler.GetImageBitsFormat(ImageBitsFormatKind.Generic);
+            nativeBitsFormat = App.Handler.GetImageBitsFormat(ImageBitsFormatKind.Native);
+            alphaBitsFormat = App.Handler.GetImageBitsFormat(ImageBitsFormatKind.Alpha);
+            genericBitsFormat = App.Handler.GetImageBitsFormat(ImageBitsFormatKind.Generic);
         }
     }
 }

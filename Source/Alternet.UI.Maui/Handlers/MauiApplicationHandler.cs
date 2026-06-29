@@ -62,6 +62,8 @@ namespace Alternet.UI
             }
         }
 
+        bool IApplicationHandler.IsOpenGLAvailable => false;
+
         /// <summary>
         /// Registers <see cref="Microsoft.Maui.Controls.Application.RequestedThemeChanged"/>
         /// event handler.
@@ -323,12 +325,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IGraphicsFactoryHandler CreateGraphicsFactoryHandler()
-        {
-            return new MauiGraphicsFactoryHandler();
-        }
-
-        /// <inheritdoc/>
         public virtual void CrtSetDbgFlag(int value)
         {
         }
@@ -365,6 +361,27 @@ namespace Alternet.UI
         private static void OnMainDisplayInfoChanged(object? sender, DisplayInfoChangedEventArgs e)
         {
             Display.Reset();
+        }
+
+        /// <inheritdoc/>
+        public virtual IFontFactoryHandler CreateFontFactoryHandler()
+        {
+            return new SkiaFontFactoryHandler();
+        }
+
+        ImageBitsFormat IApplicationHandler.GetImageBitsFormat(ImageBitsFormatKind kind)
+        {
+            throw new NotImplementedException();
+        }
+
+        IImageListHandler? IApplicationHandler.CreateImageListHandler()
+        {
+            return null;
+        }
+
+        IImageContainer? IApplicationHandler.CreateIconSetHandler()
+        {
+            return null;
         }
     }
 }

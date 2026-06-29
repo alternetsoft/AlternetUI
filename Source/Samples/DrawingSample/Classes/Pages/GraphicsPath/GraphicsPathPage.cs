@@ -79,7 +79,7 @@ namespace DrawingSample
 
             foreach (var path in randomArtModel.Paths)
             {
-                using var graphicsPath = new GraphicsPath(dc) { FillMode = PathFillMode };
+                using var graphicsPath = new GraphicsPath() { FillMode = PathFillMode };
 
                 foreach (var segment in path.Segments)
                 {
@@ -116,7 +116,7 @@ namespace DrawingSample
             /*var drawable = DrawableElement.CreateStringsStack([s1, s2, s3], 0, CoordAlignment.Near);
             drawable.Draw(dc, bounds.WithMargin(10));*/
 
-            using var path = new GraphicsPath(dc) { FillMode = PathFillMode };
+            using var path = new GraphicsPath() { FillMode = PathFillMode };
 
             path.AddLines(new[] { new PointD(210, 210), new PointD(300, 300), new PointD(300, 320) });
             path.AddLine(new PointD(320, 320), new PointD(340, 340));

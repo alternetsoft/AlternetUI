@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// and other features.
     /// Allows to implement immutable objects with properties that can not be changed.
     /// </summary>
-    public class ImmutableObject : DisposableObject, IImmutableObject
+    public class ImmutableObject : HostedDisposableObject, IImmutableObject
     {
         private bool immutable;
 

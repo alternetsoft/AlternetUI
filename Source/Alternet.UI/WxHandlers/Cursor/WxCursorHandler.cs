@@ -47,7 +47,7 @@ namespace Alternet.UI
             int hotSpotX = 0,
             int hotSpotY = 0)
             : base(
-                  UI.Native.WxOtherFactory.CreateCursor4((UI.Native.Image)image.Handler, hotSpotX, hotSpotY),
+                  UI.Native.WxOtherFactory.CreateCursor4(UI.Application.ToNative(image), hotSpotX, hotSpotY),
                   true)
         {
         }

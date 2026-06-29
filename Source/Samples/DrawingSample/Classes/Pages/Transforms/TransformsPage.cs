@@ -119,7 +119,7 @@ namespace DrawingSample
 
             void DrawFigure()
             {
-                using var path = new GraphicsPath(dc);
+                using var path = new GraphicsPath();
 
                 var center = innerFrame.Center;
 

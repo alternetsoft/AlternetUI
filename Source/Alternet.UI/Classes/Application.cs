@@ -142,6 +142,21 @@ namespace Alternet.UI
             }
         }
 
+        internal static UI.Native.Image ToNative(Alternet.Drawing.Image image)
+        {
+            var result = image.GetHostObject<UI.Native.Image>();
+            if (result is not null)
+                return result;
+
+            if (image.Handler is not SkiaImageHandler skia)
+                throw new ArgumentException("Image handler is not SkiaImageHandler", nameof(image));
+
+            result = new UI.Native.Image();
+            result.Assign(skia.Bitmap);
+            image.AddHostObject(result);
+            return result;
+        }
+
         /// <summary>
         /// Initializes dpi awareness for the application. This is called automatically.
         /// </summary>
