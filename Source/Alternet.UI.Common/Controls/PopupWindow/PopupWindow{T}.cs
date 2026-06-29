@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -607,32 +608,33 @@ namespace Alternet.UI
 
             RunWhenIdle(() =>
             {
-                if(!DisposingOrDisposed)
+                if (!DisposingOrDisposed)
                     ShowPopup(posDip, szDip, position);
             });
         }
 
         /// <summary>
-        /// Shows popup at the specified location.
+        /// Shows popup relative to the specified location using the specified alignment.
         /// </summary>
         /// <param name="ptOrigin">Popup window location.</param>
-        /// <param name="sizePopup">The size of the popup window.</param>
+        /// <param name="ptSize">The size of the area used to calculate the relative popup position.</param>
         /// <param name="position">The optional horizontal and vertical alignment of the popup
-        /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
+        /// relative to the area specified in <paramref name="ptSize"/>.
+        /// If <see langword="null"/>, the default alignment is used.</param>
         /// <remarks>
-        /// The popup is positioned at (ptOrigin + size) if it opens below and to the right
-        /// (default), at (ptOrigin - sizePopup) if it opens above and to the left.
+        /// The popup is positioned at (ptOrigin + ptSize) if it opens below and to the right
+        /// (default), at (ptOrigin - ptSize) if it opens above and to the left.
         /// </remarks>
         /// <remarks>
-        /// <paramref name="ptOrigin"/> and <paramref name="sizePopup"/> are specified in
+        /// <paramref name="ptOrigin"/> and <paramref name="ptSize"/> are specified in
         /// device-independent units.
         /// </remarks>
         public virtual void ShowPopup(
             PointD? ptOrigin,
-            SizeD sizePopup,
+            SizeD ptSize,
             HVDropDownAlignment? position = null)
         {
-            if(!CanShowPopup)
+            if (!CanShowPopup)
                 return;
 
             if (!WasShown)
@@ -642,9 +644,9 @@ namespace Alternet.UI
 
             BeforeShowPopup();
 
-            if(ptOrigin is not null)
+            if (ptOrigin is not null)
             {
-                SetPositionInDips(ptOrigin.Value, sizePopup, position);
+                SetPositionInDips(ptOrigin.Value, ptSize, position);
             }
 
             PopupResult = ModalResult.None;
@@ -710,28 +712,29 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Move the popup window to the right position, i.e. such that it is entirely visible.
+        /// Moves the popup window to the valid position, i.e. such that it is entirely visible.
         /// </summary>
-        /// <param name="ptOrigin">Must be given in screen coordinates.</param>
-        /// <param name="size">The size of the popup window.</param>
+        /// <param name="ptOrigin">Popup window location. Must be given in screen coordinates.</param>
+        /// <param name="ptSize">The size of the area used to calculate the relative popup position.</param>
         /// <param name="position">The optional horizontal and vertical alignment of the popup
-        /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
+        /// relative to the area specified in <paramref name="ptOrigin"/> and <paramref name="ptSize"/>.
+        /// If <see langword="null"/>, the default alignment is used.</param>
         /// <remarks>
-        /// Default popup position is (ptOrigin + size) if it opens below and to the right
-        /// (default), at (ptOrigin - size) if it opens above and to the left.
+        /// Default popup position is (ptOrigin + ptSize) if it opens below and to the right
+        /// (default), at (ptOrigin - ptSize) if it opens above and to the left.
         /// </remarks>
         /// <remarks>
-        /// <paramref name="ptOrigin"/> and <paramref name="size"/> are specified in
+        /// <paramref name="ptOrigin"/> and <paramref name="ptSize"/> are specified in
         /// device-independent units.
         /// </remarks>
         public virtual void SetPositionInDips(
             PointD ptOrigin,
-            SizeD size,
+            SizeD ptSize,
             HVDropDownAlignment? position = null)
         {
             SizeD sizeSelf = Size;
 
-            ptOrigin += AlignUtils.GetDropDownPosition(size, sizeSelf, position) - size;
+            ptOrigin += AlignUtils.GetDropDownPosition(ptSize, sizeSelf, position) - ptSize;
 
             // determine the position and size of the screen we clamp the popup to
             PointD posScreen;
@@ -756,14 +759,14 @@ namespace Alternet.UI
 
             // is there enough space to put the popup below the window
             // (where we put it by default)?
-            Coord y = ptOrigin.Y + size.Height;
+            Coord y = ptOrigin.Y + ptSize.Height;
             if (y + sizeSelf.Height > posScreen.Y + sizeScreen.Height)
             {
                 // check if there is enough space above
                 if (ptOrigin.Y > sizeSelf.Height)
                 {
                     // do position the control above the window
-                    y -= size.Height + sizeSelf.Height;
+                    y -= ptSize.Height + sizeSelf.Height;
                 }
 
                 // else: not enough space below nor above, leave below
@@ -775,24 +778,22 @@ namespace Alternet.UI
             if (App.Current.LangDirection == LangDirection.RightToLeft)
             {
                 // shift the window to the left instead of the right.
-                x -= size.Width;
+                x -= ptSize.Width;
                 x -= sizeSelf.Width;        // also shift it by window width.
             }
             else
             {
-                x += size.Width;
+                x += ptSize.Width;
             }
 
             if (x + sizeSelf.Width > posScreen.X + sizeScreen.Width)
             {
-                // check if there is enough space to the left
-                if (ptOrigin.X > sizeSelf.Width)
-                {
-                    // do position the control to the left
-                    x -= size.Width + sizeSelf.Width;
-                }
+                x = x + ptSize.Width - sizeSelf.Width;
 
-                // else: not enough space there either, leave in default position
+                if(x + sizeSelf.Width > posScreen.X + sizeScreen.Width)
+                {
+                    x = posScreen.X + sizeScreen.Width - sizeSelf.Width;
+                }
             }
 
             x = Math.Max(x, posScreen.X);
@@ -915,11 +916,11 @@ namespace Alternet.UI
                 HidePopup(ModalResult.Canceled);
             }
             else
-            if (HideOnEnter && e.Key == Key.Enter && e.ModifierKeys == UI.ModifierKeys.None)
-            {
-                e.Suppressed();
-                HidePopup(ModalResult.Accepted);
-            }
+                if (HideOnEnter && e.Key == Key.Enter && e.ModifierKeys == UI.ModifierKeys.None)
+                {
+                    e.Suppressed();
+                    HidePopup(ModalResult.Accepted);
+                }
 
             base.OnKeyDown(e);
         }
