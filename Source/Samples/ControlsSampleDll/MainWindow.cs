@@ -127,7 +127,7 @@ namespace ControlsSample
                 AddPage("ListBoxes", CreateListControlsPage);
                 AddPage("Buttons", CreateButtonsPage);
                 AddPage("TreeView", CreateTreeViewPage);
-                AddPage("ListView", null);
+                AddPage("ListView",() => new ListViewPage());
                 AddPage("DateTime", CreateDateTimePage);
                 AddPage("WebBrowser", CreateWebBrowserPage);
                 AddPage("Number", CreateNumericInputPage);
