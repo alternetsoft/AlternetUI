@@ -10,7 +10,10 @@ namespace PaintSample
     {
         private State? state;
 
-        public AirbrushTool(Func<PaintSampleDocument> getDocument, ISelectedColors selectedColors, UndoService undoService) :
+        public AirbrushTool(
+            Func<PaintSampleDocument> getDocument,
+            ISelectedColors selectedColors,
+            UndoService undoService) :
             base(getDocument, selectedColors, undoService)
         {
         }
@@ -40,11 +43,13 @@ namespace PaintSample
             if (state != null)
                 throw new InvalidOperationException();
 
+            var bmp = new Bitmap(Document.Bitmap);
+
             state = new State(
                 new SolidBrush(SelectedColors.Stroke),
                 Mouse.GetPosition(Canvas),
                 GetPointsPerTick(),
-                new Bitmap(Document.Bitmap));
+                bmp);
 
             state.Timer.Tick += Timer_Tick;
             state.Timer.Start();

@@ -23,7 +23,9 @@ namespace PaintSample
         }
 
         public PenTool Pen => pen ??= new PenTool(getDocument, selectedColors, undoService);
+        
         public EraserTool Eraser => eraser ??= new EraserTool(getDocument, selectedColors, undoService);
+       
         public AirbrushTool Airbrush => airbrush ??= new AirbrushTool(getDocument, selectedColors, undoService);
 
         public IEnumerable<Tool> AllTools
@@ -32,8 +34,7 @@ namespace PaintSample
             {
                 yield return Pen;
                 yield return Eraser;
-                /* yield return FloodFill;*/
-                yield return Airbrush;
+                /* yield return Airbrush; */
             }
         }
 

@@ -97,8 +97,6 @@ namespace PaintSample
             using (var dc = Graphics.FromImage(Bitmap))
                 action(dc);
 
-            using (var dc = Graphics.FromImage(Bitmap)) { }
-
             OnChanged();
         }
 
@@ -122,7 +120,9 @@ namespace PaintSample
         private Image CreateBitmap(AbstractControl control)
         {
             var pixelSize = control.PixelFromDip(new SizeD(600, 600));
-            return Image.Create(pixelSize.Width, pixelSize.Height, BackgroundColor);
+            var result = Image.Create(pixelSize.Width, pixelSize.Height, BackgroundColor);
+            result.ScaleFactor = control.ScaleFactor;
+            return result;
         }
 
         private Bitmap LoadBitmap(string fileName)
