@@ -42,11 +42,14 @@ namespace Alternet.UI
         private readonly ControlSubscriber notification = new();
         private readonly ToolBar bottomToolBar = new();
         private readonly ToolBar topToolBar = new();
+        private readonly Panel topToolBarPanel = new();
+        private readonly Panel bottomToolBarPanel = new();
         private readonly SpeedButton buttonOk;
         private readonly SpeedButton buttonCancel;
         private readonly AbstractControl buttonSpacer;
-        private readonly GripControl gripControl;
         private readonly Label label;
+        private readonly GripComponent topGripComponent;
+        private readonly GripComponent bottomGripComponent = new();
 
         private ModalResult popupResult;
         private T? mainControl;
@@ -64,24 +67,24 @@ namespace Alternet.UI
                 Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
                 ToolBar.DefaultMinItemSize);
 
-            gripControl = new GripControl();
-            gripControl.ConfigureAsMovingGrip();
-            gripControl.VerticalAlignment = VerticalAlignment.Stretch;
-            gripControl.Target = this;
-            gripControl.HorizontalAlignment = HorizontalAlignment.Fill;
+            topGripComponent = new GripComponent();
+            topGripComponent.ConfigureAsMovingGrip();
+            topGripComponent.Target = this;
+            topGripComponent.InteractionControl = topToolBar;
 
             label = new Label();
             label.VerticalAlignment = VerticalAlignment.Center;
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.Margin = DefaultTitleMargin;
             label.InputTransparent = true;
-            label.Parent = gripControl;
+            label.Parent = topToolBar;
 
-            topToolBar.AddControl(gripControl);
-            topToolBar.Parent = this;
+            topToolBarPanel.Parent = this;
 
+            topToolBar.Parent = topToolBarPanel;
             topToolBar.Margin = DefaultTopToolBarMargin;
             topToolBar.Visible = DefaultHasTitleBar;
+
             mainPanel.Margin = DefaultMainPanelMargin;
 
             MakeWithoutTitleBar();
@@ -92,8 +95,6 @@ namespace Alternet.UI
             HasInnerBorder = DefaultHasAdditionalBorder;
             mainPanel.Parent = this;
             Padding = DefaultPadding;
-
-            bottomToolBar.AddSizingGrip(this, ToolBar.GripControlKind.MoveGrip);
 
             ButtonIdOk = bottomToolBar.AddSpeedBtn(KnownButton.OK);
             buttonSpacer = bottomToolBar.AddSpacerCore(DefaultOkCancelDistance);
@@ -114,9 +115,17 @@ namespace Alternet.UI
             bottomToolBar.SetToolAlignRight(ButtonIdCancel, true);
             bottomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
             bottomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
-            bottomToolBar.VerticalAlignment = UI.VerticalAlignment.Bottom;
             bottomToolBar.ResumeLayout();
-            bottomToolBar.Parent = mainPanel;
+            bottomToolBar.Parent = bottomToolBarPanel;
+            bottomToolBar.InputTransparent = true;
+
+            bottomToolBarPanel.Parent = mainPanel;
+            bottomToolBarPanel.VerticalAlignment = UI.VerticalAlignment.Bottom;
+
+            bottomGripComponent.ConfigureAsMovingGrip();
+            bottomGripComponent.InteractionControl = bottomToolBar;
+            bottomGripComponent.Target = this;
+
             MainControl.Required();
             HideOnDeactivate = true;
             AllowFormKeyPreview = false;
@@ -222,10 +231,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets grip control used for moving the target control.
+        /// Gets grip component used for moving the target control when user interacts with the title bar.
         /// </summary>
         [Browsable(false)]
-        public GripControl TitleGripControl => gripControl;
+        public GripComponent TitleGripComponent => topGripComponent;
+
+        /// <summary>
+        /// Gets grip component used for moving the target control when user interacts with the bottom toolbar.
+        /// </summary>
+        [Browsable(false)]
+        public GripComponent BottomGripComponent => bottomGripComponent;
 
         /// <summary>
         /// Gets the label used for displaying the title.
