@@ -651,7 +651,6 @@ namespace Alternet.UI
             method($"Count: {Count}");
             method($"DefaultDPI: {GraphicsFactory.DefaultDPI}");
             method($"DeviceType: {App.DeviceType}");
-            method($"IsOpenGLAvailable: {GraphicsFactory.IsOpenGLAvailable}");
 
             for (int i = 0; i < Display.AllScreens.Length; i++)
             {

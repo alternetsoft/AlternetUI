@@ -77,11 +77,6 @@ namespace Alternet.UI
         IKeyboardHandler CreateKeyboardHandler();
 
         /// <summary>
-        /// Gets a value indicating whether OpenGL is available on the current system.
-        /// </summary>
-        public bool IsOpenGLAvailable { get; }
-
-        /// <summary>
         /// Creates <see cref="IFontFactoryHandler"/> provider.
         /// </summary>
         /// <returns></returns>

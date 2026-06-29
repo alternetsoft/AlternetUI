@@ -62,8 +62,6 @@ namespace Alternet.UI
             }
         }
 
-        bool IApplicationHandler.IsOpenGLAvailable => false;
-
         /// <summary>
         /// Registers <see cref="Microsoft.Maui.Controls.Application.RequestedThemeChanged"/>
         /// event handler.

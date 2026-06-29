@@ -77,38 +77,9 @@ namespace Alternet.Drawing
         private static ImageBitsFormat nativeBitsFormat;
         private static ImageBitsFormat alphaBitsFormat;
         private static ImageBitsFormat genericBitsFormat;
-        private static bool? isOpenGLAvailable;
 
         static GraphicsFactory()
         {
-        }
-
-        /// <summary>
-        /// Gets a value indicating whether OpenGL is available on the current system.
-        /// </summary>
-        /// <remarks>This property checks the system's capabilities to determine if OpenGL support is
-        /// present. It can be used to conditionally enable features that depend on OpenGL.
-        /// Value is cached after the first access for performance reasons.
-        /// </remarks>
-        public static bool IsOpenGLAvailable
-        {
-            get
-            {
-                if (isOpenGLAvailable is null)
-                {
-                    try
-                    {
-                        isOpenGLAvailable = App.IsWindowsOS && App.Handler is not null && App.Handler.IsOpenGLAvailable;
-                    }
-                    catch (Exception ex)
-                    {
-                        App.Log($"IsOpenGLAvailable check failed: {ex.Message}");
-                        isOpenGLAvailable = false;
-                    }
-                }
-
-                return isOpenGLAvailable.Value;
-            }
         }
 
         /// <summary>

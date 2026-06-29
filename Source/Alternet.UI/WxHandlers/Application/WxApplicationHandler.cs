@@ -444,8 +444,6 @@ namespace Alternet.UI
             }
         }
 
-        bool IApplicationHandler.IsOpenGLAvailable { get; }
-
         /// <inheritdoc/>
         public virtual IControlPainterHandler CreateControlPainterHandler()
         {
