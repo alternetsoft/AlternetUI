@@ -223,11 +223,5 @@ namespace Alternet.UI
         {
             return Native.WxOtherFactory.SystemSettingsHasFeature((int)index);
         }
-
-        public Font GetFont(SystemSettingsFont systemFont)
-        {
-            var fnt = Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
-            return new Font(fnt);
-        }
     }
 }

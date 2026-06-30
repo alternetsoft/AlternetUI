@@ -47,7 +47,7 @@ void SetWxStatusBar(void* value);
 
 static void* CreateEx(int kind);
 static void SetDefaultBounds(const RectD& bounds);
-static void SetParkingWindowFont(Font* font);
+static void SetParkingWindowFontRef(void* font);
 void SetMinSize(const SizeD& size);
 void SetMaxSize(const SizeD& size);
 NativeStringSpan GetTitle();

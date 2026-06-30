@@ -78,14 +78,12 @@ namespace NativeApi.Api
         public static void DateAttrSetTextColor(IntPtr handle, Color colText) { }
         public static void DateAttrSetBackgroundColor(IntPtr handle, Color colBack) { }
         public static void DateAttrSetBorderColor(IntPtr handle, Color color) { }
-        public static void DateAttrSetFont(IntPtr handle, IntPtr font) { }
         public static void DateAttrSetBorder(IntPtr handle, int border) { }
         public static void DateAttrSetHoliday(IntPtr handle, bool holiday) { }
 
         public static bool DateAttrHasTextColor(IntPtr handle) => default;
         public static bool DateAttrHasBackgroundColor(IntPtr handle) => default;
         public static bool DateAttrHasBorderColor(IntPtr handle) => default;
-        public static bool DateAttrHasFont(IntPtr handle) => default;
         public static bool DateAttrHasBorder(IntPtr handle) => default;
 
         public static bool DateAttrIsHoliday(IntPtr handle) => default;
@@ -93,7 +91,6 @@ namespace NativeApi.Api
         public static Color DateAttrGetTextColor(IntPtr handle) => default;
         public static Color DateAttrGetBackgroundColor(IntPtr handle) => default;
         public static Color DateAttrGetBorderColor(IntPtr handle) => default;
-        public static IntPtr DateAttrGetFont(IntPtr handle) => default;
         public static int DateAttrGetBorder(IntPtr handle) => default;
     }
 }

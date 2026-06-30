@@ -11,7 +11,7 @@ namespace NativeApi.Api
 
         public static void SetDefaultBounds(RectD bounds) { }
 
-        public static void SetParkingWindowFont(Font? font) { }
+        public static void SetParkingWindowFontRef(IntPtr font) { }
 
         [NativeEvent(cancellable: true)]
         public event EventHandler? Closing;

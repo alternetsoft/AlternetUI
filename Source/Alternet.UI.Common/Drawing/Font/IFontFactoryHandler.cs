@@ -48,12 +48,6 @@ namespace Alternet.Drawing
         bool AllowNullFontName { get; }
 
         /// <summary>
-        /// Creates native font handler.
-        /// </summary>
-        /// <returns></returns>
-        IFontHandler CreateFontHandler();
-
-        /// <summary>
         /// Creates default font.
         /// </summary>
         /// <returns></returns>

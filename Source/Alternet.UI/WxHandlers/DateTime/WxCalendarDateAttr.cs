@@ -136,14 +136,6 @@ namespace Alternet.UI
             }
         }
 
-        public bool HasFont
-        {
-            get
-            {
-                return Native.Calendar.DateAttrHasFont(Handle);
-            }
-        }
-
         public bool HasBorder
         {
             get

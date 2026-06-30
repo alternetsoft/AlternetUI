@@ -458,6 +458,15 @@ namespace Alternet::UI
         FillWithDisabledBrush = 2,
     };
     
+    enum class ImageLayout
+    {
+        None = 0,
+        Tile = 1,
+        Center = 2,
+        Stretch = 3,
+        Zoom = 4,
+    };
+    
     enum class ImageLockMode
     {
         ReadOnly = 1,

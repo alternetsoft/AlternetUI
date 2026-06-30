@@ -166,8 +166,6 @@ namespace NativeApi.Api
 
         public void SetFontRef(IntPtr value) { }
 
-        public void SetFont(Font? value) { }
-
         public static Control? HitTest(PointD screenPoint) => default;
         public static Control? GetFocusedControl() => default;
         public static void NotifyCaptureLost() { }

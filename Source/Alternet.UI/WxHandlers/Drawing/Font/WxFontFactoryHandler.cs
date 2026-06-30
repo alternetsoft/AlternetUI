@@ -77,14 +77,9 @@ namespace Alternet.Drawing
         public IFontHandler CreateFontHandler(Font font)
         {
             var result = new UI.Native.Font();
-            result.InitializeFromFont((UI.Native.Font)font.Handler);
+            var fontRef = WxControlHandler.GetFontRef(font);
+            result.InitializeFromFontRef(fontRef);
             return result;
-        }
-
-        public Font? CreateSystemFont(SystemSettingsFont systemFont)
-        {
-            var fnt = UI.Native.WxOtherFactory.SystemSettingsGetFont((int)systemFont);
-            return new Font(fnt);
         }
 
         public IEnumerable<string> GetFontFamiliesNames()
@@ -110,7 +105,8 @@ namespace Alternet.Drawing
 
         public void SetDefaultFont(Font value)
         {
-            UI.Native.Window.SetParkingWindowFont((UI.Native.Font?)value?.Handler);
+            var fontRef = WxControlHandler.GetFontRef(value);
+            UI.Native.Window.SetParkingWindowFontRef(fontRef);
         }
     }
 }

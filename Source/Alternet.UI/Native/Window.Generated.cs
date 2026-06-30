@@ -260,9 +260,9 @@ namespace Alternet.UI.Native
 NativeApi.Window_SetDefaultBounds_(ref bounds_Native);
         }
         
-        public static void SetParkingWindowFont(Font? font)
+        public static void SetParkingWindowFontRef(System.IntPtr font)
         {
-            NativeApi.Window_SetParkingWindowFont_(font?.NativePointer ?? IntPtr.Zero);
+            NativeApi.Window_SetParkingWindowFontRef_(font);
         }
         
         public void SetMinSize(Alternet.Drawing.SizeD size)
@@ -461,7 +461,7 @@ NativeApi.Window_SetTitle_(NativePointer, ref value_Native);
             public static extern void Window_SetDefaultBounds_(ref Alternet.Drawing.RectD bounds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Window_SetParkingWindowFont_(IntPtr font);
+            public static extern void Window_SetParkingWindowFontRef_(System.IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Window_SetMinSize_(IntPtr obj, ref Alternet.Drawing.SizeD size);

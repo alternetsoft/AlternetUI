@@ -32,7 +32,7 @@ namespace NativeApi.Api
             float emSizeInPoints, FontStyle style) => throw new Exception();
         public void InitializeWithDefaultFont() => throw new Exception();
         public void InitializeWithDefaultMonoFont() => throw new Exception();
-        public void InitializeFromFont(Font font) { }
+        public void InitializeFromFontRef(IntPtr font) { }
 
         public static bool IsFamilyValid(NativeStringSpan fontFamily) => throw new Exception();
         public static NativeStringSpan GetGenericFamilyName(GenericFontFamily genericFamily) => throw new Exception();

@@ -284,14 +284,6 @@ return NativeApi.WxOtherFactory_DisplayGetFromPoint_(ref pt_Native);
             return NativeApi.WxOtherFactory_SystemSettingsHasFeature_(index);
         }
         
-        public static Font SystemSettingsGetFont(int index)
-        {
-            var _nnn = NativeApi.WxOtherFactory_SystemSettingsGetFont_(index);
-            var _mmm = NativeObject.GetFromNativePointer<Font>(_nnn, p => new Font(p))!;
-            ReleaseNativeObjectPointer(_nnn);
-            return _mmm;
-        }
-        
         public static Alternet.Drawing.Color SystemSettingsGetColor(int index)
         {
             return NativeApi.WxOtherFactory_SystemSettingsGetColor_(index);
@@ -860,9 +852,6 @@ return NativeApi.WxOtherFactory_UIActionSimulatorText_(handle, ref text_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool WxOtherFactory_SystemSettingsHasFeature_(int index);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr WxOtherFactory_SystemSettingsGetFont_(int index);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color WxOtherFactory_SystemSettingsGetColor_(int index);

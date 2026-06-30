@@ -370,16 +370,6 @@ namespace Alternet.Drawing
         {
         }
 
-        /// <summary>
-        /// Initializes a new <see cref="Font" /> using a specified font handler.
-        /// </summary>
-        /// <param name="handler">Font handler.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Font(IFontHandler handler)
-        {
-            Handler = handler;
-        }
-
         internal Font(
              GenericFontFamily? genericFamily,
              string? familyName,
@@ -400,8 +390,18 @@ namespace Alternet.Drawing
                 GdiCharSet = 1,
             };
 
-            Handler = FontFactory.Handler.CreateFontHandler();
+            Handler = new SkiaFontHandler();
             Handler.Update(this, prm);
+        }
+
+        /// <summary>
+        /// Initializes a new <see cref="Font" /> using a specified font handler.
+        /// </summary>
+        /// <param name="handler">Font handler.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private Font(IFontHandler handler)
+        {
+            Handler = handler;
         }
 
         /// <summary>
@@ -1254,22 +1254,10 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual Font Clone()
         {
-            var result = FontFactory.Handler.CreateFontHandler();
+            var result = new SkiaFontHandler();
             IFontHandler.FontParams prm = new(this);
             result.Update(this, prm);
             return new Font(result);
-        }
-
-        /// <summary>
-        /// Creates <see cref="Font"/> from native font.
-        /// </summary>
-        /// <param name="font"></param>
-        /// <returns></returns>
-        public static Font? FromInternal(IFontHandler? font)
-        {
-            if (font is null)
-                return null;
-            return new Font(font);
         }
 
         /// <summary>

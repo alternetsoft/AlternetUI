@@ -666,7 +666,7 @@ namespace Alternet::UI
         Control::OnWxWindowCreated();
     }
 
-    void Window::SetParkingWindowFont(Font* font)
+    void Window::SetParkingWindowFontRef(void* font)
     {
         if (!stockGridHooked)
         {
@@ -674,10 +674,7 @@ namespace Alternet::UI
             stockGridHooked = true;
         }
 
-        if (font == nullptr)
-            fontOverride = wxNullFont;
-        else
-            fontOverride = font->GetWxFont();
+        fontOverride = Font::FromFontRef(font);
 
         auto parkingWindow = ParkingWindow::GetWindow();
         if (parkingWindow != nullptr)

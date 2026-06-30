@@ -4,7 +4,6 @@
 
 #include "WxOtherFactory.h"
 #include "Image.h"
-#include "Font.h"
 #include "DrawingContext.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -372,13 +371,6 @@ ALTERNET_UI_API c_bool WxOtherFactory_SystemSettingsHasFeature_(int index)
 {
     return MarshalExceptions<c_bool>([&](){
         return WxOtherFactory::SystemSettingsHasFeature(index);
-    });
-}
-
-ALTERNET_UI_API Font* WxOtherFactory_SystemSettingsGetFont_(int index)
-{
-    return MarshalExceptions<Font*>([&](){
-        return WxOtherFactory::SystemSettingsGetFont(index);
     });
 }
 

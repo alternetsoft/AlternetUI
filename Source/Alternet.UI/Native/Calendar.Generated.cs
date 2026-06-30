@@ -372,11 +372,6 @@ NativeApi.Calendar_DateAttrSetBackgroundColor_(handle, ref colBack_Native);
 NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
         }
         
-        public static void DateAttrSetFont(System.IntPtr handle, System.IntPtr font)
-        {
-            NativeApi.Calendar_DateAttrSetFont_(handle, font);
-        }
-        
         public static void DateAttrSetBorder(System.IntPtr handle, int border)
         {
             NativeApi.Calendar_DateAttrSetBorder_(handle, border);
@@ -402,11 +397,6 @@ NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
             return NativeApi.Calendar_DateAttrHasBorderColor_(handle);
         }
         
-        public static bool DateAttrHasFont(System.IntPtr handle)
-        {
-            return NativeApi.Calendar_DateAttrHasFont_(handle);
-        }
-        
         public static bool DateAttrHasBorder(System.IntPtr handle)
         {
             return NativeApi.Calendar_DateAttrHasBorder_(handle);
@@ -430,11 +420,6 @@ NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
         public static Alternet.Drawing.Color DateAttrGetBorderColor(System.IntPtr handle)
         {
             return NativeApi.Calendar_DateAttrGetBorderColor_(handle);
-        }
-        
-        public static System.IntPtr DateAttrGetFont(System.IntPtr handle)
-        {
-            return NativeApi.Calendar_DateAttrGetFont_(handle);
         }
         
         public static int DateAttrGetBorder(System.IntPtr handle)
@@ -673,9 +658,6 @@ NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
             public static extern void Calendar_DateAttrSetBorderColor_(System.IntPtr handle, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Calendar_DateAttrSetFont_(System.IntPtr handle, System.IntPtr font);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Calendar_DateAttrSetBorder_(System.IntPtr handle, int border);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -691,9 +673,6 @@ NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
             public static extern bool Calendar_DateAttrHasBorderColor_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool Calendar_DateAttrHasFont_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Calendar_DateAttrHasBorder_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -707,9 +686,6 @@ NativeApi.Calendar_DateAttrSetBorderColor_(handle, ref color_Native);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern NativeApiTypes.Color Calendar_DateAttrGetBorderColor_(System.IntPtr handle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr Calendar_DateAttrGetFont_(System.IntPtr handle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern int Calendar_DateAttrGetBorder_(System.IntPtr handle);

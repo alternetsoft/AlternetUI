@@ -792,12 +792,6 @@ NativeApi.Control_SetForegroundColor_(NativePointer, ref value_Native);
             NativeApi.Control_SetFontRef_(NativePointer, value);
         }
         
-        public void SetFont(Font? value)
-        {
-            CheckDisposed();
-            NativeApi.Control_SetFont_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-        }
-        
         public static Control? HitTest(Alternet.Drawing.PointD screenPoint)
         {
             var screenPoint_Native = screenPoint.ToNative();
@@ -1560,9 +1554,6 @@ NativeApi.Control_SetBoundsEx_(NativePointer, ref rect_Native, flags);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void Control_SetFontRef_(IntPtr obj, System.IntPtr value);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Control_SetFont_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern IntPtr Control_HitTest_(ref Alternet.Drawing.PointD screenPoint);

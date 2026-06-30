@@ -88,7 +88,7 @@ bool BeginUnderline();
 bool EndUnderline();
 bool BeginFontSize(int pointSize);
 bool EndFontSize();
-bool BeginFont(Font* font);
+bool BeginFontRef(void* font);
 bool EndFont();
 bool BeginTextColour(const Color& colour);
 bool EndTextColour();

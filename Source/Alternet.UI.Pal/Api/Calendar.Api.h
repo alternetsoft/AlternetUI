@@ -379,13 +379,6 @@ ALTERNET_UI_API void Calendar_DateAttrSetBorderColor_(void* handle, Color* color
     });
 }
 
-ALTERNET_UI_API void Calendar_DateAttrSetFont_(void* handle, void* font)
-{
-    MarshalExceptions<void>([&](){
-        Calendar::DateAttrSetFont(handle, font);
-    });
-}
-
 ALTERNET_UI_API void Calendar_DateAttrSetBorder_(void* handle, int border)
 {
     MarshalExceptions<void>([&](){
@@ -421,13 +414,6 @@ ALTERNET_UI_API c_bool Calendar_DateAttrHasBorderColor_(void* handle)
     });
 }
 
-ALTERNET_UI_API c_bool Calendar_DateAttrHasFont_(void* handle)
-{
-    return MarshalExceptions<c_bool>([&](){
-        return Calendar::DateAttrHasFont(handle);
-    });
-}
-
 ALTERNET_UI_API c_bool Calendar_DateAttrHasBorder_(void* handle)
 {
     return MarshalExceptions<c_bool>([&](){
@@ -460,13 +446,6 @@ ALTERNET_UI_API Color_C Calendar_DateAttrGetBorderColor_(void* handle)
 {
     return MarshalExceptions<Color_C>([&](){
         return Calendar::DateAttrGetBorderColor(handle);
-    });
-}
-
-ALTERNET_UI_API void* Calendar_DateAttrGetFont_(void* handle)
-{
-    return MarshalExceptions<void*>([&](){
-        return Calendar::DateAttrGetFont(handle);
     });
 }
 

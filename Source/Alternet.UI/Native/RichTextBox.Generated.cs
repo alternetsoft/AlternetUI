@@ -548,10 +548,10 @@ NativeApi.RichTextBox_AppendText_(NativePointer, ref text_Native);
             return NativeApi.RichTextBox_EndFontSize_(NativePointer);
         }
         
-        public bool BeginFont(Font? font)
+        public bool BeginFontRef(System.IntPtr font)
         {
             CheckDisposed();
-            return NativeApi.RichTextBox_BeginFont_(NativePointer, font?.NativePointer ?? IntPtr.Zero);
+            return NativeApi.RichTextBox_BeginFontRef_(NativePointer, font);
         }
         
         public bool EndFont()
@@ -1894,7 +1894,7 @@ return NativeApi.RichTextBox_WriteField_(NativePointer, ref fieldType_Native, pr
             public static extern bool RichTextBox_EndFontSize_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern bool RichTextBox_BeginFont_(IntPtr obj, IntPtr font);
+            public static extern bool RichTextBox_BeginFontRef_(IntPtr obj, System.IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool RichTextBox_EndFont_(IntPtr obj);

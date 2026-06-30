@@ -155,10 +155,10 @@ ALTERNET_UI_API void Font_InitializeWithDefaultMonoFont_(Font* obj)
     });
 }
 
-ALTERNET_UI_API void Font_InitializeFromFont_(Font* obj, Font* font)
+ALTERNET_UI_API void Font_InitializeFromFontRef_(Font* obj, void* font)
 {
     MarshalExceptions<void>([&](){
-        obj->InitializeFromFont(font);
+        obj->InitializeFromFontRef(font);
     });
 }
 

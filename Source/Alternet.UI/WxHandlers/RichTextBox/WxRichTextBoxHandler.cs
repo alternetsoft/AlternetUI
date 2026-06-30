@@ -1395,7 +1395,8 @@ namespace Alternet.UI
         /// </summary>
         public bool BeginFont(Font? font)
         {
-            return NativeControl.BeginFont((UI.Native.Font?)font?.Handler);
+            var fontRef = GetFontRef(font);
+            return NativeControl.BeginFontRef(fontRef);
         }
 
         /// <summary>

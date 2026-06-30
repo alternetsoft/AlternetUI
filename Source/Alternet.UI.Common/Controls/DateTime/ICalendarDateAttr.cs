@@ -58,11 +58,6 @@ namespace Alternet.UI
         bool HasBorderColor { get; }
 
         /// <summary>
-        /// Gets a value indicating whether font is assigned for the calendar date.
-        /// </summary>
-        bool HasFont { get; }
-
-        /// <summary>
         /// Gets a value indicating whether border style is assigned for the calendar date.
         /// </summary>
         bool HasBorder { get; }

@@ -4,7 +4,6 @@
 
 #include "Window.h"
 #include "IconSet.h"
-#include "Font.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -234,10 +233,10 @@ ALTERNET_UI_API void Window_SetDefaultBounds_(RectD* bounds)
     });
 }
 
-ALTERNET_UI_API void Window_SetParkingWindowFont_(Font* font)
+ALTERNET_UI_API void Window_SetParkingWindowFontRef_(void* font)
 {
     MarshalExceptions<void>([&](){
-        Window::SetParkingWindowFont(font);
+        Window::SetParkingWindowFontRef(font);
     });
 }
 

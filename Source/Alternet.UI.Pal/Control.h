@@ -131,6 +131,8 @@ namespace Alternet::UI
         virtual wxWindow* CreateWxWindowUnparented() = 0;
 
         wxWindow* GetWxWindow();
+        void SetFont(Font* value);
+
         bool IsWxWindowCreated();
 
         std::vector<Control*> GetChildren();

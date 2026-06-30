@@ -50,13 +50,6 @@ ALTERNET_UI_API void PropertyGridChoices_SetFgCol_(void* handle, uint32_t ind, C
     });
 }
 
-ALTERNET_UI_API void PropertyGridChoices_SetFont_(void* handle, uint32_t ind, void* font)
-{
-    MarshalExceptions<void>([&](){
-        PropertyGridChoices::SetFont(handle, ind, font);
-    });
-}
-
 ALTERNET_UI_API void PropertyGridChoices_SetBgCol_(void* handle, uint32_t ind, Color* color)
 {
     MarshalExceptions<void>([&](){
@@ -78,13 +71,6 @@ ALTERNET_UI_API Color_C PropertyGridChoices_GetBgCol_(void* handle, uint32_t ind
     });
 }
 
-ALTERNET_UI_API void* PropertyGridChoices_GetFont_(void* handle, uint32_t ind)
-{
-    return MarshalExceptions<void*>([&](){
-        return PropertyGridChoices::GetFont(handle, ind);
-    });
-}
-
 ALTERNET_UI_API void* PropertyGridChoices_GetBitmap_(void* handle, uint32_t ind)
 {
     return MarshalExceptions<void*>([&](){
@@ -96,13 +82,6 @@ ALTERNET_UI_API void PropertyGridChoices_SetBitmapFromItem_(void* handle, uint32
 {
     MarshalExceptions<void>([&](){
         PropertyGridChoices::SetBitmapFromItem(handle, ind, handle2, ind2);
-    });
-}
-
-ALTERNET_UI_API void PropertyGridChoices_SetFontFromItem_(void* handle, uint32_t ind, void* handle2, uint32_t ind2)
-{
-    MarshalExceptions<void>([&](){
-        PropertyGridChoices::SetFontFromItem(handle, ind, handle2, ind2);
     });
 }
 

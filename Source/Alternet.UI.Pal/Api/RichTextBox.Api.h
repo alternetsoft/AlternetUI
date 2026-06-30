@@ -5,7 +5,6 @@
 #include "RichTextBox.h"
 #include "InputStream.h"
 #include "OutputStream.h"
-#include "Font.h"
 #include "Image.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
@@ -621,10 +620,10 @@ ALTERNET_UI_API c_bool RichTextBox_EndFontSize_(RichTextBox* obj)
     });
 }
 
-ALTERNET_UI_API c_bool RichTextBox_BeginFont_(RichTextBox* obj, Font* font)
+ALTERNET_UI_API c_bool RichTextBox_BeginFontRef_(RichTextBox* obj, void* font)
 {
     return MarshalExceptions<c_bool>([&](){
-        return obj->BeginFont(font);
+        return obj->BeginFontRef(font);
     });
 }
 

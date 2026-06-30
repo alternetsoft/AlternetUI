@@ -303,12 +303,6 @@ namespace Alternet.UI
             }
         }
 
-        internal void SetFont(int index, IntPtr font)
-        {
-            hasCustomFonts = true;
-            Native.PropertyGridChoices.SetFont(handle, (uint)index, font);
-        }
-
         private void ChoicesChanged()
         {
             nullableChoices?.Clear();

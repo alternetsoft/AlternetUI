@@ -174,9 +174,6 @@ namespace NativeApi.Api
         // Returns true if the port has certain feature.
         public static bool SystemSettingsHasFeature(int index) => default;
 
-        // get a standard system font
-        public static Font SystemSettingsGetFont(int index) => default;
-
         // Gets a standard system color
         public static Color SystemSettingsGetColor(int index) => default;
 

@@ -51,11 +51,6 @@ NativeApi.PropertyGridChoices_SetLabel_(handle, ind, ref value_Native);
 NativeApi.PropertyGridChoices_SetFgCol_(handle, ind, ref color_Native);
         }
         
-        public static void SetFont(System.IntPtr handle, uint ind, System.IntPtr font)
-        {
-            NativeApi.PropertyGridChoices_SetFont_(handle, ind, font);
-        }
-        
         public static void SetBgCol(System.IntPtr handle, uint ind, Alternet.Drawing.Color color)
         {
             var color_Native = color.ToNative();
@@ -72,11 +67,6 @@ NativeApi.PropertyGridChoices_SetBgCol_(handle, ind, ref color_Native);
             return NativeApi.PropertyGridChoices_GetBgCol_(handle, ind);
         }
         
-        public static System.IntPtr GetFont(System.IntPtr handle, uint ind)
-        {
-            return NativeApi.PropertyGridChoices_GetFont_(handle, ind);
-        }
-        
         public static System.IntPtr GetBitmap(System.IntPtr handle, uint ind)
         {
             return NativeApi.PropertyGridChoices_GetBitmap_(handle, ind);
@@ -85,11 +75,6 @@ NativeApi.PropertyGridChoices_SetBgCol_(handle, ind, ref color_Native);
         public static void SetBitmapFromItem(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2)
         {
             NativeApi.PropertyGridChoices_SetBitmapFromItem_(handle, ind, handle2, ind2);
-        }
-        
-        public static void SetFontFromItem(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2)
-        {
-            NativeApi.PropertyGridChoices_SetFontFromItem_(handle, ind, handle2, ind2);
         }
         
         public static Alternet.UI.NativeStringSpan GetLabel(System.IntPtr handle, uint ind)
@@ -164,9 +149,6 @@ NativeApi.PropertyGridChoices_Insert_(handle, index, ref text_Native, value);
             public static extern void PropertyGridChoices_SetFgCol_(System.IntPtr handle, uint ind, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridChoices_SetFont_(System.IntPtr handle, uint ind, System.IntPtr font);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridChoices_SetBgCol_(System.IntPtr handle, uint ind, ref NativeApiTypes.Color color);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -176,16 +158,10 @@ NativeApi.PropertyGridChoices_Insert_(handle, index, ref text_Native, value);
             public static extern NativeApiTypes.Color PropertyGridChoices_GetBgCol_(System.IntPtr handle, uint ind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern System.IntPtr PropertyGridChoices_GetFont_(System.IntPtr handle, uint ind);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr PropertyGridChoices_GetBitmap_(System.IntPtr handle, uint ind);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void PropertyGridChoices_SetBitmapFromItem_(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void PropertyGridChoices_SetFontFromItem_(System.IntPtr handle, uint ind, System.IntPtr handle2, uint ind2);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.UI.NativeStringSpan PropertyGridChoices_GetLabel_(System.IntPtr handle, uint ind);

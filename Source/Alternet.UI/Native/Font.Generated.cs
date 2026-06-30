@@ -147,10 +147,10 @@ NativeApi.Font_Initialize_(NativePointer, genericFamily, ref familyName_Native, 
             NativeApi.Font_InitializeWithDefaultMonoFont_(NativePointer);
         }
         
-        public void InitializeFromFont(Font font)
+        public void InitializeFromFontRef(System.IntPtr font)
         {
             CheckDisposed();
-            NativeApi.Font_InitializeFromFont_(NativePointer, font.NativePointer);
+            NativeApi.Font_InitializeFromFontRef_(NativePointer, font);
         }
         
         public static bool IsFamilyValid(Alternet.UI.NativeStringSpan fontFamily)
@@ -263,7 +263,7 @@ return NativeApi.Font_IsFamilyValid_(ref fontFamily_Native);
             public static extern void Font_InitializeWithDefaultMonoFont_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void Font_InitializeFromFont_(IntPtr obj, IntPtr font);
+            public static extern void Font_InitializeFromFontRef_(IntPtr obj, System.IntPtr font);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern bool Font_IsFamilyValid_(ref Alternet.UI.NativeStringSpan fontFamily);

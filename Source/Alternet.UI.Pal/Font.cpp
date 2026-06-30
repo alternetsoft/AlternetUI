@@ -15,9 +15,22 @@ namespace Alternet::UI
     {
     }
 
-    void Font::InitializeFromFont(Font* font)
+    wxFont Font::FromFontRef(void* value)
     {
-        _font = wxFont(font->_font);
+        if (value == nullptr)
+        {
+            return wxNullFont;
+        }
+
+        auto wxf = static_cast<wxFont*>(value);
+
+        auto font = wxFont(*wxf);
+        return font;
+    }
+
+    void Font::InitializeFromFontRef(void* font)
+    {
+        _font = FromFontRef(font);
     }
 
     void* Font::CreateFontRef(

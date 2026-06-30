@@ -143,7 +143,6 @@ Color GetForegroundColor();
 void SetBackgroundColor(const Color& value);
 void SetForegroundColor(const Color& value);
 void SetFontRef(void* value);
-void SetFont(Font* value);
 static Control* HitTest(const PointD& screenPoint);
 static Control* GetFocusedControl();
 static void NotifyCaptureLost();

@@ -567,14 +567,6 @@ namespace Alternet::UI
 		return wxStr(_containerStatic);
 	}
 
-	Font* WxOtherFactory::SystemSettingsGetFont(int index)
-	{
-		auto wxfont = wxSystemSettings::GetFont((wxSystemFont)index);
-		auto _font = new Font();
-		_font->SetWxFont(wxfont);
-		return _font;
-	}
-
 	bool WxOtherFactory::SystemAppearanceIsDark()
 	{
 		return wxSystemSettings::GetAppearance().IsDark();

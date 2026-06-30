@@ -293,7 +293,7 @@ namespace NativeApi.Api
         public bool EndFontSize() => default;
 
         // Begins using this font.    
-        public bool BeginFont(Font? font) => default;
+        public bool BeginFontRef(IntPtr font) => default;
 
         // Ends using a font.    
         public bool EndFont() => default;

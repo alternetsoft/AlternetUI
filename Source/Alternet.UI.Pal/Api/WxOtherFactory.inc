@@ -52,7 +52,6 @@ static bool DisplayIsPrimary(void* handle);
 static RectI DisplayGetClientArea(void* handle);
 static RectI DisplayGetGeometry(void* handle);
 static bool SystemSettingsHasFeature(int index);
-static Font* SystemSettingsGetFont(int index);
 static Color SystemSettingsGetColor(int index);
 static int SystemSettingsGetMetric(int index, void* win);
 static NativeStringSpan SystemAppearanceGetName();

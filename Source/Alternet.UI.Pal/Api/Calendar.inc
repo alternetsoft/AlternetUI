@@ -63,19 +63,16 @@ static void DeleteDateAttr(void* handle);
 static void DateAttrSetTextColor(void* handle, const Color& colText);
 static void DateAttrSetBackgroundColor(void* handle, const Color& colBack);
 static void DateAttrSetBorderColor(void* handle, const Color& color);
-static void DateAttrSetFont(void* handle, void* font);
 static void DateAttrSetBorder(void* handle, int border);
 static void DateAttrSetHoliday(void* handle, bool holiday);
 static bool DateAttrHasTextColor(void* handle);
 static bool DateAttrHasBackgroundColor(void* handle);
 static bool DateAttrHasBorderColor(void* handle);
-static bool DateAttrHasFont(void* handle);
 static bool DateAttrHasBorder(void* handle);
 static bool DateAttrIsHoliday(void* handle);
 static Color DateAttrGetTextColor(void* handle);
 static Color DateAttrGetBackgroundColor(void* handle);
 static Color DateAttrGetBorderColor(void* handle);
-static void* DateAttrGetFont(void* handle);
 static int DateAttrGetBorder(void* handle);
 
 public:

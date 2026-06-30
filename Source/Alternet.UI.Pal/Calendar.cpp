@@ -522,11 +522,6 @@ namespace Alternet::UI
         return ((wxCalendarDateAttr*)handle)->HasBorderColour();
     }
 
-    bool Calendar::DateAttrHasFont(void* handle)
-    {
-        return ((wxCalendarDateAttr*)handle)->HasFont();
-    }
-
     bool Calendar::DateAttrHasBorder(void* handle)
     {
         return ((wxCalendarDateAttr*)handle)->HasBorder();
@@ -550,15 +545,6 @@ namespace Alternet::UI
     Color Calendar::DateAttrGetBorderColor(void* handle)
     {
         return ((wxCalendarDateAttr*)handle)->GetBorderColour();
-    }
-
-    void* Calendar::DateAttrGetFont(void* handle)
-    {
-        return nullptr;
-    }
-
-    void Calendar::DateAttrSetFont(void* handle, void* font)
-    {
     }
 
     int Calendar::DateAttrGetBorder(void* handle)

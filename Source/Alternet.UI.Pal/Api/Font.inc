@@ -23,7 +23,7 @@ int GetWeight();
 void Initialize(GenericFontFamily genericFamily, const NativeStringSpan& familyName, float emSizeInPoints, FontStyle style);
 void InitializeWithDefaultFont();
 void InitializeWithDefaultMonoFont();
-void InitializeFromFont(Font* font);
+void InitializeFromFontRef(void* font);
 static bool IsFamilyValid(const NativeStringSpan& fontFamily);
 static NativeStringSpan GetGenericFamilyName(GenericFontFamily genericFamily);
 static NativeStringSpan GetFamilies();

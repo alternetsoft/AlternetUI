@@ -1427,11 +1427,9 @@ namespace Alternet::UI
 		return GetTextCtrl()->EndAlignment();
 	}
 
-	bool RichTextBox::BeginFont(Font* font)
+	bool RichTextBox::BeginFontRef(void* font)
 	{
-		if (font == nullptr)
-			return GetTextCtrl()->BeginFont(wxNullFont);
-		return GetTextCtrl()->BeginFont(font->GetWxFont());
+		return GetTextCtrl()->BeginFont(Font::FromFontRef(font));
 	}
 
 	bool RichTextBox::WriteImage(Image* bitmap, int bitmapType, void* textAttr)
