@@ -11,6 +11,7 @@ namespace Alternet.Drawing
     internal class WxFontFactoryHandler : DisposableObject, IFontFactoryHandler
     {
         private IFontHandler? defaultFontHandler;
+        private IFontHandler? defaultMonoFontHandler;
 
         public FontEncoding DefaultFontEncoding
         {
@@ -21,6 +22,31 @@ namespace Alternet.Drawing
         public bool AllowNullFontName
         {
             get => false;
+        }
+
+        public float GetDefaultFontSize()
+        {
+            defaultFontHandler ??= CreateDefaultFontHandler();
+            return defaultFontHandler.SizeInPoints;
+        }
+
+        public string GetDefaultMonoFontName()
+        {
+            defaultMonoFontHandler ??= CreateDefaultMonoFontHandler();
+            return defaultMonoFontHandler.GetName();
+        }
+
+        public IFontHandler CreateDefaultMonoFontHandler()
+        {
+            var result = new UI.Native.Font();
+            result.InitializeWithDefaultMonoFont();
+            return result;
+        }
+
+        public string GetDefaultFontName()
+        {
+            defaultFontHandler ??= CreateDefaultFontHandler();
+            return defaultFontHandler.GetName();
         }
 
         public Font CreateDefaultFont()

@@ -44,6 +44,8 @@ namespace Alternet.Drawing
 
         private static Font? defaultFont;
         private static Font? defaultMonoFont;
+        private static string? defaultFontName;
+        private static string? defaultMonoFontName;
 
         private SKFont? skiaFont;
         private FontStyle? style;
@@ -420,6 +422,28 @@ namespace Alternet.Drawing
                     defaultFont = CreateDefaultFont();
                 else
                     defaultFont = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets default font name for the platform.
+        /// </summary>
+        public static string DefaultFontName
+        {
+            get
+            {
+                return defaultFontName ??= FontFactory.Handler.GetDefaultFontName();
+            }
+        }
+
+        /// <summary>
+        /// Gets default monospace font name for the platform.
+        /// </summary>
+        public static string DefaultMonoFontName
+        {
+            get
+            {
+                return defaultMonoFontName ??= FontFactory.Handler.GetDefaultMonoFontName();
             }
         }
 
@@ -1552,14 +1576,14 @@ namespace Alternet.Drawing
             return result;
         }
 
-        internal static Font CreateDefaultMonoFont()
+        private static Font CreateDefaultMonoFont()
         {
             var family = FontFamily.GenericMonospace;
             var fontGenericMonospace = new Font(family, Default.SizeInPoints);
             return fontGenericMonospace;
         }
 
-        internal static Font CreateDefaultFont()
+        private static Font CreateDefaultFont()
         {
             var font = FontFactory.Handler.CreateDefaultFont();
             return font;

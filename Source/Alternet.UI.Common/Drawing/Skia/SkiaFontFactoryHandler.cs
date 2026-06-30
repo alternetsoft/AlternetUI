@@ -45,8 +45,20 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual IFontHandler CreateDefaultFontHandler()
         {
-            return new SkiaFontHandler(SkiaHelper.DefaultFontName, SkiaHelper.DefaultFontSize);
+            return new SkiaFontHandler(GetDefaultFontName(), GetDefaultFontSize());
         }
+
+        /// <inheritdoc/>
+        public virtual float GetDefaultFontSize()
+        {
+            return SkiaHelper.DefaultFontSize;
+        }
+
+        /// <inheritdoc/>
+        public virtual string GetDefaultFontName() => SkiaHelper.DefaultFontName;
+
+        /// <inheritdoc/>
+        public virtual string GetDefaultMonoFontName() => SkiaHelper.DefaultMonoFontName;
 
         /// <summary>
         /// Creates default font

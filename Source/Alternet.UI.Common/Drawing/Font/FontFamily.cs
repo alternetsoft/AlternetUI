@@ -36,7 +36,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="name">The name of the new <see cref="FontFamily"/>.</param>
         public FontFamily(string? name)
-            : this(name, true)
+            : this(name, validate: true)
         {
         }
 
@@ -275,7 +275,18 @@ namespace Alternet.Drawing
         /// </summary>
         public static bool IsFamilyValid(string name)
         {
-            return Items.ContainsKey(name);
+            if (name == Font.DefaultFontName)
+                return true;
+
+            if (name == Font.DefaultMonoFontName)
+                return true;
+
+            var result = Items.ContainsKey(name);
+
+            if (result)
+                return true;
+
+            return false;
         }
 
         /// <summary>

@@ -20,7 +20,25 @@ namespace Alternet.Drawing
         FontEncoding DefaultFontEncoding { get; set; }
 
         /// <summary>
-        /// Gets whether or not to allow an empty font names.S
+        /// Gets default font size.
+        /// </summary>
+        /// <returns></returns>
+        float GetDefaultFontSize();
+
+        /// <summary>
+        /// Gets default font name.
+        /// </summary>
+        /// <returns></returns>
+        string GetDefaultFontName();
+
+        /// <summary>
+        /// Gets default monospace font name.
+        /// </summary>
+        /// <returns></returns>
+        string GetDefaultMonoFontName();
+
+        /// <summary>
+        /// Gets whether or not to allow an empty font names.
         /// </summary>
         bool AllowNullFontName { get; }
 
