@@ -49,6 +49,12 @@ namespace Alternet.Drawing
             return defaultFontHandler.GetName();
         }
 
+        public Font CreateDefaultMonoFont()
+        {
+            defaultMonoFontHandler ??= CreateDefaultMonoFontHandler();
+            return new Font(defaultMonoFontHandler.GetName(), defaultMonoFontHandler.SizeInPoints);
+        }
+
         public Font CreateDefaultFont()
         {
             defaultFontHandler ??= CreateDefaultFontHandler();

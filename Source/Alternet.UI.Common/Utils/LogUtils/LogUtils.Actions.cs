@@ -917,13 +917,6 @@ namespace Alternet.UI
 
             App.LogSeparator();
 
-            foreach (SystemSettingsFont item in Enum.GetValues(typeof(SystemSettingsFont)))
-            {
-                App.Log($"GetFont({item}) = {SystemSettings.GetFont(item)}");
-            }
-
-            App.LogSeparator();
-
             App.LogNameValue("Caret.BlinkTime", new Caret().BlinkTime);
 
             App.LogNameValue("Vector.IsHardwareAccelerated", Vector.IsHardwareAccelerated);

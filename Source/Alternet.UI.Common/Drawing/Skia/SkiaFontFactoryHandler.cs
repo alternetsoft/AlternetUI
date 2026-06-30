@@ -70,6 +70,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates default monospace font
+        /// </summary>
+        /// <returns></returns>
+        public virtual Font CreateDefaultMonoFont()
+        {
+            return new Font(SkiaHelper.DefaultMonoFontName, SkiaHelper.DefaultFontSize);
+        }
+
+        /// <summary>
         /// Creates <see cref="IFontHandler"/> interface provider.
         /// </summary>
         /// <returns></returns>

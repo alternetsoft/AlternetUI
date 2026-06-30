@@ -20,6 +20,11 @@ namespace Alternet.Drawing
         FontEncoding DefaultFontEncoding { get; set; }
 
         /// <summary>
+        /// Sets default font.
+        /// </summary>
+        void SetDefaultFont(Font value);
+
+        /// <summary>
         /// Gets default font size.
         /// </summary>
         /// <returns></returns>
@@ -43,11 +48,6 @@ namespace Alternet.Drawing
         bool AllowNullFontName { get; }
 
         /// <summary>
-        /// Sets default font.
-        /// </summary>
-        void SetDefaultFont(Font value);
-
-        /// <summary>
         /// Creates native font handler.
         /// </summary>
         /// <returns></returns>
@@ -60,11 +60,10 @@ namespace Alternet.Drawing
         Font CreateDefaultFont();
 
         /// <summary>
-        /// Creates system font specified with <see cref="SystemSettingsFont"/>.
+        /// Creates default monospace font.
         /// </summary>
-        /// <param name="systemFont">System font identifier.</param>
         /// <returns></returns>
-        Font? CreateSystemFont(SystemSettingsFont systemFont);
+        Font CreateDefaultMonoFont();
 
         /// <summary>
         /// Returns a string array that contains all font families names

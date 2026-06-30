@@ -270,29 +270,6 @@ namespace Alternet.UI
             App.Log($"Default font: {Font.Default.ToInfoString()}");
             App.Log($"Default mono font: {Font.DefaultMono.ToInfoString()}");
 
-            App.LogEmptyLine();
-
-            var fontFamilies = Enum.GetValues<GenericFontFamily>();
-            foreach (var value in fontFamilies)
-            {
-                if (value == GenericFontFamily.None)
-                    continue;
-
-                var font = SystemFonts.GetFont(value);
-
-                App.Log($"Font {value}: {font.ToInfoString()}");
-            }
-
-            App.LogEmptyLine();
-
-            var fonts = Enum.GetValues<SystemSettingsFont>();
-            foreach(var value in fonts)
-            {
-                var font = SystemFonts.GetFont(value);
-
-                App.Log($"Font {value}: {font.ToInfoString()}");
-            }
-
             App.LogEndSection();
         }
 
@@ -400,13 +377,6 @@ namespace Alternet.UI
                 insideResetColors = false;
             }
         }
-
-        /// <summary>
-        /// Gets system font.
-        /// </summary>
-        /// <param name="font">System font id.</param>
-        /// <returns></returns>
-        public static Font GetFont(SystemSettingsFont font) => SystemFonts.GetFont(font);
 
         /// <summary>
         /// Calls the specified action inside the block which temporary changes

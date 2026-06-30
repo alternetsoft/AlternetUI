@@ -1578,9 +1578,8 @@ namespace Alternet.Drawing
 
         private static Font CreateDefaultMonoFont()
         {
-            var family = FontFamily.GenericMonospace;
-            var fontGenericMonospace = new Font(family, Default.SizeInPoints);
-            return fontGenericMonospace;
+            var font = FontFactory.Handler.CreateDefaultMonoFont();
+            return font;
         }
 
         private static Font CreateDefaultFont()
