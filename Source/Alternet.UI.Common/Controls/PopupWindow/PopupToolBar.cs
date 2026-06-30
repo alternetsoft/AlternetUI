@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This value is commonly used to provide consistent spacing around content in user
         /// interface layouts.</remarks>
-        public static Thickness DefaultContentMargin = 4;
+        public static Thickness DefaultContentMargin = 1;
 
         private static PopupToolBar? defaultPopup;
         private static int hideOnDeactivateSuppressCounter;
@@ -37,7 +37,7 @@ namespace Alternet.UI
             MainPanel.Margin = 0;
             MainControl.Margin = DefaultContentMargin;
             Padding = 0;
-            HasBorder = true;
+            HasBorder = false;
             Resizable = false;
             BottomToolBar.Visible = false;
             HideOnClick = false;
@@ -46,6 +46,7 @@ namespace Alternet.UI
             FocusPopupOwnerOnHide = true;
             HideOnEnter = true;
             HideOnDeactivate = true;
+            MainControl.HasBorder = true;
 
             MainControl.ToolClick += OnToolClick;
 

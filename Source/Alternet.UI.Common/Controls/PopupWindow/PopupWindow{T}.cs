@@ -18,11 +18,6 @@ namespace Alternet.UI
         where T : AbstractControl, new()
     {
         /// <summary>
-        /// Gets or sets whether popup window has an additional border by default.
-        /// </summary>
-        public static bool DefaultHasAdditionalBorder = true;
-
-        /// <summary>
         /// Gets or sets the default distance between OK and Cancel buttons in the bottom toolbar.
         /// If not specified, a default value will be used.
         /// </summary>
@@ -92,7 +87,6 @@ namespace Alternet.UI
             StartLocation = WindowStartLocation.Manual;
             TopMost = DefaultTopMost;
 
-            HasInnerBorder = DefaultHasAdditionalBorder;
             mainPanel.Parent = this;
             Padding = DefaultPadding;
 

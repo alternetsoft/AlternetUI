@@ -481,6 +481,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether the window has inner border.
+        /// This property changed base control border which is shown additionally to window border.
         /// </summary>
         public virtual bool HasInnerBorder
         {
