@@ -180,5 +180,176 @@ namespace Alternet.UI
 
         /// <summary>Alternate directory separator for current platform (runtime value).</summary>
         public static char AltDirectorySeparator => System.IO.Path.AltDirectorySeparatorChar;
+
+        /// <summary>
+        /// Char mapping array for replacing characters in a string when DrawText is called.
+        /// The array should be indexed by the character's Unicode value,
+        /// and the value at that index is the character to replace it with.
+        /// If the value is '\0', the character is not replaced.
+        /// </summary>
+        public static char[] DrawTextMapping = CreateDrawTextMapping();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to replace certain
+        /// characters in DrawText with their mapped values.
+        /// This flag is used by <see cref="NormalizeForDrawText"/>
+        /// to determine if character replacement should occur.
+        /// By default, this is set to true on Linux, meaning that character replacement will occur.
+        /// </summary>
+        public static bool UseDrawTextMapping;
+
+        /// <summary>
+        /// An override of the default character mapping for DrawText, allowing for custom character replacements.
+        /// If specified, this delegate will be used in <see cref="NormalizeForDrawText"/>.
+        /// </summary>
+        public static Func<string?, string?>? NormalizeStrForDrawText;
+
+        static CharUtils()
+        {
+            if (App.IsLinuxOS)
+                UseDrawTextMapping = true;
+        }
+
+        /// <summary>
+        /// Creates an empty character map array.
+        /// </summary>
+        /// <returns>An empty character map array.</returns>
+        public static char[] CreateCharMap()
+        {
+            var result = new char[char.MaxValue + 1];
+            return result;
+        }
+
+        /// <summary>
+        /// Sets char mapping in the provided map array.
+        /// </summary>
+        /// <param name="map">The character map array.</param>
+        /// <param name="from">The character to be replaced.</param>
+        /// <param name="to">The character to replace with.</param>
+        public static void SetCharMapping(char[] map, char from, char to)
+        {
+            map[from] = to;
+        }
+
+        /// <summary>
+        /// Creates a character map for DrawText, replacing certain characters with their visual equivalents.
+        /// </summary>
+        /// <returns>A character map array for DrawText.</returns>
+        public static char[] CreateDrawTextMapping()
+        {
+            var map = CreateCharMap();
+
+            map['\u202F'] = Space; // narrow no-break space → NBSP
+            map['\u200B'] = Space; // zero-width space → space
+
+            return map;
+        }
+
+        /// <summary>
+        /// Sets char mapping in the provided map array for multiple characters.
+        /// </summary>
+        /// <param name="map">The character map array.</param>
+        /// <param name="from">The characters to be replaced.</param>
+        /// <param name="to">The characters to replace with.</param>
+        /// <exception cref="ArgumentException">Thrown when the 'from' and 'to'
+        /// arrays have different lengths.</exception>
+        public static void SetCharMapping(char[] map, char[] from, char[] to)
+        {
+            if (from.Length != to.Length)
+                throw new ArgumentException("The 'from' and 'to' arrays must have the same length.");
+            for (int i = 0; i < from.Length; i++)
+            {
+                map[from[i]] = to[i];
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the specified string has any characters that need to be
+        /// replaced according to the provided character map.
+        /// </summary>
+        /// <param name="input">The input string to check.</param>
+        /// <param name="map">The character map array.</param>
+        /// <returns>True if the input string contains characters
+        /// that need to be replaced; otherwise, false.</returns>
+        public static bool HasCharsToReplace(ReadOnlySpan<char> input, char[] map)
+        {
+            if (input.IsEmpty)
+                return false;
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                if (map[c] != '\0')
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Replaces characters in the input string according to the character map
+        /// provided by <see cref="DrawTextMapping"/> if <see cref="UseDrawTextMapping"/> is true.
+        /// If <see cref="UseDrawTextMapping"/> is false, the input string is returned unchanged.
+        /// If <see cref="NormalizeStrForDrawText"/> is set, it will
+        /// be used to normalize the string instead.
+        /// </summary>
+        /// <param name="input">The input string to normalize.</param>
+        /// <returns>The normalized string.</returns>
+        public static string? NormalizeForDrawText(this string? input)
+        {
+            if(NormalizeStrForDrawText is not null)
+                return NormalizeStrForDrawText(input) ?? input;
+
+            if (UseDrawTextMapping)
+                return ReplaceMappedChars(input, DrawTextMapping);
+            return input;
+        }
+
+        /// <summary>
+        /// Replaces characters in the input string according to the provided character map.
+        /// </summary>
+        /// <param name="input">The input string to process.</param>
+        /// <param name="map">The character map array.</param>
+        /// <returns>A new string with characters replaced according to the map.</returns>
+        public static string? ReplaceMappedChars(string? input, char[] map)
+        {
+            if (string.IsNullOrEmpty(input))
+                return input;
+            if (!HasCharsToReplace(input.AsSpan(), map))
+                return input;
+
+            var result = new char[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                char sub = map[c];
+                result[i] = sub == '\0' ? c : sub;
+            }
+
+            return new string(result);
+        }
+
+        /// <summary>
+        /// Replaces characters in the input span according to the provided character map.
+        /// </summary>
+        /// <param name="input">The input span to process.</param>
+        /// <param name="map">The character map array.</param>
+        /// <returns>A new span with characters replaced according to the map.</returns>
+        public static ReadOnlySpan<char> ReplaceMappedChars(ReadOnlySpan<char> input, char[] map)
+        {
+            if (input.IsEmpty)
+                return input;
+            if (!HasCharsToReplace(input, map))
+                return input;
+
+            var result = new char[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                char c = input[i];
+                char sub = map[c];
+                result[i] = sub == '\0' ? c : sub;
+            }
+
+            return result;
+        }
     }
 }

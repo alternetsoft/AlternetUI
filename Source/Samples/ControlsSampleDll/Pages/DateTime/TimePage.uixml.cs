@@ -42,7 +42,7 @@ namespace ControlsSample
         private void TimePicker_Changed(object? sender, EventArgs e)
         {
             var v = timePicker.Value;
-            var s = v.ToLongTimeString();
+            var s = v.ToLongTimeString().NormalizeForDrawText();
             timeLabel.Text = $"Selected: {s}";
         }
 
