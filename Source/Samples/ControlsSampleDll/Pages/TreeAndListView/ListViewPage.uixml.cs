@@ -96,13 +96,11 @@ namespace ControlsSample
 
         private void GridLinesComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            /*
             if (listView is null)
                 return;
-            listView.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)
+            listView.ListBox.GridLinesDisplayMode = (ListViewGridLinesDisplayMode)
                 (gridLinesComboBox.Value ??
                 throw new InvalidOperationException());
-            */
         }
 
         private void ColumnWidthModeComboBox_SelectedItemChanged(

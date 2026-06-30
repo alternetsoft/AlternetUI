@@ -95,7 +95,7 @@
 
           <Label Text="Lines:" VerticalAlignment="Center" Margin="0,5,0,0" IsTextLocalized="true"/>
           <EnumPicker Name="gridLinesComboBox"
-                    Margin="0,3,0,0" IsEnabled="false"
+                    Margin="0,3,0,0" IsEnabled="true"
                     ValueChanged="GridLinesComboBox_SelectedItemChanged"/>
 
           <Label Text="Column width:" VerticalAlignment="Center"
