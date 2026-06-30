@@ -136,7 +136,6 @@ namespace Alternet.UI
         {
             if (gameOver)
             {
-                App.Alert("The game is over. Starting a new game!");
                 InitializeGame();
                 return;
             }

@@ -22,6 +22,8 @@ namespace Alternet.UI
         /// </summary>
         public FancySlider()
         {
+            ParentBackColor = true;
+            ParentForeColor = true;
             ForEachChild(c => c.Hide());
             UserPaint = true;
             ValueChanged += Control_ValueChanged;            
@@ -162,49 +164,14 @@ namespace Alternet.UI
             var bounds = e.ClientRectangle;
             var dc = e.Graphics;
 
-            dc.FillRectangle(gaugeBackgroundBrush, bounds);
+            DrawDefaultBackground(e);
 
-            /*
-            var scaleBounds = gaugeBounds.InflatedBy(-4, -4);
-            var gradientStops1 = new[]
-            {
-                new GradientStop((Color)"#1B222C", 0),
-                new GradientStop((Color)"#80767E", 0.5),
-                new GradientStop((Color)"#0C1013", 1),
-            };
-
-            using var scaleGradientBrush = new LinearGradientBrush(
-                PointD.Empty,
-                new PointD(0, scaleBounds.Height),
-                gradientStops1);
-
-            dc.FillRectangle(scaleGradientBrush, scaleBounds);
-            */
-
-            dc.DrawBorderWithBrush(DefaultColors.GetControlBorderBrush(this), bounds);
-                
             var center = GetControlCenter();
             var controlRadius = GetControlRadius();
             var largeTickLength = controlRadius * 0.1f;
             var smallTickLength = largeTickLength * 0.5f;
             var knobPadding = largeTickLength * 0.5f;
             var knobRadius = controlRadius - largeTickLength - knobPadding;
-
-            /*
-            var gradientStops2 = new[]
-            {
-                    new GradientStop((Color)"#A9A9A9", 0),
-                    new GradientStop((Color)"#676767", 0.5),
-                    new GradientStop((Color)"#353535", 1),
-            };
-
-            using var knobGradientBrush = new LinearGradientBrush(
-                PointD.Empty,
-                new PointD(knobRadius * 2, knobRadius * 2),
-                gradientStops2);
-
-            dc.FillCircle(knobGradientBrush, center, knobRadius);
-            */
 
             dc.DrawCircle(knobBorderPen, center, knobRadius);
 
