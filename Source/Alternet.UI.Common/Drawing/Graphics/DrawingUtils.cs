@@ -54,6 +54,110 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Renders a background image onto a new bitmap using the specified layout and client rectangle.
+        /// </summary>
+        /// <remarks>The behavior of the rendering depends on the specified <paramref name="layout"/>:
+        /// <list type="bullet">
+        /// <item> <term><see cref="ImageLayout.None"/></term> <description>The image
+        /// is drawn at the top-left corner of the output bitmap without scaling.</description> </item>
+        /// <item> <term><see cref="ImageLayout.Center"/></term> <description>The image is centered within
+        /// the output bitmap without
+        /// scaling.</description> </item>
+        /// <item> <term><see cref="ImageLayout.Stretch"/></term> <description>The image
+        /// is stretched to fill the entire output bitmap, potentially distorting its
+        /// aspect ratio.</description>
+        /// </item>
+        /// <item> <term><see cref="ImageLayout.Zoom"/></term> <description>The image
+        /// is scaled to fit within
+        /// the output bitmap while preserving its aspect ratio. The image is centered,
+        /// and any excess space is left
+        /// blank.</description> </item>
+        /// <item> <term><see cref="ImageLayout.Tile"/></term> <description>The image is
+        /// tiled across the output bitmap, repeating as necessary to fill the area.</description> </item>
+        /// </list></remarks>
+        /// <param name="backgroundImage">The image to be rendered as the background.
+        /// Cannot be <see langword="null"/>.</param>
+        /// <param name="layout">The layout style to use when rendering the image.
+        /// Supported values are <see cref="ImageLayout.None"/>,  <see
+        /// cref="ImageLayout.Center"/>, <see cref="ImageLayout.Stretch"/>, <see cref="ImageLayout.Zoom"/>,
+        /// and <see cref="ImageLayout.Tile"/>.</param>
+        /// <param name="clientRect">The rectangle that defines the dimensions of the output bitmap.</param>
+        /// <param name="scaleFactor">The scale factor to apply when rendering the image.</param>
+        /// <returns>A new <see cref="Bitmap"/> containing the rendered background image.
+        /// The dimensions of the bitmap match the specified <paramref name="clientRect"/>.</returns>
+        public static Bitmap? RenderBackgroundImage(
+            Image? backgroundImage,
+            ImageLayout layout,
+            RectD clientRect,
+            float scaleFactor)
+        {
+            if (backgroundImage == null)
+                return null;
+
+            var sizeI = clientRect.Size.PixelFromDip(scaleFactor);
+
+            var result = new Bitmap(sizeI.Width, sizeI.Height);
+            using var g = Graphics.FromImage(result);
+
+            switch (layout)
+            {
+                case ImageLayout.None:
+                    g.DrawImage(backgroundImage, PointD.Empty);
+                    break;
+
+                case ImageLayout.Center:
+                    var cx = (clientRect.Width - backgroundImage.Width) / 2;
+                    var cy = (clientRect.Height - backgroundImage.Height) / 2;
+                    g.DrawImage(backgroundImage, new PointD(cx, cy));
+                    break;
+
+                case ImageLayout.Stretch:
+                    g.DrawImage(backgroundImage, clientRect);
+                    break;
+
+                case ImageLayout.Zoom:
+                    float imageAspect = (float)backgroundImage.Width / backgroundImage.Height;
+                    float rectAspect = (float)clientRect.Width / clientRect.Height;
+
+                    RectD zoomRect;
+                    if (imageAspect > rectAspect)
+                    {
+                        var width = clientRect.Width;
+                        var height = (int)(width / imageAspect);
+                        var y = (clientRect.Height - height) / 2;
+                        zoomRect = new RectD(0, y, width, height);
+                    }
+                    else
+                    {
+                        var height = clientRect.Height;
+                        var width = (int)(height * imageAspect);
+                        var x = (clientRect.Width - width) / 2;
+                        zoomRect = new RectD(x, 0, width, height);
+                    }
+
+                    g.DrawImage(backgroundImage, zoomRect);
+                    break;
+
+                case ImageLayout.Tile:
+                    var sizeDip = backgroundImage.SizeDip(scaleFactor);
+                    var tileWidth = sizeDip.Width;
+                    var tileHeight = sizeDip.Height;
+
+                    for (float y = 0; y < clientRect.Height; y += tileHeight)
+                    {
+                        for (float x = 0; x < clientRect.Width; x += tileWidth)
+                        {
+                            g.DrawImage(backgroundImage, new PointD(x, y));
+                        }
+                    }
+
+                    break;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates <see cref="SKBitmap"/> with the specifies size.
         /// </summary>
         /// <param name="width">Image width.</param>
