@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <param name="subItems">Indicates whether to add sub-items to each test item.</param>
         /// <param name="parent">The parent item to which the test items will be added.
         /// If null, the items will be added to the root of the tree view.</param>
-        public static void AddTestItemsWithColumns(
+        public static bool AddTestItemsWithColumns(
             TreeViewItem parent,
             int count,
             bool subItems = true)
@@ -76,8 +76,7 @@ namespace Alternet.UI
 
                 if(nameColumn == null || dataColumn == null || infoColumn == null)
                 {
-                    App.Alert("Columns 'Name', 'Data', and 'Info' must exist.");
-                    return;
+                    return false;
                 }
 
                 void Initialize(TreeViewItem item)
@@ -122,6 +121,8 @@ namespace Alternet.UI
 
                     parent.Add(item);
                 }
+
+                return true;
             }
             finally
             {

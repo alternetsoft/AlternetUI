@@ -63,10 +63,10 @@
             </HorizontalStackPanel>
             <HorizontalStackPanel Margin="5,0,0,0">
               <StdButton Text="Focus" Name="focusLastItemButton" IsTextLocalized="true"
-                      Margin="0,3,0,0" IsEnabled="false"
+                      Margin="0,3,0,0" IsEnabled="true"
                   Click="FocusLastItemButton_Click" />
               <StdButton Text="Add Sibling" Name="addLastItemSiblingButton" IsTextLocalized="true"
-                      Margin="3,3,0,0" Enabled="true" IsEnabled="false"
+                      Margin="3,3,0,0" Enabled="true" IsEnabled="true"
                       Click="AddLastItemSiblingButton_Click" />
             </HorizontalStackPanel>
           </Panel>

@@ -235,24 +235,17 @@ namespace ControlsSample
             listView.HasBorder = !listView.HasBorder;
         }
 
-        private void FocusLastItemButton_Click(
-            object? sender,
-            System.EventArgs e)
+        private void FocusLastItemButton_Click(object? sender, System.EventArgs e)
         {
-            /*
             var item = GetLastItem();
             if (item != null)
             {
-                listView.SetFocus();
-                item.IsFocused = true;
+                listView.SetFocusIfPossible();
                 listView.SelectedItem = item;
             }
-            */
         }
 
-        private void ListView_MouseLeftButtonDown(
-            object? sender,
-            MouseEventArgs e)
+        private void ListView_MouseLeftButtonDown(object? sender, MouseEventArgs e)
         {
             /*
             var result = listView.HitTest(Mouse.GetPosition(listView));
@@ -303,23 +296,34 @@ namespace ControlsSample
             }
         }
 
-        private void AddLastItemSiblingButton_Click(
-            object? sender,
-            System.EventArgs e)
+        private void Initialize(TreeViewItem item)
         {
-            /*
-            var item = GetLastItem();
-            if (item != null)
+            if (nameColumn == null || dataColumn == null || infoColumn == null)
+                return;
+
+            var textCell = item.SafeCell(nameColumn);
+            textCell.Text = item.Text;
+            textCell.SvgImage = KnownColorSvgImages.ImgLogo;
+
+            var dataCell = item.SafeCell(dataColumn);
+            dataCell.Text = "Data " + LogUtils.GenNewId();
+            dataCell.HorizontalAlignment = HorizontalAlignment.Right;
+
+            var infoCell = item.SafeCell(infoColumn);
+            infoCell.Text = "Info " + LogUtils.GenNewId();
+        }
+
+        private void AddLastItemSiblingButton_Click(object? sender, System.EventArgs e)
+        {
+            var itemIndex = listView.Items.Count - 1;
+            if (itemIndex >= 0)
             {
-                listView.BeginUpdate();
-                var itemIndex = listView.Items.IndexOf(item);
-                var imageIndex = item.ImageIndex ?? 0;
-                var newItem = new ListViewItem(item.Text + " Sibling", imageIndex);
-                listView.Items.Insert(itemIndex, newItem);
+                var newItem = new TreeViewItem();
+                newItem.Text = "Item " + LogUtils.GenNewId();
+                Initialize(newItem);
+                listView.RootItem.Insert(itemIndex, newItem);
                 newItem.EnsureVisible();
-                listView.EndUpdate();
             }
-            */
         }
 
         private void ClearButton_Click(object? sender, System.EventArgs e)
