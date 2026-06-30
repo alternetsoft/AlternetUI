@@ -399,9 +399,6 @@ namespace Alternet.UI.Native
 
                 void MeasureFontSize()
                 {
-                    if (!App.IsLinuxOS)
-                        return;
-
                     var font = UI.Control.DefaultFont;
                     var measureText = "Wg";
                     var skiaMeasure = graphics.MeasureText(measureText, font);

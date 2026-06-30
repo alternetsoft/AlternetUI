@@ -47,6 +47,7 @@ namespace Alternet.Drawing
         private static string? defaultFontName;
         private static string? defaultMonoFontName;
 
+        private SkiaFontHandler handler;
         private SKFont? skiaFont;
         private FontStyle? style;
         private int? hashCode;
@@ -390,8 +391,8 @@ namespace Alternet.Drawing
                 GdiCharSet = 1,
             };
 
-            Handler = new SkiaFontHandler();
-            Handler.Update(this, prm);
+            handler = new SkiaFontHandler();
+            handler.Update(this, prm);
         }
 
         /// <summary>
@@ -399,9 +400,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="handler">Font handler.</param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private Font(IFontHandler handler)
+        private Font(SkiaFontHandler handler)
         {
-            Handler = handler;
+            this.handler = handler;
         }
 
         /// <summary>
@@ -488,7 +489,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return Handler.GetPixelSize(this);
+                return handler.GetPixelSize(this);
             }
         }
 
@@ -519,7 +520,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return Handler.IsUsingSizeInPixels(this);
+                return handler.IsUsingSizeInPixels(this);
             }
         }
 
@@ -621,7 +622,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public virtual int NumericWeight
         {
-            get => Handler.GetNumericWeight(this);
+            get => handler.GetNumericWeight(this);
         }
 
         /// <summary>
@@ -640,7 +641,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return Handler.IsFixedWidth(this);
+                return handler.IsFixedWidth(this);
             }
         }
 
@@ -649,7 +650,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns></returns>
         [Browsable(false)]
-        public virtual FontWeight Weight => Handler.GetWeight();
+        public virtual FontWeight Weight => handler.GetWeight();
 
         /// <summary>
         /// Returns bold version of the font.
@@ -692,7 +693,7 @@ namespace Alternet.Drawing
         {
             get
             {
-                return style ??= GetStyle(Handler);
+                return style ??= GetStyle(handler);
             }
         }
 
@@ -710,7 +711,7 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> is italic;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsItalic => Handler.GetItalic();
+        public virtual bool IsItalic => handler.GetItalic();
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -719,13 +720,13 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> has a horizontal
         /// line through it; otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsStrikethrough => Handler.GetStrikethrough();
+        public virtual bool IsStrikethrough => handler.GetStrikethrough();
 
         /// <summary>
         /// Same as <see cref="IsStrikethrough"/>.
         /// </summary>
         [Browsable(false)]
-        public bool IsStrikeout => Handler.GetStrikethrough();
+        public bool IsStrikeout => handler.GetStrikethrough();
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/>
@@ -734,7 +735,7 @@ namespace Alternet.Drawing
         /// <value><c>true</c> if this <see cref="Font"/> is underlined;
         /// otherwise, <c>false</c>.</value>
         [Browsable(false)]
-        public virtual bool IsUnderlined => Handler.GetUnderlined();
+        public virtual bool IsUnderlined => handler.GetUnderlined();
 
         /// <summary>
         /// Gets the em-size, in points, of this <see cref="Font"/>.
@@ -745,7 +746,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return Handler.SizeInPoints;
+                return handler.SizeInPoints;
             }
         }
 
@@ -784,7 +785,7 @@ namespace Alternet.Drawing
             get
             {
                 CheckDisposed();
-                return Handler.GetName();
+                return handler.GetName();
             }
         }
 
@@ -803,7 +804,7 @@ namespace Alternet.Drawing
         /// <remarks>
         /// Note that under Linux the returned value is always UTF8.
         /// </remarks>
-        internal FontEncoding Encoding => Handler.GetEncoding(this);
+        internal FontEncoding Encoding => handler.GetEncoding(this);
 
         /// <summary>
         /// Converts the specified <see cref='Font'/> to a <see cref='SKFont'/>.
@@ -1128,7 +1129,7 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual string Serialize()
         {
-            return Handler.Serialize();
+            return handler.Serialize();
         }
 
         /// <summary>
@@ -1138,7 +1139,7 @@ namespace Alternet.Drawing
         public override int GetHashCode()
         {
             CheckDisposed();
-            hashCode ??= Handler.Serialize().GetHashCode();
+            hashCode ??= handler.Serialize().GetHashCode();
             return hashCode.Value;
         }
 
@@ -1179,7 +1180,7 @@ namespace Alternet.Drawing
         public override string ToString()
         {
             CheckDisposed();
-            return ToUserString(Handler);
+            return ToUserString(handler);
         }
 
         /// <summary>
@@ -1625,14 +1626,6 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            Handler.Dispose();
-            Handler = null;
         }
-
-        /// <summary>
-        /// Gets native font.
-        /// </summary>
-        [Browsable(false)]
-        private IFontHandler Handler { get; set; }
     }
 }
