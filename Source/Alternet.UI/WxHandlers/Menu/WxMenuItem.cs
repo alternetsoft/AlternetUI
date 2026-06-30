@@ -93,9 +93,10 @@ namespace Alternet.UI
             set
             {
                 var itemPtr = AsPointer;
-                var nativeImage = (UI.Native.Image?)value?.Handler;
                 if (itemPtr == IntPtr.Zero)
                     return;
+
+                var nativeImage = UI.Application.ToNative(value);
                 Native.Menu.SetMenuItemBitmap(itemPtr, nativeImage);
             }
         }

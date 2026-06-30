@@ -142,8 +142,11 @@ namespace Alternet.UI
             }
         }
 
-        internal static UI.Native.Image ToNative(Alternet.Drawing.Image image)
+        internal static UI.Native.Image? ToNative(Alternet.Drawing.Image? image)
         {
+            if (image is null)
+                return null;
+
             var result = image.GetHostObject<UI.Native.Image>();
             if (result is not null)
                 return result;
