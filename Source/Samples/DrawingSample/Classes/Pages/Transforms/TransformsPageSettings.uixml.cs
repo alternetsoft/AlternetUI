@@ -15,15 +15,6 @@ namespace DrawingSample
         {
             DataContext = page;
 
-            if (App.IsMacOS)
-            {
-                translationXSlider.IsEnabled = false;
-                translationYSlider.IsEnabled = false;
-                scaleFactorXSlider.IsEnabled = false;
-                scaleFactorYSlider.IsEnabled = false;
-                rotationSlider.IsEnabled = false;
-            }
-
             resetButton.Click += (s, e) =>
             {
                 translationXSlider.Value = 0;

@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a text editor with spinner buttons that allow the user to increment or decrement the value.
     /// </summary>
+    [ControlCategory(KnownControlCategory.Editors)]
     public class StdIntPicker : ToolBar
     {
         /// <summary>

@@ -86,6 +86,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<Calculator>();
                 ToolBoxAdd<LabelAndButton>();
                 ToolBoxAdd<IntPicker>();
+                ToolBoxAdd<StdIntPicker>();
                 ToolBoxAdd<DatePicker>();
                 ToolBoxAdd<DateTimePicker>();
                 ToolBoxAdd<TimePicker>();
