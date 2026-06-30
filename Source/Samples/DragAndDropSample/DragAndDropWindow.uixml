@@ -14,7 +14,7 @@
       <StackPanel Orientation="Horizontal">
 
         <StackPanel Orientation="Vertical" Margin="5" MinChildMargin="5">
-          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
+          <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" InputTransparent="true"/>
           <Label Text="Clipboard"  IsBold="true" HorizontalAlignment="Center" Margin="5"/>
           <StdButton Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" Margin="5"/>
           <StdButton Text="Paste" Name="pasteButton" Margin="5"
@@ -26,7 +26,7 @@
                   MouseDown="DragSource_MouseDown"
                   MouseMove="DragSource_MouseMove"
                   MouseUp="DragSource_MouseUp">
-            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
+            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" InputTransparent="true"/>
             <Label Text="Drag Me" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
           </Panel>
@@ -37,7 +37,7 @@
                 DragOver="DropTarget_DragOver"
                 DragEnter="DropTarget_DragEnter"
                 DragLeave="DropTarget_DragLeave">
-            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
+            <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" InputTransparent="true"/>
             <Label Text="Drop Here" VerticalAlignment="Center" IsTextLocalized="true"
                    HorizontalAlignment="Center" InputTransparent="true"/>
           </Panel>
