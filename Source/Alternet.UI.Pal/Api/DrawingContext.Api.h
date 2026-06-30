@@ -175,7 +175,7 @@ ALTERNET_UI_API void DrawingContext_ImageFromGenericImageDC_(Image* image, void*
     });
 }
 
-ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, NativeStringSpan* text, Font* font)
+ALTERNET_UI_API SizeD_C DrawingContext_GetTextExtentSimple_(DrawingContext* obj, NativeStringSpan* text, void* font)
 {
     return MarshalExceptions<SizeD_C>([&](){
         return obj->GetTextExtentSimple(*text, font);

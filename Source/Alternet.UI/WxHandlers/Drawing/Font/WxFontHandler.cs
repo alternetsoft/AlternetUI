@@ -45,13 +45,6 @@ namespace Alternet.UI.Native
             });
         }
 
-        bool IFontHandler.Equals(Alternet.Drawing.Font font)
-        {
-            if (font.Handler is not UI.Native.Font handler)
-                return false;
-            return IsEqualTo(handler);
-        }
-
         FontWeight IFontHandler.GetWeight()
         {
             return (FontWeight)GetWeight();

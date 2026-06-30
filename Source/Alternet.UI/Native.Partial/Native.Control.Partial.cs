@@ -408,7 +408,8 @@ namespace Alternet.UI.Native
 
                     var nativeMeasure = StringUtils.InvokeWithResult(measureText, span =>
                     {
-                        return dc.GetTextExtentSimple(span, (UI.Native.Font)font.Handler);
+                        var fontRef = WxControlHandler.GetFontRef(font);
+                        return dc.GetTextExtentSimple(span, fontRef);
                     });
 
                     var nativeHeight = uiControl.PixelFToDip(nativeMeasure.Height);

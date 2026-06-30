@@ -93,12 +93,6 @@ namespace Alternet.Drawing
         void Update(Font font, FontParams prm);
 
         /// <summary>
-        /// Indicates whether font is equal to another font.
-        /// </summary>
-        /// <returns></returns>
-        bool Equals(Font font);
-
-        /// <summary>
         /// Contains font properties.
         /// </summary>
         public class FontParams

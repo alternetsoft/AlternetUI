@@ -67,7 +67,7 @@ namespace NativeApi.Api
         //(usually is zero).
         //Gets the dimensions of the string using the currently selected font.
         //This function only works with single-line strings.
-        public unsafe SizeD GetTextExtentSimple(NativeStringSpan text, Font font) => default;
+        public unsafe SizeD GetTextExtentSimple(NativeStringSpan text, IntPtr font) => default;
 
         public static DrawingContext FromImage(Image image) => throw new Exception();
 

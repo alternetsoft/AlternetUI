@@ -194,7 +194,7 @@ namespace Alternet.Drawing
         public virtual bool Equals(Font font)
         {
             var thisSerialized = Serialize();
-            var otherSerialized = font.Handler.Serialize();
+            var otherSerialized = font.Serialize();
             return thisSerialized == otherSerialized;
         }
 

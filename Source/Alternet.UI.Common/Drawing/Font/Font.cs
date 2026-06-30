@@ -765,12 +765,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets native font.
-        /// </summary>
-        [Browsable(false)]
-        public virtual IFontHandler Handler { get; private set; }
-
-        /// <summary>
         /// Gets a <see cref="bool"/> value that indicates whether this
         /// <see cref="Font" /> is derived from
         /// a vertical font.</summary>
@@ -1129,6 +1123,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a string representation of the font's attributes, including its name, size, and style.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string Serialize()
+        {
+            return Handler.Serialize();
+        }
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
@@ -1144,7 +1147,8 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="font1">The first font to compare.</param>
         /// <param name="font2">The second font to compare.</param>
-        /// <returns><see langword="true"/> if both fonts are null or equal; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true"/> if both fonts are null or equal;
+        /// otherwise, <see langword="false"/>.</returns>
         public static bool AreEqual(Font? font1, Font? font2)
         {
             if (font1 is null && font2 is null)
@@ -1159,11 +1163,13 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual bool Equals(Font? other)
         {
-            if (other == null)
+            if (object.ReferenceEquals(this, other))
+                return true;
+
+            if (other is null)
                 return false;
 
-            CheckDisposed();
-            return Handler.Equals(other);
+            return GetHashCode() == other.GetHashCode();
         }
 
         /// <summary>
@@ -1622,5 +1628,11 @@ namespace Alternet.Drawing
             Handler.Dispose();
             Handler = null;
         }
+
+        /// <summary>
+        /// Gets native font.
+        /// </summary>
+        [Browsable(false)]
+        private IFontHandler Handler { get; set; }
     }
 }

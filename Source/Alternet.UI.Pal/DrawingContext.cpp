@@ -639,9 +639,9 @@ namespace Alternet::UI
 		return pen->GetGraphicsPen(_graphicsContext->GetRenderer());
 	}
 
-	Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, Font* font)
+	Size DrawingContext::GetTextExtentSimple(const NativeStringSpan& text, void* font)
 	{
-		auto wxf = font->GetWxFont();
+		auto wxf = Font::FromFontRef(font);
 
 		wxDouble height;
 		wxDouble width;
