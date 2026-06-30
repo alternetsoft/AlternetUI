@@ -119,10 +119,10 @@
                         Margin="0,5,0,0" IsTextLocalized="true"
                         IsChecked="False" />
               <StdCheckBox Text="Before Label Edit" Name="cancelBeforeLabelEditEventsCheckBox"
-                        Margin="0,5,0,0" IsTextLocalized="true"
+                        Margin="0,5,0,0" IsTextLocalized="true" IsEnabled="false"
                         IsChecked="False" />
               <StdCheckBox Text="After Label Edit" Name="cancelAfterLabelEditEventsCheckBox"
-                        Margin="0,5,0,0"
+                        Margin="0,5,0,0"  IsEnabled="false"
                         IsChecked="False" />
             </VerticalStackPanel>
           </TabControl>
