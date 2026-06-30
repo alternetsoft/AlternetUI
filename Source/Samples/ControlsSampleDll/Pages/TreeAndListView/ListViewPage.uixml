@@ -47,7 +47,7 @@
           <HorizontalStackPanel>
             <StdButton Text="Edit Selected" IsTextLocalized="true"
                     Name="beginSelectedLabelEditingButton"
-                    Margin="0,3,0,0" IsEnabled="false"
+                    Margin="0,3,0,0" IsEnabled="true"
                     Click="BeginSelectedLabelEditingButton_Click"/>
           </HorizontalStackPanel>
 

@@ -2400,8 +2400,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="column">The column for which to set the cell text. Cannot be null.</param>
         /// <param name="text">The text to set in the cell. If null, an empty string is used.</param>
-        public virtual void SetText(ListControlColumn column, string? text)
+        public virtual void SetText(ListControlColumn? column, string? text)
         {
+            if (column is null)
+                return;
+
             var cell = SafeCell(column.UniqueId);
             cell.Text = text ?? string.Empty;
         }

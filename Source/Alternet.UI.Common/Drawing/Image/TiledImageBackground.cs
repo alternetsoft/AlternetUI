@@ -10,12 +10,18 @@ using Alternet.UI;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Provides a tiled image background rendering mechanism for controls.
+    /// Provides a tiled image background rendering mechanism.
     /// </summary>
     public class TiledImageBackground : DisposableObject
     {
         private Image? backgroundImage;
         private bool imageLoaded;
+
+        /// <summary>
+        /// Gets or sets the scale factor to apply when rendering the image.
+        /// The default value is 1.0f (no scaling).
+        /// </summary>
+        public float ScaleFactor { get; set; } = 1.0f;
 
         /// <summary>
         /// Gets the source image used for rendering the background.
@@ -43,7 +49,11 @@ namespace Alternet.Drawing
                 {
                     try
                     {
-                        backgroundImage = DrawingUtils.RenderBackgroundImage(SourceImage, Layout, ContainerRect);
+                        backgroundImage = DrawingUtils.RenderBackgroundImage(
+                            SourceImage,
+                            Layout,
+                            ContainerRect,
+                            ScaleFactor);
                     }
                     catch (Exception ex)
                     {

@@ -13,6 +13,10 @@ namespace ControlsSample
         private int newItemIndex = 0;
         private int newColIndex = 2;
 
+        private ListControlColumn? nameColumn;
+        private ListControlColumn? dataColumn;
+        private ListControlColumn? infoColumn;
+
         static ListViewPage()
         {
         }
@@ -50,9 +54,19 @@ namespace ControlsSample
 
             ListControlUtils.SetTestItemsWithColumns(listView, 100, false);
 
+            nameColumn = listView.ColumnByName("Name");
+            dataColumn = listView.ColumnByName("Data");
+            infoColumn = listView.ColumnByName("Info");
+
             listView.SetPreferredColumnWidth();
 
             listView.ListBox.SelectionMode = ListBoxSelectionMode.Multiple;
+
+            listView.ListBox.ItemTextEdited+=(s,e) =>
+            {
+                e.Item.SetText(nameColumn, e.NewText);
+                App.Log($"Item text edited: {e.NewText}");
+            };
 
             /*
             listView.SelectionMode = ListViewSelectionMode.Multiple;
@@ -203,9 +217,7 @@ namespace ControlsSample
             object? sender,
             EventArgs e)
         {
-            /*
-            listView.SelectedItem?.BeginLabelEdit();
-            */
+            listView.ListBox.ShowItemEditor();
         }
 
         private TreeViewItem? GetLastItem()
