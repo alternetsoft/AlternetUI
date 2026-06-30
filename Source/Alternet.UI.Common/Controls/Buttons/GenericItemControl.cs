@@ -1151,10 +1151,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        protected override void OnMouseDoubleClick(MouseEventArgs e)
         {
-            base.OnMouseLeftButtonDown(e);
+            base.OnMouseDoubleClick(e);
+            ToggleCheckedOnMouseClick(e);
+        }
 
+        /// <summary>
+        /// Toggles the checked state of the control when a mouse click event occurs.
+        /// </summary>
+        /// <param name="e">The <see cref="MouseEventArgs"/> instance containing the event data.</param>
+        protected virtual void ToggleCheckedOnMouseClick(MouseEventArgs e)
+        {
             if (DisposingOrDisposed || !Enabled)
                 return;
 
@@ -1166,6 +1174,13 @@ namespace Alternet.UI
                     return;
                 }
             }
+        }
+
+        /// <inheritdoc/>
+        protected override void OnMouseLeftButtonDown(MouseEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+            ToggleCheckedOnMouseClick(e);
         }
 
         /// <summary>
@@ -1242,7 +1257,8 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Recalculates the alignment of text and image elements within the control based on the current settings.
+        /// Recalculates the alignment of text and image elements
+        /// within the control based on the current settings.
         /// </summary>
         /// <remarks>Override this method in a derived class to implement
         /// custom alignment logic for text and images. </remarks>
@@ -1258,11 +1274,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Invoked when a list item is created or assigned, allowing derived classes to perform custom processing or
+        /// Invoked when a list item is created or assigned, allowing derived
+        /// classes to perform custom processing or
         /// initialization for the item.
         /// </summary>
-        /// <remarks>Override this method in a derived class to implement additional behavior when a new
-        /// item is added to the control or an existing item is assigned. This method is called each time an item is
+        /// <remarks>Override this method in a derived class to implement
+        /// additional behavior when a new
+        /// item is added to the control or an existing item is assigned.
+        /// This method is called each time an item is
         /// created or assigned to the control.</remarks>
         /// <param name="item">The list item that has been created or
         /// assigned and will be associated with the control.</param>
