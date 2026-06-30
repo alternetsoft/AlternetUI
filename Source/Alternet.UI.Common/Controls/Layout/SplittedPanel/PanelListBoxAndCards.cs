@@ -47,10 +47,13 @@ namespace Alternet.UI
         /// <param name="title">Page title.</param>
         /// <param name="fnCreate">Function which creates the control.</param>
         /// <returns>
-        /// Created page index.
+        /// Created page index in the list or -1 if page was not created.
         /// </returns>
-        public virtual int Add(string title, Func<AbstractControl> fnCreate)
+        public virtual int Add(string? title, Func<AbstractControl>? fnCreate)
         {
+            if (title is null || fnCreate is null)
+                return -1;
+
             var index = cardPanel.Add(title, fnCreate);
             var id = cardPanel.Cards[index].UniqueId;
             TreeViewItem item = new(title);

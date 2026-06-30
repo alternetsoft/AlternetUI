@@ -139,6 +139,14 @@ namespace ControlsSample
 
         public static void InitActions()
         {
+            ControlsTestWindow.AddPage<NativeSliderPage>("Native Slider");
+            ControlsTestWindow.AddPage<NativeTreeViewPage>("Native TreeView");
+            ControlsTestWindow.AddPage<NativeProgressBarPage>("Native ProgressBar");
+
+            ControlsTestWindow.AddPage<NativeButtonPage>("Native Button");
+            ControlsTestWindow.AddPage<NativeCheckBoxesPage>("Native CheckBox");
+            ControlsTestWindow.AddPage<NativeRadioButtonsPage>("Native RadioButton");
+
             CustomInternalSamplesPage.Add("Documentation Samples", () => new ApiDoc.MainWindowSimple());
 
             ToolBoxAdd<Button>();
