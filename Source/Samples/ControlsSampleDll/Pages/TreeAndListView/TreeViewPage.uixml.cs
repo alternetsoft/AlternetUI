@@ -86,6 +86,12 @@ namespace ControlsSample
                 e.Result += $" (LinearIndex: {treeViewItem.LinearIndex})";
                 e.Handled = true;
             };
+
+            treeView.ListBox.ItemTextEdited += (s, e) =>
+            {
+                if (e.Item is TreeViewItem treeViewItem)
+                    treeViewItem.Text = e.NewTextOrDefault;
+            };
         }
 
         private void TreeView_MouseMove(object sender, MouseEventArgs e)
@@ -326,9 +332,7 @@ namespace ControlsSample
 
         private void BeginSelectedLabelEditingButton_Click(object? sender, EventArgs e)
         {
-            /*
-            treeView.SelectedItem?.BeginLabelEdit();
-            */
+            treeView.ListBox.ShowItemEditor();
         }
 
         private void ExpandAllButton_Click(object? sender, EventArgs e)
