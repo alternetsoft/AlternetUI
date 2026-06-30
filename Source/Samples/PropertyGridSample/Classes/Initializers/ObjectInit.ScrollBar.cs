@@ -9,7 +9,7 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
-        public static bool LogScrollBarPosition = false;
+        public static bool LogScrollBarPosition = true;
 
         public static void InitScrollBar(object control)
         {

@@ -3072,6 +3072,7 @@ namespace Alternet.UI
         /// If this value is specified, it is used instead of the inner borders in the border settings
         /// when border is painted.
         /// </summary>
+        [Browsable(false)]
         public virtual BaseCollection<BorderSettings>? InnerBordersOverride { get; set; }
 
         /// <summary>
