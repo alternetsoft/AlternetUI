@@ -65,7 +65,8 @@ namespace Alternet.UI.Native
         {
             set
             {
-                Icon = (UI.Native.Image?)value?.Handler ?? null;
+                var nativeImage = UI.Application.ToNative(value);
+                Icon = nativeImage;
             }
         }
 

@@ -9,27 +9,27 @@ namespace Alternet.UI
     {
         public Image? NormalImage
         {
-            set => NativeControl.NormalImage = (UI.Native.Image?)value?.Handler;
+            set => NativeControl.NormalImage = UI.Application.ToNative(value);
         }
 
         public Image? HoveredImage
         {
-            set => NativeControl.HoveredImage = (UI.Native.Image?)value?.Handler;
+            set => NativeControl.HoveredImage = UI.Application.ToNative(value);
         }
 
         public Image? PressedImage
         {
-            set => NativeControl.PressedImage = (UI.Native.Image?)value?.Handler;
+            set => NativeControl.PressedImage = UI.Application.ToNative(value);
         }
 
         public Image? DisabledImage
         {
-            set => NativeControl.DisabledImage = (UI.Native.Image?)value?.Handler;
+            set => NativeControl.DisabledImage = UI.Application.ToNative(value);
         }
 
         public Image? FocusedImage
         {
-            set => NativeControl.FocusedImage = (UI.Native.Image?)value?.Handler;
+            set => NativeControl.FocusedImage = UI.Application.ToNative(value);
         }
 
         /// <summary>
