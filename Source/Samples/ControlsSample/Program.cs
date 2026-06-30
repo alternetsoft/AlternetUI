@@ -124,7 +124,7 @@ namespace ControlsSample
 
             InitSamples();
 
-            if (DebugUtils.IsDebugOnWindows)
+            if (DebugUtils.IsDebugDefined)
             {
                 NativeControlsRegistration.InitActions();
             }
