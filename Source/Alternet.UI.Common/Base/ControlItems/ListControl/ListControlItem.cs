@@ -2810,7 +2810,7 @@ namespace Alternet.UI
         /// <returns>true if the checkbox allows all states for the user; otherwise, false.</returns>
         public virtual bool GetCheckBoxAllowAllStatesForUser(IListControlItemContainer? container)
         {
-            bool result = container?.Defaults.CheckBoxThreeState ?? false;
+            bool result = container?.Defaults.CheckBoxAllowAllStatesForUser ?? false;
             if (result && CheckBoxAllowAllStatesForUser is not null)
                 result = CheckBoxAllowAllStatesForUser.Value;
             return result;
