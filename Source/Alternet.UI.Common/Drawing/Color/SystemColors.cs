@@ -196,5 +196,46 @@ namespace Alternet.Drawing
         /// <returns>A <see cref="Color" /> that is the color of text in
         /// a 3-D element.</returns>
         public static Color ControlText = new(KnownSystemColor.ControlText);
+
+        /// <summary>
+        /// Resets allocated resources in system colors.
+        /// This method is called when system colors are changed.
+        /// </summary>
+        public static void ResetCachedResources()
+        {
+            ActiveBorder.ResetCachedResources();
+            ActiveCaption.ResetCachedResources();
+            ActiveCaptionText.ResetCachedResources();
+            AppWorkspace.ResetCachedResources();
+            ButtonFace.ResetCachedResources();
+            ButtonHighlight.ResetCachedResources();
+            ButtonShadow.ResetCachedResources();
+            Control.ResetCachedResources();
+            ControlDark.ResetCachedResources();
+            ControlDarkDark.ResetCachedResources();
+            ControlLight.ResetCachedResources();
+            ControlLightLight.ResetCachedResources();
+            Desktop.ResetCachedResources();
+            GradientActiveCaption.ResetCachedResources();
+            GradientInactiveCaption.ResetCachedResources();
+            GrayText.ResetCachedResources();
+            Highlight.ResetCachedResources();
+            HighlightText.ResetCachedResources();
+            HotTrack.ResetCachedResources();
+            InactiveBorder.ResetCachedResources();
+            InactiveCaption.ResetCachedResources();
+            InactiveCaptionText.ResetCachedResources();
+            Info.ResetCachedResources();
+            InfoText.ResetCachedResources();
+            Menu.ResetCachedResources();
+            MenuBar.ResetCachedResources();
+            MenuHighlight.ResetCachedResources();
+            MenuText.ResetCachedResources();
+            ScrollBar.ResetCachedResources();
+            WindowFrame.ResetCachedResources();
+            Window.ResetCachedResources();
+            WindowText.ResetCachedResources();
+            ControlText.ResetCachedResources();
+        }
     }
 }

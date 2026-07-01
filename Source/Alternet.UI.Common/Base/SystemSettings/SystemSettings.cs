@@ -349,11 +349,14 @@ namespace Alternet.UI
             try
             {
                 validColors = false;
+                SystemColors.ResetCachedResources();
                 PlessSystemColors.Reset();
                 DefaultColors.Initialize();
                 SystemColorsChanged?.Invoke();
 
-                StaticControlEvents.RaiseNotification(StaticControlEvents.NotificationType.SystemColorsChanged, EventArgs.Empty);
+                StaticControlEvents.RaiseNotification(
+                    StaticControlEvents.NotificationType.SystemColorsChanged,
+                    EventArgs.Empty);
 
                 FormUtils.ForEach((form) =>
                 {
