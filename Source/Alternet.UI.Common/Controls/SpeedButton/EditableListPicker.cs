@@ -106,7 +106,7 @@ namespace Alternet.UI
         {
             if (!IsEditable || !Label.Bounds.Contains(e.Location))
             {
-                KnownPopupControls.Default.CloseActivePopupTextBox(UniqueId);
+                CancelEdit();
                 base.TogglePopupVisible(e);
             }
         }
@@ -156,6 +156,14 @@ namespace Alternet.UI
         public override void UpdateBaseText()
         {
             base.UpdateBaseText();
+        }
+
+        /// <summary>
+        /// Ends the editing of the text in the control.
+        /// </summary>
+        public virtual void CancelEdit()
+        {
+            KnownPopupControls.Default.CloseActivePopupTextBox(UniqueId);
         }
 
         /// <summary>
