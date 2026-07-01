@@ -10,36 +10,6 @@ namespace ControlsSample
     [IsCsLocalized(true)]
     internal partial class NativeButtonPage : Panel
     {
-        private readonly Label labelBackColor = new(GenericStrings.BackColor)
-        {
-            Margin = 5,
-            VerticalAlignment = VerticalAlignment.Center,
-            ColumnIndex = 0,
-            RowIndex = 3,
-        };
-
-        private readonly ColorPicker comboBoxBackColor = new()
-        {
-            Margin = 5,
-            ColumnIndex = 1,
-            RowIndex = 3,
-        };
-
-        private readonly Label labelTextColor = new(GenericStrings.Color)
-        {
-            Margin = 5,
-            VerticalAlignment = VerticalAlignment.Center,
-            ColumnIndex = 0,
-            RowIndex = 2,
-        };
-
-        private readonly ColorPicker comboBoxTextColor = new()
-        {
-            Margin = 5,
-            ColumnIndex = 1,
-            RowIndex = 2,
-        };
-
         private int imageMargins = 5;
 
         private ControlStateImages? buttonImages;
@@ -59,12 +29,6 @@ namespace ControlsSample
 
             void Fn()
             {
-                labelBackColor.Parent = propsContainer1;
-                comboBoxBackColor.Parent = propsContainer1;
-
-                labelTextColor.Parent = propsContainer2;
-                comboBoxTextColor.Parent = propsContainer2;
-
                 imageMarginsButton.Enabled = App.IsWindowsOS;
                 imageMarginsButton.Click += ImageMarginsButton_Click;
 
@@ -83,26 +47,21 @@ namespace ControlsSample
                     showTextCheckBox.Enabled = false;
                 }
 
-                comboBoxTextColor.Select(Color.Empty, GenericStrings.Default);
-                comboBoxBackColor.Select(Color.Empty, GenericStrings.Default);
-
                 ControlSet editors = new(
                     textTextBox,
                     comboBoxFontName,
                     comboBoxFontSize,
-                    comboBoxBackColor,
                     textAlignComboBox,
-                    imageAlignComboBox,
-                    comboBoxTextColor);
+                    imageAlignComboBox);
                 editors.SuggestedHeightToMax().SuggestedWidth(125);
             }
 
             ApplyAll();
 
+            comboBoxFontName.SetValue(button.RealFont);
+
             comboBoxFontName.ValueChanged += Button_Changed;
             comboBoxFontSize.ValueChanged += Button_Changed;
-            comboBoxTextColor.ValueChanged += Fore_Changed;
-            comboBoxBackColor.ValueChanged += Back_Changed;
             textAlignComboBox.ValueChanged += Button_Changed;
             imageAlignComboBox.ValueChanged += Button_Changed;
             disabledCheckBox.CheckedChanged += Button_Changed;
@@ -223,10 +182,6 @@ namespace ControlsSample
                 button.IsDefault = defaultCheckBox.IsChecked;
                 button.Text = textTextBox.Text;
                 ApplyFont();
-                var color = GetColor(comboBoxTextColor);
-                button.ForegroundColor = color;
-                color = GetColor(comboBoxBackColor);
-                button.BackgroundColor = color;
                 button.StateImages.Assign(null);
                 if (imageCheckBox.IsChecked)
                 {
@@ -245,39 +200,7 @@ namespace ControlsSample
             App.Log("Button: Click");
         }
 
-        private Color? GetColor(ColorPicker? control)
-        {
-            var result = control?.Value;
-            if (result == Color.Empty)
-                result = null;
-            return result;
-        }
-
         private void Button_Changed(object? sender, EventArgs e)
-        {
-            ApplyAll();
-        }
-
-        internal bool TextIsDark()
-        {
-            var textColor = GetColor(comboBoxTextColor) ?? button.RealForegroundColor;
-            return textColor.IsDark();
-        }
-
-        internal bool BackIsDark()
-        {
-            var backColor = GetColor(comboBoxBackColor) ?? button.RealBackgroundColor;
-            return backColor.IsDark();
-        }
-
-        private void Back_Changed(object? sender, EventArgs e)
-        {
-            buttonImages = null;
-
-            ApplyAll();
-        }
-
-        private void Fore_Changed(object? sender, EventArgs e)
         {
             ApplyAll();
         }
