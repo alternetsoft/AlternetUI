@@ -19,16 +19,17 @@ namespace CustomControlsSample
         {
         };
         
-        private readonly FancySlider knobControl = new()
+        private readonly KnobSlider knobControl = new()
         {
             Minimum = 0,
             Maximum = 100,
         };
         
-        private readonly FancyProgressBar gaugeControl = new()
+        private readonly VerticalLinearGauge gaugeControl = new()
         {
             Minimum = 0,
             Maximum = 100,
+            SuggestedSize = (100, 150),
             VerticalAlignment = VerticalAlignment.Center,
         };
 

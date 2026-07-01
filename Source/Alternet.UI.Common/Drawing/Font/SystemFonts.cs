@@ -14,7 +14,6 @@ public static class SystemFonts
     private static Font? statusFont;
     private static Font? messageBoxFont;
     private static Font? iconTitleFont;
-    private static Font? defaultFont;
     private static Font? dialogFont;
 
     /// <summary>
