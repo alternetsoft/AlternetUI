@@ -58,6 +58,7 @@ namespace Alternet.UI
             mainPanel.VerticalAlignment = VerticalAlignment.Fill;
 
             topToolBar.ResetSuggestedSize();
+            topToolBar.VerticalAlignment = VerticalAlignment.Center;
             topToolBarPanel.MinHeight = Coord.Max(
                 Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
                 ToolBar.DefaultMinItemSize);
@@ -79,7 +80,8 @@ namespace Alternet.UI
 
             topToolBar.Parent = topToolBarPanel;
             topToolBar.Margin = DefaultTopToolBarMargin;
-            topToolBar.Visible = DefaultHasTitleBar;
+            
+            topToolBarPanel.Visible = DefaultHasTitleBar;
 
             mainPanel.Margin = DefaultMainPanelMargin;
 
@@ -221,8 +223,8 @@ namespace Alternet.UI
         /// </summary>
         public new virtual bool HasTitleBar
         {
-            get => topToolBar.Visible;
-            set => topToolBar.Visible = value;
+            get => topToolBarPanel.Visible;
+            set => topToolBarPanel.Visible = value;
         }
 
         /// <summary>
