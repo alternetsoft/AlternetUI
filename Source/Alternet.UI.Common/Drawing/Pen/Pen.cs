@@ -27,7 +27,6 @@ namespace Alternet.Drawing
 
         private PenInfo penInfo = new();
         private SKPaint? paint;
-        private bool updateRequired;
 
         static Pen()
         {
@@ -172,7 +171,7 @@ namespace Alternet.Drawing
                 if (penInfo.Color == value || Immutable)
                     return;
                 penInfo.Color = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -187,7 +186,7 @@ namespace Alternet.Drawing
                 if (penInfo.DashPattern == value || Immutable)
                     return;
                 penInfo.DashPattern = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -223,7 +222,7 @@ namespace Alternet.Drawing
                 if (penInfo == value || Immutable)
                     return;
                 penInfo = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -254,7 +253,7 @@ namespace Alternet.Drawing
                 if (penInfo.DashStyle == value || Immutable)
                     return;
                 penInfo.DashStyle = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -277,7 +276,7 @@ namespace Alternet.Drawing
                 if (penInfo.LineCap == value || Immutable)
                     return;
                 penInfo.LineCap = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -300,7 +299,7 @@ namespace Alternet.Drawing
                 if (penInfo.LineJoin == value || Immutable)
                     return;
                 penInfo.LineJoin = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -324,27 +323,7 @@ namespace Alternet.Drawing
                 if (penInfo.Width == value || Immutable)
                     return;
                 penInfo.Width = value;
-                UpdateRequired = true;
-            }
-        }
-
-        /// <inheritdoc/>
-        protected virtual bool UpdateRequired
-        {
-            get
-            {
-                return updateRequired;
-            }
-
-            set
-            {
-                if (UpdateRequired == value)
-                    return;
-                updateRequired = value;
-                if (value)
-                {
-                    SafeDispose(ref paint);
-                }
+                UpdateRequired();
             }
         }
 
@@ -380,12 +359,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Resets cached resource instances.
+        /// </summary>
+        public virtual void ResetCachedResources()
+        {
+            SafeDispose(ref paint);
+        }
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             return penInfo.GetHashCode();
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref paint);
+            base.DisposeManaged();
+        }
+
+        /// <summary>
+        /// This method is called when the pen properties are changed, and it can be overridden
+        /// in derived classes to perform custom actions when the pen properties change.
+        /// </summary>
+        protected virtual void UpdateRequired()
+        {
+            SafeDispose(ref paint);
         }
 
         /// <summary>

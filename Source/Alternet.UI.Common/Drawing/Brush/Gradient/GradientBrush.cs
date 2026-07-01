@@ -48,7 +48,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientStops = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -68,7 +68,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 localMatrix = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -84,7 +84,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 tileMode = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 

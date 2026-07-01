@@ -30,7 +30,6 @@ namespace Alternet.Drawing
 
         private Pen? asPen;
         private SKPaint? paint;
-        private bool updateRequired;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Brush"/> class.
@@ -101,26 +100,24 @@ namespace Alternet.Drawing
         /// </summary>
         public virtual Color AsColor => Color.Black;
 
-        /// <inheritdoc/>
-        protected virtual bool UpdateRequired
+        /// <summary>
+        /// Resets cached resource instances.
+        /// </summary>
+        public virtual void ResetCachedResources()
         {
-            get => updateRequired;
+            SafeDispose(ref paint);
+            asPen = null;
+        }
 
-            set
-            {
-                if (UpdateRequired == value)
-                    return;
-                updateRequired = value;
-                if (value)
-                {
-                    SafeDispose(ref paint);
-                    asPen = null;
-                }
-            }
+        /// <inheritdoc/>
+        protected virtual void UpdateRequired()
+        {
+            SafeDispose(ref paint);
+            asPen = null;
         }
 
         /// <summary>
-        /// Converts the specified <see cref='Pen'/> to a <see cref='SKPaint'/>.
+        /// Converts the specified <see cref='Brush'/> to a <see cref='SKPaint'/>.
         /// </summary>
         public static implicit operator SKPaint(Brush value)
         {
@@ -186,6 +183,14 @@ namespace Alternet.Drawing
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode() => base.GetHashCode();
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            SafeDispose(ref paint);
+            asPen = null;
+            base.DisposeManaged();
+        }
 
         /// <summary>
         /// Creates <see cref="SKPaint"/> for this brush.

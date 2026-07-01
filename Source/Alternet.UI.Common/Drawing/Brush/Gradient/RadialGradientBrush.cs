@@ -94,7 +94,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 center = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -110,7 +110,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 radius = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -127,7 +127,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 gradientOrigin = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 

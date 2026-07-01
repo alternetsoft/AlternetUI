@@ -45,7 +45,7 @@ namespace Alternet.Drawing
                 if (color == value || Immutable)
                     return;
                 color = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 

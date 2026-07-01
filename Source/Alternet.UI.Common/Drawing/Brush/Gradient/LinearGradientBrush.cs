@@ -92,7 +92,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 startPoint = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
                     return;
                 CheckDisposed();
                 endPoint = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 

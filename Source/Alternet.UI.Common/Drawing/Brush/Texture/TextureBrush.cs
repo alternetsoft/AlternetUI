@@ -39,7 +39,7 @@ namespace Alternet.Drawing
                 if (image == value || Immutable)
                     return;
                 image = value;
-                UpdateRequired = true;
+                UpdateRequired();
             }
         }
 
