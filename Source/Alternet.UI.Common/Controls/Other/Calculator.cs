@@ -43,7 +43,7 @@ namespace Alternet.UI
         private const string ButtonTextClear = "AC";
         private const string ButtonTextClearLast = "CE";
 
-        private readonly TextBoxAndButton displayTextBox;
+        private readonly TextPicker displayTextBox;
         private readonly Grid buttonGrid;
         private readonly List<AbstractControl> buttons = new();
         private readonly ControlSet buttonSet;
@@ -64,25 +64,20 @@ namespace Alternet.UI
                 RowColumnCount = (6, 4),
             };
 
-            displayTextBox = new ()
+            displayTextBox = new()
             {
-                ButtonsVisible = false,
-                InnerOuterBorder = InnerOuterSelector.Outer,
                 RowColumn = (0, 0),
                 ColumnSpan = 4,
                 Parent = buttonGrid,
                 Margin = (0, 0, 0, DefaultDistanceToDisplay),
             };
 
-            if(displayTextBox is TextBoxAndButton textBoxAndButton)
-            {
-                textBoxAndButton.MainControl.TabStop = false;
-                textBoxAndButton.MainControl.CanSelect = false;
-            }
+            displayTextBox.TabStop = false;
+            displayTextBox.CanSelect = false;
 
-            displayTextBox.MainControl.KeyDown += (s, e) =>
+            displayTextBox.EnterPressed += (s, e) =>
             {
-                if(!e.HasModifiers && e.Key == Key.Return && WantReturn)
+                if (WantReturn)
                 {
                     DoActionCalcFormula();
                 }
@@ -90,7 +85,7 @@ namespace Alternet.UI
 
             displayTextBox.DelayedTextChanged += (s, e) =>
             {
-                displayTextBox.ReportError(false);
+                ReportError(false);
             };
 
             string[] buttonLabels =
@@ -129,11 +124,11 @@ namespace Alternet.UI
 
                 button.Click += (sender, e) =>
                 {
-                    ButtonClickHandler(button.Text, displayTextBox);
+                    ButtonClickHandler(button.Text);
                 };
                 button.DoubleClick += (sender, e) =>
                 {
-                    ButtonClickHandler(button.Text, displayTextBox);
+                    ButtonClickHandler(button.Text);
                 };
             }
 
@@ -260,25 +255,18 @@ namespace Alternet.UI
             {
                 object? result = Evaluate(displayTextBox.Text);
 
-                if(result is Exception exception)
+                if (result is Exception exception)
                 {
                     ReportError(exception);
                     return;
                 }
 
                 displayTextBox.Text = result.ToString() ?? string.Empty;
-                displayTextBox.ReportError(false);
+                ReportError(false);
             }
             catch (Exception e)
             {
                 ReportError(e);
-            }
-
-            void ReportError(Exception e)
-            {
-                while(e.InnerException != null)
-                    e = e.InnerException;
-                displayTextBox.ReportError(true, $"Error: {e.Message}");
             }
         }
 
@@ -324,6 +312,36 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Reports an error message to the user interface.
+        /// </summary>
+        /// <param name="e">The exception that occurred.</param>
+        protected virtual void ReportError(Exception e)
+        {
+            while (e.InnerException != null)
+                e = e.InnerException;
+            ReportError(true, $"Error: {e.Message}");
+        }
+
+        /// <summary>
+        /// Reports a validation error with the specified message.
+        /// </summary>
+        /// <param name="isError">Indicates whether an error occurred.</param>
+        /// <param name="message">The error message to display.</param>
+        protected virtual void ReportError(bool isError, string? message = null)
+        {
+            displayTextBox.ShowErrorBorder = isError;
+
+            if (isError)
+            {
+                displayTextBox.ToolTip = message ?? "An error occurred during formula evaluation.";
+            }
+            else
+            {
+                displayTextBox.ToolTip = null;
+            }
+        }
+
+        /// <summary>
         /// Handles button click events by performing actions based on the button's text.
         /// </summary>
         /// <remarks>The method supports various button actions, including clearing text,
@@ -332,10 +350,10 @@ namespace Alternet.UI
         /// actions are determined by the value of <paramref name="buttonText"/>.</remarks>
         /// <param name="buttonText">The text displayed on the button that was clicked.
         /// This determines the action to perform.</param>
-        /// <param name="displayTextBox">The <see cref="TextBoxAndButton"/> control
-        /// associated with the button, used to display or modify text.</param>
-        private void ButtonClickHandler(string buttonText, AbstractControl displayTextBox)
+        protected virtual void ButtonClickHandler(string buttonText)
         {
+            displayTextBox.CancelEdit();
+
             switch (buttonText)
             {
                 case ButtonTextClear:
