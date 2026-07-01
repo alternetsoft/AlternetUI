@@ -58,9 +58,10 @@ namespace Alternet.UI
             mainPanel.VerticalAlignment = VerticalAlignment.Fill;
 
             topToolBar.ResetSuggestedSize();
-            topToolBar.MinHeight = Coord.Max(
+            topToolBarPanel.MinHeight = Coord.Max(
                 Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
                 ToolBar.DefaultMinItemSize);
+            topToolBar.MinHeight = topToolBarPanel.MinHeight;
 
             topGripComponent = new GripComponent();
             topGripComponent.ConfigureAsMovingGrip();
