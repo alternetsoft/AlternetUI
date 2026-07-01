@@ -21,6 +21,16 @@ namespace Alternet.UI.Localization
         /// </summary>
         public string ButtonOk { get; set; } = "Ok";
 
+        /// <summary>
+        /// Gets or sets font display name for the default font.
+        /// </summary>
+        public string DefaultFontDisplayName { get; set; } = "Default";
+
+        /// <summary>
+        /// Gets or sets font display name for the default monospace font.
+        /// </summary>
+        public string DefaultMonoFontDisplayName { get; set; } = "Default Monospace";
+
         /// <inheritdoc cref="ButtonOk"/>
         public string ButtonFilter { get; set; } = "Filter";
 

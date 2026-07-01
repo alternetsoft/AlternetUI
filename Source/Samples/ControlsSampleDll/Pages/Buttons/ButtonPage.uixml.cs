@@ -98,6 +98,8 @@ namespace ControlsSample
 
             ApplyAll();
 
+            comboBoxFontName.SetValue(button.RealFont);
+
             comboBoxFontName.ValueChanged += Button_Changed;
             comboBoxFontSize.ValueChanged += Button_Changed;
             comboBoxTextColor.ValueChanged += Fore_Changed;
