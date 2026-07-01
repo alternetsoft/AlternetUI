@@ -266,6 +266,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Finds the item in the list with the specified attribute name and value.
+        /// </summary>
+        /// <param name="attrName">The name of the attribute to search for.</param>
+        /// <param name="attrValue">The value of the attribute to match.</param>
+        /// <returns>The first item that matches the specified attribute name and value,
+        /// or null if no match is found.</returns>
+        public ListControlItem? FindItemWithAttr(string attrName, object attrValue)
+        {
+            foreach (var item in Items)
+            {
+                var itemAttrValue = item.CustomAttr[attrName];
+
+                if (Equals(itemAttrValue, attrValue))
+                    return item;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Adds font names to the associated list control and optionally selects
         /// a specified font name.
         /// </summary>
