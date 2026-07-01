@@ -13,11 +13,7 @@ namespace Alternet.Drawing
     /// </summary>
     public class PlessControlPainterHandler : DisposableObject, IControlPainterHandler
     {
-        /// <summary>
-        /// Gets or sets native <see cref="IControlPainterHandler"/> which is used
-        /// for the cases when there is not platform independent implementation.
-        /// </summary>
-        public static IControlPainterHandler? NativeHandler;
+        private static StdButton? button;
 
         /// <summary>
         /// Gets or sets the default size of a check mark in device-independent units.
@@ -321,7 +317,11 @@ namespace Alternet.Drawing
             RectD rect,
             VisualControlState controlState)
         {
-            NativeHandler?.DrawPushButton(control, canvas, rect, controlState);
+            button ??= new();
+            button.VisualStateOverride = controlState;
+            button.Size = rect.Size;
+            var e = new PaintEventArgs(canvas, rect);
+            button.DefaultPaint(e);
         }
 
         /// <inheritdoc/>

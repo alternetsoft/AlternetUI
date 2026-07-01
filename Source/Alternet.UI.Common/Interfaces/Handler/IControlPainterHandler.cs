@@ -56,14 +56,6 @@ namespace Alternet.Drawing
         Coord GetHeaderButtonMargin(AbstractControl control);
 
         /// <summary>
-        /// Returns the default size of a collapse button in dips.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <returns></returns>
-        SizeD GetCollapseButtonSize(AbstractControl control, Graphics dc);
-
-        /// <summary>
         /// Draws checkbox.
         /// </summary>
         /// <param name="control">Control where checkbox will be painted.</param>

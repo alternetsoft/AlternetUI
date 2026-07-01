@@ -4,7 +4,6 @@
 
 #include "WxOtherFactory.h"
 #include "Image.h"
-#include "DrawingContext.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -451,14 +450,14 @@ ALTERNET_UI_API int64_t WxOtherFactory_GetNumberFromUser_(NativeStringSpan* mess
     });
 }
 
-ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags, int sortArrow, void* headerButtonParams)
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButton_(void* renderer, void* win, Image* dc, RectI* rect, int flags, int sortArrow, void* headerButtonParams)
 {
     return MarshalExceptions<int>([&](){
         return WxOtherFactory::RendererDrawHeaderButton(renderer, win, dc, *rect, flags, sortArrow, headerButtonParams);
     });
 }
 
-ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags, int sortArrow, void* headerButtonParams)
+ALTERNET_UI_API int WxOtherFactory_RendererDrawHeaderButtonContents_(void* renderer, void* win, Image* dc, RectI* rect, int flags, int sortArrow, void* headerButtonParams)
 {
     return MarshalExceptions<int>([&](){
         return WxOtherFactory::RendererDrawHeaderButtonContents(renderer, win, dc, *rect, flags, sortArrow, headerButtonParams);
@@ -479,49 +478,49 @@ ALTERNET_UI_API int WxOtherFactory_RendererGetHeaderButtonMargin_(void* renderer
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTreeItemButton_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawTreeItemButton(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterBorder_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawSplitterBorder(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, DrawingContext* dcReal, SizeI* sizeReal, int position, int orientation, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawSplitterSash_(void* renderer, void* win, Image* dcReal, SizeI* sizeReal, int position, int orientation, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawSplitterSash(renderer, win, dcReal, *sizeReal, position, orientation, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBoxDropButton_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawComboBoxDropButton(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawDropArrow_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawDropArrow(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckBox_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawCheckBox(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCheckMark_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawCheckMark(renderer, win, dc, *rect, flags);
@@ -549,77 +548,77 @@ ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetExpanderSize_(void* renderer, 
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawPushButton_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawPushButton(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawCollapseButton_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawCollapseButton(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCollapseButtonSize_(void* renderer, void* win, DrawingContext* dc)
+ALTERNET_UI_API SizeI_C WxOtherFactory_RendererGetCollapseButtonSize_(void* renderer, void* win, Image* dc)
 {
     return MarshalExceptions<SizeI_C>([&](){
         return WxOtherFactory::RendererGetCollapseButtonSize(renderer, win, dc);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemSelectionRect_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawItemSelectionRect(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawFocusRect_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawFocusRect(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawChoice_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawChoice(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawComboBox_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawComboBox(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawTextCtrl_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawTextCtrl(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawRadioBitmap_(void* renderer, void* win, Image* dc, RectI* rect, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawRadioBitmap(renderer, win, dc, *rect, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, DrawingContext* dc, RectI* rect, int value, int max, int flags)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawGauge_(void* renderer, void* win, Image* dc, RectI* rect, int value, int max, int flags)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawGauge(renderer, win, dc, *rect, value, max, flags);
     });
 }
 
-ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, DrawingContext* dc, NativeStringSpan* text, RectI* rect, int align, int flags, int ellipsizeMode)
+ALTERNET_UI_API void WxOtherFactory_RendererDrawItemText_(void* renderer, void* win, Image* dc, NativeStringSpan* text, RectI* rect, int align, int flags, int ellipsizeMode)
 {
     MarshalExceptions<void>([&](){
         WxOtherFactory::RendererDrawItemText(renderer, win, dc, *text, *rect, align, flags, ellipsizeMode);

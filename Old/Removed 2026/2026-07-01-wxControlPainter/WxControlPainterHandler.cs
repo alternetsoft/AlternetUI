@@ -12,8 +12,13 @@ namespace Alternet.Drawing
     /// </summary>
     public class WxControlPainterHandler : DisposableObject, IControlPainterHandler
     {
+        private static Alternet.UI.Native.Image.NativeDynamicBitmap? bitmap;
+        private static UI.Native.SolidBrush transparentBrush;
+
         static WxControlPainterHandler()
         {
+            transparentBrush = new UI.Native.SolidBrush();
+            transparentBrush.Initialize(Color.Red);
         }
 
         /// <summary>
@@ -234,16 +239,6 @@ namespace Alternet.Drawing
             RadioBitmap,
 
             /// <summary>
-            /// Item is 'HeaderButton'.
-            /// </summary>
-            HeaderButton,
-
-            /// <summary>
-            /// Item is 'HeaderButtonContents'.
-            /// </summary>
-            HeaderButtonContents,
-
-            /// <summary>
             /// Item is 'Gauge'.
             /// </summary>
             Gauge,
@@ -314,82 +309,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws the header control button (used, for example, by <see cref="ListView"/> like
-        /// controls).
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        /// <param name="sortArrow">Type of the sort icon.</param>
-        /// <param name="headerButtonParams">Button parameters.</param>
-        /// <returns>
-        /// The optimal width to contain the unabbreviated label text or bitmap,
-        /// the sort arrow if present, and internal margins.
-        /// </returns>
-        /// <remarks>
-        /// Depending on platforms the flags parameter may support the
-        /// <see cref="DrawFlags.Selected"/>, <see cref="DrawFlags.Disabled"/>
-        /// and <see cref="DrawFlags.Current"/>.
-        /// </remarks>
-        public int DrawHeaderButton(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0,
-            HeaderSortIconType sortArrow = HeaderSortIconType.None,
-            HeaderButtonParams? headerButtonParams = null)
-        {
-            ControlUtils.CoerceControlToPlatform(ref control);
-            return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButton(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags,
-                (int)sortArrow,
-                default);
-        }
-
-        /// <summary>
-        /// Draws the contents of a header control button (label, sort arrows, etc.).
-        /// Normally only called by <see cref="DrawHeaderButton"/>.
-        /// </summary>
-        /// <param name="control">Control in which drawing will be performed.</param>
-        /// <param name="dc">Drawing context.</param>
-        /// <param name="rect">Rectangle in which control is painted.</param>
-        /// <param name="flags">Drawing flags.</param>
-        /// <param name="sortArrow">Type of the sort icon.</param>
-        /// <param name="headerButtonParams">Button parameters.</param>
-        /// <returns>
-        /// The optimal width to contain the unabbreviated label text
-        /// or bitmap, the sort arrow if present, and internal margins.
-        /// </returns>
-        /// <remarks>
-        /// The flags parameter may support the
-        /// <see cref="DrawFlags.Selected"/>, <see cref="DrawFlags.Disabled"/>
-        /// and <see cref="DrawFlags.Current"/>.
-        /// </remarks>
-        public int DrawHeaderButtonContents(
-            AbstractControl control,
-            Graphics dc,
-            RectD rect,
-            DrawFlags flags = 0,
-            HeaderSortIconType sortArrow = HeaderSortIconType.None,
-            HeaderButtonParams? headerButtonParams = null)
-        {
-            ControlUtils.CoerceControlToPlatform(ref control);
-            return Alternet.UI.Native.WxOtherFactory.RendererDrawHeaderButtonContents(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject,
-                control.PixelFromDip(rect),
-                (int)flags,
-                (int)sortArrow,
-                default);
-        }
-
-        /// <summary>
         /// Draws blank button.
         /// </summary>
         /// <param name="control">Control in which drawing will be performed.</param>
@@ -410,35 +329,31 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawPushButton(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
         }
 
-        private void DoDrawing(AbstractControl control, Graphics dc, RectD rect, Action<Graphics, RectI> drawAction)
+        private void DoDrawing(
+            AbstractControl control,
+            Graphics dc,
+            RectD rect,
+            Action<UI.Native.Image, RectI> drawAction)
         {
-            DynamicBitmap? bitmap = null;
-
             var pixelRect = control.PixelFromDip(rect).WithEmptyLocation();
 
-            DynamicBitmap.CreateOrUpdate(ref bitmap, pixelRect.Size, 1, true);
+            Alternet.UI.Native.Image.NativeDynamicBitmap.CreateOrUpdate(ref bitmap, pixelRect.Size, 1, true);
 
-            var bitmapDc = bitmap.Bitmap.Canvas;
-
-            bitmapDc.FillRectangle(Color.Transparent.AsBrush, pixelRect);
-
-            drawAction(bitmapDc, pixelRect);
-
-            dc.DrawImage(bitmap.Bitmap, rect.Location);
-
-            bitmapDc.Dispose();
-            bitmap.Dispose();
+            drawAction(bitmap.Bitmap, pixelRect);
+            var skiaImage = bitmap.Bitmap.ToSkia();
+            SkiaUtils.SaveBitmapToPng(skiaImage, "e:\\skiaImage.png");
+            dc.Canvas.DrawBitmap(skiaImage, rect.Location);
         }
 
         /// <summary>
@@ -457,12 +372,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawTreeItemButton(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -488,12 +403,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawComboBoxDropButton(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -519,12 +434,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawDropArrow(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -552,12 +467,12 @@ namespace Alternet.Drawing
 
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawCheckBox(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -583,12 +498,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawCheckMark(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -615,12 +530,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawCollapseButton(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -650,12 +565,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawItemSelectionRect(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -680,12 +595,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawFocusRect(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -707,12 +622,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawChoice(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -734,12 +649,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawComboBox(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -761,12 +676,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawTextCtrl(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -788,12 +703,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawRadioBitmap(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     (int)flags);
             }
@@ -822,12 +737,12 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 Alternet.UI.Native.WxOtherFactory.RendererDrawGauge(
                     default,
                     WxApplicationHandler.WxWidget(control),
-                    (UI.Native.DrawingContext)tempDc.NativeObject,
+                    tempDc,
                     tempRect,
                     value,
                     max,
@@ -857,14 +772,14 @@ namespace Alternet.Drawing
             ControlUtils.CoerceControlToPlatform(ref control);
             DoDrawing(control, dc, rect, InternalDraw);
 
-            void InternalDraw(Graphics tempDc, RectI tempRect)
+            void InternalDraw(UI.Native.Image tempDc, RectI tempRect)
             {
                 NativeUtils.Invoke(text, s =>
                 {
                     Alternet.UI.Native.WxOtherFactory.RendererDrawItemText(
                         default,
                         WxApplicationHandler.WxWidget(control),
-                        (UI.Native.DrawingContext)tempDc.NativeObject,
+                        tempDc,
                         s,
                         tempRect,
                         (int)align,
@@ -935,17 +850,6 @@ namespace Alternet.Drawing
             return control.PixelToDip(result);
         }
 
-        /// <inheritdoc/>
-        public SizeD GetCollapseButtonSize(AbstractControl control, Graphics dc)
-        {
-            ControlUtils.CoerceControlToPlatform(ref control);
-            var result = Alternet.UI.Native.WxOtherFactory.RendererGetCollapseButtonSize(
-                default,
-                WxApplicationHandler.WxWidget(control),
-                (UI.Native.DrawingContext)dc.NativeObject);
-            return control.PixelToDip(result);
-        }
-
         /// <summary>
         /// Gets version of the renderer.
         /// </summary>
@@ -1012,22 +916,6 @@ namespace Alternet.Drawing
                 case ControlPartKind.RadioBitmap:
                     DrawRadioBitmap(control, dc, rect, flags);
                     return 0;
-                case ControlPartKind.HeaderButton:
-                    return DrawHeaderButton(
-                        control,
-                        dc,
-                        rect,
-                        flags,
-                        prm?.SortArrow ?? HeaderSortIconType.None,
-                        prm?.HeaderButtonParams);
-                case ControlPartKind.HeaderButtonContents:
-                    return DrawHeaderButtonContents(
-                        control,
-                        dc,
-                        rect,
-                        flags,
-                        prm?.SortArrow ?? HeaderSortIconType.None,
-                        prm?.HeaderButtonParams);
                 case ControlPartKind.Gauge:
                     DrawGauge(
                         control,
@@ -1083,47 +971,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Defines parameters for the <see cref="DrawHeaderButton"/>.
-        /// </summary>
-        public class HeaderButtonParams
-        {
-            /// <summary>
-            /// Gets or sets arrow color.
-            /// </summary>
-            public Color? ArrowColor;
-
-            /// <summary>
-            /// Gets or sets selection color.
-            /// </summary>
-            public Color? SelectionColor;
-
-            /// <summary>
-            /// Gets or sets label text.
-            /// </summary>
-            public string LabelText = string.Empty;
-
-            /// <summary>
-            /// Gets or sets label font.
-            /// </summary>
-            public Font? LabelFont;
-
-            /// <summary>
-            /// Gets or sets label color.
-            /// </summary>
-            public Color? LabelColor;
-
-            /// <summary>
-            /// Gets or sets label image.
-            /// </summary>
-            public Bitmap? LabelBitmap;
-
-            /// <summary>
-            /// Gets or sets label alignment.
-            /// </summary>
-            public GenericAlignment LabelAlignment;
-        }
-
-        /// <summary>
         /// Defines additional parameters for the <see cref="DrawItem"/> method.
         /// </summary>
         public class DrawItemParams
@@ -1152,16 +999,6 @@ namespace Alternet.Drawing
             /// Gets or sets max value for the <see cref="DrawGauge"/>.
             /// </summary>
             public int GaugeMaxValue;
-
-            /// <summary>
-            /// Gets or sets parameters for the <see cref="DrawHeaderButton"/>.
-            /// </summary>
-            public HeaderButtonParams? HeaderButtonParams;
-
-            /// <summary>
-            /// Gets or sets sort arrow for the <see cref="DrawHeaderButton"/>.
-            /// </summary>
-            public HeaderSortIconType SortArrow = HeaderSortIconType.None;
         }
     }
 }

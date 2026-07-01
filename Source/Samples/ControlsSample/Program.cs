@@ -23,6 +23,7 @@ namespace ControlsSample
 
         public static void InitSamples()
         {
+            /*
             PropertyGridSample.MainControl.LimitedTypesStatic.Add(
                 typeof(PropertyGridSample.ControlPainterPreview));
 
@@ -33,6 +34,7 @@ namespace ControlsSample
                     var control = (c as PropertyGridSample.ControlPainterPreview)!;
                     control.SuggestedSize = 200;
                 });
+            */
         }
 
         public static void LogToFileSimple(object? obj = null)

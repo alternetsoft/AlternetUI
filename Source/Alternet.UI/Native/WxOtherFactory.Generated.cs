@@ -346,13 +346,13 @@ var pos_Native = pos.ToNative();
 return NativeApi.WxOtherFactory_GetNumberFromUser_(ref message_Native, ref prompt_Native, ref caption_Native, value, min, max, parent, ref pos_Native);
         }
         
-        public static int RendererDrawHeaderButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams)
+        public static int RendererDrawHeaderButton(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams)
         {
             var rect_Native = rect.ToNative();
 return NativeApi.WxOtherFactory_RendererDrawHeaderButton_(renderer, win, dc.NativePointer, ref rect_Native, flags, sortArrow, headerButtonParams);
         }
         
-        public static int RendererDrawHeaderButtonContents(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams)
+        public static int RendererDrawHeaderButtonContents(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags, int sortArrow, System.IntPtr headerButtonParams)
         {
             var rect_Native = rect.ToNative();
 return NativeApi.WxOtherFactory_RendererDrawHeaderButtonContents_(renderer, win, dc.NativePointer, ref rect_Native, flags, sortArrow, headerButtonParams);
@@ -368,43 +368,43 @@ return NativeApi.WxOtherFactory_RendererDrawHeaderButtonContents_(renderer, win,
             return NativeApi.WxOtherFactory_RendererGetHeaderButtonMargin_(renderer, win);
         }
         
-        public static void RendererDrawTreeItemButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawTreeItemButton(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawTreeItemButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawSplitterBorder(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawSplitterBorder(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawSplitterBorder_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawSplitterSash(System.IntPtr renderer, System.IntPtr win, DrawingContext dcReal, Alternet.Drawing.SizeI sizeReal, int position, int orientation, int flags)
+        public static void RendererDrawSplitterSash(System.IntPtr renderer, System.IntPtr win, Image dcReal, Alternet.Drawing.SizeI sizeReal, int position, int orientation, int flags)
         {
             var sizeReal_Native = sizeReal.ToNative();
 NativeApi.WxOtherFactory_RendererDrawSplitterSash_(renderer, win, dcReal.NativePointer, ref sizeReal_Native, position, orientation, flags);
         }
         
-        public static void RendererDrawComboBoxDropButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawComboBoxDropButton(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawComboBoxDropButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawDropArrow(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawDropArrow(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawDropArrow_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawCheckBox(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawCheckBox(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawCheckBox_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawCheckMark(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawCheckMark(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawCheckMark_(renderer, win, dc.NativePointer, ref rect_Native, flags);
@@ -425,66 +425,66 @@ NativeApi.WxOtherFactory_RendererDrawCheckMark_(renderer, win, dc.NativePointer,
             return NativeApi.WxOtherFactory_RendererGetExpanderSize_(renderer, win);
         }
         
-        public static void RendererDrawPushButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawPushButton(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawPushButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawCollapseButton(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawCollapseButton(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawCollapseButton_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static Alternet.Drawing.SizeI RendererGetCollapseButtonSize(System.IntPtr renderer, System.IntPtr win, DrawingContext dc)
+        public static Alternet.Drawing.SizeI RendererGetCollapseButtonSize(System.IntPtr renderer, System.IntPtr win, Image dc)
         {
             return NativeApi.WxOtherFactory_RendererGetCollapseButtonSize_(renderer, win, dc.NativePointer);
         }
         
-        public static void RendererDrawItemSelectionRect(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawItemSelectionRect(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawItemSelectionRect_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawFocusRect(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawFocusRect(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawFocusRect_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawChoice(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawChoice(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawChoice_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawComboBox(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawComboBox(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawComboBox_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawTextCtrl(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawTextCtrl(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawTextCtrl_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawRadioBitmap(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int flags)
+        public static void RendererDrawRadioBitmap(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawRadioBitmap_(renderer, win, dc.NativePointer, ref rect_Native, flags);
         }
         
-        public static void RendererDrawGauge(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.Drawing.RectI rect, int value, int max, int flags)
+        public static void RendererDrawGauge(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.Drawing.RectI rect, int value, int max, int flags)
         {
             var rect_Native = rect.ToNative();
 NativeApi.WxOtherFactory_RendererDrawGauge_(renderer, win, dc.NativePointer, ref rect_Native, value, max, flags);
         }
         
-        public static void RendererDrawItemText(System.IntPtr renderer, System.IntPtr win, DrawingContext dc, Alternet.UI.NativeStringSpan text, Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode)
+        public static void RendererDrawItemText(System.IntPtr renderer, System.IntPtr win, Image dc, Alternet.UI.NativeStringSpan text, Alternet.Drawing.RectI rect, int align, int flags, int ellipsizeMode)
         {
             var text_Native = text.ToNative();
 var rect_Native = rect.ToNative();

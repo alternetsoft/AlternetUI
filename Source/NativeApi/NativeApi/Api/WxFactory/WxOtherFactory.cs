@@ -214,7 +214,7 @@ namespace NativeApi.Api
         // ===================
 
         public static int RendererDrawHeaderButton(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             RectI rect,
             int flags /*= 0*/,
             int sortArrow /*= wxHDR_SORT_ICON_NONE*/,
@@ -223,7 +223,7 @@ namespace NativeApi.Api
         // Draw the contents of a header control button (label, sort arrows, etc.)
         // Normally only called by DrawHeaderButton.
         public static int RendererDrawHeaderButtonContents(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             RectI rect,
             int flags /*= 0*/,
             int sortArrow /*= wxHDR_SORT_ICON_NONE*/,
@@ -238,16 +238,16 @@ namespace NativeApi.Api
 
         // draw the expanded/collapsed icon for a tree control item
         public static void RendererDrawTreeItemButton(IntPtr renderer, IntPtr win,
-            DrawingContext dc, RectI rect, int flags = 0) { }
+            Image dc, RectI rect, int flags = 0) { }
 
         // draw the border for sash window: this border must be such that the sash
         // drawn by DrawSash() blends into it well
         public static void RendererDrawSplitterBorder(IntPtr renderer, IntPtr win,
-            DrawingContext dc, RectI rect, int flags = 0) { }
+            Image dc, RectI rect, int flags = 0) { }
 
         // draw a (vertical) sash
         public static void RendererDrawSplitterSash(IntPtr renderer, IntPtr win,
-            DrawingContext dcReal,
+            Image dcReal,
             SizeI sizeReal,
             int position,
             int orientation,
@@ -258,7 +258,7 @@ namespace NativeApi.Api
         // draw a combobox dropdown button
         // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
         public static void RendererDrawComboBoxDropButton(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             RectI rect,
             int flags = 0)
         {
@@ -267,14 +267,14 @@ namespace NativeApi.Api
         // draw a dropdown arrow
         // flags may use wxCONTROL_PRESSED and wxCONTROL_CURRENT
         public static void RendererDrawDropArrow(IntPtr renderer, IntPtr win,
-            DrawingContext dc, RectI rect, int flags = 0)
+            Image dc, RectI rect, int flags = 0)
         {
         }
 
         // draw check button
         // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
         public static void RendererDrawCheckBox(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             RectI rect,
             int flags = 0)
         {
@@ -283,7 +283,7 @@ namespace NativeApi.Api
         // draw check mark
         // flags may use wxCONTROL_DISABLED
         public static void RendererDrawCheckMark(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             RectI rect,
             int flags = 0)
         {
@@ -302,7 +302,7 @@ namespace NativeApi.Api
         //
         // flags may use wxCONTROL_PRESSED, wxCONTROL_CURRENT and wxCONTROL_ISDEFAULT
         public static void RendererDrawPushButton(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             RectI rect,
             int flags = 0)
         {
@@ -312,7 +312,7 @@ namespace NativeApi.Api
         //
         // flags may use wxCONTROL_CHECKED, wxCONTROL_UNDETERMINED and wxCONTROL_CURRENT
         public static void RendererDrawCollapseButton(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             RectI rect,
             int flags = 0)
         {
@@ -320,7 +320,7 @@ namespace NativeApi.Api
 
         // Returns the default size of a collapse button
         public static SizeI RendererGetCollapseButtonSize(IntPtr renderer, IntPtr win,
-            DrawingContext dc) => default;
+            Image dc) => default;
 
         // draw rectangle indicating that an item in e.g. a list control
         // has been selected or focused
@@ -330,7 +330,7 @@ namespace NativeApi.Api
         // wxCONTROL_CURRENT (item is the current item, e.g. dotted border)
         // wxCONTROL_FOCUSED (the whole control has focus, e.g. blue background vs. grey otherwise)
         public static void RendererDrawItemSelectionRect(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
                 RectI rect,
             int flags = 0)
         {
@@ -340,7 +340,7 @@ namespace NativeApi.Api
         //
         // only wxCONTROL_SELECTED makes sense in flags here
         public static void RendererDrawFocusRect(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
                 RectI rect,
             int flags = 0)
         {
@@ -348,7 +348,7 @@ namespace NativeApi.Api
 
         // Draw a native wxChoice
         public static void RendererDrawChoice(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
                 RectI rect,
             int flags = 0)
         {
@@ -356,7 +356,7 @@ namespace NativeApi.Api
 
         // Draw a native wxComboBox
         public static void RendererDrawComboBox(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
                 RectI rect,
             int flags = 0)
         {
@@ -364,7 +364,7 @@ namespace NativeApi.Api
 
         // Draw a native wxTextCtrl frame
         public static void RendererDrawTextCtrl(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
                 RectI rect,
             int flags = 0)
         {
@@ -372,7 +372,7 @@ namespace NativeApi.Api
 
         // Draw a native wxRadioButton bitmap
         public static void RendererDrawRadioBitmap(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
                 RectI rect,
             int flags = 0)
         {
@@ -381,7 +381,7 @@ namespace NativeApi.Api
         // Draw a gauge with native style like a wxGauge would display.
         // wxCONTROL_SPECIAL flag must be used for drawing vertical gauges.
         public static void RendererDrawGauge(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
                 RectI rect,
             int value,
             int max,
@@ -391,7 +391,7 @@ namespace NativeApi.Api
 
         // Draw text using the appropriate color for normal and selected states.
         public static void RendererDrawItemText(IntPtr renderer, IntPtr win,
-            DrawingContext dc,
+            Image dc,
             NativeStringSpan text,
             RectI rect,
             int align /*= wxALIGN_LEFT | wxALIGN_TOP*/,
