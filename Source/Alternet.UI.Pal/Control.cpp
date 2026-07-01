@@ -8,7 +8,11 @@ namespace Alternet::UI
 {
     long Control::GetAdditionalExtendedStyle()
     {
+#ifdef __WXMSW__    
         return WS_EX_COMPOSITED;
+#else
+        return 0;
+#endif
     }
 
     void Control::CreateWxWindow()
