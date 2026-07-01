@@ -22,6 +22,7 @@ namespace Alternet.UI
 
         private static ToolTipWindow? instance;
         private static bool provideToolTipsForGenericControls;
+        private static ObjectUniqueId? lastToolTipControlId;
 
         static ToolTipWindow()
         {
@@ -34,6 +35,15 @@ namespace Alternet.UI
         {
             toolTip.IsScrolledVertically = false;
             toolTip.IsScrolledHorizontally = false;
+
+            VisibleChanged += (s, e) =>
+            {
+                if (!Visible)
+                {
+                    lastToolTipControlId = null;
+                }
+            };
+
             toolTip.ToolTipVisibleChanged += (s, e) =>
             {
                 Hide();
@@ -80,7 +90,11 @@ namespace Alternet.UI
                     var display = Instance.GetDisplay();
                     var containerRect = display.ClientAreaDip;
 
-                    var alignedLocation = AlignUtils.FitToolTipIntoContainer(containerRect, windowRect, new(toolTipOffset), ScaleFactor);
+                    var alignedLocation = AlignUtils.FitToolTipIntoContainer(
+                        containerRect,
+                        windowRect,
+                        new(toolTipOffset),
+                        ScaleFactor);
 
                     Location = alignedLocation;
 
@@ -197,7 +211,8 @@ namespace Alternet.UI
         /// Determines whether the specified object is a rich tooltip.
         /// </summary>
         /// <param name="value">The object to check.</param>
-        /// <returns><see langword="true"/> if the object is a rich tooltip; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true"/> if the object is a rich tooltip;
+        /// otherwise, <see langword="false"/>.</returns>
         public static bool IsRichToolTip(object? value)
         {
             return value is RichToolTipParams;
@@ -244,7 +259,8 @@ namespace Alternet.UI
         /// Binds global event handlers to enable the class to respond to application-wide changes.
         /// </summary>
         /// <remarks>Override this method in a derived class to customize which global events are handled.
-        /// This method is typically called during initialization to ensure that the class can react to relevant global
+        /// This method is typically called during initialization to ensure
+        /// that the class can react to relevant global
         /// events.</remarks>
         protected virtual void BindGlobalEvents()
         {
@@ -256,7 +272,8 @@ namespace Alternet.UI
         /// Unsubscribes the handler from global focus change events to stop receiving notifications.
         /// </summary>
         /// <remarks>Override this method in a derived class to customize how global event handlers are
-        /// detached. Typically called during cleanup to prevent memory leaks or unwanted event handling.</remarks>
+        /// detached. Typically called during cleanup to prevent memory
+        /// leaks or unwanted event handling.</remarks>
         protected virtual void UnbindGlobalEvents()
         {
             StaticControlEvents.FocusedChanged -= OnGlobalFocusedChanged;
@@ -279,12 +296,17 @@ namespace Alternet.UI
         /// <param name="e">An object that contains the event data.</param>
         private static void OnGlobalMouseHover(object? sender, EventArgs e)
         {
+            var toolTipShown = false;
+
+            if (sender is not AbstractControl control)
+                return;
+
+            if (lastToolTipControlId == control.UniqueId)
+                return;
+
             try
             {
                 HideGlobalToolTip();
-
-                if (sender is not AbstractControl control)
-                    return;
 
                 var toolTipObject = ToolTipFactory.GetControlToolTip(control);
 
@@ -320,6 +342,7 @@ namespace Alternet.UI
 
                     Post(() =>
                     {
+                        toolTipShown = true;
                         toolTip.ShowToolTip(toolTipStr);
                     });
                     return;
@@ -332,12 +355,24 @@ namespace Alternet.UI
                         toolTip.MaxTextWidth = Math.Min(maxWidth, prm.MaxWidth.Value);
                     }
 
+                    toolTipShown = true;
                     toolTip.SetParams(prm).PostShowToolTip();
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Exception in {nameof(ToolTipWindow.OnGlobalMouseHover)}: {ex}");
+            }
+            finally
+            {
+                if (toolTipShown)
+                {
+                    lastToolTipControlId = control.UniqueId;
+                }
+                else
+                {
+                    lastToolTipControlId = null;
+                }
             }
         }
 
