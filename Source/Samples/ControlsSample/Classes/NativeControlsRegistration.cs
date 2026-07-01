@@ -141,6 +141,7 @@ namespace ControlsSample
         {
             ControlsTestWindow.AddPage<NativeSliderPage>("Native Slider");
             ControlsTestWindow.AddPage<NativeTreeViewPage>("Native TreeView");
+            ControlsTestWindow.AddPage<NativeListViewPage>("Native ListView");
             ControlsTestWindow.AddPage<NativeProgressBarPage>("Native ProgressBar");
 
             ControlsTestWindow.AddPage<NativeButtonPage>("Native Button");
