@@ -47,7 +47,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref='MenuItem'/> class.
+        /// Initializes a new instance of the <see cref='MenuItem'/> class with a blank caption.
         /// </summary>
         public MenuItem()
         {
@@ -144,6 +144,20 @@ namespace Alternet.UI
             Text = text ?? string.Empty;
             this.shortcutInfo = new ShortcutInfo(shortcut);
             ClickAction = onClick;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref='MenuItem'/> class with
+        /// the specified <paramref name="text"/> and <paramref name="items"/> for the menu item.
+        /// </summary>
+        /// <param name="text">The text to display on the menu item.</param>
+        /// <param name="items">An array of <see cref="MenuItem"/> objects to include as sub-items.</param>
+        public MenuItem(string text, MenuItem[] items)
+            : this()
+        {
+            Text = text ?? string.Empty;
+            foreach (var item in items)
+                Items.Add(item);
         }
 
         /// <summary>
