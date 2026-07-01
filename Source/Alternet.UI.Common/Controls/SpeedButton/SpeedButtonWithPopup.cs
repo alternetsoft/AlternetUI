@@ -18,6 +18,11 @@ namespace Alternet.UI
         where TPopup : PopupWindow<TControl>, new()
     {
         /// <summary>
+        /// Gets or sets the default color for the error border.
+        /// </summary>
+        public static LightDarkColor? DefaultErrorBorderColor = null;
+
+        /// <summary>
         /// Defines the minimum time interval, in milliseconds, that must elapse 
         /// after the popup window is closed before it can be reopened.
         /// </summary>
@@ -31,6 +36,8 @@ namespace Alternet.UI
         private object? data;
         private string popupWindowTitle = string.Empty;
         private DateTime popupLastClosedAt;
+        private BaseCollection<BorderSettings>? errorBorder;
+        private bool showErrorBorder;
 
         /// <summary>
         /// Initializes a new instance of the
@@ -72,6 +79,12 @@ namespace Alternet.UI
         public DateTime PopupLastClosedAt => popupLastClosedAt;
 
         /// <summary>
+        /// Gets or sets the color of the error border displayed around the control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual LightDarkColor? ErrorBorderColor { get; set; }
+
+        /// <summary>
         /// Gets milliseconds since the popup window was last closed.
         /// </summary>
         [Browsable(false)]
@@ -103,6 +116,58 @@ namespace Alternet.UI
                     UpdateBaseText();
                     RaiseValueChanged(EventArgs.Empty);
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets error border settings for the find text editor.
+        /// </summary>
+        [Browsable(false)]
+        public virtual BaseCollection<BorderSettings>? ErrorBorder
+        {
+            get
+            {
+                return errorBorder;
+            }
+            set
+            {
+                errorBorder = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to show error border around find text editor.
+        /// </summary>
+        public virtual bool ShowErrorBorder
+        {
+            get
+            {
+                return showErrorBorder;
+            }
+
+            set
+            {
+                if (showErrorBorder == value)
+                    return;
+                showErrorBorder = value;
+                if (value)
+                {
+                    if (errorBorder is null)
+                    {
+                        var cloned = GetBorderSettings(VisualControlState.Normal)?.Clone() ?? new();
+                        cloned.Color = ErrorBorderColor ?? DefaultErrorBorderColor ?? LightDarkColors.Red;
+                        errorBorder = new BaseCollection<BorderSettings>();
+                        errorBorder.Add(cloned);
+                    }
+
+                    InnerBordersOverride = errorBorder;
+                }
+                else
+                {
+                    InnerBordersOverride = null;
+                }
+
+                Invalidate();
             }
         }
 

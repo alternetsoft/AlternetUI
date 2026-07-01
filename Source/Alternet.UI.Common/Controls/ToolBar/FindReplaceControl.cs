@@ -93,8 +93,6 @@ namespace Alternet.UI
         private bool canFindInAllOpenDocuments = true;
         private bool canFindInCurrentProject = true;
         private bool canFindInSelectionOnly = true;
-        private bool showErrorBorder;
-        private BaseCollection<BorderSettings>? errorBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FindReplaceControl"/> class.
@@ -787,51 +785,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets error border settings for the find text editor.
-        /// </summary>
-        public virtual BaseCollection<BorderSettings>? ErrorBorder
-        {
-            get
-            {
-                return errorBorder;
-            }
-            set
-            {
-                errorBorder = value;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets whether to show error border around find text editor.
         /// </summary>
         public virtual bool ShowErrorBorder
         {
             get
             {
-                return showErrorBorder;
+                return findEdit.ShowErrorBorder;
             }
 
             set
             {
-                if (showErrorBorder == value)
-                    return;
-                showErrorBorder = value;
-                if (value)
-                {
-                    if (errorBorder is null)
-                    {
-                        var cloned = findEdit.GetBorderSettings(VisualControlState.Normal)?.Clone() ?? new();
-                        cloned.Color = NotFoundBorderColor;
-                        errorBorder = new BaseCollection<BorderSettings>();
-                        errorBorder.Add(cloned);
-                    }
-
-                    findEdit.InnerBordersOverride = errorBorder;
-                }
-                else
-                {
-                    findEdit.InnerBordersOverride = null;
-                }
+                findEdit.ShowErrorBorder = value;
             }
         }
 
