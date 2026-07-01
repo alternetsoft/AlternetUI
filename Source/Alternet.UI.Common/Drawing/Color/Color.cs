@@ -40,7 +40,7 @@ namespace Alternet.Drawing
     [DebuggerDisplay("{DebugString}")]
     [Serializable]
     [TypeConverter(typeof(ColorConverter))]
-    public partial class Color : IEquatable<Color>, IXmlSerializable
+    public partial class Color : BaseObject, IEquatable<Color>, IXmlSerializable
     {
         /// <summary>
         /// Shift count for Alpha component of the color.
@@ -2134,11 +2134,14 @@ namespace Alternet.Drawing
         /// instance to the current instance.
         /// </summary>
         /// <remarks>After assignment, the current instance will have the same color data and properties
-        /// as the specified <paramref name="other"/>. Any existing resources associated with this instance are replaced
+        /// as the specified <paramref name="other"/>. Any existing resources
+        /// associated with this instance are replaced
         /// with new resources.</remarks>
-        /// <param name="other">The <see cref="Color"/> instance whose color data and properties are assigned to this instance.
+        /// <param name="other">The <see cref="Color"/> instance whose
+        /// color data and properties are assigned to this instance.
         /// Cannot be <see langword="null"/>.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="other"/> is <see langword="null"/>.</exception>
+        /// <exception cref="ArgumentNullException">Thrown when <paramref name="other"/>
+        /// is <see langword="null"/>.</exception>
         public virtual void Assign(Color other)
         {
             if (other is null)
