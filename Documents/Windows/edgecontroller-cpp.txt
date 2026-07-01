@@ -1,0 +1,33 @@
+template<auto member_ptr>
+struct accessor 
+{
+    friend auto get_member() { return member_ptr; }
+};
+
+template struct accessor<&wxWebViewEdge::m_impl>;
+
+auto get_member();
+// ... on webview created:
+COREWEBVIEW2_COLOR default_color;
+default_color.A = 255;
+default_color.R = 255;
+default_color.G = 0;
+default_color.B = 0;
+
+auto* edge = dynamic_cast<wxWebViewEdge*>(m_web);
+if (!edge)
+{
+    return;
+}
+
+auto impl = get_member();
+auto raw_impl_ptr = edge->*impl;
+ICoreWebView2Controller* ctrl = raw_impl_ptr->m_webViewController;
+
+Microsoft::WRL::ComPtr<ICoreWebView2Controller2> ctrl2;
+if (FAILED(ctrl->QueryInterface(IID_PPV_ARGS(&ctrl2))))
+{
+    return;
+}
+
+ctrl2->put_DefaultBackgroundColor(default_color);

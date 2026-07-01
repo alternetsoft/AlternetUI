@@ -6,6 +6,11 @@
 
 namespace Alternet::UI
 {
+    long Control::GetAdditionalExtendedStyle()
+    {
+        return WS_EX_COMPOSITED;
+    }
+
     void Control::CreateWxWindow()
     {
         _flags.Set(ControlFlags::CreatingWxWindow, true);
@@ -36,9 +41,15 @@ namespace Alternet::UI
         }
 
 #ifdef __WXMSW__    
-        auto hwnd = (HWND)GetWxWindow()->GetHWND();
-        long exStyle = ::GetWindowLong(hwnd, GWL_EXSTYLE);
-        ::SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED);
+
+        auto extendedStyle = GetAdditionalExtendedStyle();
+
+        if (extendedStyle != 0)
+        {
+            auto hwnd = (HWND)GetWxWindow()->GetHWND();
+            long exStyle = ::GetWindowLong(hwnd, GWL_EXSTYLE);
+            ::SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | extendedStyle);
+        }
 #endif
 
         ApplyToolTip();

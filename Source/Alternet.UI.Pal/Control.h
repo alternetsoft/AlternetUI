@@ -128,6 +128,8 @@ namespace Alternet::UI
 
         virtual wxWindow* CreateWxWindowCore(wxWindow* parent) = 0;
 
+        virtual long GetAdditionalExtendedStyle();
+
         virtual wxWindow* CreateWxWindowUnparented() = 0;
 
         wxWindow* GetWxWindow();
@@ -167,6 +169,7 @@ namespace Alternet::UI
         bool HasEnabledChilds();
 
         virtual void OnSysColorChanged(wxSysColourChangedEvent& event);
+        virtual void OnEraseBackground(wxEraseEvent& event);
     protected:
         DrawingContext* _drawingContext = nullptr;
         wxString _textValue = "";
@@ -210,7 +213,6 @@ namespace Alternet::UI
         long GetDefaultStyle();
 
         virtual void OnPaint(wxPaintEvent& event);
-        virtual void OnEraseBackground(wxEraseEvent& event);
 
         void OnMouseCaptureLost(wxEvent& event);
 

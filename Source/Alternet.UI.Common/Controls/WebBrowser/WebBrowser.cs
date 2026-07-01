@@ -61,6 +61,11 @@ namespace Alternet.UI
         static WebBrowser()
         {
             IsEdgeBackendEnabled = false;
+
+            Environment.SetEnvironmentVariable(
+                        "WEBVIEW2_DEFAULT_BACKGROUND_COLOR",
+                        "FFFFFFFF",
+                        EnvironmentVariableTarget.Process);
         }
 
         /// <summary>

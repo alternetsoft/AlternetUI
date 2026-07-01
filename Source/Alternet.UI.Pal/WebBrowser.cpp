@@ -268,6 +268,16 @@ namespace Alternet::UI
         return GetWebViewCtrl()->GetNativeBackend();
     }
 
+    long WebBrowser::GetAdditionalExtendedStyle()
+    {
+        return 0;
+    }
+
+    bool WebBrowser::GetUserPaint()
+    {
+        return false;
+    }   
+
     void WebBrowser::ProcessDefaultsOnCreate(bool before)
     {
         auto realBackend = Backend; 
@@ -429,6 +439,10 @@ namespace Alternet::UI
         return false;
     }
 
+    void WebBrowser::SetUserPaint(bool value)
+    {
+    }
+
     wxWindow* WebBrowser::CreateWxWindowCore(wxWindow* parent)
     {
         Backend = WebBrowser::DefaultBackend;
@@ -470,9 +484,6 @@ namespace Alternet::UI
 
         webViewParent = parent;
 
-        webView->SetBackgroundStyle(wxBackgroundStyle::wxBG_STYLE_COLOUR);
-        webView->SetBackgroundColour(*wxWHITE);
-        
         webView->Bind(wxEVT_WEBVIEW_NAVIGATING, &WebBrowser::OnNavigating, this);
         webView->Bind(wxEVT_WEBVIEW_NAVIGATED, &WebBrowser::OnNavigated, this);
         webView->Bind(wxEVT_WEBVIEW_LOADED, &WebBrowser::OnLoaded, this);
@@ -487,6 +498,10 @@ namespace Alternet::UI
         return webView;
     }
     
+    void WebBrowser::OnEraseBackground(wxEraseEvent& event)
+    {
+    }
+
     WebBrowser::~WebBrowser()
     {
         if (IsWxWindowCreated())

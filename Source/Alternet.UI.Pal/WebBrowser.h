@@ -50,6 +50,11 @@ namespace Alternet::UI
 
         void ProcessDefaultsOnCreate(bool before);
     public:
+
+        long GetAdditionalExtendedStyle() override;
+        bool GetUserPaint() override;
+        void SetUserPaint(bool value) override;
+
         wxWindow* CreateWxWindowCore(wxWindow* parent) override;
         wxWindow* CreateWxWindowUnparented() override;
         wxWebView* GetWebViewCtrl();
@@ -61,6 +66,7 @@ namespace Alternet::UI
 
         static bool IsBackendAvailable(const wxString& value);
         static void SetBackend(WebBrowserBackend value);
+        void OnEraseBackground(wxEraseEvent& event) override;
 
         virtual void OnSizeChanged(wxSizeEvent& event) override;
 
