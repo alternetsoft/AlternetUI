@@ -109,17 +109,6 @@ namespace Alternet.Maui.Extensions
         }
 
         /// <summary>
-        /// Converts an <see cref="Alternet.Drawing.Font"/> to a MAUI-compatible font.
-        /// </summary>
-        /// <param name="font">The <see cref="Alternet.Drawing.Font"/> to convert.</param>
-        /// <returns>A MAUI-compatible <see cref="Microsoft.Maui.Graphics.IFont"/>.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Microsoft.Maui.Graphics.IFont ToMaui(this Alternet.Drawing.Font font)
-        {
-            return (Microsoft.Maui.Graphics.IFont)font.Handler;
-        }
-
-        /// <summary>
         /// Converts a <see cref="SKMouseButton"/> to an <see cref="MouseButton"/>.
         /// </summary>
         /// <param name="value">The <see cref="SKMouseButton"/> to convert.</param>
