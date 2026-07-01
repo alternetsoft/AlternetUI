@@ -653,6 +653,30 @@ namespace Alternet.Drawing
         public virtual FontWeight Weight => handler.GetWeight();
 
         /// <summary>
+        /// Gets a value indicating whether this font is a default font.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsDefaultFont
+        {
+            get
+            {
+                return FontOrigin == FontOriginKind.Default;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this font is a default monospaced font.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsDefaultMonoFont
+        {
+            get
+            {
+                return FontOrigin == FontOriginKind.DefaultMono;
+            }
+        }
+
+        /// <summary>
         /// Returns bold version of the font.
         /// </summary>
         /// <remarks>
@@ -696,6 +720,20 @@ namespace Alternet.Drawing
                 return style ??= GetStyle(handler);
             }
         }
+
+        /// <summary>
+        /// Gets the font origin kind. This property can be used to determine whether it is a default font,
+        /// system font, or a custom font.
+        /// </summary>
+        [Browsable(false)]
+        public FontOriginKind FontOrigin { get; internal set; }
+
+        /// <summary>
+        /// Gets or sets display font name. This is the name of the font as
+        /// it is displayed in the font name pickers. It may be different from the actual font name.
+        /// Value of this property can be a <see cref="string"/> or a <see cref="Func{String}"/>.
+        /// </summary>
+        public virtual object? DisplayName { get; set; }
 
         /// <summary>
         /// Gets a value that indicates whether this <see cref="Font"/> is bold.
@@ -1571,15 +1609,52 @@ namespace Alternet.Drawing
             return result;
         }
 
+        /// <summary>
+        /// Gets the user-readable string representation of the specified font name.
+        /// Uses <see cref="Font.DisplayName"/>.
+        /// </summary>
+        /// <param name="font">The font for which to get the display name.</param>
+        /// <returns>The user-readable string representation of the font name, or <c>null</c> if not available.
+        /// </returns>
+        public static string? GetEffectiveFontDisplayName(Font? font)
+        {
+            if (font == null) return null;
+
+            var displayName = font.DisplayName;
+
+            if (displayName == null) return null;
+
+            if (displayName is string str)
+            {
+                if (str.Length > 0)
+                    return str;
+                return null;
+            }
+
+            if (displayName is Func<string> func)
+            {
+                var result = func();
+                if (result is not null && result.Length > 0)
+                    return result;
+                return null;
+            }
+
+            return null;
+        }
+
         private static Font CreateDefaultMonoFont()
         {
             var font = FontFactory.Handler.CreateDefaultMonoFont();
+            font.DisplayName = () => CommonStrings.Default.DefaultMonoFontDisplayName;
+            font.FontOrigin = Drawing.FontOriginKind.DefaultMono;
             return font;
         }
 
         private static Font CreateDefaultFont()
         {
             var font = FontFactory.Handler.CreateDefaultFont();
+            font.DisplayName = () => CommonStrings.Default.DefaultFontDisplayName;
+            font.FontOrigin = Drawing.FontOriginKind.Default;
             return font;
         }
 
@@ -1590,8 +1665,8 @@ namespace Alternet.Drawing
         {
             skiaFont = null;
 
-            if(fonts is not null)
-            { 
+            if (fonts is not null)
+            {
                 foreach (var f in fonts)
                 {
                     f?.ResetSkiaFont();
