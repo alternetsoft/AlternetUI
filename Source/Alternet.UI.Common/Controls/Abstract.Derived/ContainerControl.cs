@@ -37,21 +37,6 @@ namespace Alternet.UI
             ParentForeColor = true;
         }
 
-        /// <summary>
-        /// Adds the specified child controls to the container.
-        /// </summary>
-        /// <param name="children">The child controls to add.</param>
-        /// <returns>The current instance of <see cref="ContainerControl"/>.</returns>
-        public virtual ContainerControl WithChildren(params AbstractControl[] children)
-        {
-            DoInsideLayout(() =>
-            {
-                Children.AddRange(children);
-            });
-
-            return this;
-        }
-
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {

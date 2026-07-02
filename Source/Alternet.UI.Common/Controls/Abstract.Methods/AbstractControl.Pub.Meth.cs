@@ -265,6 +265,146 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds the specified child controls to the container.
+        /// </summary>
+        /// <param name="children">The child controls to add.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public virtual AbstractControl WithChildren(params AbstractControl[] children)
+        {
+            DoInsideLayout(() =>
+            {
+                Children.AddRange(children);
+            });
+
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Margin"/> property for the control.
+        /// </summary>
+        /// <param name="margin">The margin to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithMargin(Thickness margin)
+        {
+            Margin = margin;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Margin"/> property for the control.
+        /// </summary>
+        /// <param name="bottom">The bottom margin to set for the control.</param>
+        /// <param name="left">The left margin to set for the control.</param>
+        /// <param name="top">The top margin to set for the control.</param>
+        /// <param name="right">The right margin to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithMargin(float left, float top, float right, float bottom)
+        {
+            Margin = new Thickness(left, top, right, bottom);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="MarginLeft"/> property for the control.
+        /// </summary>
+        /// <param name="left">The left margin to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithMarginLeft(float left)
+        {
+            Margin = new Thickness(left, Margin.Top, Margin.Right, Margin.Bottom);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="MarginBottom"/> property for the control.
+        /// </summary>
+        /// <param name="bottom">The bottom margin to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithMarginBottom(float bottom)
+        {
+            Margin = new Thickness(Margin.Left, Margin.Top, Margin.Right, bottom);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="MarginRight"/> property for the control.
+        /// </summary>
+        /// <param name="right">The right margin to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithMarginRight(float right)
+        {
+            Margin = new Thickness(Margin.Left, Margin.Top, right, Margin.Bottom);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="MarginTop"/> property for the control.
+        /// </summary>
+        /// <param name="top">The top margin to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithMarginTop(float top)
+        {
+            Margin = new Thickness(Margin.Left, top, Margin.Right, Margin.Bottom);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Padding"/> property for the control.
+        /// </summary>
+        /// <param name="padding">The padding to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithPadding(Thickness padding)
+        {
+            Padding = padding;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="HorizontalAlignment"/> property for the control.
+        /// </summary>
+        /// <param name="horizontalAlignment">The horizontal alignment to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithAlignment(HorizontalAlignment horizontalAlignment)
+        {
+            HorizontalAlignment = horizontalAlignment;
+            return this;
+        }
+        
+        /// <summary>
+        /// Sets <see cref="VerticalAlignment"/> property for the control.
+        /// </summary>
+        /// <param name="verticalAlignment">The vertical alignment to set for the control.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithAlignment(VerticalAlignment verticalAlignment)
+        {
+            VerticalAlignment = verticalAlignment;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Font"/> property for the control. Additionally, sets <see cref="ParentFont"/> to false.
+        /// </summary>
+        /// <param name="font"></param>
+        /// <returns></returns>
+        public AbstractControl WithFont(Font? font = null)
+        {
+            ParentFont = false;
+            Font = font;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets <see cref="Parent"/> property for the control.
+        /// </summary>
+        /// <param name="parent">The parent control to set.</param>
+        /// <returns>The current instance of <see cref="AbstractControl"/>.</returns>
+        public AbstractControl WithParent(AbstractControl? parent)
+        {
+            Parent = parent;
+            return this;
+        }
+
+        /// <summary>
         /// Applies <see cref="MinimumSize"/> and <see cref="MaximumSize"/> restrictions to the specified size.
         /// </summary>
         /// <param name="size">The size to be limited.</param>
