@@ -7,12 +7,30 @@ namespace DrawingSample
 {
     partial class BrushesAndPensPageSettings : Panel
     {
-        private readonly Label dashStyleLabel = new("Dash Style:");
-        private readonly Label lineCapLabel = new("Line Cap:");
-        private readonly Label lineJoinLabel = new("Line Join:");
-        private readonly EnumPicker dashStyleComboBox = new();
-        private readonly EnumPicker lineCapComboBox = new();
-        private readonly EnumPicker lineJoinComboBox = new();
+        private readonly Label dashStyleLabel = new("Dash Style:")
+        {
+        };
+
+        private readonly Label lineCapLabel = new("Line Cap:")
+        {
+        };
+
+        private readonly Label lineJoinLabel = new("Line Join:")
+        {
+        };
+
+        private readonly EnumPicker dashStyleComboBox = new()
+        {
+        };
+
+        private readonly EnumPicker lineCapComboBox = new()
+        {
+        };
+
+        private readonly EnumPicker lineJoinComboBox = new()
+        {
+        };
+
         private BrushesAndPensPage? page;
 
         public BrushesAndPensPageSettings()
@@ -21,13 +39,26 @@ namespace DrawingSample
             {
                 InitializeComponent();
 
-                ControlSet labels = new(dashStyleLabel, lineCapLabel, lineJoinLabel);
-                ControlSet comboBoxes = new(dashStyleComboBox, lineCapComboBox, lineJoinComboBox);
-                labels.Margin(new(0, 5, 10, 5)).VerticalAlignment(VerticalAlignment.Center);
-                comboBoxes.Margin(new(0, 5, 0, 5));
-                var gridControls = ControlSet.GridFromColumns(labels, comboBoxes);
+                Group(dashStyleLabel, lineCapLabel, lineJoinLabel).GroupName("labels");
+                Group(dashStyleComboBox, lineCapComboBox, lineJoinComboBox).GroupName("editors");
 
-                propGrid.Setup(gridControls);
+                Children.Add(new HorizontalStackPanel().WithChildren(dashStyleLabel, dashStyleComboBox));
+                Children.Add(new HorizontalStackPanel().WithChildren(lineCapLabel, lineCapComboBox));
+                Children.Add(new HorizontalStackPanel().WithChildren(lineJoinLabel, lineJoinComboBox));
+
+                GetNamedGroup("labels", recursive: true)
+                .Margin(new(0, 5, 10, 0))
+                .VerticalAlignment(VerticalAlignment.Center)
+                .MinWidthToMaxPreferred();
+
+                GetNamedGroup("editors", recursive: true)
+                .Margin(new(0, 5, 5, 0))
+                .HorizontalAlignment(HorizontalAlignment.Fill);
+
+                GetGroup<ColorPicker>(recursive: true).ForEach((c) =>
+                {
+                    c.ListBox.AddTransparentColor();
+                });
             });
         }
 
@@ -78,16 +109,22 @@ namespace DrawingSample
                 page.ShapeCount = shapeCountSlider.Value;
             };
 
-            brushColorHueSlider.Value = page.BrushColorHue;
-            brushColorHueSlider.ValueChanged += (s, e) =>
+            brushColor1Picker.Value = page.BrushColor1;
+            brushColor1Picker.ValueChanged += (s, e) =>
             {
-                page.BrushColorHue = brushColorHueSlider.Value;
+                page.BrushColor1 = brushColor1Picker.Value;
             };
 
-            penColorHueSlider.Value = page.PenColorHue;
-            penColorHueSlider.ValueChanged += (s, e) =>
+            brushColor2Picker.Value = page.BrushColor2;
+            brushColor2Picker.ValueChanged += (s, e) =>
             {
-                page.PenColorHue = penColorHueSlider.Value;
+                page.BrushColor2 = brushColor2Picker.Value;
+            };
+
+            penColorPicker.Value = page.PenColor;
+            penColorPicker.ValueChanged += (s, e) =>
+            {
+                page.PenColor = penColorPicker.Value;
             };
 
             penWidthSlider.Value = page.PenWidth;
@@ -107,11 +144,6 @@ namespace DrawingSample
             {
                 page.EllipsesIncluded = ellipsesIncludedCheckBox.IsChecked;
             };
-        }
-
-        private void BrushComboBox_SelectedItemChanged(object? sender, EventArgs e)
-        {
-            hatchStylePanel.Visible = page!.Brush == BrushesAndPensPage.BrushType.Hatch;
         }
     }
 }

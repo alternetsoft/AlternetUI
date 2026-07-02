@@ -14,9 +14,11 @@ namespace DrawingSample
 
         private int shapeCount = 5;
 
-        private int brushColorHue = 1;
+        private Color brushColor1 = Color.Red;
 
-        private int penColorHue = 2;
+        private Color brushColor2 = Color.Blue;
+
+        private Color penColor = Color.Green;
 
         private int penWidth = 4;
 
@@ -101,22 +103,32 @@ namespace DrawingSample
             }
         }
 
-        public int BrushColorHue
+        public Color BrushColor1
         {
-            get => brushColorHue;
+            get => brushColor1;
             set
             {
-                brushColorHue = value;
+                brushColor1 = value;
                 Update();
             }
         }
 
-        public int PenColorHue
+        public Color BrushColor2
         {
-            get => penColorHue;
+            get => brushColor2;
             set
             {
-                penColorHue = value;
+                brushColor2 = value;
+                Update();
+            }
+        }
+
+        public Color PenColor
+        {
+            get => penColor;
+            set
+            {
+                penColor = value;
                 Update();
             }
         }
@@ -193,7 +205,7 @@ namespace DrawingSample
             if (shapes == null)
             {
                 var random = new Random(0);
-                var fill = CreateFillBrush();
+                var fill = CreateFillBrush(bounds);
                 var stroke = CreateStrokePen();
                 shapes = CreateShapes(random, bounds, fill, stroke).ToArray();
             }
@@ -250,57 +262,36 @@ namespace DrawingSample
 
         private Pen CreateStrokePen()
         {
-            RGBValue c = new HSVValue(
-                MathUtils.MapRanges(penColorHue, 0, 10, 0, 1),
-                1,
-                0.3);
-
-            return new Pen(c, penWidth, penDashStyle, lineCap, lineJoin);
+            return new Pen(penColor, penWidth, penDashStyle, lineCap, lineJoin);
         }
 
-        private Brush CreateFillBrush()
+        private Brush CreateFillBrush(RectD bounds)
         {
-            RGBValue c = new HSVValue(
-                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1),
-                1,
-                0.7);
-
-            RGBValue c1 = new HSVValue(
-                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1) - 0.3,
-                1,
-                0.7);
-
-            RGBValue c2 = new HSVValue(
-                MathUtils.MapRanges(brushColorHue, 0, 10, 0, 1) - 0.8,
-                1,
-                0.7);
-
             return brush switch
             {
-                BrushType.Solid => new SolidBrush(Color.FromArgb(c.R, c.G, c.B)),
-                BrushType.Hatch => new HatchBrush(hatchStyle, Color.FromArgb(c.R, c.G, c.B)),
+                BrushType.Solid => new SolidBrush(brushColor1),
+                BrushType.Hatch => new HatchBrush(hatchStyle, brushColor1).SetBackgroundColor(brushColor2),
                 
                 BrushType.LinearGradient =>
                     new LinearGradientBrush(
                         new PointD(0,0),
-                        new PointD(200, 200),
+                        new PointD(bounds.Width, bounds.Height),
                         new[]
                         {
-                            new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
-                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5f),
-                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8f),
+                            new GradientStop(brushColor1, 0f),
+                            new GradientStop(brushColor2, 0.5f),
+                            new GradientStop(brushColor1, 1f),
                         }),
-                
                 BrushType.RadialGradient =>
                     new RadialGradientBrush(
-                        new PointD(200, 200),
-                        200,
-                        new PointD(200, 200),
+                        center: bounds.Center,
+                        radius: bounds.CircleRadius,
+                        gradientOrigin: bounds.Center,
                         new[]
                         {
-                            new GradientStop(Color.FromArgb(c.R, c.G, c.B), 0),
-                            new GradientStop(Color.FromArgb(c1.R, c1.G, c1.B), 0.5f),
-                            new GradientStop(Color.FromArgb(c2.R, c2.G, c2.B), 0.8f),
+                            new GradientStop(brushColor1, 0f),
+                            new GradientStop(brushColor2, 0.5f),
+                            new GradientStop(brushColor1, 0.8f),
                         }),
                 
                 _ => throw new Exception(),

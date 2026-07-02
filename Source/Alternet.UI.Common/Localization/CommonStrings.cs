@@ -22,6 +22,11 @@ namespace Alternet.UI.Localization
         public string ButtonOk { get; set; } = "Ok";
 
         /// <summary>
+        /// Gets or sets display name for the transparent color.
+        /// </summary>
+        public string TransparentColorDisplayName { get; set; } = "Transparent";
+
+        /// <summary>
         /// Gets or sets font display name for the default font.
         /// </summary>
         public string DefaultFontDisplayName { get; set; } = "Default";

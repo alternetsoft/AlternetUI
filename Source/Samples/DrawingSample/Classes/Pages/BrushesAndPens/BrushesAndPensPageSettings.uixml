@@ -1,12 +1,12 @@
 ﻿<Panel x:Class="DrawingSample.BrushesAndPensPageSettings"
         xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
-        xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample">
+        xmlns:local="clr-namespace:DrawingSample;assembly=DrawingSample" Layout="Vertical" Margin="5">
 
-  <StackPanel Orientation="Vertical" Margin="5">
     <HorizontalStackPanel Margin="0,0,0,5">
-      <Label Text="Shapes:" IsTextLocalized="true" VerticalAlignment="Center" MarginRight="5"/>
-      <IntPicker Name="shapeCountSlider" Minimum="1" Maximum="100"
+      <Label Text="Shapes:" IsTextLocalized="true" VerticalAlignment="Center" MarginRight="5"
+             Name="shapesLabel" GroupName="labels"/>
+      <IntPicker Name="shapeCountSlider" Minimum="1" Maximum="100" GroupName="editors"
               Margin="0,0,0,0"  MinWidth="150" HorizontalAlignment="Fill"/>
     </HorizontalStackPanel>
 
@@ -18,27 +18,36 @@
     </HorizontalStackPanel>
 
     <HorizontalStackPanel  Margin="0,5,0,5">
-      <Label Text="Brush:"  IsTextLocalized="true" VerticalAlignment="Center" MarginRight="5"/>
-      <EnumPicker Name="brushComboBox" MinWidth="150"
-      ValueChanged="BrushComboBox_SelectedItemChanged" HorizontalAlignment="Fill"/>
+      <Label Text="Brush:"  IsTextLocalized="true" VerticalAlignment="Center" MarginRight="5"
+             Name="brushLabel" GroupName="labels" />
+      <EnumPicker Name="brushComboBox" MinWidth="150" GroupName="editors"
+      HorizontalAlignment="Fill"/>
     </HorizontalStackPanel>
 
-    <StackPanel Name="hatchStylePanel" Visible="false">
-      <Label Text="Brush Hatch Style:" Margin="0,5,0,5" />
-      <EnumPicker Name="hatchStyleComboBox"/>
-    </StackPanel>
+    <HorizontalStackPanel Name="hatchStylePanel" Visible="true">
+      <Label Text="Hatch:" Margin="0,5,0,5" Name="hatchLabel" GroupName="labels"/>
+      <EnumPicker Name="hatchStyleComboBox" GroupName="editors"/>
+    </HorizontalStackPanel>
 
-    <Label Text="Brush Color:" Margin="0,5,0,5" IsTextLocalized="true"/>
-    <IntPicker Name="brushColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10" />
+    <HorizontalStackPanel Margin="0,0,0,10" >
+      <Label Text="Brush 1:" Margin="0,5,5,5" IsTextLocalized="true" Name="brushColor1Label"
+             GroupName="labels"/>
+      <ColorPicker Name="brushColor1Picker" GroupName="editors"/>
+    </HorizontalStackPanel>
 
-    <Label Text="Pen Color:" Margin="0,5,0,5" IsTextLocalized="true"/>
-    <IntPicker Name="penColorHueSlider" Minimum="0" Maximum="10" Margin="0,0,0,10"/>
+    <HorizontalStackPanel Margin="0,0,0,10">
+      <Label Text="Brush 2:" Margin="0,5,5,5" IsTextLocalized="true" GroupName="labels"/>
+      <ColorPicker Name="brushColor2Picker" GroupName="editors"/>
+    </HorizontalStackPanel>
 
-    <Label Text="Pen Width:" Margin="0,5,0,5" IsTextLocalized="true"/>
-    <IntPicker Name="penWidthSlider" Minimum="0" Maximum="6" Margin="0,0,0,10"/>
+    <HorizontalStackPanel Margin="0,0,0,10">
+      <Label Text="Pen Color:" Margin="0,5,5,5" IsTextLocalized="true" GroupName="labels"/>
+      <ColorPicker Name="penColorPicker" GroupName="editors"/>
+    </HorizontalStackPanel>
 
-    <Grid Margin="0,5,0,5" Name="propGrid">
-    </Grid>
-  </StackPanel>
+    <HorizontalStackPanel Margin="0,0,0,10">
+      <Label Text="Pen Width:" Margin="0,5,5,5" IsTextLocalized="true" GroupName="labels"/>
+      <IntPicker Name="penWidthSlider" Minimum="0" Maximum="6" GroupName="editors"/>
+    </HorizontalStackPanel>
 
 </Panel>
