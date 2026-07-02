@@ -3340,6 +3340,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the name of the group to which this control belongs.
+        /// Group names are used in order to identify and manage groups of controls.
+        /// </summary>
+        [Browsable(false)]
+        [DefaultValue(null)]
+        public virtual string? GroupName { get; set; }
+
+        /// <summary>
         /// Gets auto padding of the native control.
         /// </summary>
         [Browsable(false)]

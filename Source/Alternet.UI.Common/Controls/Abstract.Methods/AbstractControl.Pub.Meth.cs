@@ -1006,6 +1006,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates a new control set containing the controls with the specified type.
+        /// </summary>
+        /// <typeparam name="TItem">The type of controls to include in the set.
+        /// Must derive from AbstractControl.</typeparam>
+        /// <returns>A ControlSet containing the controls of the specified type.</returns>
+        public virtual ControlSet<TItem> GetGroup<TItem>(bool recursive = false)
+            where TItem : AbstractControl
+        {
+            if (!HasChildren)
+                return new ControlSet<TItem>();
+
+            List<TItem> result = new();
+            foreach (var control in Children)
+            {
+                if (control is TItem item)
+                    result.Add(item);
+                if (recursive)
+                {
+                    var subSet = control.GetGroup<TItem>(true);
+                    result.AddRange(subSet.Items);
+                }
+            }
+
+            return new ControlSet<TItem>(result);
+        }
+
+        /// <summary>
         /// Gets <see cref="ControlSet"/> with all child controls which are members of the
         /// specified group.
         /// </summary>
@@ -1024,6 +1051,32 @@ namespace Alternet.UI
                 if (recursive)
                 {
                     ControlSet subSet = control.GetGroup(groupIndex, true);
+                    result.AddRange(subSet.Items);
+                }
+            }
+
+            return new ControlSet(result);
+        }
+
+        /// <summary>
+        /// Gets <see cref="ControlSet"/> with all child controls which are members of the
+        /// specified group.
+        /// </summary>
+        /// <param name="groupName">Name of the group.</param>
+        /// <param name="recursive">Whether to check child controls recursively.</param>
+        public virtual ControlSet GetNamedGroup(string? groupName, bool recursive = false)
+        {
+            if (!HasChildren || groupName is null)
+                return ControlSet.Empty;
+
+            List<AbstractControl> result = new();
+            foreach (var control in Children)
+            {
+                if (control.MemberOfNamedGroup(groupName))
+                    result.Add(control);
+                if (recursive)
+                {
+                    ControlSet subSet = control.GetNamedGroup(groupName, true);
                     result.AddRange(subSet.Items);
                 }
             }
@@ -1171,6 +1224,23 @@ namespace Alternet.UI
             if (indexes is null)
                 return false;
             return Array.IndexOf<int>(indexes, groupIndex.Value) >= 0;
+        }
+
+        /// <summary>
+        /// Checks whether this control is a member of the specified named group.
+        /// </summary>
+        /// <param name="groupName">Name of the group.</param>
+        /// <returns><c>true</c> if the control is a member of the specified group; otherwise, <c>false</c>.</returns>
+        public virtual bool MemberOfNamedGroup(string? groupName)
+        {
+            if (groupName is null)
+                return false;
+
+            var name = GroupName;
+
+            if (name is null)
+                return false;
+            return string.Equals(name, groupName, StringComparison.Ordinal);
         }
 
         /// <summary>
