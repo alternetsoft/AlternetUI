@@ -6,107 +6,89 @@ namespace ControlsSample
     internal class WelcomePage : HiddenBorder
     {
         private readonly Image logoImage;
-
-        private readonly RichTextBox richText = new()
-        {
-            HasBorder = false,
-        };
+        private readonly ScrollViewer scrollViewer;
+        private readonly Panel panel = new();
 
         public WelcomePage()
         {
-            VerticalAlignment = VerticalAlignment.Stretch;
-            HorizontalAlignment = HorizontalAlignment.Stretch;
+            panel.Layout = LayoutStyle.Vertical;
+            panel.PaddingLeft = 30;
 
-            richText.Parent = this;
-            richText.TextUrl += RichTextBox_TextUrl;
             logoImage = Image.FromUrl("embres:ControlsSampleDll.Resources.logo128x128.png");
 
-            richText.ReadOnly = true;
-            richText.AutoUrlOpen = true;
-            richText.AutoUrlModifiers = Alternet.UI.ModifierKeys.None;
-            RenderText();
+            RenderText(panel);
+
+            scrollViewer = ScrollViewer.CreateWithChild(panel);
+            scrollViewer.Parent = this;
         }
 
-        private void RenderText()
+        private void RenderText(AbstractControl parent)
         {
+            UseControlColors(true);
+
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
             var docsUrl = $"{docsHomePage}introduction/getting-started.html";
 
-            var baseFontSize = (int)AbstractControl.DefaultFont.SizeInPoints;
+            var baseFontSize = AbstractControl.DefaultFont.SizeInPoints;
 
-            var r = richText;
+            var boldFont = Font.Default.WithBold();
 
-            r.SetDefaultStyle(r.CreateTextAttr());
+            var h1Font = boldFont.WithSize(baseFontSize + 15);
+            var h2Font = boldFont.WithSize(baseFontSize + 3);
+            var infoFont = Font.Default.WithSize(baseFontSize + 1);
 
-            r.BeginUpdate();
-            r.BeginSuppressUndo();
+            new Label("Alternet UI").WithMargin(0, 20, 0, 20).WithFont(h1Font)
+                .WithAlignment(HorizontalAlignment.Center).WithParent(parent);
 
-            r.BeginParagraphSpacing(0, 20);
+            new Label("Cross-platform .NET UI Framework").WithFont(h2Font).WithMargin(0, 0, 0, 20)
+                .WithAlignment(HorizontalAlignment.Center).WithParent(parent);
 
-            r.ApplyAlignmentToSelection(TextBoxTextAttrAlignment.Center);
+            new PictureBox(logoImage).WithAlignment(HorizontalAlignment.Center)
+                .WithMarginBottom(20).WithParent(parent);
 
-            r.BeginBold();
-            r.BeginFontSize(baseFontSize + 15);
+            var s1 = "Use established .NET standards and productivity tools";
+            var s2 = "for your cross-platform desktop application. ";
+            var s3 = "Keep up good engineering practices. Deliver your application quickly.";
+            var s4 = "Be native on the desktop, whether it is Windows, macOS, or Linux.";
 
-            r.WriteText("Alternet UI");
-            r.EndFontSize();
+            void WriteLine(string text)
+            {
+                new Label(text).WithFont(infoFont).WithAlignment(HorizontalAlignment.Center)
+                    .WithMargin(0, 5, 0, 0).WithParent(parent);
+            }
 
-            r.NewLine();
-            r.BeginFontSize(baseFontSize + 3);
-            r.WriteText("Cross-platform .NET UI Framework");
-            r.EndFontSize();
+            WriteLine(s1);
+            WriteLine(s2);
+            WriteLine(s3);
+            WriteLine(s4);
 
-            r.EndBold();
-            r.NewLine();
+            new Label(s3).WithFont(infoFont).WithAlignment(HorizontalAlignment.Center)
+                .WithMargin(0, 5, 0, 5).WithParent(parent);
 
-            r.WriteImage(logoImage);
-
-            r.NewLine(2);
-
-            r.BeginFontSize(baseFontSize + 1);
-            r.WriteLineText(
-                "Use established .NET standards and productivity tools for your cross-platform" +
-                " desktop application. ");
-            r.WriteLineText(
-                "Keep up good engineering practices. Deliver your application quickly.");
-            r.WriteLineText("Be native on the desktop, whether it is Windows, macOS, or Linux.");
-            r.EndFontSize();
-
-            r.NewLine();
-
-            var urlStyle = r.CreateUrlAttr();
-            r.WriteUrl(urlStyle, homePage, "Home");
-            r.WriteText("    ");
-            r.WriteUrl(urlStyle, docsUrl, "Help");
-            r.WriteText("    ");
-            r.WriteUrl(urlStyle, "PropertyGrid", "Property Grid");
-
-            r.EndSuppressUndo();
-            r.EndUpdate();
+            new HorizontalStackPanel()
+                .WithChildren(
+                    new LinkLabel("Home", homePage).WithFont(infoFont).WithMargin(0, 0, 30, 5),
+                    new LinkLabel("Help", docsUrl).WithFont(infoFont).WithMarginBottom(5))
+                .WithAlignment(HorizontalAlignment.Center)
+                .WithMarginTop(20)
+                .WithParent(parent);
         }
 
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            base.OnSystemColorsChanged(e);
-            richText.DoInsideUpdate(() =>
+            if (SystemSettings.AppearanceIsDark)
             {
-                richText.Clear();
-                RenderText();
-            });
-        }
-
-        private void RichTextBox_TextUrl(object? sender, UrlEventArgs e)
-        {
-            if(e.Url == "PropertyGrid")
-            {
-                e.Cancel = true;
-                App.AddIdleTask(() =>
-                {
-                    var form = new PropertyGridSample.MainControl();
-                    form.Show();
-                });
+                BackgroundColor = DefaultColors.ControlBackColor.Dark;
+                ForegroundColor = DefaultColors.ControlForeColor.Dark;
             }
+            else
+            {
+                BackgroundColor = DefaultColors.ControlBackColor.Light;
+                ForegroundColor = DefaultColors.ControlForeColor.Light;
+            }
+
+            base.OnSystemColorsChanged(e);
         }
     }
 }
