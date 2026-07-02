@@ -18,7 +18,7 @@ namespace Alternet.UI
     /// certain features to be available.</remarks>
     /// <typeparam name="T">The type of controls contained in the set.
     /// Must derive from <see cref="AbstractControl"/>.</typeparam>
-    public partial class ControlSet<T>
+    public partial class ControlSet<T> : BaseObject
         where T : AbstractControl
     {
         private readonly IReadOnlyList<T> items;
@@ -89,6 +89,34 @@ namespace Alternet.UI
                 Coord result = 0;
                 foreach (var item in items)
                     result = Math.Max(result, item.Width);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the maximum preferred width among all controls in the set.
+        /// </summary>
+        public virtual Coord MaxPreferredWidth
+        {
+            get
+            {
+                Coord result = 0;
+                foreach (var item in items)
+                    result = Math.Max(result, item.GetPreferredSize().Width);
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// Gets the maximum preferred height among all controls in the set.
+        /// </summary>
+        public virtual Coord MaxPreferredHeight
+        {
+            get
+            {
+                Coord result = 0;
+                foreach (var item in items)
+                    result = Math.Max(result, item.GetPreferredSize().Height);
                 return result;
             }
         }
@@ -410,8 +438,7 @@ namespace Alternet.UI
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet<T> MinWidthToMaxPreferred()
         {
-            var v = MaxPreferredSize.Width;
-            return MinWidth(v);
+            return MinWidth(MaxPreferredWidth);
         }
 
         /// <summary>
@@ -585,6 +612,18 @@ namespace Alternet.UI
                 foreach (var item in items)
                     item.SizeChanged += value;
             });
+        }
+
+        /// <summary>
+        /// Sets group name for all the controls in the set.
+        /// </summary>
+        /// <param name="value">The group name to set for all controls.</param>
+        /// <returns>Returns this object instance for use in the call sequences.</returns>
+        public virtual ControlSet<T> GroupName(string? value)
+        {
+            foreach (var item in items)
+                item.GroupName = value;
+            return this;
         }
 
         /// <summary>
@@ -944,13 +983,15 @@ namespace Alternet.UI
         /// applies the provided action
         /// only to those that are currently displayed or intended to be rendered.
         /// </remarks>
-        public virtual void ForEachVisible(Action<AbstractControl> action)
+        public virtual ControlSet<T> ForEachVisible(Action<T> action)
         {
             foreach (var item in items)
             {
                 if (item.Visible)
                     action(item);
             }
+
+            return this;
         }
 
         /// <summary>
@@ -981,12 +1022,14 @@ namespace Alternet.UI
         /// bulk operations or analysis
         /// over the entire set of controls.
         /// </remarks>
-        public virtual void ForEach(Action<AbstractControl> action)
+        public virtual ControlSet<T> ForEach(Action<T> action)
         {
             foreach (var item in items)
             {
                 action(item);
             }
+
+            return this;
         }
     }
 
