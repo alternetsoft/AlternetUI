@@ -67,6 +67,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LinkLabel"/> class with the specified text and url.
+        /// </summary>
+        /// <param name="text">The text of the link label.</param>
+        /// <param name="url">The URL associated with the link label.</param>
+        public LinkLabel(string? text, string? url)
+            : this()
+        {
+            Text = text ?? string.Empty;
+            Url = url;
+        }
+
+        /// <summary>
         /// Occurs when a link is clicked within the control.
         /// </summary>
         public event CancelEventHandler? LinkClicked;
