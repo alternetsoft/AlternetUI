@@ -54,7 +54,7 @@ namespace Alternet::UI
             "",
             wxDefaultPosition,
             wxDefaultSize,
-            _firstInGroup ? wxRB_GROUP : 0);
+            wxRB_SINGLE);
 
         radioButton->Bind(wxEVT_RADIOBUTTON, &RadioButton::OnCheckedChanged, this);
         return radioButton;
@@ -63,42 +63,6 @@ namespace Alternet::UI
     wxRadioButton* RadioButton::GetRadioButton()
     {
         return dynamic_cast<wxRadioButton*>(GetWxWindow());
-    }
-
-    std::vector<RadioButton*> RadioButton::GetRadioButtonsInGroup()
-    {
-        std::vector<RadioButton*> result;
-
-        auto parent = GetParent();
-        if (parent == nullptr)
-            return result;
-
-        // check with wxRB_GROUP?
-        for (auto child : parent->GetChildren())
-        {
-            auto radioButton = dynamic_cast<RadioButton*>(child);
-            if (radioButton != nullptr)
-                result.push_back(radioButton);
-        }
-
-        return result;
-    }
-
-    int RadioButton::GetChildRadioButtonsCount(wxWindow* parent)
-    {
-        int result = 0;
-
-        if (parent == nullptr)
-            return result;
-
-        for (auto child : parent->GetChildren())
-        {
-            auto radioButton = dynamic_cast<wxRadioButton*>(child);
-            if (radioButton != nullptr)
-                result++;
-        }
-
-        return result;
     }
 
     void RadioButton::RecreateWxWindowIfNeeded()
@@ -112,23 +76,13 @@ namespace Alternet::UI
 
     void RadioButton::SetWxWindowParent(wxWindow* parent)
     {
-        _firstInGroup = GetChildRadioButtonsCount(parent) == 0;
         Control::SetWxWindowParent(parent);
     }
 
     void RadioButton::OnCheckedChanged(wxCommandEvent& event)
     {
         event.Skip();
-        auto group = GetRadioButtonsInGroup();
-        if (group.size() > 0)
-        {
-            // wxEVT_RADIOBUTTON is not fired on unchecked, only on "click".
-            // So we need to create an illusion of that.
-            for (auto rb : group)
-                rb->RaiseEvent(RadioButtonEvent::CheckedChanged);
-        }
-        else
-            RaiseEvent(RadioButtonEvent::CheckedChanged);
+        RaiseEvent(RadioButtonEvent::CheckedChanged);
     }
 
     bool RadioButton::GetIsChecked()

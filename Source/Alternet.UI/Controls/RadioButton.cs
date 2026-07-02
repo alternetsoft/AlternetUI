@@ -30,8 +30,6 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Native)]
     public partial class RadioButton : ButtonBase
     {
-        private bool? reportedChecked;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RadioButton"/> class.
         /// </summary>
@@ -88,7 +86,7 @@ namespace Alternet.UI
                 if (IsChecked == value)
                     return;
                 Handler.IsChecked = value;
-                RaiseSiblingsCheckedChanged();
+                RaiseCheckedChanged();
             }
         }
 
@@ -129,13 +127,24 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            var newChecked = IsChecked;
-
-            if (reportedChecked == newChecked)
-                return;
-            reportedChecked = newChecked;
             OnCheckedChanged(EventArgs.Empty);
             CheckedChanged?.Invoke(this, EventArgs.Empty);
+
+            Post(() =>
+            {
+                if (IsChecked)
+                {
+                    foreach (var sinbling in Siblings)
+                    {
+                        if (sinbling is RadioButton radioButton)
+                        {
+                            radioButton.Handler.IsChecked = false;
+                            radioButton.OnCheckedChanged(EventArgs.Empty);
+                            radioButton.CheckedChanged?.Invoke(radioButton, EventArgs.Empty);
+                        }
+                    }
+                }
+            });
         }
 
         /// <inheritdoc/>
@@ -151,30 +160,6 @@ namespace Alternet.UI
         /// data.</param>
         protected virtual void OnCheckedChanged(EventArgs e)
         {
-        }
-
-        /// <summary>
-        /// Calls <see cref="RaiseCheckedChanged"/> for all sibling
-        /// <see cref="RadioButton"/> controls.
-        /// </summary>
-        protected virtual void RaiseSiblingsCheckedChanged()
-        {
-            if (DisposingOrDisposed)
-                return;
-            var siblings = Parent?.Children;
-
-            if (siblings is null || siblings.Count == 0)
-            {
-                RaiseCheckedChanged();
-                return;
-            }
-
-            foreach (var sibling in siblings)
-            {
-                if (sibling is not RadioButton radioButton)
-                    continue;
-                radioButton.RaiseCheckedChanged();
-            }
         }
     }
 }

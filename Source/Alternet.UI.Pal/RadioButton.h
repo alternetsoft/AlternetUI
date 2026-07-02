@@ -18,23 +18,9 @@ namespace Alternet::UI
         virtual void RecreateWxWindowIfNeeded() override;
 
     private:
-        enum class RadioButtonFlags
-        {
-            None = 0,
-            Checked = 1 << 0,
-        };
-
         wxRadioButton* GetRadioButton();
-
-        std::vector<RadioButton*> GetRadioButtonsInGroup();
-
-        int GetChildRadioButtonsCount(wxWindow* parent);
-
-        bool _firstInGroup = false;
 
     protected:
         void SetWxWindowParent(wxWindow* parent) override;
     };
 }
-
-template<> struct enable_bitmask_operators<Alternet::UI::RadioButton::RadioButtonFlags> { static const bool enable = true; };
