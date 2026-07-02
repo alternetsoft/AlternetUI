@@ -162,7 +162,7 @@ namespace Alternet.Drawing
         {
             SKShader result;
 
-            if(LocalMatrix != SKMatrix.Empty)
+            if (LocalMatrix != SKMatrix.Empty)
             {
                 result = SKShader.CreateLinearGradient(
                     startPoint,
