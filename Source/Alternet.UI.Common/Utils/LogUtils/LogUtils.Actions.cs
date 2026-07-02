@@ -254,7 +254,9 @@ namespace Alternet.UI
                 });
             });
 
+            /*
             Fn("Log useful defines", LogUtils.LogUsefulDefines);
+            */
             Fn("Log system information", LogUtils.LogOSInformation);
             Fn("Log system colors", LogUtils.LogSystemColors);
             Fn("Show Alternet.UI commits", GitHubUtils.ShowCommitsForAlternetUI);
@@ -339,8 +341,6 @@ namespace Alternet.UI
                 LogImage(image);
             });
 
-            Fn("Test wxCHECK_MSG", () => { WebBrowser.DoCommandGlobal("wxCHECK_MSG"); });
-
             Fn("Log Embedded Resources in Alternet.UI.Common", () =>
             {
                 const string s = "embres:Alternet.UI?assembly=Alternet.UI.Common";
@@ -419,12 +419,13 @@ namespace Alternet.UI
                 LogRangeToFile(items);
             });
 
+            /*
             Fn("Test Exception: Throw C++", () =>
             {
                 ExceptionUtils.ForceUnhandledExceptionToUseDialog();
                 WebBrowser.DoCommandGlobal("CppThrow");
             });
-
+            */
             Fn("Test Exception: Throw C#", () =>
             {
                 ExceptionUtils.ForceUnhandledExceptionToUseDialog();
@@ -617,6 +618,7 @@ namespace Alternet.UI
                 title);
         }
 
+        /*
         /// <summary>
         /// Logs useful c++ defines.
         /// </summary>
@@ -626,6 +628,7 @@ namespace Alternet.UI
             var splitted = s?.Split(' ');
             LogUtils.LogAsSection(splitted);
         }
+        */
 
         /// <summary>
         /// Logs monospaced Skia fonts.
@@ -814,7 +817,10 @@ namespace Alternet.UI
             App.LogNameValue("App.IsIOS", App.IsIOS);
             App.LogNameValue("App.Is64BitProcess", App.Is64BitProcess);
             App.LogNameValue("App.Is64BitOS", App.Is64BitOS);
+
+            /*
             App.LogNameValue("C++ CPU", WebBrowser.DoCommandGlobal("CPU"));
+            */
 
             var s = App.Handler.GetCustomData("wx.PortAndVersion");
 
@@ -898,8 +904,10 @@ namespace Alternet.UI
             App.Log($"IsWindows11AtLeast = {App.IsWindows11AtLeast}");
             App.Log($"AppearanceName = {SystemSettings.AppearanceName}");
 
+            /*
             App.Log($"CPP.SizeOfLong = {WebBrowser.DoCommandGlobal("SizeOfLong")}");
             App.Log($"CPP.IsDebug = {WebBrowser.DoCommandGlobal("IsDebug")}");
+            */
 
             App.LogSeparator();
 

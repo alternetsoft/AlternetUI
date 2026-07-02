@@ -62,7 +62,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<NumericUpDown>();
                 ToolBoxAdd<Panel>();
                 ToolBoxAdd<PanelOkCancelButtons>();
-                ToolBoxAdd<RichTextBox>();
                 ToolBoxAdd<FindReplaceControl>();
                 ToolBoxAdd<StdSlider>();
                 ToolBoxAdd<StdProgressBar>();

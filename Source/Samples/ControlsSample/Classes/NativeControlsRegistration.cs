@@ -137,8 +137,17 @@ namespace ControlsSample
             PropertyGridSample.MainControl.LimitedTypesStatic.Add(typeof(T));
         }
 
+        public static void InitRichTextBox(object control)
+        {
+            if (control is not RichTextBox textBox)
+                return;
+            textBox.SuggestedSize = ObjectInit.DefaultListSize;
+            textBox.Text = ObjectInit.LoremIpsum;
+        }
+
         public static void InitActions()
         {
+            ControlsTestWindow.AddPage<TextRichPage>("RichTextBox");
             ControlsTestWindow.AddPage<NativeSliderPage>("Native Slider");
             ControlsTestWindow.AddPage<NativeTreeViewPage>("Native TreeView");
             ControlsTestWindow.AddPage<NativeListViewPage>("Native ListView");
@@ -149,10 +158,19 @@ namespace ControlsSample
             ControlsTestWindow.AddPage<NativeRadioButtonsPage>("Native RadioButton");
 
             CustomInternalSamplesPage.Add("Documentation Samples", () => new ApiDoc.MainWindowSimple());
+            CustomInternalSamplesPage.Add("Native Controls Tests", () => new ControlsTestWindow());
+
+            if (App.IsWindowsOS)
+            {
+                CustomInternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
+            }
+
+            CustomInternalSamplesPage.Add("Notify Icon", () => new NotifyIconPage());
 
             ToolBoxAdd<Button>();
             ToolBoxAdd<ComboBox>();
             ToolBoxAdd<GroupBox>();
+            ToolBoxAdd<RichTextBox>();
             ToolBoxAdd<CheckBox>();
             ToolBoxAdd<RadioButton>();
             ToolBoxAdd<ProgressBar>();
@@ -166,6 +184,7 @@ namespace ControlsSample
             ToolBoxAdd<Alternet.UI.Slider>();
             */
 
+            ObjectInit.Actions.Add(typeof(RichTextBox), InitRichTextBox);
             ObjectInit.Actions.Add(typeof(ComboBoxAndLabel), InitComboBoxAndLabel);
             ObjectInit.Actions.Add(typeof(ComboBox), InitComboBox);
             ObjectInit.Actions.Add(typeof(Button), InitButton);

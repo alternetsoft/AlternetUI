@@ -48,7 +48,7 @@ namespace ControlsSample
             richPanel.Parent = this;
             richPanel.TextBox.KeyDown += RichEdit_KeyDown;
             richPanel.TextBox.AutoUrlOpen = true;
-            richPanel.TextBox.TextUrl += TextMemoPage.MultiLineTextBox_TextUrl;
+            richPanel.TextBox.TextUrl += TextMemoPage.OnMultiLineTextBoxTextUrl;
             richPanel.TextBox.EnterPressed += RichTextBox_EnterPressed;
             richPanel.FileNewClick += RichPanel_FileNewClick;
             richPanel.FileOpenClick += RichPanel_FileOpenClick;

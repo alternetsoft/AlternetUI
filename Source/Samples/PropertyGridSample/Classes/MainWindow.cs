@@ -22,7 +22,6 @@ namespace PropertyGridSample
         private readonly ContextMenuStrip propGridContextMenu = new();
         private MenuItem? resetMenu;
 
-        private bool useIdle = false;
         private bool showDesignCorners;
 
         static MainControl()
@@ -309,8 +308,6 @@ namespace PropertyGridSample
                     return;
                 var item = ToolBox.SelectedItem as ControlListBoxItem;
                 var type = item?.InstanceType;
-                if (type == typeof(WelcomePage))
-                    return;
                 if (item?.PropInstance == e.Instance || e.Instance is null)
                     Invoke(UpdatePropertyGrid);
                 Post(ControlParent.Refresh);
@@ -396,32 +393,19 @@ namespace PropertyGridSample
 
                 ControlParent.Refresh();
 
-                if (type == typeof(WelcomePage))
+                App.AddIdleTask(() =>
                 {
-                    if (useIdle)
-                        App.AddIdleTask(InitDefaultPropertyGrid);
-                    else
-                        InitDefaultPropertyGrid();
-                    useIdle = true;
-                    SetBackground(SystemColors.Window);
-                    panel.RemoveActions();
-                }
-                else
+                    PropGrid.SetProps(item.PropInstance, true);
+                    PropGrid.Refresh();
+                    AfterSetProps();
+                });
+
+                SetBackground(null);
+
+                App.AddIdleTask(() =>
                 {
-                    App.AddIdleTask(() =>
-                    {
-                        PropGrid.SetProps(item.PropInstance, true);
-                        PropGrid.Refresh();
-                        AfterSetProps();
-                    });
-
-                    SetBackground(null);
-
-                    App.AddIdleTask(() =>
-                    {
-                        panel.SetMethodsAndActions(type, GetSelectedControl<Control>());
-                    });
-                }
+                    panel.SetMethodsAndActions(type, GetSelectedControl<Control>());
+                });
 
                 App.AddIdleTask(() =>
                 {

@@ -6,7 +6,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class PopupToolBarPage : Panel
+    public class PopupToolBarPage : Panel
     {
         public DropDownAlignment? DropDownVerticalAlignment = DropDownAlignment.AfterEnd;
         public DropDownAlignment? DropDownHorizontalAlignment = DropDownAlignment.AfterStart;

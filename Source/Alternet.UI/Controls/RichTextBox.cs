@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Alternet.Drawing;
+using Alternet.UI.Localization;
 
 namespace Alternet.UI
 {
@@ -305,6 +306,69 @@ namespace Alternet.UI
                     return string.Empty;
                 }
             }
+        }
+
+        /// <summary>
+        /// Logs current insert position of the control.
+        /// </summary>
+        /// <param name="textBox"></param>
+        /// <remarks>
+        /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
+        /// interface.
+        /// </remarks>
+        public static void LogPosition(object? textBox)
+        {
+            if (textBox is not ISimpleRichTextBox richTextBox)
+                return;
+
+            var currentPos = richTextBox.CurrentPosition;
+            if (currentPos is null)
+                return;
+            var name = richTextBox.Name ?? textBox.GetType().Name;
+            var prefix = $"{name}.CurrentPos:";
+            App.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
+        }
+
+        /// <summary>
+        /// Shows 'Go To Line' dialog.
+        /// </summary>
+        /// <remarks>
+        /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
+        /// interface.
+        /// </remarks>
+        public static void ShowDialogGoToLine(object? textBox)
+        {
+            if (textBox is not ISimpleRichTextBox richTextBox)
+                return;
+
+            var lastLineNumber = richTextBox.LastLineNumber + 1;
+            var template = CommonStrings.Default.LineNumber + " ({0} - {1})";
+            var prompt = string.Format(template, 1, lastLineNumber);
+
+            LongFromUserParams prm = new()
+            {
+                Title = CommonStrings.Default.WindowTitleGoToLine,
+                Message = prompt,
+                Parent = textBox as AbstractControl,
+                MinValue = 1,
+                MaxValue = lastLineNumber,
+                DefaultValue = richTextBox.InsertionPointLineNumber + 1,
+                OnApply = (value) =>
+                {
+                    if (value is null)
+                        return;
+                    var newPosition = richTextBox.XYToPosition(0, value.Value - 1);
+                    richTextBox.SetInsertionPoint(newPosition);
+                    richTextBox.ShowPosition(newPosition);
+                    if (textBox is IFocusable focusable)
+                    {
+                        if (focusable.CanFocus)
+                            focusable.SetFocus();
+                    }
+                },
+            };
+
+            DialogFactory.GetNumberFromUserAsync(prm);
         }
 
         /// <summary>
@@ -665,7 +729,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ShowDialogGoToLine()
         {
-            TextBoxUtils.ShowDialogGoToLine(this);
+            ShowDialogGoToLine(this);
         }
 
         /// <summary>
@@ -2899,7 +2963,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateRichTextBoxHandler(this);
+            return new WxRichTextBoxHandler();
         }
 
         /// <inheritdoc/>

@@ -332,20 +332,20 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Back" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static string UrlImageWebBrowserBack { get; set; }
             = GetImageUrl("alternet-arrow-left");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Home" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static string UrlImageWebBrowserHome { get; set; } = GetImageUrl("alternet-house");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Forward" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static string UrlImageWebBrowserForward { get; set; }
             = GetImageUrl("alternet-arrow-right");
@@ -362,20 +362,20 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Go" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static string UrlImageWebBrowserGo { get; set; } = GetImageUrl("alternet-caret-right");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Refresh" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static string UrlImageWebBrowserRefresh { get; set; }
             = GetImageUrl("alternet-rotate-right");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Stop" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static string UrlImageWebBrowserStop { get; set; } = GetImageUrl("alternet-xmark");
 

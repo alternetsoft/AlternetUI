@@ -72,6 +72,14 @@ namespace Alternet.UI
             {
                 WebBrowser.CrtSetDbgFlag(0);
             });
+
+            PreviewFile.RegisterPreviewControls += (s, e) =>
+            {
+                if(s is not PreviewFile pf)
+                    return;
+
+                pf.RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
+            };
         }
 
         /// <summary>

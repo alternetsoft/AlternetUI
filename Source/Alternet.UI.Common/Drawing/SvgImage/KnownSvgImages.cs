@@ -585,7 +585,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets image that can be used in "Back" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static SvgImage ImgBrowserBack
         {
@@ -595,7 +595,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets image that can be used in "Forward" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static SvgImage ImgBrowserForward
         {
@@ -713,7 +713,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets image that can be used in "Go" toolbar buttons
-        /// for the <see cref="WebBrowser"/>.
+        /// for the web browser control.
         /// </summary>
         public static SvgImage ImgBrowserGo
         {

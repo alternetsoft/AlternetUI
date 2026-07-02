@@ -256,8 +256,15 @@ namespace ControlsSample
 
         private void TextBox_CurrentPositionChanged(object? sender, EventArgs e)
         {
-            if (LogPosition)
-                TextBoxUtils.LogPosition(sender);
+            if (!TextInputPage.LogPosition)
+                return;
+
+            var currentPos = textBox.CurrentPosition;
+            if (currentPos is null)
+                return;
+            var name = textBox.Name ?? textBox.GetType().Name;
+            var prefix = $"{name}.CurrentPos:";
+            App.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
         }
 
         private void TextBox_TextMaxLength(object? sender, EventArgs e)

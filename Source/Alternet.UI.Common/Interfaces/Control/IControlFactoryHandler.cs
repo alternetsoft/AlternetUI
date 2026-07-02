@@ -26,13 +26,6 @@ namespace Alternet.UI
         IControlHandler CreateTextBoxHandler(TextBox control);
 
         /// <summary>
-        /// Creates <see cref="IControlHandler"/> interface provider.
-        /// </summary>
-        /// <param name="editor">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateRichTextBoxHandler(RichTextBox editor);
-
-        /// <summary>
         /// Creates <see cref="IPropertyGridVariant"/> interface provider.
         /// </summary>
         /// <returns></returns>
@@ -50,12 +43,6 @@ namespace Alternet.UI
         /// <param name="control">Owner.</param>
         /// <returns></returns>
         IControlHandler CreatePropertyGridHandler(PropertyGrid control);
-
-        /// <summary>
-        /// Creates <see cref="IWebBrowserFactoryHandler"/> interface provider.
-        /// </summary>
-        /// <returns></returns>
-        IWebBrowserFactoryHandler CreateWebBrowserFactoryHandler();
 
         /// <summary>
         /// Creates <see cref="IScrollBarHandler"/> interface provider.

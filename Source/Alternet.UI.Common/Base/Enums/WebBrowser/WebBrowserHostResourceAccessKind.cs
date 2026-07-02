@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     /// <summary>
     ///     Kind of cross origin resource access allowed for host
-    ///     resources during download in the <see cref="WebBrowser"/> control.
+    ///     resources during download in the web browser control.
     /// </summary>
     public enum WebBrowserHostResourceAccessKind
     {

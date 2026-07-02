@@ -129,11 +129,11 @@ namespace ControlsSample
                 AddPage("TreeView", CreateTreeViewPage);
                 AddPage("ListView",() => new ListViewPage());
                 AddPage("DateTime", CreateDateTimePage);
-                AddPage("WebBrowser", CreateWebBrowserPage);
                 AddPage("Number", CreateNumericInputPage);
                 AddPage("Slider, Progress", CreateSliderAndProgressPage);
                 AddPage("Layout", CreateLayoutPage);
-                AddPage("Notify, ToolTip", CreateNotifyIconPage);
+                AddPage("Rich ToolTip", () => new ToolTipPage());
+
                 AddPage("TabControl", CreateTabControlPage);
                 AddPage("Multimedia", CreateMultimediaPage);
                 AddPage("Samples", CreateOtherPage);
@@ -232,11 +232,6 @@ namespace ControlsSample
                     return new TextMemoPage();
                 }),
 
-                new("Rich", () =>
-                {
-                    return new TextRichPage();
-                }),
-
                 new("Other", () =>
                 {
                     return new TextOtherPage();
@@ -298,26 +293,6 @@ namespace ControlsSample
         AbstractControl CreateTabControlPage() => new TabControlPage();
         AbstractControl CreateNumericInputPage() => new NumericInputPage();
         
-        AbstractControl CreateNotifyIconPage()
-        {
-            NameValue<Func<AbstractControl>>? nameValue;
-
-            if (NotifyIcon.IsAvailable)
-                nameValue = new("Notify Icon", () => new NotifyIconPage());
-            else
-                nameValue = null;
-
-            NameValue<Func<AbstractControl>>?[] pages =
-            {
-                new("Rich ToolTip", () => new ToolTipPage()),
-                nameValue,
-            };
-
-            return CreateCustomPage(pages);
-        }
-
-        AbstractControl CreateWebBrowserPage() => new WebBrowserPage();
-
         AbstractControl CreateInternalSamplesPage() => new InternalSamplesPage();
 
         AbstractControl CreateWelcomePage() => new WelcomePage();

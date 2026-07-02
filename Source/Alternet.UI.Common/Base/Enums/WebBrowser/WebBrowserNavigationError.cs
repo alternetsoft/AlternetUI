@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Types of errors that can cause navigation in the <see cref="WebBrowser"/> control to fail.
+    /// Types of errors that can cause navigation in the web browser control to fail.
     /// </summary>
     public enum WebBrowserNavigationError
     {
@@ -55,7 +55,7 @@ namespace Alternet.UI
 
     /// <summary>
     /// Extended types of errors that can cause navigation to fail.
-    /// Used in the <see cref="WebBrowser"/> control.
+    /// Used in the web browser control.
     /// </summary>
     internal enum WebBrowserNavigationErrorEx
     {

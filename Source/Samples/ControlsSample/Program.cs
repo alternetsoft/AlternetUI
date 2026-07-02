@@ -145,6 +145,9 @@ namespace ControlsSample
 
             var window = new MainWindow();
 
+            window.AddPage("WebBrowser", () => new WebBrowserPage());
+            window.AddPage("RichTextBox", () => new TextRichPage());
+
             LogSimple("Main window created.");
 
             application.Run(window);

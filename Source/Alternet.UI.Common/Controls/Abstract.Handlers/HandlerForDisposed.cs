@@ -13,10 +13,8 @@ namespace Alternet.UI
     /// </summary>
     public class HandlerForDisposed : PlessControlHandler,
         ICalendarHandler,
-        IRichTextBox,
         IScrollBarHandler,
         ITextBoxHandler,
-        IWebBrowserLite,
         IWindowHandler
     {
         /// <summary>
@@ -268,29 +266,17 @@ namespace Alternet.UI
 
         bool ITextBoxHandler.HasSelection { get; }
 
-        bool IWebBrowserLite.HasSelection { get; }
-
         bool ITextBoxHandler.IsModified { get; set; }
 
         bool ITextBoxHandler.CanCopy { get; }
 
-        bool IWebBrowserLite.CanCopy { get; }
-
         bool ITextBoxHandler.CanCut { get; }
-
-        bool IWebBrowserLite.CanCut { get; }
 
         bool ITextBoxHandler.CanPaste { get; }
 
-        bool IWebBrowserLite.CanPaste { get; }
-
         bool ITextBoxHandler.CanRedo { get; }
 
-        bool IWebBrowserLite.CanRedo { get; }
-
         bool ITextBoxHandler.CanUndo { get; }
-
-        bool IWebBrowserLite.CanUndo { get; }
 
         TextHorizontalAlignment ITextBoxHandler.TextAlign { get; set; }
 
@@ -332,11 +318,6 @@ namespace Alternet.UI
         }
 
         public bool ApplyItalicToSelection()
-        {
-            return default;
-        }
-
-        public bool ApplyStyleToSelection(ITextBoxRichAttr style, RichTextSetStyleFlags flags)
         {
             return default;
         }
@@ -442,11 +423,6 @@ namespace Alternet.UI
         }
 
         public bool BeginStandardBullet(string bulletName, int leftIndent, int leftSubIndent, TextBoxTextAttrBulletStyle bulletStyle = TextBoxTextAttrBulletStyle.Standard)
-        {
-            return default;
-        }
-
-        public bool BeginStyle(ITextBoxRichAttr style)
         {
             return default;
         }
@@ -562,21 +538,6 @@ namespace Alternet.UI
         public ICalendarDateAttr CreateDateAttr(CalendarDateBorder border = CalendarDateBorder.None)
         {
             return new PlessCalendarDateAttr();
-        }
-
-        public ITextBoxRichAttr CreateRichAttr()
-        {
-            return new PlessTextBoxRichAttr();
-        }
-
-        public ITextBoxTextAttr CreateTextAttr()
-        {
-            return new PlessTextBoxRichAttr();
-        }
-
-        public ITextBoxRichAttr CreateUrlAttr()
-        {
-            return new PlessTextBoxRichAttr();
         }
 
         public void Cut()
@@ -796,11 +757,6 @@ namespace Alternet.UI
             return default;
         }
 
-        public int Find(string text, WebBrowserFindParams? prm = null)
-        {
-            return -1;
-        }
-
         public void FindClearResult()
         {
         }
@@ -822,11 +778,6 @@ namespace Alternet.UI
         public ICalendarDateAttr? GetAttr(int day)
         {
             return default;
-        }
-
-        public ITextBoxRichAttr GetBasicStyle()
-        {
-            return PlessTextBoxRichAttr.Empty;
         }
 
         public bool GetCaretAtLineStart()
@@ -852,16 +803,6 @@ namespace Alternet.UI
         public string GetCurrentURL()
         {
             return string.Empty;
-        }
-
-        public ITextBoxTextAttr GetDefaultStyle()
-        {
-            return PlessTextBoxRichAttr.Empty;
-        }
-
-        public ITextBoxRichAttr GetDefaultStyleEx()
-        {
-            return PlessTextBoxRichAttr.Empty;
         }
 
         public int GetDelay(uint i)
@@ -1044,16 +985,6 @@ namespace Alternet.UI
             return string.Empty;
         }
 
-        public ITextBoxRichAttr GetRichStyle(long position)
-        {
-            return PlessTextBoxRichAttr.Empty;
-        }
-
-        public ITextBoxRichAttr GetRichStyleForRange(long startRange, long endRange)
-        {
-            return PlessTextBoxRichAttr.Empty;
-        }
-
         public int GetSelectedCount()
         {
             return default;
@@ -1082,16 +1013,6 @@ namespace Alternet.UI
         public string GetStringSelection()
         {
             return string.Empty;
-        }
-
-        public ITextBoxTextAttr GetStyle(long position)
-        {
-            return PlessTextBoxRichAttr.Empty;
-        }
-
-        public ITextBoxTextAttr GetStyleForRange(long startRange, long endRange)
-        {
-            return PlessTextBoxRichAttr.Empty;
         }
 
         public Cursor GetTextCursor()
@@ -1140,11 +1061,6 @@ namespace Alternet.UI
         }
 
         public bool GoForward()
-        {
-            return default;
-        }
-
-        public bool HasParagraphAttributes(long startRange, long endRange, ITextBoxRichAttr style)
         {
             return default;
         }
@@ -1521,15 +1437,7 @@ namespace Alternet.UI
             return default;
         }
 
-        public void SetAndShowDefaultStyle(ITextBoxRichAttr attr)
-        {
-        }
-
         public void SetAttr(int day, ICalendarDateAttr? dateAttr)
-        {
-        }
-
-        public void SetBasicStyle(ITextBoxRichAttr style)
         {
         }
 
@@ -1551,16 +1459,6 @@ namespace Alternet.UI
 
         public void SetColumnWidth(long columnIndex, Coord width, ListViewColumnWidthMode widthMode)
         {
-        }
-
-        public bool SetDefaultRichStyle(ITextBoxRichAttr style)
-        {
-            return default;
-        }
-
-        public bool SetDefaultStyle(ITextBoxTextAttr style)
-        {
-            return default;
         }
 
         public bool SetDefaultStyleToCursorStyle()
@@ -1710,11 +1608,6 @@ namespace Alternet.UI
         {
         }
 
-        public bool SetRichStyle(long start, long end, ITextBoxRichAttr style)
-        {
-            return default;
-        }
-
         public void SetScrollbar(int? position, int? range, int? pageSize, bool refresh = true)
         {
         }
@@ -1742,16 +1635,6 @@ namespace Alternet.UI
 
         public void SetSelectionRange(long startRange, long endRange)
         {
-        }
-
-        public bool SetStyle(long start, long end, ITextBoxTextAttr style)
-        {
-            return default;
-        }
-
-        public bool SetStyleEx(long startRange, long endRange, ITextBoxRichAttr style, RichTextSetStyleFlags flags = RichTextSetStyleFlags.WithUndo)
-        {
-            return default;
         }
 
         public void SetTextCursor(Cursor? cursor)
@@ -1810,21 +1693,6 @@ namespace Alternet.UI
         }
 
         public bool WordRight(int noPages = 1, RichTextMoveCaretFlags flags = 0)
-        {
-            return default;
-        }
-
-        public bool WriteImage(Image? bitmap, BitmapType bitmapType = BitmapType.Png, ITextBoxRichAttr? textAttr = null)
-        {
-            return default;
-        }
-
-        public bool WriteImage(string filename, BitmapType bitmapType = BitmapType.Png, ITextBoxRichAttr? textAttr = null)
-        {
-            return default;
-        }
-
-        public object WriteTable(int rows, int cols, ITextBoxRichAttr? tableAttr = null, ITextBoxRichAttr? cellAttr = null)
         {
             return default;
         }

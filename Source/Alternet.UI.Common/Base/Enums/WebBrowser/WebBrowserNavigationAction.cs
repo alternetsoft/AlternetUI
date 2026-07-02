@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    ///     Navigation action types for the <see cref="WebBrowser"/> control.
+    ///     Navigation action types for the web browser control.
     /// </summary>
     public enum WebBrowserNavigationAction
     {

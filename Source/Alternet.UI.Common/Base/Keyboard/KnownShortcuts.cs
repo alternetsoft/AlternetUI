@@ -23,7 +23,7 @@ namespace Alternet.UI
         public static KeyInfo RunTest { get; set; } = new(Key.T, ModifierKeys.ControlShift);
 
         /// <summary>
-        /// Defines keys for the <see cref="RichTextBox"/>.
+        /// Defines keys for the rich text box.
         /// </summary>
         public static class FindReplaceControlKeys
         {
@@ -93,7 +93,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Defines additional keys for the <see cref="RichTextBox"/>.
+        /// Defines additional keys for the rich text box.
         /// </summary>
         public class RichEditKeys
         {

@@ -13,18 +13,11 @@ namespace ControlsSample
     {
         protected override void AddDefaultItems()
         {
-            if (App.IsWindowsOS)
-            {
-                InternalSamplesPage.Add("Action Simulator Sample", () => new ActionSimulatorPage());
-            }
-
             Add("Threading Sample", () => new ThreadingSample.ThreadingMainWindow());
 
             AddIfDebug("Draw Test Page: Custom", () => new CustomDrawTestPage());
             AddIfDebug("Draw Test Page: Skia", () => new SkiaDrawingWindow());
             
-            AddIfDebug("Native Controls Tests", () => new ControlsTestWindow());           
-
             Add("Preview File Sample", () => new PreviewSample.PreviewSampleWindow());
             Add("Explorer UI Sample", () => new ExplorerUISample.ExplorerMainWindow());
             Add("Printing Sample", () => new PrintingSample.PrintingMainWindow());

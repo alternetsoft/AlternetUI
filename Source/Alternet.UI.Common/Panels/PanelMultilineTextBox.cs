@@ -90,7 +90,7 @@ namespace Alternet.UI
         public ObjectUniqueId ButtonIdRedo => buttonIdRedo;
 
         /// <summary>
-        /// Gets <see cref="RichTextBox"/> control used in this panel.
+        /// Gets <see cref="MultilineTextBox"/> control used in this panel.
         /// </summary>
         [Browsable(false)]
         public MultilineTextBox TextBox => textBox;

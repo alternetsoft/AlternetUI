@@ -52,12 +52,6 @@ namespace Alternet.UI
         public PropertyUpdateResult SetAppearance(ApplicationAppearance appearance);
 
         /// <summary>
-        /// Creates <see cref="IActionSimulatorHandler"/> implementation specific to the platform.
-        /// </summary>
-        /// <returns></returns>
-        IActionSimulatorHandler CreateActionSimulatorHandler();
-
-        /// <summary>
         /// Creates <see cref="IMouseHandler"/> implementation specific to the platform.
         /// </summary>
         /// <returns></returns>

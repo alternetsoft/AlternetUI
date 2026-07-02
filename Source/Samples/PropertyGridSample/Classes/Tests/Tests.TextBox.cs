@@ -24,24 +24,6 @@ namespace PropertyGridSample
             TestMemoFindReplace(true);
         }
 
-        void TestRichFindReplace(bool replace)
-        {
-            var control = GetSelectedControl<RichTextBox>();
-            if (control is null)
-                return;
-
-        }
-
-        internal void TestRichFind()
-        {
-            TestRichFindReplace(false);
-        }
-
-        internal void TestRichReplace()
-        {
-            TestRichFindReplace(true);
-        }
-
         void HandleTextChangedForTextAsValue(object? sender, EventArgs e)
         {
             if (sender is not TextBox c)

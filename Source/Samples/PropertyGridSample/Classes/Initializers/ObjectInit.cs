@@ -76,7 +76,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(TextBox), InitTextBox);
             Actions.Add(typeof(TextBoxAndLabel), InitTextBoxAndLabel);
             Actions.Add(typeof(TextBoxAndButton), InitTextBoxAndButton);
-            Actions.Add(typeof(RichTextBox), InitRichTextBox);
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
             Actions.Add(typeof(Label), InitGenericLabel);
             Actions.Add(typeof(LabelAndButton), InitLabelAndButton);

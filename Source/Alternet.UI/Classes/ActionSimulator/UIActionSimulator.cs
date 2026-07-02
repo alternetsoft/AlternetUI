@@ -424,7 +424,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IActionSimulatorHandler CreateHandler()
         {
-            return App.Handler.CreateActionSimulatorHandler();
+            return new WxActionSimulatorHandler();
         }
     }
 }

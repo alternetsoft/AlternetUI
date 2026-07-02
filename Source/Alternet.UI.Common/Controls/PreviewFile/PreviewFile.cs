@@ -55,6 +55,11 @@ namespace Alternet.UI
             ShowNoFile();
         }
 
+        /// <summary>
+        /// Occurs when the file preview is initialized.
+        /// </summary>
+        public static event EventHandler? RegisterPreviewControls;
+
         AbstractControl IFilePreview.Control { get => this; }
 
         /// <summary>
@@ -188,7 +193,8 @@ namespace Alternet.UI
             RegisterPreview(
                 new(PreviewUixmlSplitted.IsSupportedFile, PreviewUixmlSplitted.CreatePreviewControl));
             RegisterPreview(new(PreviewTextFile.IsSupportedFile, PreviewTextFile.CreatePreviewControl));
-            RegisterPreview(new(PreviewInBrowser.IsSupportedFile, PreviewInBrowser.CreatePreviewControl));
+
+            RegisterPreviewControls?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Enumerates <see cref="WebBrowser"/> event types.
+    /// Enumerates web browser event types.
     /// </summary>
     public enum WebBrowserEvent
     {

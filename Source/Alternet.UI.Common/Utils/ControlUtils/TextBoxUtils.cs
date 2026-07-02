@@ -8,16 +8,17 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains static methods related to the <see cref="TextBox"/> and
-    /// <see cref="RichTextBox"/> controls.
+    /// Contains static methods related to the <see cref="TextBox"/> controls.
     /// </summary>
     public static class TextBoxUtils
     {
         /// <summary>
         /// Calculates the margin to apply to a picture inside a text box, based on its alignment.
         /// </summary>
-        /// <param name="isRight">true to position the picture at the right side of the text box; false to position it at the left.</param>
-        /// <returns>A Thickness value representing the margin to apply to the picture, adjusted for its alignment within the
+        /// <param name="isRight">true to position the picture at the right side of the text box;
+        /// false to position it at the left.</param>
+        /// <returns>A Thickness value representing the margin to apply to the picture,
+        /// adjusted for its alignment within the
         /// text box.</returns>
         public static Thickness GetInnerTextBoxPictureMargin(bool isRight)
         {
@@ -35,7 +36,8 @@ namespace Alternet.UI
         /// using the specified icon. The PictureBox is centered, non-interactive with the tab key, and its image is
         /// hidden by default.</remarks>
         /// <param name="picture">The PictureBox control to initialize and configure as an inner text box icon.</param>
-        /// <param name="tooltipOnClick">true to display a tooltip when the PictureBox is clicked; otherwise, false.</param>
+        /// <param name="tooltipOnClick">true to display a tooltip when the PictureBox is clicked;
+        /// otherwise, false.</param>
         /// <param name="tooltipIcon">The icon to display in the tooltip when shown on click.</param>
         public static void InitInnerTextBoxPicture(PictureBox picture, bool tooltipOnClick, MessageBoxIcon? tooltipIcon)
         {
@@ -112,48 +114,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows 'Go To Line' dialog.
-        /// </summary>
-        /// <remarks>
-        /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
-        /// interface.
-        /// </remarks>
-        public static void ShowDialogGoToLine(object? textBox)
-        {
-            if (textBox is not ISimpleRichTextBox richTextBox)
-                return;
-
-            var lastLineNumber = richTextBox.LastLineNumber + 1;
-            var template = CommonStrings.Default.LineNumber + " ({0} - {1})";
-            var prompt = string.Format(template, 1, lastLineNumber);
-
-            LongFromUserParams prm = new()
-            {
-                Title = CommonStrings.Default.WindowTitleGoToLine,
-                Message = prompt,
-                Parent = textBox as AbstractControl,
-                MinValue = 1,
-                MaxValue = lastLineNumber,
-                DefaultValue = richTextBox.InsertionPointLineNumber + 1,
-                OnApply = (value) =>
-                {
-                    if (value is null)
-                        return;
-                    var newPosition = richTextBox.XYToPosition(0, value.Value - 1);
-                    richTextBox.SetInsertionPoint(newPosition);
-                    richTextBox.ShowPosition(newPosition);
-                    if (textBox is IFocusable focusable)
-                    {
-                        if (focusable.CanFocus)
-                            focusable.SetFocus();
-                    }
-                },
-            };
-
-            DialogFactory.GetNumberFromUserAsync(prm);
-        }
-
-        /// <summary>
         /// Increases height of all <see cref="TextBox"/> controls in the specified
         /// container to height of the <see cref="StdComboBox"/> control, if it
         /// is present in the container.
@@ -198,27 +158,6 @@ namespace Alternet.UI
                         return;
                 }
             }
-        }
-
-        /// <summary>
-        /// Logs current insert position of the control.
-        /// </summary>
-        /// <param name="textBox"></param>
-        /// <remarks>
-        /// <paramref name="textBox"/> parameter must support <see cref="ISimpleRichTextBox"/>
-        /// interface.
-        /// </remarks>
-        public static void LogPosition(object? textBox)
-        {
-            if (textBox is not ISimpleRichTextBox richTextBox)
-                return;
-
-            var currentPos = richTextBox.CurrentPosition;
-            if (currentPos is null)
-                return;
-            var name = richTextBox.Name ?? textBox.GetType().Name;
-            var prefix = $"{name}.CurrentPos:";
-            App.LogReplace($"{prefix} {currentPos.Value + 1}", prefix);
         }
 
         internal static void AdjustTextBoxesHeightInternal(

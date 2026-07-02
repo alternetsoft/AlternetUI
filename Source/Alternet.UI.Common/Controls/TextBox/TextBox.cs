@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class TextBox : CustomTextBox, ISimpleRichTextBox
+    public partial class TextBox : CustomTextBox
     {
         private bool multiline = false;
         private bool hasBorder = true;
@@ -836,7 +836,34 @@ namespace Alternet.UI
         /// </summary>
         public virtual void ShowDialogGoToLine()
         {
-            TextBoxUtils.ShowDialogGoToLine(this);
+            var lastLineNumber = LastLineNumber + 1;
+            var template = CommonStrings.Default.LineNumber + " ({0} - {1})";
+            var prompt = string.Format(template, 1, lastLineNumber);
+
+            LongFromUserParams prm = new()
+            {
+                Title = CommonStrings.Default.WindowTitleGoToLine,
+                Message = prompt,
+                Parent = this,
+                MinValue = 1,
+                MaxValue = lastLineNumber,
+                DefaultValue = InsertionPointLineNumber + 1,
+                OnApply = (value) =>
+                {
+                    if (value is null)
+                        return;
+                    var newPosition = XYToPosition(0, value.Value - 1);
+                    SetInsertionPoint(newPosition);
+                    ShowPosition(newPosition);
+                    if (this is IFocusable focusable)
+                    {
+                        if (focusable.CanFocus)
+                            focusable.SetFocus();
+                    }
+                },
+            };
+
+            DialogFactory.GetNumberFromUserAsync(prm);
         }
 
         /// <summary>

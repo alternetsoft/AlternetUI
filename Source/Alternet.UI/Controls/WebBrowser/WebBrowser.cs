@@ -273,8 +273,90 @@ namespace Alternet.UI
         /// </summary>
         public static IWebBrowserFactoryHandler Factory
         {
-            get => factory ??= ControlFactory.Handler.CreateWebBrowserFactoryHandler();
+            get => factory ??= new WxWebBrowserFactoryHandler();
             set => factory = value;
+        }
+
+        /// <summary>
+        /// Shows web browser in the right panel. If the right panel is not visible, it will be made visible.
+        /// <see cref="SplittedPanel.EnsureSideBarChild{T}"/> is used to ensure
+        /// that the right panel is a side bar and
+        /// contains a <see cref="WebBrowser"/> instance.
+        /// </summary>
+        /// <param name="panel">The <see cref="SplittedPanel"/> instance where the web browser will be shown.</param>
+        /// <param name="title">The title of the web browser tab.</param>
+        /// <param name="url">The URL to navigate to.</param>
+        /// <param name="preventNavigation">If set to <c>true</c>, navigation to other URLs will be prevented.</param>
+        /// <param name="width">The width of the right panel.</param>
+        /// <remarks>
+        /// Samples:<br/><br/>
+        /// <code>
+        /// ShowWebBrowser("Copilot", @"https://copilot.microsoft.com");
+        /// ShowWebBrowser("GH Copilot", @"https://github.com/copilot");
+        /// ShowWebBrowser("Google", @"https://www.google.com", true);
+        /// </code>
+        /// </remarks>
+        public static void ShowWebBrowser(
+            SplittedPanel panel,
+            string title,
+            string url,
+            bool preventNavigation = false,
+            float width = 400)
+        {
+            PostAndBusyCursor(() =>
+            {
+                panel.SetPanelWidthAtLeast(SplitPanelPosition.Right, width, true);
+
+                WebBrowser.IsEdgeBackendEnabled = true;
+
+                var browser = panel.EnsureSideBarChild<WebBrowser>(
+                    SplitPanelPosition.Right,
+                    title,
+                    onCreate: (f) =>
+                    {
+                        f.HasBorder = false;
+                        f.EnsureUrlStartsWith(url);
+                        f.Navigated += (s, e) =>
+                        {
+
+                        };
+
+                        if (preventNavigation)
+                        {
+                            f.Navigating += (s, e) =>
+                            {
+                                var newUrl = e.Url;
+                                if (string.IsNullOrEmpty(newUrl))
+                                {
+                                    e.Cancel = true;
+                                    return;
+                                }
+
+                                var newUrlTrimmed = StringUtils.RemoveHttpAndWwwPrefixes(newUrl)?.TrimEnd('/');
+                                var urlTrimmed = StringUtils.RemoveHttpAndWwwPrefixes(url)?.TrimEnd('/');
+
+                                if (!newUrlTrimmed!.StartsWith(urlTrimmed!))
+                                {
+                                    e.Cancel = true;
+                                }
+                            };
+                        }
+
+                        f.NewWindow += (s, e) =>
+                        {
+                            var url = e.Url;
+                            e.Cancel = true;
+                            if (string.IsNullOrEmpty(url))
+                                return;
+                            AppUtils.OpenUrl(url);
+                        };
+                    },
+                    onUpdate: (f) =>
+                    {
+                    },
+                    TabControl.EnsureSideBarChildFlags.MakeVisible
+                    | TabControl.EnsureSideBarChildFlags.CheckTitle);
+            });
         }
 
         /// <summary>

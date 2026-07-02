@@ -90,14 +90,6 @@ namespace PropertyGridSample
             };
         }
 
-        public static void InitRichTextBox(object control)
-        {
-            if (control is not RichTextBox textBox)
-                return;
-            textBox.SuggestedSize = DefaultListSize;
-            textBox.Text = LoremIpsum;
-        }
-
         public static void InitMultilineTextBox(object control)
         {
             if (control is not MultilineTextBox textBox)
