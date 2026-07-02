@@ -25,8 +25,6 @@ namespace ControlsSample
                 return MathUtils.Max(result1, result2, result3);
             }
 
-            AddPage<ListBoxHeaderTestPage>("ListBoxHeader");
-
             CreateWebBrowserPages();
 
             if (!App.IsMaui)

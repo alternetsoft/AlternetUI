@@ -159,9 +159,10 @@ namespace ControlsSample
             {
                 new("Virtual", () => new VListBoxSamplePage()),
                 new("List", () => new ListBoxPage()),
-                new("Checks", () => new CheckListBoxPage()),
+                new("Check", () => new CheckListBoxPage()),
                 new("Combo", () => new ComboBoxPage()),
                 new("Colors", () => new ColorListBoxSamplePage()),
+                new("Header", () => new ListBoxHeaderTestPage()),
                 new("Other", () => new ListControlsOtherPage()),               
 
                 popupNameValue,
