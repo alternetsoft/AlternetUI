@@ -120,7 +120,10 @@ public class SimpleFormulaEvaluator
     {
         int start = pos;
 
-        while (pos < text.Length && (char.IsDigit(text[pos]) || text[pos] == '.' || text[pos] == '-'))
+        if (pos < text.Length && pos == 0 && text[pos] == '-')
+            pos++;
+
+        while (pos < text.Length && (char.IsDigit(text[pos]) || text[pos] == '.'))
             pos++;
 
         string numStr = text.Substring(start, pos - start);
