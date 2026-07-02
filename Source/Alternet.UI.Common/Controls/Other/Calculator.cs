@@ -57,6 +57,9 @@ namespace Alternet.UI
         public Calculator()
         {
             FormulaEngine.Init();
+
+            this.RoundCorners();
+
             HorizontalAlignment = HorizontalAlignment.Left;
             VerticalAlignment = VerticalAlignment.Top;
             Padding = 10;
