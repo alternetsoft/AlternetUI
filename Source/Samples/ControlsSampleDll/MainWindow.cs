@@ -124,8 +124,8 @@ namespace ControlsSample
             {
                 AddPage("Welcome", CreateWelcomePage);
                 AddPage("Text", CreateTextInputPage);
-                AddPage("ListBoxes", CreateListControlsPage);
-                AddPage("Buttons", CreateButtonsPage);
+                AddPage("ListBox", CreateListControlsPage);
+                AddPage("Button", CreateButtonsPage);
                 AddPage("TreeView", CreateTreeViewPage);
                 AddPage("ListView",() => new ListViewPage());
                 AddPage("DateTime", CreateDateTimePage);
