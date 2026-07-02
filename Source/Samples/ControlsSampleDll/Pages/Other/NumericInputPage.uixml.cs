@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Linq;
+
 using Alternet.UI;
 
 namespace ControlsSample
 {
     internal partial class NumericInputPage : Panel
     {
+        private readonly PopupCalculator popupCalculator = new();
+
         static NumericInputPage()
         {
         }
@@ -23,13 +26,27 @@ namespace ControlsSample
                 calcPanel.BackColor = SystemColors.Window;
             };
 
-            intPicker2.SetPlusMinusImages(KnownButton.TextBoxUp,KnownButton.TextBoxDown);
+            intPicker2.SetPlusMinusImages(KnownButton.TextBoxUp, KnownButton.TextBoxDown);
             intPicker3.SetPlusMinusImages(KnownSvgImages.ImgAngleUp, KnownSvgImages.ImgAngleDown);
 
             intPicker1.ValueChanged += IntPicker_ValueChanged;
             intPicker2.ValueChanged += IntPicker_ValueChanged;
             intPicker3.ValueChanged += IntPicker_ValueChanged;
             intPicker4.ValueChanged += IntPicker_ValueChanged;
+
+            popupCalculator.AfterHide += PopupListBox_AfterHide;
+
+            showPopupButton.HorizontalAlignment = HorizontalAlignment.Left;
+            showPopupButton.Click += (s, e) =>
+            {
+                popupCalculator.ShowPopup(showPopupButton);
+            };
+        }
+
+        private void PopupListBox_AfterHide(object? sender, EventArgs e)
+        {
+            var resultItem = popupCalculator.MainControl.AsDouble;
+            App.Log($"AfterHide PopupResult: {popupCalculator.PopupResult}, Value: {resultItem}");
         }
 
         private void IntPicker_ValueChanged(object? sender, EventArgs e)

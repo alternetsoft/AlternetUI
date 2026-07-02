@@ -43,8 +43,9 @@
 
     </VerticalStackPanel>
 
-    <VerticalStackPanel Padding="10" Title="Calculator" Name="calcPanel">
+    <VerticalStackPanel Padding="10" Title="Calculator" Name="calcPanel" MinChildMargin="10">
       <Calculator HasBorder="true" Name="calculator"/>
+      <StdButton Text="Show popup" Name="showPopupButton"/>
     </VerticalStackPanel>
 
   </TabControl>
