@@ -48,6 +48,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="PictureBox"/> class with the specified image.
+        /// </summary>
+        /// <param name="image">The image to display in the picture box.</param>
+        public PictureBox(Image image)
+            : this() 
+        {
+            Image = image;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PictureBox"/> class.
         /// </summary>
         public PictureBox()
