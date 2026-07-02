@@ -319,7 +319,8 @@ namespace Alternet.UI
         /// found, the input value is returned unchanged.</remarks>
         /// <param name="value">The color value to coerce. If the value does not correspond to an item,
         /// the original value is used.</param>
-        /// <returns>The coerced color value if a corresponding item is found; otherwise, the original value.</returns>
+        /// <returns>The coerced color value if a corresponding item is found;
+        /// otherwise, the original value.</returns>
         public virtual Color? CoerceColor(Color? value)
         {
             var item = Find(value);
@@ -348,6 +349,20 @@ namespace Alternet.UI
         public virtual ListControlItem AddColor(Color? value, string? title = null)
         {
             var item = CreateItem(value, title);
+            Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds a transparent color to the list of colors.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.ToDisplayString"/> will be used.</param>
+        /// <returns>The newly added <see cref="ListControlItem"/> instance.</returns>
+        public virtual ListControlItem AddTransparentColor(string? title = null)
+        {
+            title ??= Localization.CommonStrings.Default.TransparentColorDisplayName;
+            var item = CreateItem(Color.Transparent, title);
             Add(item);
             return item;
         }
