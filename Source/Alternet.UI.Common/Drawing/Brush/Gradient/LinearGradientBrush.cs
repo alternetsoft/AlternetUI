@@ -149,7 +149,6 @@ namespace Alternet.Drawing
             var o = other as LinearGradientBrush;
             if (o == null)
                 return false;
-            CheckDisposed();
 
             return
                 StartPoint == o.StartPoint &&
@@ -162,7 +161,7 @@ namespace Alternet.Drawing
         {
             SKShader result;
 
-            if (LocalMatrix != SKMatrix.Empty)
+            if (!LocalMatrix.IsIdentity)
             {
                 result = SKShader.CreateLinearGradient(
                     startPoint,

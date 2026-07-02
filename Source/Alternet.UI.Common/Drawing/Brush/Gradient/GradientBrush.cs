@@ -17,7 +17,7 @@ namespace Alternet.Drawing
     {
         private GradientStop[] gradientStops;
         private SKShaderTileMode tileMode;
-        private SKMatrix localMatrix = SKMatrix.Empty;
+        private SKMatrix localMatrix = SKMatrix.CreateIdentity();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Brush"/> class.
@@ -186,7 +186,6 @@ namespace Alternet.Drawing
             var o = other as GradientBrush;
             if (o == null)
                 return false;
-            CheckDisposed();
 
             return
                 TileMode == o.TileMode &&

@@ -181,7 +181,7 @@ namespace Alternet.Drawing
         {
             SKShader result;
 
-            if (LocalMatrix != SKMatrix.Empty)
+            if (!LocalMatrix.IsIdentity)
             {
                 result = SKShader.CreateRadialGradient(
                     center,
