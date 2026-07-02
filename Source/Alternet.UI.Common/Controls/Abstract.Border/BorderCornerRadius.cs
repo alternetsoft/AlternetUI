@@ -24,8 +24,10 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the BorderCornerRadius class with the specified value and value kind.
         /// </summary>
-        /// <param name="value">The coordinate value representing the corner radius. Can be null to indicate an unspecified value.</param>
-        /// <param name="kind">The kind of value to use for the corner radius. Defaults to ValueKind.Number if not specified.</param>
+        /// <param name="value">The coordinate value representing the corner radius.
+        /// Can be null to indicate an unspecified value.</param>
+        /// <param name="kind">The kind of value to use for the corner radius.
+        /// Defaults to ValueKind.Number if not specified.</param>
         public BorderCornerRadius(Coord? value, ValueKind? kind = ValueKind.Absolute)
         {
             Value = value;
@@ -36,7 +38,8 @@ namespace Alternet.UI
         /// Initializes a new instance of the BorderCornerRadius class with the specified value and percent indicator.
         /// </summary>
         /// <param name="value">The corner radius value to assign. If null, the radius is unspecified.</param>
-        /// <param name="isPercent">A value indicating whether the corner radius is specified as a percentage. If null, the unit is unspecified.</param>
+        /// <param name="isPercent">A value indicating whether the corner radius is specified as a percentage.
+        /// If null, the unit is unspecified.</param>
         public BorderCornerRadius(Coord? value, bool? isPercent)
         {
             Value = value;

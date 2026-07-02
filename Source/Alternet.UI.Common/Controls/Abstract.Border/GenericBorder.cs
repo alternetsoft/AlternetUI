@@ -18,6 +18,12 @@ namespace Alternet.UI
     public partial class GenericBorder : GenericControl
     {
         /// <summary>
+        /// Specifies the default corner radius in device-independent units,
+        /// used for rendering the corners of panel borders.
+        /// </summary>
+        public static float DefaultCornerRadius = 10;
+
+        /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
         public static bool ShowDebugCorners = false;
@@ -314,6 +320,16 @@ namespace Alternet.UI
         {
             if (NormalBorder.SetColors(left, top, right, bottom))
                 Refresh();
+        }
+
+        /// <summary>
+        /// Initializes round corner settings for the border.
+        /// Uses <see cref="DefaultCornerRadius"/> if no specific corner radius is provided.
+        /// </summary>
+        public virtual void RoundCorners(BorderCornerRadius? corners = null)
+        {
+            corners ??= new BorderCornerRadius(DefaultCornerRadius);
+            this.NormalBorder.SetCornerRadius(corners);
         }
 
         /// <summary>

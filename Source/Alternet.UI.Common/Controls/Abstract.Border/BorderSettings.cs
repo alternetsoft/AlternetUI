@@ -38,18 +38,6 @@ namespace Alternet.UI
         /// </summary>
         public static Coord DesignCornerSize = 5;
 
-        /// <summary>
-        /// Gets or sets default border color.
-        /// </summary>
-        [Obsolete("Use DefaultColors.BorderColor instead.")]
-        public static readonly Color? DefaultColor;
-
-        /// <summary>
-        /// Default border color.
-        /// </summary>
-        [Obsolete("Use DefaultColors.BorderColor instead.")]
-        public static readonly Color DefaultCommonBorderColor = SystemColors.GrayText;
-
         private static BorderSettings? debugBorder;
         private static BorderSettings? debugBorderBlue;
         private static BorderSettings? debugBorderGreen;
