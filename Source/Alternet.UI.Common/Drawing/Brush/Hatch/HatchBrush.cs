@@ -14,8 +14,14 @@ namespace Alternet.Drawing
     /// The <see cref="HatchStyle"/> property defines what type of pattern the brush has and can
     /// be any value from the <see cref="BrushHatchStyle"/> enumeration.
     /// </remarks>
-    public class HatchBrush : Brush
+    public partial class HatchBrush : Brush
     {
+        private Color? backgroundColor;
+        private Color? color;
+        private BrushHatchStyle hatchStyle;
+        private int tileSize = 8;
+        private float strokeWidth = 1.0f;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
         /// <see cref="BrushHatchStyle"/> enumeration, and the color.
@@ -36,9 +42,81 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this
         /// <see cref="HatchBrush"/>.</value>
-        public Color Color
+        public virtual Color Color
         {
-            get;
+            get
+            {
+                return color ??= Color.Black;
+            }
+
+            set
+            {
+                if (color == value)
+                    return;
+                color = value;
+                UpdateRequired();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the width of the hatch lines.
+        /// Default is 1.0f.
+        /// </summary>
+        public virtual float StrokeWidth
+        {
+            get
+            {
+                return strokeWidth;
+            }
+
+            set
+            {
+                if (strokeWidth == value)
+                    return;
+                strokeWidth = value;
+                UpdateRequired();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets size of the hatch pattern tile.
+        /// This is used when creating a hatch pattern to determine the width and height of the pattern bitmap.
+        /// Default is 8.
+        /// </summary>
+        public virtual int TileSize
+        {
+            get
+            {
+                return tileSize;
+            }
+
+            set
+            {
+                if (tileSize == value)
+                    return;
+                tileSize = value;
+                UpdateRequired();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the background color of this <see cref="HatchBrush"/> object.
+        /// Default is transparent.
+        /// </summary>
+        public virtual Color BackgroundColor
+        {
+            get
+            {
+                return backgroundColor ??= Color.Transparent;
+            }
+
+            set
+            {
+                if (backgroundColor == value)
+                    return;
+                backgroundColor = value;
+                UpdateRequired();
+            }
         }
 
         /// <summary>
@@ -46,9 +124,20 @@ namespace Alternet.Drawing
         /// </summary>
         /// <value>One of the <see cref="BrushHatchStyle"/> values that represents the pattern of
         /// this <see cref="HatchBrush"/>.</value>
-        public BrushHatchStyle HatchStyle
+        public virtual BrushHatchStyle HatchStyle
         {
-            get;
+            get
+            {
+                return hatchStyle;
+            }
+
+            set
+            {
+                if (hatchStyle == value)
+                    return;
+                hatchStyle = value;
+                UpdateRequired();
+            }
         }
 
         /// <inheritdoc/>
@@ -60,14 +149,25 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         public override string ToString()
         {
-            return $"HatchBrush ({HatchStyle}, {Color})";
+            return $"HatchBrush ({HatchStyle}, {Color}, {BackgroundColor})";
         }
 
         /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
-        public override int GetHashCode() => (HatchStyle, Color).GetHashCode();
+        public override int GetHashCode() => (HatchStyle, Color, BackgroundColor).GetHashCode();
+
+        /// <summary>
+        /// Sets background color of the hatch pattern.
+        /// </summary>
+        /// <param name="color">The background color to set.</param>
+        /// <returns>The current <see cref="HatchBrush"/> instance.</returns>
+        public HatchBrush SetBackgroundColor(Color color)
+        {
+            BackgroundColor = color;
+            return this;
+        }
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -79,13 +179,76 @@ namespace Alternet.Drawing
                 return false;
 
             CheckDisposed();
-            return Color == o.Color && HatchStyle == o.HatchStyle;
+            return Color == o.Color && HatchStyle == o.HatchStyle && BackgroundColor == o.BackgroundColor
+                && TileSize == o.TileSize && StrokeWidth == o.StrokeWidth;
         }
 
         /// <inheritdoc/>
         protected override SKPaint CreateSkiaPaint()
         {
-            return base.CreateSkiaPaint();
+            var result = base.CreateSkiaPaint();
+            result.Shader = CreateSkiaShader();
+            return result;
+        }
+
+        /// <summary>
+        /// Creates <see cref="SKShader"/> for this hatch brush.
+        /// </summary>
+        /// <returns>The <see cref="SKShader"/> instance for this hatch brush.</returns>
+        protected virtual SKShader CreateSkiaShader()
+        {
+            var info = new SKImageInfo(tileSize, tileSize);
+
+            using var surface = SKSurface.Create(info);
+            var canvas = surface.Canvas;
+
+            canvas.Clear(BackgroundColor.SkiaColor);
+
+            using var linePaint = new SKPaint
+            {
+                Color = this.Color.SkiaColor,
+                StrokeWidth = this.StrokeWidth,
+                IsAntialias = true,
+            };
+
+            switch (HatchStyle)
+            {
+                case BrushHatchStyle.Horizontal:
+                    canvas.DrawLine(0, tileSize / 2, tileSize, tileSize / 2, linePaint);
+                    break;
+
+                case BrushHatchStyle.Vertical:
+                    canvas.DrawLine(tileSize / 2, 0, tileSize / 2, tileSize, linePaint);
+                    break;
+
+                case BrushHatchStyle.DiagonalCross:
+                    canvas.DrawLine(0, tileSize, tileSize, 0, linePaint);
+                    canvas.DrawLine(0, 0, tileSize, tileSize, linePaint);
+                    break;
+
+                case BrushHatchStyle.Cross:
+                    canvas.DrawLine(0, 0, tileSize, 0, linePaint); // top edge
+                    canvas.DrawLine(0, 0, 0, tileSize, linePaint); // left edge
+                    break;                
+                case BrushHatchStyle.ForwardDiagonal:
+                    canvas.DrawLine(0, tileSize, tileSize, 0, linePaint);
+                    break;
+
+                case BrushHatchStyle.BackwardDiagonal:
+                    canvas.DrawLine(0, 0, tileSize, tileSize, linePaint);
+                    break;
+                default:
+                    canvas.DrawLine(0, tileSize, tileSize, 0, linePaint);
+                    break;
+            }
+
+            var tile = surface.Snapshot();
+            var shader = SKShader.CreateImage(
+                tile,
+                SKShaderTileMode.Repeat,
+                SKShaderTileMode.Repeat);
+            return shader;
         }
     }
 }
+
