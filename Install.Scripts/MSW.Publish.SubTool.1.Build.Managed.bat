@@ -63,13 +63,6 @@ dotnet msbuild -tl:off /restore /t:Clean,Build /p:Configuration=Release /p:Alter
 popd
 if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
 
-echo ====================================BM1
-::Alternet.UI.Build.Tasks.ApiInfoCollector
-pushd "%SOURCE_DIR%\Alternet.UI.Build.Tasks\Alternet.UI.Build.Tasks.ApiInfoCollector\"
-dotnet msbuild -tl:off /restore /t:Clean,Build /p:Configuration=Release /p:WarningLevel=0 
-popd
-if not !ERRORLEVEL! EQU 0 (exit /b !ERRORLEVEL!)
-
 echo ====================================BM2
 ::Alternet.UI.Build.Tasks.csproj
 pushd "%SOURCE_DIR%\Alternet.UI.Build.Tasks\"
