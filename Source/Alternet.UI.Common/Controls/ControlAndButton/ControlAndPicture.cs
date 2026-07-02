@@ -206,7 +206,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the size, in pixels, of the inner SVG picture.
         /// If not specified, the default size of the SVG image for the control will be used.
-        /// Setting this property will cause the inner picture to be reinitialized and its layout to be updated to reflect the new size.
+        /// Setting this property will cause the inner picture to be reinitialized and its
+        /// layout to be updated to reflect the new size.
         /// </summary>
         public virtual int? InnerPictureSvgSize
         {
@@ -330,7 +331,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Override this method to provide a custom default image for inner pictures in derived
         /// classes.</remarks>
-        /// <returns>An <see cref="Image"/> instance representing the default image, or <see langword="null"/> if default image
+        /// <returns>An <see cref="Image"/> instance representing the default image,
+        /// or <see langword="null"/> if default image
         /// is not needed.</returns>
         protected virtual Image? GetDefaultInnerPictureImage()
         {
@@ -349,7 +351,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Override this method to provide a custom default SVG image for inner pictures in
         /// derived classes.</remarks>
-        /// <returns>An <see cref="SvgImage"/> representing the default svg image, or <see langword="null"/> if no default is
+        /// <returns>An <see cref="SvgImage"/> representing the default svg image,
+        /// or <see langword="null"/> if no default is
         /// set.</returns>
         protected virtual SvgImage? GetDefaultInnerPictureSvg()
         {

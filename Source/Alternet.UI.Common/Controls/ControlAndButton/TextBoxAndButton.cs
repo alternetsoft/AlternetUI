@@ -175,22 +175,33 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes this control for the filter editing.
         /// </summary>
-        public virtual void InitFilterEdit(SvgImage? image = null, string? emptyTextHint = null, UI.KnownButton? clearButton = null)
+        public virtual void InitFilterEdit(
+            SvgImage? image = null,
+            string? emptyTextHint = null,
+            UI.KnownButton? clearButton = null)
         {
-            InitWithImageAndClearButton(image ?? KnownSvgImages.ImgFilter, emptyTextHint ?? EmptyTextHints.FilterEdit, clearButton);
+            InitWithImageAndClearButton(
+                image ?? KnownSvgImages.ImgFilter,
+                emptyTextHint ?? EmptyTextHints.FilterEdit,
+                clearButton);
         }
 
         /// <summary>
-        /// Initializes the control with a specified image and configures a clear button, setting the provided hint text
-        /// for empty input.
+        /// Initializes the control with a specified image and configures a clear button,
+        /// setting the provided hint text for empty input.
         /// </summary>
         /// <remarks>When the button is clicked, the text box is cleared and focus is set to the text box.
         /// The clear button is positioned on the right side of the control.</remarks>
-        /// <param name="clearButton">The button to use for clearing the text box. If null, a default cancel button is used.</param>
+        /// <param name="clearButton">The button to use for clearing the text box. If null,
+        /// a default cancel button is used.</param>
         /// <param name="image">The SVG image to display on the left side of the control.</param>
-        /// <param name="emptyTextHint">The hint text to display in the text box when it is empty. Provides guidance to the user about the expected
+        /// <param name="emptyTextHint">The hint text to display in the text box when it is empty.
+        /// Provides guidance to the user about the expected
         /// input.</param>
-        public virtual void InitWithImageAndClearButton(SvgImage image, string emptyTextHint, UI.KnownButton? clearButton = null)
+        public virtual void InitWithImageAndClearButton(
+            SvgImage image,
+            string emptyTextHint,
+            UI.KnownButton? clearButton = null)
         {
             TextBox.IsPassword = false;
             TextBox.EmptyTextHint = emptyTextHint;

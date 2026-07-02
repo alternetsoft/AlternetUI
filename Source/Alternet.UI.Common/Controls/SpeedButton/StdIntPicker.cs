@@ -32,6 +32,14 @@ namespace Alternet.UI
         /// </remarks>
         public static bool IsMinusButtonFirst = true;
 
+        /// <summary>
+        /// Gets or sets default border corner radius to use in <see cref="StdIntPicker"/> 
+        /// and similar controls.
+        /// </summary>
+        internal static BorderCornerRadius DefaultBorderCorners = new(
+            SpeedButton.DefaultRoundBorderRadius,
+            SpeedButton.DefaultRoundBorderRadiusIsPercent);
+
         private readonly TextPicker textPicker = new ();
 
         private int smallChange = 1;
@@ -49,14 +57,18 @@ namespace Alternet.UI
         /// </summary>
         public StdIntPicker()
         {
+            HasBorder = true;
+            UseControlColors(true);
+
+            textPicker.UseTheme = SpeedButton.KnownTheme.None;
             textPicker.IsEditable = true;
             textPicker.MinWidth = 100;
             textPicker.ValueChanged += OnTextPickerValueChanged;
             textPicker.HorizontalAlignment = HorizontalAlignment.Fill;
             AddControl(textPicker);
             DoubleClickAsClick = false;
-            IsBtnClickRepeated = true;
             HasBtnPlusMinus = true;
+            IsBtnClickRepeated = true;
             UpdateTextFromValue();
             UpdateButtonsEnabled();
         }
@@ -744,6 +756,32 @@ namespace Alternet.UI
             var newText = Value.ToString();
             Text = newText;
             textPicker.Value = newText;
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            if (AutoUpdateColors)
+            {
+                if (SystemSettings.AppearanceIsDark)
+                {
+                    BackgroundColor = DefaultColors.ControlBackColor.Dark;
+                    ForegroundColor = DefaultColors.ControlForeColor.Dark;
+                }
+                else
+                {
+                    BackgroundColor = DefaultColors.ControlBackColor.Light;
+                    ForegroundColor = DefaultColors.ControlForeColor.Light;
+                }
+            }
+
+            base.OnSystemColorsChanged(e);
+        }
+
+        /// <inheritdoc/>
+        protected override BorderCornerRadius? GetDefaultCornerRadius()
+        {
+            return null;
         }
 
         /// <summary>
