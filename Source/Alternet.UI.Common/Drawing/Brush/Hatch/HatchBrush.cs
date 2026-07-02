@@ -21,6 +21,8 @@ namespace Alternet.Drawing
         private BrushHatchStyle hatchStyle;
         private int tileSize = 8;
         private float strokeWidth = 1.0f;
+        private SKShaderTileMode tileModeX = SKShaderTileMode.Repeat;
+        private SKShaderTileMode tileModeY = SKShaderTileMode.Repeat;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
@@ -54,6 +56,46 @@ namespace Alternet.Drawing
                 if (color == value)
                     return;
                 color = value;
+                UpdateRequired();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal tiling mode used when repeating
+        /// the hatch pattern along the X axis.
+        /// </summary>
+        /// <remarks>
+        /// This corresponds to <see cref="SKShaderTileMode"/> in SkiaSharp.
+        /// Typical values are <see cref="SKShaderTileMode.Repeat"/> (default),
+        /// <see cref="SKShaderTileMode.Clamp"/>, or <see cref="SKShaderTileMode.Mirror"/>.
+        /// </remarks>
+        public SKShaderTileMode TileModeX
+        {
+            get => tileModeX;
+            set
+            {
+                if (tileModeX == value) return;
+                tileModeX = value;
+                UpdateRequired();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the vertical tiling mode used when repeating
+        /// the hatch pattern along the Y axis.
+        /// </summary>
+        /// <remarks>
+        /// This corresponds to <see cref="SKShaderTileMode"/> in SkiaSharp.
+        /// Typical values are <see cref="SKShaderTileMode.Repeat"/> (default),
+        /// <see cref="SKShaderTileMode.Clamp"/>, or <see cref="SKShaderTileMode.Mirror"/>.
+        /// </remarks>
+        public SKShaderTileMode TileModeY
+        {
+            get => tileModeY;
+            set
+            {
+                if (tileModeY == value) return;
+                tileModeY = value;
                 UpdateRequired();
             }
         }
@@ -156,7 +198,8 @@ namespace Alternet.Drawing
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>
-        public override int GetHashCode() => (HatchStyle, Color, BackgroundColor).GetHashCode();
+        public override int GetHashCode()
+            => (HatchStyle, Color, BackgroundColor, TileSize, StrokeWidth, TileModeX, TileModeY).GetHashCode();
 
         /// <summary>
         /// Sets background color of the hatch pattern.
@@ -180,7 +223,8 @@ namespace Alternet.Drawing
 
             CheckDisposed();
             return Color == o.Color && HatchStyle == o.HatchStyle && BackgroundColor == o.BackgroundColor
-                && TileSize == o.TileSize && StrokeWidth == o.StrokeWidth;
+                && TileSize == o.TileSize && StrokeWidth == o.StrokeWidth
+                && TileModeX == o.TileModeX && TileModeY == o.TileModeY;
         }
 
         /// <inheritdoc/>
@@ -245,8 +289,8 @@ namespace Alternet.Drawing
             var tile = surface.Snapshot();
             var shader = SKShader.CreateImage(
                 tile,
-                SKShaderTileMode.Repeat,
-                SKShaderTileMode.Repeat);
+                TileModeX,
+                TileModeY);
             return shader;
         }
     }
