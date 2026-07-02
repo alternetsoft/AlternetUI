@@ -153,6 +153,11 @@ namespace Alternet.UI
         public virtual object? FormulaOptions { get; set; }
 
         /// <summary>
+        /// Gets or sets display value format.
+        /// </summary>
+        public virtual string? Format { get; set; }
+
+        /// <summary>
         /// Gets or sets script global context used in the formula evaluation. Default is Null.
         /// </summary>
         [Browsable(false)]
@@ -183,6 +188,75 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public IReadOnlyList<AbstractControl> Buttons => buttons;
+
+        /// <inheritdoc/>
+        public override string Text
+        {
+            get => displayTextBox.Text;
+            set
+            {
+                displayTextBox.Text = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current formula has an error.
+        /// </summary>
+        public virtual bool HasError
+        {
+            get
+            {
+                return AsDouble == null;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets value format provider. If not set, <see cref="CultureInfo.CurrentCulture"/> is used.
+        /// </summary>
+        public virtual IFormatProvider? FormatProvider { get; set; }
+
+        /// <summary>
+        /// Evaluates the formula shown in the display and returns the result.
+        /// If the formula is invalid, returns null.
+        /// </summary>
+        public virtual object? Value
+        {
+            get
+            {
+                try
+                {
+                    if (string.IsNullOrWhiteSpace(displayTextBox.Text))
+                        return 0;
+
+                    object? result = Evaluate(displayTextBox.Text);
+                    return result;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Evaluates the formula shown in the display and returns the result as a double.
+        /// If the formula is invalid or cannot be converted to a double, returns null.
+        /// </summary>
+        public virtual double? AsDouble
+        {
+            get
+            {
+                try
+                {
+                    var doubleResult = Convert.ToDouble(Value, FormatProvider ?? CultureInfo.InvariantCulture);
+                    return doubleResult;
+                }
+                catch
+                {
+                    return null;
+                }                
+            }
+        }
 
         /// <summary>
         /// Gets collection of calculator buttons as <see cref="ControlSet"/>.
@@ -264,7 +338,18 @@ namespace Alternet.UI
                     return;
                 }
 
-                displayTextBox.Text = result.ToString() ?? string.Empty;
+                var formatProvider = FormatProvider ?? CultureInfo.InvariantCulture;
+
+                try
+                {
+                    var asDouble = Convert.ToDouble(result, formatProvider);
+                    displayTextBox.Text = asDouble.ToString(Format, formatProvider) ?? string.Empty;
+                }
+                catch
+                {
+                    displayTextBox.Text = result.ToString() ?? string.Empty;
+                }
+
                 ReportError(false);
             }
             catch (Exception e)
