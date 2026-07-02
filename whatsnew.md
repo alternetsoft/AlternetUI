@@ -1,3 +1,41 @@
+# 1.1.0 (2026 July 2)
+
+- Add controls: StdListView, PopupCalculator, TransparentPanel, KnobSlider, VerticalLinearGauge.
+- Calculator: Text, HasError, Value, FormatProvider, AsDouble.
+- Calculator: add round borders.
+- Calculator is now derived from GenericControl.
+- Calculator: Use TextPicker as display control.
+- GenericBorder: static DefaultCornerRadius property, RoundCorner method.
+- TwoDimensionalBuffer: new members.
+- SimpleFormulaEvaluator: Fix incorrect minus char handling.
+- Fix painting when TextureBrush or HatchBrush used. Previously these brushes were painted as solid brush on SkiaSharp graphics.
+- Fix matrix for gradient brushes.
+- HatchBrush: TileModeX, TileModeY.
+- HatchBrush: Added setters to all the properties.
+- HatchBrush: Added StrokeWidth, TileSize, BackgroundColor.
+- ControlSet: MaxPreferredWidth, MaxPreferredHeight, GroupName.
+- AbstractControl: GetNamedGroup, MemberOfNamedGroup, GroupName.
+- ColorListBox.AddTransparentColor.
+- Fix native RadioButton behavior.
+- Inherit Color from BaseObject.
+- SystemColors.ResetCachedResources.
+- MenuItem: Add new constructor with caption and an array of sub-items.
+- ToolTipWindow: Fix rich tooltip dissapearing when moving within the same control.
+- Fix WebBrowser edge backend bacgkround.
+- SpeedButtonWithPopup: ErrorBorderColor, ErrorBorder, DefaultErrorBorderColor,  ShowErrorBorder.
+- EditableListPicker.CancelEdit.
+- FontNamePicker: SetValue, SetDefaultFontVisible, SetDefaultMonoFontVisible.
+- Font: IsDefaultFont, IsDefaultMonoFont, DisplayName, FontOrigin
+- PopupToolBar: Fix static border not shown on Linux.
+- Simplify font: Do not use native font handler anymore.
+- CharUtils: Mapped char replacement functions.
+- Fix conversion of image to native image in some situations.
+- ListControlItem: Fix AllowAllStatesForUser determination.
+- GenericItemControl: process double click for toggle checked.
+- Add TiledImageBackground, DrawingUtils.RenderBackgroundImage.
+
+---
+
 # 1.0.21 (2026 June 29)
 
 - New controls: StdIntPicker, EditableListPicker, TextPicker, InnerPopupTextBox.
