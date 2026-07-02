@@ -1122,7 +1122,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="isBold">Whether returned font is bold or not.</param>
         /// <returns></returns>
-        public virtual Font WithBold(bool isBold)
+        public virtual Font WithBold(bool isBold = true)
         {
             if (isBold)
                 return AsBold;
