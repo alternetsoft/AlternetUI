@@ -48,6 +48,7 @@ namespace Alternet.UI
             ParentBackColor = true;
             ParentForeColor = true;
             HorizontalAlignment = HorizontalAlignment.Left;
+            IsChecked = false;
         }
 
         /// <summary>

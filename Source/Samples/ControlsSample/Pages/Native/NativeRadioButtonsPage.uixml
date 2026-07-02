@@ -8,7 +8,7 @@
       <TabControl Margin="5">
         <StackPanel Title="Group 1" Orientation="Vertical" Margin="5" Padding="5">
           <RadioButton Text="Option 1.1" Margin="0,0,0,5" Name="radio11" IsTextLocalized="true"
-                       CheckedChanged="RadioButton_CheckedChanged" />
+                       CheckedChanged="RadioButton_CheckedChanged" IsChecked="true"/>
           <RadioButton Text="Option 1.2" Margin="0,0,0,5" Name="radio12" IsTextLocalized="true"
                        CheckedChanged="RadioButton_CheckedChanged" />
           <RadioButton Text="Option 1.3" Margin="0,0,0,5" Name="radio13" IsTextLocalized="true"
