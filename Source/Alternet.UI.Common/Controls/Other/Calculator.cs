@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// Calculator control with buttons and display.
     /// </summary>
     [ControlCategory(KnownControlCategory.Other)]
-    public partial class Calculator : HiddenBorder
+    public partial class Calculator : HiddenGenericBorder
     {
         /// <summary>
         /// Gets or sets default minimum button size.
@@ -44,9 +44,12 @@ namespace Alternet.UI
         private const string ButtonTextClearLast = "CE";
 
         private readonly TextPicker displayTextBox;
-        private readonly Grid buttonGrid;
         private readonly List<AbstractControl> buttons = new();
         private readonly ControlSet buttonSet;
+
+        static Calculator()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Calculator"/> class.
@@ -54,22 +57,16 @@ namespace Alternet.UI
         public Calculator()
         {
             FormulaEngine.Init();
-
             HorizontalAlignment = HorizontalAlignment.Left;
             VerticalAlignment = VerticalAlignment.Top;
             Padding = 10;
 
-            buttonGrid = new Grid
-            {
-                RowColumnCount = (6, 4),
-            };
+            Layout = LayoutStyle.Vertical;
 
             displayTextBox = new()
             {
-                RowColumn = (0, 0),
-                ColumnSpan = 4,
-                Parent = buttonGrid,
                 Margin = (0, 0, 0, DefaultDistanceToDisplay),
+                Parent = this,
             };
 
             displayTextBox.TabStop = false;
@@ -97,11 +94,17 @@ namespace Alternet.UI
             ButtonTextPlusMinus, "0", ".", "=",
             };
 
+            TwoDimensionalBuffer<GenericControl> buttons2d = new(width: 4, height: 5);
+
             for (int i = 0; i < buttonLabels.Length; i++)
             {
                 var button = CreateButton();
+                button.Text = buttonLabels[i];
+
                 buttons.Add(button);
                 button.Text = buttonLabels[i];
+
+                buttons2d[i] = button;
 
                 int row = i / 4;
                 int col = i % 4;
@@ -119,9 +122,6 @@ namespace Alternet.UI
 
                 button.Margin = margin;
 
-                Grid.SetRowColumn(button, row + 1, col);
-                button.Parent = buttonGrid;
-
                 button.Click += (sender, e) =>
                 {
                     ButtonClickHandler(button.Text);
@@ -132,9 +132,15 @@ namespace Alternet.UI
                 };
             }
 
-            buttonSet = new(buttons);
+            for (int i = 0; i < buttons2d.Height; i++)
+            {
+                var rowItems = buttons2d.GetRowItems(i).ToArray();
+                var panel = new TransparentPanel().WithChildren(rowItems);
+                panel.Layout = LayoutStyle.Horizontal;
+                panel.Parent = this;
+            }
 
-            buttonGrid.Parent = this;
+            buttonSet = new(buttons);
         }
 
         /// <summary>
@@ -168,12 +174,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public AbstractControl DisplayTextBox => displayTextBox;
-
-        /// <summary>
-        /// Gets panel with buttons.
-        /// </summary>
-        [Browsable(false)]
-        public AbstractControl ButtonsPanel => buttonGrid;
 
         /// <summary>
         /// Gets collection of calculator buttons.
@@ -231,7 +231,7 @@ namespace Alternet.UI
         /// Creates button used in the calculator.
         /// </summary>
         /// <returns></returns>
-        public virtual AbstractControl CreateButton()
+        public virtual GenericControl CreateButton()
         {
             var result = new SpeedTextButton();
             result.UseTheme = SpeedButton.KnownTheme.StaticBorder;
