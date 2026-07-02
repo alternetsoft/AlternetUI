@@ -8,6 +8,7 @@
   <ItemGroup>
     <EmbeddedResource Include="$(CommonResourcesPath)\Logo.png" Link="Resources\Logo.png"/>
     <EmbeddedResource Include="$(CommonResourcesPath)\Leaves.jpg" Link="Resources\Leaves.jpg"/>
+    <EmbeddedResource Include="$(CommonResourcesPath)\Leaves.jpg" Link="Resources\CarbonStack.jpg"/>
   </ItemGroup>
 
 </Project>

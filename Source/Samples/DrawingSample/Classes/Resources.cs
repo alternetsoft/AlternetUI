@@ -8,6 +8,7 @@ namespace DrawingSample
     internal static class Resources
     {
         public static readonly Image LogoImage;
+        public static readonly Image CarbonStackImage;
         public static readonly Image LeavesImage;
 
         static Resources()
@@ -15,6 +16,7 @@ namespace DrawingSample
             var asm = typeof(Resources).Assembly;
             LogoImage = new Bitmap(AssemblyUtils.GetImageUrlInAssembly(asm, "Resources.Logo.png"));
             LeavesImage = new Bitmap(AssemblyUtils.GetImageUrlInAssembly(asm, "Resources.Leaves.jpg"));
+            CarbonStackImage = new Bitmap(AssemblyUtils.GetImageUrlInAssembly(asm, "Resources.CarbonStack.jpg"));
         }
     }
 }

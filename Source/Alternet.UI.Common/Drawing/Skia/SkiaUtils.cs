@@ -1104,6 +1104,51 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Converts a <see cref="WrapMode"/> to corresponding <see cref="SKShaderTileMode"/> values.
+        /// </summary>
+        /// <param name="wrapMode">The <see cref="WrapMode"/> to convert.</param>
+        /// <param name="tileModeX">The resulting <see cref="SKShaderTileMode"/> for the X axis.</param>
+        /// <param name="tileModeY">The resulting <see cref="SKShaderTileMode"/> for the Y axis.</param>
+        public static void Convert(
+                WrapMode wrapMode,
+                out SKShaderTileMode tileModeX,
+                out SKShaderTileMode tileModeY)
+        {
+            switch (wrapMode)
+            {
+                case WrapMode.Tile:
+                    tileModeX = SKShaderTileMode.Repeat;
+                    tileModeY = SKShaderTileMode.Repeat;
+                    break;
+
+                case WrapMode.TileFlipX:
+                    tileModeX = SKShaderTileMode.Mirror;
+                    tileModeY = SKShaderTileMode.Repeat;
+                    break;
+
+                case WrapMode.TileFlipY:
+                    tileModeX = SKShaderTileMode.Repeat;
+                    tileModeY = SKShaderTileMode.Mirror;
+                    break;
+
+                case WrapMode.TileFlipXY:
+                    tileModeX = SKShaderTileMode.Mirror;
+                    tileModeY = SKShaderTileMode.Mirror;
+                    break;
+
+                case WrapMode.Clamp:
+                    tileModeX = SKShaderTileMode.Clamp;
+                    tileModeY = SKShaderTileMode.Clamp;
+                    break;
+
+                default:
+                    tileModeX = SKShaderTileMode.Repeat;
+                    tileModeY = SKShaderTileMode.Repeat;
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Retrieves a delegate of the specified type that represents
         /// a symbol with the given name from the SkiaSharp native library.
         /// </summary>

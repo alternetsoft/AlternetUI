@@ -221,7 +221,6 @@ namespace Alternet.Drawing
             if (o == null)
                 return false;
 
-            CheckDisposed();
             return Color == o.Color && HatchStyle == o.HatchStyle && BackgroundColor == o.BackgroundColor
                 && TileSize == o.TileSize && StrokeWidth == o.StrokeWidth
                 && TileModeX == o.TileModeX && TileModeY == o.TileModeY;

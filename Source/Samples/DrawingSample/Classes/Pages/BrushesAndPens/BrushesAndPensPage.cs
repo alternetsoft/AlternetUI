@@ -43,7 +43,8 @@ namespace DrawingSample
             Solid,
             Hatch,
             LinearGradient,
-            RadialGradient
+            RadialGradient,
+            Texture,
         }
 
         public BrushType Brush
@@ -271,17 +272,19 @@ namespace DrawingSample
             {
                 BrushType.Solid => new SolidBrush(brushColor1),
                 BrushType.Hatch => new HatchBrush(hatchStyle, brushColor1).SetBackgroundColor(brushColor2),
-                
+
+                BrushType.Texture => new TextureBrush(Resources.CarbonStackImage),
+
                 BrushType.LinearGradient =>
-                    new LinearGradientBrush(
-                        new PointD(0,0),
-                        new PointD(bounds.Width, bounds.Height),
-                        new[]
-                        {
+                   new LinearGradientBrush(
+                       new PointD(0, 0),
+                       new PointD(bounds.Width, bounds.Height),
+                       new[]
+                       {
                             new GradientStop(brushColor1, 0f),
                             new GradientStop(brushColor2, 0.5f),
                             new GradientStop(brushColor1, 1f),
-                        }),
+                       }),
                 BrushType.RadialGradient =>
                     new RadialGradientBrush(
                         center: bounds.Center,
@@ -293,7 +296,7 @@ namespace DrawingSample
                             new GradientStop(brushColor2, 0.5f),
                             new GradientStop(brushColor1, 0.8f),
                         }),
-                
+
                 _ => throw new Exception(),
             };
         }
