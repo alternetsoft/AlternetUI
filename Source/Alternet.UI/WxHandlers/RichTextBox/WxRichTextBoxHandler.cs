@@ -2091,9 +2091,15 @@ namespace Alternet.UI
         {
             if (bitmap is null)
                 return false;
+
+            var nativeBitmap = UI.Application.ToNative(bitmap);
+
+            if (nativeBitmap is null)
+                return false;
+
             if (textAttr is WxTextBoxRichAttr s)
-                return NativeControl.WriteImage(UI.Application.ToNative(bitmap), (int)bitmapType, s.Handle);
-            return NativeControl.WriteImage(UI.Application.ToNative(bitmap), (int)bitmapType, default);
+                return NativeControl.WriteImage(nativeBitmap, (int)bitmapType, s.Handle);
+            return NativeControl.WriteImage(nativeBitmap, (int)bitmapType, default);
         }
 
         /// <summary>

@@ -25,7 +25,10 @@ namespace Alternet.UI.Native
 
         public bool Add(Alternet.Drawing.Image image)
         {
-            AddImage(UI.Application.ToNative(image));
+            var img = UI.Application.ToNative(image);
+
+            if (img != null)
+                AddImage(img);
             return true;
         }
 
