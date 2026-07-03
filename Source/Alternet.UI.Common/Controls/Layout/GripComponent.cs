@@ -20,7 +20,7 @@ namespace Alternet.UI
         private RectD origTargetBounds;
         private bool resizing = false;
         private PointD mouseDownPos;
-        private Control? interactionControl;
+        private AbstractControl? interactionControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GripComponent"/> class.
@@ -56,7 +56,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the control whch events are being handled by the grip.
         /// </summary>
-        public virtual Control? InteractionControl
+        public virtual AbstractControl? InteractionControl
         {
             get => interactionControl;
 
