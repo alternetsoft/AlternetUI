@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 
 using Alternet.Drawing;
 using Alternet.Drawing.Printing;
