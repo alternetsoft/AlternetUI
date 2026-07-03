@@ -521,6 +521,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the application's appearance to match the system appearance.
+        /// Also sets the appearance to dark mode if the command line argument
+        /// is specified to enable dark mode.
+        /// </summary>
+        /// <remarks>
+        /// This method applies the system appearance only when the application
+        /// is running on Windows 11 or later. On earlier versions of Windows, it has no effect.
+        /// On other platforms, this method is not needed as the application appearance is managed by the system.
+        /// </remarks>
+        public static PropertyUpdateResult SetSystemAppearance()
+        {
+            try
+            {
+                if (App.IsWindows11AtLeast)
+                {
+                    if (CommandLineArgs.ParseAndGetIsDark())
+                    {
+                        var appearanceResult = App.SetAppearance(ApplicationAppearance.Dark);
+                        return appearanceResult;
+                    }
+
+                    var appearanceResult2 = App.SetAppearance(ApplicationAppearance.System);
+                    return appearanceResult2;
+                }
+
+                return PropertyUpdateResult.Failure;
+            }
+            catch
+            {
+                return PropertyUpdateResult.Failure;
+            }
+        }
+
+        /// <summary>
         /// Splits command line string into array.
         /// </summary>
         /// <param name="cmdLine">Command line string.</param>

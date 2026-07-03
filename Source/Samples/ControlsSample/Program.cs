@@ -98,7 +98,7 @@ namespace ControlsSample
             }
             else
             {
-                AppUtils.SetSystemAppearanceIfDebug();
+                AppUtils.SetSystemAppearance();
             }
 
             var application = new Application();
