@@ -242,7 +242,12 @@ namespace Alternet.UI
                 if (Label.Bounds.Contains(e.Location) && IsEditable)
                 {
                     e.Handled = true;
-                    BeginEdit();
+
+                    Post(() =>
+                    {
+                        BeginEdit();
+                    });
+
                 }
             }
 

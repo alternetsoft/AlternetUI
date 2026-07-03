@@ -350,7 +350,10 @@ namespace Alternet.UI
             {
             }
 
-            TogglePopupVisible(e);
+            Post(() =>
+            {
+                TogglePopupVisible(e);
+            });
         }
 
         /// <inheritdoc/>
@@ -364,7 +367,10 @@ namespace Alternet.UI
             {
             }
 
-            TogglePopupVisible(e);
+            Post(() =>
+            {
+                TogglePopupVisible(e);
+            });
         }
 
         /// <summary>
