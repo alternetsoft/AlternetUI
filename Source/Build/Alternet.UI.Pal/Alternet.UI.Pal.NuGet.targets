@@ -65,7 +65,7 @@
 
 	<Unzip SourceFiles="@(Windows_X64_PalZipFiles)" DestinationFolder="$(Windows_X64_NugetDestFolder)" />
 	<Unzip SourceFiles="@(Windows_X86_PalZipFiles)" DestinationFolder="$(Windows_X86_NugetDestFolder)" />
-	<Unzip SourceFiles="@(Windows_Arm64_PalZipFiles)" DestinationFolder="$(Windows_Arm64_NugetDestFolder)" Condition="False" />
+	<Unzip SourceFiles="@(Windows_Arm64_PalZipFiles)" DestinationFolder="$(Windows_Arm64_NugetDestFolder)"/>
 
         <MakeDir Directories="$(Windows_X64_NugetDestFolder)"/>
         <MakeDir Directories="$(Windows_X86_NugetDestFolder)"/>
@@ -73,7 +73,7 @@
 
         <Copy SourceFiles="@(NugetPayload_Native_Windows_X64)" DestinationFolder="$(Windows_X64_NugetDestFolder)" />
         <Copy SourceFiles="@(NugetPayload_Native_Windows_X86)" DestinationFolder="$(Windows_X86_NugetDestFolder)" />
-        <Copy SourceFiles="@(NugetPayload_Native_Windows_Arm64)" DestinationFolder="$(Windows_Arm64_NugetDestFolder)" Condition="False"/>
+        <Copy SourceFiles="@(NugetPayload_Native_Windows_Arm64)" DestinationFolder="$(Windows_Arm64_NugetDestFolder)"/>
 
 	<Delete Files="$(Windows_X64_NugetDestFolder)/Alternet.UI.Pal.exp"/>
 	<Delete Files="$(Windows_X64_NugetDestFolder)/Alternet.UI.Pal.lib"/>
