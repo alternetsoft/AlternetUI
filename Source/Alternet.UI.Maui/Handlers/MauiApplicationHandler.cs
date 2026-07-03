@@ -233,12 +233,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IActionSimulatorHandler CreateActionSimulatorHandler()
-        {
-            return new DummyActionSimulatorHandler();
-        }
-
-        /// <inheritdoc/>
         public virtual void BeginInvoke(Action action)
         {
             var isMainThread = MainThread.IsMainThread;

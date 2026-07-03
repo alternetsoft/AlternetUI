@@ -33,11 +33,6 @@ namespace Alternet.UI
             return new HandlerForDisposed();
         }
 
-        IControlHandler IControlFactoryHandler.CreateRichTextBoxHandler(RichTextBox editor)
-        {
-            return new HandlerForDisposed();
-        }
-
         IControlHandler IControlFactoryHandler.CreateScrollBarHandler(ScrollBar control)
         {
             return new PlessScrollBarHandler();
@@ -51,11 +46,6 @@ namespace Alternet.UI
         IPropertyGridVariant IControlFactoryHandler.CreateVariant()
         {
             throw new NotImplementedException();
-        }
-
-        IWebBrowserFactoryHandler IControlFactoryHandler.CreateWebBrowserFactoryHandler()
-        {
-            return new MauiWebBrowserFactoryHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateWindowHandler(Window window)
