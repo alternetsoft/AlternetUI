@@ -2792,18 +2792,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds a sizing grip to the toolbar, allowing users to resize the toolbar by dragging the grip.
-        /// </summary>
-        /// <param name="target">The target control which is being resized by the sizing grip.</param>
-        /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
-        public virtual GripControl AddSizingGrip(
-            IGripControlTarget? target,
-            GripControlKind kind = GripControlKind.SizeGripRight)
-        {
-            return AddSizingGrip(() => target, kind);
-        }
-
-        /// <summary>
         /// Returns panel by index.
         /// </summary>
         /// <param name="index">Panel index, starting from zero.</param>
@@ -2814,6 +2802,18 @@ namespace Alternet.UI
                 return null;
 
             return Panels[index];
+        }
+
+        /// <summary>
+        /// Adds a sizing grip to the toolbar, allowing users to resize the toolbar by dragging the grip.
+        /// </summary>
+        /// <param name="target">The target control which is being resized by the sizing grip.</param>
+        /// <param name="kind">Specifies the alignment of the sizing grip on the toolbar.</param>
+        public virtual GripControl AddSizingGrip(
+            IGripControlTarget? target,
+            GripControlKind kind = GripControlKind.SizeGripRight)
+        {
+            return AddSizingGrip(() => target, kind);
         }
 
         /// <summary>
