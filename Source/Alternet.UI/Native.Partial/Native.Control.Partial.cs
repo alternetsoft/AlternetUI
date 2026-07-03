@@ -8,7 +8,7 @@ namespace Alternet.UI.Native
 {
     internal partial class Control
     {
-        private static bool reportedUsedGraphics = false;
+        private static bool reportedUsedGraphics = true;
         private static bool measuredFontSize;
 
         private readonly Alternet.Skia.SkiaSurfaceOnMswDib dibSurface = new();
