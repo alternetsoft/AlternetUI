@@ -89,7 +89,6 @@ namespace ControlsSample
 
             if (useLegacyPaint.HasValue)
             {
-                AbstractControl.RenderingFlags = ControlRenderingFlags.None;
             }
 
             if (isDark.HasValue)

@@ -20,11 +20,12 @@ namespace ControlsSample
 
             scrollViewer = ScrollViewer.CreateWithChild(panel);
             scrollViewer.Parent = this;
+            scrollViewer.UseControlColors(true);
         }
 
         private void RenderText(AbstractControl parent)
         {
-            UseControlColors(true);
+            parent.UseControlColors(true);
 
             var homePage = @"https://www.alternet-ui.com/";
             var docsHomePage = @"https://docs.alternet-ui.com/";
@@ -77,17 +78,8 @@ namespace ControlsSample
 
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            if (SystemSettings.AppearanceIsDark)
-            {
-                BackgroundColor = DefaultColors.ControlBackColor.Dark;
-                ForegroundColor = DefaultColors.ControlForeColor.Dark;
-            }
-            else
-            {
-                BackgroundColor = DefaultColors.ControlBackColor.Light;
-                ForegroundColor = DefaultColors.ControlForeColor.Light;
-            }
-
+            ControlUtils.UpdateForeBackColors(panel);
+            ControlUtils.UpdateForeBackColors(scrollViewer);
             base.OnSystemColorsChanged(e);
         }
     }

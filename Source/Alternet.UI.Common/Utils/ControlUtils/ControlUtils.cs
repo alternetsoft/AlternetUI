@@ -32,6 +32,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Updates the control's background and foreground colors according to the current system theme.
+        /// </summary>
+        /// <param name="control">The control whose colors will be updated.</param>
+        public static void UpdateForeBackColors(AbstractControl control)
+        {
+            if (SystemSettings.AppearanceIsDark)
+            {
+                control.BackgroundColor = DefaultColors.ControlBackColor.Dark;
+                control.ForegroundColor = DefaultColors.ControlForeColor.Dark;
+            }
+            else
+            {
+                control.BackgroundColor = DefaultColors.ControlBackColor.Light;
+                control.ForegroundColor = DefaultColors.ControlForeColor.Light;
+            }
+        }
+
+        /// <summary>
         /// Calculates the position of a point relative to the platform control, adjusting for nested control locations
         /// as necessary. Control references are updated to point to the platform control.
         /// </summary>
@@ -40,7 +58,8 @@ namespace Alternet.UI
         /// <param name="position">The initial position to be coerced, relative to the specified control.
         /// Can be null to indicate an undefined position.</param>
         /// <param name="control">The control relative to which the position is specified. Must not be null.</param>
-        /// <returns>A <see cref="PointD"/> representing the position relative to the platform control, or null if the position
+        /// <returns>A <see cref="PointD"/> representing the position relative to the platform control,
+        /// or null if the position
         /// cannot be determined.</returns>
         public static PointD? CoercePositionToPlatform(PointD? position, ref AbstractControl control)
         {
