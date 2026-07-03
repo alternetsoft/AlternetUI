@@ -95,9 +95,7 @@ namespace Alternet.UI
         /// <param name="control">Control to check.</param>
         /// <param name="mousePosition">The position of the mouse pointer.</param>
         /// <returns></returns>
-        public static AbstractControl? GetMouseTargetControl(
-            ref AbstractControl? control,
-            ref PointD? mousePosition)
+        public static AbstractControl? GetMouseTargetControl(ref AbstractControl? control, ref PointD? mousePosition)
         {
             if (control is null)
                 return null;
@@ -106,54 +104,22 @@ namespace Alternet.UI
 
             AbstractControl? result;
 
-            if (control.IsMouseCaptured)
-            {
-                result = control;
-            }
-            else
-            {
-                result = PlessMouse.MouseTargetControlOverride;
+            result = PlessMouse.MouseTargetControlOverride;
 
-                if (result is not null && result.HasIndirectParent(control))
-                {
-                }
-                else
-                {
-                    result = control.PointInChildRecursive(position) ?? control;
-                }
+            if (result is null)
+            {
+                result = control.PointInChildRecursive(position) ?? control;
             }
 
-            if (result == control)
+            if (result != control)
             {
-                PlessMouse.UpdateMousePosition(position, control);
-                mousePosition = position;
-                return control;
+                var screenPosition = control.ClientToScreen(position);
+                position = result.ScreenToClient(screenPosition);
             }
-            else
-            {
-                while (result is not null)
-                {
-                    if (result.InputTransparent)
-                    {
-                        result = result.Parent;
-                    }
-                    else
-                    {
-                        var temp = result;
-                        while (temp != control && temp is not null)
-                        {
-                            position -= temp.Location;
-                            temp = temp.Parent;
-                        }
 
-                        PlessMouse.UpdateMousePosition(position, result);
-                        mousePosition = position;
-                        return result;
-                    }
-                }
-
-                return null;
-            }
+            PlessMouse.UpdateMousePosition(position, result);
+            mousePosition = position;
+            return result;
         }
 
         /// <summary>
@@ -3146,15 +3112,16 @@ namespace Alternet.UI
         /// from the last control in <see cref="Children"/>.
         /// </summary>
         /// <param name="point">Point to test.</param>
+        /// <param name="ignoreTransparentInput">Whether to ignore controls with transparent input.</param>
         /// <returns></returns>
-        public virtual AbstractControl? PointInChild(PointD point)
+        public virtual AbstractControl? PointInChild(PointD point, bool ignoreTransparentInput = true)
         {
             var allChildren = AllChildren;
 
             for (int i = allChildren.Count - 1; i >= 0; i--)
             {
                 var child = allChildren[i];
-                if (!child.Visible)
+                if (!child.Visible || (ignoreTransparentInput && child.InputTransparent))
                     continue;
                 if (child.Bounds.Contains(point))
                     return child;
@@ -3167,15 +3134,16 @@ namespace Alternet.UI
         /// Recursively finds the child control at the specified point.
         /// </summary>
         /// <param name="point">The point to check, relative to the current control.</param>
+        /// <param name="ignoreTransparentInput">Whether to ignore controls with transparent input.</param>
         /// <returns>The child control at the specified point, or <c>null</c>
         /// if no child control is found.</returns>
-        public virtual AbstractControl? PointInChildRecursive(PointD point)
+        public virtual AbstractControl? PointInChildRecursive(PointD point, bool ignoreTransparentInput = true)
         {
-            var child = PointInChild(point);
+            var child = PointInChild(point, ignoreTransparentInput);
             if (child is null)
                 return null;
             var pointInChild = point - child.Location;
-            var result = child.PointInChildRecursive(pointInChild) ?? child;
+            var result = child.PointInChildRecursive(pointInChild, ignoreTransparentInput) ?? child;
             return result;
         }
 

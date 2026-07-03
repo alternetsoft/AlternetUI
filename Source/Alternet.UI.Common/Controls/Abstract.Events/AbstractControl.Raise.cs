@@ -934,7 +934,7 @@ namespace Alternet.UI
 
                 PaintCaret(e);
 
-                if (this is Control && !IsWindow)
+                if (this is Control)
                 {
                     TemplateUtils.RaisePaintForNonPlatformChildren(this, () => e.Graphics, true);
                 }

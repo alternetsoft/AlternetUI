@@ -125,8 +125,7 @@ namespace PaintSample
             if (state == null)
                 return;
 
-            if (Canvas.IsMouseCaptured)
-                Canvas.ReleaseMouseCapture();
+            Canvas.ReleaseMouseCapture();
 
             state = null;
             Document.PreviewAction = null;

@@ -90,8 +90,6 @@ namespace Alternet.UI
 
         bool IControlHandler.ProcessUIUpdates { get; set; }
 
-        bool IControlHandler.IsMouseCaptured { get; }
-
         bool IControlHandler.IsHandleCreated => true;
 
         /// <inheritdoc/>

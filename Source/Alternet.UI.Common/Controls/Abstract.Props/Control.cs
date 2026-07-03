@@ -429,29 +429,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override bool IsMouseCaptured
-        {
-            get
-            {
-                return SafeHandler?.IsMouseCaptured ?? false;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-
-                if (value == IsMouseCaptured)
-                    return;
-
-                if (value)
-                    Handler.CaptureMouse();
-                else
-                    Handler.ReleaseMouseCapture();
-            }
-        }
-
         internal bool ProcessUIUpdates
         {
             get
@@ -731,12 +708,14 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void CaptureMouse()
         {
+            base.CaptureMouse();
             SafeHandler?.CaptureMouse();
         }
 
         /// <inheritdoc/>
         public override void ReleaseMouseCapture()
         {
+            base.ReleaseMouseCapture();
             SafeHandler?.ReleaseMouseCapture();
         }
 

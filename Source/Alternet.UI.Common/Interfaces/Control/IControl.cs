@@ -497,11 +497,6 @@ namespace Alternet.UI
         bool IsMouseOver { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the mouse is captured to this control.
-        /// </summary>
-        bool IsMouseCaptured { get; }
-
-        /// <summary>
         /// Gets or sets data (images, colors, borders, pens, brushes, etc.) for different
         /// control states.
         /// </summary>

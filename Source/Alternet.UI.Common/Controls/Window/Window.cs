@@ -1623,13 +1623,6 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override void RaiseChildInserted(int index, AbstractControl childControl)
         {
-            if (childControl is GenericControl)
-            {
-                LogUtils.LogException(new ArgumentException(
-                    $"Generic control '{childControl.GetType()}' cannot be added to Window. Use Panel or other container as it's parent.",
-                    nameof(childControl)));
-            }
-
             base.RaiseChildInserted(index, childControl);
         }
 
@@ -1768,13 +1761,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Configures the window to display as a tool window without a title bar, disabling minimize, maximize, close,
+        /// Configures the window to display as a tool window without a title bar,
+        /// disabling minimize, maximize, close,
         /// and system menu features, and making the window topmost.
         /// </summary>
-        /// <remarks>Use this method when a window should function as a floating tool window without
-        /// standard window controls or a title bar. The window will not appear in the taskbar and cannot be resized,
-        /// minimized, maximized, or closed by the user. This is typically used for auxiliary panels
-        /// or tool palettes in
+        /// <remarks>Use this method when a window should function
+        /// as a floating tool window without
+        /// standard window controls or a title bar. The window will not appear
+        /// in the taskbar and cannot be resized,
+        /// minimized, maximized, or closed by the user. This is typically
+        /// used for auxiliary panels or tool palettes in
         /// an application.</remarks>
         public virtual void MakeToolWindowWithoutTitleBar()
         {
@@ -1819,9 +1815,7 @@ namespace Alternet.UI
         /// Can be <see langword="null"/> to remove the current menu.</param>
         /// <param name="performLayout">A value indicating whether to perform a layout update
         /// after setting the menu.  The default value is <see langword="true"/>.</param>
-        public virtual void SetMenu(
-            DisposableObject? value,
-            bool performLayout = true)
+        public virtual void SetMenu(DisposableObject? value, bool performLayout = true)
         {
             if (DisposingOrDisposed)
                 return;
@@ -2404,8 +2398,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Provides window frame metrics such as caption area height, edge border size, single border size, and thick
-        /// frame border size. These metrics are essential for accurate layout and rendering of the window's non-client area,
+        /// Provides window frame metrics such as caption area height,
+        /// edge border size, single border size, and thick
+        /// frame border size. These metrics are essential for accurate
+        /// layout and rendering of the window's non-client area,
         /// ensuring that the window's appearance and behavior are consistent with the operating system's
         /// standards and user expectations. Values are returned in device pixels.
         /// </summary>

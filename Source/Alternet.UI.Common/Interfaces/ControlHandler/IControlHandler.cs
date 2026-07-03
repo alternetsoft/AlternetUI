@@ -95,9 +95,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="Control.ProcessUIUpdates"/>
         bool ProcessUIUpdates { get; set; }
 
-        /// <inheritdoc cref="AbstractControl.IsMouseCaptured"/>
-        bool IsMouseCaptured { get; }
-
         /// <inheritdoc cref="AbstractControl.IsHandleCreated"/>
         bool IsHandleCreated { get; }
 

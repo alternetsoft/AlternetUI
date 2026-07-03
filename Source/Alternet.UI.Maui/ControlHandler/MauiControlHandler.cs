@@ -151,26 +151,6 @@ namespace Alternet.UI
 
         public virtual bool ProcessUIUpdates { get; set; }
 
-        public virtual bool IsMouseCaptured
-        {
-            get => PlessMouse.MouseTargetControlOverride == Control;
-
-            set
-            {
-                if (value == IsMouseCaptured)
-                    return;
-
-                if (value)
-                {
-                    CaptureMouse();
-                }
-                else
-                {
-                    ReleaseMouseCapture();
-                }
-            }
-        }
-
         public virtual RectI BoundsI
         {
             get
@@ -204,13 +184,10 @@ namespace Alternet.UI
 
         public virtual void CaptureMouse()
         {
-            PlessMouse.MouseTargetControlOverride = Control;
         }
 
         public virtual void ReleaseMouseCapture()
         {
-            if (PlessMouse.MouseTargetControlOverride == Control)
-                PlessMouse.MouseTargetControlOverride = null;
         }
 
         public virtual PointD ScreenToClient(PointD point)

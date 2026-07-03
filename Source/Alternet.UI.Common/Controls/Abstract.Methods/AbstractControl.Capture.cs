@@ -8,30 +8,6 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
-        /// Gets a value indicating whether the mouse is captured to this control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsMouseCaptured
-        {
-            get => PlessMouse.MouseTargetControlOverride == this;
-
-            set
-            {
-                if (value == IsMouseCaptured)
-                    return;
-
-                if (value)
-                {
-                    CaptureMouse();
-                }
-                else
-                {
-                    ReleaseMouseCapture();
-                }
-            }
-        }
-
-        /// <summary>
         /// Sets or releases mouse capture.
         /// </summary>
         /// <param name="value"><c>true</c> to set mouse capture; <c>false</c> to release it.</param>
@@ -50,6 +26,15 @@ namespace Alternet.UI
         public virtual void CaptureMouse()
         {
             PlessMouse.MouseTargetControlOverride = this;
+
+            if (IsPlatformControl)
+            {
+                (this as Control)?.SafeHandler?.CaptureMouse();
+            }
+            else
+            {
+                PlatformBackedParent?.SafeHandler?.CaptureMouse();
+            }
         }
 
         /// <summary>
@@ -58,8 +43,15 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void ReleaseMouseCapture()
         {
-            if (PlessMouse.MouseTargetControlOverride == this)
-                PlessMouse.MouseTargetControlOverride = null;
+            PlessMouse.MouseTargetControlOverride = null;
+            if (IsPlatformControl)
+            {
+                (this as Control)?.SafeHandler?.ReleaseMouseCapture();
+            }
+            else
+            {
+                PlatformBackedParent?.SafeHandler?.ReleaseMouseCapture();
+            }
         }
     }
 }
