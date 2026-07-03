@@ -14,6 +14,11 @@ namespace Alternet.UI
     public class StdIntPicker : ToolBar
     {
         /// <summary>
+        /// Gets or sets default text picker margin.
+        /// </summary>
+        public static Thickness DefaultTextPickerMargin = (5, 0, 5, 0);
+
+        /// <summary>
         /// Gets or sets default image for the 'Plus' button.
         /// </summary>
         public static KnownButton DefaultBtnPlusImage = UI.KnownButton.TextBoxPlus;
@@ -36,7 +41,7 @@ namespace Alternet.UI
         /// Gets or sets default border corner radius to use in <see cref="StdIntPicker"/> 
         /// and similar controls.
         /// </summary>
-        internal static BorderCornerRadius DefaultBorderCorners = new(
+        public static BorderCornerRadius DefaultBorderCorners = new(
             SpeedButton.DefaultRoundBorderRadius,
             SpeedButton.DefaultRoundBorderRadiusIsPercent);
 
@@ -57,6 +62,7 @@ namespace Alternet.UI
         /// </summary>
         public StdIntPicker()
         {
+            textPicker.Margin = DefaultTextPickerMargin;
             HasBorder = true;
             UseControlColors(true);
 
@@ -586,6 +592,7 @@ namespace Alternet.UI
 
                     void ClickAction(object? s, EventArgs e)
                     {
+                        textPicker.CancelEdit();
                         var buttonId = (s as AbstractControl)?.UniqueId;
                         var buttonKind = buttonId == IdButtonMinus ? ButtonKind.Minus : ButtonKind.Plus;
                         ClickEventArgs args = new(buttonKind);
@@ -781,7 +788,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override BorderCornerRadius? GetDefaultCornerRadius()
         {
-            return null;
+            return DefaultBorderCorners;
         }
 
         /// <summary>
