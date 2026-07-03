@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Implements multiple <see cref="ToolBar"/> controls.
     /// </summary>
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
-    public partial class ToolBarSet : HiddenBorder
+    public partial class ToolBarSet : HiddenGenericBorder
     {
         /// <summary>
         /// Gets or sets default distance (in dips) between toolbars.

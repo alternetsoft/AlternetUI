@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// Implements generic toolbar control.
     /// </summary>
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
-    public partial class ToolBar : HiddenBorder
+    public partial class ToolBar : HiddenGenericBorder
     {
         /// <summary>
         /// Gets or sets the default size, in dips, of the progress bar panels.
