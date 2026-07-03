@@ -949,25 +949,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Captures the mouse to the control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual void CaptureMouse()
-        {
-            PlessMouse.MouseTargetControlOverride = this;
-        }
-
-        /// <summary>
-        /// Releases the mouse capture, if the control held the capture.
-        /// </summary>
-        [Browsable(false)]
-        public virtual void ReleaseMouseCapture()
-        {
-            if (PlessMouse.MouseTargetControlOverride == this)
-                PlessMouse.MouseTargetControlOverride = null;
-        }
-
-        /// <summary>
         /// Runs generic action.
         /// </summary>
         /// <param name="action">Action to run.</param>
@@ -1267,18 +1248,6 @@ namespace Alternet.UI
             }
 
             return new ControlSet(result);
-        }
-
-        /// <summary>
-        /// Sets or releases mouse capture.
-        /// </summary>
-        /// <param name="value"><c>true</c> to set mouse capture; <c>false</c> to release it.</param>
-        public void SetMouseCapture(bool value)
-        {
-            if (value)
-                CaptureMouse();
-            else
-                ReleaseMouseCapture();
         }
 
         /// <summary>

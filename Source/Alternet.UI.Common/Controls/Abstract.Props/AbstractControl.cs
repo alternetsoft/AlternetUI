@@ -1290,30 +1290,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the mouse is captured to this control.
-        /// </summary>
-        [Browsable(false)]
-        public virtual bool IsMouseCaptured
-        {
-            get => PlessMouse.MouseTargetControlOverride == this;
-
-            set
-            {
-                if (value == IsMouseCaptured)
-                    return;
-
-                if (value)
-                {
-                    CaptureMouse();
-                }
-                else
-                {
-                    ReleaseMouseCapture();
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets or sets data (images, colors, borders, pens, brushes, etc.) for different
         /// control states.
         /// Usage of this property depends on the control. Not all controls support it.
