@@ -64,9 +64,6 @@ namespace ControlsSample
             WriteLine(s3);
             WriteLine(s4);
 
-            new Label(s3).WithFont(infoFont).WithAlignment(HorizontalAlignment.Center)
-                .WithMargin(0, 5, 0, 5).WithParent(parent);
-
             new HorizontalStackPanel()
                 .WithChildren(
                     new LinkLabel("Home", homePage).WithFont(infoFont).WithMargin(0, 0, 30, 5),
