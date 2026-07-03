@@ -125,10 +125,6 @@ namespace EmployeeFormSample
 
             stateComboBox.PopupKind = PickerPopupKind.ListBox;
 
-            // On Linux height of the ComboBox is greater than height of the TextBox.
-            // We need to increase height of all window's TextBoxes.
-            TextBoxUtils.AdjustTextBoxesHeight(this);
-
             this.MinimumSize = new(900, 700);
 
             firstNameTextBox.Text = employee.FirstName;
@@ -226,6 +222,10 @@ namespace EmployeeFormSample
             {
                 employee.HireDate = hireDatePicker.Value;
             };
+
+            employeeFoto.CornerRadiusX = 10;
+            employeeFoto.CornerRadiusY = 10;
+            employeeFoto.UseCornerRadius = true;
 
             this.SetSizeToContent();
         }
