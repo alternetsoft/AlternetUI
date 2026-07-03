@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// The control is typically placed in the bottom-right corner of a status bar,
     /// but can be used in other contexts as well.
     /// </summary>
-    public class GripControl : HiddenBorder
+    public class GripControl : HiddenGenericBorder
     {
         /// <summary>
         /// The default minimum size delta for resizing. This value is used if the <see cref="MinSizeDelta"/>
@@ -575,7 +575,6 @@ namespace Alternet.UI
                 return;
             }
 
-            base.DefaultPaint(e);
             if (ImageKind != GripImageKind.None)
             {
                 DrawDefaultImage(e.Graphics, this.ClientRectangle);
