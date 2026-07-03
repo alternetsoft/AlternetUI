@@ -534,6 +534,14 @@ namespace Alternet.UI
             var settings = CreateBorderSettings(BorderSettings.Default);
             Borders.SetAll(settings);
             UpdatePadding();
+
+            var cornerRadius = GetDefaultCornerRadius();
+
+            if (cornerRadius != null)
+            {
+                settings.SetCornerRadius(cornerRadius);
+            }
+
             Borders.Normal!.PropertyChangedAction = (e) => Refresh();
             Invalidate();
         }
@@ -635,6 +643,17 @@ namespace Alternet.UI
         protected virtual bool GetDefaultParentBackColor()
         {
             return true;
+        }
+
+        /// <summary>
+        /// Gets default border corner radius for the control. This method
+        /// is called in the constructor to initialize corner radius.
+        /// If this method returns null, no round corners are initialized.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual BorderCornerRadius? GetDefaultCornerRadius()
+        {
+            return null;
         }
 
         /// <inheritdoc/>
