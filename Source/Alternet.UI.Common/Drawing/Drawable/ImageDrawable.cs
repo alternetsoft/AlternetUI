@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Alternet.UI;
 using Alternet.UI.Extensions;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -24,7 +26,8 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets a value indicating whether the object has an associated image.
         /// </summary>
-        public bool IsImageSpecified => SvgImage is not null || Image is not null || ImageSet is not null || Icon is not null;
+        public bool IsImageSpecified => SvgImage is not null || Image is not null
+            || ImageSet is not null || Icon is not null;
 
         /// <summary>
         /// Gets or sets the SVG image associated with this instance.
@@ -58,6 +61,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the horizontal corner radius for rounded corners.
+        /// </summary>
+        public float CornerRadiusX { get; set; } = 5.0f;
+
+        /// <summary>
+        /// Gets or sets the vertical corner radius for rounded corners.
+        /// </summary>
+        public float CornerRadiusY { get; set; } = 5.0f;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the image should be painted with round corners.
+        /// </summary>
+        public bool UseCornerRadius { get; set; }
+
+        /// <summary>
         /// Gets or sets image to draw.
         /// </summary>
         public Image? Image { get; set; }
@@ -83,13 +101,15 @@ namespace Alternet.Drawing
         public IconSet? Icon { get; set; }
 
         /// <summary>
-        /// Gets or sets horizontal alignment option that specifies how the image should be aligned within the available space.
+        /// Gets or sets horizontal alignment option that specifies
+        /// how the image should be aligned within the available space.
         /// This property is used when the image is smaller than the available space.
         /// </summary>
         public HorizontalAlignment HorizontalAlignment { get; set; } = HorizontalAlignment.Center;
 
         /// <summary>
-        /// Gets or sets vertical alignment option that specifies how the image should be aligned within the available space.
+        /// Gets or sets vertical alignment option that specifies how
+        /// the image should be aligned within the available space.
         /// This property is used when the image is smaller than the available space.
         /// </summary>
         public VerticalAlignment VerticalAlignment { get; set; } = VerticalAlignment.Center;
@@ -248,26 +268,28 @@ namespace Alternet.Drawing
             if (Image.IsNullOrEmpty(image))
                 return;
 
+            RectD locationRect = new(Location, image.SizeDip(control));
+
             if (Size.AnyIsEmptyOrNegative)
             {
-                dc.DrawImage(image, Location);
+                InternalPaint(() => dc.DrawImage(image, Location), locationRect);
                 return;
             }
 
             if (Stretch)
             {
-                dc.DrawImage(image, Bounds);
+                InternalPaint(() => dc.DrawImage(image, Bounds), Bounds);
                 return;
             }
 
             if (IsLeftTopAligned)
             {
-                dc.DrawImage(image, Location);
+                InternalPaint(() => dc.DrawImage(image, Location), locationRect);
                 return;
             }
 
-            var imageRect = image.BoundsDip(control);
             var destRect = Bounds;
+            var imageRect = image.BoundsDip(control);
 
             var alignedRect = AlignUtils.AlignRectInRect(
                 imageRect,
@@ -276,7 +298,28 @@ namespace Alternet.Drawing
                 VerticalAlignment,
                 shrinkSize: false);
 
-            dc.DrawImage(image, alignedRect.Location);
+            InternalPaint(() => dc.DrawImage(image, alignedRect.Location), alignedRect);
+
+            void InternalPaint(Action paintAction, RectD rect)
+            {
+                if (UseCornerRadius)
+                {
+                    using var path = new SKPath();
+
+                    path.AddRoundRect(new SKRect(rect.Left, rect.Top, rect.Right, rect.Bottom),
+                                        CornerRadiusX, CornerRadiusY);
+
+                    dc.Canvas.Save();
+
+                    dc.Canvas.ClipPath(path);
+                    paintAction();
+                    dc.Canvas.Restore();
+                }
+                else
+                {
+                    paintAction();
+                }
+            }
         }
 
         /// <inheritdoc/>

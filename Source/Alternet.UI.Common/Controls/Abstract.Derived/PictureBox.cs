@@ -52,7 +52,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="image">The image to display in the picture box.</param>
         public PictureBox(Image image)
-            : this() 
+            : this()
         {
             Image = image;
         }
@@ -90,6 +90,64 @@ namespace Alternet.UI
                 if (isTransparent == value)
                     return;
                 isTransparent = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the horizontal corner radius for rounded corners.
+        /// </summary>
+        public virtual float CornerRadiusX
+        {
+            get
+            {
+                return primitive.CornerRadiusX;
+            }
+
+            set
+            {
+                if (primitive.CornerRadiusX == value)
+                    return;
+                primitive.CornerRadiusX = value;
+                if (UseCornerRadius)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the vertical corner radius for rounded corners.
+        /// </summary>
+        public virtual float CornerRadiusY
+        {
+            get
+            {
+                return primitive.CornerRadiusY;
+            }
+
+            set
+            {
+                if (primitive.CornerRadiusY == value)
+                    return;
+                primitive.CornerRadiusY = value;
+                if (UseCornerRadius)
+                    Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the image should be painted with round corners.
+        /// </summary>
+        public virtual bool UseCornerRadius
+        {
+            get
+            {
+                return primitive.UseCornerRadius;
+            }
+            set
+            {
+                if (primitive.UseCornerRadius == value)
+                    return;
+                primitive.UseCornerRadius = value;
                 Invalidate();
             }
         }
