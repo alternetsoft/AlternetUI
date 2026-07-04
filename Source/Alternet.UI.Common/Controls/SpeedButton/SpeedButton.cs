@@ -148,7 +148,7 @@ namespace Alternet.UI
                 if (ImageLabelDistance == value)
                     return;
                 spacer.SuggestedSize = value;
-                if (HasVisibleImage && TextVisible)
+                if (HasVisibleImage && HasVisibleText)
                     PerformLayoutAndInvalidate();
             }
         }
@@ -171,6 +171,17 @@ namespace Alternet.UI
                 {
                     Label.IsVerticalText = value;
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether text is not empty and visible.
+        /// </summary>
+        public virtual bool HasVisibleText
+        {
+            get
+            {
+                return TextVisible && !string.IsNullOrEmpty(Text);
             }
         }
 
@@ -804,7 +815,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (TextVisible)
+                if (HasVisibleText)
                 {
                     if (HasVisibleImage)
                     {
@@ -1804,7 +1815,7 @@ namespace Alternet.UI
 
             DrawDefaultBackground(e, flags);
 
-            if (TextVisible)
+            if (HasVisibleText)
             {
                 Label.ForegroundColor = GetLabelTextColor(state);
                 TemplateUtils.RaisePaintRecursive(Label, e.Graphics, Label.Location);
@@ -2310,6 +2321,15 @@ namespace Alternet.UI
         protected virtual GenericControl CreateInnerSpacer()
         {
             return new Spacer();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnTextChanged(EventArgs e)
+        {
+            base.OnTextChanged(e);
+
+            if (HasVisibleText)
+                PerformLayoutAndInvalidate();
         }
 
         /// <summary>
