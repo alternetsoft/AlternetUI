@@ -1,3 +1,26 @@
+# 1.1.1 (2026 July 4)
+
+- SpeedColorButton: Fix paint when inside status bar.
+- Call set focus of container controls on mouse down.
+- Toolbar and ToolbarSet are now generic controls.
+- Implement round corners for StdIntPicker.
+- GenericBorder: Initialize default border corner radius.
+- Fix mouse capture to work with generic controls.
+- Hide TextPicker editor when PopupWindow is showing.
+- Add rounded corner support to PictureBox and ImageDrawable. Adds CornerRadiusX, CornerRadiusY, and UseCornerRadius properties to both 
+ImageDrawable and PictureBox. When UseCornerRadius is enabled, image painting uses an SKPath clip to render images 
+with rounded corners via SkiaSharp.
+- AppUtils.SetSystemAppearance
+- Update StdIntPicker default visual styling
+- Refactor welcome page to composed controls.
+- Add LinkLabel constructor with URL parameter.
+- Add fluent helpers to AbstractControl. Introduces a set of chainable `With*` methods on `AbstractControl` to simplify control setup 
+and composition. The new API covers adding child controls, setting margin/padding (including side-specific margins), 
+horizontal/vertical alignment, font assignment, and parent assignment.
+- Add PictureBox constructor with Image parameter.
+
+---
+
 # 1.1.0 (2026 July 2)
 
 - Add controls: StdListView, PopupCalculator, TransparentPanel, KnobSlider, VerticalLinearGauge.
