@@ -101,7 +101,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the title displayed when <see cref="Color.Empty"/> is selected.
         /// </summary>
-        public string? EmptyColorTitle { get; set; }
+        public virtual string? EmptyColorTitle { get; set; }
 
         /// <summary>
         /// Gets attached popup window with <see cref="ColorListBox"/>.
@@ -127,7 +127,7 @@ namespace Alternet.UI
         /// button is clicked.
         /// </summary>
         [Browsable(false)]
-        public bool ShowDialog
+        public virtual bool ShowDialog
         {
             get => actionKind == ClickActionKind.ShowDialog;
 
@@ -171,7 +171,7 @@ namespace Alternet.UI
         /// button is clicked.
         /// </summary>
         [Browsable(false)]
-        public bool ShowPopupWindow
+        public virtual bool ShowPopupWindow
         {
             get => actionKind == ClickActionKind.ShowPopup;
 

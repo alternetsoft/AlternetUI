@@ -275,6 +275,7 @@ namespace MenuSample
 
                 if (panel.CustomControl is StdCheckBox)
                     panel.CustomControl = CreateSpeedColorButton();
+                else
                 if (panel.CustomControl is SpeedColorButton)
                     panel.CustomControl = null;
                 else
