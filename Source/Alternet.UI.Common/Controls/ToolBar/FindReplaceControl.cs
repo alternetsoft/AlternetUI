@@ -1597,7 +1597,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>This method is invoked to trigger the "Replace All" functionality. It raises the
         /// event associated with replacing all occurrences of a specified item.
-        /// Override this method in a derived class to provide custom handling for the "Replace All" action.</remarks>
+        /// Override this method in a derived class to provide
+        /// custom handling for the "Replace All" action.</remarks>
         protected virtual void OnClickReplaceAll() => OnClickReplaceAll(this, EventArgs.Empty);
 
         /// <summary>
@@ -1736,7 +1737,10 @@ namespace Alternet.UI
             });
         }
 
-        private void UpdateFindScope()
+        /// <summary>
+        /// Updates scope editor.
+        /// </summary>
+        protected virtual void UpdateFindScope()
         {
             void AddOrRemove(ListControlItem item, bool add)
             {

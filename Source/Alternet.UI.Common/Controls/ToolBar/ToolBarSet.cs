@@ -64,7 +64,21 @@ namespace Alternet.UI
                 value = Math.Max(value, 1);
                 if (value == ToolBarCount)
                     return;
-                Children.SetCount(value, CreateToolBar);
+                Children.SetCount(value, CreateToolBarInternal);
+
+                ToolBar CreateToolBarInternal()
+                {
+                    var result = CreateToolBar();
+
+            result.ParentBackColor = true;
+            result.ParentFont = true;
+            result.ParentForeColor = true;
+
+            var distance = ToolBarDistance ?? DefaultToolBarDistance;
+            result.Margin = distance;
+
+                    return result;
+                }
             }
         }
 
@@ -148,17 +162,6 @@ namespace Alternet.UI
         protected virtual ToolBar CreateToolBar()
         {
             ToolBar result = new();
-            result.ParentBackColor = true;
-            result.ParentFont = true;
-            result.ParentForeColor = true;
-
-            var distance = ToolBarDistance ?? DefaultToolBarDistance;
-            result.Margin = distance;
-
-            if (Children.Count > 0)
-            {
-            }
-
             return result;
         }
     }
