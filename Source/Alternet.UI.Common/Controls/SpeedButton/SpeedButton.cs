@@ -1794,10 +1794,6 @@ namespace Alternet.UI
 
             var isNormalOrDisabled = state == VisualControlState.Normal || state == VisualControlState.Disabled;
 
-            if (state == VisualControlState.Hovered)
-            {
-            }
-
             var backgroundFlags = IsTransparent
                 ? DrawDefaultBackgroundFlags.None : DrawDefaultBackgroundFlags.DrawBackground;
 
@@ -1816,6 +1812,10 @@ namespace Alternet.UI
 
             if (HasVisibleImage)
             {
+                /*
+                I have no idea why this is needed. When we switched to generic control for toolbar,
+                when this code is commented out, under the combo image not correct background is painted.
+
                 if (ImageToText == ImageToText.Horizontal && TextVisible
                     && ImageHorizontalAlignment == HorizontalAlignment.Right)
                 {
@@ -1826,6 +1826,7 @@ namespace Alternet.UI
                         ClientRectangle.Height);
                     DrawDefaultBackground(e.WithRect(newRect), backgroundFlags);
                 }
+                */
 
                 drawable.VisualState = Enabled
                     ? VisualControlState.Normal : VisualControlState.Disabled;

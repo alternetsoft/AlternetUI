@@ -506,6 +506,12 @@ namespace Alternet.UI
             base.DisposeManaged();
         }
 
+        /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            base.DefaultPaint(e);
+        }
+
         /// <summary>
         /// Raised when color image is changed.
         /// </summary>
