@@ -27,7 +27,6 @@ namespace Alternet.UI
         public Panel()
         {
             TabStop = false;
-            CanSelect = false;
             ParentBackColor = true;
             ParentForeColor = true;
         }

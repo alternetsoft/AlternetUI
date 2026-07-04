@@ -32,9 +32,24 @@ namespace Alternet.UI
         public ContainerControl()
         {
             TabStop = false;
-            CanSelect = false;
             ParentBackColor = true;
             ParentForeColor = true;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is focused when it is clicked.
+        /// </summary>
+        public virtual bool FocusOnClick { get; set; } = true;
+
+        /// <inheritdoc/>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && FocusOnClick)
+            {
+                SetFocusIfPossible();
+            }
+
+            base.OnMouseDown(e);
         }
 
         /// <inheritdoc/>
