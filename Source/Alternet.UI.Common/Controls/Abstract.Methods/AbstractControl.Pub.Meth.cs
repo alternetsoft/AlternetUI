@@ -95,12 +95,12 @@ namespace Alternet.UI
         /// <param name="control">Control to check.</param>
         /// <param name="mousePosition">The position of the mouse pointer.</param>
         /// <returns></returns>
-        public static AbstractControl? GetMouseTargetControl(ref AbstractControl? control, ref PointD? mousePosition)
+        public static AbstractControl? GetMouseTargetControl(ref AbstractControl? control, ref PointD mousePosition)
         {
             if (control is null)
                 return null;
 
-            var position = mousePosition ?? Mouse.GetPosition(control);
+            var position = mousePosition;
 
             AbstractControl? result;
 
@@ -949,7 +949,7 @@ namespace Alternet.UI
         public virtual void TouchToMouseEvents(TouchEventArgs e)
         {
             var originalTarget = this;
-            PointD? position = e.Location;
+            PointD position = e.Location;
             AbstractControl? target;
 
             switch (e.DeviceType)

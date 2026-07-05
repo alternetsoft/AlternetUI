@@ -1470,7 +1470,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            PointD? position = null;
+            PointD position = Mouse.GetPosition(this);
             var originalTarget = this;
 
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(
@@ -1488,7 +1488,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            PointD? position = null;
+            PointD position = Mouse.GetPosition(this);
             var originalTarget = this;
 
             var currentTarget = UI.AbstractControl.GetMouseTargetControl(

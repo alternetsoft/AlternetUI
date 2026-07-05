@@ -129,37 +129,44 @@ namespace Alternet.UI
 
         private void ReportMouseDoubleClick(MouseButton button)
         {
-            AbstractControl.BubbleMouseDoubleClick(targetControl, timestamp, button, null, out _);
+            var position = Mouse.GetPosition(targetControl);
+            AbstractControl.BubbleMouseDoubleClick(targetControl, timestamp, button, position, out _);
         }
 
         private void ReportMouseWheel()
         {
-            AbstractControl.BubbleMouseWheel(targetControl, timestamp, delta, null, out _);
+            var position = Mouse.GetPosition(targetControl);
+            AbstractControl.BubbleMouseWheel(targetControl, timestamp, delta, position, out _);
         }
 
         private void ReportMouseUp(MouseButton button)
         {
-            AbstractControl.BubbleMouseUp(targetControl, timestamp, button, null, out _);
+            var position = Mouse.GetPosition(targetControl);
+            AbstractControl.BubbleMouseUp(targetControl, timestamp, button, position, out _);
         }
 
         private void ReportMouseDown(MouseButton button)
         {
-            AbstractControl.BubbleMouseDown(targetControl, timestamp, button, null, out _);
+            var position = Mouse.GetPosition(targetControl);
+            AbstractControl.BubbleMouseDown(targetControl, timestamp, button, position, out _);
         }
 
         private void ReportEnterWindow()
         {
-            AbstractControl.BubbleMouseEnter(targetControl, timestamp, null, out _);
+            var position = Mouse.GetPosition(targetControl);
+            AbstractControl.BubbleMouseEnter(targetControl, timestamp, position, out _);
         }
 
         private void ReportLeaveWindow()
         {
-            AbstractControl.BubbleMouseLeave(targetControl, timestamp, null, out _);
+            var position = Mouse.GetPosition(targetControl);
+            AbstractControl.BubbleMouseLeave(targetControl, timestamp, position, out _);
         }
 
         private void ReportMouseMove()
         {
-            AbstractControl.BubbleMouseMove(targetControl, timestamp, null, out _);
+            var position = Mouse.GetPosition(targetControl);
+            AbstractControl.BubbleMouseMove(targetControl, timestamp, position, out _);
         }
     }
 }

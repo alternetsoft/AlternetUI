@@ -32,14 +32,14 @@ namespace Alternet.UI
         public static void BubbleMouseEnter(
             AbstractControl? originalTarget,
             long timestamp,
-            PointD? position,
+            PointD position,
             out bool handled)
         {
             handled = false;
             var currentTarget = AbstractControl.GetMouseTargetControl(
                 ref originalTarget,
                 ref position);
-            if (currentTarget is null || position is null)
+            if (currentTarget is null)
                 return;
             currentTarget.RaiseMouseEnter(EventArgs.Empty);
             UpdateCursor(originalTarget, currentTarget);
@@ -55,14 +55,14 @@ namespace Alternet.UI
         public static void BubbleMouseLeave(
             AbstractControl? originalTarget,
             long timestamp,
-            PointD? position,
+            PointD position,
             out bool handled)
         {
             handled = false;
             var currentTarget = AbstractControl.GetMouseTargetControl(
                 ref originalTarget,
                 ref position);
-            if (currentTarget is null || position is null)
+            if (currentTarget is null)
                 return;
             currentTarget.RaiseMouseLeave(EventArgs.Empty);
             UpdateCursor(originalTarget, currentTarget);
@@ -78,7 +78,7 @@ namespace Alternet.UI
         public static void BubbleMouseMove(
             AbstractControl? originalTarget,
             long timestamp,
-            PointD? position,
+            PointD position,
             out bool handled)
         {
             handled = false;
@@ -88,14 +88,14 @@ namespace Alternet.UI
                 var currentTarget = AbstractControl.GetMouseTargetControl(
                     ref originalTarget,
                     ref position);
-                if (currentTarget is null || position is null)
+                if (currentTarget is null)
                     return;
 
                 var eventArgs = new MouseEventArgs(
                     currentTarget,
                     originalTarget!,
                     timestamp,
-                    position.Value);
+                    position);
                 currentTarget.RaiseMouseMove(eventArgs);
                 UpdateCursor(originalTarget, currentTarget);
             }
@@ -139,7 +139,7 @@ namespace Alternet.UI
             AbstractControl? originalTarget,
             long timestamp,
             int delta,
-            PointD? position,
+            PointD position,
             out bool handled)
         {
             handled = false;
@@ -151,7 +151,7 @@ namespace Alternet.UI
             var currentTarget = AbstractControl.GetMouseTargetControl(
                 ref originalTarget,
                 ref position);
-            if (currentTarget == null || position is null)
+            if (currentTarget == null)
                 return;
 
             var eventArgs
@@ -159,7 +159,7 @@ namespace Alternet.UI
                     currentTarget,
                     originalTarget!,
                     timestamp,
-                    position.Value);
+                    position);
             eventArgs.Delta = delta;
             currentTarget.RaiseMouseWheel(eventArgs);
         }
@@ -177,7 +177,7 @@ namespace Alternet.UI
             AbstractControl? originalTarget,
             long timestamp,
             MouseButton changedButton,
-            PointD? position,
+            PointD position,
             out bool handled,
             TouchDeviceType deviceType = TouchDeviceType.Mouse)
         {
@@ -187,7 +187,7 @@ namespace Alternet.UI
             var currentTarget = AbstractControl.GetMouseTargetControl(
                 ref originalTarget,
                 ref position);
-            if (currentTarget is null || position is null)
+            if (currentTarget is null)
                 return;
 
             var eventArgs = new MouseEventArgs(
@@ -195,17 +195,8 @@ namespace Alternet.UI
                 originalTarget!,
                 changedButton,
                 timestamp,
-                position.Value);
+                position);
             eventArgs.DeviceType = deviceType;
-
-            /*
-            var isContinuation = SetLastUsedMouseEventSnapshot(eventArgs, ref lastUsedMouseDownArgsSnapshot);
-
-            if (isContinuation)
-            {
-                eventArgs.ClickCount = lastUsedMouseDownArgsSnapshot.ClickCount;
-            }
-            */
 
             currentTarget.RaiseMouseDown(eventArgs);
         }
@@ -222,14 +213,14 @@ namespace Alternet.UI
             AbstractControl? originalTarget,
             long timestamp,
             MouseButton changedButton,
-            PointD? position,
+            PointD position,
             out bool handled)
         {
             handled = false;
             var currentTarget = AbstractControl.GetMouseTargetControl(
                 ref originalTarget,
                 ref position);
-            if (currentTarget is null || position is null)
+            if (currentTarget is null)
                 return;
 
             var eventArgs =
@@ -238,7 +229,7 @@ namespace Alternet.UI
                     originalTarget!,
                     changedButton,
                     timestamp,
-                    position.Value);
+                    position);
             eventArgs.ClickCount = 2;
             currentTarget.RaiseMouseDoubleClick(eventArgs);
         }
@@ -256,7 +247,7 @@ namespace Alternet.UI
             AbstractControl? originalTarget,
             long timestamp,
             MouseButton changedButton,
-            PointD? position,
+            PointD position,
             out bool handled,
             TouchDeviceType deviceType = TouchDeviceType.Mouse)
         {
@@ -266,7 +257,7 @@ namespace Alternet.UI
             var currentTarget = AbstractControl.GetMouseTargetControl(
                 ref originalTarget,
                 ref position);
-            if (currentTarget is null || position is null)
+            if (currentTarget is null)
                 return;
 
             var eventArgs
@@ -275,7 +266,7 @@ namespace Alternet.UI
                     originalTarget!,
                     changedButton,
                     timestamp,
-                    position.Value);
+                    position);
             eventArgs.DeviceType = deviceType;
 
             currentTarget.RaiseMouseUp(eventArgs);
@@ -296,7 +287,7 @@ namespace Alternet.UI
         /// <param name="changedButton">The mouse button that triggered
         /// the double-click event.</param>
         /// <param name="position">The position of the mouse pointer at the time of
-        /// the event, in device-independent coordinates. Can be <see langword="null"/>.</param>
+        /// the event, in device-independent coordinates.</param>
         /// <param name="handled">When the method returns, contains <see langword="true"/>
         /// if the event was handled; otherwise, <see langword="false"/>.</param>
         /// <param name="deviceType">The type of input device that triggered the event.
@@ -305,7 +296,7 @@ namespace Alternet.UI
             AbstractControl? originalTarget,
             long timestamp,
             MouseButton changedButton,
-            PointD? position,
+            PointD position,
             out bool handled,
             TouchDeviceType deviceType = TouchDeviceType.Mouse)
         {
@@ -313,7 +304,7 @@ namespace Alternet.UI
             var currentTarget = AbstractControl.GetMouseTargetControl(
                 ref originalTarget,
                 ref position);
-            if (currentTarget is null || position is null)
+            if (currentTarget is null)
                 return;
 
             var eventArgs
@@ -322,7 +313,7 @@ namespace Alternet.UI
                     originalTarget!,
                     changedButton,
                     timestamp,
-                    position.Value);
+                    position);
             eventArgs.DeviceType = deviceType;
 
             currentTarget.RaiseMouseDoubleClick(eventArgs);
