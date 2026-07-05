@@ -1073,9 +1073,180 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes data validation for <see cref="double"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsDouble(bool useCharValidator = false, double? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<double>();
+            SetErrorText(ValueValidatorKnownError.FloatIsExpected);
+            if (value is not null)
+                SetTextAsDouble(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="sbyte"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsSignedByte(bool useCharValidator = false, sbyte? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<sbyte>();
+            SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+            if (value is not null)
+                SetTextAsSByte(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="byte"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsByte(bool useCharValidator = false, byte? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<byte>();
+            SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+            if (value is not null)
+                SetTextAsByte(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="float"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsSingle(bool useCharValidator = false, float? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<float>();
+            SetErrorText(ValueValidatorKnownError.FloatIsExpected);
+            if (value is not null)
+                SetTextAsSingle(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for unsigned <see cref="double"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsUnsignedDouble(bool useCharValidator = false, double? value = default)
+        {
+            MinValue = 0d;
+            if (useCharValidator)
+                UseCharValidator<double>();
+            SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+            if (value is not null)
+                SetTextAsDouble(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for unsigned <see cref="float"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsUnsignedSingle(bool useCharValidator = false, float? value = default)
+        {
+            MinValue = 0f;
+            if (useCharValidator)
+                UseCharValidator<float>();
+            SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+            if (value is not null)
+                SetTextAsSingle(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="short"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsInt16(bool useCharValidator = false, short? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<short>();
+            SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+            if (value is not null)
+                SetTextAsInt16(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="ushort"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsUnsignedInt16(bool useCharValidator = false, ushort? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<ushort>();
+            SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+            if (value is not null)
+                SetTextAsUInt16(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="int"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsInt32(bool useCharValidator = false, int? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<int>();
+            SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+            if (value is not null)
+                SetTextAsInt32(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="uint"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsUnsignedInt32(bool useCharValidator = false, uint? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<uint>();
+            SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+            if (value is not null)
+                SetTextAsUInt32(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="long"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsInt64(bool useCharValidator = false, long? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<long>();
+            SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+            if (value is not null)
+                SetTextAsInt64(value.Value);
+        }
+
+        /// <summary>
+        /// Initializes data validation for <see cref="ulong"/> values.
+        /// </summary>
+        /// <param name="useCharValidator">Indicates whether to use character validation.</param>
+        /// <param name="value">The initial value to set. Optional.</param>
+        public virtual void InitAsUnsignedInt64(bool useCharValidator = false, ulong? value = default)
+        {
+            if (useCharValidator)
+                UseCharValidator<ulong>();
+            SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+            if (value is not null)
+                SetTextAsUInt64(value.Value);
+        }
+
+        /// <summary>
         /// Gets 'Min Length' error status if <see cref="MinLength"/> is specified.
         /// </summary>
-        /// <returns></returns>
+        /// <returns><c>true</c> if the text length is less than <see cref="MinLength"/>;
+        /// otherwise, <c>false</c>.</returns>
         public virtual bool HasErrorMinLength()
         {
             if (MinLength > 0)

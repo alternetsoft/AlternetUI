@@ -62,10 +62,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.ValueHelper.MinValue = 0f;
-            if (UseCharValidator)
-                TextBox.ValueHelper.UseCharValidator<float>();
-            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+            TextBox.ValueHelper.InitAsUnsignedSingle(UseCharValidator);
         }
     }
 }

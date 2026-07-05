@@ -52,9 +52,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            if (UseCharValidator)
-                TextBox.ValueHelper.UseCharValidator<ushort>();
-            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+            TextBox.ValueHelper.InitAsUnsignedInt16(UseCharValidator);
         }
     }
 }
