@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 
 using Alternet.Base.Collections;
@@ -373,7 +374,7 @@ namespace Alternet.UI
 
         public PointD ScreenToClient(PointD point, string debugId)
         {
-            Console.WriteLine($"ScreenToClient: {debugId} - {point}");
+            Debug.WriteLineIf(false, $"ScreenToClient: {debugId} - {point}");
             return NativeControl.ScreenToClient(point);
         }
 

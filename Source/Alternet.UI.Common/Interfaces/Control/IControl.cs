@@ -1084,7 +1084,7 @@ namespace Alternet.UI
         /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
         /// <returns>The converted coordinates.</returns>
-        PointD ScreenToClient(PointD point, string debugId);
+        PointD ScreenToClient(PointD point);
 
         /// <summary>
         /// Converts the client-area coordinates of a specified point to

@@ -1827,6 +1827,19 @@ namespace Alternet.UI
         /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
         /// <returns>The converted coordinates.</returns>
+        public PointD ScreenToClient(PointD point)
+        {
+            return ScreenToClient(point, string.Empty);
+        }
+
+        /// <summary>
+        /// Converts the screen coordinates of a specified point on the screen
+        /// to client-area coordinates.
+        /// </summary>
+        /// <param name="point">A <see cref="PointD"/> that specifies the
+        /// screen coordinates to be converted.</param>
+        /// <param name="debugId">A string identifier for debugging purposes.</param>
+        /// <returns>The converted coordinates.</returns>
         public virtual PointD ScreenToClient(PointD point, string debugId)
         {
             var result = Parent?.ScreenToClient(point, debugId) ?? PointD.HalfOfMinValue + point;
