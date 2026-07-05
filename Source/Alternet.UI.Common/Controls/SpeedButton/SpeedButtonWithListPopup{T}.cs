@@ -21,7 +21,7 @@ namespace Alternet.UI
     /// <typeparam name="T">The type of the virtual list box used within the popup window.
     /// Must inherit from <see cref="VirtualListBox"/>
     /// and have a parameterless constructor.</typeparam>
-    public partial class SpeedButtonWithListPopup<T> : SpeedButtonWithPopup<PopupListBox<T>, T>
+    public partial class SpeedButtonWithListPopup<T> : SpeedButtonWithPopup<PopupListBox<T>, T>, IReadOnlyStrings
         where T : VirtualListBox, new()
     {
         /// <summary>
@@ -202,6 +202,10 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public PopupListBox<T> PopupListBox => (PopupListBox<T>)PopupWindow;
+
+        int IReadOnlyStrings.Count => Items.Count;
+
+        string? IReadOnlyStrings.this[int index] => Items[index].Text;
 
         /// <summary>
         /// Adds a collection of items to the list control shown in the popup.
