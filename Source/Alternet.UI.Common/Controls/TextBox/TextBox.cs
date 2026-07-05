@@ -22,7 +22,7 @@ namespace Alternet.UI
         private bool readOnly = false;
         private TextBoxTextWrap textWrap;
         private TextHorizontalAlignment textAlign;
-        private TextAsValueHelper helper;
+        private TextAsValueHelper? valueHelper;
 
         static TextBox()
         {
@@ -57,7 +57,6 @@ namespace Alternet.UI
         /// </summary>
         public TextBox()
         {
-            helper = new TextAsValueHelper(this);
         }
 
         /// <summary>
@@ -138,10 +137,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets helper for <c>Text</c> property. This helper allows to use text as value.
+        /// Gets value helper for <c>Text</c> property. This helper allows to use text as value.
         /// </summary>
         [Browsable(false)]
-        public TextAsValueHelper ValueHelper => helper;
+        public virtual TextAsValueHelper ValueHelper
+        {
+            get
+            {
+                valueHelper ??= TextAsValueHelper.Create(this);
+                return valueHelper;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the starting point of text selected in the control.
@@ -416,7 +422,7 @@ namespace Alternet.UI
         {
             get
             {
-                return helper.MaxLength;
+                return ValueHelper.MaxLength;
             }
 
             set
@@ -425,8 +431,8 @@ namespace Alternet.UI
                     return;
                 if (MaxLength == value || value < 0)
                     return;
-                helper.MaxLength = value;
-                if (helper.Options.HasFlag(TextBoxOptions.SetNativeMaxLength))
+                ValueHelper.MaxLength = value;
+                if (ValueHelper.Options.HasFlag(TextBoxOptions.SetNativeMaxLength))
                     Handler.SetMaxLength((ulong)value);
             }
         }
@@ -848,7 +854,7 @@ namespace Alternet.UI
         {
             get
             {
-                return helper.GetErrors().Any();
+                return ValueHelper.GetErrors().Any();
             }
         }
 
@@ -1445,7 +1451,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public void SetErrorStatus(object? sender, bool showError, string? errorText)
         {
-            helper.SetErrorStatus(sender, showError, errorText);
+            ValueHelper.SetErrorStatus(sender, showError, errorText);
         }
 
         /// <inheritdoc/>
@@ -1460,8 +1466,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnTextChanged(e);
-            if (helper.Options.HasFlag(TextBoxOptions.DefaultValidation))
-                helper.RunDefaultValidation();
+            if (ValueHelper.Options.HasFlag(TextBoxOptions.DefaultValidation))
+                ValueHelper.RunDefaultValidation();
         }
 
         /// <inheritdoc/>
