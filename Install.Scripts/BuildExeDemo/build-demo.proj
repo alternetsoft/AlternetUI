@@ -195,7 +195,7 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 		<Message Text="Building exe demo..." Importance="high" />
 
 		<PropertyGroup>
-			<DemoPlatformArg Condition="'$(DEMO_PLATFORM)'!=''">/p:Platform=$(DEMO_PLATFORM)</DemoPlatformArg>
+			<DemoPlatformArg Condition="'$(DEMO_PLATFORM)'!='' AND False">/p:Platform=$(DEMO_PLATFORM)</DemoPlatformArg>
 			<DemoPlatformArg Condition="$([MSBuild]::IsOsPlatform('OSX'))"></DemoPlatformArg>
 			<DemoPlatformArg Condition="$([MSBuild]::IsOsPlatform('Linux'))"></DemoPlatformArg>
 
@@ -276,7 +276,6 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\Edge"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\arm"/>
-            <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\arm64"/>
             <DeleteFoldersAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\musl-x64"/>
 
             <DeleteFoldersWindows Include="$(PUBLISH_FOLDER_SFX)\runtimes\linux-x64"/>
