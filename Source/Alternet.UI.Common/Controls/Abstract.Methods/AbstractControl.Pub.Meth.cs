@@ -114,7 +114,7 @@ namespace Alternet.UI
             if (result != control)
             {
                 var screenPosition = control.ClientToScreen(position);
-                position = result.ScreenToClient(screenPosition);
+                position = result.ScreenToClient(screenPosition, "GetMouseTargetControl");
             }
 
             PlessMouse.UpdateMousePosition(position, result);
@@ -1827,9 +1827,9 @@ namespace Alternet.UI
         /// <param name="point">A <see cref="PointD"/> that specifies the
         /// screen coordinates to be converted.</param>
         /// <returns>The converted coordinates.</returns>
-        public virtual PointD ScreenToClient(PointD point)
+        public virtual PointD ScreenToClient(PointD point, string debugId)
         {
-            var result = Parent?.ScreenToClient(point) ?? PointD.HalfOfMinValue + point;
+            var result = Parent?.ScreenToClient(point, debugId) ?? PointD.HalfOfMinValue + point;
             result -= Location;
             return result;
         }
@@ -2811,7 +2811,7 @@ namespace Alternet.UI
         /// <see cref="PointD" />, <paramref name="p" />, in client coordinates.</returns>
         public PointD PointToClient(PointD p)
         {
-            return ScreenToClient(p);
+            return ScreenToClient(p, "PointToClient");
         }
 
         /// <summary>

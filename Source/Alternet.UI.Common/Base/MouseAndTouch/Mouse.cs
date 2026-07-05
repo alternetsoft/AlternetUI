@@ -177,7 +177,7 @@ namespace Alternet.UI
             var position = Handler.GetPosition(relativeTo?.ScaleFactor);
             if (relativeTo is not null)
             {
-                var clientPosition = relativeTo.ScreenToClient(position);
+                var clientPosition = relativeTo.ScreenToClient(position, "GetPosition");
                 return clientPosition;
             }
 

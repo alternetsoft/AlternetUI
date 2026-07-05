@@ -613,7 +613,7 @@ namespace Alternet.UI
 
                     var toolRect = control.Bounds;
                     var pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
-                    platformPosition = window.ScreenToClient(pt);
+                    platformPosition = window.ScreenToClient(pt, "ShowAtFactory");
                 }
 
                 platformPosition = ControlUtils.CoercePositionToPlatform(platformPosition, ref platformControl);

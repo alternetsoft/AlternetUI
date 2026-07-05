@@ -241,7 +241,7 @@ namespace Alternet.UI
             ForegroundColor = SystemColors.WindowText;
         }
 
-        PointD IControlHandler.ScreenToClient(PointD point)
+        PointD IControlHandler.ScreenToClient(PointD point, string debugId)
         {
             if (Control is null)
                 return PointD.MinValue;
@@ -255,7 +255,7 @@ namespace Alternet.UI
                 return result;
             }
 
-            result = parent.ScreenToClient(point) - Control.Location;
+            result = parent.ScreenToClient(point, debugId) - Control.Location;
             return result;
         }
 

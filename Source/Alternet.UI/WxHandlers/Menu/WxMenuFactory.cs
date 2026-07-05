@@ -423,7 +423,7 @@ namespace Alternet.UI
 
                 var toolRect = control.Bounds;
                 var pt = control.Parent!.ClientToScreen(toolRect.BottomLeft);
-                position = window.ScreenToClient(pt);
+                position = window.ScreenToClient(pt, "WxMenuFactory.Show");
             }
 
             var savedCursor = control.Cursor;

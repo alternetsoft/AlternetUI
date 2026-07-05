@@ -136,7 +136,7 @@ namespace Alternet.UI
         void ReleaseMouseCapture();
 
         /// <inheritdoc cref="AbstractControl.ScreenToClient"/>
-        PointD ScreenToClient(PointD point);
+        PointD ScreenToClient(PointD point, string debugId);
 
         /// <inheritdoc cref="AbstractControl.ClientToScreen"/>
         PointD ClientToScreen(PointD point);

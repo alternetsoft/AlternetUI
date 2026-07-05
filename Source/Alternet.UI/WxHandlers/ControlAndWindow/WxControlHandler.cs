@@ -371,8 +371,9 @@ namespace Alternet.UI
             NativeControl.SetMouseCapture(false);
         }
 
-        public PointD ScreenToClient(PointD point)
+        public PointD ScreenToClient(PointD point, string debugId)
         {
+            Console.WriteLine($"ScreenToClient: {debugId} - {point}");
             return NativeControl.ScreenToClient(point);
         }
 
