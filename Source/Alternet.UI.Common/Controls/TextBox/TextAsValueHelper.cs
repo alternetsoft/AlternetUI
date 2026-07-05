@@ -18,6 +18,11 @@ namespace Alternet.UI
     /// </summary>
     public partial class TextAsValueHelper : BaseObject, IObjectToStringOptions
     {
+        /// <summary>
+        /// An override of the <see cref="Create"/> method.
+        /// </summary>
+        public static Func<AbstractControl, TextAsValueHelper>? CreateOverride;
+
         private const TextBoxOptions DefaultOptions = TextBoxOptions.IntRangeInError;
         private const bool DefaultAllowEmptyText = true;
 
@@ -861,6 +866,18 @@ namespace Alternet.UI
                     return;
                 minLength = value;
             }
+        }
+
+        /// <summary>
+        /// Creates instance of <see cref="TextAsValueHelper"/> class.
+        /// </summary>
+        /// <param name="owner">The owner of the helper.</param>
+        /// <returns>A new instance of <see cref="TextAsValueHelper"/>.</returns>
+        public static TextAsValueHelper Create(AbstractControl owner)
+        {
+            if (CreateOverride != null)
+                return CreateOverride(owner);
+            return new TextAsValueHelper(owner);
         }
 
         /// <summary>
