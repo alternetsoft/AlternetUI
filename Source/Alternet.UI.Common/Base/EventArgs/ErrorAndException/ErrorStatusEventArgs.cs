@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the method that will handle <see cref="CustomTextBox.ErrorStatusChanged"/>
-    /// and similar events.
+    /// Represents the method that will handle error status events.
     /// </summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">An object that contains an event data.</param>
@@ -17,7 +16,7 @@ namespace Alternet.UI
         ErrorStatusEventArgs e);
 
     /// <summary>
-    /// Provides data for the <see cref="CustomTextBox.ErrorStatusChanged"/> and similar events.
+    /// Provides data for error status events.
     /// </summary>
     public class ErrorStatusEventArgs : BaseEventArgs
     {
