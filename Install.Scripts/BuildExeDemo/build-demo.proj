@@ -265,7 +265,10 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.pdb"/>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.lib"/>
             <DeleteFilesAnyPlatform Include="$(PUBLISH_FOLDER_SFX)\**\*.exp"/>
- 
+
+            <DeleteFilesMacOs Include="$(PUBLISH_FOLDER_SFX)\**\*.so"/>
+            <DeleteFilesMacOs Include="$(PUBLISH_FOLDER_SFX)\*.so"/>
+
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\**\*.so"/>
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\*.so"/>
             <DeleteFilesWindows Include="$(PUBLISH_FOLDER_SFX)\**\*.dylib"/>
@@ -306,6 +309,7 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 		<Delete Files="$(RESULT_ZIP)"/>
 		<Delete Files="@(DeleteFilesAnyPlatform)"/>
 		<Delete Files="@(DeleteFilesWindows)" Condition="$([MSBuild]::IsOsPlatform('Windows'))"/>
+		<Delete Files="@(DeleteFilesMacOs)" Condition="$([MSBuild]::IsOsPlatform('OSX'))"/>
 
 		<Exec Command="$(RUNCMD_PREFIX) -r=rmdir -hr Path=&quot;%(DeleteFoldersAnyPlatform.Identity)&quot;"/>
 
