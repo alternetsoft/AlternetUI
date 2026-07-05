@@ -1,7 +1,7 @@
 # AlterNET UI
 
-AlterNET UI is a cross-platform .NET UI framework that allows the development of light-footprint .NET desktop 
-applications that runs on Windows, macOS, and Linux with Microsoft Visual Studio or Visual Studio Code.
+AlterNET UI is a cross-platform .NET UI framework that allows the development of lightweight .NET desktop 
+applications that run on Windows, macOS, and Linux.
 
 AlterNET UI is also compatible with .NET MAUI 10.0 platform. It provides a ControlView and its various descendants, 
 which allow you to use AlterNET UI controls inside MAUI applications.
