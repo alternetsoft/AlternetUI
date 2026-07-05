@@ -96,7 +96,7 @@ namespace ControlsSample
 
                 var itemMinLengthEdit = panelSettings.AddInput(
                     MinLengthEditLabel,
-                    textBox,
+                    textBox.ValueHelper,
                     nameof(TextBox.ValueHelper.MinLength),
                     e);
                 itemMinLengthEdit.ValueChanged += (s, e) =>
@@ -106,8 +106,8 @@ namespace ControlsSample
 
                 var itemMaxLengthEdit = panelSettings.AddInput(
                     MaxLengthEditLabel,
-                    textBox,
-                    nameof(TextBox.MaxLength),
+                    textBox.ValueHelper,
+                    nameof(TextBox.ValueHelper.MaxLength),
                     e);
                 itemMaxLengthEdit.ValueChanged += (s, e) =>
                 {

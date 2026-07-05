@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Globalization;
 using Alternet.Drawing;
 using Alternet.UI.Localization;
+using System.Collections;
 
 namespace Alternet.UI
 {
@@ -854,7 +855,7 @@ namespace Alternet.UI
         {
             get
             {
-                return ValueHelper.GetErrors().Any();
+                return ValueHelper.HasErrors;
             }
         }
 
@@ -1192,6 +1193,12 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             Handler.Remove(from, to);
+        }
+
+        /// <inheritdoc/>
+        public override IEnumerable GetErrors(string? propertyName)
+        {
+            return ValueHelper.GetErrors();
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides helper methods for <c>TextBox</c> and similar controls to use text as value.
     /// </summary>
-    public partial class TextAsValueHelper : BaseObject, IObjectToStringOptions
+    public partial class TextAsValueHelper : BaseObject, IObjectToStringOptions, IValidatorReporter
     {
         /// <summary>
         /// An override of the <see cref="Create"/> method.
@@ -1389,6 +1389,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the <see cref="AbstractControl.Text"/> property is valid.
+        /// </summary>
+        public virtual bool HasErrors
+        {
+            get
+            {
+                return GetErrors().Any();
+            }
+        }
+
+        /// <summary>
         /// Returns <see cref="TypeCode"/> for the <see cref="DataType"/> property
         /// or <see cref="TypeCode.String"/>.
         /// </summary>
@@ -1718,6 +1729,7 @@ namespace Alternet.UI
 
             Report(ValidatorReporter as IValidatorReporter);
             Report(owner as IValidatorReporter);
+            Report(this);
 
             if (!string.IsNullOrEmpty(hint))
                 errorEnumerator?.Invoke(hint!);
