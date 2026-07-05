@@ -11,11 +11,10 @@ and productivity tools, empowering developers to create powerful desktop applica
 
 ## Executable demo platforms
 
-- <b>alternet-***-demo-win10-x64-net9</b>. Demo for Windows 10 (X64) Build 1607 or newer using NET 9.0 platform.
-- <b>alternet-***-demo-macos-x64-net8</b>. Demo for MacOs 10.15 (X64) or newer using NET 8.0 platform.
-- <b>alternet-***-demo-macos-arm64-net9</b>. Demo for MacOs on Arm64 using NET 9.0 platform.
-- <b>alternet-***-demo-ubuntu-x64-net8</b>. Demo for Ubuntu 24.10 (X64) or newer using NET 9.0 platform.
-- <b>alternet-***-demo-ubuntu-arm64-net8</b>. Demo for Ubuntu 24.10 (Arm64) or newer using NET 9.0 platform.
+- <b>alternet-***-demo-win10-x64-net10</b>. Demo for Windows 10 (X64) Build 1607 or newer using NET 10.0 platform.
+- <b>alternet-***-demo-macos-arm64-net10</b>. Demo for MacOs on Arm64 using NET 10.0 platform.
+- <b>alternet-***-demo-ubuntu-x64-net10</b>. Demo for Ubuntu 24.10 (X64) or newer using NET 10.0 platform.
+- <b>alternet-***-demo-ubuntu-arm64-net10</b>. Demo for Ubuntu 24.10 (Arm64) or newer using NET 10.0 platform.
 
 Read included USAGE.md for the installation details.
 
@@ -35,8 +34,6 @@ Read included USAGE.md for the installation details.
 - [Discussions](https://github.com/alternetsoft/AlternetUI/discussions)
 - [Download PDF Manual](https://docs.alternet-ui.com/pdf/alternet-ui-manual.pdf)
 
-## NET Framework Download Links
+## NET Download Links
 
 - [NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
-- [NET 9](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
-- [NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)

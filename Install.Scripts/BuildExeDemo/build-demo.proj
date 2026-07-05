@@ -42,7 +42,7 @@ dotnet msbuild -tl:off /t:BuildExeDemo -property:DEMO_NAME=%DEMO_NAME%;DEMO_FRAM
 	<DEMO_NAME_CPU Condition="$(OSARCH) == X64">x64</DEMO_NAME_CPU>
 	<DEMO_NAME_CPU Condition="$(OSARCH) == Arm64">arm64</DEMO_NAME_CPU>
 
-	<DEMO_NAME_NET>net9</DEMO_NAME_NET>
+	<DEMO_NAME_NET>net10</DEMO_NAME_NET>
 	<DEMO_NAME_NET Condition="$(IsOsxX64) == 'true'">net8</DEMO_NAME_NET>
 
 	<DEMO_FRAMEWORK>$(DEMO_NAME_NET).0</DEMO_FRAMEWORK>
