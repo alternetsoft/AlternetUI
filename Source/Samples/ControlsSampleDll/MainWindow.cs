@@ -274,10 +274,7 @@ namespace ControlsSample
         {
             NameValue<Func<AbstractControl>>? animationNameValue;
 
-            if (!App.IsLinuxOS)
-                animationNameValue = new("Animation", () => new AnimationPage());
-            else
-                animationNameValue = null;
+            animationNameValue = new("Animation", () => new AnimationPage());
 
             NameValue<Func<AbstractControl>>?[] pages =
             {
