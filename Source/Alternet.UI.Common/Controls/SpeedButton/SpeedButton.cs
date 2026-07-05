@@ -46,6 +46,7 @@ namespace Alternet.UI
         private bool isToolTipEnabled = true;
         private Coord minRightSideWidth;
         private bool isTransparent = true;
+        private TextAsValueHelper? valueHelper;
 
         static SpeedButton()
         {
@@ -1171,6 +1172,19 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public Label Label => label;
+
+        /// <summary>
+        /// Gets value helper for <c>Text</c> property. This helper allows to use text as value.
+        /// </summary>
+        [Browsable(false)]
+        public virtual TextAsValueHelper ValueHelper
+        {
+            get
+            {
+                valueHelper ??= TextAsValueHelper.Create(this);
+                return valueHelper;
+            }
+        }
 
         internal new LayoutStyle? Layout
         {
