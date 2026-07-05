@@ -37,7 +37,7 @@ namespace Alternet.UI
                     : base(title)
         {
             if(value is not null)
-                TextBox.SetTextAsUInt32(value.Value);
+                TextBox.ValueHelper.SetTextAsUInt32(value.Value);
         }
 
         /// <summary>
@@ -52,12 +52,12 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.NumberStyles = NumberStyles.HexNumber;
-            TextBox.DefaultFormat = "X";
+            TextBox.ValueHelper.NumberStyles = NumberStyles.HexNumber;
+            TextBox.ValueHelper.DefaultFormat = "X";
             if(UseCharValidator)
                 TextBox.CharValidator = Alternet.UI.CharValidator.UnsignedHexValidator;
-            TextBox.DataType = typeof(uint);
-            TextBox.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
+            TextBox.ValueHelper.DataType = typeof(uint);
+            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.HexNumberIsExpected);
         }
     }
 }

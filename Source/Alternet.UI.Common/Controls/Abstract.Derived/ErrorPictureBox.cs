@@ -15,7 +15,7 @@ namespace Alternet.UI
         /// </summary>
         public ErrorPictureBox()
         {
-            TextBox.InitErrorPicture(this);
+            TextAsValueHelper.InitErrorPicture(this);
         }
     }
 }

@@ -29,22 +29,22 @@ namespace PropertyGridSample
             if (sender is not TextBox c)
                 return;
 
-            var value = c.TextAsValue;
+            var value = c.ValueHelper.TextAsValue;
 
             string prefix = "TextBox.TextAsValue: ";
 
-            if (c.TextAsValueError is null)
+            if (c.ValueHelper.TextAsValueError is null)
             {
                 App.LogReplace($"{prefix}Value = {value}", prefix);
-                c.ReportValidatorError(false);
+                c.ValueHelper.ReportValidatorError(false);
             }
             else
             {
                 App.LogReplace(
-                    $"{prefix}Error = {c.TextAsValueError.Message}",
+                    $"{prefix}Error = {c.ValueHelper.TextAsValueError.Message}",
                     prefix,
                     LogItemKind.Error);
-                c.ReportValidatorError(true);
+                c.ValueHelper.ReportValidatorError(true);
             }
 
         }
@@ -57,13 +57,13 @@ namespace PropertyGridSample
 
                 var c = control.TextBox;
 
-                c.ResetInputSettings();
+                c.ValueHelper.ResetInputSettings();
                 c.Clear();
-                c.DataType = typeof(Thickness);
-                c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
-                c.TextAsValue = new Thickness(10, 5, 5, 10);
-                c.ValidatorErrorText = "Expected thickness. Example: 10, 5, 10, 5";
-                c.Options |= TextBoxOptions.UseTypeConverter;
+                c.ValueHelper.DataType = typeof(Thickness);
+                c.ValueHelper.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
+                c.ValueHelper.TextAsValue = new Thickness(10, 5, 5, 10);
+                c.ValueHelper.ValidatorErrorText = "Expected thickness. Example: 10, 5, 10, 5";
+                c.ValueHelper.Options |= TextBoxOptions.UseTypeConverter;
 
                 c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
                 c.DelayedTextChanged += HandleTextChangedForTextAsValue;
@@ -75,12 +75,12 @@ namespace PropertyGridSample
                 control.AutoShowError = true;
                 var c = control.TextBox;
 
-                c.ResetInputSettings();
+                c.ValueHelper.ResetInputSettings();
                 c.Clear();
-                c.DataType = typeof(KeyGesture);
-                c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
-                c.TextAsValue = new KeyGesture(Key.Space, Alternet.UI.ModifierKeys.ControlShift);
-                c.ValidatorErrorText = "Expected key with modifier. Example: Alt+Shift+B";
+                c.ValueHelper.DataType = typeof(KeyGesture);
+                c.ValueHelper.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
+                c.ValueHelper.TextAsValue = new KeyGesture(Key.Space, Alternet.UI.ModifierKeys.ControlShift);
+                c.ValueHelper.ValidatorErrorText = "Expected key with modifier. Example: Alt+Shift+B";
 
                 c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
                 c.DelayedTextChanged += HandleTextChangedForTextAsValue;
@@ -91,12 +91,12 @@ namespace PropertyGridSample
                 control.AutoShowError = true;
                 var c = control.TextBox;
 
-                c.ResetInputSettings();
+                c.ValueHelper.ResetInputSettings();
                 c.Clear();
-                c.DataType = typeof(DateTime);
-                c.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
-                c.TextAsValue = DateTime.Now;
-                c.ValidatorErrorText = "Expected date and time";
+                c.ValueHelper.DataType = typeof(DateTime);
+                c.ValueHelper.TrimTextRules = TrimTextRules.TrimWhiteChars | TrimTextRules.TrimBrackets;
+                c.ValueHelper.TextAsValue = DateTime.Now;
+                c.ValueHelper.ValidatorErrorText = "Expected date and time";
 
                 c.DelayedTextChanged -= HandleTextChangedForTextAsValue;
                 c.DelayedTextChanged += HandleTextChangedForTextAsValue;
@@ -115,7 +115,7 @@ namespace PropertyGridSample
 
             AddControlAction<TextBox>("Edit sbyte", (c) =>
             {
-                c.SetValueAndValidator((sbyte)5, true);
+                c.ValueHelper.SetValueAndValidator((sbyte)5, true);
             });
 
             PropertyGrid.AddSimpleAction<TextBox>("SelectionStart++", () =>

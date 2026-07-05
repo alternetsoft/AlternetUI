@@ -65,7 +65,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.SetErrorText(ValueValidatorKnownError.UrlIsExpected);
+            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UrlIsExpected);
         }
     }
 }

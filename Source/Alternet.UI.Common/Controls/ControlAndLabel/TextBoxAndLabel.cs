@@ -52,11 +52,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool AutoShowError
         {
-            get => MainControl.AutoShowError;
+            get => MainControl.ValueHelper.AutoShowError;
 
             set
             {
-                MainControl.AutoShowError = value;
+                MainControl.ValueHelper.AutoShowError = value;
             }
         }
 
@@ -67,8 +67,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual TextBoxInitializeEventArgs? InputTypeArgs
         {
-            get => TextBox.InputTypeArgs;
-            set => TextBox.InputTypeArgs = value;
+            get => TextBox.ValueHelper.InputTypeArgs;
+            set => TextBox.ValueHelper.InputTypeArgs = value;
         }
 
         /// <summary>
@@ -78,12 +78,12 @@ namespace Alternet.UI
         {
             get
             {
-                return TextBox.InputType;
+                return TextBox.ValueHelper.InputType;
             }
 
             set
             {
-                TextBox.InputType = value;
+                TextBox.ValueHelper.InputType = value;
             }
         }
 
@@ -94,13 +94,13 @@ namespace Alternet.UI
         public TextBox TextBox => MainControl;
 
         /// <summary>
-        /// <see cref="CustomTextBox.IsRequired"/>
+        /// <see cref="TextAsValueHelper.IsRequired"/>
         /// </summary>
         public virtual bool IsRequired
         {
-            get => TextBox.IsRequired;
+            get => TextBox.ValueHelper.IsRequired;
 
-            set => TextBox.IsRequired = value;
+            set => TextBox.ValueHelper.IsRequired = value;
         }
 
         /// <summary>
@@ -164,8 +164,8 @@ namespace Alternet.UI
         /// </remarks>
         protected virtual void Init()
         {
-            MainControl.ValidatorReporter = InnerPicture;
-            MainControl.AutoShowError = true;
+            MainControl.ValueHelper.ValidatorReporter = InnerPicture;
+            MainControl.ValueHelper.AutoShowError = true;
             MainControl.TextChanged += (s, e) =>
             {
                 RaiseTextChanged(EventArgs.Empty);

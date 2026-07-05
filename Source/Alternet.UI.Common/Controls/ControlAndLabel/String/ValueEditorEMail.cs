@@ -54,7 +54,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.SetErrorText(ValueValidatorKnownError.EMailIsExpected);
+            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.EMailIsExpected);
         }
     }
 }

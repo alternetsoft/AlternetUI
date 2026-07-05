@@ -18,9 +18,9 @@ namespace Alternet.UI
         /// </summary>
         public TextBoxAndButton()
         {
-            MainControl.ValidatorReporter = InnerPicture;
+            MainControl.ValueHelper.ValidatorReporter = InnerPicture;
             MainControl.TextChanged += OnMainControlTextChanged;
-            MainControl.AutoShowError = true;
+            MainControl.ValueHelper.AutoShowError = true;
             MainControl.VerticalAlignment = VerticalAlignment.Center;
             AutoBackColor = true;
         }
@@ -59,11 +59,11 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool AutoShowError
         {
-            get => MainControl.AutoShowError;
+            get => MainControl.ValueHelper.AutoShowError;
 
             set
             {
-                MainControl.AutoShowError = value;
+                MainControl.ValueHelper.AutoShowError = value;
             }
         }
 
@@ -152,8 +152,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual TextBoxInitializeEventArgs? InputTypeArgs
         {
-            get => TextBox.InputTypeArgs;
-            set => TextBox.InputTypeArgs = value;
+            get => TextBox.ValueHelper.InputTypeArgs;
+            set => TextBox.ValueHelper.InputTypeArgs = value;
         }
 
         /// <summary>
@@ -163,12 +163,12 @@ namespace Alternet.UI
         {
             get
             {
-                return TextBox.InputType;
+                return TextBox.ValueHelper.InputType;
             }
 
             set
             {
-                TextBox.InputType = value;
+                TextBox.ValueHelper.InputType = value;
             }
         }
 
@@ -261,22 +261,22 @@ namespace Alternet.UI
             {
                 if (prm?.UnsignedFloat ?? false)
                 {
-                    TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+                    TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
                 }
                 else
                 {
-                    TextBox.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
+                    TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.FloatIsExpected);
                 }
             }
             else
             {
                 if (AssemblyUtils.IsTypeCodeUnsignedInt((TypeCode)typeCode))
                 {
-                    TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+                    TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
                 }
                 else
                 {
-                    TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+                    TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
                 }
             }
         }
@@ -292,8 +292,8 @@ namespace Alternet.UI
         {
             var type = AssemblyUtils.TypeFromTypeCode((TypeCode)typeCode);
 
-            TextBox.Options |= TextBoxOptions.DefaultValidation;
-            TextBox.DataType = type;
+            TextBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
+            TextBox.ValueHelper.DataType = type;
             if (prm?.UseCharValidator ?? false)
                 CharValidator = Alternet.UI.CharValidator.CreateValidator(type);
 
@@ -306,11 +306,11 @@ namespace Alternet.UI
         /// <param name="useCharValidator"></param>
         public virtual void InitAsInt32Edit(bool useCharValidator = false)
         {
-            TextBox.Options |= TextBoxOptions.DefaultValidation;
-            TextBox.DataType = typeof(int);
+            TextBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
+            TextBox.ValueHelper.DataType = typeof(int);
             if (useCharValidator)
-                TextBox.UseCharValidator<int>();
-            TextBox.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+                TextBox.ValueHelper.UseCharValidator<int>();
+            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
         }
 
         /// <summary>

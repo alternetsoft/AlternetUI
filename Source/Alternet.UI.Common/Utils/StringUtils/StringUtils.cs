@@ -156,6 +156,11 @@ namespace Alternet.UI
         ];
 
         /// <summary>
+        /// Gets <see cref="IReadOnlyStrings"/> instance which provides access to an empty collection of strings.
+        /// </summary>
+        public static readonly IReadOnlyStrings EmptyStrings = new EmptyReadOnlyStrings();
+
+        /// <summary>
         /// Gets or sets values that split one string to many.
         /// </summary>
         /// <remarks>
@@ -1686,6 +1691,13 @@ namespace Alternet.UI
                 var result = string.Compare(s1, s2, StringComparison.CurrentCulture);
                 return result;
             }
+        }
+
+        private class EmptyReadOnlyStrings : IReadOnlyStrings
+        {
+            public string? this[int index] => string.Empty;
+
+            public int Count => 0;
         }
     }
 }

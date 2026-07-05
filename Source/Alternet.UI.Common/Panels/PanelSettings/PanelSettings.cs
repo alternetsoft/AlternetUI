@@ -701,11 +701,11 @@ namespace Alternet.UI
             textBox.HasBtnComboBox = false;
             textBox.Buttons.Visible = false;
 
-            textBox.TextBox.SetValidator(item.ValueType, false);
-            textBox.TextBox.AutoShowError = true;
-            textBox.TextBox.Options |= TextBoxOptions.DefaultValidation;
-            textBox.TextBox.TextAsValue = item.Value;
-            textBox.TextBox.IsRequired = GetFlagIsRequired(item.CreateArg);
+            textBox.TextBox.ValueHelper.SetValidator(item.ValueType, false);
+            textBox.TextBox.ValueHelper.AutoShowError = true;
+            textBox.TextBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
+            textBox.TextBox.ValueHelper.TextAsValue = item.Value;
+            textBox.TextBox.ValueHelper.IsRequired = GetFlagIsRequired(item.CreateArg);
 
             textBox.DelayedTextChanged -= TextChanged;
             textBox.DelayedTextChanged += TextChanged;
@@ -736,7 +736,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        item.Value = textBox.TextBox.TextAsValue;
+                        item.Value = textBox.TextBox.ValueHelper.TextAsValue;
                     }
                 }
                 catch (Exception ex)

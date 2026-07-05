@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -13,13 +14,15 @@ namespace Alternet.UI
     [DefaultEvent("TextChanged")]
     [DefaultBindingProperty("Text")]
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class TextBox : CustomTextBox
+    public partial class TextBox : Control,
+        IReadOnlyStrings, IValidatorReporter, INotifyDataErrorInfo
     {
         private bool multiline = false;
         private bool hasBorder = true;
         private bool readOnly = false;
         private TextBoxTextWrap textWrap;
         private TextHorizontalAlignment textAlign;
+        private TextAsValueHelper helper;
 
         static TextBox()
         {
@@ -54,6 +57,7 @@ namespace Alternet.UI
         /// </summary>
         public TextBox()
         {
+            helper = new TextAsValueHelper(this);
         }
 
         /// <summary>
@@ -132,6 +136,12 @@ namespace Alternet.UI
                 Handler.ProcessTab = value;
             }
         }
+
+        /// <summary>
+        /// Gets helper for <c>Text</c> property. This helper allows to use text as value.
+        /// </summary>
+        [Browsable(false)]
+        public TextAsValueHelper ValueHelper => helper;
 
         /// <summary>
         /// Gets or sets the starting point of text selected in the control.
@@ -399,12 +409,14 @@ namespace Alternet.UI
             }
         }
 
+        int IReadOnlyStrings.Count => GetNumberOfLines();
+
         /// <inheritdoc/>
-        public override int MaxLength
+        public virtual int MaxLength
         {
             get
             {
-                return base.MaxLength;
+                return helper.MaxLength;
             }
 
             set
@@ -413,8 +425,8 @@ namespace Alternet.UI
                     return;
                 if (MaxLength == value || value < 0)
                     return;
-                base.MaxLength = value;
-                if (Options.HasFlag(TextBoxOptions.SetNativeMaxLength))
+                helper.MaxLength = value;
+                if (helper.Options.HasFlag(TextBoxOptions.SetNativeMaxLength))
                     Handler.SetMaxLength((ulong)value);
             }
         }
@@ -831,6 +843,37 @@ namespace Alternet.UI
         [Browsable(false)]
         public new ITextBoxHandler Handler => (ITextBoxHandler)base.Handler;
 
+        /// <inheritdoc/>
+        public override bool HasErrors
+        {
+            get
+            {
+                return helper.GetErrors().Any();
+            }
+        }
+
+        string? IReadOnlyStrings.this[int index]
+        {
+            get
+            {
+                try
+                {
+                    return GetLineText(index);
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
         /// <summary>
         /// Shows 'Go To Line' dialog.
         /// </summary>
@@ -880,7 +923,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override string GetLineText(long lineNo)
+        public virtual string GetLineText(long lineNo)
         {
             if (DisposingOrDisposed)
                 return string.Empty;
@@ -936,7 +979,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override int GetNumberOfLines()
+        public virtual int GetNumberOfLines()
         {
             if (DisposingOrDisposed)
                 return default;
@@ -1244,6 +1287,16 @@ namespace Alternet.UI
             Handler.SelectNone();
         }
 
+        /// <inheritdoc/>
+        public override bool IsValidInputChar(char ch)
+        {
+            if (ch == CharUtils.BackspaceChar)
+                return true;
+
+            var result = base.IsValidInputChar(ch);
+            return result;
+        }
+
         /// <summary>
         /// Undoes the last edit operation in the control.
         /// </summary>
@@ -1390,6 +1443,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public void SetErrorStatus(object? sender, bool showError, string? errorText)
+        {
+            helper.SetErrorStatus(sender, showError, errorText);
+        }
+
+        /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
             return ControlFactory.Handler.CreateTextBoxHandler(this);
@@ -1401,8 +1460,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
             base.OnTextChanged(e);
-            if (Options.HasFlag(TextBoxOptions.DefaultValidation))
-                RunDefaultValidation();
+            if (helper.Options.HasFlag(TextBoxOptions.DefaultValidation))
+                helper.RunDefaultValidation();
         }
 
         /// <inheritdoc/>

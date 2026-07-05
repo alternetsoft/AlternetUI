@@ -44,7 +44,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.Options |= TextBoxOptions.DefaultValidation;
+            TextBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
         }
     }
 }

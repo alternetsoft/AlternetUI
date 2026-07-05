@@ -64,7 +64,7 @@ namespace PropertyGridSample
 
                 if (textBox.HasErrors)
                 {
-                    var errors = textBox.GetErrors();
+                    var errors = textBox.ValueHelper.GetErrors();
                     var error = errors.FirstOrDefault();
                     if (error is not null)
                     {
@@ -76,10 +76,10 @@ namespace PropertyGridSample
                 }
                 else
                 {
-                    if (textBox.IsNumber)
+                    if (textBox.ValueHelper.IsNumber)
                     {
                         App.LogReplace(
-                            $"{prefixWithText} Number: <{textBox.TextAsNumber}>.", prefix);
+                            $"{prefixWithText} Number: <{textBox.ValueHelper.TextAsNumber}>.", prefix);
                     }
                     else
                     {

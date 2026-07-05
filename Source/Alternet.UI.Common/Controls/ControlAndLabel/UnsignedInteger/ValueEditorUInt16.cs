@@ -37,7 +37,7 @@ namespace Alternet.UI
                    : base(title)
         {
             if (value is not null)
-                TextBox.SetTextAsUInt16(value.Value);
+                TextBox.ValueHelper.SetTextAsUInt16(value.Value);
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace Alternet.UI
         {
             base.Init();
             if (UseCharValidator)
-                TextBox.UseCharValidator<ushort>();
-            TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+                TextBox.ValueHelper.UseCharValidator<ushort>();
+            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
         }
     }
 }

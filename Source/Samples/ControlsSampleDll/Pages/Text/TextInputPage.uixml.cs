@@ -34,10 +34,10 @@ namespace ControlsSample
 
             textBox.EmptyTextHint = TextBoxEmptyTextHint;
             textBox.Text = TextBoxSampleText;
-            textBox.ValidatorReporter = textImage;
+            textBox.ValueHelper.ValidatorReporter = textImage;
             textBox.TextMaxLength += TextBox_TextMaxLength;
             textBox.CurrentPositionChanged += TextBox_CurrentPositionChanged;
-            textBox.Options |= TextBoxOptions.DefaultValidation;
+            textBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
             
             textBox.TextChanged += (s, e) =>
             { 
@@ -97,11 +97,11 @@ namespace ControlsSample
                 var itemMinLengthEdit = panelSettings.AddInput(
                     MinLengthEditLabel,
                     textBox,
-                    nameof(TextBox.MinLength),
+                    nameof(TextBox.ValueHelper.MinLength),
                     e);
                 itemMinLengthEdit.ValueChanged += (s, e) =>
                 {
-                    textBox.RunDefaultValidation();
+                    textBox.ValueHelper.RunDefaultValidation();
                 };
 
                 var itemMaxLengthEdit = panelSettings.AddInput(
@@ -111,7 +111,7 @@ namespace ControlsSample
                     e);
                 itemMaxLengthEdit.ValueChanged += (s, e) =>
                 {
-                    textBox.RunDefaultValidation();
+                    textBox.ValueHelper.RunDefaultValidation();
                 };
 
                 panelSettings.AddInput("Foreground Color", textBox, nameof(ForeColor));
@@ -294,7 +294,7 @@ namespace ControlsSample
             else
                 prefix = $"{name}";
 
-            var asNumber = textBox.TextAsNumber;
+            var asNumber = textBox.ValueHelper.TextAsNumber;
 
             if (asNumber is not null)
                 asNumber = $" => {asNumber} | {asNumber.GetType().Name}";

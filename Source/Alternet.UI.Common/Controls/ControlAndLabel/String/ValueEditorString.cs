@@ -55,7 +55,7 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.Options &= ~TextBoxOptions.DefaultValidation;
+            TextBox.ValueHelper.Options &= ~TextBoxOptions.DefaultValidation;
         }
 
         /// <inheritdoc/>
@@ -63,7 +63,7 @@ namespace Alternet.UI
         {
             base.MainControlTextChanged();
 
-            if (TextBox.ReportErrorEmptyText())
+            if (TextBox.ValueHelper.ReportErrorEmptyText())
                 return;
 
             if (TextValidation is not null)
@@ -72,12 +72,12 @@ namespace Alternet.UI
                 TextValidation(this, e);
                 if (e.IsValid is not null)
                 {
-                    TextBox.ReportValidatorError(!e.IsValid.Value);
+                    TextBox.ValueHelper.ReportValidatorError(!e.IsValid.Value);
                     return;
                 }
             }
 
-            TextBox.ReportValidatorError(!(IsNullOrEmpty || IsValidText));
+            TextBox.ValueHelper.ReportValidatorError(!(IsNullOrEmpty || IsValidText));
         }
     }
 }

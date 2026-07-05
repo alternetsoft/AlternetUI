@@ -37,7 +37,7 @@ namespace Alternet.UI
                     : base(title)
         {
             if (value is not null)
-                TextBox.SetTextAsByte(value.Value);
+                TextBox.ValueHelper.SetTextAsByte(value.Value);
         }
 
         /// <summary>
@@ -53,8 +53,8 @@ namespace Alternet.UI
         {
             base.Init();
             if (UseCharValidator)
-                TextBox.UseCharValidator<byte>();
-            TextBox.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
+                TextBox.ValueHelper.UseCharValidator<byte>();
+            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UnsignedNumberIsExpected);
         }
     }
 }

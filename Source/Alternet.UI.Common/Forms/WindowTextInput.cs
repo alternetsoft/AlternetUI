@@ -217,7 +217,7 @@ namespace Alternet.UI
 
                 try
                 {
-                    s = (long?)longDialog.Edit.MainControl.TextAsNumber;
+                    s = (long?)longDialog.Edit.MainControl.ValueHelper.TextAsNumber;
                 }
                 catch
                 {
@@ -250,14 +250,14 @@ namespace Alternet.UI
             Edit.InnerOuterBorder = InnerOuterSelector.Outer;
             var e = Edit.MainControl;
 
-            e.MinValue = prm.MinValue;
-            e.MaxValue = prm.MaxValue;
+            e.ValueHelper.MinValue = prm.MinValue;
+            e.ValueHelper.MaxValue = prm.MaxValue;
 
-            e.SetTextAsInt64(prm.DefaultValue ?? 0);
+            e.ValueHelper.SetTextAsInt64(prm.DefaultValue ?? 0);
 
             if (UseCharValidator)
-                e.UseCharValidator<long>();
-            e.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
+                e.ValueHelper.UseCharValidator<long>();
+            e.ValueHelper.SetErrorText(ValueValidatorKnownError.NumberIsExpected);
 
             e.DelayedTextChanged -= HandleTextChanged;
             e.DelayedTextChanged += HandleTextChanged;

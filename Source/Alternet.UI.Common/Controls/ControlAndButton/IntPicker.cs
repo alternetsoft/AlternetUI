@@ -37,8 +37,8 @@ namespace Alternet.UI
         /// </summary>
         public IntPicker()
         {
-            TextBox.MinValue = 0;
-            TextBox.MaxValue = 100;
+            TextBox.ValueHelper.MinValue = 0;
+            TextBox.ValueHelper.MaxValue = 100;
             TextBox.Text = "0";
             Buttons.DoubleClickAsClick = false;
             IsBtnClickRepeated = true;
@@ -177,7 +177,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = TextBox.GetRealMinValue();
+                var result = TextBox.ValueHelper.GetRealMinValue();
 
                 if (result is null)
                     return default;
@@ -191,7 +191,7 @@ namespace Alternet.UI
                     value = Maximum;
                 if (Minimum == value)
                     return;
-                TextBox.MinValue = value;
+                TextBox.ValueHelper.MinValue = value;
                 UpdateErrorText();
                 if (Value < value)
                     Value = value;
@@ -216,7 +216,7 @@ namespace Alternet.UI
         {
             get
             {
-                var result = TextBox.GetRealMaxValue();
+                var result = TextBox.ValueHelper.GetRealMaxValue();
 
                 if (result is null)
                     return 100;
@@ -230,7 +230,7 @@ namespace Alternet.UI
                     value = Minimum;
                 if (Maximum == value)
                     return;
-                TextBox.MaxValue = value;
+                TextBox.ValueHelper.MaxValue = value;
                 UpdateErrorText();
                 if (Value > value)
                     Value = value;
@@ -402,7 +402,7 @@ namespace Alternet.UI
             textUpdateSuppressed++;
             try
             {
-                Value = TextBox.TextAsInt32;
+                Value = TextBox.ValueHelper.TextAsInt32;
             }
             finally
             {
@@ -428,7 +428,7 @@ namespace Alternet.UI
         {
             if(textUpdateSuppressed > 0)
                 return;
-            TextBox.SetTextAsNumber(NumericTypeCode.Int32, Value);
+            TextBox.ValueHelper.SetTextAsNumber(NumericTypeCode.Int32, Value);
         }
     }
 }

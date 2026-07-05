@@ -10,7 +10,6 @@ namespace Alternet.UI
     /// for editing different value types.
     /// </summary>
     internal class ControlInitializers<TControl, TEventArgs> : BaseObject
-        where TControl : AbstractControl
         where TEventArgs : EventArgs
     {
         private EnumArray<KnownInputType, Item?> register = new();

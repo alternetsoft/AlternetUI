@@ -46,7 +46,7 @@ namespace Alternet.UI
                         nameof(value));
                 }
 
-                TextBox.SetTextAsSingle(value.Value);
+                TextBox.ValueHelper.SetTextAsSingle(value.Value);
             }
         }
 
@@ -62,10 +62,10 @@ namespace Alternet.UI
         protected override void Init()
         {
             base.Init();
-            TextBox.MinValue = 0f;
+            TextBox.ValueHelper.MinValue = 0f;
             if (UseCharValidator)
-                TextBox.UseCharValidator<float>();
-            TextBox.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
+                TextBox.ValueHelper.UseCharValidator<float>();
+            TextBox.ValueHelper.SetErrorText(ValueValidatorKnownError.UnsignedFloatIsExpected);
         }
     }
 }
