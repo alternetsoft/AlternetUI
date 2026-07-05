@@ -1,6 +1,9 @@
 # AlterNET Demo Usage
 
 Please install Microsoft .NET Runtime 10 and any required packages before running this demo.
+NET Download Link: [NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+
+Additional instructions:
 
 ## Linux
 
@@ -14,6 +17,3 @@ It can be downloaded from: https://github.com/alternetsoft/AlternetUI/blob/maste
 - Use the chmod command in the terminal to grant execute permissions. 
 For example: ```chmod +x yourfile```. Replace ```yourfile``` with the name of the demo.
 
-## NET Download Links
-
-- [NET 10](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)

@@ -12,9 +12,10 @@ and productivity tools, empowering developers to create powerful desktop applica
 ## Executable demo platforms
 
 - <b>alternet-***-demo-win10-x64-net10</b>. Demo for Windows 10 (X64) Build 1607 or newer using NET 10.0 platform.
+- <b>alternet-***-demo-win10-arm64-net10</b>. Demo for Windows on Arm64 using NET 10.0 platform.
 - <b>alternet-***-demo-macos-arm64-net10</b>. Demo for MacOs on Arm64 using NET 10.0 platform.
-- <b>alternet-***-demo-ubuntu-x64-net10</b>. Demo for Ubuntu 24.10 (X64) or newer using NET 10.0 platform.
-- <b>alternet-***-demo-ubuntu-arm64-net10</b>. Demo for Ubuntu 24.10 (Arm64) or newer using NET 10.0 platform.
+- <b>alternet-***-demo-ubuntu-x64-net10</b>. Demo for Ubuntu 26.04 on X64 or newer using NET 10.0 platform.
+- <b>alternet-***-demo-ubuntu-arm64-net10</b>. Demo for Ubuntu 26.04 on Arm64 or newer using NET 10.0 platform.
 
 Read included USAGE.md for the installation details.
 
