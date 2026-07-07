@@ -23,10 +23,21 @@ namespace Alternet.Maui.Extensions
     public static class MauiExtensions
     {
         /// <summary>
+        /// Converts an <see cref="Alternet.Drawing.RectD"/> to a .NET MAUI <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="rect">The rectangle to convert.</param>
+        /// <returns>A <see cref="Rect"/> representing the converted rectangle.</returns>
+        public static Rect ToMaui(this Alternet.Drawing.RectD rect)
+        {
+            return new Rect(rect.X, rect.Y, rect.Width, rect.Height);
+        }
+
+        /// <summary>
         /// Sets the visibility of the specified view.
         /// </summary>
         /// <param name="view">The view whose visibility is to be set. Cannot be null.</param>
-        /// <param name="isVisible">A value indicating whether the view should be visible. Set to <see langword="true"/> to make the view
+        /// <param name="isVisible">A value indicating whether the view should be visible.
+        /// Set to <see langword="true"/> to make the view
         /// visible; otherwise, <see langword="false"/>.</param>
         public static void SetVisible(this View view, bool isVisible)
         {
@@ -40,8 +51,10 @@ namespace Alternet.Maui.Extensions
         /// <remarks>When the keyboard is visible, the view's width is set to the keyboard's height and
         /// the view is made visible. When the keyboard is hidden, the view is hidden. This method is intended for use
         /// in scenarios where a UI element needs to track the keyboard's presence and size.</remarks>
-        /// <param name="e">The event arguments containing information about the keyboard's visibility and height.</param>
-        /// <param name="view">The view to update based on the keyboard's visibility state. The view's width and visibility will be
+        /// <param name="e">The event arguments containing information about
+        /// the keyboard's visibility and height.</param>
+        /// <param name="view">The view to update based on the keyboard's visibility state.
+        /// The view's width and visibility will be
         /// modified.</param>
         public static void UpdateKeyboardPanel(this KeyboardVisibleChangedEventArgs e, View view)
         {
@@ -143,8 +156,10 @@ namespace Alternet.Maui.Extensions
         /// <summary>
         /// Converts an <see cref="Alternet.UI.MenuItem"/> to a <see cref="MenuBarItem"/>.
         /// </summary>
-        /// <param name="menuItem">The <see cref="Alternet.UI.MenuItem"/> to convert. Must not be <see langword="null"/>.</param>
-        /// <returns>A <see cref="MenuBarItem"/> that represents the converted menu item, including its text, enabled state, and
+        /// <param name="menuItem">The <see cref="Alternet.UI.MenuItem"/> to convert.
+        /// Must not be <see langword="null"/>.</param>
+        /// <returns>A <see cref="MenuBarItem"/> that represents the converted menu item,
+        /// including its text, enabled state, and
         /// child items if present.</returns>
         public static MenuBarItem ToMenuBarItem(this Alternet.UI.MenuItem menuItem)
         {
@@ -166,13 +181,17 @@ namespace Alternet.Maui.Extensions
         }
 
         /// <summary>
-        /// Creates a new <see cref="MenuFlyout"/> that contains the items from the specified <see cref="ContextMenu"/>.
+        /// Creates a new <see cref="MenuFlyout"/> that contains the items from
+        /// the specified <see cref="ContextMenu"/>.
         /// </summary>
         /// <remarks>
-        /// This method copies the items from the <see cref="ContextMenu"/> to the <see cref="MenuFlyout"/>. Changes to the
-        /// original <see cref="ContextMenu"/> after calling this method are not reflected in the returned <see cref="MenuFlyout"/>.
+        /// This method copies the items from the <see cref="ContextMenu"/> to
+        /// the <see cref="MenuFlyout"/>. Changes to the
+        /// original <see cref="ContextMenu"/> after calling this method are
+        /// not reflected in the returned <see cref="MenuFlyout"/>.
         /// </remarks>
-        /// <param name="contextMenu">The <see cref="ContextMenu"/> whose items will be added to the new <see cref="MenuFlyout"/>.
+        /// <param name="contextMenu">The <see cref="ContextMenu"/> whose items
+        /// will be added to the new <see cref="MenuFlyout"/>.
         /// Cannot be null.</param>
         /// <returns>A <see cref="MenuFlyout"/> containing all items from
         /// the specified <see cref="ContextMenu"/>, in the same order.</returns>
@@ -190,8 +209,10 @@ namespace Alternet.Maui.Extensions
         /// Converts an <see cref="Alternet.UI.MenuItem"/> to a corresponding
         /// <see cref="Microsoft.Maui.Controls.MenuFlyoutItem"/>.
         /// </summary>
-        /// <param name="menuItem">The <see cref="Alternet.UI.MenuItem"/> to convert. Cannot be <c>null</c>.</param>
-        /// <returns>A <see cref="Microsoft.Maui.Controls.MenuFlyoutItem"/> that represents the converted menu item.</returns>
+        /// <param name="menuItem">The <see cref="Alternet.UI.MenuItem"/> to convert.
+        /// Cannot be <c>null</c>.</param>
+        /// <returns>A <see cref="Microsoft.Maui.Controls.MenuFlyoutItem"/>
+        /// that represents the converted menu item.</returns>
         public static MenuFlyoutItem ToMenuFlyoutItem(this Alternet.UI.MenuItem menuItem)
         {
             if (menuItem.IsSeparator)

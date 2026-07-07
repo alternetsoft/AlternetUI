@@ -699,7 +699,8 @@ namespace Alternet.UI
         /// Determines whether any parent of the specified element uses an absolute layout.
         /// </summary>
         /// <param name="view">The element for which to check the parent hierarchy. Can be null.</param>
-        /// <returns>true if an absolute layout is found in the parent chain of the specified element; otherwise, false.</returns>
+        /// <returns>true if an absolute layout is found in the parent chain
+        /// of the specified element; otherwise, false.</returns>
         public static bool HasAbsoluteLayoutInParents(Element? view)
         {
             return GetParentAbsoluteLayout(view) is not null;
@@ -1454,7 +1455,8 @@ namespace Alternet.UI
         /// <remarks>The toolbar is placed in a row with automatic height, while the content occupies the
         /// remaining available space. Both views are added as direct children of the returned grid.</remarks>
         /// <param name="toolBar">The view to display as the toolbar in the first row of the grid. Cannot be null.</param>
-        /// <param name="content">The view to display as the main content in the second row of the grid. Cannot be null.</param>
+        /// <param name="content">The view to display as the main content
+        /// in the second row of the grid. Cannot be null.</param>
         /// <returns>A Grid containing the specified toolbar in the first row and the content in the second row.</returns>
         public static Microsoft.Maui.Controls.Grid CreateGridWithToolBarAndContent(View toolBar, View content)
         {
@@ -1604,7 +1606,8 @@ namespace Alternet.UI
         /// If control is not attached to the parent, this function returns main page.
         /// </summary>
         /// <param name="control">Control for which to get the parent page.</param>
-        /// <returns></returns>
+        /// <returns>The parent page of the specified control, or the main page
+        /// if the control is not attached to a parent.</returns>
         public static Microsoft.Maui.Controls.Page? GetParentPage(AbstractControl? control)
         {
             if (control is null)
@@ -1717,7 +1720,8 @@ namespace Alternet.UI
         /// <returns></returns>
         public static IKeyboardVisibilityService? BindToKeyboardVisibility(Action<KeyboardVisibleChangedEventArgs> action)
         {
-            bool testKeyboard = Alternet.UI.DebugUtils.IsDebugDefinedAndAttached && Alternet.UI.App.IsWindowsOS && true;
+            bool testKeyboard = Alternet.UI.DebugUtils.IsDebugDefinedAndAttached
+                && Alternet.UI.App.IsWindowsOS && true;
             bool logKeyboard = Alternet.UI.DebugUtils.IsDebugDefinedAndAttached && false;
 
             if (!testKeyboard)
@@ -1812,7 +1816,6 @@ namespace Alternet.UI
         /// </summary>
         public struct ContextMenuDisplayOptions
         {
-
         }
     }
 }
