@@ -19,7 +19,7 @@ namespace Alternet.UI
         {
             get
             {
-                var c = container?.Control;
+                var c = (container as ControlView)?.Control;
 
                 if (c is null)
                     return false;
@@ -32,7 +32,7 @@ namespace Alternet.UI
                 if (IsFocused == value)
                     return;
                 AbstractControl.FocusedControl?.RaiseLostFocus(LostFocusEventArgs.Empty);
-                AbstractControl.FocusedControl = container?.Control;
+                AbstractControl.FocusedControl = (container as ControlView)?.Control;
                 AbstractControl.FocusedControl?.RaiseGotFocus(GotFocusEventArgs.Empty);
             }
         }
@@ -41,8 +41,8 @@ namespace Alternet.UI
         {
             if (container is null)
                 return false;
-            container.SetFocusIfPossible();
-            return container.IsFocused;
+            (container as ControlView)?.SetFocusIfPossible();
+            return (container as ControlView)?.IsFocused ?? false;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Alternet.UI
 
         public static Color DefaultForegroundColor = SystemColors.WindowText;
 
-        private ControlView? container;
+        private View? container;
         private Color backgroundColor = DefaultBackgroundColor;
         private Color foregroundColor = DefaultForegroundColor;
         private bool visible = true;
@@ -138,7 +138,7 @@ namespace Alternet.UI
             }
         }
 
-        public virtual ControlView? Container
+        public virtual View? Container
         {
             get => container;
 
@@ -467,7 +467,7 @@ namespace Alternet.UI
             return result;
         }
 
-        public virtual ControlView? ThisOrRootContainer => container ?? GetRootHandler()?.container;
+        public virtual ControlView? ThisOrRootContainer => (container ?? GetRootHandler()?.container) as ControlView;
 
         public virtual void InvalidateContainer(RectD? rect = null)
         {

@@ -157,7 +157,7 @@ namespace Alternet.UI
         public static ControlView? GetContainer(AbstractControl? control)
         {
             if (control is Control { Handler: MauiControlHandler handler })
-                return handler.Container;
+                return handler.Container as ControlView;
             return null;
         }
 
