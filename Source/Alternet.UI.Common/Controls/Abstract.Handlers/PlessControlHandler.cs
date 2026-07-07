@@ -88,8 +88,6 @@ namespace Alternet.UI
             set => ((IControlHandler)this).Bounds = (((IControlHandler)this).Bounds.Location, value);
         }
 
-        bool IControlHandler.ProcessUIUpdates { get; set; }
-
         bool IControlHandler.IsHandleCreated => true;
 
         /// <inheritdoc/>
@@ -221,16 +219,6 @@ namespace Alternet.UI
             Control?.Parent?.ReleaseMouseCapture();
         }
 
-        void IControlHandler.ResetBackgroundColor()
-        {
-            BackgroundColor = SystemColors.Window;
-        }
-
-        void IControlHandler.ResetForegroundColor()
-        {
-            ForegroundColor = SystemColors.WindowText;
-        }
-
         PointD IControlHandler.ScreenToClient(PointD point, string debugId)
         {
             if (Control is null)
@@ -292,7 +280,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void UpdateFocusFlags(bool canSelect, bool tabStop)
+        public virtual void UpdateFocusFlags(bool canSelect, bool tabStop)
         {
             this.canSelect = canSelect;
             this.tabStop = tabStop;
@@ -303,17 +291,17 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public void OnSystemColorsChanged()
+        public virtual void OnSystemColorsChanged()
         {
         }
 
         /// <inheritdoc/>
-        public void OnRemovedFromParent(AbstractControl parentControl)
+        public virtual void OnRemovedFromParent(AbstractControl parentControl)
         {
         }
 
         /// <inheritdoc/>
-        public void OnInsertedToParent(AbstractControl parentControl)
+        public virtual void OnInsertedToParent(AbstractControl parentControl)
         {
         }
 
@@ -321,6 +309,14 @@ namespace Alternet.UI
         public Graphics CreateDrawingContext()
         {
             return new PlessGraphics();
+        }
+
+        public void ResetBackgroundColor()
+        {
+        }
+
+        public void ResetForegroundColor()
+        {
         }
     }
 }

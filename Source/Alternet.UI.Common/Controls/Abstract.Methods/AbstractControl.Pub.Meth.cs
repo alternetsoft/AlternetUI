@@ -3174,14 +3174,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Resets the cached best size value so it will be recalculated the next time it is needed.
-        /// </summary>
-        [Browsable(false)]
-        public virtual void InvalidateBestSize()
-        {
-        }
-
-        /// <summary>
         /// Gets <see cref="IEnumerable"/> list of visible child controls
         /// which have <see cref="Bounds"/> that contains the specified point.
         /// Controls are returned starting

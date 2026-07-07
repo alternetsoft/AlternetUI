@@ -1033,10 +1033,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override void InvalidateBestSize()
+        public virtual void InvalidateBestSize()
         {
             savedBestSize = null;
-            base.InvalidateBestSize();
         }
 
         /// <inheritdoc/>

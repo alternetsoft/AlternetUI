@@ -583,11 +583,6 @@ namespace Alternet.UI
             }
         }
 
-        public virtual void SetFocusFlags(bool canSelect, bool tabStop, bool acceptsFocusRecursively)
-        {
-            NativeControl.SetFocusFlags(canSelect, tabStop, acceptsFocusRecursively);
-        }
-
         public virtual bool EnableTouchEvents(TouchEventsMask flag)
         {
             return NativeControl.EnableTouchEvents((int)flag);

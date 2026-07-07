@@ -221,7 +221,6 @@ namespace ControlsSample
                 tabControl.TabAlignment = tabAlignment;
 
             var preferredSize = tabAlignmentComboBox.GetPreferredSize();
-            tabAlignmentComboBox.InvalidateBestSize();
             var preferredSize2 = tabAlignmentComboBox.GetPreferredSize();
 
             App.DebugLogIf(

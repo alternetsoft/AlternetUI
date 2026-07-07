@@ -92,19 +92,11 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.ClientSize"/>
         SizeD ClientSize { get; set; }
 
-        /// <inheritdoc cref="Control.ProcessUIUpdates"/>
-        bool ProcessUIUpdates { get; set; }
-
         /// <inheritdoc cref="AbstractControl.IsHandleCreated"/>
         bool IsHandleCreated { get; }
 
         /// <inheritdoc cref="Window.Raise"/>
         void Raise();
-
-        /// <summary>
-        /// Resets the cached best size value so it will be recalculated the next time it is needed.
-        /// </summary>
-        void InvalidateBestSize();
 
         /// <inheritdoc cref="AbstractControl.SetCursor"/>
         void SetCursor(Cursor? value);

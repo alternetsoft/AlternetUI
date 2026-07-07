@@ -429,21 +429,6 @@ namespace Alternet.UI
             }
         }
 
-        internal bool ProcessUIUpdates
-        {
-            get
-            {
-                return SafeHandler?.ProcessUIUpdates ?? false;
-            }
-
-            set
-            {
-                if (DisposingOrDisposed)
-                    return;
-                Handler.ProcessUIUpdates = value;
-            }
-        }
-
         /// <summary>
         /// Gets <see cref="IControlHandler"/> for the control if it is possible.
         /// </summary>
@@ -672,12 +657,6 @@ namespace Alternet.UI
         {
             base.BeginInit();
             SafeHandler?.BeginInit();
-        }
-
-        /// <inheritdoc/>
-        public override void InvalidateBestSize()
-        {
-            SafeHandler?.InvalidateBestSize();
         }
 
         /// <inheritdoc/>
