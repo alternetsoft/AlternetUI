@@ -13,10 +13,6 @@ namespace Alternet.UI
     {
         private string? title;
 
-        public Action<HandledEventArgs<string>>? InputBindingCommandExecuted { get; set; }
-
-        public Action<CancelEventArgs>? Closing { get; set; }
-
         public virtual bool ShowInTaskbar
         {
             get;
@@ -77,30 +73,13 @@ namespace Alternet.UI
             set;
         }
 
-        public Action? StateChanged
-        {
-            get;
-            set;
-        }
-
         public virtual string Title
         {
             get => title ?? string.Empty;
             set => title = value;
         }
 
-        public virtual bool IsModal
-        {
-            get;
-        }
-
         public virtual bool IsPopupWindow
-        {
-            get;
-            set;
-        }
-
-        public virtual WindowStartLocation StartLocation
         {
             get;
             set;
@@ -117,35 +96,13 @@ namespace Alternet.UI
             set;
         }
 
-        public virtual Window[] OwnedWindows { get; } = Array.Empty<Window>();
-
-        public virtual ModalResult ModalResult
-        {
-            get;
-            set;
-        }
-
-        public virtual DisposableObject? StatusBar
-        {
-            get;
-            set;
-        }
-
         Window? IWindowHandler.Control => (Window?)Control;
 
         public virtual void Activate()
         {
         }
 
-        public virtual void AddInputBinding(InputBinding value)
-        {
-        }
-
         public virtual void Close()
-        {
-        }
-
-        public virtual void RemoveInputBinding(InputBinding item)
         {
         }
 
@@ -157,26 +114,8 @@ namespace Alternet.UI
         {
         }
 
-        public virtual void SetMenu(DisposableObject? value)
-        {
-        }
-
         public virtual void SetMinSize(SizeD size)
         {
-        }
-
-        public virtual void SetOwner(Window? owner)
-        {
-        }
-
-        public virtual ModalResult ShowModal(IWindow? owner)
-        {
-            return ModalResult.Canceled;
-        }
-
-        public void ShowModalAsync(Window? owner, Action<ModalResult> onResult)
-        {
-            onResult(ModalResult.Canceled);
         }
     }
 }

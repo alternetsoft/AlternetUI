@@ -8,7 +8,7 @@ namespace Alternet.UI
 {
     internal partial class MauiControlHandler
     {
-        private bool canSelect = true;
+        private readonly bool canSelect = true;
 
         public virtual bool CanSelect
         {
