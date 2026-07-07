@@ -10,7 +10,14 @@ namespace Alternet.UI
     /// Contains methods which create controls of the different types.
     /// </summary>
     public interface IControlFactoryHandler : IDisposable
-    {        
+    {
+        /// <summary>
+        /// Gets <see cref="IPopupEntryHandler"/> interface provider.
+        /// </summary>
+        /// <returns>The <see cref="IPopupEntryHandler"/> interface provider if available;
+        /// otherwise, <c>null</c>.</returns>
+        IPopupEntryHandler? GetPopupEntryHandler();
+
         /// <summary>
         /// Creates platform control for the <see cref="Panel"/>.
         /// </summary>

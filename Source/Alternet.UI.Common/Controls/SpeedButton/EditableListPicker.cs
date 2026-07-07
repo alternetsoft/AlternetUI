@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <see cref="EditableListPicker"/> behaves like a combo box, but it is <see cref="SpeedButton"/>
     /// descendant, so it can be used in toolbars and other places where a button is needed.
     /// <see cref="EditableListPicker"/> doesn't have an internal text box, but it uses
-    /// a text box popup provided by <see cref="KnownPopupControls.GetOrCreatePopupTextBox"/>.
+    /// a text box popup provided by the application handler.
     /// This text box is shown as a popup window when the user starts to edit the text.
     /// <see cref="EditableListPicker"/> is a generic control and is not attached to any native control of the
     /// operating system. It is implemented using other controls, so it can be used in any environment where 
@@ -81,7 +81,7 @@ namespace Alternet.UI
         {
             get
             {
-                return KnownPopupControls.Default.HasActivePopupTextBox(UniqueId);
+                return KnownPopupControls.Default.HasActivePopupEntry(UniqueId);
             }
         }
 
@@ -163,13 +163,29 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CancelEdit()
         {
-            KnownPopupControls.Default.CloseActivePopupTextBox(UniqueId);
+            KnownPopupControls.Default.CloseActivePopupEntry(UniqueId);
         }
 
         /// <summary>
         /// Starts editing the text in the control using popup text box.
         /// </summary>
         public virtual void BeginEdit()
+        {
+            var prm = CreatePopupEditorParams();
+
+            if (prm is null)
+                return;
+
+            Post(() => {
+                ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm.Value);
+            });
+        }
+
+        /// <summary>
+        /// Creates parameters for the popup text box editor.
+        /// </summary>
+        /// <returns>The parameters for the popup text box editor.</returns>
+        protected virtual PopupEntryParams? CreatePopupEditorParams()
         {
             var itemRect = Label.Bounds;
 
@@ -181,7 +197,7 @@ namespace Alternet.UI
 
             var s = RequestTextForItemEditor();
 
-            InnerPopupTextBox.ShowAsItemEditorParams prm = new()
+            PopupEntryParams prm = new()
             {
                 BackColor = backColor,
                 ForeColor = foreColor,
@@ -191,9 +207,18 @@ namespace Alternet.UI
                 HideOnEnter = false,
                 HasBorder = false,
                 EmptyTextHint = this.EmptyTextHint,
-                TabPressed = () => TabPressed?.Invoke(this, EventArgs.Empty),
-                EnterPressed = () => EnterPressed?.Invoke(this, EventArgs.Empty),
-                EscapePressed = () => EscapePressed?.Invoke(this, EventArgs.Empty),
+                TabPressed = () =>
+                {
+                    TabPressed?.Invoke(this, EventArgs.Empty);
+                },
+                EnterPressed = () =>
+                {
+                    EnterPressed?.Invoke(this, EventArgs.Empty);
+                },
+                EscapePressed = () =>
+                {
+                    EscapePressed?.Invoke(this, EventArgs.Empty);
+                },
                 KeyDown = (s, e) => EditorKeyDown?.Invoke(this, e),
                 GetItemText = () => s,
                 SetItemText = text =>
@@ -204,14 +229,7 @@ namespace Alternet.UI
 
             prm.SetTargetControl(this, itemRect);
 
-            var popup = KnownPopupControls.Default.GetOrCreatePopupTextBox();
-
-            if (popup is null)
-                return;
-
-            Post(() => {
-                popup.ShowAsItemEditor(prm);
-            });
+            return prm;
         }
 
         /// <summary>

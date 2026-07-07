@@ -1785,13 +1785,8 @@ namespace Alternet.UI
             var prm = CreateItemEditorParams(itemIndex);
             if (prm is null)
                 return false;
-            var popup = KnownPopupControls.Default.GetOrCreatePopupTextBox();
-            
-            if(popup is null)
-                return false;
-
-            popup.ShowAsItemEditor(prm.Value);
-            return true;
+            var result = ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm.Value) ?? false;
+            return result;
         }
 
         /// <summary>
@@ -1801,7 +1796,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="itemIndex">The index of the item to edit.</param>
         /// <returns>The parameters for the item editor popup text box.</returns>
-        protected virtual InnerPopupTextBox.ShowAsItemEditorParams? CreateItemEditorParams(int? itemIndex)
+        protected virtual PopupEntryParams? CreateItemEditorParams(int? itemIndex)
         {
             itemIndex ??= SelectedIndex;
 
@@ -1817,7 +1812,7 @@ namespace Alternet.UI
 
             if (rect is null)
                 return null;
-            InnerPopupTextBox.ShowAsItemEditorParams prm = new()
+            PopupEntryParams prm = new()
             {
                 BackColor = this.RealBackgroundColor,
                 ForeColor = this.RealForegroundColor,

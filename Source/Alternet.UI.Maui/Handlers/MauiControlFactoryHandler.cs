@@ -13,6 +13,11 @@ namespace Alternet.UI
             return new MauiControlHandler();
         }
 
+        public IPopupEntryHandler? GetPopupEntryHandler()
+        {
+            return null;
+        }
+
         IControlHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
         {
             return new HandlerForDisposed();

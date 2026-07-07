@@ -4,40 +4,29 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    public partial class KnownPopupControls
+    public partial class KnownPopupControls : IPopupEntryHandler
     {
         private readonly List<InnerPopupTextBox> popupTextBoxes = new();
 
         /// <summary>
-        /// Gets instance of <see cref="InnerPopupTextBox"/> control.
-        /// If it is not created yet, it will be created using <see cref="CreateInnerPopupTextBox"/> method.
-        /// A single instance of <see cref="InnerPopupTextBox"/> returned by
-        /// this method can be reused for multiple editing operations. For example different
-        /// <see cref="VirtualListBox"/> controls share
-        /// the same instance of <see cref="InnerPopupTextBox"/> for editing their items.
+        /// Shows the popup entry.
         /// </summary>
-        /// <returns>The instance of <see cref="InnerPopupTextBox"/> control or <c>null</c>
-        /// if it cannot be created.</returns>
-        public virtual InnerPopupTextBox? GetOrCreatePopupTextBox(bool hidePopups = true)
+        /// <param name="prm">The parameters for the popup entry.</param>
+        /// <returns><c>true</c> if the popup entry was shown; otherwise, <c>false</c>.</returns>
+        public virtual bool ShowPopupEntry(PopupEntryParams prm)
         {
-            if (hidePopups)
-                CloseAllPopupTextBoxes();
+            var popup = KnownPopupControls.Default.GetOrCreatePopupTextBox();
 
-            foreach (var popupTextBox in popupTextBoxes)
-            {
-                if (popupTextBox.Parent is null)
-                    return popupTextBox;
-            }
+            if (popup is null)
+                return false;
 
-            var result = CreateInnerPopupTextBox();
-            popupTextBoxes.Add(result);
-            return result;
+            return popup.ShowAsItemEditor(prm);
         }
 
         /// <summary>
-        /// Closes all popup text boxes created by this instance of <see cref="KnownPopupControls"/>.
+        /// Closes all popup entries created by this instance of <see cref="KnownPopupControls"/>.
         /// </summary>
-        public virtual void CloseAllPopupTextBoxes()
+        public virtual void CloseAllPopupEntries()
         {
             foreach (var popupTextBox in popupTextBoxes)
             {
@@ -48,12 +37,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Closes popup text box which is currently used for editing
+        /// Closes popup entry which is currently used for editing
         /// the control with the specified unique identifier.
         /// </summary>
         /// <param name="id">The unique identifier of the control.</param>
-        /// <returns><c>true</c> if the popup text box was closed; otherwise, <c>false</c>.</returns>
-        public virtual bool CloseActivePopupTextBox(ObjectUniqueId id)
+        /// <returns><c>true</c> if the popup entry was closed; otherwise, <c>false</c>.</returns>
+        public virtual bool CloseActivePopupEntry(ObjectUniqueId id)
         {
             var activePopup = GetActivePopupTextBox(id);
             if (activePopup != null)
@@ -65,13 +54,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether the popup entry is currently being used for editing
+        /// by the control with the specified unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the control.</param>
+        /// <returns><c>true</c> if the popup entry is currently
+        /// being used for editing by the control with the specified unique identifier;
+        /// otherwise, <c>false</c>.</returns>
+        public virtual bool HasActivePopupEntry(ObjectUniqueId id)
+        {
+            return GetActivePopupTextBox(id) != null;
+        }
+
+        /// <summary>
         /// Gets the active instance of <see cref="InnerPopupTextBox"/> control
         /// which is currently used for editing. If no instance is active, returns <c>null</c>.
         /// </summary>
         /// <param name="id">The unique identifier of the control for which popup is used.</param>
         /// <returns>The active instance of <see cref="InnerPopupTextBox"/> control
         /// or <c>null</c> if no instance is active.</returns>
-        public virtual InnerPopupTextBox? GetActivePopupTextBox(ObjectUniqueId id)
+        protected virtual InnerPopupTextBox? GetActivePopupTextBox(ObjectUniqueId id)
         {
             foreach (var popup in popupTextBoxes)
             {
@@ -85,26 +87,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets a value indicating whether the <see cref="InnerPopupTextBox"/> is currently being used for editing
-        /// by the control with the specified unique identifier.
-        /// </summary>
-        /// <param name="id">The unique identifier of the control.</param>
-        /// <returns><c>true</c> if the <see cref="InnerPopupTextBox"/> is currently
-        /// being used for editing by the control with the specified unique identifier;
-        /// otherwise, <c>false</c>.</returns>
-        public virtual bool HasActivePopupTextBox(ObjectUniqueId id)
-        {
-            return GetActivePopupTextBox(id) != null;
-        }
-
-        /// <summary>
         /// Creates a new instance of <see cref="InnerPopupTextBox"/> control.
         /// Override this method to provide a custom implementation of <see cref="InnerPopupTextBox"/>.
         /// </summary>
         /// <returns>A new instance of the <see cref="InnerPopupTextBox"/> control.</returns>
-        public virtual InnerPopupTextBox CreateInnerPopupTextBox()
+        protected virtual InnerPopupTextBox CreateInnerPopupTextBox()
         {
             var result = new InnerPopupTextBox();
+            return result;
+        }
+
+        /// <summary>
+        /// Gets instance of <see cref="InnerPopupTextBox"/> control.
+        /// If it is not created yet, it will be created using <see cref="CreateInnerPopupTextBox"/> method.
+        /// A single instance of <see cref="InnerPopupTextBox"/> returned by
+        /// this method can be reused for multiple editing operations. For example different
+        /// <see cref="VirtualListBox"/> controls share
+        /// the same instance of <see cref="InnerPopupTextBox"/> for editing their items.
+        /// </summary>
+        /// <returns>The instance of <see cref="InnerPopupTextBox"/> control or <c>null</c>
+        /// if it cannot be created.</returns>
+        protected virtual InnerPopupTextBox? GetOrCreatePopupTextBox(bool hidePopups = true)
+        {
+            if (hidePopups)
+                CloseAllPopupEntries();
+
+            foreach (var popupTextBox in popupTextBoxes)
+            {
+                if (popupTextBox.Parent is null)
+                    return popupTextBox;
+            }
+
+            var result = CreateInnerPopupTextBox();
+            popupTextBoxes.Add(result);
             return result;
         }
     }

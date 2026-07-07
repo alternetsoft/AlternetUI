@@ -612,7 +612,7 @@ namespace Alternet.UI
         /// relative to the control. If <see langword="null"/>, the default alignment is used.</param>
         public virtual void ShowPopup(AbstractControl control, HVDropDownAlignment? position = null)
         {
-            KnownPopupControls.Default.CloseAllPopupTextBoxes();
+            KnownPopupControls.Default.CloseAllPopupEntries();
 
             PopupOwner = control;
 

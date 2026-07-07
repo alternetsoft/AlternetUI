@@ -12,6 +12,25 @@ namespace Alternet.UI
     public static class ControlFactory
     {
         private static IControlFactoryHandler? handler;
+        private static IPopupEntryHandler? popupEntryHandler;
+
+        /// <summary>
+        /// Gets or sets the <see cref="IPopupEntryHandler"/> interface provider.
+        /// </summary>
+        public static IPopupEntryHandler? PopupEntryHandler
+        {
+            get
+            {
+                if (popupEntryHandler is null)
+                    popupEntryHandler = Handler.GetPopupEntryHandler();
+                return popupEntryHandler;
+            }
+
+            set
+            {
+                popupEntryHandler = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets <see cref="IControlFactoryHandler"/> which is used to create controls.

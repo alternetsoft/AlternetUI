@@ -311,10 +311,12 @@ namespace Alternet.UI
             return new PlessGraphics();
         }
 
+        /// <inheritdoc/>
         public void ResetBackgroundColor()
         {
         }
 
+        /// <inheritdoc/>
         public void ResetForegroundColor()
         {
         }

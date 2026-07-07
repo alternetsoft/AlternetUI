@@ -9,6 +9,11 @@ namespace Alternet.UI
     internal class WxControlFactoryHandler : DisposableObject
         , IControlFactoryHandler, IWxControlFactoryHandler
     {
+        public IPopupEntryHandler? GetPopupEntryHandler()
+        {
+            return KnownPopupControls.Default;
+        }
+
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
             return new WxPanelHandler();
