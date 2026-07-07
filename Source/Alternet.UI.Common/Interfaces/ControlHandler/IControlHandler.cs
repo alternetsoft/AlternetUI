@@ -184,12 +184,6 @@ namespace Alternet.UI
         /// <inheritdoc cref="AbstractControl.SetEnabled"/>
         void SetEnabled(bool value);
 
-        /// <inheritdoc cref="AbstractControl.GetDefaultAttributesBgColor"/>
-        Color GetDefaultAttributesBgColor();
-
-        /// <inheritdoc cref="AbstractControl.GetDefaultAttributesFgColor"/>
-        Color GetDefaultAttributesFgColor();
-
         /// <inheritdoc cref="AbstractControl.Update"/>
         void Update();
 

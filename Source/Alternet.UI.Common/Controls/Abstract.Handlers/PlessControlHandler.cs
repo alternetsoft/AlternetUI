@@ -150,16 +150,6 @@ namespace Alternet.UI
         {
         }
 
-        Color IControlHandler.GetDefaultAttributesBgColor()
-        {
-            return Control?.Parent?.GetDefaultAttributesBgColor() ?? SystemColors.Window;
-        }
-
-        Color IControlHandler.GetDefaultAttributesFgColor()
-        {
-            return Control?.Parent?.GetDefaultAttributesFgColor() ?? SystemColors.WindowText;
-        }
-
         nint IControlHandler.GetHandle()
         {
             return Control?.Parent?.GetHandle() ?? default;

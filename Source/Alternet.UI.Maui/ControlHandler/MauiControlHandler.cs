@@ -116,10 +116,6 @@ namespace Alternet.UI
             }
         }
 
-        public virtual SizeD MinimumSize { get; set; }
-
-        public virtual SizeD MaximumSize { get; set; }
-
         public virtual Color BackgroundColor
         {
             get => backgroundColor;
@@ -133,8 +129,6 @@ namespace Alternet.UI
         }
 
         public virtual Font? Font { get; set; }
-
-        public virtual bool IsBold { get; set; }
 
         public virtual bool AllowDrop { get; set; }
 
@@ -226,11 +220,6 @@ namespace Alternet.UI
         public virtual Color GetDefaultAttributesFgColor()
         {
             return SystemColors.WindowText;
-        }
-
-        public virtual Font? GetDefaultAttributesFont()
-        {
-            return default;
         }
 
         public virtual nint GetHandle()

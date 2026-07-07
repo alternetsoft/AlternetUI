@@ -549,18 +549,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Color? GetDefaultAttributesBgColor()
-        {
-            return SafeHandler?.GetDefaultAttributesBgColor();
-        }
-
-        /// <inheritdoc/>
-        public override Color? GetDefaultAttributesFgColor()
-        {
-            return SafeHandler?.GetDefaultAttributesFgColor();
-        }
-
-        /// <inheritdoc/>
         [Browsable(false)]
         public override void RaiseBackgroundColorChanged()
         {
