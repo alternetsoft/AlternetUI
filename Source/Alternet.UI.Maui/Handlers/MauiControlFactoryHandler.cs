@@ -8,6 +8,8 @@ namespace Alternet.UI
 {
     internal partial class MauiControlFactoryHandler : DisposableObject, IControlFactoryHandler
     {
+        private static IPopupEntryHandler? popupEntryHandler;
+
         public IControlHandler CreatePanelHandler(ContainerControl control)
         {
             return new MauiControlHandler();
@@ -15,7 +17,7 @@ namespace Alternet.UI
 
         public IPopupEntryHandler? GetPopupEntryHandler()
         {
-            return null;
+            return popupEntryHandler ??= new Alternet.Maui.MauiPopupEntryHandler();
         }
 
         IControlHandler IControlFactoryHandler.CreateCalendarHandler(Calendar control)
