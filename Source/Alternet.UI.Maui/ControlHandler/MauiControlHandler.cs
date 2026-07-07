@@ -190,6 +190,11 @@ namespace Alternet.UI
         {
         }
 
+        public PointD ScreenToClient(PointD point, string debugId)
+        {
+            return MauiApplicationHandler.ScreenToClient(point, Control);
+        }
+
         public virtual PointD ScreenToClient(PointD point)
         {
             return MauiApplicationHandler.ScreenToClient(point, Control);
