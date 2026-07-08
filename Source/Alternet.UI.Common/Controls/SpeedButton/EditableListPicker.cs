@@ -81,7 +81,7 @@ namespace Alternet.UI
         {
             get
             {
-                return KnownPopupControls.Default.HasActivePopupEntry(UniqueId);
+                return ControlFactory.PopupEntryHandler?.HasActivePopupEntry(UniqueId) ?? false;
             }
         }
 
@@ -163,7 +163,7 @@ namespace Alternet.UI
         /// </summary>
         public virtual void CancelEdit()
         {
-            KnownPopupControls.Default.CloseActivePopupEntry(UniqueId);
+            ControlFactory.PopupEntryHandler?.CloseActivePopupEntry(UniqueId);
         }
 
         /// <summary>
@@ -250,6 +250,13 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            CancelEdit();
+            base.DisposeManaged();
         }
 
         /// <inheritdoc/>

@@ -69,6 +69,7 @@ namespace Alternet.UI
         private IListSource<ListControlItem> items = new ListSource<ListControlItem>();
         private bool immutableItems;
         private bool isHoverSelectionEnabled;
+        private bool itemEditorCalled;
 
         static VirtualListBox()
         {
@@ -1782,11 +1783,31 @@ namespace Alternet.UI
         /// If null, the selected item will be edited.</param>
         public virtual bool ShowItemEditor(int? itemIndex = null)
         {
+            itemEditorCalled = true;
+
             var prm = CreateItemEditorParams(itemIndex);
             if (prm is null)
                 return false;
             var result = ControlFactory.PopupEntryHandler?.ShowPopupEntry(prm.Value) ?? false;
             return result;
+        }
+
+        /// <summary>
+        /// Ends the editing of the item text in the control.
+        /// </summary>
+        public virtual void CancelItemEdit()
+        {
+            if (itemEditorCalled)
+            {
+                ControlFactory.PopupEntryHandler?.CloseActivePopupEntry(UniqueId);
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            CancelItemEdit();
+            base.DisposeManaged();
         }
 
         /// <summary>

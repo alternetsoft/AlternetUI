@@ -12,11 +12,25 @@ namespace Alternet.Maui
 {
     internal partial class MauiPopupEntryHandler : IPopupEntryHandler
     {
-        private readonly List<WeakReferenceValue<BasePopupEntry>> activeEntries = new ();
+        private readonly List<WeakReferenceValue<BasePopupEntry>> activeEntries = new();
 
         /// <inheritdoc/>
         public virtual bool CloseActivePopupEntry(ObjectUniqueId id)
         {
+            for (int i = activeEntries.Count - 1; i >= 0; i--)
+            {
+                var entry = activeEntries[i].Value;
+                if (entry is not null && entry.Params.TargetControl?.UniqueId == id)
+                {
+                    entry.ResetEventActions();
+                    entry.IsVisible = false;
+                    entry.Params = new();
+                    (entry.Parent as AbsoluteLayout)?.Children.Remove(entry);
+                    activeEntries.RemoveAt(i);
+                    return true;
+                }
+            }
+
             return false;
         }
 
@@ -32,7 +46,7 @@ namespace Alternet.Maui
                     value.ResetEventActions();
                     value.IsVisible = false;
                     value.Params = new();
-                    value.Parent = null;
+                    (value.Parent as AbsoluteLayout)?.Children.Remove(value);
                 }
             }
 
@@ -42,6 +56,14 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public virtual bool HasActivePopupEntry(ObjectUniqueId id)
         {
+            for (int i = activeEntries.Count - 1; i >= 0; i--)
+            {
+                var entry = activeEntries[i].Value;
+                if (entry is not null && entry.Params.TargetControl?.UniqueId == id)
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -64,9 +86,9 @@ namespace Alternet.Maui
                 return false;
 
             var entry = MauiUtils.FindViewInContainer<BasePopupEntry>(absLayout);
-            if(entry is null)
+            if (entry is null)
             {
-                entry = new (prm);
+                entry = new(prm);
                 activeEntries.Add(new WeakReferenceValue<BasePopupEntry>(entry));
                 entry.ZIndex = int.MaxValue - 1;
             }
@@ -95,10 +117,27 @@ namespace Alternet.Maui
             entry.SizeChangedAction = OnEntrySizeChanged;
             entry.TextChangedAction = OnEntryTextChanged;
             entry.CompletedAction = OnEntryCompleted;
+            entry.UnfocusedAction = OnEntryUnfocused;
+            entry.BackgroundColor = prm.BackColor?.ToMaui();
+            entry.Text = prm.GetItemText?.Invoke();
+            entry.Placeholder = prm.EmptyTextHint;
+            entry.SelectAllOnFocus = true;
 
             entry.IsVisible = true;
+            entry.Focus();
+            BaseObject.Post(() =>
+            {
+                entry.SelectAll();
+            });
 
             return true;
+
+            void OnEntryUnfocused()
+            {
+                var id = prm.TargetControl?.UniqueId;
+                if (id is not null)
+                    CloseActivePopupEntry(id.Value);
+            }
 
             void OnEntryCompleted()
             {

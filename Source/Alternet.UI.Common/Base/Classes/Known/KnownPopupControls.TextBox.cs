@@ -13,7 +13,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="prm">The parameters for the popup entry.</param>
         /// <returns><c>true</c> if the popup entry was shown; otherwise, <c>false</c>.</returns>
-        public virtual bool ShowPopupEntry(PopupEntryParams prm)
+        protected virtual bool ShowPopupEntry(PopupEntryParams prm)
         {
             var popup = KnownPopupControls.Default.GetOrCreatePopupTextBox();
 
@@ -26,7 +26,7 @@ namespace Alternet.UI
         /// <summary>
         /// Closes all popup entries created by this instance of <see cref="KnownPopupControls"/>.
         /// </summary>
-        public virtual void CloseAllPopupEntries()
+        protected virtual void CloseAllPopupEntries()
         {
             foreach (var popupTextBox in popupTextBoxes)
             {
@@ -42,7 +42,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="id">The unique identifier of the control.</param>
         /// <returns><c>true</c> if the popup entry was closed; otherwise, <c>false</c>.</returns>
-        public virtual bool CloseActivePopupEntry(ObjectUniqueId id)
+        protected virtual bool CloseActivePopupEntry(ObjectUniqueId id)
         {
             var activePopup = GetActivePopupTextBox(id);
             if (activePopup != null)
@@ -61,7 +61,7 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the popup entry is currently
         /// being used for editing by the control with the specified unique identifier;
         /// otherwise, <c>false</c>.</returns>
-        public virtual bool HasActivePopupEntry(ObjectUniqueId id)
+        protected virtual bool HasActivePopupEntry(ObjectUniqueId id)
         {
             return GetActivePopupTextBox(id) != null;
         }
@@ -121,6 +121,26 @@ namespace Alternet.UI
             var result = CreateInnerPopupTextBox();
             popupTextBoxes.Add(result);
             return result;
+        }
+
+        void IPopupEntryHandler.CloseAllPopupEntries()
+        {
+            CloseAllPopupEntries();
+        }
+
+        bool IPopupEntryHandler.CloseActivePopupEntry(ObjectUniqueId id)
+        {
+            return CloseActivePopupEntry(id);
+        }
+
+        bool IPopupEntryHandler.HasActivePopupEntry(ObjectUniqueId id)
+        {
+            return HasActivePopupEntry(id);
+        }
+
+        bool IPopupEntryHandler.ShowPopupEntry(PopupEntryParams prm)
+        {
+            return ShowPopupEntry(prm);
         }
     }
 }
