@@ -10,8 +10,10 @@ using Microsoft.Maui.Controls;
 
 namespace Alternet.Maui
 {
-    internal class MauiPopupEntryHandler : IPopupEntryHandler
+    internal partial class MauiPopupEntryHandler : IPopupEntryHandler
     {
+        private readonly List<WeakReferenceValue<BasePopupEntry>> activeEntries = new ();
+
         /// <inheritdoc/>
         public virtual bool CloseActivePopupEntry(ObjectUniqueId id)
         {
@@ -21,6 +23,20 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public virtual void CloseAllPopupEntries()
         {
+            foreach (var entry in activeEntries)
+            {
+                var value = entry.Value;
+
+                if (value is not null)
+                {
+                    value.ResetEventActions();
+                    value.IsVisible = false;
+                    value.Params = new();
+                    value.Parent = null;
+                }
+            }
+
+            activeEntries.Clear();
         }
 
         /// <inheritdoc/>
@@ -51,6 +67,7 @@ namespace Alternet.Maui
             if(entry is null)
             {
                 entry = new (prm);
+                activeEntries.Add(new WeakReferenceValue<BasePopupEntry>(entry));
                 entry.ZIndex = int.MaxValue - 1;
             }
             else
@@ -73,14 +90,41 @@ namespace Alternet.Maui
             r.Offset(absPosition.X, absPosition.Y);
             r.Height = -1;
             MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
+
+            entry.ResetEventActions();
+            entry.SizeChangedAction = OnEntrySizeChanged;
+            entry.TextChangedAction = OnEntryTextChanged;
+            entry.CompletedAction = OnEntryCompleted;
+
             entry.IsVisible = true;
 
             return true;
+
+            void OnEntryCompleted()
+            {
+            }
+
+            void OnEntryTextChanged(string oldText, string newText)
+            {
+            }
+
+            void OnEntrySizeChanged()
+            {
+                var itemHeight = prm.ItemRect.Height;
+                var entryHeight = (float)entry.Height;
+
+                r.Top -= (entryHeight - itemHeight) / 2;
+                MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
+            }
         }
 
         private partial class BasePopupEntry : BaseEntry
         {
             private PopupEntryParams prm;
+
+            public BasePopupEntry()
+            {
+            }
 
             public BasePopupEntry(PopupEntryParams prm)
             {
