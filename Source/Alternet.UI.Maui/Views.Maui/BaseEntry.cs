@@ -159,8 +159,28 @@ namespace Alternet.Maui
         /// </summary>
         public virtual void SelectAll()
         {
-            CursorPosition = 0;
-            SelectionLength = Text?.Length ?? 0;
+#if ANDROID
+            var editText = Handler?.PlatformView as AndroidX.AppCompat.Widget.AppCompatEditText;
+            if (editText != null)
+            {
+                editText.SetSelection(0, editText.Text?.Length ?? 0);
+            }
+#endif
+
+#if IOS || MACCATALYST
+        var textField = Handler?.PlatformView as UIKit.UITextField;
+        if (textField != null)
+        {
+            var start = textField.BeginningOfDocument;
+            var end = textField.EndOfDocument;
+            textField.SelectedTextRange = textField.GetTextRange(start, end);
+        }
+#endif
+
+#if WINDOWS
+        var textBox = Handler?.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
+        textBox?.SelectAll();
+#endif
         }
 
         /// <summary>
