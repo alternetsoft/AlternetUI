@@ -33,17 +33,29 @@ namespace Alternet.Maui
         /// </summary>
         public BaseEntry()
         {
+            SizeChanged += (s, e) =>
+            {
+                SizeChangedAction?.Invoke();
+            };
+
+            Completed += (s, e) =>
+            {
+                CompletedAction?.Invoke();
+            };
+
             Focused += (s, e) =>
             {
                 focusedEntry.Value = this;
                 if (SelectAllOnFocus)
                     SelectAll();
+                FocusedAction?.Invoke();
             };
 
             Unfocused += (s, e) =>
             {
                 if (focusedEntry.Value == this)
                     focusedEntry.Value = null;
+                UnfocusedAction?.Invoke();
             };
 
             HandlerChanged += (s, e) =>
@@ -56,8 +68,7 @@ namespace Alternet.Maui
                 else
                 {
 #if WINDOWS
-                    var platformView = Handler.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
-                    if (platformView is null)
+                    if (Handler.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox platformView)
                         return;
                     platformView.KeyDown -= OnPlatformViewKeyDown;
                     platformView.KeyDown += OnPlatformViewKeyDown;
@@ -76,6 +87,11 @@ namespace Alternet.Maui
         }
 
         /// <summary>
+        /// Occurs when the Tab key is pressed while the entry is focused.
+        /// </summary>
+        public event EventHandler? TabClicked;
+
+        /// <summary>
         /// Occurs when the Escape key is pressed while the entry is focused.
         /// </summary>
         public event EventHandler? EscapeClicked;
@@ -90,6 +106,46 @@ namespace Alternet.Maui
                 return focusedEntry.Value;
             }
         }
+
+        /// <summary>
+        /// Called when a key is pressed while the entry is focused.
+        /// </summary>
+        public Action<UI.Key>? KeyDownAction { get; set; }
+
+        /// <summary>
+        /// Called when size of the entry changes.
+        /// </summary>
+        public Action? SizeChangedAction { get; set; }
+
+        /// <summary>
+        /// Called when the entry is completed (e.g., when the user presses Enter).
+        /// </summary>
+        public Action? CompletedAction { get; set; }
+
+        /// <summary>
+        /// Called when the Tab key is pressed while the entry is focused.
+        /// </summary>
+        public Action? TabClickedAction { get; set; }
+
+        /// <summary>
+        /// Called when the Escape key is pressed while the entry is focused.
+        /// </summary>
+        public Action? EscapeClickedAction { get; set; }
+
+        /// <summary>
+        /// Called when text in the entry changes.
+        /// </summary>
+        public Action<string, string>? TextChangedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets an action which is invoked when the entry gains focus.
+        /// </summary>
+        public Action? FocusedAction { get; set; }
+
+        /// <summary>
+        /// Gets or sets an action which is invoked when the entry loses focus.
+        /// </summary>
+        public Action? UnfocusedAction { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether all text should be selected when
@@ -113,20 +169,57 @@ namespace Alternet.Maui
         public virtual void RaiseEscapeClicked()
         {
             EscapeClicked?.Invoke(this, EventArgs.Empty);
+            EscapeClickedAction?.Invoke();
+        }
+
+        /// <summary>
+        /// Raises the <see cref="TabClicked"/> event.
+        /// </summary>
+        public virtual void RaiseTabClicked()
+        {
+            TabClicked?.Invoke(this, EventArgs.Empty);
+            TabClickedAction?.Invoke();
+        }
+
+        /// <summary>
+        /// Sets all events actions to null, effectively removing any event handlers.
+        /// </summary>
+        public virtual void ResetEventActions()
+        {
+            SizeChangedAction = null;
+            CompletedAction = null;
+            TextChangedAction = null;
+            FocusedAction = null;
+            UnfocusedAction = null;
+            TabClickedAction = null;
+            EscapeClickedAction = null;
+            KeyDownAction = null;
         }
 
         /// <inheritdoc/>
         protected override void OnTextChanged(string oldValue, string newValue)
         {
             base.OnTextChanged(oldValue, newValue);
+            TextChangedAction?.Invoke(oldValue, newValue);
         }
 
 #if WINDOWS
         private void OnPlatformViewKeyDown(object sender, KeyRoutedEventArgs e)
         {
+            var key = Alternet.UI.MauiKeyboardHandler.Default.Convert(e.Key);
+
+            KeyDownAction?.Invoke(key);
+
             if (e.Key == Windows.System.VirtualKey.Escape)
             {
                 RaiseEscapeClicked();
+                return;
+            }
+
+            if (e.Key == Windows.System.VirtualKey.Tab)
+            {
+                RaiseTabClicked();
+                return;
             }
         }
 #endif
