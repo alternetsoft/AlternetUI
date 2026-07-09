@@ -200,6 +200,7 @@ namespace Alternet.UI
             PopupEntryParams prm = new()
             {
                 BackColor = backColor,
+                Font = Label.RealFont,
                 ForeColor = foreColor,
                 HideClickOnParent = false,
                 CommitTextOnKeyPress = true,
@@ -267,6 +268,8 @@ namespace Alternet.UI
                 if (Label.Bounds.Contains(e.Location) && IsEditable)
                 {
                     e.Handled = true;
+
+                    ControlFactory.PopupEntryHandler?.CloseAllPopupEntries();
 
                     Post(() =>
                     {

@@ -90,6 +90,8 @@ namespace Alternet.UI
             HideOnEnter = prm.HideOnEnter;
             BackColor = prm.BackColor ?? prm.ItemContainer.BackColor;
             ForeColor = prm.ForeColor ?? prm.ItemContainer.ForeColor;
+            ParentFont = false;
+            Font = prm.Font ?? Control.DefaultFont;
             HasBorder = prm.HasBorder;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;

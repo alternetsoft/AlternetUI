@@ -61,6 +61,11 @@ public struct PopupEntryParams
     public Color? ForeColor { get; set; }
 
     /// <summary>
+    /// Gets or sets the font of the popup.
+    /// </summary>
+    public Font? Font { get; set; }
+
+    /// <summary>
     /// Gets or sets the bounds of the item being edited. This is used to position the popup control.
     /// Rectangle is in client coordinates of the <see cref="ItemContainer"/>.
     /// </summary>
