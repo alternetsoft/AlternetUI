@@ -96,6 +96,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual bool LookupByValue { get; set; } = true;
 
+        /// <inheritdoc/>
+        public override bool HasVisibleText => true;
+
         /// <summary>
         /// Gets or sets a value indicating whether to perform an exact text lookup
         /// when popup window is opened.

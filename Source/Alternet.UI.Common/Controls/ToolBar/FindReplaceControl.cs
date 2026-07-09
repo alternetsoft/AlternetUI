@@ -123,10 +123,6 @@ namespace Alternet.UI
                     replaceEdit?.BeginEdit();
             };
 
-            findEdit.BorderColor = FindEditBorderColor;
-            replaceEdit.BorderColor = FindEditBorderColor;
-            scopeEdit.BorderColor = FindEditBorderColor;
-
             DoInsideLayout(Fn);
 
             void Fn()
