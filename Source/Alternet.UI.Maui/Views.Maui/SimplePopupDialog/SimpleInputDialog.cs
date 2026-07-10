@@ -52,6 +52,7 @@ namespace Alternet.Maui
                 Placeholder = GetDefaultPlaceholder(),
             };
 
+            entry.WantEscape = true;
             entry.EscapeClicked += (s, e) =>
             {
                 OnCancelButtonClicked(UI.DialogCloseAction.EscapeKey);

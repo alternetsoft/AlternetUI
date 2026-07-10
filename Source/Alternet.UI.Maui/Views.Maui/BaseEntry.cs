@@ -23,6 +23,7 @@ namespace Alternet.Maui
     public partial class BaseEntry : Entry
     {
         private static Alternet.UI.WeakReferenceValue<BaseEntry> focusedEntry = new();
+        private bool wantTab;
 
         static BaseEntry()
         {
@@ -60,18 +61,30 @@ namespace Alternet.Maui
 
             HandlerChanged += (s, e) =>
             {
-                if(Handler is null)
+                if (Handler is null)
                 {
                     if (focusedEntry.Value == this)
                         focusedEntry.Value = null;
                 }
                 else
                 {
+#if ANDROID
+#endif
+
+#if IOS || MACCATALYST
+#endif
+
 #if WINDOWS
                     if (Handler.PlatformView is not Microsoft.UI.Xaml.Controls.TextBox platformView)
                         return;
-                    platformView.KeyDown -= OnPlatformViewKeyDown;
-                    platformView.KeyDown += OnPlatformViewKeyDown;
+                    platformView.PreviewKeyDown -= OnPlatformPreviewKeyDown;
+                    platformView.PreviewKeyDown += OnPlatformPreviewKeyDown;
+                    platformView.KeyDown -= OnPlatformKeyDown;
+                    platformView.KeyDown += OnPlatformKeyDown;
+                    platformView.KeyUp -= OnPlatformKeyUp;
+                    platformView.KeyUp += OnPlatformKeyUp;
+                    platformView.LosingFocus -= OnPlatformLosingFocus;
+                    platformView.LosingFocus += OnPlatformLosingFocus;
 #endif
                 }
             };
@@ -110,7 +123,7 @@ namespace Alternet.Maui
         /// <summary>
         /// Called when a key is pressed while the entry is focused.
         /// </summary>
-        public Action<UI.Key>? KeyDownAction { get; set; }
+        public Action<Alternet.UI.KeyEventArgs>? KeyDownAction { get; set; }
 
         /// <summary>
         /// Called when size of the entry changes.
@@ -151,7 +164,38 @@ namespace Alternet.Maui
         /// Gets or sets a value indicating whether all text should be selected when
         /// the control gains focus.
         /// </summary>
-        public bool SelectAllOnFocus { get; set; } = true;
+        public virtual bool SelectAllOnFocus { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the entry should handle the Tab key.
+        /// </summary>
+        public virtual bool WantTab
+        {
+            get => wantTab;
+            set
+            {
+                if (wantTab == value) return;
+                wantTab = value;
+
+#if ANDROID
+#endif
+
+#if IOS || MACCATALYST
+#endif
+
+#if WINDOWS
+                var textBox = GetAsPlatformControl();
+                if (textBox != null)
+                {
+                }
+#endif
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the entry should handle the Escape key.
+        /// </summary>
+        public virtual bool WantEscape { get; set; }
 
         /// <summary>
         /// Selects all the text in the entry field.
@@ -160,16 +204,14 @@ namespace Alternet.Maui
         public virtual void SelectAll()
         {
 #if ANDROID
-            var editText = Handler?.PlatformView as AndroidX.AppCompat.Widget.AppCompatEditText;
-            if (editText != null)
+            if (Handler?.PlatformView is AndroidX.AppCompat.Widget.AppCompatEditText editText)
             {
                 editText.SetSelection(0, editText.Text?.Length ?? 0);
             }
 #endif
 
 #if IOS || MACCATALYST
-        var textField = Handler?.PlatformView as UIKit.UITextField;
-        if (textField != null)
+        if (Handler?.PlatformView is UIKit.UITextField textField)
         {
             var start = textField.BeginningOfDocument;
             var end = textField.EndOfDocument;
@@ -178,10 +220,15 @@ namespace Alternet.Maui
 #endif
 
 #if WINDOWS
-        var textBox = Handler?.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
-        textBox?.SelectAll();
+            var textBox = GetAsPlatformControl();
+            textBox?.SelectAll();
 #endif
         }
+
+#if WINDOWS
+        Microsoft.UI.Xaml.Controls.TextBox? GetAsPlatformControl()
+            => Handler?.PlatformView as Microsoft.UI.Xaml.Controls.TextBox;
+#endif
 
         /// <summary>
         /// Raises the <see cref="EscapeClicked"/> event.
@@ -224,21 +271,89 @@ namespace Alternet.Maui
         }
 
 #if WINDOWS
-        private void OnPlatformViewKeyDown(object sender, KeyRoutedEventArgs e)
+        /// <summary>
+        /// Handles the LosingFocus event for the platform-specific view on Windows.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="args">The event data.</param>
+        protected virtual void OnPlatformLosingFocus(UIElement sender, LosingFocusEventArgs args)
         {
-            var key = Alternet.UI.MauiKeyboardHandler.Default.Convert(e.Key);
-
-            KeyDownAction?.Invoke(key);
-
-            if (e.Key == Windows.System.VirtualKey.Escape)
+            if (WantTab && args.InputDevice == FocusInputDeviceKind.Keyboard)
             {
-                RaiseEscapeClicked();
+                args.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// Handles the PreviewKeyDown event for the platform-specific view on Windows.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnPlatformPreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (WantTab && e.Key == Windows.System.VirtualKey.Tab)
+            {
+                RaiseTabClicked();
+                e.Handled = true;
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Handles the KeyUp event for the platform-specific view on Windows.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnPlatformKeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            if (WantEscape && e.Key == Windows.System.VirtualKey.Escape)
+            {
+                e.Handled = true;
                 return;
             }
 
-            if (e.Key == Windows.System.VirtualKey.Tab)
+            if (WantTab && e.Key == Windows.System.VirtualKey.Tab)
             {
-                RaiseTabClicked();
+                e.Handled = true;
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Handles the KeyDown event for the platform-specific view on Windows.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnPlatformKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (KeyDownAction is not null)
+            {
+                var key = Alternet.UI.MauiKeyboardHandler.Default.Convert(e.Key);
+
+                Alternet.UI.KeyStates keyStates = e.KeyStatus.WasKeyDown
+                    ? Alternet.UI.KeyStates.Down : Alternet.UI.KeyStates.None;
+
+                Alternet.UI.KeyEventArgs args = new(
+                    sender,
+                    key,
+                    keyStates,
+                    Alternet.UI.Keyboard.Modifiers,
+                    e.KeyStatus.RepeatCount);
+
+                KeyDownAction?.Invoke(args);
+                e.Handled = args.Handled;
+            }
+
+            if (WantEscape && e.Key == Windows.System.VirtualKey.Escape)
+            {
+                RaiseEscapeClicked();
+                e.Handled = true;
+                return;
+            }
+
+            if (WantTab && e.Key == Windows.System.VirtualKey.Tab)
+            {
+                e.Handled = true;
                 return;
             }
         }
