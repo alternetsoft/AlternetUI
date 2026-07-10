@@ -114,9 +114,13 @@ namespace Alternet.Maui
             MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
 
             entry.ResetEventActions();
+            entry.WantTab = true;
+            entry.WantEscape = true;
             entry.SizeChangedAction = OnEntrySizeChanged;
             entry.TextChangedAction = OnEntryTextChanged;
             entry.CompletedAction = OnEntryCompleted;
+            entry.EscapeClickedAction = OnEntryEscapeClicked;
+            entry.TabClickedAction = OnEntryTabClicked;
             entry.UnfocusedAction = OnEntryUnfocused;
             entry.BackgroundColor = prm.BackColor?.ToMaui();
             entry.Text = prm.GetItemText?.Invoke();
@@ -132,19 +136,45 @@ namespace Alternet.Maui
 
             return true;
 
-            void OnEntryUnfocused()
+            void OnEntryEscapeClicked()
+            {
+                prm.EscapePressed?.Invoke();
+                if (!prm.HideOnEscape)
+                    return;
+                CloseEntry();
+            }
+
+            void OnEntryTabClicked()
+            {
+                prm.TabPressed?.Invoke();
+            }
+
+            void CloseEntry()
             {
                 var id = prm.TargetControl?.UniqueId;
                 if (id is not null)
                     CloseActivePopupEntry(id.Value);
             }
 
+            void OnEntryUnfocused()
+            {
+                CloseEntry();
+            }
+
             void OnEntryCompleted()
             {
+                prm.EnterPressed?.Invoke();
+                if (!prm.HideOnEnter)
+                    return;
+                prm.SetItemText?.Invoke(entry.Text);
+                CloseEntry();
             }
 
             void OnEntryTextChanged(string oldText, string newText)
             {
+                if (!prm.CommitTextOnKeyPress)
+                    return;
+                prm.SetItemText?.Invoke(newText);
             }
 
             void OnEntrySizeChanged()
