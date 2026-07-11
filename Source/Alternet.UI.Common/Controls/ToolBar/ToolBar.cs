@@ -1231,6 +1231,18 @@ namespace Alternet.UI
         }        
 
         /// <summary>
+        /// Sets <see cref="ItemSize"/> value using the specified image height.
+        /// </summary>
+        /// <param name="imageHeight">The height of the image (in pixels) to use as a basis for the item size.</param>
+        /// <param name="padding">The padding (in dips) to apply around the image. Defaults to 8 dips.</param>
+        public virtual void SetItemSizeFromImageSize(int imageHeight, float padding = 8)
+        {
+            var paddingPixels = PixelFromDip(padding);
+            var itemSize = imageHeight + paddingPixels;
+            ItemSize = PixelToDip(itemSize);
+        }
+
+        /// <summary>
         /// Creates and adds a new <see cref="PictureBox"/> control with the specified properties.
         /// </summary>
         /// <remarks>This method initializes a <see cref="PictureBox"/> with default alignment and
