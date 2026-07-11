@@ -1206,6 +1206,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the maximal size of the image used in the tool items of the control.
+        /// This method uses <see cref="ToolsAsButton"/> to get a collection of all buttons
+        /// and then calculates the maximal width and height of the images used in these buttons.
+        /// If no buttons are found, it returns <see cref="DefaultSize"/>.
+        /// </summary>
+        /// <returns>A <see cref="SizeD"/> structure representing the maximal width and height
+        /// of the images used in the tool items.</returns>
+        public virtual SizeD GetMaxToolImageSize()
+        {
+            SizeD result = DefaultSize;
+
+            foreach (var item in ToolsAsButton)
+            {
+                var size = item.PictureBoxSize;
+                if (size.IsPositive)
+                {
+                    result.Width = Math.Max(result.Width, size.Width);
+                    result.Height = Math.Max(result.Height, size.Height);
+                }
+            }
+
+            return result;
+        }        
+
+        /// <summary>
         /// Creates and adds a new <see cref="PictureBox"/> control with the specified properties.
         /// </summary>
         /// <remarks>This method initializes a <see cref="PictureBox"/> with default alignment and
