@@ -1186,6 +1186,22 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets size of the image displayed by the control.
+        /// </summary>
+        [Browsable(false)]
+        public SizeD PictureBoxSize
+        {
+            get => PictureBoxSpacer.SuggestedSize;
+        }
+
+        /// <summary>
+        /// Gets inner picture box spacer control. This control has suggested size equal
+        /// to picture box size and is used to picture box inside the control.
+        /// </summary>
+        [Browsable(false)]
+        public GenericControl PictureBoxSpacer => pictureSpacer;
+
         internal new LayoutStyle? Layout
         {
             get => base.Layout;
@@ -1198,12 +1214,6 @@ namespace Alternet.UI
             get => base.Title;
             set => base.Title = value;
         }
-
-        /// <summary>
-        /// Gets inner picture box spacer control.
-        /// </summary>
-        [Browsable(false)]
-        internal GenericControl PictureBoxSpacer => pictureSpacer;
 
         /// <inheritdoc/>
         public override void RaiseFontChanged(EventArgs e)
