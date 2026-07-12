@@ -111,7 +111,6 @@ namespace Alternet.Maui
             var r = prm.ItemRect;
             r.Offset(absPosition.X, absPosition.Y);
             r.Height = -1;
-            MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
 
             entry.ResetEventActions();
             entry.WantTab = true;
@@ -127,8 +126,16 @@ namespace Alternet.Maui
             entry.Placeholder = prm.EmptyTextHint;
             entry.SelectAllOnFocus = true;
 
+            MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
+
+            if (entry.Height > 0)
+            {
+                OnEntrySizeChanged();
+            }
+
             entry.IsVisible = true;
             entry.Focus();
+            
             BaseObject.Post(() =>
             {
                 entry.SelectAll();
@@ -151,6 +158,7 @@ namespace Alternet.Maui
 
             void CloseEntry()
             {
+                entry.ResetEventActions();
                 var id = prm.TargetControl?.UniqueId;
                 if (id is not null)
                     CloseActivePopupEntry(id.Value);

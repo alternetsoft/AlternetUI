@@ -280,7 +280,13 @@ namespace Alternet.Maui
         {
             if (WantTab && args.InputDevice == FocusInputDeviceKind.Keyboard)
             {
-                args.Cancel = true;
+                try
+                {
+                    args.Cancel = true;
+                }
+                catch
+                {
+                }
             }
         }
 

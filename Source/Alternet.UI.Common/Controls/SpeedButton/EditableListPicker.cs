@@ -199,6 +199,7 @@ namespace Alternet.UI
 
             PopupEntryParams prm = new()
             {
+                DebugIdentifier = DebugIdentifier ?? Label.DebugIdentifier,
                 BackColor = backColor,
                 Font = Label.RealFont,
                 ForeColor = foreColor,

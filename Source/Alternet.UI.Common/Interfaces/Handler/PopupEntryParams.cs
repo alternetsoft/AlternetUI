@@ -19,6 +19,11 @@ public struct PopupEntryParams
     }
 
     /// <summary>
+    /// Gets or sets the debug identifier of the entry.
+    /// </summary>
+    public string? DebugIdentifier { get; set; }
+
+    /// <summary>
     /// Gets or sets a value indicating whether the popup should hide when clicking on the parent control.
     /// </summary>
     public bool HideClickOnParent { get; set; } = true;
