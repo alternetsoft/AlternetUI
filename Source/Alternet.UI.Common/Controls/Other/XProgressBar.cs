@@ -13,7 +13,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class StdProgressBar : GenericBorder
+    public partial class XProgressBar : GenericBorder
     {
         /// <summary>
         /// Represents the proportion of the animated chunk size as a floating-point value.
@@ -113,19 +113,19 @@ namespace Alternet.UI
         private bool isIndeterminate;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdProgressBar"/> class.
+        /// Initializes a new instance of the <see cref="XProgressBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StdProgressBar(AbstractControl parent)
+        public XProgressBar(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdProgressBar"/> class.
+        /// Initializes a new instance of the <see cref="XProgressBar"/> class.
         /// </summary>
-        public StdProgressBar()
+        public XProgressBar()
         {
             AutoPadding = false;
 

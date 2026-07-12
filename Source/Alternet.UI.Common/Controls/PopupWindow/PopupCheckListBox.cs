@@ -10,7 +10,7 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Popup window with <see cref="StdCheckListBox"/> control.
+    /// Popup window with <see cref="XCheckListBox"/> control.
     /// </summary>
     public partial class PopupCheckListBox : PopupListBox<VirtualCheckListBox>
     {

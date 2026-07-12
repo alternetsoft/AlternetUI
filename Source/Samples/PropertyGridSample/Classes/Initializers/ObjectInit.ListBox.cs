@@ -309,7 +309,7 @@ namespace PropertyGridSample
 
         public static void InitStdListBox(object control)
         {
-            if (control is not StdListBox listBox)
+            if (control is not XListBox listBox)
                 return;
             listBox.SuggestedSize = DefaultListSize;
             listBox.Items.AddRange(GetTenItems());
@@ -317,7 +317,7 @@ namespace PropertyGridSample
 
         public static void InitCheckListBox(object control)
         {
-            if (control is not StdCheckListBox listBox)
+            if (control is not XCheckListBox listBox)
                 return;
             listBox.SuggestedSize = defaultListHeight;
             listBox.Items.AddRange(GetTenItems());
@@ -325,7 +325,7 @@ namespace PropertyGridSample
 
         public static void InitStdComboBox(object control)
         {
-            if (control is not StdComboBox comboBox)
+            if (control is not XComboBox comboBox)
                 return;
             var items = GetTenItems();
             comboBox.AddRange(items);

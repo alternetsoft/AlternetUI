@@ -7,12 +7,12 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a generic button control. This control is implemented inside the library and can be used in the
-    /// same way as a regular native button control. <see cref="StdButton"/> is used when you need
-    /// to have the same code for all platforms. <see cref="StdButton"/> provides many additional features,
+    /// same way as a regular native button control. <see cref="XButton"/> is used when you need
+    /// to have the same code for all platforms. <see cref="XButton"/> provides many additional features,
     /// which are not available in the native button control.
     /// </summary>
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class StdButton : GenericItemControl, INotifyPropertyChanged, IDialogButtonRoles
+    public partial class XButton : GenericItemControl, INotifyPropertyChanged, IDialogButtonRoles
     {
         /// <summary>
         /// Gets or sets default value of the <see cref="IsBoldWhenDefault"/> property. It indicates whether the
@@ -21,11 +21,11 @@ namespace Alternet.UI
         public static bool DefaultValueIsBoldWhenDefault = false;
 
         /// <summary>
-        /// Represents the default padding value which is applied to <see cref="StdButton"/>
+        /// Represents the default padding value which is applied to <see cref="XButton"/>
         /// controls in the constructor.
         /// </summary>
         /// <remarks>This static field provides a standard padding size that is applied
-        /// to <see cref="StdButton"/> controls
+        /// to <see cref="XButton"/> controls
         /// to ensure consistent spacing across components.</remarks>
         public static Thickness DefaultPadding = (4, 1, 1, 4);
 
@@ -52,25 +52,25 @@ namespace Alternet.UI
         private bool exactFit = false;
         private bool useVisualStyleBackColor = true;
 
-        static StdButton()
+        static XButton()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdButton"/> class
+        /// Initializes a new instance of the <see cref="XButton"/> class
         /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StdButton(AbstractControl parent)
+        public XButton(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new <see cref="StdButton"/> instance.
+        /// Initializes a new <see cref="XButton"/> instance.
         /// </summary>
-        public StdButton()
+        public XButton()
         {
             WantTab = true;
             IsGraphicControl = false;
@@ -97,19 +97,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new <see cref="StdButton"/> instance with the specified text.
+        /// Initializes a new <see cref="XButton"/> instance with the specified text.
         /// </summary>
-        public StdButton(string text)
+        public XButton(string text)
             : this()
         {
             Text = text;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdButton"/> class
+        /// Initializes a new instance of the <see cref="XButton"/> class
         /// with the specified text, click action and parent control.
         /// </summary>
-        public StdButton(Control parent, string text, Action? clickAction = null)
+        public XButton(Control parent, string text, Action? clickAction = null)
             : this()
         {
             Text = text;
@@ -118,10 +118,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdButton"/> class
+        /// Initializes a new instance of the <see cref="XButton"/> class
         /// with the specified text and click action.
         /// </summary>
-        public StdButton(string text, Action clickAction)
+        public XButton(string text, Action clickAction)
             : this()
         {
             Text = text;
@@ -187,12 +187,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether a <see cref="StdButton"/> is
+        /// Gets or sets a value that indicates whether a <see cref="XButton"/> is
         /// the default button. In a modal dialog,
         /// a user invokes the default button by pressing the ENTER key.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the <see cref="StdButton"/> is the default
+        /// <see langword="true"/> if the <see cref="XButton"/> is the default
         /// button; otherwise, <see
         /// langword="false"/>. The default is <see langword="false"/>.
         /// </value>
@@ -304,12 +304,12 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value that indicates whether a <see cref="StdButton"/>
+        /// Gets or sets a value that indicates whether a <see cref="XButton"/>
         /// is a 'Cancel' button. In a modal dialog, a
         /// user can activate the 'Cancel' button by pressing the ESC key.
         /// </summary>
         /// <value>
-        /// <see langword="true"/> if the <see cref="StdButton"/> is a 'Cancel'
+        /// <see langword="true"/> if the <see cref="XButton"/> is a 'Cancel'
         /// button; otherwise, <see langword="false"/>.
         /// The default is <see langword="false"/>.
         /// </value>
@@ -387,4 +387,13 @@ namespace Alternet.UI
             return true;
         }
     }
+
+
+#pragma warning disable
+    [Obsolete("StdButton is deprecated. Use XButton instead.")]
+    public class StdButton : XButton
+    {
+
+    }
+#pragma warning restore
 }

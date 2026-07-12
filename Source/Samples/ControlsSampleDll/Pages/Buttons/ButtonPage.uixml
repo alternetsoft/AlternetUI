@@ -41,7 +41,7 @@
           <EnumPicker Name="imageAlignComboBox" Margin="5"
                     Grid.Column="1" Grid.Row="1"/>
 
-          <StdButton Text="Image Margins..." Name="imageMarginsButton"
+          <XButton Text="Image Margins..." Name="imageMarginsButton"
                   RowIndex="3" ColumnIndex="0" IsTextLocalized="true"
                   ColumnSpan="2" Margin="5"/>
         </Grid>
@@ -49,29 +49,29 @@
 
       <HorizontalStackPanel Margin="5,0,0,0">
         <VerticalStackPanel Margin="0,0,0,0">
-          <StdCheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" IsTextLocalized="true" />
-          <StdCheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0"
+          <XCheckBox Text="Disabled" Name="disabledCheckBox" Margin="0,10,0,0" IsTextLocalized="true" />
+          <XCheckBox Text="Image" Name="imageCheckBox" Margin="0,10,0,0"
                     IsChecked="True" IsTextLocalized="true" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <StdCheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
-          <StdCheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
+          <XCheckBox Text="Default" Name="defaultCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
+          <XCheckBox Text="Bold" Name="boldCheckBox" Margin="0,10,0,0"  IsTextLocalized="true"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <StdCheckBox Text="Border" Name="hasBorderCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Border" Name="hasBorderCheckBox" IsTextLocalized="true"
                     IsChecked="True" Margin="0,10,0,0" />
-          <StdCheckBox Text="TabStop" Name="tabStopCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="TabStop" Name="tabStopCheckBox" IsTextLocalized="true"
                     IsChecked="True" Margin="0,10,0,0" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <StdCheckBox Text="Show Text" Name="showTextCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Show Text" Name="showTextCheckBox" IsTextLocalized="true"
                     IsChecked="True" Margin="0,10,0,0" />
-          <StdCheckBox Text="Debug Corners" Name="debugCornersCheckBox"
+          <XCheckBox Text="Debug Corners" Name="debugCornersCheckBox"
                     IsChecked="False" Margin="0,10,0,0" />
-          <StdCheckBox Text="Exact Fit" IsChecked="False" IsTextLocalized="true"
+          <XCheckBox Text="Exact Fit" IsChecked="False" IsTextLocalized="true"
                     Name="exactFitCheckBox" Margin="0,10,0,0" IsVisible="false" />
         </VerticalStackPanel>
       </HorizontalStackPanel>
@@ -79,9 +79,9 @@
     </VerticalStackPanel>
 
     <Panel Grid.Row="1" Margin="10" Layout="Horizontal" VerticalAlignment="Fill">
-      <StdButton Name="button" VerticalAlignment="Top"  IsTextLocalized="true" MarginTop="10"
+      <XButton Name="button" VerticalAlignment="Top"  IsTextLocalized="true" MarginTop="10"
               HorizontalAlignment="Center" Click="Button_Click"/>
-      <StdButton Name="button2" VerticalAlignment="Bottom" Text="Secondary Button"
+      <XButton Name="button2" VerticalAlignment="Bottom" Text="Secondary Button"
               HorizontalAlignment="Right"/>
     </Panel>
   </VerticalStackPanel>

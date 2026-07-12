@@ -54,7 +54,7 @@ namespace DrawingSample
                 page.Rotation = rotationSlider.Value;
             };
 
-            GetChildrenRecursive().Action<StdSlider>((c) => c.ClearTicks());
+            GetChildrenRecursive().Action<XSlider>((c) => c.ClearTicks());
         }
     }
 }

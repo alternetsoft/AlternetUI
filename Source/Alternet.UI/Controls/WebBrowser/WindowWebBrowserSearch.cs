@@ -13,17 +13,17 @@ namespace Alternet.UI
     /// </summary>
     public partial class WindowWebBrowserSearch : Window
     {
-        private readonly StdCheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
-        private readonly StdCheckBox findEntireWordCheckBox
+        private readonly XCheckBox findWrapCheckBox = new(CommonStrings.Default.FindOptionWrap);
+        private readonly XCheckBox findEntireWordCheckBox
             = new(CommonStrings.Default.FindOptionMatchWholeWord);
 
-        private readonly StdCheckBox findMatchCaseCheckBox
+        private readonly XCheckBox findMatchCaseCheckBox
             = new(CommonStrings.Default.FindOptionMatchCase);
 
-        private readonly StdCheckBox findHighlightResultCheckBox
+        private readonly XCheckBox findHighlightResultCheckBox
             = new(CommonStrings.Default.FindOptionHighlight);
 
-        private readonly StdCheckBox findBackwardsCheckBox
+        private readonly XCheckBox findBackwardsCheckBox
             = new(CommonStrings.Default.FindOptionBackwards);
 
         private readonly VerticalStackPanel findPanel = new()
@@ -38,9 +38,9 @@ namespace Alternet.UI
             Margin = 5,
         };
 
-        private readonly StdButton findButton = new(CommonStrings.Default.ButtonFind);
-        private readonly StdButton findClearButton = new(CommonStrings.Default.ButtonClear);
-        private readonly StdButton closeButton = new(CommonStrings.Default.ButtonCancel);
+        private readonly XButton findButton = new(CommonStrings.Default.ButtonFind);
+        private readonly XButton findClearButton = new(CommonStrings.Default.ButtonClear);
+        private readonly XButton closeButton = new(CommonStrings.Default.ButtonCancel);
 
         private WebBrowserFindParams findParams;
 

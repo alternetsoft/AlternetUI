@@ -160,7 +160,7 @@ namespace Alternet.UI
                     panelControl = InsertTextBtnCore(index, item.Text, item.ToolTip, OnControlClick);
                     break;
                 case BarPanelKind.ProgressBar:
-                    StdProgressBar progressBar = new()
+                    XProgressBar progressBar = new()
                     {
                         MinHeight = DefaultProgressBarSize.Height,
                         AutoSize = false,

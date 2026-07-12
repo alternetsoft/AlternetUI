@@ -11,12 +11,12 @@
 
       <HorizontalStackPanel>
         <VerticalStackPanel>
-          <StdCheckBox Name="boldCheckBox" Text="Bold" Margin="0,0,0,5"/>
-          <StdCheckBox Name="italicCheckBox" Text="Italic" Margin="0,0,0,5"/>
+          <XCheckBox Name="boldCheckBox" Text="Bold" Margin="0,0,0,5"/>
+          <XCheckBox Name="italicCheckBox" Text="Italic" Margin="0,0,0,5"/>
         </VerticalStackPanel>
         <VerticalStackPanel>
-          <StdCheckBox Name="underlinedCheckBox" Text="Underlined" Margin="0,0,0,5" />
-          <StdCheckBox Name="strikethroughCheckBox" Text="Strikethrough" Margin="0,0,0,5" />
+          <XCheckBox Name="underlinedCheckBox" Text="Underlined" Margin="0,0,0,5" />
+          <XCheckBox Name="strikethroughCheckBox" Text="Strikethrough" Margin="0,0,0,5" />
         </VerticalStackPanel>
       </HorizontalStackPanel>
 
@@ -26,10 +26,10 @@
         <FontNamePicker Name="customFontFamilyComboBox" Margin="0,5,5,5"/>
       </HorizontalStackPanel>
 
-      <StdCheckBox Name="textWidthLimitEnabledCheckBox" Text="Limit width:" Margin="0,5,5,0" />
+      <XCheckBox Name="textWidthLimitEnabledCheckBox" Text="Limit width:" Margin="0,5,5,0" />
       <IntPicker Name="textWidthLimitSlider" Margin="0,5,5,0" SmallChange="10" LargeChange="20"/>
 
-      <StdCheckBox Name="textHeightSetCheckBox" IsTextLocalized="true"
+      <XCheckBox Name="textHeightSetCheckBox" IsTextLocalized="true"
         Text="Set height:" Margin="0,10,5,0"/>
       <IntPicker Name="textHeightValueSlider" Margin="0,5,5,0" SmallChange="10" LargeChange="20"/>
 
@@ -38,7 +38,7 @@
     </StackPanel>
 
     <StackPanel Orientation="Vertical" Margin="5" Title="Settings 2" Padding="5">
-      <StdButton Text="Toggle Text" Name="toggleTextButton" Margin="10"/>
+      <XButton Text="Toggle Text" Name="toggleTextButton" Margin="10"/>
       <PanelSettings Name="propertyGrid" Margin="10" VerticalAlignment="Fill"/>
     </StackPanel>
 

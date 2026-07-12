@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// Represents a tree view control used in inner popups.
     /// This control is supposed to be shown inside the client area of another control.
     /// </summary>
-    public partial class InnerPopupTreeView : ResizablePopupControl<StdTreeView>
+    public partial class InnerPopupTreeView : ResizablePopupControl<XTreeView>
     {
         /// <summary>
         /// Gets or sets default minimal popup width.

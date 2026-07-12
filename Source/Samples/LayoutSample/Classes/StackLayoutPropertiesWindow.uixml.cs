@@ -10,7 +10,7 @@ namespace LayoutSample
         private readonly AlignmentControl containerAlignmentControl;
         private readonly VerticalStackPanel dockedSettings = new();
         
-        private readonly StdListBox dockedControl = new()
+        private readonly XListBox dockedControl = new()
         {
             Dock = DockStyle.Left,
             MinWidth = 150,
@@ -135,7 +135,7 @@ namespace LayoutSample
         {
             if (subjectPanel == null)
                 return;
-            if(sender is not StdCheckBox checkBox)
+            if(sender is not XCheckBox checkBox)
                 return;
 
             subjectPanel.Orientation = checkBox.IsChecked

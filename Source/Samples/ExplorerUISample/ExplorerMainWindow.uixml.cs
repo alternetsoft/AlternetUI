@@ -15,7 +15,7 @@ namespace ExplorerUISample
             TopVisible = false,
             BottomVisible = false,
         };
-        private readonly StdTreeView treeView = new()
+        private readonly XTreeView treeView = new()
         {
             HasBorder = false,
         };
@@ -94,7 +94,7 @@ namespace ExplorerUISample
                 progressLabel.Margin = 10;
                 progressLabel.Parent = panel;
 
-                var progressBar = new StdProgressBar()
+                var progressBar = new XProgressBar()
                 {
                     Margin = (10,0,10,10),
                     Parent = panel,

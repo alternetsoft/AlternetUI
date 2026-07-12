@@ -6,7 +6,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    public partial class StdButton
+    public partial class XButton
     {
         /// <summary>
         /// Represents the default background color used for hovered buttons in light themes.
@@ -54,7 +54,7 @@ namespace Alternet.UI
         private static LightDarkColor? defaultForeColor;
 
         /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control when
+        /// Gets or sets the default background color used for <see cref="XButton"/> control when
         /// it is in hovered state and its <see cref="IsDefault"/> property is set to true.
         /// </summary>
         public static LightDarkColor DefaultHoveredBackColorIsd
@@ -68,7 +68,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control when
+        /// Gets or sets the default background color used for <see cref="XButton"/> control when
         /// its <see cref="IsDefault"/> property is set to true.
         /// </summary>
         public static LightDarkColor DefaultNormalBackColorIsd
@@ -82,7 +82,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default foreground color used for <see cref="StdButton"/> control when
+        /// Gets or sets the default foreground color used for <see cref="XButton"/> control when
         /// it's <see cref="IsDefault"/> property is set to true.
         /// </summary>
         public static LightDarkColor DefaultForeColorIsd
@@ -96,7 +96,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control.
+        /// Gets or sets the default background color used for <see cref="XButton"/> control.
         /// </summary>
         public static LightDarkColor DefaultNormalBackColor
         {
@@ -123,7 +123,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default background color used for <see cref="StdButton"/> control when it is in a hovered state.
+        /// Gets or sets the default background color used for <see cref="XButton"/> control when it is in a hovered state.
         /// </summary>
         public static LightDarkColor DefaultHoveredBackColor
         {
@@ -137,7 +137,7 @@ namespace Alternet.UI
 
 
         /// <summary>
-        /// Gets or sets the default foreground color used for <see cref="StdButton"/> control.
+        /// Gets or sets the default foreground color used for <see cref="XButton"/> control.
         /// </summary>
         public static LightDarkColor DefaultNormalForeColor
         {
@@ -150,7 +150,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> elements in a hot (hovered or active) state.
+        /// Gets or sets the default border color used for <see cref="XButton"/> elements in a hot (hovered or active) state.
         /// </summary>
         /// <remarks>The default value is initialized to <see cref="LightDarkColors.Blue"/> if not previously set.</remarks>
         public static LightDarkColor DefaultHoveredBorderColor
@@ -167,7 +167,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the normal state.
+        /// Gets or sets the default border color used for <see cref="XButton"/> controls in the normal state.
         /// </summary>
         public static LightDarkColor DefaultBorderColor
         {
@@ -183,7 +183,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the focused state.
+        /// Gets or sets the default border color used for <see cref="XButton"/> controls in the focused state.
         /// </summary>
         public static LightDarkColor DefaultFocusedBorderColor
         {
@@ -199,7 +199,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default border color used for <see cref="StdButton"/> controls in the application
+        /// Gets or sets the default border color used for <see cref="XButton"/> controls in the application
         /// when <see cref="IsDefault"/> property of the control is set to true.
         /// </summary>
         public static LightDarkColor DefaultBorderColorIsd
@@ -216,7 +216,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the default hovered border color used for <see cref="StdButton"/> controls in the application
+        /// Gets or sets the default hovered border color used for <see cref="XButton"/> controls in the application
         /// when <see cref="IsDefault"/> property of the control is set to true.
         /// </summary>
         public static LightDarkColor DefaultHoveredBorderColorIsd

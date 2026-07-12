@@ -16,7 +16,7 @@ namespace ControlsSample
             SuggestedWidth = 200,
         };
 
-        private readonly StdCheckBox textVisibleCheckBox = new(GenericStrings.TextVisible)
+        private readonly XCheckBox textVisibleCheckBox = new(GenericStrings.TextVisible)
         {
             IsChecked = true,
         };
@@ -26,7 +26,7 @@ namespace ControlsSample
             MinChildMargin = 5,
         };
 
-        private readonly StdButton setColorButton = new(GenericStrings.SetColor)
+        private readonly XButton setColorButton = new(GenericStrings.SetColor)
         {
             HorizontalAlignment = HorizontalAlignment.Left,
         };

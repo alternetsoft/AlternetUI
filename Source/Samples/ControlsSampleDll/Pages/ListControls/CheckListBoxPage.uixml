@@ -6,37 +6,37 @@
   <Panel >
       <StackPanel Orientation="Horizontal" Padding="5">
 
-        <StdCheckListBox
+        <XCheckListBox
           SuggestedWidth="200" Name="checkListBox" 
           CheckedChanged="CheckListBox_CheckedChanged"
           MouseLeftButtonDown="CheckListBox_MouseLeftButtonDown"
           Margin="0,0,0,5"/>
 
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-          <StdButton Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" IsTextLocalized="true"/>
-          <StdButton Text="Remove Checked" Name="removeCheckedButton" Margin="0,3,0,0" IsTextLocalized="true"
+          <XButton Text="Add Item" Name="addItemButton" Click="AddItemButton_Click" IsTextLocalized="true"/>
+          <XButton Text="Remove Checked" Name="removeCheckedButton" Margin="0,3,0,0" IsTextLocalized="true"
                   Click="RemoveCheckedButton_Click"/>
-          <StdButton Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0" IsTextLocalized="true"
+          <XButton Text="Remove Selected" Name="removeItemButton" Margin="0,3,0,0" IsTextLocalized="true"
                   Click="RemoveItemButton_Click"/>
-          <StdButton Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" IsTextLocalized="true"
+          <XButton Text="Add 5000 Items" Name="addManyItemsButton" Margin="0,3,0,0" IsTextLocalized="true"
                   Click="AddManyItemsButton_Click" />
-          <StdButton Text="Make Last Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
+          <XButton Text="Make Last Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-          <StdButton Text="Check Item: 2" Name="checkItemAtIndex2Button" IsTextLocalized="true"
+          <XButton Text="Check Item: 2" Name="checkItemAtIndex2Button" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="CheckItemAtIndex2Button_Click" />
-          <StdButton Text="Check Items: 2, 4" Name="checkItemAtIndices2And4Button" IsTextLocalized="true"
+          <XButton Text="Check Items: 2, 4" Name="checkItemAtIndices2And4Button" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="CheckItemAtIndices2And4Button_Click" />
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-          <StdButton Text="Uncheck All" Name="uncheckAllButton" IsTextLocalized="true"
+          <XButton Text="Uncheck All" Name="uncheckAllButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="UncheckAllButton_Click" />
-          <StdButton Text="Has Border" Name="hasBorderButton" IsTextLocalized="true"
+          <XButton Text="Has Border" Name="hasBorderButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="HasBorderButton_Click" />
-          <StdCheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
+          <XCheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox"
                     Margin="0,3,0,3" IsChecked="true" IsTextLocalized="true"
                     CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-          <StdButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
+          <XButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
                   Margin="0,3,0,3" Click="EditorButton_Click" IsVisible="false"/>
         </StackPanel>
 

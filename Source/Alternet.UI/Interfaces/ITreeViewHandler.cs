@@ -59,7 +59,7 @@ namespace Alternet.UI
         /// </summary>
         bool ShowExpandButtons { get; set; }
 
-        /// <inheritdoc cref="StdTreeView.TopItem"/>
+        /// <inheritdoc cref="XTreeView.TopItem"/>
         TreeViewItem? TopItem { get; }
 
         /// <summary>
@@ -72,10 +72,10 @@ namespace Alternet.UI
         /// </summary>
         bool AllowLabelEdit { get; set; }
 
-        /// <inheritdoc cref="StdTreeView.ExpandAll"/>
+        /// <inheritdoc cref="XTreeView.ExpandAll"/>
         void ExpandAll();
 
-        /// <inheritdoc cref="StdTreeView.CollapseAll"/>
+        /// <inheritdoc cref="XTreeView.CollapseAll"/>
         void CollapseAll();
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Alternet.UI
         /// <param name="item">Item.</param>
         void CollapseAllChildren(TreeViewItem item);
 
-        /// <inheritdoc cref="StdTreeView.MakeAsListBox"/>
+        /// <inheritdoc cref="XTreeView.MakeAsListBox"/>
         void MakeAsListBox();
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Alternet.UI
         /// Must not be <see langword="null"/>.</param>
         void EnsureVisible(TreeViewItem item);
 
-        /// <inheritdoc cref="StdTreeView.ScrollIntoView"/>
+        /// <inheritdoc cref="XTreeView.ScrollIntoView"/>
         void ScrollIntoView(TreeViewItem item);
 
         /// <summary>

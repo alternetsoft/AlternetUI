@@ -12,9 +12,9 @@ namespace Alternet.UI
     /// inside the library and doesn't use native list box control.
     /// </summary>
     /// <remarks>
-    /// The <see cref="StdListBox"/> control enables you to display a list of items to
+    /// The <see cref="XListBox"/> control enables you to display a list of items to
     /// the user that the user can select by clicking.
-    /// A <see cref="StdListBox"/> control can provide single or multiple selections
+    /// A <see cref="XListBox"/> control can provide single or multiple selections
     /// using the <see cref="SelectionMode"/> property.
     /// The <see cref="AbstractControl.BeginUpdate"/> and <see cref="AbstractControl.EndUpdate"/>
     /// methods enable
@@ -24,25 +24,25 @@ namespace Alternet.UI
     /// properties provide access to the collection of selected items and their indices.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class StdListBox : VirtualListBox, ICustomListBox<object>
+    public partial class XListBox : VirtualListBox, ICustomListBox<object>
     {
         private readonly ListBoxItems adapter;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdListBox"/> class
+        /// Initializes a new instance of the <see cref="XListBox"/> class
         /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StdListBox(AbstractControl parent)
+        public XListBox(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdListBox"/> class.
+        /// Initializes a new instance of the <see cref="XListBox"/> class.
         /// </summary>
-        public StdListBox()
+        public XListBox()
         {
             HasBorder = true;
             adapter = new ListBoxItems(() => BaseItems);
@@ -357,4 +357,11 @@ namespace Alternet.UI
             item?.SetValue(data);
         }
     }
+
+#pragma warning disable
+    [Obsolete("Use XListBox instead.")]
+    public partial class StdListBox : XListBox
+    {
+    }
+#pragma warning restore
 }

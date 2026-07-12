@@ -34,11 +34,11 @@ namespace Alternet.UI
         private bool isDetailed;
         private TextBox? messageTextBox;
         
-        private StdButton detailsButton;
-        private StdButton continueButton;
-        private StdButton copyButton;
-        private StdButton quitButton;
-        private StdButton throwButton;
+        private XButton detailsButton;
+        private XButton continueButton;
+        private XButton copyButton;
+        private XButton quitButton;
+        private XButton throwButton;
 
         private Label instructionsLabel;
         private Label exceptionHeaderLabel;
@@ -152,30 +152,30 @@ namespace Alternet.UI
         /// Gets the "Details" button control, which can be used to show or hide detailed
         /// information about the exception when clicked.
         /// </summary>
-        public StdButton DetailsButton => detailsButton;
+        public XButton DetailsButton => detailsButton;
 
         /// <summary>
         /// Gets the "Continue" button control, which can be used to allow
         /// the user to continue running the application after an exception has occurred when clicked.
         /// </summary>
-        public StdButton ContinueButton => continueButton;
+        public XButton ContinueButton => continueButton;
 
         /// <summary>
         /// Gets the "Copy" button control, which can be used to copy exception information to clipboard when clicked.
         /// </summary>
-        public StdButton CopyButton => copyButton;
+        public XButton CopyButton => copyButton;
 
         /// <summary>
         /// Gets the "Throw" button control, which can be used to throw the exception
         /// to be handled by the development environment or default exception handler when clicked.
         /// </summary>
-        public StdButton ThrowButton => throwButton;
+        public XButton ThrowButton => throwButton;
 
         /// <summary>
         /// Gets the "Quit" button control, which can be used to allow the user to quit the
         /// application after an exception has occurred when clicked.
         /// </summary>
-        public StdButton QuitButton => quitButton;
+        public XButton QuitButton => quitButton;
 
         /// <summary>
         /// Gets or sets additional information related to the exception.
@@ -470,19 +470,19 @@ namespace Alternet.UI
             var buttonContainer = new HorizontalStackPanel();
             buttonContainer.Padding = 10;
 
-            detailsButton = new StdButton
+            detailsButton = new XButton
             {
                 Text = CommonStrings.Default.ButtonDetails,
                 Parent = buttonContainer,
             };
 
-            copyButton = new StdButton
+            copyButton = new XButton
             {
                 Text = CommonStrings.Default.ButtonCopy,
                 Parent = buttonContainer,
             };
 
-            continueButton = new StdButton
+            continueButton = new XButton
             {
                 Text = CommonStrings.Default.ButtonContinue,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -490,7 +490,7 @@ namespace Alternet.UI
                 Parent = buttonContainer,
             };
 
-            throwButton = new StdButton
+            throwButton = new XButton
             {
                 Text = CommonStrings.Default.ButtonThrow,
                 HorizontalAlignment = HorizontalAlignment.Right,
@@ -498,7 +498,7 @@ namespace Alternet.UI
                 Parent = buttonContainer,
             };
 
-            quitButton = new StdButton
+            quitButton = new XButton
             {
                 Text = CommonStrings.Default.ButtonQuit,
                 IsDefault = true,

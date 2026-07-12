@@ -28,14 +28,14 @@ namespace ControlsSample
             sliderv3.TickStyle = SliderTickStyle.BottomRight;
             sliderv4.TickStyle = SliderTickStyle.Both;
 
-            sliderv4.ThumbControl.Shape = StdSlider.SliderThumb.ShapeType.Rectangle;
+            sliderv4.ThumbControl.Shape = XSlider.SliderThumb.ShapeType.Rectangle;
 
             sliderh1.TickStyle = SliderTickStyle.None;
             sliderh2.TickStyle = SliderTickStyle.TopLeft;
             sliderh3.TickStyle = SliderTickStyle.BottomRight;
             sliderh4.TickStyle = SliderTickStyle.Both;
 
-            sliderh4.ThumbControl.Shape = StdSlider.SliderThumb.ShapeType.Rectangle;
+            sliderh4.ThumbControl.Shape = XSlider.SliderThumb.ShapeType.Rectangle;
 
             sliderh1.ValueDisplay = displayH1;
             sliderh2.ValueDisplay = displayH2;
@@ -104,7 +104,7 @@ namespace ControlsSample
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
         {
-            App.LogNameValueReplace("Slider.Value",((StdSlider)sender!).Value);
+            App.LogNameValueReplace("Slider.Value",((XSlider)sender!).Value);
         }
 
         private void ProgressBarControlSlider_ValueChanged(object? sender, EventArgs e)
@@ -144,9 +144,9 @@ namespace ControlsSample
             return parents.SelectMany(x => x.Children.OfType<T>());
         }
 
-        private IEnumerable<StdSlider> GetAllSliders()
+        private IEnumerable<XSlider> GetAllSliders()
         {
-            return GetAllChildrenOfType<StdSlider>(horizontalSlidersPanel, verticalSlidersGrid);
+            return GetAllChildrenOfType<XSlider>(horizontalSlidersPanel, verticalSlidersGrid);
         }
     }
 }

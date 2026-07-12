@@ -42,10 +42,10 @@ namespace ControlsSample
             }
         }
 
-        private IEnumerable<StdProgressBar> GetFirstProgressBars()
+        private IEnumerable<XProgressBar> GetFirstProgressBars()
         {
-            var c1 = verticalProgressBarsGrid.FirstChildOfType<StdProgressBar>();
-            var c2 = horizontalProgressBarsPanel.FirstChildOfType<StdProgressBar>();
+            var c1 = verticalProgressBarsGrid.FirstChildOfType<XProgressBar>();
+            var c2 = horizontalProgressBarsPanel.FirstChildOfType<XProgressBar>();
 
             if (c1 is not null)
                 yield return c1;
@@ -53,13 +53,13 @@ namespace ControlsSample
                 yield return c2;
         }
 
-        private IEnumerable<StdProgressBar> GetAllProgressBars()
+        private IEnumerable<XProgressBar> GetAllProgressBars()
         {
             return new AbstractControl[]
             {
                 verticalProgressBarsGrid,
                 horizontalProgressBarsPanel
-            }.SelectMany(x => x.Children.OfType<StdProgressBar>());
+            }.SelectMany(x => x.Children.OfType<XProgressBar>());
         }
 
         private void IndeterminateCheckBox_CheckedChanged(object sender, System.EventArgs e)

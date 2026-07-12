@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// </summary>
     public class PanelFormSelector : Panel
     {
-        private readonly StdTreeView view = new()
+        private readonly XTreeView view = new()
         {
             MinimumSize = (350, 400),
         };
@@ -24,7 +24,7 @@ namespace Alternet.UI
             Margin = (10, 0, 0, 0),
         };
 
-        private readonly StdButton openButton = new()
+        private readonly XButton openButton = new()
         {
             Text = "Open",
             Margin = (0, 0, 0, 5),
@@ -68,12 +68,12 @@ namespace Alternet.UI
         /// <summary>
         /// Gets "Open" button.
         /// </summary>
-        public StdButton OpenButton => openButton;
+        public XButton OpenButton => openButton;
 
         /// <summary>
         /// Gets control with the list of forms.
         /// </summary>
-        public StdTreeView View => view;
+        public XTreeView View => view;
 
         /// <summary>
         /// Gets button panel which contains "Open" button.

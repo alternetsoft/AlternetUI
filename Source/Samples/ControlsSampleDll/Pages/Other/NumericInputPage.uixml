@@ -12,31 +12,31 @@
         <Grid Name="numericUpDownsPanel" Margin="5" ColumnCount="2" RowCount="4">
           <Label Text="[-50..10]" Margin="0,0,0,5" Grid.Column="0" Grid.Row="0"
                  VerticalAlignment="Center"/>
-          <StdIntPicker Margin="10,0,0,5" Maximum="10" Minimum="-50" Value="-5"
+          <XIntPicker Margin="10,0,0,5" Maximum="10" Minimum="-50" Value="-5"
                          Name="intPicker1" SuggestedWidth="300" Grid.Column="1" Grid.Row="0"/>
 
           <Label Text="[0..20]" Margin="0,0,0,5"  Grid.Column="0" Grid.Row="1"
                  VerticalAlignment="Center"/>
-          <StdIntPicker Maximum="20" Value="5" Margin="10,0,0,5" Name="intPicker4"
+          <XIntPicker Maximum="20" Value="5" Margin="10,0,0,5" Name="intPicker4"
                          SuggestedWidth="300" Grid.Column="1" Grid.Row="1"/>
 
           <Label Text="[0..100]" Margin="0,0,0,5"  Grid.Column="0" Grid.Row="2"
                  VerticalAlignment="Center"/>
-          <StdIntPicker Maximum="100" Value="100" Margin="10,0,0,5" Name="intPicker3"
+          <XIntPicker Maximum="100" Value="100" Margin="10,0,0,5" Name="intPicker3"
                          SuggestedWidth="300" Grid.Column="1" Grid.Row="2"/>
 
           <Label Text="[50..200]" Margin="0,0,0,5"  Grid.Column="0" Grid.Row="3"
                    VerticalAlignment="Center"/>
-          <StdIntPicker Minimum="50" Maximum="200" Value="125" Margin="10,0,0,5" Name="intPicker2"
+          <XIntPicker Minimum="50" Maximum="200" Value="125" Margin="10,0,0,5" Name="intPicker2"
                          SuggestedWidth="300" Grid.Column="1" Grid.Row="3"/>
         </Grid>
 
         <StackPanel Orientation="Vertical" Margin="10,5,5,5">
-          <StdButton Text="Increase All" Margin="0,0,0,5" Name="increaseAllButton"
+          <XButton Text="Increase All" Margin="0,0,0,5" Name="increaseAllButton"
                   Click="IncreaseAllButton_Click" IsTextLocalized="true" />
-          <StdButton Text="Decrease All" Margin="0,0,0,5" Name="decreaseAllButton"
+          <XButton Text="Decrease All" Margin="0,0,0,5" Name="decreaseAllButton"
                   Click="DecreaseAllButton_Click" IsTextLocalized="true" />
-          <StdButton Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
+          <XButton Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton"
                   Click="HasBorderButton_Click" Visible="false" IsTextLocalized="true"/>
         </StackPanel>
       </HorizontalStackPanel>
@@ -45,7 +45,7 @@
 
     <VerticalStackPanel Padding="10" Title="Calculator" Name="calcPanel" MinChildMargin="10">
       <Calculator HasBorder="true" Name="calculator"/>
-      <StdButton Text="Show popup" Name="showPopupButton"/>
+      <XButton Text="Show popup" Name="showPopupButton"/>
     </VerticalStackPanel>
 
   </TabControl>

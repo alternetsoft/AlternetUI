@@ -368,11 +368,11 @@ namespace Alternet.UI
         public SpeedButton? AsSpeedButton => Control as SpeedButton;
 
         /// <summary>
-        /// Gets the <see cref="StdProgressBar"/> control in which the panel is displayed
+        /// Gets the <see cref="XProgressBar"/> control in which the panel is displayed
         /// in case the panel has <see cref="BarPanelKind.ProgressBar"/> kind.
         /// </summary>
         [Browsable(false)]
-        public StdProgressBar? AsProgressBar => Control as StdProgressBar;
+        public XProgressBar? AsProgressBar => Control as XProgressBar;
 
         /// <summary>
         /// Gets the <see cref="Label"/> control in which the panel is displayed

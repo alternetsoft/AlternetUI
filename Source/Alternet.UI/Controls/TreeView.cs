@@ -13,8 +13,8 @@ namespace Alternet.UI
     /// each represented by a <see cref="TreeViewItem"/>.
     /// This control encapsulates the native tree view implemented by the operating system.
     /// It has limited functionality.
-    /// For the full featured tree view control, use the <see cref="StdTreeView"/> control.
-    /// <see cref="StdTreeView"/> supports all capabilities specified in <see cref="TreeViewItem"/> properties
+    /// For the full featured tree view control, use the <see cref="XTreeView"/> control.
+    /// <see cref="XTreeView"/> supports all capabilities specified in <see cref="TreeViewItem"/> properties
     /// and works much faster, especially with large number of items.
     /// </summary>
     /// <remarks>
@@ -1060,7 +1060,7 @@ namespace Alternet.UI
 
         Coord ITreeViewItemContainer.GetLevelMargin()
         {
-            return StdTreeView.DefaultLevelMargin;
+            return XTreeView.DefaultLevelMargin;
         }
 
         void ITreeViewItemContainer.BeginUpdate()

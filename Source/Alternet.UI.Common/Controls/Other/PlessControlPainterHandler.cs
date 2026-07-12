@@ -13,7 +13,7 @@ namespace Alternet.Drawing
     /// </summary>
     public class PlessControlPainterHandler : DisposableObject, IControlPainterHandler
     {
-        private static StdButton? button;
+        private static XButton? button;
 
         /// <summary>
         /// Gets or sets the default size of a check mark in device-independent units.

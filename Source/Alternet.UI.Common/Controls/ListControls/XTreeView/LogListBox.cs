@@ -17,7 +17,7 @@ namespace Alternet.UI
     /// Represents list control with log and debug related functionality.
     /// </summary>
     [ControlCategory(KnownControlCategory.Other)]
-    public partial class LogListBox : StdTreeView
+    public partial class LogListBox : XTreeView
     {
         /// <summary>
         /// Indicates whether message identifiers should be displayed in the log.

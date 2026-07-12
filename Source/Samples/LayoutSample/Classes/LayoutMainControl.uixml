@@ -2,15 +2,15 @@
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="LayoutSample.LayoutMainControl">
   <StackPanel Padding="10">
-	  <StdButton Text="Grid Layout Properties" IsTextLocalized="true" Name="buttonGridLayoutProperties"
+	  <XButton Text="Grid Layout Properties" IsTextLocalized="true" Name="buttonGridLayoutProperties"
               Margin="0,0,0,10" Click="ShowGridLayoutPropertiesButton_Click" />
-	  <StdButton Text="Stack Layout Properties" IsTextLocalized="true" Name="buttonStackLayoutProperties"
+	  <XButton Text="Stack Layout Properties" IsTextLocalized="true" Name="buttonStackLayoutProperties"
               Margin="0,0,0,10" Click="ShowStackLayoutPropertiesButton_Click" />
-      <StdButton Text="Grid 10x10" Margin="0,0,0,10" Name="buttonShowGrid10x10Button"
+      <XButton Text="Grid 10x10" Margin="0,0,0,10" Name="buttonShowGrid10x10Button"
               Click="ShowGrid10x10Button_Click" />
-      <StdButton Text="Scrolling" IsTextLocalized="true" Margin="0,0,0,10" Name="buttonShowScrolling"
+      <XButton Text="Scrolling" IsTextLocalized="true" Margin="0,0,0,10" Name="buttonShowScrolling"
               Click="ShowScrollingButton_Click" />
-      <StdButton Text="Focus" IsTextLocalized="true" Margin="0,0,0,10" Name="buttonShowFocus"
+      <XButton Text="Focus" IsTextLocalized="true" Margin="0,0,0,10" Name="buttonShowFocus"
               Click="ShowFocusButton_Click" />
   </StackPanel>
 </Panel>

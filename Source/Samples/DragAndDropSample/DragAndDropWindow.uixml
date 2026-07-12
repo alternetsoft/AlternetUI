@@ -16,8 +16,8 @@
         <StackPanel Orientation="Vertical" Margin="5" MinChildMargin="5">
           <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" InputTransparent="true"/>
           <Label Text="Clipboard"  IsBold="true" HorizontalAlignment="Center" Margin="5"/>
-          <StdButton Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" Margin="5"/>
-          <StdButton Text="Paste" Name="pasteButton" Margin="5"
+          <XButton Text="Copy" Name="copyButton1" Click="CopyButton_Click" IsTextLocalized="true" Margin="5"/>
+          <XButton Text="Paste" Name="pasteButton" Margin="5"
                   Click="PasteButton_Click" IsTextLocalized="true" />
         </StackPanel>
 
@@ -46,11 +46,11 @@
                     MinWidth="100" MinChildMargin="5" HasBorder="false">
           <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
           <Label Text="Drop Effects" IsBold="true" HorizontalAlignment="Center"/>
-          <StdCheckBox Text="Move" Name="moveDropEffectCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Move" Name="moveDropEffectCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <StdCheckBox Text="Copy" Name="copyDropEffectCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Copy" Name="copyDropEffectCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <StdCheckBox Text="Link" Name="linkDropEffectCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Link" Name="linkDropEffectCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
         </StackPanel>
 
@@ -58,13 +58,13 @@
                     HasBorder="false" MinChildMargin="5">
           <ShapeControl Dock="Fill" ShapeType="RoundedRectangle" CornerRadius="5" />
           <Label Text="Include Formats"  IsBold="true" HorizontalAlignment="Center"/>
-          <StdCheckBox Text="Text" Name="textFormatCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Text" Name="textFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <StdCheckBox Text="Files" Name="filesFormatCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Files" Name="filesFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <StdCheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Bitmap" Name="bitmapFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
-          <StdCheckBox Text="Serializable" Name="serializableFormatCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Serializable" Name="serializableFormatCheckBox" IsTextLocalized="true"
                     IsChecked="true" Margin="0,0,0,5"/>
         </StackPanel>
 

@@ -17,9 +17,9 @@ namespace Alternet.Maui
 {
     /// <summary>
     /// Implements tree view on the MAUI platform using internal
-    /// <see cref="StdTreeView"/> control.
+    /// <see cref="XTreeView"/> control.
     /// </summary>
-    public partial class VirtualTreeControlView : ControlView<StdTreeView>
+    public partial class VirtualTreeControlView : ControlView<XTreeView>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualTreeControlView"/> class.

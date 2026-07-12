@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace PropertyGridSample
 {
-    internal class ShowContextMenuButton : StdButton
+    internal class ShowContextMenuButton : XButton
     {
         public ShowContextMenuButton()
         {

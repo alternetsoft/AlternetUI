@@ -84,31 +84,31 @@
 
       <HorizontalStackPanel Margin="10" Name="menuPanel" Title="Menu" IsTitleLocalized="true">
         <VerticalStackPanel>
-          <StdButton Text="Add Menu Item" IsTextLocalized="true"
+          <XButton Text="Add Menu Item" IsTextLocalized="true"
                     Name="addDynamicMenuItemMenuItem"
                     Click="AddDynamicMenuItemMenuItem_Click"
                     Margin="0,0,0,10" />
 
-          <StdButton Text="Remove Menu Item" IsTextLocalized="true"
+          <XButton Text="Remove Menu Item" IsTextLocalized="true"
                   Name="removeLastDynamicMenuItemMenuItem"
                   Click="RemoveLastDynamicMenuItemMenuItem_Click"
                   Margin="0,0,0,10" />
 
-          <StdButton Name="toggleExitEnabledMenuItem"
+          <XButton Name="toggleExitEnabledMenuItem"
                   Click="ToggleExitEnabledMenuItem_Click" Margin="0,0,0,10" />
 
-          <StdButton Name="toggleSeparatorMenuItem"
+          <XButton Name="toggleSeparatorMenuItem"
                   Click="ToggleSeparatorMenuItem_Click" Margin="0,0,0,10" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Name="roleControlsPanel" Margin="10,0,0,0">
-          <StdButton Text="Set About Item Role to None" IsTextLocalized="true"
+          <XButton Text="Set About Item Role to None" IsTextLocalized="true"
                   Name="setAboutMenuItemRoleToNone"
                   Click="SetAboutMenuItemRoleToNone_Click" Margin="0,0,0,10" />
-          <StdButton Text="Set Options Item Role to None" Name="buttonSetOptionsItemRoletoNone"
+          <XButton Text="Set Options Item Role to None" Name="buttonSetOptionsItemRoletoNone"
                   Click="SetOptionsMenuItemRoleToNone_Click" IsTextLocalized="true"
                   Margin="0,0,0,10" />
-          <StdButton Text="Set Options Item Role to Preferences" Name="buttonSetOptionsItemRoletoPreferences"
+          <XButton Text="Set Options Item Role to Preferences" Name="buttonSetOptionsItemRoletoPreferences"
                   Click="SetOptionsMenuItemRoleToPreferences_Click" IsTextLocalized="true"
                   Margin="0,0,0,10" />
         </VerticalStackPanel>
@@ -127,38 +127,38 @@
 
       <HorizontalStackPanel Margin="10" Name="toolbarPanel" Title="ToolBar" IsTitleLocalized="true">
         <StackPanel>
-          <StdButton Text="Toggle item check" IsTextLocalized="true"
+          <XButton Text="Toggle item check" IsTextLocalized="true"
                   Name="toggleToolbarItemCheckButton"
                   Click="ToggleToolbarItemCheckButton_Click"
                   Margin="5,5,0,5" />
-          <StdButton Text="Toggle item enabled" IsTextLocalized="true"
+          <XButton Text="Toggle item enabled" IsTextLocalized="true"
                   Name="toggleFirstToolbarEnabledButton"
                   Click="ToggleFirstToolbarEnabledButton_Click"
               Margin="5,5,0,5" />
-          <StdButton Text="Add item" IsTextLocalized="true"
+          <XButton Text="Add item" IsTextLocalized="true"
                   Name="addDynamicToolbarItemButton"
                   Click="AddDynamicToolbarItemButton_Click"
                   Margin="5,5,0,5" />
-          <StdButton Text="Remove item" IsTextLocalized="true"
+          <XButton Text="Remove item" IsTextLocalized="true"
                   Name="removeLastDynamicToolbarItemButton"
                   Click="RemoveLastDynamicToolbarItemButton_Click"
                   Margin="5,5,0,5" />
         </StackPanel>
 
         <StackPanel Margin="10,0,0,0">
-          <StdCheckBox Text="No divider" Name="noDividerCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="No divider" Name="noDividerCheckBox" IsTextLocalized="true"
               CheckedChanged="NoDividerCheckBox_Changed" IsChecked="False"
               Margin="5,5,0,5"/>
-          <StdCheckBox Text="Vertical" Name="verticalCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Vertical" Name="verticalCheckBox" IsTextLocalized="true"
               CheckedChanged="VerticalCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <StdCheckBox Text="Is Bottom" Name="isBottomCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Is Bottom" Name="isBottomCheckBox" IsTextLocalized="true"
               CheckedChanged="IsBottomCheckBox_Changed"
               Margin="5,5,0,5" IsChecked="false"/>
-          <StdCheckBox Text="Show text" Name="showToolbarTextCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Show text" Name="showToolbarTextCheckBox" IsTextLocalized="true"
               CheckedChanged="ShowToolbarTextCheckBox_CheckedChanged"
                     Margin="5,5,0,5" IsChecked="True" />
-          <StdCheckBox Text="Show images" Name="showToolbarImagesCheckBox" IsTextLocalized="true"
+          <XCheckBox Text="Show images" Name="showToolbarImagesCheckBox" IsTextLocalized="true"
               CheckedChanged="ShowToolbarImagesCheckBox_CheckedChanged"
               Margin="5,5,0,5" IsChecked="True"/>
         </StackPanel>
@@ -175,22 +175,22 @@
 
       <HorizontalStackPanel Margin="10" Name="statusPanel" Title="StatusBar">
         <VerticalStackPanel>
-          <StdButton Text="Add item" IsTextLocalized="true" Name="statusAddButton" Margin="0,0,0,10" />
-          <StdButton Text="Add separator" IsTextLocalized="true" Name="statusAddSeparatorButton" Margin="0,0,0,10" />
-          <StdButton Text="Add resizable item" IsTextLocalized="true" Name="statusAddResizableButton" Margin="0,0,0,10" />
-          <StdButton Text="More actions..." IsTextLocalized="true" Name="statusMoreActions" Margin="0,0,0,10" />
+          <XButton Text="Add item" IsTextLocalized="true" Name="statusAddButton" Margin="0,0,0,10" />
+          <XButton Text="Add separator" IsTextLocalized="true" Name="statusAddSeparatorButton" Margin="0,0,0,10" />
+          <XButton Text="Add resizable item" IsTextLocalized="true" Name="statusAddResizableButton" Margin="0,0,0,10" />
+          <XButton Text="More actions..." IsTextLocalized="true" Name="statusMoreActions" Margin="0,0,0,10" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <StdButton Text="Remove" IsTextLocalized="true" Name="statusRemoveButton" Margin="0,0,0,10" />
-          <StdButton Text="Clear" Margin="0,0,0,10" IsTextLocalized="true" Name="statusClearButton"/>
-          <StdButton Text="Null" Margin="0,0,0,10" IsTextLocalized="true" Name="statusNullButton"/>
-          <StdButton Text="Recreate" Margin="0,0,0,10" IsTextLocalized="true" Name="statusRecreateButton"/>
+          <XButton Text="Remove" IsTextLocalized="true" Name="statusRemoveButton" Margin="0,0,0,10" />
+          <XButton Text="Clear" Margin="0,0,0,10" IsTextLocalized="true" Name="statusClearButton"/>
+          <XButton Text="Null" Margin="0,0,0,10" IsTextLocalized="true" Name="statusNullButton"/>
+          <XButton Text="Recreate" Margin="0,0,0,10" IsTextLocalized="true" Name="statusRecreateButton"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <StdButton Text="Edit..." Margin="0,0,0,10" Name="statusEditButton" IsTextLocalized="true"/>
-          <StdButton
+          <XButton Text="Edit..." Margin="0,0,0,10" Name="statusEditButton" IsTextLocalized="true"/>
+          <XButton
             Text="Toggle Grip" IsTextLocalized="true"
             Name="showSizingGripButton"
             Click="ShowSizingGripButton_Click"

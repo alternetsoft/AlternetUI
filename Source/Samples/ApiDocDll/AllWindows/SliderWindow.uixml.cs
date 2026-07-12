@@ -15,7 +15,7 @@ namespace ApiDoc
         public void SliderExample1()
         {
             #region SliderCSharpCreation
-            var Slider = new Alternet.UI.StdSlider()
+            var Slider = new Alternet.UI.XSlider()
             {
                 Minimum = 50,
                 Maximum = 200,

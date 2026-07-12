@@ -12,26 +12,26 @@
 
       <Panel Title="File and Directory" Margin="10" IsTitleLocalized="true" >
         <StackPanel>
-          <StdCheckBox Text="Set Initial Dir to User Home Dir" IsTextLocalized="true"
+          <XCheckBox Text="Set Initial Dir to User Home Dir" IsTextLocalized="true"
             Name="setInitialDirectoryCheckBox" Margin="5" />
 
-          <StdCheckBox Text="Set Title to 'Custom Title'" IsTextLocalized="true"
+          <XCheckBox Text="Set Title to 'Custom Title'" IsTextLocalized="true"
                     Name="setCustomTitleCheckBox" Margin="5" />
 
-          <StdCheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" IsTextLocalized="true" />
+          <XCheckBox Text="Set Filter" Name="setFilterCheckBox" Margin="5" IsTextLocalized="true" />
 
           <Border Margin="10" Layout="Vertical" >
               <Label Text="Open File Dialog:" Margin="5"/>
-              <StdCheckBox Text="Allow Multiple Selection" IsTextLocalized="true"
+              <XCheckBox Text="Allow Multiple Selection" IsTextLocalized="true"
                   Name="allowMultipleSelectionCheckBox" Margin="5" />
-              <StdButton Text="Show Open File Dialog" Name="showOpenFileDialogButton"
+              <XButton Text="Show Open File Dialog" Name="showOpenFileDialogButton"
                       IsTextLocalized="true"
                     HorizontalAlignment="Left" Click ="ShowOpenFileDialogButton_Click" Margin="5"/>
           </Border>
 
-          <StdButton Text="Save File Dialog" Name="showSaveFileDialogButton" IsTextLocalized="true"
+          <XButton Text="Save File Dialog" Name="showSaveFileDialogButton" IsTextLocalized="true"
                       HorizontalAlignment="Left" Click="ShowSaveFileDialogButton_Click" Margin="5"/>
-          <StdButton Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton"
+          <XButton Text="Select Directory Dialog" Name="showSelectDirectoryDialogButton"
                   HorizontalAlignment="Left" IsTextLocalized="true"
                   Click="ShowSelectDirectoryDialogButton_Click" Margin="5,5,5,10"/>
         </StackPanel>
@@ -54,7 +54,7 @@
         <ListPicker Name="messageBoxDefaultButtonComboBox" Margin="5,0,0,10"
                   HorizontalAlignment="Left" />
 
-        <StdButton Text="Show Message" Name="showMessageBoxButton" IsTextLocalized="true"
+        <XButton Text="Show Message" Name="showMessageBoxButton" IsTextLocalized="true"
           Click="ShowMessageBoxButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
       </StackPanel>
 
@@ -64,9 +64,9 @@
 
         <Border Margin="10" IsTitleLocalized="true"
                   VerticalAlignment="Top" Padding="5" Layout="Horizontal">
-          <StdButton Text="Color Dialog" Name="showColorDialogButton" IsTextLocalized="true"
+          <XButton Text="Color Dialog" Name="showColorDialogButton" IsTextLocalized="true"
           Click="ShowColorDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
-          <StdButton Text="Font Dialog" Name="showFontDialogButton" IsTextLocalized="true"
+          <XButton Text="Font Dialog" Name="showFontDialogButton" IsTextLocalized="true"
             Click="ShowFontDialogButton_Click" Margin="5" HorizontalAlignment="Left" />
           <Label Text="Sample Label" Name="sampleLabel" Margin="5" IsTextLocalized="true"
                  VerticalAlignment="Center"/>
@@ -76,7 +76,7 @@
                   VerticalAlignment="Top" Padding="5" Layout="Vertical">
           <Label Text="Thread Exception Window:" Margin="5,5,5,10"
                    IsTextLocalized="true" />
-          <StdButton Text="Throw Exception" Name="buttonThrowException" IsTextLocalized="true"
+          <XButton Text="Throw Exception" Name="buttonThrowException" IsTextLocalized="true"
             Click="ThrowExceptionButton_Click" Margin="5,0,0,10" HorizontalAlignment="Left" />
           <Label Text="Exception:" Margin="5,5,5,10" VerticalAlignment="Center"
                    IsTextLocalized="true" />

@@ -292,7 +292,7 @@ namespace Alternet.UI
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
         public static object? DefaultItemToButtonControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            var result = CreateOrUpdateControl<StdButton>(sender, item, control);
+            var result = CreateOrUpdateControl<XButton>(sender, item, control);
             UpdateText(sender, item, result);
 
             result.ClickAction = () =>
@@ -599,7 +599,7 @@ namespace Alternet.UI
             PanelSettingsItem item,
             object? control)
         {
-            var checkBox = CreateOrUpdateControl<StdCheckBox>(sender, item, control);
+            var checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
             UpdateText(sender, item, checkBox);
 
             if (item.Value is bool isChecked)

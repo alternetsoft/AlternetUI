@@ -5,19 +5,19 @@
         Layout="Vertical" Padding="10">
 
   <HorizontalStackPanel>
-    <StdButton Text="Show" Name="showToolTipButton" IsTextLocalized="true"
+    <XButton Text="Show" Name="showToolTipButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             HorizontalAlignment="Left"/>
-    <StdButton Text="Hide" Name="hideToolTipButton" IsTextLocalized="true"
+    <XButton Text="Hide" Name="hideToolTipButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
-    <StdButton Text="Simple" Name="showSimpleButton" IsTextLocalized="true"
+    <XButton Text="Simple" Name="showSimpleButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
-    <StdButton Text="Image" Name="showImageButton" IsTextLocalized="true"
+    <XButton Text="Image" Name="showImageButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
-    <StdButton Text="Template" Name="showTemplateButton" IsTextLocalized="true"
+    <XButton Text="Template" Name="showTemplateButton" IsTextLocalized="true"
             VerticalAlignment="Center"
             Margin="5,0,0,0" HorizontalAlignment="Left"/>
   </HorizontalStackPanel>
@@ -30,7 +30,7 @@
         <TextBox Text="Message Title" Name="tooltipTitleTextBox"
                  Margin="0,0,0,0" IsTextLocalized="true" HorizontalAlignment="Fill"
                  VerticalAlignment="Center"/>
-        <StdButton Text="Toggle" Name="resetTitleButton" IsTextLocalized="true"
+        <XButton Text="Toggle" Name="resetTitleButton" IsTextLocalized="true"
                 VerticalAlignment="Center"
                 Margin="5,0,0,0" HorizontalAlignment="Right"/>
       </HorizontalStackPanel>
@@ -42,7 +42,7 @@
                  Margin="0,0,0,0" IsTextLocalized="true"  HorizontalAlignment="Fill"
                           SuggestedHeight = "100"
                  VerticalAlignment="Center"/>
-        <StdButton Text="Toggle" Name="resetTextButton" IsTextLocalized="true"
+        <XButton Text="Toggle" Name="resetTextButton" IsTextLocalized="true"
                 VerticalAlignment="Center"
                 Margin="5,0,0,0" HorizontalAlignment="Right"/>
       </HorizontalStackPanel>
@@ -56,17 +56,17 @@
                  SuggestedWidth="250" VerticalAlignment="Center"/>
       </HorizontalStackPanel>
 
-      <StdCheckBox Name="customImageCheckBox" Text="Use custom image" MarginTop="10"/>
-      <StdCheckBox Name="largeImageCheckBox" Text="Use large custom image" MarginTop="10"/>
+      <XCheckBox Name="customImageCheckBox" Text="Use custom image" MarginTop="10"/>
+      <XCheckBox Name="largeImageCheckBox" Text="Use large custom image" MarginTop="10"/>
     </Panel>
 
     <Panel Title="Options" Padding="10" Layout="Vertical">
-      <StdCheckBox Name="dontHideCheckBox" Text="Do not hide after delay" IsChecked="true"/>
-      <StdCheckBox Name="atCenterCheckBox" Text="Show at center" IsChecked="false" MarginTop="5"
+      <XCheckBox Name="dontHideCheckBox" Text="Do not hide after delay" IsChecked="true"/>
+      <XCheckBox Name="atCenterCheckBox" Text="Show at center" IsChecked="false" MarginTop="5"
                 IsEnabled="true"/>
-      <StdCheckBox Name="borderCheckBox" Text="Show Border"
+      <XCheckBox Name="borderCheckBox" Text="Show Border"
                 IsChecked="true" MarginTop="5"/>
-      <StdCheckBox Name="otherSchemeCheckBox" Text="Use other color theme"
+      <XCheckBox Name="otherSchemeCheckBox" Text="Use other color theme"
                 IsChecked="false" MarginTop="5"
                 IsEnabled="true" IsVisible="false"/>
     </Panel>

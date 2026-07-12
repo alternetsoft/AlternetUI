@@ -14,7 +14,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="VirtualListBox"/> descendant which allows to browse folder contents.
     /// </summary>
-    public partial class FileListBox : StdTreeView
+    public partial class FileListBox : XTreeView
     {
         /// <summary>
         /// Represents the identifier for the file name column.

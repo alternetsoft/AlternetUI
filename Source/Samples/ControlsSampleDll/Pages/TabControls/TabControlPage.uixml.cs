@@ -177,7 +177,7 @@ namespace ControlsSample
 
             for (int i=1; i < 4; i++)
             {
-                var button = new StdButton()
+                var button = new XButton()
                 {
                     Text = s + " Button " + i.ToString(),
                     Margin = 5,

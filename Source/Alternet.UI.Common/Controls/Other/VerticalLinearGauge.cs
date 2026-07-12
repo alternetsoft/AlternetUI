@@ -8,7 +8,7 @@ namespace Alternet.UI
     /// Represents a vertical linear gauge control. It has a vertical orientation and displays
     /// a value within a specified range.
     /// </summary>
-    public partial class VerticalLinearGauge : StdProgressBar
+    public partial class VerticalLinearGauge : XProgressBar
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="VerticalLinearGauge"/> class.

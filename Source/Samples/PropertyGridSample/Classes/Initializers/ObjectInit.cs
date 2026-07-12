@@ -53,9 +53,9 @@ Environment.NewLine + Environment.NewLine +
             AddAction<ColorPicker>(InitColorPicker);
             AddAction<FontNamePicker>(InitFontNamePicker);
             AddAction<TextBoxWithListPopup>(InitTextBoxWithListPopup);
-            AddAction<StdSlider>(InitGenericSlider);
-            AddAction<StdCheckBox>(InitStdCheckBox);
-            AddAction<StdRadioButton>(InitStdRadioButton);
+            AddAction<XSlider>(InitGenericSlider);
+            AddAction<XCheckBox>(InitStdCheckBox);
+            AddAction<XRadioButton>(InitStdRadioButton);
 
             Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
             Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
@@ -81,16 +81,16 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
             Actions.Add(typeof(GenericWrappedTextControl), InitGenericWrappedTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
-            Actions.Add(typeof(StdButton), InitStdButton);
+            Actions.Add(typeof(XButton), InitStdButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
             Actions.Add(typeof(TabControl), InitGenericTabControl);
             Actions.Add(typeof(VirtualListBox), InitListBoxItems);
             Actions.Add(typeof(FileListBox), InitFileListBox);
-            Actions.Add(typeof(StdListBox), InitStdListBox);
-            Actions.Add(typeof(StdComboBox), InitStdComboBox);
-            Actions.Add(typeof(StdCheckListBox), InitCheckListBox);
+            Actions.Add(typeof(XListBox), InitStdListBox);
+            Actions.Add(typeof(XComboBox), InitStdComboBox);
+            Actions.Add(typeof(XCheckListBox), InitCheckListBox);
 
             Actions.Add(typeof(UserControl), (c) =>
             {
@@ -132,7 +132,7 @@ Environment.NewLine + Environment.NewLine +
                 SetBackgrounds(border);
 
                 border.Layout = LayoutStyle.Vertical;
-                StdButton button = new();
+                XButton button = new();
                 button.Text = "Click me";
                 button.Parent = border;
                 button.Click += Button_Click;
@@ -156,9 +156,9 @@ Environment.NewLine + Environment.NewLine +
                 (c as StatusBar)!.Panels.Add(new("text2"));
             });
 
-            Actions.Add(typeof(StdTreeView), (c) =>
+            Actions.Add(typeof(XTreeView), (c) =>
             {
-                StdTreeView treeView = (c as StdTreeView)!;
+                XTreeView treeView = (c as XTreeView)!;
                 treeView.SuggestedSize = DefaultListSize;
                 InitVirtualTreeControl(treeView);
             });
@@ -198,16 +198,16 @@ Environment.NewLine + Environment.NewLine +
                 control.SuggestedSize = defaultListHeight;
             });
 
-            Actions.Add(typeof(StdProgressBar), (c) =>
+            Actions.Add(typeof(XProgressBar), (c) =>
             {
-                StdProgressBar control = (c as StdProgressBar)!;
+                XProgressBar control = (c as XProgressBar)!;
                 control.OrientationChanged += OrientationChanged;
                 control.Value = 50;
                 control.SuggestedWidth = 250;
 
                 static void OrientationChanged(object? sender, EventArgs e)
                 {
-                    if (sender is not StdProgressBar control)
+                    if (sender is not XProgressBar control)
                         return;
                     if (control.IsVertical)
                         control.SuggestedSize = (Coord.NaN, 250);
@@ -224,12 +224,12 @@ Environment.NewLine + Environment.NewLine +
             });
         }
 
-        public static void InitStdCheckBox(StdCheckBox control)
+        public static void InitStdCheckBox(XCheckBox control)
         {
             control.Text = "StdCheckBox";
         }
 
-        public static void InitStdRadioButton(StdRadioButton control)
+        public static void InitStdRadioButton(XRadioButton control)
         {
             control.Text = "StdRadioButton";
         }
@@ -378,7 +378,7 @@ Environment.NewLine + Environment.NewLine +
             control.Value = FontStyle.Regular;
         }
 
-        public static void InitGenericSlider(StdSlider control)
+        public static void InitGenericSlider(XSlider control)
         {
             control.Value = 4;
             control.SuggestedWidth = 250;
@@ -386,7 +386,7 @@ Environment.NewLine + Environment.NewLine +
 
             static void OrientationChanged(object? sender, EventArgs e)
             {
-                if (sender is not StdSlider control)
+                if (sender is not XSlider control)
                     return;
                 if (control.IsVertical)
                     control.SuggestedSize = (Coord.NaN, 250);
@@ -492,7 +492,7 @@ Environment.NewLine + Environment.NewLine +
 
             for (int i = 1; i < 4; i++)
             {
-                var button = new StdButton()
+                var button = new XButton()
                 {
                     Text = s + " Button " + i.ToString(),
                     Margin = 5,
@@ -505,7 +505,7 @@ Environment.NewLine + Environment.NewLine +
 
             static void Button_Click(object? sender, EventArgs e)
             {
-                App.Log($"Button '{(sender as StdButton)?.Text}' Click");
+                App.Log($"Button '{(sender as XButton)?.Text}' Click");
             }
         }
 
@@ -545,7 +545,7 @@ Environment.NewLine + Environment.NewLine +
             panel.HasBorder = true;
 
 #pragma warning disable
-            StdButton OkButton = new()
+            XButton OkButton = new()
             {
                 Text = "1",
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
@@ -555,7 +555,7 @@ Environment.NewLine + Environment.NewLine +
                 Parent = panel,
             };
 
-            StdButton CancelButton = new()
+            XButton CancelButton = new()
             {
                 Text = "2",
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
@@ -565,7 +565,7 @@ Environment.NewLine + Environment.NewLine +
                 Parent = panel,
             };
 
-            StdButton ApplyButton = new()
+            XButton ApplyButton = new()
             {
                 Margin = PanelOkCancelButtons.DefaultButtonMargin,
                 Text = "3",
@@ -597,7 +597,7 @@ Environment.NewLine + Environment.NewLine +
             contextMenu.Items.Add(menuItem2);
         }
 
-        public static void InitVirtualTreeControl(StdTreeView control)
+        public static void InitVirtualTreeControl(XTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
                 control.ImageList = LoadImageLists().Small;
@@ -608,7 +608,7 @@ Environment.NewLine + Environment.NewLine +
             AddItems(control, 10);
         }
 
-        public static void InitTreeView(StdTreeView control)
+        public static void InitTreeView(XTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
                 control.ImageList = LoadImageLists().Small;
@@ -625,7 +625,7 @@ Environment.NewLine + Environment.NewLine +
             return newItemIndex;
         }
 
-        public static void AddItems(StdTreeView treeView, int count)
+        public static void AddItems(XTreeView treeView, int count)
         {
             treeView.BeginUpdate();
             try

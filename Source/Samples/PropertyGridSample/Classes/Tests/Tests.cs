@@ -158,12 +158,12 @@ namespace PropertyGridSample
 
         internal void InitTestsSlider()
         {
-            AddControlAction<StdSlider>("SetSpacerColor", (c) =>
+            AddControlAction<XSlider>("SetSpacerColor", (c) =>
             {
                 c.SetSpacerColor(LightDarkColors.Red);
             });
 
-            AddControlAction<StdSlider>("SetSliderRange(50,120)", (s) =>
+            AddControlAction<XSlider>("SetSliderRange(50,120)", (s) =>
             {
                 s.Minimum = 50;
                 s.Maximum = 120;
@@ -217,7 +217,7 @@ namespace PropertyGridSample
 
         internal void InitTestsButton()
         {
-            AddControlAction<StdButton>("Set Command", (c) =>
+            AddControlAction<XButton>("Set Command", (c) =>
             {
                 c.Command = NamedCommands.CommandAppLog;
                 c.CommandParameter = "Button.Command executed";
@@ -338,12 +338,12 @@ namespace PropertyGridSample
                 ObjectInit.AddManyItems(c);
             });
 
-            AddControlAction<StdCheckListBox>("Recreate Native Window", (c) =>
+            AddControlAction<XCheckListBox>("Recreate Native Window", (c) =>
             {
                 c.Handler.RecreateWindow();
             });
 
-            AddControlAction<StdListBox>("Recreate Native Window", (c) =>
+            AddControlAction<XListBox>("Recreate Native Window", (c) =>
             {
                 c.Handler.RecreateWindow();
             });

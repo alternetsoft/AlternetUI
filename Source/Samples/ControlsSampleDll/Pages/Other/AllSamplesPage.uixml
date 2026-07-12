@@ -7,22 +7,22 @@
 
   <HorizontalStackPanel>
 
-    <StdListBox SuggestedWidth="350" SuggestedHeight="400" Name="view" />
+    <XListBox SuggestedWidth="350" SuggestedHeight="400" Name="view" />
 
     <VerticalStackPanel Margin="10,0,0,0" Padding="5"
                 Grid.Column="1" Grid.Row="0" >
-      <StdButton Text="Run Sample" Name="runButton" Margin="0,0,0,5"  IsTextLocalized="true"
+      <XButton Text="Run Sample" Name="runButton" Margin="0,0,0,5"  IsTextLocalized="true"
               Click="RunButton_Click" HorizontalAlignment="Left" />
-      <StdButton Text="Build Sample" Name="buildButton" Margin="0,0,0,5" IsTextLocalized="true"
+      <XButton Text="Build Sample" Name="buildButton" Margin="0,0,0,5" IsTextLocalized="true"
               Enabled="true" Visible="true"
               Click="BuildButton_Click" HorizontalAlignment="Left" />
-      <StdButton Text="Build UI" Name="buildUIButton" Margin="0,0,0,5" IsTextLocalized="true"
+      <XButton Text="Build UI" Name="buildUIButton" Margin="0,0,0,5" IsTextLocalized="true"
               Enabled="true" Visible="true"
               Click="BuildUIButton_Click" HorizontalAlignment="Left"/>
-      <StdButton Text="Build Pal" Name="buildPalButton" Margin="0,0,0,5" Enabled="false"
+      <XButton Text="Build Pal" Name="buildPalButton" Margin="0,0,0,5" Enabled="false"
               IsTextLocalized="true" Visible="false"
               Click="BuildPalButton_Click" HorizontalAlignment="Left"/>
-      <StdCheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5" IsTextLocalized="true"
+      <XCheckBox Text="Delete Bin" Name="deleteBinCheckBox" Margin="0,5,0,5" IsTextLocalized="true"
               Enabled="true" Visible="true"/>
     </VerticalStackPanel>
   </HorizontalStackPanel>

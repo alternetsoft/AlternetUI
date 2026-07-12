@@ -117,7 +117,7 @@ namespace LayoutSample
 
         private void AddControlToGrid(int columnIndex, int rowIndex)
         {
-            var button = new StdButton
+            var button = new XButton
             {
                 Text = $"{rowIndex}.{columnIndex}",
                 RowColumn = new(rowIndex, columnIndex),
@@ -129,7 +129,7 @@ namespace LayoutSample
 
         private void AddControlToStackPanel()
         {
-            var btn = new StdButton("Button " + (stackPanel.Children.Count + 1));
+            var btn = new XButton("Button " + (stackPanel.Children.Count + 1));
             btn.Margin = 10;
             stackPanel.Children.Add(btn);
         }

@@ -254,7 +254,7 @@ namespace WindowPropertiesSample
             buttons.OkButton.Click += OkButton_Click;
             buttons.CancelButton.Click += CancelButton_Click;
 
-            StdListBox listBox = new()
+            XListBox listBox = new()
             {
                 Parent = testWindow,
                 VerticalAlignment = VerticalAlignment.Fill,

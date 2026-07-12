@@ -104,7 +104,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets left control as <see cref="TreeView"/>.
         /// </summary>
-        public StdTreeView? TreeView => leftControl as StdTreeView;
+        public XTreeView? TreeView => leftControl as XTreeView;
 
         /// <summary>
         /// Gets left control as <see cref="VirtualListBox"/>.
@@ -143,7 +143,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Calls <see cref="StdTreeView.MakeAsListBox"/> for the left control if
+        /// Calls <see cref="XTreeView.MakeAsListBox"/> for the left control if
         /// it is tree view.
         /// </summary>
         public virtual void MakeAsListBox()
@@ -203,7 +203,7 @@ namespace Alternet.UI
         /// <returns></returns>
         protected virtual AbstractControl CreateTreeView()
         {
-            StdTreeView treeView = new()
+            XTreeView treeView = new()
             {
                 HasBorder = false,
             };

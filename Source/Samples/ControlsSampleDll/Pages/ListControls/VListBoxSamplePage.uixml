@@ -7,47 +7,47 @@
 
     <StackPanel Orientation="Vertical" Padding="10" Name="vertPanel1" Title="Options"
                 HorizontalAlignment = "Left">
-      <StdButton Text="Last Item Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
+      <XButton Text="Last Item Visible" Name="ensureLastItemVisibleButton" IsTextLocalized="true"
           Margin="0,3,0,0" Click="EnsureLastItemVisibleButton_Click" />
-      <StdButton Text="Select Item: 2" Name="selectItemAtIndex2Button" IsTextLocalized="true"
+      <XButton Text="Select Item: 2" Name="selectItemAtIndex2Button" IsTextLocalized="true"
           Margin="0,3,0,0" Click="SelectItemAtIndex2Button_Click" />
-      <StdButton Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button" IsTextLocalized="true"
+      <XButton Text="Select Items: 2, 4" Name="selectItemAtIndices2And4Button" IsTextLocalized="true"
           Margin="0,3,0,0" Click="SelectItemAtIndices2And4Button_Click"
               Enabled="false"/>
-      <StdButton Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0" IsTextLocalized="true"
+      <XButton Text="Unselect All" Name="deselectAllButton" Margin="0,3,0,0" IsTextLocalized="true"
           Click="DeselectAllButton_Click" />
-      <StdButton Text="Has Border" Name="hasBorderButton" Margin="0,3,0,0" IsTextLocalized="true"
+      <XButton Text="Has Border" Name="hasBorderButton" Margin="0,3,0,0" IsTextLocalized="true"
           Click="HasBorderButton_Click" />
-      <StdCheckBox Margin="0,3,0,0" Text="CheckBox Visible"
+      <XCheckBox Margin="0,3,0,0" Text="CheckBox Visible"
                 Name="showCheckBoxesCheckBox"  IsTextLocalized="true"/>
-      <StdCheckBox Margin="0,3,0,0" Text="CheckBox ThreeState" Name="threeStateCheckBox"
+      <XCheckBox Margin="0,3,0,0" Text="CheckBox ThreeState" Name="threeStateCheckBox"
                 IsTextLocalized="true"/>
-      <StdCheckBox Margin="0,3,0,0" Text="CheckBox UserAllStates" IsTextLocalized="true"
+      <XCheckBox Margin="0,3,0,0" Text="CheckBox UserAllStates" IsTextLocalized="true"
                 Name="allowAllStatesCheckBox"  IsToolTipLocalized="true"
                 ToolTip="Allow the user to set the checkboxes to the third state by clicking."/>
-      <StdCheckBox Margin="0,3,0,0" Text="CheckBox AllowClick" IsTextLocalized="true"
+      <XCheckBox Margin="0,3,0,0" Text="CheckBox AllowClick" IsTextLocalized="true"
                 Name="allowClickCheckCheckBox"/>
     </StackPanel>
 
     <StackPanel Orientation="Vertical" Padding="10" Name="vertPanel2" Title="More"
                 HorizontalAlignment = "Left">
-      <StdCheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" IsTextLocalized="true"
+      <XCheckBox Text="Multiple Selection" Name="allowMultipleSelectionCheckBox" IsTextLocalized="true"
           Margin="0,0,0,5" CheckedChanged="AllowMultipleSelectionCheckBox_CheckedChanged"/>
-      <StdCheckBox Text="Find Exact" Name="findExactCheckBox" Margin="0,0,0,5" IsTextLocalized="true"/>
-      <StdCheckBox Text="Find Ignore Case" Name="findIgnoreCaseCheckBox"
+      <XCheckBox Text="Find Exact" Name="findExactCheckBox" Margin="0,0,0,5" IsTextLocalized="true"/>
+      <XCheckBox Text="Find Ignore Case" Name="findIgnoreCaseCheckBox"
                 Margin="0,0,0,5" IsTextLocalized="true"/>
       <Label Text="Find Text" Margin="0,0,0,5" IsTextLocalized="true"/>
       <TextBox Name="findText" Margin="0,0,0,5" IsTextLocalized="true"/>
-      <StdCheckBox Text="Use other color theme" Name="otherThemeCheckBox"
+      <XCheckBox Text="Use other color theme" Name="otherThemeCheckBox"
                 Margin="0,0,0,5" IsTextLocalized="true" IsEnabled="false"/>
-      <StdCheckBox Margin="0,0,0,5" Text="Round Selection" IsTextLocalized="true"
+      <XCheckBox Margin="0,0,0,5" Text="Round Selection" IsTextLocalized="true"
                 Name="roundSelectionCheckBox"/>
     </StackPanel>
 
     <StackPanel Orientation="Vertical" Padding="10" Name="vertPanel3" Title="Events"
                 HorizontalAlignment = "Left">
-      <StdCheckBox Text="Log HitTest Event" Name="cbLogHitTestEvent" IsTextLocalized="true" Margin="0,0,0,5"/>
-      <StdCheckBox Text="Log SelectinoChanged Event" Name="cbLogSelectedEvent" Margin="0,0,0,5" IsTextLocalized="true"/>
+      <XCheckBox Text="Log HitTest Event" Name="cbLogHitTestEvent" IsTextLocalized="true" Margin="0,0,0,5"/>
+      <XCheckBox Text="Log SelectinoChanged Event" Name="cbLogSelectedEvent" Margin="0,0,0,5" IsTextLocalized="true"/>
     </StackPanel>
   </TabControl>
 </Panel>

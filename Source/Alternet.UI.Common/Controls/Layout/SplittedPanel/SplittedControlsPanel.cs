@@ -14,10 +14,10 @@ namespace Alternet.UI
     /// </summary>
     public partial class SplittedControlsPanel : SplittedPanel
     {
-        private StdTreeView? leftListBox;
+        private XTreeView? leftListBox;
         private PropertyGrid? propertyGrid;
         private LogListBox? logControl;
-        private StdTreeView? actionsControl;
+        private XTreeView? actionsControl;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SplittedControlsPanel"/> class.
@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
-        public StdTreeView ActionsControl
+        public XTreeView ActionsControl
         {
             get
             {
@@ -101,10 +101,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets <see cref="StdTreeView"/> control on the left pane.
+        /// Gets <see cref="XTreeView"/> control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public StdTreeView LeftTreeView
+        public XTreeView LeftTreeView
         {
             get
             {
@@ -116,7 +116,7 @@ namespace Alternet.UI
         /// Gets the control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public StdTreeView LeftListBox
+        public XTreeView LeftListBox
         {
             get
             {

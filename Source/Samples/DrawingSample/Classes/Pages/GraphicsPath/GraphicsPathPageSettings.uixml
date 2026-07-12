@@ -11,10 +11,10 @@
         <EnumPicker Name="pathFillModeComboBox" 
                   ValueChanged="PathFillModeComboBox_Changed"/>
 
-        <StdButton Text="Clear" Name="clearButton" IsTextLocalized="true"
+        <XButton Text="Clear" Name="clearButton" IsTextLocalized="true"
                 Click="ClearButton_Click" Margin="0,10,0,0" />
 
-        <StdButton Text="Close Last Figure" IsTextLocalized="true"
+        <XButton Text="Close Last Figure" IsTextLocalized="true"
                 Name="closeLastFigureButton" Click="CloseLastFigureButton_Click" Margin="0,10,0,0" />
     </StackPanel>
 </Panel>

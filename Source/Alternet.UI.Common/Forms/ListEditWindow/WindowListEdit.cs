@@ -383,7 +383,7 @@ namespace Alternet.UI
             treeView.ImageList = null;
         }
 
-        private class TreeViewPlus : StdTreeView, IEnumerableTree<TreeViewItem>
+        private class TreeViewPlus : XTreeView, IEnumerableTree<TreeViewItem>
         {
             public TreeViewPlus()
             {

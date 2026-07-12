@@ -10,10 +10,10 @@ namespace ControlsSample
     internal class ActionSimulatorPage : Window
     {
         [IsTextLocalized(true)]
-        private readonly StdButton button1;
+        private readonly XButton button1;
 
         [IsTextLocalized(true)]
-        private readonly StdButton button2;
+        private readonly XButton button2;
 
         private readonly UIActionSimulator simulator = new();
         private readonly TextBox editor;

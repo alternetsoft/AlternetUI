@@ -6,7 +6,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a fancy slider control which can be rotated like a knob.
     /// </summary>
-    public partial class KnobSlider : StdSlider
+    public partial class KnobSlider : XSlider
     {
         private bool dragging = false;
         private PointD dragStartPosition;

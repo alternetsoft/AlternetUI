@@ -7,16 +7,16 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Represents a generic check box control. This control is implemented inside the library and can be used in the
-    /// same way as a regular native check box control. <see cref="StdCheckBox"/> is used when you need
-    /// to have the same code for all platforms. <see cref="StdCheckBox"/> provides many additional features,
+    /// same way as a regular native check box control. <see cref="XCheckBox"/> is used when you need
+    /// to have the same code for all platforms. <see cref="XCheckBox"/> provides many additional features,
     /// which are not available in the native check box control.
     /// </summary>
     /// <remarks>
-    /// Use a <see cref="StdCheckBox"/> to give the user an option, such as true/false or yes/no.
-    /// The <see cref="StdCheckBox"/> control can display an image or text or both.
+    /// Use a <see cref="XCheckBox"/> to give the user an option, such as true/false or yes/no.
+    /// The <see cref="XCheckBox"/> control can display an image or text or both.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class StdCheckBox : GenericItemControl
+    public partial class XCheckBox : GenericItemControl
     {
         /// <summary>
         /// Gets or sets a default value of the check box margin. This margin is used when check box mark is painted.
@@ -38,7 +38,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets a value indicating whether the hovered color should be used for check boxes
-        /// when the control is in the hovered state. If set to true, the check box will be drawn using <see cref="DefaultHoveredCheckBoxColor"/>
+        /// when the control is in the hovered state. If set to true, the check box will be drawn
+        /// using <see cref="DefaultHoveredCheckBoxColor"/>
         /// </summary>
         public static bool UseHoveredCheckBoxColor = true;
 
@@ -46,29 +47,29 @@ namespace Alternet.UI
         private LightDarkColor? hoveredForeColor;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdCheckBox"/> class.
+        /// Initializes a new instance of the <see cref="XCheckBox"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StdCheckBox(AbstractControl parent)
+        public XCheckBox(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdCheckBox"/> class with the specified text.
+        /// Initializes a new instance of the <see cref="XCheckBox"/> class with the specified text.
         /// </summary>
         /// <param name="text"></param>
-        public StdCheckBox(string text)
+        public XCheckBox(string text)
             : this()
         {
             Text = text;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdCheckBox"/> class.
+        /// Initializes a new instance of the <see cref="XCheckBox"/> class.
         /// </summary>
-        public StdCheckBox()
+        public XCheckBox()
         {
             ItemDefaults.CheckBoxVisible = true;
             WantTab = true;
@@ -158,15 +159,15 @@ namespace Alternet.UI
 
         /// <summary>
         /// Binds property specified with <paramref name="instance"/> and
-        /// <paramref name="propName"/> to the <see cref="StdCheckBox"/>.
-        /// After binding <see cref="StdCheckBox"/> will edit the specified property.
+        /// <paramref name="propName"/> to the <see cref="XCheckBox"/>.
+        /// After binding <see cref="XCheckBox"/> will edit the specified property.
         /// </summary>
         /// <param name="instance">Object.</param>
         /// <param name="propName">Property name.</param>
         /// <remarks>Property must have the <see cref="bool"/> type. Value of the bound
         /// property will be changed automatically after
         /// <c>IsChecked</c> is changed.</remarks>
-        public virtual StdCheckBox BindBoolProp(object instance, string propName)
+        public virtual XCheckBox BindBoolProp(object instance, string propName)
         {
             var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
             if (propInfo is null)
@@ -178,7 +179,7 @@ namespace Alternet.UI
 
             void Editor_CheckedChanged(object? sender, EventArgs e)
             {
-                var value = (sender as StdCheckBox)?.IsChecked;
+                var value = (sender as XCheckBox)?.IsChecked;
                 propInfo?.SetValue(instance, value);
             }
 

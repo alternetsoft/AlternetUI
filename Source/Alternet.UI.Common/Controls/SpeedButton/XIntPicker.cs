@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a text editor with spinner buttons that allow the user to increment or decrement the value.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
-    public class StdIntPicker : ToolBar
+    public partial class XIntPicker : ToolBar
     {
         /// <summary>
         /// Gets or sets default text picker margin.
@@ -32,13 +32,13 @@ namespace Alternet.UI
         /// Gets or sets whether minus button is shown before plus button. Default value is True.
         /// </summary>
         /// <remarks>
-        /// This property affects all <see cref="StdIntPicker"/> descendants created after
+        /// This property affects all <see cref="XIntPicker"/> descendants created after
         /// it was changed.
         /// </remarks>
         public static bool IsMinusButtonFirst = true;
 
         /// <summary>
-        /// Gets or sets default border corner radius to use in <see cref="StdIntPicker"/> 
+        /// Gets or sets default border corner radius to use in <see cref="XIntPicker"/> 
         /// and similar controls.
         /// </summary>
         public static BorderCornerRadius DefaultBorderCorners = new(
@@ -58,9 +58,9 @@ namespace Alternet.UI
         private ObjectUniqueId? idButtonMinus;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdIntPicker"/> class.
+        /// Initializes a new instance of the <see cref="XIntPicker"/> class.
         /// </summary>
-        public StdIntPicker()
+        public XIntPicker()
         {
             textPicker.Margin = DefaultTextPickerMargin;
             HasBorder = true;
@@ -80,7 +80,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Enumerates the buttons of the <see cref="StdIntPicker"/> control.
+        /// Enumerates the buttons of the <see cref="XIntPicker"/> control.
         /// </summary>
         public enum ButtonKind
         {

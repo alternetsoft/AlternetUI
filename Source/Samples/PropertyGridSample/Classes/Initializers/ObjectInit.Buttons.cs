@@ -18,7 +18,7 @@ namespace PropertyGridSample
 
         public static void InitStdButton(object control)
         {
-            if (control is not StdButton button)
+            if (control is not XButton button)
                 return;
             button.Text = "StdButton";
             button.Click += LogClick;

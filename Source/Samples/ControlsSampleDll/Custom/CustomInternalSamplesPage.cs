@@ -7,7 +7,7 @@ namespace Alternet.UI
 {
     public class CustomInternalSamplesPage : Panel
     {
-        private readonly StdTreeView view = new()
+        private readonly XTreeView view = new()
         {
             SuggestedWidth = 350,
             SuggestedHeight = 400,
@@ -19,7 +19,7 @@ namespace Alternet.UI
             Padding = 5,
         };
 
-        private readonly StdButton runButton = new()
+        private readonly XButton runButton = new()
         {
             Text = "Run Sample",
             Margin = (0, 0, 0, 5),

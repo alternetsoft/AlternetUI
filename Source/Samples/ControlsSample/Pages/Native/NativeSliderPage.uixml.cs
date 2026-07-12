@@ -71,7 +71,7 @@ namespace ControlsSample
 
         private void Slider_ValueChanged(object? sender, EventArgs e)
         {
-            App.LogNameValueReplace("Slider.Value",((StdSlider)sender!).Value);
+            App.LogNameValueReplace("Slider.Value",((XSlider)sender!).Value);
         }
 
         private void ProgressBarControlSlider_ValueChanged(object? sender, EventArgs e)

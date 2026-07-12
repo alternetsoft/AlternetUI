@@ -29,7 +29,7 @@ namespace Alternet.UI
         /// to which test items will be added.</param>
         /// <param name="count">The number of test items to create and add to the tree view.</param>
         /// <param name="subItems">Indicates whether to add sub-items to each test item.</param>
-        public static void SetTestItemsWithColumns(StdTreeView owner, int count, bool subItems = true)
+        public static void SetTestItemsWithColumns(XTreeView owner, int count, bool subItems = true)
         {
             try
             {

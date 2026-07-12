@@ -16,9 +16,9 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Containers)]
     public partial class PanelOkCancelButtons : StackPanel
     {
-        private StdButton? applyButton;
-        private StdButton? cancelButton;
-        private StdButton? okButton;
+        private XButton? applyButton;
+        private XButton? cancelButton;
+        private XButton? okButton;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PanelOkCancelButtons"/> class.
@@ -198,7 +198,7 @@ namespace Alternet.UI
         /// Gets 'Ok' button.
         /// </summary>
         [Browsable(false)]
-        public StdButton OkButton
+        public XButton OkButton
         {
             get
             {
@@ -219,7 +219,7 @@ namespace Alternet.UI
         /// Gets 'Cancel' button.
         /// </summary>
         [Browsable(false)]
-        public StdButton CancelButton
+        public XButton CancelButton
         {
             get
             {
@@ -240,7 +240,7 @@ namespace Alternet.UI
         /// Gets 'Apply' button.
         /// </summary>
         [Browsable(false)]
-        public StdButton ApplyButton
+        public XButton ApplyButton
         {
             get
             {
@@ -315,13 +315,13 @@ namespace Alternet.UI
         /// Gets an enumerable collection of buttons that are currently visible.
         /// </summary>
         [Browsable(false)]
-        public virtual IEnumerable<StdButton> VisibleButtons
+        public virtual IEnumerable<XButton> VisibleButtons
         {
             get
             {
                 foreach (var child in Children)
                 {
-                    if (child is StdButton btn && btn.IsVisible)
+                    if (child is XButton btn && btn.IsVisible)
                         yield return btn;
                 }
             }
@@ -418,11 +418,11 @@ namespace Alternet.UI
         /// Gets the default button from the collection of child buttons.
         /// </summary>
         /// <returns>The default button if found; otherwise, null.</returns>
-        public virtual StdButton? GetDefaultButton()
+        public virtual XButton? GetDefaultButton()
         {
             foreach (var child in Children)
             {
-                if (child is StdButton btn && btn.IsDefault && btn.IsVisible)
+                if (child is XButton btn && btn.IsDefault && btn.IsVisible)
                     return btn;
             }
 
@@ -435,11 +435,11 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="button">The button to set as the default.
         /// If <see langword="null"/>, all buttons will be unset as default.</param>
-        public virtual void SetDefaultButtonExclusive(StdButton? button)
+        public virtual void SetDefaultButtonExclusive(XButton? button)
         {
             foreach (var child in Children)
             {
-                if (child is StdButton btn)
+                if (child is XButton btn)
                 {
                     btn.IsDefault = btn == button;
                 }
@@ -451,17 +451,17 @@ namespace Alternet.UI
         /// of child buttons.
         /// </summary>
         /// <remarks>This method iterates through all child elements and sets the
-        /// <see cref="StdButton.IsCancel"/> property to <see langword="true"/> for
+        /// <see cref="XButton.IsCancel"/> property to <see langword="true"/> for
         /// the specified button, and <see langword="false"/> for all other buttons.
         /// Only one button can be designated as the cancel button at a time.</remarks>
         /// <param name="button">The button to be set as the exclusive cancel button.
         /// If <see langword="null"/>, no button will be set as the
         /// cancel button.</param>
-        public virtual void SetCancelButtonExclusive(StdButton? button)
+        public virtual void SetCancelButtonExclusive(XButton? button)
         {
             foreach (var child in Children)
             {
-                if (child is StdButton btn)
+                if (child is XButton btn)
                 {
                     btn.IsCancel = btn == button;
                 }
@@ -488,9 +488,9 @@ namespace Alternet.UI
         /// is out of range of the visible buttons.</remarks>
         /// <param name="index">The zero-based index of the button to retrieve.
         /// Must be within the range of visible buttons.</param>
-        /// <returns>The <see cref="StdButton"/> at the specified index if it exists;
+        /// <returns>The <see cref="XButton"/> at the specified index if it exists;
         /// otherwise, <see langword="null"/>.</returns>
-        public virtual StdButton? GetVisibleButton(int index)
+        public virtual XButton? GetVisibleButton(int index)
         {
             var visibleButtons = VisibleButtons.ToArray();
 
@@ -613,12 +613,12 @@ namespace Alternet.UI
         /// </remarks>
         public virtual void ResetButtonsText()
         {
-            DoInsideLayout(() =>
+            base.DoInsideLayout((Action)(() =>
             {
-                for (int i = Children.Count - 1; i >= 0; i--)
+                for (int i = base.Children.Count - 1; i >= 0; i--)
                 {
-                    var child = Children[i];
-                    if (child is not StdButton btn)
+                    var child = base.Children[i];
+                    if (child is not XButton btn)
                         continue;
                     var value = btn.CustomAttr.GetAttribute("KnownButton");
 
@@ -626,7 +626,7 @@ namespace Alternet.UI
                         continue;
                     btn.Text = KnownButtons.GetText(knownButton) ?? knownButton.ToString();
                 }
-            });
+            }));
         }
 
         /// <summary>
@@ -682,7 +682,7 @@ namespace Alternet.UI
             if (buttons is null)
                 throw new ArgumentNullException(nameof(buttons));
 
-            DoInsideLayout(() =>
+            base.DoInsideLayout((Action)(() =>
             {
                 var applyButtonIndex = Array.IndexOf(buttons, KnownButton.Apply);
                 var cancelButtonIndex = Array.IndexOf(buttons, KnownButton.Cancel);
@@ -707,37 +707,37 @@ namespace Alternet.UI
                     }
                 }
 
-                for (int i = Children.Count - 1; i >= 0; i--)
+                for (int i = base.Children.Count - 1; i >= 0; i--)
                 {
-                    var child = Children[i];
-                    if (child is not StdButton btn)
+                    var child = base.Children[i];
+                    if (child is not XButton btn)
                         continue;
                     var knownButton = btn.CustomAttr.GetAttribute<KnownButton>("KnownButton");
 
-                    if (!buttons.Contains(knownButton))
+                    if (!buttons.Contains((KnownButton)knownButton))
                     {
                         child.Visible = false;
                     }
                 }
 
-                SortChildren(Comparison);
+                base.SortChildren(Comparison);
 
                 int Comparison(AbstractControl x, AbstractControl y)
                 {
-                    if (x is StdButton btnX && y is StdButton btnY)
+                    if (x is XButton btnX && y is XButton btnY)
                     {
                         var knownButtonX = btnX.CustomAttr.GetAttribute<KnownButton>("KnownButton");
                         var knownButtonY = btnY.CustomAttr.GetAttribute<KnownButton>("KnownButton");
 
-                        var indexX = Array.IndexOf(buttons, knownButtonX);
-                        var indexY = Array.IndexOf(buttons, knownButtonY);
+                        var indexX = Array.IndexOf(buttons, (KnownButton)knownButtonX);
+                        var indexY = Array.IndexOf(buttons, (KnownButton)knownButtonY);
 
                         return indexX.CompareTo(indexY);
                     }
 
                     return 0;
                 }
-            });
+            }));
         }
 
         /// <summary>
@@ -774,13 +774,13 @@ namespace Alternet.UI
         /// specified known button identifier.
         /// </summary>
         /// <param name="button">The identifier of the known button to search for.</param>
-        /// <returns>A <see cref="StdButton"/> object that matches the specified identifier,
+        /// <returns>A <see cref="XButton"/> object that matches the specified identifier,
         /// or <see langword="null"/> if no matching button is found.</returns>
-        public virtual StdButton? GetButton(KnownButton button)
+        public virtual XButton? GetButton(KnownButton button)
         {
             foreach (var child in Children)
             {
-                if (child is StdButton btn
+                if (child is XButton btn
                     && btn.CustomAttr.GetAttribute<KnownButton>("KnownButton") == button)
                     return btn;
             }
@@ -794,14 +794,14 @@ namespace Alternet.UI
         /// <param name="text">The text to display on the button. Cannot be null or empty.</param>
         /// <param name="clickAction">The action to execute when the button is clicked.
         /// Can be null.</param>
-        /// <returns>A <see cref="StdButton"/> instance representing the newly added button.</returns>
+        /// <returns>A <see cref="XButton"/> instance representing the newly added button.</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="text"/>
         /// is null or empty.</exception>
-        public virtual StdButton AddButton(string text, Action? clickAction = null)
+        public virtual XButton AddButton(string text, Action? clickAction = null)
         {
             if (string.IsNullOrEmpty(text))
                 throw new ArgumentException("Button text cannot be null or empty.", nameof(text));
-            StdButton button = CreateButton(text);
+            XButton button = CreateButton(text);
 
             if (clickAction is not null)
             {
@@ -823,11 +823,11 @@ namespace Alternet.UI
         /// the type of button to add.</param>
         /// <param name="clickAction">An <see cref="Action"/> to be executed when
         /// the button is clicked.</param>
-        /// <returns>A <see cref="StdButton"/> instance representing the newly added button.</returns>
-        public virtual StdButton AddButton(KnownButton button, Action? clickAction = null)
+        /// <returns>A <see cref="XButton"/> instance representing the newly added button.</returns>
+        public virtual XButton AddButton(KnownButton button, Action? clickAction = null)
         {
             var text = KnownButtons.GetText(button) ?? string.Empty;
-            StdButton newButton = AddButton(text, clickAction);
+            XButton newButton = AddButton(text, clickAction);
 
             newButton.Click += (sender, e) =>
             {
@@ -897,7 +897,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="text">The text for the button.</param>
         /// <returns>A <c>Button</c> instance.</returns>
-        protected virtual StdButton CreateButton(string text)
+        protected virtual XButton CreateButton(string text)
         {
             PanelButton result = new()
             {
@@ -955,7 +955,7 @@ namespace Alternet.UI
             }
         }
 
-        private class PanelButton : StdButton
+        private class PanelButton : XButton
         {
             protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
             {

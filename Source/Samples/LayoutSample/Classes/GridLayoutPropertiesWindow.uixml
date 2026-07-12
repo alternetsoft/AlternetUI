@@ -15,23 +15,23 @@
       <TabControl Grid.Column="0" Margin="0,0,10,0" Name="pageControl">
 
         <VerticalStackPanel Name="gridStackPanel" Padding="10" Title="Grid">
-          <StdButton Text="Add Column" Click="AddGridColumnButton_Click" IsTextLocalized="true"
+          <XButton Text="Add Column" Click="AddGridColumnButton_Click" IsTextLocalized="true"
                   Margin="0,0,0,5" Name="buttonAddGridColumn"/>
-          <StdButton Text="Add Row" Click="AddGridRowButton_Click" IsTextLocalized="true"
+          <XButton Text="Add Row" Click="AddGridRowButton_Click" IsTextLocalized="true"
                   Margin="0,0,0,5" Name="buttonAddGridRow"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Name="containerStackPanel" Padding="10" Title="Container">
-          <StdButton Text="Increase Margin" Name="buttonIncreaseMargin" IsTextLocalized="true"
+          <XButton Text="Increase Margin" Name="buttonIncreaseMargin" IsTextLocalized="true"
                   Click="IncreaseContainerMarginButton_Click" Margin="0,0,0,5" />
-          <StdButton Text="Increase Padding" Name="buttonIncreasePadding" IsTextLocalized="true"
+          <XButton Text="Increase Padding" Name="buttonIncreasePadding" IsTextLocalized="true"
                   Click="IncreaseContainerPaddingButton_Click" Margin="0,0,0,5" />
         </VerticalStackPanel>
 
         <VerticalStackPanel Name="buttonStackPanel" Padding="10" Title="Button">
-          <StdButton Text="Increase Margin" Name="buttonStackInreaseMargin" IsTextLocalized="true"
+          <XButton Text="Increase Margin" Name="buttonStackInreaseMargin" IsTextLocalized="true"
                   Click="IncreaseButtonMarginButton_Click" Margin="0,0,0,5" />
-          <StdButton Text="Increase Padding" Name="buttonStackInreasePadding" IsTextLocalized="true"
+          <XButton Text="Increase Padding" Name="buttonStackInreasePadding" IsTextLocalized="true"
                   Click="IncreaseButtonPaddingButton_Click" Margin="0,0,0,5" />
         </VerticalStackPanel>
       </TabControl>
@@ -80,7 +80,7 @@
             <Label Text="(1, 2)" />
           </Border>
 
-            <StdButton Name="subjectButton" Text="Button" Margin="0" Grid.Column="2" Grid.Row="2"/>
+            <XButton Name="subjectButton" Text="Button" Margin="0" Grid.Column="2" Grid.Row="2"/>
 
           <Border Grid.Column="3" Grid.Row="2">
             <Label Text="(3, 2)" HasBorder="false"/>

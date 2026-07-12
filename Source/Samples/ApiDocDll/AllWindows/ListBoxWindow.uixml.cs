@@ -17,7 +17,7 @@ namespace ApiDoc
         public void ListBoxExample1()
         {
             #region ListBoxCSharpCreation
-            var ListBox = new Alternet.UI.StdListBox();
+            var ListBox = new Alternet.UI.XListBox();
             ListBox.Items.Add("One");
             ListBox.Items.Add("Two");
             ListBox.Items.Add("Three");

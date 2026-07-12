@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Alternet.UI
 {
-    public partial class StdTreeView
+    public partial class XTreeView
     {
         /// <summary>
         /// Gets a value indicating whether lines are drawn between the

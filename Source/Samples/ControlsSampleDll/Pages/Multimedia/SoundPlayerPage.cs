@@ -52,8 +52,8 @@ namespace ControlsSample
 
             var stackPanel = new VerticalStackPanel(this);
 
-            var playButton = new StdButton("Play", Play);
-            var stopButton = new StdButton("Stop", Stop);
+            var playButton = new XButton("Play", Play);
+            var stopButton = new XButton("Stop", Stop);
 
             new ControlSet(playButton, stopButton)
             .Margin(5).HorizontalAlignment(HorizontalAlignment.Left).Parent(this).SuggestedWidthToMax();

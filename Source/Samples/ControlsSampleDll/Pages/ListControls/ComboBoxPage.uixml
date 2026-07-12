@@ -5,52 +5,52 @@
          Name="comboContainer">
       <HorizontalStackPanel>
         <VerticalStackPanel Margin="0,0,0,5" Padding="5,0,5,5" Name="comboPanel">
-          <StdComboBox SuggestedWidth="170" Name="comboBox" IsEditable="false"
+          <XComboBox SuggestedWidth="170" Name="comboBox" IsEditable="false"
                         VerticalAlignment="Top"
                         TextChanged="ComboBox_TextChanged" />
-          <StdCheckBox Text="Allow Text Edit" IsTextLocalized="true"
+          <XCheckBox Text="Allow Text Edit" IsTextLocalized="true"
                     Name="allowTextEditingCheckBox" Margin="0,10,0,0"
                     CheckedChanged= "AllowTextEditingCheckBox_CheckedChanged"/>
-          <StdCheckBox Text="Owner Draw" IsTextLocalized="true" IsChecked="false"
+          <XCheckBox Text="Owner Draw" IsTextLocalized="true" IsChecked="false"
                     Name="ownerDrawCheckBox" Margin="0,5,0,10"
                     CheckedChanged= "OwnerDrawCheckBox_CheckedChanged"/>
-          <StdButton Text="Text = Empty" IsTextLocalized="true"
+          <XButton Text="Text = Empty" IsTextLocalized="true"
                   Name="setTextToEmptyStringButton" Margin="0,0,0,0"
                   Click="SetTextToEmptyStringButton_Click"/>
-          <StdButton Text="Text = 'One'" Name="setTextToOneButton" IsTextLocalized="true"
+          <XButton Text="Text = 'One'" Name="setTextToOneButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="SetTextToOneButton_Click"/>
-          <StdButton Text="Text = 'abc'" Name="setTextToAbcButton" IsTextLocalized="true"
+          <XButton Text="Text = 'abc'" Name="setTextToAbcButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="SetTextToAbcButton_Click"/>
         </VerticalStackPanel>
 
         <VerticalLine Margin="5,0,5,0"/>
         
         <VerticalStackPanel Margin="5,0,0,5" Padding="5,0,5,5" Name="buttonsPanel">
-          <StdButton Text="Add Item" Name="addItemButton" IsTextLocalized="true"
+          <XButton Text="Add Item" Name="addItemButton" IsTextLocalized="true"
                   Click="AddItemButton_Click"/>
-          <StdButton Text="Remove Item" Name="removeItemButton" IsTextLocalized="true"
+          <XButton Text="Remove Item" Name="removeItemButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="RemoveItemButton_Click"/>
-          <StdButton Text="Add 500 Items" Name="addManyItemsButton" IsTextLocalized="true"
+          <XButton Text="Add 500 Items" Name="addManyItemsButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="AddManyItemsButton_Click"/>
-          <StdButton Text="SelectedIndex = 2" IsTextLocalized="true"
+          <XButton Text="SelectedIndex = 2" IsTextLocalized="true"
                   Name="setSelectedIndexTo2Button" Margin="0,3,0,0"
                   Click="SetSelectedIndexTo2_Click"/>
-          <StdButton Text="SelectedItem = null" IsTextLocalized="true"
+          <XButton Text="SelectedItem = null" IsTextLocalized="true"
                   Name="setSelectedItemToNullButton" Margin="0,3,0,0"
                   Click="SetSelectedItemToNullButton_Click"/>
-          <StdButton Text="Select Text [2..5]" IsTextLocalized="true"
+          <XButton Text="Select Text [2..5]" IsTextLocalized="true"
                   Name="selectTextRangeButton" Margin="0,3,0,0"
                   Click="SelectTextRangeButton_Click"/>
-          <StdButton Text="Get Text Selection" Name="getTextSelectionButton" IsTextLocalized="true"
+          <XButton Text="Get Text Selection" Name="getTextSelectionButton" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
-          <StdButton Text="Items[2] = 'hello'" Name="buttonItemsEqHello" IsTextLocalized="true"
+          <XButton Text="Items[2] = 'hello'" Name="buttonItemsEqHello" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="SetItem_Click"/>
-          <StdButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
+          <XButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
                 Margin="0,3,0,0" Click="Editor_Click" IsVisible="false"/>
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="0,0,0,5" Padding="0,0,5,5">
-          <StdButton Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
+          <XButton Text="Has Border" Margin="0,0,0,5" Name="hasBorderButton" IsTextLocalized="true"
                   Click="HasBorderButton_Click" Visible="true"/>
         </VerticalStackPanel>
       </HorizontalStackPanel>

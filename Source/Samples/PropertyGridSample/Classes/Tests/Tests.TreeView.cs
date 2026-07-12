@@ -16,17 +16,17 @@ namespace PropertyGridSample
     {
         void InitTestsStdTreeView()
         {
-            AddControlAction<StdTreeView>("SelectedItem: ExpandAll", (c) =>
+            AddControlAction<XTreeView>("SelectedItem: ExpandAll", (c) =>
             {
                 c.SelectedItem?.ExpandAll();
             });
 
-            AddControlAction<StdTreeView>("SelectedItem: CollapseAll", (c) =>
+            AddControlAction<XTreeView>("SelectedItem: CollapseAll", (c) =>
             {
                 c.SelectedItem?.CollapseAll();
             });
 
-            AddControlAction<StdTreeView>("Toggle selection of 2 and 4", (c) =>
+            AddControlAction<XTreeView>("Toggle selection of 2 and 4", (c) =>
             {
                 c.SelectionMode = TreeViewSelectionMode.Multiple;
                 var item2 = c.RootItem.Items[2];
@@ -35,21 +35,21 @@ namespace PropertyGridSample
                 item4.IsSelected = !item4.IsSelected;
             });
 
-            AddControlAction<StdTreeView>("Load png from resources", TestTreeViewLoadPngFromResource);
+            AddControlAction<XTreeView>("Load png from resources", TestTreeViewLoadPngFromResource);
             
-            AddControlAction<StdTreeView>(
+            AddControlAction<XTreeView>(
                 "Load all small *.png in folder...",
                 TestTreeViewLoadAllPngInFolder);
 
-            AddControlAction<StdTreeView>("Load all *.svg in folder...", TestTreeViewLoadAllSvgInFolder);
-            AddControlAction<StdTreeView>("Load known svg", TestTreeViewLoadKnownSvg);
+            AddControlAction<XTreeView>("Load all *.svg in folder...", TestTreeViewLoadAllSvgInFolder);
+            AddControlAction<XTreeView>("Load known svg", TestTreeViewLoadKnownSvg);
 
-            AddControlAction<StdTreeView>("BackColor = Black", (c) =>
+            AddControlAction<XTreeView>("BackColor = Black", (c) =>
             {
                 c.BackColor = Color.Black;
             });
 
-            AddControlAction<StdTreeView>("Lighten images", (c) =>
+            AddControlAction<XTreeView>("Lighten images", (c) =>
             {
                 var images = c.ImageList;
                 var converted = images?.WithConvertedColors(ControlPaint.LightLight);
@@ -81,7 +81,7 @@ namespace PropertyGridSample
         }
         */
 
-        void TestTreeViewLoadPngFromResource(StdTreeView control)
+        void TestTreeViewLoadPngFromResource(XTreeView control)
         {
             const string highDpiSuffix = "_HighDpi";
 
@@ -128,7 +128,7 @@ namespace PropertyGridSample
             }
         }
 
-        void TestTreeViewLoadAllPngInFolder(StdTreeView control)
+        void TestTreeViewLoadAllPngInFolder(XTreeView control)
         {
             var dialog = SelectDirectoryDialog.Default;
 
@@ -168,7 +168,7 @@ namespace PropertyGridSample
             });
         }
 
-        void TestTreeViewLoadKnownSvg(StdTreeView control)
+        void TestTreeViewLoadKnownSvg(XTreeView control)
         {
             int size = 32;
             ImageList imgList = new();
@@ -197,7 +197,7 @@ namespace PropertyGridSample
             }
         }
 
-        void TestTreeViewLoadAllSvgInFolder(StdTreeView control)
+        void TestTreeViewLoadAllSvgInFolder(XTreeView control)
         {
             var dialog = SelectDirectoryDialog.Default;
 

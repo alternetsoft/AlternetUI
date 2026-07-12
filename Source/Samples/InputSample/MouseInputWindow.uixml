@@ -18,7 +18,7 @@
                 >
         <StackPanel Orientation="Vertical"
                     Padding="5" InputTransparent="true">
-          <StdButton Name="helloButton" Text="Say Hello" IsTextLocalized="true"
+          <XButton Name="helloButton" Text="Say Hello" IsTextLocalized="true"
                   Margin="10" Click="HelloButton_Click"
                   MouseMove="HelloButton_MouseMove"
                   MouseDown="HelloButton_MouseDown"
@@ -45,7 +45,7 @@
 
           </HorizontalStackPanel>
 
-          <StdCheckBox Text="Log Mouse Move" Name="logMoveCheckBox" IsTextLocalized="true"/>
+          <XCheckBox Text="Log Mouse Move" Name="logMoveCheckBox" IsTextLocalized="true"/>
 
           <LogListBox Name="lb" Margin="5"  SuggestedHeight="200"/>
 

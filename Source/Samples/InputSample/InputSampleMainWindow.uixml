@@ -3,9 +3,9 @@
         x:Class="InputSample.MainWindow"
         Title="Alternet UI Input Sample"  StartLocation="CenterScreen">
 	<StackPanel Padding="10" >
-		<StdButton Text="Keyboard Input" IsTextLocalized="true" Name="keyboardInputButton"
+		<XButton Text="Keyboard Input" IsTextLocalized="true" Name="keyboardInputButton"
                 Margin="0,0,0,10" Click="KeyboardInputButton_Click" />
-		<StdButton Text="Mouse Input" IsTextLocalized="true" Name="mouseInputButton"
+		<XButton Text="Mouse Input" IsTextLocalized="true" Name="mouseInputButton"
                 Margin="0,0,0,10" Click="MouseInputButton_Click" />
 	</StackPanel>
 </Window>

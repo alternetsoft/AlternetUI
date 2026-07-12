@@ -9,9 +9,9 @@ namespace Alternet.UI
     /// This control is implemented inside the library and doesn't use native check list box control.
     /// </summary>
     /// <remarks>
-    /// The <see cref="StdCheckListBox"/> control enables you to display a list of
+    /// The <see cref="XCheckListBox"/> control enables you to display a list of
     /// items to the user that the user can check by clicking.
-    /// A <see cref="StdCheckListBox"/> control can provide single or
+    /// A <see cref="XCheckListBox"/> control can provide single or
     /// multiple selections using the <see cref="VirtualListControl.SelectionMode"/> property.
     /// The <see cref="AbstractControl.BeginUpdate"/> and <see cref="AbstractControl.EndUpdate"/>
     /// methods enable
@@ -22,23 +22,23 @@ namespace Alternet.UI
     /// properties provide access to the selected and checked items collections.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class StdCheckListBox : StdListBox
+    public partial class XCheckListBox : XListBox
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdCheckListBox"/> class
+        /// Initializes a new instance of the <see cref="XCheckListBox"/> class
         /// with the specified parent control.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StdCheckListBox(AbstractControl parent)
+        public XCheckListBox(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdCheckListBox"/> class.
+        /// Initializes a new instance of the <see cref="XCheckListBox"/> class.
         /// </summary>
-        public StdCheckListBox()
+        public XCheckListBox()
         {
             CheckBoxVisible = true;
         }

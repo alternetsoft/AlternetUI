@@ -273,7 +273,7 @@ namespace MenuSample
                     return;
                 }
 
-                if (panel.CustomControl is StdCheckBox)
+                if (panel.CustomControl is XCheckBox)
                     panel.CustomControl = CreateSpeedColorButton();
                 else
                 if (panel.CustomControl is SpeedColorButton)
@@ -527,9 +527,9 @@ namespace MenuSample
         private void OpenMenuItem_Click(object? sender, EventArgs e) =>
             LogEvent("Open");
 
-        private StdSlider CreateSlider()
+        private XSlider CreateSlider()
         {
-            var slider = new StdSlider()
+            var slider = new XSlider()
             {
                 Minimum = 0,
                 Maximum = 100,
@@ -542,9 +542,9 @@ namespace MenuSample
             return slider;
         }
 
-        private StdButton CreateStdButton()
+        private XButton CreateStdButton()
         {
-            var button = new StdButton()
+            var button = new XButton()
             {
                 ToolTip = "StdButton",
                 VerticalAlignment = VerticalAlignment.Stretch,
@@ -552,9 +552,9 @@ namespace MenuSample
             return button;
         }
 
-        private StdCheckBox CreateCheckBox()
+        private XCheckBox CreateCheckBox()
         {
-            var button = new StdCheckBox()
+            var button = new XCheckBox()
             {
                 Text = "StdCheckBox",
                 VerticalAlignment = VerticalAlignment.Stretch,
@@ -763,7 +763,7 @@ namespace MenuSample
             object? sender,
             EventArgs e)
         {
-            if(sender is not StdCheckBox checkBox)
+            if(sender is not XCheckBox checkBox)
                 return;
             toolbar.TextVisible = checkBox.IsChecked;
             VerticalCheckBox_Changed(null, EventArgs.Empty);
@@ -826,7 +826,7 @@ namespace MenuSample
             object? sender,
             EventArgs e)
         {
-            if (sender is not StdCheckBox checkBox)
+            if (sender is not XCheckBox checkBox)
                 return;
             toolbar.ImageVisible = checkBox.IsChecked;
         }

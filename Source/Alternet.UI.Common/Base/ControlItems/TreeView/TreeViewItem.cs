@@ -54,7 +54,7 @@ namespace Alternet.UI
         /// <param name="imageIndex">
         /// The zero-based index of the image within the
         /// <see cref="ImageList"/>
-        /// associated with the <see cref="StdTreeView"/> that contains the item.
+        /// associated with the <see cref="XTreeView"/> that contains the item.
         /// </param>
         public TreeViewItem(string text, int? imageIndex)
             : this()
@@ -250,7 +250,7 @@ namespace Alternet.UI
             get
             {
                 var indentLevel = IndentLevel - 1;
-                var indentPx = Owner?.GetLevelMargin() ?? StdTreeView.DefaultLevelMargin;
+                var indentPx = Owner?.GetLevelMargin() ?? XTreeView.DefaultLevelMargin;
                 Thickness result = (indentPx * indentLevel, 0, 0, 0);
                 return result;
             }
@@ -454,11 +454,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets items from the <see cref="StdTreeView"/> (if item is on root level)
+        /// Gets items from the <see cref="XTreeView"/> (if item is on root level)
         /// or from the <see cref="Parent"/> (if item has parent).
         /// </summary>
         /// <remarks>
-        /// If item has no parent and is not attached to the <see cref="StdTreeView"/> this
+        /// If item has no parent and is not attached to the <see cref="XTreeView"/> this
         /// property returns <c>null</c>.
         /// </remarks>
         [Browsable(false)]
@@ -712,7 +712,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When the <see cref="EnsureVisible"/> method is called, the tree
         /// is expanded and scrolled to ensure that the current tree
-        /// item is visible in the <see cref="StdTreeView"/>. This method is useful
+        /// item is visible in the <see cref="XTreeView"/>. This method is useful
         /// if you are selecting a tree item in code based on
         /// certain criteria. By calling this method after you select the item,
         /// the user can see and interact with the

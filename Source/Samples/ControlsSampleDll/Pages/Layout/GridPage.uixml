@@ -40,9 +40,9 @@
         </Grid>
 
         <StackPanel Orientation="Vertical" Margin="10,0,5,5">
-          <StdButton Margin="0,0,0,5" Text="Grow" Name="growButton"
+          <XButton Margin="0,0,0,5" Text="Grow" Name="growButton"
                   Visible="false"  IsTextLocalized="true"/>
-          <StdButton Margin="0,0,0,5" Text="Shrink" Name="shrinkButton"
+          <XButton Margin="0,0,0,5" Text="Shrink" Name="shrinkButton"
                   Visible="false"  IsTextLocalized="true"/>
         </StackPanel>
 

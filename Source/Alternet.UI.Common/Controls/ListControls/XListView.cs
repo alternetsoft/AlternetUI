@@ -7,12 +7,12 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a generic list view control implemented inside the library.
     /// </summary>
-    public partial class StdListView : StdTreeView
+    public partial class XListView : XTreeView
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdListView"/> class.
+        /// Initializes a new instance of the <see cref="XListView"/> class.
         /// </summary>
-        public StdListView()
+        public XListView()
         {
             ListBox.GridLinesDisplayMode = ListViewGridLinesDisplayMode.Vertical;
             ListBox.CheckBoxVisible = false;

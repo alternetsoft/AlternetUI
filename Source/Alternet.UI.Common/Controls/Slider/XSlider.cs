@@ -30,7 +30,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class StdSlider : Border, ISliderScaleContainer
+    public partial class XSlider : Border, ISliderScaleContainer
     {
         /// <summary>
         /// Specifies the default corner radius to apply to the slider thumb.
@@ -152,19 +152,19 @@ namespace Alternet.UI
         private int spaceSizeInPercentOfThumb;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdSlider"/> class.
+        /// Initializes a new instance of the <see cref="XSlider"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public StdSlider(AbstractControl parent)
+        public XSlider(AbstractControl parent)
             : this()
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="StdSlider"/> class.
+        /// Initializes a new instance of the <see cref="XSlider"/> class.
         /// </summary>
-        public StdSlider()
+        public XSlider()
         {
             AutoPadding = false;
             useSpacerColor = DefaultUseSpacerColor;
@@ -1723,11 +1723,11 @@ namespace Alternet.UI
             /// Gets the container that holds the thumb.
             /// </summary>
             [Browsable(false)]
-            public virtual StdSlider? Container
+            public virtual XSlider? Container
             {
                 get
                 {
-                    return Parent as StdSlider;
+                    return Parent as XSlider;
                 }
             }
 
