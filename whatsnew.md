@@ -1,3 +1,27 @@
+# 1.1.2 (2026 July 12)
+
+- ToolBar: Add SetItemSizeFromImageSize and GetMaxToolImageSize methods.
+- SpeedButton: PictureBoxSpacer to customize image layout and PictureBoxSize to report the displayed image area size.
+- Handle Tab/Escape and key args in BaseEntry.
+- Add popup font to PopupEntryParams.
+- Fix BaseEntry.SelectAll.
+- Add IPopupEntryHandler and MauiPopupEntryHandler.
+- BaseEntry: Add action callbacks (FocusedAction, UnfocusedAction, SizeChangedAction, CompletedAction, 
+TextChangedAction, TabClickedAction, EscapeClickedAction, KeyDownAction) as alternatives to events. 
+- BaseEntry: Add TabClicked event and RaiseTabClicked method. Adds ResetEventActions() to clear all action callbacks.
+- BaseEntry: Fires KeyDownAction on Windows key press and handles Tab key via RaiseTabClicked.
+- MauiControlHandler: add support to handle any View not only ControlView.
+- Simplify IControlHandler.
+- Fix ScreenToClient related issues.
+- Implement IReadOnlyStrings on list popup button.
+- Create TextAsValueHelper and move related code from TextBox to this new class.
+- Add ValueHelper property to SpeedButton and TextBox.
+- Consolidate repetitive initialization code across all numeric ValueEditor classes by introducing dedicated Init methods in TextAsValueHelper. 
+Each new method (InitAsDouble, InitAsInt32, etc.) encapsulates character validation setup, error text configuration, 
+and optional value initialization, reducing code duplication and improving maintainability.
+
+---
+
 # 1.1.1 (2026 July 4)
 
 - SpeedColorButton: Fix paint when inside status bar.
