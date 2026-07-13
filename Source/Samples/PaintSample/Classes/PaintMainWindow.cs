@@ -40,7 +40,7 @@ namespace PaintSample
         private readonly MenuItem exitMenuItem;
         private readonly MenuItem testMenu;
 
-        private readonly Panel optionsPlaceholder = new()
+        private readonly TransparentPanel optionsPlaceholder = new()
         {
             Layout = LayoutStyle.Horizontal,
         };

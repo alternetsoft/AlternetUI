@@ -1,4 +1,4 @@
-<Panel xmlns="http://schemas.alternetsoft.com/ui/2021"
+<TransparentPanel xmlns="http://schemas.alternetsoft.com/ui/2021"
         xmlns:x="http://schemas.alternetsoft.com/ui/2021/uixml"
         x:Class="PaintSample.PenLikeToolOptionsControl"
 		xmlns:local="clr-namespace:PaintSample" Layout="Horizontal">
@@ -6,4 +6,4 @@
 		<Label Text="Thickness:" Margin="0,0,5,0" VerticalAlignment="Center"/>
 		<XIntPicker Name="thicknessNumericUpDown" Minimum="1" Maximum="20" VerticalAlignment="Center"/>
 	
-</Panel>
+</TransparentPanel>

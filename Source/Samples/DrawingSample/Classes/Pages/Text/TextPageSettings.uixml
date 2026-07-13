@@ -7,7 +7,7 @@
 
     <StackPanel Orientation="Vertical" Margin="5" Title="Settings 1">
       <Label Text="Font Size:" IsTextLocalized="true"/>
-      <IntPicker Name="fontSizeSlider" Margin="0,0,0,10"/>
+      <XIntPicker Name="fontSizeSlider" Margin="0,0,0,10"/>
 
       <HorizontalStackPanel>
         <VerticalStackPanel>
@@ -27,11 +27,11 @@
       </HorizontalStackPanel>
 
       <XCheckBox Name="textWidthLimitEnabledCheckBox" Text="Limit width:" Margin="0,5,5,0" />
-      <IntPicker Name="textWidthLimitSlider" Margin="0,5,5,0" SmallChange="10" LargeChange="20"/>
+      <XIntPicker Name="textWidthLimitSlider" Margin="0,5,5,0" SmallChange="10" LargeChange="20"/>
 
       <XCheckBox Name="textHeightSetCheckBox" IsTextLocalized="true"
         Text="Set height:" Margin="0,10,5,0"/>
-      <IntPicker Name="textHeightValueSlider" Margin="0,5,5,0" SmallChange="10" LargeChange="20"/>
+      <XIntPicker Name="textHeightValueSlider" Margin="0,5,5,0" SmallChange="10" LargeChange="20"/>
 
       <Grid Name="propGrid" Margin="0,5,0,0">
       </Grid>

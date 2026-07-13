@@ -6,7 +6,7 @@
     <HorizontalStackPanel Margin="0,0,0,5">
       <Label Text="Shapes:" IsTextLocalized="true" VerticalAlignment="Center" MarginRight="5"
              Name="shapesLabel" GroupName="labels"/>
-      <IntPicker Name="shapeCountSlider" Minimum="1" Maximum="100" GroupName="editors"
+      <XIntPicker Name="shapeCountSlider" Minimum="1" Maximum="100" GroupName="editors"
               Margin="0,0,0,0"  MinWidth="150" HorizontalAlignment="Fill"/>
     </HorizontalStackPanel>
 
@@ -47,7 +47,7 @@
 
     <HorizontalStackPanel Margin="0,0,0,10">
       <Label Text="Pen Width:" Margin="0,5,5,5" IsTextLocalized="true" GroupName="labels"/>
-      <IntPicker Name="penWidthSlider" Minimum="0" Maximum="6" GroupName="editors"/>
+      <XIntPicker Name="penWidthSlider" Minimum="0" Maximum="6" GroupName="editors"/>
     </HorizontalStackPanel>
 
 </Panel>
