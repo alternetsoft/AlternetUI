@@ -25,7 +25,7 @@ namespace ApiDoc
         private void NumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             string text = numericUpDown.Value.ToString();
-            MessageBox.Show(text, string.Empty);
+            Title = text;
         }
         #endregion    
     }

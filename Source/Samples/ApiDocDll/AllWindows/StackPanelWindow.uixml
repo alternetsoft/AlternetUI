@@ -3,9 +3,10 @@
         x:Class="ApiDoc.StackPanelWindow"
         Title="Examples.StackPanel">
     <!-- <CreateUixmlDeclaration> -->
-    <StackPanel Name="stackPanel" Margin="16,16,16,254" Orientation="Vertical">
-      <XButton Text="Sample button 1" Name="addItemButton" Margin="8"/>
-      <XButton Text="Sample button 2" Name="removeItemButton" Margin="8"/>
+    <StackPanel Name="stackPanel" Margin="16,16,16,16" Orientation="Vertical">
+      <XButton Text="Add Item" Name="addItemButton" Margin="8"/>
+      <XButton Text="Remove Item" Name="removeItemButton" Margin="8"/>
+      <XButton Text="Edit Item" Name="editItemButton" Margin="8" VerticalAlignment="Fill"/>
     </StackPanel>
     <!-- </CreateUixmlDeclaration> -->
 </Window>
