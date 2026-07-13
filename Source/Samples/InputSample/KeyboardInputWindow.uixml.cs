@@ -125,9 +125,15 @@ namespace InputSample
             LogKey(e, "Window", "KeyDown");
             if (e.Key == Key.D && e.ModifierKeys == Alternet.UI.ModifierKeys.ControlShift)
             {
+                App.Log("Ctrl+Shift+D pressed, changing message label color");
                 e.Handled = true;
+                messageLabel.ParentBackColor = false;
+
+                var redColor = LightDarkColors.Red.LightOrDark(SystemSettings.AppearanceIsDark);
+
+                messageLabel.IsTransparent = false;
                 messageLabel.BackgroundColor =
-                    messageLabel.BackgroundColor != Color.Red ? Color.Red : Color.Green;
+                    messageLabel.BackgroundColor != redColor ? redColor : LightDarkColors.Blue;
             }
 
             if (HandledInForm)
