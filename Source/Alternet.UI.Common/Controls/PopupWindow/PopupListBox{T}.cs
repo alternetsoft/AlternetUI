@@ -25,12 +25,23 @@ namespace Alternet.UI
         {
             MinimumSize = DefaultMinimumSize;
             Title = CommonStrings.Default.WindowTitleSelectValue;
+
+            MainControl.SizeChanged += (s, e) =>
+            {
+                if (AutoScrollOnResize)
+                    ScrollToSelectedRow();
+            };
         }
 
         /// <summary>
         /// Gets or sets default minimum size of the list box popup main control.
         /// </summary>
         public static SizeD DefaultMinimumSize { get; set; } = (200, 300);
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the list box popup should automatically scroll to the selected item when resized.
+        /// </summary>
+        public virtual bool AutoScrollOnResize { get; set; } = false;
 
         /// <inheritdoc/>
         [Browsable(false)]
@@ -65,6 +76,31 @@ namespace Alternet.UI
                 if (ResultIndex is null || ResultIndex >= MainControl.Count)
                     return null;
                 return MainControl[ResultIndex.Value];
+            }
+        }
+
+        /// <inheritdoc/>
+        protected override void AfterShowPopup()
+        {
+            base.AfterShowPopup();
+            ScrollToSelectedRow();
+        }
+
+        /// <summary>
+        /// Scrolls list box to the selected item
+        /// </summary>
+        /// <param name="postAction">Whether to post the action to the message queue.</param>
+        public virtual void ScrollToSelectedRow(bool postAction = true)
+        {
+            if(postAction)
+                Post(() => Internal());
+            else
+                Internal();
+
+            void Internal()
+            {
+                if (MainControl.SelectedIndex is not null)
+                    MainControl.ScrollToRow(MainControl.SelectedIndex.Value);
             }
         }
 
