@@ -654,6 +654,8 @@ namespace Alternet.UI
             ActiveControl = MainControl;
             ShowAndFocus();
             WasShown = true;
+
+            AfterShowPopup();
         }
 
         /// <summary>
@@ -884,6 +886,13 @@ namespace Alternet.UI
         /// Called before popup is shown.
         /// </summary>
         protected virtual void BeforeShowPopup()
+        {
+        }
+
+        /// <summary>
+        /// Called after popup is shown.
+        /// </summary>
+        protected virtual void AfterShowPopup()
         {
         }
 
