@@ -36,7 +36,6 @@ namespace Alternet.UI
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ControlSubscriber notification = new();
         private readonly ToolBar bottomToolBar = new();
-        private readonly ToolBar topToolBar = new();
         private readonly Panel topToolBarPanel = new();
         private readonly Panel bottomToolBarPanel = new();
         private readonly SpeedButton buttonOk;
@@ -57,30 +56,24 @@ namespace Alternet.UI
             Layout = LayoutStyle.Vertical;
             mainPanel.VerticalAlignment = VerticalAlignment.Fill;
 
-            topToolBar.ResetSuggestedSize();
-            topToolBar.VerticalAlignment = VerticalAlignment.Center;
             topToolBarPanel.MinHeight = Coord.Max(
                 Window.FrameMetrics.GetCaptionAreaHeight(App.SafeWindow),
                 ToolBar.DefaultMinItemSize);
-            topToolBar.MinHeight = topToolBarPanel.MinHeight;
 
             topGripComponent = new GripComponent();
             topGripComponent.ConfigureAsMovingGrip();
             topGripComponent.Target = this;
-            topGripComponent.InteractionControl = topToolBar;
+            topGripComponent.InteractionControl = topToolBarPanel;
 
             label = new Label();
             label.VerticalAlignment = VerticalAlignment.Center;
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.Margin = DefaultTitleMargin;
             label.InputTransparent = true;
-            label.Parent = topToolBar;
+            label.Parent = topToolBarPanel;
 
             topToolBarPanel.Parent = this;
 
-            topToolBar.Parent = topToolBarPanel;
-            topToolBar.Margin = DefaultTopToolBarMargin;
-            
             topToolBarPanel.Visible = DefaultHasTitleBar;
 
             mainPanel.Margin = DefaultMainPanelMargin;
@@ -112,15 +105,15 @@ namespace Alternet.UI
             bottomToolBar.SetToolAlignRight(ButtonIdCancel, true);
             bottomToolBar.SetToolAction(ButtonIdOk, OnOkButtonClick);
             bottomToolBar.SetToolAction(ButtonIdCancel, OnCancelButtonClick);
+            bottomToolBar.HorizontalAlignment = HorizontalAlignment.Right;
             bottomToolBar.ResumeLayout();
             bottomToolBar.Parent = bottomToolBarPanel;
-            bottomToolBar.InputTransparent = true;
 
             bottomToolBarPanel.Parent = mainPanel;
             bottomToolBarPanel.VerticalAlignment = UI.VerticalAlignment.Bottom;
 
             bottomGripComponent.ConfigureAsMovingGrip();
-            bottomGripComponent.InteractionControl = bottomToolBar;
+            bottomGripComponent.InteractionControl = bottomToolBarPanel;
             bottomGripComponent.Target = this;
 
             MainControl.Required();
@@ -331,12 +324,6 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public ToolBar BottomToolBar => bottomToolBar;
-
-        /// <summary>
-        /// Gets top toolbar with title and other buttons.
-        /// </summary>
-        [Browsable(false)]
-        public ToolBar TopToolBar => topToolBar;
 
         /// <summary>
         /// Gets default value of the <see cref="Window.MinimizeEnabled"/> property.
