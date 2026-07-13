@@ -5,10 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
-    /// Implements multiple <see cref="ToolBar"/> controls.
+    /// <see cref="ToolBarSet"/> is a container for multiple <see cref="ToolBar"/> controls.
+    /// It doesn't support any other child controls except <see cref="ToolBar"/>.
+    /// It is used to group multiple toolbars together.
     /// </summary>
     [ControlCategory(KnownControlCategory.MenusAndToolbars)]
     public partial class ToolBarSet : HiddenGenericBorder
@@ -83,8 +87,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the last toolbar.
+        /// </summary>
+        public ToolBar? LastToolBar => ToolBarCount > 0 ? this[ToolBarCount - 1] : null;
+
+        /// <summary>
+        /// Gets the first toolbar.
+        /// </summary>
+        public ToolBar? FirstToolBar => ToolBarCount > 0 ? this[0] : null;
+
+        /// <summary>
         /// Gets or sets <see cref="ToolBar.ItemSize"/> for the child toolbars.
         /// </summary>
+        [Browsable(false)]
         public virtual Coord ItemSize
         {
             get
