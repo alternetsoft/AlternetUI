@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -16,6 +18,15 @@ namespace Alternet.UI
         /// Closes all popup entries created by this handler.
         /// </summary>
         void CloseAllPopupEntries();
+
+        /// <summary>
+        /// Gets height of the popup entry.
+        /// </summary>
+        /// <param name="control">The control for which the popup entry is used.</param>
+        /// <param name="font">The font used in the popup entry.</param>
+        /// <param name="hasBorder">Indicates whether the popup entry has a border.</param>
+        /// <returns>The height of the popup entry.</returns>
+        float GetPopupEntryHeight(AbstractControl? control, Font font, bool hasBorder);
 
         /// <summary>
         /// Closes popup entry which is currently used for editing

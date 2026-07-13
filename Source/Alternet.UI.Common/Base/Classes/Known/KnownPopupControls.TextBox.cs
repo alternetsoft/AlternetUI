@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public partial class KnownPopupControls : IPopupEntryHandler
@@ -87,6 +89,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets height of the popup entry control.
+        /// </summary>
+        /// <param name="control">The control for which the popup entry is used.</param>
+        /// <param name="font">The font used in the popup entry.</param>
+        /// <param name="hasBorder">Indicates whether the popup entry has a border.</param>
+        /// <returns>The height of the popup entry.</returns>
+        protected virtual float GetPopupEntryHeight(AbstractControl? control, Font font, bool hasBorder)
+        {
+            return (control?.ParentWindow ?? App.SafeWindow).GetTextBoxHeight(font, hasBorder);
+        }
+
+        /// <summary>
         /// Creates a new instance of <see cref="InnerPopupTextBox"/> control.
         /// Override this method to provide a custom implementation of <see cref="InnerPopupTextBox"/>.
         /// </summary>
@@ -121,6 +135,11 @@ namespace Alternet.UI
             var result = CreateInnerPopupTextBox();
             popupTextBoxes.Add(result);
             return result;
+        }
+
+        float IPopupEntryHandler.GetPopupEntryHeight(AbstractControl? control, Font font, bool hasBorder)
+        {
+            return GetPopupEntryHeight(control, font, hasBorder);
         }
 
         void IPopupEntryHandler.CloseAllPopupEntries()

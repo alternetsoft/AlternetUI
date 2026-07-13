@@ -321,7 +321,10 @@ namespace Alternet.UI
                 if (minLocation == value)
                     return;
                 minLocation = value;
+
+#pragma warning disable
                 Bounds = Bounds;
+#pragma warning restore
             }
         }
 

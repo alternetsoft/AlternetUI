@@ -112,6 +112,19 @@ namespace Alternet.UI
             findEdit.Label.DebugIdentifier = "FindEditLabel";
             replaceEdit.DebugIdentifier = "ReplaceEdit";
 
+            findEdit.FontChanged += (s, e) =>
+            {
+                findEdit.MinHeightFromPopupEntry();
+            };
+
+            replaceEdit.FontChanged += (s, e) =>
+            {
+                replaceEdit.MinHeightFromPopupEntry();
+            };
+
+            findEdit.MinHeightFromPopupEntry();
+            replaceEdit.MinHeightFromPopupEntry();
+
             var hookSizeChanged = false;
 
             if (hookSizeChanged)

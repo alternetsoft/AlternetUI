@@ -101,6 +101,16 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Sets minimal height of the control using <see cref="IPopupEntryHandler.GetPopupEntryHeight"/>.
+        /// </summary>
+        public virtual void MinHeightFromPopupEntry()
+        {
+            if (ControlFactory.PopupEntryHandler is null)
+                return;
+            Label.MinHeight = ControlFactory.PopupEntryHandler.GetPopupEntryHeight(Label, RealFont, true);
+        }
+
         /// <inheritdoc/>
         protected override void TogglePopupVisible(MouseEventArgs e)
         {

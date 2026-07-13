@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.Maui.Extensions;
 using Alternet.UI;
 using Alternet.UI.Extensions;
@@ -10,8 +11,20 @@ using Microsoft.Maui.Controls;
 
 namespace Alternet.Maui
 {
-    internal partial class MauiPopupEntryHandler : IPopupEntryHandler
+    /// <summary>
+    /// Represents a handler for popup entry controls in a Maui application.
+    /// It provides methods to manage popup entries, including closing all entries, closing active entries,
+    /// checking for active entries, and showing new entries. This class implements
+    /// the <see cref="IPopupEntryHandler"/> interface for handling popup entries in a Maui application.
+    /// </summary>
+    public partial class MauiPopupEntryHandler : IPopupEntryHandler
     {
+        /// <summary>
+        /// Gets default height of the popup entry control. This value is used when
+        /// it is not possible to get height of the popup entry control dynamically.
+        /// </summary>
+        public static float DefaultPopupEntryHeight { get; set; } = 32;
+
         private readonly List<WeakReferenceValue<BasePopupEntry>> activeEntries = new();
 
         /// <inheritdoc/>
@@ -53,6 +66,12 @@ namespace Alternet.Maui
             }
 
             activeEntries.Clear();
+        }
+
+        /// <inheritdoc/>
+        public float GetPopupEntryHeight(AbstractControl? control, Font font, bool hasBorder)
+        {
+            return DefaultPopupEntryHeight;
         }
 
         /// <inheritdoc/>
