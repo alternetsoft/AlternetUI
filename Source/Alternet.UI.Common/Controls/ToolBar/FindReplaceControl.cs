@@ -112,6 +112,34 @@ namespace Alternet.UI
             findEdit.Label.DebugIdentifier = "FindEditLabel";
             replaceEdit.DebugIdentifier = "ReplaceEdit";
 
+            var hookSizeChanged = false;
+
+            if (hookSizeChanged)
+            {
+                findEdit.Label.SizeChanged += (s, e) =>
+                {
+                    Post(() =>
+                    {
+                        FindToolBar.MinHeight = Math.Max(findEdit.Height, FindToolBar.MinHeight ?? 0);
+                    });
+
+                    App.DebugLogIf("FindToolBar size changed: " + FindToolBar.Size, false);
+                };
+
+                SizeChanged += (s, e) =>
+                {
+                    App.DebugLogIf("FindReplaceControl size changed: " + Size, false);
+                };
+
+                replaceEdit.Label.SizeChanged += (s, e) =>
+                {
+                    Post(() =>
+                    {
+                        ReplaceToolBar.MinHeight = Math.Max(replaceEdit.Height, ReplaceToolBar.MinHeight ?? 0);
+                    });
+                };
+            }
+
             replaceEdit.TabPressed += (s, e) =>
             {
                 findEdit?.BeginEdit();

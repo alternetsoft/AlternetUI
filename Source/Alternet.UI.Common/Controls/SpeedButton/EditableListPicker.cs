@@ -114,7 +114,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override KnownTheme GetDefaultUseTheme()
         {
-            return KnownTheme.StaticBorder;
+            return KnownTheme.StaticBorderNoHover;
         }
 
         /// <inheritdoc/>
@@ -187,8 +187,6 @@ namespace Alternet.UI
         /// <returns>The parameters for the popup text box editor.</returns>
         protected virtual PopupEntryParams? CreatePopupEditorParams()
         {
-            var itemRect = Label.Bounds;
-
             var backColor = GetBackColor(VisualControlState.Normal);
             var foreColor = GetLabelTextColor(VisualControlState.Normal);
 
@@ -221,6 +219,7 @@ namespace Alternet.UI
                 {
                     EscapePressed?.Invoke(this, EventArgs.Empty);
                 },
+                EntryHeightChanged = OnPopupEntryHeightChanged,
                 KeyDown = (s, e) => EditorKeyDown?.Invoke(this, e),
                 GetItemText = () => s,
                 SetItemText = text =>
@@ -229,7 +228,7 @@ namespace Alternet.UI
                 },
             };
 
-            prm.SetTargetControl(this, itemRect);
+            prm.SetTargetControl(this, () => Label.Bounds);
 
             return prm;
         }
@@ -252,6 +251,14 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// This method is called when the height of the popup entry changes.
+        /// </summary>
+        /// <param name="itemHeight">The new height of the popup entry.</param>
+        protected virtual void OnPopupEntryHeightChanged(float itemHeight)
+        {
         }
 
         /// <inheritdoc/>

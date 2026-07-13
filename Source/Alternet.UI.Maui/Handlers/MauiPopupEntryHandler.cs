@@ -17,6 +17,8 @@ namespace Alternet.Maui
         /// <inheritdoc/>
         public virtual bool CloseActivePopupEntry(ObjectUniqueId id)
         {
+            var removed = false;
+
             for (int i = activeEntries.Count - 1; i >= 0; i--)
             {
                 var entry = activeEntries[i].Value;
@@ -27,11 +29,11 @@ namespace Alternet.Maui
                     entry.Params = new();
                     (entry.Parent as AbsoluteLayout)?.Children.Remove(entry);
                     activeEntries.RemoveAt(i);
-                    return true;
+                    removed = true;
                 }
             }
 
-            return false;
+            return removed;
         }
 
         /// <inheritdoc/>
@@ -64,6 +66,7 @@ namespace Alternet.Maui
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -126,11 +129,13 @@ namespace Alternet.Maui
             entry.Placeholder = prm.EmptyTextHint;
             entry.SelectAllOnFocus = true;
 
-            MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
-
             if (entry.Height > 0)
             {
                 OnEntrySizeChanged();
+            }
+            else
+            {
+                MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
             }
 
             entry.IsVisible = true;
@@ -187,8 +192,10 @@ namespace Alternet.Maui
 
             void OnEntrySizeChanged()
             {
-                var itemHeight = prm.ItemRect.Height;
                 var entryHeight = (float)entry.Height;
+                prm.EntryHeightChanged?.Invoke(entryHeight);
+
+                var itemHeight = prm.ItemRect.Height;
 
                 r.Top -= (entryHeight - itemHeight) / 2;
                 MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
