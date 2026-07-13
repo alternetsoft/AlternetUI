@@ -248,9 +248,11 @@ namespace Alternet.UI
         /// and the specified options. Only the color aspects indicated by the <paramref name="opt"/> parameter are
         /// affected, allowing for selective theme application. The method respects the control's default or custom
         /// color settings as appropriate.</remarks>
-        /// <param name="isDark">A value indicating whether to apply the dark theme (<see langword="true"/>) or the light theme (<see
+        /// <param name="isDark">A value indicating whether to apply the dark theme
+        /// (<see langword="true"/>) or the light theme (<see
         /// langword="false"/>).</param>
-        /// <param name="opt">A set of options that specifies which color properties (such as background, foreground, and border colors)
+        /// <param name="opt">A set of options that specifies which color properties
+        /// (such as background, foreground, and border colors)
         /// the theme should be applied to.</param>
         public virtual void SetColorThemeToLightOrDark(bool isDark, ColorThemeApplyOptions opt = ColorThemeApplyOptions.All)
         {
@@ -274,7 +276,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the effective border color based on the specified dark mode and other settings.
         /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// <param name="isDark">A value indicating whether the application is in dark mode.
+        /// If <see langword="true"/>, a color suitable for
         /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
         /// <returns>A <see cref="Color"/> representing the effective border color, determined by the current 
         /// settings and the dark mode parameter.</returns>
@@ -295,7 +298,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the effective hovered border color based on the specified dark mode and other settings.
         /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// <param name="isDark">A value indicating whether the application is in dark mode.
+        /// If <see langword="true"/>, a color suitable for
         /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
         /// <returns>A <see cref="Color"/> representing the effective hovered border color, determined by the current 
         /// settings and the dark mode parameter.</returns>
@@ -316,7 +320,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the effective foreground color based on the specified dark mode and other settings.
         /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// <param name="isDark">A value indicating whether the application is in dark mode.
+        /// If <see langword="true"/>, a color suitable for
         /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
         /// <returns>A <see cref="Color"/> representing the effective foreground color, determined by the current 
         /// settings and the dark mode parameter.</returns>
@@ -337,7 +342,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the effective background color based on the specified dark mode and other settings.
         /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// <param name="isDark">A value indicating whether the application is in dark mode.
+        /// If <see langword="true"/>, a color suitable for
         /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
         /// <returns>A <see cref="Color"/> representing the effective background color, determined by the current default
         /// settings and the dark mode parameter.</returns>
@@ -360,7 +366,8 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>Use this method to obtain the appropriate pressed background color for a button,
         /// ensuring consistency with the application's light or dark mode.</remarks>
-        /// <param name="isDark">An optional value indicating whether to use dark appearance. If null, the method uses the system's current
+        /// <param name="isDark">An optional value indicating whether to use dark appearance.
+        /// If null, the method uses the system's current
         /// appearance setting.</param>
         /// <returns>A Color representing the background color to use when the button is pressed, based on the effective
         /// appearance.</returns>
@@ -373,9 +380,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the effective background color for the hovered state based on the specified dark mode and other settings.
         /// </summary>
-        /// <param name="isDark">A value indicating whether the application is in dark mode. If <see langword="true"/>, a color suitable for
+        /// <param name="isDark">A value indicating whether the application is in dark mode.
+        /// If <see langword="true"/>, a color suitable for
         /// dark backgrounds is returned; otherwise, a color suitable for light backgrounds is returned.</param>
-        /// <returns>A <see cref="Color"/> representing the effective background color for the hovered state, determined by the current default
+        /// <returns>A <see cref="Color"/> representing the effective background color for the
+        /// hovered state, determined by the current default
         /// settings and the dark mode parameter.</returns>
         public virtual Color GetEffectiveHoveredBackColor(bool? isDark = null)
         {
@@ -414,8 +423,8 @@ namespace Alternet.UI
         /// or pressed state. Override this method to customize background color selection for additional states or
         /// behaviors.</remarks>
         /// <param name="state">The visual state of the control for which to retrieve the background color.</param>
-        /// <returns>A <see cref="Color"/> representing the background color for the given state, or <see langword="null"/> if no
-        /// color is defined.</returns>
+        /// <returns>A <see cref="Color"/> representing the background color for the given state,
+        /// or <see langword="null"/> if no color is defined.</returns>
         public virtual Color? GetBackgroundColor(VisualControlState state)
         {
             Color color;
