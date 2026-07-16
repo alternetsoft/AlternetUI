@@ -25,6 +25,12 @@ namespace Alternet.Maui
         /// </summary>
         public static float DefaultPopupEntryHeight { get; set; } = 32;
 
+        /// <summary>
+        /// Gets dictionary of the popup entry heights. The key is the font.
+        /// The value is the height of the popup entry control for the specified font.
+        /// </summary>
+        public static readonly BaseDictionary<Alternet.Drawing.Font, float> PopupEntryHeights = new();
+
         private readonly List<WeakReferenceValue<BasePopupEntry>> activeEntries = new();
 
         /// <inheritdoc/>
@@ -69,12 +75,6 @@ namespace Alternet.Maui
         }
 
         /// <inheritdoc/>
-        public float GetPopupEntryHeight(AbstractControl? control, Font font, bool hasBorder)
-        {
-            return DefaultPopupEntryHeight;
-        }
-
-        /// <inheritdoc/>
         public virtual bool HasActivePopupEntry(ObjectUniqueId id)
         {
             for (int i = activeEntries.Count - 1; i >= 0; i--)
@@ -87,6 +87,50 @@ namespace Alternet.Maui
             }
 
             return false;
+        }
+
+        /// <inheritdoc/>
+        public float GetPopupEntryHeight(AbstractControl? control, Font font, bool hasBorder)
+        {
+            if (PopupEntryHeights.TryGetValue(font, out var height))
+                return height;
+
+            AbsoluteLayout? absLayout = null;
+
+            absLayout = MauiUtils.GetObjectAbsoluteLayout(control);
+            
+            absLayout ??= MauiUtils.GetObjectAbsoluteLayout(MauiUtils.FirstWindow?.Page);
+ 
+            if (absLayout is null)
+                return DefaultPopupEntryHeight;
+
+            var entry = MauiUtils.FindViewInContainer<MeasurementEntry>(absLayout);
+            if (entry is null)
+            {
+                entry = new();
+                entry.IsVisible = false;
+                entry.SetFont(font);
+
+                entry.SizeChangedAction = () =>
+                {
+                    PopupEntryHeights.Add(font, (float)entry.Height);
+                };
+
+                entry.Text = "Wg";
+                RectD r = (-5000, -5000, -1, -1);
+                MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
+                absLayout.Children.Add(entry);
+                entry.IsVisible = true;
+            }
+            else
+            {
+                entry.SetFont(font);
+            }
+
+            if (PopupEntryHeights.TryGetValue(font, out height))
+                return height;
+
+            return DefaultPopupEntryHeight;
         }
 
         /// <inheritdoc/>
@@ -136,6 +180,7 @@ namespace Alternet.Maui
 
             entry.ResetEventActions();
             entry.WantTab = true;
+            entry.SetFont(prm.Font);
             entry.WantEscape = true;
             entry.SizeChangedAction = OnEntrySizeChanged;
             entry.TextChangedAction = OnEntryTextChanged;
@@ -218,6 +263,13 @@ namespace Alternet.Maui
 
                 r.Top -= (entryHeight - itemHeight) / 2;
                 MauiUtils.SetChildBoundsAbsoluteLayout(entry, r.ToMaui());
+            }
+        }
+
+        private partial class MeasurementEntry : BaseEntry
+        {
+            public MeasurementEntry()
+            {
             }
         }
 
