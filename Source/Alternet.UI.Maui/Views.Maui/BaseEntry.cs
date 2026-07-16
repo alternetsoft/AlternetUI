@@ -263,6 +263,19 @@ namespace Alternet.Maui
             KeyDownAction = null;
         }
 
+        /// <summary>
+        /// Sets font properties for the entry control.
+        /// </summary>
+        /// <param name="font">The font to apply to the entry control.</param>
+        public virtual void SetFont(Alternet.Drawing.Font? font)
+        {
+            MauiFontInfo fi = new (font);
+
+            FontFamily = fi.FontFamily;
+            FontSize = fi.FontSize;
+            FontAttributes = fi.FontAttributes;
+        }
+
         /// <inheritdoc/>
         protected override void OnTextChanged(string oldValue, string newValue)
         {
