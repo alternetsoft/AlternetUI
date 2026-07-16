@@ -79,6 +79,7 @@ namespace Alternet.UI
 
             label = CreateInnerLabel();
             label.Visible = false;
+            label.TextAlignmentVertical = VerticalAlignment.Center;
             label.Alignment = HVAlignment.Center;
 
             useTheme = GetDefaultUseTheme();
