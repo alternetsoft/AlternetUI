@@ -112,6 +112,16 @@ namespace Alternet.UI
             findEdit.Label.DebugIdentifier = "FindEditLabel";
             replaceEdit.DebugIdentifier = "ReplaceEdit";
 
+            findEdit.EscapePressed += (s, e) =>
+            {
+                EscapePressed?.Invoke(this, EventArgs.Empty);
+            };
+
+            replaceEdit.EscapePressed += (s, e) =>
+            {
+                EscapePressed?.Invoke(this, EventArgs.Empty);
+            };
+
             findEdit.FontChanged += (s, e) =>
             {
                 findEdit.MinHeightFromPopupEntry();
@@ -342,6 +352,11 @@ namespace Alternet.UI
         /// Occurs when 'Find Previous' button is clicked.
         /// </summary>
         public event EventHandler? ClickFindPrevious;
+
+        /// <summary>
+        /// Occurs when 'Escape' key is pressed when find or replace text boxes are focused.
+        /// </summary>
+        public event EventHandler? EscapePressed;
 
         /// <summary>
         /// Occurs when 'Replace' button is clicked.
