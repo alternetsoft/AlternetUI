@@ -313,6 +313,15 @@ namespace Alternet.Maui
         /// <summary>
         /// Sets the font for the tabs.
         /// </summary>
+        public virtual void SetTabFont(Alternet.Drawing.Font? font)
+        {
+            MauiFontInfo fi = new(font);
+            SetTabFont(fi.FontFamily, fi.FontSize);
+        }
+
+        /// <summary>
+        /// Sets the font for the tabs.
+        /// </summary>
         /// <param name="fontFamily">The font family to use for the tabs.</param>
         /// <param name="fontsize">The font size to use for the tabs.</param>
         public virtual void SetTabFont(string? fontFamily, double fontsize)
