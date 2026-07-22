@@ -1,3 +1,20 @@
+# 1.1.3 (2026 July 22)
+
+- Center label text vertically in SpeedButton by default.
+- Add EscapePressed event to FindReplaceControl.
+- SimpleTabControlView: Add SetTabFont overload.
+- Create MauiFontInfo.
+- Add SetFont method to BaseEntry.
+- Improve MauiPopupEntryHandler.
+- ToolBarSet: Add FirstToolBar and LastToolBar.
+- Adjust XButton default corner radius.
+- Auto-scroll popup listbox to selected item.
+- PopupWindow.AfterShowPopup.
+- Fix PopupWindow movement and buttons.
+- Rename Std prefix to X in controls.
+
+--
+
 # 1.1.2 (2026 July 12)
 
 - ToolBar: Add SetItemSizeFromImageSize and GetMaxToolImageSize methods.
