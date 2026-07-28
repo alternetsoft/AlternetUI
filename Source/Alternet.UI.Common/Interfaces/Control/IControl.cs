@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to the methods and properties of the control.
     /// </summary>
-    public interface IControl : IDisposable, IWin32Window, ILayoutItem
+    public interface IControl : IDisposable, IWin32Window, ILayoutItem, IComponent
     {
         /// <summary>
         /// Occurs before the <see cref="AbstractControl.KeyDown" /> event when a key is pressed
@@ -776,13 +776,6 @@ namespace Alternet.UI
         /// <value><c>true</c> if drag-and-drop operations are allowed in the
         /// control; otherwise, <c>false</c>. The default is <c>false</c>.</value>
         bool AllowDrop { get; set; }
-
-        /// <summary>
-        /// Gets or sets the site of the control.
-        /// </summary>
-        /// <returns>The <see cref="System.ComponentModel.ISite" /> associated
-        /// with the <see cref="AbstractControl" />, if any.</returns>
-        ISite? Site { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether the control has input focus.
