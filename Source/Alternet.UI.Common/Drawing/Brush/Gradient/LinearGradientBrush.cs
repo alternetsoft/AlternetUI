@@ -46,20 +46,67 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has
+        /// the specified bounding rectangle, start color, end color, and linear gradient mode.
+        /// </summary>
+        /// <param name="rect">The rectangle to calculate the start and end points from.</param>
+        /// <param name="color1">The start color of the gradient.</param>
+        /// <param name="color2">The end color of the gradient.</param>
+        /// <param name="linearGradientMode">The linear gradient mode.</param>
+        public LinearGradientBrush(RectD rect, Color color1, Color color2, LinearGradientMode linearGradientMode)
+            : this(GetStartPointFromRect(rect, linearGradientMode), GetEndPointFromRect(rect, linearGradientMode), color1, color2)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has
+        /// the specified bounding rectangle, start color, end color, and angle.
+        /// </summary>
+        /// <param name="rect">The rectangle to calculate the start and end points from.</param>
+        /// <param name="color1">The start color of the gradient.</param>
+        /// <param name="color2">The end color of the gradient.</param>
+        /// <param name="angle">The angle of the gradient.</param>
+        /// <param name="isAngleScaleable">Indicates whether the angle is scalable.</param>
+        public LinearGradientBrush(RectD rect, Color color1, Color color2, float angle, bool isAngleScaleable)
+               : this(GetStartEndPoints(rect, angle, isAngleScaleable), color1, color2)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has
+        /// the specified bounding rectangle, start color, end color, and angle.
+        /// </summary>
+        /// <param name="rect">The rectangle to calculate the start and end points from.</param>
+        /// <param name="color1">The start color of the gradient.</param>
+        /// <param name="color2">The end color of the gradient.</param>
+        /// <param name="angle">The angle of the gradient.</param>
+        public LinearGradientBrush(RectD rect, Color color1, Color color2, float angle)
+            : this(rect, color1, color2, angle, isAngleScaleable: false)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the LinearGradientBrush class that has the specified
-        /// start color, end color,
-        /// start point, end point.
+        /// start color, end color, start point, and end point.
         /// </summary>
         /// <param name="startPoint">The start point of the gradient.</param>
         /// <param name="endPoint">The end point of the gradient.</param>
         /// <param name="startColor">The start color of the gradient.</param>
         /// <param name="endColor">The end color of the gradient.</param>
-        public LinearGradientBrush(
-            PointD startPoint,
-            PointD endPoint,
-            Color startColor,
-            Color endColor)
+        public LinearGradientBrush(PointD startPoint, PointD endPoint, Color startColor, Color endColor)
             : this(startPoint, endPoint, GradientStopsFromEdgeColors(startColor, endColor))
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has the specified
+        /// start point, end point, start color, and end color. Start and end points are specified as a tuple of <see cref="PointD"/> values.
+        /// </summary>
+        /// <param name="points">A tuple containing the start and end points of the gradient.</param>
+        /// <param name="startColor">The start color of the gradient.</param>
+        /// <param name="endColor">The end color of the gradient.</param>
+        public LinearGradientBrush((PointD StartPoint, PointD EndPoint) points, Color startColor, Color endColor)
+            : this(points.StartPoint, points.EndPoint, GradientStopsFromEdgeColors(startColor, endColor))
         {
         }
 
@@ -115,6 +162,81 @@ namespace Alternet.Drawing
 
         /// <inheritdoc/>
         public override BrushType BrushType => BrushType.LinearGradient;
+
+        /// <summary>
+        /// Gets the start and end points of the linear gradient as a tuple of <see cref="PointD"/> values.
+        /// </summary>
+        /// <param name="rect">The rectangle to calculate the start and end points from.</param>
+        /// <param name="angle">The angle of the linear gradient in degrees.</param>
+        /// <param name="isAngleScaleable">Indicates whether the angle is scalable.</param>
+        /// <returns>A tuple containing the start and end points of the linear gradient.</returns>
+        public static (PointD, PointD) GetStartEndPoints(RectD rect, float angle, bool isAngleScaleable)
+        {
+            float radians = angle * MathF.PI / 180f;
+            float dx = MathF.Cos(radians);
+            float dy = MathF.Sin(radians);
+
+            // Center of rectangle
+            var center = new PointD(rect.Left + rect.Width / 2f, rect.Top + rect.Height / 2f);
+
+            // Half dimensions
+            float halfX = rect.Width / 2f;
+            float halfY = rect.Height / 2f;
+
+            // Scale vector depending on isAngleScaleable
+            float scale = isAngleScaleable
+                ? MathF.Sqrt(halfX * halfX + halfY * halfY)   // stretch with rect
+                : MathF.Min(halfX, halfY);                    // fixed length
+
+            var startPoint = new PointD(center.X - dx * scale, center.Y - dy * scale);
+            var endPoint = new PointD(center.X + dx * scale, center.Y + dy * scale);
+
+            return (startPoint, endPoint);
+        }
+
+        /// <summary>
+        /// Gets the start point of the linear gradient based on the specified rectangle and linear gradient mode.
+        /// </summary>
+        /// <param name="rect">The rectangle to calculate the start point from.</param>
+        /// <param name="linearGradientMode">The linear gradient mode.</param>
+        /// <returns>The start point of the linear gradient.</returns>
+        public static PointD GetStartPointFromRect(RectD rect, LinearGradientMode linearGradientMode)
+        {
+            switch (linearGradientMode)
+            {
+                case LinearGradientMode.Horizontal:
+                default:
+                    return new PointD(rect.Left, rect.Top);
+                case LinearGradientMode.Vertical:
+                    return new PointD(rect.Left, rect.Top);
+                case LinearGradientMode.ForwardDiagonal:
+                    return new PointD(rect.Left, rect.Top);
+                case LinearGradientMode.BackwardDiagonal:
+                    return new PointD(rect.Right, rect.Top);
+            }
+        }
+
+        /// <summary>
+        /// Gets the end point of the linear gradient from the specified rectangle and linear gradient mode.
+        /// </summary>
+        /// <param name="rect">The rectangle to calculate the end point from.</param>
+        /// <param name="linearGradientMode">The linear gradient mode.</param>
+        /// <returns>The end point of the linear gradient.</returns>
+        public static PointD GetEndPointFromRect(RectD rect, LinearGradientMode linearGradientMode)
+        {
+            switch (linearGradientMode)
+            {
+                case LinearGradientMode.Horizontal:
+                default:
+                    return new PointD(rect.Right, rect.Top);
+                case LinearGradientMode.Vertical:
+                    return new PointD(rect.Left, rect.Bottom);
+                case LinearGradientMode.ForwardDiagonal:
+                    return new PointD(rect.Right, rect.Bottom);
+                case LinearGradientMode.BackwardDiagonal:
+                    return new PointD(rect.Left, rect.Bottom);
+            }
+        }
 
         /// <inheritdoc/>
         public override string ToString()
