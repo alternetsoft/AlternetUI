@@ -45,6 +45,11 @@ namespace Alternet.Drawing
         public string? Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the current smoothing mode for this <see cref="Graphics"/> instance.
+        /// </summary>
+        public abstract SmoothingMode SmoothingMode { get; set; }
+
+        /// <summary>
         /// Gets or sets a copy of the geometric world transformation for this
         /// <see cref="Graphics"/>.
         /// </summary>

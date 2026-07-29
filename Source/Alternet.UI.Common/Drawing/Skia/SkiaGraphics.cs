@@ -58,6 +58,20 @@ namespace Alternet.Drawing
             this.canvas = canvas;
         }
 
+        /// <inheritdoc/>
+        public override SmoothingMode SmoothingMode
+        {
+            get
+            {
+                var isAntialias = SkiaHelper.DefaultAntialiasing;
+                return isAntialias ? SmoothingMode.AntiAlias : SmoothingMode.None;
+            }
+
+            set
+            {
+            }
+        }
+
         /// <summary>
         /// Gets a value indicating whether the scale factor is 1f.
         /// </summary>

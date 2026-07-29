@@ -52,6 +52,9 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override SmoothingMode SmoothingMode { get; set; }
+
+        /// <inheritdoc/>
         public override void Circle(Pen pen, Brush brush, PointD center, Coord radius)
         {
         }
