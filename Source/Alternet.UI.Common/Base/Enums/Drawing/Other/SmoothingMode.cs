@@ -37,6 +37,6 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies antialiased smoothing mode.
         /// </summary>
-        AntiAlias = 4
+        AntiAlias = 4,
     }
 }
