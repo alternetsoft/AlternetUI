@@ -7,7 +7,7 @@ namespace Alternet.UI;
 /// <summary>
 /// Handler for the popup event of the tooltip.
 /// </summary>
-public delegate void PopupEventHandler(object? sender, PopupToolTipEventArgs e);
+public delegate void PopupToolTipEventHandler(object? sender, PopupToolTipEventArgs e);
 
 /// <summary>
 /// This class contains the information a user needs to handle the popup event of the tooltip.
