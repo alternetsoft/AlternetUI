@@ -6,16 +6,6 @@ namespace Alternet.UI;
 
 // https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.tooltip?view=windowsdesktop-10.0
 
-/// <summary>
-/// Handler for the Popup event of the ToolTip control.
-/// </summary>
-public delegate void PopupEventHandler(object? sender, PopupEventArgs e);
-
-/// <summary>
-/// Handler for the Draw event of the ToolTip control.
-/// </summary>
-public delegate void DrawToolTipEventHandler(object? sender, DrawToolTipEventArgs e);
-
 [DefaultEvent(nameof(Popup))]
 public partial class ToolTip : Component
 {
