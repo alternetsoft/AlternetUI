@@ -333,6 +333,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the control has captured the mouse. 
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool Capture
+        {
+            get
+            {
+                return PlessMouse.MouseTargetControlOverride == this;
+            }
+
+            set
+            {
+                if (value)
+                {
+                    CaptureMouse();
+                }
+                else
+                {
+                    ReleaseMouseCapture();
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets unique identifier of the last used drop-down menu popup.
         /// </summary>
         [Browsable(false)]
