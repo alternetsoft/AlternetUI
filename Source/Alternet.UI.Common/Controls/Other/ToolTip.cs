@@ -1,20 +1,52 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+
+using Alternet.Drawing;
 
 namespace Alternet.UI;
 
 // https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.tooltip?view=windowsdesktop-10.0
 
+/// <summary>
+/// Represents a tooltip component that displays a small pop-up window with a brief description of a control's purpose
+/// when the user hovers the mouse pointer over the control. Currently, this class is not fully implemented and
+/// not all features are available.
+/// </summary>
 [DefaultEvent(nameof(Popup))]
 public partial class ToolTip : Component
 {
+    /// <summary>
+    /// Gets or sets default value of the <see cref="AutomaticDelay"/> property.
+    /// This is the time (in milliseconds) that passes before the tooltip appears.
+    /// </summary>
+    public static int DefaultAutomaticDelay = 500;
+
+    /// <summary>    
+    /// Gets or sets default value of the <see cref="AutoPopDelay"/> property.
+    /// </summary>
+    public static int DefaultAutoPopDelay = 5000;
+
+    /// <summary>    
+    /// Gets or sets default value of the <see cref="InitialDelay"/> property.
+    /// </summary>
+    public static int DefaultInitialDelay = 500;
+
+    /// <summary>    
+    /// Gets or sets default value of the <see cref="ReshowDelay"/> property.
+    /// This is the length of time (in milliseconds) that it takes subsequent tooltip
+    /// instances to appear as the mouse pointer moves from one tooltip region to another.
+    /// </summary>
+    public static int DefaultReshowDelay = 100;
+
     private Color backColor;
     private Color foreColor;
-    private int automaticDelay;
-    private int autoPopDelay;
-    private int initialDelay;
-    private int reshowDelay;
+    private int automaticDelay = DefaultAutomaticDelay;
+    private int autoPopDelay = DefaultAutoPopDelay;
+    private int initialDelay = DefaultInitialDelay;
+    private int reshowDelay = DefaultReshowDelay;
+
     private ToolTipIcon toolTipIcon;
     private string? toolTipTitle;
     private bool active;
@@ -35,20 +67,20 @@ public partial class ToolTip : Component
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the tooltip is currently active.
+    /// Initializes a new instance of the <see cref="ToolTip"/> class with the specified container.
     /// </summary>
-    [DefaultValue(true)]
-    public virtual bool Active
+    /// <param name="cont">The container to add the tooltip to.</param>
+    public ToolTip(IContainer cont)
+        : this()
     {
-        get => active;
-        set
-        {
-            active = value;
-        }
+        ArgumentNullException.ThrowIfNull(cont);
+
+        cont.Add(this);
     }
 
     /// <summary>
     /// Gets or sets the time (in milliseconds) that passes before the tooltip appears.
+    /// Currently this property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [RefreshProperties(RefreshProperties.All)]
     public virtual int AutomaticDelay
@@ -56,28 +88,34 @@ public partial class ToolTip : Component
         get => automaticDelay;
         set
         {
+            if (automaticDelay == value)
+                return;
             automaticDelay = value;
         }
     }
 
     /// <summary>
     /// Gets or sets the initial delay for the tooltip.
+    /// Currently this property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [RefreshProperties(RefreshProperties.All)]
-    public virtual int AutoPopDelay
+    internal virtual int AutoPopDelay
     {
         get => autoPopDelay;
         set
         {
+            if (autoPopDelay == value)
+                return;
             autoPopDelay = value;
         }
     }
 
     /// <summary>
     /// Gets or sets the BackColor for the tooltip.
+    /// Currently this property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [DefaultValue(typeof(Color), "Info")]
-    public virtual Color BackColor
+    internal virtual Color BackColor
     {
         get => backColor;
         set
@@ -90,9 +128,10 @@ public partial class ToolTip : Component
 
     /// <summary>
     /// Gets or sets the ForeColor for the tooltip.
+    /// Currently this property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [DefaultValue(typeof(Color), "InfoText")]
-    public virtual Color ForeColor
+    internal virtual Color ForeColor
     {
         get => foreColor;
         set
@@ -105,10 +144,10 @@ public partial class ToolTip : Component
 
     /// <summary>
     /// Gets or sets the IsBalloon for the tooltip.
-    /// This property doesn't have any effect and is implemented for compatibility.
+    /// Currently this property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [DefaultValue(false)]
-    public virtual bool IsBalloon
+    internal virtual bool IsBalloon
     {
         get => isBalloon;
         set
@@ -123,7 +162,7 @@ public partial class ToolTip : Component
     /// Gets or sets the initial delay for the tooltip.
     /// </summary>
     [RefreshProperties(RefreshProperties.All)]
-    public virtual int InitialDelay
+    internal virtual int InitialDelay
     {
         get => initialDelay;
         set
@@ -139,7 +178,7 @@ public partial class ToolTip : Component
     /// This property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [DefaultValue(false)]
-    public virtual bool OwnerDraw
+    internal virtual bool OwnerDraw
     {
         get => ownerDraw;
         set
@@ -149,11 +188,11 @@ public partial class ToolTip : Component
     }
 
     /// <summary>
-    /// Gets or sets the length of time (in milliseconds) that it takes subsequent ToolTip
-    /// instances to appear as the mouse pointer moves from one ToolTip region to another.
+    /// Gets or sets the length of time (in milliseconds) that it takes subsequent tooltip
+    /// instances to appear as the mouse pointer moves from one tooltip region to another.
     /// </summary>
     [RefreshProperties(RefreshProperties.All)]
-    public virtual int ReshowDelay
+    internal virtual int ReshowDelay
     {
         get => reshowDelay;
         set
@@ -169,7 +208,7 @@ public partial class ToolTip : Component
     /// parent control is not active.
     /// </summary>
     [DefaultValue(false)]
-    public virtual bool ShowAlways
+    internal virtual bool ShowAlways
     {
         get => showAlways;
         set
@@ -185,7 +224,7 @@ public partial class ToolTip : Component
     /// </summary>
     [Browsable(true)]
     [DefaultValue(false)]
-    public virtual bool StripAmpersands
+    internal virtual bool StripAmpersands
     {
         get => stripAmpersands;
         set
@@ -196,17 +235,11 @@ public partial class ToolTip : Component
         }
     }
 
-    [Localizable(false)]
-    [Bindable(true)]
-    [DefaultValue(null)]
-    [TypeConverter(typeof(StringConverter))]
-    public virtual object? Tag { get; set; }
-
     /// <summary>
     /// Gets or sets an Icon on the tooltip.
     /// </summary>
     [DefaultValue(ToolTipIcon.None)]
-    public virtual ToolTipIcon ToolTipIcon
+    internal virtual ToolTipIcon ToolTipIcon
     {
         get => toolTipIcon;
         set
@@ -227,7 +260,7 @@ public partial class ToolTip : Component
     /// </remarks>
     [DefaultValue(null)]
     [AllowNull]
-    public virtual string? ToolTipTitle
+    internal virtual string? ToolTipTitle
     {
         get => toolTipTitle;
         set
@@ -244,7 +277,7 @@ public partial class ToolTip : Component
     /// </summary>
     [Browsable(true)]
     [DefaultValue(true)]
-    public virtual bool UseAnimation
+    internal virtual bool UseAnimation
     {
         get => useAnimation;
         set => useAnimation = value;
@@ -256,7 +289,7 @@ public partial class ToolTip : Component
     /// </summary>
     [Browsable(true)]
     [DefaultValue(true)]
-    public virtual bool UseFading
+    internal virtual bool UseFading
     {
         get => useFading;
         set
@@ -264,6 +297,19 @@ public partial class ToolTip : Component
             if (useFading == value)
                 return;
             useFading = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether the tooltip is currently active.
+    /// </summary>
+    [DefaultValue(true)]
+    internal virtual bool Active
+    {
+        get => active;
+        set
+        {
+            active = value;
         }
     }
 
@@ -329,6 +375,7 @@ public partial class ToolTip : Component
     public virtual void Show(object? tooltip, AbstractControl control, PointD? point, int? duration = null)
     {
         SetToolTip(control, tooltip);
+        ToolTipWindow.ShowToolTip(control, point);
     }
 
     /// <summary>
@@ -344,7 +391,7 @@ public partial class ToolTip : Component
     /// or until the parent form is minimized, hidden, or dismissed.</param>
     public void Show(object? tooltip, AbstractControl control, float x, float y, int? duration = null)
     {
-        Show(tooltip, control, new (x, y), duration);
+        Show(tooltip, control, new(x, y), duration);
     }
 
     /// <summary>
@@ -360,8 +407,19 @@ public partial class ToolTip : Component
     /// </summary>
     public override string ToString()
     {
-        string s = base.ToString();
+        var s = base.ToString();
         return $"{s} InitialDelay: {InitialDelay}, ShowAlways: {ShowAlways}";
+    }
+
+    /// <summary>
+    /// Logs delay related properties to the debug output.
+    /// </summary>
+    public virtual void LogDelayProperties()
+    {
+        Debug.WriteLine($"InitialDelay: {InitialDelay}");
+        Debug.WriteLine($"ReshowDelay: {ReshowDelay}");
+        Debug.WriteLine($"AutoPopDelay: {AutoPopDelay}");
+        Debug.WriteLine($"AutomaticDelay: {AutomaticDelay}");
     }
 
     /// <summary>

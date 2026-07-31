@@ -284,7 +284,8 @@ namespace Alternet.UI
         /// When this method is called, the tooltip will be shown after the current event is processed.
         /// The tooltip will be shown at the specified screen location or at a default position if no location is provided.
         /// </summary>
-        /// <param name="location">The screen coordinates where the tooltip should be displayed. If null, the tooltip is shown at a default
+        /// <param name="location">The screen coordinates where the tooltip should be displayed.
+        /// If null, the tooltip is shown at a default
         /// location determined by the implementation.</param>
         /// <returns>Returns this <see cref="IRichToolTip"/> object instance for use in the call sequences.</returns>
         IRichToolTip PostShowToolTip(PointD? location = null);

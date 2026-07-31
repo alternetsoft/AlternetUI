@@ -288,21 +288,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the global mouse hover event.
+        /// Shows the tooltip for the specified control.
         /// </summary>
-        /// <remarks>Override this method to provide custom handling when a global mouse hover event
-        /// occurs. This method is called when the mouse pointer hovers over a relevant UI element.</remarks>
-        /// <param name="sender">The source of the event, typically the object that raised the event.</param>
-        /// <param name="e">An object that contains the event data.</param>
-        private static void OnGlobalMouseHover(object? sender, EventArgs e)
+        /// <param name="control">The control for which to show the tooltip.</param>
+        /// <param name="location">The location at which to show the tooltip. Optional.
+        /// If not specified, the tooltip is shown at a default location determined by the implementation.</param>
+        public static void ShowToolTip(AbstractControl? control, PointD? location = null)
         {
-            var toolTipShown = false;
-
-            if (sender is not AbstractControl control)
+            if (control is null)
                 return;
 
             if (lastToolTipControlId == control.UniqueId)
                 return;
+
+            var toolTipShown = false;
 
             try
             {
@@ -343,7 +342,7 @@ namespace Alternet.UI
                     Post(() =>
                     {
                         toolTipShown = true;
-                        toolTip.ShowToolTip(toolTipStr);
+                        toolTip.ShowToolTip(toolTipStr, true, location);
                     });
                     return;
                 }
@@ -356,7 +355,7 @@ namespace Alternet.UI
                     }
 
                     toolTipShown = true;
-                    toolTip.SetParams(prm).PostShowToolTip();
+                    toolTip.SetParams(prm).PostShowToolTip(location);
                 }
             }
             catch (Exception ex)
@@ -376,6 +375,17 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Raises the global mouse hover event.
+        /// </summary>
+        /// <remarks>Override this method to provide custom handling when a global mouse hover event
+        /// occurs. This method is called when the mouse pointer hovers over a relevant UI element.</remarks>
+        /// <param name="sender">The source of the event, typically the object that raised the event.</param>
+        /// <param name="e">An object that contains the event data.</param>
+        private static void OnGlobalMouseHover(object? sender, EventArgs e)
+        {
+
+        }
         private void HideToolTip<T>(object? sender, T e)
         {
             if (!Visible || DisposingOrDisposed)
