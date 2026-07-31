@@ -11,9 +11,11 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a method that retrieves the tooltip content for a specified control.
     /// </summary>
-    /// <param name="control">The control for which to obtain the tooltip content. Can be null to indicate no control is specified.</param>
+    /// <param name="control">The control for which to obtain the tooltip content.
+    /// Can be null to indicate no control is specified.</param>
     /// <param name="defaultToolTip">The default tooltip content to use if no custom tooltip is provided.</param>
-    /// <returns>An object representing the tooltip content for the specified control, or null if no tooltip is available.</returns>
+    /// <returns>An object representing the tooltip content for the specified control,
+    /// or null if no tooltip is available.</returns>
     public delegate object? GetControlToolTipDelegate(AbstractControl control, object? defaultToolTip);
 
     /// <summary>
