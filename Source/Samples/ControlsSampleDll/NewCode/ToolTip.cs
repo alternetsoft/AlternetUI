@@ -9,21 +9,21 @@ namespace Alternet.UI;
 [DefaultEvent(nameof(Popup))]
 public partial class ToolTip : Component
 {
-    private bool active;
-    private int automaticDelay;
-    private int autoPopDelay;
     private Color backColor;
     private Color foreColor;
-    private bool isBalloon;
+    private int automaticDelay;
+    private int autoPopDelay;
     private int initialDelay;
-    private bool ownerDraw;
     private int reshowDelay;
-    private bool showAlways;
-    private bool stripAmpersands;
     private ToolTipIcon toolTipIcon;
     private string? toolTipTitle;
-    private bool useAnimation;
-    private bool useFading;
+    private bool active;
+    private bool isBalloon = false;
+    private bool ownerDraw = false;
+    private bool showAlways = false;
+    private bool stripAmpersands = false;
+    private bool useAnimation = false;
+    private bool useFading = false;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolTip"/> class in its default state.
@@ -35,83 +35,117 @@ public partial class ToolTip : Component
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the <see cref="ToolTip"/> control is currently active.
+    /// Gets or sets a value indicating whether the tooltip is currently active.
     /// </summary>
     [DefaultValue(true)]
     public virtual bool Active
     {
         get => active;
-        set => active = value;
+        set
+        {
+            active = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets the time (in milliseconds) that passes before the <see cref="ToolTip"/> appears.
+    /// Gets or sets the time (in milliseconds) that passes before the tooltip appears.
     /// </summary>
     [RefreshProperties(RefreshProperties.All)]
     public virtual int AutomaticDelay
     {
         get => automaticDelay;
-        set => automaticDelay = value;
+        set
+        {
+            automaticDelay = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets the initial delay for the <see cref="ToolTip"/> control.
+    /// Gets or sets the initial delay for the tooltip.
     /// </summary>
     [RefreshProperties(RefreshProperties.All)]
     public virtual int AutoPopDelay
     {
         get => autoPopDelay;
-        set => autoPopDelay = value;
+        set
+        {
+            autoPopDelay = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets the BackColor for the <see cref="ToolTip"/> control.
+    /// Gets or sets the BackColor for the tooltip.
     /// </summary>
     [DefaultValue(typeof(Color), "Info")]
     public virtual Color BackColor
     {
         get => backColor;
-        set => backColor = value;
+        set
+        {
+            if (backColor == value)
+                return;
+            backColor = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets the ForeColor for the <see cref="ToolTip"/> control.
+    /// Gets or sets the ForeColor for the tooltip.
     /// </summary>
     [DefaultValue(typeof(Color), "InfoText")]
     public virtual Color ForeColor
     {
         get => foreColor;
-        set => foreColor = value;
+        set
+        {
+            if (foreColor == value)
+                return;
+            foreColor = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets the IsBalloon for the <see cref="ToolTip"/> control.
+    /// Gets or sets the IsBalloon for the tooltip.
+    /// This property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [DefaultValue(false)]
     public virtual bool IsBalloon
     {
         get => isBalloon;
-        set => isBalloon = value;
+        set
+        {
+            if (isBalloon == value)
+                return;
+            isBalloon = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets the initial delay for the <see cref="ToolTip"/> control.
+    /// Gets or sets the initial delay for the tooltip.
     /// </summary>
     [RefreshProperties(RefreshProperties.All)]
     public virtual int InitialDelay
     {
         get => initialDelay;
-        set => initialDelay = value;
+        set
+        {
+            if (initialDelay == value)
+                return;
+            initialDelay = value;
+        }
     }
 
     /// <summary>
-    /// Indicates whether the ToolTip will be drawn by the system or the user.
+    /// Indicates whether the tooltip will be drawn by the system or the user.
+    /// This property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [DefaultValue(false)]
     public virtual bool OwnerDraw
     {
         get => ownerDraw;
-        set => ownerDraw = value;
+        set
+        {
+            ownerDraw = value;
+        }
     }
 
     /// <summary>
@@ -122,18 +156,28 @@ public partial class ToolTip : Component
     public virtual int ReshowDelay
     {
         get => reshowDelay;
-        set => reshowDelay = value;
+        set
+        {
+            if (reshowDelay == value)
+                return;
+            reshowDelay = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets a value indicating whether the <see cref="ToolTip"/> appears even when its
+    /// Gets or sets a value indicating whether the tooltip appears even when its
     /// parent control is not active.
     /// </summary>
     [DefaultValue(false)]
     public virtual bool ShowAlways
     {
         get => showAlways;
-        set => showAlways = value;
+        set
+        {
+            if (showAlways == value)
+                return;
+            showAlways = value;
+        }
     }
 
     /// <summary>
@@ -144,7 +188,12 @@ public partial class ToolTip : Component
     public virtual bool StripAmpersands
     {
         get => stripAmpersands;
-        set => stripAmpersands = value;
+        set
+        {
+            if (stripAmpersands == value)
+                return;
+            stripAmpersands = value;
+        }
     }
 
     [Localizable(false)]
@@ -154,28 +203,44 @@ public partial class ToolTip : Component
     public virtual object? Tag { get; set; }
 
     /// <summary>
-    /// Gets or sets an Icon on the ToolTip.
+    /// Gets or sets an Icon on the tooltip.
     /// </summary>
     [DefaultValue(ToolTipIcon.None)]
     public virtual ToolTipIcon ToolTipIcon
     {
         get => toolTipIcon;
-        set => toolTipIcon = value;
+        set
+        {
+            if (toolTipIcon == value)
+                return;
+            toolTipIcon = value;
+        }
     }
 
     /// <summary>
-    /// Gets or sets the title of the ToolTip.
+    /// Gets or sets the title of the tooltip.
     /// </summary>
+    /// <remarks>
+    /// The title is displayed within the window as a line of bold text above the standard text of a toolTip description.
+    /// Typically, titles are used either to differentiate different categories of controls on a form or as an
+    /// introduction to a long description.
+    /// </remarks>
     [DefaultValue(null)]
     [AllowNull]
     public virtual string? ToolTipTitle
     {
         get => toolTipTitle;
-        set => toolTipTitle = value;
+        set
+        {
+            if (toolTipTitle == value)
+                return;
+            toolTipTitle = value;
+        }
     }
 
     /// <summary>
     /// When set to true, animations are used when tooltip is shown or hidden.
+    /// This property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [Browsable(true)]
     [DefaultValue(true)]
@@ -187,24 +252,30 @@ public partial class ToolTip : Component
 
     /// <summary>
     /// When set to true, a fade effect is used when tooltips are shown or hidden.
+    /// This property doesn't have any effect and is implemented for compatibility.
     /// </summary>
     [Browsable(true)]
     [DefaultValue(true)]
     public virtual bool UseFading
     {
         get => useFading;
-        set => useFading = value;
+        set
+        {
+            if (useFading == value)
+                return;
+            useFading = value;
+        }
     }
 
     /// <summary>
     /// Fires in OwnerDraw mode when the tooltip needs to be drawn.
     /// </summary>
-    public event DrawToolTipEventHandler? Draw;
+    internal event DrawToolTipEventHandler? Draw;
 
     /// <summary>
     /// Fires when the tooltip is just about to be shown.
     /// </summary>
-    public event PopupToolTipEventHandler? Popup;
+    internal event PopupToolTipEventHandler? Popup;
 
     /// <summary>
     /// Returns true if the tooltip can offer an extender property to the specified target component.
@@ -224,59 +295,64 @@ public partial class ToolTip : Component
     /// <summary>
     /// Associates tooltip text with the specified control.
     /// </summary>
-    public virtual void SetToolTip(AbstractControl control, string? caption)
+    /// <param name="tooltip">The text to display in the tooltip.</param>
+    /// <param name="control">The control with which the tooltip is associated.</param>
+    public virtual void SetToolTip(AbstractControl control, object? tooltip)
     {
-        control.ToolTip = caption;
-    }
-
-    /// <summary>
-    /// Associates tooltip with the specified control and displays it.
-    /// </summary>
-    public virtual void Show(string? text, AbstractControl window)
-    {
+        control.ToolTipObject = tooltip;
     }
 
     /// <summary>
     /// Associates tooltip with the specified control and displays it for the
-    /// specified duration.
+    /// specified duration or until tooltip is dismissed.
     /// </summary>
-    public virtual void Show(string? text, AbstractControl window, int duration)
+    /// <param name="tooltip">The text to display in the tooltip.</param>
+    /// <param name="control">The control with which the tooltip is associated.</param>
+    /// <param name="duration">The duration for which the tooltip is displayed (in milliseconds).
+    /// If duration is not specified, the tooltip will be displayed until the Hide method is called,
+    /// or until the parent form is minimized, hidden, or dismissed.</param>
+    public void Show(object? tooltip, AbstractControl control, int? duration = null)
     {
+        Show(tooltip, control, null, duration);
     }
 
     /// <summary>
-    /// Associates tooltip with the specified control and displays it.
+    /// Associates tooltip with the specified control and displays it at the specified point.
     /// </summary>
-    public virtual void Show(string? text, AbstractControl window, PointD point)
+    /// <param name="point">The point at which to display the tooltip. If null, the tooltip will be displayed
+    /// at the default location.</param>
+    /// <param name="tooltip">The text to display in the tooltip.</param>
+    /// <param name="control">The control with which the tooltip is associated.</param>
+    /// <param name="duration">The duration for which the tooltip is displayed (in milliseconds).
+    /// If duration is not specified, the tooltip will be displayed until the Hide method is called,
+    /// or until the parent form is minimized, hidden, or dismissed.</param>
+    public virtual void Show(object? tooltip, AbstractControl control, PointD? point, int? duration = null)
     {
+        SetToolTip(control, tooltip);
     }
 
     /// <summary>
-    /// Associates tooltip with the specified control and displays it.
+    /// Associates tooltip with the specified control and displays it at the specified coordinates.
     /// </summary>
-    public virtual void Show(string? text, AbstractControl window, PointD point, int duration)
+    /// <param name="tooltip">The text to display in the tooltip. If null, the tooltip will be displayed
+    /// at the default location.</param>
+    /// <param name="control">The control with which the tooltip is associated.</param>
+    /// <param name="x">The x-coordinate at which to display the tooltip.</param>
+    /// <param name="y">The y-coordinate at which to display the tooltip.</param>
+    /// <param name="duration">The duration for which the tooltip is displayed (in milliseconds).
+    /// If duration is not specified, the tooltip will be displayed until the Hide method is called,
+    /// or until the parent form is minimized, hidden, or dismissed.</param>
+    public void Show(object? tooltip, AbstractControl control, float x, float y, int? duration = null)
     {
+        Show(tooltip, control, new (x, y), duration);
     }
 
     /// <summary>
-    /// Associates tooltip with the specified control and displays it.
+    /// Hides tooltip shown for the the specified control.
     /// </summary>
-    public virtual void Show(string? text, AbstractControl window, int x, int y)
+    public virtual void Hide(AbstractControl control)
     {
-    }
-
-    /// <summary>
-    /// Associates tooltip with the specified control and displays it.
-    /// </summary>
-    public virtual void Show(string? text, AbstractControl window, int x, int y, int duration)
-    {
-    }
-
-    /// <summary>
-    /// Hides <see cref="ToolTip"/> with the specified control.
-    /// </summary>
-    public virtual void Hide(AbstractControl win)
-    {
+        ToolTipWindow.HideGlobalToolTip();
     }
 
     /// <summary>
