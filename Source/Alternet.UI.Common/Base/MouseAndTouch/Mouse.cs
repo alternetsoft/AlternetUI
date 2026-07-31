@@ -49,6 +49,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool? IsMousePresent
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return Handler.MousePresent;
@@ -72,10 +73,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the left button.
+        /// The state of the left button.
         /// </summary>
         public static MouseButtonState LeftButton
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return GetButtonState(MouseButton.Left);
@@ -83,10 +85,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the right button.
+        /// The state of the right button.
         /// </summary>
         public static MouseButtonState RightButton
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return GetButtonState(MouseButton.Right);
@@ -94,10 +97,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the middle button.
+        /// The state of the middle button.
         /// </summary>
         public static MouseButtonState MiddleButton
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return GetButtonState(MouseButton.Middle);
@@ -105,10 +109,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the first extended button.
+        /// The state of the first extended button.
         /// </summary>
         public static MouseButtonState XButton1
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return GetButtonState(MouseButton.XButton1);
@@ -116,10 +121,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        ///     The state of the second extended button.
+        /// Gets the state of all mouse buttons.
+        /// </summary>
+        public static Alternet.UI.MouseButtons MouseButtons
+        {
+            get
+            {
+                Alternet.UI.MouseButtons result = MouseButtons.None;
+
+                if (IsPressed(MouseButton.Left))
+                    result |= MouseButtons.Left;
+                if (IsPressed(MouseButton.Middle))
+                    result |= MouseButtons.Middle;
+                if (IsPressed(MouseButton.Right))
+                    result |= MouseButtons.Right;
+                if (IsPressed(MouseButton.XButton1))
+                    result |= MouseButtons.XButton1;
+                if (IsPressed(MouseButton.XButton2))
+                    result |= MouseButtons.XButton2;
+
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// The state of the second extended button.
         /// </summary>
         public static MouseButtonState XButton2
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return GetButtonState(MouseButton.XButton2);
@@ -135,6 +165,17 @@ namespace Alternet.UI
         public static MouseButtonState GetButtonState(MouseButton mouseButton)
         {
             return Handler.GetButtonState(mouseButton);
+        }
+
+        /// <summary>
+        /// Gets whether the specified mouse button is pressed.
+        /// </summary>
+        /// <param name="mouseButton">The mouse button to check.</param>
+        /// <returns><see langword="true"/> if the specified mouse button is pressed; otherwise, <see langword="false"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsPressed(MouseButton mouseButton)
+        {
+            return GetButtonState(mouseButton) == MouseButtonState.Pressed;
         }
 
         /// <summary>
@@ -162,15 +203,14 @@ namespace Alternet.UI
         /// the value of <paramref name="position"/> is returned.</returns>
         public static PointD CoercePosition(PointD? position, AbstractControl? relativeTo)
         {
-            if(position is null || position == PointD.MinusOne)
+            if (position is null || position == PointD.MinusOne)
                 return Mouse.GetPosition(relativeTo);
 
             return position.Value;
         }
 
         /// <summary>
-        ///     Calculates the position of the mouse relative to
-        ///     a particular element.
+        /// Calculates the position of the mouse relative to a particular element.
         /// </summary>
         public static PointD GetPosition(AbstractControl? relativeTo)
         {
@@ -189,6 +229,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event arguments.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void RaiseMoved(object sender, MouseEventArgs e)
         {
             Moved?.Invoke(sender, e);

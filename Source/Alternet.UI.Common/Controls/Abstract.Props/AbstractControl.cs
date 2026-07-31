@@ -575,8 +575,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the state of all mouse buttons.
+        /// </summary>
+        [Browsable(false)]
+        public static Alternet.UI.MouseButtons MouseButtons
+        {
+            get
+            {
+                return Mouse.MouseButtons;
+            }
+        }
+
+        /// <summary>
         /// Gets height of the currently used font. By default returns height of "Wg" text.
         /// </summary>
+        [Browsable(false)]
         public virtual float FontHeight
         {
             get
