@@ -10,6 +10,16 @@ namespace Alternet.UI
     public partial class AbstractControl
     {
         /// <summary>
+        /// Called when drag operation is started.
+        /// </summary>
+        /// <param name="e">An <see cref="GiveFeedbackEventArgs" /> that contains the event data.</param>
+        /// <remarks>Currently, this method is not called by the framework. It was added
+        /// for the compatibility with legacy code.</remarks>
+        protected virtual void OnGiveFeedback(GiveFeedbackEventArgs e)
+        {
+        }
+
+        /// <summary>
         /// Called when the <see cref="CellChanged" /> event is raised.
         /// </summary>
         /// <param name="e">An <see cref="EventArgs" /> that contains the event data.</param>

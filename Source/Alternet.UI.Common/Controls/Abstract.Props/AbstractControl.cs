@@ -163,6 +163,7 @@ namespace Alternet.UI
             padding = MinPadding;
             visible = GetDefaultVisible();
             font = DefaultFont;
+
             OnCreateControl();
             Designer?.RaiseCreated(this, EventArgs.Empty);
             RaiseNotifications((n) => n.AfterCreate(this, EventArgs.Empty));
