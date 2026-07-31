@@ -74,7 +74,7 @@ namespace Alternet.UI
             AutoUpdateColors = true;
             AssignDefaultColors();
             Layout = LayoutStyle.Horizontal;
-            itemSize = Math.Max(DefaultSize, DefaultMinItemSize);
+            itemSize = Math.Max(DefaultItemSize, DefaultMinItemSize);
             IsGraphicControl = true;
         }
 
@@ -155,7 +155,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default item size in dips.
         /// </summary>
-        public static Coord DefaultSize { get; set; } = 24;
+        public static Coord DefaultItemSize { get; set; } = 24;
 
         /// <summary>
         /// Gets or sets default minimal item size in dips. You should not normally
@@ -1209,13 +1209,13 @@ namespace Alternet.UI
         /// Gets the maximal size of the image used in the tool items of the control.
         /// This method uses <see cref="ToolsAsButton"/> to get a collection of all buttons
         /// and then calculates the maximal width and height of the images used in these buttons.
-        /// If no buttons are found, it returns <see cref="DefaultSize"/>.
+        /// If no buttons are found, it returns <see cref="DefaultItemSize"/>.
         /// </summary>
         /// <returns>A <see cref="SizeD"/> structure representing the maximal width and height
         /// of the images used in the tool items.</returns>
         public virtual SizeD GetMaxToolImageSize()
         {
-            SizeD result = DefaultSize;
+            SizeD result = DefaultItemSize;
 
             foreach (var item in ToolsAsButton)
             {

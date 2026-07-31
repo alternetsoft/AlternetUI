@@ -32,7 +32,7 @@ namespace Alternet.UI
         /// Specifies the default amount by which the size is adjusted in resizing operations.
         /// This value is used to initialize the <see cref="SizeDelta"/> property of <see cref="Splitter"/> class.
         /// </summary>
-        public static int DefaultSizeDelta = 10;
+        public static int DefaultResizeDelta = 10;
 
         /// <summary>
         /// Gets or sets a default value of the
@@ -282,9 +282,9 @@ namespace Alternet.UI
         /// update attached control size.
         /// </summary>
         /// <remarks>
-        /// Default value is stored in <see cref="DefaultSizeDelta"/> static field.
+        /// Default value is stored in <see cref="DefaultResizeDelta"/> static field.
         /// </remarks>
-        public virtual int SizeDelta { get; set; } = DefaultSizeDelta;
+        public virtual int SizeDelta { get; set; } = DefaultResizeDelta;
 
         /// <summary>
         /// Gets whether the splitter is horizontal.
