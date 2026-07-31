@@ -575,6 +575,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets height of the currently used font. By default returns height of "Wg" text.
+        /// </summary>
+        public virtual float FontHeight
+        {
+            get
+            {
+                return RealFont.GetHeight(this.MeasureCanvas);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets border for all visual states of the control.
         /// Usage of this property depends on the control. Not all controls support it.
         /// </summary>
