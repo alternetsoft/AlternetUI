@@ -14,6 +14,16 @@ namespace Alternet.UI
         private EventHandler? click;
 
         /// <summary>
+        /// Occurs during a drag operation.It is raised when a drag-and-drop operation is started. With this event,
+        /// the source of a drag event can modify the appearance of the mouse pointer in order to give the user visual
+        /// feedback during a drag-and-drop operation.
+        /// </summary>
+        /// <remarks>
+        /// Currently is not used.
+        /// </remarks>
+        public event GiveFeedbackEventHandler? GiveFeedback;
+
+        /// <summary>
         /// Occurs when preferred size of the control is requested by the layout system.
         /// </summary>
         public event EventHandler<DefaultPreferredSizeEventArgs>? RequestPreferredSize;

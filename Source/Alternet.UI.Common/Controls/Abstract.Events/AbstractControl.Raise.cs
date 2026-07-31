@@ -11,8 +11,7 @@ namespace Alternet.UI
 {
     public partial class AbstractControl
     {
-        private static
-            (VisualControlStates ControlState, ObjectUniqueId ControlId)? reportedVisualStates;
+        private static (VisualControlStates ControlState, ObjectUniqueId ControlId)? reportedVisualStates;
 
         private static WeakReferenceValue<AbstractControl> lastMouseEventTarget = new();
 
@@ -1496,6 +1495,17 @@ namespace Alternet.UI
                 ref position);
 
             currentTarget?.RaiseMouseLeave(e);
+        }
+
+        /// <summary>
+        /// Raises the <see cref="GiveFeedback" /> event.
+        /// </summary>
+        /// <param name="e">An <see cref="GiveFeedbackEventArgs"/> that contains the event data.</param>
+        public void RaiseGiveFeedback(GiveFeedbackEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+            GiveFeedback?.Invoke(this, e);
         }
 
         /// <summary>
