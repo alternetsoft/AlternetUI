@@ -307,7 +307,8 @@ namespace Alternet.Drawing
         /// <param name="text">An array of text lines, where each line is represented as an array of text segments with associated font
         /// styles to be drawn.</param>
         /// <param name="lineDistance">The vertical distance, in device-independent units, to apply between each line of text.</param>
-        /// <param name="location">The starting location, in device-independent coordinates, where the first line of text will be drawn.</param>
+        /// <param name="location">The starting location, in device-independent coordinates,
+        /// where the first line of text will be drawn.</param>
         /// <param name="font">The base font to use for rendering text segments that do not specify an explicit font style.</param>
         /// <param name="foreColor">The color to use for the text foreground.</param>
         /// <param name="backColor">The background color to use behind the text. If null, no background is drawn.</param>
