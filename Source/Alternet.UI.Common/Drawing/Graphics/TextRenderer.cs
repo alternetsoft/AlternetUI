@@ -316,7 +316,7 @@ namespace Alternet.Drawing
             Color backColor,
             TextFormatFlags flags)
         {
-            if(handler != null)
+            if (handler != null)
                 handler.DrawText(dc, text, font, bounds, foreColor, backColor, flags);
             else
                 throw new NotImplementedException();
