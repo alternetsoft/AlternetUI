@@ -41,6 +41,8 @@ namespace Alternet.Common.Skia
 
     /// <summary>
     /// Encapsulates a 3-by-2 affine matrix that represents a geometric transform.
+    /// This structure uses <see cref="System.Numerics.Matrix3x2"/> internally for data storage.
+    /// Use <see cref="Matrix3x2"/> field to access it.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, Pack = 1)]
     public partial struct TransformMatrix : IEquatable<TransformMatrix>
@@ -204,6 +206,16 @@ namespace Alternet.Common.Skia
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TransformMatrix"/> class with specified matrix.
+        /// </summary>
+        /// <param name="matrix">The <see cref="System.Numerics.Matrix3x2"/> representing
+        /// the transformation matrix to initialize this instance with.</param>
+        public TransformMatrix(System.Numerics.Matrix3x2 matrix)
+        {
+            Matrix3x2 = matrix;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TransformMatrix"/> class
         /// with the specified elements.
         /// </summary>
@@ -212,7 +224,7 @@ namespace Alternet.Common.Skia
         /// <param name="m21">The skew in the x-direction.</param>
         /// <param name="m22">The skew in the y-direction.</param>
         /// <param name="dx">The translation in the x-direction.</param>
-        /// <param name="dy">The translation in the x-direction.</param>
+        /// <param name="dy">The translation in the y-direction.</param>
         public TransformMatrix(
             float m11,
             float m12,
@@ -334,6 +346,18 @@ namespace Alternet.Common.Skia
         }
 
         /// <summary>
+        /// Converts the current <see cref="TransformMatrix"/> to a <see cref="System.Numerics.Matrix3x2"/>.
+        /// </summary>
+        /// <param name="m">The <see cref="TransformMatrix"/> to convert.</param>
+        public static explicit operator System.Numerics.Matrix3x2(TransformMatrix m) => m.Matrix3x2;
+
+        /// <summary>
+        /// Converts the current <see cref="System.Numerics.Matrix3x2"/> to a <see cref="TransformMatrix"/>.
+        /// </summary>
+        /// <param name="m">The <see cref="System.Numerics.Matrix3x2"/> to convert.</param>
+        public static explicit operator TransformMatrix(System.Numerics.Matrix3x2 m) => new(m);
+
+        /// <summary>
         /// Converts <see cref="SKMatrix"/> to <see cref="TransformMatrix"/>.
         /// </summary>
         /// <param name="m">Value to convert.</param>
@@ -342,6 +366,61 @@ namespace Alternet.Common.Skia
         {
             var result = new TransformMatrix(m.ScaleX, m.SkewY, m.SkewX, m.ScaleY, m.TransX, m.TransY);
             return result;
+        }
+
+        /// <summary>Adds each element in one matrix with its corresponding element in a second matrix.</summary>
+        /// <param name="value1">The first matrix.</param>
+        /// <param name="value2">The second matrix.</param>
+        /// <returns>The matrix that contains the summed values.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TransformMatrix operator +(TransformMatrix value1, TransformMatrix value2)
+        {
+            var result = value1.Matrix3x2 + value2.Matrix3x2;
+            return new(result);
+        }
+
+        /// <summary>Multiplies two matrices together to compute the product.</summary>
+        /// <param name="value1">The first matrix.</param>
+        /// <param name="value2">The second matrix.</param>
+        /// <returns>The product matrix.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TransformMatrix operator *(TransformMatrix value1, TransformMatrix value2)
+        {
+            var result = value1.Matrix3x2 * value2.Matrix3x2;
+            return new(result);
+        }
+
+        /// <summary>Multiplies a matrix by a float to compute the product.</summary>
+        /// <param name="value1">The matrix to scale.</param>
+        /// <param name="value2">The scaling value to use.</param>
+        /// <returns>The scaled matrix.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TransformMatrix operator *(TransformMatrix value1, float value2)
+        {
+            var result = value1.Matrix3x2 * value2;
+            return new(result);
+        }
+
+        /// <summary>Subtracts each element in a second matrix from its corresponding element in a first matrix.</summary>
+        /// <param name="value1">The first matrix.</param>
+        /// <param name="value2">The second matrix.</param>
+        /// <returns>The matrix containing the values that result from subtracting
+        /// each element in <paramref name="value2" /> from its corresponding element in <paramref name="value1" />.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TransformMatrix operator -(TransformMatrix value1, TransformMatrix value2)
+        {
+            var result = value1.Matrix3x2 - value2.Matrix3x2;
+            return new(result);
+        }
+
+        /// <summary>Negates the specified matrix by multiplying all its values by -1.</summary>
+        /// <param name="value">The matrix to negate.</param>
+        /// <returns>The negated matrix.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TransformMatrix operator -(TransformMatrix value)
+        {
+            var result = -value.Matrix3x2;
+            return new(result);
         }
 
         /// <summary>
@@ -716,7 +795,7 @@ namespace Alternet.Common.Skia
         /// </returns>
         public readonly float GetRotationAngleInRadians()
         {
-            if(IsRotationIdentity())
+            if (IsRotationIdentity())
                 return 0f;
 
             // Extract angle using clockwise convention
