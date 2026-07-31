@@ -700,6 +700,92 @@ namespace Alternet.Drawing
             => DrawImage(image, origin);
 
         /// <summary>
+        /// Applies the specified rotation to the transformation matrix of this graphics in the specified order.
+        /// </summary>
+        /// <param name="angle">The angle of rotation in degrees.</param>
+        /// <param name="order">The order in which to apply the rotation.</param>
+        public virtual void RotateTransform(float angle, MatrixOrder order)
+        {
+            var rotation = TransformMatrix.CreateRotation(angle);
+
+            if (order == MatrixOrder.Prepend)
+            {
+                Transform = rotation * Transform;
+            }
+            else
+            {
+                Transform *= rotation;
+            }
+        }
+
+        /// <summary>
+        /// Applies the specified rotation to the transformation matrix of this graphics in the prepend order.
+        /// </summary>
+        /// <param name="angle">The angle of rotation in degrees.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void RotateTransform(float angle) => RotateTransform(angle, MatrixOrder.Prepend);
+
+        /// <summary>
+        /// Changes the scale of the coordinate system by applying the specified scale factors
+        /// to the transformation matrix of this graphics in the prepend order.
+        /// </summary>
+        /// <param name="sx">The x value of the scale factor.</param>
+        /// <param name="sy">The y value of the scale factor.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void ScaleTransform(float sx, float sy) => ScaleTransform(sx, sy, MatrixOrder.Prepend);
+
+        /// <summary>
+        /// Changes the origin of the coordinate system by prepending the specified translation
+        /// to the transformation matrix of this graphics.
+        /// </summary>
+        /// <param name="dx">The x value of the translation.</param>
+        /// <param name="dy">The y value of the translation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TranslateTransform(float dx, float dy) => TranslateTransform(dx, dy, MatrixOrder.Prepend);
+
+        /// <summary>
+        /// Changes the origin of the coordinate system by applying the specified translation
+        /// to the transformation matrix of this graphics in the specified order.
+        /// </summary>
+        /// <param name="dx">The x value of the translation.</param>
+        /// <param name="dy">The y value of the translation.</param>
+        /// <param name="order">The order in which to apply the translation.</param>
+        public virtual void TranslateTransform(float dx, float dy, MatrixOrder order)
+        {
+            var translation = TransformMatrix.CreateTranslation(dx, dy);
+
+            if (order == MatrixOrder.Prepend)
+            {
+                Transform = translation * Transform;
+            }
+            else
+            {
+                Transform *= translation;
+            }
+        }
+
+        /// <summary>
+        /// Changes the scale of the coordinate system by applying the specified scale factors
+        /// to the transformation matrix of this graphics in the specified order.
+        /// </summary>
+        /// <param name="sx">The x value of the scale factor.</param>
+        /// <param name="sy">The y value of the scale factor.</param>
+        /// <param name="order">The order in which to apply the scale.</param>
+        public virtual void ScaleTransform(float sx, float sy, MatrixOrder order)
+        {
+            var scale = TransformMatrix.CreateScale(sx, sy);
+
+            if (order == MatrixOrder.Prepend)
+            {
+                Transform = scale * Transform;
+            }
+            else
+            {
+                Transform *= scale;
+            }
+        }
+
+        /// <summary>
         /// Draws an arc representing a portion of an ellipse specified by a bounding rectangle.
         /// </summary>
         /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the arc.</param>
