@@ -16,15 +16,11 @@ namespace NativeApi.Api
         public IntPtr WxWidgetDC { get; }
         public IntPtr GetHandle() => default; 
 
-        public void DestroyClippingRegion() { }
-
         public void Save() { }
 
         public void Restore() { }
 
         public void SetClippingRect(RectD rect) { }
-
-        public void SetClippingRegion(Region region) { }
 
         public RectD GetClippingBox() => default;
 
@@ -77,12 +73,7 @@ namespace NativeApi.Api
             Coord cornerRadius) { }
         public void Rectangle(Pen pen, Brush brush, RectD rectangle) { }
         public void Ellipse(Pen pen, Brush brush, RectD rectangle) { }
-        public void Path(Pen pen, Brush brush, GraphicsPath path) { }
-        public void Pie(Pen pen, Brush brush, PointD center, Coord radius, Coord startAngle,
-            Coord sweepAngle) { }
         public void Circle(Pen pen, Brush brush, PointD center, Coord radius) { }
-        public unsafe void Polygon(Pen pen, Brush brush,
-            PointD* points, int pointsLength,  FillMode fillMode) { }
 
         public void FillRectangle(Brush brush, RectD rectangle) { }
 
@@ -92,9 +83,6 @@ namespace NativeApi.Api
 
         public void FillEllipse(Brush brush, RectD bounds) { }
         public void DrawEllipse(Pen pen, RectD bounds) { }
-
-        public void DrawPath(Pen pen, GraphicsPath path) { }
-        public void FillPath(Brush brush, GraphicsPath path) { }
 
         public void DrawImageAtPoint(Image image, PointD origin, bool useMask = false)
             => throw new Exception();
@@ -112,22 +100,6 @@ namespace NativeApi.Api
 
         public void DrawLine(Pen pen, PointD a, PointD b) => throw new Exception();
 
-        public unsafe void DrawLines(Pen pen, PointD* points, int pointsLength) => throw new Exception();
-
-        public void DrawArc(Pen pen, PointD center, Coord radius, Coord startAngle,
-            Coord sweepAngle) => throw new Exception();
-
-        public void FillPie(Brush brush, PointD center, Coord radius, Coord startAngle,
-            Coord sweepAngle) => throw new Exception();
-        
-        public void DrawPie(Pen pen, PointD center, Coord radius, Coord startAngle,
-            Coord sweepAngle) => throw new Exception();
-
-        public void DrawBezier(Pen pen, PointD startPoint, PointD controlPoint1,
-            PointD controlPoint2, PointD endPoint) => throw new Exception();
-
-        public unsafe void DrawBeziers(Pen pen, PointD* points, int pointsLength) => throw new Exception();
-
         public void DrawPoint(Pen pen, Coord x, Coord y) { }
 
         public void DrawCircle(Pen pen, PointD center, Coord radius) => throw new Exception();
@@ -139,13 +111,6 @@ namespace NativeApi.Api
 
         public void FillRoundedRectangle(Brush brush, RectD rect, Coord cornerRadius)
             => throw new Exception();
-
-        public unsafe void DrawPolygon(Pen pen, PointD* points, int pointsLength) => throw new Exception();
-
-        public unsafe void FillPolygon(Brush brush, PointD* points, int pointsLength, FillMode fillMode)
-            => throw new Exception();
-
-        public Region? Clip { get; set; }
 
         public InterpolationMode InterpolationMode { get; set; }
     }

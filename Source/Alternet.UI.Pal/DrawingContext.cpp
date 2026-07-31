@@ -134,26 +134,6 @@ namespace Alternet::UI
 			return window;
 	}
 
-	Region* DrawingContext::GetClip()
-	{
-		if (_clip == nullptr)
-			return nullptr;
-
-		_clip->AddRef();
-		return _clip;
-	}
-
-	void DrawingContext::DestroyClippingRegion()
-	{
-		if (_clip != nullptr)
-		{
-			_clip->Release();
-			_clip = nullptr;
-		}
-		_dc->DestroyClippingRegion();
-		_graphicsContext->ResetClip();
-	}
-
 	void DrawingContext::SetClippingRect(const Rect& rect)
 	{
 		auto bounds = fromDip(rect, _dc->GetWindow());
@@ -168,100 +148,6 @@ namespace Alternet::UI
 			return rect;
 		else
 			return Rect();
-	}
-
-	void DrawingContext::SetClippingRegion(Region* region)
-	{
-		_graphicsContext->Clip(region->GetRegion());
-	}
-
-	void DrawingContext::SetClip(Region* value)
-	{
-		DestroyClippingRegion();
-		_clip = value;
-
-		if (_clip != nullptr)
-		{
-			_clip->AddRef();
-			_dc->SetDeviceClippingRegion(_clip->GetRegion());
-			_graphicsContext->Clip(_clip->GetRegion());
-		}
-	}
-
-	void DrawingContext::DrawArc(Pen* pen, const Point& center, float radius, float startAngle,
-		float sweepAngle)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddArc(center, radius, startAngle, sweepAngle);
-		DrawPath(pen, path);
-
-		path->Release();
-	}
-
-	void DrawingContext::FillPie(Brush* brush, const Point& center, float radius, float startAngle,
-		float sweepAngle)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddArc(center, radius, startAngle, sweepAngle);
-		path->AddLineTo(center);
-		path->CloseFigure();
-		FillPath(brush, path);
-
-		path->Release();
-	}
-
-	void DrawingContext::DrawPie(Pen* pen, const Point& center, float radius, float startAngle,
-		float sweepAngle)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddArc(center, radius, startAngle, sweepAngle);
-		path->AddLineTo(center);
-		path->CloseFigure();
-		DrawPath(pen, path);
-
-		path->Release();
-	}
-
-	void DrawingContext::Pie(Pen* pen, Brush* brush, const Point& center,
-		float radius, float startAngle,
-		float sweepAngle)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-		path->AddArc(center, radius, startAngle, sweepAngle);
-		path->AddLineTo(center);
-		path->CloseFigure();
-		Path(pen, brush, path);
-		path->Release();
-	}
-
-	void DrawingContext::DrawBezier(Pen* pen, const Point& startPoint, const Point& controlPoint1,
-		const Point& controlPoint2, const Point& endPoint)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddBezier(startPoint, controlPoint1, controlPoint2, endPoint);
-		DrawPath(pen, path);
-
-		path->Release();
-	}
-
-	void DrawingContext::DrawBeziers(Pen* pen, Point* points, int pointsCount)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->StartFigure(points[0]);
-
-		for (int i = 1; i <= pointsCount - 3; i += 3)
-		{
-			path->AddBezierTo(points[i], points[i + 1], points[i + 2]);
-		}
-
-		DrawPath(pen, path);
-
-		path->Release();
 	}
 
 	void DrawingContext::DrawCircle(Pen* pen, const Point& center, float radius)
@@ -314,65 +200,6 @@ namespace Alternet::UI
 		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(rect.X, rect.Y)));
 		auto r = fromDipF(rect, _dc->GetWindow());
 		_graphicsContext->DrawRoundedRectangle(r.X, r.Y, r.Width, r.Height, cornerRadius);
-	}
-
-	void DrawingContext::DrawPath(Pen* pen, GraphicsPath* path)
-	{
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->StrokePath(path->GetPath());
-	}
-
-	void DrawingContext::FillPath(Brush* brush, GraphicsPath* path)
-	{
-		auto bounds = fromDipF(path->GetBounds(), _dc->GetWindow());
-
-		_graphicsContext->SetPen(*wxTRANSPARENT_PEN);
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(bounds.X, bounds.Y)));
-
-		_graphicsContext->FillPath(path->GetPath(), path->GetWxFillMode());
-	}
-
-	void DrawingContext::Path(Pen* pen, Brush* brush, GraphicsPath* path)
-	{
-		auto bounds = fromDipF(path->GetBounds(), _dc->GetWindow());
-
-		_graphicsContext->SetPen(pen->GetWxPen());
-		_graphicsContext->SetBrush(GetGraphicsBrush(brush, wxPoint2DDouble(bounds.X, bounds.Y)));
-		_graphicsContext->DrawPath(path->GetPath(), path->GetWxFillMode());
-	}
-
-	void DrawingContext::DrawPolygon(Pen* pen, Point* points, int pointsCount)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddLines(points, pointsCount);
-		path->CloseFigure();
-		DrawPath(pen, path);
-
-		path->Release();
-	}
-
-	void DrawingContext::FillPolygon(Brush* brush, Point* points, int pointsCount, FillMode fillMode)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddLines(points, pointsCount);
-		path->CloseFigure();
-		FillPath(brush, path);
-
-		path->Release();
-	}
-
-	void DrawingContext::Polygon(Pen* pen, Brush* brush, Point* points,
-		int pointsCount, FillMode fillMode)
-	{
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddLines(points, pointsCount);
-		path->CloseFigure();
-		Path(pen, brush, path);
-
-		path->Release();
 	}
 
 	/*static*/ DrawingContext* DrawingContext::FromImage(Image* image)
@@ -559,20 +386,6 @@ namespace Alternet::UI
 		_graphicsContext->StrokeLine(p1.x, p1.y, p2.x, p2.y);
 
 		_graphicsContext->Flush();
-	}
-
-	void DrawingContext::DrawLines(Pen* pen, Point* points, int pointsCount)
-	{
-		if (pointsCount <= 2)
-			return;
-
-		auto path = new GraphicsPath(_dc, _graphicsContext);
-
-		path->AddLines(points, pointsCount);
-
-		DrawPath(pen, path);
-
-		path->Release();
 	}
 
 	void DrawingContext::DrawEllipse(Pen* pen, const Rect& bounds)

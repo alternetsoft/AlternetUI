@@ -3,12 +3,10 @@
 #pragma once
 
 #include "DrawingContext.h"
-#include "Region.h"
 #include "Image.h"
 #include "Font.h"
 #include "Brush.h"
 #include "Pen.h"
-#include "GraphicsPath.h"
 #include "ApiUtils.h"
 #include "Exceptions.h"
 
@@ -25,20 +23,6 @@ ALTERNET_UI_API void* DrawingContext_GetWxWidgetDC_(DrawingContext* obj)
 {
     return MarshalExceptions<void*>([&](){
         return obj->GetWxWidgetDC();
-    });
-}
-
-ALTERNET_UI_API Region* DrawingContext_GetClip_(DrawingContext* obj)
-{
-    return MarshalExceptions<Region*>([&](){
-        return obj->GetClip();
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_SetClip_(DrawingContext* obj, Region* value)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetClip(value);
     });
 }
 
@@ -77,13 +61,6 @@ ALTERNET_UI_API void* DrawingContext_GetHandle_(DrawingContext* obj)
     });
 }
 
-ALTERNET_UI_API void DrawingContext_DestroyClippingRegion_(DrawingContext* obj)
-{
-    MarshalExceptions<void>([&](){
-        obj->DestroyClippingRegion();
-    });
-}
-
 ALTERNET_UI_API void DrawingContext_Save_(DrawingContext* obj)
 {
     MarshalExceptions<void>([&](){
@@ -102,13 +79,6 @@ ALTERNET_UI_API void DrawingContext_SetClippingRect_(DrawingContext* obj, RectD*
 {
     MarshalExceptions<void>([&](){
         obj->SetClippingRect(*rect);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_SetClippingRegion_(DrawingContext* obj, Region* region)
-{
-    MarshalExceptions<void>([&](){
-        obj->SetClippingRegion(region);
     });
 }
 
@@ -217,31 +187,10 @@ ALTERNET_UI_API void DrawingContext_Ellipse_(DrawingContext* obj, Pen* pen, Brus
     });
 }
 
-ALTERNET_UI_API void DrawingContext_Path_(DrawingContext* obj, Pen* pen, Brush* brush, GraphicsPath* path)
-{
-    MarshalExceptions<void>([&](){
-        obj->Path(pen, brush, path);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_Pie_(DrawingContext* obj, Pen* pen, Brush* brush, PointD* center, float radius, float startAngle, float sweepAngle)
-{
-    MarshalExceptions<void>([&](){
-        obj->Pie(pen, brush, *center, radius, startAngle, sweepAngle);
-    });
-}
-
 ALTERNET_UI_API void DrawingContext_Circle_(DrawingContext* obj, Pen* pen, Brush* brush, PointD* center, float radius)
 {
     MarshalExceptions<void>([&](){
         obj->Circle(pen, brush, *center, radius);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_Polygon_(DrawingContext* obj, Pen* pen, Brush* brush, PointD* points, int pointsLength, FillMode fillMode)
-{
-    MarshalExceptions<void>([&](){
-        obj->Polygon(pen, brush, points, pointsLength, fillMode);
     });
 }
 
@@ -280,20 +229,6 @@ ALTERNET_UI_API void DrawingContext_DrawEllipse_(DrawingContext* obj, Pen* pen, 
     });
 }
 
-ALTERNET_UI_API void DrawingContext_DrawPath_(DrawingContext* obj, Pen* pen, GraphicsPath* path)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawPath(pen, path);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillPath_(DrawingContext* obj, Brush* brush, GraphicsPath* path)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillPath(brush, path);
-    });
-}
-
 ALTERNET_UI_API void DrawingContext_DrawImageAtPoint_(DrawingContext* obj, Image* image, PointD* origin, c_bool useMask)
 {
     MarshalExceptions<void>([&](){
@@ -319,48 +254,6 @@ ALTERNET_UI_API void DrawingContext_DrawLine_(DrawingContext* obj, Pen* pen, Poi
 {
     MarshalExceptions<void>([&](){
         obj->DrawLine(pen, *a, *b);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawLines_(DrawingContext* obj, Pen* pen, PointD* points, int pointsLength)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawLines(pen, points, pointsLength);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawArc_(DrawingContext* obj, Pen* pen, PointD* center, float radius, float startAngle, float sweepAngle)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawArc(pen, *center, radius, startAngle, sweepAngle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillPie_(DrawingContext* obj, Brush* brush, PointD* center, float radius, float startAngle, float sweepAngle)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillPie(brush, *center, radius, startAngle, sweepAngle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawPie_(DrawingContext* obj, Pen* pen, PointD* center, float radius, float startAngle, float sweepAngle)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawPie(pen, *center, radius, startAngle, sweepAngle);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawBezier_(DrawingContext* obj, Pen* pen, PointD* startPoint, PointD* controlPoint1, PointD* controlPoint2, PointD* endPoint)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawBezier(pen, *startPoint, *controlPoint1, *controlPoint2, *endPoint);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawBeziers_(DrawingContext* obj, Pen* pen, PointD* points, int pointsLength)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawBeziers(pen, points, pointsLength);
     });
 }
 
@@ -396,20 +289,6 @@ ALTERNET_UI_API void DrawingContext_FillRoundedRectangle_(DrawingContext* obj, B
 {
     MarshalExceptions<void>([&](){
         obj->FillRoundedRectangle(brush, *rect, cornerRadius);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_DrawPolygon_(DrawingContext* obj, Pen* pen, PointD* points, int pointsLength)
-{
-    MarshalExceptions<void>([&](){
-        obj->DrawPolygon(pen, points, pointsLength);
-    });
-}
-
-ALTERNET_UI_API void DrawingContext_FillPolygon_(DrawingContext* obj, Brush* brush, PointD* points, int pointsLength, FillMode fillMode)
-{
-    MarshalExceptions<void>([&](){
-        obj->FillPolygon(brush, points, pointsLength, fillMode);
     });
 }
 

@@ -48,13 +48,6 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public virtual void AddArc(PointD center, float radius, float startAngle, float sweepAngle)
-        {
-            var rect = RectD.GetCircleBoundingBox(center, radius);
-            path.AddArc(rect, startAngle, sweepAngle);
-        }
-
-        /// <inheritdoc/>
         public virtual void AddLineTo(PointD pt)
         {
             path.LineTo(pt);
@@ -120,6 +113,19 @@ namespace Alternet.Drawing
         public virtual void AddBezierTo(PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
             path.CubicTo(controlPoint1, controlPoint2, endPoint);
+        }
+
+        /// <inheritdoc/>
+        public virtual void AddArc(PointD center, float radius, float startAngle, float sweepAngle)
+        {
+            var rect = RectD.GetCircleBoundingBox(center, radius);
+            path.AddArc(rect, startAngle, sweepAngle);
+        }
+
+        /// <inheritdoc/>
+        public virtual void AddArc(RectD rect, float startAngle, float sweepAngle)
+        {
+            path.AddArc(rect, startAngle, sweepAngle);
         }
     }
 }

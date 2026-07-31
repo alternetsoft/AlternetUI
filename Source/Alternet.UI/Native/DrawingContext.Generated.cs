@@ -42,24 +42,6 @@ namespace Alternet.UI.Native
             
         }
         
-        public Region? Clip
-        {
-            get
-            {
-                CheckDisposed();
-                var _nnn = NativeApi.DrawingContext_GetClip_(NativePointer);
-                var _mmm = NativeObject.GetFromNativePointer<Region>(_nnn, p => new Region(p));
-                ReleaseNativeObjectPointer(_nnn);
-                return _mmm;
-            }
-            
-            set
-            {
-                CheckDisposed();
-                NativeApi.DrawingContext_SetClip_(NativePointer, value?.NativePointer ?? IntPtr.Zero);
-            }
-        }
-        
         public Alternet.Drawing.InterpolationMode InterpolationMode
         {
             get
@@ -97,12 +79,6 @@ namespace Alternet.UI.Native
             return NativeApi.DrawingContext_GetHandle_(NativePointer);
         }
         
-        public void DestroyClippingRegion()
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DestroyClippingRegion_(NativePointer);
-        }
-        
         public void Save()
         {
             CheckDisposed();
@@ -120,12 +96,6 @@ namespace Alternet.UI.Native
             CheckDisposed();
             var rect_Native = rect.ToNative();
 NativeApi.DrawingContext_SetClippingRect_(NativePointer, ref rect_Native);
-        }
-        
-        public void SetClippingRegion(Region region)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_SetClippingRegion_(NativePointer, region.NativePointer);
         }
         
         public Alternet.Drawing.RectD GetClippingBox()
@@ -228,30 +198,11 @@ NativeApi.DrawingContext_Rectangle_(NativePointer, pen.NativePointer, brush.Nati
 NativeApi.DrawingContext_Ellipse_(NativePointer, pen.NativePointer, brush.NativePointer, ref rectangle_Native);
         }
         
-        public void Path(Pen pen, Brush brush, GraphicsPath path)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_Path_(NativePointer, pen.NativePointer, brush.NativePointer, path.NativePointer);
-        }
-        
-        public void Pie(Pen pen, Brush brush, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
-        {
-            CheckDisposed();
-            var center_Native = center.ToNative();
-NativeApi.DrawingContext_Pie_(NativePointer, pen.NativePointer, brush.NativePointer, ref center_Native, radius, startAngle, sweepAngle);
-        }
-        
         public void Circle(Pen pen, Brush brush, Alternet.Drawing.PointD center, float radius)
         {
             CheckDisposed();
             var center_Native = center.ToNative();
 NativeApi.DrawingContext_Circle_(NativePointer, pen.NativePointer, brush.NativePointer, ref center_Native, radius);
-        }
-        
-        public unsafe void Polygon(Pen pen, Brush brush, Alternet.Drawing.PointD* points, int pointsLength, Alternet.Drawing.FillMode fillMode)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_Polygon_(NativePointer, pen.NativePointer, brush.NativePointer, points, pointsLength, fillMode);
         }
         
         public void FillRectangle(Brush brush, Alternet.Drawing.RectD rectangle)
@@ -289,18 +240,6 @@ NativeApi.DrawingContext_FillEllipse_(NativePointer, brush.NativePointer, ref bo
 NativeApi.DrawingContext_DrawEllipse_(NativePointer, pen.NativePointer, ref bounds_Native);
         }
         
-        public void DrawPath(Pen pen, GraphicsPath path)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawPath_(NativePointer, pen.NativePointer, path.NativePointer);
-        }
-        
-        public void FillPath(Brush brush, GraphicsPath path)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_FillPath_(NativePointer, brush.NativePointer, path.NativePointer);
-        }
-        
         public void DrawImageAtPoint(Image image, Alternet.Drawing.PointD origin, bool useMask)
         {
             CheckDisposed();
@@ -327,49 +266,6 @@ NativeApi.DrawingContext_DrawImageAtRect_(NativePointer, image.NativePointer, re
             var a_Native = a.ToNative();
 var b_Native = b.ToNative();
 NativeApi.DrawingContext_DrawLine_(NativePointer, pen.NativePointer, ref a_Native, ref b_Native);
-        }
-        
-        public unsafe void DrawLines(Pen pen, Alternet.Drawing.PointD* points, int pointsLength)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawLines_(NativePointer, pen.NativePointer, points, pointsLength);
-        }
-        
-        public void DrawArc(Pen pen, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
-        {
-            CheckDisposed();
-            var center_Native = center.ToNative();
-NativeApi.DrawingContext_DrawArc_(NativePointer, pen.NativePointer, ref center_Native, radius, startAngle, sweepAngle);
-        }
-        
-        public void FillPie(Brush brush, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
-        {
-            CheckDisposed();
-            var center_Native = center.ToNative();
-NativeApi.DrawingContext_FillPie_(NativePointer, brush.NativePointer, ref center_Native, radius, startAngle, sweepAngle);
-        }
-        
-        public void DrawPie(Pen pen, Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle)
-        {
-            CheckDisposed();
-            var center_Native = center.ToNative();
-NativeApi.DrawingContext_DrawPie_(NativePointer, pen.NativePointer, ref center_Native, radius, startAngle, sweepAngle);
-        }
-        
-        public void DrawBezier(Pen pen, Alternet.Drawing.PointD startPoint, Alternet.Drawing.PointD controlPoint1, Alternet.Drawing.PointD controlPoint2, Alternet.Drawing.PointD endPoint)
-        {
-            CheckDisposed();
-            var startPoint_Native = startPoint.ToNative();
-var controlPoint1_Native = controlPoint1.ToNative();
-var controlPoint2_Native = controlPoint2.ToNative();
-var endPoint_Native = endPoint.ToNative();
-NativeApi.DrawingContext_DrawBezier_(NativePointer, pen.NativePointer, ref startPoint_Native, ref controlPoint1_Native, ref controlPoint2_Native, ref endPoint_Native);
-        }
-        
-        public unsafe void DrawBeziers(Pen pen, Alternet.Drawing.PointD* points, int pointsLength)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawBeziers_(NativePointer, pen.NativePointer, points, pointsLength);
         }
         
         public void DrawPoint(Pen pen, float x, float y)
@@ -406,18 +302,6 @@ NativeApi.DrawingContext_DrawRoundedRectangle_(NativePointer, pen.NativePointer,
 NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointer, ref rect_Native, cornerRadius);
         }
         
-        public unsafe void DrawPolygon(Pen pen, Alternet.Drawing.PointD* points, int pointsLength)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_DrawPolygon_(NativePointer, pen.NativePointer, points, pointsLength);
-        }
-        
-        public unsafe void FillPolygon(Brush brush, Alternet.Drawing.PointD* points, int pointsLength, Alternet.Drawing.FillMode fillMode)
-        {
-            CheckDisposed();
-            NativeApi.DrawingContext_FillPolygon_(NativePointer, brush.NativePointer, points, pointsLength, fillMode);
-        }
-        
         
         [SuppressUnmanagedCodeSecurity]
         public class NativeApi : NativeApiProvider
@@ -429,12 +313,6 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern System.IntPtr DrawingContext_GetWxWidgetDC_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern IntPtr DrawingContext_GetClip_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_SetClip_(IntPtr obj, IntPtr value);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.InterpolationMode DrawingContext_GetInterpolationMode_(IntPtr obj);
@@ -452,9 +330,6 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             public static extern System.IntPtr DrawingContext_GetHandle_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DestroyClippingRegion_(IntPtr obj);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Save_(IntPtr obj);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -462,9 +337,6 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_SetClippingRect_(IntPtr obj, ref Alternet.Drawing.RectD rect);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_SetClippingRegion_(IntPtr obj, IntPtr region);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern Alternet.Drawing.RectD DrawingContext_GetClippingBox_(IntPtr obj);
@@ -512,16 +384,7 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             public static extern void DrawingContext_Ellipse_(IntPtr obj, IntPtr pen, IntPtr brush, ref Alternet.Drawing.RectD rectangle);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_Path_(IntPtr obj, IntPtr pen, IntPtr brush, IntPtr path);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_Pie_(IntPtr obj, IntPtr pen, IntPtr brush, ref Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_Circle_(IntPtr obj, IntPtr pen, IntPtr brush, ref Alternet.Drawing.PointD center, float radius);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public unsafe static extern void DrawingContext_Polygon_(IntPtr obj, IntPtr pen, IntPtr brush, Alternet.Drawing.PointD* points, int pointsLength, Alternet.Drawing.FillMode fillMode);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRectangle_(IntPtr obj, IntPtr brush, ref Alternet.Drawing.RectD rectangle);
@@ -539,12 +402,6 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             public static extern void DrawingContext_DrawEllipse_(IntPtr obj, IntPtr pen, ref Alternet.Drawing.RectD bounds);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawPath_(IntPtr obj, IntPtr pen, IntPtr path);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillPath_(IntPtr obj, IntPtr brush, IntPtr path);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawImageAtPoint_(IntPtr obj, IntPtr image, ref Alternet.Drawing.PointD origin, bool useMask);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
@@ -555,24 +412,6 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawLine_(IntPtr obj, IntPtr pen, ref Alternet.Drawing.PointD a, ref Alternet.Drawing.PointD b);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public unsafe static extern void DrawingContext_DrawLines_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD* points, int pointsLength);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawArc_(IntPtr obj, IntPtr pen, ref Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_FillPie_(IntPtr obj, IntPtr brush, ref Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawPie_(IntPtr obj, IntPtr pen, ref Alternet.Drawing.PointD center, float radius, float startAngle, float sweepAngle);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void DrawingContext_DrawBezier_(IntPtr obj, IntPtr pen, ref Alternet.Drawing.PointD startPoint, ref Alternet.Drawing.PointD controlPoint1, ref Alternet.Drawing.PointD controlPoint2, ref Alternet.Drawing.PointD endPoint);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public unsafe static extern void DrawingContext_DrawBeziers_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD* points, int pointsLength);
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_DrawPoint_(IntPtr obj, IntPtr pen, float x, float y);
@@ -588,12 +427,6 @@ NativeApi.DrawingContext_FillRoundedRectangle_(NativePointer, brush.NativePointe
             
             [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
             public static extern void DrawingContext_FillRoundedRectangle_(IntPtr obj, IntPtr brush, ref Alternet.Drawing.RectD rect, float cornerRadius);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public unsafe static extern void DrawingContext_DrawPolygon_(IntPtr obj, IntPtr pen, Alternet.Drawing.PointD* points, int pointsLength);
-            
-            [DllImport(NativeModuleName, CallingConvention = CallingConvention.Cdecl)]
-            public unsafe static extern void DrawingContext_FillPolygon_(IntPtr obj, IntPtr brush, Alternet.Drawing.PointD* points, int pointsLength, Alternet.Drawing.FillMode fillMode);
             
         }
     }

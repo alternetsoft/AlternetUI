@@ -39,12 +39,20 @@ namespace Alternet.Drawing
             PointD controlPoint2,
             PointD endPoint);
 
-        /// <inheritdoc cref="GraphicsPath.AddArc"/>
+        /// <inheritdoc cref="GraphicsPath.AddArc(PointD, Coord, Coord, Coord)"/>
         void AddArc(
             PointD center,
             Coord radius,
             Coord startAngle,
             Coord sweepAngle);
+
+        /// <summary>
+        /// Appends an elliptical arc to the current figure.
+        /// </summary>
+        /// <param name="rect">A <see cref="RectD"/> that represents the bounding rectangle of the arc.</param>
+        /// <param name="startAngle">The starting angle of the arc, measured in degrees clockwise from the x-axis.</param>
+        /// <param name="sweepAngle">The angle between <paramref name="startAngle"/> and the end of the arc.</param>
+        void AddArc(RectD rect, float startAngle, float sweepAngle);
 
         /// <inheritdoc cref="GraphicsPath.AddRectangle"/>
         void AddRectangle(RectD rect);

@@ -6,8 +6,6 @@
 #include "Font.h"
 #include "Brush.h"
 #include "Pen.h"
-#include "GraphicsPath.h"
-#include "Region.h"
 
 namespace Alternet::UI
 {
@@ -42,8 +40,6 @@ namespace Alternet::UI
 
         wxGraphicsBrush GetGraphicsBrush(Brush* brush, const wxPoint2DDouble& offset);
         wxGraphicsPen GetGraphicsPen(Pen* pen);
-
-        Region* _clip = nullptr;
 
         bool _doNotDeleteDC = false;
     };

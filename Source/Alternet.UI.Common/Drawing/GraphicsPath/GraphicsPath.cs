@@ -215,8 +215,7 @@ namespace Alternet.Drawing
         /// <param name="center">The center <see cref="PointD"/> of the arc.</param>
         /// <param name="radius">The radius of the arc.</param>
         /// <param name="startAngle">The starting angle of the arc, measured
-        /// in degrees clockwise from the
-        /// x-axis.</param>
+        /// in degrees clockwise from the x-axis.</param>
         /// <param name="sweepAngle">The angle between <paramref name="startAngle"/>
         /// and the end of the arc.</param>
         /// <remarks>
@@ -227,8 +226,7 @@ namespace Alternet.Drawing
         /// the x-axis of the ellipse (at the 0-degree angle) by the number of degrees in
         /// the start angle. The endpoint
         /// is similarly located by measuring clockwise from the starting point by the
-        /// number of degrees in the sweep
-        /// angle.
+        /// number of degrees in the sweep angle.
         /// </remarks>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void AddArc(PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
@@ -239,6 +237,38 @@ namespace Alternet.Drawing
                 radius,
                 startAngle,
                 sweepAngle);
+        }
+
+        /// <summary>
+        /// Appends an elliptical arc to the current figure.
+        /// </summary>
+        /// <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle of the arc.</param>
+        /// <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle of the arc.</param>
+        /// <param name="width">The width of the bounding rectangle of the arc.</param>
+        /// <param name="height">The height of the bounding rectangle of the arc.</param>
+        /// <param name="startAngle">The starting angle of the arc, measured in degrees clockwise from the x-axis.</param>
+        /// <param name="sweepAngle">The angle between <paramref name="startAngle"/> and the end of the arc.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddArc(float x, float y, float width, float height, float startAngle, float sweepAngle)
+        {
+            CheckDisposed();
+            Handler.AddArc(
+                new RectD(x, y, width, height),
+                startAngle,
+                sweepAngle);
+        }
+
+        /// <summary>
+        /// Appends an elliptical arc to the current figure.
+        /// </summary>
+        /// <param name="rect">A <see cref="RectD"/> that represents the bounding rectangle of the arc.</param>
+        /// <param name="startAngle">The starting angle of the arc, measured in degrees clockwise from the x-axis.</param>
+        /// <param name="sweepAngle">The angle between <paramref name="startAngle"/> and the end of the arc.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void AddArc(RectD rect, float startAngle, float sweepAngle)
+        {
+            CheckDisposed();
+            Handler.AddArc(rect, startAngle, sweepAngle);
         }
 
         /// <summary>

@@ -65,6 +65,23 @@ namespace Alternet::UI
         Texture = 6,
     };
     
+    enum class LinearGradientMode
+    {
+        Horizontal = 0,
+        Vertical = 1,
+        ForwardDiagonal = 2,
+        BackwardDiagonal = 3,
+    };
+    
+    enum class WrapMode
+    {
+        Tile = 0,
+        TileFlipX = 1,
+        TileFlipY = 2,
+        TileFlipXY = 3,
+        Clamp = 4,
+    };
+    
     enum class KnownColor
     {
         ActiveBorder = 1,
@@ -402,6 +419,15 @@ namespace Alternet::UI
         System = -1,
     };
     
+    enum class FontOriginKind
+    {
+        Default = 0,
+        DefaultMono = 1,
+        File = 2,
+        System = 3,
+        Other = 4,
+    };
+    
     enum class FontStyle
     {
         Regular = 0,
@@ -607,6 +633,16 @@ namespace Alternet::UI
     {
         OutRegion = 0,
         InRegion = 2,
+    };
+    
+    enum class SmoothingMode
+    {
+        Default = 0,
+        HighSpeed = 1,
+        HighQuality = 2,
+        None = 3,
+        AntiAlias = 4,
+        Invalid = -1,
     };
     
     enum class DashStyle
@@ -1302,6 +1338,14 @@ namespace Alternet::UI
         NoVertScrollBar = 1024,
         IntegralHeight = 2048,
         ShowHorzScrollWhenNeeded = 1073741824,
+    };
+    
+    enum class ScrollBars
+    {
+        None = 0,
+        Horizontal = 1,
+        Vertical = 2,
+        Both = 3,
     };
     
     enum class SetBoundsFlags
@@ -3343,6 +3387,14 @@ namespace Alternet::UI
         Bottom = 5,
         BottomRight = 6,
         Auto = 7,
+    };
+    
+    enum class ToolTipIcon
+    {
+        None = 0,
+        Info = 1,
+        Warning = 2,
+        Error = 3,
     };
     
     enum class TreeViewButtonsKind
