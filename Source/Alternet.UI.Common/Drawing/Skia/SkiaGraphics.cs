@@ -420,6 +420,13 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawArc(Pen pen, RectD rect, float startAngle, float sweepAngle)
+        {
+            DebugPenAssert(pen);
+            canvas.DrawArc(rect, startAngle, sweepAngle, useCenter: true, pen);
+        }
+
+        /// <inheritdoc/>
         public override void DrawCircle(Pen pen, PointD center, Coord radius)
         {
             DebugPenAssert(pen);

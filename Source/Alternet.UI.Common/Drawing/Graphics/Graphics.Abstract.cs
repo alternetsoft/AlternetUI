@@ -481,6 +481,17 @@ namespace Alternet.Drawing
             Coord sweepAngle);
 
         /// <summary>
+        /// Draws an arc representing a portion of an ellipse specified by a bounding rectangle.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the arc.</param>
+        /// <param name="rect"><see cref="RectD"/> structure that defines the bounding rectangle of the ellipse.</param>
+        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis
+        /// to the starting point of the arc.</param>
+        /// <param name="sweepAngle">Angle in degrees measured clockwise from the
+        /// <paramref name="startAngle"/> parameter to the ending point of the arc.</param>
+        public abstract void DrawArc(Pen pen, RectD rect, float startAngle, float sweepAngle);
+
+        /// <summary>
         /// Sets transform matrix of the handler.
         /// </summary>
         /// <param name="matrix">New transform value.</param>

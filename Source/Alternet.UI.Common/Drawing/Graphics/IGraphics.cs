@@ -66,7 +66,7 @@ namespace Alternet.Drawing
         /// <inheritdoc cref="Graphics.FillRectangle(Brush, RectD)"/>
         void FillRectangle(Brush brush, RectD rectangle);
 
-        /// <inheritdoc cref="Graphics.DrawArc"/>
+        /// <inheritdoc cref="Graphics.DrawArc(Pen, PointD, Coord, Coord, Coord)"/>
         void DrawArc(
             Pen pen,
             PointD center,

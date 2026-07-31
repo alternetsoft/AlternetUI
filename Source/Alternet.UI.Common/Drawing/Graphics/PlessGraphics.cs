@@ -70,6 +70,11 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void DrawArc(Pen pen, RectD rect, float startAngle, float sweepAngle)
+        {
+        }
+
+        /// <inheritdoc/>
         public override void DrawArc(Pen pen, PointD center, Coord radius, Coord startAngle, Coord sweepAngle)
         {
         }

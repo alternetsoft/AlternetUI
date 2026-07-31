@@ -700,6 +700,23 @@ namespace Alternet.Drawing
             => DrawImage(image, origin);
 
         /// <summary>
+        /// Draws an arc representing a portion of an ellipse specified by a bounding rectangle.
+        /// </summary>
+        /// <param name="pen"><see cref="Pen"/> that determines the color, width, and style of the arc.</param>
+        /// <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle.</param>
+        /// <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle.</param>
+        /// <param name="width">The width of the bounding rectangle.</param>
+        /// <param name="height">The height of the bounding rectangle.</param>
+        /// <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the starting point of the arc.</param>
+        /// <param name="sweepAngle">Angle in degrees measured clockwise from the <paramref name="startAngle"/>
+        /// parameter to the ending point of the arc.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawArc(Pen pen, float x, float y, float width, float height, float startAngle, float sweepAngle)
+        {
+            DrawArc(pen, new(x, y, width, height), startAngle, sweepAngle);
+        }
+
+        /// <summary>
         /// Draws the specified <see cref="Image"/>, using its original size, at the
         /// specified location.
         /// </summary>
