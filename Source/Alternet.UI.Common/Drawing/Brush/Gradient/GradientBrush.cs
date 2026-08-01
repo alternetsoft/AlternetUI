@@ -31,9 +31,34 @@ namespace Alternet.Drawing
             this.gradientStops = gradientStops;
         }
 
+        /// <summary>
+        /// Gets the starting color of the gradient, defined by the first stop.
+        /// </summary>
+        public virtual Color StartColor
+        {
+            get
+            {
+                if (GradientStops == null || GradientStops.Length == 0)
+                    return Color.Black;
+                return GradientStops[0].Color;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ending color of the gradient, defined by the last stop.
+        /// </summary>
+        public virtual Color EndColor
+        {
+            get
+            {
+                if (GradientStops == null || GradientStops.Length == 0)
+                    return Color.Black;
+                return GradientStops[GradientStops.Length - 1].Color;
+            }
+        }
+
         /// <inheritdoc/>
-        public override Color AsColor => GradientStops.Length > 0 ?
-            GradientStops[0].Color : Color.Black;
+        public override Color AsColor => StartColor;
 
         /// <summary>
         /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
