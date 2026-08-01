@@ -531,7 +531,7 @@ namespace Alternet.Drawing
         public void SetPixel(PointD point, Pen pen)
         {
             DebugPenAssert(pen);
-            canvas.DrawPoint((float)point.X, (float)point.Y, pen.Color.AsFillPaint);
+            canvas.DrawPoint(point.X, point.Y, pen.Color.AsFillPaint);
         }
 
         /// <summary>
@@ -543,7 +543,7 @@ namespace Alternet.Drawing
         public void SetPixel(Coord x, Coord y, Pen pen)
         {
             DebugPenAssert(pen);
-            canvas.DrawPoint((float)x, (float)y, pen.Color.AsFillPaint);
+            canvas.DrawPoint(x, y, pen.Color.AsFillPaint);
         }
 
         /// <summary>
@@ -608,18 +608,29 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
-        public override void Save()
+        public override GraphicsState Save()
         {
-            base.Save();
-            canvas.Save();
+            PushTransform();
+            var skiaResult = canvas.Save();
+            return new GraphicsState(skiaResult);
         }
+
+        /// <inheritdoc/>
+        public override void Restore(GraphicsState state)
+        {
+            canvas.RestoreToCount(state.State);
+            ignoreSetHandlerTransform = true;
+            PopTransform();
+            ignoreSetHandlerTransform = false;
+        }
+
 
         /// <inheritdoc/>
         public override void Restore()
         {
             canvas.Restore();
             ignoreSetHandlerTransform = true;
-            base.Restore();
+            PopTransform();
             ignoreSetHandlerTransform = false;
         }
 

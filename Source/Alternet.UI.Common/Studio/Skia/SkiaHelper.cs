@@ -593,7 +593,9 @@ namespace Alternet.Common.Skia
             char ch,
             SKFont font)
         {
+#pragma warning disable
             Span<char> buffer = stackalloc char[1];
+#pragma warning restore
             buffer[0] = ch;
             return canvas.GetTextExtent(buffer, font);
         }

@@ -183,10 +183,13 @@ namespace Alternet.Drawing
         void PushTransform();
 
         /// <inheritdoc cref="Graphics.Save()"/>
-        void Save();
+        GraphicsState Save();
 
         /// <inheritdoc cref="Graphics.Restore()"/>
         void Restore();
+
+        /// <inheritdoc cref="Graphics.Restore(GraphicsState)"/>
+        void Restore(GraphicsState state);
 
         /// <inheritdoc cref="Graphics.DrawText(ReadOnlySpan{char},PointD,Font,Color,Color)"/>
         void DrawText(

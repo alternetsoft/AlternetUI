@@ -1014,10 +1014,7 @@ namespace Alternet.Drawing
         /// This method should be overridden in a derived
         /// class to implement the specific save logic.
         /// </remarks>
-        public virtual void Save()
-        {
-            PushTransform();
-        }
+        public abstract GraphicsState Save();
 
         /// <summary>
         /// Restore the saved canvas state.
@@ -1028,10 +1025,13 @@ namespace Alternet.Drawing
         /// It is an error to restore more times than was previously saved.
         /// This method should be overridden in a derived class to implement the specific restore logic.
         /// </remarks>
-        public virtual void Restore()
-        {
-            PopTransform();
-        }
+        public abstract void Restore();
+
+        /// <summary>
+        /// Restores the canvas to the specified state.
+        /// </summary>
+        /// <param name="state">The <see cref="GraphicsState"/> to restore.</param>
+        public abstract void Restore(GraphicsState state);
 
         /// <summary>
         /// Ensures that the transform stack depth remains balanced before
