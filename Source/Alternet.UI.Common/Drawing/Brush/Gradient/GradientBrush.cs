@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -34,31 +35,52 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets the starting color of the gradient, defined by the first stop.
         /// </summary>
+        [Browsable(false)]
         public virtual Color StartColor
         {
             get
             {
-                if (GradientStops == null || GradientStops.Length == 0)
+                var stops = OrderedGradientStops;
+
+                if (stops.Length == 0)
                     return Color.Black;
-                return GradientStops[0].Color;
+                return stops[0].Color;
             }
         }
 
         /// <summary>
         /// Gets the ending color of the gradient, defined by the last stop.
         /// </summary>
+        [Browsable(false)]
         public virtual Color EndColor
         {
             get
             {
-                if (GradientStops == null || GradientStops.Length == 0)
+                var stops = OrderedGradientStops;
+
+                if (stops.Length == 0)
                     return Color.Black;
-                return GradientStops[GradientStops.Length - 1].Color;
+                return stops[stops.Length - 1].Color;
             }
         }
 
         /// <inheritdoc/>
+        [Browsable(false)]
         public override Color AsColor => StartColor;
+
+        /// <summary>
+        /// Gets <see cref="GradientStop"/> instances ordered by their offset.
+        /// </summary>
+        [Browsable(false)]
+        public virtual GradientStop[]  OrderedGradientStops
+        {
+            get
+            {
+                if (GradientStops == null || GradientStops.Length == 0)
+                    return Array.Empty<GradientStop>();
+                return GradientStops.OrderBy(s => s.Offset).ToArray();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the <see cref="GradientStop"/> instances array defining the color
@@ -81,6 +103,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets matrix that defines a local geometric transform for this brush.
         /// </summary>
+        [Browsable(false)]
         public virtual TransformMatrix Transform
         {
             get => new (LocalMatrix);
