@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using Alternet.UI;
@@ -100,7 +101,8 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LinearGradientBrush"/> class that has the specified
-        /// start point, end point, start color, and end color. Start and end points are specified as a tuple of <see cref="PointD"/> values.
+        /// start point, end point, start color, and end color. Start and end points
+        /// are specified as a tuple of <see cref="PointD"/> values.
         /// </summary>
         /// <param name="points">A tuple containing the start and end points of the gradient.</param>
         /// <param name="startColor">The start color of the gradient.</param>
@@ -250,6 +252,94 @@ namespace Alternet.Drawing
             {
                 return $"LinearGradientBrush";
             }
+        }
+
+        /// <summary>
+        /// Creates a gradient falloff based on a bell-shaped curve.
+        /// </summary>
+        /// <param name="focus">A value from 0 through 1 that specifies the center
+        /// of the gradient (the point where the starting color and ending color are blended equally).</param>
+        public void SetSigmaBellShape(float focus) => SetSigmaBellShape(focus, (float)1.0);
+
+        /// <summary>
+        /// Creates a linear gradient with a center color and a linear falloff to a single color on both ends. 
+        /// </summary>
+        /// <param name="focus">A value from 0 through 1 that specifies the center of the gradient
+        /// (the point where the gradient is composed of only the ending color).</param>
+        public void SetBlendTriangularShape(float focus) => SetBlendTriangularShape(focus, 1.0f);
+
+        /// <summary>
+        /// Creates a gradient falloff based on a bell-shaped curve.
+        /// </summary>
+        /// <param name="focus">A value from 0 through 1 that specifies the center
+        /// of the gradient (the point where the starting color and ending color are blended equally).</param>
+        /// <param name="scale">A value from 0 through 1 that specifies how fast the colors falloff from the focus.</param>
+        public virtual void SetSigmaBellShape(float focus, float scale)
+        {
+            SetSigmaBellShape(focus, scale, StartColor, EndColor);
+        }
+
+        /// <summary>
+        /// Creates a linear gradient with a center color and a linear falloff to a single color on both ends.
+        /// </summary>
+        /// <param name="focus">A value from 0 through 1 that specifies the center
+        /// of the gradient (the point where the starting color and ending color are blended equally).</param>
+        /// <param name="scale">A value from 0 through 1 that specifies how fast the colors falloff from the focus.</param>
+        /// <param name="startColor">The starting color of the gradient.</param>
+        /// <param name="endColor">The ending color of the gradient.</param>
+        public virtual void SetSigmaBellShape(float focus, float scale, Color startColor, Color endColor)
+        {
+            focus = Math.Clamp(focus, 0f, 1f);
+            scale = Math.Clamp(scale, 0f, 1f);
+
+            float left = Math.Max(0f, focus - scale / 2f);
+            float right = Math.Min(1f, focus + scale / 2f);
+
+            List<GradientStop> gradientStops = new(5);
+            gradientStops.Add(new GradientStop(startColor, 0f));
+            gradientStops.Add(new GradientStop(ColorUtils.BlendColor(startColor, endColor, 0.5f), left));
+            gradientStops.Add(new GradientStop(ColorUtils.BlendColor(startColor, endColor, 1f), focus));
+            gradientStops.Add(new GradientStop(ColorUtils.BlendColor(startColor, endColor, 0.5f), right));
+            gradientStops.Add(new GradientStop(endColor, 1f));
+            GradientStops = gradientStops.ToArray();
+        }
+
+        /// <summary>
+        /// Creates a linear gradient with a center color and a linear falloff to a single color on both ends. 
+        /// </summary>
+        /// <param name="focus">A value from 0 through 1 that specifies the center of the gradient
+        /// (the point where the gradient is composed of only the ending color).</param>
+        /// <param name="scale">A value from 0 through 1 that specifies how fast the colors
+        /// falloff from the starting color to focus (ending color)</param>
+        public virtual void SetBlendTriangularShape(float focus, float scale)
+        {
+            SetBlendTriangularShape(focus, scale, StartColor, EndColor);
+        }
+
+        /// <summary>
+        /// Creates a linear gradient with a center color and a linear falloff to a single color on both ends. 
+        /// </summary>
+        /// <param name="focus">A value from 0 through 1 that specifies the center of the gradient
+        /// (the point where the gradient is composed of only the ending color).</param>
+        /// <param name="scale">A value from 0 through 1 that specifies how fast the colors
+        /// falloff from the starting color to focus (ending color)</param>
+        /// <param name="startColor">The starting color of the gradient.</param>
+        /// <param name="endColor">The ending color of the gradient.</param>
+        public virtual void SetBlendTriangularShape(float focus, float scale, Color startColor, Color endColor)
+        {
+            focus = Math.Clamp(focus, 0f, 1f);
+            scale = Math.Clamp(scale, 0f, 1f);
+
+            float left = Math.Max(0f, focus - scale / 2f);
+            float right = Math.Min(1f, focus + scale / 2f);
+
+            List<GradientStop> gradientStops = new(5);
+            gradientStops.Add(new GradientStop(startColor, 0f));
+            gradientStops.Add(new GradientStop(endColor, left));
+            gradientStops.Add(new GradientStop(endColor, focus));
+            gradientStops.Add(new GradientStop(endColor, right));
+            gradientStops.Add(new GradientStop(startColor, 1f));
+            GradientStops = gradientStops.ToArray();
         }
 
         /// <summary>
