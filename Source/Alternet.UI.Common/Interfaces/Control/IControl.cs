@@ -743,9 +743,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the font of the text displayed by the control.
         /// </summary>
-        /// <value>The <see cref="Font"/> to apply to the text displayed by
-        /// the control. The default is the value of <c>null</c>.</value>
-        Font? Font { get; set; }
+        Font Font { get; set; }
 
         /// <summary>
         /// Gets or sets whether control's font is bold.

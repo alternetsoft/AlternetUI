@@ -514,7 +514,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Font? Font
+        public override Font Font
         {
             get => base.Font;
             set => base.Font = value;

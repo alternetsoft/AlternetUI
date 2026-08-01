@@ -91,7 +91,7 @@ namespace Alternet.UI
         private Color? backgroundColor;
         private Color? foregroundColor;
         private FontStyle fontStyle;
-        private Font? font;
+        private Font font;
 
         private SizeD minimumSize;
         private SizeD maximumSize;
@@ -3076,7 +3076,7 @@ namespace Alternet.UI
             {
                 BackgroundColor = value?.BackgroundColor;
                 ForegroundColor = value?.ForegroundColor;
-                Font = value?.Font;
+                Font = value?.Font ?? Control.DefaultFont;
             }
         }
 
@@ -3579,14 +3579,9 @@ namespace Alternet.UI
         /// Gets or sets the font of the text displayed by the control.
         /// </summary>
         /// <value>
-        /// The <see cref="Font"/> to apply to the text displayed by
-        /// the control. The default is the value of <c>null</c>.
+        /// The <see cref="Font"/> to apply to the text displayed by the control.
         /// </value>
-        /// <remarks>
-        /// If <see cref="Font"/> is not specified, <see cref="AbstractControl.DefaultFont"/> is used.
-        /// </remarks>
-        [DefaultValue(null)]
-        public virtual Font? Font
+        public virtual Font Font
         {
             get
             {
@@ -3595,6 +3590,8 @@ namespace Alternet.UI
 
             set
             {
+                value ??= DefaultFont;
+
                 if (Font.AreEqual(font, value))
                     return;
 

@@ -392,7 +392,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override Font? Font
+        public override Font Font
         {
             get
             {
@@ -402,7 +402,7 @@ namespace Alternet.UI
             set
             {
                 base.Font = value;
-                SetChildrenFont(RealFont, true);
+                SetChildrenFont(RealFont, recursive: true);
             }
         }
 

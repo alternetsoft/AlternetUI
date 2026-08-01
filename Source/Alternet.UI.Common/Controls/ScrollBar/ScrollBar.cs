@@ -185,7 +185,7 @@ namespace Alternet.UI
 
         /// <inheritdoc cref="AbstractControl.Font"/>
         [Browsable(false)]
-        public new Font? Font
+        public new Font Font
         {
             get => base.Font;
             set => base.Font = value;

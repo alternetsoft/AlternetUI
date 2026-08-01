@@ -19,6 +19,11 @@ namespace Alternet.UI
     public partial class RichToolTip : ScrollableCanvasControl, IRichToolTip, IToolTipProvider, IScrollEventRouter
     {
         /// <summary>
+        /// Gets or sets default scale factor for title font size relative to the tooltip font size.
+        /// </summary>
+        public static float DefaultTitleFontScaleFactor = 1.5f;
+
+        /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
         /// </summary>
         public static bool ShowDebugCorners = false;
@@ -538,7 +543,7 @@ namespace Alternet.UI
                 template.TitleLabel.Text = data.Title;
 
                 template.TitleLabel.Font
-                    = data.TitleFont ?? template.Font?.Scaled(1.5f);
+                    = data.TitleFont ?? template.Font?.Scaled(DefaultTitleFontScaleFactor) ?? Control.DefaultFont.Scaled(DefaultTitleFontScaleFactor);
                 template.TitleLabel.ForegroundColor
                     = data.TitleForegroundColor?.Current ?? RichToolTip.DefaultToolTipTitleForegroundColor.Current;
                 template.MessageLabel.Text = data.Text;

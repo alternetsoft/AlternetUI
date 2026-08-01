@@ -355,7 +355,7 @@ namespace Alternet.UI
         public AbstractControl WithFont(Font? font = null)
         {
             ParentFont = false;
-            Font = font;
+            Font = font ?? Control.DefaultFont;
             return this;
         }
 
@@ -2329,6 +2329,7 @@ namespace Alternet.UI
         /// <param name="recursive">Whether to apply to all children recursively.</param>
         public virtual void SetChildrenFont(Font? font, bool recursive = false)
         {
+            font ??= this.RealFont;
             ForEachChild((control) => control.Font = font, recursive);
         }
 
@@ -2783,7 +2784,7 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual void ResetFont()
         {
-            Font = null;
+            Font = Control.DefaultFont;
         }
 
         /// <summary>

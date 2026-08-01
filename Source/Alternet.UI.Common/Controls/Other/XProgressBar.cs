@@ -779,7 +779,7 @@ namespace Alternet.UI
         }
 
         [Browsable(false)]
-        internal new Font? Font
+        internal new Font Font
         {
             get => base.Font;
             set => base.Font = value;

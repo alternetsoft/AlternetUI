@@ -244,6 +244,8 @@ namespace Alternet.UI
         /// <returns>Returns this object instance for use in the call sequences.</returns>
         public virtual ControlSet<T> Font(Font? value)
         {
+            value ??= Control.DefaultFont;
+
             return DoInsideLayout(() =>
             {
                 foreach (var item in items)
