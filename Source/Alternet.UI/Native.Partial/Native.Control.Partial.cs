@@ -450,15 +450,15 @@ namespace Alternet.UI.Native
             Native.NativeEventArgs<Native.DragEventData> e,
             Action<DragEventArgs>? raiseAction)
         {
-            if (raiseAction is null || (!UIControl?.AllowDrop ?? false))
+            if (raiseAction is null || UIControl is null || !UIControl.AllowDrop)
                 return;
 
             var data = e.Data;
-            var ea = new DragEventArgs(
-                new UnmanagedDataObjectAdapter(
-                    new Native.UnmanagedDataObject(data.data)),
-                new Drawing.PointD(data.mouseClientLocationX, data.mouseClientLocationY),
-                (DragDropEffects)data.effect);
+
+            var managedData = new UnmanagedDataObjectAdapter(new Native.UnmanagedDataObject(data.data));
+            var location = new Drawing.PointD(data.mouseClientLocationX, data.mouseClientLocationY);
+
+            var ea = new DragEventArgs(UIControl, managedData, location, (DragDropEffects)data.effect);
 
             raiseAction?.Invoke(ea);
 
