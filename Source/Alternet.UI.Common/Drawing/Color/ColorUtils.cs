@@ -28,6 +28,36 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Linearly interpolates between two colors based on the specified factor.
+        /// </summary>
+        /// <param name="start">
+        /// The starting <see cref="Color"/>. Returned when <paramref name="t"/> is 0.
+        /// </param>
+        /// <param name="end">
+        /// The ending <see cref="Color"/>. Returned when <paramref name="t"/> is 1.
+        /// </param>
+        /// <param name="t">
+        /// A value between 0 and 1 that specifies the interpolation factor.
+        /// Values outside this range are clamped. 
+        /// 0 returns <paramref name="start"/>, 1 returns <paramref name="end"/>, 
+        /// and 0.5 returns the midpoint color.
+        /// </param>
+        /// <returns>
+        /// A new <see cref="Color"/> that is the linear blend of <paramref name="start"/> and <paramref name="end"/>.
+        /// </returns>
+        public static Color BlendColor(Color start, Color end, float t)
+        {
+            t = Math.Clamp(t, 0f, 1f);
+
+            int r = (int)(start.R + (end.R - start.R) * t);
+            int g = (int)(start.G + (end.G - start.G) * t);
+            int b = (int)(start.B + (end.B - start.B) * t);
+            int a = (int)(start.A + (end.A - start.A) * t);
+
+            return Color.FromArgb(a, r, g, b);
+        }
+
+        /// <summary>
         /// Gets dimmed color.
         /// </summary>
         /// <param name="color">The color to be dimmed.</param>
