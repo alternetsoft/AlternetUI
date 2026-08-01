@@ -9,6 +9,20 @@ namespace Alternet.UI
     public interface IDataObject
     {
         /// <summary>
+        /// Gets whether the data associated with this instance is in a format that can be converted to the specified type.
+        /// </summary>
+        /// <param name="format">The type to check for.</param>
+        /// <returns><c>true</c> if the data can be converted to the specified type; otherwise, <c>false</c>.</returns>
+        bool GetDataPresent(Type format);
+
+        /// <summary>
+        /// Retrieves the data associated with the specified class type format.
+        /// </summary>
+        /// <param name="format">The type of data to retrieve.</param>
+        /// <returns>The data associated with the specified type, or <c>null</c> if the data is not available.</returns>
+        object? GetData(Type format);
+
+        /// <summary>
         /// Retrieves a data object in a specified format; the data format is specified by a string.
         /// </summary>
         /// <param name="format">

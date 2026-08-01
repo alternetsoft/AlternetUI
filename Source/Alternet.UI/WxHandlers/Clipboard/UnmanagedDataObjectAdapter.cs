@@ -95,6 +95,12 @@ namespace Alternet.UI
             return NativeStringSpan.InvokeWithResult(format, s => dataObject.GetDataPresent(s));
         }
 
+        /// <inheritdoc/>
+        public virtual bool GetDataPresent(Type format) => format is not null && GetDataPresent(format.FullName!);
+
+        /// <inheritdoc/>
+        public virtual object? GetData(Type format) => format is null ? null : GetData(format.FullName!);
+
         public string[] GetFormats()
         {
             var nativeFormats = NativeUtils.ToStringArray(dataObject.Formats);

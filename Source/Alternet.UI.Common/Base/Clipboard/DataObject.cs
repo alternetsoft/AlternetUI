@@ -426,6 +426,12 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public virtual bool GetDataPresent(Type format) => format is not null && GetDataPresent(format.FullName!);
+
+        /// <inheritdoc/>
+        public virtual object? GetData(Type format) => format is null ? null : GetData(format.FullName!);
+
+        /// <inheritdoc/>
         public virtual object? GetData(string format)
         {
             if (format is null)
