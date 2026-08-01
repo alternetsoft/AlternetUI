@@ -129,6 +129,45 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the two endpoint colors of the linear gradient.
+        /// </summary>
+        public virtual Color[] LinearColors
+        {
+            get
+            {
+                var stops = OrderedGradientStops;
+
+                if (stops.Length < 2)
+                    return new Color[] { Color.Black, Color.Black };
+
+                var colors = new Color[2];
+                colors[0] = stops[0].Color;
+                colors[1] = stops[stops.Length - 1].Color;
+                return colors;
+            }
+            set
+            {
+                if (value == null || value.Length != 2)
+                    throw new ArgumentException("LinearColors must be an array of exactly two colors.");
+
+                if (GradientStops is null || GradientStops.Length < 2)
+                {
+                    GradientStop[] newStops = new GradientStop[2];
+                    newStops[0] = new GradientStop(value[0], 0f);
+                    newStops[1] = new GradientStop(value[1], 1f);
+                    GradientStops = newStops;
+                }
+                else
+                {
+                    var stops = OrderedGradientStops;
+                    stops[0].Color = value[0];
+                    stops[stops.Length - 1].Color = value[1];
+                    GradientStops = stops;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the starting two-dimensional coordinates of the linear gradient.
         /// </summary>
         public virtual PointD StartPoint
