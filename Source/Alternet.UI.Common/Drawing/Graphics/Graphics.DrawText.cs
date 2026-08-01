@@ -23,6 +23,34 @@ namespace Alternet.Drawing
         public static ObjectUniqueId? DebugElementId;
 #endif
 
+        /// <inheritdoc cref="DrawText(ReadOnlySpan{char}, Font, Brush, RectD)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawString(ReadOnlySpan<char> s, Font font, Brush brush, RectD layoutRectangle)
+        {
+            DrawText(s, font, brush, layoutRectangle);
+        }
+
+        /// <inheritdoc cref="DrawText(ReadOnlySpan{char}, Font, Brush, PointD)"/>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawString(ReadOnlySpan<char> s, Font font, Brush brush, PointD point)
+        {
+            DrawText(s, font, brush, point);
+        }
+
+        /// <summary>
+        /// Draws the text string at the specified location using the specified font and brush.
+        /// </summary>
+        /// <param name="s">The text to draw.</param>
+        /// <param name="font">The font to use.</param>
+        /// <param name="brush">The brush to use.</param>
+        /// <param name="x">The x-coordinate of the location.</param>
+        /// <param name="y">The y-coordinate of the location.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void DrawString(ReadOnlySpan<char> s, Font font, Brush brush, float x, float y)
+        {
+            DrawText(s, font, brush, new PointD(x, y));
+        }
+
         /// <summary>
         /// Returns the size of a single character when drawn with the specified font.
         /// </summary>
@@ -1543,7 +1571,8 @@ namespace Alternet.Drawing
             /// This is the same as setting the <see cref="IsVerticalText"/> property,
             /// but provided as a method for convenience and potential future extensibility.
             /// </summary>
-            /// <param name="value">A boolean value that determines if the text is vertical. Set to <see langword="true"/> to display text
+            /// <param name="value">A boolean value that determines if the text is vertical.
+            /// Set to <see langword="true"/> to display text
             /// vertically; otherwise, set to <see langword="false"/>.</param>
             public void SetIsVerticalText(bool value)
             {
@@ -1586,7 +1615,8 @@ namespace Alternet.Drawing
 
             /// <summary>
             /// Sets the distance between the image and its label.
-            /// If value is <see langword="null"/>, <see cref="SpeedButton.DefaultImageLabelDistance"/> is used as the default distance.
+            /// If value is <see langword="null"/>, <see cref="SpeedButton.DefaultImageLabelDistance"/>
+            /// is used as the default distance.
             /// This is the same as setting the <see cref="ImageLabelDistance"/> property,
             /// but provided as a method for convenience and potential future extensibility.
             /// </summary>
@@ -1631,7 +1661,8 @@ namespace Alternet.Drawing
             /// </summary>
             /// <remarks>If <paramref name="value"/> is <see langword="null"/>, any previously set
             /// text and font styles are removed.</remarks>
-            /// <param name="value">An array of <see cref="TextAndFontStyle"/> objects that specify the text and font styles to use. This
+            /// <param name="value">An array of <see cref="TextAndFontStyle"/> objects that
+            /// specify the text and font styles to use. This
             /// parameter can be <see langword="null"/> to clear the current styles.</param>
             public void SetTextAndFontStyle(TextAndFontStyle[]? value)
             {
@@ -1688,7 +1719,8 @@ namespace Alternet.Drawing
             /// This is the same as setting the <see cref="Rect"/> property,
             /// but provided as a method for convenience and potential future extensibility.
             /// </summary>
-            /// <param name="value">The new rectangle value to assign. This value must be a valid instance of <see cref="RectD"/>.</param>
+            /// <param name="value">The new rectangle value to assign. This value must be
+            /// a valid instance of <see cref="RectD"/>.</param>
             public void SetRect(RectD value)
             {
                 Rect = value;
@@ -1700,7 +1732,8 @@ namespace Alternet.Drawing
             /// This is the same as setting the <see cref="Alignment"/> property,
             /// but provided as a method for convenience and potential future extensibility.
             /// </summary>
-            /// <param name="value">The alignment value to apply. Specifies how the element is positioned horizontally and vertically.</param>
+            /// <param name="value">The alignment value to apply. Specifies how the element
+            /// is positioned horizontally and vertically.</param>
             public void SetAlignment(HVAlignment value)
             {
                 Alignment = value;
