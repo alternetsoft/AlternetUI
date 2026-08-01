@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,7 +54,20 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Gets or sets <see cref="SKMatrix"/> for this brush.
+        /// Gets or sets matrix that defines a local geometric transform for this brush.
+        /// </summary>
+        public virtual TransformMatrix Transform
+        {
+            get => new (LocalMatrix);
+            
+            set
+            {
+                LocalMatrix = (SKMatrix)value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets matrix that defines a local geometric transform for this brush.
         /// </summary>
         public virtual SKMatrix LocalMatrix
         {
@@ -110,7 +124,7 @@ namespace Alternet.Drawing
         /// Converts array of <see cref="GradientStop"/> to array of <see cref="SKColor"/>.
         /// </summary>
         /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
-        /// <returns></returns>
+        /// <returns>Array of <see cref="SKColor"/>.</returns>
         public static SKColor[] ToSkiaGradientColors(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => (SKColor)item.Color);
@@ -121,7 +135,7 @@ namespace Alternet.Drawing
         /// Converts array of <see cref="GradientStop"/> to array of <see cref="Color"/>.
         /// </summary>
         /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
-        /// <returns></returns>
+        /// <returns>Array of <see cref="Color"/>.</returns>
         public static Color[] ToGradientColors(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => item.Color);
@@ -131,12 +145,10 @@ namespace Alternet.Drawing
         /// <summary>
         /// Converts two colors to array of <see cref="GradientStop"/>.
         /// </summary>
-        /// <param name="startColor"></param>
-        /// <param name="endColor"></param>
-        /// <returns></returns>
-        public static GradientStop[] GradientStopsFromEdgeColors(
-            Color startColor,
-            Color endColor)
+        /// <param name="startColor">The start color.</param>
+        /// <param name="endColor">The end color.</param>
+        /// <returns>Array of <see cref="GradientStop"/>.</returns>
+        public static GradientStop[] GradientStopsFromEdgeColors(Color startColor, Color endColor)
         {
             return new[]
             {
@@ -149,7 +161,7 @@ namespace Alternet.Drawing
         /// Converts array of <see cref="GradientStop"/> to array of gradient offsets.
         /// </summary>
         /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
-        /// <returns></returns>
+        /// <returns>Array of <see cref="Coord"/>.</returns>
         public static Coord[] ToGradientOffsets(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => (Coord)item.Offset);
@@ -160,11 +172,127 @@ namespace Alternet.Drawing
         /// Converts array of <see cref="GradientStop"/> to array of gradient offsets.
         /// </summary>
         /// <param name="gradientStops">Array of <see cref="GradientStop"/>.</param>
-        /// <returns></returns>
+        /// <returns>Array of <see cref="float"/>.</returns>
         public static float[] ToGradientOffsetsF(GradientStop[] gradientStops)
         {
             var result = Array.ConvertAll(gradientStops, item => (float)item.Offset);
             return result;
+        }
+
+        /// <summary>
+        /// Resets the <see cref="Transform"/> property to identity matrix.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void ResetTransform()
+        {
+            LocalMatrix = SKMatrix.CreateIdentity();
+        }
+
+        /// <summary>
+        /// Multiply the <see cref="Transform"/> property by the specified matrix.
+        /// This method prepends the specified matrix to the transform of this brush.
+        /// </summary>
+        /// <param name="matrix">The matrix to multiply by.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void MultiplyTransform(TransformMatrix matrix) => MultiplyTransform(matrix, MatrixOrder.Prepend);
+
+        /// <summary>
+        /// Multiply the <see cref="Transform"/> property by the specified matrix using the specified order.
+        /// </summary>
+        /// <param name="matrix">The matrix to multiply by.</param>
+        /// <param name="order">The order in which to apply the multiplication.</param>
+        public virtual void MultiplyTransform(TransformMatrix matrix, MatrixOrder order)
+        {
+            if (order == MatrixOrder.Prepend)
+            {
+                Transform = matrix * Transform;
+            }
+            else
+            {
+                Transform = Transform * matrix;
+            }
+        }
+
+        /// <summary>
+        /// Translates the local geometric transform by the specified amount. This method prepends the translation to the transform. 
+        /// </summary>
+        /// <param name="dx">The amount to translate in the x-direction.</param>
+        /// <param name="dy">The amount to translate in the y-direction.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void TranslateTransform(float dx, float dy) => TranslateTransform(dx, dy, MatrixOrder.Prepend);
+
+        /// <summary>
+        /// Translates the local geometric transform by the specified amount using the specified order.
+        /// </summary>
+        /// <param name="dx">The amount to translate in the x-direction.</param>
+        /// <param name="dy">The amount to translate in the y-direction.</param>
+        /// <param name="order">The order in which to apply the translation.</param>
+        public virtual void TranslateTransform(float dx, float dy, MatrixOrder order)
+        {
+            var translation = TransformMatrix.CreateTranslation(dx, dy);
+
+            if (order == MatrixOrder.Prepend)
+            {
+                Transform = translation * Transform;
+            }
+            else
+            {
+                Transform *= translation;
+            }
+        }
+
+        /// <summary>
+        /// Scales the local geometric transform by the specified amount. This method prepends the scale to the transform. 
+        /// </summary>
+        /// <param name="sx">The scale factor in the x-direction.</param>
+        /// <param name="sy">The scale factor in the y-direction.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void ScaleTransform(float sx, float sy) => ScaleTransform(sx, sy, MatrixOrder.Prepend);
+
+        /// <summary>
+        /// Scales the local geometric transform by the specified amount using the specified order.
+        /// </summary>
+        /// <param name="sx">The scale factor in the x-direction.</param>
+        /// <param name="sy">The scale factor in the y-direction.</param>
+        /// <param name="order">The order in which to apply the scale.</param>
+        public virtual void ScaleTransform(float sx, float sy, MatrixOrder order)
+        {
+            var scale = TransformMatrix.CreateScale(sx, sy);
+
+            if (order == MatrixOrder.Prepend)
+            {
+                Transform = scale * Transform;
+            }
+            else
+            {
+                Transform *= scale;
+            }
+        }
+
+        /// <summary>
+        /// Rotates the local geometric transform by the specified amount. This method prepends the rotation to the transform. 
+        /// </summary>
+        /// <param name="angle">The angle of rotation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void RotateTransform(float angle) => RotateTransform(angle, MatrixOrder.Prepend);
+
+        /// <summary>
+        /// Rotates the local geometric transform by the specified amount using the specified order of the rotation.
+        /// </summary>
+        /// <param name="angle">The angle of rotation.</param>
+        /// <param name="order">The order in which to apply the rotation.</param>
+        public virtual void RotateTransform(float angle, MatrixOrder order)
+        {
+            var rotation = TransformMatrix.CreateRotation(angle);
+
+            if (order == MatrixOrder.Prepend)
+            {
+                Transform = rotation * Transform;
+            }
+            else
+            {
+                Transform *= rotation;
+            }
         }
 
         /// <summary>
