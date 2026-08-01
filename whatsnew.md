@@ -1,3 +1,22 @@
+# 1.1.4 (2026 August 1)
+
+- Graphics: Add Save and Restore which use GraphicsState.
+- Inherit PlessGraphics from SkiaGraphics.
+- Graphics: Add DrawString overloads.
+- Add AbstractControl.Capture property.
+- Graphics: RotateTransform, ScaleTransform, TranslateTransform.
+- TransformMatrix: Add TransformMatrix(Matrix3x2 matrix) constructor.
+- TransformMatrix: Add explicit conversion to/from Matrix3x2.
+- TransformMatrix: Add operators (+, -, *).
+- Add Graphics.DrawArc and GraphicsPath.AddArc overloads.
+- Add static MouseButtons property in AbstractControl and Mouse.
+- AbstractControl.FontHeight.
+- Add TextRenderer.Handler property so text measuring and drawing can be delegated to a full implementation.
+- Add ToolTip component.
+- Add rect/angle/mode constructors to LinearGradientBrush
+
+---
+
 # 1.1.3 (2026 July 22)
 
 - Center label text vertically in SpeedButton by default.
@@ -13,7 +32,7 @@
 - Fix PopupWindow movement and buttons.
 - Rename Std prefix to X in controls.
 
---
+---
 
 # 1.1.2 (2026 July 12)
 
