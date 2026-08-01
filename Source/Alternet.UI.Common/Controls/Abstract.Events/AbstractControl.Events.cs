@@ -14,6 +14,39 @@ namespace Alternet.UI
         private EventHandler? click;
 
         /// <summary>
+        /// Occurs when the control gets focus. This is the same as the <see cref="GotFocus"/> event
+        /// and is added for compatibility with legacy code.
+        /// </summary>
+        public event EventHandler? Enter
+        {
+            add
+            {
+                GotFocus += value;
+            }
+
+            remove
+            {
+                GotFocus -= value;
+            }
+        }
+
+        /// <summary>
+        /// Occurs when the control loses focus. This is the same as the <see cref="LostFocus"/> event
+        /// and is added for compatibility with legacy code.
+        /// </summary>
+        public event EventHandler? Leave
+        {
+            add
+            {
+                LostFocus += value;
+            }
+            remove
+            {
+                LostFocus -= value;
+            }
+        }
+
+        /// <summary>
         /// Occurs during a drag operation.It is raised when a drag-and-drop operation is started. With this event,
         /// the source of a drag event can modify the appearance of the mouse pointer in order to give the user visual
         /// feedback during a drag-and-drop operation.
