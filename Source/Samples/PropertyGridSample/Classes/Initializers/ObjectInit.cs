@@ -67,6 +67,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(VerticalStackPanel), InitStackPanel);
             Actions.Add(typeof(StackPanel), InitStackPanel);
             Actions.Add(typeof(ScrollBar), InitScrollBar);
+            Actions.Add(typeof(XScrollBar), InitXScrollBar);
             Actions.Add(typeof(SpeedButton), InitSpeedButton);
             Actions.Add(typeof(PictureBox), InitPictureBox);
             Actions.Add(typeof(ToolBar), InitGenericToolBar);

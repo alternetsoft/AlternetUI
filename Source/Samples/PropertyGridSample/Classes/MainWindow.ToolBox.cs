@@ -108,6 +108,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<XCheckListBox>();
                 ToolBoxAdd<EditableListPicker>();
                 ToolBoxAdd<TextPicker>();
+                ToolBoxAdd<XScrollBar>();
 
                 void ToolBoxAdd<T>()
                 {
