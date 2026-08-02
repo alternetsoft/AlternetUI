@@ -13,20 +13,21 @@ using Alternet.UI.Localization;
 namespace Alternet.UI
 {
     /// <summary>
-    /// A <see cref="ScrollBar"/> is a control that represents a horizontal or vertical scrollbar.
+    /// A <see cref="XScrollBar"/> is a control that represents a horizontal or vertical scrollbar.
     /// </summary>
     [ControlCategory(KnownControlCategory.Native)]
-    public partial class ScrollBar : Control
+    public partial class XScrollBar : UserControl
     {
         private readonly AltScrollBarPositionInfo pos = new();
 
         private ScrollBarMetricsInfo? metrics;
+        private bool isVertical;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
-        public ScrollBar(AbstractControl parent)
+        public XScrollBar(AbstractControl parent)
             : this()
         {
             Parent = parent;
@@ -35,7 +36,7 @@ namespace Alternet.UI
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBar"/> class.
         /// </summary>
-        public ScrollBar()
+        public XScrollBar()
         {
             pos.PropertyChanged += OnPositionPropertyChanged;
         }
@@ -226,9 +227,7 @@ namespace Alternet.UI
         {
             get
             {
-                if (DisposingOrDisposed)
-                    return default;
-                return PlatformControl.IsVertical;
+                return isVertical;
             }
 
             set
@@ -237,7 +236,7 @@ namespace Alternet.UI
                     return;
                 if (IsVertical == value)
                     return;
-                PlatformControl.IsVertical = value;
+                isVertical = value;
                 IsVerticalChanged?.Invoke(this, EventArgs.Empty);
                 UpdateScrollInfo();
             }
@@ -270,15 +269,6 @@ namespace Alternet.UI
             set
             {
                 pos.Assign(value);
-            }
-        }
-
-        internal IScrollBarHandler PlatformControl
-        {
-            get
-            {
-                CheckDisposed();
-                return (IScrollBarHandler)Handler;
             }
         }
 
@@ -357,18 +347,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Logs scrollbar info.
-        /// </summary>
-        public virtual void LogInfo()
-        {
-            App.Log(ToString());
-            var position = $"Position: {PlatformControl.ThumbPosition}";
-            var range = $"Range: {PlatformControl.Range}";
-            var pageSize = $"PageSize: {PlatformControl.PageSize}";
-            App.Log($"Native: {position}, {range}, {pageSize}");
-        }
-
-        /// <summary>
         /// Updates scroll info and calls <see cref="SetScrollbar"/> to update native control.
         /// </summary>
         public virtual void UpdateScrollInfo()
@@ -414,12 +392,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override IControlHandler CreateHandler()
-        {
-            return ControlFactory.Handler.CreateScrollBarHandler(this);
-        }
-
-        /// <inheritdoc/>
         protected override void OnLocationChanged(EventArgs e)
         {
             base.OnLocationChanged(e);
@@ -460,13 +432,7 @@ namespace Alternet.UI
             int? pageSize,
             bool refresh = true)
         {
-            if (DisposingOrDisposed)
-                return;
-            PlatformControl.SetScrollbar(
-                position,
-                range,
-                pageSize,
-                refresh);
+            // !!!
         }
 
         /// <summary>
