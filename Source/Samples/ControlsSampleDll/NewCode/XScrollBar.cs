@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <summary>
     /// A <see cref="XScrollBar"/> is a control that represents a horizontal or vertical scrollbar.
     /// </summary>
-    [ControlCategory(KnownControlCategory.Native)]
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class XScrollBar : UserControl
     {
         private readonly AltScrollBarPositionInfo pos = new();
