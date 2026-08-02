@@ -40,6 +40,52 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
+        /// <see cref="BrushHatchStyle"/> enumeration, and the color.
+        /// </summary>
+        /// <param name="hatchStyle">One of the <see cref="BrushHatchStyle"/> values that
+        /// represents the pattern drawn by this <see cref="HatchBrush"/>.</param>
+        /// <param name="foreColor">The <see cref="Drawing.Color"/> structure that represents the
+        /// color of lines drawn by this <see cref="HatchBrush"/>.</param>
+        /// <param name="backColor">The <see cref="Drawing.Color"/> structure that represents the
+        /// background color of this <see cref="HatchBrush"/>.</param>
+        public HatchBrush(BrushHatchStyle hatchStyle, Color foreColor, Color backColor)
+            : base(immutable: false)
+        {
+            HatchStyle = hatchStyle;
+            Color = foreColor;
+            BackgroundColor = backColor;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
+        /// <see cref="HatchStyle"/> enumeration, and the color.
+        /// </summary>
+        /// <param name="hatchStyle">One of the <see cref="HatchStyle"/> values that
+        /// represents the pattern drawn by this <see cref="HatchBrush"/>.</param>
+        /// <param name="foreColor">The <see cref="Drawing.Color"/> structure that represents the
+        /// color of lines drawn by this <see cref="HatchBrush"/>.</param>
+        /// <param name="backColor">The <see cref="Drawing.Color"/> structure that represents the
+        /// background color of this <see cref="HatchBrush"/>.</param>
+        public HatchBrush(HatchStyle hatchStyle, Color foreColor, Color backColor)
+            : this((BrushHatchStyle)hatchStyle, foreColor, backColor)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HatchBrush"/> class with the specified
+        /// <see cref="HatchStyle"/> enumeration, and the color.
+        /// </summary>
+        /// <param name="hatchStyle">One of the <see cref="HatchStyle"/> values that
+        /// represents the pattern drawn by this <see cref="HatchBrush"/>.</param>
+        /// <param name="color">The <see cref="Drawing.Color"/> structure that represents the
+        /// color of lines drawn by this <see cref="HatchBrush"/>.</param>
+        public HatchBrush(HatchStyle hatchStyle, Color color)
+            : this((BrushHatchStyle)hatchStyle, color)
+        {
+        }
+
+        /// <summary>
         /// Gets the color of hatch lines drawn by this <see cref="HatchBrush"/> object.
         /// </summary>
         /// <value>A <see cref="Drawing.Color"/> structure that represents the color for this
@@ -69,7 +115,7 @@ namespace Alternet.Drawing
         /// Typical values are <see cref="SKShaderTileMode.Repeat"/> (default),
         /// <see cref="SKShaderTileMode.Clamp"/>, or <see cref="SKShaderTileMode.Mirror"/>.
         /// </remarks>
-        public SKShaderTileMode TileModeX
+        public virtual SKShaderTileMode TileModeX
         {
             get => tileModeX;
             set
@@ -89,7 +135,7 @@ namespace Alternet.Drawing
         /// Typical values are <see cref="SKShaderTileMode.Repeat"/> (default),
         /// <see cref="SKShaderTileMode.Clamp"/>, or <see cref="SKShaderTileMode.Mirror"/>.
         /// </remarks>
-        public SKShaderTileMode TileModeY
+        public virtual SKShaderTileMode TileModeY
         {
             get => tileModeY;
             set
