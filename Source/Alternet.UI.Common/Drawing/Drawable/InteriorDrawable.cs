@@ -22,7 +22,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets the default theme for the interior elements, such as scrollbars.
         /// </summary>
-        public static ScrollBar.KnownTheme DefaultInteriorTheme = ScrollBar.KnownTheme.WindowsAuto;
+        public static KnownScrollBarTheme DefaultInteriorTheme = KnownScrollBarTheme.WindowsAuto;
 
         /// <summary>
         /// Gets or sets vertical scrollbar element.
@@ -51,7 +51,7 @@ namespace Alternet.Drawing
 
         private ScrollBarMetricsInfo? metrics;
         private InteriorControlActivity? notification;
-        private ScrollBar.KnownTheme? scrollBarTheme;
+        private KnownScrollBarTheme? scrollBarTheme;
         private bool? currentIsDark;
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets theme assigned with <see cref="SetThemeMetrics"/>.
         /// </summary>
-        public virtual ScrollBar.KnownTheme? ScrollBarTheme
+        public virtual KnownScrollBarTheme? ScrollBarTheme
         {
             get
             {
@@ -597,7 +597,7 @@ namespace Alternet.Drawing
         /// Initialized this drawable with default settings for the specified color theme.
         /// </summary>
         public virtual void SetThemeMetrics(
-            ScrollBar.KnownTheme theme,
+            KnownScrollBarTheme theme,
             bool isDark = false,
             bool reset = false)
         {
@@ -613,7 +613,7 @@ namespace Alternet.Drawing
             bool savedHasBorder = HasBorder;
 
             SetDefaultBorder(isDark);
-            var themeObj = ScrollBar.ThemeMetrics.GetTheme(theme, isDark);
+            var themeObj = UI.ScrollBarTheme.GetTheme(theme, isDark);
             themeObj.AssignTo(this);
 
             HasBorder = savedHasBorder;

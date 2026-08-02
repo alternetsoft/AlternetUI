@@ -15,7 +15,7 @@ namespace ControlsSample
 {
     public partial class CustomDrawTestPage : Window
     {
-        private ScrollBar.KnownTheme currentTheme = ScrollBar.KnownTheme.WindowsDark;
+        private KnownScrollBarTheme currentTheme = KnownScrollBarTheme.WindowsDark;
 
         private readonly PaintActionsControl customDrawControl = new()
         {
@@ -131,12 +131,12 @@ namespace ControlsSample
             panel.AddAction("Test Bad Image Assert", TestBadImageAssert);
             */
 
-            AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsDark);
-            AddDrawScrollBarAction(ScrollBar.KnownTheme.WindowsLight);
-            AddDrawScrollBarAction(ScrollBar.KnownTheme.VisualStudioDark);
-            AddDrawScrollBarAction(ScrollBar.KnownTheme.VisualStudioLight);
+            AddDrawScrollBarAction(KnownScrollBarTheme.WindowsDark);
+            AddDrawScrollBarAction(KnownScrollBarTheme.WindowsLight);
+            AddDrawScrollBarAction(KnownScrollBarTheme.VisualStudioDark);
+            AddDrawScrollBarAction(KnownScrollBarTheme.VisualStudioLight);
 
-            void AddDrawScrollBarAction(ScrollBar.KnownTheme theme)
+            void AddDrawScrollBarAction(KnownScrollBarTheme theme)
             {
                 panel.AddAction($"Draw ScrollBar ({theme})",
                     () => {
@@ -198,17 +198,17 @@ namespace ControlsSample
         public static InteriorDrawable CreateInteriorDrawable(bool isDarkBackground)
         {
             InteriorDrawable result = new();
-            result.SetThemeMetrics(ScrollBar.KnownTheme.MauiAuto, isDarkBackground);
+            result.SetThemeMetrics(KnownScrollBarTheme.MauiAuto, isDarkBackground);
             return result;
         }
 
         public static void PaintInteriorDrawable(
             InteriorDrawable drawable,
-            ScrollBar.KnownTheme theme,
+            KnownScrollBarTheme theme,
             AbstractControl control,
             Graphics canvas,
             RectD rect,
-            ScrollBar.AltPositionInfo position)
+            AltScrollBarPositionInfo position)
         {
             rect.Inflate(-20);
 
@@ -236,7 +236,7 @@ namespace ControlsSample
             });
         }
 
-        public void DrawScrollBar(ScrollBar.KnownTheme theme)
+        public void DrawScrollBar(KnownScrollBarTheme theme)
         {
             customDrawControl.SetPaintAction((control, canvas, rect) =>
             {

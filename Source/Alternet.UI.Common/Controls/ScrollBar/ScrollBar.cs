@@ -36,7 +36,7 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Native)]
     public partial class ScrollBar : Control
     {
-        private readonly AltPositionInfo pos = new();
+        private readonly AltScrollBarPositionInfo pos = new();
 
         private ScrollBarMetricsInfo? metrics;
 
@@ -262,10 +262,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets scrollbar position as <see cref="AltPositionInfo"/>.
+        /// Gets scrollbar position as <see cref="AltScrollBarPositionInfo"/>.
         /// </summary>
         [Browsable(false)]
-        public virtual AltPositionInfo AltPosInfo
+        public virtual AltScrollBarPositionInfo AltPosInfo
         {
             get
             {
