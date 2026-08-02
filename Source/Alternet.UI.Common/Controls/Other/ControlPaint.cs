@@ -61,7 +61,7 @@ namespace Alternet.Drawing
         /// Returns True if is dark (it's brightness is less than 0.5).
         /// </summary>
         /// <param name="color">Color to test.</param>
-        /// <returns></returns>
+        /// <returns>True if the color is dark; otherwise, false.</returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsDark(Color color) => color.GetBrightness() <= .5;
 

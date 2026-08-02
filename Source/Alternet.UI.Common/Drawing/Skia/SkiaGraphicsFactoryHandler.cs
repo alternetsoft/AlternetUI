@@ -26,44 +26,6 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public virtual IBrushHandler CreateTransparentBrushHandler(Brush brush)
-        {
-            return new PlessBrushHandler(brush);
-        }
-
-        /// <inheritdoc/>
-        public virtual ISolidBrushHandler CreateSolidBrushHandler(SolidBrush brush)
-        {
-            return new PlessSolidBrushHandler(brush);
-        }
-
-        /// <inheritdoc/>
-        public virtual ITextureBrushHandler CreateTextureBrushHandler(TextureBrush brush)
-        {
-            return new PlessTextureBrushHandler(brush);
-        }
-
-        /// <inheritdoc/>
-        public virtual IHatchBrushHandler CreateHatchBrushHandler(HatchBrush brush)
-        {
-            return new PlessHatchBrushHandler(brush);
-        }
-
-        /// <inheritdoc/>
-        public virtual ILinearGradientBrushHandler CreateLinearGradientBrushHandler(
-            LinearGradientBrush brush)
-        {
-            return new PlessLinearGradientBrushHandler(brush);
-        }
-
-        /// <inheritdoc/>
-        public virtual IRadialGradientBrushHandler CreateRadialGradientBrushHandler(
-            RadialGradientBrush brush)
-        {
-            return new PlessRadialGradientBrushHandler(brush);
-        }
-
-        /// <inheritdoc/>
         public virtual Graphics CreateGraphicsFromImage(Image image)
         {
             if (image.Handler is not SkiaImageHandler skiaImageHandler)
