@@ -212,7 +212,7 @@ namespace Alternet.UI
         /// It passes an instance of <see cref="PaintEventArgs"/> to the method(s)
         /// that handles the <see cref="Paint"/> event.
         /// </remarks>
-        event EventHandler<PaintEventArgs>? Paint;
+        event PaintEventHandler? Paint;
 
         /// <summary>
         /// Occurs when the value of the <c>Margin</c> property changes.

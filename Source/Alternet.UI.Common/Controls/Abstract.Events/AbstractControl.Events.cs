@@ -379,7 +379,7 @@ namespace Alternet.UI
         /// that handles the <see cref="Paint"/> event.
         /// </remarks>
         [Category(KnownMemberCategory.Appearance)]
-        public event EventHandler<PaintEventArgs>? Paint;
+        public event PaintEventHandler? Paint;
 
         /// <summary>
         /// Occurs when the value of the <see cref="Margin"/> property changes.
