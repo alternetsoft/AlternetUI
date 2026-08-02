@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Alternet.Base.Collections;
@@ -3581,6 +3582,8 @@ namespace Alternet.UI
         /// <value>
         /// The <see cref="Font"/> to apply to the text displayed by the control.
         /// </value>
+        [Category(KnownMemberCategory.Appearance)]
+        [Localizable(true)]
         public virtual Font Font
         {
             get
