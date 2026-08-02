@@ -602,7 +602,7 @@ namespace Alternet.UI
         public virtual SizeD GetContainerScrollbarSize()
         {
             var p = GetContainer() ?? this;
-            var cornerSize = ScrollBar.GetCornerSize(p);
+            var cornerSize = ScrollBarUtils.GetCornerSize(p);
             return cornerSize;
         }
 

@@ -38,7 +38,7 @@ namespace Alternet.UI
     {
         private readonly AltPositionInfo pos = new();
 
-        private MetricsInfo? metrics;
+        private ScrollBarMetricsInfo? metrics;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBar"/> class.
@@ -75,7 +75,7 @@ namespace Alternet.UI
         /// Gets or sets metrics used to paint this scrollbar when its style is non-system.
         /// </summary>
         [Browsable(false)]
-        public virtual MetricsInfo? Metrics
+        public virtual ScrollBarMetricsInfo? Metrics
         {
             get
             {
@@ -345,9 +345,9 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default metrics used to paint non-system scrollbars.
         /// </summary>
-        public static MetricsInfo DefaultMetrics(AbstractControl control)
+        public static ScrollBarMetricsInfo DefaultMetrics(AbstractControl control)
         {
-            return new MetricsInfo(control);
+            return new ScrollBarMetricsInfo(control);
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Alternet.UI
         /// <see cref="ScrollBar.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
-        protected virtual ScrollBar.MetricsInfo GetRealMetrics()
+        protected virtual ScrollBarMetricsInfo GetRealMetrics()
         {
             return metrics ?? ScrollBar.DefaultMetrics(this);
         }

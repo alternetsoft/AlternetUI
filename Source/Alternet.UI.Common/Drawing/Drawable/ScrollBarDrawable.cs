@@ -119,7 +119,7 @@ namespace Alternet.Drawing
         /// </summary>
         public ControlStateObjects<RectangleDrawable>? RightArrow;
 
-        private ScrollBar.MetricsInfo? metrics;
+        private ScrollBarMetricsInfo? metrics;
         private VisualControlState startButtonState;
         private VisualControlState endButtonState;
         private VisualControlState startArrowState;
@@ -202,7 +202,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets scrollbar metrics.
         /// </summary>
-        public virtual ScrollBar.MetricsInfo? Metrics
+        public virtual ScrollBarMetricsInfo? Metrics
         {
             get
             {
@@ -360,7 +360,7 @@ namespace Alternet.Drawing
         /// <see cref="ScrollBar.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual ScrollBar.MetricsInfo GetRealMetrics(AbstractControl control)
+        public virtual ScrollBarMetricsInfo GetRealMetrics(AbstractControl control)
         {
             return metrics ?? ScrollBar.DefaultMetrics(control);
         }
@@ -571,7 +571,7 @@ namespace Alternet.Drawing
         /// the arrow button, adjusted for margins and bounds.</returns>
         public virtual Coord GetRealArrowSize(
             Coord scaleFactor,
-            ScrollBar.MetricsInfo metrics)
+            ScrollBarMetricsInfo metrics)
         {
             var arrowSize = metrics.GetArrowBitmapSize(IsVertical, scaleFactor) - 6;
             arrowSize = SizeD.Max(MinArrowSize, arrowSize);

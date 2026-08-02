@@ -49,7 +49,7 @@ namespace Alternet.Drawing
         /// </summary>
         public BorderDrawable? Border;
 
-        private ScrollBar.MetricsInfo? metrics;
+        private ScrollBarMetricsInfo? metrics;
         private InteriorControlActivity? notification;
         private ScrollBar.KnownTheme? scrollBarTheme;
         private bool? currentIsDark;
@@ -253,7 +253,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets scrollbar metrics.
         /// </summary>
-        public virtual ScrollBar.MetricsInfo? ScrollBarMetrics
+        public virtual ScrollBarMetricsInfo? ScrollBarMetrics
         {
             get
             {
@@ -573,7 +573,7 @@ namespace Alternet.Drawing
         /// <see cref="ScrollBar.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
-        public virtual ScrollBar.MetricsInfo GetRealMetrics(AbstractControl control)
+        public virtual ScrollBarMetricsInfo GetRealMetrics(AbstractControl control)
         {
             return metrics ?? ScrollBar.DefaultMetrics(control);
         }

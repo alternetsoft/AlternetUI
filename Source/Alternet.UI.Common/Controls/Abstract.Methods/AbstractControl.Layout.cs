@@ -320,7 +320,7 @@ namespace Alternet.UI
         /// <returns>The size of the scrollbar corner area.</returns>
         public virtual SizeD GetScrollBarCornerSize()
         {
-            return ScrollBar.GetCornerSize(this);
+            return ScrollBarUtils.GetCornerSize(this);
         }
 
         /// <summary>
