@@ -2914,6 +2914,12 @@ namespace Alternet.UI
         public bool InUpdates => updateCount > 0;
 
         /// <summary>
+        /// Gets update count. This property is used to determine whether control is performing updates.
+        /// </summary>
+        [Browsable(false)]
+        public int UpdateCount => updateCount;
+
+        /// <summary>
         /// Gets or sets tooltip provider.
         /// </summary>
         [Browsable(false)]
