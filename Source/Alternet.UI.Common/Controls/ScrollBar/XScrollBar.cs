@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// A <see cref="XScrollBar"/> is a control that represents a horizontal or vertical scrollbar.
     /// </summary>
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class XScrollBar : ScrollableUserControl
+    public partial class XScrollBar : ScrollableUserControl, IScrollEventRouter
     {
         private readonly AltScrollBarPositionInfo pos = new();
 
@@ -24,7 +24,7 @@ namespace Alternet.UI
         private bool isVertical;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrollBar"/> class.
+        /// Initializes a new instance of the <see cref="XScrollBar"/> class.
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public XScrollBar(AbstractControl parent)
@@ -34,7 +34,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScrollBar"/> class.
+        /// Initializes a new instance of the <see cref="XScrollBar"/> class.
         /// </summary>
         public XScrollBar()
         {
@@ -226,7 +226,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets whether <see cref="ScrollBar"/> is vertical.
+        /// Gets or sets whether <see cref="XScrollBar"/> is vertical.
         /// </summary>
         public virtual bool IsVertical
         {
@@ -242,8 +242,8 @@ namespace Alternet.UI
                 if (IsVertical == value)
                     return;
                 isVertical = value;
+                UpdateScrollBars(refresh: true);
                 IsVerticalChanged?.Invoke(this, EventArgs.Empty);
-                UpdateScrollInfo();
             }
         }
 
@@ -282,7 +282,7 @@ namespace Alternet.UI
         {
             get
             {
-                return base.ScrollEventRouter;
+                return this;
             }
         }
 
@@ -329,9 +329,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Returns a string that represents the <see cref="ScrollBar" /> control.
+        /// Returns a string that represents the <see cref="XScrollBar" /> control.
         /// </summary>
-        /// <returns>A string that represents the current <see cref="ScrollBar" />.</returns>
+        /// <returns>A string that represents the current <see cref="XScrollBar" />.</returns>
         public override string ToString()
         {
             string? text = base.ToString();
@@ -353,16 +353,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates scroll info and calls <see cref="SetScrollbar"/> to update native control.
-        /// </summary>
-        public virtual void UpdateScrollInfo()
-        {
-            var posInfo = pos.AsPositionInfo();
-            SetScrollbar(posInfo.Position, posInfo.Range, posInfo.PageSize);
-        }
-
-        /// <summary>
-        /// This method should not be used in the <see cref="ScrollBar"/>.
+        /// This method should not be used in the scrollbar.
         /// </summary>
         public override ScrollBarInfo GetScrollBarInfo(bool isVertical)
         {
@@ -372,7 +363,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// This method should not be used in the <see cref="ScrollBar"/>.
+        /// This method should not be used in the scrollbar.
         /// </summary>
         public override void SetScrollBarInfo(bool isVertical, ScrollBarInfo value)
         {
@@ -425,38 +416,6 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-        }
-
-        /// <summary>
-        /// Sets the native scrollbar properties.
-        /// </summary>
-        /// <param name="position">The position of the scrollbar in scroll units.</param>
-        /// <param name="range">The maximum position of the scrollbar.</param>
-        /// <param name="pageSize">The size of the page size in scroll units. This is the
-        /// number of units the scrollbar will scroll when it is paged up or down.
-        /// Often it is the same as the thumb size.</param>
-        /// <param name="refresh"><c>true</c> to redraw the scrollbar, <c>false</c> otherwise.</param>
-        /// <remarks>
-        /// Let's say you wish to display 50 lines of text, using the same font.
-        /// The window is sized so that you can only see 16 lines at a time. You would use:
-        /// scrollbar.SetScrollbar(0, 16, 50, 15);
-        /// The page size is 1 less than the thumb size so that the last line of the previous
-        /// page will be visible on the next page, to help orient the user. Note that with the
-        /// window at this size, the thumb position can never go above 50 minus 16, or 34.
-        /// You can determine how many lines are currently visible by dividing the
-        /// current view size by the character height in pixels. When defining your own
-        /// scrollbar behavior, you will always need to recalculate the scrollbar settings
-        /// when the window size changes. You could therefore put your scrollbar calculations
-        /// and SetScrollbar() call into a function named AdjustScrollbars, which can
-        /// be called initially and also from a size event handler function.
-        /// </remarks>
-        protected virtual void SetScrollbar(
-            int? position,
-            int? range,
-            int? pageSize,
-            bool refresh = true)
-        {
-            // !!!
         }
 
         /// <inheritdoc/>
@@ -551,9 +510,88 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            UpdateScrollInfo();
+            UpdateScrollBars(refresh: true);
             if (!e.HasPropertyName())
                 RaiseValueChanged();
+        }
+
+        void IScrollEventRouter.CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
+        {
+            if (IsVertical)
+            {
+                horzScrollbar = ScrollBarInfo.Hidden;
+                vertScrollbar = PosInfo;
+            }
+            else
+            {
+                horzScrollbar = PosInfo;
+                vertScrollbar = ScrollBarInfo.Hidden;
+            }
+        }
+
+        void IScrollEventRouter.DoActionScrollCharLeft()
+        {
+            pos.Value -= SmallChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollCharRight()
+        {
+            pos.Value += SmallChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollToFirstChar()
+        {
+            pos.Value = Minimum;
+        }
+
+        void IScrollEventRouter.DoActionScrollPageLeft()
+        {
+            pos.Value -= LargeChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollPageRight()
+        {
+            pos.Value += LargeChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollPageUp()
+        {
+            pos.Value -= LargeChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollPageDown()
+        {
+            pos.Value += LargeChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollLineUp()
+        {
+            pos.Value -= SmallChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollLineDown()
+        {
+            pos.Value += SmallChange;
+        }
+
+        void IScrollEventRouter.DoActionScrollToFirstLine()
+        {
+            pos.Value = Minimum;
+        }
+
+        void IScrollEventRouter.DoActionScrollToLastLine()
+        {
+            pos.Value = Maximum;
+        }
+
+        void IScrollEventRouter.DoActionScrollToVertPos(int value)
+        {
+            pos.Value = value;
+        }
+
+        void IScrollEventRouter.DoActionScrollToHorzPos(int value)
+        {
+            pos.Value = value;
         }
     }
 }
