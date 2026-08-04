@@ -227,12 +227,12 @@ Environment.NewLine + Environment.NewLine +
 
         public static void InitStdCheckBox(XCheckBox control)
         {
-            control.Text = "StdCheckBox";
+            control.Text = "XCheckBox";
         }
 
         public static void InitStdRadioButton(XRadioButton control)
         {
-            control.Text = "StdRadioButton";
+            control.Text = "XRadioButton";
         }
 
         public static ImageLists LoadImageLists()

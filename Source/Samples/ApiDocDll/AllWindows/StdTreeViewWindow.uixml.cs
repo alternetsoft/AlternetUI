@@ -60,12 +60,12 @@ namespace ApiDoc
         #region TreeViewEventHandler
         private void TreeView_SelectionChanged(object? sender, EventArgs e)
         {
-            App.Log($"StdTreeView: SelectionChanged. SelectedItem: {treeView.SelectedItem?.Text}");
+            App.Log($"XTreeView: SelectionChanged. SelectedItem: {treeView.SelectedItem?.Text}");
         }
 
         private void TreeView_ExpandedChanged(object? sender, TreeViewEventArgs e)
         {
-            App.Log($"StdTreeView: ExpandedChanged. Item: {e.Item.Text} {e.Item.IsExpanded}");
+            App.Log($"XTreeView: ExpandedChanged. Item: {e.Item.Text} {e.Item.IsExpanded}");
         }
 
         #endregion    

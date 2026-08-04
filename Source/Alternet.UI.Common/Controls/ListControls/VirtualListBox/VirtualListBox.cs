@@ -1965,7 +1965,7 @@ namespace Alternet.UI
             if (newOffset != scrollOffsetX)
             {
                 scrollOffsetX = newOffset;
-                UpdateScrollBars(true);
+                UpdateScrollBars(refresh: true);
                 ScrollOffsetXChanged?.Invoke(this, EventArgs.Empty);
             }
         }

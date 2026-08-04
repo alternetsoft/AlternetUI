@@ -5,7 +5,7 @@
 
   <TabControl>
 
-    <VerticalStackPanel Padding="10" Title="StdIntPicker">
+    <VerticalStackPanel Padding="10" Title="XIntPicker">
 
       <HorizontalStackPanel >
 

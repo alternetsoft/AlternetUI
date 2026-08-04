@@ -95,6 +95,8 @@ namespace Alternet.UI
         /// <param name="propertyName">Name of the property.</param>
         public virtual void RaisePropertyChanged([CallerMemberName] string? propertyName = null)
         {
+            if (suspendCounter > 0)
+                return;
             var e = EventArgsUtils.GetPropertyChangedEventArgs(propertyName);
             RaisePropertyChangedEx(e);
         }

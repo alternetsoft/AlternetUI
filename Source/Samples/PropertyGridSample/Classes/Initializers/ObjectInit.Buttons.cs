@@ -20,7 +20,7 @@ namespace PropertyGridSample
         {
             if (control is not XButton button)
                 return;
-            button.Text = "StdButton";
+            button.Text = "XButton";
             button.Click += LogClick;
             button.StateImages = GetButtonImages(button);
             button.SetImageMargins(5);
@@ -34,7 +34,7 @@ namespace PropertyGridSample
             {
                 button.IsMouseOverChanged += (s, e) =>
                 {
-                    App.Log($"StdButton.IsMouseOver changed to [{button.IsMouseOver}]");
+                    App.Log($"XButton.IsMouseOver changed to [{button.IsMouseOver}]");
                 };
             }
 
@@ -42,7 +42,7 @@ namespace PropertyGridSample
             {
                 button.VisualStateChanged += (s, e) =>
                 {
-                    App.Log($"StdButton.VisualState changed to [{button.VisualState}]");
+                    App.Log($"XButton.VisualState changed to [{button.VisualState}]");
                 };
             }
         }

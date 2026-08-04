@@ -546,7 +546,7 @@ namespace MenuSample
         {
             var button = new XButton()
             {
-                ToolTip = "StdButton",
+                ToolTip = "XButton",
                 VerticalAlignment = VerticalAlignment.Stretch,
             };
             return button;
@@ -556,7 +556,7 @@ namespace MenuSample
         {
             var button = new XCheckBox()
             {
-                Text = "StdCheckBox",
+                Text = "XCheckBox",
                 VerticalAlignment = VerticalAlignment.Stretch,
                 IsChecked = true,
             };
