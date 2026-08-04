@@ -368,7 +368,7 @@ namespace Alternet.UI
         {
             if (isVertical == IsVertical)
                 return PosInfo;
-            return ScrollBarInfo.Default;
+            return ScrollBarInfo.Hidden;
         }
 
         /// <summary>
@@ -408,6 +408,8 @@ namespace Alternet.UI
             void DoDefaultPaint()
             {
                 var dc = e.Graphics;
+
+                UpdateInteriorProperties();
 
                 DrawInterior(dc);
             }

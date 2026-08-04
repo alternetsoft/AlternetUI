@@ -16,11 +16,23 @@ namespace Alternet.UI
         /// </summary>
         public static readonly ScrollBarInfo Default = new(immutable: true);
 
+        /// <summary>
+        /// Gets hidden value for the <see cref="ScrollBarInfo"/> structure.
+        /// </summary>
+        public static readonly ScrollBarInfo Hidden;
+
         private bool immutable;
         private HiddenOrVisible visibility;
         private int position;
         private int range;
         private int pageSize = -1;
+
+        static ScrollBarInfo()
+        {
+            Hidden = new ScrollBarInfo();
+            Hidden.Visibility = HiddenOrVisible.Hidden;
+            Hidden.SetImmutable();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScrollBarInfo"/> struct
