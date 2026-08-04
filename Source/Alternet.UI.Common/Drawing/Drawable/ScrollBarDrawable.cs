@@ -357,12 +357,12 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets real scrollbar metrics. If <see cref="Metrics"/> is not specified, returns
-        /// <see cref="ScrollBar.DefaultMetrics"/>.
+        /// <see cref="ScrollBarMetricsInfo.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
         public virtual ScrollBarMetricsInfo GetRealMetrics(AbstractControl control)
         {
-            return metrics ?? ScrollBar.DefaultMetrics(control);
+            return metrics ?? ScrollBarMetricsInfo.DefaultMetrics(control);
         }
 
         /// <summary>

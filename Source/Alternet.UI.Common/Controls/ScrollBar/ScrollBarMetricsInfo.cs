@@ -68,6 +68,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets default metrics used to paint non-system scrollbars.
+        /// </summary>
+        public static ScrollBarMetricsInfo DefaultMetrics(AbstractControl control)
+        {
+            return new ScrollBarMetricsInfo(control);
+        }
+
+        /// <summary>
         /// Logs scroll bar metrics.
         /// </summary>
         public void Log()

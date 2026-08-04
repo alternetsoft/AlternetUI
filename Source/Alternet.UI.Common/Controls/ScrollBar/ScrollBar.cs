@@ -325,14 +325,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets default metrics used to paint non-system scrollbars.
-        /// </summary>
-        public static ScrollBarMetricsInfo DefaultMetrics(AbstractControl control)
-        {
-            return new ScrollBarMetricsInfo(control);
-        }
-
-        /// <summary>
         /// Returns a string that represents the <see cref="ScrollBar" /> control.
         /// </summary>
         /// <returns>A string that represents the current <see cref="ScrollBar" />.</returns>
@@ -499,12 +491,12 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets real scroll bar metrics. If <see cref="Metrics"/> is not specified, returns
-        /// <see cref="ScrollBar.DefaultMetrics"/>.
+        /// <see cref="ScrollBarMetricsInfo.DefaultMetrics"/>.
         /// </summary>
         /// <returns></returns>
         protected virtual ScrollBarMetricsInfo GetRealMetrics()
         {
-            return metrics ?? ScrollBar.DefaultMetrics(this);
+            return metrics ?? ScrollBarMetricsInfo.DefaultMetrics(this);
         }
 
         /// <summary>
