@@ -38,8 +38,12 @@ namespace Alternet.UI
         /// </summary>
         public XScrollBar()
         {
+            HorizontalAlignment = HorizontalAlignment.Left;
+            VerticalAlignment = VerticalAlignment.Top;
             HasBorder = false;
             pos.PropertyChanged += OnPositionPropertyChanged;
+            Interior.Border = null;
+            Interior.Background = null;
         }
 
         /// <summary>
@@ -394,6 +398,22 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        public override void DefaultPaint(PaintEventArgs e)
+        {
+            if (DisposingOrDisposed)
+                return;
+
+            e.Graphics.DoInsideClipped(ClientRectangle, DoDefaultPaint);
+
+            void DoDefaultPaint()
+            {
+                var dc = e.Graphics;
+
+                DrawInterior(dc);
+            }
+        }
+
+        /// <inheritdoc/>
         protected override void OnLocationChanged(EventArgs e)
         {
             base.OnLocationChanged(e);
@@ -440,7 +460,36 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
         {
-            return base.GetPreferredSizeInternal(context);
+            var scaleFactor = ScaleFactor;
+            var suggested = SuggestedSize;
+
+            var isNanSuggestedWidth = suggested.IsNanWidth;
+            var isNanSuggestedHeight = suggested.IsNanHeight;
+
+            var containerSize = suggested;
+
+            if (isNanSuggestedWidth)
+                containerSize.Width = context.AvailableSize.Width;
+
+            if (isNanSuggestedHeight)
+                containerSize.Height = context.AvailableSize.Height;
+
+            var measured = containerSize;
+
+            var metrics = Interior.GetRealMetrics(this);
+
+            if (IsVertical)
+            {
+                var vertWidth = metrics.GetPreferredSize(isVertical: true, scaleFactor).Width;
+                measured.Width = vertWidth;
+            }
+            else
+            {
+                var horzHeight = metrics.GetPreferredSize(isVertical: false, scaleFactor).Height;
+                measured.Height = horzHeight;
+            }
+
+            return measured;
         }
 
         /// <summary>
