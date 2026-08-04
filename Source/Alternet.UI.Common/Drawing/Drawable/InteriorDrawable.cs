@@ -859,25 +859,29 @@ namespace Alternet.Drawing
             /// Gets an instance of <see cref="LayoutRectanglesParams"/> with
             /// both vertical and horizontal scrollbars considered visible.
             /// </summary>
-            public static readonly LayoutRectanglesParams DefaultBothVisible = new(vertVisible: true, horzVisible: true, immutable: true);
+            public static readonly LayoutRectanglesParams DefaultBothVisible
+                = new(vertVisible: true, horzVisible: true, immutable: true);
 
             /// <summary>
             /// Gets an instance of <see cref="LayoutRectanglesParams"/> with
             /// both vertical and horizontal scrollbars considered hidden.
             /// </summary>
-            public static readonly LayoutRectanglesParams DefaultBothHidden = new(vertVisible: false, horzVisible: false, immutable: true);
+            public static readonly LayoutRectanglesParams DefaultBothHidden
+                = new(vertVisible: false, horzVisible: false, immutable: true);
 
             /// <summary>
             /// Gets an instance of <see cref="LayoutRectanglesParams"/> with vertical scrollbar considered visible
             /// and horizontal scrollbar considered hidden.
             /// </summary>
-            public static readonly LayoutRectanglesParams DefaultVertOnly = new(vertVisible: true, horzVisible: false, immutable: true);
+            public static readonly LayoutRectanglesParams DefaultVertOnly
+                = new(vertVisible: true, horzVisible: false, immutable: true);
 
             /// <summary>
             /// Gets an instance of <see cref="LayoutRectanglesParams"/> with horizontal scrollbar considered visible
             /// and vertical scrollbar considered hidden.
             /// </summary>
-            public static readonly LayoutRectanglesParams DefaultHorzOnly = new(vertVisible: false, horzVisible: true, immutable: true);
+            public static readonly LayoutRectanglesParams DefaultHorzOnly
+                = new(vertVisible: false, horzVisible: true, immutable: true);
 
             private bool? vertVisible;
             private bool? horzVisible;

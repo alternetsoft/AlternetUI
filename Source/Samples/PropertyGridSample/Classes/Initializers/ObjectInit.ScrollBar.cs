@@ -25,16 +25,13 @@ namespace PropertyGridSample
                     return;
                 App.AddIdleTask(() =>
                 {
-                    App.LogBeginSection();
                     App.Log($"Scrollbar {e.Type}, New: {e.NewValue} Old: {e.OldValue}");
-                    (sender as ScrollBar)?.LogInfo();
-                    App.LogEndSection();
                 });
             }
 
             static void ScrollBar_IsVerticalChanged(object? sender, EventArgs e)
             {
-                if (sender is not ScrollBar scrollBar)
+                if (sender is not XScrollBar scrollBar)
                     return;
                 if (scrollBar.IsVertical)
                     scrollBar.SuggestedSize = (Coord.NaN, 250);
