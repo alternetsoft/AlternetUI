@@ -306,11 +306,15 @@ namespace PropertyGridSample
             {
                 if (DisposingOrDisposed)
                     return;
-                var item = ToolBox.SelectedItem as ControlListBoxItem;
-                var type = item?.InstanceType;
-                if (item?.PropInstance == e.Instance || e.Instance is null)
-                    Invoke(UpdatePropertyGrid);
-                Post(ControlParent.Refresh);
+                if (PropGrid.FirstItemInstance == e.Instance)
+                {
+                    Invoke(() =>
+                    {
+                        PropGrid.SetProps(e.Instance, sort: true);
+                        AfterSetProps();
+                        Post(ControlParent.Refresh);
+                    });
+                }
             });
         }
 
@@ -341,7 +345,7 @@ namespace PropertyGridSample
             {
                 if (PropGrid.FirstItemInstance == instance)
                     return;
-                PropGrid.SetProps(instance, true);
+                PropGrid.SetProps(instance, sort: true);
                 AfterSetProps();
                 return;
             }
@@ -349,6 +353,7 @@ namespace PropertyGridSample
             void DoAction()
             {
                 ControlParent.GetVisibleChildOrNull()?.Hide();
+
                 if (ToolBox.SelectedItem is not ControlListBoxItem item)
                 {
                     PropGrid.Clear();

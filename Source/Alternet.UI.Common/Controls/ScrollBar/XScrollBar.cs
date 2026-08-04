@@ -38,6 +38,8 @@ namespace Alternet.UI
         /// </summary>
         public XScrollBar()
         {
+            TabStop = false;
+            CanSelect = false;
             HorizontalAlignment = HorizontalAlignment.Left;
             VerticalAlignment = VerticalAlignment.Top;
             HasBorder = false;
@@ -510,23 +512,15 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            UpdateScrollBars(refresh: true);
+            Refresh();
             if (!e.HasPropertyName())
                 RaiseValueChanged();
         }
 
         void IScrollEventRouter.CalcScrollBarInfo(out ScrollBarInfo horzScrollbar, out ScrollBarInfo vertScrollbar)
         {
-            if (IsVertical)
-            {
-                horzScrollbar = ScrollBarInfo.Hidden;
-                vertScrollbar = PosInfo;
-            }
-            else
-            {
-                horzScrollbar = PosInfo;
-                vertScrollbar = ScrollBarInfo.Hidden;
-            }
+            horzScrollbar = GetScrollBarInfo(isVertical: false);
+            vertScrollbar = GetScrollBarInfo(isVertical: true);
         }
 
         void IScrollEventRouter.DoActionScrollCharLeft()

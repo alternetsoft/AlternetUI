@@ -64,12 +64,7 @@ namespace Alternet.UI
                     var newValue = (int)((maxValue * newX) / maxX);
                     if (newValue != oldValue)
                     {
-                        RaiseScroll(
-                            sender,
-                            ScrollBarOrientation.Horizontal,
-                            evType,
-                            oldValue,
-                            newValue);
+                        RaiseScroll(sender, ScrollBarOrientation.Horizontal, evType, oldValue, newValue);
                     }
                 }
                 else
@@ -98,7 +93,11 @@ namespace Alternet.UI
         /// </summary>
         public void ResetDragging(AbstractControl sender)
         {
-            isDragging = false;
+            if (isDragging)
+            {
+                isDragging = false;
+            }
+
             hitTestsMouseDown = null;
 
             if (interior.SetThumbState(VisualControlState.Normal))
