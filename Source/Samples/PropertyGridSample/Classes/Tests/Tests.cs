@@ -51,6 +51,7 @@ namespace PropertyGridSample
             InitTestsListBox();
             InitTestsStdTreeView();
             InitTestsButton();
+            InitTestsScrollBar();
             InitTestsSpeedButton();
             InitTestsTabControl();
             InitTestsSlider();
@@ -221,6 +222,27 @@ namespace PropertyGridSample
             {
                 c.Command = NamedCommands.CommandAppLog;
                 c.CommandParameter = "Button.Command executed";
+            });
+        }
+
+        internal void InitTestsScrollBar()
+        {
+            AddControlAction<XScrollBar>("Set auto theme", (c) =>
+            {
+                c.IsDarkBackgroundOverride = null;
+                c.Invalidate();
+            });
+
+            AddControlAction<XScrollBar>("Set dark theme", (c) =>
+            {
+                c.IsDarkBackgroundOverride = true;
+                c.Invalidate();
+            });
+
+            AddControlAction<XScrollBar>("Set light theme", (c) =>
+            {
+                c.IsDarkBackgroundOverride = false;
+                c.Invalidate();
             });
         }
 
