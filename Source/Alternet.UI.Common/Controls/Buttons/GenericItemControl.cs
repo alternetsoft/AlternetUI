@@ -88,6 +88,23 @@ namespace Alternet.UI
             RefreshOnStateChanged = true;
         }
 
+        /// <summary>
+        /// Implemented for the compatibility with the legacy code. Always returns true.
+        /// </summary>
+        [Browsable(false)]
+        [DefaultValue(true)]
+        public virtual bool AutoSize
+        {
+            get
+            {
+                return true;
+            }
+
+            set
+            {
+            }
+        }
+
         /// <inheritdoc cref="MnemonicMarkerHelper.MnemonicMarker"/>
         public virtual char? MnemonicMarker
         {
@@ -676,7 +693,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets or sets the format provider used to control formatting operations for this control.
-        /// When this property is set, the control will use the specified format provider for any culture-specific formatting operations,
+        /// When this property is set, the control will use the specified format
+        /// provider for any culture-specific formatting operations,
         /// such as displaying dates, numbers, or other formatted values. If the format provider is null, the control will use
         /// the default formatting behavior based on the current culture or invariant culture.
         /// Setting this property allows for customization of how values are formatted and displayed by the control,
