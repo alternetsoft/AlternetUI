@@ -11,6 +11,11 @@ namespace Alternet.Drawing
     public partial class Graphics
     {
         /// <summary>
+        /// Gets the bounds of the current clipping region of this <see cref="Graphics"/> object.
+        /// </summary>
+        public abstract RectD ClipBounds { get; }
+
+        /// <summary>
         /// Clips the canvas to the specified rectangle.
         /// </summary>
         /// <param name="rect">The rectangle to clip to.</param>

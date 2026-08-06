@@ -59,6 +59,15 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override RectD ClipBounds
+        {
+            get
+            {
+                return canvas.LocalClipBounds;
+            }
+        }
+
+        /// <inheritdoc/>
         public override SmoothingMode SmoothingMode
         {
             get
