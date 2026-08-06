@@ -52,6 +52,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="ContextMenu"/> class with the specified container.
+        /// </summary>
+        /// <param name="container">The container to add the ContextMenu to.</param>
+        public ContextMenu(IContainer container) : base()
+        {
+            ArgumentNullException.ThrowIfNull(container);
+
+            container.Add(this);
+        }
+
+        /// <summary>
         /// Occurs when the menu is opening. This event is usually raised only for top level menus.
         /// You can also handle <see cref="MenuItem.Opened"/> to be notified when a menu item is opened.
         /// </summary>
