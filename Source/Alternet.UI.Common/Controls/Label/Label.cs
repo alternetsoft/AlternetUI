@@ -194,6 +194,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Implemented for the compatibility with the legacy code. Always returns true.
+        /// </summary>
+        [Browsable(false)]
+        [DefaultValue(true)]
+        public virtual bool AutoSize
+        {
+            get
+            {
+                return true;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <summary>
         /// Gets the parameters used to control label drawing behavior for the graphics context.
         /// This is a read-only property that provides access to the current
         /// label drawing parameters, which include
