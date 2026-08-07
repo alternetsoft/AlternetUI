@@ -39,6 +39,37 @@ namespace Alternet.UI
         public event EventHandler? DropDown;
 
         /// <summary>
+        /// Occurs when selected value is changed.
+        /// </summary>
+        public event EventHandler? SelectedValueChanged
+        {
+            add
+            {
+                ButtonCombo.ValueChanged += value;
+            }
+
+            remove
+            {
+                ButtonCombo.ValueChanged -= value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected value
+        /// </summary>
+        public virtual object? SelectedItem
+        {
+            get
+            {
+                return ButtonCombo.Value;
+            }
+            set
+            {
+                ButtonCombo.Value = value;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the combo box is displaying its drop-down portion.
         /// </summary>
         /// <returns>
