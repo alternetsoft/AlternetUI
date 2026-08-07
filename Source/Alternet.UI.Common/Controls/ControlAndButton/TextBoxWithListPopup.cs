@@ -29,13 +29,13 @@ namespace Alternet.UI
         /// <summary>
         /// Occurs when the drop-down portion of the control is no longer visible.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? DropDownClosed;
 
         /// <summary>
         /// Occurs when the drop-down portion of the control is shown.
         /// </summary>
-        [Category("Behavior")]
+        [Category(KnownMemberCategory.Behavior)]
         public event EventHandler? DropDown;
 
         /// <summary>
@@ -57,6 +57,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected value
         /// </summary>
+        [Browsable(false)]
         public virtual object? SelectedItem
         {
             get
@@ -76,7 +77,6 @@ namespace Alternet.UI
         /// <see langword="true" /> if the drop-down portion is displayed;
         /// otherwise, <see langword="false" />. The default is false.</returns>
         [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public virtual bool DroppedDown
         {
             get
@@ -150,9 +150,23 @@ namespace Alternet.UI
         /// <summary>
         /// Gets simple items where item is <c>object</c>.
         /// It is mapped from <see cref="ListControlItem.Value"/> elements
-        /// of the <see cref="Items"/> collection.
+        /// of the <see cref="ListItems"/> collection.
         /// </summary>
+        [Browsable(false)]
         public virtual ListBoxItems SimpleItems
+        {
+            get
+            {
+                return ButtonCombo.SimpleItems;
+            }
+        }
+
+        /// <summary>
+        /// Gets simple items where item is <c>object</c>.
+        /// It is mapped from <see cref="ListControlItem.Value"/> elements
+        /// of the <see cref="ListItems"/> collection.
+        /// </summary>
+        public virtual ListBoxItems Items
         {
             get
             {
@@ -174,7 +188,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the collection of items used in the list box control within the popup window.
         /// </summary>
-        public virtual IListSource<ListControlItem> Items
+        public virtual IListSource<ListControlItem> ListItems
         {
             get
             {

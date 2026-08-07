@@ -17,7 +17,7 @@ namespace ControlsSample
             InitializeComponent();
 
             LoadDefaultItems(ownerDrawCheckBox.IsChecked);
-            comboBox.Text = comboBox.Items[1].Text;
+            comboBox.Text = comboBox.ListItems[1].Text;
             ignoreEvents = false;
 
             addItemButton.KeyDown += AddItemButton_KeyDown;
@@ -97,7 +97,7 @@ namespace ControlsSample
                 items.Add(new("Three"));
             }
 
-            comboBox.Items = items;
+            comboBox.ListItems = items;
         }
 
         private void ComboBoxPage_KeyDown(object? sender, KeyEventArgs e)
@@ -122,7 +122,7 @@ namespace ControlsSample
 
         private void SetSelectedIndexTo2_Click(object? sender, EventArgs e)
         {
-            comboBox.Text = comboBox.Items[2].Text;
+            comboBox.Text = comboBox.ListItems[2].Text;
         }
 
         private void SetTextToEmptyStringButton_Click(object? sender, EventArgs e)
@@ -135,7 +135,7 @@ namespace ControlsSample
             try
             {
                 for (int i = 0; i < 500; i++)
-                    comboBox.Items.Add(new("Item " + GenItemIndex()));
+                    comboBox.ListItems.Add(new("Item " + GenItemIndex()));
             }
             finally
             {
@@ -185,8 +185,8 @@ namespace ControlsSample
 
         private void RemoveItemButton_Click(object? sender, EventArgs e)
         {
-            if (comboBox.Items.Count > 0)
-                comboBox.Items.RemoveAt(comboBox.Items.Count - 1);
+            if (comboBox.ListItems.Count > 0)
+                comboBox.ListItems.RemoveAt(comboBox.ListItems.Count - 1);
         }
 
         private int GenItemIndex()
@@ -197,7 +197,7 @@ namespace ControlsSample
 
         private void AddItemButton_Click(object? sender, EventArgs e)
         {
-            comboBox.Items.Add(new("Item " + GenItemIndex()));
+            comboBox.ListItems.Add(new("Item " + GenItemIndex()));
         }
 
         private bool CheckComboBoxIsEditable()
@@ -233,7 +233,7 @@ namespace ControlsSample
 
         private void SetItem_Click(object? sender, System.EventArgs e)
         {
-            comboBox.Items[2].Text = "hello";
+            comboBox.ListItems[2].Text = "hello";
         }
 
         private void SetTextToAbcButton_Click(object? sender, System.EventArgs e)
