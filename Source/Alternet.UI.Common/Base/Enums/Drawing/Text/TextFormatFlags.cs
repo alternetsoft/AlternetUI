@@ -4,6 +4,33 @@ using System.Text;
 
 namespace Alternet.Drawing
 {
+    /*
+    Default Rules (TextFormatFlags.Default)
+    Alignment:
+        Left aligned horizontally.
+        Top aligned vertically.
+
+    Padding:
+        GlyphOverhangPadding is applied (extra space around text to account for overhanging glyphs).
+
+    Line behavior:
+        Single line by default (no wrapping).
+        No ellipsis trimming (EndEllipsis, WordEllipsis, PathEllipsis are off).
+
+    Tabs:
+        Tab characters are expanded (default = 8 spaces).
+
+    Mnemonics:
+        Ampersand (&) is treated as a mnemonic prefix (e.g., &File → “File” with F underlined).
+        Double ampersand (&&) renders a literal &.
+
+    Clipping:
+        Text is clipped to the bounding rectangle.
+
+    External leading:
+        Not included in line height unless you specify ExternalLeading.
+    */
+
     /// <summary>
     /// Specifies the display and layout information for text strings.
     /// </summary>
@@ -11,15 +38,64 @@ namespace Alternet.Drawing
     public enum TextFormatFlags
     {
         /// <summary>
+        /// Applies the default formatting, which is left-aligned.
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// Aligns the text on the left side of the clipping area.
+        /// </summary>
+#pragma warning disable
+        Left = 0,
+#pragma warning restore
+
+        /// <summary>
+        /// Aligns the text on the top of the bounding rectangle.
+        /// </summary>
+#pragma warning disable
+        Top = 0,
+#pragma warning restore
+
+        /// <summary>
+        /// Centers the text horizontally within the bounding rectangle.
+        /// </summary>
+        HorizontalCenter = 1,
+
+        /// <summary>
+        /// Aligns the text on the right side of the clipping area.
+        /// </summary>
+        Right = 2,
+
+        /// <summary>
+        /// Centers the text vertically, within the bounding rectangle.
+        /// </summary>
+        VerticalCenter = 4,
+
+        /// <summary>
         /// Aligns the text on the bottom of the bounding rectangle. Applied only
         /// when the text is a single line.
         /// </summary>
         Bottom = 8,
 
         /// <summary>
-        /// Removes the end of trimmed lines, and replaces them with an ellipsis.
+        /// Trims the line to the nearest word and an ellipsis is placed at the end
+        /// of a trimmed line.
         /// </summary>
-        EndEllipsis = 0x8000,
+        WordEllipsis = 0x40000,
+
+        /*
+                /// <summary>
+                /// Removes the end of trimmed lines, and replaces them with an ellipsis.
+                /// </summary>
+                EndEllipsis = 0x8000,
+        */
+
+        /*
+                /// <summary>
+                /// Removes the center of trimmed lines and replaces it with an ellipsis.
+                /// </summary>
+                PathEllipsis = 0x4000,
+        */
 
         /*
                 /// <summary>
@@ -38,20 +114,12 @@ namespace Alternet.Drawing
                 ExternalLeading = 0x200,
         */
 
-        /// <summary>
-        /// Applies the default formatting, which is left-aligned.
-        /// </summary>
-        Default = 0,
-
-        /// <summary>
-        /// Applies to Windows 2000 and Windows XP only.
-        /// </summary>
-        HidePrefix = 0x100000,
-
-        /// <summary>
-        /// Centers the text horizontally within the bounding rectangle.
-        /// </summary>
-        HorizontalCenter = 1,
+        /*
+                /// <summary>
+                /// Applies to Windows 2000 and Windows XP only.
+                /// </summary>
+                HidePrefix = 0x100000,
+        */
 
         /*
                 /// <summary>
@@ -59,13 +127,6 @@ namespace Alternet.Drawing
                 /// </summary>
                 Internal = 0x1000,
         */
-
-        /// <summary>
-        /// Aligns the text on the left side of the clipping area.
-        /// </summary>
-#pragma warning disable
-        Left = 0,
-#pragma warning restore
 
         /*
                 /// <summary>
@@ -104,21 +165,10 @@ namespace Alternet.Drawing
 
         /*
                 /// <summary>
-                /// Removes the center of trimmed lines and replaces it with an ellipsis.
-                /// </summary>
-                PathEllipsis = 0x4000,
-        */
-
-        /*
-                /// <summary>
                 /// Applies to Windows 2000 or Windows XP only.
                 /// </summary>
                 PrefixOnly = 0x200000,
         */
-        /// <summary>
-        /// Aligns the text on the right side of the clipping area.
-        /// </summary>
-        Right = 2,
 
         /*
                 /// <summary>
@@ -127,10 +177,12 @@ namespace Alternet.Drawing
                 RightToLeft = 0x20000,
         */
 
-        /// <summary>
-        /// Displays the text in a single line.
-        /// </summary>
-        SingleLine = 0x20,
+        /*
+                /// <summary>
+                /// Displays the text in a single line.
+                /// </summary>
+                SingleLine = 0x20,
+        */
 
         /*
                 /// <summary>
@@ -139,30 +191,12 @@ namespace Alternet.Drawing
                 TextBoxControl = 0x2000,
         */
 
-        /// <summary>
-        /// Aligns the text on the top of the bounding rectangle.
-        /// </summary>
-#pragma warning disable
-        Top = 0,
-#pragma warning restore
-
-        /// <summary>
-        /// Centers the text vertically, within the bounding rectangle.
-        /// </summary>
-        VerticalCenter = 4,
-
         /*
                 /// <summary>
                 /// Breaks the text at the end of a word.
                 /// </summary>
                 WordBreak = 0x10,
         */
-
-        /// <summary>
-        /// Trims the line to the nearest word and an ellipsis is placed at the end
-        /// of a trimmed line.
-        /// </summary>
-        WordEllipsis = 0x40000,
 
         /*
                 /// <summary>

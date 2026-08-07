@@ -77,15 +77,6 @@ public class DrawToolTipEventArgs : BaseEventArgs
     }
 
     /// <summary>
-    /// Draws the text with the default settings.
-    /// </summary>
-    public virtual void DrawText()
-    {
-        DrawText(TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter
-            | TextFormatFlags.SingleLine | TextFormatFlags.HidePrefix);
-    }
-
-    /// <summary>
     /// Draws the text using the specified text format flags.
     /// </summary>
     public virtual void DrawText(TextFormatFlags flags)
