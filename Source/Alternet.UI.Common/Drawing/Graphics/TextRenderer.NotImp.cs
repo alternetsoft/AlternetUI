@@ -9,13 +9,15 @@ namespace Alternet.Drawing
     public static partial class TextRenderer
     {
         /// <summary>Provides the size, in dips, of the specified text when drawn with the
-        /// specified font, using the specified size to create an initial bounding rectangle.</summary>
+        /// specified font in the specified device context, using the specified size to create
+        /// an initial bounding rectangle for the text.</summary>
+        /// <param name="dc">The device context in which to measure the text.</param>
         /// <param name="text">The text to measure.</param>
         /// <param name="font">The <see cref="Font" /> to apply to the measured text.</param>
         /// <param name="proposedSize">The <see cref="SizeD" /> of the initial bounding rectangle.</param>
-        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn with
-        /// the specified <paramref name="font" />.</returns>
-        public static SizeD MeasureText(string text, Font? font, SizeD proposedSize)
+        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" />
+        /// drawn with the specified <paramref name="font" />.</returns>
+        public static SizeD MeasureText(Graphics dc, ReadOnlySpan<char> text, Font? font, SizeD proposedSize)
         {
             /*
             int.MaxValue can be specified in the proposedSize parameter to indicate that there
@@ -26,43 +28,9 @@ namespace Alternet.Drawing
             Height (proposedSize.Height): maximum height allowed; text may be clipped if it exceeds this.
             */
 
-            font ??= Control.DefaultFont;
-            if (handler != null)
-                return handler.MeasureText(text, font, proposedSize);
-            throw new NotImplementedException();
-        }
-
-        /// <summary>Provides the size, in dips, of the specified text when drawn with the
-        /// specified font in the specified device context, using the specified size to create
-        /// an initial bounding rectangle for the text.</summary>
-        /// <param name="dc">The device context in which to measure the text.</param>
-        /// <param name="text">The text to measure.</param>
-        /// <param name="font">The <see cref="Font" /> to apply to the measured text.</param>
-        /// <param name="proposedSize">The <see cref="SizeD" /> of the initial bounding rectangle.</param>
-        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" />
-        /// drawn with the specified <paramref name="font" />.</returns>
-        public static SizeD MeasureText(Graphics dc, string text, Font? font, SizeD proposedSize)
-        {
-            font ??= Control.DefaultFont;
+            BeforeMeasureText(dc, ref font);
             if (handler != null)
                 return handler.MeasureText(dc, text, font, proposedSize);
-            throw new NotImplementedException();
-        }
-
-        /// <summary>Provides the size, in dips, of the specified text when drawn with the specified
-        /// font and formatting instructions, using the specified size to create the initial
-        /// bounding rectangle for the text.</summary>
-        /// <param name="text">The text to measure.</param>
-        /// <param name="font">The <see cref="Font" /> to apply to the measured text.</param>
-        /// <param name="proposedSize">The <see cref="SizeD" /> of the initial bounding rectangle.</param>
-        /// <param name="flags">The formatting instructions to apply to the measured text.</param>
-        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn
-        /// with the specified <paramref name="font" /> and format.</returns>
-        public static SizeD MeasureText(string text, Font? font, SizeD proposedSize, TextFormatFlags flags)
-        {
-            font ??= Control.DefaultFont;
-            if (handler != null)
-                return handler.MeasureText(text, font, proposedSize, flags);
             throw new NotImplementedException();
         }
 
@@ -78,12 +46,12 @@ namespace Alternet.Drawing
         /// with the specified <paramref name="font" /> and format.</returns>
         public static SizeD MeasureText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font? font,
             SizeD proposedSize,
             TextFormatFlags flags)
         {
-            font ??= Control.DefaultFont;
+            BeforeMeasureText(dc, ref font);
             if (handler != null)
                 return handler.MeasureText(dc, text, font, proposedSize, flags);
             throw new NotImplementedException();
@@ -103,14 +71,14 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         public static void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font? font,
             PointD pt,
             Color foreColor,
             Color backColor,
             TextFormatFlags flags)
         {
-            font ??= Control.DefaultFont;
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, pt, foreColor, backColor, flags);
             else
@@ -129,15 +97,14 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         public static void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font? font,
             RectD bounds,
             Color foreColor,
             Color backColor,
             TextFormatFlags flags)
         {
-            font ??= Control.DefaultFont;
-
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, bounds, foreColor, backColor, flags);
             else

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Text;
 
@@ -19,15 +20,6 @@ namespace Alternet.Drawing
         private static ITextRendererHandler? handler;
 
         /// <summary>
-        /// Gets or sets the <see cref="ITextRendererHandler" /> that is used to measure and render text.
-        /// </summary>
-        public static ITextRendererHandler? Handler
-        {
-            get => handler;
-            set => handler = value;
-        }
-
-        /// <summary>
         /// Gets measurement graphics object. This object is used to measure text size.
         /// </summary>
         public static Graphics Measure
@@ -37,6 +29,30 @@ namespace Alternet.Drawing
                 Graphics.RequireMeasure(ref measure, new(Display.MaxScaleFactor));
                 return measure;
             }
+
+            set
+            {
+                measure = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="ITextRendererHandler" /> that is used to measure and render text.
+        /// </summary>
+        public static ITextRendererHandler? Handler
+        {
+            get => handler;
+            set => handler = value;
+        }
+
+        /// <summary>
+        /// This method is used to update scale factor of the measurement graphics object
+        /// when the application scale factor is changed.
+        /// </summary>
+        /// <param name="scaleFactor">The new scale factor.</param>
+        public static void SetMeasureScaleFactor(float scaleFactor)
+        {
+            Graphics.RequireMeasure(ref measure, new(scaleFactor));
         }
 
         /// <summary>
@@ -67,6 +83,16 @@ namespace Alternet.Drawing
             return TextHorizontalAlignment.Left;
         }
 
+        private static void BeforeDrawText(Graphics graphics, [NotNull] ref Font? font)
+        {
+            font ??= Control.DefaultFont;
+        }
+
+        private static void BeforeMeasureText(Graphics graphics, [NotNull] ref Font? font)
+        {
+            font ??= Control.DefaultFont;
+        }
+
         /// <summary>
         /// Draws the specified text at the specified location using the specified device context,
         /// font, and color.
@@ -77,40 +103,13 @@ namespace Alternet.Drawing
         /// <param name="pt">The <see cref="PointD" /> that represents the upper-left corner
         /// of the drawn text.</param>
         /// <param name="foreColor">The <see cref="Color" /> to apply to the drawn text.</param>
-        public static void DrawText(Graphics dc, string text, Font? font, PointD pt, Color foreColor)
+        public static void DrawText(Graphics dc, ReadOnlySpan<char> text, Font? font, PointD pt, Color foreColor)
         {
-            font ??= Control.DefaultFont;
-
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, pt, foreColor);
             else
                 dc.DrawText(text, pt, font, foreColor, Color.Empty);
-        }
-
-        /// <summary>Provides the size, in dips, of the specified text when drawn with
-        /// the specified font.</summary>
-        /// <param name="text">The text to measure.</param>
-        /// <param name="font">The <see cref="Font" /> to apply to the measured text.</param>
-        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn
-        /// on a single line with the specified <paramref name="font" />. You can manipulate
-        /// how the text is drawn by using one of the
-        /// <see cref="TextRenderer.DrawText(Graphics,string,Font,RectD,Color,TextFormatFlags)" />
-        /// overloads that takes a <see cref="TextFormatFlags" /> parameter.
-        /// For example, the default behavior of the <see cref="TextRenderer" /> is to
-        /// add padding to the bounding rectangle of the drawn text to accommodate overhanging glyphs.
-        /// If you need to draw a line of text without these extra spaces you should use the versions
-        /// of <see cref="TextRenderer.DrawText(Graphics,string,Font,PointD,Color)" /> and
-        /// <see cref="TextRenderer.MeasureText(Graphics,string,Font)" /> that take
-        /// a <see cref="SizeD" /> and <see cref="TextFormatFlags" /> parameter. For an example,
-        /// see <see cref="TextRenderer.MeasureText(Graphics,string,Font,SizeD,TextFormatFlags)" />.
-        /// </returns>
-        public static SizeD MeasureText(string text, Font? font)
-        {
-            font ??= Control.DefaultFont;
-
-            if (handler != null)
-                return handler.MeasureText(text, font);
-            return Measure.MeasureText(text, font);
         }
 
         /// <summary>Draws the specified text at the specified location, using the specified
@@ -125,13 +124,13 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         public static void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font? font,
             PointD pt,
             Color foreColor,
             Color backColor)
         {
-            font ??= Control.DefaultFont;
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, pt, foreColor, backColor);
             else
@@ -145,9 +144,9 @@ namespace Alternet.Drawing
         /// <param name="font">The <see cref="Font" /> to apply to the drawn text.</param>
         /// <param name="bounds">The <see cref="RectD" /> that represents the bounds of the text.</param>
         /// <param name="foreColor">The <see cref="Color" /> to apply to the drawn text.</param>
-        public static void DrawText(Graphics dc, string text, Font? font, RectD bounds, Color foreColor)
+        public static void DrawText(Graphics dc, ReadOnlySpan<char> text, Font? font, RectD bounds, Color foreColor)
         {
-            font ??= Control.DefaultFont;
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, bounds, foreColor);
             else
@@ -165,13 +164,13 @@ namespace Alternet.Drawing
         /// by <paramref name="bounds" />.</param>
         public static void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font? font,
             RectD bounds,
             Color foreColor,
             Color backColor)
         {
-            font ??= Control.DefaultFont;
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, bounds, foreColor, backColor);
             else
@@ -186,9 +185,9 @@ namespace Alternet.Drawing
         /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn
         /// in a single line with the specified <paramref name="font" /> in the specified
         /// device context.</returns>
-        public static SizeD MeasureText(Graphics dc, string text, Font? font)
+        public static SizeD MeasureText(Graphics dc, ReadOnlySpan<char> text, Font? font)
         {
-            font ??= Control.DefaultFont;
+            BeforeMeasureText(dc, ref font);
             if (handler != null)
                 return handler.MeasureText(dc, text, font);
             return dc.MeasureText(text, font);
@@ -205,13 +204,13 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         public static void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font? font,
             PointD pt,
             Color foreColor,
             TextFormatFlags flags)
         {
-            font ??= Control.DefaultFont;
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, pt, foreColor, flags);
             else
@@ -228,13 +227,13 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         public static void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font? font,
             RectD bounds,
             Color foreColor,
             TextFormatFlags flags)
         {
-            font ??= Control.DefaultFont;
+            BeforeDrawText(dc, ref font);
             if (handler != null)
                 handler.DrawText(dc, text, font, bounds, foreColor, flags);
             else

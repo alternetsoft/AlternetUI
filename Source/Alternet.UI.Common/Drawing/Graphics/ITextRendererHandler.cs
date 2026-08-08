@@ -19,26 +19,7 @@ namespace Alternet.Drawing
         /// <param name="pt">The <see cref="PointD" /> that represents the upper-left corner
         /// of the drawn text.</param>
         /// <param name="foreColor">The <see cref="Color" /> to apply to the drawn text.</param>
-        void DrawText(Graphics dc, string text, Font font, PointD pt, Color foreColor);
-
-        /// <summary>Provides the size, in dips, of the specified text when drawn with
-        /// the specified font.</summary>
-        /// <param name="text">The text to measure.</param>
-        /// <param name="font">The <see cref="Font" /> to apply to the measured text.</param>
-        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn
-        /// on a single line with the specified <paramref name="font" />. You can manipulate
-        /// how the text is drawn by using one of the
-        /// <see cref="TextRenderer.DrawText(Graphics,string,Font,RectD,Color,TextFormatFlags)" />
-        /// overloads that takes a <see cref="TextFormatFlags" /> parameter.
-        /// For example, the default behavior of the <see cref="TextRenderer" /> is to
-        /// add padding to the bounding rectangle of the drawn text to accommodate overhanging glyphs.
-        /// If you need to draw a line of text without these extra spaces you should use the versions
-        /// of <see cref="TextRenderer.DrawText(Graphics,string,Font,PointD,Color)" /> and
-        /// <see cref="TextRenderer.MeasureText(Graphics,string,Font)" /> that take
-        /// a <see cref="SizeD" /> and <see cref="TextFormatFlags" /> parameter. For an example,
-        /// see <see cref="TextRenderer.MeasureText(Graphics,string,Font,SizeD,TextFormatFlags)" />.
-        /// </returns>
-        SizeD MeasureText(string text, Font font);
+        void DrawText(Graphics dc, ReadOnlySpan<char> text, Font font, PointD pt, Color foreColor);
 
         /// <summary>Draws the specified text at the specified location, using the specified
         /// device context, font, color, and back color.</summary>
@@ -52,7 +33,7 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             PointD pt,
             Color foreColor,
@@ -65,7 +46,7 @@ namespace Alternet.Drawing
         /// <param name="font">The <see cref="Font" /> to apply to the drawn text.</param>
         /// <param name="bounds">The <see cref="RectD" /> that represents the bounds of the text.</param>
         /// <param name="foreColor">The <see cref="Color" /> to apply to the drawn text.</param>
-        void DrawText(Graphics dc, string text, Font font, RectD bounds, Color foreColor);
+        void DrawText(Graphics dc, ReadOnlySpan<char> text, Font font, RectD bounds, Color foreColor);
 
         /// <summary>Draws the specified text within the specified bounds using the
         /// specified device context, font, color, and back color.</summary>
@@ -78,20 +59,11 @@ namespace Alternet.Drawing
         /// by <paramref name="bounds" />.</param>
         void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             RectD bounds,
             Color foreColor,
             Color backColor);
-
-        /// <summary>Provides the size, in dips, of the specified text when drawn with the
-        /// specified font, using the specified size to create an initial bounding rectangle.</summary>
-        /// <param name="text">The text to measure.</param>
-        /// <param name="font">The <see cref="Font" /> to apply to the measured text.</param>
-        /// <param name="proposedSize">The <see cref="SizeD" /> of the initial bounding rectangle.</param>
-        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn with
-        /// the specified <paramref name="font" />.</returns>
-        SizeD MeasureText(string text, Font font, SizeD proposedSize);
 
         /// <summary>Provides the size, in dips, of the specified text drawn with the
         /// specified font in the specified device context.</summary>
@@ -101,7 +73,7 @@ namespace Alternet.Drawing
         /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn
         /// in a single line with the specified <paramref name="font" /> in the specified
         /// device context.</returns>
-        SizeD MeasureText(Graphics dc, string text, Font font);
+        SizeD MeasureText(Graphics dc, ReadOnlySpan<char> text, Font font);
 
         /// <summary>Provides the size, in dips, of the specified text when drawn with the
         /// specified font in the specified device context, using the specified size to create
@@ -112,18 +84,7 @@ namespace Alternet.Drawing
         /// <param name="proposedSize">The <see cref="SizeD" /> of the initial bounding rectangle.</param>
         /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" />
         /// drawn with the specified <paramref name="font" />.</returns>
-        SizeD MeasureText(Graphics dc, string text, Font font, SizeD proposedSize);
-
-        /// <summary>Provides the size, in dips, of the specified text when drawn with the specified
-        /// font and formatting instructions, using the specified size to create the initial
-        /// bounding rectangle for the text.</summary>
-        /// <param name="text">The text to measure.</param>
-        /// <param name="font">The <see cref="Font" /> to apply to the measured text.</param>
-        /// <param name="proposedSize">The <see cref="SizeD" /> of the initial bounding rectangle.</param>
-        /// <param name="flags">The formatting instructions to apply to the measured text.</param>
-        /// <returns>The <see cref="SizeD" />, in dips, of <paramref name="text" /> drawn
-        /// with the specified <paramref name="font" /> and format.</returns>
-        SizeD MeasureText(string text, Font font, SizeD proposedSize, TextFormatFlags flags);
+        SizeD MeasureText(Graphics dc, ReadOnlySpan<char> text, Font font, SizeD proposedSize);
 
         /// <summary>Provides the size, in dips, of the specified text when drawn with
         /// the specified device context, font, and formatting instructions, using the specified
@@ -137,7 +98,7 @@ namespace Alternet.Drawing
         /// with the specified <paramref name="font" /> and format.</returns>
         SizeD MeasureText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             SizeD proposedSize,
             TextFormatFlags flags);
@@ -153,7 +114,7 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             PointD pt,
             Color foreColor,
@@ -173,7 +134,7 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             PointD pt,
             Color foreColor,
@@ -190,7 +151,7 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             RectD bounds,
             Color foreColor,
@@ -208,7 +169,7 @@ namespace Alternet.Drawing
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         void DrawText(
             Graphics dc,
-            string text,
+            ReadOnlySpan<char> text,
             Font font,
             RectD bounds,
             Color foreColor,
