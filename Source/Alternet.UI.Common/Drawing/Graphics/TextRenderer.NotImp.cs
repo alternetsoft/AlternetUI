@@ -29,7 +29,8 @@ namespace Alternet.Drawing
         /// <param name="bounds">The <see cref="RectD" /> that represents the bounds of the text.</param>
         /// <param name="foreColor">The <see cref="Color" /> to apply to the text.</param>
         /// <param name="backColor">The <see cref="Color" /> to apply to the area represented
-        /// by <paramref name="bounds" />.</param>
+        /// by <paramref name="bounds" />. If <paramref name="backColor" /> is <see langword="null" />,
+        /// the background is not filled.</param>
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         public static void DrawText(
             Graphics dc,
@@ -37,13 +38,13 @@ namespace Alternet.Drawing
             Font? font,
             RectD bounds,
             Color foreColor,
-            Color backColor,
+            Color? backColor,
             TextFormatFlags flags)
         {
             BeforeDrawText(dc, ref font);
             if (handler != null)
             {
-                handler.DrawText(dc, text, font, bounds, foreColor, backColor, flags);
+                handler.DrawText(dc, text, font, bounds, foreColor, backColor ?? Color.Empty, flags);
             }
 
             TextFormat.Record record = AsTextFormat(flags);

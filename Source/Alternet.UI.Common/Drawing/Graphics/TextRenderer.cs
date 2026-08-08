@@ -214,7 +214,7 @@ namespace Alternet.Drawing
             if (handler != null)
                 handler.DrawText(dc, text, font, pt, foreColor, flags);
             else
-                DrawText(dc, text, font, pt, foreColor, Color.Transparent, flags);
+                DrawText(dc, text, font, pt, foreColor, null, flags);
         }
 
         /// <summary>Draws the specified text within the specified bounds using the
@@ -237,7 +237,7 @@ namespace Alternet.Drawing
             if (handler != null)
                 handler.DrawText(dc, text, font, bounds, foreColor, flags);
             else
-                DrawText(dc, text, font, bounds, foreColor, Color.Transparent, flags);
+                DrawText(dc, text, font, bounds, foreColor, null, flags);
         }
 
         /// <summary>Provides the size, in dips, of the specified text when drawn with the
@@ -273,7 +273,7 @@ namespace Alternet.Drawing
         /// of the drawn text.</param>
         /// <param name="foreColor">The <see cref="Color" /> to apply to the text.</param>
         /// <param name="backColor">The <see cref="Color" /> to apply to the background area
-        /// of the drawn text. If <paramref name="backColor" /> is <see cref="Color.Transparent" />,
+        /// of the drawn text. If <paramref name="backColor" /> is <see langword="null" />,
         /// the background is not filled.</param>
         /// <param name="flags">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
         public static void DrawText(
@@ -282,7 +282,7 @@ namespace Alternet.Drawing
             Font? font,
             PointD pt,
             Color foreColor,
-            Color backColor,
+            Color? backColor,
             TextFormatFlags flags)
         {
             DrawText(
