@@ -299,7 +299,7 @@ namespace Alternet.Drawing
         public virtual RectD DrawText(
             ReadOnlySpan<char> text,
             Font font,
-            Brush brush,
+            Brush? brush,
             RectD rect,
             in TextFormat.Record format)
         {
@@ -309,10 +309,10 @@ namespace Alternet.Drawing
             var document = SafeDocument;
             var wrappedText = document.WrappedText;
 
-            if (rect.HasEmptyWidth)
+            if (rect.HasEmptyWidth || rect.Width == int.MaxValue || rect.Size.IsNanWidth)
                 rect.Width = MaxCoord;
 
-            if (rect.HasEmptyHeight)
+            if (rect.HasEmptyHeight || rect.Height == int.MaxValue || rect.Size.IsNanHeight)
                 rect.Height = MaxCoord;
 
             wrappedText.SuspendLayout();
@@ -323,16 +323,24 @@ namespace Alternet.Drawing
                 wrappedText.Text = string.Empty;
                 wrappedText.Text = text.ToString();
                 wrappedText.Font = font;
-                wrappedText.ForegroundColor = brush.AsColor;
+                wrappedText.ForegroundColor = brush?.AsColor;
             }
             finally
             {
                 wrappedText.ResumeLayout(true, true);
             }
 
-            TemplateUtils.RaisePaintClipped(wrappedText, this, rect.Location, isClipped: true);
-            var result = wrappedText.Bounds.WithLocation(rect.Location);
-            return result;
+            if (brush is null)
+            {
+                var result = wrappedText.MeasureText(wrappedText.MeasureCanvas, font, rect.Size);
+                return new(rect.Location, result);
+            }
+            else
+            {
+                TemplateUtils.RaisePaintClipped(wrappedText, this, rect.Location, isClipped: true);
+                var result = wrappedText.Bounds.WithLocation(rect.Location);
+                return result;
+            }
         }
 
         /// <summary>
