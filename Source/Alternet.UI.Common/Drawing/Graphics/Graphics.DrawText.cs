@@ -267,12 +267,41 @@ namespace Alternet.Drawing
         /// <remarks>
         /// You can pass 0 as height of the <paramref name="rect"/>.
         /// </remarks>
-        public virtual RectD DrawText(
+        public RectD DrawText(
             ReadOnlySpan<char> text,
             Font font,
             Brush brush,
             RectD rect,
             TextFormat format)
+        {
+            return DrawText(text, font, brush, rect, format.AsRecord);
+        }
+
+        /// <summary>
+        /// Draws the text string at the specified location with
+        /// <see cref="Brush"/> and <see cref="Font"/> objects.
+        /// </summary>
+        /// <param name="text">String to draw.</param>
+        /// <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
+        /// <param name="brush"><see cref="Brush"/> that determines the color and texture of
+        /// the drawn text.</param>
+        /// <param name="rect"><see cref="RectD"/> structure that specifies the bounds
+        /// of the text.</param>
+        /// <param name="format"><see cref="TextFormat"/> that specifies formatting attributes,
+        /// such as alignment and trimming, that are applied to the drawn text.</param>
+        /// <remarks>
+        /// You can pass 0 as width of the <paramref name="rect"/>. In this case wrapping
+        /// will not be performed, only line breaks will be applied.
+        /// </remarks>
+        /// <remarks>
+        /// You can pass 0 as height of the <paramref name="rect"/>.
+        /// </remarks>
+        public virtual RectD DrawText(
+            ReadOnlySpan<char> text,
+            Font font,
+            Brush brush,
+            RectD rect,
+            in TextFormat.Record format)
         {
             if (text.IsEmpty)
                 return rect.WithEmptySize();
@@ -290,7 +319,7 @@ namespace Alternet.Drawing
             try
             {
                 document.Size = rect.Size;
-                wrappedText.SetFormat(format.AsRecord);
+                wrappedText.SetFormat(in format);
                 wrappedText.Text = string.Empty;
                 wrappedText.Text = text.ToString();
                 wrappedText.Font = font;
@@ -326,21 +355,28 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws multiple lines of text, each with individual font style segments, at the specified location and
+        /// Draws multiple lines of text, each with individual font style segments,
+        /// at the specified location and
         /// returns the size of each rendered line.
         /// </summary>
         /// <remarks>The method draws each line sequentially, offsetting the Y-coordinate by the height of
-        /// the previous line plus the specified line distance. Each text segment within a line can have its own font
+        /// the previous line plus the specified line distance. Each text segment
+        /// within a line can have its own font
         /// style, but the base font is used when no style is specified.</remarks>
-        /// <param name="text">An array of text lines, where each line is represented as an array of text segments with associated font
+        /// <param name="text">An array of text lines, where each line is represented
+        /// as an array of text segments with associated font
         /// styles to be drawn.</param>
-        /// <param name="lineDistance">The vertical distance, in device-independent units, to apply between each line of text.</param>
+        /// <param name="lineDistance">The vertical distance, in device-independent units,
+        /// to apply between each line of text.</param>
         /// <param name="location">The starting location, in device-independent coordinates,
         /// where the first line of text will be drawn.</param>
-        /// <param name="font">The base font to use for rendering text segments that do not specify an explicit font style.</param>
+        /// <param name="font">The base font to use for rendering text segments that
+        /// do not specify an explicit font style.</param>
         /// <param name="foreColor">The color to use for the text foreground.</param>
-        /// <param name="backColor">The background color to use behind the text. If null, no background is drawn.</param>
-        /// <returns>An array of SizeD values representing the width and height of each rendered text line, in the same order as
+        /// <param name="backColor">The background color to use behind the text.
+        /// If null, no background is drawn.</param>
+        /// <returns>An array of SizeD values representing the width and height
+        /// of each rendered text line, in the same order as
         /// the input lines.</returns>
         public virtual SizeD[] DrawTextLinesWithFontStyle(
             TextAndFontStyle[][] text,

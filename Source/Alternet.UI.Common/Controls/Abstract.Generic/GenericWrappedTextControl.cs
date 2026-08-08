@@ -140,15 +140,15 @@ namespace Alternet.UI
         /// <summary>
         /// Sets text formatting record.
         /// </summary>
-        public virtual void SetFormat(TextFormat.Record value)
+        public virtual void SetFormat(in TextFormat.Record value)
         {
             textFormat = value;
             PerformLayoutAndInvalidate(() =>
             {
-                MaxHeight = value.MaxHeight;
-                MaxWidth = value.MaxWidth;
-                SetSuggestedSize(value.SuggestedWidth, value.SuggestedHeight);
-                Padding = value.Padding;
+                MaxHeight = textFormat.MaxHeight;
+                MaxWidth = textFormat.MaxWidth;
+                SetSuggestedSize(textFormat.SuggestedWidth, textFormat.SuggestedHeight);
+                Padding = textFormat.Padding;
             });
         }
 
