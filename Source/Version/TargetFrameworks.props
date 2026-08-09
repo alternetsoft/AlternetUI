@@ -5,12 +5,17 @@
 
 <PropertyGroup>
   <OSARCH>$([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture)</OSARCH>
+
   <IsLinuxX64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == X64">true</IsLinuxX64>
+  <IsLinux Condition="$([MSBuild]::IsOsPlatform('Linux'))">true</IsLinux>
+  <IsLinuxArm64 Condition="$([MSBuild]::IsOsPlatform('Linux')) And $(OSARCH) == Arm64">true</IsLinuxArm64>
+
   <IsOsx Condition="$([MSBuild]::IsOsPlatform('OSX'))">true</IsOsx>
   <IsOsxArm64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == Arm64">true</IsOsxArm64>
-  <IsLinux Condition="$([MSBuild]::IsOsPlatform('Linux'))">true</IsLinux>
   <IsOsxX64 Condition="$([MSBuild]::IsOsPlatform('OSX')) And $(OSARCH) == X64">true</IsOsxX64>
+
   <IsWindowsX64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == X64">true</IsWindowsX64>
+  <IsWindowsArm64 Condition="$([MSBuild]::IsOsPlatform('Windows')) And $(OSARCH) == Arm64">true</IsWindowsArm64>
   <IsWindows Condition="$([MSBuild]::IsOsPlatform('Windows'))">true</IsWindows>
 </PropertyGroup>
 
