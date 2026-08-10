@@ -1,3 +1,23 @@
+# 1.1.5 (2026 August 10)
+
+- TextRenderer: Use ReadOnlySpan{char} for text.
+- Graphics.ClipBounds.
+- HatchBrush: Add constructor with HatchStyle param to make it more compatible with WinForms.
+- HatchBrush: Add new constructors with background color parameter.
+- Reorder elements in BrushHatchStyle to make it compatible with WinForms and HatchStyle enum.
+- Implement XScrollBar. This control is implemented inside the library and doesn't use native control.
+- Move inner ScrollBar classes to root level.
+- Use PaintEventHandler for compatibility with legacy code
+- IDataObject: GetDataPresent and GetData overloads
+- DragEventArgs: Add X, Y, OriginalTarget, MouseScreenLocation.
+- AbstractControl: Enter and Leave events
+- LinearGradientBrush: SetSigmaBellShape, SetBlendTriangularShap, LinearColors.
+- ColorUtils.BlendColor.
+- GradientBrush: StartColor, EndColor, OrderedGradientStops.
+- GradientBrush: Implement matrix transformations.
+
+---
+
 # 1.1.4 (2026 August 1)
 
 - Graphics: Add Save and Restore which use GraphicsState.
@@ -7,7 +27,7 @@
 - Graphics: RotateTransform, ScaleTransform, TranslateTransform.
 - TransformMatrix: Add TransformMatrix(Matrix3x2 matrix) constructor.
 - TransformMatrix: Add explicit conversion to/from Matrix3x2.
-- TransformMatrix: Add operators (+, -, *).
+- TransformMatrix: Add operators ( +, -, * ).
 - Add Graphics.DrawArc and GraphicsPath.AddArc overloads.
 - Add static MouseButtons property in AbstractControl and Mouse.
 - AbstractControl.FontHeight.
