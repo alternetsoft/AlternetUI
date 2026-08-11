@@ -49,6 +49,16 @@ namespace Alternet.Drawing
 
             TextFormat.Record record = AsTextFormat(flags);
 
+            if (bounds.Width != int.MaxValue)
+            {
+                record.SuggestedWidth = bounds.Width;
+            }
+
+            if (bounds.Height != int.MaxValue)
+            {
+                record.SuggestedHeight = bounds.Height;
+            }
+
             // !! backColor
 
             var result = dc.DrawText(text, font, foreColor.AsBrush, bounds, record);
