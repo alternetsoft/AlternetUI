@@ -423,16 +423,18 @@ namespace Alternet.Drawing
             Coord startAngle,
             Coord sweepAngle)
         {
-            DebugPenAssert(pen);
             var rect = RectD.GetCircleBoundingBox(center, radius);
-            canvas.DrawArc(rect, startAngle, sweepAngle, useCenter: true, pen);
+            DrawArc(pen, rect, startAngle, sweepAngle);
         }
 
         /// <inheritdoc/>
         public override void DrawArc(Pen pen, RectD rect, float startAngle, float sweepAngle)
         {
             DebugPenAssert(pen);
-            canvas.DrawArc(rect, startAngle, sweepAngle, useCenter: true, pen);
+
+            using var path = new SKPath();
+            path.AddArc(rect, startAngle, sweepAngle);
+            canvas.DrawPath(path, pen);
         }
 
         /// <inheritdoc/>
