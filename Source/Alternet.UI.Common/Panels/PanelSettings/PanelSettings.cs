@@ -625,10 +625,26 @@ namespace Alternet.UI
                 = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(sender, item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
             UpdateText(sender, item, result.Label);
-            result.MainControl.HasBtnComboBox = false;
-            result.MainControl.Buttons.Visible = false;
 
             var colorEditor = result.MainControl;
+
+            colorEditor.HasBtnComboBox = false;
+            colorEditor.Buttons.Visible = false;
+
+            var args = item.CreateArg;
+            var hasEmptyColor = args is not null && args.CustomFlags["HasEmptyColor"];
+            var hasTransparentColor = args is not null && args.CustomFlags["HasTransparentColor"];
+
+            if (hasEmptyColor)
+            {
+                colorEditor.MainControl.ListBox.AddEmptyColor();
+            }
+
+            if (hasTransparentColor)
+            {
+                colorEditor.MainControl.ListBox.AddTransparentColor();
+            }
+
             colorEditor.ButtonClick -= ButtonClick;
             colorEditor.ButtonClick += ButtonClick;
 

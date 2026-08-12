@@ -27,6 +27,11 @@ namespace Alternet.UI.Localization
         public string TransparentColorDisplayName { get; set; } = "Transparent";
 
         /// <summary>
+        /// Gets or sets display name for the empty color.
+        /// </summary>
+        public string EmptyColorDisplayName { get; set; } = "Empty";
+
+        /// <summary>
         /// Gets or sets font display name for the default font.
         /// </summary>
         public string DefaultFontDisplayName { get; set; } = "Default";

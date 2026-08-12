@@ -53,44 +53,39 @@ namespace DrawingSample
         {
             DataContext = page;
 
-            if (DebugUtils.IsDebugDefined)
+            AddProperty(
+                page.textFormat,
+                nameof(TextFormat.PaddingTop));
+
+            AddProperty(
+                page.textFormat,
+                nameof(TextFormat.PaddingBottom));
+
+            AddProperty(
+                page.textFormat,
+                nameof(TextFormat.PaddingLeft));
+
+            AddProperty(
+                page.textFormat,
+                nameof(TextFormat.PaddingRight));
+
+            AddProperty(
+                page.textFormat,
+                nameof(TextFormat.Distance));
+
+            var colorArgs = new CustomEventArgs();
+            colorArgs.CustomFlags["HasEmptyColor"] = true;
+            colorArgs.CustomFlags["HasTransparentColor"] = true;
+
+            AddProperty(
+                page.textFormat,
+                nameof(TextFormat.BackColor),
+                null,
+                colorArgs);
+
+            PanelSettingsItem AddProperty(object obj, string name, string? label = null, CustomEventArgs? e = null)
             {
-                /*
-                AddProperty(
-                    page.wrappedControl,
-                    nameof(AbstractControl.HorizontalAlignment),
-                    "Block Horz");
-
-                AddProperty(
-                    page.wrappedControl,
-                    nameof(AbstractControl.VerticalAlignment),
-                    "Block Vert");
-                */
-
-                AddProperty(
-                    page.textFormat,
-                    nameof(TextFormat.PaddingTop));
-
-                AddProperty(
-                    page.textFormat,
-                    nameof(TextFormat.PaddingBottom));
-
-                AddProperty(
-                    page.textFormat,
-                    nameof(TextFormat.PaddingLeft));
-
-                AddProperty(
-                    page.textFormat,
-                    nameof(TextFormat.PaddingRight));
-
-                AddProperty(
-                    page.textFormat,
-                    nameof(TextFormat.Distance));
-            }
-
-            void AddProperty(object obj, string name, string? label = null)
-            {
-                propertyGrid.AddInput(label ?? name, obj, name);
+                return propertyGrid.AddInput(label ?? name, obj, name, e);
             }
 
             toggleTextButton.Click += (s, e) =>
