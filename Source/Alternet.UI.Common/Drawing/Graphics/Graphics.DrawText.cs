@@ -158,7 +158,7 @@ namespace Alternet.Drawing
             PointD location,
             Font font,
             Color foreColor,
-            Color backColor,
+            Color? backColor,
             Coord angle);
 
         /// <summary>
@@ -485,6 +485,34 @@ namespace Alternet.Drawing
             var result = DrawLabel(ref prm);
             return result;
         }
+
+        /// <summary>
+        /// Draws text vertically from the bottom of the specified rectangle using the given font and colors.
+        /// Text is centered within the rectangle, and the method handles
+        /// rotation and translation to achieve the desired orientation.
+        /// </summary>
+        /// <param name="text">The text to draw.</param>
+        /// <param name="font">The font to use for drawing the text.</param>
+        /// <param name="foreColor">The foreground color of the text.</param>
+        /// <param name="rect">The rectangle in which to draw the text.</param>
+        public virtual void DrawVertTextFromBottom(ReadOnlySpan<char> text, Font font, Color foreColor, RectD rect)
+        {
+            var state = Save();
+            RotateTransform(-90);
+            TranslateTransform(0, rect.Top + rect.Bottom, MatrixOrder.Append);
+
+            var strSize = MeasureText(text, font);
+
+            PointD p = new (
+                rect.Top + Math.Max(0, (rect.Height - strSize.Width) / 2),
+                rect.Left + ((rect.Width - strSize.Height) / 2));
+
+            var r = new RectD(p, new SizeD(rect.Height, rect.Width));
+
+            DrawString(text, font, foreColor.AsBrush, r);
+            Restore();
+        }
+
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors,

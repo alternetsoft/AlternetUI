@@ -844,15 +844,17 @@ namespace Alternet.Drawing
             PointD location,
             Font font,
             Color foreColor,
-            Color backColor)
+            Color? backColor)
         {
+            var backColorIsOk = backColor?.IsOk ?? false;
+
             SkiaHelper.DrawText(
                 canvas,
                 s,
                 location,
                 font,
                 foreColor.AsStrokeAndFillPaint,
-                backColor.IsOk ? backColor.AsFillPaint : null);
+                backColorIsOk ? backColor?.AsFillPaint : null);
         }
 
         /// <summary>

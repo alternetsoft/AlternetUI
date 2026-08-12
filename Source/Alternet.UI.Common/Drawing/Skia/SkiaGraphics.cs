@@ -261,7 +261,7 @@ namespace Alternet.Drawing
             PointD location,
             Font font,
             Color foreColor,
-            Color backColor,
+            Color? backColor,
             Coord angle)
         {
             canvas.Save();
