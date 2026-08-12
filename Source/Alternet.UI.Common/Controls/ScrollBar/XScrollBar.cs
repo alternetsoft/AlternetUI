@@ -603,4 +603,11 @@ namespace Alternet.UI
             IsVertical = true;
         }
     }
+
+    /// <summary>
+    /// A <see cref="XHorzScrollBar"/> is a control that represents a horizontal scrollbar.
+    /// </summary>
+    public partial class XHorzScrollBar : XScrollBar
+    {
+    }
 }
