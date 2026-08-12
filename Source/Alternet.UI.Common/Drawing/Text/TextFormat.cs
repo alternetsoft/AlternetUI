@@ -150,6 +150,15 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets or sets the background color of the text. Default is <see langword="null"/> and background is not painted.
+        /// </summary>
+        public virtual Color? BackColor
+        {
+            get => record.BackColor;
+            set => record.BackColor = GetNewFieldValue(record.BackColor, value);
+        }
+
+        /// <summary>
         /// Gets or sets padding of the text.
         /// </summary>
         public virtual Thickness Padding
@@ -395,6 +404,9 @@ namespace Alternet.Drawing
 
             /// <see cref="TextFormat.Padding"/>
             public Thickness Padding;
+
+            /// <see cref="TextFormat.BackColor"/>
+            public Color? BackColor;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Record"/> struct.
