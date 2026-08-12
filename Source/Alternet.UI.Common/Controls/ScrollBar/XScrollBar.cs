@@ -588,4 +588,19 @@ namespace Alternet.UI
             pos.Value = value;
         }
     }
+
+    /// <summary>
+    /// A <see cref="XVertScrollBar"/> is a control that represents a vertical scrollbar.
+    /// </summary>
+    public partial class XVertScrollBar : XScrollBar
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XVertScrollBar"/> class.
+        /// </summary>
+        public XVertScrollBar()
+            : base()
+        {
+            IsVertical = true;
+        }
+    }
 }
