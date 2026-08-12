@@ -80,7 +80,6 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
             Actions.Add(typeof(Label), InitGenericLabel);
             Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
-            Actions.Add(typeof(GenericWrappedTextControl), InitGenericWrappedTextControl);
             Actions.Add(typeof(LinkLabel), InitLinkLabel);
             Actions.Add(typeof(XButton), InitStdButton);
             Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);

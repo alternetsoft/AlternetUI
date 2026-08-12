@@ -171,7 +171,6 @@ namespace PropertyGridSample
 
                 if (DebugUtils.IsDebugDefined)
                 {
-                    ToolBoxAdd<GenericWrappedTextControl>();
                 }
 
                 LimitedTypes.AddRange(LimitedTypesStatic);

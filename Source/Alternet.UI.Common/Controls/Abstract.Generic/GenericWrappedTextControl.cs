@@ -13,7 +13,7 @@ namespace Alternet.UI
     /// characters and wrapping.
     /// </summary>
     [ControlCategory(KnownControlCategory.Tests)]
-    public partial class GenericWrappedTextControl : GenericControl
+    internal partial class GenericWrappedTextControl : GenericControl
     {
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.

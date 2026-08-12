@@ -150,11 +150,6 @@ namespace PropertyGridSample
                 }
 
             });
-
-            AddControlAction<GenericWrappedTextControl>("Set LoremIpsum", (c) =>
-            {
-                c.Text = ObjectInit.LoremIpsum;
-            });
         }
 
         internal void InitTestsSlider()
