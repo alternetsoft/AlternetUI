@@ -42,6 +42,67 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Adds a rounded rectangle to the specified <see cref="SKPath"/> with the given corner radii.
+        /// </summary>
+        /// <param name="skPath">The <see cref="SKPath"/> to which the rounded rectangle will be added.</param>
+        /// <param name="rect">The rectangle defining the bounds of the rounded rectangle.</param>
+        /// <param name="topLeftCorner">The radius of the top-left corner.</param>
+        /// <param name="topRightCorner">The radius of the top-right corner.</param>
+        /// <param name="bottomLeftCorner">The radius of the bottom-left corner.</param>
+        /// <param name="bottomRightCorner">The radius of the bottom-right corner.</param>
+        public static void AddRoundRect(
+            SKPath skPath,
+            RectD rect,
+            float topLeftCorner = 0,
+            float topRightCorner = 0,
+            float bottomLeftCorner = 0,
+            float bottomRightCorner = 0)
+        {
+            // start at top edge after top‑left corner
+            skPath.MoveTo(rect.Left + topLeftCorner, rect.Top);
+
+            // top edge
+            skPath.LineTo(rect.Right - topRightCorner, rect.Top);
+
+            // top‑right corner arc
+            if (topRightCorner != 0)
+                skPath.ArcTo(new SKRect(rect.Right - (topRightCorner * 2), rect.Top,
+                                      rect.Right, rect.Top + (topRightCorner * 2)),
+                           270, 90, false);
+
+            // right edge
+            skPath.LineTo(rect.Right, rect.Bottom - bottomRightCorner);
+
+            // bottom‑right corner arc
+            if (bottomRightCorner != 0)
+                skPath.ArcTo(new SKRect(rect.Right - (bottomRightCorner * 2),
+                                      rect.Bottom - (bottomRightCorner * 2),
+                                      rect.Right, rect.Bottom),
+                           0, 90, false);
+
+            // bottom edge
+            skPath.LineTo(rect.Left + bottomLeftCorner, rect.Bottom);
+
+            // bottom‑left corner arc
+            if (bottomLeftCorner != 0)
+                skPath.ArcTo(new SKRect(rect.Left, rect.Bottom - (bottomLeftCorner * 2),
+                                      rect.Left + (bottomLeftCorner * 2), rect.Bottom),
+                           90, 90, false);
+
+            // left edge
+            skPath.LineTo(rect.Left, rect.Top + topLeftCorner);
+
+            // top‑left corner arc
+            if (topLeftCorner != 0)
+                skPath.ArcTo(new SKRect(rect.Left, rect.Top,
+                                      rect.Left + (topLeftCorner * 2), rect.Top + (topLeftCorner * 2)),
+                           180, 90, false);
+
+            // close contour so filling works
+            skPath.Close();
+        }
+
+        /// <summary>
         /// Loads svg image from the specified string with svg data.
         /// </summary>
         /// <param name="s">The string containing the SVG data.</param>
