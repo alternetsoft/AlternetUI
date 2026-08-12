@@ -3,6 +3,8 @@ using System.Runtime.CompilerServices;
 
 using Alternet.UI;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -27,9 +29,34 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GraphicsPath()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
+        /// </summary>
+        public GraphicsPath(SKPath path)
+        {
+            Handler = new SkiaGraphicsPathHandler(path);
+        }
+
+        /// <summary>
+        /// Gets or sets path as <see cref="SKPath"/>.
+        /// </summary>
+        public SKPath Path
+        {
+            get
+            {
+                CheckDisposed();
+                return Handler.Path;
+            }
+
+            set
+            {
+                CheckDisposed();
+                Handler.Path = value;
+            }
         }
 
         /// <summary>

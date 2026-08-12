@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -11,6 +13,10 @@ namespace Alternet.Drawing
     /// </summary>
     public interface IGraphicsPathHandler : IDisposable
     {
+
+        /// <inheritdoc cref="GraphicsPath.Path"/>
+        SKPath Path { get; set; }
+
         /// <inheritdoc cref="GraphicsPath.FillMode"/>
         FillMode FillMode { get; set; }
 
