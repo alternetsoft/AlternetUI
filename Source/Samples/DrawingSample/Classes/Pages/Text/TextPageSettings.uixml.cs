@@ -79,7 +79,7 @@ namespace DrawingSample
 
             AddProperty(
                 page.textFormat,
-                nameof(TextFormat.BackColor),
+                nameof(TextFormat.TextBackColor),
                 null,
                 colorArgs);
 

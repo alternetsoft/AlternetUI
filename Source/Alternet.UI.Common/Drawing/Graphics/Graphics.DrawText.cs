@@ -324,14 +324,6 @@ namespace Alternet.Drawing
                 wrappedText.Text = text.ToString();
                 wrappedText.Font = font;
                 wrappedText.ForegroundColor = brush?.AsColor;
-
-                if (brush is null)
-                {
-                }
-                else
-                {
-
-                }
             }
             finally
             {
@@ -1563,7 +1555,8 @@ namespace Alternet.Drawing
             /// <remarks>Setting prefix elements affects how future drawing operations are rendered,
             /// as these elements will be applied before the main drawing content. If <paramref name="value"/> is <see
             /// langword="null"/>, any existing prefix elements are removed.</remarks>
-            /// <param name="value">An array of <see cref="DrawElementParams"/> objects that represent the prefix elements to set. This
+            /// <param name="value">An array of <see cref="DrawElementParams"/> objects
+            /// that represent the prefix elements to set. This
             /// parameter can be <see langword="null"/> to clear the current prefix elements.</param>
             public void SetPrefixElements(DrawElementParams[]? value)
             {
@@ -1578,7 +1571,8 @@ namespace Alternet.Drawing
             /// <remarks>Setting this value to <see langword="null"/> clears any previously assigned
             /// suffix elements. The provided array is used to update the internal state for subsequent drawing
             /// operations.</remarks>
-            /// <param name="value">An array of <see cref="DrawElementParams"/> objects that represent the suffix elements to assign.
+            /// <param name="value">An array of <see cref="DrawElementParams"/> objects
+            /// that represent the suffix elements to assign.
             /// Specify <see langword="null"/> to remove all existing suffix elements.</param>
             public void SetSuffixElements(DrawElementParams[]? value)
             {

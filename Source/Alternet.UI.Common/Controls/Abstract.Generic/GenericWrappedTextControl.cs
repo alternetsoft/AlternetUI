@@ -149,6 +149,7 @@ namespace Alternet.UI
                 MaxWidth = textFormat.MaxWidth;
                 SetSuggestedSize(textFormat.SuggestedWidth, textFormat.SuggestedHeight);
                 Padding = textFormat.Padding;
+                TextBackColor = textFormat.TextBackColor;
             });
         }
 

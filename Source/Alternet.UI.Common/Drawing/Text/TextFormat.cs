@@ -151,11 +151,13 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets the background color of the text. Default is <see langword="null"/> and background is not painted.
+        /// This property is used only for text rendering and does not affect background color of the block if 
+        /// drawing rectangle is specified.
         /// </summary>
-        public virtual Color? BackColor
+        public virtual Color? TextBackColor
         {
-            get => record.BackColor;
-            set => record.BackColor = GetNewFieldValue(record.BackColor, value);
+            get => record.TextBackColor;
+            set => record.TextBackColor = GetNewFieldValue(record.TextBackColor, value);
         }
 
         /// <summary>
@@ -405,8 +407,8 @@ namespace Alternet.Drawing
             /// <see cref="TextFormat.Padding"/>
             public Thickness Padding;
 
-            /// <see cref="TextFormat.BackColor"/>
-            public Color? BackColor;
+            /// <see cref="TextFormat.TextBackColor"/>
+            public Color? TextBackColor;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Record"/> struct.

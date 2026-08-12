@@ -378,9 +378,9 @@ namespace Alternet.Drawing
                 record.SuggestedHeight = bounds.Height;
             }
 
-            record.BackColor = backColor;
+            record.TextBackColor = backColor;
 
-            dc.DrawText(text, font, foreColor.AsBrush, bounds, record);
+            dc.DrawText(text, font, foreColor.AsBrush, bounds, in record);
         }
     }
 }
