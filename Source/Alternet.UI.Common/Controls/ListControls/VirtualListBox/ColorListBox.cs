@@ -368,6 +368,20 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds an empty color to the list of colors.
+        /// </summary>
+        /// <param name="title">Color title. Optional. If not specified,
+        /// <see cref="Color.ToDisplayString"/> will be used.</param>
+        /// <returns>The newly added <see cref="ListControlItem"/> instance.</returns>
+        public virtual ListControlItem AddEmptyColor(string? title = null)
+        {
+            title ??= Localization.CommonStrings.Default.EmptyColorDisplayName;
+            var item = CreateItem(Color.Empty, title);
+            Add(item);
+            return item;
+        }
+
+        /// <summary>
         /// Adds colors from the specified color categories.
         /// </summary>
         /// <param name="categories">Array of categories to add colors from.</param>
