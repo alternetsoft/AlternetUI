@@ -11,8 +11,9 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// This control can change visibility of other controls depending on
-    /// the selected tab.
+    /// Represents a header for the <see cref="CardPanel"/> and <see cref="TabControl"/> controls.
+    /// It contains a collection of tabs, each represented by a <see cref="CardPanelHeaderItem"/> object.
+    /// This control can change visibility of other controls depending on the selected tab.
     /// </summary>
     /// <remarks>
     /// Allows to switch cards in the <see cref="CardPanel"/> control by clicking
@@ -70,7 +71,6 @@ namespace Alternet.UI
         private CardPanelHeaderItem? selectedTab;
         private CardPanel? cardPanel;
         private SpeedButton? closeButton;
-
         private Thickness? tabMargin;
         private Thickness? tabPadding;
         private bool useTabBold;
@@ -1320,8 +1320,8 @@ namespace Alternet.UI
         /// Gets real tab horizontal alignment which depends on <see cref="TabHorizontalAlignment"/>
         /// and <see cref="TabsAlignment"/>.
         /// </summary>
-        /// <returns></returns>
-        protected HorizontalAlignment GetRealTabHorizontalAlignment()
+        /// <returns>The horizontal alignment of the tab.</returns>
+        protected virtual HorizontalAlignment GetRealTabHorizontalAlignment()
         {
             if (TabHorizontalAlignment is not null)
                 return TabHorizontalAlignment.Value;
