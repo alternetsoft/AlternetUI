@@ -595,6 +595,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets the background and foreground colors to the default values or to the light or dark colors.
+        /// </summary>
+        /// <param name="useControlColors">Whether to use <see cref="DefaultColors.ControlBackColor"/>
+        /// and <see cref="DefaultColors.ControlForeColor"/>.</param>
+        /// <param name="isDark">If set to <c>true</c>, sets the colors to dark;
+        /// if set to <c>false</c>, sets the colors to light; if <c>null</c>, sets the colors to the default values.</param>
+        public virtual void UseControlColors(bool useControlColors, bool? isDark)
+        {
+            if (!useControlColors)
+            {
+                ParentBackColor = true;
+                ParentForeColor = true;
+                IsDarkBackgroundOverride = null;
+                return;
+            }
+
+            ParentBackColor = false;
+            ParentForeColor = false;
+            IsDarkBackgroundOverride = isDark;
+
+            if (isDark is null)
+            {
+                BackColor = DefaultColors.ControlBackColor.Current;
+                ForeColor = DefaultColors.ControlForeColor.Current;
+            }
+            else
+            {
+                BackColor = DefaultColors.ControlBackColor.LightOrDark(isDark.Value);
+                ForeColor = DefaultColors.ControlForeColor.LightOrDark(isDark.Value);
+            }
+        }
+
+
+        /// <summary>
         /// Sets back and fore colors to <see cref="AbstractControl.BackColor"/>
         /// and <see cref="AbstractControl.ForeColor"/>.
         /// </summary>
