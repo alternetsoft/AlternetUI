@@ -25,7 +25,7 @@ namespace DrawingSample
                 new("NearestNeighbor", InterpolationMode.NearestNeighbor),
             ];
 
-            interpolationModeComboBox.Items.AddRange(modes);
+            interpolationModeComboBox.ListItems.AddRange(modes);
             var item = interpolationModeComboBox.FindItemWithValue(page.InterpolationMode);
             interpolationModeComboBox.Value = item;
         }

@@ -1798,11 +1798,11 @@ namespace Alternet.UI
             {
                 if (add)
                 {
-                    if (scopeEdit.Items.IndexOf(item) < 0)
-                        scopeEdit.Items.Add(item);
+                    if (scopeEdit.ListItems.IndexOf(item) < 0)
+                        scopeEdit.ListItems.Add(item);
                 }
                 else
-                    scopeEdit.Items.Remove(item);
+                    scopeEdit.ListItems.Remove(item);
             }
 
             var selected = false;
@@ -1828,7 +1828,7 @@ namespace Alternet.UI
 
             if (selected)
             {
-                scopeEdit.Enabled = scopeEdit.Items.Count > 1;
+                scopeEdit.Enabled = scopeEdit.ListItems.Count > 1;
             }
             else
             {

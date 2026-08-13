@@ -52,7 +52,7 @@ namespace LayoutSample
         public void AddGridLengthItem(GridLength length, string title)
         {
             var item = new GridLengthItem(length, title);
-            valueComboBox.Items.Add(item);
+            valueComboBox.ListItems.Add(item);
         }
     }
 }

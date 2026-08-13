@@ -192,12 +192,12 @@ namespace Alternet.UI
         {
             get
             {
-                return ButtonCombo.Items;
+                return ButtonCombo.ListItems;
             }
 
             set
             {
-                ButtonCombo.Items = value;
+                ButtonCombo.ListItems = value;
             }
         }
 

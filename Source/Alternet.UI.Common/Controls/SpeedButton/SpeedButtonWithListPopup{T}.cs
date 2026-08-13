@@ -141,20 +141,33 @@ namespace Alternet.UI
         /// <summary>
         /// Gets simple items where item is <c>object</c>.
         /// It is mapped from <see cref="ListControlItem.Value"/> elements
-        /// of the <see cref="Items"/> collection.
+        /// of the <see cref="ListItems"/> collection.
         /// </summary>
         public virtual ListBoxItems SimpleItems
         {
             get
             {
-                return simpleItems ??= new(() => Items);
+                return simpleItems ??= new(() => ListItems);
+            }
+        }
+
+        /// <summary>
+        /// Gets simple items where item is <c>object</c>.
+        /// It is mapped from <see cref="ListControlItem.Value"/> elements
+        /// of the <see cref="ListItems"/> collection.
+        /// </summary>
+        public virtual ListBoxItems Items
+        {
+            get
+            {
+                return SimpleItems;
             }
         }
 
         /// <summary>
         /// Gets the collection of items used in the list box control within the popup window.
         /// </summary>
-        public virtual IListSource<ListControlItem> Items
+        public virtual IListSource<ListControlItem> ListItems
         {
             get
             {
@@ -196,7 +209,7 @@ namespace Alternet.UI
             {
                 if (Value is null)
                     return null;
-                return ListControlItem.FindItemIndexWithValue(Items, Value);
+                return ListControlItem.FindItemIndexWithValue(ListItems, Value);
             }
         }
 
@@ -206,9 +219,9 @@ namespace Alternet.UI
         [Browsable(false)]
         public PopupListBox<T> PopupListBox => (PopupListBox<T>)PopupWindow;
 
-        int IReadOnlyStrings.Count => Items.Count;
+        int IReadOnlyStrings.Count => ListItems.Count;
 
-        string? IReadOnlyStrings.this[int index] => Items[index].Text;
+        string? IReadOnlyStrings.this[int index] => ListItems[index].Text;
 
         /// <summary>
         /// Adds a collection of items to the list control shown in the popup.
@@ -218,12 +231,12 @@ namespace Alternet.UI
             foreach (var item in items)
             {
                 if (item is ListControlItem listItem)
-                    Items.Add(listItem);
+                    ListItems.Add(listItem);
                 else
                 {
                     ListControlItem newItem = new();
                     newItem.Value = item;
-                    Items.Add(newItem);
+                    ListItems.Add(newItem);
                 }
             }
         }
@@ -267,7 +280,7 @@ namespace Alternet.UI
         public virtual void AddFontSizesAndSelect(bool select = false, Coord? size = null)
         {
             size ??= Control.DefaultFont.Size;
-            ListControlUtils.AddFontSizes(Items, size);
+            ListControlUtils.AddFontSizes(ListItems, size);
             if (select)
                 Value = size;
         }
@@ -281,7 +294,7 @@ namespace Alternet.UI
         /// or null if no match is found.</returns>
         public ListControlItem? FindItemWithAttr(string attrName, object attrValue)
         {
-            foreach (var item in Items)
+            foreach (var item in ListItems)
             {
                 var itemAttrValue = item.CustomAttr[attrName];
 
@@ -305,7 +318,7 @@ namespace Alternet.UI
         /// the default font name is used.</param>
         public virtual void AddFontNamesAndSelect(bool select = false, string? fontName = default)
         {
-            ListControlUtils.AddFontNames(Items);
+            ListControlUtils.AddFontNames(ListItems);
             if (select)
                 Value = fontName ?? Control.DefaultFont.Name;
         }
@@ -340,9 +353,9 @@ namespace Alternet.UI
             if (value is null)
                 return null;
 
-            for (int i = 0; i < Items.Count; i++)
+            for (int i = 0; i < ListItems.Count; i++)
             {
-                var item = Items[i];
+                var item = ListItems[i];
 
                 if (value.Equals(item.Value))
                     return item;
@@ -379,12 +392,12 @@ namespace Alternet.UI
         {
             var listItem = Add(item);
 
-            var index = Items.Count - 1;
+            var index = ListItems.Count - 1;
 
-            if (Items[index] == listItem)
+            if (ListItems[index] == listItem)
                 return index;
 
-            return Items.IndexOf(listItem);
+            return ListItems.IndexOf(listItem);
         }
 
         /// <summary>
@@ -418,9 +431,9 @@ namespace Alternet.UI
         /// </summary>
         public virtual void SelectFirstItem()
         {
-            if (Items.Count > 0)
+            if (ListItems.Count > 0)
             {
-                Value = Items[0].Value;
+                Value = ListItems[0].Value;
             }
             else
             {
@@ -434,7 +447,7 @@ namespace Alternet.UI
         /// <param name="item">Item to add.</param>
         public virtual void Add(ListControlItem item)
         {
-            Items.Add(item);
+            ListItems.Add(item);
         }
 
         /// <summary>
@@ -469,7 +482,7 @@ namespace Alternet.UI
                 {
                     case PickerPopupKind.Auto:
                     default:
-                        if (Items.Count <= MaxItemsUsingContextMenu)
+                        if (ListItems.Count <= MaxItemsUsingContextMenu)
                             ShowPopupMenu();
                         else
                             ShowListBox();
@@ -495,18 +508,18 @@ namespace Alternet.UI
                     createdMenuId = DropDownMenu.UniqueId;
                 }
 
-                DropDownMenu.Items.SetCount(Items.Count, () => new MenuItem());
+                DropDownMenu.Items.SetCount(ListItems.Count, () => new MenuItem());
 
-                if (Items.Count == 0)
+                if (ListItems.Count == 0)
                     return;
 
                 var popupOwner = PopupOwner ?? this;
 
                 var spaceWidth = popupOwner.MeasureCanvas.MeasureText(" ", RealFont).Width;
 
-                for (int i = 0; i < Items.Count; i++)
+                for (int i = 0; i < ListItems.Count; i++)
                 {
-                    var item = Items[i];
+                    var item = ListItems[i];
                     var menuItem = DropDownMenu.Items[i];
 
                     var s = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
@@ -548,13 +561,13 @@ namespace Alternet.UI
 
             void ShowListBox()
             {
-                if (Items is null)
+                if (ListItems is null)
                 {
                     ListBox.RemoveAll();
                     return;
                 }
                 else
-                    ListBox.SetItemsFastest(Items);
+                    ListBox.SetItemsFastest(ListItems);
 
                 if (ListBox.Count == 0)
                     return;

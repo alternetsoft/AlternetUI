@@ -51,14 +51,14 @@ namespace LayoutSample
 
             subjectPanel.LayoutFlags |= LayoutFlags.UseMarginsWhenDock;
 
-            dockedEdit.Items.Add(new("Left", DockStyle.Left));
-            dockedEdit.Items.Add(new("Top", DockStyle.Top));
-            dockedEdit.Items.Add(new("Right", DockStyle.Right));
-            dockedEdit.Items.Add(new("Bottom", DockStyle.Bottom));
-            dockedEdit.Items.Add(new("LeftAutoSize", DockStyle.LeftAutoSize));
-            dockedEdit.Items.Add(new("TopAutoSize", DockStyle.TopAutoSize));
-            dockedEdit.Items.Add(new("RightAutoSize", DockStyle.RightAutoSize));
-            dockedEdit.Items.Add(new("BottomAutoSize", DockStyle.BottomAutoSize));
+            dockedEdit.ListItems.Add(new("Left", DockStyle.Left));
+            dockedEdit.ListItems.Add(new("Top", DockStyle.Top));
+            dockedEdit.ListItems.Add(new("Right", DockStyle.Right));
+            dockedEdit.ListItems.Add(new("Bottom", DockStyle.Bottom));
+            dockedEdit.ListItems.Add(new("LeftAutoSize", DockStyle.LeftAutoSize));
+            dockedEdit.ListItems.Add(new("TopAutoSize", DockStyle.TopAutoSize));
+            dockedEdit.ListItems.Add(new("RightAutoSize", DockStyle.RightAutoSize));
+            dockedEdit.ListItems.Add(new("BottomAutoSize", DockStyle.BottomAutoSize));
             dockedEdit.Value = DockStyle.Left;
             dockedEdit.ValueChanged += DockedEdit_SelectedItemChanged;
 
