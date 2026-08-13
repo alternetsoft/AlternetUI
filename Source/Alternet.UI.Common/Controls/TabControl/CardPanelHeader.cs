@@ -118,6 +118,7 @@ namespace Alternet.UI
 
             rightPanel.HorizontalAlignment = HorizontalAlignment.Right;
             rightPanel.VerticalAlignment = VerticalAlignment.Fill;
+            rightPanel.Padding = 1;
             rightPanel.Parent = this;
             rightPanel.UserPaint = true;
 
@@ -281,12 +282,7 @@ namespace Alternet.UI
                     closeButton = CreateCloseButton();
                     closeButton.HorizontalAlignment = HorizontalAlignment.Center;
                     closeButton.VerticalAlignment = VerticalAlignment.Center;
-
-                    closeButton.Click += (s, e) =>
-                    {
-                        CloseButtonClick?.Invoke(this, EventArgs.Empty);
-                    };
-
+                    closeButton.Click += OnCloseButtonClick;
                     closeButton.Parent = rightPanel;
                 }
 
@@ -1523,6 +1519,16 @@ namespace Alternet.UI
         /// <param name="item">The tab which is removed.</param>
         protected virtual void OnTabsItemRemoved(object? sender, int index, CardPanelHeaderItem item)
         {
+        }
+
+        /// <summary>
+        /// Called when the close button is clicked. Raises the <see cref="CloseButtonClick"/> event.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">The event arguments.</param>
+        protected virtual void OnCloseButtonClick(object? sender, EventArgs e)
+        {
+            CloseButtonClick?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>
