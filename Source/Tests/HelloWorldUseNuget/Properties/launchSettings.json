@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HelloWorldSample": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
