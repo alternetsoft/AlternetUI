@@ -160,10 +160,34 @@ namespace Alternet.UI
             var brush = prm.Brush;
             var control = prm.Control;
 
-            if (prm.TabAlignment == TabAlignment.Top || prm.TabAlignment == TabAlignment.Bottom)
-                DrawLines();
+            if (prm.DrawTabSeparatorLines)
+            {
+                if (prm.TabAlignment == TabAlignment.Top || prm.TabAlignment == TabAlignment.Bottom)
+                    DrawHorzLines();
+                else
+                    DrawVertLines();
+            }
 
-            void DrawLines()
+            void DrawVertLines()
+            {
+                if (tabCount < 3)
+                    return;
+                for (int i = 0; i < tabCount - 1; i++)
+                {
+                    if (i == tabIndex || i == (tabIndex - 1))
+                        continue;
+                    var tab = control.Tabs[i];
+                    var rect = tab.HeaderButton.Bounds;
+                    PointD startPoint = (rect.Left, rect.Bottom + 1);
+                    var width = Math.Min(rect.Width - 4, 12);
+                    SizeD size = (width, 1);
+                    RectD drawRect = (startPoint, size);
+                    var centeredRect = drawRect.CenterIn(rect, true, false);
+                    DrawingUtils.DrawHorzLine(dc, brush, centeredRect.Location, width, 1);
+                }
+            }
+
+            void DrawHorzLines()
             {
                 if (tabCount < 3)
                     return;
@@ -582,6 +606,11 @@ namespace Alternet.UI
             /// Gets or sets a value indicating whether border has rounded corners.
             /// </summary>
             public bool RoundCorners;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether to draw tab separator lines.
+            /// </summary>
+            public bool DrawTabSeparatorLines;
 
             /// <summary>
             /// The control to which the tab page belongs.

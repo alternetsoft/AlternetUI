@@ -90,6 +90,7 @@ namespace Alternet.UI
         private ImageToText imageToText;
         private bool useRoundedCorners;
         private VerticalTextDirection? vertDirection;
+        private bool drawTabSeparatorLines = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -872,6 +873,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to draw tab separator lines.
+        /// </summary>
+        public virtual bool DrawTabSeparatorLines
+        {
+            get => drawTabSeparatorLines;
+            set
+            {
+                if (drawTabSeparatorLines == value)
+                    return;
+                drawTabSeparatorLines = value;
+                InvalidateInterior();
+            }
+        }
+
+        /// <summary>
         /// Updates visibility of the cards.
         /// </summary>
         public virtual void SetCardsVisible()
@@ -1065,6 +1081,8 @@ namespace Alternet.UI
             button.Padding = TabPadding ?? DefaultTabPadding;
             button.HasBorder = TabHasBorder;
             button.VerticalAlignment = UI.VerticalAlignment.Center;
+            button.VertDirection = VertDirection;
+            button.IsVerticalText = IsVerticalText;
             button.SetContentHorizontalAlignment(HorizontalAlignment.Left);
             fillPanel.Children.Insert(index ?? fillPanel.Children.Count, button);
             button.Click += OnItemClick;
@@ -1431,6 +1449,7 @@ namespace Alternet.UI
             item.HeaderButton.Padding = TabPadding ?? DefaultTabPadding;
             item.HeaderButton.HorizontalAlignment = GetRealTabHorizontalAlignment();
             item.HeaderButton.IsVerticalText = IsVerticalText;
+            item.HeaderButton.VertDirection = VertDirection;
             item.HeaderButton.ImageToText = ImageToText;
 
             if (isSelected)
@@ -1505,6 +1524,7 @@ namespace Alternet.UI
                     Brush = GetInteriorBorderColor().AsBrush,
                     TabAlignment = TabsAlignment,
                     RoundCorners = UseRoundedCorners,
+                    DrawTabSeparatorLines = drawTabSeparatorLines,
                 };
 
                 TabControlDrawInterior.Default.DrawTabHeaderInterior(ref prm);

@@ -247,6 +247,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to draw tab separator lines.
+        /// </summary>
+        public virtual bool DrawTabSeparatorLines
+        {
+            get => HeaderControl.DrawTabSeparatorLines;
+            set
+            {
+                HeaderControl.DrawTabSeparatorLines = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the index of the currently selected tab page.
         /// </summary>
         /// <returns>
@@ -1526,6 +1538,7 @@ namespace Alternet.UI
                 Brush = GetInteriorBorderColor().AsBrush,
                 TabAlignment = tabPaintAlignment ?? TabAlignment,
                 RoundCorners = UseRoundedCorners,
+                DrawTabSeparatorLines = this.DrawTabSeparatorLines,
             };
 
             return prm;
