@@ -14,7 +14,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Specifies the default vertical text direction used when no direction is provided.
         /// </summary>
-        public static VerticalTextDirection DefaultVertTextDirection = VerticalTextDirection.BottomToTop;
+        public static VerticalTextDirection DefaultVertTextDirection = VerticalTextDirection.TopToBottom;
 
         /// <summary>
         /// Gets or sets whether debug corners are painted in some of the graphics methods.
@@ -1213,6 +1213,7 @@ namespace Alternet.Drawing
                 var backColor = prm.BackgroundColor;
                 var isVertical = prm.IsVertical;
                 var isVerticalText = prm.IsVerticalText;
+                var vertTextDirection = prm.VertDirection;
                 var drawDebugCorners = prm.DrawDebugCorners || Graphics.DrawDebugCorners;
 
                 var textHorizontalAlignment = prm.TextHorizontalAlignment;
@@ -1344,16 +1345,12 @@ namespace Alternet.Drawing
                             {
                                 if (isVerticalText)
                                 {
-                                    dc.DrawTextWithAngle(
-                                        s,
-                                        (rect.X + rect.Width, rect.Y),
-                                        font,
-                                        foreColor,
-                                        backColor,
-                                        270);
+                                    dc.DrawVertText(s, font, foreColor, rect, vertTextDirection);
                                 }
                                 else
+                                {
                                     dc.DrawText(s, rect.Location, font, foreColor, backColor);
+                                }
                             }
                             else
                             {
@@ -1458,6 +1455,13 @@ namespace Alternet.Drawing
             /// Gets or sets a value indicating whether the text should be rendered vertically.
             /// </summary>
             public bool IsVerticalText;
+
+            /// <summary>
+            /// Gets or sets the direction in which vertical text should be drawn.
+            /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+            /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
+            /// </summary>
+            public VerticalTextDirection? VertDirection;
 
             /// <summary>
             /// Gets or sets horizontal alignment of the text line within the text block.
