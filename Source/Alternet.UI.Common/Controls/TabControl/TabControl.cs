@@ -320,6 +320,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the direction in which vertical text should be drawn.
+        /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+        /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
+        /// </summary>
+        public virtual VerticalTextDirection? VertDirection
+        {
+            get => Header.VertDirection;
+            set
+            {
+                if (VertDirection == value)
+                    return;
+                DoInsideLayout(() =>
+                {
+                    Header.VertDirection = value;
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether contents of the control is visible.
         /// If contents is hidden only tab headers are shown.
         /// </summary>

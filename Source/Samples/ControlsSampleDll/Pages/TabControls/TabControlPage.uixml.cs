@@ -79,9 +79,11 @@ namespace ControlsSample
                     item.Enabled = false;
                 }
 
+                tabControl.VertDirection = VerticalTextDirection.BottomToTop;
+
                 this.ContextMenuStrip.Add("Toggle vertical text", () =>
                 {
-                    if(tabControl.IsVerticalText)
+                    if (tabControl.IsVerticalText)
                     {
                         tabControl.ImageToText = ImageToText.Horizontal;
                         tabControl.IsVerticalText = false;
@@ -91,6 +93,14 @@ namespace ControlsSample
                         tabControl.ImageToText = ImageToText.Vertical;
                         tabControl.IsVerticalText = true;
                     }
+                });
+
+                this.ContextMenuStrip.Add("Toggle vertical direction", () =>
+                {
+                    if (tabControl.VertDirection == VerticalTextDirection.TopToBottom)
+                        tabControl.VertDirection = VerticalTextDirection.BottomToTop;
+                    else
+                        tabControl.VertDirection = VerticalTextDirection.TopToBottom;
                 });
 
                 this.ContextMenuStrip.Add("Toggle interior border", () =>

@@ -70,6 +70,7 @@ namespace Alternet.UI
         private bool imageVisible = true;
         private bool isTransparent = true;
         private string? emptyTextHint;
+        private VerticalTextDirection? vertDirection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -391,7 +392,26 @@ namespace Alternet.UI
                 if (isVerticalText == value)
                     return;
                 isVerticalText = value;
-                PerformLayout();
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the direction in which vertical text should be drawn.
+        /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+        /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
+        /// </summary>
+        public virtual VerticalTextDirection? VertDirection
+        {
+            get => vertDirection;
+
+            set
+            {
+                if (vertDirection == value)
+                    return;
+                vertDirection = value;
+                if (IsVerticalText)
+                    PerformLayoutAndInvalidate();
             }
         }
 
@@ -745,6 +765,7 @@ namespace Alternet.UI
 
             prm.MinTextWidth = minTextWidth;
             prm.IsVerticalText = isVerticalText;
+            prm.VertDirection = vertDirection;
             prm.Visible = foreColor != Color.Empty;
             prm.Flags = drawLabelFlags;
 

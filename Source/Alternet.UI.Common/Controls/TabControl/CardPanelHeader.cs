@@ -89,6 +89,7 @@ namespace Alternet.UI
         private bool isVerticalText;
         private ImageToText imageToText;
         private bool useRoundedCorners;
+        private VerticalTextDirection? vertDirection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -410,6 +411,31 @@ namespace Alternet.UI
                     foreach (var tab in Tabs)
                     {
                         tab.HeaderButton.IsVerticalText = value;
+                    }
+                });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the direction in which vertical text should be drawn.
+        /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+        /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
+        /// </summary>
+        public virtual VerticalTextDirection? VertDirection
+        {
+            get => vertDirection;
+
+            set
+            {
+                if (vertDirection == value)
+                    return;
+                vertDirection = value;
+
+                fillPanel.DoInsideLayout(() =>
+                {
+                    foreach (var tab in Tabs)
+                    {
+                        tab.HeaderButton.VertDirection = value;
                     }
                 });
             }

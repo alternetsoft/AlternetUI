@@ -156,6 +156,25 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the direction in which vertical text should be drawn.
+        /// If not specified, the default direction is used (specified in <see cref="Graphics.DefaultVertTextDirection"/>).
+        /// This property is relevant only when <see cref="IsVerticalText"/> is set to <see langword="true"/>.
+        /// </summary>
+        public virtual VerticalTextDirection? VertDirection
+        {
+            get => Label.VertDirection;
+            set
+            {
+                if (VertDirection == value)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    Label.VertDirection = value;
+                });
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the text should be rendered vertically.
         /// </summary>
         /// <remarks>
