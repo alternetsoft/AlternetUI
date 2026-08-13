@@ -86,6 +86,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a value specifying the style of the control.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="ComboBoxStyle" /> values.
+        /// </returns>
+        [Category("Appearance")]
+        [DefaultValue(ComboBoxStyle.DropDown)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [Browsable(false)]
+        public override ComboBoxStyle DropDownStyle
+        {
+            get
+            {
+                if (IsEditable)
+                    return ComboBoxStyle.DropDown;
+                else
+                    return ComboBoxStyle.DropDownList;
+            }
+
+            set
+            {
+                if (DropDownStyle == value)
+                    return;
+                switch (value)
+                {
+                    case ComboBoxStyle.DropDown:
+                        IsEditable = true;
+                        break;
+                    case ComboBoxStyle.DropDownList:
+                        IsEditable = false;
+                        break;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets empty text hint displayed in the control when the text is empty.
         /// </summary>
         public virtual string? EmptyTextHint

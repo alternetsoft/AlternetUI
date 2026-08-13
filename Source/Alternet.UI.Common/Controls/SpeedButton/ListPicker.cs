@@ -44,10 +44,33 @@ namespace Alternet.UI
             UseControlColors(DefaultUseControlColors);
         }
 
+        /// <summary>
+        /// Gets or sets a value specifying the style of the control.
+        /// </summary>
+        /// <returns>
+        /// One of the <see cref="ComboBoxStyle" /> values.
+        /// </returns>
+        [Category("Appearance")]
+        [DefaultValue(ComboBoxStyle.DropDown)]
+        [RefreshProperties(RefreshProperties.Repaint)]
+        [Browsable(false)]
+        public virtual ComboBoxStyle DropDownStyle
+        {
+            get
+            {
+                return ComboBoxStyle.DropDownList;
+            }
+
+            set
+            {
+            }
+        }
+
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            UseControlColors(DefaultUseControlColors);
+            if (IsDarkBackgroundOverride is null)
+                UseControlColors(DefaultUseControlColors);
             base.OnSystemColorsChanged(e);
         }
 
