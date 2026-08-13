@@ -220,7 +220,7 @@ namespace ControlsSample
                 tabControl.IsVerticalText = true;
             }
 
-            UpdateDrawTabSeparatorLines();
+            UpdateOtherProperties();
         }
 
         private void ToggleVerticalTextButton_Click(object? sender, EventArgs e)
@@ -233,14 +233,16 @@ namespace ControlsSample
             tabControl.HasCloseButton = !tabControl.HasCloseButton;
         }
 
-        private void UpdateDrawTabSeparatorLines()
+        private void UpdateOtherProperties()
         {
             var tabAlignment = tabControl.TabAlignment;
             var isTopOrBottom = tabAlignment == TabAlignment.Top || tabAlignment == TabAlignment.Bottom;
             var isLeftOrRight = tabAlignment == TabAlignment.Left || tabAlignment == TabAlignment.Right;
             var isVerticalText = tabControl.IsVerticalText;
-
             tabControl.DrawTabSeparatorLines = (isTopOrBottom && !isVerticalText) || (isLeftOrRight && isVerticalText);
+
+            var isImageCentered = isVerticalText;
+            tabControl.HeaderControl.ImageHorizontalAlignment = isImageCentered ? HorizontalAlignment.Center : HorizontalAlignment.Left;
         }
 
         private void TabAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
@@ -249,7 +251,7 @@ namespace ControlsSample
                 return;
             tabControl.TabAlignment = tabAlignment;
 
-            UpdateDrawTabSeparatorLines();
+            UpdateOtherProperties();
 
             var preferredSize = tabAlignmentComboBox.GetPreferredSize();
             var preferredSize2 = tabAlignmentComboBox.GetPreferredSize();

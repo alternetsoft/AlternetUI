@@ -91,6 +91,8 @@ namespace Alternet.UI
         private bool useRoundedCorners;
         private VerticalTextDirection? vertDirection;
         private bool drawTabSeparatorLines = true;
+        private HorizontalAlignment imageHorizontalAlignment = HorizontalAlignment.Left;
+        private VerticalAlignment imageVerticalAlignment = VerticalAlignment.Center;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPanelHeader"/> class.
@@ -686,6 +688,44 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets horizontal alignment of the tab image.
+        /// </summary>
+        public virtual HorizontalAlignment ImageHorizontalAlignment
+        {
+            get
+            {
+                return imageHorizontalAlignment;
+            }
+
+            set
+            {
+                if (ImageHorizontalAlignment == value)
+                    return;
+                imageHorizontalAlignment = value;
+                UpdateTabs();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets vertical alignment of the tab image.
+        /// </summary>
+        public virtual VerticalAlignment ImageVerticalAlignment
+        {
+            get
+            {
+                return imageVerticalAlignment;
+            }
+
+            set
+            {
+                if (ImageVerticalAlignment == value)
+                    return;
+                imageVerticalAlignment = value;
+                UpdateTabs();
+            }
+        }
+
         /// <inheritdoc/>
         public override LayoutStyle? Layout
         {
@@ -1081,6 +1121,8 @@ namespace Alternet.UI
             button.Padding = TabPadding ?? DefaultTabPadding;
             button.HasBorder = TabHasBorder;
             button.VerticalAlignment = UI.VerticalAlignment.Center;
+            button.ImageHorizontalAlignment = ImageHorizontalAlignment;
+            button.ImageVerticalAlignment = ImageVerticalAlignment;
             button.VertDirection = VertDirection;
             button.IsVerticalText = IsVerticalText;
             button.SetContentHorizontalAlignment(HorizontalAlignment.Left);
@@ -1220,6 +1262,10 @@ namespace Alternet.UI
             tabHasBorder = DefaultTabHasBorder;
             activeTabHasBorder = DefaultActiveTabHasBorder;
             activeTabColors = null;
+            imageHorizontalAlignment = ImageHorizontalAlignment;
+            imageVerticalAlignment = ImageVerticalAlignment;
+            isVerticalText = false;
+            vertDirection = null;
             inactiveTabColors = null;
             tabHorizontalAlignment = null;
             tabTheme = SpeedButton.KnownTheme.TabControl;
@@ -1451,6 +1497,8 @@ namespace Alternet.UI
             item.HeaderButton.IsVerticalText = IsVerticalText;
             item.HeaderButton.VertDirection = VertDirection;
             item.HeaderButton.ImageToText = ImageToText;
+            item.HeaderButton.ImageHorizontalAlignment = ImageHorizontalAlignment;
+            item.HeaderButton.ImageVerticalAlignment = ImageVerticalAlignment;
 
             if (isSelected)
             {
