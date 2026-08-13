@@ -121,34 +121,8 @@ namespace Alternet.UI
             rightPanel.Parent = this;
             rightPanel.UserPaint = true;
 
-            fillPanel.Paint += (s, e) =>
-            {
-                if (HasInteriorBorder)
-                {
-                    TabControlDrawInterior.TabHeaderInteriorDrawParams prm = new()
-                    {
-                        Control = this,
-                        Graphics = e.Graphics,
-                        Bounds = e.ClientRectangle,
-                        Brush = GetInteriorBorderColor().AsBrush,
-                        TabAlignment = TabsAlignment,
-                        RoundCorners = UseRoundedCorners,
-                    };
-
-                    TabControlDrawInterior.Default.DrawTabHeaderInterior(ref prm);
-                }
-            };
-
-            rightPanel.Paint += (s, e) =>
-            {
-                if (HasInteriorBorder)
-                {
-                    e.Graphics.DrawBorderWithBrush(
-                                GetInteriorBorderColor().AsBrush,
-                                e.ClientRectangle,
-                                GetRightPanelBorder(TabsAlignment));
-                }
-            };
+            fillPanel.Paint += OnFillPanelPaint;
+            rightPanel.Paint += OnRightPanelPaint;
 
             ResetAppearance(invalidate: false);
             TabStop = false;
@@ -1500,6 +1474,45 @@ namespace Alternet.UI
             }
 
             InvalidateInterior();
+        }
+
+        /// <summary>
+        /// Paints the right panel of the control.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">The event arguments containing information about the paint event.</param>
+        protected virtual void OnRightPanelPaint(object? sender, PaintEventArgs e)
+        {
+            if (HasInteriorBorder)
+            {
+                e.Graphics.DrawBorderWithBrush(
+                            GetInteriorBorderColor().AsBrush,
+                            e.ClientRectangle,
+                            GetRightPanelBorder(TabsAlignment));
+            }
+        }
+
+        /// <summary>
+        /// Paints the fill panel of the control.
+        /// </summary>
+        /// <param name="sender">The event source.</param>
+        /// <param name="e">The event arguments containing information about the paint event.</param>
+        protected virtual void OnFillPanelPaint(object? sender, PaintEventArgs e)
+        {
+            if (HasInteriorBorder)
+            {
+                TabControlDrawInterior.TabHeaderInteriorDrawParams prm = new()
+                {
+                    Control = this,
+                    Graphics = e.Graphics,
+                    Bounds = e.ClientRectangle,
+                    Brush = GetInteriorBorderColor().AsBrush,
+                    TabAlignment = TabsAlignment,
+                    RoundCorners = UseRoundedCorners,
+                };
+
+                TabControlDrawInterior.Default.DrawTabHeaderInterior(ref prm);
+            }
         }
 
         /// <summary>
