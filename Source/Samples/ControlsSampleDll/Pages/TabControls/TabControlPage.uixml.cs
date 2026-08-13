@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+
 using Alternet.UI;
 using Alternet.Drawing;
 
@@ -42,7 +43,7 @@ namespace ControlsSample
 
                 ImageSet image;
 
-                if(UseSmallImages)
+                if (UseSmallImages)
                 {
                     image = ImageSet.FromUrl($"{ResPrefixSmall}Calendar16.png");
                 }
@@ -58,7 +59,7 @@ namespace ControlsSample
                 tabControl.SelectedIndexChanged += TabControl_SelectedIndexChanged;
 
                 var button = tabControl.GetHeaderButtonAt(1);
-                if(button is not null)
+                if (button is not null)
                 {
                     button.ContextMenuStrip.Add("Sample command", () => App.Log("Sample command clicked"));
                     var item = button.ContextMenuStrip.Add(
@@ -83,16 +84,7 @@ namespace ControlsSample
 
                 this.ContextMenuStrip.Add("Toggle vertical text", () =>
                 {
-                    if (tabControl.IsVerticalText)
-                    {
-                        tabControl.ImageToText = ImageToText.Horizontal;
-                        tabControl.IsVerticalText = false;
-                    }
-                    else
-                    {
-                        tabControl.ImageToText = ImageToText.Vertical;
-                        tabControl.IsVerticalText = true;
-                    }
+                    ToggleVerticalText();
                 });
 
                 this.ContextMenuStrip.Add("Toggle vertical direction", () =>
@@ -130,7 +122,7 @@ namespace ControlsSample
         private void TabControl_SelectedIndexChanged(object? sender, EventArgs e)
         {
             var selected = tabControl.SelectedPage as TabPage;
-            if(selected is not null)
+            if (selected is not null)
                 App.Log($"TabControl TabPage.Index: {selected.Index}");
             else
                 App.Log($"TabControl SelectedIndex: {tabControl.SelectedIndex}");
@@ -172,7 +164,7 @@ namespace ControlsSample
         private TabPage InsertPage(int? index = null)
         {
             var s = "Page " + GenItemIndex();
-            TabPage page = new() 
+            TabPage page = new()
             {
                 Padding = 5,
             };
@@ -185,7 +177,7 @@ namespace ControlsSample
 
             page.Children.Add(panel);
 
-            for (int i=1; i < 4; i++)
+            for (int i = 1; i < 4; i++)
             {
                 var button = new XButton()
                 {
@@ -215,9 +207,23 @@ namespace ControlsSample
             tabControl.RemoveAll();
         }
 
+        private void ToggleVerticalText()
+        {
+            if (tabControl.IsVerticalText)
+            {
+                tabControl.ImageToText = ImageToText.Horizontal;
+                tabControl.IsVerticalText = false;
+            }
+            else
+            {
+                tabControl.ImageToText = ImageToText.Vertical;
+                tabControl.IsVerticalText = true;
+            }
+        }
+
         private void ToggleVerticalTextButton_Click(object? sender, EventArgs e)
         {
-            tabControl.IsVerticalText = !tabControl.IsVerticalText;
+            ToggleVerticalText();
         }
 
         private void ToggleCloseButton_Click(object? sender, EventArgs e)
@@ -227,7 +233,7 @@ namespace ControlsSample
 
         private void TabAlignmentComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            if(tabAlignmentComboBox.Value is TabAlignment tabAlignment)
+            if (tabAlignmentComboBox.Value is TabAlignment tabAlignment)
                 tabControl.TabAlignment = tabAlignment;
 
             var preferredSize = tabAlignmentComboBox.GetPreferredSize();
