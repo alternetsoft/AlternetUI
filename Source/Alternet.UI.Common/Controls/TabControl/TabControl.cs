@@ -1548,10 +1548,12 @@ namespace Alternet.UI
             if (r.Height > ClientSize.Height)
                 r.Height = ClientSize.Height;
 
+            var border = HeaderControl.GetRightPanelBorder(TabAlignment);
+
             e.Graphics.DrawBorderWithBrush(
                         GetInteriorBorderColor().AsBrush,
-                        e.ClientRectangle,
-                        HeaderControl.GetRightPanelBorder(TabAlignment));
+                        r,
+                        border);
         }
 
         private class TabControlCardPanel : CardPanel
