@@ -12,6 +12,11 @@ namespace Alternet.Drawing
     public partial class Graphics
     {
         /// <summary>
+        /// Specifies the default vertical text direction used when no direction is provided.
+        /// </summary>
+        public static VerticalTextDirection DefaultVertTextDirection = VerticalTextDirection.BottomToTop;
+
+        /// <summary>
         /// Gets or sets whether debug corners are painted in some of the graphics methods.
         /// </summary>
         public static bool DrawDebugCorners = false;
@@ -487,7 +492,7 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Draws text vertically from the bottom of the specified rectangle using the given font and colors.
+        /// Draws text vertically starting from the bottom of the specified rectangle using the given font and colors.
         /// Text is centered within the rectangle, and the method handles
         /// rotation and translation to achieve the desired orientation.
         /// </summary>
@@ -510,9 +515,64 @@ namespace Alternet.Drawing
             var r = new RectD(p, new SizeD(rect.Height, rect.Width));
 
             DrawString(text, font, foreColor.AsBrush, r);
-            Restore();
+            Restore(state);
         }
 
+        /// <summary>
+        /// Draws text vertically in the specified rectangle using the given font and colors,
+        /// based on the specified vertical text direction.
+        /// </summary>
+        /// <param name="text">The text to draw.</param>
+        /// <param name="font">The font to use for drawing the text.</param>
+        /// <param name="foreColor">The foreground color of the text.</param>
+        /// <param name="rect">The rectangle in which to draw the text.</param>
+        /// <param name="direction">The direction in which to draw the vertical text.</param>
+        public virtual void DrawVertText(
+            ReadOnlySpan<char> text,
+            Font font,
+            Color foreColor,
+            RectD rect,
+            VerticalTextDirection? direction)
+        {
+            if ((direction ?? DefaultVertTextDirection) == VerticalTextDirection.BottomToTop)
+            {
+                DrawVertTextFromBottom(text, font, foreColor, rect);
+            }
+            else
+            {
+                DrawVertTextFromTop(text, font, foreColor, rect);
+            }
+        }
+        
+        /// <summary>
+        /// Draws text vertically starting from the top of the specified rectangle using the given font and colors.
+        /// Text is centered within the rectangle, and the method handles
+        /// rotation and translation to achieve the desired orientation.
+        /// </summary>
+        /// <param name="text">The text to draw.</param>
+        /// <param name="font">The font to use for drawing the text.</param>
+        /// <param name="foreColor">The foreground color of the text.</param>
+        /// <param name="rect">The rectangle in which to draw the text.</param>
+        public virtual void DrawVertTextFromTop(ReadOnlySpan<char> text, Font font, Color foreColor, RectD rect)
+        {
+            var state = Save();
+
+            RotateTransform(90);
+
+            TranslateTransform(rect.Right, rect.Top, MatrixOrder.Append);
+
+            var strSize = MeasureText(text, font);
+
+            PointD p = new(
+                Math.Max(0, (rect.Height - strSize.Width) / 2),
+                ((rect.Width - strSize.Height) / 2));
+
+            var r = new RectD(p, new SizeD(rect.Height, rect.Width));
+
+            DrawString(text, font, foreColor.AsBrush, r);
+
+            Restore(state);
+        }
 
         /// <summary>
         /// Draws text with the specified font, background and foreground colors,
