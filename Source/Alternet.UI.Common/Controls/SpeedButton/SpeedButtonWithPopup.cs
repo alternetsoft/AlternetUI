@@ -68,6 +68,22 @@ namespace Alternet.UI
         public event EventHandler? BeforeShowPopup;
 
         /// <summary>
+        /// Occurs when selected value is changed.
+        /// </summary>
+        public event EventHandler? SelectedValueChanged
+        {
+            add
+            {
+                ValueChanged += value;
+            }
+
+            remove
+            {
+                ValueChanged -= value;
+            }
+        }
+
+        /// <summary>
         /// Gets a value indicating whether the popup window has been created.
         /// </summary>
         public virtual bool IsPopupWindowCreated => popupWindow is not null;
@@ -93,6 +109,22 @@ namespace Alternet.UI
             get
             {
                 return DateUtils.GetAbsElapsedMilliseconds(popupLastClosedAt);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected value
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? SelectedItem
+        {
+            get
+            {
+                return Value;
+            }
+            set
+            {
+                Value = value;
             }
         }
 
