@@ -25,7 +25,7 @@ namespace ControlsSample
             Add("Mouse Input", () => new InputSample.MouseInputWindow());
             Add("Keyboard Input", () => new InputSample.KeyboardInputWindow());
             Add("Drag and Drop", () => new DragAndDropSample.DragAndDropWindow());
-            Add("SkiaSharp MegaDemo", () => new SkiaSharpExamplesWindow());
+            /* Add("SkiaSharp MegaDemo", () => new SkiaSharpExamplesWindow());*/
             Add("Paint Sample", () => new PaintSample.PaintMainWindow());
             Add("Custom Controls", () => new CustomControlsSample.CustomControlsWindow());
             Add("Window Properties", () => new WindowPropertiesSample.WindowPropertiesWindow());

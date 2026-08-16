@@ -6,6 +6,8 @@ using System.Text;
 
 using SkiaSharp;
 
+using Alternet.Drawing;
+
 namespace Alternet.UI
 {
     public static partial class LinuxUtils
@@ -126,13 +128,8 @@ namespace Alternet.UI
                     canvas.DrawRect(
                         new SKRect(10, 10, 120, 80),
                         new SKPaint { Color = SKColors.Red, IsAntialias = true });
-#pragma warning disable
-                    canvas.DrawText(
-                        "Hello SkiaSharp!",
-                        20,
-                        60,
-                        new SKPaint { Color = SKColors.Blue, TextSize = 24 });
-#pragma warning restore
+
+                    SkiaUtils.DrawHelloText(canvas, "Hello from SkiaSharp", (20, 60), Font.Default.WithSize(24));
                     skiaSurface.Flush();
                 }
                 else
