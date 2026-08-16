@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using Alternet.UI;
 using Alternet.UI.Localization;
 
+using SkiaSharp;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -28,6 +30,12 @@ namespace Alternet.Drawing
         {
             RunTests();
         }
+
+        /// <summary>
+        /// Gets or sets the sampling options used for drawing images.
+        /// If not specified, the default sampling options <see cref="SKSamplingOptions.Default"/> will be used.
+        /// </summary>
+        public virtual SKSamplingOptions? SamplingOptions { get; set; }
 
         /// <summary>
         /// Gets the current depth of the transform stack.
@@ -135,6 +143,18 @@ namespace Alternet.Drawing
             get
             {
                 return GraphicsFactory.ScaleFactorFromDpi(GetDPI().Height);
+            }
+        }
+
+        /// <summary>
+        /// Gets the <see cref="SKPaint"/> used for drawing images, based on the current <see cref="InterpolationMode"/>
+        /// and other settings.
+        /// </summary>
+        protected virtual SKPaint? DrawImagePaintSettings
+        {
+            get
+            {
+                return SkiaUtils.InterpolationModePaints[InterpolationMode];
             }
         }
 
@@ -1047,6 +1067,16 @@ namespace Alternet.Drawing
             action();
             if (stack.Count != initialDepth)
                 throw new InvalidOperationException("Unbalanced Push/Pop Transform calls.");
+        }
+
+        /// <summary>
+        /// Gets the effective sampling options used for drawing images,
+        /// taking into account the <see cref="SamplingOptions"/> property.
+        /// </summary>
+        /// <returns></returns>
+        protected virtual SKSamplingOptions GetEffectiveSamplingOptions()
+        {
+            return SamplingOptions ?? SKSamplingOptions.Default;
         }
 
         /// <summary>

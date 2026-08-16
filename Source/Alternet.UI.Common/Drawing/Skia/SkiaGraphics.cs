@@ -183,9 +183,6 @@ namespace Alternet.Drawing
             get => canvas;
         }
 
-        internal SKPaint? InterpolationModePaint
-            => SkiaUtils.InterpolationModePaints[InterpolationMode];
-
         /// <inheritdoc/>
         public override SizeD GetTextExtent(ReadOnlySpan<char> text, Font font)
         {
@@ -288,13 +285,16 @@ namespace Alternet.Drawing
 
             var paint = pen.SkiaPaint;
 
-            using var path = new SKPath();
-            path.MoveTo(points[0].X, points[0].Y);
+            using var builder = new SKPathBuilder();
+
+            builder.MoveTo(points[0].X, points[0].Y);
 
             for (int i = 1; i < points.Length; i++)
-                path.LineTo(points[i].X, points[i].Y);
+                builder.LineTo(points[i].X, points[i].Y);
 
-            path.Close();
+            builder.Close();
+
+            var path = builder.Detach();
 
             canvas.DrawPath(path, paint);
         }
@@ -432,8 +432,10 @@ namespace Alternet.Drawing
         {
             DebugPenAssert(pen);
 
-            using var path = new SKPath();
-            path.AddArc(rect, startAngle, sweepAngle);
+            using var builder = new SKPathBuilder();
+
+            builder.AddArc(rect, startAngle, sweepAngle);
+            var path = builder.Detach();
             canvas.DrawPath(path, pen);
         }
 
@@ -468,12 +470,13 @@ namespace Alternet.Drawing
 
             var paint = pen.SkiaPaint;
 
-            using var path = new SKPath();
-            path.MoveTo(points[0]);
+            using var builder = new SKPathBuilder();
+            builder.MoveTo(points[0]);
 
             for (int i = 1; i < points.Length; i++)
-                path.LineTo(points[i]);
+                builder.LineTo(points[i]);
 
+            var path = builder.Detach();
             canvas.DrawPath(path, paint);
         }
 
@@ -514,7 +517,7 @@ namespace Alternet.Drawing
         public override void DrawImage(Image image, PointD origin)
         {
             BeforeDrawImage(ref image, ref origin);
-            canvas.DrawBitmap((SKBitmap)image, origin, InterpolationModePaint);
+            canvas.DrawBitmap((SKBitmap)image, origin, GetEffectiveSamplingOptions(), DrawImagePaintSettings);
             AfterDrawImage();
         }
 
@@ -522,7 +525,7 @@ namespace Alternet.Drawing
         public override void DrawBitmap(SKBitmap bitmap, PointD origin)
         {
             BeforeDrawImage(ref origin);
-            canvas.DrawBitmap(bitmap, origin, InterpolationModePaint);
+            canvas.DrawBitmap(bitmap, origin, GetEffectiveSamplingOptions(), DrawImagePaintSettings);
             AfterDrawImage();
         }
 
@@ -530,7 +533,7 @@ namespace Alternet.Drawing
         public override void DrawImage(Image image, RectD destinationRect)
         {
             BeforeDrawImage(ref image, ref destinationRect);
-            canvas.DrawBitmap((SKBitmap)image, destinationRect, InterpolationModePaint);
+            canvas.DrawBitmap((SKBitmap)image, destinationRect, GetEffectiveSamplingOptions(), DrawImagePaintSettings);
             AfterDrawImage();
         }
 
@@ -578,7 +581,7 @@ namespace Alternet.Drawing
             Coord startAngle,
             Coord sweepAngle)
         {
-            var path = new SKPath();
+            using var builder = new SKPathBuilder();
 
             SKRect oval = new(
                 (float)(center.X - radius),
@@ -586,9 +589,12 @@ namespace Alternet.Drawing
                 (float)(center.X + radius),
                 (float)(center.Y + radius));
 
-            path.AddArc(oval, (float)startAngle, (float)sweepAngle);
-            path.LineTo(center);
-            path.Close();
+            builder.AddArc(oval, (float)startAngle, (float)sweepAngle);
+            builder.LineTo(center);
+            builder.Close();
+
+            var path = builder.Detach();
+
             return path;
         }
 

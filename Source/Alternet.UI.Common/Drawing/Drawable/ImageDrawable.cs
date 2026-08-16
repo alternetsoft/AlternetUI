@@ -304,12 +304,14 @@ namespace Alternet.Drawing
             {
                 if (UseCornerRadius)
                 {
-                    using var path = new SKPath();
+                    using var builder = new SKPathBuilder();
 
-                    path.AddRoundRect(new SKRect(rect.Left, rect.Top, rect.Right, rect.Bottom),
+                    builder.AddRoundRect(new SKRect(rect.Left, rect.Top, rect.Right, rect.Bottom),
                                         CornerRadiusX, CornerRadiusY);
 
                     dc.Canvas.Save();
+
+                    var path = builder.Detach();
 
                     dc.Canvas.ClipPath(path);
                     paintAction();
