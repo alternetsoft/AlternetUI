@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 
 using Alternet.UI;
 
@@ -305,6 +306,36 @@ public partial class StringFormat : DisposableObject, ICloneable
     /// Returns a string that represents the current object.
     /// </summary>
     public override string ToString() => $"[StringFormat, FormatFlags={FormatFlags}]";
+
+    /// <summary>
+    /// Logs the properties of this <see cref="StringFormat"/> instance to the debug output.
+    /// </summary>
+    /// <param name="name"></param>
+    public virtual void Log(string name)
+    {
+        Debug.WriteLine($"--- {name} ---");
+        Debug.WriteLine($"Alignment: {Alignment}");
+        Debug.WriteLine($"LineAlignment: {LineAlignment}");
+        Debug.WriteLine($"FormatFlags: {FormatFlags}");
+        Debug.WriteLine($"HotkeyPrefix: {HotkeyPrefix}");
+        Debug.WriteLine($"Trimming: {Trimming}");
+        Debug.WriteLine($"DigitSubstitutionMethod: {DigitSubstitutionMethod}");
+        Debug.WriteLine($"DigitSubstitutionLanguage: {DigitSubstitutionLanguage}");
+
+        float[] tabStops = GetTabStops(out var firstTabOffset);
+
+        Debug.WriteLine($"FirstTabOffset: {firstTabOffset}");
+        if (tabStops.Length == 0)
+        {
+            Debug.WriteLine("TabStops: (none)");
+        }
+        else
+        {
+            Debug.WriteLine("TabStops: " + string.Join(", ", tabStops));
+        }
+
+        Debug.WriteLine(string.Empty);
+    }
 
     /// <summary>
     /// Contains all properties of the <see cref="StringFormat"/>.
