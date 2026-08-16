@@ -749,7 +749,8 @@ namespace Alternet.Drawing
         /// <returns>An <see cref="SKBitmap"/> representing the concatenated image strip, or <see langword="null"/> if the
         /// collection contains no images.</returns>
         /// <param name="imageSize">The size of each individual image in the strip.</param>
-        public virtual SKBitmap? AsSkiaStrip(SizeI imageSize)
+        /// <param name="samplingOptions">The sampling options for drawing the images.</param>
+        public virtual SKBitmap? AsSkiaStrip(SizeI imageSize, SKSamplingOptions? samplingOptions = null)
         {
             if (Images.Count == 0)
                 return null;
@@ -760,11 +761,13 @@ namespace Alternet.Drawing
             var stripImage = new SKBitmap(stripWidth, height, false);
             var canvas = new SKCanvas(stripImage);
 
+            var options = samplingOptions ?? SKSamplingOptions.Default;
+
             for (int i = 0; i < Images.Count; i++)
             {
                 var image = Images[i];
                 var x = i * width;
-                canvas.DrawBitmap((SKBitmap)image, x, 0);
+                canvas.DrawBitmap((SKBitmap)image, x, 0, options);
             }
 
             return stripImage;

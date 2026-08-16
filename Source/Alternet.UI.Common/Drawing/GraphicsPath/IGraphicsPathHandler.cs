@@ -13,12 +13,17 @@ namespace Alternet.Drawing
     /// </summary>
     public interface IGraphicsPathHandler : IDisposable
     {
-
-        /// <inheritdoc cref="GraphicsPath.Path"/>
-        SKPath Path { get; set; }
+        /// <inheritdoc cref="GraphicsPath.PathBuilder"/>
+        SKPathBuilder PathBuilder { get; set; }
 
         /// <inheritdoc cref="GraphicsPath.FillMode"/>
         FillMode FillMode { get; set; }
+
+        /// <summary>
+        /// Gets the snapshot of the current path.
+        /// </summary>
+        /// <returns></returns>
+        SKPath GetSnapshot();
 
         /// <inheritdoc cref="GraphicsPath.AddLines"/>
         void AddLines(ReadOnlySpan<PointD> points);

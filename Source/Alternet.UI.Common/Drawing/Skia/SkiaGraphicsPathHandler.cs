@@ -13,16 +13,17 @@ namespace Alternet.Drawing
     /// </summary>
     public class SkiaGraphicsPathHandler : DisposableObject, IGraphicsPathHandler
     {
-        private SKPath path;
+        private SKPathBuilder pathBuilder;
+        private SKPath? path;
         private FillMode fillMode;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SkiaGraphicsPathHandler"/> class
-        /// with the specified <see cref="SKPath"/>.
+        /// with the specified <see cref="SKPathBuilder"/>.
         /// </summary>
-        public SkiaGraphicsPathHandler(SKPath path)
+        public SkiaGraphicsPathHandler(SKPathBuilder path)
         {
-            this.path = path;
+            this.pathBuilder = path;
         }
 
         /// <summary>
@@ -30,22 +31,23 @@ namespace Alternet.Drawing
         /// </summary>
         public SkiaGraphicsPathHandler()
         {
-            path = new();
+            pathBuilder = new();
         }
 
         /// <summary>
-        /// Gets the underlying SkiaSharp <see cref="SKPath"/> object.
+        /// Gets the underlying SkiaSharp <see cref="SKPathBuilder"/> object.
         /// </summary>
-        public SKPath Path
+        public SKPathBuilder PathBuilder
         {
             get
             {
-                return path;
+                return pathBuilder;
             }
 
             set
             {
-                path = value;
+                pathBuilder = value;
+                ResetPath();
             }
         }
 
@@ -57,45 +59,51 @@ namespace Alternet.Drawing
             {
                 if (fillMode == value)
                     return;
+                ResetPath();
                 fillMode = value;
-                path.FillType = fillMode.ToSkia();
+                pathBuilder.FillType = fillMode.ToSkia();
             }
         }
 
         /// <inheritdoc/>
         public virtual void AddRectangle(RectD rect)
         {
-            path.AddRect(rect);
+            ResetPath();
+            pathBuilder.AddRect(rect);
         }
 
         /// <inheritdoc/>
         public virtual void AddLineTo(PointD pt)
         {
-            path.LineTo(pt);
+            ResetPath();
+            pathBuilder.LineTo(pt);
         }
 
         /// <inheritdoc/>
         public virtual void CloseFigure()
         {
-            path.Close();
+            ResetPath();
+            pathBuilder.Close();
         }
 
         /// <inheritdoc/>
         public virtual void AddRoundedRectangle(RectD rect, float cornerRadius)
         {
-            path.AddRoundRect(rect, cornerRadius, cornerRadius);
+            ResetPath();
+            pathBuilder.AddRoundRect(rect, cornerRadius, cornerRadius);
         }
 
         /// <inheritdoc/>
         public virtual RectD GetBounds()
         {
-            return path.Bounds;
+            return GetSnapshot().Bounds;
         }
 
         /// <inheritdoc/>
         public virtual void AddEllipse(RectD rect)
         {
-            path.AddOval(rect);
+            ResetPath();
+            pathBuilder.AddOval(rect);
         }
 
         /// <inheritdoc/>
@@ -103,50 +111,83 @@ namespace Alternet.Drawing
         {
             if (points.Length < 2)
                 return;
+            ResetPath();
 
-            path.MoveTo(points[0]);
+            pathBuilder.MoveTo(points[0]);
 
             for (int i = 1; i < points.Length; i++)
-                path.LineTo(points[i]);
+                pathBuilder.LineTo(points[i]);
         }
 
         /// <inheritdoc/>
         public virtual void AddLine(PointD pt1, PointD pt2)
         {
-            path.MoveTo(pt1);
-            path.LineTo(pt2);
+            ResetPath();
+            pathBuilder.MoveTo(pt1);
+            pathBuilder.LineTo(pt2);
         }
 
         /// <inheritdoc/>
         public virtual void StartFigure(PointD point)
         {
-            path.MoveTo(point);
+            ResetPath();
+            pathBuilder.MoveTo(point);
         }
 
         /// <inheritdoc/>
         public virtual void AddBezier(PointD startPoint, PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
-            path.MoveTo(startPoint);
-            path.CubicTo(controlPoint1, controlPoint2, endPoint);
+            ResetPath();
+            pathBuilder.MoveTo(startPoint);
+            pathBuilder.CubicTo(controlPoint1, controlPoint2, endPoint);
         }
 
         /// <inheritdoc/>
         public virtual void AddBezierTo(PointD controlPoint1, PointD controlPoint2, PointD endPoint)
         {
-            path.CubicTo(controlPoint1, controlPoint2, endPoint);
+            ResetPath();
+            pathBuilder.CubicTo(controlPoint1, controlPoint2, endPoint);
         }
 
         /// <inheritdoc/>
         public virtual void AddArc(PointD center, float radius, float startAngle, float sweepAngle)
         {
+            ResetPath();
             var rect = RectD.GetCircleBoundingBox(center, radius);
-            path.AddArc(rect, startAngle, sweepAngle);
+            pathBuilder.AddArc(rect, startAngle, sweepAngle);
         }
 
         /// <inheritdoc/>
         public virtual void AddArc(RectD rect, float startAngle, float sweepAngle)
         {
-            path.AddArc(rect, startAngle, sweepAngle);
+            ResetPath();
+            pathBuilder.AddArc(rect, startAngle, sweepAngle);
+        }
+
+        /// <summary>
+        /// Gets a snapshot of the current path as an <see cref="SKPath"/> object.
+        /// </summary>
+        /// <returns></returns>
+        public virtual SKPath GetSnapshot()
+        {
+            if (path == null)
+            {
+                path = pathBuilder.Snapshot();
+            }
+
+            return path;
+        }
+
+        /// <inheritdoc/>
+        protected override void DisposeManaged()
+        {
+            base.DisposeManaged();
+            ResetPath();
+        }
+
+        private void ResetPath()
+        {
+            SafeDispose(ref path);
         }
     }
 }

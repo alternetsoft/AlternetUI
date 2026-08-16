@@ -63,11 +63,15 @@ namespace Alternet.Drawing
         /// <param name="scaleFactor">The scale factor for the polygon.</param>
         public SkiaRegionHandler(ReadOnlySpan<PointD> points, FillMode fillMode, float scaleFactor = 1.0f)
         {
-            SKPath path = new();
-            path.FillType = fillMode.ToSkia();
+            using var builder = new SKPathBuilder
+            {
+                FillType = fillMode.ToSkia(),
+            };
 
             ReadOnlySpan<SKPoint> spanSKPoint = MemoryMarshal.Cast<PointD, SKPoint>(points);
-            path.AddPoly(spanSKPoint);
+            builder.AddPoly(spanSKPoint);
+
+            SKPath path = builder.Detach();
 
             if (scaleFactor != 1.0f)
             {

@@ -163,6 +163,8 @@ public static class AnimatedImageExtractor
         using var canvasBitmap = new SKBitmap(info.Width, info.Height, info.ColorType, SKAlphaType.Premul);
         using var canvas = new SKCanvas(canvasBitmap);
 
+        var samplingOptions = SKSamplingOptions.Default;
+
         for (int i = 0; i < frameCount; i++)
         {
             var frameInfo = frameInfos[i];
@@ -177,7 +179,7 @@ public static class AnimatedImageExtractor
                 // Copy required frame's bitmap to canvas
                 canvas.Clear(SKColors.Transparent);
                 var requiredFrameBmp = finalFrames[frameInfo.RequiredFrame].CombinedBitmap;
-                canvas.DrawBitmap(requiredFrameBmp, 0, 0);
+                canvas.DrawBitmap(requiredFrameBmp, 0, 0, samplingOptions);
             }
 
             // Decode this frame as a partial/delta image (as stored in GIF)
@@ -187,7 +189,7 @@ public static class AnimatedImageExtractor
             codec.GetPixels(partialFrameBmp.Info, partialFrameBmp.GetPixels(), codecOpts);
 
             // Compose this frame over current state
-            canvas.DrawBitmap(partialFrameBmp, 0, 0);
+            canvas.DrawBitmap(partialFrameBmp, 0, 0, samplingOptions);
 
             // Save a copy of the composed frame (full view for playback)
             var composedBitmap = new SKBitmap(info.Width, info.Height, info.ColorType, SKAlphaType.Premul);

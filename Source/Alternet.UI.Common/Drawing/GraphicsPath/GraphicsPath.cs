@@ -36,7 +36,7 @@ namespace Alternet.Drawing
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsPath"/> class.
         /// </summary>
-        public GraphicsPath(SKPath path)
+        public GraphicsPath(SKPathBuilder path)
         {
             Handler = new SkiaGraphicsPathHandler(path);
         }
@@ -44,18 +44,18 @@ namespace Alternet.Drawing
         /// <summary>
         /// Gets or sets path as <see cref="SKPath"/>.
         /// </summary>
-        public SKPath Path
+        public SKPathBuilder PathBuilder
         {
             get
             {
                 CheckDisposed();
-                return Handler.Path;
+                return Handler.PathBuilder;
             }
 
             set
             {
                 CheckDisposed();
-                Handler.Path = value;
+                Handler.PathBuilder = value;
             }
         }
 

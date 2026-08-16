@@ -490,7 +490,7 @@ namespace Alternet.Drawing
                 throw new ArgumentException("Incompatible path handler", nameof(path));
             }
 
-            canvas.DrawPath(handler.Path, pen);
+            canvas.DrawPath(handler.GetSnapshot(), pen);
         }
 
         /// <inheritdoc/>
@@ -503,7 +503,7 @@ namespace Alternet.Drawing
                 throw new ArgumentException("Incompatible path handler", nameof(path));
             }
 
-            canvas.DrawPath(handler.Path, brush);
+            canvas.DrawPath(handler.GetSnapshot(), brush);
         }
 
         /// <inheritdoc/>

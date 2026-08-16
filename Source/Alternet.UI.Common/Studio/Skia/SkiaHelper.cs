@@ -648,13 +648,14 @@ namespace Alternet.Common.Skia
         /// Converts the specified <see cref="SKBitmap"/> to a grayscale version using a color filter.
         /// </summary>
         /// <param name="bitmap">The <see cref="SKBitmap"/> to convert to grayscale.</param>
+        /// <param name="samplingOptions">The sampling options for drawing the bitmap.</param>
         /// <returns>
         /// A new <see cref="SKBitmap"/> instance containing the grayscale version of the input bitmap.
         /// </returns>
         /// <exception cref="ArgumentNullException">
         /// Thrown if the <paramref name="bitmap"/> parameter is <c>null</c>.
         /// </exception>
-        public static SKBitmap ConvertToGrayscale(SKBitmap bitmap)
+        public static SKBitmap ConvertToGrayscale(SKBitmap bitmap, SKSamplingOptions? samplingOptions = null)
         {
             if (bitmap == null)
                 throw new ArgumentNullException(nameof(bitmap));
@@ -663,8 +664,10 @@ namespace Alternet.Common.Skia
             using SKSurface surface = SKSurface.Create(image.Info);
             using SKCanvas canvas = surface.Canvas;
 
+            var options = samplingOptions ?? SKSamplingOptions.Default;
+
             using SKPaint paint = new() { ColorFilter = SkiaHelper.GrayscaleColorFilter };
-            canvas.DrawBitmap(bitmap, 0, 0, paint);
+            canvas.DrawBitmap(bitmap, 0, 0, options, paint);
 
             var resultImage = surface.Snapshot();
 
@@ -770,7 +773,6 @@ namespace Alternet.Common.Skia
         {
             var pxSize = size;
 
-            bool isTransparent = color2 is null;
             if (x1 == x2)
             {
                 if (pxSize > 1)
@@ -957,22 +959,21 @@ namespace Alternet.Common.Skia
             if (points.Length < 3)
                 return null;
 
-            var path = new SKPath
+            using var builder = new SKPathBuilder
             {
                 FillType = fillMode.ToSkia(),
             };
 
-            // Move to the first point
-            path.MoveTo(points[0].X, points[0].Y);
+            builder.MoveTo(points[0].X, points[0].Y);
 
-            // Draw lines between the points
             for (int i = 1; i < points.Length; i++)
             {
-                path.LineTo(points[i].X, points[i].Y);
+                builder.LineTo(points[i].X, points[i].Y);
             }
 
-            // Ensures the polygon is closed
-            path.Close();
+            builder.Close();
+
+            var path = builder.Detach();
 
             return path;
         }
@@ -1094,13 +1095,16 @@ namespace Alternet.Common.Skia
             var pointsCount = points.Length;
             DebugBezierPointsAssert(points);
 
-            SKPath path = new();
-            path.MoveTo(points[0]);
+            using var builder = new SKPathBuilder();
+
+            builder.MoveTo(points[0]);
 
             for (int i = 1; i <= pointsCount - 3; i += 3)
             {
-                path.CubicTo(points[i], points[i + 1], points[i + 2]);
+                builder.CubicTo(points[i], points[i + 1], points[i + 2]);
             }
+
+            var path = builder.Detach();
 
             canvas.DrawPath(path, pen);
         }
@@ -1217,7 +1221,9 @@ namespace Alternet.Common.Skia
                 point1,
                 point2,
                 new[] { beginColor, endColor },
+#pragma warning disable
                 new float[] { 0f, 1f },
+#pragma warning restore
                 SKShaderTileMode.Clamp);
 
             using var paint = new SKPaint

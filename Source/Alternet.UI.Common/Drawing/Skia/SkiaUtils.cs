@@ -51,7 +51,7 @@ namespace Alternet.Drawing
         /// <param name="bottomLeftCorner">The radius of the bottom-left corner.</param>
         /// <param name="bottomRightCorner">The radius of the bottom-right corner.</param>
         public static void AddRoundRect(
-            SKPath skPath,
+            SKPathBuilder skPath,
             RectD rect,
             float topLeftCorner = 0,
             float topRightCorner = 0,
@@ -357,7 +357,7 @@ namespace Alternet.Drawing
             {
                 // Draw image centered horizontally
                 int x = (maxWidth - bmp.Width) / 2;
-                canvas.DrawBitmap(bmp, x, y);
+                canvas.DrawBitmap(bmp, x, y, SKSamplingOptions.Default);
 
                 y += bmp.Height;
 
@@ -626,23 +626,21 @@ namespace Alternet.Drawing
             if (points.Length < 3)
                 return null;
 
-            var path = new SKPath
+            using var builder = new SKPathBuilder
             {
                 FillType = fillMode.ToSkia(),
             };
 
-            // Move to the first point
-            path.MoveTo(points[0].X, points[0].Y);
+            builder.MoveTo(points[0].X, points[0].Y);
 
-            // Draw lines between the points
             for (int i = 1; i < points.Length; i++)
             {
-                path.LineTo(points[i].X, points[i].Y);
+                builder.LineTo(points[i].X, points[i].Y);
             }
 
-            // Ensures the polygon is closed
-            path.Close();
+            builder.Close();
 
+            var path = builder.Detach();
             return path;
         }
 
@@ -880,9 +878,10 @@ namespace Alternet.Drawing
             PointD endPoint)
         {
             Graphics.DebugPenAssert(pen);
-            SKPath path = new();
-            path.MoveTo(startPoint);
-            path.CubicTo(controlPoint1, controlPoint2, endPoint);
+            using var builder = new SKPathBuilder();
+            builder.MoveTo(startPoint);
+            builder.CubicTo(controlPoint1, controlPoint2, endPoint);
+            var path = builder.Detach();
             canvas.DrawPath(path, pen);
         }
 
@@ -993,13 +992,14 @@ namespace Alternet.Drawing
             var pointsCount = points.Length;
             Graphics.DebugBezierPointsAssert(points);
 
-            SKPath path = new();
-            path.MoveTo(points[0]);
+            using var builder = new SKPathBuilder();
+            builder.MoveTo(points[0]);
 
             for (int i = 1; i <= pointsCount - 3; i += 3)
             {
-                path.CubicTo(points[i], points[i + 1], points[i + 2]);
+                builder.CubicTo(points[i], points[i + 1], points[i + 2]);
             }
+            var path = builder.Detach();
 
             canvas.DrawPath(path, paint);
         }
