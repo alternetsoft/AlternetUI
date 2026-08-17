@@ -36,6 +36,10 @@ namespace ControlsSample
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
+        static ColorListBoxSamplePage()
+        {
+        }
+
         public ColorListBoxSamplePage()
         {
             Layout = LayoutStyle.Horizontal;
@@ -56,6 +60,11 @@ namespace ControlsSample
                 var brush = new HatchBrush(BrushHatchStyle.Horizontal, Color.Red);
 
                 listBox.AddBrushItem(brush, $"HatchBrush");
+            });
+
+            this.ContextMenuStrip.Add("Toggle color image alignment", () =>
+            {
+                listBox.IsColorRightAligned = !listBox.IsColorRightAligned;
             });
         }
 

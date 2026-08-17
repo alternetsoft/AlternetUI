@@ -47,6 +47,7 @@ namespace Alternet.UI
 
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
+        private bool isColorRightAligned;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
@@ -95,6 +96,21 @@ namespace Alternet.UI
                 useDisabledImageColor = value;
                 if (Enabled)
                     return;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether color image is right aligned in the item.
+        /// </summary>
+        public virtual bool IsColorRightAligned
+        {
+            get => isColorRightAligned;
+            set
+            {
+                if (isColorRightAligned == value)
+                    return;
+                isColorRightAligned = value;
                 Invalidate();
             }
         }
@@ -533,10 +549,13 @@ namespace Alternet.UI
                     return;
                 }
 
+                var isRight = colorListBox.IsColorRightAligned;
                 var itemBrush = GetImageBrush(colorListBox, e);
+                SizeD? imageSize = null;
+
                 if (colorListBox.TextVisible)
                 {
-                    var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClientRectangle);
+                    var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClientRectangle, imageSize, isRight);
                     e.ClientRectangle = itemRect;
                     colorListBox.DefaultDrawItemForeground(e);
                     PaintItemImage(e.Graphics, colorRect, itemBrush);
