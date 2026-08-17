@@ -24,7 +24,7 @@ namespace Alternet.UI
         private PopupColorListBox? popupWindow;
         private ClickActionKind actionKind = ClickActionKind.ShowPopup;
         private ClickActionKind longTapAction = ClickActionKind.None;
-        private ClickActionKind ctrlAction = ClickActionKind.ShowDialog;
+        private ClickActionKind ctrlAction = ClickActionKind.None;
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
 
