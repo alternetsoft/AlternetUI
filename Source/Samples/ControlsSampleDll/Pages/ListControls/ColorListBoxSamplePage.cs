@@ -58,8 +58,10 @@ namespace ControlsSample
             this.ContextMenuStrip.Add("Add brush item", () =>
             {
                 var brush = new HatchBrush(BrushHatchStyle.Horizontal, Color.Red);
+                var brushName = $"HatchBrush";
 
-                listBox.AddBrushItem(brush, $"HatchBrush");
+                listBox.AddBrushItem(brush, brushName);
+                comboBox.ListBox.AddBrushItem(brush, brushName);
             });
 
             this.ContextMenuStrip.Add("Toggle color image alignment", () =>
