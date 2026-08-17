@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,6 +49,9 @@ namespace Alternet.UI
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
         private bool isColorRightAligned;
+        private ItemImageSizeKind colorImageSizeKind = ItemImageSizeKind.Ratio;
+        private SizeD? colorImageSize;
+        private SizeD colorImageRatio = (3, 2);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
@@ -78,6 +82,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates the ways in which the size of the color image can be determined.
+        /// </summary>
+        public enum ItemImageSizeKind
+        {
+            /// <summary>
+            /// Color image size is calculated using height of the item.
+            /// </summary>
+            Auto,
+
+            /// <summary>
+            /// Color image size is specified by <see cref="ColorImageSize"/> property.
+            /// </summary>
+            Custom,
+
+            /// <summary>
+            /// Color image size is calculated using ratio of the height of the item.
+            /// </summary>
+            Ratio,
+        }
+
+        /// <summary>
         /// Gets or sets whether to use <see cref="DisabledImageColor"/>
         /// for painting of the color image
         /// when control is disabled.
@@ -101,8 +126,58 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets how to determine size of the color image in the item.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ItemImageSizeKind ColorImageSizeKind
+        {
+            get => colorImageSizeKind;
+
+            set
+            {
+                if (colorImageSizeKind == value)
+                    return;
+                colorImageSizeKind = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets size of the color image in the item.
+        /// It is used when <see cref="ColorImageSizeKind"/> is <see cref="ItemImageSizeKind.Custom"/>
+        /// </summary>
+        [Browsable(false)]
+        public virtual SizeD? ColorImageSize
+        {
+            get => colorImageSize;
+            set
+            {
+                if (colorImageSize == value) return;
+                colorImageSize = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the ratio of the color image size.
+        /// It is used when <see cref="ColorImageSizeKind"/> is <see cref="ItemImageSizeKind.Ratio"/>.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SizeD ColorImageRatio
+        {
+            get => colorImageRatio;
+            set
+            {
+                if (colorImageRatio == value) return;
+                colorImageRatio = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
         /// Gets or sets whether color image is right aligned in the item.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsColorRightAligned
         {
             get => isColorRightAligned;
@@ -477,6 +552,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Coerces the size of the color image based on the specified size.
+        /// </summary>
+        /// <param name="size">The size to coerce.</param>
+        /// <param name="prm">The parameters for coercing the image size.</param>
+        /// <returns>The coerced size.</returns>
+        protected virtual SizeD CoerceColorImageSize(SizeD size, ListControlItem.CoerceItemImageSizeParams prm)
+        {
+            switch (ColorImageSizeKind)
+            {
+                case ItemImageSizeKind.Custom:
+                    return ColorImageSize ?? size;
+                case ItemImageSizeKind.Ratio:
+
+                    var hratio = colorImageRatio.Height;
+                    if(hratio <= 0)
+                        hratio = 1;
+                    var wratio = colorImageRatio.Width;
+                    if (wratio <= 0)
+                        wratio  = 1;
+
+                    var height = size.Height;
+                    var v = height / hratio;
+                    var width = v * wratio;
+                    size = new SizeD(width, height);
+                    return size;
+            }
+
+            return size;
+        }
+
+        /// <summary>
         /// Default item painter for the <see cref="ColorListBox"/> items.
         /// </summary>
         public class DefaultItemPainter : IListBoxItemPainter
@@ -551,11 +657,13 @@ namespace Alternet.UI
 
                 var isRight = colorListBox.IsColorRightAligned;
                 var itemBrush = GetImageBrush(colorListBox, e);
-                SizeD? imageSize = null;
 
                 if (colorListBox.TextVisible)
                 {
-                    var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClientRectangle, imageSize, isRight);
+                    var (colorRect, itemRect) = ListControlItem.GetItemImageRect(
+                        e.ClientRectangle,
+                        colorListBox.CoerceColorImageSize,
+                        isRight);
                     e.ClientRectangle = itemRect;
                     colorListBox.DefaultDrawItemForeground(e);
                     PaintItemImage(e.Graphics, colorRect, itemBrush);
