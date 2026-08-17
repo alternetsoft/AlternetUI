@@ -163,6 +163,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Represents the method that is used to coerce the size of the image in a list control item.
+        /// </summary>
+        /// <param name="size">The size to coerce.</param>
+        /// <param name="prm">The parameters for the coercion.</param>
+        /// <returns>The coerced size.</returns>
+        public delegate SizeD CoerceItemImageSizeDelegate(SizeD size, CoerceItemImageSizeParams prm);
+
+        /// <summary>
         /// Represents the method that handles the event occurring before the text of a ListControlItem is drawn, allowing
         /// customization of the text rendering parameters.
         /// </summary>
@@ -2244,13 +2252,13 @@ namespace Alternet.UI
         /// Gets suggested rectangles of the item's image and text.
         /// </summary>
         /// <param name="rect">Item rectangle.</param>
-        /// <param name="imageSize">Image size. Optional. If not specified, calculated
-        /// using height of the item.</param>
+        /// <param name="coerceImageSize">Function to coerce image size. Optional. If not specified, image size is
+        /// calculated using height of the item.</param>
         /// <param name="isRight">Indicates whether the image should be aligned to the right.</param>
         /// <returns></returns>
         public static (RectD ImageRect, RectD TextRect) GetItemImageRect(
             RectD rect,
-            SizeD? imageSize = null,
+            CoerceItemImageSizeDelegate? coerceImageSize = null,
             bool isRight = false)
         {
             Thickness textMargin = GetAdditionalTextMargin();
@@ -2258,15 +2266,21 @@ namespace Alternet.UI
             var imageMargin = GetAdditionalImageMargin();
 
             var size = rect.Height - textMargin.Vertical - (imageMargin * 2);
+            var imageSize = new SizeD(size, size);
 
-            if (imageSize is null || imageSize.Value.Height > size)
-                imageSize = (size, size);
+            if (coerceImageSize != null)
+            {
+                imageSize = coerceImageSize(imageSize, CoerceItemImageSizeParams.Default);
+
+                if (imageSize.Height > size)
+                    imageSize = (size, size);
+            }
 
             PointD imageLocation = (
                 rect.X + textMargin.Left,
                 rect.Y + textMargin.Top + imageMargin);
 
-            var imageRect = new RectD(imageLocation, imageSize.Value);
+            var imageRect = new RectD(imageLocation, imageSize);
             var centeredImageRect = imageRect.CenterIn(rect, centerHorz: false, centerVert: true);
 
             var itemRect = rect;
@@ -2783,9 +2797,14 @@ namespace Alternet.UI
                 result.ImageIndeterminate = container.CheckImageIndeterminate;
             }
 
+            SizeD CoerceCheckSize(SizeD size, CoerceItemImageSizeParams prm)
+            {
+                return result.CheckSize;
+            }
+
             var (checkRect, textRect) = ListControlItem.GetItemImageRect(
                 rect,
-                result.CheckSize,
+                CoerceCheckSize,
                 isRight: IsCheckRightAligned);
 
             checkRect = checkRect.DeflatedWithPadding(CheckBoxMargin);
@@ -2973,6 +2992,17 @@ namespace Alternet.UI
                         BorderSettings.DebugBorder);
                 }
             }
+        }
+
+        /// <summary>
+        /// Parameters for <see cref="CoerceItemImageSizeDelegate"/> delegate.
+        /// </summary>
+        public readonly struct CoerceItemImageSizeParams
+        {
+            /// <summary>
+            /// Gets the default parameters for coercing item image size.
+            /// </summary>
+            public static readonly CoerceItemImageSizeParams Default = new();
         }
     }
 }
