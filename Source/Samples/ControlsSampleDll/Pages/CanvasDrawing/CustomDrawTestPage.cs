@@ -10,6 +10,7 @@ using Alternet.Drawing;
 using Alternet.UI;
 
 using SkiaSharp;
+using SkiaSharp.HarfBuzz;
 
 namespace ControlsSample
 {
@@ -146,6 +147,8 @@ namespace ControlsSample
 
             panel.AddAction("Draw Control Template", DrawControlTemplate);
 
+            panel.AddAction("Draw HarfBuzz sample", DrawHarfBuzzSample);
+
             horzScrollBar.ValueChanged += HorzScrollBar_ValueChanged;
         }
 
@@ -259,6 +262,49 @@ namespace ControlsSample
                 var image = new Bitmap();
                 canvas.DrawImage(image, PointD.Empty);
             });
+        }
+
+        public void DrawHarfBuzzSample()
+        {
+            customDrawControl.SetPaintAction(Draw);
+
+            void Draw(AbstractControl container, Graphics dc, RectD rect)
+            {
+                var canvas = dc.Canvas;
+
+                const string Hello_SkiaSharp = "Hello, SkiaSharp!";
+                const string ArabicHelloWorld = "مرحبا بالعالم";
+                const string HindiHelloWorld = "नमस्ते दुनिया";
+                const string Office_Ligature_Demo = "Office → ﬂ ligature demo";
+
+                canvas.Clear(SKColors.White);
+
+                using var paint1 = new SKPaint
+                {
+                    Color = SKColors.DarkBlue,
+                };
+                canvas.DrawShapedText(Hello_SkiaSharp, 20, 60, SKTextAlign.Left, Font.Default.WithSize(24), paint1);
+
+                using var paint2 = new SKPaint
+                {
+                    Color = SKColors.DarkRed,
+                };
+                canvas.DrawShapedText(ArabicHelloWorld, 20, 120, SKTextAlign.Left, Font.Default.WithSize(36), paint2);
+
+                // Example 3: Hindi text, italic
+                using var paint3 = new SKPaint
+                {
+                    Color = SKColors.ForestGreen,
+                };
+                canvas.DrawShapedText(HindiHelloWorld, 20, 180, SKTextAlign.Left, Font.Default.WithSize(40), paint3);
+
+                // Example 4: Ligatures in Latin text
+                using var paint4 = new SKPaint
+                {
+                    Color = SKColors.Purple,
+                };
+                canvas.DrawShapedText(Office_Ligature_Demo, 20, 240, SKTextAlign.Left, Font.Default.WithSize(28), paint4);
+            }
         }
 
         public void DrawControlTemplate()
