@@ -50,6 +50,13 @@ namespace ControlsSample
             textVisibleCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.TextVisible));
             comboBox.MinWidth = 150;
             comboBox.ValueChanged += ComboBox_SelectedItemChanged;
+
+            this.ContextMenuStrip.Add("Add brush item", () =>
+            {
+                var brush = new HatchBrush(BrushHatchStyle.Horizontal, Color.Red);
+
+                listBox.AddBrushItem(brush, $"HatchBrush");
+            });
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)

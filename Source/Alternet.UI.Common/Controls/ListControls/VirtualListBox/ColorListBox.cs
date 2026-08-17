@@ -38,8 +38,7 @@ namespace Alternet.UI
         /// Gets or sets method that paints color image in the item. Borders around
         /// color image are also painted by this method.
         /// </summary>
-        public static Action<Graphics, RectD, Color> PaintColorImage
-            = ColorListBox.PaintDefaultColorImage;
+        public static Action<Graphics, RectD, Brush> PaintItemImage = ColorListBox.PaintDefaultItemImage;
 
         /// <summary>
         /// Gets or sets method that initializes items in <see cref="ColorListBox"/>.
@@ -170,12 +169,12 @@ namespace Alternet.UI
         /// <summary>
         /// Paints color image in the item with the default style. Borders around
         /// color image are also painted by this method.
-        /// This is default value of the <see cref="PaintColorImage"/> field.
+        /// This is default value of the <see cref="PaintItemImage"/> field.
         /// </summary>
         /// <param name="canvas"><see cref="Graphics"/> where drawing is performed.</param>
         /// <param name="rect"><see cref="RectD"/> where drawing is performed.</param>
-        /// <param name="color">Color value.</param>
-        public static void PaintDefaultColorImage(Graphics canvas, RectD rect, Color color)
+        /// <param name="brush">Color value.</param>
+        public static void PaintDefaultItemImage(Graphics canvas, RectD rect, Brush brush)
         {
             RectD colorRect = DrawingUtils.DrawDoubleBorder(
                 canvas,
@@ -183,7 +182,7 @@ namespace Alternet.UI
                 Color.Empty,
                 ListControlItem.DefaultImageBorderColor);
 
-            canvas.FillRectangle(color.AsBrush, colorRect);
+            canvas.FillRectangle(brush, colorRect);
         }
 
         /// <summary>
@@ -226,6 +225,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Default method of the item creation for the specified brush and title.
+        /// </summary>
+        /// <param name="title">Brush title.</param>
+        /// <param name="value">Brush value.</param>
+        /// <returns></returns>
+        public static ListControlItem DefaultCreateItem(Brush value, string title)
+        {
+            ListControlItem controlItem = new(title, value);
+            return controlItem;
+        }
+
+        /// <summary>
         /// Gets color value of the specified item or default color.
         /// </summary>
         /// <param name="control">Control with items.</param>
@@ -248,6 +259,22 @@ namespace Alternet.UI
                 itemColor = defaultValue;
 
             return itemColor;
+        }
+
+        /// <summary>
+        /// Gets value of the specified item as a <see cref="Brush"/> object.
+        /// </summary>
+        /// <param name="control">The control containing the item.</param>
+        /// <param name="itemIndex">The index of the item.</param>
+        /// <returns>The brush value of the item, or <see langword="null"/> if the item is not a brush.</returns>
+        public static Brush? GetItemValueAsBrush(IListControl control, int itemIndex)
+        {
+            object? item = control.GetItemAsObject(itemIndex);
+
+            if (item is ListControlItem item1)
+                item = item1.Value;
+
+            return item as Brush;
         }
 
         /// <summary>
@@ -341,12 +368,35 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates item for the specified brush and title.
+        /// </summary>
+        /// <param name="title">Brush title.</param>
+        /// <param name="value">Brush value.</param>
+        /// <returns></returns>
+        public virtual ListControlItem CreateItem(Brush value, string title)
+        {
+            return DefaultCreateItem(value, title);
+        }
+
+        /// <summary>
         /// Adds color to the list of colors.
         /// </summary>
         /// <param name="title">Color title. Optional. If not specified,
         /// <see cref="Color.ToDisplayString"/> will be used.</param>
         /// <param name="value">Color value.</param>
         public virtual ListControlItem AddColor(Color? value, string? title = null)
+        {
+            var item = CreateItem(value, title);
+            Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Adds brush item to the list of items.
+        /// </summary>
+        /// <param name="title">Brush title.</param>
+        /// <param name="value">Brush value.</param>
+        public virtual ListControlItem AddBrushItem(Brush value, string title)
         {
             var item = CreateItem(value, title);
             Add(item);
@@ -430,23 +480,47 @@ namespace Alternet.UI
             /// <param name="sender">Control.</param>
             /// <param name="e">Parameters.</param>
             /// <returns></returns>
-            public virtual Color GetImageColor(
-                ColorListBox sender,
-                ListBoxItemPaintEventArgs e)
+            public virtual Color GetImageColor(ColorListBox sender, ListBoxItemPaintEventArgs e)
             {
                 var itemColor = GetItemValueOrDefault(sender, e.ItemIndex, Color.White);
-                var colorListBox = sender as ColorListBox;
-                var useDisabledImageColor = colorListBox?.UseDisabledImageColor ?? false;
+                var useDisabledImageColor = sender.UseDisabledImageColor;
 
                 if (!sender.Enabled && useDisabledImageColor)
                 {
-                    var disabledColor = colorListBox?.DisabledImageColor
-                        ?? DefaultDisabledImageColor;
+                    var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
                     if (disabledColor is not null)
                         itemColor = disabledColor;
                 }
 
                 return itemColor;
+            }
+
+            /// <summary>
+            /// Gets image brush for the item.
+            /// </summary>
+            /// <param name="sender">Control.</param>
+            /// <param name="e">Parameters.</param>
+            /// <returns></returns>
+            public virtual Brush GetImageBrush(ColorListBox sender, ListBoxItemPaintEventArgs e)
+            {
+                var result = GetItemValueAsBrush(sender, e.ItemIndex);
+
+                if(result is null)
+                {
+                    result = GetImageColor(sender, e).AsBrush;
+                    return result;
+                }
+
+                var useDisabledImageColor = sender.UseDisabledImageColor;
+
+                if (!sender.Enabled && useDisabledImageColor)
+                {
+                    var disabledColor = sender.DisabledImageColor ?? DefaultDisabledImageColor;
+                    if (disabledColor is not null)
+                        result = disabledColor.AsBrush;
+                }
+
+                return result;
             }
 
             /// <inheritdoc/>
@@ -459,17 +533,17 @@ namespace Alternet.UI
                     return;
                 }
 
-                var itemColor = GetImageColor(colorListBox, e);
+                var itemBrush = GetImageBrush(colorListBox, e);
                 if (colorListBox.TextVisible)
                 {
                     var (colorRect, itemRect) = ListControlItem.GetItemImageRect(e.ClientRectangle);
                     e.ClientRectangle = itemRect;
                     colorListBox.DefaultDrawItemForeground(e);
-                    PaintColorImage(e.Graphics, colorRect, itemColor);
+                    PaintItemImage(e.Graphics, colorRect, itemBrush);
                 }
                 else
                 {
-                    PaintColorImage(e.Graphics, e.ClientRectangle, itemColor);
+                    PaintItemImage(e.Graphics, e.ClientRectangle, itemBrush);
                 }
             }
 
