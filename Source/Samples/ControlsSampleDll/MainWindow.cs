@@ -130,9 +130,9 @@ namespace ControlsSample
                 AddPage("ListView",() => new ListViewPage());
                 AddPage("DateTime", CreateDateTimePage);
                 AddPage("Number", CreateNumericInputPage);
-                AddPage("Slider, Progress", CreateSliderAndProgressPage);
+                AddPage("Sliders", CreateSliderAndProgressPage);
                 AddPage("Layout", CreateLayoutPage);
-                AddPage("Rich ToolTip", () => new ToolTipPage());
+                AddPage("ToolTip", () => new ToolTipPage());
 
                 AddPage("TabControl", CreateTabControlPage);
                 AddPage("Multimedia", CreateMultimediaPage);
