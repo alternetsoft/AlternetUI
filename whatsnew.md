@@ -1,3 +1,29 @@
+# 1.1.6 (2026 August 17)
+
+- ColorListBox: ColorImageSizeKind, ColorImageSize, ColorImageRatio, IsColorRightAligned, AddBrushItem, AddEmptyColor.
+- ListControlItem: Change GetItemImageRect declaration to accept CoerceItemImageSizeDelegate param.
+- Use latest SkiaSharp nuget version (4.151.1).
+- Create StringFormat, CharacterRange, StringTrimming, StringFormatFlags, StringDigitSubstitute, HotkeyPrefix.
+- SpeedButtonWithPopup: SelectedValueChanged, SelectedItem.
+- ListPicker.DropDownStyle.
+- ListPicker: Items property is now WinForms compatible. Old Items property was renamed to ListItems.
+- CardPanelHeader: ImageHorizontalAlignment, ImageVerticalAlignment.
+- TabControl and CardPanelHeader: DrawTabSeparatorLines.
+- CardPanelHeader: Fixes close button paint when tabs are left/right aligned and add OnCloseButtonClick.
+- CardPanelHeader: Made inner panels paint methods overridable.
+- Graphics: Fix vertical text paint in DrawLabel.
+- Add VertDirection to Label, SpeedButton, TabControl, CardPanelHeader.
+- Add Graphics.DrawVerticalText with VerticalTextDirection parameter.
+- Graphics.DrawVertTextFromBottom.
+- GraphicsPath: Path, PathBuilder and new constructor.
+- TextFormat.TextBackColor.
+- PanelSettings: Allow to customize editor with ColorListBox using custom args: HasEmptyColor and HasTransparentColor.
+- ColorListBox..
+- XScrollBar minor improvements and bug fixes.
+- Graphics: Fix DrawArc.
+
+---
+
 # 1.1.5 (2026 August 10)
 
 - TextRenderer: Use ReadOnlySpan{char} for text.
