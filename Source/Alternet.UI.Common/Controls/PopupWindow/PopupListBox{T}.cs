@@ -23,14 +23,16 @@ namespace Alternet.UI
         /// </summary>
         public PopupListBox()
         {
-            MinimumSize = DefaultMinimumSize;
-            Title = CommonStrings.Default.WindowTitleSelectValue;
+            InitPopup();
+        }
 
-            MainControl.SizeChanged += (s, e) =>
-            {
-                if (AutoScrollOnResize)
-                    ScrollToSelectedRow();
-            };
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupListBox{T}"/> class with specified parameters.
+        /// </summary>
+        public PopupListBox(object? initialSettings)
+            : base(initialSettings)
+        {
+            InitPopup();
         }
 
         /// <summary>
@@ -39,7 +41,8 @@ namespace Alternet.UI
         public static SizeD DefaultMinimumSize { get; set; } = (200, 300);
 
         /// <summary>
-        /// Gets or sets a value indicating whether the list box popup should automatically scroll to the selected item when resized.
+        /// Gets or sets a value indicating whether the list box popup should
+        /// automatically scroll to the selected item when resized.
         /// </summary>
         public virtual bool AutoScrollOnResize { get; set; } = false;
 
@@ -153,6 +156,21 @@ namespace Alternet.UI
             UpdateResultIndex(e);
             if (resultIndex is not null)
                 base.OnMainControlMouseLeftButtonUp(sender, e);
+        }
+
+        /// <summary>
+        /// Called from the constructor to initialize the popup window.
+        /// </summary>
+        protected virtual void InitPopup()
+        {
+            MinimumSize = DefaultMinimumSize;
+            Title = CommonStrings.Default.WindowTitleSelectValue;
+
+            MainControl.SizeChanged += (s, e) =>
+            {
+                if (AutoScrollOnResize)
+                    ScrollToSelectedRow();
+            };
         }
 
         /// <inheritdoc/>
