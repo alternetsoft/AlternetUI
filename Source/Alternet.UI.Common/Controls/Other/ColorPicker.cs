@@ -22,18 +22,28 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public ColorPicker(AbstractControl parent)
-            : this()
+            : this(useDefaultColors: true)
         {
             Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ColorPicker"/> class with specified default colors usage flag.
+        /// </summary>
+        /// <param name="useDefaultColors">A value indicating whether to use default colors.</param>
+        public ColorPicker(bool useDefaultColors)
+            : base(useDefaultColors)
+        {
+            UseTheme = KnownTheme.StaticBorder;
+            UseControlColors(DefaultUseControlColors);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorPicker"/> class.
         /// </summary>
         public ColorPicker()
+            : this(useDefaultColors: true)
         {
-            UseTheme = KnownTheme.StaticBorder;
-            UseControlColors(DefaultUseControlColors);
         }
 
         /// <inheritdoc/>
