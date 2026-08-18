@@ -18,7 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public static SizeD DefaultColorImageSizeDips = 12;
 
-        private bool useDefaultColors = true;
+        private readonly bool useDefaultColors = true;
         private Color? color = Color.Black;
         private SizeD colorImageSize = DefaultColorImageSizeDips;
         private ColorDialog? colorDialog;
