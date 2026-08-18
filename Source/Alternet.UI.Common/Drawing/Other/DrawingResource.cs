@@ -15,12 +15,22 @@ namespace Alternet.Drawing
         private Brush? brush;
         private Pen? pen;
         private Color? color;
+        private string? title;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawingResource"/> class.
         /// </summary>
         public DrawingResource()
         {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawingResource"/> class with specified color.
+        /// </summary>
+        /// <param name="color">Color object.</param>
+        public DrawingResource(Color? color)
+        {
+            this.color = color;
         }
 
         /// <summary>
@@ -32,6 +42,30 @@ namespace Alternet.Drawing
         {
             this.brush = brush;
             this.pen = pen;
+        }
+
+        /// <summary>
+        /// Gets or sets title of the drawing resource.
+        /// </summary>
+        public virtual string? Title
+        {
+            get
+            {
+                var result = title;
+
+                if (result != null)
+                    return result;
+
+                if (HasColor)
+                    return Color?.ToDisplayString();
+
+                return result;
+            }
+
+            set
+            {
+                title = value;
+            }
         }
 
         /// <summary>
