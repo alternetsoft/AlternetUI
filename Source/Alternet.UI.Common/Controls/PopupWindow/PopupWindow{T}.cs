@@ -33,6 +33,7 @@ namespace Alternet.UI
         /// </summary>
         public static SpeedButton.KnownTheme DefaultOkCancelTheme = SpeedButton.KnownTheme.RoundBorder;
 
+        private readonly object? initialSettings;
         private readonly VerticalStackPanel mainPanel = new();
         private readonly ControlSubscriber notification = new();
         private readonly ToolBar bottomToolBar = new();
@@ -49,10 +50,12 @@ namespace Alternet.UI
         private T? mainControl;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PopupWindow{T}"/> class.
+        /// Initializes a new instance of the <see cref="PopupWindow{T}"/> class with specified parameters.
         /// </summary>
-        public PopupWindow()
+        /// <param name="initialSettings">The initial settings for the popup window.</param>
+        public PopupWindow(object? initialSettings)
         {
+            this.initialSettings = initialSettings;
             Layout = LayoutStyle.Vertical;
             mainPanel.VerticalAlignment = VerticalAlignment.Fill;
 
@@ -119,6 +122,14 @@ namespace Alternet.UI
             MainControl.Required();
             HideOnDeactivate = true;
             AllowFormKeyPreview = false;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupWindow{T}"/> class.
+        /// </summary>
+        public PopupWindow()
+            : this(initialSettings: null)
+        {
         }
 
         /// <summary>
@@ -464,6 +475,14 @@ namespace Alternet.UI
                 BindEvents(mainControl);
                 mainControl.Parent = mainPanel;
             }
+        }
+
+        /// <summary>
+        /// Gets create parameters passed to the constructor of the popup window.
+        /// </summary>
+        protected object? InitialSettings
+        {
+            get { return initialSettings; }
         }
 
         /// <summary>
