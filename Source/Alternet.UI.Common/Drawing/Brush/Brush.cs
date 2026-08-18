@@ -179,6 +179,35 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Creates <see cref="Image"/> with this brush as a fill.
+        /// </summary>
+        /// <param name="size">The size of the image.</param>
+        /// <param name="scaleFactor">The scale factor for the image.</param>
+        /// <param name="borderColor">The color of the border. If not specified, a default border color will be used.</param>
+        /// <returns>The created image.</returns>
+        public virtual Image AsImageWithBorder(
+            SizeD size,
+            Coord scaleFactor,
+            Color? borderColor = null)
+        {
+            borderColor ??= ListControlItem.DefaultImageBorderColor;
+
+            var graphics = SkiaUtils.CreateBitmapCanvas(size, scaleFactor, true);
+
+            RectD rect = (PointD.Empty, size);
+
+            RectD colorRect = DrawingUtils.DrawDoubleBorder(
+                graphics,
+                rect,
+                Color.Empty,
+                borderColor);
+
+            graphics.FillRectangle(this, colorRect);
+
+            return (Image)graphics.Bitmap!;
+        }
+
+        /// <summary>
         /// Serves as the default hash function.
         /// </summary>
         /// <returns>A hash code for the current object.</returns>

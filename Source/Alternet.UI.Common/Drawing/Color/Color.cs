@@ -1811,21 +1811,7 @@ namespace Alternet.Drawing
             Coord scaleFactor,
             Color? borderColor = null)
         {
-            borderColor ??= ListControlItem.DefaultImageBorderColor;
-
-            var graphics = SkiaUtils.CreateBitmapCanvas(size, scaleFactor, true);
-
-            RectD rect = (PointD.Empty, size);
-
-            RectD colorRect = DrawingUtils.DrawDoubleBorder(
-                graphics,
-                rect,
-                Color.Empty,
-                borderColor);
-
-            graphics.FillRectangle(this.AsBrush, colorRect);
-
-            return (Image)graphics.Bitmap!;
+            return AsBrush.AsImageWithBorder(size, scaleFactor, borderColor);
         }
 
         /// <summary>
