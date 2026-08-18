@@ -17,8 +17,32 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="PopupColorListBox"/> class.
         /// </summary>
         public PopupColorListBox()
+            : this(defaultColors: true)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PopupColorListBox"/> class with specified default colors usage flag.
+        /// </summary>
+        /// <param name="defaultColors">A value indicating whether to use default colors.</param>
+        public PopupColorListBox(bool defaultColors)
+            : base(defaultColors)
         {
             Title = CommonStrings.Default.WindowTitleSelectColor;
+        }
+
+        /// <inheritdoc/>
+        protected override ColorListBox CreateMainControl()
+        {
+            bool defaultColors = true;
+
+            if (InitialSettings is bool initialSettingsBool)
+                defaultColors = initialSettingsBool;
+
+            return new ColorListBox(defaultColors)
+            {
+                HasBorder = false,
+            };
         }
 
         /// <summary>
