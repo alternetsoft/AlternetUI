@@ -146,7 +146,14 @@ namespace Alternet.UI
             {
                 if (ShowDialog == value)
                     return;
-                actionKind = ClickActionKind.ShowDialog;
+                if (value)
+                {
+                    actionKind = ClickActionKind.ShowDialog;
+                }
+                else
+                {
+                    actionKind = ClickActionKind.None;
+                }
             }
         }
 

@@ -63,5 +63,19 @@ namespace Alternet.UI
                 return color;
             }
         }
+
+        /// <summary>
+        /// Gets popup result as <see cref="DrawingResource"/>.
+        /// </summary>
+        public virtual DrawingResource? ResultAsDrawingResource
+        {
+            get
+            {
+                if (ResultIndex is null)
+                    return null;
+                var result = ColorListBox.GetItemValueAsDrawingResource(MainControl, ResultIndex.Value);
+                return result;
+            }
+        }
     }
 }

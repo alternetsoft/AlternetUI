@@ -369,6 +369,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets value of the specified item as a <see cref="DrawingResource"/> object.
+        /// </summary>
+        /// <param name="control">The control containing the item.</param>
+        /// <param name="itemIndex">The index of the item.</param>
+        /// <returns>The drawing resource value of the item, or <see langword="null"/> if the item is not a drawing resource.</returns>
+        public static DrawingResource? GetItemValueAsDrawingResource(IListControl control, int itemIndex)
+        {
+            object? item = control.GetItemAsObject(itemIndex);
+
+            if (item is ListControlItem item1)
+                item = item1.Value;
+
+            if (item is DrawingResource drawingResource)
+                return drawingResource;
+
+            if (item is Color color)
+                return new DrawingResource(color);
+
+            if (item is Brush brush)
+                return new DrawingResource(brush, null);
+
+            if (item is Pen pen)
+                return new DrawingResource(null, pen);
+
+            return null;
+        }
+
+        /// <summary>
         /// Retrieves the value of the specified item as a <see cref="Color"/> object.
         /// </summary>
         /// <remarks>This method attempts to cast the value of the
