@@ -107,5 +107,56 @@ namespace Alternet.Drawing
                 return (brush?.SkiaPaint ?? Color?.AsBrush.SkiaPaint, pen?.SkiaPaint ?? Color?.AsBrush.SkiaPaint);
             }
         }
+
+        /// <summary>
+        /// Defines implicit conversion from <see cref="Brush"/> to <see cref="DrawingResource"/>.
+        /// </summary>
+        public static implicit operator DrawingResource?(Brush? brush)
+        {
+            return brush == null ? null : new DrawingResource { Brush = brush };
+        }
+
+        /// <summary>
+        /// Defines implicit conversion from <see cref="Pen"/> to <see cref="DrawingResource"/>.
+        /// </summary>
+        public static implicit operator DrawingResource?(Pen? pen)
+        {
+            return pen == null ? null : new DrawingResource { Pen = pen };
+        }
+
+        /// <summary>
+        /// Defines implicit conversion from <see cref="Color"/> to <see cref="DrawingResource"/>.
+        /// </summary>
+        public static implicit operator DrawingResource?(Color? color)
+        {
+            return color == null ? null : new DrawingResource { Color = color };
+        }
+
+        /// <summary>
+        /// Defines implicit conversion from <see cref="DrawingResource"/> to <see cref="Brush"/>.
+        /// </summary>
+        /// <param name="resource">The drawing resource to convert.</param>
+        public static implicit operator Brush?(DrawingResource? resource)
+        {
+            return resource?.Brush;
+        }
+
+        /// <summary>
+        /// Defines implicit conversion from <see cref="DrawingResource"/> to <see cref="Pen"/>.
+        /// </summary>
+        /// <param name="resource">The drawing resource to convert.</param>
+        public static implicit operator Pen?(DrawingResource? resource)
+        {
+            return resource?.Pen;
+        }
+        
+        /// <summary>
+        /// Defines implicit conversion from <see cref="DrawingResource"/> to <see cref="Color"/>.
+        /// </summary>
+        /// <param name="resource">The drawing resource to convert.</param>
+        public static implicit operator Color?(DrawingResource? resource)
+        {
+            return resource?.Color;
+        }
     }
 }
