@@ -32,6 +32,7 @@ namespace ControlsSample
         };
 
         private readonly ColorPicker colorPicker;
+        private readonly DrawingResourcePicker drawingResourcePicker;
 
         static ColorListBoxSamplePage()
         {
@@ -39,6 +40,8 @@ namespace ControlsSample
 
         public ColorListBoxSamplePage()
         {
+            drawingResourcePicker = new ();
+
             colorPicker = new(useDefaultColors: true)
             {
                 HorizontalAlignment = HorizontalAlignment.Left,
@@ -48,22 +51,43 @@ namespace ControlsSample
             MinChildMargin = 10;
             listBox.Parent = this;
             panel.Parent = this;
-            colorPicker.Value = Color.Red;
-            colorPicker.Parent = panel;
             textVisibleCheckBox.Parent = panel;
             setColorButton.Parent = panel;
             setColorButton.Click += SetColorButton_Click;
             textVisibleCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.TextVisible));
+
+            new Label("Color picker:").Parent = panel;
+
+            colorPicker.Value = Color.Red;
+            colorPicker.Parent = panel;
             colorPicker.MinWidth = 150;
             colorPicker.ValueChanged += ComboBox_SelectedItemChanged;
 
+            new Label("Brush picker:").Parent = panel;
+
+            drawingResourcePicker.Parent = panel;
+            drawingResourcePicker.MinWidth = 150;
+
+            var brush1 = new HatchBrush(BrushHatchStyle.Horizontal, LightDarkColors.Red);
+            DrawingResource brush1resource = new(brush1);
+            var brush1Name = $"Horizontal Red";
+            brush1resource.Title = brush1Name;
+
+            var brush2 = new HatchBrush(BrushHatchStyle.Vertical, LightDarkColors.Green);
+            DrawingResource brush2resource = new(brush2);
+            var brush2Name = $"Vertical Green";
+            brush2resource.Title = brush2Name;
+
+            drawingResourcePicker.Add(brush1resource);
+            drawingResourcePicker.Add(brush2resource);
+
+            drawingResourcePicker.Value = brush1resource;
+
             this.ContextMenuStrip.Add("Add brush item", () =>
             {
-                var brush = new HatchBrush(BrushHatchStyle.Horizontal, Color.Red);
-                var brushName = $"HatchBrush";
 
-                listBox.AddBrushItem(brush, brushName);
-                colorPicker.ListBox.AddBrushItem(brush, brushName);
+                listBox.AddBrushItem(brush1, brush1Name);
+                colorPicker.ListBox.AddBrushItem(brush1, brush1Name);
             });
 
             this.ContextMenuStrip.Add("Toggle color image alignment", () =>

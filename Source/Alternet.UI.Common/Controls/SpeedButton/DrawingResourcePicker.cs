@@ -9,6 +9,9 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Implements <see cref="SpeedButton"/> for editing of the <see cref="DrawingResource"/> values.
+    /// In the editor, the <see cref="DrawingResource"/> value can be changed by selecting an item from the list box.
+    /// Item image is painted using the <see cref="DrawingResource"/> value.
+    /// <see cref="DrawingResource"/> can be defined by a brush, pen, or color.
     /// </summary>
     [ControlCategory(KnownControlCategory.Editors)]
     public partial class DrawingResourcePicker : SpeedButton
@@ -99,7 +102,7 @@ namespace Alternet.UI
                 if (popupWindow is null)
                 {
                     popupWindow = new(defaultColors: false);
-                    popupWindow.Title = CommonStrings.Default.WindowTitleSelectColor;
+                    popupWindow.Title = CommonStrings.Default.WindowTitleSelectValue;
                     popupWindow.AfterHide += PopupWindowAfterHideHandler;
                 }
 
@@ -175,8 +178,14 @@ namespace Alternet.UI
             {
                 if (data == value)
                     return;
-                data = value;                
-                base.Text = data?.Title ?? string.Empty;
+                data = value;
+                var s = data?.Title ?? StringUtils.OneSpace;
+
+                if (s.Length == 0)
+                    s = StringUtils.OneSpace;
+
+                base.Text = s;
+
                 ValueChanged?.Invoke(this, EventArgs.Empty);
                 OnValueImageChanged();
             }
@@ -235,11 +244,11 @@ namespace Alternet.UI
         /// Gets or sets <see cref="Value"/> as <see cref="string"/>.
         /// </summary>
         [Browsable(false)]
-        internal new string? Text
+        public override string Text
         {
             get
             {
-                return string.Empty;
+                return base.Text;
             }
 
             set
@@ -293,6 +302,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds drawng resource item to the list of items.
+        /// </summary>
+        /// <param name="value">Drawing resource value.</param>
+        public virtual ListControlItem Add(DrawingResource value)
+        {
+            var item = ListBox.CreateItem(value);
+            ListBox.Add(item);
+            return item;
+        }
+
+        /// <summary>
+        /// Selects specified <see cref="DrawingResource"/> in the list box.
+        /// </summary>
+        /// <param name="newValue">The new value to select.</param>
+        public virtual void Select(DrawingResource? newValue)
+        {
+            if (newValue is null)
+            {
+                PopupWindow.MainControl.SelectedIndex = null;
+                return;
+            }
+
+            for (int i = 0; i < PopupWindow.MainControl.Count; i++)
+            {
+                var item = PopupWindow.MainControl[i];
+
+                if (item is null)
+                    continue;
+
+                if (item.Value is DrawingResource itemResource)
+                {
+                    if (itemResource == newValue)
+                    {
+                        PopupWindow.MainControl.SelectedIndex = i;
+                        return;
+                    }
+                }
+            }
+
+            PopupWindow.MainControl.SelectedIndex = null;
+        }
+
+        /// <summary>
         /// Shows color popup.
         /// </summary>
         public virtual void ShowColorPopup()
@@ -300,7 +352,7 @@ namespace Alternet.UI
             if (!Enabled)
                 return;
 
-            PopupWindow.MainControl.Value = Value;
+            Select(Value);
             PopupWindow.ShowPopup(this);
         }
 
@@ -363,35 +415,30 @@ namespace Alternet.UI
             UseControlColors(DefaultUseControlColors);
             base.OnSystemColorsChanged(e);
         }
-        
+
         /// <summary>
         /// Raised when item image is changed.
         /// </summary>
         protected virtual void OnValueImageChanged(bool refresh = true)
         {
-            DrawingResource? imageResource = data ?? Color.Transparent;
+            DrawingResource? imageResource = data;
 
             if (!Enabled && useDisabledImageColor)
             {
                 var disabledColor = DisabledImageColor ?? ColorListBox.DefaultDisabledImageColor;
                 if (disabledColor is not null)
-                    imageResource = disabledColor;
+                    imageResource = new(disabledColor);
             }
 
-            if (imageResource is null)
-            {
-                LabelImage = null;
-            }
+            imageResource ??= new(Color.Empty);
+
+            if (imageResource.HasBrush)
+                LabelImage = imageResource.Brush?.AsImageWithBorder(valueImageSize, ScaleFactor);
             else
-            {
-                if(imageResource.HasBrush)
-                    LabelImage = imageResource.Brush?.AsImageWithBorder(valueImageSize, ScaleFactor);
+                if (imageResource.HasColor)
+                    LabelImage = imageResource.Color?.AsBrush.AsImageWithBorder(valueImageSize, ScaleFactor);
                 else
-                    if (imageResource.HasColor)
-                        LabelImage = imageResource.Color?.AsBrush.AsImageWithBorder(valueImageSize, ScaleFactor);
-                    else
-                        LabelImage = null;
-            }
+                    LabelImage = Color.Empty.AsBrush.AsImageWithBorder(valueImageSize, ScaleFactor);
 
             if (refresh)
                 Refresh();

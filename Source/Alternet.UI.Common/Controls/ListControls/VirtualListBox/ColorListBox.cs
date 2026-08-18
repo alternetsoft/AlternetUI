@@ -316,6 +316,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Default method of the item creation for the specified drawing resource and title.
+        /// </summary>
+        /// <param name="value">Drawing resource value.</param>
+        /// <returns></returns>
+        public static ListControlItem DefaultCreateItem(DrawingResource value)
+        {
+            ListControlItem controlItem = new(value.Title ?? string.Empty, value);
+            return controlItem;
+        }
+
+        /// <summary>
         /// Default method of the item creation for the specified brush and title.
         /// </summary>
         /// <param name="title">Brush title.</param>
@@ -365,7 +376,13 @@ namespace Alternet.UI
             if (item is ListControlItem item1)
                 item = item1.Value;
 
-            return item as Brush;
+            if (item is Brush brush)
+                return brush;
+
+            if (item is DrawingResource drawingResource)
+                return drawingResource.Brush;
+
+            return null;
         }
 
         /// <summary>
@@ -376,22 +393,35 @@ namespace Alternet.UI
         /// <returns>The drawing resource value of the item, or <see langword="null"/> if the item is not a drawing resource.</returns>
         public static DrawingResource? GetItemValueAsDrawingResource(IListControl control, int itemIndex)
         {
-            object? item = control.GetItemAsObject(itemIndex);
+            if (control.GetItemAsObject(itemIndex) is not ListControlItem item)
+                return null;
 
-            if (item is ListControlItem item1)
-                item = item1.Value;
+            var value = item.Value;
+            var valueText = item.DisplayText ?? item.Text;
 
-            if (item is DrawingResource drawingResource)
+            if (value is DrawingResource drawingResource)
                 return drawingResource;
 
-            if (item is Color color)
-                return new DrawingResource(color);
+            if (value is Color color)
+            {
+                var result = new DrawingResource(color);
+                result.Title = valueText;
+                return result;
+            }
 
-            if (item is Brush brush)
-                return new DrawingResource(brush, null);
+            if (value is Brush brush)
+            {
+                var result = new DrawingResource(brush, null);
+                result.Title = valueText;
+                return result;
+            }
 
-            if (item is Pen pen)
-                return new DrawingResource(null, pen);
+            if (value is Pen pen)
+            {
+                var result = new DrawingResource(null, pen);
+                result.Title = valueText;
+                return result;
+            }
 
             return null;
         }
@@ -495,6 +525,16 @@ namespace Alternet.UI
         public virtual ListControlItem CreateItem(Brush value, string title)
         {
             return DefaultCreateItem(value, title);
+        }
+
+        /// <summary>
+        /// Creates item for the specified drawing resource and title.
+        /// </summary>
+        /// <param name="value">Drawing resource value.</param>
+        /// <returns></returns>
+        public virtual ListControlItem CreateItem(DrawingResource value)
+        {
+            return DefaultCreateItem(value);
         }
 
         /// <summary>

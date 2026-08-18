@@ -10,7 +10,7 @@ namespace Alternet.Drawing
     /// Represents a drawing resource that can be defined
     /// by a brush, pen, or color.
     /// </summary>
-    public class DrawingResource
+    public class DrawingResource : IEquatable<DrawingResource>
     {
         private Brush? brush;
         private Pen? pen;
@@ -41,6 +41,24 @@ namespace Alternet.Drawing
         public DrawingResource(Brush? brush, Pen? pen)
         {
             this.brush = brush;
+            this.pen = pen;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawingResource"/> class with specified brush.
+        /// </summary>
+        /// <param name="brush">Brush object.</param>
+        public DrawingResource(Brush? brush)
+        {
+            this.brush = brush;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DrawingResource"/> class with specified pen.
+        /// </summary>
+        /// <param name="pen">Pen object.</param>
+        public DrawingResource(Pen? pen)
+        {
             this.pen = pen;
         }
 
@@ -143,54 +161,51 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Defines implicit conversion from <see cref="Brush"/> to <see cref="DrawingResource"/>.
+        /// Compares two <see cref="DrawingResource"/> instances for equality.
         /// </summary>
-        public static implicit operator DrawingResource?(Brush? brush)
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>True if equal; otherwise false.</returns>
+        public static bool operator ==(DrawingResource? left, DrawingResource? right)
         {
-            return brush == null ? null : new DrawingResource { Brush = brush };
+            if (ReferenceEquals(left, right))
+                return true;
+            if (left is null || right is null)
+                return false;
+
+            return Equals(left.Brush, right.Brush)
+                && Equals(left.Pen, right.Pen)
+                && Equals(left.Color, right.Color);
         }
 
         /// <summary>
-        /// Defines implicit conversion from <see cref="Pen"/> to <see cref="DrawingResource"/>.
+        /// Compares two <see cref="DrawingResource"/> instances for inequality.
         /// </summary>
-        public static implicit operator DrawingResource?(Pen? pen)
+        /// <param name="left">Left operand.</param>
+        /// <param name="right">Right operand.</param>
+        /// <returns>True if not equal; otherwise false.</returns>
+        public static bool operator !=(DrawingResource? left, DrawingResource? right)
         {
-            return pen == null ? null : new DrawingResource { Pen = pen };
+            return !(left == right);
         }
 
-        /// <summary>
-        /// Defines implicit conversion from <see cref="Color"/> to <see cref="DrawingResource"/>.
-        /// </summary>
-        public static implicit operator DrawingResource?(Color? color)
+        /// <inheritdoc/>
+        public override bool Equals(object? obj)
         {
-            return color == null ? null : new DrawingResource { Color = color };
+            return obj is DrawingResource other && this == other;
         }
 
-        /// <summary>
-        /// Defines implicit conversion from <see cref="DrawingResource"/> to <see cref="Brush"/>.
-        /// </summary>
-        /// <param name="resource">The drawing resource to convert.</param>
-        public static implicit operator Brush?(DrawingResource? resource)
+        /// <inheritdoc/>
+        public override int GetHashCode()
         {
-            return resource?.Brush;
+            (object, object, object) tuple = (Brush ?? (object)0, Color ?? (object)0, Pen ?? (object)0);
+            return tuple.GetHashCode();
         }
 
-        /// <summary>
-        /// Defines implicit conversion from <see cref="DrawingResource"/> to <see cref="Pen"/>.
-        /// </summary>
-        /// <param name="resource">The drawing resource to convert.</param>
-        public static implicit operator Pen?(DrawingResource? resource)
+        /// <inheritdoc/>
+        public bool Equals(DrawingResource? other)
         {
-            return resource?.Pen;
-        }
-        
-        /// <summary>
-        /// Defines implicit conversion from <see cref="DrawingResource"/> to <see cref="Color"/>.
-        /// </summary>
-        /// <param name="resource">The drawing resource to convert.</param>
-        public static implicit operator Color?(DrawingResource? resource)
-        {
-            return resource?.Color;
+            return this == other;
         }
     }
 }
