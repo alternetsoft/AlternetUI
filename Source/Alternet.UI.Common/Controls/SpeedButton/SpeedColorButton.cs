@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default size of the color image.
         /// </summary>
-        public static SizeD DefaultColorImageSizeDips = 12;
+        public static SizeD DefaultColorImageSizeDips = (18, 12);
 
         private readonly bool useDefaultColors = true;
         private Color? color = Color.Black;
