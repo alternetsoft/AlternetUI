@@ -18,6 +18,7 @@ namespace Alternet.UI
         /// </summary>
         public static SizeD DefaultColorImageSizeDips = 12;
 
+        private bool useDefaultColors = true;
         private Color? color = Color.Black;
         private SizeD colorImageSize = DefaultColorImageSizeDips;
         private ColorDialog? colorDialog;
@@ -33,21 +34,31 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public SpeedColorButton(AbstractControl parent)
-            : this()
+            : this(useDefaultColors: true)
         {
             Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SpeedColorButton"/> class with specified default colors usage flag.
+        /// </summary>
+        /// <param name="useDefaultColors">A value indicating whether to use default colors.</param>
+        public SpeedColorButton(bool useDefaultColors)
+        {
+            this.useDefaultColors = useDefaultColors;
+            base.Text = GetColorAsString() ?? string.Empty;
+            TextVisible = true;
+            OnColorImageChanged(false);
+            ShowComboBoxImageAtRight();
+            ClickTrigger = ClickTriggerKind.MouseDown;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
         /// </summary>
         public SpeedColorButton()
+            : this(useDefaultColors: true)
         {
-            base.Text = GetColorAsString() ?? string.Empty;
-            TextVisible = true;
-            OnColorImageChanged(false);
-            ShowComboBoxImageAtRight();
-            ClickTrigger = ClickTriggerKind.MouseDown;
         }
 
         /// <summary>
@@ -113,7 +124,7 @@ namespace Alternet.UI
             {
                 if (popupWindow is null)
                 {
-                    popupWindow = new();
+                    popupWindow = new(useDefaultColors);
                     popupWindow.Title = CommonStrings.Default.WindowTitleSelectColor;
                     popupWindow.AfterHide += PopupWindowAfterHideHandler;
                 }
@@ -179,7 +190,10 @@ namespace Alternet.UI
             {
                 if (ShowPopupWindow == value)
                     return;
-                actionKind = ClickActionKind.ShowPopup;
+                if (value)
+                    actionKind = ClickActionKind.ShowPopup;
+                else
+                    actionKind = ClickActionKind.None;
             }
         }
 

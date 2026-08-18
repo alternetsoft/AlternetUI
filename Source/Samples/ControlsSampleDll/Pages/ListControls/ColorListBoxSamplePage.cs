@@ -31,10 +31,7 @@ namespace ControlsSample
             HorizontalAlignment = HorizontalAlignment.Left,
         };
 
-        private readonly ColorPicker comboBox = new()
-        {
-            HorizontalAlignment = HorizontalAlignment.Left,
-        };
+        private readonly ColorPicker colorPicker;
 
         static ColorListBoxSamplePage()
         {
@@ -42,18 +39,23 @@ namespace ControlsSample
 
         public ColorListBoxSamplePage()
         {
+            colorPicker = new(useDefaultColors: true)
+            {
+                HorizontalAlignment = HorizontalAlignment.Left,
+            };
+
             Layout = LayoutStyle.Horizontal;
             MinChildMargin = 10;
             listBox.Parent = this;
             panel.Parent = this;
-            comboBox.Value = Color.Red;
-            comboBox.Parent = panel;
+            colorPicker.Value = Color.Red;
+            colorPicker.Parent = panel;
             textVisibleCheckBox.Parent = panel;
             setColorButton.Parent = panel;
             setColorButton.Click += SetColorButton_Click;
             textVisibleCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.TextVisible));
-            comboBox.MinWidth = 150;
-            comboBox.ValueChanged += ComboBox_SelectedItemChanged;
+            colorPicker.MinWidth = 150;
+            colorPicker.ValueChanged += ComboBox_SelectedItemChanged;
 
             this.ContextMenuStrip.Add("Add brush item", () =>
             {
@@ -61,7 +63,7 @@ namespace ControlsSample
                 var brushName = $"HatchBrush";
 
                 listBox.AddBrushItem(brush, brushName);
-                comboBox.ListBox.AddBrushItem(brush, brushName);
+                colorPicker.ListBox.AddBrushItem(brush, brushName);
             });
 
             this.ContextMenuStrip.Add("Toggle color image alignment", () =>
@@ -72,7 +74,7 @@ namespace ControlsSample
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
         {
-            listBox.Value = comboBox.Value;
+            listBox.Value = colorPicker.Value;
         }
 
         private void SetColorButton_Click(object? sender, EventArgs e)
@@ -80,12 +82,12 @@ namespace ControlsSample
             if(listBox.Value == Color.Red)
             {
                 listBox.Value = Color.Green;
-                comboBox.Value = Color.Green;
+                colorPicker.Value = Color.Green;
             }
             else
             {
                 listBox.Value = Color.Red;
-                comboBox.Value = Color.Red;
+                colorPicker.Value = Color.Red;
             }
         }
     }
