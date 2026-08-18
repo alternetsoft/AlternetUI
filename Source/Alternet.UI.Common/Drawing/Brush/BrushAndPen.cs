@@ -9,11 +9,9 @@ namespace Alternet.Drawing
     /// <summary>
     /// Contains <see cref="Brush"/> and <see cref="Pen"/> properties.
     /// </summary>
-    public class BrushAndPen
+    [Obsolete("Use DrawingResource class.")]
+    public class BrushAndPen : DrawingResource
     {
-        private Brush? brush;
-        private Pen? pen;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="BrushAndPen"/> class.
         /// </summary>
@@ -27,56 +25,8 @@ namespace Alternet.Drawing
         /// <param name="brush">Brush object.</param>
         /// <param name="pen">Pen object.</param>
         public BrushAndPen(Brush? brush, Pen? pen)
+            : base(brush, pen)
         {
-            this.brush = brush;
-            this.pen = pen;
-        }
-
-        /// <summary>
-        /// Gets or sets brush value.
-        /// </summary>
-        public virtual Brush? Brush
-        {
-            get
-            {
-                return brush;
-            }
-
-            set
-            {
-                if (brush == value)
-                    return;
-                brush = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets pen value.
-        /// </summary>
-        public virtual Pen? Pen
-        {
-            get
-            {
-                return pen;
-            }
-
-            set
-            {
-                if (pen == value)
-                    return;
-                pen = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets this object as <see cref="SKPaint"/>.
-        /// </summary>
-        public (SKPaint? Fill, SKPaint? Stroke) AsPaint
-        {
-            get
-            {
-                return (brush?.SkiaPaint, pen?.SkiaPaint);
-            }
         }
     }
 }

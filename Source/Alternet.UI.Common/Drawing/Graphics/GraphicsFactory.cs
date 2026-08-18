@@ -28,11 +28,11 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets or sets function which is used when
-        /// <see cref="BrushAndPen"/> is converted to <see cref="SKPaint"/>
+        /// <see cref="DrawingResource"/> is converted to <see cref="SKPaint"/>
         /// with <see cref="SKPaintStyle.StrokeAndFill"/> style.
         /// </summary>
-        public static Func<BrushAndPen, (SKPaint? Fill, SKPaint? Stroke)> BrushAndPenToStrokeAndFillPaint
-            = (brushAndPen) => GraphicsFactory.CreateStrokeAndFillPaint(brushAndPen);
+        public static Func<DrawingResource, (SKPaint? Fill, SKPaint? Stroke)> DrawingResourceToStrokeAndFillPaint
+            = (drawingResource) => GraphicsFactory.CreateStrokeAndFillPaint(drawingResource);
 
         /// <summary>
         /// Gets or sets function which is used when
@@ -300,14 +300,14 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Creates <see cref="SKPaint"/> with <see cref="SKPaintStyle.StrokeAndFill"/> style
-        /// for the specified <see cref="BrushAndPen"/> value.
+        /// for the specified <see cref="DrawingResource"/> value.
         /// </summary>
-        /// <param name="brushAndPen">Brush and pen for which <see cref="SKPaint"/> is created.</param>
+        /// <param name="drawingResource">Drawing resource for which <see cref="SKPaint"/> is created.</param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static (SKPaint? Fill, SKPaint? Stroke) CreateStrokeAndFillPaint(BrushAndPen brushAndPen)
+        public static (SKPaint? Fill, SKPaint? Stroke) CreateStrokeAndFillPaint(DrawingResource drawingResource)
         {
-            return brushAndPen.AsPaint;
+            return drawingResource.AsPaint;
         }
 
         /// <summary>
