@@ -55,6 +55,7 @@ namespace Alternet.UI
             IsUnderline = true;
             ParentForeColor = false;
             Cursor = Cursors.Hand;
+            OnLinkColorChanged(invalidate: false);
         }
 
         /// <summary>
@@ -132,7 +133,7 @@ namespace Alternet.UI
                 if(hoverColor == value)
                     return;
                 hoverColor = value;
-                Invalidate();
+                OnLinkColorChanged();
             }
         }
 
@@ -154,7 +155,7 @@ namespace Alternet.UI
                 if(normalColor == value)
                     return;
                 normalColor = value;
-                Invalidate();
+                OnLinkColorChanged();
             }
         }
 
@@ -176,7 +177,7 @@ namespace Alternet.UI
                 if(visitedColor == value)
                     return;
                 visitedColor = value;
-                Invalidate();
+                OnLinkColorChanged();
             }
         }
 
@@ -197,7 +198,7 @@ namespace Alternet.UI
                 if(visited == value)
                     return;
                 visited = value;
-                Invalidate();
+                OnLinkColorChanged();
             }
         }
 
@@ -247,6 +248,18 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
+        protected override Thickness? GetDefaultBorderWidth()
+        {
+            return (0, 0, 0, 1);
+        }
+
+        /// <inheritdoc/>
+        protected override bool GetDefaultHasBorder()
+        {
+            return true;
+        }
+
+        /// <inheritdoc/>
         protected override Color GetLabelForeColor(VisualControlState state)
         {
             if (state == VisualControlState.Hovered)
@@ -266,6 +279,25 @@ namespace Alternet.UI
             var realNormalColor = NormalColor ?? DefaultNormalColor ?? LightDarkColors.Blue;
 
             return realNormalColor;
+        }
+
+        /// <summary>
+        /// This method is called when <see cref="NormalColor"/>,
+        /// <see cref="HoverColor"/> or <see cref="VisitedColor"/> properties are changed.
+        /// </summary>
+        protected virtual void OnLinkColorChanged(bool invalidate = true)
+        {
+            var normalBorder = Borders?.Normal;
+
+            if (normalBorder != null)
+            {
+                normalBorder.SuspendPropertyChanged();
+                normalBorder.Bottom.Color = GetLabelForeColor(VisualControlState.Normal);
+                normalBorder.ResumePropertyChanged(false);
+            }
+
+            if (invalidate)
+                Invalidate();
         }
 
         /// <summary>
