@@ -49,7 +49,7 @@ namespace Alternet.UI
             CanSelect = false;
             ParentBackColor = GetDefaultParentBackColor();
             ParentForeColor = GetDefaultParentForeColor();
-            ResetBorders();
+            ResetBorders(invalidate: false);
         }
 
         /// <summary>
@@ -528,10 +528,18 @@ namespace Alternet.UI
         /// Resets border so it is returned to the initial state as it was specified
         /// in the constructor.
         /// </summary>
-        public virtual void ResetBorders()
+        public virtual void ResetBorders(bool invalidate = true)
         {
             Borders ??= new();
             var settings = CreateBorderSettings(BorderSettings.Default);
+
+            var newBorderWidth = GetDefaultBorderWidth();
+
+            if (newBorderWidth != null)
+            {
+                settings.Width = newBorderWidth.Value;
+            }
+
             Borders.SetAll(settings);
             UpdatePadding();
 
@@ -542,8 +550,10 @@ namespace Alternet.UI
                 settings.SetCornerRadius(cornerRadius);
             }
 
-            Borders.Normal!.PropertyChangedAction = (e) => Refresh();
-            Invalidate();
+            Borders.Normal!.PropertyChangedAction = OnBorderPropertyChanged;
+
+            if (invalidate)
+                Invalidate();
         }
 
         /// <summary>
@@ -656,6 +666,15 @@ namespace Alternet.UI
             return null;
         }
 
+        /// <summary>
+        /// Gets default border width for the control. This method is called in the constructor to initialize border width.
+        /// If this method returns null, border width is initialized with default global settings.
+        /// </summary>
+        protected virtual Thickness? GetDefaultBorderWidth()
+        {
+            return null;
+        }
+
         /// <inheritdoc/>
         protected override void OnSizeChanged(EventArgs e)
         {
@@ -664,10 +683,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when border property is changed. By default, calls <see cref="AbstractControl.Refresh"/> method.
+        /// </summary>
+        /// <param name="e">Event arguments.</param>
+        protected virtual void OnBorderPropertyChanged(PropertyChangedEventArgs e)
+        {
+            Refresh();
+        }
+
+        /// <summary>
         /// Gets default value for <see cref="AbstractControl.ParentForeColor"/> property.
         /// </summary>
-        /// <returns>True if the parent foreground color is used by default;
-        /// otherwise, false.</returns>
+        /// <returns>True if the parent foreground color is used by default; otherwise, false.</returns>
         protected virtual bool GetDefaultParentForeColor()
         {
             return true;
