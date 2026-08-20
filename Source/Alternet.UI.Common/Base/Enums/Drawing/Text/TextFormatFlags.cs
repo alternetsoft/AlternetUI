@@ -83,6 +83,16 @@ namespace Alternet.Drawing
         /// </summary>
         WordEllipsis = 0x40000,
 
+        /// <summary>
+        /// Breaks the text at the end of a word.
+        /// </summary>
+        WordBreak = 0x10,
+
+        /// <summary>
+        /// Does not add padding to the bounding rectangle.
+        /// </summary>
+        NoPadding = 0x10000000,
+
         /*
                 /// <summary>
                 /// Removes the end of trimmed lines, and replaces them with an ellipsis.
@@ -193,13 +203,6 @@ namespace Alternet.Drawing
 
         /*
                 /// <summary>
-                /// Breaks the text at the end of a word.
-                /// </summary>
-                WordBreak = 0x10,
-        */
-
-        /*
-                /// <summary>
                 /// Preserves the clipping specified by a graphics object.
                 /// </summary>
                 PreserveGraphicsClipping = 0x1000000,
@@ -217,13 +220,6 @@ namespace Alternet.Drawing
                 /// Adds padding to the bounding rectangle to accommodate overhanging glyphs.
                 /// </summary>
                 GlyphOverhangPadding = 0,
-        */
-
-        /*
-                /// <summary>
-                /// Does not add padding to the bounding rectangle.
-                /// </summary>
-                NoPadding = 0x10000000,
         */
 
         /*
