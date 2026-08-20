@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial class SpeedColorButton : SpeedButton
     {
         /// <summary>
+        /// Gets or sets default shape of the color image.
+        /// </summary>
+        public static DrawingShapeType? DefaultColorImageShape = DrawingShapeType.RoundedRectangle;
+
+        /// <summary>
         /// Gets or sets default size of the color image.
         /// </summary>
         public static SizeD DefaultColorImageSizeDips = (18, 12);
@@ -28,6 +33,8 @@ namespace Alternet.UI
         private ClickActionKind ctrlAction = ClickActionKind.None;
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
+        private DrawingShapeType? colorImageShape = DefaultColorImageShape;
+        private Color? colorImageBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
@@ -113,6 +120,37 @@ namespace Alternet.UI
         /// Gets or sets the title displayed when <see cref="Color.Empty"/> is selected.
         /// </summary>
         public virtual string? EmptyColorTitle { get; set; }
+
+        /// <summary>
+        /// Gets or sets the border color of the color image.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color? ColorImageBorder
+        {
+            get => colorImageBorder;
+            set
+            {
+                if (value == colorImageBorder)
+                    return;
+                colorImageBorder = value;
+                OnColorImageChanged(refresh: true);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the shape of the color image.
+        /// </summary>
+        public virtual DrawingShapeType? ColorImageShape
+        {
+            get => colorImageShape;
+            set
+            {
+                if (value == colorImageShape)
+                    return;
+                colorImageShape = value;
+                OnColorImageChanged(refresh: true);
+            }
+        }
 
         /// <summary>
         /// Gets attached popup window with <see cref="ColorListBox"/>.
@@ -547,7 +585,7 @@ namespace Alternet.UI
                     imageColor = disabledColor;
             }
 
-            LabelImage = imageColor.AsImageWithBorder(colorImageSize, ScaleFactor);
+            LabelImage = imageColor.AsImageWithBorder(colorImageSize, ScaleFactor, ColorImageBorder, ColorImageShape);
 
             if (refresh)
                 Refresh();
