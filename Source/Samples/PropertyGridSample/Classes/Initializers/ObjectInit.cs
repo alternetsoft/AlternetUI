@@ -374,8 +374,8 @@ Environment.NewLine + Environment.NewLine +
 
         public static void InitEnumPicker(EnumPicker control)
         {
-            control.EnumType = typeof(FontStyle);
-            control.Value = FontStyle.Regular;
+            control.EnumType = typeof(HorizontalAlignment);
+            control.Value = HorizontalAlignment.Center;
         }
 
         public static void InitGenericSlider(XSlider control)
