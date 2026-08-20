@@ -36,22 +36,24 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="parent">Parent of the control.</param>
         public ControlAndLabel(AbstractControl parent)
-            : this()
+            : this(typeOfLabel: null)
         {
             Parent = parent;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlAndLabel{TControl,TLabel}"/> class.
+        /// Initializes a new instance of the <see cref="ControlAndLabel{TControl,TLabel}"/> class
+        /// with the specified type of the label control.
         /// </summary>
-        public ControlAndLabel()
+        /// <param name="typeOfLabel">Type of the label control to use.</param>
+        public ControlAndLabel(Type? typeOfLabel)
         {
             SuspendHandlerTextChange();
             ParentBackColor = true;
             ParentForeColor = true;
             Layout = LayoutStyle.Horizontal;
 
-            label = CreateLabel();
+            label = CreateLabel(typeOfLabel);
             label.VerticalAlignment = UI.VerticalAlignment.Center;
             label.HorizontalAlignment = HorizontalAlignment.Left;
             label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
@@ -61,6 +63,14 @@ namespace Alternet.UI
             mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
             mainControl.MinWidth = KnownMetrics.InnerControlMinWidth;
             mainControl.Parent = this;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlAndLabel{TControl,TLabel}"/> class.
+        /// </summary>
+        public ControlAndLabel()
+            : this(typeOfLabel: null)
+        {
         }
 
         /// <summary>
@@ -244,7 +254,17 @@ namespace Alternet.UI
         /// <remarks>
         /// By default <see cref="Label"/> is created.
         /// </remarks>
-        protected virtual AbstractControl CreateLabel() => CreateDefaultLabel();
+        protected virtual AbstractControl CreateLabel(Type? typeOfLabel)
+        {
+            if (typeOfLabel is not null)
+            {
+                var label = Activator.CreateInstance(typeOfLabel) as AbstractControl;
+                if (label is not null)
+                    return label;
+            }
+
+            return CreateDefaultLabel();
+        }
 
         /// <inheritdoc/>
         protected override void UpdateInnerPictureLayout()
