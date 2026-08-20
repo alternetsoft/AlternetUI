@@ -17,6 +17,11 @@ namespace Alternet.UI
     public partial class DrawingResourcePicker : SpeedButton
     {
         /// <summary>
+        /// Gets or sets default shape of the item image.
+        /// </summary>
+        public static DrawingShapeType? DefaultValueImageShape = DrawingShapeType.RoundedRectangle;
+
+        /// <summary>
         /// Gets or sets whether to assign default control colors
         /// in the constructor. Default is <c>true</c>.
         /// </summary>
@@ -29,6 +34,8 @@ namespace Alternet.UI
         private ClickActionKind longTapAction = ClickActionKind.None;
         private Color? disabledImageColor;
         private bool useDisabledImageColor = true;
+        private DrawingShapeType? valueImageShape = DefaultValueImageShape;
+        private Color? valueImageBorder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedColorButton"/> class.
@@ -72,6 +79,37 @@ namespace Alternet.UI
             /// No action is performed when button is clicked.
             /// </summary>
             None,
+        }
+
+        /// <summary>
+        /// Gets or sets the border color of the value image.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color? ValueImageBorder
+        {
+            get => valueImageBorder;
+            set
+            {
+                if (value == valueImageBorder)
+                    return;
+                valueImageBorder = value;
+                OnValueImageChanged(refresh: true);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the shape of the value image.
+        /// </summary>
+        public virtual DrawingShapeType? ValueImageShape
+        {
+            get => valueImageShape;
+            set
+            {
+                if (value == valueImageShape)
+                    return;
+                valueImageShape = value;
+                OnValueImageChanged(refresh: true);
+            }
         }
 
         /// <summary>
@@ -432,13 +470,21 @@ namespace Alternet.UI
 
             imageResource ??= new(Color.Empty);
 
+            Brush? brush;
+
             if (imageResource.HasBrush)
-                LabelImage = imageResource.Brush?.AsImageWithBorder(valueImageSize, ScaleFactor);
+                brush = imageResource.Brush;
             else
                 if (imageResource.HasColor)
-                    LabelImage = imageResource.Color?.AsBrush.AsImageWithBorder(valueImageSize, ScaleFactor);
+                {
+                    brush = imageResource.Color?.AsBrush;
+                }
                 else
-                    LabelImage = Color.Empty.AsBrush.AsImageWithBorder(valueImageSize, ScaleFactor);
+                {
+                    brush = Color.Empty.AsBrush;
+                }
+
+            LabelImage = brush?.AsImageWithBorder(valueImageSize, ScaleFactor, ValueImageBorder, ValueImageShape);
 
             if (refresh)
                 Refresh();
