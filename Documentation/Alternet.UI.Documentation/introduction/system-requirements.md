@@ -1,6 +1,6 @@
 # System Requirements
 
-AlterNET UI Version 1.0.1 requires .NET 8.0 or newer.
+AlterNET UI Version 1.1.6 requires .NET 8.0 or newer.
 
 The following operating systems are supported:
 

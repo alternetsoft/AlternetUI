@@ -19,7 +19,7 @@ Word gives you information on page location, section location, and editing modes
 and Visual Studio uses the status bar to provide context-sensitive information, such as telling you how to manipulate
 dockable windows as either docked or floating.
   
-A status bar is divided into panels to display information using the <xref:Alternet.UI.StatusBar.Panels> property.
+A status bar is divided into panels to display information using the <xref:Alternet.UI.ToolBar.Panels> property.
 The <xref:Alternet.UI.StatusBar> control allows you to create status bar panels by adding
 <xref:Alternet.UI.StatusBarPanel> objects to a <xref:Alternet.UI.ToolBar.Panels> collection. Each
 <xref:Alternet.UI.StatusBarPanel> object should have <xref:Alternet.UI.BarPanel.Text> assigned to be

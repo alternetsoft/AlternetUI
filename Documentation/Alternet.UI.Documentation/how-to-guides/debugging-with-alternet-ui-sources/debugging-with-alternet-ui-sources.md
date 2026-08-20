@@ -5,7 +5,7 @@ such as `Alternet.UI`, `Alternet.UI.Common`, and `Alternet.UI.Maui`, directly fr
 
 These instructions explain how to configure Visual Studio to use our `.snupkg` files for a better debugging experience.
 
-In this instruction, we use version 1.0.1 of the `Alternet.UI` NuGet packages. 
+In this instruction, we use version 1.1.0 of the `Alternet.UI` NuGet packages. 
 In practice, use the latest available version of our NuGet packages.
 
 ---
@@ -13,11 +13,11 @@ In practice, use the latest available version of our NuGet packages.
 ## Prerequisites
 
 - **Visual Studio 2022** or newer is recommended (for full symbol package support).
-- Project references the relevant NuGet packages (e.g., `Alternet.UI.1.0.1.nupkg`).
+- Project references the relevant NuGet packages (e.g., `Alternet.UI.1.1.0.nupkg`).
 - You have the corresponding `.snupkg` files for these packages:
-    - `Alternet.UI.1.0.1.snupkg`
-    - `Alternet.UI.Common.1.0.1.snupkg`
-    - `Alternet.UI.Maui.1.0.1.snupkg`
+    - `Alternet.UI.1.1.0.snupkg`
+    - `Alternet.UI.Common.1.1.0.snupkg`
+    - `Alternet.UI.Maui.1.1.0.snupkg`
 
 ---
 
@@ -26,9 +26,9 @@ In practice, use the latest available version of our NuGet packages.
 Add the packages to your project as usual (via NuGet Package Manager or CLI):
 
 ```shell
-dotnet add package Alternet.UI --version 1.0.1
-dotnet add package Alternet.UI.Common --version 1.0.1
-dotnet add package Alternet.UI.Maui --version 1.0.1
+dotnet add package Alternet.UI --version 1.1.0
+dotnet add package Alternet.UI.Common --version 1.1.0
+dotnet add package Alternet.UI.Maui --version 1.1.0
 ```
 
 ---
