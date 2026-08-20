@@ -1805,13 +1805,15 @@ namespace Alternet.Drawing
         /// <param name="scaleFactor">Scaling factor used to convert dips to/from pixels.</param>
         /// <param name="borderColor">Border color. Optional. If not specified,
         /// default border color is used.</param>
+        /// <param name="shape">Shape of the image. Optional.</param>
         /// <returns></returns>
         public Image AsImageWithBorder(
             SizeD size,
             Coord scaleFactor,
-            Color? borderColor = null)
+            Color? borderColor = null,
+            DrawingShapeType? shape = null)
         {
-            return AsBrush.AsImageWithBorder(size, scaleFactor, borderColor);
+            return AsBrush.AsImageWithBorder(size, scaleFactor, borderColor, shape);
         }
 
         /// <summary>

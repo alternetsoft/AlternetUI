@@ -30,6 +30,7 @@ namespace Alternet.Drawing
 
         private Pen? asPen;
         private SKPaint? paint;
+        private ShapeDrawable? shapeDrawable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Brush"/> class.
@@ -184,11 +185,13 @@ namespace Alternet.Drawing
         /// <param name="size">The size of the image.</param>
         /// <param name="scaleFactor">The scale factor for the image.</param>
         /// <param name="borderColor">The color of the border. If not specified, a default border color will be used.</param>
+        /// <param name="shape">The shape of the image. Optional. Default is <see cref="DrawingShapeType.Rectangle"/>.</param>
         /// <returns>The created image.</returns>
         public virtual Image AsImageWithBorder(
             SizeD size,
             Coord scaleFactor,
-            Color? borderColor = null)
+            Color? borderColor = null,
+            DrawingShapeType? shape = null)
         {
             borderColor ??= ListControlItem.DefaultImageBorderColor;
 
@@ -196,13 +199,27 @@ namespace Alternet.Drawing
 
             RectD rect = (PointD.Empty, size);
 
-            RectD colorRect = DrawingUtils.DrawDoubleBorder(
-                graphics,
-                rect,
-                Color.Empty,
-                borderColor);
+            if (shape is null)
+            {
+                RectD colorRect = DrawingUtils.DrawDoubleBorder(
+                    graphics,
+                    rect,
+                    innerColor: Color.Empty,
+                    outerColor: borderColor);
 
-            graphics.FillRectangle(this, colorRect);
+                graphics.FillRectangle(this, colorRect);
+            }
+            else
+            {
+                shapeDrawable ??= new ShapeDrawable();
+
+                shapeDrawable.Bounds = rect;
+                shapeDrawable.Brush = this;
+                shapeDrawable.Pen = borderColor.AsPen;
+                shapeDrawable.ShapeType = shape.Value;
+
+                shapeDrawable.Draw(null!, graphics);
+            }
 
             return (Image)graphics.Bitmap!;
         }
