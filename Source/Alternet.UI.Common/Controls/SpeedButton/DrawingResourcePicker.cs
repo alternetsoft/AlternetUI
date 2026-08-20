@@ -19,7 +19,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default shape of the item image.
         /// </summary>
-        public static DrawingShapeType? DefaultValueImageShape = DrawingShapeType.RoundedRectangle;
+        public static DrawingShapeType? DefaultValueImageShape = DrawingShapeType.Circle;
 
         /// <summary>
         /// Gets or sets whether to assign default control colors

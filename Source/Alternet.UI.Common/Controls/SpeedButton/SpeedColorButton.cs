@@ -16,7 +16,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets default shape of the color image.
         /// </summary>
-        public static DrawingShapeType? DefaultColorImageShape = DrawingShapeType.RoundedRectangle;
+        public static DrawingShapeType? DefaultColorImageShape = DrawingShapeType.Circle;
 
         /// <summary>
         /// Gets or sets default size of the color image.

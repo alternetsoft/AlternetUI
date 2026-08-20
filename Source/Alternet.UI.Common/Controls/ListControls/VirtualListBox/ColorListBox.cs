@@ -20,6 +20,11 @@ namespace Alternet.UI
     public partial class ColorListBox : VirtualListBox
     {
         /// <summary>
+        /// Gets or sets default shape of the item image.
+        /// </summary>
+        public static DrawingShapeType? DefaultItemImageShape = DrawingShapeType.Circle;
+
+        /// <summary>
         /// Gets or sets default disabled image color.
         /// </summary>
         /// <remarks>
@@ -36,12 +41,6 @@ namespace Alternet.UI
         public static IListBoxItemPainter Painter = new DefaultItemPainter();
 
         /// <summary>
-        /// Gets or sets method that paints color image in the item. Borders around
-        /// color image are also painted by this method.
-        /// </summary>
-        public static Action<Graphics, RectD, Brush> PaintItemImage = ColorListBox.PaintDefaultItemImage;
-
-        /// <summary>
         /// Gets or sets method that initializes items in <see cref="ColorListBox"/>.
         /// </summary>
         public static Action<ColorListBox>? InitColors = InitDefaultColors;
@@ -52,6 +51,9 @@ namespace Alternet.UI
         private ItemImageSizeKind colorImageSizeKind = ItemImageSizeKind.Ratio;
         private SizeD? colorImageSize;
         private SizeD colorImageRatio = (3, 2);
+        private DrawingShapeType? itemImageShape = DefaultItemImageShape;
+        private Color? itemImageBorder;
+        private ShapeDrawable? shapeDrawable;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
@@ -100,6 +102,37 @@ namespace Alternet.UI
             /// Color image size is calculated using ratio of the height of the item.
             /// </summary>
             Ratio,
+        }
+
+        /// <summary>
+        /// Gets or sets the border color of the item image.
+        /// </summary>
+        [Browsable(false)]
+        public virtual Color? ItemImageBorder
+        {
+            get => itemImageBorder;
+            set
+            {
+                if (value == itemImageBorder)
+                    return;
+                itemImageBorder = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the shape of the item image.
+        /// </summary>
+        public virtual DrawingShapeType? ItemImageShape
+        {
+            get => itemImageShape;
+            set
+            {
+                if (value == itemImageShape)
+                    return;
+                itemImageShape = value;
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -258,25 +291,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Paints color image in the item with the default style. Borders around
-        /// color image are also painted by this method.
-        /// This is default value of the <see cref="PaintItemImage"/> field.
-        /// </summary>
-        /// <param name="canvas"><see cref="Graphics"/> where drawing is performed.</param>
-        /// <param name="rect"><see cref="RectD"/> where drawing is performed.</param>
-        /// <param name="brush">Color value.</param>
-        public static void PaintDefaultItemImage(Graphics canvas, RectD rect, Brush brush)
-        {
-            RectD colorRect = DrawingUtils.DrawDoubleBorder(
-                canvas,
-                rect,
-                Color.Empty,
-                ListControlItem.DefaultImageBorderColor);
-
-            canvas.FillRectangle(brush, colorRect);
-        }
-
-        /// <summary>
         /// Finds item with the specified color in the collection of the color items.
         /// </summary>
         /// <param name="value">Color value.</param>
@@ -424,6 +438,39 @@ namespace Alternet.UI
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Paints color image in the item with the default style. Borders around
+        /// color image are also painted by this method.
+        /// </summary>
+        /// <param name="canvas"><see cref="Graphics"/> where drawing is performed.</param>
+        /// <param name="rect"><see cref="RectD"/> where drawing is performed.</param>
+        /// <param name="brush">Color value.</param>
+        public virtual void PaintItemImage(Graphics canvas, RectD rect, Brush brush)
+        {
+            var borderColor = ItemImageBorder ?? ListControlItem.DefaultImageBorderColor;
+
+            if (ItemImageShape is null)
+            {
+                RectD colorRect = DrawingUtils.DrawDoubleBorder(
+                    canvas,
+                    rect,
+                    Color.Empty,
+                    borderColor);
+
+                canvas.FillRectangle(brush, colorRect);
+            }
+            else
+            {
+                shapeDrawable ??= new ShapeDrawable();
+
+                shapeDrawable.Bounds = rect;
+                shapeDrawable.Brush = brush;
+                shapeDrawable.Pen = borderColor?.AsPen;
+                shapeDrawable.ShapeType = ItemImageShape.Value;
+                shapeDrawable.Draw(this, canvas);
+            }
         }
 
         /// <summary>
@@ -734,11 +781,11 @@ namespace Alternet.UI
                         isRight);
                     e.ClientRectangle = itemRect;
                     colorListBox.DefaultDrawItemForeground(e);
-                    PaintItemImage(e.Graphics, colorRect, itemBrush);
+                    colorListBox.PaintItemImage(e.Graphics, colorRect, itemBrush);
                 }
                 else
                 {
-                    PaintItemImage(e.Graphics, e.ClientRectangle, itemBrush);
+                    colorListBox.PaintItemImage(e.Graphics, e.ClientRectangle, itemBrush);
                 }
             }
 
