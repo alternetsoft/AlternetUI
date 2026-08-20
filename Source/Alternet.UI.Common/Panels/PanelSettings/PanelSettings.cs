@@ -380,6 +380,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the control which is used to represent the specified item.
+        /// </summary>
+        /// <param name="item">The panel settings item.</param>
+        /// <returns>The control representing the item, or null if not found.</returns>
+        public virtual AbstractControl? GetItemControl(PanelSettingsItem? item)
+        {
+            if (item == null)
+                return null;
+            var id = item.UniqueId;
+
+            foreach (var itemControl in Children)
+            {
+                if (itemControl.CustomAttr["PanelSettingsItem"]?.Equals(id) == true)
+                    return itemControl;
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Adds item with the link label.
         /// </summary>
         /// <param name="clickAction">Action which is invoked when link label is clicked.</param>
@@ -591,6 +611,7 @@ namespace Alternet.UI
             var obj = conversion(this, item, null);
             if (obj is not AbstractControl control)
                 return;
+            control.CustomAttr["PanelSettingsItem"] = item.UniqueId;
             control.Parent = this;
         }
 
@@ -708,8 +729,31 @@ namespace Alternet.UI
             PanelSettingsItem item,
             object? control)
         {
-            var result
-                = CreateOrUpdateControl<ControlAndLabel<TextBoxAndButton, Label>>(sender, item, control);
+            var args = item.CreateArg;
+            var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
+
+            ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>? result;
+
+            result = control as ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>;
+
+            if (result is null)
+            {
+                if (checkBoxInLabel)
+                {
+                    result = new ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>(typeof(XCheckBox));
+
+                    if (result.Label is XCheckBox checkBox)
+                    {
+                    }
+                }
+                else
+                {
+                    result = new ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>(typeof(Label));
+                }
+            }
+
+            UpdateCommonProps(sender, item, result);
+
             result.LabelToControl = StackPanelOrientation.Vertical;
             UpdateText(sender, item, result.Label);
 

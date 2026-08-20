@@ -94,6 +94,8 @@ namespace ControlsSample
 
                 var e = CustomEventArgs.CreateWithFlag("IsRequired");
 
+                e.CustomFlags["CheckBoxInLabel"] = false;
+
                 var itemMinLengthEdit = panelSettings.AddInput(
                     MinLengthEditLabel,
                     textBox.ValueHelper,
@@ -103,6 +105,8 @@ namespace ControlsSample
                 {
                     textBox.ValueHelper.RunDefaultValidation();
                 };
+
+                var minLengthEdit = panelSettings.GetItemControl(itemMinLengthEdit);
 
                 var itemMaxLengthEdit = panelSettings.AddInput(
                     MaxLengthEditLabel,
@@ -115,6 +119,7 @@ namespace ControlsSample
                 };
 
                 panelSettings.AddInput("Foreground Color", textBox, nameof(ForeColor));
+
                 panelSettings.AddInput("Background Color", textBox, nameof(BackColor));
 
                 panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
