@@ -106,8 +106,18 @@ namespace ControlsSample
                     textBox.ValueHelper.RunDefaultValidation();
                 };
 
-                var minLengthEdit = panelSettings.GetItemControl(itemMinLengthEdit);
+                var minLengthEdit = panelSettings.GetItemControlEditor(itemMinLengthEdit);
                 var minLengthEditLabel = panelSettings.GetItemControlLabel(itemMinLengthEdit);
+
+                if (minLengthEdit is TextBoxAndButton textBoxAndButton)
+                {
+                    textBoxAndButton.Buttons.IsVisible = true;
+                    textBoxAndButton.SetSingleButton(KnownButton.Cancel);
+                    textBoxAndButton.ButtonClick += (s, e) =>
+                    {
+                        textBoxAndButton.Text = "0";
+                    };
+                }
 
                 if (minLengthEditLabel is XCheckBox checkBox)
                 {
