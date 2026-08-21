@@ -63,6 +63,12 @@ namespace Alternet.UI
             Item.IsRadioButton = true;
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether sibling controls
+        /// should be unchecked when this control's checked state changes.
+        /// </summary>
+        public bool AutoUncheckSiblings { get; set; } = true;
+
         /// <inheritdoc/>
         public override void RaiseCheckedChanged()
         {
@@ -71,7 +77,7 @@ namespace Alternet.UI
             
             base.RaiseCheckedChanged();
 
-            if (suppressSiblingNotifyCounter > 0)
+            if (!AutoUncheckSiblings || suppressSiblingNotifyCounter > 0)
                 return;
 
             suppressSiblingNotifyCounter++;
