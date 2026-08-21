@@ -181,6 +181,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Converts a <see cref="TimeOnly"/> to a <see cref="DateTime"/> using the specified date.
+        /// </summary>
+        /// <param name="time">The time of day.</param>
+        /// <param name="date">The date to combine with the time.</param>
+        /// <returns>A <see cref="DateTime"/> representing the combined date and time.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateTime ToDateTime(TimeOnly time, DateOnly date)
+        {
+            return date.ToDateTime(time);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="TimeOnly"/> to a <see cref="DateTime"/> using today's date.
+        /// </summary>
+        /// <param name="time">The time of day.</param>
+        /// <returns>A <see cref="DateTime"/> representing today at the specified time.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateTime ToDateTimeToday(TimeOnly time)
+        {
+            return DateTime.Today.Add(time.ToTimeSpan());
+        }
+
+        /// <summary>
+        /// Converts a DateTime to DateOnly (drops the time component).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateOnly ToDateOnly(DateTime dateTime)
+        {
+            return DateOnly.FromDateTime(dateTime);
+        }
+
+        /// <summary>
+        /// Converts a DateTime to TimeOnly (drops the date component).
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TimeOnly ToTimeOnly(DateTime dateTime)
+        {
+            return TimeOnly.FromDateTime(dateTime);
+        }
+
+        /// <summary>
         /// Converts milliseconds to ticks.
         /// </summary>
         /// <param name="msec">Value to convert.</param>
