@@ -36,6 +36,18 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual object? Tag { get; set; }
 
+        /// <summary>
+        /// Sets custom attribute with the specified name and value.
+        /// </summary>
+        /// <param name="name">The name of the custom attribute.</param>
+        /// <param name="value">The value of the custom attribute.</param>
+        /// <returns>The current <see cref="CustomEventArgs"/> instance.</returns>
+        public CustomEventArgs Attr(string name, object? value)
+        {
+            CustomAttr[name] = value;
+            return this;
+        }
+
         /// <inheritdoc cref="BaseObjectWithAttr.IntFlags"/>
         [Browsable(false)]
         public ICustomIntFlags IntFlags
