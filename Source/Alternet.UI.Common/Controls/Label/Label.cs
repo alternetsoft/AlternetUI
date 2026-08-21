@@ -44,7 +44,7 @@ namespace Alternet.UI
     [DefaultProperty("Text")]
     [DefaultBindingProperty("Text")]
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class Label : HiddenGenericBorder
+    public partial class Label : HiddenGenericBorder, IControlAndLabel
     {
         /// <summary>
         /// Gets or sets whether to show debug corners when control is painted.
@@ -303,6 +303,10 @@ namespace Alternet.UI
                 PerformLayoutAndInvalidate();
             }
         }
+
+        AbstractControl IControlAndLabel.Label => this;
+
+        AbstractControl IControlAndLabel.MainControl => this;
 
         /// <inheritdoc/>
         public override bool ParentBackColor

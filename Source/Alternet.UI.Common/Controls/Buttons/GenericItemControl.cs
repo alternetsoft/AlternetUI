@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// Represents a user interface control that displays a single <see cref="ListControlItem"/> item.
     /// </summary>
     public partial class GenericItemControl
-        : HiddenGenericBorder, IListControlItemContainer, ICommandSource, IControlStateObjectChanged
+        : HiddenGenericBorder, IListControlItemContainer, ICommandSource, IControlStateObjectChanged, IControlAndLabel
     {
         /// <summary>
         /// Gets the default margin applied to images.
@@ -816,6 +816,10 @@ namespace Alternet.UI
             get => base.Title;
             set => base.Title = value;
         }
+
+        AbstractControl IControlAndLabel.Label => this;
+
+        AbstractControl IControlAndLabel.MainControl => this;
 
         /// <summary>
         /// Creates a new instance of a ListControlItem. Derived classes can override
