@@ -16,6 +16,17 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Panels)]
     public partial class PanelMultilineTextBox : PanelWithToolBar
     {
+        /// <summary>
+        /// Gets or sets default margin for <see cref="MultilineTextBox"/> control in this panel.
+        /// </summary>
+        public static Thickness DefaultTextBoxMargin = 5;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the background color of the <see cref="MultilineTextBox"/> control
+        /// as background color of the panel.
+        /// </summary>
+        public static bool UseTextBoxBackgroundColor = true;
+
         private readonly MultilineTextBox textBox = new();
 
         private ObjectUniqueId buttonIdNew;
@@ -41,7 +52,14 @@ namespace Alternet.UI
         {
             textBox.HasBorder = false;
             textBox.VerticalAlignment = VerticalAlignment.Fill;
+            textBox.Margin = DefaultTextBoxMargin;
             textBox.Parent = this;
+
+            if (UseTextBoxBackgroundColor)
+            {
+                ParentBackColor = false;
+                BackColor = textBox.RealBackgroundColor;
+            }
         }
 
         /// <summary>
@@ -103,6 +121,18 @@ namespace Alternet.UI
             buttonIdSave = ToolBar.AddSpeedBtn(KnownButton.Save, OnFileSaveClick);
             buttonIdUndo = ToolBar.AddSpeedBtn(KnownButton.Undo, OnUndoClick);
             buttonIdRedo = ToolBar.AddSpeedBtn(KnownButton.Redo, OnRedoClick);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+
+            if (UseTextBoxBackgroundColor)
+            {
+                ParentBackColor = false;
+                BackColor = textBox.RealBackgroundColor;
+            }
         }
 
         /// <summary>
