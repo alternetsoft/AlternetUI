@@ -359,8 +359,7 @@ namespace Alternet.UI
             PanelSettingsItem item,
             object? control)
         {
-            var result
-                = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(sender, item, control);
+            var result = CreateOrUpdateControlAndLabel<ColorPickerAndButton>(sender, item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
             UpdateText(sender, item, result.Label);
 
@@ -419,8 +418,7 @@ namespace Alternet.UI
             PanelSettingsItem item,
             object? control)
         {
-            var result
-                = CreateOrUpdateControl<ControlAndLabel<EnumPickerAndButton, Label>>(sender, item, control);
+            var result = CreateOrUpdateControlAndLabel<EnumPickerAndButton>(sender, item, control);
             result.LabelToControl = StackPanelOrientation.Vertical;
             result.MainControl.HasBtnComboBox = false;
             result.MainControl.Buttons.Visible = false;
@@ -1080,6 +1078,40 @@ namespace Alternet.UI
             T? typedControl = control as T ?? new T();
             UpdateCommonProps(sender, item, typedControl);
             return typedControl;
+        }
+
+        private static ControlAndLabel<TControl, GenericControl> CreateOrUpdateControlAndLabel<TControl>(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+            where TControl : AbstractControl, new()
+        {
+            var args = item.CreateArg;
+            var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
+
+            ControlAndLabel<TControl, GenericControl>? result;
+
+            result = control as ControlAndLabel<TControl, GenericControl>;
+
+            if (result is null)
+            {
+                if (checkBoxInLabel)
+                {
+                    result = new ControlAndLabel<TControl, GenericControl>(typeof(XCheckBox));
+
+                    if (result.Label is XCheckBox checkBox)
+                    {
+                        checkBox.Item.CheckBoxMargin = 0;
+                    }
+                }
+                else
+                {
+                    result = new ControlAndLabel<TControl, GenericControl>(typeof(Label));
+                }
+            }
+
+            UpdateCommonProps(sender, item, result);
+            return result;
         }
 
         private static bool GetFlagIsRequired(CustomEventArgs? e)
