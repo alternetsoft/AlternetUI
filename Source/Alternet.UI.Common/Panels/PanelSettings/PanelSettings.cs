@@ -381,6 +381,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the control which is used to represent the specified item.
+        /// This control contains inner label and editor controls. 
+        /// Use <see cref="GetItemControlLabel"/> and <see cref="GetItemControlEditor"/> to get label and editor controls.
         /// </summary>
         /// <param name="item">The panel settings item.</param>
         /// <returns>The control representing the item, or null if not found.</returns>
@@ -396,6 +398,34 @@ namespace Alternet.UI
                     return itemControl;
             }
 
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the label control which is used to represent the specified item.
+        /// </summary>
+        /// <param name="item">The panel settings item.</param>
+        /// <returns>The label control representing the item, or null if not found.</returns>
+        public virtual AbstractControl? GetItemControlLabel(PanelSettingsItem? item)
+        {
+            var itemControl = GetItemControl(item);
+
+            if (itemControl is IControlAndLabel controlAndLabel)
+                return controlAndLabel.Label;
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the editor control which is used to represent the specified item.
+        /// </summary>
+        /// <param name="item">The panel settings item.</param>
+        /// <returns>The editor control representing the item, or null if not found.</returns>
+        public virtual AbstractControl? GetItemControlEditor(PanelSettingsItem? item)
+        {
+            var itemControl = GetItemControl(item);
+
+            if (itemControl is IControlAndLabel controlAndLabel)
+                return controlAndLabel.MainControl;
             return null;
         }
 
@@ -744,6 +774,7 @@ namespace Alternet.UI
 
                     if (result.Label is XCheckBox checkBox)
                     {
+                        checkBox.Item.CheckBoxMargin = 0;
                     }
                 }
                 else
