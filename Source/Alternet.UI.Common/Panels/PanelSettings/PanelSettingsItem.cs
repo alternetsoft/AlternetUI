@@ -203,6 +203,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets delegate which is used to create control for the item.
+        /// Default is null, which means default control creation logic is used.
+        /// When set, this delegate is used to create control for the item instead of default control creation logic.
+        /// </summary>
+        public virtual PanelSettings.ItemToControlDelegate? ItemToControl { get; set; }
+
+        /// <summary>
         /// Gets or sets value.
         /// </summary>
         public virtual object? Value
