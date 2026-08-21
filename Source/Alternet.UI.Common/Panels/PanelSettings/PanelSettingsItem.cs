@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// </summary>
     public class PanelSettingsItem : BaseControlItem
     {
+        private PanelSettings? owner;
         private object? label;
         private IValueSource<object>? valueSource;
         private PanelSettingsItemKind kind;
@@ -45,6 +46,33 @@ namespace Alternet.UI
         {
             get => valueChangedAction;
             set => valueChangedAction = value;
+        }
+
+        /// <summary>
+        /// Gets the editor control associated with the item.
+        /// </summary>
+        public AbstractControl? Editor => owner?.GetItemControlEditor(this);
+
+        /// <summary>
+        /// Gets the editor container control associated with the item.
+        /// </summary>
+        public AbstractControl? EditorContainer => owner?.GetItemControl(this);
+
+        /// <summary>
+        /// Gets the editor label control associated with the item.
+        /// </summary>
+        public AbstractControl? EditorLabel => owner?.GetItemControlLabel(this);
+
+        /// <summary>
+        /// Gets owner of the item.
+        /// </summary>
+        public PanelSettings? Owner
+        {
+            get => owner;
+            internal set
+            {
+                owner = value;
+            }
         }
 
         /// <summary>
