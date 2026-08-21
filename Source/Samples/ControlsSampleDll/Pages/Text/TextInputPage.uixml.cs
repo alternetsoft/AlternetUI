@@ -74,6 +74,14 @@ namespace ControlsSample
 
             panelSettings.HasBorder = false;
 
+            if (DebugUtils.IsDebugOnWindows)
+            {
+                panelSettings.ContextMenuStrip.Add("Clear panel", () =>
+                {
+                    panelSettings.Items.Clear();
+                });
+            }
+
             panelSettings.DoInsideLayout(() =>
             {
                 App.DebugLogIf("Adding TextBox settings inputs...", false);

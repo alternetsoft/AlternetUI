@@ -20,10 +20,12 @@ namespace Alternet.UI.Extensions
     {
         /// <summary>
         /// Returns display string for the <see cref="TimePeriodUnit"/>.
+        /// If time period unit is not recognized, the method returns the unit's name in lowercase.
+        /// If amount is greater than 1, the plural form of the unit is returned.
         /// </summary>
         /// <param name="unit">The unit.</param>
-        /// <param name="amount">The ammount.</param>
-        /// <returns></returns>
+        /// <param name="amount">The amount.</param>
+        /// <returns>A display string representing the specified time period unit for the given amount.</returns>
         public static string ToDisplayString(this TimePeriodUnit unit, int amount = 1)
         {
             var s = CommonStrings.Default;
