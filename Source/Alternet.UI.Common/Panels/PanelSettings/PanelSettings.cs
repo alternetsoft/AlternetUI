@@ -650,7 +650,20 @@ namespace Alternet.UI
             PanelSettingsItem item,
             object? control)
         {
-            var checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
+            var args = item.CreateArg;
+            var isRadioButton = args is not null && args.CustomFlags["IsRadioButton"];
+
+            XCheckBox checkBox;
+
+            if (isRadioButton)
+            {
+                checkBox = CreateOrUpdateControl<XRadioButton>(sender, item, control);
+            }
+            else
+            {
+                checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
+            }
+
             UpdateText(sender, item, checkBox);
 
             if (item.Value is bool isChecked)
