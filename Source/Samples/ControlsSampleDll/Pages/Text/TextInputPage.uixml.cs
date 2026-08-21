@@ -172,11 +172,9 @@ namespace ControlsSample
 
                 panelSettings.AddHorizontalLine();
 
-                var itemToolTip = panelSettings.AddInput("ToolTip", textBox, nameof(TextBox.ToolTip), new("IsMultiline"));
-                var itemToolTipControl = itemToolTip.EditorContainer;
-                if (itemToolTipControl is not null)
-                {
-                }
+                var toolTipArgs = new CustomEventArgs("IsMultiline").Attr("MinHeight", 120);
+
+                var itemToolTip = panelSettings.AddInput("ToolTip", textBox, nameof(TextBox.ToolTip), toolTipArgs);
 
                 App.DebugLogIf("Done adding TextBox settings inputs...", false);
             });

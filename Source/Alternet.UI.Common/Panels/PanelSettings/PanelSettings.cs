@@ -467,6 +467,7 @@ namespace Alternet.UI
             var args = item.CreateArg;
             var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
             var useMemo = args is not null && args.CustomFlags["IsMultiline"];
+            var minHeight = args?.CustomAttr["MinHeight"] as int?;
 
             ControlAndLabel<TextBoxAndButton, GenericControl>? result;
 
@@ -489,6 +490,11 @@ namespace Alternet.UI
                 {
                     result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(Label), typeOfTextBox);
                 }
+
+                if (minHeight.HasValue)
+                {
+                    result.MainControl.MainControl.MinHeight = minHeight.Value;
+                };
             }
 
             UpdateCommonProps(sender, item, result);
