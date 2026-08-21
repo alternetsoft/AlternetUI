@@ -551,7 +551,8 @@ namespace Alternet.UI
         /// <param name="label">The label for the radio button group.</param>
         /// <param name="getValue">The function to get the current value.</param>
         /// <param name="setValue">The action to set the value.</param>
-        /// <param name="itemTitles">The titles for the radio buttons.</param>
+        /// <param name="itemTitles">The titles for the radio buttons. Optional.
+        /// If not provided, the values will be used as titles.</param>
         /// <param name="itemValues">The values for the radio buttons.</param>
         /// <param name="e">Additional arguments.</param>
         public virtual void AddRadioButtons<T>(
