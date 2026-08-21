@@ -268,7 +268,7 @@ namespace Alternet.UI
         {
             if (item.ValueType is null)
             {
-                return CreateOrUpdateInput(sender, item, control);
+                return CreateOrUpdateTextBox(sender, item, control);
             }
 
             Type realType = AssemblyUtils.GetRealType(item.ValueType);
@@ -293,7 +293,7 @@ namespace Alternet.UI
                 return CreateOrUpdateDateEdit(sender, item, control);
             }
 
-            var result = CreateOrUpdateInput(sender, item, control);
+            var result = CreateOrUpdateTextBox(sender, item, control);
             return result;
         }
 
@@ -561,7 +561,7 @@ namespace Alternet.UI
         /// be updated using item's properties. Can be null, in this case new control
         /// need to be created.</param>
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
-        public static object? CreateOrUpdateInput(
+        public static object? CreateOrUpdateTextBox(
             PanelSettings sender,
             PanelSettingsItem item,
             object? control)
