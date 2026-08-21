@@ -179,7 +179,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets selected time.
+        /// Gets or sets selected time as <see cref="TimeOnly"/>.
+        /// </summary>
+        public virtual TimeOnly AsTimeOnly
+        {
+            get
+            {
+                return DateUtils.ToTimeOnly(Value);
+            }
+
+            set
+            {
+                Value = DateUtils.ToDateTime(value, DateOnly.FromDateTime(Value));
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected time as <see cref="DateTime"/>.
         /// </summary>
         public virtual DateTime Value
         {
