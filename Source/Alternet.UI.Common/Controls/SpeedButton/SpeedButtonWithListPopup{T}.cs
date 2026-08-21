@@ -44,12 +44,17 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
-        public static PickerPopupKind DefaultPopupKind = PickerPopupKind.ListBox;
+        public static PickerPopupKind DefaultPopupKind;
 
         /// <summary>
         /// Gets or sets whether context menu is allowed to be used as a popup with a list of elements.
         /// </summary>
-        public static bool AllowContextMenuPopup = false;
+        public static bool AllowContextMenuPopup;
+
+        /// <summary>
+        /// Gets or sets whether to allow the use of a list box as a popup window.
+        /// </summary>
+        public static bool AllowListBoxPopup;
 
         /// <summary>
         /// Gets or sets whether the default behavior is to expand drop-down menu width
@@ -60,6 +65,22 @@ namespace Alternet.UI
         private IListSource<ListControlItem>? items;
         private ObjectUniqueId? createdMenuId;
         private ListBoxItems? simpleItems;
+
+        static SpeedButtonWithListPopup()
+        {
+            if (App.IsMaui)
+            {
+                DefaultPopupKind = PickerPopupKind.ContextMenu;
+                AllowContextMenuPopup = true;
+                AllowListBoxPopup = false;
+            }
+            else
+            {
+                DefaultPopupKind = PickerPopupKind.ListBox;
+                AllowContextMenuPopup = false;
+                AllowListBoxPopup = true;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedButtonWithListPopup{T}"/> class.
@@ -482,7 +503,7 @@ namespace Alternet.UI
                 {
                     case PickerPopupKind.Auto:
                     default:
-                        if (ListItems.Count <= MaxItemsUsingContextMenu)
+                        if (ListItems.Count <= MaxItemsUsingContextMenu || !AllowListBoxPopup)
                             ShowPopupMenu();
                         else
                             ShowListBox();
@@ -508,7 +529,14 @@ namespace Alternet.UI
                     createdMenuId = DropDownMenu.UniqueId;
                 }
 
-                DropDownMenu.Items.SetCount(ListItems.Count, () => new MenuItem());
+                var itemsCount = ListItems.Count;
+
+                if (itemsCount > MaxItemsUsingContextMenu)
+                {
+                    itemsCount = MaxItemsUsingContextMenu;
+                }
+
+                DropDownMenu.Items.SetCount(itemsCount, () => new MenuItem());
 
                 if (ListItems.Count == 0)
                     return;
@@ -517,7 +545,7 @@ namespace Alternet.UI
 
                 var spaceWidth = popupOwner.MeasureCanvas.MeasureText(" ", RealFont).Width;
 
-                for (int i = 0; i < ListItems.Count; i++)
+                for (int i = 0; i < itemsCount; i++)
                 {
                     var item = ListItems[i];
                     var menuItem = DropDownMenu.Items[i];
