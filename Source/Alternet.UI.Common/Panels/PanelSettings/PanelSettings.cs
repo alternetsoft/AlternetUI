@@ -547,7 +547,7 @@ namespace Alternet.UI
         /// Adds a group of radio buttons for the specified value type. Each radio button corresponds to a specific value.
         /// This can be used to allow the user to select one value from a predefined set of options.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">The type of the value.</typeparam>
         /// <param name="label">The label for the radio button group.</param>
         /// <param name="getValue">The function to get the current value.</param>
         /// <param name="setValue">The action to set the value.</param>
@@ -558,7 +558,7 @@ namespace Alternet.UI
             object? label,
             Func<T> getValue,
             Action<T> setValue,
-            object[] itemTitles,
+            object?[]? itemTitles,
             T[] itemValues,
             CustomEventArgs? e = null)
         {
@@ -572,10 +572,14 @@ namespace Alternet.UI
 
             var groupIdentifier = BeginRadioGroup();
 
-            for (int i = 0; i < itemTitles.Length; i++)
+            for (int i = 0; i < itemValues.Length; i++)
             {
-                var title = itemTitles[i];
                 var value = itemValues[i];
+                var title = itemTitles?[i] ?? value?.ToString();
+
+                if (title is null)
+                    continue;
+
                 var item = AddInput<bool>(
                     title,
                     () => getValue()?.Equals(value) ?? false,
