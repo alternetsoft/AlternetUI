@@ -302,6 +302,251 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates or updates a checkbox control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateCheckBox(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var args = item.CreateArg;
+            var isRadioButton = args is not null && args.CustomFlags["IsRadioButton"];
+
+            XCheckBox checkBox;
+
+            if (isRadioButton)
+            {
+                checkBox = CreateOrUpdateControl<XRadioButton>(sender, item, control);
+            }
+            else
+            {
+                checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
+            }
+
+            UpdateText(sender, item, checkBox);
+
+            if (item.Value is bool isChecked)
+                checkBox.Checked = isChecked;
+
+            checkBox.CheckedChanged -= CheckBoxChecked;
+            checkBox.CheckedChanged += CheckBoxChecked;
+
+            void CheckBoxChecked(object? sender, EventArgs e)
+            {
+                item.Value = checkBox.IsChecked;
+            }
+
+            return checkBox;
+        }
+
+        /// <summary>
+        /// Creates or updates a color edit control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateColorEdit(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var result
+                = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(sender, item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(sender, item, result.Label);
+
+            var colorEditor = result.MainControl;
+
+            colorEditor.HasBtnComboBox = false;
+            colorEditor.Buttons.Visible = false;
+
+            var args = item.CreateArg;
+            var hasEmptyColor = args is not null && args.CustomFlags["HasEmptyColor"];
+            var hasTransparentColor = args is not null && args.CustomFlags["HasTransparentColor"];
+
+            if (hasEmptyColor)
+            {
+                colorEditor.MainControl.ListBox.AddEmptyColor();
+            }
+
+            if (hasTransparentColor)
+            {
+                colorEditor.MainControl.ListBox.AddTransparentColor();
+            }
+
+            colorEditor.ButtonClick -= ButtonClick;
+            colorEditor.ButtonClick += ButtonClick;
+
+            if (item.Value is Color colorValue)
+                colorEditor.ColorPicker.Value = colorValue;
+
+            colorEditor.ColorPicker.ValueChanged -= SelectorChanged;
+            colorEditor.ColorPicker.ValueChanged += SelectorChanged;
+
+            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
+            {
+                colorEditor.ColorPicker.ShowColorPopup();
+            }
+
+            void SelectorChanged(object? sender, EventArgs e)
+            {
+                item.Value = colorEditor.ColorPicker.Value;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates or updates an enum edit control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateEnumEdit(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var result
+                = CreateOrUpdateControl<ControlAndLabel<EnumPickerAndButton, Label>>(sender, item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            result.MainControl.HasBtnComboBox = false;
+            result.MainControl.Buttons.Visible = false;
+            UpdateText(sender, item, result.Label);
+
+            var enumEditor = result.MainControl;
+            enumEditor.ButtonClick -= ButtonClick;
+            enumEditor.ButtonClick += ButtonClick;
+            enumEditor.EnumPicker.EnumType = item.ValueType;
+
+            if (item.Value is not null)
+                enumEditor.EnumPicker.Value = item.Value;
+
+            enumEditor.EnumPicker.ValueChanged -= SelectorChanged;
+            enumEditor.EnumPicker.ValueChanged += SelectorChanged;
+
+            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
+            {
+                enumEditor.EnumPicker.ShowPopup();
+            }
+
+            void SelectorChanged(object? sender, EventArgs e)
+            {
+                item.Value = enumEditor.EnumPicker.Value;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates or updates an input control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateInput(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var args = item.CreateArg;
+            var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
+            var useMemo = args is not null && args.CustomFlags["IsMultiline"];
+
+            ControlAndLabel<TextBoxAndButton, GenericControl>? result;
+
+            result = control as ControlAndLabel<TextBoxAndButton, GenericControl>;
+
+            if (result is null)
+            {
+                var typeOfTextBox = useMemo ? typeof(MemoAndButton) : typeof(TextBoxAndButton);
+
+                if (checkBoxInLabel)
+                {
+                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(XCheckBox), typeOfTextBox);
+
+                    if (result.Label is XCheckBox checkBox)
+                    {
+                        checkBox.Item.CheckBoxMargin = 0;
+                    }
+                }
+                else
+                {
+                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(Label), typeOfTextBox);
+                }
+            }
+
+            UpdateCommonProps(sender, item, result);
+
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(sender, item, result.Label);
+
+            var textBox = result.MainControl;
+            textBox.HasBtnComboBox = false;
+            textBox.Buttons.Visible = false;
+
+            textBox.TextBox.ValueHelper.SetValidator(item.ValueType, false);
+            textBox.TextBox.ValueHelper.AutoShowError = true;
+            textBox.TextBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
+            textBox.TextBox.ValueHelper.TextAsValue = item.Value;
+            textBox.TextBox.ValueHelper.IsRequired = GetFlagIsRequired(item.CreateArg);
+
+            textBox.DelayedTextChanged -= TextChanged;
+            textBox.DelayedTextChanged += TextChanged;
+
+            void TextChanged(object? control, EventArgs e)
+            {
+                var previousValue = item.Value;
+
+                try
+                {
+                    if (item.ValueType is not null && item.ValueType != typeof(string))
+                    {
+                        var dictionary = sender.TypeConverters ?? DefaultTypeConverters;
+
+                        var found = dictionary.TryGetValue(item.ValueType, out var converter);
+
+                        if (found && converter is not null)
+                        {
+                            var converterInstance = Activator.CreateInstance(converter);
+
+                            if (converterInstance is TypeConverter typeConverter)
+                            {
+                                var convertedValue = typeConverter.ConvertFromString(textBox.TextBox.Text);
+                                item.Value = convertedValue;
+                                return;
+                            }
+                        }
+                    }
+
+                    item.Value = textBox.TextBox.ValueHelper.TextAsValue;
+                }
+                catch (Exception ex)
+                {
+                    item.Value = previousValue;
+                    sender.RaiseProcessException(new ThrowExceptionEventArgs(ex));
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Registers function which is called when item is converted to the control.
         /// </summary>
         /// <param name="platform">Platform kind.</param>
@@ -801,7 +1046,7 @@ namespace Alternet.UI
 
             if (!AutoCreate)
                 return;
-            var conversion = GetRegisteredConversion(item.Kind);
+            var conversion = item.ItemToControl ?? GetRegisteredConversion(item.Kind);
             if (conversion is null)
                 return;
             var obj = conversion(this, item, null);
@@ -809,214 +1054,6 @@ namespace Alternet.UI
                 return;
             control.CustomAttr["PanelSettingsItem"] = item.UniqueId;
             control.Parent = this;
-        }
-
-        private static object? CreateOrUpdateCheckBox(
-            PanelSettings sender,
-            PanelSettingsItem item,
-            object? control)
-        {
-            var args = item.CreateArg;
-            var isRadioButton = args is not null && args.CustomFlags["IsRadioButton"];
-
-            XCheckBox checkBox;
-
-            if (isRadioButton)
-            {
-                checkBox = CreateOrUpdateControl<XRadioButton>(sender, item, control);
-            }
-            else
-            {
-                checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
-            }
-
-            UpdateText(sender, item, checkBox);
-
-            if (item.Value is bool isChecked)
-                checkBox.Checked = isChecked;
-
-            checkBox.CheckedChanged -= CheckBoxChecked;
-            checkBox.CheckedChanged += CheckBoxChecked;
-
-            void CheckBoxChecked(object? sender, EventArgs e)
-            {
-                item.Value = checkBox.IsChecked;
-            }
-
-            return checkBox;
-        }
-
-        private static object? CreateOrUpdateColorEdit(
-            PanelSettings sender,
-            PanelSettingsItem item,
-            object? control)
-        {
-            var result
-                = CreateOrUpdateControl<ControlAndLabel<ColorPickerAndButton, Label>>(sender, item, control);
-            result.LabelToControl = StackPanelOrientation.Vertical;
-            UpdateText(sender, item, result.Label);
-
-            var colorEditor = result.MainControl;
-
-            colorEditor.HasBtnComboBox = false;
-            colorEditor.Buttons.Visible = false;
-
-            var args = item.CreateArg;
-            var hasEmptyColor = args is not null && args.CustomFlags["HasEmptyColor"];
-            var hasTransparentColor = args is not null && args.CustomFlags["HasTransparentColor"];
-
-            if (hasEmptyColor)
-            {
-                colorEditor.MainControl.ListBox.AddEmptyColor();
-            }
-
-            if (hasTransparentColor)
-            {
-                colorEditor.MainControl.ListBox.AddTransparentColor();
-            }
-
-            colorEditor.ButtonClick -= ButtonClick;
-            colorEditor.ButtonClick += ButtonClick;
-
-            if (item.Value is Color colorValue)
-                colorEditor.ColorPicker.Value = colorValue;
-
-            colorEditor.ColorPicker.ValueChanged -= SelectorChanged;
-            colorEditor.ColorPicker.ValueChanged += SelectorChanged;
-
-            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
-            {
-                colorEditor.ColorPicker.ShowColorPopup();
-            }
-
-            void SelectorChanged(object? sender, EventArgs e)
-            {
-                item.Value = colorEditor.ColorPicker.Value;
-            }
-
-            return result;
-        }
-
-        private static object? CreateOrUpdateEnumEdit(
-            PanelSettings sender,
-            PanelSettingsItem item,
-            object? control)
-        {
-            var result
-                = CreateOrUpdateControl<ControlAndLabel<EnumPickerAndButton, Label>>(sender, item, control);
-            result.LabelToControl = StackPanelOrientation.Vertical;
-            result.MainControl.HasBtnComboBox = false;
-            result.MainControl.Buttons.Visible = false;
-            UpdateText(sender, item, result.Label);
-
-            var enumEditor = result.MainControl;
-            enumEditor.ButtonClick -= ButtonClick;
-            enumEditor.ButtonClick += ButtonClick;
-            enumEditor.EnumPicker.EnumType = item.ValueType;
-
-            if (item.Value is not null)
-                enumEditor.EnumPicker.Value = item.Value;
-
-            enumEditor.EnumPicker.ValueChanged -= SelectorChanged;
-            enumEditor.EnumPicker.ValueChanged += SelectorChanged;
-
-            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
-            {
-                enumEditor.EnumPicker.ShowPopup();
-            }
-
-            void SelectorChanged(object? sender, EventArgs e)
-            {
-                item.Value = enumEditor.EnumPicker.Value;
-            }
-
-            return result;
-        }
-
-        private static object? CreateOrUpdateInput(
-            PanelSettings sender,
-            PanelSettingsItem item,
-            object? control)
-        {
-            var args = item.CreateArg;
-            var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
-
-            ControlAndLabel<TextBoxAndButton, GenericControl>? result;
-
-            result = control as ControlAndLabel<TextBoxAndButton, GenericControl>;
-
-            if (result is null)
-            {
-                if (checkBoxInLabel)
-                {
-                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(XCheckBox));
-
-                    if (result.Label is XCheckBox checkBox)
-                    {
-                        checkBox.Item.CheckBoxMargin = 0;
-                    }
-                }
-                else
-                {
-                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(Label));
-                }
-            }
-
-            UpdateCommonProps(sender, item, result);
-
-            result.LabelToControl = StackPanelOrientation.Vertical;
-            UpdateText(sender, item, result.Label);
-
-            var textBox = result.MainControl;
-            textBox.HasBtnComboBox = false;
-            textBox.Buttons.Visible = false;
-
-            textBox.TextBox.ValueHelper.SetValidator(item.ValueType, false);
-            textBox.TextBox.ValueHelper.AutoShowError = true;
-            textBox.TextBox.ValueHelper.Options |= TextBoxOptions.DefaultValidation;
-            textBox.TextBox.ValueHelper.TextAsValue = item.Value;
-            textBox.TextBox.ValueHelper.IsRequired = GetFlagIsRequired(item.CreateArg);
-
-            textBox.DelayedTextChanged -= TextChanged;
-            textBox.DelayedTextChanged += TextChanged;
-
-            void TextChanged(object? control, EventArgs e)
-            {
-                var previousValue = item.Value;
-
-                try
-                {
-                    if (item.ValueType is not null)
-                    {
-                        var dictionary = sender.TypeConverters ?? DefaultTypeConverters;
-
-                        var found = dictionary.TryGetValue(item.ValueType, out var converter);
-
-                        if (found && converter is not null)
-                        {
-                            var converterInstance = Activator.CreateInstance(converter);
-
-                            if (converterInstance is TypeConverter typeConverter)
-                            {
-                                var convertedValue = typeConverter.ConvertFromString(textBox.TextBox.Text);
-                                item.Value = convertedValue;
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        item.Value = textBox.TextBox.ValueHelper.TextAsValue;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    item.Value = previousValue;
-                    sender.RaiseProcessException(new ThrowExceptionEventArgs(ex));
-                }
-            }
-
-            return result;
         }
 
         private static void UpdateCommonProps(PanelSettings sender, PanelSettingsItem item, AbstractControl control)
