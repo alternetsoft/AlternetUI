@@ -78,7 +78,12 @@ namespace ControlsSample
             {
                 App.DebugLogIf("Adding TextBox settings inputs...", false);
 
-                panelSettings.AddInput("ReadOnly", textBox, nameof(TextBox.ReadOnly));
+                panelSettings.AddInput<bool>(
+                            "ReadOnly",
+                            () => textBox.ReadOnly,
+                            (value) => textBox.ReadOnly = value,
+                            e: null);
+
                 panelSettings.AddInput("Password", textBox, nameof(TextBox.IsPassword));
                 panelSettings.AddInput("Has Border", textBox, nameof(TextBox.HasBorder));
                 panelSettings.AddInput("Allow Space Character", this, nameof(AllowSpaceChar));
