@@ -45,7 +45,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateControl()
+        protected override AbstractControl CreateControl(Type? typeOfControl)
         {
             return new T();
         }

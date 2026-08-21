@@ -90,6 +90,9 @@ namespace Alternet.UI
         protected override bool NeedDefaultButton() => false;
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateControl() => new ComboBox();
+        protected override AbstractControl CreateControl(Type? typeOfControl)
+        {
+            return new ComboBox();
+        }
     }
 }

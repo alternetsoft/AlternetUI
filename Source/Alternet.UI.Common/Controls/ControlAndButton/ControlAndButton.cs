@@ -80,9 +80,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ControlAndButton"/> class.
+        /// Initializes a new instance of the <see cref="ControlAndButton"/> class with the specified type of the main child control.
         /// </summary>
-        public ControlAndButton()
+        /// <param name="typeOfControl">The type of the main child control.</param>
+        public ControlAndButton(Type? typeOfControl)
         {
             SuspendHandlerTextChange();
             ParentBackColor = true;
@@ -92,7 +93,7 @@ namespace Alternet.UI
             SuspendLayout();
             try
             {
-                mainControl = CreateControl();
+                mainControl = CreateControl(typeOfControl);
                 mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
                 mainControl.Parent = this;
 
@@ -106,7 +107,7 @@ namespace Alternet.UI
                 buttons.ParentBackColor = true;
                 buttons.ParentForeColor = true;
 
-                if(NeedDefaultButton())
+                if (NeedDefaultButton())
                     HasBtnComboBox = true;
                 buttons.Parent = this;
             }
@@ -114,6 +115,14 @@ namespace Alternet.UI
             {
                 ResumeLayout();
             }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ControlAndButton"/> class.
+        /// </summary>
+        public ControlAndButton()
+            : this(typeOfControl: null)
+        {
         }
 
         /// <summary>
@@ -838,7 +847,7 @@ namespace Alternet.UI
         /// <remarks>
         /// For example, main control for the <see cref="TextBoxAndButton"/> is <see cref="TextBox"/>.
         /// </remarks>
-        protected abstract AbstractControl CreateControl();
+        protected abstract AbstractControl CreateControl(Type? typeOfControl);
 
         /// <summary>
         /// Creates substitute control which can be optionally used instead of the main child control.

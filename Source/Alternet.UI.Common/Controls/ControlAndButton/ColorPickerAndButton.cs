@@ -32,7 +32,7 @@ namespace Alternet.UI
         public ColorPicker ColorPicker => (ColorPicker)base.MainControl;
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateControl()
+        protected override AbstractControl CreateControl(Type? typeOfControl)
         {
             return new ColorPicker();
         }
