@@ -504,141 +504,148 @@ namespace Alternet.UI
                     case PickerPopupKind.Auto:
                     default:
                         if (ListItems.Count <= MaxItemsUsingContextMenu || !AllowListBoxPopup)
-                            ShowPopupMenu();
+                            ShowPopupViaContextMenu();
                         else
-                            ShowListBox();
+                            ShowPopupViaListBox();
                         break;
                     case PickerPopupKind.ListBox:
-                        ShowListBox();
+                        ShowPopupViaListBox();
                         break;
                     case PickerPopupKind.ContextMenu:
-                        ShowPopupMenu();
+                        ShowPopupViaContextMenu();
                         break;
                 }
             }
             else
             {
-                ShowListBox();
+                ShowPopupViaListBox();
             }
 
-            void ShowPopupMenu()
+        }
+
+        /// <summary>
+        /// Shows the popup window with a list box containing the items.
+        /// </summary>
+        protected virtual void ShowPopupViaListBox()
+        {
+            if (ListItems is null)
             {
-                if (DropDownMenu is null)
-                {
-                    DropDownMenu = new ContextMenu();
-                    createdMenuId = DropDownMenu.UniqueId;
-                }
+                ListBox.RemoveAll();
+                return;
+            }
+            else
+                ListBox.SetItemsFastest(ListItems);
 
-                var itemsCount = ListItems.Count;
+            if (ListBox.Count == 0)
+                return;
 
-                if (itemsCount > MaxItemsUsingContextMenu)
-                {
-                    itemsCount = MaxItemsUsingContextMenu;
-                }
+            int? index = null;
 
-                DropDownMenu.Items.SetCount(itemsCount, () => new MenuItem());
-
-                if (ListItems.Count == 0)
-                    return;
-
-                var popupOwner = PopupOwner ?? this;
-
-                var spaceWidth = popupOwner.MeasureCanvas.MeasureText(" ", RealFont).Width;
-
-                for (int i = 0; i < itemsCount; i++)
-                {
-                    var item = ListItems[i];
-                    var menuItem = DropDownMenu.Items[i];
-
-                    var s = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
-
-                    if (i == 0 && DefaultExpandDropDownMenuToWidth)
-                    {
-                        var itemWidth = popupOwner.MeasureCanvas.MeasureText(s, RealFont).Width;
-                        var numOfSpaces = (int)((popupOwner.Width - itemWidth) / spaceWidth);
-                        numOfSpaces -= DefaultExpandedDropDownMenuDecrement;
-
-                        if (numOfSpaces > 0)
-                            s += new string(' ', numOfSpaces);
-                    }
-
-                    menuItem.Text = s;
-                    menuItem.Tag = item.Value ?? item;
-                    menuItem.ClickAction = MenuItemClickHandler;
-
-                    void MenuItemClickHandler()
-                    {
-                        Value = menuItem.Tag;
-                    }
-                }
-
-                var valueChecked = DropDownMenu.CheckSingleItemWithTag(Value);
-
-                if (!valueChecked)
-                {
-                    var checkValue = Value is not ListControlItem valueAsItem
-                        ? Value : valueAsItem.Value ?? valueAsItem;
-
-                    DropDownMenu.CheckSingleItemWithTag(
-                        checkValue,
-                        Menu.FindItemFlags.IgnoreCase | Menu.FindItemFlags.TrimText);
-                }
-
-                DropDownMenu.ShowAsDropDown(popupOwner);
+            if (LookupValue is not null)
+            {
+                var lookupEventArgs = new BaseEventArgs<int?>();
+                LookupValue(this, lookupEventArgs);
+                index = lookupEventArgs.Value;
             }
 
-            void ShowListBox()
+            if (index is null)
             {
-                if (ListItems is null)
+                var v = Value;
+
+                if (LookupByValue && v is not null)
                 {
-                    ListBox.RemoveAll();
-                    return;
-                }
-                else
-                    ListBox.SetItemsFastest(ListItems);
-
-                if (ListBox.Count == 0)
-                    return;
-
-                int? index = null;
-
-                if (LookupValue is not null)
-                {
-                    var lookupEventArgs = new BaseEventArgs<int?>();
-                    LookupValue(this, lookupEventArgs);
-                    index = lookupEventArgs.Value;
+                    index = ListBox.FindItemIndexWithValue(v);
                 }
 
-                if (index is null)
+                var s = Text;
+
+                if (index is null && !string.IsNullOrEmpty(s))
                 {
-                    var v = Value;
-
-                    if (LookupByValue && v is not null)
-                    {
-                        index = ListBox.FindItemIndexWithValue(v);
-                    }
-
-                    var s = Text;
-
-                    if (index is null && !string.IsNullOrEmpty(s))
-                    {
-                        index = ListBox.FindAndSelect(
-                         s,
-                         startIndex: 0,
-                         exact: LookupExactText,
-                         ignoreCase: LookupIgnoreCase);
-                    }
+                    index = ListBox.FindAndSelect(
+                     s,
+                     startIndex: 0,
+                     exact: LookupExactText,
+                     ignoreCase: LookupIgnoreCase);
                 }
+            }
 
+            ListBox.SelectItemAndScroll(index);
+            PopupWindow.ShowPopup(PopupOwner ?? this);
+
+            App.InvokeIdle(() =>
+            {
                 ListBox.SelectItemAndScroll(index);
-                PopupWindow.ShowPopup(PopupOwner ?? this);
+                ListBox.Refresh();
+            });
+        }
 
-                App.InvokeIdle(() =>
-                {
-                    ListBox.SelectItemAndScroll(index);
-                    ListBox.Refresh();
-                });
+        /// <summary>
+        /// Shows the popup window as a context menu with the list of items.
+        /// </summary>
+        protected virtual void ShowPopupViaContextMenu()
+        {
+            if (DropDownMenu is null)
+            {
+                DropDownMenu = new ContextMenu();
+                createdMenuId = DropDownMenu.UniqueId;
             }
+
+            var itemsCount = ListItems.Count;
+
+            if (itemsCount > MaxItemsUsingContextMenu)
+            {
+                itemsCount = MaxItemsUsingContextMenu;
+            }
+
+            DropDownMenu.Items.SetCount(itemsCount, () => new MenuItem());
+
+            if (ListItems.Count == 0)
+                return;
+
+            var popupOwner = PopupOwner ?? this;
+
+            var spaceWidth = popupOwner.MeasureCanvas.MeasureText(" ", RealFont).Width;
+
+            for (int i = 0; i < itemsCount; i++)
+            {
+                var item = ListItems[i];
+                var menuItem = DropDownMenu.Items[i];
+
+                var s = item.DisplayText ?? item.Text ?? item.Value?.ToString() ?? string.Empty;
+
+                if (i == 0 && DefaultExpandDropDownMenuToWidth)
+                {
+                    var itemWidth = popupOwner.MeasureCanvas.MeasureText(s, RealFont).Width;
+                    var numOfSpaces = (int)((popupOwner.Width - itemWidth) / spaceWidth);
+                    numOfSpaces -= DefaultExpandedDropDownMenuDecrement;
+
+                    if (numOfSpaces > 0)
+                        s += new string(' ', numOfSpaces);
+                }
+
+                menuItem.Text = s;
+                menuItem.Tag = item.Value ?? item;
+                menuItem.ClickAction = MenuItemClickHandler;
+
+                void MenuItemClickHandler()
+                {
+                    Value = menuItem.Tag;
+                }
+            }
+
+            var valueChecked = DropDownMenu.CheckSingleItemWithTag(Value);
+
+            if (!valueChecked)
+            {
+                var checkValue = Value is not ListControlItem valueAsItem
+                    ? Value : valueAsItem.Value ?? valueAsItem;
+
+                DropDownMenu.CheckSingleItemWithTag(
+                    checkValue,
+                    Menu.FindItemFlags.IgnoreCase | Menu.FindItemFlags.TrimText);
+            }
+
+            DropDownMenu.ShowAsDropDown(popupOwner);
         }
 
         /// <inheritdoc/>
