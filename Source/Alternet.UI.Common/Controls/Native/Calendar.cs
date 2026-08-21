@@ -643,9 +643,6 @@ namespace Alternet.UI
             }
         }
 
-        internal DayOfWeek FirstDayOfWeekUseGlobalization =>
-            System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
-
         /// <summary>
         /// Creates <see cref="ICalendarDateAttr"/> instance.
         /// </summary>

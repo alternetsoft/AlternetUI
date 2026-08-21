@@ -38,6 +38,17 @@ namespace Alternet.UI
         public static string DateFormatJs { get; set; } = "yyyy-MM-ddTHH:mm:ss.fffK";
 
         /// <summary>
+        /// Gets the first day of the week according to the current culture's settings.
+        /// </summary>
+        public static DayOfWeek SystemFirstDayOfWeek
+        {
+            get
+            {
+                return System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
+            }
+        }
+
+        /// <summary>
         /// Returns the culture-specific AM or PM designator for the specified date and time value.
         /// </summary>
         /// <remarks>If a user-defined override for the AM or PM designator is set, it is used in
