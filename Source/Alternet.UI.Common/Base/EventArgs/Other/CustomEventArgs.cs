@@ -48,6 +48,19 @@ namespace Alternet.UI
             return this;
         }
 
+        /// <summary>
+        /// Sets custom flag with the specified name and value.
+        /// </summary>
+        /// <param name="name">The name of the custom flag.</param>
+        /// <param name="value">The value of the custom flag. Optional.
+        /// If not specified, the default value is <c>true</c>.</param>
+        /// <returns>The current <see cref="CustomEventArgs"/> instance.</returns>
+        public CustomEventArgs Flag(string name, bool value = true)
+        {
+            CustomFlags[name] = value;
+            return this;
+        }
+
         /// <inheritdoc cref="BaseObjectWithAttr.IntFlags"/>
         [Browsable(false)]
         public ICustomIntFlags IntFlags
