@@ -14,15 +14,25 @@ namespace Alternet.UI
     public partial class TextBoxAndButton : ControlAndButton
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="TextBoxAndButton"/> class.
+        /// Initializes a new instance of the <see cref="TextBoxAndButton"/> class
+        /// with the specified type of the main child control.
         /// </summary>
-        public TextBoxAndButton()
+        public TextBoxAndButton(Type? typeOfControl)
+            : base(typeOfControl)
         {
             MainControl.ValueHelper.ValidatorReporter = InnerPicture;
             MainControl.TextChanged += OnMainControlTextChanged;
             MainControl.ValueHelper.AutoShowError = true;
             MainControl.VerticalAlignment = VerticalAlignment.Center;
             AutoBackColor = true;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TextBoxAndButton"/> class.
+        /// </summary>
+        public TextBoxAndButton()
+            : this(typeOfControl: null)
+        {
         }
 
         /// <summary>
@@ -341,8 +351,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateControl()
+        protected override AbstractControl CreateControl(Type? typeOfControl)
         {
+            if (typeOfControl != null)
+            {
+                if (Activator.CreateInstance(typeOfControl) is TextBox result)
+                    return result;
+            }
+
             return new TextBox();
         }
 
@@ -412,6 +428,20 @@ namespace Alternet.UI
                     return Default;
                 }
             }
+        }
+    }
+
+    /// <summary>
+    /// Implements <see cref="MultilineTextBox"/> with side buttons.
+    /// </summary>
+    public partial class MemoAndButton : TextBoxAndButton
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemoAndButton"/> class.
+        /// </summary>
+        public MemoAndButton()
+            : base(typeOfControl: typeof(MultilineTextBox))
+        {
         }
     }
 }
