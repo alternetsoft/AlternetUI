@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -37,11 +38,13 @@ namespace Alternet.UI
         /// <summary>
         /// Gets additional arguments used when item was created.
         /// </summary>
+        [Browsable(false)]
         public virtual CustomEventArgs? CreateArg { get; internal set; }
 
         /// <summary>
         /// Gets or sets action which is invoked when value is changed.
         /// </summary>
+        [Browsable(false)]
         public virtual PanelSettings.ItemActionDelegate? ValueChangedAction
         {
             get => valueChangedAction;
@@ -51,21 +54,25 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the editor control associated with the item.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl? Editor => owner?.GetItemControlEditor(this);
 
         /// <summary>
         /// Gets the editor container control associated with the item.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl? EditorContainer => owner?.GetItemControl(this);
 
         /// <summary>
         /// Gets the editor label control associated with the item.
         /// </summary>
+        [Browsable(false)]
         public AbstractControl? EditorLabel => owner?.GetItemControlLabel(this);
 
         /// <summary>
         /// Gets owner of the item.
         /// </summary>
+        [Browsable(false)]
         public PanelSettings? Owner
         {
             get => owner;
@@ -91,6 +98,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets click action.
         /// </summary>
+        [Browsable(false)]
         public virtual PanelSettings.ItemActionDelegate? ClickAction
         {
             get => clickAction;
@@ -113,6 +121,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item is visible.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsVisible
         {
             get => isVisible;
@@ -126,6 +135,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether item is enabled.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsEnabled
         {
             get => isEnabled;
@@ -139,6 +149,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets whether value is nullable.
         /// </summary>
+        [Browsable(false)]
         public virtual bool IsNullable
         {
             get
@@ -168,6 +179,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets type of the value.
         /// </summary>
+        [Browsable(false)]
         public virtual Type? ValueType
         {
             get => valueType;
@@ -182,6 +194,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets value source.
         /// </summary>
+        [Browsable(false)]
         public virtual IValueSource<object> ValueSource
         {
             get => valueSource ??= new ValueContainer<object>();
