@@ -80,7 +80,7 @@ namespace Alternet.UI
 
                 if (value is null)
                     return null;
-                return DateUtils.ToDateOnly(value.Value);
+                return DateOnly.FromDateTime(value.Value);
             }
 
             set
@@ -89,7 +89,7 @@ namespace Alternet.UI
                     Value = null;
                 else
                 {
-                    Value = DateUtils.ToDateTime(DateUtils.ToTimeOnly(Value ?? DateTime.Now), value.Value);
+                    Value = DateUtils.ToDateTime(TimeOnly.FromDateTime(Value ?? DateTime.Now), value.Value);
                 }
             }
         }

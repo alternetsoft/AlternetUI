@@ -185,7 +185,7 @@ namespace Alternet.UI
         {
             get
             {
-                return DateUtils.ToTimeOnly(Value);
+                return TimeOnly.FromDateTime(Value);
             }
 
             set
