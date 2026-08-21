@@ -194,6 +194,31 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets selected date as <see cref="DateOnly"/>.
+        /// </summary>
+        public virtual DateOnly? AsDateOnly
+        {
+            get
+            {
+                var value = Value;
+
+                if (value is null)
+                    return null;
+                return DateOnly.FromDateTime(value.Value);
+            }
+
+            set
+            {
+                if (value is null)
+                    Value = null;
+                else
+                {
+                    Value = DateUtils.ToDateTime(TimeOnly.FromDateTime(Value ?? DateTime.Now), value.Value);
+                }
+            }
+        }
+
         /// <inheritdoc/>
         /// <remarks>
         /// When this property is changed from the code and not by the user, events are not fired.
