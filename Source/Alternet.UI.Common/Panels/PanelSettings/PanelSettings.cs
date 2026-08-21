@@ -272,6 +272,22 @@ namespace Alternet.UI
             }
 
             Type realType = AssemblyUtils.GetRealType(item.ValueType);
+            var typeCode = Type.GetTypeCode(realType);
+            var isIntNumber = AssemblyUtils.IsTypeCodeSignedInt(typeCode) || AssemblyUtils.IsTypeCodeUnsignedInt(typeCode);
+
+            if (isIntNumber)
+            {
+                var useUpDown = item.CreateArg?.CustomFlags["UseUpDown"] ?? false;
+
+                if (useUpDown)
+                {
+                    return CreateOrUpdateIntPicker(sender, item, control);
+                }
+                else
+                {
+                    return CreateOrUpdateTextBox(sender, item, control);
+                }
+            }
 
             if (realType == typeof(bool))
             {
@@ -510,6 +526,40 @@ namespace Alternet.UI
             void SelectorChanged(object? sender, EventArgs e)
             {
                 item.Value = timeEditor.AsTimeOnly;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates or updates an integer picker control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateIntPicker(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var result = CreateOrUpdateControlAndLabel<XIntPicker>(sender, item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(sender, item, result.Label);
+
+            var intPicker = result.MainControl;
+
+            if (item.Value is int intValue)
+                intPicker.Value = intValue;
+
+            intPicker.ValueChanged -= SelectorChanged;
+            intPicker.ValueChanged += SelectorChanged;
+
+            void SelectorChanged(object? sender, EventArgs e)
+            {
+                item.Value = intPicker.Value;
             }
 
             return result;

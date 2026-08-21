@@ -62,7 +62,7 @@ namespace PropertyGridSample
         {
             if (control is not PanelSettings panel)
                 return;
-            panel.HasBorder = true;
+            panel.HasBorder = false;
             panel.Dock = DockStyle.Fill;
 
             panel.AddInput("This is CheckBox:", samplePropContainer, nameof(SamplePropContainer.SampleBool));
@@ -94,7 +94,6 @@ namespace PropertyGridSample
             panel.AddInput("This is color:", samplePropContainer, nameof(SamplePropContainer.SampleColor));
 
             panel.AddInput("This is time picker:", samplePropContainer, nameof(SamplePropContainer.SampleTime));
-
         }
 
         private static void Panel_Scroll(object sender, ScrollEventArgs e)

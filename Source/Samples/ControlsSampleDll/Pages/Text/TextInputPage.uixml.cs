@@ -105,15 +105,13 @@ namespace ControlsSample
 
                 panelSettings.AddInput("Text Align", textBox, nameof(TextBox.TextAlign));
 
-                var e = CustomEventArgs.CreateWithFlag("IsRequired");
-
-                e.CustomFlags["CheckBoxInLabel"] = true;
+                CustomEventArgs lengthArgs = new("IsRequired", "CheckBoxInLabel");
 
                 var itemMinLengthEdit = panelSettings.AddInput(
                     MinLengthEditLabel,
                     textBox.ValueHelper,
                     nameof(TextBox.ValueHelper.MinLength),
-                    e);
+                    lengthArgs);
                 itemMinLengthEdit.ValueChanged += (s, e) =>
                 {
                     textBox.ValueHelper.RunDefaultValidation();
@@ -142,7 +140,7 @@ namespace ControlsSample
                     MaxLengthEditLabel,
                     textBox.ValueHelper,
                     nameof(TextBox.ValueHelper.MaxLength),
-                    e);
+                    lengthArgs.Flag("UseUpDown"));
 
                 var maxLengthEditLabel = panelSettings.GetItemControlLabel(itemMaxLengthEdit);
 
