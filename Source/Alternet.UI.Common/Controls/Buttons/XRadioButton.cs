@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
@@ -67,7 +68,16 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether sibling controls
         /// should be unchecked when this control's checked state changes.
         /// </summary>
-        public bool AutoUncheckSiblings { get; set; } = true;
+        public virtual bool AutoUncheckSiblings { get; set; } = true;
+
+        /// <summary>
+        /// Gets or sets the unique identifier of the radio button group to which this control belongs.
+        /// This property allows you to specify a custom group for the radio button,
+        /// enabling you to have multiple groups of radio buttons within the same container.
+        /// If this property is not set, the radio button will be part of the default group within its container.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ObjectUniqueId? RadioGroupId { get; set; }
 
         /// <inheritdoc/>
         public override void RaiseCheckedChanged()
@@ -84,18 +94,34 @@ namespace Alternet.UI
 
             try
             {
-                var siblings = Siblings.ToArray();
+                var siblings = GetSiblingButtons();
 
                 foreach (var sibling in siblings)
                 {
-                    if (sibling is not XRadioButton radioButton)
-                        continue;
-                    radioButton.IsChecked = false;
+                    sibling.IsChecked = false;
                 }
             }
             finally
             {
                 suppressSiblingNotifyCounter--;
+            }
+        }
+
+        /// <summary>
+        /// Gets the sibling <see cref="XRadioButton"/> controls in the same container.
+        /// </summary>
+        /// <returns>A collection of sibling <see cref="XRadioButton"/> controls.</returns>
+        protected virtual IEnumerable<XRadioButton> GetSiblingButtons()
+        {
+            var siblings = Siblings.ToArray();
+
+            foreach (var sibling in siblings)
+            {
+                if (sibling is not XRadioButton radioButton)
+                    continue;
+                if(radioButton.RadioGroupId != RadioGroupId)
+                    continue;
+                yield return radioButton;
             }
         }
     }
