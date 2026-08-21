@@ -21,6 +21,7 @@ namespace ControlsSample
             calendar.Margin = 5;
             calendar.Alignment = (HorizontalAlignment.Left, VerticalAlignment.Top);
             calendar.Parent = this;
+            tabControl.HorizontalAlignment = HorizontalAlignment.Fill;
             tabControl.Margin = 5;
             tabControl.MinSizeGrowMode = WindowSizeToContentMode.Width;
             tabControl.Parent = this;
@@ -121,11 +122,20 @@ namespace ControlsSample
                 tabControl.Add(panelSettings);
 
                 panelSettings.AddRadioButtons<DayOfWeek>(
-                    "First Day of Week",
+                    "First Day of Week:",
                     () => calendar.FirstDayOfWeek ?? DateUtils.SystemFirstDayOfWeek,
                     (value) => calendar.FirstDayOfWeek = value,
                     itemTitles: [ "Sunday", "Monday" ],
                     itemValues: [ DayOfWeek.Sunday, DayOfWeek.Monday ]);
+
+                panelSettings.AddHorizontalLine();
+
+                panelSettings.AddFlagCheckBoxes<FontStyle>(
+                            "Font Styles:",
+                            () => calendar.RealFont.Style,
+                            (value) => calendar.Font = calendar.RealFont.WithStyle(value),
+                            itemTitles: ["Bold", "Italic", "Underline"],
+                            itemValues: [FontStyle.Bold, FontStyle.Italic, FontStyle.Underline]);
 
                 // Other initializations
 

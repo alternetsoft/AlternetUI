@@ -544,6 +544,64 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds a group of checkboxes for editing of the specified enum type.
+        /// Each checkbox corresponds to a specific flag value.
+        /// </summary>
+        /// <typeparam name="TEnum">The enum type.</typeparam>
+        /// <param name="label">The label for the checkbox group.</param>
+        /// <param name="getValue">The function to get the current value.</param>
+        /// <param name="setValue">The action to set the value.</param>
+        /// <param name="itemTitles">The titles for the checkboxes. Optional.
+        /// If not provided, the values will be used as titles.</param>
+        /// <param name="itemValues">The values for the checkboxes. Enum elements are specified here.</param>
+        /// <param name="e">Additional arguments.</param>
+        public virtual void AddFlagCheckBoxes<TEnum>(
+            object? label,
+            Func<TEnum> getValue,
+            Action<TEnum> setValue,
+            object?[]? itemTitles,
+            TEnum[] itemValues,
+            CustomEventArgs? e = null)
+            where TEnum : struct, Enum
+        {
+            if (label is not null)
+            {
+                AddLabel(label);
+            }
+
+            for (int i = 0; i < itemValues.Length; i++)
+            {
+                var value = itemValues[i];
+                var title = itemTitles?[i] ?? value.ToString();
+
+                var item = AddInput<bool>(
+                    title,
+                    () => getValue().HasFlag(value),
+                    (isChecked) =>
+                    {
+                        var oldValue = getValue();
+                        var underlying = Convert.ToUInt64(oldValue);
+                        var flag = Convert.ToUInt64(value);
+
+                        ulong newUnderlying;
+
+                        if (isChecked)
+                        {
+                            newUnderlying = underlying | flag;
+                        }
+                        else
+                        {
+                            newUnderlying = underlying & ~flag;
+                        }
+
+                        var newValue = (TEnum)Enum.ToObject(typeof(TEnum), newUnderlying);
+                        setValue(newValue);
+                    },
+                    e);
+            }
+        }
+
+        /// <summary>
         /// Adds a group of radio buttons for the specified value type. Each radio button corresponds to a specific value.
         /// This can be used to allow the user to select one value from a predefined set of options.
         /// </summary>
