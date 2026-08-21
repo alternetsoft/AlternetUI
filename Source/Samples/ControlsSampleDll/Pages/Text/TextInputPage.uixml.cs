@@ -94,7 +94,7 @@ namespace ControlsSample
 
                 var e = CustomEventArgs.CreateWithFlag("IsRequired");
 
-                e.CustomFlags["CheckBoxInLabel"] = false;
+                e.CustomFlags["CheckBoxInLabel"] = true;
 
                 var itemMinLengthEdit = panelSettings.AddInput(
                     MinLengthEditLabel,
@@ -107,6 +107,13 @@ namespace ControlsSample
                 };
 
                 var minLengthEdit = panelSettings.GetItemControl(itemMinLengthEdit);
+                var minLengthEditLabel = panelSettings.GetItemControlLabel(itemMinLengthEdit);
+
+                if (minLengthEditLabel is XCheckBox checkBox)
+                {
+                    checkBox.Checked = true;
+                    checkBox.Item.IsCheckBoxEnabled = false;
+                }
 
                 var itemMaxLengthEdit = panelSettings.AddInput(
                     MaxLengthEditLabel,
