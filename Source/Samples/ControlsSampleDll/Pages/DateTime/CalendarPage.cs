@@ -113,6 +113,20 @@ namespace ControlsSample
                     rangeYesterdayButton,
                     rangeYesterdayTomorrowButton).Margin(5).Parent(rangePanel);
 
+                // First day panel
+
+                var panelSettings = new PanelSettings();
+                panelSettings.Margin = 5;
+                panelSettings.Title = "Other";
+                tabControl.Add(panelSettings);
+
+                panelSettings.AddRadioButtons<DayOfWeek>(
+                    "First Day of Week",
+                    () => calendar.FirstDayOfWeek ?? DateUtils.SystemFirstDayOfWeek,
+                    (value) => calendar.FirstDayOfWeek = value,
+                    itemTitles: [ "Sunday", "Monday" ],
+                    itemValues: [ DayOfWeek.Sunday, DayOfWeek.Monday ]);
+
                 // Other initializations
 
                 useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(XButton.Enabled));

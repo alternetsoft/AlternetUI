@@ -21,7 +21,7 @@ namespace Alternet.UI
         /// Gets or sets a default dictionary of type converters for the settings panel items.
         /// The type converter is used to convert the item value to and from string representation.
         /// </summary>
-        public static BaseDictionary<Type, Type> DefaultTypeConverters = new ();
+        public static BaseDictionary<Type, Type> DefaultTypeConverters = new();
 
         /// <summary>
         /// Gets or sets default horizontal line margin.
@@ -46,12 +46,12 @@ namespace Alternet.UI
         /// </summary>
         public static int DefaultLabelToTextMargin = 3;
 
-        private static
-            EnumArray<PanelSettingsItemKind, ItemToControlDelegate?> itemToControl = new();
+        private static long globalCounter;
+        private static EnumArray<PanelSettingsItemKind, ItemToControlDelegate?> itemToControl = new();
 
         private readonly BaseCollection<PanelSettingsItem> items;
-
-        private bool autoCreate = true;
+        private readonly bool autoCreate = true;
+        private BaseConcurrentStack<ObjectUniqueId>? radioGroupStack;
 
         static PanelSettings()
         {
@@ -108,17 +108,12 @@ namespace Alternet.UI
             UIPlatformKind platform = UIPlatformKind.Unspecified);
 
         /// <summary>
-        /// Gets or sets whether controls are automatically created and updated
+        /// Gets whether controls are automatically created and updated
         /// when items are changed.
         /// </summary>
         public virtual bool AutoCreate
         {
             get => autoCreate;
-
-            set
-            {
-                autoCreate = value;
-            }
         }
 
         /// <summary>
@@ -510,6 +505,95 @@ namespace Alternet.UI
             item.ValueType = typeof(T);
             Items.Add(item);
             return item;
+        }
+
+        /// <summary>
+        /// Begins radio button group. All items added after this call will be part of the same radio button group.
+        /// Use <see cref="EndRadioGroup"/> to end the radio button group.
+        /// </summary>
+        /// <returns>Radio group identifier.</returns>
+        public virtual ObjectUniqueId BeginRadioGroup()
+        {
+            radioGroupStack ??= new();
+            var result = new ObjectUniqueId(ref globalCounter);
+            radioGroupStack.Push(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the current radio button group identifier.
+        /// Use <see cref="BeginRadioGroup"/> to start a new radio button group and <see cref="EndRadioGroup"/> to end it.
+        /// </summary>
+        /// <returns>Current radio group identifier. Returns null if no radio group is active.</returns>
+        public ObjectUniqueId? GetCurrentRadioGroup()
+        {
+            if (radioGroupStack == null || radioGroupStack.Count == 0)
+                return null;
+            if (radioGroupStack.TryPeek(out var result))
+                return result;
+            return null;
+        }
+
+        /// <summary>
+        /// Ends radio button group started with <see cref="BeginRadioGroup"/>.
+        /// All items added after this call will not be part of the same radio button group.
+        /// </summary>
+        public virtual void EndRadioGroup()
+        {
+            radioGroupStack?.TryPop(out _);
+        }
+
+        /// <summary>
+        /// Adds a group of radio buttons for the specified value type. Each radio button corresponds to a specific value.
+        /// This can be used to allow the user to select one value from a predefined set of options.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="label">The label for the radio button group.</param>
+        /// <param name="getValue">The function to get the current value.</param>
+        /// <param name="setValue">The action to set the value.</param>
+        /// <param name="itemTitles">The titles for the radio buttons.</param>
+        /// <param name="itemValues">The values for the radio buttons.</param>
+        /// <param name="e">Additional arguments.</param>
+        public virtual void AddRadioButtons<T>(
+            object? label,
+            Func<T> getValue,
+            Action<T> setValue,
+            object[] itemTitles,
+            T[] itemValues,
+            CustomEventArgs? e = null)
+        {
+            if (label is not null)
+            {
+                AddLabel(label);
+            }
+
+            e ??= new CustomEventArgs();
+            e.CustomFlags["IsRadioButton"] = true;
+
+            var groupIdentifier = BeginRadioGroup();
+
+            for (int i = 0; i < itemTitles.Length; i++)
+            {
+                var title = itemTitles[i];
+                var value = itemValues[i];
+                var item = AddInput<bool>(
+                    title,
+                    () => getValue()?.Equals(value) ?? false,
+                    (isChecked) =>
+                    {
+                        if (isChecked)
+                            setValue(value);
+                    },
+                    e);
+                var control = GetItemControl(item);
+
+                if (control is XRadioButton radioButton)
+                {
+                    radioButton.RadioGroupId = groupIdentifier;
+                }
+            }
+
+            EndRadioGroup();
         }
 
         /// <summary>
