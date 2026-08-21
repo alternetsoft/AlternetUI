@@ -266,19 +266,31 @@ namespace Alternet.UI
         /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
         public static object? DefaultItemToValueControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
-            if (item.ValueType == typeof(bool))
+            if (item.ValueType is null)
+            {
+                return CreateOrUpdateInput(sender, item, control);
+            }
+
+            Type realType = AssemblyUtils.GetRealType(item.ValueType);
+
+            if (realType == typeof(bool))
             {
                 return CreateOrUpdateCheckBox(sender, item, control);
             }
 
-            if (item.ValueType == typeof(Color))
+            if (realType == typeof(Color))
             {
                 return CreateOrUpdateColorEdit(sender, item, control);
             }
 
-            if (item.ValueType == typeof(TimeOnly))
+            if (realType == typeof(TimeOnly))
             {
                 return CreateOrUpdateTimeEdit(sender, item, control);
+            }
+
+            if (realType == typeof(DateOnly))
+            {
+                return CreateOrUpdateDateEdit(sender, item, control);
             }
 
             var result = CreateOrUpdateInput(sender, item, control);
@@ -498,6 +510,43 @@ namespace Alternet.UI
             void SelectorChanged(object? sender, EventArgs e)
             {
                 item.Value = timeEditor.AsTimeOnly;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates or updates a date edit control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateDateEdit(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var result = CreateOrUpdateControlAndLabel<DatePicker>(sender, item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(sender, item, result.Label);
+
+            var dateEditor = result.MainControl;
+
+            if (item.Value is DateTime dateTimeValue)
+                dateEditor.Value = dateTimeValue;
+            else
+                if (item.Value is DateOnly dateOnlyValue)
+                    dateEditor.AsDateOnly = dateOnlyValue;
+
+            dateEditor.ValueChanged -= SelectorChanged;
+            dateEditor.ValueChanged += SelectorChanged;
+
+            void SelectorChanged(object? sender, EventArgs e)
+            {
+                item.Value = dateEditor.AsDateOnly;
             }
 
             return result;

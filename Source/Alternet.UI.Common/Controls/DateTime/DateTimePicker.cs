@@ -11,7 +11,8 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents control that displays a selected date and allows to change it.
+    /// Represents control that displays a date or time and allows to change it.
+    /// Use <see cref="Kind"/> property to specify whether to edit date or time part of the value.
     /// </summary>
     [DefaultProperty("Value")]
     [DefaultEvent("ValueChanged")]

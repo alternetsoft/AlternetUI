@@ -137,6 +137,8 @@ namespace ControlsSample
                             itemTitles: ["Bold", "Italic", "Underline"],
                             itemValues: [FontStyle.Bold, FontStyle.Italic, FontStyle.Underline]);
 
+                panelSettings.AddInput("Selected date:", calendar, nameof(Calendar.AsDateOnly));
+
                 // Other initializations
 
                 useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(XButton.Enabled));
