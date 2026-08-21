@@ -18,6 +18,11 @@ namespace Alternet.UI
     public partial class PanelSettings : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets default margin for the check image of <see cref="XCheckBox"/> control in this panel.
+        /// </summary>
+        public static Thickness DefaultCheckImageMargin = 0;
+
+        /// <summary>
         /// Gets or sets a default dictionary of type converters for the settings panel items.
         /// The type converter is used to convert the item value to and from string representation.
         /// </summary>
@@ -271,6 +276,11 @@ namespace Alternet.UI
                 return CreateOrUpdateColorEdit(sender, item, control);
             }
 
+            if (item.ValueType == typeof(TimeOnly))
+            {
+                return CreateOrUpdateTimeEdit(sender, item, control);
+            }
+
             var result = CreateOrUpdateInput(sender, item, control);
             return result;
         }
@@ -328,6 +338,8 @@ namespace Alternet.UI
             {
                 checkBox = CreateOrUpdateControl<XCheckBox>(sender, item, control);
             }
+
+            checkBox.Item.CheckBoxMargin = DefaultCheckImageMargin;
 
             UpdateText(sender, item, checkBox);
 
@@ -449,6 +461,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Creates or updates a time edit control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateTimeEdit(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var result = CreateOrUpdateControlAndLabel<TimePicker>(sender, item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(sender, item, result.Label);
+
+            var timeEditor = result.MainControl;
+            timeEditor.ButtonClick -= ButtonClick;
+            timeEditor.ButtonClick += ButtonClick;
+
+            if (item.Value is DateTime dateTimeValue)
+                timeEditor.Value = dateTimeValue;
+            else
+                if (item.Value is TimeOnly timeOnlyValue)
+                    timeEditor.AsTimeOnly = timeOnlyValue;
+
+            timeEditor.ValueChanged -= SelectorChanged;
+            timeEditor.ValueChanged += SelectorChanged;
+
+            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
+            {
+            }
+
+            void SelectorChanged(object? sender, EventArgs e)
+            {
+                item.Value = timeEditor.AsTimeOnly;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Creates or updates an input control for the specified item.
         /// </summary>
         /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
@@ -481,7 +536,7 @@ namespace Alternet.UI
 
                     if (result.Label is XCheckBox checkBox)
                     {
-                        checkBox.Item.CheckBoxMargin = 0;
+                        checkBox.Item.CheckBoxMargin = DefaultCheckImageMargin;
                     }
                 }
                 else
@@ -1101,7 +1156,7 @@ namespace Alternet.UI
 
                     if (result.Label is XCheckBox checkBox)
                     {
-                        checkBox.Item.CheckBoxMargin = 0;
+                        checkBox.Item.CheckBoxMargin = DefaultCheckImageMargin;
                     }
                 }
                 else

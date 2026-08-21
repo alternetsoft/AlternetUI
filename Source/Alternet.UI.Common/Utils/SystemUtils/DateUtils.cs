@@ -204,24 +204,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Converts a DateTime to DateOnly (drops the time component).
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static DateOnly ToDateOnly(DateTime dateTime)
-        {
-            return DateOnly.FromDateTime(dateTime);
-        }
-
-        /// <summary>
-        /// Converts a DateTime to TimeOnly (drops the date component).
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static TimeOnly ToTimeOnly(DateTime dateTime)
-        {
-            return TimeOnly.FromDateTime(dateTime);
-        }
-
-        /// <summary>
         /// Converts milliseconds to ticks.
         /// </summary>
         /// <param name="msec">Value to convert.</param>
