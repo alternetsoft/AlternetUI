@@ -22,6 +22,16 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomEventArgs"/> class
+        /// with the specified custom flags turned on.
+        /// </summary>
+        public CustomEventArgs(params string[] flags)
+        {
+            foreach(var flag in flags)
+                CustomFlags[flag] = true;
+        }
+
         /// <inheritdoc cref="BaseObjectWithAttr.Tag"/>
         [Browsable(false)]
         public virtual object? Tag { get; set; }
