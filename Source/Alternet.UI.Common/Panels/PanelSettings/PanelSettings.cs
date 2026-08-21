@@ -762,15 +762,15 @@ namespace Alternet.UI
             var args = item.CreateArg;
             var checkBoxInLabel = args is not null && args.CustomFlags["CheckBoxInLabel"];
 
-            ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>? result;
+            ControlAndLabel<TextBoxAndButton, GenericControl>? result;
 
-            result = control as ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>;
+            result = control as ControlAndLabel<TextBoxAndButton, GenericControl>;
 
             if (result is null)
             {
                 if (checkBoxInLabel)
                 {
-                    result = new ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>(typeof(XCheckBox));
+                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(XCheckBox));
 
                     if (result.Label is XCheckBox checkBox)
                     {
@@ -779,7 +779,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    result = new ControlAndLabel<TextBoxAndButton, HiddenGenericBorder>(typeof(Label));
+                    result = new ControlAndLabel<TextBoxAndButton, GenericControl>(typeof(Label));
                 }
             }
 
