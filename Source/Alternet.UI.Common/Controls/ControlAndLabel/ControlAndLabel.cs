@@ -46,7 +46,8 @@ namespace Alternet.UI
         /// with the specified type of the label control.
         /// </summary>
         /// <param name="typeOfLabel">Type of the label control to use.</param>
-        public ControlAndLabel(Type? typeOfLabel)
+        /// <param name="typeOfControl">Type of the control to use.</param>
+        public ControlAndLabel(Type? typeOfLabel, Type? typeOfControl = null)
         {
             SuspendHandlerTextChange();
             ParentBackColor = true;
@@ -59,7 +60,7 @@ namespace Alternet.UI
             label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
             label.Parent = this;
 
-            mainControl = CreateControl();
+            mainControl = CreateControl(typeOfControl);
             mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
             mainControl.MinWidth = KnownMetrics.InnerControlMinWidth;
             mainControl.Parent = this;
@@ -69,7 +70,7 @@ namespace Alternet.UI
         /// Initializes a new instance of the <see cref="ControlAndLabel{TControl,TLabel}"/> class.
         /// </summary>
         public ControlAndLabel()
-            : this(typeOfLabel: null)
+            : this(typeOfLabel: null, typeOfControl: null)
         {
         }
 
@@ -246,7 +247,17 @@ namespace Alternet.UI
         /// For example, main control for the <see cref="TextBoxAndLabel"/>
         /// is <see cref="TextBox"/>.
         /// </remarks>
-        protected virtual TControl CreateControl() => new();
+        protected virtual TControl CreateControl(Type? typeOfControl)
+        {
+            if (typeOfControl is not null)
+            {
+                var control = Activator.CreateInstance(typeOfControl) as TControl;
+                if (control is not null)
+                    return control;
+            }
+
+            return new();
+        }
 
         /// <summary>
         /// Creates label control.
