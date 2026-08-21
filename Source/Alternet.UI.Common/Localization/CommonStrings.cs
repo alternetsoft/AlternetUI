@@ -360,5 +360,55 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string DoubleClick { get; set; } = "Double click";
+
+        // ========================
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitYear { get; set; } = "year";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitMonth { get; set; } = "month";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitWeek { get; set; } = "week";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitDay { get; set; } = "day";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitHour { get; set; } = "hour";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitMinute { get; set; } = "minute";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitSecond { get; set; } = "second";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitMillisecond { get; set; } = "millisecond";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitYears { get; set; } = "years";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitMonths { get; set; } = "months";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitWeeks { get; set; } = "weeks";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitDays { get; set; } = "days";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitHours { get; set; } = "hours";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitMinutes { get; set; } = "minutes";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitSeconds { get; set; } = "seconds";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string TimePeriodUnitMilliseconds { get; set; } = "milliseconds";
     }
 }
