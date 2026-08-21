@@ -70,6 +70,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets selected date as <see cref="DateOnly"/>.
+        /// </summary>
+        public virtual DateOnly? AsDateOnly
+        {
+            get
+            {
+                var value = Value;
+
+                if (value is null)
+                    return null;
+                return DateUtils.ToDateOnly(value.Value);
+            }
+
+            set
+            {
+                if (value is null)
+                    Value = null;
+                else
+                {
+                    Value = DateUtils.ToDateTime(DateUtils.ToTimeOnly(Value ?? DateTime.Now), value.Value);
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets selected date.
         /// </summary>
         public new virtual DateTime? Value
