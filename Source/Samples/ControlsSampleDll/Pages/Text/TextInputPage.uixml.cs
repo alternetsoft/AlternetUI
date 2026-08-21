@@ -120,6 +120,15 @@ namespace ControlsSample
                     textBox.ValueHelper,
                     nameof(TextBox.ValueHelper.MaxLength),
                     e);
+
+                var maxLengthEditLabel = panelSettings.GetItemControlLabel(itemMaxLengthEdit);
+
+                if (maxLengthEditLabel is XCheckBox checkBox2)
+                {
+                    checkBox2.Checked = true;
+                    checkBox2.Item.IsCheckBoxEnabled = false;
+                }
+
                 itemMaxLengthEdit.ValueChanged += (s, e) =>
                 {
                     textBox.ValueHelper.RunDefaultValidation();

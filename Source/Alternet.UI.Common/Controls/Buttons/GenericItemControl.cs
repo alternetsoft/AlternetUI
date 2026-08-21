@@ -1188,6 +1188,12 @@ namespace Alternet.UI
             if (DisposingOrDisposed || !Enabled)
                 return;
 
+            if (Item.IsCheckBoxEnabled is bool b)
+            {
+                if (!b)
+                    return;
+            }
+
             if (ItemDefaults.CheckBoxVisible)
             {
                 if (ToggleItemCheckState(e.Location, hitTestCheckBox: false))

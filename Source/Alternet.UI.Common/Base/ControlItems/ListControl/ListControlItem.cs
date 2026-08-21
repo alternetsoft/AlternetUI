@@ -115,6 +115,7 @@ namespace Alternet.UI
         private object? toolTip;
         private ObjectUniqueId? columnId;
         private MnemonicMarkerHelper mnemonicMarkerHelper = new();
+        private bool? checkBoxEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -372,6 +373,19 @@ namespace Alternet.UI
             {
                 checkState = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets whether checkbox is enabled. If property is null (default), control's Enabled setting is used.
+        /// Assign this property to false to disable checkbox for the item.
+        /// Assign this property to true to enable checkbox for the item.
+        /// This property allows to specify enabled state of the checkbox for the item independently
+        /// from the enabled state of the item itself.
+        /// </summary>
+        public virtual bool? IsCheckBoxEnabled
+        {
+            get => checkBoxEnabled;
+            set => checkBoxEnabled = value;
         }
 
         /// <summary>
@@ -2567,13 +2581,18 @@ namespace Alternet.UI
             var info = item.GetCheckBoxInfo(container, paintRectangle);
             if (info.IsCheckBoxVisible)
             {
-                info.SvgState = IsContainerEnabled(container)
+                if (container?.Control?.VisualState == VisualControlState.Hovered)
+                {
+                }
+
+                info.SvgState = info.IsCheckBoxEnabled
                     ? (isSelected ? VisualControlState.Selected : VisualControlState.Normal)
                     : VisualControlState.Disabled;
                 if (info.SvgState == VisualControlState.Selected)
                     info.SvgImageColor = ListControlItem.GetSelectedTextColor(item, container);
                 info.IsRadioButton = item.IsRadioButton;
                 BeforeDrawCheckBox?.Invoke(this, info);
+
                 DefaultDrawCheckBox(dc, ControlUtils.SafeControl(container), info);
                 paintRectangle = info.TextRect;
             }
@@ -2782,7 +2801,9 @@ namespace Alternet.UI
       
             result.IsCheckBoxVisible = GetShowCheckBox(container);
 
-            result.PartState = IsContainerEnabled(container)
+            result.IsCheckBoxEnabled = IsCheckBoxEnabled ?? IsContainerEnabled(container);
+
+            result.PartState = result.IsCheckBoxEnabled
                 ? VisualControlState.Normal : VisualControlState.Disabled;
             result.CheckState = GetCheckState(container);
             

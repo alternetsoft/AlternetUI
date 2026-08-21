@@ -210,7 +210,7 @@ namespace Alternet.UI
         {
             var state = VisualState;
 
-            if (state == VisualControlState.Hovered && UseHoveredCheckBoxColor)
+            if (info.IsCheckBoxEnabled && state == VisualControlState.Hovered && UseHoveredCheckBoxColor)
             {
                 var color = DefaultHoveredCheckBoxColor ?? LightDarkColors.Red;
 

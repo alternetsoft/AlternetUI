@@ -278,6 +278,11 @@ namespace Alternet.UI
             public bool IsCheckBoxVisible;
 
             /// <summary>
+            /// Gets or sets a value indicating whether the checkbox is enabled.
+            /// </summary>
+            public bool IsCheckBoxEnabled;
+
+            /// <summary>
             /// Gets or sets whether to draw the checkbox as a radio button.
             /// </summary>
             public bool IsRadioButton;
