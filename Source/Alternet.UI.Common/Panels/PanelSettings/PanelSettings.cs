@@ -126,7 +126,7 @@ namespace Alternet.UI
         /// Gets collection of the items. Each of the items defines individual
         /// setting with label, value and style options.
         /// </summary>
-        internal virtual BaseCollection<PanelSettingsItem> Items
+        public virtual BaseCollection<PanelSettingsItem> Items
         {
             get
             {
@@ -771,6 +771,16 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ItemRemoved(object? sender, int index, PanelSettingsItem item)
         {
+            var itemControl = GetItemControl(item);
+
+            if (itemControl != null)
+            {
+                itemControl.Parent = null;
+                itemControl.Dispose();
+            }
+
+            item.Owner = null;
+
             if (!AutoCreate)
                 return;
         }
@@ -780,6 +790,15 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void ItemInserted(object? sender, int index, PanelSettingsItem item)
         {
+            if (item.Owner is null)
+            {
+                item.Owner = this;
+            }
+            else
+            {
+                throw new InvalidOperationException("Item already has an owner.");
+            }
+
             if (!AutoCreate)
                 return;
             var conversion = GetRegisteredConversion(item.Kind);
