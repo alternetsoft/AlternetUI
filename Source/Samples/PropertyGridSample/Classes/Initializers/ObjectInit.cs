@@ -164,6 +164,7 @@ Environment.NewLine + Environment.NewLine +
             });
 
             Actions.Add(typeof(Panel), InitPanel);
+            Actions.Add(typeof(PanelSettings), InitPanelSettings);
 
             Actions.Add(typeof(ResizableWindowBorder), (c) =>
             {

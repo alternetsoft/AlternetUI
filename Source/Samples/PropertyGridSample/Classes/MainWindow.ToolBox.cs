@@ -109,6 +109,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<EditableListPicker>();
                 ToolBoxAdd<TextPicker>();
                 ToolBoxAdd<XScrollBar>();
+                ToolBoxAdd<Alternet.UI.PanelSettings>();
 
                 void ToolBoxAdd<T>()
                 {
@@ -166,7 +167,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<Alternet.UI.SpeedDateButton>();
                 ToolBoxAdd<Alternet.UI.SpeedEnumButton>();
                 ToolBoxAdd<Alternet.UI.WebBrowser>();
-                ToolBoxAdd<Alternet.UI.PanelSettings>();
                 */
 
                 if (DebugUtils.IsDebugDefined)

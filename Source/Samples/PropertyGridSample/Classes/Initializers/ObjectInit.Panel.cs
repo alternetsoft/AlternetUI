@@ -58,10 +58,70 @@ namespace PropertyGridSample
             }
         }
 
+        public static void InitPanelSettings(object control)
+        {
+            if (control is not PanelSettings panel)
+                return;
+            panel.HasBorder = true;
+            panel.Dock = DockStyle.Fill;
+
+            panel.AddInput("This is CheckBox:", samplePropContainer, nameof(SamplePropContainer.SampleBool));
+
+            panel.AddInput("This is TextBox:", samplePropContainer, nameof(SamplePropContainer.SampleString));
+
+            panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), new("IsMultiline"));
+
+            panel.AddHorizontalLine();
+
+            panel.AddRadioButtons<DayOfWeek>(
+                "First Day of Week:",
+                () => samplePropContainer.FirstDayOfWeek ?? DateUtils.SystemFirstDayOfWeek,
+                (value) => samplePropContainer.FirstDayOfWeek = value,
+                itemTitles: ["Sunday", "Monday"],
+                itemValues: [DayOfWeek.Sunday, DayOfWeek.Monday]);
+
+            panel.AddHorizontalLine();
+
+            panel.AddFlagCheckBoxes<FontStyle>(
+                        "Font Styles:",
+                        () => samplePropContainer.FontStyle,
+                        (value) => samplePropContainer.FontStyle = value,
+                        itemTitles: ["Bold", "Italic", "Underline"],
+                        itemValues: [FontStyle.Bold, FontStyle.Italic, FontStyle.Underline]);
+
+            panel.AddHorizontalLine();
+
+            panel.AddInput("This is color:", samplePropContainer, nameof(SamplePropContainer.SampleColor));
+
+            panel.AddInput("This is time picker:", samplePropContainer, nameof(SamplePropContainer.SampleTime));
+
+        }
+
         private static void Panel_Scroll(object sender, ScrollEventArgs e)
         {
             var s = $"Panel.Scroll: {e.Type}";
             App.LogReplace($"{s}, {e.ScrollOrientation}, {e.NewValue}", s);
         }
+
+        public class SamplePropContainer
+        {
+            public Color SampleColor { get; set; } = LightDarkColors.Red;
+
+            public TimeOnly SampleTime { get; set; } = TimeOnly.FromDateTime(DateTime.Now);
+
+            public DateOnly SampleDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+
+            public DayOfWeek? FirstDayOfWeek { get; set; }
+
+            public bool SampleBool { get; set; } = true;
+
+            public string? SampleString { get; set; } = "Sample string";
+
+            public string? SampleMemo { get; set; } = LoremIpsumSmall;
+
+            public FontStyle FontStyle { get; set; } = FontStyle.Bold;
+        }
+
+        private static readonly SamplePropContainer samplePropContainer = new ();
     }
 }
