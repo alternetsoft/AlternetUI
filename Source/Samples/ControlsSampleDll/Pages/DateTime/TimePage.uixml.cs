@@ -22,7 +22,7 @@ namespace ControlsSample
         {
             InitializeComponent();
 
-            tabControl2.MinSizeGrowMode = WindowSizeToContentMode.Width;
+            tabControl2.HorizontalAlignment = HorizontalAlignment.Fill;
 
             timePicker.Value = DateTime.Now;
 
