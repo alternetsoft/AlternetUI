@@ -14,7 +14,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory(KnownControlCategory.Date)]
-    public partial class TimePicker : ControlAndButton<ToolBar>
+    public partial class TimePicker : GenericControlAndButton<ToolBar>
     {
         /// <summary>
         /// Gets or sets whether to assign default control colors
@@ -55,7 +55,6 @@ namespace Alternet.UI
         public TimePicker()
         {
             UseControlColors(DefaultUseControlColors);
-            WantChars = true;
             IsGraphicControl = false;
             CanSelect = true;
             TabStop = true;
@@ -88,13 +87,6 @@ namespace Alternet.UI
 
             void FocusMe()
             {
-                App.AddIdleTask(
-                    () =>
-                    {
-                        if (DisposingOrDisposed)
-                            return;
-                        SetFocusIfPossible();
-                    });
             }
 
             MainControl.MouseLeftButtonDown += (s, e) =>
@@ -165,17 +157,17 @@ namespace Alternet.UI
         /// Gets the separator control between minutes and seconds buttons.
         /// </summary>
         public AbstractControl MinutesAndSecondsSeparator => minutesAndSecondsSeparator;
-        
+
         /// <summary>
         /// Gets the button used for incrementing the time value. 
         /// </summary>
         public SpeedButton SecondsButton => secondsButton;
-        
+
         /// <summary>
         /// Gets the separator control between seconds and AM/PM buttons.
         /// </summary>
         public AbstractControl SecondsAndAmPmSeparator => secondsAndAmPmSeparator;
-        
+
         /// <summary>
         /// Gets the button used for incrementing the time value. 
         /// </summary>
@@ -313,12 +305,12 @@ namespace Alternet.UI
         public override void OnButtonClick(ControlAndButtonClickEventArgs e)
         {
             base.OnButtonClick(e);
-            if (e.IsButtonPlus(this))
+            if (e.ButtonId == IdButtonPlus)
             {
                 e.Handled = true;
                 IncPartValue(1);
             }
-            else if (e.IsButtonMinus(this))
+            else if (e.ButtonId == IdButtonMinus)
             {
                 e.Handled = true;
                 IncPartValue(-1);
@@ -358,7 +350,7 @@ namespace Alternet.UI
         protected override void OnGotFocus(EventArgs e)
         {
             base.OnGotFocus(e);
-            if(!IsAnyPartSelected())
+            if (!IsAnyPartSelected())
                 SelectedPart = TimePickerValuePart.Hour;
         }
 
@@ -378,10 +370,10 @@ namespace Alternet.UI
             if (amPmButton.IsVisible)
                 return TimePickerValuePart.AmPm;
             else
-            if (secondsButton.IsVisible)
-                return TimePickerValuePart.Second;
-            else
-                return TimePickerValuePart.Minute;
+                if (secondsButton.IsVisible)
+                    return TimePickerValuePart.Second;
+                else
+                    return TimePickerValuePart.Minute;
         }
 
         /// <summary>
@@ -399,7 +391,7 @@ namespace Alternet.UI
         /// If true, selects forward; otherwise, selects backward.</param>
         protected virtual void SelectNextPart(bool forward)
         {
-            if(SelectedPart == null)
+            if (SelectedPart == null)
             {
                 SelectedPart = TimePickerValuePart.Hour;
                 return;
@@ -407,7 +399,7 @@ namespace Alternet.UI
 
             if (forward)
             {
-                if(SelectedPart == GetLastPart())
+                if (SelectedPart == GetLastPart())
                 {
                     SelectedPart = TimePickerValuePart.Hour;
                     return;
@@ -464,7 +456,7 @@ namespace Alternet.UI
         protected virtual void IncPartValue(int value)
         {
             var part = SelectedPart;
-            if(part is null)
+            if (part is null)
                 return;
 
             switch (part)
@@ -491,7 +483,7 @@ namespace Alternet.UI
         {
             base.OnKeyDown(e);
 
-            if(!IsEnabled || DisposingOrDisposed)
+            if (!IsEnabled || DisposingOrDisposed)
                 return;
             switch (e.Key)
             {
@@ -546,8 +538,6 @@ namespace Alternet.UI
         protected override void OnMouseLeftButtonDown(MouseEventArgs e)
         {
             base.OnMouseLeftButtonDown(e);
-            SetFocusIfPossible();
-            e.Handled = true;
         }
 
         /// <summary>

@@ -284,12 +284,12 @@ namespace Alternet.UI
         {
             var change = Keyboard.IsControlPressed ? LargeChange : SmallChange;
 
-            if (e.IsButtonMinus(this))
+            if (e.ButtonId == IdButtonMinus)
             {
                 IncrementValue(-change);
             }
             else
-            if (e.IsButtonPlus(this))
+            if (e.ButtonId == IdButtonPlus)
             {
                 IncrementValue(change);
             }

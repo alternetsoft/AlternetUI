@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Base.Collections;
 using Alternet.Drawing;
 
@@ -231,10 +232,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool SetFocus()
         {
-            if(datePicker.Visible)
-                return datePicker.SetFocus();
-            else
-                return timePicker.SetFocus();
+            return base.SetFocus();
         }
 
         /// <summary>
