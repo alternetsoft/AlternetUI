@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="EnumPicker"/> with side buttons.
     /// </summary>
-    public partial class EnumPickerAndButton : ControlAndButton
+    public partial class EnumPickerAndButton : GenericControlAndButton
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EnumPickerAndButton"/> class.
@@ -32,7 +32,7 @@ namespace Alternet.UI
         public EnumPicker EnumPicker => (EnumPicker)base.MainControl;
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateControl(Type? typeOfControl)
+        protected override GenericControl CreateControl(Type? typeOfControl)
         {
             return new EnumPicker();
         }
