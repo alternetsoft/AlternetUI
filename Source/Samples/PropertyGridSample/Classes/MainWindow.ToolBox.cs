@@ -65,7 +65,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<FindReplaceControl>();
                 ToolBoxAdd<XSlider>();
                 ToolBoxAdd<XProgressBar>();
-                ToolBoxAdd<ScrollBar>();
                 ToolBoxAdd<StackPanel>();
                 ToolBoxAdd<TextBox>();
                 ToolBoxAdd<VerticalStackPanel>();

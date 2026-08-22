@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Represents the method that handles the <see langword="Scroll" /> event of the
-    /// <see cref="ScrollBar" /> and other controls.</summary>
+    /// Represents the method that handles the scroll event of the
+    /// scrollbar and other controls.</summary>
     /// <param name="sender">The source of the event.</param>
     /// <param name="e">A <see cref="ScrollEventArgs" /> that contains the event data.</param>
     public delegate void ScrollEventHandler(object sender, ScrollEventArgs e);
@@ -169,10 +169,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the new <see cref="ScrollBar.Value" /> of the scroll bar.
+        /// Gets or sets the new value of the scroll bar.
         /// </summary>
         /// <returns>
-        /// The numeric value that the <see cref="ScrollBar.Value" /> property
+        /// The numeric value that the scroll bar's value property
         /// will be changed to.
         /// </returns>
         public int NewValue
@@ -189,10 +189,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the old <see cref="ScrollBar.Value" /> of the scroll bar.
+        /// Gets the old value of the scroll bar.
         /// </summary>
         /// <returns>
-        /// The numeric value that the <see cref="ScrollBar.Value" /> property
+        /// The numeric value that the scroll bar's value property
         /// contained before it changed.
         /// </returns>
         public int OldValue

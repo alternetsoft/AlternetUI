@@ -40,11 +40,6 @@ namespace Alternet.UI
             return new HandlerForDisposed();
         }
 
-        IControlHandler IControlFactoryHandler.CreateScrollBarHandler(ScrollBar control)
-        {
-            return new PlessScrollBarHandler();
-        }
-
         IControlHandler IControlFactoryHandler.CreateTextBoxHandler(TextBox control)
         {
             return new HandlerForDisposed();

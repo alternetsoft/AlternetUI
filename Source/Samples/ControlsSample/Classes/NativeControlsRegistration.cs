@@ -145,6 +145,39 @@ namespace ControlsSample
             textBox.Text = ObjectInit.LoremIpsum;
         }
 
+        public static void InitScrollBar(object control)
+        {
+            if (control is not ScrollBar scrollBar)
+                return;
+            scrollBar.SuggestedWidth = 250;
+            scrollBar.Scroll += ScrollBar_Scroll;
+            scrollBar.IsVerticalChanged += ScrollBar_IsVerticalChanged;
+
+            static void ScrollBar_Scroll(object sender, ScrollEventArgs e)
+            {
+                if (!ObjectInit.LogScrollBarPosition)
+                    return;
+                App.AddIdleTask(() =>
+                {
+                    App.LogBeginSection();
+                    App.Log($"Scrollbar {e.Type}, New: {e.NewValue} Old: {e.OldValue}");
+                    (sender as ScrollBar)?.LogInfo();
+                    App.LogEndSection();
+                });
+            }
+
+            static void ScrollBar_IsVerticalChanged(object? sender, EventArgs e)
+            {
+                if (sender is not ScrollBar scrollBar)
+                    return;
+                if (scrollBar.IsVertical)
+                    scrollBar.SuggestedSize = (float.NaN, 250);
+                else
+                    scrollBar.SuggestedSize = (250, float.NaN);
+                scrollBar.PerformLayout();
+            }
+        }
+
         public static void InitActions()
         {
             ControlsTestWindow.AddPage<TextRichPage>("RichTextBox");
@@ -167,6 +200,7 @@ namespace ControlsSample
 
             CustomInternalSamplesPage.Add("Notify Icon", () => new NotifyIconPage());
 
+            ToolBoxAdd<ScrollBar>();
             ToolBoxAdd<Button>();
             ToolBoxAdd<ComboBox>();
             ToolBoxAdd<GroupBox>();
@@ -178,6 +212,9 @@ namespace ControlsSample
             ToolBoxAdd<CheckedListBox>();
             ToolBoxAdd<TreeView>();
             ToolBoxAdd<ListView>();
+
+            ObjectInit.Actions.Add(typeof(ScrollBar), InitScrollBar);
+
 
             /*
             This is commented out because Slider control doesn't work property on Windows when dark mode is enabled.

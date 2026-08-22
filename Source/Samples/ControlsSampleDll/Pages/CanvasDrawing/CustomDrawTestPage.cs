@@ -42,7 +42,7 @@ namespace ControlsSample
             Text = "Custom Draw Test",
         };
 
-        private readonly ScrollBar horzScrollBar = new()
+        private readonly HScrollBar horzScrollBar = new()
         {
         };
 

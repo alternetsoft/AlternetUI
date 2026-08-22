@@ -408,7 +408,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreateScrollBarHandler(this);
+            return new WxScrollBarHandler();
         }
 
         /// <inheritdoc/>

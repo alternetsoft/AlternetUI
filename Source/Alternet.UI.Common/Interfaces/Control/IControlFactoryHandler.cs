@@ -52,13 +52,6 @@ namespace Alternet.UI
         IControlHandler CreatePropertyGridHandler(PropertyGrid control);
 
         /// <summary>
-        /// Creates <see cref="IScrollBarHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreateScrollBarHandler(ScrollBar control);
-
-        /// <summary>
         /// Creates <see cref="IWindowHandler"/> interface provider.
         /// </summary>
         /// <param name="window">Owner.</param>
