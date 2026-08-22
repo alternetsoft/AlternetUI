@@ -392,6 +392,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether the rectangle is a square (width equals height).
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsSquare
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => width == height;
+        }
+
+        /// <summary>
         /// Gets or sets the y-coordinate of the upper-left corner of the rectangular
         /// region defined by this <see cref='RectD'/>.
         /// </summary>

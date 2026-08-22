@@ -174,6 +174,7 @@ namespace Alternet.Drawing
         /// both dimensions are set to <see cref="Graphics.MaxCoord"/>.</remarks>
         public static SizeD MaxCoord
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return new(Graphics.MaxCoord);
@@ -186,6 +187,7 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly Coord MinWidthHeight
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return Math.Min(width, height);
@@ -198,10 +200,21 @@ namespace Alternet.Drawing
         [Browsable(false)]
         public readonly Coord MaxWidthHeight
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
                 return Math.Max(width, height);
             }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether width equals height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsSquare
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => width == height;
         }
 
         /// <summary>
