@@ -18,6 +18,16 @@ namespace Alternet.UI
     public partial class PanelSettings : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets default minimum margin between child controls in this panel.
+        /// </summary>
+        public static Thickness DefaultMinChildMargin = (5, 1, 5, 1);
+
+        /// <summary>
+        /// Gets or sets default horizontal line margin.
+        /// </summary>
+        public static Thickness DefaultHorizontalLineMargin = (5, 10, 5, 10);
+
+        /// <summary>
         /// Gets or sets default margin for the check image of <see cref="XCheckBox"/> control in this panel.
         /// </summary>
         public static Thickness DefaultCheckImageMargin = 0;
@@ -27,11 +37,6 @@ namespace Alternet.UI
         /// The type converter is used to convert the item value to and from string representation.
         /// </summary>
         public static BaseDictionary<Type, Type> DefaultTypeConverters = new();
-
-        /// <summary>
-        /// Gets or sets default horizontal line margin.
-        /// </summary>
-        public static Coord DefaultHorizontalLineMargin = 5;
 
         /// <summary>
         /// Gets or sets a value indicating whether the combo box mouse
@@ -73,7 +78,7 @@ namespace Alternet.UI
             items = new(CollectionSecurityFlags.NoNullOrReplace);
             items.ItemInserted += ItemInserted;
             items.ItemRemoved += ItemRemoved;
-            MinChildMargin = 5;
+            MinChildMargin = DefaultMinChildMargin;
             Layout = LayoutStyle.Vertical;
             UserPaint = true;
         }
@@ -167,8 +172,7 @@ namespace Alternet.UI
         public static object? DefaultItemToLineControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
             var spacer = CreateOrUpdateControl<HorizontalLine>(sender, item, control);
-            spacer.MarginTop = DefaultHorizontalLineMargin;
-            spacer.MarginBottom = DefaultHorizontalLineMargin;
+            spacer.Margin = DefaultHorizontalLineMargin;
             return spacer;
         }
 
@@ -185,7 +189,17 @@ namespace Alternet.UI
         public static object? DefaultItemToSpacerControl(PanelSettings sender, PanelSettingsItem item, object? control)
         {
             var spacer = CreateOrUpdateControl<Spacer>(sender, item, control);
-            spacer.SuggestedSize = DefaultSpacerSize;
+
+            SizeD spacerSize = DefaultSpacerSize;
+
+            var minHeight = item.CreateArg?.CustomAttr["MinHeight"] as float?;
+            if (minHeight.HasValue && minHeight.Value > spacerSize.Height)
+            {
+                spacerSize.Height = minHeight.Value;
+            }
+
+            spacer.SuggestedSize = spacerSize;
+
             return spacer;
         }
 
@@ -735,9 +749,16 @@ namespace Alternet.UI
         /// Adds item with an empty space.
         /// </summary>
         /// <param name="e">Additional arguments.</param>
+        /// <param name="minHeight">Minimum height of the spacer.</param>
         /// <returns></returns>
-        public virtual PanelSettingsItem AddSpacer(CustomEventArgs? e = null)
+        public virtual PanelSettingsItem AddSpacer(Coord minHeight = 0, CustomEventArgs? e = null)
         {
+            if (minHeight > 0)
+            {
+                e ??= new();
+                e.Attr("MinHeight", minHeight);
+            }
+
             PanelSettingsItem item
                 = CreateItemCore("Spacer", PanelSettingsItemKind.Spacer, null, e);
             Items.Add(item);

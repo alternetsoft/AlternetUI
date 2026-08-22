@@ -96,6 +96,8 @@ namespace PropertyGridSample
             panel.AddHorizontalLine();
 
             panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), new("IsMultiline"));
+
+            panel.AddSpacer(30);
         }
 
         private static void Panel_Scroll(object sender, ScrollEventArgs e)
