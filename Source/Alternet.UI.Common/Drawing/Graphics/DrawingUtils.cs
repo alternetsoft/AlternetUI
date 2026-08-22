@@ -54,6 +54,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the maximum size of the specified strings when drawn with the specified font on the specified graphics context.
+        /// </summary>
+        /// <param name="dc">The graphics context used to measure the text.</param>
+        /// <param name="font">The font used to measure the text.</param>
+        /// <param name="strings">The strings to measure.</param>
+        /// <returns>The maximum size of the specified strings.</returns>
+        public static SizeD GetMaxStringSize(Graphics dc, Font font, params string[] strings)
+        {
+            SizeD maxSize = SizeD.Empty;
+            foreach (var str in strings)
+            {
+                var size = dc.MeasureText(str, font);
+                if (size.Width > maxSize.Width)
+                    maxSize.Width = size.Width;
+                if (size.Height > maxSize.Height)
+                    maxSize.Height = size.Height;
+            }
+
+            return maxSize;
+        }
+
+        /// <summary>
         /// Renders a background image onto a new bitmap using the specified layout and client rectangle.
         /// </summary>
         /// <remarks>The behavior of the rendering depends on the specified <paramref name="layout"/>:
