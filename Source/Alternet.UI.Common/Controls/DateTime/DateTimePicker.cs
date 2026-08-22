@@ -86,6 +86,56 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets selected time as <see cref="TimeOnly"/>.
+        /// </summary>
+        public virtual TimeOnly? AsTimeOnly
+        {
+            get
+            {
+                var value = Value;
+
+                if (value is null)
+                    return null;
+                return TimeOnly.FromDateTime(value.Value);
+            }
+
+            set
+            {
+                if (value is null)
+                    Value = null;
+                else
+                {
+                    Value = DateUtils.ToDateTime(time: value.Value, date: DateOnly.FromDateTime(Value ?? DateTime.Now));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected date as <see cref="DateOnly"/>.
+        /// </summary>
+        public virtual DateOnly? AsDateOnly
+        {
+            get
+            {
+                var value = Value;
+
+                if (value is null)
+                    return null;
+                return DateOnly.FromDateTime(value.Value);
+            }
+
+            set
+            {
+                if (value is null)
+                    Value = null;
+                else
+                {
+                    Value = DateUtils.ToDateTime(time: TimeOnly.FromDateTime(Value ?? DateTime.Now), date: value.Value);
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override bool UseMinDate
         {
