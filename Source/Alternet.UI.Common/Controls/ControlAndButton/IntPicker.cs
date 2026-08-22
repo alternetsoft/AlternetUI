@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// This class represents a label with plus and minus buttons
     /// which allow users to increment and decrement an integer value.
     /// </summary>
-    public class IntPicker : TextBoxAndButton
+    public partial class IntPicker : TextBoxAndButton
     {
         /// <summary>
         /// Gets or sets whether to use char validator to limit unwanted chars in the input.
