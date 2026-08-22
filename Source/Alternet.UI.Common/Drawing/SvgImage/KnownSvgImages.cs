@@ -108,6 +108,9 @@ namespace Alternet.UI
         private static SvgImage? imgWindowMinimize;
         private static SvgImage? imgWindowRestore;
         private static SvgImage? imgCircleCheckmark;
+        private static SvgImage? imgClock;
+        private static SvgImage? imgCalendar;
+        private static SvgImage? imgRotate;
 
         static KnownSvgImages()
         {
@@ -174,6 +177,40 @@ namespace Alternet.UI
             {
                 imgWindowRestore = value;
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image with an arrows pointing in a circular direction,
+        /// typically used to represent a "rotate" action.
+        /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
+        public static SvgImage ImgRotate
+        {
+            get => imgRotate ??= new MonoSvgImage(KnownSvgUrls.UrlImageRotate);
+            set => imgRotate = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image with a clock, typically used to represent time-related actions or information.
+        /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
+        public static SvgImage ImgClock
+        {
+            get => imgClock ??= new MonoSvgImage(KnownSvgUrls.UrlImageClock);
+            set => imgClock = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image with a calendar, typically used to represent date-related actions or information.
+        /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
+        public static SvgImage ImgCalendar
+        {
+            get => imgCalendar ??= new MonoSvgImage(KnownSvgUrls.UrlImageCalendar);
+            set => imgCalendar = value;
         }
 
         /// <summary>

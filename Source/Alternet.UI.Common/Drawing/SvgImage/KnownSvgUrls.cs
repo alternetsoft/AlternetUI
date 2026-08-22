@@ -40,6 +40,21 @@ namespace Alternet.UI
             = GetImageUrl("alternet-square-minus-filled");
 
         /// <summary>
+        /// Gets or sets url used to load "Calendar" svg image.
+        /// </summary>
+        public static string UrlImageCalendar { get; set; } = GetImageUrl("alternet-calendar");
+
+        /// <summary>
+        /// Gets or sets url used to load "Clock" svg image.
+        /// </summary>
+        public static string UrlImageClock { get; set; } = GetImageUrl("alternet-clock");
+
+        /// <summary>
+        /// Gets or sets url used to load "Rotate" svg image.
+        /// </summary>
+        public static string UrlImageRotate { get; set; } = GetImageUrl("alternet-rotate");
+
+        /// <summary>
         /// Gets or sets url used to load "Square Plus Filled" svg image.
         /// </summary>
         public static string UrlImageSquarePlusFilled { get; set; }
