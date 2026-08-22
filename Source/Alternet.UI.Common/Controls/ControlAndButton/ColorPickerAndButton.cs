@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="ColorPicker"/> with side buttons.
     /// </summary>
-    public partial class ColorPickerAndButton : ControlAndButton
+    public partial class ColorPickerAndButton : GenericControlAndButton
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorPickerAndButton"/> class.
@@ -32,7 +32,7 @@ namespace Alternet.UI
         public ColorPicker ColorPicker => (ColorPicker)base.MainControl;
 
         /// <inheritdoc/>
-        protected override AbstractControl CreateControl(Type? typeOfControl)
+        protected override GenericControl CreateControl(Type? typeOfControl)
         {
             return new ColorPicker();
         }
