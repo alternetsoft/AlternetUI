@@ -14,6 +14,16 @@ namespace Alternet.UI
     public static class DateUtils
     {
         /// <summary>
+        /// Represents 12:00 AM (midnight) on the minimum date.
+        /// </summary>
+        public static readonly DateTime MinimumDateMidnight = DateTime.MinValue.Date.AddHours(0);
+
+        /// <summary>
+        /// Represents 12:00 PM (noon) on the minimum date.
+        /// </summary>
+        public static readonly DateTime MinimumDateNoon = DateTime.MinValue.Date.AddHours(12);
+
+        /// <summary>
         /// Gets or sets the designator override for AM/PM formatting in time representations.
         /// </summary>
         /// <remarks>This property allows customization of the AM designator used in date and time
