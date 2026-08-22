@@ -15,6 +15,17 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Panels)]
     public partial class PanelRichTextBox : PanelWithToolBar
     {
+        /// <summary>
+        /// Gets or sets default margin for textbox control in this panel.
+        /// </summary>
+        public static Thickness DefaultTextBoxMargin = 5;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the background color of the textbox control
+        /// as background color of the panel.
+        /// </summary>
+        public static bool UseTextBoxBackgroundColor = true;
+
         private readonly RichTextBox textBox = new();
 
         private ObjectUniqueId buttonIdNew;
@@ -43,7 +54,14 @@ namespace Alternet.UI
         {
             textBox.HasBorder = false;
             textBox.VerticalAlignment = VerticalAlignment.Fill;
+            textBox.Margin = DefaultTextBoxMargin;
             textBox.Parent = this;
+
+            if (UseTextBoxBackgroundColor)
+            {
+                ParentBackColor = false;
+                BackColor = textBox.RealBackgroundColor;
+            }
         }
 
         /// <summary>
@@ -118,52 +136,104 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override void CreateToolbarItems()
         {
-            buttonIdNew = ToolBar.AddSpeedBtn(KnownButton.New, FileNew_Click);
-            buttonIdOpen = ToolBar.AddSpeedBtn(KnownButton.Open, FileOpen_Click);
-            buttonIdSave = ToolBar.AddSpeedBtn(KnownButton.Save, FileSave_Click);
-            buttonIdUndo = ToolBar.AddSpeedBtn(KnownButton.Undo, Undo_Click);
-            buttonIdRedo = ToolBar.AddSpeedBtn(KnownButton.Redo, Redo_Click);
-            buttonIdBold = ToolBar.AddSpeedBtn(KnownButton.Bold, Bold_Click);
-            buttonIdItalic = ToolBar.AddSpeedBtn(KnownButton.Italic, Italic_Click);
-            buttonIdUnderline = ToolBar.AddSpeedBtn(KnownButton.Underline, Underline_Click);
+            buttonIdNew = ToolBar.AddSpeedBtn(KnownButton.New, OnFileNewClick);
+            buttonIdOpen = ToolBar.AddSpeedBtn(KnownButton.Open, OnFileOpenClick);
+            buttonIdSave = ToolBar.AddSpeedBtn(KnownButton.Save, OnFileSaveClick);
+            buttonIdUndo = ToolBar.AddSpeedBtn(KnownButton.Undo, OnUndoClick);
+            buttonIdRedo = ToolBar.AddSpeedBtn(KnownButton.Redo, OnRedoClick);
+            buttonIdBold = ToolBar.AddSpeedBtn(KnownButton.Bold, OnBoldClick);
+            buttonIdItalic = ToolBar.AddSpeedBtn(KnownButton.Italic, OnItalicClick);
+            buttonIdUnderline = ToolBar.AddSpeedBtn(KnownButton.Underline, OnUnderlineClick);
         }
 
-        private void Undo_Click(object? sender, EventArgs e)
+        /// <inheritdoc/>
+        protected override void OnSystemColorsChanged(EventArgs e)
+        {
+            base.OnSystemColorsChanged(e);
+
+            if (UseTextBoxBackgroundColor)
+            {
+                ParentBackColor = false;
+                BackColor = textBox.RealBackgroundColor;
+            }
+        }
+
+        /// <summary>
+        /// Called when 'Undo' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnUndoClick(object? sender, EventArgs e)
         {
             TextBox.Undo();
         }
 
-        private void Redo_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when 'Redo' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnRedoClick(object? sender, EventArgs e)
         {
             TextBox.Redo();
         }
 
-        private void Bold_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when 'Bold' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnBoldClick(object? sender, EventArgs e)
         {
             TextBox.SelectionToggleBold();
         }
 
-        private void Italic_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when 'Italic' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnItalicClick(object? sender, EventArgs e)
         {
             TextBox.SelectionToggleItalic();
         }
 
-        private void Underline_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when 'Underline' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnUnderlineClick(object? sender, EventArgs e)
         {
             TextBox.SelectionToggleUnderlined();
         }
 
-        private void FileNew_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when 'New' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnFileNewClick(object? sender, EventArgs e)
         {
             FileNewClick?.Invoke(this, EventArgs.Empty);
         }
 
-        private void FileOpen_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when 'Open' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnFileOpenClick(object? sender, EventArgs e)
         {
             FileOpenClick?.Invoke(this, EventArgs.Empty);
         }
 
-        private void FileSave_Click(object? sender, EventArgs e)
+        /// <summary>
+        /// Called when 'Save' button is clicked on the toolbar.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        protected virtual void OnFileSaveClick(object? sender, EventArgs e)
         {
             FileSaveClick?.Invoke(this, EventArgs.Empty);
         }
