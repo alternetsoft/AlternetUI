@@ -15,7 +15,7 @@ namespace Alternet.UI
     /// <see cref="IntPicker.Minimum"/> and <see cref="IntPicker.Maximum"/> properties.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Common)]
-    public partial class NumericUpDown : IntPicker
+    public partial class NumericUpDown : XIntPicker
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NumericUpDown"/> class.
