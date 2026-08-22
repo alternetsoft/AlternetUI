@@ -19,7 +19,7 @@ namespace Alternet.UI
     [DefaultEvent("ValueChanged")]
     [DefaultBindingProperty("Value")]
     [ControlCategory(KnownControlCategory.Date)]
-    public partial class DateTimePicker : CustomDateEdit
+    public partial class DateTimePicker : GenericDateEdit
     {
         private readonly DatePicker datePicker = new();
         private readonly TimePicker timePicker = new();
