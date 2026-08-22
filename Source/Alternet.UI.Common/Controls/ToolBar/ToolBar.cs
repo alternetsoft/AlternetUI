@@ -48,6 +48,7 @@ namespace Alternet.UI
         private Type? customButtonType;
         private MenuChangeRouter? menuChangeRouter;
         private bool isButtonToolTipsEnabled = true;
+        private bool isTransparent = false;
 
         static ToolBar()
         {
@@ -538,6 +539,20 @@ namespace Alternet.UI
                         speedButton.SuggestedSize = GetItemSuggestedSize(speedButton);
                     }
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether the toolbar is transparent. Default is false.
+        /// </summary>
+        public virtual bool IsTransparent
+        {
+            get => isTransparent;
+            set
+            {
+                if (isTransparent == value) return;
+                isTransparent = value;
+                Invalidate();
             }
         }
 
@@ -3054,6 +3069,19 @@ namespace Alternet.UI
                 DeleteAll(true);
                 AddItems(menu);
             });
+        }
+
+        /// <inheritdoc/>
+        public override void DrawBorderAndBackground(
+                    PaintEventArgs e,
+                    DrawDefaultBackgroundFlags flags = DrawDefaultBackgroundFlags.DrawBorderAndBackground)
+        {
+            if (IsTransparent)
+            {
+                flags &= ~DrawDefaultBackgroundFlags.DrawBackground;
+            }
+
+            base.DrawBorderAndBackground(e, flags);
         }
 
         /// <summary>
