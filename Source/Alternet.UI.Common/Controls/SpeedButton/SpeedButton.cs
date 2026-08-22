@@ -45,9 +45,10 @@ namespace Alternet.UI
         private RightSideElementKind rightSideElementKind;
         private bool isToolTipEnabled = true;
         private Coord minRightSideWidth;
-        private bool isTransparent = true;
+        private bool isTransparent;
         private TextAsValueHelper? valueHelper;
         private bool keepSquareShape;
+        private bool isNormalTransparent;
 
         static SpeedButton()
         {
@@ -87,7 +88,6 @@ namespace Alternet.UI
 
             commandSource = new(this);
 
-            IsTransparent = false; // It should be false as control paints hovered background
             ParentBackColor = true;
             ParentForeColor = true;
             Padding = DefaultPadding;
@@ -305,7 +305,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the control is transparent. Default is true.
+        /// Gets or sets a value indicating whether the control is transparent. Default is false.
         /// When true, the control's background is not drawn, allowing the parent control's
         /// background to show through. When false, the control's background
         /// is drawn normally. In both states, the control's border is drawn if applicable.
@@ -323,6 +323,26 @@ namespace Alternet.UI
                 if (isTransparent == value)
                     return;
                 isTransparent = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control is transparent when it is in its normal state.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsNormalTransparent
+        {
+            get
+            {
+                return isNormalTransparent;
+            }
+
+            set
+            {
+                if (isNormalTransparent == value)
+                    return;
+                isNormalTransparent = value;
                 Invalidate();
             }
         }
@@ -1869,9 +1889,12 @@ namespace Alternet.UI
         {
             var state = VisualState;
 
-            var isNormalOrDisabled = state == VisualControlState.Normal || state == VisualControlState.Disabled;
+            var isNormal = state == VisualControlState.Normal;
+            var isNormalOrDisabled = isNormal || state == VisualControlState.Disabled;
 
-            var backgroundFlags = IsTransparent
+            var transparent = IsTransparent || (isNormal && IsNormalTransparent);
+
+            var backgroundFlags = transparent
                 ? DrawDefaultBackgroundFlags.None : DrawDefaultBackgroundFlags.DrawBackground;
 
             var flags = backgroundFlags;
