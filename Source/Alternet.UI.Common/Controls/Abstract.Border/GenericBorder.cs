@@ -444,10 +444,13 @@ namespace Alternet.UI
             {
                 if (flags.HasFlag(DrawDefaultBackgroundFlags.DrawBackground))
                     DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBackground);
+                
                 var saved = e.ClientRectangle;
                 e.ClientRectangle = saved.DeflatedWithPadding(BorderMargin);
+
                 if (flags.HasFlag(DrawDefaultBackgroundFlags.DrawBorder))
                     DrawDefaultBackground(e, DrawDefaultBackgroundFlags.DrawBorder);
+
                 e.ClientRectangle = saved;
             }
             else
