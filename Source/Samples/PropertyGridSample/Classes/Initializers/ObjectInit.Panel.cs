@@ -93,9 +93,13 @@ namespace PropertyGridSample
 
             panel.AddInput("This is time picker:", samplePropContainer, nameof(SamplePropContainer.SampleTime));
 
+            panel.AddInput("This is date picker:", samplePropContainer, nameof(SamplePropContainer.SampleDate));
+
             panel.AddHorizontalLine();
 
-            panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), new("IsMultiline"));
+            var memoArgs = new CustomEventArgs("IsMultiline").Attr("MinHeight", 120);
+
+            panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), memoArgs);
 
             panel.AddSpacer(30);
         }
