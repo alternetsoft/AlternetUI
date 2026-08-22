@@ -69,8 +69,6 @@ namespace PropertyGridSample
 
             panel.AddInput("This is TextBox:", samplePropContainer, nameof(SamplePropContainer.SampleString));
 
-            panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), new("IsMultiline"));
-
             panel.AddHorizontalLine();
 
             panel.AddRadioButtons<DayOfWeek>(
@@ -94,6 +92,10 @@ namespace PropertyGridSample
             panel.AddInput("This is color:", samplePropContainer, nameof(SamplePropContainer.SampleColor));
 
             panel.AddInput("This is time picker:", samplePropContainer, nameof(SamplePropContainer.SampleTime));
+
+            panel.AddHorizontalLine();
+
+            panel.AddInput("This is Memo:", samplePropContainer, nameof(SamplePropContainer.SampleMemo), new("IsMultiline"));
         }
 
         private static void Panel_Scroll(object sender, ScrollEventArgs e)

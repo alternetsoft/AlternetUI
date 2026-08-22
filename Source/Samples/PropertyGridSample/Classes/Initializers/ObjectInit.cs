@@ -531,9 +531,9 @@ Environment.NewLine + Environment.NewLine +
         {
             ScrollViewer? sv = control as ScrollViewer;
             sv!.SuggestedHeight = 250;
-            StackPanel panel = new();
-            InitStackPanel(panel);
-            panel.Parent = sv;
+            PanelSettings panel = new();
+            InitPanelSettings(panel);
+            panel.Parent = sv.Content;
         }
 
         public static void InitStackPanel(object control)

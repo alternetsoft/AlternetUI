@@ -108,7 +108,8 @@ namespace PropertyGridSample
                 ToolBoxAdd<EditableListPicker>();
                 ToolBoxAdd<TextPicker>();
                 ToolBoxAdd<XScrollBar>();
-                ToolBoxAdd<Alternet.UI.PanelSettings>();
+                ToolBoxAdd<PanelSettings>();
+                ToolBoxAdd<ScrollViewer>();
 
                 void ToolBoxAdd<T>()
                 {
@@ -144,7 +145,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<Alternet.UI.ValueEditorUInt64>();
                 ToolBoxAdd<Alternet.UI.HeaderLabel>();
                 ToolBoxAdd<Alternet.UI.SplittedTreeAndCards>();
-                ToolBoxAdd<Alternet.UI.ScrollViewer>();
                 ToolBoxAdd<Alternet.UI.SplittedControlsPanel>();
                 ToolBoxAdd<Alternet.UI.Splitter>();
                 ToolBoxAdd<Alternet.UI.ColorComboBox>();
