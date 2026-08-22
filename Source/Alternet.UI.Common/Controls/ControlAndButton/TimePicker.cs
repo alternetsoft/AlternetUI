@@ -74,6 +74,16 @@ namespace Alternet.UI
             secondsButton = MainControl.AddTextBtnCore();
             secondsAndAmPmSeparator = MainControl.AddSpacerCore();
             amPmButton = MainControl.AddTextBtnCore();
+
+            secondsAndAmPmSeparator.Margin = 0;
+            hoursAndMinutesSeparator.Margin = 0;
+            minutesAndSecondsSeparator.Margin = 0;
+
+            hoursButton.KeepSquareShape = true;
+            minutesButton.KeepSquareShape = true;
+            secondsButton.KeepSquareShape = true;
+
+            UpdateMinElementWidth();
             UpdateButtons();
 
             void FocusMe()
@@ -224,6 +234,7 @@ namespace Alternet.UI
                 secondsButton.IsVisible = value;
                 minutesAndSecondsSeparator.IsVisible = value;
                 UpdateButtons();
+                PerformLayoutAndInvalidate();
             }
         }
 
@@ -552,6 +563,24 @@ namespace Alternet.UI
         {
             base.OnSystemColorsChanged(e);
             UseControlColors(DefaultUseControlColors);
+        }
+
+        /// <inheritdoc/>
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            UpdateMinElementWidth();
+        }
+
+        /// <summary>
+        /// Updates the minimum width of the AM/PM and other buttons based on their text and font.
+        /// </summary>
+        protected virtual void UpdateMinElementWidth()
+        {
+            var (am, pm) = DateUtils.GetAmPmDesignators(FormatProvider);
+
+            var minWidth = DrawingUtils.GetMaxStringSize(MeasureCanvas, amPmButton.RealFont, am, pm).Width + 10;
+            amPmButton.MinWidth = minWidth;
         }
 
         /// <summary>
