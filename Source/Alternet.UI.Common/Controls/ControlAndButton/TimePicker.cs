@@ -147,6 +147,41 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
+        /// Gets the button used for incrementing the time value. 
+        /// </summary>
+        public SpeedButton HoursButton => hoursButton;
+
+        /// <summary>
+        /// Gets the separator control between hours and minutes buttons.
+        /// </summary>
+        public AbstractControl HoursAndMinutesSeparator => hoursAndMinutesSeparator;
+
+        /// <summary>
+        /// Gets the button used for incrementing the time value. 
+        /// </summary>
+        public SpeedButton MinutesButton => minutesButton;
+
+        /// <summary>
+        /// Gets the separator control between minutes and seconds buttons.
+        /// </summary>
+        public AbstractControl MinutesAndSecondsSeparator => minutesAndSecondsSeparator;
+        
+        /// <summary>
+        /// Gets the button used for incrementing the time value. 
+        /// </summary>
+        public SpeedButton SecondsButton => secondsButton;
+        
+        /// <summary>
+        /// Gets the separator control between seconds and AM/PM buttons.
+        /// </summary>
+        public AbstractControl SecondsAndAmPmSeparator => secondsAndAmPmSeparator;
+        
+        /// <summary>
+        /// Gets the button used for incrementing the time value. 
+        /// </summary>
+        public SpeedButton AmPmButton => amPmButton;
+
+        /// <summary>
         /// Gets or sets the currently selected part of the time value.
         /// </summary>
         public virtual TimePickerValuePart? SelectedPart
