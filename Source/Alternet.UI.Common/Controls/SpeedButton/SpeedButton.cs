@@ -47,6 +47,7 @@ namespace Alternet.UI
         private Coord minRightSideWidth;
         private bool isTransparent = true;
         private TextAsValueHelper? valueHelper;
+        private bool keepSquareShape;
 
         static SpeedButton()
         {
@@ -117,6 +118,27 @@ namespace Alternet.UI
         /// is displayed when the user hovers over the associated control.
         /// </summary>
         public virtual bool ShowDropDownMenuWhenHovered { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the control
+        /// should keep a square shape by expanding width or height
+        /// to the larger dimension.
+        /// </summary>
+        public virtual bool KeepSquareShape
+        {
+            get => keepSquareShape;
+            set
+            {
+                if (keepSquareShape == value)
+                    return;
+                keepSquareShape = value;
+                if (KeepSquareShape)
+                {
+                    if (!Bounds.IsSquare)
+                        PerformLayoutAndInvalidate();
+                }
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether tooltip is shown
@@ -2290,6 +2312,20 @@ namespace Alternet.UI
         {
             base.OnDpiChanged(e);
             OnDpiOrSystemColorsChanged();
+        }
+
+        /// <inheritdoc/>
+        protected override SizeD GetPreferredSizeInternal(PreferredSizeContext context)
+        {
+            var result = base.GetPreferredSizeInternal(context);
+
+            if (KeepSquareShape)
+            {
+                var max = result.MaxWidthHeight;
+                result = new SizeD(max, max);
+            }
+
+            return result;
         }
 
         /// <summary>
