@@ -54,6 +54,7 @@ namespace Alternet.UI
         /// </summary>
         public TimePicker()
         {
+            MainControl.IsTransparent = true;
             UseControlColors(DefaultUseControlColors);
             IsGraphicControl = false;
             CanSelect = true;
@@ -81,6 +82,11 @@ namespace Alternet.UI
             hoursButton.KeepSquareShape = true;
             minutesButton.KeepSquareShape = true;
             secondsButton.KeepSquareShape = true;
+
+            hoursButton.IsNormalTransparent = true;
+            minutesButton.IsNormalTransparent = true;
+            secondsButton.IsNormalTransparent = true;
+            amPmButton.IsNormalTransparent = true;
 
             UpdateMinElementWidth();
             UpdateButtons();
@@ -131,6 +137,9 @@ namespace Alternet.UI
             IsBtnClickRepeated = true;
             ButtonPlus?.SetEnabled(false);
             ButtonMinus?.SetEnabled(false);
+
+            var corners = new BorderCornerRadius(SpeedButton.DefaultRoundBorderRadius, SpeedButton.DefaultRoundBorderRadiusIsPercent);
+            RoundCorners(corners);
         }
 
         /// <summary>
