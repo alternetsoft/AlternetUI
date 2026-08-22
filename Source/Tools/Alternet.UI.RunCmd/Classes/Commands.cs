@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Alternet.Drawing;
+using System.IO;
+using System.Xml.Linq;
 
 using SharpCompress.Common;
 
@@ -624,7 +626,13 @@ namespace Alternet.UI
 
         public static void CmdSomeAction(CommandLineArgs args)
         {
-            CombineCodeExplorerImages();
+            CmdResxToCs(args);
+        }
+
+        public static void CmdResxToCs(CommandLineArgs args)
+        {
+            string code = ResourceClassGenerator.Generate(@"E:\DIMA\AlternetUI\Source\Alternet.UI.Common\Resources\Strings.resx");
+            File.WriteAllText(@"E:\CommonStrings.cs", code);
         }
 
         public static void CmdSvgToPng(CommandLineArgs args)

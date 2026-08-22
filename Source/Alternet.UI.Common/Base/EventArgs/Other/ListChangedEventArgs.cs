@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Specialized;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI;
 
 /// <summary>
@@ -124,7 +126,7 @@ public class ListChangedEventArgs : BaseEventArgs
         if (action != NotifyCollectionChangedAction.Reset)
         {
             throw new ArgumentException(
-                SR.Format(ErrWrongActionForCtor, NotifyCollectionChangedAction.Reset), nameof(action));
+                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Reset), nameof(action));
         }
 
         this.action = action;
@@ -268,7 +270,7 @@ public class ListChangedEventArgs : BaseEventArgs
         if (action != NotifyCollectionChangedAction.Replace)
         {
             throw new ArgumentException(
-                SR.Format(ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace), nameof(action));
+                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace), nameof(action));
         }
 
         this.action = action;
@@ -310,7 +312,7 @@ public class ListChangedEventArgs : BaseEventArgs
         if (action != NotifyCollectionChangedAction.Replace)
         {
             throw new ArgumentException(
-                SR.Format(ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace), nameof(action));
+                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Replace), nameof(action));
         }
 
         ArgumentNullException.ThrowIfNull(newItems, nameof(newItems));
@@ -339,7 +341,7 @@ public class ListChangedEventArgs : BaseEventArgs
         if (action != NotifyCollectionChangedAction.Move)
         {
             throw new ArgumentException(
-                SR.Format(ErrWrongActionForCtor, NotifyCollectionChangedAction.Move), nameof(action));
+                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Move), nameof(action));
         }
 
         ArgumentOutOfRangeException.ThrowIfNegative(index, nameof(index));
@@ -367,7 +369,7 @@ public class ListChangedEventArgs : BaseEventArgs
         if (action != NotifyCollectionChangedAction.Move)
         {
             throw new ArgumentException(
-                SR.Format(ErrWrongActionForCtor, NotifyCollectionChangedAction.Move), nameof(action));
+                string.Format(CommonStrings.Default.ErrWrongActionForCtor, NotifyCollectionChangedAction.Move), nameof(action));
         }
 
         ArgumentOutOfRangeException.ThrowIfNegative(index, nameof(index));

@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -570,7 +572,7 @@ namespace Alternet.UI
             // thread is not STA.
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
-                throw new InvalidOperationException(SR.Get(SRID.RequiresSTA));
+                throw new InvalidOperationException(CommonStrings.Default.ErrRequiresSTA);
             }
         }
     }

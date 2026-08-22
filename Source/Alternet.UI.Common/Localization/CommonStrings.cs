@@ -9,7 +9,7 @@ namespace Alternet.UI.Localization
     /// <summary>
     /// Defines localizations for common strings.
     /// </summary>
-    public class CommonStrings
+    public partial class CommonStrings
     {
         /// <summary>
         /// Current localizations for common strings.

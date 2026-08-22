@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 
+using Alternet.UI.Localization;
 using Alternet.UI.Markup;
 
 namespace Alternet.UI
@@ -93,7 +94,7 @@ namespace Alternet.UI
                 else
                 {
                     throw new ArgumentException(
-                        SR.Get(SRID.InputBinding_ExpectedInputGesture, typeof(KeyGesture)));
+                        string.Format(CommonStrings.Default.ErrInputBindingExpectedInputGesture, typeof(KeyGesture)));
                 }
             }
         }

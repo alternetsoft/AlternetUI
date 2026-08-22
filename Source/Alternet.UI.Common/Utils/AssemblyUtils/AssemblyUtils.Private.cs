@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     public static partial class AssemblyUtils
@@ -44,7 +46,7 @@ namespace Alternet.UI
 
                     if (attrValue == null)
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(string.Format(CommonStrings.Default.ErrParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else if (constructorArguments.Count == 0)
@@ -57,12 +59,12 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsLow, attrType.Name));
+                        throw new ArgumentException(string.Format(CommonStrings.Default.ErrParserAttributeArgsLow, attrType.Name));
                     }
                 }
                 else
                 {
-                    throw new ArgumentException(SR.Get(SRID.ParserAttributeArgsHigh, attrType.Name));
+                    throw new ArgumentException(string.Format(CommonStrings.Default.ErrParserAttributeArgsHigh, attrType.Name));
                 }
             }
 
