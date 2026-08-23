@@ -13,8 +13,7 @@ using SkiaSharp;
 namespace Alternet.Drawing
 {
     /// <summary>
-    /// Describes an image to be drawn on a <see cref="Graphics"/> or
-    /// displayed in a UI control.
+    /// Describes an image to be drawn on a <see cref="Graphics"/> or displayed in a control.
     /// </summary>
     [TypeConverter(typeof(ImageConverter))]
     public partial class Image : HandledObject<IImageHandler>, IImageSource, IGetAsToolTip
@@ -988,6 +987,20 @@ namespace Alternet.Drawing
             }
 
             return grayScaleCache;
+        }
+
+        /// <summary>
+        /// Rotates and/or flips the image according to the specified <paramref name="rotateFlipType"/>.
+        /// </summary>
+        /// <param name="rotateFlipType">The type of rotation and/or flip to apply.</param>
+        /// <returns>true if the image was successfully rotated and/or flipped; otherwise, false.</returns>
+        public virtual bool RotateFlip(RotateFlipType rotateFlipType)
+        {
+            if (DisposingOrDisposed || Immutable)
+                return false;
+            if (rotateFlipType == RotateFlipType.RotateNoneFlipNone)
+                return true;
+            return Handler.RotateFlip(rotateFlipType);
         }
 
         /// <summary>

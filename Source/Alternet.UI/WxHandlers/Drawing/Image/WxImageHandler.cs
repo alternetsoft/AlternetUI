@@ -135,6 +135,11 @@ namespace Alternet.UI.Native
             return result;
         }
 
+        public bool RotateFlip(Drawing.RotateFlipType rotateFlipType)
+        {
+            return false;
+        }
+
         public class NativeDynamicBitmap : Drawing.DynamicBitmap<UI.Native.Image>
         {
             /// <summary>

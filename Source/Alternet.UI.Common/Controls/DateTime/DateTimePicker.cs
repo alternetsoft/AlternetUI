@@ -38,11 +38,10 @@ namespace Alternet.UI
         private readonly TransparentPanel spacer = new();
         private readonly PictureBox datePictureBox = new();
         private readonly PictureBox timePictureBox = new();
+        private readonly DateTimePickerPopupKind popupKind = DateTimePickerPopupKind.DropDown;
 
         private int suppressCounter;
-
         private DateTimePickerKind kind = DateTimePickerKind.Date;
-        private DateTimePickerPopupKind popupKind = DateTimePickerPopupKind.DropDown;
         private DateTime? dateTime;
 
         /// <summary>

@@ -62,6 +62,13 @@ namespace Alternet.Drawing
         bool Rescale(SizeI sizeNeeded);
 
         /// <summary>
+        /// Rotates and/or flips the image.
+        /// </summary>
+        /// <param name="rotateFlipType">The type of rotation and/or flip to apply.</param>
+        /// <returns>true if the image was successfully rotated and/or flipped; otherwise, false.</returns>
+        bool RotateFlip(RotateFlipType rotateFlipType);
+
+        /// <summary>
         /// Assigns pixels of <see cref="SKBitmap"/> to this image.
         /// </summary>
         /// <param name="image">Image.</param>

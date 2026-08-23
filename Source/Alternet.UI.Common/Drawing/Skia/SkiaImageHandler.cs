@@ -16,7 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Implements <see cref="IImageHandler"/> interface provider for the <see cref="SKBitmap"/>.
     /// </summary>
-    public class SkiaImageHandler : PlessImageHandler, IImageHandler
+    public class SkiaImageHandler : DisposableObject, IImageHandler
     {
         /// <summary>
         /// Gets or sets default <see cref="SKSamplingOptions"/> used hen images are resized.
@@ -406,7 +406,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool LoadFromStream(Stream stream)
+        public virtual bool LoadFromStream(Stream stream)
         {
             return InsideTryCatch(() =>
             {
@@ -422,6 +422,52 @@ namespace Alternet.UI
             });
         }
 
+        /// <inheritdoc cref="Image.Load(string, BitmapType)"/>
+        public virtual bool Load(string name, BitmapType type)
+        {
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.OpenRead(name);
+                return LoadFromStream(stream, type);
+            });
+        }
+
+        /// <inheritdoc cref="Image.Load(Stream, BitmapType)"/>
+        public virtual bool LoadFromStream(Stream stream, BitmapType type)
+        {
+            return LoadFromStream(stream);
+        }
+
+        /// <inheritdoc cref="Image.Save(string, int?)"/>
+        public virtual bool SaveToFile(string name, int quality)
+        {
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(name);
+                var bitmapType = Image.GetBitmapTypeFromFileName(name);
+                return SaveToStream(stream, bitmapType, quality);
+            });
+        }
+
+        /// <inheritdoc cref="Image.Save(string, BitmapType, int?)"/>
+        public virtual bool SaveToFile(string name, BitmapType type, int quality)
+        {
+            return InsideTryCatch(() =>
+            {
+                using var stream = FileSystem.Default.Create(name);
+                return SaveToStream(stream, type, quality);
+            });
+        }
+
+        /// <inheritdoc cref="Image.Save(Stream, ImageFormat, int?)"/>
+        public virtual bool SaveToStream(Stream stream, ImageFormat format, int quality)
+        {
+            var bitmapType = format.AsBitmapType();
+            if (bitmapType == BitmapType.Invalid)
+                return false;
+            return SaveToStream(stream, bitmapType, quality);
+        }
+
         /// <inheritdoc/>
         public SKBitmap ToSkia(bool assignPixels = true)
         {
@@ -429,7 +475,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override bool SaveToStream(Stream stream, BitmapType type, int quality)
+        public virtual bool SaveToStream(Stream stream, BitmapType type, int quality)
         {
             return InsideTryCatch(() =>
             {
@@ -474,6 +520,13 @@ namespace Alternet.UI
         private void DisposeBitmap()
         {
             SafeDispose(ref bitmap!);
+        }
+
+        /// <inheritdoc/>
+        public bool RotateFlip(RotateFlipType rotateFlipType)
+        {
+            bitmap = SkiaUtils.RotateFlip(bitmap, rotateFlipType);
+            return true;
         }
     }
 }

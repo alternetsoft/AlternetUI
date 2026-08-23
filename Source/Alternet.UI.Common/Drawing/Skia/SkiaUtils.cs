@@ -184,6 +184,92 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Rotates and/or flips the specified <see cref="SKBitmap"/> according to the given <paramref name="type"/>.
+        /// </summary>
+        /// <param name="source">The source <see cref="SKBitmap"/> to rotate and/or flip.</param>
+        /// <param name="type">The <see cref="RotateFlipType"/> specifying the rotation and/or flip to apply.</param>
+        /// <returns>A new <see cref="SKBitmap"/> that has been rotated and/or flipped according to the
+        /// specified <paramref name="type"/>.</returns>
+        public static SKBitmap RotateFlip(this SKBitmap source, RotateFlipType type)
+        {
+            // Determine target dimensions
+            int width = source.Width;
+            int height = source.Height;
+
+            bool swapDimensions = type == RotateFlipType.Rotate90FlipNone ||
+                                  type == RotateFlipType.Rotate270FlipNone ||
+                                  type == RotateFlipType.Rotate90FlipX ||
+                                  type == RotateFlipType.Rotate270FlipX;
+
+            SKBitmap target = new (
+                swapDimensions ? height : width,
+                swapDimensions ? width : height,
+                source.ColorType,
+                source.AlphaType);
+
+            using (var canvas = new SKCanvas(target))
+            {
+                // Set up transform
+                switch (type)
+                {
+                    case RotateFlipType.RotateNoneFlipNone:
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+
+                    case RotateFlipType.Rotate90FlipNone:
+                        canvas.Translate(target.Width, 0);
+                        canvas.RotateDegrees(90);
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+
+                    case RotateFlipType.Rotate180FlipNone:
+                        canvas.Translate(target.Width, target.Height);
+                        canvas.RotateDegrees(180);
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+
+                    case RotateFlipType.Rotate270FlipNone:
+                        canvas.Translate(0, target.Height);
+                        canvas.RotateDegrees(270);
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+
+                    case RotateFlipType.RotateNoneFlipX:
+                        canvas.Scale(-1, 1);
+                        canvas.Translate(-target.Width, 0);
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+
+                    case RotateFlipType.Rotate90FlipX:
+                        canvas.Translate(target.Width, 0);
+                        canvas.RotateDegrees(90);
+                        canvas.Scale(-1, 1);
+                        canvas.Translate(-height, 0);
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+
+                    case RotateFlipType.Rotate180FlipX:
+                        canvas.Translate(target.Width, target.Height);
+                        canvas.RotateDegrees(180);
+                        canvas.Scale(-1, 1);
+                        canvas.Translate(-width, 0);
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+
+                    case RotateFlipType.Rotate270FlipX:
+                        canvas.Translate(0, target.Height);
+                        canvas.RotateDegrees(270);
+                        canvas.Scale(-1, 1);
+                        canvas.Translate(-height, 0);
+                        canvas.DrawBitmap(source, 0, 0);
+                        break;
+                }
+            }
+
+            return target;
+        }
+        
+        /// <summary>
         /// Coerces the specified image depth to a supported value.
         /// </summary>
         /// <param name="depth">The desired image depth.</param>
