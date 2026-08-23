@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// Base class for generic date editors.
     /// </summary>
-    public abstract partial class GenericDateEdit : GenericControl
+    public abstract partial class GenericDateEdit : TransparentPanel
     {
         /// <summary>Specifies the maximum date value of the
         /// <see cref="DateTimePicker"/> and other date editors.

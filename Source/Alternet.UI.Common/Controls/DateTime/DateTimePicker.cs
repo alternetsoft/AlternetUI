@@ -21,11 +21,22 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Date)]
     public partial class DateTimePicker : GenericDateEdit
     {
+        /// <summary>
+        /// Gets or sets the default distance between date and time pickers in the <see cref="DateTimePicker"/> control.
+        /// </summary>
+        public static float DefaultDateTimeDistance = 5;
+
         private readonly DatePicker datePicker = new();
         private readonly TimePicker timePicker = new();
+        private readonly TransparentPanel datePanel = new();
+        private readonly TransparentPanel timePanel = new();
+        private readonly TransparentPanel spacer = new();
+
+        private int suppressCounter;
 
         private DateTimePickerKind kind = DateTimePickerKind.Date;
         private DateTimePickerPopupKind popupKind = DateTimePickerPopupKind.DropDown;
+        private DateTime? dateTime;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DateTimePicker"/> class.
@@ -42,22 +53,28 @@ namespace Alternet.UI
         /// </summary>
         public DateTimePicker()
         {
-            UserPaint = true;
-            datePicker.Parent = this;
+            Layout = LayoutStyle.Vertical;
 
-            timePicker.Visible = false;
-            timePicker.Parent = this;
+            datePanel.Layout = LayoutStyle.Horizontal;
+            datePicker.HorizontalAlignment = HorizontalAlignment.Fill;
+            datePicker.Parent = datePanel;
+            datePanel.Parent = this;
 
-            datePicker.ValueChanged += (s, e) =>
-            {
-                timePicker.Value = Value ?? DateTime.Now;
-                RaiseValueChanged(e);
-            };
+            spacer.SuggestedHeight = DefaultDateTimeDistance;
+            spacer.HorizontalAlignment = HorizontalAlignment.Fill;
+            spacer.Visible = false;
+            spacer.Parent = this;
 
-            timePicker.ValueChanged += (s, e) =>
-            {
-                Value = (Value ?? DateTime.Now).Date + timePicker.Value.TimeOfDay;
-            };
+            timePanel.Layout = LayoutStyle.Horizontal;
+            timePanel.Visible = false;
+            timePicker.HorizontalAlignment = HorizontalAlignment.Fill;
+            timePicker.Parent = timePanel;
+            timePanel.Parent = this;
+
+            datePicker.ValueChanged += OnDatePickerValueChanged;
+            timePicker.ValueChanged += OnTimePickerValueChanged;
+
+            Value = DateTime.Now;
         }
 
         /// <summary>
@@ -78,12 +95,26 @@ namespace Alternet.UI
         {
             get
             {
-                return datePicker.Value;
+                return dateTime;
             }
 
             set
             {
-                datePicker.Value = value;
+                if (dateTime == value) return;
+                dateTime = value;
+
+                try
+                {
+                    suppressCounter++;
+                    datePicker.Value = value;
+                    timePicker.Value = value ?? DateTime.Now.Date;
+                }
+                finally
+                {
+                    suppressCounter--;
+                }
+
+                RaiseValueChanged(EventArgs.Empty);
             }
         }
 
@@ -140,29 +171,72 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override bool UseMinDate
         {
-            get => datePicker.UseMinDate;
-            set => datePicker.UseMinDate = value;
+            get => base.UseMinDate;
+            set
+            {
+                base.UseMinDate = value;
+                datePicker.UseMinDate = value;
+            }
         }
 
         /// <inheritdoc/>
         public override bool UseMaxDate
         {
-            get => datePicker.UseMaxDate;
-            set => datePicker.UseMaxDate = value;
+            get => base.UseMaxDate;
+            set
+            {
+                base.UseMaxDate = value;
+                datePicker.UseMaxDate = value;
+            }
         }
 
         /// <inheritdoc/>
         public override DateTime MinDate
         {
-            get => datePicker.MinDate;
-            set => datePicker.MinDate = value;
+            get => base.MinDate;
+            set
+            {
+                base.MinDate = value;
+                datePicker.MinDate = value;
+            }
         }
 
         /// <inheritdoc/>
         public override DateTime MaxDate
         {
-            get => datePicker.MaxDate;
-            set => datePicker.MaxDate = value;
+            get => base.MaxDate;
+            set
+            {
+                base.MaxDate = value;
+                datePicker.MaxDate = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the picker is set to time only mode.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsTimeOnly
+        {
+            get => kind == DateTimePickerKind.Time;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the picker is set to date only mode.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsDateOnly
+        {
+            get => kind == DateTimePickerKind.Date;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the picker is set to date and time mode.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsDateTime
+        {
+            get => kind == DateTimePickerKind.DateTime;
         }
 
         /// <summary>
@@ -182,12 +256,11 @@ namespace Alternet.UI
                     return;
                 kind = value;
 
-                var isDate = kind == DateTimePickerKind.Date;
-
                 DoInsideLayout(() =>
                 {
-                    timePicker.Visible = !isDate;
-                    datePicker.Visible = isDate;
+                    spacer.Visible = IsDateTime;
+                    datePanel.Visible = IsDateTime || IsDateOnly;
+                    timePanel.Visible = IsDateTime || IsTimeOnly;
                 });
             }
         }
@@ -196,6 +269,7 @@ namespace Alternet.UI
         /// Gets or sets whether to show calendar popup or edit date with spin control.
         /// Currently only <see cref="DateTimePickerPopupKind.DropDown"/> is implemented.
         /// </summary>
+        [Browsable(false)]
         public virtual DateTimePickerPopupKind PopupKind
         {
             get
@@ -233,6 +307,30 @@ namespace Alternet.UI
         public override bool SetFocus()
         {
             return base.SetFocus();
+        }
+
+        /// <summary>
+        /// Called when the value of the inner <see cref="TimePicker"/> has changed.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnTimePickerValueChanged(object? sender, EventArgs e)
+        {
+            if (suppressCounter > 0)
+                return;
+            AsTimeOnly = timePicker.AsTimeOnly;
+        }
+
+        /// <summary>
+        /// Called when the value of the inner <see cref="DatePicker"/> has changed.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        protected virtual void OnDatePickerValueChanged(object? sender, EventArgs e)
+        {
+            if (suppressCounter > 0)
+                return;
+            AsDateOnly = datePicker.AsDateOnly;
         }
 
         /// <summary>

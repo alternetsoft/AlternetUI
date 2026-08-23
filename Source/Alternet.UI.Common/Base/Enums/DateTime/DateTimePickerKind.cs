@@ -13,15 +13,18 @@ namespace Alternet.UI
     public enum DateTimePickerKind
     {
         /// <summary>
-        /// Specifies to edit date part of the <see cref="DateTime"/> value
-        /// in the control.
+        /// Specifies to edit date part of the <see cref="DateTime"/> value in the control.
         /// </summary>
         Date = 0,
 
         /// <summary>
-        /// Specifies to edit time part of the <see cref="DateTime"/> value
-        /// in the control.
+        /// Specifies to edit time part of the <see cref="DateTime"/> value in the control.
         /// </summary>
         Time = 1,
+
+        /// <summary>
+        /// Specifies to edit both date and time parts of the <see cref="DateTime"/> value in the control.
+        /// </summary>
+        DateTime = 2,
     }
 }

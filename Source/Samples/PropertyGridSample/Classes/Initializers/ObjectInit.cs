@@ -45,6 +45,7 @@ Environment.NewLine + Environment.NewLine +
             AddAction<GenericItemControl>(InitGenericListItemControl);
             AddAction<CardPanelHeader>(InitCardPanelHeader);
             AddAction<RichToolTip>(InitRichToolTip);
+            AddAction<DateTimePicker>(InitDateTimePicker);
             AddAction<DatePicker>(InitDatePicker);
             AddAction<TimePicker>(InitTimePicker);
             AddAction<ListPicker>(InitListPicker);
@@ -349,6 +350,16 @@ Environment.NewLine + Environment.NewLine +
 
                 e.HasMorePages = pageNumber - 1 < v;
             }
+        }
+
+        public static void InitDateTimePicker(DateTimePicker control)
+        {
+            control.Kind = DateTimePickerKind.DateTime;
+
+            control.ValueChanged += (s, e) =>
+            {
+                App.LogReplace($"DateTimePicker: {control.Value}", "DateTimePicker:");
+            };
         }
 
         public static void InitDatePicker(DatePicker control)
