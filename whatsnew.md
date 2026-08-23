@@ -1,3 +1,55 @@
+# 1.1.7 (2026 August 23)
+
+- Add controls: ScrollablePanelSettings, GenericDateEdit, GenericControlAndButton, GenericControlAndPicture, DrawingResourcePicker.
+- PanelSettings: support DateTime, DateOnly and TimeOnly editing.
+- PanelSettings: Add DefaultMinChildMargin.
+- PanelSettings: DefaultHorizontalLineMargin is Thickness now.
+- PanelSettings: AddSpacer now has optional minHeight param.
+- PanelSettings: allow to use up/down for int values.
+- PanelSettings: Add MinHeight support for multiline input controls.
+- PanelSettings: AddFlagCheckBoxes, AddRadioButtons.
+- PanelSettings: GetItemControlEditor, GetItemControlLabel, GetItemControl.
+- PanelSettings: Add support for "CheckBoxInLabel" custom param for value editors with textBox. This allows to show checkbox instead of label.
+- DateTimePicker.Kind now accepts DateTime.
+- DateTimePicker: show icons in DateTime mode.
+- PanelSettings: Fix CheckBox image margins.
+- SpeedDateButton.DefaultTextLeftPadding.
+- DateTimePicker now derives from GenericDateEdit.
+- Inherit NumericUpDown from XIntPicker.
+- PanelRichTextBox: add margin around rich editor.
+- TimePicker: implement round border.
+- Inherit from generic control: TimePicker, ColorPickerAndButton, EnumPickerAndButton.
+- TimePicker: Expose segment controls for the hours, minutes, seconds buttons, plus the separator controls between them.
+- DateTimePicker: AsTimeOnly, AsDateOnly.
+- Fix TimePicker layout.
+- Image.RotateFlip, ToolBar.IsTransparent, DrawingUtils.GetMaxStringSize.
+- SpeedButton: KeepSquareShape, IsNormalTransparent.
+- Add IsSquare helpers for RectD and SizeD.
+- Remove obsolete error strings.
+- Add new svg: clock, calendar, rotate.
+- Calendar.AsDateOnly, SpeedDateButton.AsDateOnly, TimePicker.AsTimeOnly.
+- PanelMultilineTextBox: Add textbox margin and color sync options.
+- PanelSettingsItem.ItemToControl. This property allows to override the default control creation behavior with a custom delegate. 
+- PanelSettingsItem.Owner. This property allows to get the owner PanelSettings instance for a given item.
+- Refactors TextBoxAndButton and ControlAndButtonto accept an optional control type in its constructor.
+- CustomEventArgs: new constructors and members.
+- Expose PanelSettings.Items as public and enforce explicit item ownership when items are inserted or removed..
+- XRadioButton: GetSiblingButtons, RadioGroupId, AutoUncheckSiblings.
+- ControlAndLabel: Add constructor overload with typeOfControl and typeOfLabel params.
+- ListControlItem.IsCheckBoxEnabled.
+- SpeedButtonWithListPopup: now works fine on MAUI platform.
+- ColorListBox: ItemImageBorder, ItemImageShape.
+- SpeedColorButton: AsImageWithBorder, ColorImageShape.
+- Brush and Color: add shape param to AsImageWithBorder.
+- LinkLabel: show underline under the text.
+- GenericBorder: GetDefaultBorderWidth, OnBorderPropertyChanged.
+- Brush.AsImageWithBorder.
+- PopupWindow and PopupListBox: New constructor with initial settings param.
+- Create DrawingResource.
+- PopupColorListBox, ColorPicker and SpeedColorButton: new constructor with useDefaultColors param.
+
+---
+
 # 1.1.6 (2026 August 17)
 
 - ColorListBox: ColorImageSizeKind, ColorImageSize, ColorImageRatio, IsColorRightAligned, AddBrushItem, AddEmptyColor.
