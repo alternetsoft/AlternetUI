@@ -993,14 +993,16 @@ namespace Alternet.Drawing
         /// Rotates and/or flips the image according to the specified <paramref name="rotateFlipType"/>.
         /// </summary>
         /// <param name="rotateFlipType">The type of rotation and/or flip to apply.</param>
+        /// <param name="samplingOptions">The optional <see cref="SKSamplingOptions"/> to use when drawing the bitmap.
+        /// If not specified, the default sampling options will be used.</param>
         /// <returns>true if the image was successfully rotated and/or flipped; otherwise, false.</returns>
-        public virtual bool RotateFlip(RotateFlipType rotateFlipType)
+        public virtual bool RotateFlip(RotateFlipType rotateFlipType, SKSamplingOptions? samplingOptions = null)
         {
             if (DisposingOrDisposed || Immutable)
                 return false;
             if (rotateFlipType == RotateFlipType.RotateNoneFlipNone)
                 return true;
-            return Handler.RotateFlip(rotateFlipType);
+            return Handler.RotateFlip(rotateFlipType, samplingOptions);
         }
 
         /// <summary>

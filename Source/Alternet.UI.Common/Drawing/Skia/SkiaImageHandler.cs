@@ -523,9 +523,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public bool RotateFlip(RotateFlipType rotateFlipType)
+        public bool RotateFlip(RotateFlipType rotateFlipType, SKSamplingOptions? samplingOptions = null)
         {
-            bitmap = SkiaUtils.RotateFlip(bitmap, rotateFlipType);
+            bitmap = SkiaUtils.RotateFlip(bitmap, rotateFlipType, samplingOptions);
             return true;
         }
     }

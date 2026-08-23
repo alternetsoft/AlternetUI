@@ -65,8 +65,10 @@ namespace Alternet.Drawing
         /// Rotates and/or flips the image.
         /// </summary>
         /// <param name="rotateFlipType">The type of rotation and/or flip to apply.</param>
+        /// <param name="samplingOptions">The optional <see cref="SKSamplingOptions"/> to use when drawing the bitmap.
+        /// If not specified, the default sampling options will be used.</param>
         /// <returns>true if the image was successfully rotated and/or flipped; otherwise, false.</returns>
-        bool RotateFlip(RotateFlipType rotateFlipType);
+        bool RotateFlip(RotateFlipType rotateFlipType, SKSamplingOptions? samplingOptions = null);
 
         /// <summary>
         /// Assigns pixels of <see cref="SKBitmap"/> to this image.

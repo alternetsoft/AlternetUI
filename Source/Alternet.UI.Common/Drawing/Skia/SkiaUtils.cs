@@ -188,9 +188,11 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="source">The source <see cref="SKBitmap"/> to rotate and/or flip.</param>
         /// <param name="type">The <see cref="RotateFlipType"/> specifying the rotation and/or flip to apply.</param>
+        /// <param name="samplingOptions">The optional <see cref="SKSamplingOptions"/> to use when drawing the bitmap.
+        /// If not specified, the default sampling options will be used.</param>
         /// <returns>A new <see cref="SKBitmap"/> that has been rotated and/or flipped according to the
         /// specified <paramref name="type"/>.</returns>
-        public static SKBitmap RotateFlip(this SKBitmap source, RotateFlipType type)
+        public static SKBitmap RotateFlip(this SKBitmap source, RotateFlipType type, SKSamplingOptions? samplingOptions = null)
         {
             // Determine target dimensions
             int width = source.Width;
@@ -207,37 +209,39 @@ namespace Alternet.Drawing
                 source.ColorType,
                 source.AlphaType);
 
+            samplingOptions ??= SKSamplingOptions.Default;
+
             using (var canvas = new SKCanvas(target))
             {
                 // Set up transform
                 switch (type)
                 {
                     case RotateFlipType.RotateNoneFlipNone:
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
 
                     case RotateFlipType.Rotate90FlipNone:
                         canvas.Translate(target.Width, 0);
                         canvas.RotateDegrees(90);
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
 
                     case RotateFlipType.Rotate180FlipNone:
                         canvas.Translate(target.Width, target.Height);
                         canvas.RotateDegrees(180);
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
 
                     case RotateFlipType.Rotate270FlipNone:
                         canvas.Translate(0, target.Height);
                         canvas.RotateDegrees(270);
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
 
                     case RotateFlipType.RotateNoneFlipX:
                         canvas.Scale(-1, 1);
                         canvas.Translate(-target.Width, 0);
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
 
                     case RotateFlipType.Rotate90FlipX:
@@ -245,7 +249,7 @@ namespace Alternet.Drawing
                         canvas.RotateDegrees(90);
                         canvas.Scale(-1, 1);
                         canvas.Translate(-height, 0);
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
 
                     case RotateFlipType.Rotate180FlipX:
@@ -253,7 +257,7 @@ namespace Alternet.Drawing
                         canvas.RotateDegrees(180);
                         canvas.Scale(-1, 1);
                         canvas.Translate(-width, 0);
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
 
                     case RotateFlipType.Rotate270FlipX:
@@ -261,7 +265,7 @@ namespace Alternet.Drawing
                         canvas.RotateDegrees(270);
                         canvas.Scale(-1, 1);
                         canvas.Translate(-height, 0);
-                        canvas.DrawBitmap(source, 0, 0);
+                        canvas.DrawBitmap(source, 0, 0, samplingOptions.Value);
                         break;
                 }
             }

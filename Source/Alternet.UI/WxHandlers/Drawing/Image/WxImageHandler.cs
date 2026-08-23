@@ -135,7 +135,7 @@ namespace Alternet.UI.Native
             return result;
         }
 
-        public bool RotateFlip(Drawing.RotateFlipType rotateFlipType)
+        public bool RotateFlip(Drawing.RotateFlipType rotateFlipType, SKSamplingOptions? samplingOptions = null)
         {
             return false;
         }
