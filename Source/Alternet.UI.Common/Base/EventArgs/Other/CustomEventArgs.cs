@@ -23,6 +23,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="CustomEventArgs"/> class 
+        /// with the specified custom attribute name and value.
+        /// </summary>
+        /// <param name="name">The name of the custom attribute.</param>
+        /// <param name="value">The value of the custom attribute.</param>
+        public CustomEventArgs(string name, object? value)
+        {
+            CustomAttr[name] = value;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="CustomEventArgs"/> class
         /// with the specified custom flags turned on.
         /// </summary>

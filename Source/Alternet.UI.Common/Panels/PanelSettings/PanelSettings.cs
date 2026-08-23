@@ -323,6 +323,11 @@ namespace Alternet.UI
                 return CreateOrUpdateDateEdit(sender, item, control);
             }
 
+            if (realType == typeof(DateTime))
+            {
+                return CreateOrUpdateDateTimeEdit(sender, item, control);
+            }
+
             var result = CreateOrUpdateTextBox(sender, item, control);
             return result;
         }
@@ -442,15 +447,15 @@ namespace Alternet.UI
             if (item.Value is Color colorValue)
                 colorEditor.ColorPicker.Value = colorValue;
 
-            colorEditor.ColorPicker.ValueChanged -= SelectorChanged;
-            colorEditor.ColorPicker.ValueChanged += SelectorChanged;
+            colorEditor.ColorPicker.ValueChanged -= ValueChanged;
+            colorEditor.ColorPicker.ValueChanged += ValueChanged;
 
             void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
             {
                 colorEditor.ColorPicker.ShowColorPopup();
             }
 
-            void SelectorChanged(object? sender, EventArgs e)
+            void ValueChanged(object? sender, EventArgs e)
             {
                 item.Value = colorEditor.ColorPicker.Value;
             }
@@ -486,15 +491,15 @@ namespace Alternet.UI
             if (item.Value is not null)
                 enumEditor.EnumPicker.Value = item.Value;
 
-            enumEditor.EnumPicker.ValueChanged -= SelectorChanged;
-            enumEditor.EnumPicker.ValueChanged += SelectorChanged;
+            enumEditor.EnumPicker.ValueChanged -= ValueChanged;
+            enumEditor.EnumPicker.ValueChanged += ValueChanged;
 
             void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
             {
                 enumEditor.EnumPicker.ShowPopup();
             }
 
-            void SelectorChanged(object? sender, EventArgs e)
+            void ValueChanged(object? sender, EventArgs e)
             {
                 item.Value = enumEditor.EnumPicker.Value;
             }
@@ -521,8 +526,6 @@ namespace Alternet.UI
             UpdateText(sender, item, result.Label);
 
             var timeEditor = result.MainControl;
-            timeEditor.ButtonClick -= ButtonClick;
-            timeEditor.ButtonClick += ButtonClick;
 
             if (item.Value is DateTime dateTimeValue)
                 timeEditor.Value = dateTimeValue;
@@ -530,14 +533,10 @@ namespace Alternet.UI
                 if (item.Value is TimeOnly timeOnlyValue)
                     timeEditor.AsTimeOnly = timeOnlyValue;
 
-            timeEditor.ValueChanged -= SelectorChanged;
-            timeEditor.ValueChanged += SelectorChanged;
+            timeEditor.ValueChanged -= ValueChanged;
+            timeEditor.ValueChanged += ValueChanged;
 
-            void ButtonClick(object? sender, ControlAndButtonClickEventArgs e)
-            {
-            }
-
-            void SelectorChanged(object? sender, EventArgs e)
+            void ValueChanged(object? sender, EventArgs e)
             {
                 item.Value = timeEditor.AsTimeOnly;
             }
@@ -605,12 +604,61 @@ namespace Alternet.UI
                 if (item.Value is DateOnly dateOnlyValue)
                     dateEditor.AsDateOnly = dateOnlyValue;
 
-            dateEditor.ValueChanged -= SelectorChanged;
-            dateEditor.ValueChanged += SelectorChanged;
+            dateEditor.ValueChanged -= ValueChanged;
+            dateEditor.ValueChanged += ValueChanged;
 
-            void SelectorChanged(object? sender, EventArgs e)
+            void ValueChanged(object? sender, EventArgs e)
             {
                 item.Value = dateEditor.AsDateOnly;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Creates or updates a DateTime edit control for the specified item.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should
+        /// be updated using item's properties. Can be null, in this case new control
+        /// need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateDateTimeEdit(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var args = item.CreateArg;
+            var kind = (args?.CustomAttr["Kind"] as DateTimePickerKind?) ?? DateTimePickerKind.DateTime;
+
+            if (kind == DateTimePickerKind.Date)
+            {
+                return CreateOrUpdateDateEdit(sender, item, control);
+            }
+
+            if (kind == DateTimePickerKind.Time)
+            {
+                return CreateOrUpdateTimeEdit(sender, item, control);
+            }
+
+            var result = CreateOrUpdateControlAndLabel<DateTimePicker>(sender, item, control);
+            result.LabelToControl = StackPanelOrientation.Vertical;
+            UpdateText(sender, item, result.Label);
+
+            var editor = result.MainControl;
+
+            editor.Kind = kind;
+
+            if (item.Value is DateTime dateTimeValue)
+                editor.Value = dateTimeValue;
+
+            editor.ValueChanged -= ValueChanged;
+            editor.ValueChanged += ValueChanged;
+
+            void ValueChanged(object? sender, EventArgs e)
+            {
+                item.Value = editor.Value;
             }
 
             return result;

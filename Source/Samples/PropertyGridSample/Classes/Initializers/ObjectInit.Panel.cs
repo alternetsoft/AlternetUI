@@ -95,6 +95,11 @@ namespace PropertyGridSample
 
             panel.AddInput("This is date picker:", samplePropContainer, nameof(SamplePropContainer.SampleDate));
 
+            // This call is optional
+            var dateTimeArgs = new CustomEventArgs("Kind", DateTimePickerKind.DateTime);
+
+            panel.AddInput("This is date and time picker:", samplePropContainer, nameof(SamplePropContainer.SampleDateTime));
+
             panel.AddHorizontalLine();
 
             var memoArgs = new CustomEventArgs("IsMultiline").Attr("MinHeight", 120);
@@ -113,6 +118,8 @@ namespace PropertyGridSample
         public class SamplePropContainer
         {
             public Color SampleColor { get; set; } = LightDarkColors.Red;
+
+            public DateTime SampleDateTime { get; set; } = DateTime.Now;
 
             public TimeOnly SampleTime { get; set; } = TimeOnly.FromDateTime(DateTime.Now);
 
