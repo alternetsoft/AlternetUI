@@ -200,16 +200,21 @@ namespace Alternet.Drawing
                 return image;
             }
 
+            Image? GetDisabledImage()
+            {
+                var image = SvgImage?.AsDisabledImage(sz, isDark);
+                image ??= DisabledImage ?? DisabledImageSet?.AsImage(DisabledImageSet.DefaultSize);
+                image ??= GetNormalImage();
+                return image;
+            }
+
             if (Enabled)
             {
                 return GetNormalImage();
             }
             else
             {
-                var image = SvgImage?.AsDisabledImage(sz, isDark);
-                image ??= DisabledImage ?? DisabledImageSet?.AsImage(DisabledImageSet.DefaultSize);
-                image ??= GetNormalImage();
-                return image;
+                return GetDisabledImage();
             }
         }
 
