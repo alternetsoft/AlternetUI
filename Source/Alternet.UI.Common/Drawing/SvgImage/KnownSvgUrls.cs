@@ -321,9 +321,14 @@ namespace Alternet.UI
         public static string UrlImageRetry { get; set; } = GetImageUrl("alternet-arrows-rotate");
 
         /// <summary>
+        /// Gets or sets url used to load svg image used in "Arrows Spin" buttons.
+        /// </summary>
+        public static string UrlImageArrowsSpin { get; set; } = GetImageUrl("alternet-arrows-spin");
+
+        /// <summary>
         /// Gets or sets url used to load svg image used in "Ignore" buttons.
         /// </summary>
-        public static string UrlImageIgnore { get; set; } = GetImageUrl("alternet-empty"); /* !!!! */
+        public static string UrlImageIgnore { get; set; } = GetImageUrl("alternet-empty");
 
         /// <summary>
         /// Gets or sets url used to load svg image used in "Help" buttons.

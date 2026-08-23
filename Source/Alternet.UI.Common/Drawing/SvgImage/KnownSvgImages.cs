@@ -111,6 +111,7 @@ namespace Alternet.UI
         private static SvgImage? imgClock;
         private static SvgImage? imgCalendar;
         private static SvgImage? imgRotate;
+        private static SvgImage? imgArrowsSpin;
 
         static KnownSvgImages()
         {
@@ -801,6 +802,15 @@ namespace Alternet.UI
         {
             get => imgRetry ??= new MonoSvgImage(KnownSvgUrls.UrlImageRetry);
             set => imgRetry = value;
+        }
+
+        /// <summary>
+        /// Gets or sets image that can be used in "Retry" buttons.
+        /// </summary>
+        public static SvgImage ImgArrowsSpin
+        {
+            get => imgArrowsSpin ??= new MonoSvgImage(KnownSvgUrls.UrlImageArrowsSpin);
+            set => imgArrowsSpin = value;
         }
 
         /// <summary>
