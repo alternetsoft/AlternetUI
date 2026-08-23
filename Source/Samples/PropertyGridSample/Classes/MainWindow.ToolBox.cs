@@ -110,6 +110,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<XScrollBar>();
                 ToolBoxAdd<PanelSettings>();
                 ToolBoxAdd<ScrollViewer>();
+                ToolBoxAdd<ScrollablePanelSettings>();
 
                 void ToolBoxAdd<T>()
                 {

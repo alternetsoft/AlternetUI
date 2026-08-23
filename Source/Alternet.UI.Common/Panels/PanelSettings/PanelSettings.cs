@@ -1296,4 +1296,27 @@ namespace Alternet.UI
             return e.CustomFlags["IsRequired"];
         }
     }
+
+    /// <summary>
+    /// Represents a scrollable panel settings control that contains a <see cref="PanelSettings"/> instance.
+    /// Use <see cref="Panel"/> to access the contained <see cref="PanelSettings"/> instance.
+    /// </summary>
+    public partial class ScrollablePanelSettings : ScrollViewer
+    {
+        private readonly PanelSettings panel = new();
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollablePanelSettings"/> class.
+        /// </summary>
+        public ScrollablePanelSettings()
+        {
+            panel.Parent = base.Content;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="PanelSettings"/> instance that is used to manage the items and their corresponding controls.
+        /// </summary>
+        [Browsable(false)]
+        public PanelSettings Panel => panel;
+    }
 }

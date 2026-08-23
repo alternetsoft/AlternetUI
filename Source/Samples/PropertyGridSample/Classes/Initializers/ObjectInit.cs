@@ -63,6 +63,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(ContextMenu), InitContextMenu);
             Actions.Add(typeof(SplittedPanel), InitSplittedPanel);
             Actions.Add(typeof(ScrollViewer), InitScrollViewer);
+            Actions.Add(typeof(ScrollablePanelSettings), InitScrollablePanelSettings);            
             Actions.Add(typeof(HorizontalStackPanel), InitStackPanel);
             Actions.Add(typeof(VerticalStackPanel), InitStackPanel);
             Actions.Add(typeof(StackPanel), InitStackPanel);
@@ -531,9 +532,29 @@ Environment.NewLine + Environment.NewLine +
         {
             ScrollViewer? sv = control as ScrollViewer;
             sv!.SuggestedHeight = 250;
-            PanelSettings panel = new();
-            InitPanelSettings(panel);
-            panel.Parent = sv.Content;
+            Label label = new();
+
+            StringBuilder sb = new();
+
+            for(int i = 1; i <= 20; i++)
+            {
+                sb.AppendLine(LoremIpsum);
+                sb.AppendLine(Environment.NewLine);
+            }
+
+            label.Text = sb.ToString();
+            label.MaxWidth = 200;
+            label.WordWrap = true;
+
+            label.Parent = sv.Content;
+        }
+
+        public static void InitScrollablePanelSettings(object control)
+        {
+            if(control is not ScrollablePanelSettings sv)
+                return;
+            sv.SuggestedHeight = 300;
+            InitPanelSettings(sv.Panel);
         }
 
         public static void InitStackPanel(object control)
