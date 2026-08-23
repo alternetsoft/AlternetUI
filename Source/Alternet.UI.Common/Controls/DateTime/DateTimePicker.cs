@@ -26,11 +26,18 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultDateTimeDistance = 5;
 
+        /// <summary>
+        /// Gets or sets the default margin for the date and time picker icons in the <see cref="DateTimePicker"/> control.
+        /// </summary>
+        public static Thickness DefaultIconMargin = (0, 0, 5, 0);
+
         private readonly DatePicker datePicker = new();
         private readonly TimePicker timePicker = new();
         private readonly TransparentPanel datePanel = new();
         private readonly TransparentPanel timePanel = new();
         private readonly TransparentPanel spacer = new();
+        private readonly PictureBox datePictureBox = new();
+        private readonly PictureBox timePictureBox = new();
 
         private int suppressCounter;
 
@@ -56,14 +63,26 @@ namespace Alternet.UI
             Layout = LayoutStyle.Vertical;
 
             datePanel.Layout = LayoutStyle.Horizontal;
+
+            datePictureBox.Visible = false;
+            datePictureBox.VerticalAlignment = VerticalAlignment.Center;
+            datePictureBox.Parent = datePanel;
+            datePictureBox.Margin = DefaultIconMargin;
+
             datePicker.HorizontalAlignment = HorizontalAlignment.Fill;
             datePicker.Parent = datePanel;
+            
             datePanel.Parent = this;
 
             spacer.SuggestedHeight = DefaultDateTimeDistance;
             spacer.HorizontalAlignment = HorizontalAlignment.Fill;
             spacer.Visible = false;
             spacer.Parent = this;
+
+            timePictureBox.Visible = false;
+            timePictureBox.VerticalAlignment = VerticalAlignment.Center;
+            timePictureBox.Parent = timePanel;
+            timePictureBox.Margin = DefaultIconMargin;
 
             timePanel.Layout = LayoutStyle.Horizontal;
             timePanel.Visible = false;
@@ -75,6 +94,9 @@ namespace Alternet.UI
             timePicker.ValueChanged += OnTimePickerValueChanged;
 
             Value = DateTime.Now;
+
+            datePictureBox.SetSvgImage(DefaultDateIcon ?? KnownSvgImages.ImgCalendar);
+            timePictureBox.SetSvgImage(DefaultTimeIcon ?? KnownSvgImages.ImgClock);
         }
 
         /// <summary>
@@ -87,6 +109,58 @@ namespace Alternet.UI
         /// value that is read by the control.</remarks>
         public event EventHandler? ValueChanged;
 
+        /// <summary>
+        /// Gets or sets the default icon for the date picker in the <see cref="DateTimePicker"/> control.
+        /// </summary>
+        public static SvgImage? DefaultDateIcon { get; set; }
+
+        /// <summary>
+        /// Gets or sets the default icon for the time picker in the <see cref="DateTimePicker"/> control.
+        /// </summary>
+        public static SvgImage? DefaultTimeIcon { get; set; }
+
+        /// <summary>
+        /// Gets the inner <see cref="DatePicker"/> control used to edit date part of the <see cref="Value"/>.
+        /// </summary>
+        [Browsable(false)]
+        public DatePicker DatePicker => datePicker;
+
+        /// <summary>
+        /// Gets the inner <see cref="TimePicker"/> control used to edit time part of the <see cref="Value"/>.
+        /// </summary>
+        [Browsable(false)]
+        public TimePicker TimePicker => timePicker;
+        
+        /// <summary>
+        /// Gets the inner panel used to contain the date picker.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel DatePanel => datePanel;
+
+        /// <summary>
+        /// Gets the inner panel used to contain the time picker.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel TimePanel => timePanel;
+
+        /// <summary>
+        /// Gets the inner panel used as a spacer between the date and time pickers.
+        /// </summary>
+        [Browsable(false)]
+        public TransparentPanel Spacer => spacer;
+
+        /// <summary>
+        /// Gets the inner picture box used to display the date picker icon.
+        /// </summary>
+        [Browsable(false)]
+        public PictureBox DateIcon => datePictureBox;
+
+        /// <summary>
+        /// Gets the inner picture box used to display the time picker icon.
+        /// </summary>
+        [Browsable(false)]
+        public PictureBox TimeIcon => timePictureBox;
+        
         /// <summary>
         /// Gets or sets the value assigned to the <see cref="DateTimePicker"/>
         /// as a selected <see cref="DateTime"/>.
@@ -259,6 +333,8 @@ namespace Alternet.UI
                 DoInsideLayout(() =>
                 {
                     spacer.Visible = IsDateTime;
+                    datePictureBox.Visible = IsDateTime;
+                    timePictureBox.Visible = IsDateTime;
                     datePanel.Visible = IsDateTime || IsDateOnly;
                     timePanel.Visible = IsDateTime || IsTimeOnly;
                 });
@@ -333,11 +409,16 @@ namespace Alternet.UI
             AsDateOnly = datePicker.AsDateOnly;
         }
 
+        /// <inheritdoc/>
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+        }
+
         /// <summary>
         /// Called when the value of the <see cref="Value"/> property changes.
         /// </summary>
-        /// <param name="e">An <see cref="EventArgs"/> that contains the
-        /// event data.</param>
+        /// <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
         protected virtual void OnValueChanged(EventArgs e)
         {
         }
