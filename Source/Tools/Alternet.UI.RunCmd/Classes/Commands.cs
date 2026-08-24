@@ -415,8 +415,8 @@ namespace Alternet.UI
 
             if (!Directory.Exists(pathToResult))
             {
-                Console.WriteLine($"Output folder doesn't exist: [{pathToResult}]");
-                return;
+                Console.WriteLine($"Creating output folder: [{pathToResult}]");
+                Directory.CreateDirectory(pathToResult);
             }
 
             pathToFolder = PathUtils.AddDirectorySeparatorChar(Path.GetFullPath(pathToFolder));
