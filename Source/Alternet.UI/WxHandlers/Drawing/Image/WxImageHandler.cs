@@ -137,7 +137,10 @@ namespace Alternet.UI.Native
 
         public bool RotateFlip(Drawing.RotateFlipType rotateFlipType, SKSamplingOptions? samplingOptions = null)
         {
-            return false;
+            var bitmap = ToSkia(assignPixels: true);
+            var rotated = Alternet.Drawing.SkiaUtils.RotateFlip(bitmap, rotateFlipType, samplingOptions);
+            Assign(rotated);
+            return true;
         }
 
         public class NativeDynamicBitmap : Drawing.DynamicBitmap<UI.Native.Image>
