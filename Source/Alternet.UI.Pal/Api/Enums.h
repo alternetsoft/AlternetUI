@@ -549,6 +549,26 @@ namespace Alternet::UI
         Format64bppArgb = 3424269,
     };
     
+    enum class RotateFlipType
+    {
+        RotateNoneFlipNone = 0,
+        Rotate180FlipXY = 0,
+        Rotate90FlipNone = 1,
+        Rotate270FlipXY = 1,
+        Rotate180FlipNone = 2,
+        RotateNoneFlipXY = 2,
+        Rotate270FlipNone = 3,
+        Rotate90FlipXY = 3,
+        RotateNoneFlipX = 4,
+        Rotate180FlipY = 4,
+        Rotate90FlipX = 5,
+        Rotate270FlipY = 5,
+        Rotate180FlipX = 6,
+        RotateNoneFlipY = 6,
+        Rotate270FlipX = 7,
+        Rotate90FlipY = 7,
+    };
+    
     enum class ClipOperation
     {
         Difference = 0,
@@ -698,6 +718,44 @@ namespace Alternet::UI
         MeasureTextAsBold = 4,
     };
     
+    enum class HotkeyPrefix
+    {
+        None = 0,
+        Show = 1,
+        Hide = 2,
+    };
+    
+    enum class StringDigitSubstitute
+    {
+        User = 0,
+        None = 1,
+        National = 2,
+        Traditional = 3,
+    };
+    
+    enum class StringFormatFlags
+    {
+        DirectionRightToLeft = 1,
+        DirectionVertical = 2,
+        FitBlackBox = 4,
+        DisplayFormatControl = 32,
+        NoFontFallback = 1024,
+        MeasureTrailingSpaces = 2048,
+        NoWrap = 4096,
+        LineLimit = 8192,
+        NoClip = 16384,
+    };
+    
+    enum class StringTrimming
+    {
+        None = 0,
+        Character = 1,
+        Word = 2,
+        EllipsisCharacter = 3,
+        EllipsisWord = 4,
+        EllipsisPath = 5,
+    };
+    
     enum class TextFormatFlags
     {
         Default = 0,
@@ -707,7 +765,9 @@ namespace Alternet::UI
         Right = 2,
         VerticalCenter = 4,
         Bottom = 8,
+        WordBreak = 16,
         WordEllipsis = 262144,
+        NoPadding = 268435456,
     };
     
     enum class Duplex
@@ -1410,6 +1470,7 @@ namespace Alternet::UI
     {
         Date = 0,
         Time = 1,
+        DateTime = 2,
     };
     
     enum class DateTimePickerPopupKind
@@ -1417,6 +1478,18 @@ namespace Alternet::UI
         Default = 0,
         Spin = 1,
         DropDown = 2,
+    };
+    
+    enum class TimePeriodUnit
+    {
+        Years = 0,
+        Months = 1,
+        Weeks = 2,
+        Days = 3,
+        Hours = 4,
+        Minutes = 5,
+        Seconds = 6,
+        Milliseconds = 7,
     };
     
     enum class TimePickerHourFormat
@@ -1638,6 +1711,12 @@ namespace Alternet::UI
         TrimSpaces = 32,
         NoLeading = 64,
         NoTrailing = 128,
+    };
+    
+    enum class VerticalTextDirection
+    {
+        BottomToTop = 0,
+        TopToBottom = 1,
     };
     
     enum class DragAction
@@ -3685,6 +3764,7 @@ template<> struct enable_bitmask_operators<Alternet::UI::KnownColorCategory> { s
 template<> struct enable_bitmask_operators<Alternet::UI::FontStyle> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::FontWeight> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::DrawLabelFlags> { static const bool enable = true; };
+template<> struct enable_bitmask_operators<Alternet::UI::StringFormatFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::TextFormatFlags> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericAlignment> { static const bool enable = true; };
 template<> struct enable_bitmask_operators<Alternet::UI::GenericDirection> { static const bool enable = true; };
