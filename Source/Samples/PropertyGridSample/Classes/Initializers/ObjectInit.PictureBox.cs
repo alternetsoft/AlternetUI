@@ -15,7 +15,6 @@ namespace PropertyGridSample
                 return;
             pictureBox.ImageStretch = false;
             SetBackgrounds(pictureBox);
-            pictureBox.SuggestedSize = 150;
             pictureBox.ParentBackColor = true;
 
             pictureBox.Borders ??= new();
@@ -25,8 +24,6 @@ namespace PropertyGridSample
             pictureBox.Borders.SetAll(border);
 
             pictureBox.Image = DefaultImage;
-
-            pictureBox.DisabledImage = DefaultImage.ToGrayScale();
 
             pictureBox.VisualStateChanged += VisualStateChanged;
             pictureBox.Click += PictureBox_Click;

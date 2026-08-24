@@ -98,7 +98,7 @@ namespace Alternet.UI.Tests
 
             if (stream != null)
             {
-                var iconStream = new IconStream(stream);
+                using var iconStream = new IconStream(stream, disposeImages: true);
                 var combinedBitmap = SkiaUtils.CombineIconsVertically(iconStream.Bitmaps, null);
                 LogUtils.LogImage((Image)combinedBitmap);
             }
@@ -118,7 +118,7 @@ namespace Alternet.UI.Tests
             }
             try
             {
-                var iconStream = new IconStream(stream);
+                using var iconStream = new IconStream(stream, disposeImages: true);
 
                 foreach (var entry in iconStream.Entries)
                 {

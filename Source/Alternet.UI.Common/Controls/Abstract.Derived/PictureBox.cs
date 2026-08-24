@@ -668,6 +668,7 @@ namespace Alternet.UI
             }
 
             primitive.SvgImage = null;
+            primitive.Icon = null;
         }
 
         /// <summary>
@@ -680,7 +681,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            UpdatePrimitiveImage(VisualControlState.Normal);
+            UpdatePrimitiveImage();
             OnImageChanged(e);
             ImageChanged?.Invoke(this, e);
         }
@@ -774,6 +775,7 @@ namespace Alternet.UI
         /// If <see langword="null"/>, the default color is used.</param>
         public virtual void SetSvgImage(SvgImage? svg, int? size = null, Color? color = null)
         {
+            ClearImage();
             primitive.SvgImage = svg;
             primitive.SvgSize = size;
             primitive.SvgColor = color;
@@ -791,6 +793,7 @@ namespace Alternet.UI
         {
             PerformLayoutAndInvalidate(() =>
             {
+                ClearImage();
                 primitive.Icon = icon;
                 primitive.SizeFallbackOptions = sizeFallbackOptions;
                 RaiseImageChanged(EventArgs.Empty);
@@ -825,7 +828,8 @@ namespace Alternet.UI
         {
             var primitive = Primitive;
             var state = VisualState;
-            UpdatePrimitiveImage(state);
+            UpdatePrimitiveImage();
+            primitive.VisualState = state;
             primitive.Bounds = (rect.Location + Padding.LeftTop, rect.Size - Padding.Size);
             primitive.Draw(this, dc);
         }
@@ -850,7 +854,12 @@ namespace Alternet.UI
         protected override void OnSizeChanged(EventArgs e)
         {
             base.OnSizeChanged(e);
-            Invalidate();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
         }
 
         /// <summary>
@@ -905,13 +914,11 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>If the specified state does not have an associated image, the default image is used.
         /// The method also updates the image set for the primitive if one is available for the given state.</remarks>
-        /// <param name="state">The visual control state that determines which image and image set to apply to the primitive.</param>
-        protected virtual void UpdatePrimitiveImage(VisualControlState state)
+        protected virtual void UpdatePrimitiveImage()
         {
-            var image = StateObjects?.Images?.GetObjectOrNull(state);
-            image ??= Image;
-            primitive.Image = image;
-            primitive.ImageSet = StateObjects?.ImageSets?.GetObjectOrNormal(state);
+            primitive.Images = StateObjects?.Images;
+            primitive.Image = Image;
+            primitive.ImageSets = StateObjects?.ImageSets;
         }
     }
 }

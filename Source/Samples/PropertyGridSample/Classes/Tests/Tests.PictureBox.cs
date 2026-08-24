@@ -48,6 +48,14 @@ namespace PropertyGridSample
             AddControlAction<PictureBox>("Set border and parent background", TestPictureBoxSetBorderAndParentBack);
 
             AddControlAction<PictureBox>("Set image from tooltip", TestPictureBoxSetImageFromToolTip);
+
+            AddControlAction<PictureBox>("Set svg image", TestPictureBoxSetSvgImage);
+        }
+
+        void TestPictureBoxSetSvgImage(PictureBox control)
+        {
+            control.SvgSize = 64;
+            control.SvgImage = KnownColorSvgImages.ImgWarning;
         }
 
         void TestPictureBoxSetBorderAndParentBack(PictureBox control)
