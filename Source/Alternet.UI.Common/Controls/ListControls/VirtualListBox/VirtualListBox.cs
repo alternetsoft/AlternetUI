@@ -16,8 +16,7 @@ namespace Alternet.UI
     /// <summary>
     /// Advanced list box control with ability to customize item painting.
     /// This control enables you to display a list of items
-    /// to the user that the user can select by clicking.
-    /// Works fine with
+    /// to the user that the user can select by clicking. Works fine with
     /// large number of the items. You can add <see cref="ListControlItem"/> items to this control.
     /// </summary>
     /// <remarks>

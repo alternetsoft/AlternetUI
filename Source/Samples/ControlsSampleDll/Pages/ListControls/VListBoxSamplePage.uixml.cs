@@ -100,6 +100,12 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
+            contextMenu.Add("Toggle hovered selection", () =>
+            {
+                listBox.IsHoverSelectionEnabled = !listBox.IsHoverSelectionEnabled;
+            });
+
+
             contextMenu.Add("Next item alignment", () =>
             {
                 var item = listBox.GetItem(listBox.SelectedIndex ?? 0);

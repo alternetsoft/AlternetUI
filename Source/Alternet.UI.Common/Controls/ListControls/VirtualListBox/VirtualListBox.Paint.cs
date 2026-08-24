@@ -46,14 +46,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Draws the empty text string, if defined, centered within the specified rectangle using the provided graphics
-        /// context.
+        /// Paints <see cref="EmptyText"/> in the specified rectangle using the provided graphics context.
+        /// This method is called when the list box has no items to display.
+        /// Override this method to customize the appearance of the empty text.
         /// </summary>
         /// <remarks>If the empty text is null or empty, no text is drawn. The text is rendered using a
-        /// gray color and is centered both horizontally and vertically within the specified rectangle.</remarks>
+        /// <see cref="EmptyTextForeColor"/> and is centered both horizontally and vertically
+        /// within the specified rectangle.</remarks>
         /// <param name="dc">The graphics context used to render the empty text.</param>
-        /// <param name="paintRectangle">The rectangle that defines the area in which
-        /// to center and draw the empty text.</param>
+        /// <param name="paintRectangle">The rectangle that defines the area in which to center and draw the empty text.</param>
         protected virtual void PaintEmptyText(Graphics dc, RectD paintRectangle)
         {
             var s = EmptyText;
@@ -85,7 +86,13 @@ namespace Alternet.UI
         /// if the row does not correspond to a specific item.</param>
         /// <param name="rectRow">The bounding rectangle, in client coordinates,
         /// that defines the area of the row to paint.</param>
-        public virtual void PaintRow(Graphics dc, int rowIndex, ListControlItem? item, RectD rectRow)
+        /// <param name="rowPaintParams">The parameters used to customize row painting. Can be null.</param>
+        public virtual void PaintRow(
+            Graphics dc,
+            int rowIndex,
+            ListControlItem? item,
+            RectD rectRow,
+            RowPaintParams? rowPaintParams = null)
         {
             if (drawItemArgs is null)
             {
@@ -289,6 +296,7 @@ namespace Alternet.UI
         /// If null, painting starts from the first visible row.</param>
         /// <param name="toIndex">The optional ending index of the rows to paint.
         /// If null, painting ends at the last visible row.</param>
+        /// <param name="rowPaintParams">The parameters used to customize row painting. Can be null.</param>
         /// <param name="paintRectangle">The rectangle that defines the area in which rows are painted.</param>
         /// <param name="widthIncrement">The additional width, in device units, to add to the painting
         /// rectangle before rendering the rows.</param>
@@ -297,7 +305,8 @@ namespace Alternet.UI
             RectD paintRectangle,
             float widthIncrement,
             int? fromIndex = null,
-            int? toIndex = null)
+            int? toIndex = null,
+            RowPaintParams? rowPaintParams = null)
         {
             int lineMax = toIndex ?? GetVisibleEnd();
             int lineMin = fromIndex ?? GetVisibleBegin();
@@ -338,13 +347,13 @@ namespace Alternet.UI
                 {
                     var effectiveRowRect = rectRow;
                     effectiveRowRect.Height -= 1;
-                    PaintRow(dc, line, item, effectiveRowRect);
+                    PaintRow(dc, line, item, effectiveRowRect, rowPaintParams);
                     var p = effectiveRowRect.BottomLeft;
                     dc.DrawHorzLine(horzLineColor.AsBrush, p, rectRow.Width, 1);
                 }
                 else
                 {
-                    PaintRow(dc, line, item, rectRow);
+                    PaintRow(dc, line, item, rectRow, rowPaintParams);
                 }
 
                 if (item is not null)
@@ -404,10 +413,13 @@ namespace Alternet.UI
 
                 void InternalPaint()
                 {
+                    RowPaintParams rowPaintParams = new();
+                    rowPaintParams.HoveredRowIndex = HitTest();
+
                     dc.PushAndTranslate(-scrollOffsetX, 0);
                     try
                     {
-                        PaintRows(dc, r, scrollOffsetX);
+                        PaintRows(dc, r, scrollOffsetX, fromIndex: null, toIndex: null, rowPaintParams);
                     }
                     finally
                     {
@@ -472,6 +484,17 @@ namespace Alternet.UI
 
                 return result;
             }
+        }
+
+        /// <summary>
+        /// Represents the parameters used to customize row painting in the control.
+        /// </summary>
+        public class RowPaintParams
+        {
+            /// <summary>
+            /// Gets or sets the index of the row that is currently hovered by the mouse pointer.
+            /// </summary>
+            public int? HoveredRowIndex { get; set; }
         }
     }
 }
