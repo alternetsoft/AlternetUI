@@ -22,6 +22,9 @@ namespace Alternet.Drawing
     {
         private SvgImageInfo svgImageInfo;
         private bool stretch = false;
+        private ObjectUniqueId? flippedIdentifier;
+        private Image? flippedImage;
+        private RotateFlipType? rotateFlip;
 
         /// <summary>
         /// Gets a value indicating whether the object has an associated image.
@@ -92,6 +95,21 @@ namespace Alternet.Drawing
         /// visual feedback based on the control's state.
         /// </summary>
         public ControlStateImages? Images { get; set; }
+
+        /// <summary>
+        /// Gets or sets the rotation and flip transformation to apply to the image. This property allows for
+        /// rotating and flipping the image in various ways, such as rotating 90 degrees clockwise or flipping horizontally.
+        /// </summary>
+        public RotateFlipType? RotateFlip
+        {
+            get => rotateFlip;
+            set
+            {
+                if (rotateFlip == value) return;
+                rotateFlip = value;
+                ResetFlippedImage();
+            }
+        }
 
         /// <summary>
         /// Gets or sets image sets to draw. This property is used to specify different image sets for different
@@ -192,60 +210,87 @@ namespace Alternet.Drawing
         /// <returns></returns>
         public virtual Image? GetImage(AbstractControl control, bool isDark)
         {
-            if (Icon is not null)
-            {
-                var iconImage = Icon.GetImageWithFallback(SizeFallbackOptions);
+            if (RotateFlip is not null)
+                return GetCachedFlipped();
 
-                if (!Enabled)
+            return GetOriginalImage();
+
+            Image? GetCachedFlipped()
+            {
+                var original = GetOriginalImage();
+                if (original is null)
+                    return null;
+                if (flippedIdentifier == original.UniqueId)
+                    return flippedImage;
+                flippedImage = GetFlipped(original);
+                flippedIdentifier = original.UniqueId;
+                return flippedImage;
+            }
+
+            Image? GetFlipped(Image image)
+            {
+                var skiaImage = image.SkiaBitmap;
+                var rotated = SkiaUtils.RotateFlip(skiaImage, RotateFlip.Value);
+                return new Bitmap(rotated);
+            }
+
+            Image? GetOriginalImage()
+            {
+                if (Icon is not null)
                 {
-                    iconImage = iconImage?.ToGrayScaleCached();
+                    var iconImage = Icon.GetImageWithFallback(SizeFallbackOptions);
+
+                    if (!Enabled)
+                    {
+                        iconImage = iconImage?.ToGrayScaleCached();
+                    }
+
+                    return iconImage;
                 }
 
-                return iconImage;
-            }
+                var sz = SvgSize ?? ToolBarUtils.GetDefaultImageSize(control).Width;
 
-            var sz = SvgSize ?? ToolBarUtils.GetDefaultImageSize(control).Width;
-
-            Image? GetImage(VisualControlState? state = null)
-            {
-                state ??= VisualState;
-
-                Image? image = null;
-
-                if (SvgImage is not null)
+                Image? GetImage(VisualControlState? state = null)
                 {
-                    if (SvgColor is null)
-                        image = SvgImage.AsNormalImage(sz, isDark);
-                    else
-                        image = SvgImage.ImageWithColor(sz, SvgColor);
+                    state ??= VisualState;
+
+                    Image? image = null;
+
+                    if (SvgImage is not null)
+                    {
+                        if (SvgColor is null)
+                            image = SvgImage.AsNormalImage(sz, isDark);
+                        else
+                            image = SvgImage.ImageWithColor(sz, SvgColor);
+                    }
+
+                    image ??= Images?.GetObjectOrNull(state.Value) ?? Image;
+
+                    if (image is null)
+                    {
+                        var imageSet = ImageSets?.GetObjectOrNull(state.Value) ?? ImageSet;
+                        image = imageSet?.AsImage(imageSet.DefaultSize);
+                    }
+
+                    return image;
                 }
 
-                image ??= Images?.GetObjectOrNull(state.Value) ?? Image;
-
-                if (image is null)
+                Image? GetDisabledImage()
                 {
-                    var imageSet = ImageSets?.GetObjectOrNull(state.Value) ?? ImageSet;
-                    image = imageSet?.AsImage(imageSet.DefaultSize);
+                    var image = SvgImage?.AsDisabledImage(sz, isDark);
+                    image ??= DisabledImage ?? DisabledImageSet?.AsImage(DisabledImageSet.DefaultSize);
+                    image ??= GetImage(VisualControlState.Normal)?.ToGrayScaleCached();
+                    return image;
                 }
 
-                return image;
-            }
-
-            Image? GetDisabledImage()
-            {
-                var image = SvgImage?.AsDisabledImage(sz, isDark);
-                image ??= DisabledImage ?? DisabledImageSet?.AsImage(DisabledImageSet.DefaultSize);
-                image ??= GetImage(VisualControlState.Normal)?.ToGrayScaleCached();
-                return image;
-            }
-
-            if (Enabled)
-            {
-                return GetImage();
-            }
-            else
-            {
-                return GetDisabledImage();
+                if (Enabled)
+                {
+                    return GetImage();
+                }
+                else
+                {
+                    return GetDisabledImage();
+                }
             }
         }
 
@@ -269,6 +314,7 @@ namespace Alternet.Drawing
         public void ResetCachedImages()
         {
             svgImageInfo.ResetCachedImages();
+            ResetFlippedImage();
         }
 
         /// <summary>
@@ -364,6 +410,16 @@ namespace Alternet.Drawing
         protected override void OnDraw(AbstractControl control, Graphics dc)
         {
             DefaultDrawImage(control, dc);
+        }
+
+        /// <summary>
+        /// Resets the cached flipped image and its associated identifier.
+        /// This method is used to clear any previously cached flipped image.
+        /// </summary>
+        protected void ResetFlippedImage()
+        {
+            flippedIdentifier = null;
+            flippedImage = null;
         }
     }
 }

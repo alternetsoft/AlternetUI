@@ -315,6 +315,30 @@ namespace Alternet.UI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the rotation and flip transformation to apply to the image. This property allows for
+        /// rotating and flipping the image in various ways, such as rotating 90 degrees clockwise or flipping horizontally.
+        /// </summary>
+        public virtual RotateFlipType? RotateFlip
+        {
+            get => primitive.RotateFlip;
+            set
+            {
+                if (primitive.RotateFlip == value) return;
+                primitive.RotateFlip = value;
+
+                var image = primitive.GetImage(this, IsDarkBackground);
+
+                if (image is not null && ImageVisible)
+                {
+                    if (!image.Size.IsSquare)
+                        PerformLayoutAndInvalidate();
+                    else
+                        Invalidate();
+                }
+            }
+        }
+
         /// <inheritdoc/>
         public override bool Visible
         {
