@@ -171,6 +171,16 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Gets a value indicating whether width equals height.
+        /// </summary>
+        [Browsable(false)]
+        public readonly bool IsSquare
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => width == height;
+        }
+
+        /// <summary>
         /// Gets minimal of width and height.
         /// </summary>
         [Browsable(false)]
