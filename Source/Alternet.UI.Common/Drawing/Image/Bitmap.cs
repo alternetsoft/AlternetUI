@@ -18,6 +18,15 @@ namespace Alternet.Drawing
         private static Bitmap? empty;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Bitmap"/> class from a <see cref="SKBitmap"/>.
+        /// </summary>
+        /// <param name="bitmap">The <see cref="SKBitmap"/> to initialize the <see cref="Bitmap"/> with.</param>
+        public Bitmap(SKBitmap bitmap)
+            : base(new SkiaImageHandler(bitmap))
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Bitmap"/> class from a stream.
         /// </summary>
         /// <param name="stream">Stream with bitmap.</param>
