@@ -60,6 +60,7 @@ namespace Alternet.Drawing
         /// </summary>
         public static int DefaultPreviewImageMinWidth = 300;
 
+        private readonly bool disposeImages;
         private readonly List<IconEntry> list = new();
         private readonly bool isIcon;
         private readonly bool isCursor;
@@ -176,8 +177,11 @@ namespace Alternet.Drawing
         /// Initializes a new instance of the <see cref="IconStream"/> class by reading icon entries from the specified stream.
         /// </summary>
         /// <param name="stream">The stream containing the icon data.</param>
-        public IconStream(Stream stream)
+        /// <param name="disposeImages">A value indicating whether to dispose the images when the stream is disposed.</param>
+        public IconStream(Stream stream, bool disposeImages = false)
         {
+            this.disposeImages = disposeImages;
+
             try
             {
                 using var reader = new BinaryReader(stream);
@@ -234,7 +238,7 @@ namespace Alternet.Drawing
                         ? SKBitmap.Decode(imageData)
                         : LoadBmpFromIco(imageData);
 
-                    list.Add(new IconEntry
+                    var iconEntry = new IconEntry
                     {
                         Width = width == 0 ? 256 : width,
                         Height = height == 0 ? 256 : height,
@@ -246,7 +250,9 @@ namespace Alternet.Drawing
                         HotSpotY = hotspotY,
                         Planes = planes,
                         Image = bmp,
-                    });
+                    };
+
+                    list.Add(iconEntry);
 
                     reader.BaseStream.Seek(currentPos, SeekOrigin.Begin);
                 }
@@ -338,7 +344,7 @@ namespace Alternet.Drawing
         {
             IEnumerable<SKBitmap> LoadBitmaps()
             {
-                var iconStream = new IconStream(stream);
+                var iconStream = new IconStream(stream, disposeImages: false);
                 foreach (var entry in iconStream.Entries)
                 {
                     if (entry.Image != null)
@@ -365,7 +371,7 @@ namespace Alternet.Drawing
         {
             IEnumerable<IconEntry> LoadEntries()
             {
-                var iconStream = new IconStream(stream);
+                var iconStream = new IconStream(stream, disposeImages: false);
                 foreach (var entry in iconStream.Entries)
                 {
                     if (entry.Image != null)
@@ -386,10 +392,13 @@ namespace Alternet.Drawing
         /// <inheritdoc/>
         protected override void DisposeManaged()
         {
-            foreach (var entry in Entries)
+            if (disposeImages)
             {
-                entry.Image?.Dispose();
-                entry.Image = null;
+                foreach (var entry in Entries)
+                {
+                    entry.Image?.Dispose();
+                    entry.Image = null;
+                }
             }
 
             list.Clear();

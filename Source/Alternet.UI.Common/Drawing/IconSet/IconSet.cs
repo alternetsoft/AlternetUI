@@ -311,14 +311,14 @@ namespace Alternet.Drawing
 
             try
             {
-                using IconStream iconStream = new(stream);
+                using IconStream iconStream = new(stream, disposeImages: false);
 
                 foreach (var entry in iconStream.Entries)
                 {
                     if (entry.Image is null)
                         continue;
 
-                    var image = (Image)entry.Image;
+                    var image = new Bitmap(entry.Image);
 
                     Images.Add(image);
                     result = true;
