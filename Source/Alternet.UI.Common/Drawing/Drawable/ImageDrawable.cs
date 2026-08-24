@@ -86,6 +86,22 @@ namespace Alternet.Drawing
         public ImageSet? ImageSet { get; set; }
 
         /// <summary>
+        /// Gets or sets images to draw. This property is used to specify different images for different
+        /// visual states of the control, such as normal, hovered, pressed, and disabled states.
+        /// It allows for a more dynamic and responsive user interface by providing appropriate
+        /// visual feedback based on the control's state.
+        /// </summary>
+        public ControlStateImages? Images { get; set; }
+
+        /// <summary>
+        /// Gets or sets image sets to draw. This property is used to specify different image sets for different
+        /// visual states of the control, such as normal, hovered, pressed, and disabled states.
+        /// It allows for a more dynamic and responsive user interface by providing appropriate
+        /// visual feedback based on the control's state.
+        /// </summary>
+        public ControlStateImageSets? ImageSets { get; set; }
+
+        /// <summary>
         /// Gets or sets image to draw.
         /// </summary>
         public Image? DisabledImage { get; set; }
@@ -179,13 +195,21 @@ namespace Alternet.Drawing
             if (Icon is not null)
             {
                 var iconImage = Icon.GetImageWithFallback(SizeFallbackOptions);
+
+                if (!Enabled)
+                {
+                    iconImage = iconImage?.ToGrayScaleCached();
+                }
+
                 return iconImage;
             }
 
             var sz = SvgSize ?? ToolBarUtils.GetDefaultImageSize(control).Width;
 
-            Image? GetNormalImage()
+            Image? GetImage(VisualControlState? state = null)
             {
+                state ??= VisualState;
+
                 Image? image = null;
 
                 if (SvgImage is not null)
@@ -196,7 +220,14 @@ namespace Alternet.Drawing
                         image = SvgImage.ImageWithColor(sz, SvgColor);
                 }
 
-                image ??= Image ?? ImageSet?.AsImage(ImageSet.DefaultSize);
+                image ??= Images?.GetObjectOrNull(state.Value) ?? Image;
+
+                if (image is null)
+                {
+                    var imageSet = ImageSets?.GetObjectOrNull(state.Value) ?? ImageSet;
+                    image = imageSet?.AsImage(imageSet.DefaultSize);
+                }
+
                 return image;
             }
 
@@ -204,13 +235,13 @@ namespace Alternet.Drawing
             {
                 var image = SvgImage?.AsDisabledImage(sz, isDark);
                 image ??= DisabledImage ?? DisabledImageSet?.AsImage(DisabledImageSet.DefaultSize);
-                image ??= GetNormalImage();
+                image ??= GetImage(VisualControlState.Normal)?.ToGrayScaleCached();
                 return image;
             }
 
             if (Enabled)
             {
-                return GetNormalImage();
+                return GetImage();
             }
             else
             {
