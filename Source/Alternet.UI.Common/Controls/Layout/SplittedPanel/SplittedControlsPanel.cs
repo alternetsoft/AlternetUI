@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -233,7 +234,8 @@ namespace Alternet.UI
                 AddActions(type);
                 if (addMethods)
                 {
-                    ActionsControl.AddSeparator();
+                    if (ActionsControl.Items.Count > 0)
+                        ActionsControl.AddSeparator();
                     AddMethodsAsActions(type, instance);
                 }
             }
