@@ -12,7 +12,8 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Date)]
     public partial class MonthPicker : EnumPicker
     {
-        private CultureInfo? culture;
+        private IFormatProvider? formatProvider;
+        private MonthNamesKind monthNamesKind = MonthNamesKind.Full;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MonthPicker"/> class.
@@ -25,17 +26,33 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the culture used to display month names. If not set, the current culture is used by default.
+        /// Gets or sets the kind of month names to display (full or abbreviated).
         /// </summary>
-        [Browsable(false)]
-        public virtual CultureInfo? Culture
+        public virtual MonthNamesKind MonthNamesKind
         {
-            get => culture;
+            get => monthNamesKind;
             set
             {
-                if (culture != value)
+                if (monthNamesKind != value)
                 {
-                    culture = value;
+                    monthNamesKind = value;
+                    UpdateMonthLabels();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the format provider used to display month names. If not set, the current culture is used by default.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IFormatProvider? FormatProvider
+        {
+            get => formatProvider;
+            set
+            {
+                if (formatProvider != value)
+                {
+                    formatProvider = value;
                     UpdateMonthLabels();
                 }
             }
@@ -51,23 +68,13 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets the effective culture used for displaying month names.
-        /// If the <see cref="Culture"/> property is set, it returns that value; otherwise, it returns the current culture.
-        /// </summary>
-        /// <returns></returns>
-        protected virtual CultureInfo GetEffectiveCulture()
-        {
-            return culture ?? CultureInfo.CurrentCulture;
-        }
-
-        /// <summary>
-        /// Updates the month labels based on the effective culture.
-        /// This method retrieves the month names from the culture's DateTimeFormat
+        /// Updates the month labels based on the current format provider.
+        /// This method retrieves the month names from the format provider's DateTimeFormat
         /// and updates the text of each list item accordingly.
         /// </summary>
         protected virtual void UpdateMonthLabels()
         {
-            string[] months = GetEffectiveCulture().DateTimeFormat.MonthNames;
+            string[] months = DateUtils.GetMonthNames(MonthNamesKind, formatProvider);
 
             foreach(var item in ListItems)
             {
