@@ -68,13 +68,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates the month labels based on the current format provider.
+        /// Updates the month labels based on the current format provider and the selected <see cref="MonthNamesKind"/>.
+        /// If no format provider is set, the current culture will be used.
         /// This method retrieves the month names from the format provider's DateTimeFormat
         /// and updates the text of each list item accordingly.
         /// </summary>
         protected virtual void UpdateMonthLabels()
         {
-            string[] months = DateUtils.GetMonthNames(MonthNamesKind, formatProvider);
+            string[] months = DateUtils.GetMonthNames(MonthNamesKind, FormatProvider);
 
             foreach(var item in ListItems)
             {
