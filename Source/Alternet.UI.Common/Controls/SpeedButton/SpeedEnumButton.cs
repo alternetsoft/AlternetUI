@@ -21,6 +21,7 @@ namespace Alternet.UI
 
         private Type? enumType;
         private IEnumerable? excludeValues;
+        private ListControlItem? cachedItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpeedEnumButton"/> class.
@@ -58,6 +59,43 @@ namespace Alternet.UI
                     return;
                 enumType = value;
                 ReloadItems();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets value as <see cref="string"/>.
+        /// </summary>
+        [Browsable(false)]
+        public override string Text
+        {
+            get
+            {
+                if (cachedItem is null)
+                {
+                    cachedItem = FindItemWithValue(Value);
+                }
+
+                if (cachedItem is not null)
+                {
+                    return GetValueAsString(cachedItem) ?? string.Empty;
+                }
+
+                return Value?.ToString() ?? string.Empty;
+            }
+
+            set
+            {
+            }
+        }
+
+        /// <inheritdoc/>
+        public override object? Value
+        {
+            get => base.Value;
+            set
+            {
+                cachedItem = null;
+                base.Value = value;
             }
         }
 
@@ -110,6 +148,12 @@ namespace Alternet.UI
             }
 
             return false;
+        }
+
+        /// <inheritdoc/>
+        public override string? GetValueAsString(object? d)
+        {
+            return base.GetValueAsString(d);
         }
 
         /// <summary>
