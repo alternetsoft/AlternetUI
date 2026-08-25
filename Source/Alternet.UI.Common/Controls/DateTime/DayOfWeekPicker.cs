@@ -28,7 +28,7 @@ namespace Alternet.UI
             SetDisplayText(ExtendedDayOfWeek.Day, CommonStrings.Default.ExtendedDayOfWeekDay);
             SetDisplayText(ExtendedDayOfWeek.Weekday, CommonStrings.Default.ExtendedDayOfWeekWeekday);
             SetDisplayText(ExtendedDayOfWeek.Weekend, CommonStrings.Default.ExtendedDayOfWeekWeekend);
-            SetExtendedItemsVisibility(true);
+            SetExtendedItemsVisibility(false);
             Value = ExtendedDayOfWeek.Sunday;
         }
 
