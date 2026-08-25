@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.UI;
 using Alternet.Drawing;
 
@@ -33,6 +34,7 @@ namespace ControlsSample
 
         private readonly ColorPicker colorPicker;
         private readonly DrawingResourcePicker drawingResourcePicker;
+        private readonly PanelSettings settings = new();
 
         static ColorListBoxSamplePage()
         {
@@ -40,7 +42,7 @@ namespace ControlsSample
 
         public ColorListBoxSamplePage()
         {
-            drawingResourcePicker = new ();
+            drawingResourcePicker = new();
 
             colorPicker = new(useDefaultColors: true)
             {
@@ -85,7 +87,6 @@ namespace ControlsSample
 
             this.ContextMenuStrip.Add("Add brush item", () =>
             {
-
                 listBox.AddBrushItem(brush1, brush1Name);
                 colorPicker.ListBox.AddBrushItem(brush1, brush1Name);
             });
@@ -93,6 +94,24 @@ namespace ControlsSample
             this.ContextMenuStrip.Add("Toggle color image alignment", () =>
             {
                 listBox.IsColorRightAligned = !listBox.IsColorRightAligned;
+            });
+
+            settings.VerticalAlignment = VerticalAlignment.Fill;
+            settings.Parent = panel;
+
+            settings.AddInput("Item Image Shape:", listBox, nameof(ColorListBox.ItemImageShape));
+
+            this.ContextMenuStrip.Add("Toggle draw text over item image", () =>
+            {
+                listBox.DrawTextOverItemImage = !listBox.DrawTextOverItemImage;
+            });
+
+            this.ContextMenuStrip.Add("Toggle text over item image style", () =>
+            {
+                if(listBox.TextOverItemImageStyle?.Equals(Color.White) == true)
+                    listBox.TextOverItemImageStyle = Color.Black;
+                else
+                    listBox.TextOverItemImageStyle = Color.White;
             });
         }
 
@@ -103,7 +122,7 @@ namespace ControlsSample
 
         private void SetColorButton_Click(object? sender, EventArgs e)
         {
-            if(listBox.Value == Color.Red)
+            if (listBox.Value == Color.Red)
             {
                 listBox.Value = Color.Green;
                 colorPicker.Value = Color.Green;
