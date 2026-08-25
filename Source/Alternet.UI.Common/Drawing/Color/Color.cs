@@ -116,7 +116,21 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Color"/> class with the specified value. 
+        /// Alpha is set to 255 (fully opaque), and the red, green, and blue components are set to the specified value.
+        /// </summary>
+        /// <param name="value">The value to set for the red, green, and blue components of the color.</param>
+        public Color(byte value)
+        {
+            color.A = 255;
+            color.R = value;
+            color.G = value;
+            color.B = value;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Color"/> class with the specified parameters.
+        /// Alpha is set to 255 (fully opaque), and the red, green, and blue components are set to the specified values.
         /// </summary>
         /// <param name="red">Red component of the color.</param>
         /// <param name="green">Green component of the color.</param>
@@ -504,7 +518,7 @@ namespace Alternet.Drawing
 
         /// <summary>
         /// Gets RGB as web <see cref="string"/> in the format "rgb({R},{G},{B})".
-        /// Fo example for the black color it will return "rgb(0,0,0)".
+        /// For example, for the black color it will return "rgb(0,0,0)".
         /// </summary>
         [Browsable(false)]
         public string RGBWeb
@@ -892,6 +906,14 @@ namespace Alternet.Drawing
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static implicit operator Color((byte Red, byte Green, byte Blue) d) =>
             new(d.Red, d.Green, d.Blue);
+
+        /// <summary>
+        /// Implicit operator conversion from <see cref="byte"/> value to <see cref="Color"/>.
+        /// Alpha is set to 255 (fully opaque), and the red, green, and blue components are set to the specified value.
+        /// </summary>
+        /// <param name="value">New color value specified as a <see cref="byte"/>.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static implicit operator Color(byte value) => new(value);
 
         /// <summary>
         /// Implicit operator conversion from tuple with four <see cref="byte"/> values
