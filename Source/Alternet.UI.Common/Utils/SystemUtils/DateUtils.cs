@@ -96,6 +96,43 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the names of the months in the Gregorian calendar, based on the specified kind and format provider.
+        /// </summary>
+        /// <param name="kind">The kind of month names to retrieve (full or abbreviated).</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns>An array of month names corresponding to the specified kind and format provider.</returns>
+        public static string[] GetMonthNames(MonthNamesKind kind = MonthNamesKind.Full, IFormatProvider? formatProvider = null)
+        {
+            var info = GetFormatInfo(formatProvider);
+            return kind switch
+            {
+                MonthNamesKind.Full => info.MonthNames,
+                MonthNamesKind.Abbreviated => info.AbbreviatedMonthNames,
+                _ => info.MonthNames,
+            };
+        }
+
+        /// <summary>
+        /// Gets the names of the days of the week in the Gregorian calendar, based on the specified kind and format provider. 
+        /// </summary>
+        /// <param name="kind">The kind of day names to retrieve (full, abbreviated, or shortest).</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns>An array of day names corresponding to the specified kind and format provider.</returns>
+        public static string[] GetDayNames(DayNamesKind kind = DayNamesKind.Full, IFormatProvider? formatProvider = null)
+        {
+            var info = GetFormatInfo(formatProvider);
+            return kind switch
+            {
+                DayNamesKind.Full => info.DayNames,
+                DayNamesKind.Abbreviated => info.AbbreviatedDayNames,
+                DayNamesKind.Shortest => info.ShortestDayNames,
+                _ => info.DayNames,
+            };
+        }
+
+        /// <summary>
         /// Gets the current timestamp in ticks.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
