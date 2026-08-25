@@ -54,6 +54,8 @@ namespace Alternet.UI
         private DrawingShapeType? itemImageShape = DefaultItemImageShape;
         private Color? itemImageBorder;
         private ShapeDrawable? shapeDrawable;
+        private bool drawTextOverColor;
+        private object? textOverItemImageStyle;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ColorListBox"/> class.
@@ -116,6 +118,43 @@ namespace Alternet.UI
                 if (value == itemImageBorder)
                     return;
                 itemImageBorder = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the style of the text displayed over the item image.
+        /// Currently, it is possible to assign <see cref="Color"/> value to this property.
+        /// </summary>
+        [Browsable(false)]
+        public virtual object? TextOverItemImageStyle
+        {
+            get => textOverItemImageStyle;
+            set
+            {
+                if (value == textOverItemImageStyle) return;
+                textOverItemImageStyle = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to draw text over color image in the item when color image occupies whole item rectangle.
+        /// This property is used when <see cref="VirtualListControl.TextVisible"/> is false.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool DrawTextOverItemImage
+        {
+            get
+            {
+                return drawTextOverColor;
+            }
+
+            set
+            {
+                if (drawTextOverColor == value)
+                    return;
+                drawTextOverColor = value;
                 Invalidate();
             }
         }
@@ -786,6 +825,26 @@ namespace Alternet.UI
                 else
                 {
                     colorListBox.PaintItemImage(e.Graphics, e.ClientRectangle, itemBrush);
+
+                    var item = e.Item;
+
+                    var shapeIsOk = colorListBox.ItemImageShape == DrawingShapeType.Rectangle
+                        || colorListBox.ItemImageShape == DrawingShapeType.RoundedRectangle;
+
+                    if (item is not null && colorListBox.DrawTextOverItemImage && shapeIsOk)
+                    {
+                        var foreColor = (colorListBox.TextOverItemImageStyle as Color)
+                            ?? e.GetTextColor(isSelected: false) ?? colorListBox.ForeColor;
+
+                        colorListBox.PaintText(
+                                    e.Graphics,
+                                    item.DisplayText ?? item.Text,
+                                    e.ClientRectangle,
+                                    foreColor,
+                                    Color.Empty,
+                                    HorizontalAlignment.Center,
+                                    VerticalAlignment.Center);
+                    }
                 }
             }
 
