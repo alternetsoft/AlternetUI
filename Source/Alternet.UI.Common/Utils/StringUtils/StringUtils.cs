@@ -367,6 +367,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Changes the case of the input string <paramref name="input"/> according to the specified <paramref name="rule"/>.
+        /// </summary>
+        /// <param name="input">The input string to change the case of.</param>
+        /// <param name="rule">The rule to apply for changing the case.</param>
+        /// <param name="culture">The culture to use when changing the case. If null, the current culture is used.</param>
+        /// <returns>The input string with the case changed according to the specified rule.</returns>
+        public static string? ChangeCase(string? input, TextCaseRule rule, CultureInfo? culture = null)
+        {
+            if (input == null) return null;
+            if (input.Length == 0) return input;
+
+            culture ??= CultureInfo.CurrentCulture;
+
+            return rule switch
+            {
+                TextCaseRule.Lower => input.ToLower(culture),
+                TextCaseRule.Upper => input.ToUpper(culture),
+                TextCaseRule.LowerInvariant => input.ToLowerInvariant(),
+                TextCaseRule.UpperInvariant => input.ToUpperInvariant(),
+                TextCaseRule.SentenceCase => char.ToUpper(input[0], culture) + input.Substring(1),
+                _ => input
+            };
+        }
+
+        /// <summary>
         /// Invokes <paramref name="callback"/> with a pointer to the native representation
         /// of the string <paramref name="text"/>.
         /// </summary>
