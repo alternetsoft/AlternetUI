@@ -111,6 +111,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<PanelSettings>();
                 ToolBoxAdd<ScrollViewer>();
                 ToolBoxAdd<ScrollablePanelSettings>();
+                ToolBoxAdd<RelativeWeekdayPicker>();
 
                 void ToolBoxAdd<T>()
                 {
