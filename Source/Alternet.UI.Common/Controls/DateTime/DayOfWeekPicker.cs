@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -23,8 +25,78 @@ namespace Alternet.UI
         {
             EnumType = typeof(ExtendedDayOfWeek);
             UpdateDayLabels();
-            SetExtendedItemsVisibility(false);
+            SetDisplayText(ExtendedDayOfWeek.Day, CommonStrings.Default.ExtendedDayOfWeekDay);
+            SetDisplayText(ExtendedDayOfWeek.Weekday, CommonStrings.Default.ExtendedDayOfWeekWeekday);
+            SetDisplayText(ExtendedDayOfWeek.Weekend, CommonStrings.Default.ExtendedDayOfWeekWeekend);
+            SetExtendedItemsVisibility(true);
             Value = ExtendedDayOfWeek.Sunday;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the extended "Day" item is visible in the picker.
+        /// </summary>
+        public bool ShowDayItem
+        {
+            get
+            {
+                return GetItemVisibility(ExtendedDayOfWeek.Day);
+            }
+
+            set
+            {
+                SetItemVisibility(ExtendedDayOfWeek.Day, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the extended "Weekday" item is visible in the picker.
+        /// </summary>
+        public bool ShowWeekdayItem
+        {
+            get
+            {
+                return GetItemVisibility(ExtendedDayOfWeek.Weekday);
+            }
+            set
+            {
+                SetItemVisibility(ExtendedDayOfWeek.Weekday, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the extended "Weekend" item is visible in the picker.
+        /// </summary>
+        public bool ShowWeekendItem
+        {
+            get
+            {
+                return GetItemVisibility(ExtendedDayOfWeek.Weekend);
+            }
+            set
+            {
+                SetItemVisibility(ExtendedDayOfWeek.Weekend, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the selected day of the week as a <see cref="DayOfWeek"/> value.
+        /// This property returns null if the selected value is one of the extended day options (Day, Weekday, Weekend).
+        /// </summary>
+        public virtual DayOfWeek? AsDayOfWeek
+        {
+            get
+            {
+                if (Value >= ExtendedDayOfWeek.Day)
+                    return null;
+                return (DayOfWeek)Value;
+            }
+            set
+            {
+                if (value == null)
+                    Value = ExtendedDayOfWeek.Day;
+                else
+                    Value = (ExtendedDayOfWeek)value;
+            }
         }
 
         /// <summary>
@@ -81,6 +153,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the visibility of a specific day item.
+        /// </summary>
+        /// <param name="day">The day to get the visibility for.</param>
+        /// <returns>True if the day is visible; otherwise, false.</returns>
+        public virtual bool GetItemVisibility(ExtendedDayOfWeek day)
+        {
+            var item = FindItemWithValue(day);
+            return item?.IsVisible ?? false;
+        }
+
+        /// <summary>
         /// Sets the visibility of a specific day.
         /// </summary>
         /// <param name="day">The day to set the visibility for.</param>
@@ -109,7 +192,7 @@ namespace Alternet.UI
             {
                 if (item.Value is ExtendedDayOfWeek value)
                 {
-                    int dayIndex = (int)value - 1;
+                    int dayIndex = (int)value;
                     if (dayIndex >= 0 && dayIndex < days.Length)
                     {
                         item.Text = days[dayIndex];
