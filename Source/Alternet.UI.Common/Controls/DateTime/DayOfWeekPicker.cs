@@ -17,6 +17,7 @@ namespace Alternet.UI
     {
         private IFormatProvider? formatProvider;
         private DayNamesKind dayNamesKind = DayNamesKind.Full;
+        private bool showExtendedItemsFirst = true;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DayOfWeekPicker"/> class.
@@ -29,7 +30,25 @@ namespace Alternet.UI
             SetDisplayText(ExtendedDayOfWeek.Weekday, CommonStrings.Default.ExtendedDayOfWeekWeekday);
             SetDisplayText(ExtendedDayOfWeek.Weekend, CommonStrings.Default.ExtendedDayOfWeekWeekend);
             SetExtendedItemsVisibility(false);
+            ListItems.Sort(ItemsComparison);
             Value = ExtendedDayOfWeek.Sunday;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether extended items (day, weekday, weekend)
+        /// are displayed before standard weekdays.
+        /// </summary>
+        public virtual bool ShowExtendedItemsFirst
+        {
+            get => showExtendedItemsFirst;
+            set
+            {
+                if (showExtendedItemsFirst == value)
+                    return;
+                showExtendedItemsFirst = value;
+                ListItems.Sort(ItemsComparison);
+                Invalidate();
+            }
         }
 
         /// <summary>
@@ -142,6 +161,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Compares two <see cref="ListControlItem"/> instances based on their <see cref="ExtendedDayOfWeek"/> values. 
+        /// </summary>
+        /// <param name="a">The first item to compare.</param>
+        /// <param name="b">The second item to compare.</param>
+        /// <returns>A signed integer that indicates the relative values of a and b.</returns>
+        protected virtual int ItemsComparison(ListControlItem a, ListControlItem b)
+        {
+            if (a.Value is ExtendedDayOfWeek aValue && b.Value is ExtendedDayOfWeek bValue)
+            {
+                if (showExtendedItemsFirst)
+                {
+                    if (aValue >= ExtendedDayOfWeek.Day && bValue < ExtendedDayOfWeek.Day)
+                        return -1;
+                    if (aValue < ExtendedDayOfWeek.Day && bValue >= ExtendedDayOfWeek.Day)
+                        return 1;
+                }
+                else
+                {
+                    if (aValue >= ExtendedDayOfWeek.Day && bValue < ExtendedDayOfWeek.Day)
+                        return 1;
+                    if (aValue < ExtendedDayOfWeek.Day && bValue >= ExtendedDayOfWeek.Day)
+                        return -1;
+                }
+
+                return aValue.CompareTo(bValue);
+            }
+
+            return 0;
+        }
+
+        /// <summary>
         /// Sets the visibility of extended day items (Day, Weekday, Weekend).
         /// </summary>
         /// <param name="isVisible">A value indicating whether the extended day items should be visible.</param>
@@ -182,11 +232,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Updates the day labels based on the current culture.
+        /// Updates the day labels based on the current <see cref="DayNamesKind"/> and <see cref="FormatProvider"/>.
         /// </summary>
         protected virtual void UpdateDayLabels()
         {
-            string[] days = DateUtils.GetDayNames(dayNamesKind, formatProvider);
+            string[] days = DateUtils.GetDayNames(DayNamesKind, FormatProvider);
 
             foreach (var item in ListItems)
             {
