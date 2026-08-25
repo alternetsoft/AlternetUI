@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -243,6 +244,24 @@ namespace Alternet.UI
         int IReadOnlyStrings.Count => ListItems.Count;
 
         string? IReadOnlyStrings.this[int index] => ListItems[index].Text;
+
+        /// <summary>
+        /// Changes the case of all items in the list according to the specified rule and culture.
+        /// </summary>
+        /// <param name="rule">The rule to apply for changing the case.</param>
+        /// <param name="culture">The culture to use when changing the case. If null, the current culture is used.</param>
+        public virtual void ChangeItemsCase(TextCaseRule rule, CultureInfo? culture = null)
+        {
+            if(ListItems.Count == 0)
+                return;
+
+            foreach (var item in ListItems)
+            {
+                item.Text = StringUtils.ChangeCase(item.Text, rule, culture) ?? string.Empty;
+            }
+
+            Invalidate();
+        }
 
         /// <summary>
         /// Adds a collection of items to the list control shown in the popup.
