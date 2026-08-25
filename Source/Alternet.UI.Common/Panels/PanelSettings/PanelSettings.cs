@@ -486,7 +486,9 @@ namespace Alternet.UI
             var enumEditor = result.MainControl;
             enumEditor.ButtonClick -= ButtonClick;
             enumEditor.ButtonClick += ButtonClick;
-            enumEditor.EnumPicker.EnumType = item.ValueType;
+
+            if (item.ValueType is not null)
+               enumEditor.EnumPicker.EnumType = AssemblyUtils.GetRealType(item.ValueType);
 
             if (item.Value is not null)
                 enumEditor.EnumPicker.Value = item.Value;
@@ -708,7 +710,8 @@ namespace Alternet.UI
                 if (minHeight.HasValue)
                 {
                     result.MainControl.MainControl.MinHeight = minHeight.Value;
-                };
+                }
+                ;
             }
 
             UpdateCommonProps(sender, item, result);
