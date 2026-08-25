@@ -46,6 +46,40 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws the specified text within the given rectangle using the provided graphics context and alignment settings.
+        /// </summary>
+        /// <param name="dc">The graphics context used to draw the text.</param>
+        /// <param name="s">The text to be drawn.</param>
+        /// <param name="paintRectangle">The rectangle that defines the area in which to draw the text.</param>
+        /// <param name="foreColor">The color of the text.</param>
+        /// <param name="backColor">The background color of the text. Pass <see cref="Color.Empty"/> to indicate no background.</param>
+        /// <param name="horizontalAlignment">The horizontal alignment of the text within the rectangle.</param>
+        /// <param name="verticalAlignment">The vertical alignment of the text within the rectangle.</param>
+        public virtual void PaintText(
+            Graphics dc,
+            ReadOnlySpan<char> s,
+            RectD paintRectangle,
+            Color foreColor,
+            Color backColor,
+            HorizontalAlignment horizontalAlignment = HorizontalAlignment.Center,
+            VerticalAlignment verticalAlignment = VerticalAlignment.Center)
+        {
+            if (s.Length == 0)
+                return;
+
+            var size = dc.MeasureText(s, RealFont);
+
+            var alignedRect = AlignUtils.AlignRectInRect(
+                (PointD.Empty, size),
+                paintRectangle,
+                horizontalAlignment,
+                verticalAlignment,
+                false);
+            var location = alignedRect.Location;
+            dc.DrawText(s, location.ClampToZero(), RealFont, foreColor, backColor);
+        }
+
+        /// <summary>
         /// Paints <see cref="EmptyText"/> in the specified rectangle using the provided graphics context.
         /// This method is called when the list box has no items to display.
         /// Override this method to customize the appearance of the empty text.
@@ -59,19 +93,15 @@ namespace Alternet.UI
         {
             var s = EmptyText;
 
-            if (s is null || s.Length == 0)
+            if (s is null)
                 return;
 
-            var size = dc.MeasureText(s, RealFont);
-
-            var alignedRect = AlignUtils.AlignRectInRect(
-                (PointD.Empty, size),
-                paintRectangle,
-                HorizontalAlignment.Center,
-                VerticalAlignment.Center,
-                false);
-            var location = alignedRect.Location;
-            dc.DrawText(s, location.ClampToZero(), RealFont, EmptyTextForeColor ?? DefaultEmptyTextForeColor, Color.Empty);
+            PaintText(
+                    dc,
+                    s,
+                    paintRectangle,
+                    EmptyTextForeColor ?? DefaultEmptyTextForeColor,
+                    Color.Empty);
         }
 
         /// <summary>
