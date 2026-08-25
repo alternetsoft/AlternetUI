@@ -170,6 +170,14 @@ namespace Alternet.UI
             Value = value;
         }
 
+        /// <summary>
+        /// Resets the cached item used for displaying the current value.
+        /// </summary>
+        protected virtual void ResetCachedValueItem()
+        {
+            cachedItem = null;
+        }
+
         /// <inheritdoc/>
         protected override IListSource<ListControlItem> CreateItems()
         {

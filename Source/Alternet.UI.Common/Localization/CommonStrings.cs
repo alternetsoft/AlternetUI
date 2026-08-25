@@ -414,18 +414,18 @@ namespace Alternet.UI.Localization
         // ========================
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string RelativeWeekdayFirst { get; set; } = "first";
+        public string RelativeWeekdayFirst { get; set; } = "First";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string RelativeWeekdaySecond { get; set; } = "second";
+        public string RelativeWeekdaySecond { get; set; } = "Second";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string RelativeWeekdayThird { get; set; } = "third";
+        public string RelativeWeekdayThird { get; set; } = "Third";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string RelativeWeekdayFourth { get; set; } = "fourth";
+        public string RelativeWeekdayFourth { get; set; } = "Fourth";
 
         /// <inheritdoc cref="ButtonOk"/>
-        public string RelativeWeekdayLast { get; set; } = "last";
+        public string RelativeWeekdayLast { get; set; } = "Last";
     }
 }
