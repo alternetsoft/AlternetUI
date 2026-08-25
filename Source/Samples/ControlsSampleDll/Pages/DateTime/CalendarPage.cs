@@ -47,10 +47,12 @@ namespace ControlsSample
                 noMonthChangeCheckBox.BindBoolProp(calendar, nameof(Calendar.NoMonthChange));
 
                 var useGenericCheckBox = new XCheckBox(GenericStrings.UseGeneric);
+                useGenericCheckBox.Visible = false;
                 useGenericCheckBox.Parent = checkboxPanel;
                 useGenericCheckBox.BindBoolProp(calendar, nameof(Calendar.UseGeneric));
 
                 var sequentialMonthSelectCheckBox = new XCheckBox(GenericStrings.SequentalMonthSelect);
+                sequentialMonthSelectCheckBox.Visible = false;
                 sequentialMonthSelectCheckBox.Parent = checkboxPanel;
                 sequentialMonthSelectCheckBox.BindBoolProp(calendar, nameof(Calendar.SequentialMonthSelect));
                 sequentialMonthSelectCheckBox.Enabled = useGenericCheckBox.IsChecked;

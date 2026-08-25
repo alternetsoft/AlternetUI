@@ -49,7 +49,7 @@ namespace Alternet.UI
         /// Gets or sets whether to use generic or native platform calendar by default.
         /// Default is True.
         /// </summary>
-        public static bool DefaultUseGeneric = true;
+        public static readonly bool DefaultUseGeneric = true;
 
         /// <summary>
         /// Gets or sets whether to apply theme colors after native calendar control
@@ -67,7 +67,7 @@ namespace Alternet.UI
         /// Gets or sets default value for the <see cref="SequentialMonthSelect"/> property.
         /// Default is True.
         /// </summary>
-        public static bool DefaultSequentialMonthSelect = true;
+        public static readonly bool DefaultSequentialMonthSelect = true;
 
         /// <summary>
         /// Gets or sets default value for the <see cref="ShowHolidays"/> property.
@@ -313,7 +313,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
-                if (SequentialMonthSelect == value)
+                if (SequentialMonthSelect == value || !value)
                     return;
                 Handler.SequentialMonthSelect = value;
                 PerformLayout();
@@ -396,7 +396,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
-                if (UseGeneric == value)
+                if (UseGeneric == value || !value)
                     return;
                 Handler.UseGeneric = value;
                 SetRange();
