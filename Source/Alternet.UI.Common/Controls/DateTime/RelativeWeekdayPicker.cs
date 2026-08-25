@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -17,7 +19,13 @@ namespace Alternet.UI
         public RelativeWeekdayPicker()
         {
             EnumType = typeof(RelativeWeekday);
-            ChangeItemsCase(TextCaseRule.Lower);
+
+            SetDisplayText(RelativeWeekday.First, CommonStrings.Default.RelativeWeekdayFirst);
+            SetDisplayText(RelativeWeekday.Second, CommonStrings.Default.RelativeWeekdaySecond);
+            SetDisplayText(RelativeWeekday.Third, CommonStrings.Default.RelativeWeekdayThird);
+            SetDisplayText(RelativeWeekday.Fourth, CommonStrings.Default.RelativeWeekdayFourth);
+            SetDisplayText(RelativeWeekday.Last, CommonStrings.Default.RelativeWeekdayLast);
+
             Value = RelativeWeekday.First;
         }
 

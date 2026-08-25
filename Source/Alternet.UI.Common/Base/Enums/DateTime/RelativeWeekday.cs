@@ -33,6 +33,6 @@ namespace Alternet.UI
         /// <summary>
         /// The last occurrence of the specified weekday in a month.
         /// </summary>
-        Last
+        Last,
     }
 }

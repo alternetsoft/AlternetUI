@@ -410,5 +410,22 @@ namespace Alternet.UI.Localization
 
         /// <inheritdoc cref="ButtonOk"/>
         public string TimePeriodUnitMilliseconds { get; set; } = "milliseconds";
+
+        // ========================
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string RelativeWeekdayFirst { get; set; } = "first";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string RelativeWeekdaySecond { get; set; } = "second";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string RelativeWeekdayThird { get; set; } = "third";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string RelativeWeekdayFourth { get; set; } = "fourth";
+
+        /// <inheritdoc cref="ButtonOk"/>
+        public string RelativeWeekdayLast { get; set; } = "last";
     }
 }
