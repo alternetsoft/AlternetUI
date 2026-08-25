@@ -13,6 +13,11 @@ namespace Alternet.UI
     public partial class EnumPicker : SpeedEnumButton
     {
         /// <summary>
+        /// Gets or sets the default left padding for the text displayed in the control.
+        /// </summary>
+        public static float DefaultTextLeftPadding = 7;
+
+        /// <summary>
         /// Gets or sets whether to assign default control colors
         /// in the constructor. Default is <c>true</c>.
         /// </summary>
@@ -33,6 +38,7 @@ namespace Alternet.UI
         /// </summary>
         public EnumPicker()
         {
+            Label.PaddingLeft = DefaultTextLeftPadding;
             UseTheme = KnownTheme.StaticBorder;
             UseControlColors(DefaultUseControlColors);
         }

@@ -32,6 +32,7 @@ namespace Alternet.UI
         /// </remarks>
         public static int PopupReopenThresholdMs = 200;
 
+        private int valueChangedSuppressCounter;
         private TPopup? popupWindow;
         private object? data;
         private string popupWindowTitle = string.Empty;
@@ -333,10 +334,47 @@ namespace Alternet.UI
         /// event data.</param>
         public void RaiseValueChanged(EventArgs e)
         {
-            if (DisposingOrDisposed)
+            if (DisposingOrDisposed || valueChangedSuppressCounter > 0)
                 return;
             OnValueChanged(e);
             ValueChanged?.Invoke(this, e);
+        }
+
+        /// <summary>
+        /// Suppresses the raising of the <see cref="ValueChanged"/> event.
+        /// </summary>
+        public virtual void SuppressValueChanged()
+        {
+            valueChangedSuppressCounter++;
+        }
+
+        /// <summary>
+        /// Resumes the raising of the <see cref="ValueChanged"/> event after it has been suppressed.
+        /// </summary>
+        /// <param name="raiseEvent">Indicates whether to raise the <see cref="ValueChanged"/> event immediately after resuming.</param>
+        public virtual void ResumeValueChanged(bool raiseEvent = true)
+        {
+            valueChangedSuppressCounter--;
+            if (raiseEvent)
+                RaiseValueChanged(EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Reassigns the current value to the <see cref="Value"/> property.
+        /// </summary>
+        public virtual void ReassignValue()
+        {
+            SuppressValueChanged();
+            try
+            {
+                var savedValue = Value;
+                data = null;
+                Value = savedValue;
+            }
+            finally
+            {
+                ResumeValueChanged(false);
+            }
         }
 
         /// <summary>

@@ -10,6 +10,11 @@ namespace Alternet.UI
     public enum TextCaseRule
     {
         /// <summary>
+        /// No case conversion is applied; the text remains unchanged.
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Convert all characters to lowercase using the current culture.
         /// </summary>
         Lower,

@@ -170,6 +170,13 @@ namespace Alternet.UI
             Value = value;
         }
 
+        /// <inheritdoc/>
+        public override void ReassignValue()
+        {
+            cachedItem = null;
+            base.ReassignValue();
+        }
+
         /// <summary>
         /// Resets the cached item used for displaying the current value.
         /// </summary>

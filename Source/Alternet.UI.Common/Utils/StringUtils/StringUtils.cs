@@ -382,6 +382,7 @@ namespace Alternet.UI
 
             return rule switch
             {
+                TextCaseRule.None => input,
                 TextCaseRule.Lower => input.ToLower(culture),
                 TextCaseRule.Upper => input.ToUpper(culture),
                 TextCaseRule.LowerInvariant => input.ToLowerInvariant(),

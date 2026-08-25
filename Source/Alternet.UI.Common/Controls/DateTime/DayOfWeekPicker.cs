@@ -15,9 +15,15 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Date)]
     public partial class DayOfWeekPicker : EnumPicker
     {
+        /// <summary>
+        /// Gets or sets the default text case rule for the displayed labels.
+        /// </summary>
+        public static TextCaseRule DefaultTextCase = TextCaseRule.SentenceCase;
+
         private IFormatProvider? formatProvider;
         private DayNamesKind dayNamesKind = DayNamesKind.Full;
         private bool showExtendedItemsFirst = true;
+        private TextCaseRule textCase = DefaultTextCase;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DayOfWeekPicker"/> class.
@@ -26,9 +32,6 @@ namespace Alternet.UI
         {
             EnumType = typeof(ExtendedDayOfWeek);
             UpdateDayLabels();
-            SetDisplayText(ExtendedDayOfWeek.Day, CommonStrings.Default.ExtendedDayOfWeekDay);
-            SetDisplayText(ExtendedDayOfWeek.Weekday, CommonStrings.Default.ExtendedDayOfWeekWeekday);
-            SetDisplayText(ExtendedDayOfWeek.Weekend, CommonStrings.Default.ExtendedDayOfWeekWeekend);
             SetExtendedItemsVisibility(false);
             ListItems.Sort(ItemsComparison);
             Value = ExtendedDayOfWeek.Sunday;
@@ -48,6 +51,23 @@ namespace Alternet.UI
                 showExtendedItemsFirst = value;
                 ListItems.Sort(ItemsComparison);
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the text case rule for the displayed labels.
+        /// </summary>
+        public virtual TextCaseRule TextCase
+        {
+            get => textCase;
+            set
+            {
+                if (textCase != value)
+                {
+                    textCase = value;
+                    UpdateDayLabels();
+                    ReassignValue();
+                }
             }
         }
 
@@ -232,10 +252,34 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Formats the label for a given day of the week.
+        /// This method can be overridden to customize the display text for each day.
+        /// </summary>
+        /// <param name="day">The day of the week.</param>
+        /// <param name="dayName">The default name of the day.</param>
+        /// <returns>The formatted label for the day.</returns>
+        protected virtual string FormatDayLabel(ExtendedDayOfWeek day, string dayName)
+        {
+            return StringUtils.ChangeCase(dayName, textCase) ?? string.Empty;
+        }
+
+        /// <summary>
         /// Updates the day labels based on the current <see cref="DayNamesKind"/> and <see cref="FormatProvider"/>.
         /// </summary>
         protected virtual void UpdateDayLabels()
         {
+            SetDisplayText(
+                ExtendedDayOfWeek.Day,
+                FormatDayLabel(ExtendedDayOfWeek.Day, CommonStrings.Default.ExtendedDayOfWeekDay));
+            
+            SetDisplayText(
+                ExtendedDayOfWeek.Weekday,
+                FormatDayLabel(ExtendedDayOfWeek.Weekday, CommonStrings.Default.ExtendedDayOfWeekWeekday));
+            
+            SetDisplayText(
+                ExtendedDayOfWeek.Weekend,
+                FormatDayLabel(ExtendedDayOfWeek.Weekend, CommonStrings.Default.ExtendedDayOfWeekWeekend));
+
             string[] days = DateUtils.GetDayNames(DayNamesKind, FormatProvider);
 
             foreach (var item in ListItems)
@@ -245,7 +289,7 @@ namespace Alternet.UI
                     int dayIndex = (int)value;
                     if (dayIndex >= 0 && dayIndex < days.Length)
                     {
-                        item.Text = days[dayIndex];
+                        item.Text = FormatDayLabel(value, days[dayIndex]);
                     }
                 }
             }

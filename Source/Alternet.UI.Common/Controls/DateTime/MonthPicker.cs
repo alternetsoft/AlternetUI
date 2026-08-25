@@ -12,8 +12,14 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Date)]
     public partial class MonthPicker : EnumPicker
     {
+        /// <summary>
+        /// Gets or sets the default text case rule for the displayed labels.
+        /// </summary>
+        public static TextCaseRule DefaultTextCase = TextCaseRule.SentenceCase;
+
         private IFormatProvider? formatProvider;
         private MonthNamesKind monthNamesKind = MonthNamesKind.Full;
+        private TextCaseRule textCase = DefaultTextCase;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MonthPicker"/> class.
@@ -37,6 +43,23 @@ namespace Alternet.UI
                 {
                     monthNamesKind = value;
                     UpdateMonthLabels();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the text case rule for the displayed labels.
+        /// </summary>
+        public virtual TextCaseRule TextCase
+        {
+            get => textCase;
+            set
+            {
+                if (textCase != value)
+                {
+                    textCase = value;
+                    UpdateMonthLabels();
+                    ReassignValue();
                 }
             }
         }
@@ -68,6 +91,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Formats the label for a given month.
+        /// This method can be overridden to customize the display text for each month.
+        /// </summary>
+        /// <param name="month">The month.</param>
+        /// <param name="monthName">The default name of the month.</param>
+        /// <returns>The formatted label for the month.</returns>
+        protected virtual string FormatMonthLabel(CalendarMonth month, string monthName)
+        {
+            return StringUtils.ChangeCase(monthName, textCase) ?? string.Empty;
+        }
+
+        /// <summary>
         /// Updates the month labels based on the current format provider and the selected <see cref="MonthNamesKind"/>.
         /// If no format provider is set, the current culture will be used.
         /// This method retrieves the month names from the format provider's DateTimeFormat
@@ -84,7 +119,7 @@ namespace Alternet.UI
                     int monthIndex = (int)month - 1;
                     if (monthIndex >= 0 && monthIndex < months.Length)
                     {
-                        item.Text = months[monthIndex];
+                        item.Text = FormatMonthLabel(month, months[monthIndex]);
                     }
                 }
             }
