@@ -11,7 +11,7 @@ namespace Alternet.UI
     /// <summary>
     /// A custom control for executing paint actions.
     /// </summary>
-    public partial class PaintActionsControl : HiddenBorder
+    public partial class PaintActionsControl : HiddenGenericBorder
     {
         private List<Action<AbstractControl, Graphics, RectD>>? paintActions;
 
