@@ -167,6 +167,9 @@ namespace Alternet.UI
 
         public int GetMetric(SystemSettingsMetric index, AbstractControl? control)
         {
+            if (control is not null && !control.IsPlatformControl)
+                control = control.PlatformBackedParent;
+
             return Native.WxOtherFactory.SystemSettingsGetMetric(
                 (int)index,
                 WxApplicationHandler.WxWidget(control));
