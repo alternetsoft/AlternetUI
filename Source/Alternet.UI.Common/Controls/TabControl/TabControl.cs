@@ -1583,7 +1583,7 @@ namespace Alternet.UI
             public override bool Visible
             {
                 get => base.Visible;
-                set => base.Visible = value && IsVisibleInParent;
+                set => base.Visible = value;
             }
 
             /// <inheritdoc/>
