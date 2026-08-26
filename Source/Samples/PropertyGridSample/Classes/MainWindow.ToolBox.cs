@@ -114,6 +114,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<RelativeWeekdayPicker>();
                 ToolBoxAdd<MonthPicker>();
                 ToolBoxAdd<DayOfWeekPicker>();
+                ToolBoxAdd<RepeatPatternPicker>();
 
                 void ToolBoxAdd<T>()
                 {
