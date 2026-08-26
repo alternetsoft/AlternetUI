@@ -3,7 +3,7 @@ using Alternet.Drawing;
 
 namespace Alternet.UI
 {
-    internal class TicTacToeCell : GraphicControl
+    internal class TicTacToeCell : GenericControl
     {
         private static readonly SolidBrush winningCellBrush = new(Color.Parse("#FFD0BF"));
 
