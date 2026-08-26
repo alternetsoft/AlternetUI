@@ -167,6 +167,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified <see cref="DaysOfWeek"/> contains the specified <see cref="DayOfWeek"/>.
+        /// </summary>
+        /// <param name="days">The days of the week to check.</param>
+        /// <param name="day">The day of the week to look for.</param>
+        /// <returns><c>true</c> if the specified <see cref="DaysOfWeek"/> contains the specified <see cref="DayOfWeek"/>;
+        /// otherwise, <c>false</c>.</returns>
+        public static bool HasDay(this DaysOfWeek days, DayOfWeek day)
+        {
+            return (days & (DaysOfWeek)(1 << (int)day)) != 0;
+        }
+
+        /// <summary>
         /// Gets the localized time separator from the specified format provider,
         /// or uses the current culture if the provider is <c>null</c>.
         /// </summary>
