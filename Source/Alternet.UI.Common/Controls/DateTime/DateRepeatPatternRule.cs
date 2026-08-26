@@ -83,7 +83,56 @@ namespace Alternet.UI
     /// </summary>
     public partial class DailyRepeatPatternRule : DateRepeatPatternRule
     {
-        private int intervalDays = 1;
+        private int intervalDays = 2;
+        private RepeatKind kind = RepeatKind.EveryDay;
+
+        /// <summary>
+        /// Represents the kind of daily repeat pattern.
+        /// </summary>
+        public enum RepeatKind
+        {
+            /// <summary>
+            /// Repeat every day (default behavior).
+            /// </summary>
+            EveryDay,
+
+            /// <summary>
+            /// Repeat only on even days of the month (2, 4, 6, ...).
+            /// </summary>
+            EvenDays,
+
+            /// <summary>
+            /// Repeat only on odd days of the month (1, 3, 5, ...).
+            /// </summary>
+            OddDays,
+
+            /// <summary>
+            /// Repeat every N days (uses <see cref="IntervalDays"/>).
+            /// </summary>
+            IntervalDays,
+
+            /// <summary>
+            /// Repeat only on weekdays (Mon–Fri).
+            /// </summary>
+            Weekdays,
+
+            /// <summary>
+            /// Repeat only on weekends (Sat–Sun).
+            /// </summary>
+            Weekends,
+        }
+
+        /// <summary>
+        /// Gets or sets the kind of daily repeat pattern.
+        /// </summary>
+        public virtual RepeatKind Kind
+        {
+            get => kind;
+            set
+            {
+                kind = GetNewFieldValue(kind, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the number of days between occurrences.
@@ -96,7 +145,7 @@ namespace Alternet.UI
             {
                 if (value < 1)
                     value = 1;
-                intervalDays = GetNewFieldValue<int>(intervalDays, value);
+                intervalDays = GetNewFieldValue(intervalDays, value);
             }
         }
 
@@ -106,19 +155,65 @@ namespace Alternet.UI
             CoerceMinMaxDate(ref minDate, ref maxDate);
 
             if (minDate > maxDate)
-                yield break;
+                return Array.Empty<DateOnly>();
 
             var startDate = minDate;
-            var returnedCount = 0;
-            var occ = OccurrenceCount;
 
-            while (startDate <= maxDate)
+            switch (Kind)
             {
-                yield return startDate;
-                startDate = startDate.AddDays(intervalDays);
-                returnedCount++;
-                if (occ > 0 && returnedCount >= occ)
-                    yield break;
+                case RepeatKind.EveryDay:
+                    return GetEveryDay();
+                case RepeatKind.EvenDays:
+                    return GetDays((d) => d.Day % 2 == 0);
+                case RepeatKind.OddDays:
+                    return GetDays((d) => d.Day % 2 != 0);
+                case RepeatKind.IntervalDays:
+                    return GetIntervalDays();
+                case RepeatKind.Weekends:
+                    return GetWeekDays(DaysOfWeek.Weekend);
+                case RepeatKind.Weekdays:
+                    return GetWeekDays(DaysOfWeek.Weekdays);
+                default:
+                    return Array.Empty<DateOnly>();
+            }
+
+            IEnumerable<DateOnly> GetIntervalDays()
+            {
+                var returnedCount = 0;
+                var occ = OccurrenceCount;
+
+                while (startDate <= maxDate)
+                {
+                    yield return startDate;
+                    startDate = startDate.AddDays(intervalDays);
+                    returnedCount++;
+                    if (occ > 0 && returnedCount >= occ)
+                        yield break;
+                }
+            }
+
+            IEnumerable<DateOnly> GetEveryDay()
+            {
+                while (startDate <= maxDate)
+                {
+                    yield return startDate;
+                    startDate = startDate.AddDays(1);
+                }
+            }
+
+            IEnumerable<DateOnly> GetDays(Func<DateOnly, bool> predicate)
+            {
+                while (startDate <= maxDate)
+                {
+                    if (predicate(startDate))
+                        yield return startDate;
+                    startDate = startDate.AddDays(1);
+                }
+            }
+
+            IEnumerable<DateOnly> GetWeekDays(DaysOfWeek days)
+            {
+                return GetDays((d) => days.HasDay(d.DayOfWeek));
             }
         }
     }
