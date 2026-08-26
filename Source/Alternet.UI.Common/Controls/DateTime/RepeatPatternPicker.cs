@@ -53,42 +53,16 @@ namespace Alternet.UI
         {
             get
             {
-                switch (tabControl.SelectedIndex)
-                {
-                    default:
-                    case 0:
-                        return ScheduleRepeatPattern.None;
-                    case 1:
-                        return ScheduleRepeatPattern.Daily;
-                    case 2:
-                        return ScheduleRepeatPattern.Weekly;
-                    case 3:
-                        return ScheduleRepeatPattern.Monthly;
-                    case 4:
-                        return ScheduleRepeatPattern.Yearly;
-                }
+                var index = tabControl.SelectedIndex;
+
+                if (index >= 0 && index <= (int)ScheduleRepeatPattern.Yearly)
+                    return (ScheduleRepeatPattern)index;
+                return ScheduleRepeatPattern.None;
             }
+
             set
             {
-                switch (value)
-                {
-                    default:
-                    case ScheduleRepeatPattern.None:
-                        tabControl.SelectedIndex = 0;
-                        break;
-                    case ScheduleRepeatPattern.Daily:
-                        tabControl.SelectedIndex = 1;
-                        break;
-                    case ScheduleRepeatPattern.Weekly:
-                        tabControl.SelectedIndex = 2;
-                        break;
-                    case ScheduleRepeatPattern.Monthly:
-                        tabControl.SelectedIndex = 3;
-                        break;
-                    case ScheduleRepeatPattern.Yearly:
-                        tabControl.SelectedIndex = 4;
-                        break;
-                }
+                tabControl.SelectedIndex = (int)value;
             }
         }
 
@@ -104,10 +78,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Represents a generic control for selecting a repeat pattern rule.
+        /// </summary>
+        /// <typeparam name="TValue">The type of the repeat pattern rule.</typeparam>
+        public abstract partial class DateRepeatPatternRule<TValue> : HiddenBorder
+            where TValue : DateRepeatPatternRule, new()
+        {
+            private TValue data = new();
+
+            /// <summary>
+            /// Gets or sets the value of the daily repeat pattern rule.
+            /// </summary>
+            public virtual TValue Value
+            {
+                get
+                {
+                    return data;
+                }
+
+                set
+                {
+                    value ??= new ();
+
+                    if (data == value)
+                        return;
+                    data = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Represents a control that allows users to select a daily repeat pattern for an event or task.
         /// </summary>
-        public partial class DailyPatternPicker : HiddenBorder
+        public partial class DailyPatternPicker : DateRepeatPatternRule<DailyRepeatPatternRule>
         {
+
             /// <summary>
             /// Initializes a new instance of the <see cref="DailyPatternPicker"/> class.
             /// </summary>
@@ -120,10 +125,10 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a weekly repeat pattern for an event or task.
         /// </summary>
-        public partial class WeeklyPatternPicker : HiddenBorder
+        public partial class WeeklyPatternPicker : DateRepeatPatternRule<WeeklyRepeatPatternRule>
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class. 
+            /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
             /// </summary>
             public WeeklyPatternPicker()
             {
@@ -134,7 +139,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a monthly repeat pattern for an event or task.
         /// </summary>
-        public partial class MonthlyPatternPicker : HiddenBorder
+        public partial class MonthlyPatternPicker : DateRepeatPatternRule<MonthlyRepeatPatternRule>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="MonthlyPatternPicker"/> class.
@@ -148,7 +153,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a yearly repeat pattern for an event or task.
         /// </summary>
-        public partial class YearlyPatternPicker : HiddenBorder
+        public partial class YearlyPatternPicker : DateRepeatPatternRule<YearlyRepeatPatternRule>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="YearlyPatternPicker"/> class.
