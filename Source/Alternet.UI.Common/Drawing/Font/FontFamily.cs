@@ -13,11 +13,12 @@ namespace Alternet.Drawing
     /// Defines a group of type faces having a similar basic design and
     /// certain variations in styles.
     /// </summary>
-    public class FontFamily : BaseObject
+    public partial class FontFamily : BaseObject
     {
         private static readonly string?[] GenericFamilyNames
             = new string?[(int)GenericFontFamily.Default + 1];
 
+        private static readonly object syncRoot = new();
         private static FontFamily? genericSerif;
         private static FontFamily? genericDefault;
         private static FontFamily? genericSansSerif;
@@ -255,7 +256,15 @@ namespace Alternet.Drawing
             get
             {
                 if (items is null)
-                    FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
+                {
+                    lock (syncRoot)
+                    {
+                        if (items is null)
+                        {
+                            FamiliesNames = FontFactory.Handler.GetFontFamiliesNames();
+                        }
+                    }
+                }
 
                 return items!;
             }
