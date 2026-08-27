@@ -1172,20 +1172,48 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Adds items with the editors for the properties of the specified object.
+        /// </summary>
+        /// <param name="labels">The labels for the properties. If null, property names will be used as labels.</param>
+        /// <param name="propContainer">The object which contains the properties.</param>
+        /// <param name="propNames">The names of the properties.</param>
+        /// <param name="e">Additional arguments.</param>
+        /// <returns>The array of created PanelSettingsItem objects.</returns>
+        public virtual PanelSettingsItem[] AddInputs(
+            object[]? labels,
+            object propContainer,
+            string[] propNames,
+            CustomEventArgs? e = null)
+        {
+            labels ??= propNames;
+            PanelSettingsItem[] items = new PanelSettingsItem[propNames.Length];
+            
+            for (int i = 0; i < propNames.Length; i++)
+            {
+                items[i] = AddInput(labels[i], propContainer, propNames[i], e);
+            }
+
+            return items;
+        }
+
+        /// <summary>
         /// Adds item with the editor for the property of the specified object.
         /// Value is specified using property name and property container.
         /// </summary>
-        /// <param name="label">Text which will be shown next to the editor.</param>
+        /// <param name="label">Text which will be shown next to the editor.
+        /// If null, the property name will be used as the label.</param>
         /// <param name="propContainer">Object which contains the property.</param>
         /// <param name="propName">Property name.</param>
         /// <param name="e">Additional arguments.</param>
-        /// <returns></returns>
+        /// <returns>The created PanelSettingsItem object.</returns>
         public virtual PanelSettingsItem AddInput(
-            object label,
+            object? label,
             object propContainer,
             string propName,
             CustomEventArgs? e = null)
         {
+            label ??= propName;
+
             PanelSettingsItem item;
 
             var valueSource = new PropertyValueSource(propContainer, propName);
