@@ -171,6 +171,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="ShowDeveloperTools"/> event, indicating
+        /// that the user has requested to show the developer tools window.
+        /// </summary>
+        public static void RaiseShowDeveloperTools()
+        {
+            ShowDeveloperTools?.Invoke();
+        }
+
+        /// <summary>
         /// Same as <see cref="App.LogReplace"/> but
         /// uses only this control for the logging.
         /// </summary>

@@ -34,6 +34,14 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Shows developer tools window.
+        /// </summary>
+        public static void ShowDeveloperTools()
+        {
+            LogListBox.RaiseShowDeveloperTools();
+        }
+
+        /// <summary>
         /// Displays a prompt to the user with a specified title and an optional default value,
         /// and invokes a callback with the user's input.
         /// </summary>
