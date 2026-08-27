@@ -144,6 +144,8 @@ namespace ControlsSample
 
             var window = new MainWindow();
 
+            window.MainTabControl.Add("Controls", () => new PropertyGridSample.MainControl());
+
             window.AddPage("WebBrowser", () => new WebBrowserPage());
             window.AddPage("RichTextBox", () => new TextRichPage());
 
