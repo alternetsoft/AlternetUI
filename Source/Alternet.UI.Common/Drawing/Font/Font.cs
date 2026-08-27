@@ -1020,6 +1020,25 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Returns whether this font has a glyph for the specified character.
+        /// </summary>
+        /// <param name="ch">The character to check for a glyph.</param>
+        /// <returns><c>true</c> if the font has a glyph for the specified character; otherwise, <c>false</c>.</returns>
+        public virtual bool HasGlyph(char ch)
+        {
+            ushort[] glyphs = SkiaFont.GetGlyphs(ch.ToString());
+
+            if (glyphs.Length > 0 && glyphs[0] != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Returns a scaled version of this font.
         /// </summary>
         /// <param name="scaleFactor">Font size scaling factor.</param>
