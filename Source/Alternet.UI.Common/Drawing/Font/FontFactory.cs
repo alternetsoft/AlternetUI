@@ -14,6 +14,34 @@ namespace Alternet.Drawing
     public static class FontFactory
     {
         private static IFontFactoryHandler? handler;
+        private static Font? defaultSymbolFont;
+
+        /// <summary>
+        /// Gets or sets default symbol font for the current operating system.
+        /// If the default symbol font is not assigned or unavailable, <see cref="Font.Default"/> will be returned.
+        /// </summary>
+        public static Font DefaultSymbolFont
+        {
+            get
+            {
+                if (defaultSymbolFont is null)
+                {
+                    var fontName = GetDefaultSymbolFontName();
+                    var isValid = FontFamily.IsFamilyValid(fontName);
+                    if (isValid)
+                        defaultSymbolFont = new Font(fontName, Font.Default.Size);
+                    else
+                        defaultSymbolFont = Font.Default;
+                }
+
+                return defaultSymbolFont;
+            }
+
+            set
+            {
+                defaultSymbolFont = value;
+            }
+        }
 
         /// <summary>
         /// Gets whether only SkiaSharp compatible font are allowed.
@@ -46,6 +74,24 @@ namespace Alternet.Drawing
                 return result;
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets default symbol font name for the current operating system.
+        /// </summary>
+        /// <returns>The name of the default symbol font.</returns>
+        public static string GetDefaultSymbolFontName()
+        {
+            if (App.IsWindowsOS)
+                return "Segoe UI Symbol";
+            if (App.IsMacOS || App.IsIOS)
+                return "Apple Symbols";
+            if (App.IsLinuxOS)
+                return "DejaVu Sans";
+            if (App.IsAndroidOS)
+                return "Noto Sans Symbols";
+
+            return "Symbola";
         }
 
         /// <summary>
