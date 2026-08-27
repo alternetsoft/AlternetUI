@@ -112,6 +112,7 @@ namespace Alternet.UI
         private static SvgImage? imgCalendar;
         private static SvgImage? imgRotate;
         private static SvgImage? imgArrowsSpin;
+        private static SvgImage? imgBell;
 
         static KnownSvgImages()
         {
@@ -132,6 +133,15 @@ namespace Alternet.UI
         {
             get => imgCircleCheckmark ??= new MonoSvgImage(KnownSvgUrls.UrlImageCircleCheckmark);
             set => imgCircleCheckmark = value;
+        }
+
+        /// <summary>
+        /// Gets or sets svg image which can be used for indicating a bell icon, typically used for notifications or alerts.
+        /// </summary>
+        public static SvgImage ImgBell
+        {
+            get => imgBell ??= new MonoSvgImage(KnownSvgUrls.UrlImageBell);
+            set => imgBell = value;
         }
 
         /// <summary>
