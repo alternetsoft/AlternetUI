@@ -29,6 +29,7 @@ namespace Alternet.UI
     /// The <see cref="VirtualListControl.SelectedItems"/> and <see cref="VirtualListControl.SelectedIndices"/>
     /// properties provide access to the selected items and their indices.
     /// </remarks>
+    [ControlCategory(KnownControlCategory.Common)]
     public partial class VirtualListBox : VirtualListControl, IListControl, IScrollEventRouter, IListBoxActions
     {
         /// <summary>
