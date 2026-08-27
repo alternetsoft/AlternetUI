@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace ControlsSample
 {
     [IsTextLocalized(true)]
-    internal class ListControlsPopups : Panel
+    public class ListControlsPopups : Panel
     {
         internal bool logMouseEvents = false;
 
@@ -174,7 +174,7 @@ namespace ControlsSample
         {
             if (popupVListBox.MainControl.Count == 0)
             {
-                PropertyGridSample.ObjectInit.InitListBoxItems(popupVListBox.MainControl);
+                DemoUtils.InitListBoxItems(popupVListBox.MainControl);
                 popupVListBox.MainControl.SelectFirstItem();
             }
             popupVListBox.ShowPopup(showPopupVListBoxButton);

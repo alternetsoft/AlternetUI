@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class TextOtherPage : VerticalStackPanel
+    public class TextOtherPage : VerticalStackPanel
     {
         [IsTextLocalized(true)]
         private readonly ValueEditorEMail emailEdit = new("E-mail");

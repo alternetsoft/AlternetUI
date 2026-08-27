@@ -15,30 +15,8 @@ namespace PropertyGridSample
 {
     public partial class ObjectInit
     {
-        private const int defaultListHeight = 250;
-
-        public static string LoremIpsumSmall =
-"Beneath a sky stitched with teacup clouds, the girl tiptoed across checkerboard moss. " +
-"Each step made a peculiar sound—like libraries whispering to mushrooms. " +
-"Trees bent inward to eavesdrop, their leaves rustling riddles only crickets could decipher.";
-
-        public static string LoremIpsumVerySmall = "I see a sky with clouds.";
-
-        public static string LoremIpsum = LoremIpsumSmall +
-Environment.NewLine + Environment.NewLine +
-"The map she carried was drawn entirely in nonsense, but somehow it felt correct. " +
-"It pulsed faintly in her hands, humming with ink made from stolen dreams and marmalade." +
-Environment.NewLine + Environment.NewLine +
-"“Left is usually right,” said the rabbit-shaped shadow, bowing courteously. " +
-"“Unless, of course, you're upside-down.”" +
-Environment.NewLine + Environment.NewLine +
-"And so, with a smile too wide for logic, she stepped forward—into a world where clocks " +
-"melted politely and hats outgrew heads.";
-
         private static ImageLists? imageLists;
         
-        public static SizeD DefaultListSize = new(defaultListHeight, defaultListHeight);
-
         static ObjectInit()
         {
             AddAction<ShapeControl>(InitShapeControl);
@@ -87,7 +65,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
             Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
             Actions.Add(typeof(TabControl), InitGenericTabControl);
-            Actions.Add(typeof(VirtualListBox), InitListBoxItems);
+            Actions.Add(typeof(VirtualListBox), DemoUtils.InitListBoxItems);
             Actions.Add(typeof(FileListBox), InitFileListBox);
             Actions.Add(typeof(XListBox), InitStdListBox);
             Actions.Add(typeof(XComboBox), InitStdComboBox);
@@ -129,7 +107,7 @@ Environment.NewLine + Environment.NewLine +
                 var border = (c as Border)!;
                 border.ParentBackColor = false;
                 border.ParentForeColor = false;
-                border.SuggestedSize = DefaultListSize;
+                border.SuggestedSize = DemoUtils.DefaultListSize;
                 SetBackgrounds(border);
 
                 border.Layout = LayoutStyle.Vertical;
@@ -160,7 +138,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(XTreeView), (c) =>
             {
                 XTreeView treeView = (c as XTreeView)!;
-                treeView.SuggestedSize = DefaultListSize;
+                treeView.SuggestedSize = DemoUtils.DefaultListSize;
                 InitVirtualTreeControl(treeView);
             });
 
@@ -197,7 +175,7 @@ Environment.NewLine + Environment.NewLine +
             Actions.Add(typeof(AbstractControl), (c) =>
             {
                 AbstractControl control = (c as AbstractControl)!;
-                control.SuggestedSize = defaultListHeight;
+                control.SuggestedSize = DemoUtils.DefaultListHeight;
             });
 
             Actions.Add(typeof(XProgressBar), (c) =>
@@ -247,15 +225,11 @@ Environment.NewLine + Environment.NewLine +
 
         internal static string AsmResPrefix
             = AssemblyUtils.GetAssemblyResPrefix(typeof(ObjectInit).Assembly)+"Resources.";
-        internal static string UrlResPrefix
-            = AssemblyUtils.GetImageUrlInAssembly(typeof(ObjectInit).Assembly, "Resources.");
-        internal static string ResPrefixImage = $"{UrlResPrefix}logo128x128.png";
+        internal static string ResPrefixImage = $"{DemoUtils.UrlResPrefix}logo128x128.png";
 
         public static Image DefaultImage { get; } = Image.FromUrl(ResPrefixImage);
 
         public static ImageSet DefaultImageSet { get; } = ImageSet.FromUrl(ResPrefixImage);
-
-        private static int newItemIndex = 0;
 
         public static void SetBackgrounds(AbstractControl control)
         {
@@ -452,7 +426,7 @@ Environment.NewLine + Environment.NewLine +
 
             control.ShowToolTip(
                 "This is title",
-                LoremIpsum,
+                DemoUtils.LoremIpsum,
                 MessageBoxIcon.Information,
                 0);
         }
@@ -475,7 +449,7 @@ Environment.NewLine + Environment.NewLine +
         {
             static Image LoadImage(string stateName)
             {
-                var s = $"{UrlResPrefix}ButtonImages.ButtonImage{stateName}.png";
+                var s = $"{DemoUtils.UrlResPrefix}ButtonImages.ButtonImage{stateName}.png";
                 return new Bitmap(s);
             }
 
@@ -549,7 +523,7 @@ Environment.NewLine + Environment.NewLine +
 
             for(int i = 1; i <= 20; i++)
             {
-                sb.AppendLine(LoremIpsum);
+                sb.AppendLine(DemoUtils.LoremIpsum);
                 sb.AppendLine(Environment.NewLine);
             }
 
@@ -637,7 +611,7 @@ Environment.NewLine + Environment.NewLine +
                 control.ImageList = LoadImageLists().Large;
 
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
-            AddItems(control, 10);
+            DemoUtils.AddItems(control, 10);
         }
 
         public static void InitTreeView(XTreeView control)
@@ -648,52 +622,7 @@ Environment.NewLine + Environment.NewLine +
                 control.ImageList = LoadImageLists().Large;
 
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
-            AddItems(control, 10);
-        }
-
-        public static int GenItemIndex()
-        {
-            newItemIndex++;
-            return newItemIndex;
-        }
-
-        public static void AddItems(XTreeView treeView, int count)
-        {
-            treeView.BeginUpdate();
-            try
-            {
-                for (int i = 0; i < count; i++)
-                {
-                    int imageIndex = i % 4;
-                    var item = new TreeViewItem(
-                        "Item " + GenItemIndex(),
-                        imageIndex);
-                    for (int j = 0; j < 3; j++)
-                    {
-                        var childItem = new TreeViewItem(
-                            item.Text + "." + j,
-                            imageIndex);
-                        item.Add(childItem);
-
-                        if (i < 5)
-                        {
-                            for (int k = 0; k < 2; k++)
-                            {
-                                childItem.Add(
-                                    new TreeViewItem(
-                                        item.Text + "." + k,
-                                        imageIndex));
-                            }
-                        }
-                    }
-
-                    treeView.Add(item);
-                }
-            }
-            finally
-            {
-                treeView.EndUpdate();
-            }
+            DemoUtils.AddItems(control, 10);
         }
 
         private static ImageLists LoadImageListsCore()

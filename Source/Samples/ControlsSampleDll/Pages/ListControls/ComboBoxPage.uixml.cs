@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ComboBoxPage : Panel
+    public partial class ComboBoxPage : Panel
     {
         private const bool suppressUpDown = false;
 
@@ -80,8 +80,7 @@ namespace ControlsSample
 
             if (ownerDraw)
             {
-                PropertyGridSample.ObjectInit.
-                    AddDefaultOwnerDrawItemsForListBox(comboBox, (s) =>
+                DemoUtils.AddDefaultOwnerDrawItemsForListBox(comboBox, (s) =>
                     {
                         items.Add(s);
                     }, false);

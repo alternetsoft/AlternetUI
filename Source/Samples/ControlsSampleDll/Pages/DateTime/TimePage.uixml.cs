@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class TimePage : Panel
+    public partial class TimePage : Panel
     {
         static TimePage()
         {

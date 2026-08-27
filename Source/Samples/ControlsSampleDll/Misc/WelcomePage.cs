@@ -3,7 +3,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class WelcomePage : HiddenBorder
+    public class WelcomePage : HiddenBorder
     {
         private readonly Image logoImage;
         private readonly ScrollViewer scrollViewer;

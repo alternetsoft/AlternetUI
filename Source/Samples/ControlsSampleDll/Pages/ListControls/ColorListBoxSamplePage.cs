@@ -10,7 +10,7 @@ using Alternet.Drawing;
 namespace ControlsSample
 {
     [IsLocalized(true)]
-    internal class ColorListBoxSamplePage : Panel
+    public class ColorListBoxSamplePage : Panel
     {
         private readonly ColorListBox listBox = new()
         {

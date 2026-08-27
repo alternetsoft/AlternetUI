@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class SliderPage : Panel
+    public partial class SliderPage : Panel
     {
         public SliderPage()
         {

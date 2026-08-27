@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class DatePage : Panel
+    public partial class DatePage : Panel
     {
         private string?[] dateFormats = new[]
         {

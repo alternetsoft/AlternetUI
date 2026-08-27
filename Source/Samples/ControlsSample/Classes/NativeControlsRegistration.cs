@@ -115,7 +115,7 @@ namespace ControlsSample
                 {
                     for (int i = 0; i < count; i++)
                     {
-                        var ix = ObjectInit.GenItemIndex();
+                        var ix = DemoUtils.GenItemIndex();
                         listView.Items.Add(
                             new ListViewItem(new[] {
                             "Item " + ix,
@@ -141,8 +141,8 @@ namespace ControlsSample
         {
             if (control is not RichTextBox textBox)
                 return;
-            textBox.SuggestedSize = ObjectInit.DefaultListSize;
-            textBox.Text = ObjectInit.LoremIpsum;
+            textBox.SuggestedSize = DemoUtils.DefaultListSize;
+            textBox.Text = DemoUtils.LoremIpsum;
         }
 
         public static void InitScrollBar(object control)
@@ -236,7 +236,7 @@ namespace ControlsSample
             ObjectInit.Actions.Add(typeof(ListView), (c) =>
             {
                 ListView listView = (c as ListView)!;
-                listView.SuggestedSize = ObjectInit.DefaultListSize;
+                listView.SuggestedSize = DemoUtils.DefaultListSize;
                 InitListView(listView);
             });
 
@@ -264,7 +264,7 @@ namespace ControlsSample
             ObjectInit.Actions.Add(typeof(TreeView), (c) =>
             {
                 TreeView treeView = (c as TreeView)!;
-                treeView.SuggestedSize = ObjectInit.DefaultListSize;
+                treeView.SuggestedSize = DemoUtils.DefaultListSize;
                 InitVirtualTreeControl(treeView);
             });
 
@@ -343,7 +343,7 @@ namespace ControlsSample
         {
             if (control is not ListBox listBox)
                 return;
-            listBox.SuggestedSize = ObjectInit.DefaultListSize;
+            listBox.SuggestedSize = DemoUtils.DefaultListSize;
 
             foreach (var item in ObjectInit.GetTenItems())
                 listBox.Items.Add(item);
@@ -372,7 +372,7 @@ namespace ControlsSample
                 {
                     int imageIndex = i % 4;
                     var item = new TreeViewItem(
-                        "Item " + ObjectInit.GenItemIndex(),
+                        "Item " + DemoUtils.GenItemIndex(),
                         imageIndex);
                     for (int j = 0; j < 3; j++)
                     {

@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal class DateTimePopups : Panel
+    public class DateTimePopups : Panel
     {
         private readonly VerticalStackPanel panel = new()
         {

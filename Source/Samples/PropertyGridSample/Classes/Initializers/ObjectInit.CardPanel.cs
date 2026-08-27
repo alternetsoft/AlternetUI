@@ -37,7 +37,7 @@ namespace PropertyGridSample
         {
             if (c is not SideBarPanel control)
                 return;
-            control.SuggestedSize = DefaultListSize;
+            control.SuggestedSize = DemoUtils.DefaultListSize;
             var tab1 = CreatePanelWithButtons("Tab 1");
             var tab2 = CreatePanelWithButtons("Tab 2");
             control.Add("Tab 1", tab1);
@@ -50,7 +50,7 @@ namespace PropertyGridSample
             if (c is not CardPanel control)
                 return;
             control.HasBorder = true;
-            control.SuggestedSize = DefaultListSize;
+            control.SuggestedSize = DemoUtils.DefaultListSize;
             var panel = CreatePanelWithButtons("Card 1");
 
             new Label()

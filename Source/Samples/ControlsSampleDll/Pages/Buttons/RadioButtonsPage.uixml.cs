@@ -5,7 +5,7 @@ using Alternet.UI;
 namespace ControlsSample
 {
     [IsCsLocalized(true)]
-    internal partial class RadioButtonsPage : Panel
+    public partial class RadioButtonsPage : Panel
     {
         public RadioButtonsPage()
         {

@@ -6,7 +6,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class ListControlsOtherPage : PanelFormSelector
+    public class ListControlsOtherPage : PanelFormSelector
     {
         protected override void AddDefaultItems()
         {

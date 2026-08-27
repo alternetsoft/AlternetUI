@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class TreeViewPage : Panel
+    public partial class TreeViewPage : Panel
     {
         private readonly PopupTreeView popupTreeView = new();
         private int suppressExpandEvents = 0;
@@ -43,7 +43,7 @@ namespace ControlsSample
                 AddDefaultItems();
                 SetCustomColors();
 
-                PropertyGridSample.ObjectInit.AddItems(popupTreeView.MainControl, 10);
+                DemoUtils.AddItems(popupTreeView.MainControl, 10);
                 popupTreeView.AfterHide += PopupTreeView_AfterHide;
             }
 
@@ -152,7 +152,7 @@ namespace ControlsSample
                 AddItems(treeView, 5);
                 treeView.AddSeparator();
 
-                PropertyGridSample.ObjectInit.AddDefaultOwnerDrawItemsForTreeView(
+                DemoUtils.AddDefaultOwnerDrawItemsForTreeView(
                 treeView,
                 item =>
                 {

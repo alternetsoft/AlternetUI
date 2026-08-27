@@ -6,7 +6,7 @@ using Alternet.UI;
 namespace ControlsSample
 {
     [IsCsLocalized(true)]
-    internal partial class CheckListBoxPage : Panel
+    public partial class CheckListBoxPage : Panel
     {
         public CheckListBoxPage()
         {

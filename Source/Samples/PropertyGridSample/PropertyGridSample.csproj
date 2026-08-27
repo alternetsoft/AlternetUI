@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\ControlsSampleDll\DemoUtils.cs" Link="Links\DemoUtils.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Include="..\PrintingSample\PrintingMainWindow.uixml.cs"
              Link="Links\PrintingSample\PrintingMainWindow.uixml.cs"/>
     <UIXml Include="..\PrintingSample\PrintingMainWindow.uixml"

@@ -8,7 +8,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class VListBoxSamplePage : Panel
+    public partial class VListBoxSamplePage : Panel
     {
         private readonly ListSource items1 = new();
         private readonly ListSource items2 = new();
@@ -29,7 +29,7 @@ namespace ControlsSample
 
         public VListBoxSamplePage()
         {
-            PropertyGridSample.ObjectInit.AddDefaultOwnerDrawItemsForListBox(listBox, (s) =>
+            DemoUtils.AddDefaultOwnerDrawItemsForListBox(listBox, (s) =>
             {
                 items1.Add(s);
             });
@@ -49,7 +49,7 @@ namespace ControlsSample
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
             findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
             findText.TextChanged += FindText_TextChanged;
-            PropertyGridSample.ObjectInit.InitListBoxItems(listBox);
+            DemoUtils.InitListBoxItems(listBox);
 
             splitter.TargetMode = SplitterTargetMode.NextVisibleSibling;
             Children.Prepend(splitter);

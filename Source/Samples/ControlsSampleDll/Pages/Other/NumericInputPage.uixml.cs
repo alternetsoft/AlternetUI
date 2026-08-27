@@ -5,7 +5,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class NumericInputPage : Panel
+    public partial class NumericInputPage : Panel
     {
         private readonly PopupCalculator popupCalculator = new();
 

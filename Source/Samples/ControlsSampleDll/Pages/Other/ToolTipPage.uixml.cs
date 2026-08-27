@@ -6,7 +6,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class ToolTipPage : Panel
+    public partial class ToolTipPage : Panel
     {
         private static ImageSet? customImage;
         private static ImageSet? largeImage;

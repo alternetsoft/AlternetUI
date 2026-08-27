@@ -6,7 +6,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal partial class SoundPlayerPage : VerticalStackPanel
+    public partial class SoundPlayerPage : VerticalStackPanel
     {
         private static readonly string ResPrefix = $"Resources/Sounds/Wav/";
         internal static readonly string audioButton = $"{ResPrefix}button-124476.wav";

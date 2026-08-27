@@ -193,7 +193,7 @@ callback,
 
         public static void TestActivateEvents()
         {
-            var window = App.FindWindow<MainWindow>();
+            var window = App.MainWindow;
             if (window is null)
                 return;
             window.Activated -= Window_Activated;

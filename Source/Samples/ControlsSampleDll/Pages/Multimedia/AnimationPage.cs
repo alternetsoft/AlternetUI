@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace ControlsSample
 {
-    internal partial class AnimationPage : VerticalStackPanel
+    public partial class AnimationPage : VerticalStackPanel
     {
         private static readonly string ResPrefix = $"embres:ControlsSampleDll.Resources.Animation.";
 

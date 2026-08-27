@@ -9,7 +9,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class ListBoxAsTreeWindow : Window
+    public class ListBoxAsTreeWindow : Window
     {
         internal bool IsDebugInfoLogged = false;
 

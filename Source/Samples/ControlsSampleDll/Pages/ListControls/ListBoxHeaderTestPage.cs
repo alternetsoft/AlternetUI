@@ -6,7 +6,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class ListBoxHeaderTestPage : Panel
+    public class ListBoxHeaderTestPage : Panel
     {
         public ListBoxHeaderTestPage()
         {

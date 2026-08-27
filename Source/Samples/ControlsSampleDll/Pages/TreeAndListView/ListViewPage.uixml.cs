@@ -8,14 +8,14 @@ using static Alternet.UI.ControlsSampleUtils;
 
 namespace ControlsSample
 {
-    internal partial class ListViewPage : Panel
+    public partial class ListViewPage : Panel
     {
         private int newItemIndex = 0;
         private int newColIndex = 2;
 
-        private ListControlColumn? nameColumn;
-        private ListControlColumn? dataColumn;
-        private ListControlColumn? infoColumn;
+        private readonly ListControlColumn? nameColumn;
+        private readonly ListControlColumn? dataColumn;
+        private readonly ListControlColumn? infoColumn;
 
         static ListViewPage()
         {

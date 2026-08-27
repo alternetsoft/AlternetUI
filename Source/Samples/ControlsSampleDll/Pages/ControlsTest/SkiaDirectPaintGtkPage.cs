@@ -9,7 +9,7 @@ using Cairo;
 
 namespace ControlsSample
 {
-    internal class SkiaDirectPaintGtkPage : Panel
+    public class SkiaDirectPaintGtkPage : Panel
     {
         public SkiaDirectPaintGtkPage()
         {

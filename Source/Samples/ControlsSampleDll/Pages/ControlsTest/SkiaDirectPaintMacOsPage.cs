@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal class SkiaDirectPaintMacOsPage : Panel
+    public class SkiaDirectPaintMacOsPage : Panel
     {
         public SkiaDirectPaintMacOsPage()
         {

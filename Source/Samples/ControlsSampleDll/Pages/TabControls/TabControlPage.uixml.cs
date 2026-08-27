@@ -7,7 +7,7 @@ using Alternet.Drawing;
 
 namespace ControlsSample
 {
-    internal partial class TabControlPage : Panel
+    public partial class TabControlPage : Panel
     {
         private const string ResPrefixSmall = "embres:ControlsSampleDll.Resources.ToolBarPng.Small.";
         private const string ResPrefixLarge = "embres:ControlsSampleDll.Resources.ToolBarPng.Large.";

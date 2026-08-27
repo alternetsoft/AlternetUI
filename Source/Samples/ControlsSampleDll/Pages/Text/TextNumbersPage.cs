@@ -8,7 +8,7 @@ using Alternet.UI;
 
 namespace ControlsSample
 {
-    internal class TextNumbersPage : VerticalStackPanel
+    public class TextNumbersPage : VerticalStackPanel
     {
         private const string ErrorMinValueTextDouble = "-2.7976931348623157E+308";
         private const string ErrorMaxValueTextDouble = "2.7976931348623157E+308";

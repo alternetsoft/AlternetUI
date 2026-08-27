@@ -131,7 +131,7 @@ namespace PropertyGridSample
 
             public string? SampleString { get; set; } = "Sample string";
 
-            public string? SampleMemo { get; set; } = LoremIpsumSmall;
+            public string? SampleMemo { get; set; } = DemoUtils.LoremIpsumSmall;
 
             public FontStyle FontStyle { get; set; } = FontStyle.Bold;
         }

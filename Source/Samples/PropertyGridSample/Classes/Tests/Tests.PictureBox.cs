@@ -96,7 +96,7 @@ namespace PropertyGridSample
         {
             RichToolTipParams prm = new();
             prm.Title = "Tooltip title";
-            prm.Text = ObjectInit.LoremIpsumVerySmall;
+            prm.Text = DemoUtils.LoremIpsumVerySmall;
             prm.Image = ObjectInit.DefaultImageSet;
             control.SetImageFrom(prm);
         }

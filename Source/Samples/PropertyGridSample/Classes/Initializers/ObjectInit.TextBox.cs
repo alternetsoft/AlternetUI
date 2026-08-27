@@ -94,8 +94,8 @@ namespace PropertyGridSample
         {
             if (control is not MultilineTextBox textBox)
                 return;
-            textBox.SuggestedSize = DefaultListSize;
-            textBox.Text = LoremIpsum;
+            textBox.SuggestedSize = DemoUtils.DefaultListSize;
+            textBox.Text = DemoUtils.LoremIpsum;
         }
     }
 }

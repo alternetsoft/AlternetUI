@@ -9,7 +9,7 @@ using Alternet.UI.Localization;
 
 namespace ControlsSample
 {
-    internal partial class TextInputPage : Panel
+    public partial class TextInputPage : Panel
     {
         public static bool ConsumeTabKey = false;
 

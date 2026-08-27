@@ -6,7 +6,7 @@ using Alternet.Drawing;
 namespace ControlsSample
 {
     [IsCsLocalized(true)]
-    internal partial class CalendarPage : Panel
+    public partial class CalendarPage : Panel
     {
         private readonly Calendar calendar = new();
         private readonly TabControl tabControl = new();

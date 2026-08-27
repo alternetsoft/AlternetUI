@@ -115,7 +115,7 @@ namespace PropertyGridSample
 
             AddControlAction<Label>("Set LoremIpsum", (c) =>
             {
-                c.Text = ObjectInit.LoremIpsum;
+                c.Text = DemoUtils.LoremIpsum;
                 c.WordWrap = true;
             });
 

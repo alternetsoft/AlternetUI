@@ -12,7 +12,7 @@ using SkiaSharp;
 
 namespace ControlsSample
 {
-    internal class SkiaDrawingWindow : Window
+    public class SkiaDrawingWindow : Window
     {
         private const string ResPrefixBackground = "embres:ControlsSampleDll.Resources.Backgrounds.";
 

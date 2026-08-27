@@ -48,7 +48,7 @@ namespace ControlsSample
                 AddDefaultItems();
                 SetCustomColors();
 
-                PropertyGridSample.ObjectInit.AddItems(popupTreeView.MainControl, 10);
+                DemoUtils.AddItems(popupTreeView.MainControl, 10);
                 popupTreeView.AfterHide += PopupTreeView_AfterHide;
             }
 

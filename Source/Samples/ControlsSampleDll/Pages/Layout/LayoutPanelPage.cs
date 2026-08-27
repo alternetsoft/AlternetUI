@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace ControlsSample
 {
-    internal partial class LayoutPanelPage : StackPanel
+    public partial class LayoutPanelPage : StackPanel
     {
         static LayoutPanelPage()
         {
