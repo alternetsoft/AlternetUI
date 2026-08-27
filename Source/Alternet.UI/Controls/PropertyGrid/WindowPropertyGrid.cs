@@ -25,7 +25,7 @@ namespace Alternet.UI
 
         static WindowPropertyGrid()
         {
-            PropertyGrid.RegisterCollectionEditors();
+            PropertyGridUtils.RegisterCollectionEditors();
         }
 
         /// <summary>

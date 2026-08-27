@@ -17,7 +17,7 @@ namespace PropertyGridSample
     {
         public static bool DoSampleLocalization = true;
 
-        internal readonly SplittedControlsPanel panel = new();
+        internal readonly SplittedPropertyGridPanel panel = new();
 
         private readonly ContextMenuStrip propGridContextMenu = new();
         private MenuItem? resetMenu;

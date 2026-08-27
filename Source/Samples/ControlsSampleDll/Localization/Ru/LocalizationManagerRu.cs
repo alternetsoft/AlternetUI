@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace ControlsSample
 {
     public static class LocalizationManagerRu

@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Choices used in <see cref="PropertyGrid"/> items for enum and flags properties.
+    /// Choices used in the property grid items for enum and flags properties.
     /// </summary>
     public interface IPropertyGridChoices
     {

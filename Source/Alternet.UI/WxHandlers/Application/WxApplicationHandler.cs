@@ -86,6 +86,8 @@ namespace Alternet.UI
             {
                 InitOnLinux();
             }
+
+            LogListBox.ShowDeveloperTools += PropertyGrid.ShowDeveloperTools;
         }
 
         /// <summary>
@@ -534,7 +536,7 @@ namespace Alternet.UI
         {
             App.LogSeparator();
 
-            foreach (var item in Enum.GetValues(typeof(WxEventIdentifiers)))
+            foreach (var item in Enum.GetValues<WxEventIdentifiers>())
             {
                 App.LogNameValue(item, eventIdentifiers[(int)item]);
             }

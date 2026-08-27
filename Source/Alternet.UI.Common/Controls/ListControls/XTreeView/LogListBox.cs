@@ -20,6 +20,11 @@ namespace Alternet.UI
     public partial class LogListBox : XTreeView
     {
         /// <summary>
+        /// Occurs when user selects 'Developer Tools...' menu item in the context menu of the log list box.
+        /// </summary>
+        public static event Action? ShowDeveloperTools;
+
+        /// <summary>
         /// Indicates whether message identifiers should be displayed in the log.
         /// </summary>
         public static bool ShowMessageIdentifier = true;
@@ -317,7 +322,7 @@ namespace Alternet.UI
 
             void ShowDevTools()
             {
-                DialogFactory.ShowDeveloperTools();
+                ShowDeveloperTools?.Invoke();
             }
 
             ContextMenu.Opening -= OnContextMenuOpening;

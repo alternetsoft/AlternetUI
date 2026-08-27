@@ -2804,7 +2804,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         protected override IControlHandler CreateHandler()
         {
-            return ControlFactory.Handler.CreatePropertyGridHandler(this);
+            return new WxPropertyGridHandler();
         }
     }
 }

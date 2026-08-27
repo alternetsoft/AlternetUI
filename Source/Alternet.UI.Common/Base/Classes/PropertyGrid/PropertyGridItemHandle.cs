@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Handle of the <see cref="PropertyGrid"/> item.
+    /// Handle of the property grid item.
     /// </summary>
     public class PropertyGridItemHandle
     {

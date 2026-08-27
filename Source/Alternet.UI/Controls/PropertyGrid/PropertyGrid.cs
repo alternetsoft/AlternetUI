@@ -464,7 +464,7 @@ namespace Alternet.UI
         /// <param name="sender">Must implement <see cref="IPropInfoAndInstance"/>.</param>
         /// <param name="e">Event arguments.</param>
         /// <remarks>
-        /// Calls <see cref="DialogFactory.EditPropertyWithListEditor(object,string)"/> for
+        /// Calls <see cref="EditPropertyWithListEditor(object,string)"/> for
         /// the <paramref name="sender"/>,
         /// if it implements <see cref="IPropInfoAndInstance"/> interface.
         /// </remarks>

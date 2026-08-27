@@ -34,9 +34,9 @@ namespace PropertyGridSample
                 if (sender is not XScrollBar scrollBar)
                     return;
                 if (scrollBar.IsVertical)
-                    scrollBar.SuggestedSize = (Coord.NaN, 250);
+                    scrollBar.SuggestedSize = (float.NaN, 250);
                 else
-                    scrollBar.SuggestedSize = (250, Coord.NaN);
+                    scrollBar.SuggestedSize = (250, float.NaN);
                 scrollBar.PerformLayout();
             }
         }

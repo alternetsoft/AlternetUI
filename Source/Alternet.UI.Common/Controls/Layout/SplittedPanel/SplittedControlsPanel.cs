@@ -16,7 +16,6 @@ namespace Alternet.UI
     public partial class SplittedControlsPanel : SplittedPanel
     {
         private XTreeView? leftListBox;
-        private PropertyGrid? propertyGrid;
         private LogListBox? logControl;
         private XTreeView? actionsControl;
 
@@ -50,7 +49,7 @@ namespace Alternet.UI
         /// Gets the control with actions list.
         /// </summary>
         [Browsable(false)]
-        public XTreeView ActionsControl
+        public virtual XTreeView ActionsControl
         {
             get
             {
@@ -75,33 +74,6 @@ namespace Alternet.UI
         public new SideBarPanel RightPanel => (SideBarPanel)base.RightPanel;
 
         /// <summary>
-        /// Gets <see cref="PropertyGrid"/> which can be used to show properties.
-        /// </summary>
-        [Browsable(false)]
-        public PropertyGrid PropGrid
-        {
-            get
-            {
-                if (propertyGrid == null)
-                {
-                    propertyGrid = new()
-                    {
-                        HasBorder = false,
-                        VerticalAlignment = UI.VerticalAlignment.Fill,
-                        Visible = false,
-                    };
-
-                    RightPanel.Add(
-                        CommonStrings.Default.WindowTitleProperties,
-                        propertyGrid);
-                    RightPanel.SelectFirstTab();
-                }
-
-                return propertyGrid;
-            }
-        }
-
-        /// <summary>
         /// Gets <see cref="XTreeView"/> control on the left pane.
         /// </summary>
         [Browsable(false)]
@@ -117,7 +89,7 @@ namespace Alternet.UI
         /// Gets the control on the left pane.
         /// </summary>
         [Browsable(false)]
-        public XTreeView LeftListBox
+        public virtual XTreeView LeftListBox
         {
             get
             {
@@ -137,7 +109,7 @@ namespace Alternet.UI
         /// Gets control on the bottom pane which can be used for logging.
         /// </summary>
         [Browsable(false)]
-        public LogListBox LogControl
+        public virtual LogListBox LogControl
         {
             get
             {

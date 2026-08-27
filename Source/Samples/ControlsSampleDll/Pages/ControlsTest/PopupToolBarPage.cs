@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using Alternet.UI;
+using Alternet.UI.Localization;
 
 namespace ControlsSample
 {

@@ -18,15 +18,20 @@ namespace Alternet.UI
     public static partial class LogUtils
     {
 #pragma warning disable
-        internal static bool ShowFocusedProperties;
-        internal static bool LogFocusedControlInfo;
+        public static bool ShowFocusedProperties;
+        public static bool LogFocusedControlInfo;
+
         private static bool logGotFocus;
 
 #pragma warning restore
 
         private static TestActionsWindow? testActionsWindow;
 
-        internal static bool LogGotFocus
+        /// <summary>
+        /// Gets or sets a value indicating whether to log focus events and show debug focus rectangle
+        /// in the developer tools window.
+        /// </summary>
+        public static bool LogGotFocus
         {
             get => logGotFocus;
 

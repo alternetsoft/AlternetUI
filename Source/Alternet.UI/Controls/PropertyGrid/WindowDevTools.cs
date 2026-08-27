@@ -105,14 +105,14 @@ namespace Alternet.UI
 
             panel.LastFocusedControl = control;
 
-            if (LogGotFocus)
+            if (LogUtils.LogGotFocus)
             {
                 var s = control.ParentWindow?.Title ?? control.ParentWindow?.GetType().Name;
                 var prefix = "FocusedControl:";
                 App.LogReplace($"{prefix} <{s}>.<{control.GetType().FullName}>", prefix);
             }
 
-            if (LogFocusedControlInfo)
+            if (LogUtils.LogFocusedControlInfo)
                 LogFocusedControl(control);
         }
 

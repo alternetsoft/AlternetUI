@@ -11,8 +11,8 @@ namespace Alternet.UI
     {
         public PropertyGridCreateStyle DefaultCreateStyle
         {
-            get => PropertyGrid.DefaultCreateStyle;
-            set => PropertyGrid.DefaultCreateStyle = value;
+            get => PropertyGridUtils.DefaultCreateStyle;
+            set => PropertyGridUtils.DefaultCreateStyle = value;
         }
 
         public bool SetCustomLabel<T>(string propName, string label)

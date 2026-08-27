@@ -212,9 +212,9 @@ Environment.NewLine + Environment.NewLine +
                     if (sender is not XProgressBar control)
                         return;
                     if (control.IsVertical)
-                        control.SuggestedSize = (Coord.NaN, 250);
+                        control.SuggestedSize = (float.NaN, 250);
                     else
-                        control.SuggestedSize = (250, Coord.NaN);
+                        control.SuggestedSize = (250, float.NaN);
                 }
 
             });
@@ -401,9 +401,9 @@ Environment.NewLine + Environment.NewLine +
                 if (sender is not XSlider control)
                     return;
                 if (control.IsVertical)
-                    control.SuggestedSize = (Coord.NaN, 250);
+                    control.SuggestedSize = (float.NaN, 250);
                 else
-                    control.SuggestedSize = (250, Coord.NaN);
+                    control.SuggestedSize = (250, float.NaN);
                 control.PerformLayout();
             }
 

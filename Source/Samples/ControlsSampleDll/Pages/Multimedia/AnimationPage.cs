@@ -3,6 +3,8 @@ using System.IO;
 using System.Linq;
 
 using Alternet.UI;
+using Alternet.Drawing;
+using System.Collections.Generic;
 
 namespace ControlsSample
 {

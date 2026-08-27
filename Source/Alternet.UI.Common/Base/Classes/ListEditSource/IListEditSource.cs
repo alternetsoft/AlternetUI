@@ -10,8 +10,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines properties and methods for use in the <see cref="WindowListEdit"/>
-    /// collection editor.
+    /// Defines properties and methods for use in the collection editor.
     /// </summary>
     public interface IListEditSource
     {
@@ -75,7 +74,7 @@ namespace Alternet.UI
         string? GetItemTitle(object item);
 
         /// <summary>
-        /// Gets object which will be shown in the <see cref="PropertyGrid"/>.
+        /// Gets object which will be shown in the property grid.
         /// </summary>
         /// <param name="item">Item id.</param>
         object? GetProperties(object item);

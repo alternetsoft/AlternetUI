@@ -163,7 +163,7 @@ namespace PaintSample
             {
                 Brush = brush;
                 Center = center;
-                Timer = new Timer(TimeSpan.FromMilliseconds(10));
+                Timer = new Alternet.UI.Timer(TimeSpan.FromMilliseconds(10));
                 PointsPerTick = pointsPerTick;
                 PreviewBitmap = previewBitmap;
             }

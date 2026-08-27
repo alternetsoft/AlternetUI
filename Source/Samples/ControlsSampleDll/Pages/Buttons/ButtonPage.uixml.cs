@@ -181,7 +181,7 @@ namespace ControlsSample
 
             RichToolTipParams prm = new();
             prm.Title = "Tooltip title";
-            prm.Text = testSingleLine ? TextMemoPage.LoremIpsumSmallSingleLine : TextMemoPage.LoremIpsumSmallThreeLines;
+            prm.Text = testSingleLine ? DemoUtils.LoremIpsumSmallSingleLine : DemoUtils.LoremIpsumSmallThreeLines;
             prm.Image = ToolTipPage.LargeImageSet;
             prm.MaxWidth = 300;
             return prm;

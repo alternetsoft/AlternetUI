@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -29,7 +30,7 @@ namespace ControlsSample
         {
             BaseObject.Post(() =>
             {
-                throw new Exception(PropertyGridSample.ObjectInit.LoremIpsum);
+                throw new Exception(DemoUtils.LoremIpsum);
             });
         }
 
@@ -57,14 +58,14 @@ namespace ControlsSample
         [Conditional("DEBUG")]
         public static void TestThreadingTimerXX()
         {
-            System.Threading.TimerCallback callback = state =>
+            static void callback(object? state)
             {
                 TimerTickAction();
-            };
+            }
 
             TestTimersInit("ThreadingTimer", TestTimerInterval);
             TestThreadingTimer = new (
-                callback,
+callback,
                 null,
                 dueTime: TestTimerInterval,
                 period: TestTimerInterval);

@@ -27,8 +27,21 @@
     </Content>
     </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="..\PropertyGridSample\Classes\**\*.cs">
+      <Link>Links\PropertyGridSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </Compile>
+    <UIXml Include="..\PropertyGridSample\Classes\**\*.uixml">
+      <Link>Links\PropertyGridSample\%(RecursiveDir)/%(FileName)%(Extension)</Link>
+    </UIXml>
+  </ItemGroup>
 
-    <ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonData\GlobalUsing.cs" Link="GlobalUsing.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
         <ProjectReference Include="..\ControlsSampleDll\ControlsSampleDll.csproj" />
         <ProjectReference Include="..\..\Alternet.UI\Alternet.UI.csproj" />
         <ProjectReference Include="..\ApiDocDll\ApiDocDll.csproj" />
@@ -42,6 +55,11 @@
       <None Update="ControlsSample.sh">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Links\" />
     </ItemGroup>
 
   <Import Project="$(SignToolPath)" Condition="Exists('$(SignToolPath)')" />

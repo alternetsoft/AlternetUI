@@ -1,4 +1,9 @@
-﻿global using Coord = float;
+﻿global using Alternet.Drawing;
+global using Alternet.UI;
+global using System;
+global using System.ComponentModel;
+
+global using Coord = float;
 global using FontMeasure = float;
 global using FontSize = float;
 

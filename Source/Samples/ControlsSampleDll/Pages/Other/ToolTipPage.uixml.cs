@@ -342,7 +342,7 @@ namespace ControlsSample
                     textBox.Text = text;
                 else
                     if (textBox.Text == text)
-                        textBox.Text = PropertyGridSample.ObjectInit.LoremIpsum;
+                        textBox.Text = DemoUtils.LoremIpsum;
                     else
                         textBox.Text = string.Empty;
                 ShowToolTipButton_Click(this, EventArgs.Empty);
