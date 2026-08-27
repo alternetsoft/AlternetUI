@@ -1201,7 +1201,7 @@ namespace Alternet.UI
             if (Parent is not null)
             {
                 Parent.ChildVisibleChanged?.Invoke(Parent, new BaseEventArgs<AbstractControl>(this));
-                Parent.PerformLayout();
+                Parent.PerformLayoutAndInvalidate();
 
                 Parent.ForEachChild(
                     (c) =>
