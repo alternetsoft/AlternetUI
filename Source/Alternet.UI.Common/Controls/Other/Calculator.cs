@@ -18,6 +18,16 @@ namespace Alternet.UI
     public partial class Calculator : HiddenGenericBorder
     {
         /// <summary>
+        /// Gets or sets whether the toggle sign button is visible in the calculator.
+        /// </summary>
+        public static bool DefaultShowToggleSignButton = false;
+
+        /// <summary>
+        /// Gets or sets whether the 'erase to the left' button is visible in the calculator.
+        /// </summary>
+        public static bool DefaultShowEraseLeftButton = true;
+
+        /// <summary>
         /// Gets or sets whether clicking on a button will trigger repeated click events when the button is held down.
         /// </summary>
         public static bool DefaultIsClickRepeated = true;
@@ -48,9 +58,9 @@ namespace Alternet.UI
         public static readonly string ButtonTextClear = "AC";
         
         /// <summary>
-        /// Gets the text displayed on the "clear last" button.
+        /// Gets the text displayed on the "erase to the left" button.
         /// </summary>
-        public static readonly string ButtonTextClearLast = "CE";
+        public static readonly string ButtonTextEraseLeft = "CE";
 
         /// <summary>
         /// Gets or sets default minimum button size.
@@ -83,7 +93,9 @@ namespace Alternet.UI
 
         private readonly TextPicker displayTextBox;
         private readonly List<GenericControl> buttons = new();
+        private readonly List<GenericControl> rowPanels = new();
         private readonly ControlSet buttonSet;
+        private readonly GenericControl? clearLastButton;
 
         static Calculator()
         {
@@ -132,7 +144,7 @@ namespace Alternet.UI
             ButtonKind.Digit7, ButtonKind.Digit8, ButtonKind.Digit9, ButtonKind.Multiply, null,
             ButtonKind.Digit4, ButtonKind.Digit5, ButtonKind.Digit6, ButtonKind.Minus, null,
             ButtonKind.Digit1, ButtonKind.Digit2, ButtonKind.Digit3, ButtonKind.Plus, null,
-            ButtonKind.ToggleSign, ButtonKind.Digit0, ButtonKind.DecimalPoint, ButtonKind.Equals, ButtonKind.ClearLast,
+            ButtonKind.ToggleSign, ButtonKind.Digit0, ButtonKind.DecimalPoint, ButtonKind.Equals, ButtonKind.EraseLeft,
             };
 
             bool[] buttonVisibility =
@@ -141,7 +153,7 @@ namespace Alternet.UI
             true, true, true, true, false,
             true, true, true, true, false,
             true, true, true, true, false,
-            true, true, true, true, false,
+            DefaultShowToggleSignButton, true, true, true, DefaultShowEraseLeftButton,
             };
 
             TwoDimensionalBuffer<GenericControl> buttons2d = new(width: 5, height: 5);
@@ -155,6 +167,9 @@ namespace Alternet.UI
 
                 var kind = bk.Value;
 
+                int row = i / 5;
+                int col = i % 5;
+
                 var button = CreateButton();
                 button.CustomAttr["ButtonKind"] = kind;
                 button.Text = GetButtonText(kind);
@@ -164,13 +179,6 @@ namespace Alternet.UI
 
                 buttons2d[i] = button;
 
-                int row = i / 5;
-                int col = i % 5;
-
-                Thickness margin = DefaultButtonDistance;
-
-                button.Margin = margin;
-
                 button.Click += OnButtonClick;
                 button.DoubleClick += OnButtonDoubleClick;
             }
@@ -179,11 +187,15 @@ namespace Alternet.UI
             {
                 var rowItems = buttons2d.GetRowItems(i).Where(b => b != null).ToArray();
                 var panel = new TransparentPanel().WithChildren(rowItems);
+                rowPanels.Add(panel);
                 panel.Layout = LayoutStyle.Horizontal;
                 panel.Parent = this;
             }
 
             buttonSet = new(buttons);
+
+            clearLastButton = GetButton(ButtonKind.EraseLeft);
+            UpdateEraseToTheLeftChar();
         }
 
         /// <summary>
@@ -294,7 +306,7 @@ namespace Alternet.UI
             /// <summary>
             /// Represents the "clear last" button, which removes the last character from the input.
             /// </summary>
-            ClearLast,
+            EraseLeft,
         }
 
         /// <summary>
@@ -339,12 +351,12 @@ namespace Alternet.UI
 
             get
             {
-                return AllButtonsVisible([ButtonKind.ClearLast], true);
+                return AllButtonsVisible([ButtonKind.EraseLeft], true);
             }
 
             set
             {
-                SetButtonsVisible([ButtonKind.ClearLast], value);
+                SetButtonsVisible([ButtonKind.EraseLeft], value);
             }
         }
 
@@ -400,56 +412,6 @@ namespace Alternet.UI
         }      
 
         /// <summary>
-        /// Gets a value indicating whether all specified buttons have the specified visibility.
-        /// </summary>
-        /// <param name="buttonKinds">An array of button kinds to check visibility for.</param>
-        /// <param name="value">A boolean value indicating the visibility to check for.</param>
-        /// <returns><c>true</c> if all specified buttons have the specified visibility; otherwise, <c>false</c>.</returns>
-        public virtual bool AllButtonsVisible(ButtonKind[] buttonKinds, bool value)
-        {
-            foreach (var button in buttons)
-            {
-                var buttonKind = GetButtonKind(button);
-                if (buttonKind is not null && buttonKinds.Contains(buttonKind.Value))
-                {
-                    if(button.Visible != value)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        /// Gets the kind of button associated with the specified <see cref="GenericControl"/>.
-        /// </summary>
-        /// <param name="button">The button for which to get the kind.</param>
-        /// <returns>The kind of the button, or <c>null</c> if the kind is not set.</returns>
-        public virtual ButtonKind? GetButtonKind(GenericControl? button)
-        {
-            return button?.CustomAttr.GetAttribute("ButtonKind") as ButtonKind?;
-        }
-
-        /// <summary>
-        /// Sets the visibility of buttons in the calculator based on their kinds.
-        /// </summary>
-        /// <param name="buttonKinds">An array of button kinds to set visibility for.</param>
-        /// <param name="value">A boolean value indicating whether the buttons should be visible.</param>
-        public virtual void SetButtonsVisible(ButtonKind[] buttonKinds, bool value)
-        {
-            foreach (var buttonKind in buttonKinds)
-            {
-                var button = GetButton(buttonKind);
-                if (button != null)
-                {
-                    button.Visible = value;
-                }
-            }
-        }
-
-        /// <summary>
         /// Gets or sets a value indicating whether the display text box is visible.
         /// </summary>
         public virtual bool IsDisplayVisible
@@ -493,13 +455,19 @@ namespace Alternet.UI
         /// Gets display control.
         /// </summary>
         [Browsable(false)]
-        public AbstractControl DisplayTextBox => displayTextBox;
+        public GenericControl DisplayTextBox => displayTextBox;
 
         /// <summary>
         /// Gets collection of calculator buttons.
         /// </summary>
         [Browsable(false)]
-        public IReadOnlyList<AbstractControl> Buttons => buttons;
+        public IReadOnlyList<GenericControl> Buttons => buttons;
+
+        /// <summary>
+        /// Gets collection of row controls which contain the calculator buttons.
+        /// </summary>
+        [Browsable(false)]
+        public IReadOnlyList<GenericControl> RowControls => rowPanels;
 
         /// <inheritdoc/>
         public override string Text
@@ -639,7 +607,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates button used in the calculator.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The created button control.</returns>
         public virtual GenericControl CreateButton()
         {
             var result = new SpeedTextButton();
@@ -647,6 +615,7 @@ namespace Alternet.UI
             result.Padding = DefaultButtonPadding;
             result.MinimumSize = DefaultMinButtonSize;
             result.IsClickRepeated = DefaultIsClickRepeated;
+            result.Margin = DefaultButtonDistance;
             return result;
         }
 
@@ -732,6 +701,56 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a value indicating whether all specified buttons have the specified visibility.
+        /// </summary>
+        /// <param name="buttonKinds">An array of button kinds to check visibility for.</param>
+        /// <param name="value">A boolean value indicating the visibility to check for.</param>
+        /// <returns><c>true</c> if all specified buttons have the specified visibility; otherwise, <c>false</c>.</returns>
+        public virtual bool AllButtonsVisible(ButtonKind[] buttonKinds, bool value)
+        {
+            foreach (var button in buttons)
+            {
+                var buttonKind = GetButtonKind(button);
+                if (buttonKind is not null && buttonKinds.Contains(buttonKind.Value))
+                {
+                    if (button.Visible != value)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the kind of button associated with the specified <see cref="GenericControl"/>.
+        /// </summary>
+        /// <param name="button">The button for which to get the kind.</param>
+        /// <returns>The kind of the button, or <c>null</c> if the kind is not set.</returns>
+        public virtual ButtonKind? GetButtonKind(GenericControl? button)
+        {
+            return button?.CustomAttr.GetAttribute("ButtonKind") as ButtonKind?;
+        }
+
+        /// <summary>
+        /// Sets the visibility of buttons in the calculator based on their kinds.
+        /// </summary>
+        /// <param name="buttonKinds">An array of button kinds to set visibility for.</param>
+        /// <param name="value">A boolean value indicating whether the buttons should be visible.</param>
+        public virtual void SetButtonsVisible(ButtonKind[] buttonKinds, bool value)
+        {
+            foreach (var buttonKind in buttonKinds)
+            {
+                var button = GetButton(buttonKind);
+                if (button != null)
+                {
+                    button.Visible = value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Reports an error message to the user interface.
         /// </summary>
         /// <param name="e">The exception that occurred.</param>
@@ -772,7 +791,7 @@ namespace Alternet.UI
                 ButtonKind.Digit0 => "0",
                 ButtonKind.DecimalPoint => ".",
                 ButtonKind.Equals => "=",
-                ButtonKind.ClearLast => ButtonTextClearLast,
+                ButtonKind.EraseLeft => ButtonTextEraseLeft,
                 _ => throw new ArgumentOutOfRangeException(nameof(buttonKind), buttonKind, null),
             };
         }
@@ -821,6 +840,31 @@ namespace Alternet.UI
             ButtonClickHandler(kind);
         }
 
+        /// <inheritdoc/>
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            UpdateEraseToTheLeftChar();
+        }
+
+        /// <summary>
+        /// Updates the display character for the "erase to the left" button based on the current font.
+        /// If the font supports the specific glyph for the erase character, it will be used;
+        /// otherwise, a default text is displayed.
+        /// </summary>
+        protected virtual void UpdateEraseToTheLeftChar()
+        {
+            var glyphFont = FontFactory.DefaultSymbolFont.WithSize(RealFont.Size);
+
+            var hasGlyph = glyphFont.HasGlyph(CharUtils.EraseToTheLeftDisplayChar);
+
+            if (clearLastButton != null)
+            {
+                clearLastButton.Font = hasGlyph ? glyphFont : RealFont;
+                clearLastButton.Text = hasGlyph ? CharUtils.EraseToTheLeftDisplayChar.ToString() : ButtonTextEraseLeft;
+            }
+        }
+
         /// <summary>
         /// Handles button click events by performing actions based on the button's text.
         /// </summary>
@@ -847,7 +891,7 @@ namespace Alternet.UI
                 case ButtonKind.Clear:
                     DoActionClearAll();
                     break;
-                case ButtonKind.ClearLast:
+                case ButtonKind.EraseLeft:
                     DoActionClearLast();
                     break;
                 case ButtonKind.Equals:
@@ -908,6 +952,28 @@ namespace Alternet.UI
                     AddText(".");
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    /// Represents a specialized calculator control designed for PIN code entry.
+    /// This control inherits from <see cref="Calculator"/> but hides most 
+    /// calculator-specific UI elements, leaving only the numeric keypad.
+    /// </summary>
+    [ControlCategory(KnownControlCategory.Other)]
+    public partial class PinCodePicker : Calculator
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PinCodePicker"/> class.
+        /// </summary>
+        public PinCodePicker()
+        {
+            IsDisplayVisible = false;
+            ShowOperatorButtons = false;
+            ShowParenthesisButtons = false;
+            ShowClearButton = false;
+            ShowDecimalPointButton = false;
+            ShowToggleSignButton = false;
         }
     }
 }
