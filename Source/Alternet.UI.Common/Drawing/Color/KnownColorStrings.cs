@@ -1606,7 +1606,7 @@ namespace Alternet.UI.Localization
         /// </summary>
         /// <remarks>
         /// When "Custom" color is selected in the color editor
-        /// (for example in <see cref="PropertyGrid"/> control),
+        /// (for example in <see cref="IPropertyGrid"/> control),
         /// <see cref="ColorDialog"/> is shown for the user.
         /// </remarks>
         public string Custom

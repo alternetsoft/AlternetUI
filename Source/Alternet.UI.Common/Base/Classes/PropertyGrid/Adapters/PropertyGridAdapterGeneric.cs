@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Base helper class for complex <see cref="PropertyGrid"/> items.
+    /// Base helper class for complex <see cref="IPropertyGrid"/> items.
     /// </summary>
     public abstract class PropertyGridAdapterGeneric
     {
@@ -116,9 +116,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates properties to show in <see cref="PropertyGrid"/>.
+        /// Creates properties to show in <see cref="IPropertyGrid"/>.
         /// </summary>
-        /// <param name="propGrid">Use this <see cref="PropertyGrid"/> instance
+        /// <param name="propGrid">Use this <see cref="IPropertyGrid"/> instance
         /// to create properties.</param>
         /// <returns>List of created properties.</returns>
         public abstract IEnumerable<IPropertyGridItem> CreateProps(IPropertyGrid propGrid);

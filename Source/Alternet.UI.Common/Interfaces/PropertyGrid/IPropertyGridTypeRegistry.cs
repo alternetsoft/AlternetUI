@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains <see cref="PropertyGrid"/> settings related to <see cref="Type"/>.
+    /// Contains settings related to <see cref="Type"/>.
     /// </summary>
     public interface IPropertyGridTypeRegistry : IObjectToStringOptions
     {
@@ -39,32 +39,31 @@ namespace Alternet.UI
         Type InstanceType { get; }
 
         /// <summary>
-        /// Gets <see cref="PropertyGrid"/> settings related
-        /// to base type of <see cref="InstanceType"/>.
+        /// Gets settings related to base type of <see cref="InstanceType"/>.
         /// </summary>
         IPropertyGridTypeRegistry? BaseTypeRegistry { get; }
 
         /// <summary>
-        /// Gets <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/>.
+        /// Gets settings related to <see cref="PropertyInfo"/>.
         /// </summary>
         /// <param name="propInfo">Property information.</param>
         IPropertyGridPropInfoRegistry GetPropRegistry(PropertyInfo propInfo);
 
         /// <summary>
-        /// Gets <see cref="PropertyGrid"/> settings related to the specified property name.
+        /// Gets settings related to the specified property name.
         /// </summary>
         /// <param name="propName">Property name.</param>
         IPropertyGridPropInfoRegistry? GetPropRegistry(string propName);
 
         /// <summary>
-        /// Gets <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/> if
+        /// Gets settings related to <see cref="PropertyInfo"/> if
         /// its available, otherwise returns <c>null</c>.
         /// </summary>
         /// <param name="propInfo">Property information.</param>
         IPropertyGridPropInfoRegistry? GetPropRegistryOrNull(PropertyInfo propInfo);
 
         /// <summary>
-        /// Gets <see cref="PropertyGrid"/> settings related to the specified property name if
+        /// Gets settings related to the specified property name if
         /// its available, otherwise returns <c>null</c>.
         /// </summary>
         /// <param name="propName">Property name.</param>

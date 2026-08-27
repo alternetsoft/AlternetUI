@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Container for the property values in the <see cref="PropertyGrid"/>.
+    /// Container for the property values in the <see cref="IPropertyGrid"/>.
     /// </summary>
     public interface IPropertyGridVariant : IDisposable
     {

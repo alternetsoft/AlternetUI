@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Contains <see cref="PropertyGrid"/> settings related to <see cref="PropertyInfo"/>.
+    /// Contains settings related to <see cref="PropertyInfo"/>.
     /// </summary>
     public interface IPropertyGridPropInfoRegistry : IObjectToStringOptions
     {
         /// <summary>
         /// Gets or sets customization parameters used when new <see cref="IPropertyGridItem"/>
-        /// instances are created in <see cref="PropertyGrid"/>.
+        /// instances are created in <see cref="IPropertyGrid"/>.
         /// </summary>
         IPropertyGridNewItemParams NewItemParams { get; set; }
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Item of the <see cref="PropertyGrid"/>.
+    /// Item of the property grid.
     /// </summary>
     public interface IPropertyGridItem : IPropInfoAndInstance, IBaseObjectWithId
     {
@@ -34,7 +34,7 @@ namespace Alternet.UI
         IPropertyGridNewItemParams? Params { get; }
 
         /// <summary>
-        /// Gets <see cref="PropertyGrid"/> instance which owns this property.
+        /// Gets <see cref="IPropertyGrid"/> instance which owns this property.
         /// </summary>
         IPropertyGrid Owner { get; }
 
@@ -62,7 +62,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// You can change list of children properties before item is
-        /// added to <see cref="PropertyGrid"/>.
+        /// added to <see cref="IPropertyGrid"/>.
         /// </remarks>
         IList<IPropertyGridItem> Children { get; }
 

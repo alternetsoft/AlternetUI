@@ -4,7 +4,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Helper class for using <see cref="Font"/> properties in the <see cref="PropertyGrid"/>.
+    /// Helper class for using <see cref="Font"/> properties in the <see cref="IPropertyGrid"/>.
     /// </summary>
     public class PropertyGridAdapterFont : PropertyGridAdapterGeneric
     {

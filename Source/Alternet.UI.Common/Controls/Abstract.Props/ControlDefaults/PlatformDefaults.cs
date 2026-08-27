@@ -27,10 +27,10 @@ namespace Alternet.UI
         public virtual bool AdjustTextBoxesHeight { get; set; } = false;
 
         /// <summary>
-        /// Defines default vertical spacing of the <see cref="PropertyGrid"/>.
+        /// Defines default vertical spacing of the <see cref="IPropertyGrid"/>.
         /// </summary>
         /// <remarks>
-        /// Used in <see cref="PropertyGrid.SetVerticalSpacing"/>.
+        /// Used in <see cref="IPropertyGrid.SetVerticalSpacing"/>.
         /// </remarks>
         public virtual int PropertyGridVerticalSpacing { get; set; } =
             App.IsWindowsOS ? 3 : 2;

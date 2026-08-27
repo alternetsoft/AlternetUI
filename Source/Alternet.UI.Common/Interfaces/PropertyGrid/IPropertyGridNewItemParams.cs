@@ -10,7 +10,7 @@ namespace Alternet.UI
 {
     /// <summary>
     /// Defines customization parameters used when new <see cref="IPropertyGridItem"/>
-    /// instances are created in <see cref="PropertyGrid"/>.
+    /// instances are created in <see cref="IPropertyGrid"/>.
     /// </summary>
     public interface IPropertyGridNewItemParams : IObjectToStringOptions
     {
@@ -24,7 +24,7 @@ namespace Alternet.UI
         /// </summary>
         /// <remarks>
         /// This setting is used to specify localized or user friendly property label
-        /// which will be used in <see cref="PropertyGrid"/> instead of property name.
+        /// which will be used in <see cref="IPropertyGrid"/> instead of property name.
         /// </remarks>
         string? Label { get; set; }
 
@@ -57,17 +57,11 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets kind of the <see cref="Color"/> editor.
         /// </summary>
-        /// <remarks>
-        /// Used in <see cref="PropertyGrid.CreateColorItemWithKind"/>.
-        /// </remarks>
         PropertyGridEditKindColor? EditKindColor { get; set; }
 
         /// <summary>
         /// Gets or sets kind of the <see cref="string"/> editor.
         /// </summary>
-        /// <remarks>
-        /// Used in <see cref="PropertyGrid.CreateStringItemWithKind"/>.
-        /// </remarks>
         PropertyGridEditKindString? EditKindString { get; set; }
 
         /// <summary>
@@ -86,7 +80,7 @@ namespace Alternet.UI
         /// <remarks>
         /// This doesn't change readonly status of ellipsis button. If you need to
         /// change readonly status of all parts of property editor, use
-        /// <see cref="PropertyGrid.SetPropertyReadOnly"/>.
+        /// <see cref="IPropertyGrid.SetPropertyReadOnly"/>.
         /// </remarks>
         bool? TextReadOnly { get; set; }
 
