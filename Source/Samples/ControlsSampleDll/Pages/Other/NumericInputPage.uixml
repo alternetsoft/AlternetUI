@@ -44,7 +44,10 @@
     </VerticalStackPanel>
 
     <VerticalStackPanel Padding="10" Title="Calculator" Name="calcPanel" MinChildMargin="10">
-      <Calculator HasBorder="true" Name="calculator"/>
+      <HorizontalStackPanel>
+        <Calculator HasBorder="true" Name="calculator"/>
+        <PanelSettings Name="calcSettings" HasBorder="true" Margin="10,0,0,0" HorizontalAlignment="Fill"/>
+      </HorizontalStackPanel>
       <XButton Text="Show popup" Name="showPopupButton"/>
     </VerticalStackPanel>
 

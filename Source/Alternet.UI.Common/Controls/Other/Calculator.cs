@@ -18,6 +18,41 @@ namespace Alternet.UI
     public partial class Calculator : HiddenGenericBorder
     {
         /// <summary>
+        /// Gets or sets whether clicking on a button will trigger repeated click events when the button is held down.
+        /// </summary>
+        public static bool DefaultIsClickRepeated = true;
+
+        /// <summary>
+        /// Gets or sets whether a double-click on a button should be treated as a single click.
+        /// </summary>
+        public static bool DefaultDoubleClickAsClick = false;
+
+        /// <summary>
+        /// Gets the text displayed on the "plus/minus" button.
+        /// </summary>
+        public static readonly string ButtonTextPlusMinus = " \u00B1";
+        
+        /// <summary>
+        /// Gets the text displayed on the "divide" button.
+        /// </summary>
+        public static readonly string ButtonTextDivide = "/";
+        
+        /// <summary>
+        /// Gets the text displayed on the "multiply" button.
+        /// </summary>
+        public static readonly string ButtonTextMultiply = "*";
+        
+        /// <summary>
+        /// Gets the text displayed on the "clear" button.
+        /// </summary>
+        public static readonly string ButtonTextClear = "AC";
+        
+        /// <summary>
+        /// Gets the text displayed on the "clear last" button.
+        /// </summary>
+        public static readonly string ButtonTextClearLast = "CE";
+
+        /// <summary>
         /// Gets or sets default minimum button size.
         /// </summary>
         public static SizeD DefaultMinButtonSize = (50, 40);
@@ -37,14 +72,17 @@ namespace Alternet.UI
         /// </summary>
         public static Coord DefaultDistanceToDisplay = 10;
 
-        private const string ButtonTextPlusMinus = " \u00B1";
-        private const string ButtonTextDivide = "/";
-        private const string ButtonTextMultiply = "*";
-        private const string ButtonTextClear = "AC";
-        private const string ButtonTextClearLast = "CE";
+        private static readonly ButtonKind[] operatorButtons = new ButtonKind[]
+        {
+            ButtonKind.Plus,
+            ButtonKind.Minus,
+            ButtonKind.Multiply,
+            ButtonKind.Divide,
+            ButtonKind.Equals,
+        };
 
         private readonly TextPicker displayTextBox;
-        private readonly List<AbstractControl> buttons = new();
+        private readonly List<GenericControl> buttons = new();
         private readonly ControlSet buttonSet;
 
         static Calculator()
@@ -88,62 +126,336 @@ namespace Alternet.UI
                 ReportError(false);
             };
 
-            string[] buttonLabels =
+            ButtonKind?[] buttonKinds =
             {
-            ButtonTextClear, "(", ")", ButtonTextDivide,
-            "7", "8", "9", ButtonTextMultiply,
-            "4", "5", "6", "-",
-            "1", "2", "3", "+",
-            ButtonTextPlusMinus, "0", ".", "=",
+            ButtonKind.Clear, ButtonKind.LeftParenthesis, ButtonKind.RightParenthesis, ButtonKind.Divide, null,
+            ButtonKind.Digit7, ButtonKind.Digit8, ButtonKind.Digit9, ButtonKind.Multiply, null,
+            ButtonKind.Digit4, ButtonKind.Digit5, ButtonKind.Digit6, ButtonKind.Minus, null,
+            ButtonKind.Digit1, ButtonKind.Digit2, ButtonKind.Digit3, ButtonKind.Plus, null,
+            ButtonKind.ToggleSign, ButtonKind.Digit0, ButtonKind.DecimalPoint, ButtonKind.Equals, ButtonKind.ClearLast,
             };
 
-            TwoDimensionalBuffer<GenericControl> buttons2d = new(width: 4, height: 5);
-
-            for (int i = 0; i < buttonLabels.Length; i++)
+            bool[] buttonVisibility =
             {
+            true, true, true, true, false,
+            true, true, true, true, false,
+            true, true, true, true, false,
+            true, true, true, true, false,
+            true, true, true, true, false,
+            };
+
+            TwoDimensionalBuffer<GenericControl> buttons2d = new(width: 5, height: 5);
+
+            for (int i = 0; i < buttonKinds.Length; i++)
+            {
+                var bk = buttonKinds[i];
+
+                if (bk is null)
+                    continue;
+
+                var kind = bk.Value;
+
                 var button = CreateButton();
-                button.Text = buttonLabels[i];
+                button.CustomAttr["ButtonKind"] = kind;
+                button.Text = GetButtonText(kind);
+                button.Visible = buttonVisibility[i];
 
                 buttons.Add(button);
-                button.Text = buttonLabels[i];
 
                 buttons2d[i] = button;
 
-                int row = i / 4;
-                int col = i % 4;
+                int row = i / 5;
+                int col = i % 5;
 
-                Thickness margin = Thickness.Empty;
-
-                if (col != 0)
-                    margin.Left = DefaultButtonDistance;
-                if (col != 3)
-                    margin.Right = DefaultButtonDistance;
-                if (row != 0)
-                    margin.Top = DefaultButtonDistance;
-                if (row != 4)
-                    margin.Bottom = DefaultButtonDistance;
+                Thickness margin = DefaultButtonDistance;
 
                 button.Margin = margin;
 
-                button.Click += (sender, e) =>
-                {
-                    ButtonClickHandler(button.Text);
-                };
-                button.DoubleClick += (sender, e) =>
-                {
-                    ButtonClickHandler(button.Text);
-                };
+                button.Click += OnButtonClick;
+                button.DoubleClick += OnButtonDoubleClick;
             }
 
             for (int i = 0; i < buttons2d.Height; i++)
             {
-                var rowItems = buttons2d.GetRowItems(i).ToArray();
+                var rowItems = buttons2d.GetRowItems(i).Where(b => b != null).ToArray();
                 var panel = new TransparentPanel().WithChildren(rowItems);
                 panel.Layout = LayoutStyle.Horizontal;
                 panel.Parent = this;
             }
 
             buttonSet = new(buttons);
+        }
+
+        /// <summary>
+        /// Defines the kinds of buttons available in the calculator.
+        /// </summary>
+        public enum ButtonKind
+        {
+            /// <summary>
+            /// Represents the "clear" button, which clears the entire input.
+            /// </summary>
+            Clear,
+
+            /// <summary>
+            /// Represents the "(" button, which inserts a left parenthesis.
+            /// </summary>
+            LeftParenthesis,
+
+            /// <summary>
+            /// Represents the ")" button, which inserts a right parenthesis.
+            /// </summary>
+            RightParenthesis,
+
+            /// <summary>
+            /// Represents the "divide" button, which performs division.
+            /// </summary>
+            Divide,
+
+            /// <summary>
+            /// Represents the "7" button, which inputs the digit 7.
+            /// </summary>
+            Digit7,
+
+            /// <summary>
+            /// Represents the "8" button, which inputs the digit 8.
+            /// </summary>
+            Digit8,
+
+            /// <summary>
+            /// Represents the "9" button, which inputs the digit 9.
+            /// </summary>
+            Digit9,
+
+            /// <summary>
+            /// Represents the "multiply" button, which performs multiplication.
+            /// </summary>
+            Multiply,
+
+            /// <summary>
+            /// Represents the "4" button, which inputs the digit 4.
+            /// </summary>
+            Digit4,
+
+            /// <summary>
+            /// Represents the "5" button, which inputs the digit 5.
+            /// </summary>
+            Digit5,
+
+            /// <summary>
+            /// Represents the "6" button, which inputs the digit 6.
+            /// </summary>
+            Digit6,
+
+            /// <summary>
+            /// Represents the "minus" button, which performs subtraction.
+            /// </summary>
+            Minus,
+
+            /// <summary>
+            /// Represents the "1" button, which inputs the digit 1.
+            /// </summary>
+            Digit1,
+
+            /// <summary>
+            /// Represents the "2" button, which inputs the digit 2.
+            /// </summary>
+            Digit2,
+
+            /// <summary>
+            /// Represents the "3" button, which inputs the digit 3.
+            /// </summary>
+            Digit3,
+
+            /// <summary>
+            /// Represents the "plus" button, which performs addition.
+            /// </summary>
+            Plus,
+
+            /// <summary>
+            /// Represents the "toggle sign" button, which toggles the sign of the current input.
+            /// </summary>
+            ToggleSign,
+
+            /// <summary>
+            /// Represents the "0" button, which inputs the digit 0.
+            /// </summary>
+            Digit0,
+
+            /// <summary>
+            /// Represents the "." button, which inputs a decimal point.
+            /// </summary>
+            DecimalPoint,
+
+            /// <summary>
+            /// Represents the "=" button, which evaluates the current expression.
+            /// </summary>
+            Equals,
+
+            /// <summary>
+            /// Represents the "clear last" button, which removes the last character from the input.
+            /// </summary>
+            ClearLast,
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether operator buttons are visible in the calculator.
+        /// </summary>
+        public virtual bool ShowOperatorButtons
+        {
+
+            get
+            {
+                return AllButtonsVisible(operatorButtons, true);
+            }
+
+            set
+            {
+                SetButtonsVisible(operatorButtons, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the clear button is visible in the calculator.
+        /// </summary>
+        public virtual bool ShowClearButton
+        {
+
+            get
+            {
+                return AllButtonsVisible([ButtonKind.Clear], true);
+            }
+
+            set
+            {
+                SetButtonsVisible([ButtonKind.Clear], value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the clear last button is visible in the calculator.
+        /// </summary>
+        public virtual bool ShowClearLastButton
+        {
+
+            get
+            {
+                return AllButtonsVisible([ButtonKind.ClearLast], true);
+            }
+
+            set
+            {
+                SetButtonsVisible([ButtonKind.ClearLast], value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the toggle sign button is visible in the calculator.
+        /// </summary>
+        public virtual bool ShowToggleSignButton
+        {
+
+            get
+            {
+                return AllButtonsVisible([ButtonKind.ToggleSign], true);
+            }
+
+            set
+            {
+                SetButtonsVisible([ButtonKind.ToggleSign], value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the decimal point button is visible in the calculator.
+        /// </summary>
+        public virtual bool ShowDecimalPointButton
+        {
+
+            get
+            {
+                return AllButtonsVisible([ButtonKind.DecimalPoint], true);
+            }
+
+            set
+            {
+                SetButtonsVisible([ButtonKind.DecimalPoint], value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether parenthesis buttons are visible in the calculator.
+        /// </summary>
+        public virtual bool ShowParenthesisButtons
+        {
+
+            get
+            {
+                return AllButtonsVisible([ButtonKind.LeftParenthesis, ButtonKind.RightParenthesis], true);
+            }
+
+            set
+            {
+                SetButtonsVisible([ButtonKind.LeftParenthesis, ButtonKind.RightParenthesis], value);
+            }
+        }      
+
+        /// <summary>
+        /// Gets a value indicating whether all specified buttons have the specified visibility.
+        /// </summary>
+        /// <param name="buttonKinds">An array of button kinds to check visibility for.</param>
+        /// <param name="value">A boolean value indicating the visibility to check for.</param>
+        /// <returns><c>true</c> if all specified buttons have the specified visibility; otherwise, <c>false</c>.</returns>
+        public virtual bool AllButtonsVisible(ButtonKind[] buttonKinds, bool value)
+        {
+            foreach (var button in buttons)
+            {
+                var buttonKind = GetButtonKind(button);
+                if (buttonKind is not null && buttonKinds.Contains(buttonKind.Value))
+                {
+                    if(button.Visible != value)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the kind of button associated with the specified <see cref="GenericControl"/>.
+        /// </summary>
+        /// <param name="button">The button for which to get the kind.</param>
+        /// <returns>The kind of the button, or <c>null</c> if the kind is not set.</returns>
+        public virtual ButtonKind? GetButtonKind(GenericControl? button)
+        {
+            return button?.CustomAttr.GetAttribute("ButtonKind") as ButtonKind?;
+        }
+
+        /// <summary>
+        /// Sets the visibility of buttons in the calculator based on their kinds.
+        /// </summary>
+        /// <param name="buttonKinds">An array of button kinds to set visibility for.</param>
+        /// <param name="value">A boolean value indicating whether the buttons should be visible.</param>
+        public virtual void SetButtonsVisible(ButtonKind[] buttonKinds, bool value)
+        {
+            foreach (var buttonKind in buttonKinds)
+            {
+                var button = GetButton(buttonKind);
+                if (button != null)
+                {
+                    button.Visible = value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the display text box is visible.
+        /// </summary>
+        public virtual bool IsDisplayVisible
+        {
+            get => displayTextBox.Visible;
+            set => displayTextBox.Visible = value;
         }
 
         /// <summary>
@@ -280,6 +592,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the button control corresponding to the specified <see cref="ButtonKind"/>.
+        /// </summary>
+        /// <param name="kind">The kind of button to retrieve.</param>
+        /// <returns>The button control if found; otherwise, null.</returns>
+        public virtual GenericControl? GetButton(ButtonKind kind)
+        {
+            foreach (var button in buttons)
+            {
+                var buttonKind = GetButtonKind(button);
+
+                if (buttonKind == kind)
+                {
+                    return button;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Asynchronously evaluates the specified formula and returns the result.
         /// </summary>
         /// <remarks>The evaluation process uses the default formula options, global object,
@@ -314,7 +646,7 @@ namespace Alternet.UI
             result.UseTheme = SpeedButton.KnownTheme.StaticBorder;
             result.Padding = DefaultButtonPadding;
             result.MinimumSize = DefaultMinButtonSize;
-            result.IsClickRepeated = true;
+            result.IsClickRepeated = DefaultIsClickRepeated;
             return result;
         }
 
@@ -411,6 +743,41 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the text to display on a button based on its kind.
+        /// </summary>
+        /// <param name="buttonKind">The kind of the button.</param>
+        /// <returns>The text to display on the button.</returns>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
+        protected virtual string GetButtonText(ButtonKind buttonKind)
+        {
+            return buttonKind switch
+            {
+                ButtonKind.Clear => ButtonTextClear,
+                ButtonKind.LeftParenthesis => "(",
+                ButtonKind.RightParenthesis => ")",
+                ButtonKind.Divide => ButtonTextDivide,
+                ButtonKind.Digit7 => "7",
+                ButtonKind.Digit8 => "8",
+                ButtonKind.Digit9 => "9",
+                ButtonKind.Multiply => ButtonTextMultiply,
+                ButtonKind.Digit4 => "4",
+                ButtonKind.Digit5 => "5",
+                ButtonKind.Digit6 => "6",
+                ButtonKind.Minus => "-",
+                ButtonKind.Digit1 => "1",
+                ButtonKind.Digit2 => "2",
+                ButtonKind.Digit3 => "3",
+                ButtonKind.Plus => "+",
+                ButtonKind.ToggleSign => ButtonTextPlusMinus,
+                ButtonKind.Digit0 => "0",
+                ButtonKind.DecimalPoint => ".",
+                ButtonKind.Equals => "=",
+                ButtonKind.ClearLast => ButtonTextClearLast,
+                _ => throw new ArgumentOutOfRangeException(nameof(buttonKind), buttonKind, null),
+            };
+        }
+
+        /// <summary>
         /// Reports a validation error with the specified message.
         /// </summary>
         /// <param name="isError">Indicates whether an error occurred.</param>
@@ -430,40 +797,115 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when a button is clicked in the calculator.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnButtonClick(object? sender, EventArgs e)
+        {
+            var kind = GetButtonKind(sender as GenericControl);
+            ButtonClickHandler(kind);
+        }
+        
+        /// <summary>
+        /// Called when a button is double-clicked in the calculator.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnButtonDoubleClick(object? sender, EventArgs e)   
+        {
+            if (!DefaultDoubleClickAsClick)
+                return;
+
+            var kind = GetButtonKind(sender as GenericControl);
+            ButtonClickHandler(kind);
+        }
+
+        /// <summary>
         /// Handles button click events by performing actions based on the button's text.
         /// </summary>
         /// <remarks>The method supports various button actions, including clearing text,
         /// removing the last character, evaluating expressions,  and appending mathematical
         /// operators or other characters. Specific
-        /// actions are determined by the value of <paramref name="buttonText"/>.</remarks>
-        /// <param name="buttonText">The text displayed on the button that was clicked.
+        /// actions are determined by the value of <paramref name="buttonKind"/>.</remarks>
+        /// <param name="buttonKind">The kind of button that was clicked.
         /// This determines the action to perform.</param>
-        protected virtual void ButtonClickHandler(string buttonText)
+        protected virtual void ButtonClickHandler(ButtonKind? buttonKind)
         {
+            if (buttonKind is null)
+                return;
+
+            void AddText(string text)
+            {
+                displayTextBox.Text += text;
+            }   
+
             displayTextBox.CancelEdit();
 
-            switch (buttonText)
+            switch (buttonKind)
             {
-                case ButtonTextClear:
+                case ButtonKind.Clear:
                     DoActionClearAll();
                     break;
-                case ButtonTextClearLast:
+                case ButtonKind.ClearLast:
                     DoActionClearLast();
                     break;
-                case "=":
+                case ButtonKind.Equals:
                     DoActionCalcFormula();
                     break;
-                case ButtonTextMultiply:
+                case ButtonKind.Multiply:
                     displayTextBox.Text += "*";
                     break;
-                case ButtonTextDivide:
+                case ButtonKind.Divide:
                     displayTextBox.Text += "/";
                     break;
-                case ButtonTextPlusMinus:
+                case ButtonKind.ToggleSign:
                     DoActionToggleSign();
                     break;
-                default:
-                    displayTextBox.Text += buttonText;
+                case ButtonKind.LeftParenthesis:
+                    AddText("(");
+                    break;
+                case ButtonKind.RightParenthesis:
+                    AddText(")");
+                    break;
+                case ButtonKind.Digit0:
+                    AddText("0");
+                    break;
+                case ButtonKind.Digit1:
+                    AddText("1");
+                    break;
+                case ButtonKind.Digit2:
+                    AddText("2");
+                    break;
+                case ButtonKind.Digit3:
+                    AddText("3");
+                    break;
+                case ButtonKind.Digit4:
+                    AddText("4");
+                    break;
+                case ButtonKind.Digit5:
+                    AddText("5");
+                    break;
+                case ButtonKind.Digit6:
+                    AddText("6");
+                    break;
+                case ButtonKind.Digit7:
+                    AddText("7");
+                    break;
+                case ButtonKind.Digit8:
+                    AddText("8");
+                    break;
+                case ButtonKind.Digit9:
+                    AddText("9");
+                    break;
+                case ButtonKind.Minus:
+                    AddText("-");
+                    break;
+                case ButtonKind.Plus:
+                    AddText("+");
+                    break;
+                case ButtonKind.DecimalPoint:
+                    AddText(".");
                     break;
             }
         }

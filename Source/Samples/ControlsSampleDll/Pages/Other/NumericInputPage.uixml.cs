@@ -41,6 +41,14 @@ namespace ControlsSample
             {
                 popupCalculator.ShowPopup(showPopupButton);
             };
+
+            calcSettings.AddInput("Show display", calculator, nameof(calculator.IsDisplayVisible));
+            calcSettings.AddInput("Show operator buttons", calculator, nameof(calculator.ShowOperatorButtons));
+            calcSettings.AddInput("Show parenthesis buttons", calculator, nameof(calculator.ShowParenthesisButtons));
+            calcSettings.AddInput("Show clear button", calculator, nameof(calculator.ShowClearButton));
+            calcSettings.AddInput("Show toggle sign button", calculator, nameof(calculator.ShowToggleSignButton));
+            calcSettings.AddInput("Show decimal point button", calculator, nameof(calculator.ShowDecimalPointButton));
+            calcSettings.AddInput("Show clear last button", calculator, nameof(calculator.ShowClearLastButton));
         }
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)
