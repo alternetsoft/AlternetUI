@@ -77,7 +77,6 @@ namespace ControlsSample
 
         private void EditorButton_Click(object? sender, System.EventArgs e)
         {
-            checkListBox.EditItemsWithListEditor();
         }
 
         private void CheckListBox_MouseLeftButtonDown(

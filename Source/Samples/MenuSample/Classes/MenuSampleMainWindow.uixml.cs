@@ -421,8 +421,6 @@ namespace MenuSample
 
         private void StatusEditButton_Click(object? sender, EventArgs e)
         {
-            StatusBar ??= new StatusBar();
-            DialogFactory.EditItemsWithListEditor(GetStatusBar());
         }
 
         private void StatusClearButton_Click(object? sender, EventArgs e)

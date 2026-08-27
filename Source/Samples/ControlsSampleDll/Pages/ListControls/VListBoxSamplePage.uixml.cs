@@ -205,7 +205,6 @@ namespace ControlsSample
 
         private void EditorButton_Click(object? sender, System.EventArgs e)
         {
-            DialogFactory.EditItemsWithListEditor(listBox);
         }
 
         private void HasBorderButton_Click(object? sender, EventArgs e)

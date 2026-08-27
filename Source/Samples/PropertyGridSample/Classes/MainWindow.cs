@@ -27,7 +27,7 @@ namespace PropertyGridSample
         static MainControl()
         {
             // Registers known collection property editors.
-            PropertyGrid.RegisterCollectionEditors();
+            PropertyGridUtils.RegisterCollectionEditors();
         }
 
         private static void InitSampleLocalization()
@@ -43,7 +43,7 @@ namespace PropertyGridSample
             KnownColorStrings.Default.Azure = "Azure color";
 
             // Sample localization of Enum property values
-            var brushTypeChoices = PropertyGrid.GetChoices<BrushType>();
+            var brushTypeChoices = PropertyGridUtils.GetChoices<BrushType>();
 
             brushTypeChoices.SetLabelForValue<BrushType>(
                 BrushType.LinearGradient,
@@ -54,12 +54,12 @@ namespace PropertyGridSample
                 "Radial Gradient");
 
             // Sample of hiding Enum value in PropertyGrid
-            var knownColorsChoices = PropertyGrid.GetChoices<PropertyGridKnownColors>();
+            var knownColorsChoices = PropertyGridUtils.GetChoices<PropertyGridKnownColors>();
             knownColorsChoices.RemoveValue<PropertyGridKnownColors>(PropertyGridKnownColors.Custom);
             knownColorsChoices.RemoveValue<PropertyGridKnownColors>(PropertyGridKnownColors.Black);
 
             // Sample localization of the property label
-            var prm = PropertyGrid.GetNewItemParams(typeof(AbstractControl), "Name");
+            var prm = PropertyGridUtils.GetNewItemParams(typeof(AbstractControl), "Name");
             if (prm is not null)
                 prm.Label = "(name)";
         }

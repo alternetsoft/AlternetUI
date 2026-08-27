@@ -28,7 +28,7 @@ namespace PropertyGridSample
         void AddControlAction<T>(string title, Action<T> action)
             where T : AbstractControl
         {
-            PropertyGrid.AddSimpleAction<T>(title, () =>
+            PropertyGridUtils.AddSimpleAction<T>(title, () =>
             {
                 var selectedControl = GetSelectedControl<T>();
                 if (selectedControl is null)
@@ -59,7 +59,7 @@ namespace PropertyGridSample
             InitTestsPanel();
             InitTestsShapeControl();
 
-            PropertyGrid.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
+            PropertyGridUtils.AddSimpleAction<PanelOkCancelButtons>("Reorder buttons", ReorderButtonsTest);
         }
 
         void InitTestsShapeControl()
@@ -557,33 +557,6 @@ namespace PropertyGridSample
             return result;
         }
 
-        internal static void TestColorVariant()
-        {
-            static Color Fn(Color color)
-            {
-                static void DebugWriteColor(string label, Color c)
-                {
-                    Debug.WriteLine(label+" " + c.NameAndARGBValue);
-                }
-
-                var variant = PropertyGrid.CreateVariant();
-                variant.AsColor = color;
-                var result = variant.AsColor;
-
-                Debug.WriteLine("====");
-                DebugWriteColor("Color", color);
-                Debug.WriteLine("Variant ValueType: " + variant.ValueType);
-                DebugWriteColor("Result", result);
-                Debug.WriteLine("====");
-
-                return result;
-            }
-
-            Fn(Color.Red);
-            Fn(SystemColors.ButtonFace);
-            Fn(Color.FloralWhite);            
-        }
-
         internal static void TestIsNullableClass()
         {
 #pragma warning disable
@@ -591,43 +564,6 @@ namespace PropertyGridSample
             var fontNullableInfo =
                 AssemblyUtils.GetPropInfo(NullableProps.Default, "AsFontN")!.PropertyType;
 #pragma warning restore
-        }
-
-        internal void TestLong()
-        {
-            IPropertyGridVariant variant = PropertyGrid.CreateVariant();
-
-            long minLong = long.MinValue;
-            long maxLong = long.MaxValue;
-            ulong minULong = ulong.MinValue;
-            ulong maxULong = ulong.MaxValue;
-
-            variant.AsLong = minLong;
-            long minLong2 = variant.AsLong;
-
-            variant.AsLong = maxLong;
-            long maxLong2 = variant.AsLong;
-
-            variant.AsULong = minULong;
-            ulong minULong2 = variant.AsULong;
-
-            variant.AsULong = maxULong;
-            ulong maxULong2 = variant.AsULong;
-
-            App.Log($"{minLong} - {minLong2}");
-            App.Log($"{maxLong} - {maxLong2}");
-            App.Log($"{minULong} - {minULong2}");
-            App.Log($"{maxULong} - {maxULong2}");
-
-            variant.AsBool = true;
-
-            variant.AsLong = 150;
-
-            variant.AsDateTime = DateTime.Now;
-
-            variant.AsDouble = 18;
-
-            variant.AsString = "hello";
         }
     }
 }

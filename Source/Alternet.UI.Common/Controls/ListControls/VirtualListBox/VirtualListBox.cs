@@ -1031,14 +1031,6 @@ namespace Alternet.UI
             return unitFirst;
         }
 
-        /// <summary>
-        /// Shows list editor dialog which allows to edit items.
-        /// </summary>
-        public virtual void EditItemsWithListEditor()
-        {
-            DialogFactory.EditItemsWithListEditor(this);
-        }
-
         /// <inheritdoc/>
         public override void RemoveAll()
         {

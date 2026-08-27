@@ -52,7 +52,7 @@ namespace Alternet.UI
         {
             get
             {
-                newItemParams ??= PropertyGrid.CreateNewItemParams(this, propInfo);
+                newItemParams ??= PropertyGridUtils.CreateNewItemParams(this, propInfo);
                 return newItemParams;
             }
 

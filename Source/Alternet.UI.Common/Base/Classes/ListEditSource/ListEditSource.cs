@@ -70,7 +70,7 @@ namespace Alternet.UI
 
         /// <summary>
         /// Creates <see cref="IListEditSource"/> provider using collection editors
-        /// registered with <see cref="PropertyGrid.RegisterCollectionEditor"/>.
+        /// registered with <see cref="PropertyGridUtils.RegisterCollectionEditor"/>.
         /// </summary>
         /// <param name="instance">Object which contains the collection.</param>
         /// <param name="propInfo">Property information.</param>
@@ -80,7 +80,7 @@ namespace Alternet.UI
         {
             if (propInfo == null)
                 return null;
-            var editType = PropertyGrid.GetListEditSourceType(instance?.GetType(), propInfo);
+            var editType = PropertyGridUtils.GetListEditSourceType(instance?.GetType(), propInfo);
             if (editType == null)
                 return null;
 

@@ -102,7 +102,7 @@ namespace PropertyGridSample
 
         void CreateColorProperties()
         {
-            var prm = PropertyGrid.CreateNewItemParams();
+            var prm = PropertyGridUtils.CreateNewItemParams();
             PropGrid.AddPropCategory("Color");
 
             // Default color editor
@@ -164,18 +164,18 @@ namespace PropertyGridSample
         {
             PropGrid.AddPropCategory("Flags and Enum");
 
-            var choices1 = PropertyGrid.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
+            var choices1 = PropertyGridUtils.CreateChoicesOnce(typeof(PropertyGridCreateStyle));
             var prop = PropGrid.CreateFlagsItem("Flags", null, choices1,
-                PropertyGrid.DefaultCreateStyle);
+                PropertyGridUtils.DefaultCreateStyle);
             PropGrid.Add(prop);
 
-            var choices2 = PropertyGrid.CreateChoicesOnce(typeof(HorizontalAlignment));
+            var choices2 = PropertyGridUtils.CreateChoicesOnce(typeof(HorizontalAlignment));
             prop = PropGrid.CreateChoicesItem("Enum", null, choices2,
                 HorizontalAlignment.Center);
             PropGrid.Add(prop);
 
             // Editable enum. Can have values which are not in choices.
-            var choices = PropertyGrid.CreateChoices();
+            var choices = PropertyGridUtils.CreateChoices();
             choices.Add("Item 1", 1);
             choices.Add("Item 2", 2);
             choices.Add("Item 3", 3);
@@ -195,7 +195,7 @@ namespace PropertyGridSample
         void CreateStringProperties()
         {
             PropGrid.AddPropCategory("String");
-            var prm = PropertyGrid.CreateNewItemParams();
+            var prm = PropertyGridUtils.CreateNewItemParams();
 
             var prop = PropGrid.CreateStringItem("Str");
             PropGrid.Add(prop);

@@ -15,7 +15,7 @@ namespace Alternet.UI
 
         static WxPropertyGridHandler()
         {
-            PropertyGrid.EditWithListEdit += DialogFactory.EditWithListEdit;
+            PropertyGridUtils.EditWithListEdit += PropertyGrid.EditWithListEdit;
 
             KnownColorStrings.CustomChanged += (s, e) =>
             {
@@ -1544,9 +1544,9 @@ namespace Alternet.UI
 
         internal static void KnownColorsAdd()
         {
-            if (PropertyGrid.StaticFlags.HasFlag(PropertyGrid.StaticStateFlags.KnownColorsAdded))
+            if (PropertyGridUtils.StaticFlags.HasFlag(PropertyGridUtils.StaticStateFlags.KnownColorsAdded))
                 return;
-            PropertyGrid.StaticFlags |= PropertyGrid.StaticStateFlags.KnownColorsAdded;
+            PropertyGridUtils.StaticFlags |= PropertyGridUtils.StaticStateFlags.KnownColorsAdded;
 
             var items = ColorUtils.GetColorInfoItems();
 
@@ -1593,7 +1593,7 @@ namespace Alternet.UI
 
         internal override Native.Control CreateNativeControl()
         {
-            return new NativePropertyGrid(PropertyGrid.DefaultCreateStyle);
+            return new NativePropertyGrid(PropertyGridUtils.DefaultCreateStyle);
         }
 
         internal bool CommitChangesFromEditor()

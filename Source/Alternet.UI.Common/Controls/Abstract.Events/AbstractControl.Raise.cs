@@ -1297,14 +1297,6 @@ namespace Alternet.UI
 
             RaiseNotifications((n) => n.AfterKeyDown(this, e));
 
-            if (DebugUtils.AreDeveloperToolsShown && !e.Handled)
-            {
-                KeyInfo.Run(
-                    KnownShortcuts.ShowDeveloperTools,
-                    e,
-                    DialogFactory.ShowDeveloperTools);
-            }
-
             if (ForEachVisibleChild(e, (control, e) => control.OnAfterParentKeyDown(this, e)))
                 return;
             if (ForEachParent(e, (control, e) => control.OnAfterChildKeyDown(this, e)))

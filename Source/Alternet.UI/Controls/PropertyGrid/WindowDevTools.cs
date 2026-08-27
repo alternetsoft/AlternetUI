@@ -13,13 +13,6 @@ namespace Alternet.UI
     /// </summary>
     internal class WindowDevTools : Window
     {
-        private static bool logGotFocus;
-
-#pragma warning disable
-        internal static bool ShowFocusedProperties;
-        internal static bool LogFocusedControlInfo;
-#pragma warning restore
-
         private readonly PanelDevTools panel = new()
         {
         };
@@ -51,17 +44,6 @@ namespace Alternet.UI
         }
 
         public PanelDevTools DevPanel => panel;
-
-        internal static bool LogGotFocus
-        {
-            get => logGotFocus;
-
-            set
-            {
-                logGotFocus = value;
-                AbstractControl.ShowDebugFocusRect = value;
-            }
-        }
 
         protected override void DisposeManaged()
         {

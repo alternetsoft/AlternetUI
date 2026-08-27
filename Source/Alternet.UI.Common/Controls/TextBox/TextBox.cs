@@ -27,12 +27,12 @@ namespace Alternet.UI
 
         static TextBox()
         {
-            PropertyGrid.AddInitializer(() =>
+            PropertyGridUtils.AddInitializer(() =>
             {
-                var prm = PropertyGrid.GetNewItemParams(typeof(TextBox), nameof(TextBox.TextAlign));
+                var prm = PropertyGridUtils.GetNewItemParams(typeof(TextBox), nameof(TextBox.TextAlign));
                 if (prm is not null)
                 {
-                    var choices = PropertyGrid.CreateChoices();
+                    var choices = PropertyGridUtils.CreateChoices();
                     choices.Add(PropNameStrings.Default.Left, GenericAlignment.Left);
                     choices.Add(PropNameStrings.Default.Right, GenericAlignment.Right);
                     choices.Add(PropNameStrings.Default.Center, GenericAlignment.CenterHorizontal);

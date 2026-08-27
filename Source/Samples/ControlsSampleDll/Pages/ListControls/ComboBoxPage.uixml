@@ -45,7 +45,7 @@
                   Margin="0,3,0,0" Click="GetTextSelectionButton_Click"/>
           <XButton Text="Items[2] = 'hello'" Name="buttonItemsEqHello" IsTextLocalized="true"
                   Margin="0,3,0,0" Click="SetItem_Click"/>
-          <XButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true"
+          <XButton Text="Edit Items..." Name="buttonEditItems" IsTextLocalized="true" IsEnabled="false"
                 Margin="0,3,0,0" Click="Editor_Click" IsVisible="false"/>
         </VerticalStackPanel>
 

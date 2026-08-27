@@ -331,7 +331,7 @@ namespace Alternet.UI
         /// <param name="type">Type for which required simple actions are registered.</param>
         public virtual void AddActions(Type type)
         {
-            var actions = PropertyGrid.GetSimpleActions(type);
+            var actions = PropertyGridUtils.GetSimpleActions(type);
             if (actions is null)
                 return;
             var orderedActions = actions.OrderBy(item => item.Title);

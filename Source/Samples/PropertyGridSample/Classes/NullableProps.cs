@@ -45,32 +45,32 @@ namespace PropertyGridSample
 
         static NullableProps()
         {
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsByteN), "byte");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsBoolN), "bool");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsCharN), "char");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsSByteN), "sbyte");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsInt16N), "short");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsUInt16N), "ushort");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsInt32N), "int");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsUInt32N), "uint");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsInt64N), "long");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsUInt64N), "ulong");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsSingleN), "float");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsDoubleN), "double");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsDecimalN), "decimal");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsDateTimeN), "DateTime");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsStringN), "string");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsColorN), "Color");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsFontN), "Font");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsBrushN), "Brush");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsPenN), "Pen");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsSizeN), "Size");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsThicknessN), "Thickness");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsRectN), "Rect");
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsPointN), "Point");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsByteN), "byte");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsBoolN), "bool");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsCharN), "char");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsSByteN), "sbyte");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsInt16N), "short");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsUInt16N), "ushort");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsInt32N), "int");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsUInt32N), "uint");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsInt64N), "long");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsUInt64N), "ulong");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsSingleN), "float");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsDoubleN), "double");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsDecimalN), "decimal");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsDateTimeN), "DateTime");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsStringN), "string");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsColorN), "Color");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsFontN), "Font");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsBrushN), "Brush");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsPenN), "Pen");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsSizeN), "Size");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsThicknessN), "Thickness");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsRectN), "Rect");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsPointN), "Point");
 
-            PropertyGrid.SetCustomLabel<NullableProps>(nameof(AsFontStyleN), "FontStyle");
-            PropertyGrid.SetCustomLabel<NullableProps>(
+            PropertyGridUtils.SetCustomLabel<NullableProps>(nameof(AsFontStyleN), "FontStyle");
+            PropertyGridUtils.SetCustomLabel<NullableProps>(
                 nameof(AsVerticalAlignmnentN),
                 "VerticalAlignmnent");
         }

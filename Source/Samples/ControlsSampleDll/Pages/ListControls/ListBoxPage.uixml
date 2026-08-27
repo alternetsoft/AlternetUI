@@ -41,7 +41,7 @@
                   Margin="0,0,0,5" IsTextLocalized="true"/>
         <Label Text="Find Text" Margin="0,0,0,5" IsTextLocalized="true"/>
         <TextBox Name="findText" Margin="0,0,0,5"/>
-        <XButton Text="Edit Items..." Margin="0,0,0,10" IsTextLocalized="true"
+        <XButton Text="Edit Items..." Margin="0,0,0,10" IsTextLocalized="true" IsEnabled="false"
             Click="EditorButton_Click" Name="buttonEditItems" IsVisible="false"/>
       </StackPanel>
     </StackPanel>

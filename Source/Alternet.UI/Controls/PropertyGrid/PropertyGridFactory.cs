@@ -18,49 +18,49 @@ namespace Alternet.UI
         public bool SetCustomLabel<T>(string propName, string label)
             where T : class
         {
-            return PropertyGrid.SetCustomLabel<T>(propName, label);
+            return PropertyGridUtils.SetCustomLabel<T>(propName, label);
         }
 
         public IPropertyGridNewItemParams GetNewItemParams(Type type, PropertyInfo propInfo)
         {
-            return PropertyGrid.GetNewItemParams(type, propInfo);
+            return PropertyGridUtils.GetNewItemParams(type, propInfo);
         }
 
         public IPropertyGridPropInfoRegistry GetPropRegistry(Type type, PropertyInfo propInfo)
         {
-            return PropertyGrid.GetPropRegistry(type, propInfo);
+            return PropertyGridUtils.GetPropRegistry(type, propInfo);
         }
 
         public string? GetCustomLabel<T>(string propName)
             where T : class
         {
-            return PropertyGrid.GetCustomLabel<T>(propName);
+            return PropertyGridUtils.GetCustomLabel<T>(propName);
         }
 
         public IPropertyGridChoices GetChoices<T>()
             where T : Enum
         {
-            return PropertyGrid.GetChoices<T>();
+            return PropertyGridUtils.GetChoices<T>();
         }
 
         public IPropertyGridNewItemParams CreateNewItemParams(PropertyInfo? propInfo = null)
         {
-            return PropertyGrid.CreateNewItemParams(null, propInfo);
+            return PropertyGridUtils.CreateNewItemParams(null, propInfo);
         }
 
         public IPropertyGridChoices CreateChoices()
         {
-            return PropertyGrid.CreateChoices();
+            return PropertyGridUtils.CreateChoices();
         }
 
         public IPropertyGridChoices CreateChoices(Type enumType)
         {
-            return PropertyGrid.CreateChoices(enumType);
+            return PropertyGridUtils.CreateChoices(enumType);
         }
 
         public IPropertyGridChoices CreateChoicesOnce(Type enumType)
         {
-            return PropertyGrid.CreateChoicesOnce(enumType);
+            return PropertyGridUtils.CreateChoicesOnce(enumType);
         }
 
         public IPropertyGrid CreatePropertyGrid()
@@ -70,12 +70,12 @@ namespace Alternet.UI
 
         public IPropertyGridTypeRegistry GetTypeRegistry(Type type)
         {
-            return PropertyGrid.GetTypeRegistry(type);
+            return PropertyGridUtils.GetTypeRegistry(type);
         }
 
         public void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func)
         {
-            PropertyGrid.RegisterPropCreateFunc(type, func);
+            PropertyGridUtils.RegisterPropCreateFunc(type, func);
         }
     }
 }

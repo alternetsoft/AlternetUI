@@ -8,7 +8,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Defines all <see cref="PropertyGrid"/> colors.
+    /// Defines colors related to the property grid.
     /// </summary>
     public class PropertyGridColors : IPropertyGridColors
     {
@@ -310,7 +310,7 @@ namespace Alternet.UI
         /// <summary>
         /// Creates known <see cref="IPropertyGridColors"/> instance.
         /// </summary>
-        /// <param name="colors">Known <see cref="PropertyGrid"/> colors.</param>
+        /// <param name="colors">Known <see cref="PropertyGridKnownColors"/> value.</param>
         public static IPropertyGridColors CreateColors(PropertyGridKnownColors colors)
         {
             return colors switch

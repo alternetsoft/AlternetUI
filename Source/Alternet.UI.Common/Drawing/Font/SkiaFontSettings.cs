@@ -85,17 +85,6 @@ namespace Alternet.Drawing
             }
         }
 
-        /// <summary>
-        /// Shows the font settings dialog with adjustable options which allows to
-        /// customize text rendering.
-        /// </summary>
-        /// <param name="onClose">The optional callback to be invoked
-        /// when the dialog is accepted.</param>
-        public static void ShowFontSettingsDialog(Action? onClose = null)
-        {
-            PopupPropertyGrid.ShowPropertiesPopup(new SkiaFontSettings(), onClose);
-        }
-
         /// <inheritdoc/>
         protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {

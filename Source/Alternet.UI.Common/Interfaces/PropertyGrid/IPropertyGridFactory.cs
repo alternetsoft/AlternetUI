@@ -14,45 +14,50 @@ namespace Alternet.UI
     /// in the application.</remarks>
     public interface IPropertyGridFactory
     {
-        /// <inheritdoc cref="PropertyGrid.DefaultCreateStyle"/>
+        /// <summary>
+        /// Gets or sets default <see cref="PropertyGridCreateStyle"/> used when creating new <see cref="IPropertyGrid"/> instance.
+        /// </summary>
         PropertyGridCreateStyle DefaultCreateStyle { get; set; }
 
-        /// <inheritdoc cref="PropertyGrid.SetCustomLabel"/>
+        /// <inheritdoc cref="PropertyGridUtils.SetCustomLabel"/>
         bool SetCustomLabel<T>(string propName, string label)
             where T : class;
 
-        /// <inheritdoc cref="PropertyGrid.GetNewItemParams(Type, PropertyInfo)"/>
+        /// <inheritdoc cref="PropertyGridUtils.GetNewItemParams(Type, PropertyInfo)"/>
         IPropertyGridNewItemParams GetNewItemParams(Type type, PropertyInfo propInfo);
 
-        /// <inheritdoc cref="PropertyGrid.GetPropRegistry"/>
+        /// <inheritdoc cref="PropertyGridUtils.GetPropRegistry"/>
         IPropertyGridPropInfoRegistry GetPropRegistry(Type type, PropertyInfo propInfo);
 
-        /// <inheritdoc cref="PropertyGrid.GetCustomLabel"/>
+        /// <inheritdoc cref="PropertyGridUtils.GetCustomLabel"/>
         string? GetCustomLabel<T>(string propName)
             where T : class;
 
-        /// <inheritdoc cref="PropertyGrid.RegisterPropCreateFunc"/>
+        /// <inheritdoc cref="PropertyGridUtils.RegisterPropCreateFunc"/>
         void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func);
 
-        /// <inheritdoc cref="PropertyGrid.CreateNewItemParams(PropertyInfo)"/>
+        /// <inheritdoc cref="PropertyGridUtils.CreateNewItemParams(PropertyInfo)"/>
         IPropertyGridNewItemParams CreateNewItemParams(PropertyInfo? propInfo = null);
 
-        /// <inheritdoc cref="PropertyGrid.GetTypeRegistry"/>
+        /// <inheritdoc cref="PropertyGridUtils.GetTypeRegistry"/>
         IPropertyGridTypeRegistry GetTypeRegistry(Type type);
 
-        /// <inheritdoc cref="PropertyGrid.CreateChoices()"/>
+        /// <inheritdoc cref="PropertyGridUtils.CreateChoices()"/>
         IPropertyGridChoices CreateChoices();
 
-        /// <inheritdoc cref="PropertyGrid.CreatePropertyGrid"/>
+        /// <summary>
+        /// Creates instance of <see cref="IPropertyGrid"/>.
+        /// </summary>
+        /// <returns>Instance of <see cref="IPropertyGrid"/>.</returns>
         IPropertyGrid CreatePropertyGrid();
 
-        /// <inheritdoc cref="PropertyGrid.CreateChoicesOnce"/>
+        /// <inheritdoc cref="PropertyGridUtils.CreateChoicesOnce"/>
         IPropertyGridChoices CreateChoicesOnce(Type enumType);
 
-        /// <inheritdoc cref="PropertyGrid.CreateChoices(Type)"/>
+        /// <inheritdoc cref="PropertyGridUtils.CreateChoices(Type)"/>
         IPropertyGridChoices CreateChoices(Type enumType);
 
-        /// <inheritdoc cref="PropertyGrid.GetChoices"/>
+        /// <inheritdoc cref="PropertyGridUtils.GetChoices"/>
         IPropertyGridChoices GetChoices<T>()
             where T : Enum;
     }

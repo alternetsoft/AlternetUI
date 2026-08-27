@@ -12,7 +12,7 @@ namespace Alternet.UI
     internal class PropertyGridNewItemParams : IPropertyGridNewItemParams
     {
         public static readonly IPropertyGridNewItemParams Default =
-            PropertyGrid.CreateNewItemParams(null!);
+            PropertyGridUtils.CreateNewItemParams(null!);
 
         private readonly IPropertyGridPropInfoRegistry? owner;
         private PropertyInfo? propInfo;
@@ -415,7 +415,7 @@ namespace Alternet.UI
                     return registry.HasNewItemParams && func(registry) is not null;
                 }
 
-                var pr = PropertyGrid.GetValidBasePropRegistry(
+                var pr = PropertyGridUtils.GetValidBasePropRegistry(
                             OwnerInstanceType,
                             PropInfo,
                             ValidatorFunc);

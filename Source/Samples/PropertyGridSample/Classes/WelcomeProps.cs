@@ -46,29 +46,29 @@ namespace PropertyGridSample
 
         static WelcomeProps()
         {
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsByte), "byte");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsBool), "bool");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsChar), "char");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsSByte), "sbyte");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsInt16), "short");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsUInt16), "ushort");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsInt32), "int");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsUInt32), "uint");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsInt64), "long");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsUInt64), "ulong");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsSingle), "float");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsDouble), "double");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsDecimal), "decimal");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsDateTime), "DateTime");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsString), "string");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsColor), "Color");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsFont), "Font");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsBrush), "Brush");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsPen), "Pen");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsSize), "Size");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsThickness), "Thickness");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsRect), "Rect");
-            PropertyGrid.SetCustomLabel<WelcomeProps>(nameof(AsPoint), "Point");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsByte), "byte");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsBool), "bool");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsChar), "char");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsSByte), "sbyte");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsInt16), "short");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsUInt16), "ushort");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsInt32), "int");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsUInt32), "uint");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsInt64), "long");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsUInt64), "ulong");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsSingle), "float");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsDouble), "double");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsDecimal), "decimal");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsDateTime), "DateTime");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsString), "string");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsColor), "Color");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsFont), "Font");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsBrush), "Brush");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsPen), "Pen");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsSize), "Size");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsThickness), "Thickness");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsRect), "Rect");
+            PropertyGridUtils.SetCustomLabel<WelcomeProps>(nameof(AsPoint), "Point");
         }
 
         [Category(CategoryInt)]

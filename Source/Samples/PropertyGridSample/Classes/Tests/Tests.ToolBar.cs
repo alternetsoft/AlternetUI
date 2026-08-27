@@ -21,7 +21,7 @@ namespace PropertyGridSample
                 c.AddIcon(KnownIcons.Default);
             });
 
-            PropertyGrid.AddSimpleAction<ToolBar>(
+            PropertyGridUtils.AddSimpleAction<ToolBar>(
                 "Configure as ContextMenu",
                 () => {
                     var control = GetSelectedControl<ToolBar>();
@@ -31,18 +31,18 @@ namespace PropertyGridSample
                     (control.Children[0] as SpeedButton)?.SetLabelImageAsMenuArrow();
                 });
 
-            PropertyGrid.AddSimpleAction<ToolBarSet>(
+            PropertyGridUtils.AddSimpleAction<ToolBarSet>(
                 "Add Sticky Grouped Buttons",
                 TestStickyGroupedButtons);
 
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Visible", TestGenericToolBarVisible);
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Enabled", TestGenericToolBarEnabled);
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Test Visible", TestGenericToolBarVisible);
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Test Enabled", TestGenericToolBarEnabled);
 
-            PropertyGrid.AddSimpleAction<ToolBar>(
+            PropertyGridUtils.AddSimpleAction<ToolBar>(
                 "Test Delete (Without Dispose)",
                 ()=> { TestGenericToolBarDelete(); });
 
-            PropertyGrid.AddSimpleAction<ToolBar>(
+            PropertyGridUtils.AddSimpleAction<ToolBar>(
                 "Test Delete (With Dispose)",
                 () => { TestGenericToolBarDelete(true); });
 
@@ -62,22 +62,22 @@ namespace PropertyGridSample
             });
 
 
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Sticky", TestGenericToolBarSticky);
-            PropertyGrid.AddSimpleAction<ToolBar>(
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Test Sticky", TestGenericToolBarSticky);
+            PropertyGridUtils.AddSimpleAction<ToolBar>(
                 "Test Foreground Color",
                 TestGenericToolBarForegroundColor);
-            PropertyGrid.AddSimpleAction<ToolBar>(
+            PropertyGridUtils.AddSimpleAction<ToolBar>(
                 "Test Background Color",
                 TestGenericToolBarBackgroundColor);
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Font", TestGenericToolBarFont);
-            PropertyGrid.AddSimpleAction<ToolBar>("Test Background", TestGenericToolBarBackground);
-            PropertyGrid.AddSimpleAction<ToolBar>(
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Test Font", TestGenericToolBarFont);
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Test Background", TestGenericToolBarBackground);
+            PropertyGridUtils.AddSimpleAction<ToolBar>(
                 "Reset Background",
                 TestGenericToolBarResetBackground);
-            PropertyGrid.AddSimpleAction<ToolBar>("Clear", TestGenericToolBarClear);
-            PropertyGrid.AddSimpleAction<ToolBar>("Add OK button", TestGenericToolBarAddOk);
-            PropertyGrid.AddSimpleAction<ToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
-            PropertyGrid.AddSimpleAction<ToolBar>("ReInit", TestGenericToolBarReInit);
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Clear", TestGenericToolBarClear);
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Add OK button", TestGenericToolBarAddOk);
+            PropertyGridUtils.AddSimpleAction<ToolBar>("Add Cancel button", TestGenericToolBarAddCancel);
+            PropertyGridUtils.AddSimpleAction<ToolBar>("ReInit", TestGenericToolBarReInit);
         }
 
         void TestGenericToolBarFont()

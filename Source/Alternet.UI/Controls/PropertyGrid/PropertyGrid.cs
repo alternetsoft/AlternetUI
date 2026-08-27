@@ -45,12 +45,12 @@ namespace Alternet.UI
 
         static PropertyGrid()
         {
-            AddInitializer(() =>
+            PropertyGridUtils.AddInitializer(() =>
             {
-                RegisterPropCreateFunc(typeof(Color), FuncCreatePropertyAsColor);
-                RegisterPropCreateFunc(typeof(Font), FuncCreatePropertyAsFont);
-                RegisterPropCreateFunc(typeof(Brush), FuncCreatePropertyAsBrush);
-                RegisterPropCreateFunc(typeof(Pen), FuncCreatePropertyAsPen);
+                PropertyGridUtils.RegisterPropCreateFunc(typeof(Color), FuncCreatePropertyAsColor);
+                PropertyGridUtils.RegisterPropCreateFunc(typeof(Font), FuncCreatePropertyAsFont);
+                PropertyGridUtils.RegisterPropCreateFunc(typeof(Brush), FuncCreatePropertyAsBrush);
+                PropertyGridUtils.RegisterPropCreateFunc(typeof(Pen), FuncCreatePropertyAsPen);
             });
         }
 
@@ -69,9 +69,9 @@ namespace Alternet.UI
         /// </summary>
         public PropertyGrid()
         {
-            if(initializers is not null)
+            if(PropertyGridUtils.Initializers is not null)
             {
-                while (initializers.TryPop(out var action))
+                while (PropertyGridUtils.Initializers.TryPop(out var action))
                 {
                     action();
                 }
@@ -175,13 +175,6 @@ namespace Alternet.UI
         /// <see cref="PropertyInfo"/> is converted to the <see cref="IPropertyGridItem"/>.
         /// </remarks>
         public event CreatePropertyEventHandler? PropertyCustomCreate;
-
-        /// <summary>
-        /// Defines default style for the newly created
-        /// <see cref="PropertyGrid"/> controls.
-        /// </summary>
-        public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
-            = PropertyGridCreateStyle.DefaultStyle;
 
         /// <summary>
         /// Gets or sets default editor for <see cref="Color"/>.
@@ -302,6 +295,82 @@ namespace Alternet.UI
             = PropertyGridCreateStyleEx.DefaultStyle;
 
         /// <summary>
+        /// Edits property with list editor.
+        /// </summary>
+        /// <param name="instance">Object which contains the property.</param>
+        /// <param name="propInfo">Property information.</param>
+        /// <remarks>
+        /// List editor must support editing of the property.
+        /// </remarks>
+        /// <returns><c>null</c> if property editing is not supported; <c>true</c> if editing
+        /// was performed and user pressed 'Ok' button; <c>false</c> if user pressed
+        /// 'Cancel' button.</returns>
+        public static void EditPropertyWithListEditor(object? instance, PropertyInfo? propInfo)
+        {
+            PropertyGridUtils.RegisterCollectionEditors();
+
+            var source = ListEditSource.CreateEditSource(instance, propInfo);
+            if (source == null)
+                return;
+
+            var existing = App.FindVisibleWindow<WindowListEdit>();
+
+            if (existing is not null)
+            {
+                existing.ShowAndFocus();
+                App.LogWarning("List Editor is already shown. Please close it first.");
+            }
+            else
+            {
+                WindowListEdit dialog = new(source);
+                dialog.Show();
+            }
+        }
+
+        /// <summary>
+        /// Edits property with list editor.
+        /// </summary>
+        /// <param name="instance">Object which contains the property.</param>
+        /// <param name="propName">Property name.</param>
+        /// <remarks>
+        /// List editor must support editing of the property.
+        /// </remarks>
+        /// <returns><c>null</c> if property editing is not supported; <c>true</c> if editing
+        /// was performed and user pressed 'Ok' button; <c>false</c> if user pressed
+        /// 'Cancel' button.</returns>
+        public static void EditPropertyWithListEditor(object? instance, string propName)
+        {
+            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
+            EditPropertyWithListEditor(instance, propInfo);
+        }
+
+        /// <summary>
+        /// Edits <see cref="ToolBar.Panels"/> with list editor.
+        /// </summary>
+        /// <param name="control">Control which items will be edited.</param>
+        public static void EditItemsWithListEditor(ToolBar? control)
+        {
+            EditPropertyWithListEditor(control, nameof(ToolBar.Panels));
+        }
+
+        /// <summary>
+        /// Edits items of the <see cref="ListControl{T}"/> with list editor.
+        /// </summary>
+        /// <param name="control">Control which items will be edited.</param>
+        public static void EditItemsWithListEditor<T>(ListControl<T> control)
+            where T : class, new()
+            => EditPropertyWithListEditor(control, "Items");
+
+        /// <summary>
+        /// Shows developer tools window.
+        /// </summary>
+        public static void ShowDeveloperTools()
+        {
+            PanelDevTools.ShowDeveloperTools();
+            DebugUtils.RaiseDeveloperToolsShown();
+        }
+
+        /// <summary>
         /// Creates new <see cref="IPropertyGrid"/> instance.
         /// </summary>
         public static IPropertyGrid CreatePropertyGrid()
@@ -310,81 +379,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Determines whether the specified property represents an enumeration,
-        /// a flags enumeration, or neither.
-        /// </summary>
-        /// <remarks>This method evaluates the property's type to determine if it is
-        /// an enumeration or a flags enumeration. If the property type is not an enumeration,
-        /// <see cref="FlagsOrEnum.None"/> is returned.</remarks>
-        /// <param name="instance">The object instance containing the property to evaluate.</param>
-        /// <param name="propInfo">The metadata information for the property to evaluate.
-        /// Cannot be null.</param>
-        /// <returns>A <see cref="FlagsOrEnum"/> value indicating the type
-        /// of the property: <see cref="FlagsOrEnum.Flags"/> if
-        /// the property is a flags enumeration, <see cref="FlagsOrEnum.Enum"/>
-        /// if the property is a standard
-        /// enumeration, or <see cref="FlagsOrEnum.None"/> if the property is neither.</returns>
-        public static FlagsOrEnum IsFlagsOrEnum(object instance, PropertyInfo propInfo)
-        {
-            var valueType = propInfo.PropertyType ?? typeof(object);
-
-            var realType = AssemblyUtils.GetRealType(valueType);
-            var isEnum = realType.IsEnum;
-
-            if (isEnum)
-            {
-                var prm = PropertyGrid.ConstructNewItemParams(instance, propInfo);
-                bool isFlags;
-                if (prm.EnumIsFlags is null)
-                    isFlags = AssemblyUtils.EnumIsFlags(realType);
-                else
-                    isFlags = prm.EnumIsFlags.Value;
-
-                if (isFlags)
-                    return FlagsOrEnum.Flags;
-                return FlagsOrEnum.Enum;
-            }
-            else
-            {
-                return FlagsOrEnum.None;
-            }
-        }
-
-        /// <summary>
         /// Creates new <see cref="IPropertyGridVariant"/> instance.
         /// </summary>
         public static IPropertyGridVariant CreateVariant()
         {
             return ControlFactory.Handler.CreateVariant();
-        }
-
-        /// <summary>
-        /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
-        /// </summary>
-        /// <param name="type">Object type.</param>
-        /// <param name="func">Create function.</param>
-        public static void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func)
-        {
-            var registry = GetTypeRegistry(type);
-            registry.CreateFunc = func;
-        }
-
-        /// <summary>
-        /// Sets custom label for the property.
-        /// </summary>
-        /// <typeparam name="T">Object type.</typeparam>
-        /// <param name="propName">Property name.</param>
-        /// <param name="label">New custom label of the property.</param>
-        /// <returns><c>true</c> if operation successful, <c>false</c> otherwise.</returns>
-        public static bool SetCustomLabel<T>(string propName, string label)
-            where T : class
-        {
-            var propInfo = AssemblyUtils.GetPropertySafe(typeof(T), propName);
-            if (propInfo == null)
-                return false;
-            var propRegistry = GetPropRegistry(typeof(T), propInfo);
-            propRegistry.NewItemParams.Label = label;
-            return true;
         }
 
         /// <summary>
@@ -457,6 +456,26 @@ namespace Alternet.UI
             var result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
             SetPropertyMaxLength(result, 1);
             return result;
+        }
+
+        /// <summary>
+        /// Used as event handler.
+        /// </summary>
+        /// <param name="sender">Must implement <see cref="IPropInfoAndInstance"/>.</param>
+        /// <param name="e">Event arguments.</param>
+        /// <remarks>
+        /// Calls <see cref="DialogFactory.EditPropertyWithListEditor(object,string)"/> for
+        /// the <paramref name="sender"/>,
+        /// if it implements <see cref="IPropInfoAndInstance"/> interface.
+        /// </remarks>
+        public static void EditWithListEdit(object? sender, EventArgs e)
+        {
+            if (sender is not IPropInfoAndInstance prop)
+                return;
+            var instance = prop.Instance;
+            var propInfo = prop.PropInfo;
+
+            EditPropertyWithListEditor(instance, propInfo);
         }
 
         /// <inheritdoc/>
@@ -548,7 +567,7 @@ namespace Alternet.UI
             IPropertyGridItem? result;
 
             var realType = AssemblyUtils.GetRealType(propInfo.PropertyType);
-            var registry = GetTypeRegistryOrNull(realType);
+            var registry = PropertyGridUtils.GetTypeRegistryOrNull(realType);
             var createFunc = registry?.CreateFunc;
 
             if (createFunc != null)
@@ -558,7 +577,7 @@ namespace Alternet.UI
             else
             {
                 var value = GetStructPropertyValueForReload(null, instance, propInfo);
-                var prm = ConstructNewItemParams(instance, propInfo);
+                var prm = PropertyGridUtils.ConstructNewItemParams(instance, propInfo);
                 prm.TextReadOnly = true;
                 result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
                 result.GetValueFuncForReload = GetStructPropertyValueForReload;
@@ -657,7 +676,7 @@ namespace Alternet.UI
             }
 
             var value = GetStructPropertyValueForReload(null, instance, propInfo);
-            var prm = ConstructNewItemParams(instance, propInfo);
+            var prm = PropertyGridUtils.ConstructNewItemParams(instance, propInfo);
             var result = CreateStringItemWithKind(label, name, value?.ToString(), prm);
             result.GetValueFuncForReload = GetStructPropertyValueForReload;
             SetPropertyReadOnly(result, true, false);
@@ -1021,7 +1040,7 @@ namespace Alternet.UI
                     PropertyInfo propInfo)
         {
             var value = (bool)AssemblyUtils.GetPropValue(instance, propInfo, false);
-            var prm = ConstructNewItemParams(instance, propInfo);
+            var prm = PropertyGridUtils.ConstructNewItemParams(instance, propInfo);
             var prop = CreateBoolItem(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             return prop;
@@ -1104,7 +1123,7 @@ namespace Alternet.UI
                     TypeConverter? typeConverter = null)
         {
             var value = PropValueToString(instance, propInfo, ref typeConverter);
-            var prm = ConstructNewItemParams(instance, propInfo);
+            var prm = PropertyGridUtils.ConstructNewItemParams(instance, propInfo);
             var prop = CreateStringItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
             prop.TypeConverter = typeConverter;
@@ -1216,7 +1235,7 @@ namespace Alternet.UI
             label ??= propName;
             object? propValue = propInfo.GetValue(instance, null);
             propValue ??= Color.Empty;
-            var prm = ConstructNewItemParams(instance, propInfo);
+            var prm = PropertyGridUtils.ConstructNewItemParams(instance, propInfo);
             var value = (Color)propValue;
             prop = CreateColorItemWithKind(label, name, value, prm);
             OnPropertyCreated(prop, instance, propInfo, prm);
@@ -1239,7 +1258,7 @@ namespace Alternet.UI
             label ??= propName;
             object? propValue = propInfo.GetValue(instance, null);
             var realType = AssemblyUtils.GetRealType(propType);
-            var prm = ConstructNewItemParams(instance, propInfo);
+            var prm = PropertyGridUtils.ConstructNewItemParams(instance, propInfo);
             var choices = prm.Choices;
             bool isFlags;
             if (prm.EnumIsFlags is null)
@@ -1247,7 +1266,7 @@ namespace Alternet.UI
             else
                 isFlags = prm.EnumIsFlags.Value;
 
-            choices ??= CreateChoicesOnce(realType);
+            choices ??= PropertyGridUtils.CreateChoicesOnce(realType);
             bool isNullable = AssemblyUtils.GetNullable(propInfo);
             propValue ??= 0;
             if (isFlags)

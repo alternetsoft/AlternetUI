@@ -338,7 +338,7 @@ namespace Alternet.UI
         /// <remarks>This method invokes the <see cref="DeveloperToolsShown"/> event with a null sender
         /// and an empty <see cref="EventArgs"/> instance. Ensure that any event handlers attached to
         /// <see cref="DeveloperToolsShown"/> are prepared to handle a null sender.</remarks>
-        internal static void RaiseDeveloperToolsShown()
+        public static void RaiseDeveloperToolsShown()
         {
             DeveloperToolsShown?.Invoke(null, EventArgs.Empty);
         }

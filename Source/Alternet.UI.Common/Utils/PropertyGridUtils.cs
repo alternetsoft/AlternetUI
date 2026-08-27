@@ -9,8 +9,37 @@ using System.Threading.Tasks;
 
 namespace Alternet.UI
 {
-    public partial class PropertyGrid : Control
+    /// <summary>
+    /// Represents the method that will handle creation of the property.
+    /// </summary>
+    /// <param name="sender">Instance of the property grid.</param>
+    /// <param name="label">Property label.</param>
+    /// <param name="name">Property name.</param>
+    /// <param name="instance">Object instance which contains the property.</param>
+    /// <param name="propInfo">Property information.</param>
+    /// <returns>Property declaration for use with property add methods.</returns>
+    /// <remarks>
+    /// If <paramref name="label"/> or <paramref name="name"/> is null,
+    /// <paramref name="propInfo"/> is used to get them.
+    /// </remarks>
+    public delegate IPropertyGridItem PropertyGridItemCreate(
+            IPropertyGrid sender,
+            string label,
+            string? name,
+            object instance,
+            PropertyInfo propInfo);
+
+    /// <summary>
+    /// Contains methods and properties which allow to work with property grid.
+    /// </summary>
+    public static class PropertyGridUtils
     {
+        /// <summary>
+        /// Defines default style for the newly created property grid controls.
+        /// </summary>
+        public static PropertyGridCreateStyle DefaultCreateStyle { get; set; }
+            = PropertyGridCreateStyle.DefaultStyle;
+
         /// <summary>
         /// Dictionary used to get type related information.
         /// </summary>
@@ -27,7 +56,7 @@ namespace Alternet.UI
         public static event EventHandler? EditWithListEdit;
 
         /// <summary>
-        /// Defines static states for <see cref="PropertyGrid"/> class.
+        /// Defines static states related to the property grid.
         /// </summary>
         [Flags]
         public enum StaticStateFlags
@@ -44,12 +73,44 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets static states for <see cref="PropertyGrid"/> class.
+        /// Gets or sets static states related to the property grid.
         /// </summary>
         public static StaticStateFlags StaticFlags
         {
             get => staticStateFlags;
             set => staticStateFlags = value;
+        }
+
+        /// <summary>
+        /// Gets the initializers stack.
+        /// </summary>
+        public static ConcurrentStack<Action>? Initializers => initializers;
+
+        /// <summary>
+        /// Adds simple action for the specified <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">Type for which action is registered.</typeparam>
+        /// <param name="name">Action name.</param>
+        /// <param name="action">Action.</param>
+        /// <returns><see cref="IPropertyGridTypeRegistry"/> of the specified
+        /// <typeparamref name="T"/> type so you can chain calls and perform other actions
+        /// on it.</returns>
+        public static IPropertyGridTypeRegistry AddSimpleAction<T>(string name, Action action)
+        {
+            var registry = PropertyGridUtils.GetTypeRegistry(typeof(T));
+            registry.AddSimpleAction(name, action);
+            return registry;
+        }
+
+        /// <summary>
+        /// Gets list of simple actions or <c>null</c> if there are no actions.
+        /// </summary>
+        /// <param name="t">Type for which actions are requested.</param>
+        /// <returns></returns>
+        public static IEnumerable<(string Title, Action Action)>? GetSimpleActions(Type t)
+        {
+            var registry = PropertyGridUtils.GetTypeRegistryOrNull(t);
+            return registry?.GetSimpleActions();
         }
 
         /// <summary>
@@ -65,11 +126,40 @@ namespace Alternet.UI
             string propName,
             bool value = true)
         {
-            var typeRegistry = PropertyGrid.GetTypeRegistry(type);
+            var typeRegistry = PropertyGridUtils.GetTypeRegistry(type);
             var propRegistry = typeRegistry.GetPropRegistry(propName);
             if(propRegistry is not null)
                 propRegistry.NewItemParams.HasEllipsis = value;
             return propRegistry;
+        }
+
+        /// <summary>
+        /// Registers <see cref="IPropertyGridItem"/> create function for specific <see cref="Type"/>.
+        /// </summary>
+        /// <param name="type">Object type.</param>
+        /// <param name="func">Create function.</param>
+        public static void RegisterPropCreateFunc(Type type, PropertyGridItemCreate func)
+        {
+            var registry = GetTypeRegistry(type);
+            registry.CreateFunc = func;
+        }
+
+        /// <summary>
+        /// Sets custom label for the property.
+        /// </summary>
+        /// <typeparam name="T">Object type.</typeparam>
+        /// <param name="propName">Property name.</param>
+        /// <param name="label">New custom label of the property.</param>
+        /// <returns><c>true</c> if operation successful, <c>false</c> otherwise.</returns>
+        public static bool SetCustomLabel<T>(string propName, string label)
+            where T : class
+        {
+            var propInfo = AssemblyUtils.GetPropertySafe(typeof(T), propName);
+            if (propInfo == null)
+                return false;
+            var propRegistry = GetPropRegistry(typeof(T), propInfo);
+            propRegistry.NewItemParams.Label = label;
+            return true;
         }
 
         /// <summary>
@@ -266,6 +356,47 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Determines whether the specified property represents an enumeration,
+        /// a flags enumeration, or neither.
+        /// </summary>
+        /// <remarks>This method evaluates the property's type to determine if it is
+        /// an enumeration or a flags enumeration. If the property type is not an enumeration,
+        /// <see cref="FlagsOrEnum.None"/> is returned.</remarks>
+        /// <param name="instance">The object instance containing the property to evaluate.</param>
+        /// <param name="propInfo">The metadata information for the property to evaluate.
+        /// Cannot be null.</param>
+        /// <returns>A <see cref="FlagsOrEnum"/> value indicating the type
+        /// of the property: <see cref="FlagsOrEnum.Flags"/> if
+        /// the property is a flags enumeration, <see cref="FlagsOrEnum.Enum"/>
+        /// if the property is a standard
+        /// enumeration, or <see cref="FlagsOrEnum.None"/> if the property is neither.</returns>
+        public static FlagsOrEnum IsFlagsOrEnum(object instance, PropertyInfo propInfo)
+        {
+            var valueType = propInfo.PropertyType ?? typeof(object);
+
+            var realType = AssemblyUtils.GetRealType(valueType);
+            var isEnum = realType.IsEnum;
+
+            if (isEnum)
+            {
+                var prm = PropertyGridUtils.ConstructNewItemParams(instance, propInfo);
+                bool isFlags;
+                if (prm.EnumIsFlags is null)
+                    isFlags = AssemblyUtils.EnumIsFlags(realType);
+                else
+                    isFlags = prm.EnumIsFlags.Value;
+
+                if (isFlags)
+                    return FlagsOrEnum.Flags;
+                return FlagsOrEnum.Enum;
+            }
+            else
+            {
+                return FlagsOrEnum.None;
+            }
+        }
+
+        /// <summary>
         /// Gets <see cref="IPropertyGridNewItemParams"/> for the given
         /// <see cref="Type"/> and property name.
         /// </summary>
@@ -378,7 +509,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Adds initialization action which is called before <see cref="PropertyGrid"/>
+        /// Adds initialization action which is called before property grid
         /// is created for the first time.
         /// </summary>
         /// <param name="action"></param>
@@ -389,8 +520,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates property choices list for use with <see cref="CreateFlagsItem"/> and
-        /// <see cref="CreateChoicesItem"/>.
+        /// Creates property choices list.
         /// </summary>
         public static IPropertyGridChoices CreateChoices()
         {
@@ -411,10 +541,6 @@ namespace Alternet.UI
         /// Creates property choices list for the given enumeration type or returns it from
         /// the internal cache if it was previously created.
         /// </summary>
-        /// <remarks>
-        /// Result can be used in <see cref="CreateFlagsItem"/> and
-        /// <see cref="CreateChoicesItem"/>.
-        /// </remarks>
         public static IPropertyGridChoices CreateChoicesOnce(Type enumType)
         {
             choicesCache ??= new();
@@ -428,10 +554,6 @@ namespace Alternet.UI
         /// <summary>
         /// Creates property choices list for the given enumeration type.
         /// </summary>
-        /// <remarks>
-        /// Result can be used in <see cref="CreateFlagsItem"/> and
-        /// <see cref="CreateChoicesItem"/>.
-        /// </remarks>
         public static IPropertyGridChoices CreateChoices(Type enumType)
         {
             var result = CreateChoices();

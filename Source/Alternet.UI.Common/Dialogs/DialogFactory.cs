@@ -34,15 +34,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows developer tools window.
-        /// </summary>
-        public static void ShowDeveloperTools()
-        {
-            PanelDevTools.ShowDeveloperTools();
-            DebugUtils.RaiseDeveloperToolsShown();
-        }
-
-        /// <summary>
         /// Displays a prompt to the user with a specified title and an optional default value,
         /// and invokes a callback with the user's input.
         /// </summary>
@@ -237,19 +228,6 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Shows a dialog asking the user for numeric input.
-        /// </summary>
-        /// <remarks>
-        /// Minimal, maximal and default values specified in the dialog
-        /// parameters must be positive.
-        /// </remarks>
-        /// <param name="prm">Dialog parameters.</param>
-        public static void GetNumberFromUserAsync(LongFromUserParams prm)
-        {
-            Handler.GetNumberFromUserAsync(prm);
-        }
-
-        /// <summary>
         /// Popups a dialog box with a title, message and input box.
         /// The user may type in text and press 'OK' to return this text, or press 'Cancel'
         /// to return the empty string.
@@ -261,91 +239,17 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Used as event handler.
+        /// Shows a dialog asking the user for numeric input.
         /// </summary>
-        /// <param name="sender">Must implement <see cref="IPropInfoAndInstance"/>.</param>
-        /// <param name="e">Event arguments.</param>
         /// <remarks>
-        /// Calls <see cref="DialogFactory.EditPropertyWithListEditor(object,string)"/> for
-        /// the <paramref name="sender"/>,
-        /// if it implements <see cref="IPropInfoAndInstance"/> interface.
+        /// Minimal, maximal and default values specified in the dialog
+        /// parameters must be positive.
         /// </remarks>
-        public static void EditWithListEdit(object? sender, EventArgs e)
+        /// <param name="prm">Dialog parameters.</param>
+        public static void GetNumberFromUserAsync(LongFromUserParams prm)
         {
-            if (sender is not IPropInfoAndInstance prop)
-                return;
-            var instance = prop.Instance;
-            var propInfo = prop.PropInfo;
-
-            DialogFactory.EditPropertyWithListEditor(instance, propInfo);
+            Handler.GetNumberFromUserAsync(prm);
         }
-
-        /// <summary>
-        /// Edits property with list editor.
-        /// </summary>
-        /// <param name="instance">Object which contains the property.</param>
-        /// <param name="propInfo">Property information.</param>
-        /// <remarks>
-        /// List editor must support editing of the property.
-        /// </remarks>
-        /// <returns><c>null</c> if property editing is not supported; <c>true</c> if editing
-        /// was performed and user pressed 'Ok' button; <c>false</c> if user pressed
-        /// 'Cancel' button.</returns>
-        public static void EditPropertyWithListEditor(object? instance, PropertyInfo? propInfo)
-        {
-            PropertyGrid.RegisterCollectionEditors();
-
-            var source = ListEditSource.CreateEditSource(instance, propInfo);
-            if (source == null)
-                return;
-
-            var existing = App.FindVisibleWindow<WindowListEdit>();
-
-            if(existing is not null)
-            {
-                existing.ShowAndFocus();
-                App.LogWarning("List Editor is already shown. Please close it first.");
-            }
-            else
-            {
-                WindowListEdit dialog = new(source);
-                dialog.Show();
-            }
-        }
-
-        /// <summary>
-        /// Edits property with list editor.
-        /// </summary>
-        /// <param name="instance">Object which contains the property.</param>
-        /// <param name="propName">Property name.</param>
-        /// <remarks>
-        /// List editor must support editing of the property.
-        /// </remarks>
-        /// <returns><c>null</c> if property editing is not supported; <c>true</c> if editing
-        /// was performed and user pressed 'Ok' button; <c>false</c> if user pressed
-        /// 'Cancel' button.</returns>
-        public static void EditPropertyWithListEditor(object? instance, string propName)
-        {
-            var propInfo = AssemblyUtils.GetPropInfo(instance, propName);
-            EditPropertyWithListEditor(instance, propInfo);
-        }
-
-        /// <summary>
-        /// Edits <see cref="ToolBar.Panels"/> with list editor.
-        /// </summary>
-        /// <param name="control">Control which items will be edited.</param>
-        public static void EditItemsWithListEditor(ToolBar? control)
-        {
-            EditPropertyWithListEditor(control, nameof(ToolBar.Panels));
-        }
-
-        /// <summary>
-        /// Edits items of the <see cref="ListControl{T}"/> with list editor.
-        /// </summary>
-        /// <param name="control">Control which items will be edited.</param>
-        public static void EditItemsWithListEditor<T>(ListControl<T> control)
-            where T : class, new()
-            => EditPropertyWithListEditor(control, "Items");
 
         /// <summary>
         /// Converts a <see cref="MessageBoxButtons"/> enumeration value

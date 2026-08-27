@@ -189,7 +189,7 @@
         </VerticalStackPanel>
 
         <VerticalStackPanel Margin="5,0,0,0">
-          <XButton Text="Edit..." Margin="0,0,0,10" Name="statusEditButton" IsTextLocalized="true"/>
+          <XButton Text="Edit..." Margin="0,0,0,10" Name="statusEditButton" IsTextLocalized="true" IsEnabled="false"/>
           <XButton
             Text="Toggle Grip" IsTextLocalized="true"
             Name="showSizingGripButton"

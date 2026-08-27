@@ -138,13 +138,6 @@ namespace WindowPropertiesSample
                 testWindow.Bounds = rect;
         }
 
-        private void PropertiesButton_Click(object? sender, EventArgs e)
-        {
-            if (testWindow is null)
-                return;
-            WindowPropertyGrid.ShowDefault(null, testWindow);
-        }
-
         private void CreateAndShowWindowButton_Click(object sender, EventArgs e)
         {
             CreateWindowAndSetProperties(typeof(Window));
@@ -369,8 +362,7 @@ namespace WindowPropertiesSample
                     setMinMaxSizeButton,
                     setIcon1Button,
                     setIcon2Button,
-                    clearIconButton,
-                    propertiesButton).Enabled(haveTestWindow);
+                    clearIconButton).Enabled(haveTestWindow);
 
                 if (!haveTestWindow)
                     currentBoundsLabel.Text = string.Empty;

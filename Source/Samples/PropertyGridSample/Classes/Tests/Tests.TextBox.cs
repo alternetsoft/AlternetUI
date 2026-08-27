@@ -118,7 +118,7 @@ namespace PropertyGridSample
                 c.ValueHelper.SetValueAndValidator((sbyte)5, true);
             });
 
-            PropertyGrid.AddSimpleAction<TextBox>("SelectionStart++", () =>
+            PropertyGridUtils.AddSimpleAction<TextBox>("SelectionStart++", () =>
             {
                 var control = GetSelectedControl<TextBox>();
                 if (control is null)
@@ -126,7 +126,7 @@ namespace PropertyGridSample
                 control.SelectionStart += 1;
             });
 
-            PropertyGrid.AddSimpleAction<TextBox>("SelectionStart--", () =>
+            PropertyGridUtils.AddSimpleAction<TextBox>("SelectionStart--", () =>
             {
                 var control = GetSelectedControl<TextBox>();
                 if (control is null)
@@ -134,7 +134,7 @@ namespace PropertyGridSample
                 control.SelectionStart -= 1;
             });
 
-            PropertyGrid.AddSimpleAction<TextBox>("SelectionLength--", () =>
+            PropertyGridUtils.AddSimpleAction<TextBox>("SelectionLength--", () =>
             {
                 var control = GetSelectedControl<TextBox>();
                 if (control is null)
@@ -142,7 +142,7 @@ namespace PropertyGridSample
                 control.SelectionLength -= 1;
             });
 
-            PropertyGrid.AddSimpleAction<TextBox>("SelectionLength++", () =>
+            PropertyGridUtils.AddSimpleAction<TextBox>("SelectionLength++", () =>
             {
                 var control = GetSelectedControl<TextBox>();
                 if (control is null)
@@ -150,7 +150,7 @@ namespace PropertyGridSample
                 control.SelectionLength += 1;
             });
 
-            PropertyGrid.AddSimpleAction<TextBox>("Change SelectedText", () =>
+            PropertyGridUtils.AddSimpleAction<TextBox>("Change SelectedText", () =>
             {
                 var control = GetSelectedControl<TextBox>();
                 if (control is null)

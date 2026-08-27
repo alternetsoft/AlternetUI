@@ -747,7 +747,7 @@ namespace Alternet.UI
         /// </remarks>
         /// <remarks>
         /// Items property of the <see cref="ComboBox"/> is filled with <see cref="Enum"/>
-        /// elements using <see cref="PropertyGrid.GetPropChoices"/>. So, it is possible
+        /// elements using <see cref="PropertyGridUtils.GetPropChoices"/>. So, it is possible
         /// to localize labels and limit displayed enum elements.
         /// </remarks>
         public virtual void BindEnumProp(
@@ -757,7 +757,7 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            var choices = PropertyGrid.GetPropChoices(instance, propName);
+            var choices = PropertyGridUtils.GetPropChoices(instance, propName);
             if (choices is null)
                 return;
             IsEditable = false;

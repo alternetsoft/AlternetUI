@@ -15,7 +15,7 @@ namespace Alternet.UI
     {
         static PopupPropertyGrid()
         {
-            PropertyGrid.RegisterCollectionEditors();
+            PropertyGridUtils.RegisterCollectionEditors();
         }
 
         /// <summary>

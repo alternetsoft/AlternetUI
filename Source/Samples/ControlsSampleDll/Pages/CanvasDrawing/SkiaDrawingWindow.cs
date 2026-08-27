@@ -40,11 +40,6 @@ namespace ControlsSample
             HasBorder = false,
         };
 
-        private readonly PropertyGrid propGrid = new()
-        {
-            HasBorder = false,
-        };
-
         private readonly PictureBox pictureBox = new()
         {
             ImageStretch = false,
@@ -66,7 +61,7 @@ namespace ControlsSample
 
         static SkiaDrawingWindow()
         {
-            PropertyGrid.RegisterCollectionEditors();
+            PropertyGridUtils.RegisterCollectionEditors();
         }
 
         public SkiaDrawingWindow()
@@ -86,14 +81,8 @@ namespace ControlsSample
 
             rightPanel.Add(GenericStrings.TabTitleActions, actionsListBox);
             rightPanel.Add(GenericStrings.TabTitleFonts, fontListBox);
-            rightPanel.Add(GenericStrings.TabTitleProperties, propGrid);
 
             pictureBox.Parent = mainPanel.FillPanel;
-            propGrid.SetProps(prm, true);
-
-            propGrid.ApplyFlags |= PropertyGridApplyFlags.PropInfoSetValue
-                | PropertyGridApplyFlags.ReloadAfterSetValue;
-            propGrid.Features = PropertyGridFeature.QuestionCharInNullable;
 
             Title = "SkiaSharp Drawing Demo";
 
@@ -106,11 +95,7 @@ namespace ControlsSample
             actionsListBox.AddAction("Draw text on SKSurface (alpha Bitmap)", DrawTextOnSkiaA);
             actionsListBox.AddAction("Draw text on SKSurface (opaque Bitmap)", DrawTextOnSkia);
             
-            propGrid.SuggestedInitDefaults();
-
             RefreshPreviewControl();
-
-            propGrid.FitColumns();
         }
 
         private void RefreshPreviewControl()

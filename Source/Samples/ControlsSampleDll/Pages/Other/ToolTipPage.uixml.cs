@@ -138,14 +138,6 @@ namespace ControlsSample
                 ShowToolTipButton_Click(this, EventArgs.Empty);
             });
 
-            popup.Add("Show SkiaSharp Font defaults", () =>
-            {
-                SkiaFontSettings.ShowFontSettingsDialog(() =>
-                {
-                    toolTip.HideToolTip();
-                });
-            });
-
             popup.Add("Set ToolTip container back to green", () =>
             {
                 tooltipPreview.ParentBackColor = false;

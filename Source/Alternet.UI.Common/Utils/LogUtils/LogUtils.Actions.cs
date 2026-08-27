@@ -17,7 +17,25 @@ namespace Alternet.UI
 {
     public static partial class LogUtils
     {
+#pragma warning disable
+        internal static bool ShowFocusedProperties;
+        internal static bool LogFocusedControlInfo;
+        private static bool logGotFocus;
+
+#pragma warning restore
+
         private static TestActionsWindow? testActionsWindow;
+
+        internal static bool LogGotFocus
+        {
+            get => logGotFocus;
+
+            set
+            {
+                logGotFocus = value;
+                AbstractControl.ShowDebugFocusRect = value;
+            }
+        }
 
         /// <summary>
         /// Enumerates and logs debug actions from the specified type, invoking a callback for each eligible method.
@@ -62,22 +80,6 @@ namespace Alternet.UI
         {
             var image = DrawingUtils.DebugImageFromTextWithFontStyle(text);
             LogImage(image);
-        }
-
-        /// <summary>
-        /// Shows developer tools window.
-        /// </summary>
-        public static void ShowDeveloperTools()
-        {
-            PanelDevTools.ShowDeveloperTools();
-        }
-
-        /// <summary>
-        /// Creates developer tools window.
-        /// </summary>
-        public static void CreateDeveloperTools()
-        {
-            PanelDevTools.GetOrCreateDeveloperTools();
         }
 
         /// <summary>
@@ -316,16 +318,16 @@ namespace Alternet.UI
 
             AddToggle(
                 "Show Focused Properties",
-                typeof(WindowDevTools),
-                nameof(WindowDevTools.ShowFocusedProperties));
+                typeof(LogUtils),
+                nameof(LogUtils.ShowFocusedProperties));
             AddToggle(
                 "Show Debug Focus Rect",
-                typeof(WindowDevTools),
-                nameof(WindowDevTools.LogGotFocus));
+                typeof(LogUtils),
+                nameof(LogUtils.LogGotFocus));
             AddToggle(
                 "Focused control info",
-                typeof(WindowDevTools),
-                nameof(WindowDevTools.LogFocusedControlInfo));
+                typeof(LogUtils),
+                nameof(LogUtils.LogFocusedControlInfo));
             AddToggle(
                 "Use generic caret",
                 typeof(Caret),
@@ -911,14 +913,14 @@ namespace Alternet.UI
 
             App.LogSeparator();
 
-            foreach (SystemSettingsFeature item in Enum.GetValues(typeof(SystemSettingsFeature)))
+            foreach (SystemSettingsFeature item in Enum.GetValues<SystemSettingsFeature>())
             {
                 App.Log($"HasFeature({item}) = {SystemSettings.HasFeature(item)}");
             }
 
             App.LogSeparator();
 
-            foreach (SystemSettingsMetric item in Enum.GetValues(typeof(SystemSettingsMetric)))
+            foreach (SystemSettingsMetric item in Enum.GetValues<SystemSettingsMetric>())
             {
                 App.Log($"GetMetric({item}) = {SystemSettings.GetMetric(item)}");
             }

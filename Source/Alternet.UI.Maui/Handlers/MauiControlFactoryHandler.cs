@@ -35,11 +35,6 @@ namespace Alternet.UI
             return new MauiControlHandler();
         }
 
-        IControlHandler IControlFactoryHandler.CreatePropertyGridHandler(PropertyGrid control)
-        {
-            return new HandlerForDisposed();
-        }
-
         IControlHandler IControlFactoryHandler.CreateTextBoxHandler(TextBox control)
         {
             return new HandlerForDisposed();

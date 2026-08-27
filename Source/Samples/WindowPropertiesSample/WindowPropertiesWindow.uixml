@@ -49,9 +49,6 @@
                     Text="Activate" IsTextLocalized="true" />
           </StackPanel>
         </Border>
-
-        <XButton Text="All Properties..." IsTextLocalized="true"
-                Name="propertiesButton" Click="PropertiesButton_Click"/>
       </VerticalStackPanel>
       
     </HorizontalStackPanel>

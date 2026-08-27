@@ -55,7 +55,7 @@ namespace Alternet.UI.Localization
         public string Y { get; set; } = "Y";
 
         /// <summary>
-        /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure.
+        /// Registers property name localizations.
         /// Uses nested types of the <paramref name="localizationsContainer"/> type as
         /// a source of the localized property names.
         /// </summary>
@@ -109,8 +109,7 @@ namespace Alternet.UI.Localization
         }
 
         /// <summary>
-        /// Registers enum values localizations in the <see cref="PropertyGrid"/> infrastructure
-        /// for the specified type using localization container specified in the
+        /// Registers enum values localizations for the specified type using localization container specified in the
         /// <paramref name="localizations"/> parameter.
         /// </summary>
         /// <param name="type">Type for which enum values localizations are registered.</param>
@@ -122,7 +121,7 @@ namespace Alternet.UI.Localization
                 return;
 
             var fields = localizations.GetFields(BindingFlags.Static | BindingFlags.Public);
-            var choices = PropertyGrid.CreateChoicesOnce(type);
+            var choices = PropertyGridUtils.CreateChoicesOnce(type);
 
             foreach (var field in fields)
             {
@@ -144,7 +143,7 @@ namespace Alternet.UI.Localization
         }
 
         /// <summary>
-        /// Registers property name localizations in the <see cref="PropertyGrid"/> infrastructure
+        /// Registers property name localizations
         /// for the specified type using localization container specified in the
         /// <paramref name="localizations"/> parameter.
         /// </summary>
@@ -155,7 +154,7 @@ namespace Alternet.UI.Localization
         {
             var fields = localizations.GetFields(BindingFlags.Static | BindingFlags.Public);
 
-            var registry = PropertyGrid.GetTypeRegistry(type);
+            var registry = PropertyGridUtils.GetTypeRegistry(type);
 
             foreach (var field in fields)
             {

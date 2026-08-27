@@ -20,8 +20,6 @@ namespace ControlsSample
 
         private readonly Timer timer = new(100);
 
-        private PopupPropertyGrid? popup;
-
         static TextInputPage()
         {
         }
@@ -160,7 +158,6 @@ namespace ControlsSample
                 panelSettings.AddInput("Background Color", textBox, nameof(BackColor));
 
                 panelSettings.AddLinkLabel("Change Text", ChangeTextButton_Click);
-                panelSettings.AddLinkLabel("Show All Properties", ShowProperties_Click);
 
                 panelSettings.AddHorizontalLine();
 
@@ -244,21 +241,6 @@ namespace ControlsSample
         }
 
         internal bool UsePopup { get; set; } = false;
-
-        private void ShowProperties_Click(object? sender, EventArgs e)
-        {
-            if (UsePopup)
-            {
-                popup ??= PopupPropertyGrid.CreatePropertiesPopup();
-                popup.StartLocation = WindowStartLocation.ScreenTopRight;
-                popup.MainControl.SetProps(textBox, true);
-                popup.Show();
-            }
-            else
-            {
-                WindowPropertyGrid.ShowDefault(null, textBox, true);
-            }
-        }
 
         private string? reportedSelection;
 

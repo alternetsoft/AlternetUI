@@ -1189,7 +1189,7 @@ namespace Alternet.UI
             PanelSettingsItem item;
 
             var valueSource = new PropertyValueSource(propContainer, propName);
-            var flagsOrEnum = PropertyGrid.IsFlagsOrEnum(propContainer, valueSource.PropInfo);
+            var flagsOrEnum = PropertyGridUtils.IsFlagsOrEnum(propContainer, valueSource.PropInfo);
 
             switch (flagsOrEnum)
             {

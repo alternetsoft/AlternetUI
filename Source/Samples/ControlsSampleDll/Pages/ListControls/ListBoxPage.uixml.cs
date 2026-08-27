@@ -47,7 +47,6 @@ namespace ControlsSample
 
         private void EditorButton_Click(object? sender, System.EventArgs e)
         {
-            listBox.EditItemsWithListEditor();
         }
 
         public static int GenItemIndex()

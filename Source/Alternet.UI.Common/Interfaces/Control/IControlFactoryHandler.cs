@@ -45,13 +45,6 @@ namespace Alternet.UI
         IPropertyGridChoices CreateChoices();
 
         /// <summary>
-        /// Creates <see cref="IPropertyGridHandler"/> interface provider.
-        /// </summary>
-        /// <param name="control">Owner.</param>
-        /// <returns></returns>
-        IControlHandler CreatePropertyGridHandler(PropertyGrid control);
-
-        /// <summary>
         /// Creates <see cref="IWindowHandler"/> interface provider.
         /// </summary>
         /// <param name="window">Owner.</param>

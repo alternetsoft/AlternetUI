@@ -9,7 +9,7 @@ using Alternet.Drawing;
 namespace Alternet.UI
 {
     /// <summary>
-    /// Helper class for using <see cref="Brush"/> properties in the <see cref="PropertyGrid"/>.
+    /// Helper class for using <see cref="Brush"/> properties in the property grid.
     /// </summary>
     public class PropertyGridAdapterBrush : PropertyGridAdapterGeneric
     {
