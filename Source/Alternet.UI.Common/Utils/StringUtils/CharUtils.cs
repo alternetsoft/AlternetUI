@@ -175,6 +175,11 @@ namespace Alternet.UI
         /// <summary>Right single quotation mark (U+2019).</summary>
         public const char RightSingleQuote = '\u2019';
 
+        /// <summary>
+        /// Represents the display character for the erase to the left control character as a constant value.
+        /// </summary>
+        public static char EraseToTheLeftDisplayChar = '\u232B';
+
         /// <summary>Directory separator for current platform (runtime value).</summary>
         public static char DirectorySeparator => System.IO.Path.DirectorySeparatorChar;
 
