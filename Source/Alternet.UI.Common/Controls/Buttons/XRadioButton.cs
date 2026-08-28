@@ -79,12 +79,19 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual ObjectUniqueId? RadioGroupId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the collection of sibling <see cref="XRadioButton"/> controls that belong to the same group.
+        /// If this property is not set, the control will automatically find its siblings in the same container.
+        /// </summary>
+        [Browsable(false)]
+        public virtual IEnumerable<XRadioButton>? RadioSiblings { get; set; }
+
         /// <inheritdoc/>
         public override void RaiseCheckedChanged()
         {
             if (DisposingOrDisposed)
                 return;
-            
+
             base.RaiseCheckedChanged();
 
             if (!AutoUncheckSiblings || suppressSiblingNotifyCounter > 0)
@@ -113,15 +120,23 @@ namespace Alternet.UI
         /// <returns>A collection of sibling <see cref="XRadioButton"/> controls.</returns>
         protected virtual IEnumerable<XRadioButton> GetSiblingButtons()
         {
-            var siblings = Siblings.ToArray();
+            if (RadioSiblings is not null)
+                return RadioSiblings;
 
-            foreach (var sibling in siblings)
+            return Internal();
+
+            IEnumerable<XRadioButton> Internal()
             {
-                if (sibling is not XRadioButton radioButton)
-                    continue;
-                if(radioButton.RadioGroupId != RadioGroupId)
-                    continue;
-                yield return radioButton;
+                var siblings = Siblings.ToArray();
+
+                foreach (var sibling in siblings)
+                {
+                    if (sibling is not XRadioButton radioButton)
+                        continue;
+                    if (radioButton.RadioGroupId != RadioGroupId)
+                        continue;
+                    yield return radioButton;
+                }
             }
         }
     }
