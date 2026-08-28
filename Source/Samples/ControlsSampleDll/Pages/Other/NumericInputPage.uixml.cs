@@ -49,6 +49,8 @@ namespace ControlsSample
             calcSettings.AddInput("Show toggle sign button", calculator, nameof(calculator.ShowToggleSignButton));
             calcSettings.AddInput("Show decimal point button", calculator, nameof(calculator.ShowDecimalPointButton));
             calcSettings.AddInput("Show clear last button", calculator, nameof(calculator.ShowClearLastButton));
+
+            pinCodePickerSettings.AddInput("Show display", pinCodePicker, nameof(pinCodePicker.IsDisplayVisible));
         }
 
         private void PopupListBox_AfterHide(object? sender, EventArgs e)

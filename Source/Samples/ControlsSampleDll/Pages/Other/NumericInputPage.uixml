@@ -51,6 +51,13 @@
       <XButton Text="Show popup" Name="showPopupButton"/>
     </VerticalStackPanel>
 
+    <VerticalStackPanel Padding="10" Title="PinCodePicker" Name="pinCodePickerPanel" MinChildMargin="10">
+      <HorizontalStackPanel>
+        <PinCodePicker HasBorder="true" Name="pinCodePicker"/>
+        <PanelSettings Name="pinCodePickerSettings" HasBorder="true" Margin="10,0,0,0" HorizontalAlignment="Fill"/>
+      </HorizontalStackPanel>
+    </VerticalStackPanel>
+
   </TabControl>
 
 </Panel>
