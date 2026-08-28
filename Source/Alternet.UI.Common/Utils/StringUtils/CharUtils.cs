@@ -187,6 +187,11 @@ namespace Alternet.UI
         public static char AltDirectorySeparator => System.IO.Path.AltDirectorySeparatorChar;
 
         /// <summary>
+        /// Gets or sets the default character used to mask text. 
+        /// </summary>
+        public static char DefaultPasswordChar = '*';
+
+        /// <summary>
         /// Char mapping array for replacing characters in a string when DrawText is called.
         /// The array should be indexed by the character's Unicode value,
         /// and the value at that index is the character to replace it with.
