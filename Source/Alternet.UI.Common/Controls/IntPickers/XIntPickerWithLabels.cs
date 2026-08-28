@@ -30,6 +30,7 @@ namespace Alternet.UI
             Layout = LayoutStyle.Horizontal;
 
             prefixLabel.VerticalAlignment = VerticalAlignment.Center;
+            prefixLabel.InputTransparent = true;
             prefixLabel.MarginRight = DefaultLabelAndPickerMargin;
             prefixLabel.Parent = this;
 
@@ -39,6 +40,7 @@ namespace Alternet.UI
             intPicker.Parent = this;
 
             suffixLabel.VerticalAlignment = VerticalAlignment.Center;
+            suffixLabel.InputTransparent = true;
             suffixLabel.MarginLeft = DefaultLabelAndPickerMargin;
             suffixLabel.Parent = this;
         }
