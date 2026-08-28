@@ -150,13 +150,13 @@ namespace Alternet.UI
         /// <param name="register">The delegate to call for the registration.</param>
         public static void RegisterDefaultConversions(RegisterConversionDelegate register)
         {
-            register(PanelSettingsItemKind.Line, DefaultItemToLineControl);
-            register(PanelSettingsItemKind.Spacer, DefaultItemToSpacerControl);
-            register(PanelSettingsItemKind.Label, DefaultItemToLabelControl);
-            register(PanelSettingsItemKind.LinkLabel, DefaultItemToLinkLabelControl);
-            register(PanelSettingsItemKind.Enum, DefaultItemToEnumControl);
-            register(PanelSettingsItemKind.Value, DefaultItemToValueControl);
-            register(PanelSettingsItemKind.Button, DefaultItemToButtonControl);
+            register(PanelSettingsItemKind.Line, ItemToControlMethods.CreateOrUpdateLineControl);
+            register(PanelSettingsItemKind.Spacer, ItemToControlMethods.CreateOrUpdateSpacerControl);
+            register(PanelSettingsItemKind.Label, ItemToControlMethods.CreateOrUpdateLabelControl);
+            register(PanelSettingsItemKind.LinkLabel, ItemToControlMethods.CreateOrUpdateLinkLabelControl);
+            register(PanelSettingsItemKind.Enum, ItemToControlMethods.CreateOrUpdateEnumControl);
+            register(PanelSettingsItemKind.Value, ItemToControlMethods.CreateOrUpdateValueControl);
+            register(PanelSettingsItemKind.Button, ItemToControlMethods.CreateOrUpdateButtonControl);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Alternet.UI
         {
             if (item.ValueType is null)
             {
-                return CreateOrUpdateTextBox(sender, item, control);
+                return ItemToControlMethods.CreateOrUpdateTextBox(sender, item, control);
             }
 
             Type realType = AssemblyUtils.GetRealType(item.ValueType);
@@ -295,40 +295,40 @@ namespace Alternet.UI
 
                 if (useUpDown)
                 {
-                    return CreateOrUpdateIntPicker(sender, item, control);
+                    return ItemToControlMethods.CreateOrUpdateIntPicker(sender, item, control);
                 }
                 else
                 {
-                    return CreateOrUpdateTextBox(sender, item, control);
+                    return ItemToControlMethods.CreateOrUpdateTextBox(sender, item, control);
                 }
             }
 
             if (realType == typeof(bool))
             {
-                return CreateOrUpdateCheckBox(sender, item, control);
+                return ItemToControlMethods.CreateOrUpdateCheckBox(sender, item, control);
             }
 
             if (realType == typeof(Color))
             {
-                return CreateOrUpdateColorEdit(sender, item, control);
+                return ItemToControlMethods.CreateOrUpdateColorEdit(sender, item, control);
             }
 
             if (realType == typeof(TimeOnly))
             {
-                return CreateOrUpdateTimeEdit(sender, item, control);
+                return ItemToControlMethods.CreateOrUpdateTimeEdit(sender, item, control);
             }
 
             if (realType == typeof(DateOnly))
             {
-                return CreateOrUpdateDateEdit(sender, item, control);
+                return ItemToControlMethods.CreateOrUpdateDateEdit(sender, item, control);
             }
 
             if (realType == typeof(DateTime))
             {
-                return CreateOrUpdateDateTimeEdit(sender, item, control);
+                return ItemToControlMethods.CreateOrUpdateDateTimeEdit(sender, item, control);
             }
 
-            var result = CreateOrUpdateTextBox(sender, item, control);
+            var result = ItemToControlMethods.CreateOrUpdateTextBox(sender, item, control);
             return result;
         }
 
@@ -1373,6 +1373,83 @@ namespace Alternet.UI
             if (e is null)
                 return false;
             return e.CustomFlags["IsRequired"];
+        }
+
+        /// <summary>
+        /// Contains delegates for converting <see cref="PanelSettingsItem"/> to controls.
+        /// Assign the delegate to the appropriate item kind to override default conversion.
+        /// </summary>
+        public static class ItemToControlMethods
+        {
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the horizontal line control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateLineControl = PanelSettings.DefaultItemToLineControl;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the spacer control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateSpacerControl = DefaultItemToSpacerControl;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the label control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateLabelControl = DefaultItemToLabelControl;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the link label control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateLinkLabelControl = DefaultItemToLinkLabelControl;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the enum picker control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateEnumControl = DefaultItemToEnumControl;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the value editor control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateValueControl = DefaultItemToValueControl;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the button control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateButtonControl = DefaultItemToButtonControl;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the text box control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateTextBox = PanelSettings.CreateOrUpdateTextBox;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the integer picker control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateIntPicker = PanelSettings.CreateOrUpdateIntPicker;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the time picker control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateTimeEdit = PanelSettings.CreateOrUpdateTimeEdit;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the date picker control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateDateEdit = PanelSettings.CreateOrUpdateDateEdit;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the date and time picker control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateDateTimeEdit = PanelSettings.CreateOrUpdateDateTimeEdit;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the color picker control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateColorEdit = PanelSettings.CreateOrUpdateColorEdit;
+
+            /// <summary>
+            /// Gets or sets the delegate for converting <see cref="PanelSettingsItem"/> to the check box control.
+            /// </summary>
+            public static ItemToControlDelegate CreateOrUpdateCheckBox = PanelSettings.CreateOrUpdateCheckBox;
         }
     }
 
