@@ -121,17 +121,15 @@ namespace Alternet.UI
         protected virtual IEnumerable<XRadioButton> GetSiblingButtons()
         {
             if (RadioSiblings is not null)
-                return RadioSiblings;
+                return Select(RadioSiblings);
 
-            return Internal();
+            return Select(Siblings);
 
-            IEnumerable<XRadioButton> Internal()
+            IEnumerable<XRadioButton> Select(IEnumerable<AbstractControl> siblings)
             {
-                var siblings = Siblings.ToArray();
-
                 foreach (var sibling in siblings)
                 {
-                    if (sibling is not XRadioButton radioButton)
+                    if (sibling == this || sibling is not XRadioButton radioButton)
                         continue;
                     if (radioButton.RadioGroupId != RadioGroupId)
                         continue;
