@@ -262,6 +262,8 @@ namespace Alternet.UI
 
                     c.IsChecked = Value.Kind == kind;
 
+                    c.RadioSiblings = radioButtons.Items;
+
                     c.CheckedChanged += (s, e) =>
                     {
                         Value.Kind = kind ?? DailyRepeatPatternRule.RepeatKind.EveryDay;
