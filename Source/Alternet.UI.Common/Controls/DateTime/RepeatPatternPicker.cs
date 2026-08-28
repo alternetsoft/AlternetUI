@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
+using Alternet.UI.Localization;
+
 namespace Alternet.UI
 {
     /// <summary>
@@ -31,11 +33,11 @@ namespace Alternet.UI
 
             tabControl.Parent = this;
 
-            tabControl.Add("None", nonePicker);
-            tabControl.Add("Daily", dailyPicker);
-            tabControl.Add("Weekly", weeklyPicker);
-            tabControl.Add("Monthly", monthlyPicker);
-            tabControl.Add("Yearly", yearlyPicker);
+            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternNone, nonePicker);
+            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternDaily, dailyPicker);
+            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternWeekly, weeklyPicker);
+            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternMonthly, monthlyPicker);
+            tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternYearly, yearlyPicker);
 
             tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
 
@@ -82,13 +84,18 @@ namespace Alternet.UI
         /// Represents a generic control for selecting a repeat pattern rule.
         /// </summary>
         /// <typeparam name="TValue">The type of the repeat pattern rule.</typeparam>
-        public abstract partial class DateRepeatPatternRule<TValue> : HiddenBorder
+        public abstract partial class DateRepeatPatternRulePicker<TValue> : HiddenBorder
             where TValue : DateRepeatPatternRule, new()
         {
             private TValue data = new();
 
             /// <summary>
-            /// Gets or sets the value of the daily repeat pattern rule.
+            /// Occurs when the value of the repeat pattern rule changes.
+            /// </summary>
+            public event EventHandler? ValueChanged;
+
+            /// <summary>
+            /// Gets or sets the value of the date repeat pattern rule.
             /// </summary>
             public virtual TValue Value
             {
@@ -104,14 +111,23 @@ namespace Alternet.UI
                     if (data == value)
                         return;
                     data = value;
+                    OnValueChanged();
                 }
+            }
+
+            /// <summary>
+            /// Called when the value of the repeat pattern rule changes.
+            /// </summary>
+            protected virtual void OnValueChanged()
+            {
+                ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
 
         /// <summary>
         /// Represents a control that allows users to select a daily repeat pattern for an event or task.
         /// </summary>
-        public partial class DailyPatternPicker : DateRepeatPatternRule<DailyRepeatPatternRule>
+        public partial class DailyPatternPicker : DateRepeatPatternRulePicker<DailyRepeatPatternRule>
         {
 
             /// <summary>
@@ -126,7 +142,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a weekly repeat pattern for an event or task.
         /// </summary>
-        public partial class WeeklyPatternPicker : DateRepeatPatternRule<WeeklyRepeatPatternRule>
+        public partial class WeeklyPatternPicker : DateRepeatPatternRulePicker<WeeklyRepeatPatternRule>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
@@ -140,7 +156,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a monthly repeat pattern for an event or task.
         /// </summary>
-        public partial class MonthlyPatternPicker : DateRepeatPatternRule<MonthlyRepeatPatternRule>
+        public partial class MonthlyPatternPicker : DateRepeatPatternRulePicker<MonthlyRepeatPatternRule>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="MonthlyPatternPicker"/> class.
@@ -154,7 +170,7 @@ namespace Alternet.UI
         /// <summary>
         /// Represents a control that allows users to select a yearly repeat pattern for an event or task.
         /// </summary>
-        public partial class YearlyPatternPicker : DateRepeatPatternRule<YearlyRepeatPatternRule>
+        public partial class YearlyPatternPicker : DateRepeatPatternRulePicker<YearlyRepeatPatternRule>
         {
             /// <summary>
             /// Initializes a new instance of the <see cref="YearlyPatternPicker"/> class.
