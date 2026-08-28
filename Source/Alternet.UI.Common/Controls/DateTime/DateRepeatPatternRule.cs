@@ -259,10 +259,38 @@ namespace Alternet.UI
     public partial class MonthlyRepeatPatternRule : DateRepeatPatternRule
     {
         private int dayOfMonth = 1;
-        private bool useDayOfMonth = true;
         private int intervalMonths = 1;
+        private RepeatKind kind = RepeatKind.DayOfMonth;
         private ExtendedDayOfWeek dayOfWeek = ExtendedDayOfWeek.Day;
         private RelativeWeekday dayOfWeekIndex = RelativeWeekday.First;
+
+        /// <summary>
+        /// Gets or sets the kind of monthly repeat pattern.
+        /// </summary>
+        public enum RepeatKind
+        {
+            /// <summary>
+            /// Repeat on a fixed day of the month (e.g., 15th of every month).
+            /// </summary>
+            DayOfMonth,
+
+            /// <summary>
+            /// Repeat on a relative weekday occurrence (e.g., First Monday of every month).
+            /// </summary>
+            RelativeWeekday,
+        }
+
+        /// <summary>
+        /// Gets or sets the kind of daily repeat pattern.
+        /// </summary>
+        public virtual RepeatKind Kind
+        {
+            get => kind;
+            set
+            {
+                kind = GetNewFieldValue(kind, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the day of the month for recurrence.
@@ -278,20 +306,6 @@ namespace Alternet.UI
                 if (value > 31)
                     value = 31;
                 dayOfMonth = GetNewFieldValue(dayOfMonth, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the recurrence
-        /// is based on a fixed day of the month (true) or a relative
-        /// weekday occurrence (false).
-        /// </summary>
-        public virtual bool UseDayOfMonth
-        {
-            get => useDayOfMonth;
-            set
-            {
-                useDayOfMonth = GetNewFieldValue(useDayOfMonth, value);
             }
         }
 
@@ -347,9 +361,37 @@ namespace Alternet.UI
         private int intervalYears = 1;
         private CalendarMonth month = CalendarMonth.January;
         private ExtendedDayOfWeek dayOfWeek = ExtendedDayOfWeek.Day;
-        private bool useFixedDate = true;
         private int dayOfMonth = 1;
         private RelativeWeekday dayOfWeekIndex = RelativeWeekday.First;
+        private RepeatKind kind = RepeatKind.DayOfMonth;
+
+        /// <summary>
+        /// Gets or sets the kind of yearly repeat pattern.
+        /// </summary>
+        public enum RepeatKind
+        {
+            /// <summary>
+            /// Repeat on a fixed day of the month (e.g., August 26th every year).
+            /// </summary>
+            DayOfMonth,
+
+            /// <summary>
+            /// Repeat on a relative weekday occurrence (e.g., First Monday of August every year).
+            /// </summary>
+            RelativeWeekday,
+        }
+
+        /// <summary>
+        /// Gets or sets the kind of yearly repeat pattern.
+        /// </summary>
+        public virtual RepeatKind Kind
+        {
+            get => kind;
+            set
+            {
+                kind = GetNewFieldValue(kind, value);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the interval in years between occurrences.
@@ -376,19 +418,6 @@ namespace Alternet.UI
             set
             {
                 month = GetNewFieldValue(month, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the recurrence
-        /// is based on a fixed date (true) or a relative weekday occurrence (false).
-        /// </summary>
-        public virtual bool UseFixedDate
-        {
-            get => useFixedDate;
-            set
-            {
-                useFixedDate = GetNewFieldValue(useFixedDate, value);
             }
         }
 

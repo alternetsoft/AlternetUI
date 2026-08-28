@@ -25,6 +25,8 @@ namespace Alternet.UI
         /// </summary>
         public RepeatPatternPicker()
         {
+            Padding = 5;
+
             dailyPicker = CreateDailyPatternPicker();
             weeklyPicker = CreateWeeklyPatternPicker();
             monthlyPicker = CreateMonthlyPatternPicker();
@@ -503,11 +505,60 @@ namespace Alternet.UI
         [ControlCategory(KnownControlCategory.Date)]
         public partial class MonthlyPatternPicker : DateRepeatPatternRulePicker<MonthlyRepeatPatternRule>
         {
+            private readonly XIntPickerWithLabels intervalMonthPicker = new();
+            private readonly RelativeWeekdayOfMonthPicker relativeWeekdayOfMonthPicker;
+            private readonly XRadioButtonAndSuffix dayOfMonthRadioButton;
+            private readonly XRadioButtonAndSuffix relativeWeekdayRadioButton;
+
             /// <summary>
             /// Initializes a new instance of the <see cref="MonthlyPatternPicker"/> class.
             /// </summary>
             public MonthlyPatternPicker()
             {
+                Layout = LayoutStyle.Vertical;
+
+                intervalMonthPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;
+                intervalMonthPicker.PrefixText = CommonStrings.Default.DateRepeatPatternPrefixLabelEvery;
+                intervalMonthPicker.Minimum = 1;
+                intervalMonthPicker.Value = Value.IntervalMonths;
+                intervalMonthPicker.ValueChanged += OnIntervalMonthPickerValueChanged;
+                UpdateSuffixLabelText();
+
+                relativeWeekdayOfMonthPicker = new();
+                relativeWeekdayOfMonthPicker.IsMonthVisible = false;
+
+                dayOfMonthRadioButton = new();
+                relativeWeekdayRadioButton = new(relativeWeekdayOfMonthPicker);
+
+                intervalMonthPicker.Parent = this;
+                dayOfMonthRadioButton.Parent = this;
+                relativeWeekdayRadioButton.Parent = this;
+            }
+
+            /// <summary>
+            /// Called when the value of the interval month picker changes.
+            /// </summary>
+            /// <param name="sender">The sender of the event.</param>
+            /// <param name="e">The event arguments.</param>
+            protected virtual void OnIntervalMonthPickerValueChanged(object? sender, EventArgs e)
+            {
+                Value.IntervalMonths = intervalMonthPicker.Value;
+                UpdateSuffixLabelText();
+            }
+
+            /// <summary>
+            /// Updates the text of the suffix label based on the value of the interval month picker.
+            /// </summary>
+            protected virtual void UpdateSuffixLabelText()
+            {
+                if (intervalMonthPicker.Value == 1)
+                {
+                    intervalMonthPicker.SuffixLabel.Text = CommonStrings.Default.TimePeriodUnitMonth;
+                }
+                else
+                {
+                    intervalMonthPicker.SuffixLabel.Text = CommonStrings.Default.TimePeriodUnitMonths;
+                }
             }
         }
 
@@ -517,11 +568,58 @@ namespace Alternet.UI
         [ControlCategory(KnownControlCategory.Date)]
         public partial class YearlyPatternPicker : DateRepeatPatternRulePicker<YearlyRepeatPatternRule>
         {
+            private readonly XIntPickerWithLabels intervalYearPicker = new();
+            private readonly XRadioButtonAndSuffix dayOfMonthRadioButton;
+            private readonly XRadioButtonAndSuffix relativeWeekdayRadioButton;
+            private readonly RelativeWeekdayOfMonthPicker relativeWeekdayOfMonthPicker;
+
             /// <summary>
             /// Initializes a new instance of the <see cref="YearlyPatternPicker"/> class.
             /// </summary>
             public YearlyPatternPicker()
             {
+                Layout = LayoutStyle.Vertical;
+
+                intervalYearPicker.PrefixLabel.MarginLeft = XCheckBox.DefaultCheckBoxMargin.Left + 3;
+                intervalYearPicker.PrefixText = CommonStrings.Default.DateRepeatPatternPrefixLabelEvery;
+                intervalYearPicker.Minimum = 1;
+                intervalYearPicker.Value = Value.IntervalYears;
+                intervalYearPicker.ValueChanged += OnIntervalYearPickerValueChanged;
+                UpdateSuffixLabelText();
+
+                relativeWeekdayOfMonthPicker = new();
+                dayOfMonthRadioButton = new();
+                relativeWeekdayRadioButton = new(relativeWeekdayOfMonthPicker);
+
+                intervalYearPicker.Parent = this;
+                dayOfMonthRadioButton.Parent = this;
+                relativeWeekdayRadioButton.Parent = this;
+            }
+
+            /// <summary>
+            /// Called when the value of the interval year picker changes.
+            /// </summary>
+            /// <param name="sender">The sender of the event.</param>
+            /// <param name="e">The event arguments.</param>
+            protected virtual void OnIntervalYearPickerValueChanged(object? sender, EventArgs e)
+            {
+                Value.IntervalYears = intervalYearPicker.Value;
+                UpdateSuffixLabelText();
+            }
+
+            /// <summary>
+            /// Updates the text of the suffix label based on the value of the interval year picker.
+            /// </summary>
+            protected virtual void UpdateSuffixLabelText()
+            {
+                if (intervalYearPicker.Value == 1)
+                {
+                    intervalYearPicker.SuffixLabel.Text = CommonStrings.Default.TimePeriodUnitYear;
+                }
+                else
+                {
+                    intervalYearPicker.SuffixLabel.Text = CommonStrings.Default.TimePeriodUnitYears;
+                }
             }
         }
     }
