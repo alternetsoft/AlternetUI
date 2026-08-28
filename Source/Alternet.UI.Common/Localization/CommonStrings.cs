@@ -311,5 +311,21 @@ namespace Alternet.UI.Localization
         public string ScheduleRepeatPatternYearly { get; set; } = "Yearly";
 
         // ========================
+
+        public string DailyRepeatPatternRuleKindEveryDay { get; set; } = "Every day";
+        
+        public string DailyRepeatPatternRuleKindEvenDays { get; set; } = "On even days";
+        
+        public string DailyRepeatPatternRuleKindOddDays { get; set; } = "On odd days";
+        
+        public string DailyRepeatPatternRuleKindIntervalDay { get; set; } = "Every {0} day";
+        
+        public string DailyRepeatPatternRuleKindIntervalDays { get; set; } = "Every {0} days";
+        
+        public string DailyRepeatPatternRuleKindWeekdays { get; set; } = "Weekdays";
+        
+        public string DailyRepeatPatternRuleKindWeekends = "Weekends";
+
+        // ========================
     }
 }
