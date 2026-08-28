@@ -409,7 +409,16 @@ namespace Alternet.UI
             {
                 SetButtonsVisible([ButtonKind.LeftParenthesis, ButtonKind.RightParenthesis], value);
             }
-        }      
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the display text box is read-only.
+        /// </summary>
+        public virtual bool IsDisplayReadOnly
+        {
+            get => !displayTextBox.IsEditable;
+            set => displayTextBox.IsEditable = !value;
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether the display text box is visible.
@@ -450,6 +459,15 @@ namespace Alternet.UI
         /// </summary>
         [Browsable(false)]
         public virtual Type? FormulaGlobalType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the display text box is used for password input.
+        /// </summary>
+        public bool IsPasswordDisplay
+        {
+            get => displayTextBox.IsPassword;
+            set => displayTextBox.IsPassword = value;
+        }
 
         /// <summary>
         /// Gets display control.
@@ -968,7 +986,8 @@ namespace Alternet.UI
         /// </summary>
         public PinCodePicker()
         {
-            IsDisplayVisible = false;
+            IsDisplayReadOnly = true;
+            IsPasswordDisplay = true;
             ShowOperatorButtons = false;
             ShowParenthesisButtons = false;
             ShowClearButton = false;
