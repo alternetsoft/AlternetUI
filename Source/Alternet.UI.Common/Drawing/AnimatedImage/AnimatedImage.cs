@@ -12,7 +12,7 @@ namespace Alternet.Drawing;
 /// <summary>
 /// Represents an animated image that can be displayed in a user interface.
 /// </summary>
-/// <remarks>This class inherits from DisposableObject, which means it should be properly disposed of to free
+/// <remarks>This class inherits from <see cref="DisposableObject"/>, which means it should be properly disposed of to free
 /// resources. It is designed to handle the loading and rendering of animated images efficiently.</remarks>
 public partial class AnimatedImage : DisposableObject
 {
@@ -29,8 +29,10 @@ public partial class AnimatedImage : DisposableObject
     /// </summary>
     /// <remarks>If delayLoading is set to false, all animation frames are loaded during construction, which
     /// may impact performance for large images or slow network connections.</remarks>
-    /// <param name="sourceUrl">The URL of the image to be used for the animated image. Must be a valid URL pointing to an image resource.</param>
-    /// <param name="delayLoading">A value indicating whether to delay loading the animation frames. If set to false, frames are loaded immediately
+    /// <param name="sourceUrl">The URL of the image to be used for the animated image.
+    /// Must be a valid URL pointing to an image resource.</param>
+    /// <param name="delayLoading">A value indicating whether to delay loading the animation frames.
+    /// If set to false, frames are loaded immediately
     /// upon initialization; otherwise, loading is deferred. Default is <see langword="true"/>.</param>
     public AnimatedImage(string sourceUrl, bool delayLoading = true)
     {
@@ -45,7 +47,8 @@ public partial class AnimatedImage : DisposableObject
     /// </summary>
     /// <remarks>If <paramref name="delayLoading"/> is set to <see langword="false"/>, all frames are loaded
     /// during construction, which may impact performance for large images.</remarks>
-    /// <param name="streamProvider">A function that returns a stream containing the image data to be used for loading the animated image. This
+    /// <param name="streamProvider">A function that returns a stream containing the image data
+    /// to be used for loading the animated image. This
     /// parameter cannot be null.</param>
     /// <param name="delayLoading">A value indicating whether to delay loading of image frames until they are needed. If set to <see
     /// langword="false"/>, all frames are loaded immediately upon initialization.</param>
@@ -61,7 +64,8 @@ public partial class AnimatedImage : DisposableObject
     /// </summary>
     /// <remarks>The constructor requires that the provided stream contains valid image frames. If the stream
     /// does not meet these requirements, an exception may be thrown during initialization.</remarks>
-    /// <param name="stream">The stream that provides the image data. The stream must be readable and positioned at the beginning of the
+    /// <param name="stream">The stream that provides the image data.
+    /// The stream must be readable and positioned at the beginning of the
     /// image data.</param>
     public AnimatedImage(Stream stream)
     {

@@ -13,16 +13,11 @@ namespace Alternet.UI
     /// <summary>
     /// This is a static control which displays an animation.
     /// This control is useful to display a (small) animation while doing
-    /// a long task (e.g. a "throbber").
+    /// a long task (e.g. a "throbber"). It supports gif and webp animations.
     /// </summary>
     /// <remarks>
     /// <see cref="AnimationPlayer"/> API is as simple as possible and won't give you full
     /// control on the animation; if you need it then use other controls.
-    /// </remarks>
-    /// <remarks>
-    /// For the platforms where this control has a native implementation, it
-    /// may have only limited support for the animation types. Set UseGeneric if you need to
-    /// support all of them.
     /// </remarks>
     [ControlCategory(KnownControlCategory.Other)]
     public partial class AnimationPlayer : HiddenGenericBorder
