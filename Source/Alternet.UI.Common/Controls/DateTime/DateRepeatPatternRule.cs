@@ -243,7 +243,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the days of the week on which the event occurs.
         /// </summary>
-        public virtual DaysOfWeek Days
+        public virtual DaysOfWeek WeekDays
         {
             get => days;
             set

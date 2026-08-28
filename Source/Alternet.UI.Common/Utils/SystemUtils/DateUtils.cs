@@ -40,6 +40,8 @@ namespace Alternet.UI
         /// will be used based on the current culture
         /// settings.</remarks>
         public static string? PmDesignatorOverride;
+        
+        private static DayOfWeek? systemFirstDayOfWeek;
 
         /// <summary>
         /// Gets <see cref="DateTime"/> format used in JavaScript
@@ -49,12 +51,18 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the first day of the week according to the current culture's settings.
+        /// You can set this property to override the default behavior and specify a custom first day of the week.
         /// </summary>
         public static DayOfWeek SystemFirstDayOfWeek
         {
             get
             {
-                return System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
+                return systemFirstDayOfWeek ?? System.Globalization.DateTimeFormatInfo.CurrentInfo.FirstDayOfWeek;
+            }
+
+            set
+            {
+                systemFirstDayOfWeek = value;
             }
         }
 

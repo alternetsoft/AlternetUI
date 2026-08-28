@@ -170,6 +170,11 @@ namespace Alternet.UI
             public event EventHandler? ValueChanged;
 
             /// <summary>
+            /// Gets or sets the format provider used for formatting and parsing date and time values.
+            /// </summary>
+            public virtual IFormatProvider? FormatProvider { get; set; }
+
+            /// <summary>
             /// Gets or sets the value of the date repeat pattern rule.
             /// </summary>
             public virtual TValue Value
@@ -392,7 +397,8 @@ namespace Alternet.UI
             private readonly TransparentPanel intervalWeekPanel = new();
             private readonly XIntPicker intervalWeekPicker = new();
             private readonly Label intervalWeekSuffixLabel = new();
-            private readonly Label intervalWeekPrefixLabel = new(CommonStrings.Default.DateRepeatPatternPrefixLabelEvery);
+            private readonly Label intervalWeekPrefixLabel = new(CommonStrings.Default.DateRepeatPatternPrefixLabelEvery);            
+            private readonly PanelSettings weekDaysPanel = new();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
@@ -418,6 +424,54 @@ namespace Alternet.UI
                 intervalWeekSuffixLabel.MarginLeft = 5;
                 intervalWeekSuffixLabel.Parent = intervalWeekPanel;
 
+                var firstDayOfWeek = DateUtils.SystemFirstDayOfWeek;
+
+                DaysOfWeek[] weekdays;
+                List<string> titles = new();
+                var dayNames = DateUtils.GetDayNames(DayNamesKind.Full, FormatProvider);
+
+                if (firstDayOfWeek == DayOfWeek.Sunday)
+                {
+                    weekdays = new DaysOfWeek[]
+                    {
+                        DaysOfWeek.Sunday,
+                        DaysOfWeek.Monday,
+                        DaysOfWeek.Tuesday,
+                        DaysOfWeek.Wednesday,
+                        DaysOfWeek.Thursday,
+                        DaysOfWeek.Friday,
+                        DaysOfWeek.Saturday,
+                    };
+
+                    titles.AddRange(dayNames);
+                }
+                else
+                {
+                    weekdays = new DaysOfWeek[]
+                    {
+                        DaysOfWeek.Monday,
+                        DaysOfWeek.Tuesday,
+                        DaysOfWeek.Wednesday,
+                        DaysOfWeek.Thursday,
+                        DaysOfWeek.Friday,
+                        DaysOfWeek.Saturday,
+                        DaysOfWeek.Sunday,
+                    };
+
+                    titles.AddRange(dayNames);
+                    titles.RemoveAt(0);
+                    titles.Add(dayNames[0]);
+                }
+
+                weekDaysPanel.AddFlagCheckBoxes(
+                    label: null,
+                    getValue: () => Value.WeekDays,
+                    setValue: v => Value.WeekDays = v,
+                    itemTitles: titles.ToArray(),
+                    itemValues: weekdays,
+                    e: null);
+
+                weekDaysPanel.Parent = this;
                 intervalWeekPanel.Parent = this;
             }
 
