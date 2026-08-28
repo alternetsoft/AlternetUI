@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 using Alternet.UI.Localization;
@@ -227,6 +228,9 @@ namespace Alternet.UI
             private readonly XRadioButton weekdaysRadioButton;
             private readonly XRadioButton weekendsRadioButton;
             private readonly ControlSet<XRadioButton> radioButtons;
+            private readonly TransparentPanel intervalDayPanel = new();
+            private readonly XIntPicker intervalDayPicker = new();
+            private readonly Label intervalDaySuffixLabel = new();
 
             /// <summary>
             /// Initializes a new instance of the <see cref="DailyPatternPicker"/> class.
@@ -240,7 +244,7 @@ namespace Alternet.UI
                 oddDaysRadioButton = CreateRadioButton(
                     CommonStrings.Default.DailyRepeatPatternRuleKindOddDays, DailyRepeatPatternRule.RepeatKind.OddDays);
                 intervalRadioButton = CreateRadioButton(
-                    CommonStrings.Default.DailyRepeatPatternRuleKindIntervalDay, DailyRepeatPatternRule.RepeatKind.IntervalDays);
+                    CommonStrings.Default.DailyRepeatPatternRuleKindIntervalDayPrefix, DailyRepeatPatternRule.RepeatKind.IntervalDays);
                 weekdaysRadioButton = CreateRadioButton(
                     CommonStrings.Default.DailyRepeatPatternRuleKindWeekdays, DailyRepeatPatternRule.RepeatKind.Weekdays);
                 weekendsRadioButton = CreateRadioButton(
@@ -256,7 +260,7 @@ namespace Alternet.UI
                     weekendsRadioButton,
                     intervalRadioButton);
 
-                radioButtons.Parent(this).ForEach(c =>
+                radioButtons.ForEach(c =>
                 {
                     var kind = c.Tag as DailyRepeatPatternRule.RepeatKind?;
 
@@ -268,45 +272,114 @@ namespace Alternet.UI
                     {
                         Value.Kind = kind ?? DailyRepeatPatternRule.RepeatKind.EveryDay;
                     };
+
+                    if (c != intervalRadioButton)
+                        c.Parent = this;
                 });
 
-                // string DailyRepeatPatternRuleKindIntervalDays = "Every {0} days";
+                intervalDayPanel.Layout = LayoutStyle.Horizontal;
+
+                intervalRadioButton.VerticalAlignment = VerticalAlignment.Center;
+                intervalRadioButton.Parent = intervalDayPanel;
+
+                intervalDayPicker.Minimum = 1;
+                intervalDayPicker.VerticalAlignment = VerticalAlignment.Center;
+                intervalDayPicker.ValueChanged += OnIntervalDayPickerValueChanged;
+                intervalDayPicker.Value = Value.IntervalDays;
+                intervalDayPicker.Parent = intervalDayPanel;
+
+                intervalDaySuffixLabel.VerticalAlignment = VerticalAlignment.Center;
+                intervalDaySuffixLabel.MarginLeft = 5;
+                intervalDaySuffixLabel.Parent = intervalDayPanel;
+
+                intervalDayPanel.Parent = this;
             }
+
+            /// <summary>
+            /// Gets the panel that contains the controls for selecting the interval day repeat pattern.
+            /// </summary>
+            [Browsable(false)]
+            public TransparentPanel IntervalDayPanel => intervalDayPanel;
+
+            /// <summary>
+            /// Gets the integer picker control for selecting the interval day value in the daily repeat pattern.
+            /// </summary>
+            [Browsable(false)]
+            public XIntPicker IntervalDayPicker => intervalDayPicker;
+
+            /// <summary>
+            /// Gets the label that displays the suffix text for the interval day picker in the daily repeat pattern.
+            /// </summary>
+            [Browsable(false)]
+            public Label IntervalDaySuffixLabel => intervalDaySuffixLabel;
 
             /// <summary>
             /// Gets the radio button for selecting the "Every Day" repeat pattern.
             /// </summary>
+            [Browsable(false)]
             public XRadioButton EveryDayRadioButton => everyDayRadioButton;
 
             /// <summary>
             /// Gets the radio button for selecting the "Even Days" repeat pattern.
             /// </summary>
+            [Browsable(false)]
             public XRadioButton EvenDaysRadioButton => evenDaysRadioButton;
 
             /// <summary>
             /// Gets the radio button for selecting the "Odd Days" repeat pattern.
             /// </summary>
+            [Browsable(false)]
             public XRadioButton OddDaysRadioButton => oddDaysRadioButton;
 
             /// <summary>
             /// Gets the radio button for selecting the "Interval Day" repeat pattern.
             /// </summary>
+            [Browsable(false)]
             public XRadioButton IntervalRadioButton => intervalRadioButton;
 
             /// <summary>
             /// Gets the radio button for selecting the "Weekdays" repeat pattern.
             /// </summary>
+            [Browsable(false)]
             public XRadioButton WeekdaysRadioButton => weekdaysRadioButton;
 
             /// <summary>
             /// Gets the radio button for selecting the "Weekends" repeat pattern.
             /// </summary>
+            [Browsable(false)]
             public XRadioButton WeekendsRadioButton => weekendsRadioButton;
 
             /// <summary>
             /// Gets the set of all radio buttons in the daily pattern picker.
             /// </summary>
+            [Browsable(false)]
             public ControlSet<XRadioButton> RadioButtons => radioButtons;
+
+            /// <summary>
+            /// Called when the value of the interval day picker changes.
+            /// </summary>
+            /// <param name="sender">The sender of the event.</param>
+            /// <param name="e">The event arguments.</param>
+            protected virtual void OnIntervalDayPickerValueChanged(object? sender, EventArgs e)
+            {
+                Value.IntervalDays = intervalDayPicker.Value;
+                UpdateSuffixLabelText();
+            }
+
+            /// <summary>
+            /// Updates the text of the suffix label based on the value of the interval day picker.
+            /// </summary>
+            protected virtual void UpdateSuffixLabelText()
+            {
+                if (intervalDayPicker.Value == 1)
+                {
+                    intervalDaySuffixLabel.Text = CommonStrings.Default.TimePeriodUnitDay;
+                }
+                else
+                {
+                    intervalDaySuffixLabel.Text = CommonStrings.Default.TimePeriodUnitDays;
+                }
+            }
         }
 
         /// <summary>

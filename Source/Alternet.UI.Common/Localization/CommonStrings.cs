@@ -318,9 +318,7 @@ namespace Alternet.UI.Localization
         
         public string DailyRepeatPatternRuleKindOddDays { get; set; } = "On odd days";
         
-        public string DailyRepeatPatternRuleKindIntervalDay { get; set; } = "Every {0} day";
-        
-        public string DailyRepeatPatternRuleKindIntervalDays { get; set; } = "Every {0} days";
+        public string DailyRepeatPatternRuleKindIntervalDayPrefix { get; set; } = "Every";
         
         public string DailyRepeatPatternRuleKindWeekdays { get; set; } = "On weekdays";
         
