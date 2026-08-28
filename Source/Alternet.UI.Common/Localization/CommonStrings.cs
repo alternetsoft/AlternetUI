@@ -312,13 +312,13 @@ namespace Alternet.UI.Localization
 
         // ========================
 
+        public string DateRepeatPatternPrefixLabelEvery { get; set; } = "Every";
+
         public string DailyRepeatPatternRuleKindEveryDay { get; set; } = "Every day";
         
         public string DailyRepeatPatternRuleKindEvenDays { get; set; } = "On even days";
         
         public string DailyRepeatPatternRuleKindOddDays { get; set; } = "On odd days";
-        
-        public string DailyRepeatPatternRuleKindIntervalDayPrefix { get; set; } = "Every";
         
         public string DailyRepeatPatternRuleKindWeekdays { get; set; } = "On weekdays";
         

@@ -244,7 +244,7 @@ namespace Alternet.UI
                 oddDaysRadioButton = CreateRadioButton(
                     CommonStrings.Default.DailyRepeatPatternRuleKindOddDays, DailyRepeatPatternRule.RepeatKind.OddDays);
                 intervalRadioButton = CreateRadioButton(
-                    CommonStrings.Default.DailyRepeatPatternRuleKindIntervalDayPrefix, DailyRepeatPatternRule.RepeatKind.IntervalDays);
+                    CommonStrings.Default.DateRepeatPatternPrefixLabelEvery, DailyRepeatPatternRule.RepeatKind.IntervalDays);
                 weekdaysRadioButton = CreateRadioButton(
                     CommonStrings.Default.DailyRepeatPatternRuleKindWeekdays, DailyRepeatPatternRule.RepeatKind.Weekdays);
                 weekendsRadioButton = CreateRadioButton(
@@ -284,8 +284,9 @@ namespace Alternet.UI
 
                 intervalDayPicker.Minimum = 1;
                 intervalDayPicker.VerticalAlignment = VerticalAlignment.Center;
-                intervalDayPicker.ValueChanged += OnIntervalDayPickerValueChanged;
                 intervalDayPicker.Value = Value.IntervalDays;
+                intervalDayPicker.ValueChanged += OnIntervalDayPickerValueChanged;
+                UpdateSuffixLabelText();
                 intervalDayPicker.Parent = intervalDayPanel;
 
                 intervalDaySuffixLabel.VerticalAlignment = VerticalAlignment.Center;
@@ -388,11 +389,82 @@ namespace Alternet.UI
         [ControlCategory(KnownControlCategory.Date)]
         public partial class WeeklyPatternPicker : DateRepeatPatternRulePicker<WeeklyRepeatPatternRule>
         {
+            private readonly TransparentPanel intervalWeekPanel = new();
+            private readonly XIntPicker intervalWeekPicker = new();
+            private readonly Label intervalWeekSuffixLabel = new();
+            private readonly Label intervalWeekPrefixLabel = new(CommonStrings.Default.DateRepeatPatternPrefixLabelEvery);
+
             /// <summary>
             /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
             /// </summary>
             public WeeklyPatternPicker()
             {
+                Layout = LayoutStyle.Vertical;
+
+                intervalWeekPanel.Layout = LayoutStyle.Horizontal;
+
+                intervalWeekPrefixLabel.VerticalAlignment = VerticalAlignment.Center;
+                intervalWeekPrefixLabel.MarginRight = 5;
+                intervalWeekPrefixLabel.Parent = intervalWeekPanel;
+
+                intervalWeekPicker.Minimum = 1;
+                intervalWeekPicker.VerticalAlignment = VerticalAlignment.Center;
+                intervalWeekPicker.Value = Value.IntervalWeeks;
+                intervalWeekPicker.ValueChanged += OnIntervalWeekPickerValueChanged;
+                UpdateSuffixLabelText();
+                intervalWeekPicker.Parent = intervalWeekPanel;
+
+                intervalWeekSuffixLabel.VerticalAlignment = VerticalAlignment.Center;
+                intervalWeekSuffixLabel.MarginLeft = 5;
+                intervalWeekSuffixLabel.Parent = intervalWeekPanel;
+
+                intervalWeekPanel.Parent = this;
+            }
+
+            /// <summary>
+            /// Gets the panel that contains the controls for selecting the interval week repeat pattern.
+            /// </summary>
+            public TransparentPanel IntervalWeekPanel => intervalWeekPanel;
+
+            /// <summary>
+            /// Gets the integer picker control for selecting the interval week value in the weekly repeat pattern.
+            /// </summary>
+            public XIntPicker IntervalWeekPicker => intervalWeekPicker;
+
+            /// <summary>
+            /// Gets the label that displays the suffix text for the interval week picker in the weekly repeat pattern.
+            /// </summary>
+            public Label IntervalWeekSuffixLabel => intervalWeekSuffixLabel;
+
+            /// <summary>
+            /// Gets the label that displays the prefix text for the interval week picker in the weekly repeat pattern.
+            /// </summary>
+            public Label IntervalWeekPrefixLabel => intervalWeekPrefixLabel;
+
+            /// <summary>
+            /// Called when the value of the interval week picker changes.
+            /// </summary>
+            /// <param name="sender">The sender of the event.</param>
+            /// <param name="e">The event arguments.</param>
+            protected virtual void OnIntervalWeekPickerValueChanged(object? sender, EventArgs e)
+            {
+                Value.IntervalWeeks = intervalWeekPicker.Value;
+                UpdateSuffixLabelText();
+            }
+
+            /// <summary>
+            /// Updates the text of the suffix label based on the value of the interval week picker.
+            /// </summary>
+            protected virtual void UpdateSuffixLabelText()
+            {
+                if (intervalWeekPicker.Value == 1)
+                {
+                    intervalWeekSuffixLabel.Text = CommonStrings.Default.TimePeriodUnitWeek;
+                }
+                else
+                {
+                    intervalWeekSuffixLabel.Text = CommonStrings.Default.TimePeriodUnitWeeks;
+                }
             }
         }
 
