@@ -33,7 +33,7 @@ namespace Alternet.UI
             tabControl.TabHasBorder = true;
             tabControl.HasInteriorBorder = false;
             tabControl.ActiveTabTheme = SpeedButton.KnownTheme.StaticBorder;
-            tabControl.TabTheme = SpeedButton.KnownTheme.None;
+            tabControl.TabTheme = SpeedButton.KnownTheme.Default;
             tabControl.ContentVisible = false;
 
             tabControl.Parent = this;
@@ -148,7 +148,20 @@ namespace Alternet.UI
         public abstract partial class DateRepeatPatternRulePicker<TValue> : HiddenBorder
             where TValue : DateRepeatPatternRule, new()
         {
+            /// <summary>
+            /// Gets or sets the default minimum margin for child controls within the repeat pattern rule picker.
+            /// </summary>
+            public static Thickness DefaultMinChildMargin = (5, 2, 5, 2);
+
             private TValue data = new();
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DateRepeatPatternRulePicker{TValue}"/> class.
+            /// </summary>
+            public DateRepeatPatternRulePicker()
+            {
+                MinChildMargin = DefaultMinChildMargin;
+            }
 
             /// <summary>
             /// Occurs when the value of the repeat pattern rule changes.
@@ -177,6 +190,22 @@ namespace Alternet.UI
             }
 
             /// <summary>
+            /// Creates a new instance of the <see cref="XRadioButton"/> control with optional text and tag.
+            /// </summary>
+            /// <param name="text">The text to display on the radio button.</param>
+            /// <param name="tag">The tag associated with the radio button.</param>
+            /// <returns>A new instance of the <see cref="XRadioButton"/> control.</returns>
+            protected virtual XRadioButton CreateRadioButton(string? text = null, object? tag = null)
+            {
+                var radioButton = new XRadioButton();
+
+                if (text != null) radioButton.Text = text;
+
+                radioButton.Tag = tag;
+                return radioButton;
+            }
+
+            /// <summary>
             /// Called when the value of the repeat pattern rule changes.
             /// </summary>
             protected virtual void OnValueChanged()
@@ -191,12 +220,12 @@ namespace Alternet.UI
         [ControlCategory(KnownControlCategory.Date)]
         public partial class DailyPatternPicker : DateRepeatPatternRulePicker<DailyRepeatPatternRule>
         {
-            private readonly XRadioButton everyDayRadioButton = new();
-            private readonly XRadioButton evenDaysRadioButton = new();
-            private readonly XRadioButton oddDaysRadioButton = new();
-            private readonly XRadioButton intervalRadioButton = new();
-            private readonly XRadioButton weekdaysRadioButton = new();
-            private readonly XRadioButton weekendsRadioButton = new();
+            private readonly XRadioButton everyDayRadioButton;
+            private readonly XRadioButton evenDaysRadioButton;
+            private readonly XRadioButton oddDaysRadioButton;
+            private readonly XRadioButton intervalRadioButton;
+            private readonly XRadioButton weekdaysRadioButton;
+            private readonly XRadioButton weekendsRadioButton;
             private readonly ControlSet<XRadioButton> radioButtons;
 
             /// <summary>
@@ -204,15 +233,20 @@ namespace Alternet.UI
             /// </summary>
             public DailyPatternPicker()
             {
-                MinChildMargin = 5;
-                Layout = LayoutStyle.Vertical;
+                everyDayRadioButton = CreateRadioButton(
+                    CommonStrings.Default.DailyRepeatPatternRuleKindEveryDay, DailyRepeatPatternRule.RepeatKind.EveryDay);
+                evenDaysRadioButton = CreateRadioButton(
+                    CommonStrings.Default.DailyRepeatPatternRuleKindEvenDays, DailyRepeatPatternRule.RepeatKind.EvenDays);
+                oddDaysRadioButton = CreateRadioButton(
+                    CommonStrings.Default.DailyRepeatPatternRuleKindOddDays, DailyRepeatPatternRule.RepeatKind.OddDays);
+                intervalRadioButton = CreateRadioButton(
+                    CommonStrings.Default.DailyRepeatPatternRuleKindIntervalDay, DailyRepeatPatternRule.RepeatKind.IntervalDays);
+                weekdaysRadioButton = CreateRadioButton(
+                    CommonStrings.Default.DailyRepeatPatternRuleKindWeekdays, DailyRepeatPatternRule.RepeatKind.Weekdays);
+                weekendsRadioButton = CreateRadioButton(
+                    CommonStrings.Default.DailyRepeatPatternRuleKindWeekends, DailyRepeatPatternRule.RepeatKind.Weekends);
 
-                everyDayRadioButton.Text = CommonStrings.Default.DailyRepeatPatternRuleKindEveryDay;
-                evenDaysRadioButton.Text = CommonStrings.Default.DailyRepeatPatternRuleKindEvenDays;
-                oddDaysRadioButton.Text = CommonStrings.Default.DailyRepeatPatternRuleKindOddDays;
-                intervalRadioButton.Text = CommonStrings.Default.DailyRepeatPatternRuleKindIntervalDay;
-                weekdaysRadioButton.Text = CommonStrings.Default.DailyRepeatPatternRuleKindWeekdays;
-                weekendsRadioButton.Text = CommonStrings.Default.DailyRepeatPatternRuleKindWeekends;
+                Layout = LayoutStyle.Vertical;
 
                 radioButtons = new(
                     everyDayRadioButton,
@@ -222,7 +256,17 @@ namespace Alternet.UI
                     weekendsRadioButton,
                     intervalRadioButton);
 
-                radioButtons.Parent(this);
+                radioButtons.Parent(this).ForEach(c =>
+                {
+                    var kind = c.Tag as DailyRepeatPatternRule.RepeatKind?;
+
+                    c.IsChecked = Value.Kind == kind;
+
+                    c.CheckedChanged += (s, e) =>
+                    {
+                        Value.Kind = kind ?? DailyRepeatPatternRule.RepeatKind.EveryDay;
+                    };
+                });
 
                 // string DailyRepeatPatternRuleKindIntervalDays = "Every {0} days";
             }
@@ -274,7 +318,6 @@ namespace Alternet.UI
             /// </summary>
             public WeeklyPatternPicker()
             {
-                SuggestedHeight = 100;
             }
         }
 
@@ -289,7 +332,6 @@ namespace Alternet.UI
             /// </summary>
             public MonthlyPatternPicker()
             {
-                SuggestedHeight = 100;
             }
         }
 
@@ -304,7 +346,6 @@ namespace Alternet.UI
             /// </summary>
             public YearlyPatternPicker()
             {
-                SuggestedHeight = 100;
             }
         }
     }

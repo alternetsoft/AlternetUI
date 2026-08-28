@@ -322,9 +322,9 @@ namespace Alternet.UI.Localization
         
         public string DailyRepeatPatternRuleKindIntervalDays { get; set; } = "Every {0} days";
         
-        public string DailyRepeatPatternRuleKindWeekdays { get; set; } = "Weekdays";
+        public string DailyRepeatPatternRuleKindWeekdays { get; set; } = "On weekdays";
         
-        public string DailyRepeatPatternRuleKindWeekends = "Weekends";
+        public string DailyRepeatPatternRuleKindWeekends { get; set; } = "On weekends";
 
         // ========================
     }
