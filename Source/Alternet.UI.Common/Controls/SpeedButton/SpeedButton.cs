@@ -49,7 +49,6 @@ namespace Alternet.UI
         private TextAsValueHelper? valueHelper;
         private bool keepSquareShape;
         private bool isNormalTransparent;
-
         static SpeedButton()
         {
             ResetThemes();
@@ -193,6 +192,21 @@ namespace Alternet.UI
                 {
                     Label.VertDirection = value;
                 });
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is used for password input.
+        /// </summary>
+        public virtual bool IsPassword
+        {
+            get => Label.IsPassword;
+            set
+            {
+                if (Label.IsPassword == value)
+                    return;
+                Label.IsPassword = value;
+                PerformLayoutAndInvalidate();
             }
         }
 

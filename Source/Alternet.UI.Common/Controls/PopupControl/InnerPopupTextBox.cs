@@ -95,6 +95,7 @@ namespace Alternet.UI
             HasBorder = prm.HasBorder;
             Parent = prm.ItemContainer;
             Content.Text = prm.GetItemText?.Invoke() ?? string.Empty;
+            Content.IsPassword = prm.IsPassword;
 
             void OnContentTextChanged(object? sender, EventArgs e)
             {

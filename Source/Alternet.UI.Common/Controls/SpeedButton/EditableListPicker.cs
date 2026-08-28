@@ -252,6 +252,7 @@ namespace Alternet.UI
                 HideOnEscape = false,
                 HideOnEnter = false,
                 HasBorder = false,
+                IsPassword = this.IsPassword,
                 EmptyTextHint = this.EmptyTextHint,
                 TabPressed = () =>
                 {

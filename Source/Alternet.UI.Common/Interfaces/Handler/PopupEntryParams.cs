@@ -99,6 +99,11 @@ public struct PopupEntryParams
     public bool HideOnEscape { get; set; } = true;
 
     /// <summary>
+    /// Gets or sets whether the popup entry is used for password input.
+    /// </summary>
+    public bool IsPassword { get; set; }
+
+    /// <summary>
     /// Gets or sets whether popup is closed when Enter key is pressed.
     /// If set to true, the popup is closed when Enter key is pressed.
     /// </summary>

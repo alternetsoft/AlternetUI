@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -71,6 +72,7 @@ namespace Alternet.UI
         private bool isTransparent = true;
         private string? emptyTextHint;
         private VerticalTextDirection? vertDirection;
+        private bool isPassword;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Label"/> class
@@ -190,6 +192,26 @@ namespace Alternet.UI
                 if (drawLabelFlags == value)
                     return;
                 drawLabelFlags = value;
+                PerformLayoutAndInvalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the text in the control is shown as a password.
+        /// </summary>
+        [Browsable(false)]
+        public virtual bool IsPassword
+        {
+            get
+            {
+                return isPassword;
+            }
+
+            set
+            {
+                if (isPassword == value)
+                    return;
+                isPassword = value;
                 PerformLayoutAndInvalidate();
             }
         }
@@ -784,7 +806,7 @@ namespace Alternet.UI
 
             string GetWrappedText(string s)
             {
-                if(!WordWrap)
+                if (!WordWrap)
                     return s;
 
                 var mw = paddedRect.Width;
@@ -901,25 +923,39 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual string GetFormattedText()
         {
-#pragma warning disable
-            var image = GetImage();
-#pragma warning restore
-            var labelText = Text;
+            var result = Internal(out var isEmptyTextHint);
 
-            if (labelText.Length > 0)
+            if (IsPassword && !isEmptyTextHint)
             {
-                var prefix = TextPrefix;
-                var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
-                if (textFormat is not null)
-                    result = string.Format(textFormat, result);
-                return result;
+                result = new string(CharUtils.DefaultPasswordChar, result.Length);
             }
 
-            labelText = EmptyTextHint ?? string.Empty;
+            return result;
 
-            if (labelText.Length == 0)
-                return StringUtils.OneSpace;
-            return labelText;
+            string Internal(out bool isEmptyTextHint)
+            {
+#pragma warning disable
+                var image = GetImage();
+#pragma warning restore
+                var labelText = Text;
+
+                if (labelText.Length > 0)
+                {
+                    var prefix = TextPrefix;
+                    var result = $"{prefix}{labelText}{TextSuffix}" ?? string.Empty;
+                    if (textFormat is not null)
+                        result = string.Format(textFormat, result);
+                    isEmptyTextHint = false;
+                    return result;
+                }
+
+                labelText = EmptyTextHint ?? string.Empty;
+                isEmptyTextHint = true;
+
+                if (labelText.Length == 0)
+                    return StringUtils.OneSpace;
+                return labelText;
+            }
         }
 
         /// <summary>
@@ -979,7 +1015,7 @@ namespace Alternet.UI
         public virtual Coord GetRightSideWidth(bool remeasure)
         {
             var prm = GetLastUsedDrawLabelParams(remeasure);
-            if(prm.SuffixElements is null)
+            if (prm.SuffixElements is null)
                 return 0;
             var last = prm.SuffixElements[prm.SuffixElements.Length - 1];
             var lastWidth = last.GetSize(MeasureCanvas).Width;
