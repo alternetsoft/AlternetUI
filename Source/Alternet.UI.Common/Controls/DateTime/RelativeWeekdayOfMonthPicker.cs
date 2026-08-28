@@ -19,16 +19,16 @@ namespace Alternet.UI
         private readonly Label dayOfWeekAndMonthSeparatorLabel = new();
         private readonly MonthPicker monthPicker;
         private readonly Label prefixLabel = new();
-        private readonly TransparentPanel firstRowPanel = new();
-        private readonly TransparentPanel secondRowPanel = new();
+        private readonly TransparentPanel firstPanel = new();
+        private readonly TransparentPanel secondPanel = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RelativeWeekdayOfMonthPicker"/> class.
         /// </summary>
         public RelativeWeekdayOfMonthPicker()
         {
-            firstRowPanel.MinChildMargin = 5;
-            secondRowPanel.MinChildMargin = 5;
+            firstPanel.MinChildMargin = 5;
+            secondPanel.MinChildMargin = 5;
 
             Layout = LayoutStyle.Horizontal;
 
@@ -45,17 +45,17 @@ namespace Alternet.UI
 
             monthPicker = new MonthPicker();
 
-            firstRowPanel.Layout = LayoutStyle.Horizontal;
-            secondRowPanel.Layout = LayoutStyle.Horizontal;
+            firstPanel.Layout = LayoutStyle.Horizontal;
+            secondPanel.Layout = LayoutStyle.Horizontal;
 
-            prefixLabel.Parent = firstRowPanel;
-            relativeWeekdayPicker.Parent = firstRowPanel;
-            dayOfWeekPicker.Parent = firstRowPanel;
-            dayOfWeekAndMonthSeparatorLabel.Parent = secondRowPanel;
-            monthPicker.Parent = secondRowPanel;
+            prefixLabel.Parent = firstPanel;
+            relativeWeekdayPicker.Parent = firstPanel;
+            dayOfWeekPicker.Parent = firstPanel;
+            dayOfWeekAndMonthSeparatorLabel.Parent = secondPanel;
+            monthPicker.Parent = secondPanel;
 
-            firstRowPanel.Parent = this;
-            secondRowPanel.Parent = this;
+            firstPanel.Parent = this;
+            secondPanel.Parent = this;
         }
 
         /// <summary>
@@ -121,6 +121,16 @@ namespace Alternet.UI
                 monthPicker.Visible = value;
             }
         }
+
+        /// <summary>
+        /// Gets the first panel that contains the prefix label, relative weekday picker, and day of the week picker.
+        /// </summary>
+        public TransparentPanel FirstPanel => firstPanel;
+
+        /// <summary>
+        /// Gets the second panel that contains the separator label and the month picker.
+        /// </summary>
+        public TransparentPanel SecondPanel => secondPanel;
 
         /// <summary>
         /// Gets the currently selected <see cref="RelativeWeekdayOfMonth"/> value,

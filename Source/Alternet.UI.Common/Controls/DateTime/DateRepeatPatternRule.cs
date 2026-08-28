@@ -9,15 +9,14 @@ namespace Alternet.UI
     /// </summary>
     public abstract partial class DateRepeatPatternRule : BaseObjectWithNotify
     {
-        private DateOnly? startDate;
+        private DateOnly startDate;
         private DateOnly? endDate;
         private int occurrenceCount;
 
         /// <summary>
         /// Gets or sets the start date of the repeat pattern range. 
-        /// If not set, the repeat pattern is considered to start from the earliest possible date.
         /// </summary>
-        public virtual DateOnly? StartDate
+        public virtual DateOnly StartDate
         {
             get => startDate;
             set
@@ -62,8 +61,9 @@ namespace Alternet.UI
             if (EndDate is not null && EndDate < maxDate)
                 maxDate = EndDate.Value;
 
-            if (StartDate is not null && StartDate > minDate)
-                minDate = StartDate.Value;
+            // Here we can add optimization for some cases and to use minDate as is.
+
+            minDate = StartDate;
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Alternet.UI
         /// <param name="minDate">The minimum date to consider for the occurrences.</param>
         /// <param name="maxDate">The maximum date to consider for the occurrences.</param>
         /// <returns>An enumerable of the occurrence dates.</returns>
-        public virtual IEnumerable<DateOnly> GetOccurrences(DateOnly minDate, DateOnly maxDate)
+        public virtual IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
         {
             return Array.Empty<DateOnly>();
         }
@@ -150,14 +150,14 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IEnumerable<DateOnly> GetOccurrences(DateOnly minDate, DateOnly maxDate)
+        public override IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
         {
             CoerceMinMaxDate(ref minDate, ref maxDate);
 
             if (minDate > maxDate)
                 return Array.Empty<DateOnly>();
 
-            var startDate = minDate;
+            var currentDate = minDate;
 
             switch (Kind)
             {
@@ -182,10 +182,10 @@ namespace Alternet.UI
                 var returnedCount = 0;
                 var occ = OccurrenceCount;
 
-                while (startDate <= maxDate)
+                while (currentDate <= maxDate)
                 {
-                    yield return startDate;
-                    startDate = startDate.AddDays(intervalDays);
+                    yield return currentDate;
+                    currentDate = currentDate.AddDays(intervalDays);
                     returnedCount++;
                     if (occ > 0 && returnedCount >= occ)
                         yield break;
@@ -194,20 +194,20 @@ namespace Alternet.UI
 
             IEnumerable<DateOnly> GetEveryDay()
             {
-                while (startDate <= maxDate)
+                while (currentDate <= maxDate)
                 {
-                    yield return startDate;
-                    startDate = startDate.AddDays(1);
+                    yield return currentDate;
+                    currentDate = currentDate.AddDays(1);
                 }
             }
 
             IEnumerable<DateOnly> GetDays(Func<DateOnly, bool> predicate)
             {
-                while (startDate <= maxDate)
+                while (currentDate <= maxDate)
                 {
-                    if (predicate(startDate))
-                        yield return startDate;
-                    startDate = startDate.AddDays(1);
+                    if (predicate(currentDate))
+                        yield return currentDate;
+                    currentDate = currentDate.AddDays(1);
                 }
             }
 
