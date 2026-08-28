@@ -14,6 +14,11 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Date)]
     public partial class RelativeWeekdayOfMonthPicker : TransparentPanel
     {
+        /// <summary>
+        /// The default margin between the label and the picker control.
+        /// </summary>
+        public static float DefaultLabelAndPickerMargin = 5;
+
         private readonly RelativeWeekdayPicker relativeWeekdayPicker;
         private readonly DayOfWeekPicker dayOfWeekPicker;
         private readonly Label dayOfWeekAndMonthSeparatorLabel = new();
@@ -27,13 +32,14 @@ namespace Alternet.UI
         /// </summary>
         public RelativeWeekdayOfMonthPicker()
         {
-            firstPanel.MinChildMargin = 5;
-            secondPanel.MinChildMargin = 5;
-
             Layout = LayoutStyle.Horizontal;
 
-            prefixLabel.Text = CommonStrings.Default.RelativeWeekdayOfMonthPrefix;
+            prefixLabel.Text = CommonStrings.Default.OnThePrefix;
             prefixLabel.VerticalAlignment = VerticalAlignment.Center;
+            prefixLabel.InputTransparent = true;
+
+            firstPanel.InputTransparent = true;
+            secondPanel.InputTransparent = true;
 
             relativeWeekdayPicker = new RelativeWeekdayPicker();
 
@@ -42,11 +48,15 @@ namespace Alternet.UI
 
             dayOfWeekAndMonthSeparatorLabel.Text = CommonStrings.Default.DayOfWeekAndMonthSeparator;
             dayOfWeekAndMonthSeparatorLabel.VerticalAlignment = VerticalAlignment.Center;
+            dayOfWeekAndMonthSeparatorLabel.InputTransparent = true;
 
             monthPicker = new MonthPicker();
 
             firstPanel.Layout = LayoutStyle.Horizontal;
             secondPanel.Layout = LayoutStyle.Horizontal;
+
+            prefixLabel.MarginRight = DefaultLabelAndPickerMargin;
+            dayOfWeekAndMonthSeparatorLabel.Margin = (DefaultLabelAndPickerMargin, 0, DefaultLabelAndPickerMargin, 0);
 
             prefixLabel.Parent = firstPanel;
             relativeWeekdayPicker.Parent = firstPanel;

@@ -328,8 +328,10 @@ namespace Alternet.UI.Localization
 
         public string DayOfWeekAndMonthSeparator { get; set; } = "of";
 
-        public string RelativeWeekdayOfMonthPrefix { get; set; } = "On the";
+        public string OnThePrefix { get; set; } = "On the";
 
-        public string DayOfMonthPrefix { get; set; } = "On";
+        public string OnPrefix { get; set; } = "On";
+
+        public string OnDayPrefix { get; set; } = "On day";
     }
 }
