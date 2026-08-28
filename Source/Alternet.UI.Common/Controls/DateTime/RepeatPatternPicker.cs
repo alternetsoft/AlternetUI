@@ -394,10 +394,7 @@ namespace Alternet.UI
         [ControlCategory(KnownControlCategory.Date)]
         public partial class WeeklyPatternPicker : DateRepeatPatternRulePicker<WeeklyRepeatPatternRule>
         {
-            private readonly TransparentPanel intervalWeekPanel = new();
-            private readonly XIntPicker intervalWeekPicker = new();
-            private readonly Label intervalWeekSuffixLabel = new();
-            private readonly Label intervalWeekPrefixLabel = new(CommonStrings.Default.DateRepeatPatternPrefixLabelEvery);            
+            private readonly XIntPickerWithLabels intervalWeekPicker = new();
             private readonly PanelSettings weekDaysPanel = new();
 
             /// <summary>
@@ -407,22 +404,12 @@ namespace Alternet.UI
             {
                 Layout = LayoutStyle.Vertical;
 
-                intervalWeekPanel.Layout = LayoutStyle.Horizontal;
-
-                intervalWeekPrefixLabel.VerticalAlignment = VerticalAlignment.Center;
-                intervalWeekPrefixLabel.MarginRight = 5;
-                intervalWeekPrefixLabel.Parent = intervalWeekPanel;
-
+                intervalWeekPicker.PrefixText = CommonStrings.Default.DateRepeatPatternPrefixLabelEvery;
                 intervalWeekPicker.Minimum = 1;
-                intervalWeekPicker.VerticalAlignment = VerticalAlignment.Center;
                 intervalWeekPicker.Value = Value.IntervalWeeks;
                 intervalWeekPicker.ValueChanged += OnIntervalWeekPickerValueChanged;
                 UpdateSuffixLabelText();
-                intervalWeekPicker.Parent = intervalWeekPanel;
-
-                intervalWeekSuffixLabel.VerticalAlignment = VerticalAlignment.Center;
-                intervalWeekSuffixLabel.MarginLeft = 5;
-                intervalWeekSuffixLabel.Parent = intervalWeekPanel;
+                intervalWeekPicker.Parent = this;
 
                 var firstDayOfWeek = DateUtils.SystemFirstDayOfWeek;
 
@@ -472,28 +459,25 @@ namespace Alternet.UI
                     e: null);
 
                 weekDaysPanel.Parent = this;
-                intervalWeekPanel.Parent = this;
             }
-
-            /// <summary>
-            /// Gets the panel that contains the controls for selecting the interval week repeat pattern.
-            /// </summary>
-            public TransparentPanel IntervalWeekPanel => intervalWeekPanel;
 
             /// <summary>
             /// Gets the integer picker control for selecting the interval week value in the weekly repeat pattern.
             /// </summary>
-            public XIntPicker IntervalWeekPicker => intervalWeekPicker;
+            [Browsable(false)]
+            public XIntPickerWithLabels IntervalWeekPicker => intervalWeekPicker;
 
             /// <summary>
             /// Gets the label that displays the suffix text for the interval week picker in the weekly repeat pattern.
             /// </summary>
-            public Label IntervalWeekSuffixLabel => intervalWeekSuffixLabel;
+            [Browsable(false)]
+            public Label IntervalWeekSuffixLabel => intervalWeekPicker.SuffixLabel;
 
             /// <summary>
             /// Gets the label that displays the prefix text for the interval week picker in the weekly repeat pattern.
             /// </summary>
-            public Label IntervalWeekPrefixLabel => intervalWeekPrefixLabel;
+            [Browsable(false)]
+            public Label IntervalWeekPrefixLabel => intervalWeekPicker.PrefixLabel;
 
             /// <summary>
             /// Called when the value of the interval week picker changes.
@@ -513,11 +497,11 @@ namespace Alternet.UI
             {
                 if (intervalWeekPicker.Value == 1)
                 {
-                    intervalWeekSuffixLabel.Text = CommonStrings.Default.TimePeriodUnitWeek;
+                    intervalWeekPicker.SuffixLabel.Text = CommonStrings.Default.TimePeriodUnitWeek;
                 }
                 else
                 {
-                    intervalWeekSuffixLabel.Text = CommonStrings.Default.TimePeriodUnitWeeks;
+                    intervalWeekPicker.SuffixLabel.Text = CommonStrings.Default.TimePeriodUnitWeeks;
                 }
             }
         }
