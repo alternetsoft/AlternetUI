@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -13,7 +14,7 @@ namespace Alternet.UI
         /// <typeparam name="TValue">The type of the repeat pattern rule.</typeparam>
         [ControlCategory(KnownControlCategory.Date)]
         public abstract partial class DateRepeatPatternRulePicker<TValue> : HiddenBorder
-            where TValue : DateRepeatPatternRule, new()
+            where TValue : DateRepeatPatternRule
         {
             /// <summary>
             /// Gets or sets the default minimum margin for child controls within the repeat pattern rule picker.
@@ -25,21 +26,33 @@ namespace Alternet.UI
             /// </summary>
             public static Thickness DefaultPadding = 5;
 
-            private TValue data = new();
+            private readonly TValue data;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="DateRepeatPatternRulePicker{TValue}"/> class.
             /// </summary>
-            public DateRepeatPatternRulePicker()
+            public DateRepeatPatternRulePicker(TValue data)
             {
                 MinChildMargin = DefaultMinChildMargin;
                 Padding = DefaultPadding;
+                this.data = data;
             }
 
             /// <summary>
             /// Occurs when the value of the repeat pattern rule changes.
             /// </summary>
-            public event EventHandler? ValueChanged;
+            public event PropertyChangedEventHandler? ValueChanged
+            {
+                add
+                {
+                    data.PropertyChanged += value;
+                }
+
+                remove
+                {
+                    data.PropertyChanged -= value;
+                }
+            }
 
             /// <summary>
             /// Gets or sets the format provider used for formatting and parsing date and time values.
@@ -55,24 +68,6 @@ namespace Alternet.UI
                 {
                     return data;
                 }
-
-                set
-                {
-                    value ??= new();
-
-                    if (data == value)
-                        return;
-                    data = value;
-                    OnValueChanged();
-                }
-            }
-
-            /// <summary>
-            /// Called when the value of the repeat pattern rule changes.
-            /// </summary>
-            protected virtual void OnValueChanged()
-            {
-                ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
     }

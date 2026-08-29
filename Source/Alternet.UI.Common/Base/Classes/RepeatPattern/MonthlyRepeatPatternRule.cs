@@ -7,13 +7,21 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a monthly repeat pattern rule.
     /// </summary>
-    public partial class MonthlyRepeatPatternRule : DateRepeatPatternRule
+    public partial class MonthlyRepeatPatternRule : OwnedRepeatPatternRule
     {
         private int dayOfMonth = 1;
         private int intervalMonths = 1;
         private RepeatKind kind = RepeatKind.DayOfMonth;
         private ExtendedDayOfWeek dayOfWeek = ExtendedDayOfWeek.Day;
         private RelativeWeekday dayOfWeekIndex = RelativeWeekday.First;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MonthlyRepeatPatternRule"/> class with the specified owner.
+        /// </summary>
+        /// <param name="owner">The owner <see cref="DateRepeatPatternRule"/> of this rule.</param>
+        public MonthlyRepeatPatternRule(DateRepeatPatternRule owner) : base(owner)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the kind of monthly repeat pattern.

@@ -28,7 +28,7 @@ namespace Alternet.UI
             /// <summary>
             /// Initializes a new instance of the <see cref="DailyPatternPicker"/> class.
             /// </summary>
-            public DailyPatternPicker()
+            public DailyPatternPicker(DailyRepeatPatternRule data) : base(data)
             {
                 everyDayRadioButton = new();
                 everyDayRadioButton.MainControl.Tag = DailyRepeatPatternRule.RepeatKind.EveryDay;

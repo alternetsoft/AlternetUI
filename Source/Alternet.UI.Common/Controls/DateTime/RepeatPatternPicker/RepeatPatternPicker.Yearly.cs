@@ -25,7 +25,7 @@ namespace Alternet.UI
             /// <summary>
             /// Initializes a new instance of the <see cref="YearlyPatternPicker"/> class.
             /// </summary>
-            public YearlyPatternPicker()
+            public YearlyPatternPicker(YearlyRepeatPatternRule data) : base(data)
             {
                 Layout = LayoutStyle.Vertical;
 

@@ -21,7 +21,7 @@ namespace Alternet.UI
             get => startDate;
             set
             {
-                startDate = GetNewFieldValue(startDate, value);
+                startDate = GetNewFieldValue(startDate, value, OnStartDateChanged);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Alternet.UI
             get => endDate;
             set
             {
-                endDate = GetNewFieldValue(endDate, value);
+                endDate = GetNewFieldValue(endDate, value, OnEndDateChanged);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Alternet.UI
             get => occurrenceCount;
             set
             {
-                occurrenceCount = GetNewFieldValue(occurrenceCount, value);
+                occurrenceCount = GetNewFieldValue(occurrenceCount, value, OnOccurrenceCountChanged);
             }
         }
 
@@ -60,6 +60,30 @@ namespace Alternet.UI
         public virtual IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
         {
             return Array.Empty<DateOnly>();
+        }
+
+        /// <summary>
+        /// Called when the <see cref="EndDate"/> property changes.
+        /// Override this method to implement custom behavior when the end date is updated.
+        /// </summary>
+        protected virtual void OnEndDateChanged()
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="StartDate"/> property changes.
+        /// Override this method to implement custom behavior when the start date is updated.
+        /// </summary>
+        protected virtual void OnStartDateChanged()
+        {
+        }
+
+        /// <summary>
+        /// Called when the <see cref="OccurrenceCount"/> property changes.
+        /// Override this method to implement custom behavior when the occurrence count is updated.
+        /// </summary>
+        protected virtual void OnOccurrenceCountChanged()
+        {
         }
 
         /// <summary>

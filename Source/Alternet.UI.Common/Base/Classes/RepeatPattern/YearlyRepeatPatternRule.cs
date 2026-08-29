@@ -7,7 +7,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a yearly repeat pattern rule.
     /// </summary>
-    public partial class YearlyRepeatPatternRule : DateRepeatPatternRule
+    public partial class YearlyRepeatPatternRule : OwnedRepeatPatternRule
     {
         private int intervalYears = 1;
         private CalendarMonth month = CalendarMonth.January;
@@ -15,6 +15,14 @@ namespace Alternet.UI
         private int dayOfMonth = 1;
         private RelativeWeekday dayOfWeekIndex = RelativeWeekday.First;
         private RepeatKind kind = RepeatKind.DayOfMonth;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="YearlyRepeatPatternRule"/> class with the specified owner.
+        /// </summary>
+        /// <param name="owner">The owner <see cref="DateRepeatPatternRule"/> of this rule.</param>
+        public YearlyRepeatPatternRule(DateRepeatPatternRule owner) : base(owner)
+        {
+        }
 
         /// <summary>
         /// Gets or sets the kind of yearly repeat pattern.

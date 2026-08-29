@@ -22,7 +22,7 @@ namespace Alternet.UI
             /// <summary>
             /// Initializes a new instance of the <see cref="WeeklyPatternPicker"/> class.
             /// </summary>
-            public WeeklyPatternPicker()
+            public WeeklyPatternPicker(WeeklyRepeatPatternRule data) : base(data)
             {
                 Layout = LayoutStyle.Vertical;
 

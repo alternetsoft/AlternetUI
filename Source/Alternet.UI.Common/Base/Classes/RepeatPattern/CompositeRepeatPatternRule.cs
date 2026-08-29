@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace Alternet.UI
@@ -8,13 +9,14 @@ namespace Alternet.UI
     /// Represents a composite repeat pattern rule that combines daily, weekly, monthly, yearly
     /// and other repeat pattern rules.
     /// </summary>
-    public class CompositeRepeatPatternRule : DateRepeatPatternRule
+    public partial class CompositeRepeatPatternRule : DateRepeatPatternRule
     {
         private readonly DailyRepeatPatternRule dailyRule;
         private readonly WeeklyRepeatPatternRule weeklyRule;
         private readonly MonthlyRepeatPatternRule monthlyRule;
         private readonly YearlyRepeatPatternRule yearlyRule;
         private readonly List<DateRepeatPatternRule> rules = new();
+        private ScheduleRepeatPattern kind = ScheduleRepeatPattern.None;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CompositeRepeatPatternRule"/> class.
@@ -30,6 +32,23 @@ namespace Alternet.UI
             rules.Add(weeklyRule);
             rules.Add(monthlyRule);
             rules.Add(yearlyRule);
+
+            dailyRule.PropertyChanged += OnChildRulePropertyChanged;
+            weeklyRule.PropertyChanged += OnChildRulePropertyChanged;
+            monthlyRule.PropertyChanged += OnChildRulePropertyChanged;
+            yearlyRule.PropertyChanged += OnChildRulePropertyChanged;
+        }
+
+        /// <summary>
+        /// Gets or sets the kind of repeat pattern represented by this composite rule.
+        /// </summary>
+        public virtual ScheduleRepeatPattern Kind
+        {
+            get => kind;
+            set
+            {
+                kind = GetNewFieldValue(kind, value);
+            }
         }
 
         /// <summary>
@@ -57,13 +76,59 @@ namespace Alternet.UI
         /// </summary>
         public IReadOnlyList<DateRepeatPatternRule> Rules => rules;
 
+        /// <inheritdoc/>
+        public override IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
+        {
+            switch (Kind)
+            {
+                case ScheduleRepeatPattern.Daily:
+                    return dailyRule.GetDates(minDate, maxDate);
+                case ScheduleRepeatPattern.Weekly:
+                    return weeklyRule.GetDates(minDate, maxDate);
+                case ScheduleRepeatPattern.Monthly:
+                    return monthlyRule.GetDates(minDate, maxDate);
+                case ScheduleRepeatPattern.Yearly:
+                    return yearlyRule.GetDates(minDate, maxDate);
+                default:
+                    return Array.Empty<DateOnly>();
+            }
+        }
+
+        /// <summary>
+        /// Called when a property of any child rule changes, allowing the composite rule to respond accordingly.
+        /// </summary>
+        /// <param name="sender">The child rule that raised the event.</param>
+        /// <param name="e">The event data.</param>
+        protected virtual void OnChildRulePropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            RaisePropertyChanged();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnEndDateChanged()
+        {
+            base.OnEndDateChanged();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnStartDateChanged()
+        {
+            base.OnStartDateChanged();
+        }
+
+        /// <inheritdoc/>
+        protected override void OnOccurrenceCountChanged()
+        {
+            base.OnOccurrenceCountChanged();
+        }
+
         /// <summary>
         /// Creates a new instance of the <see cref="YearlyRepeatPatternRule"/> class.
         /// </summary>
         /// <returns>A new instance of the <see cref="YearlyRepeatPatternRule"/> class.</returns>
         protected virtual YearlyRepeatPatternRule CreateYearlyRule()
         {
-            return new YearlyRepeatPatternRule();
+            return new YearlyRepeatPatternRule(this);
         }
 
         /// <summary>
@@ -72,7 +137,7 @@ namespace Alternet.UI
         /// <returns>A new instance of the <see cref="MonthlyRepeatPatternRule"/> class.</returns>
         protected virtual MonthlyRepeatPatternRule CreateMonthlyRule()
         {
-            return new MonthlyRepeatPatternRule();
+            return new MonthlyRepeatPatternRule(this);
         }
 
         /// <summary>
@@ -81,7 +146,7 @@ namespace Alternet.UI
         /// <returns>A new instance of the <see cref="WeeklyRepeatPatternRule"/> class.</returns>
         protected virtual WeeklyRepeatPatternRule CreateWeeklyRule()
         {
-            return new WeeklyRepeatPatternRule();
+            return new WeeklyRepeatPatternRule(this);
         }
 
         /// <summary>
@@ -90,7 +155,7 @@ namespace Alternet.UI
         /// <returns>A new instance of the <see cref="DailyRepeatPatternRule"/> class.</returns>
         protected virtual DailyRepeatPatternRule CreateDailyRule()
         {
-            return new DailyRepeatPatternRule();
+            return new DailyRepeatPatternRule(this);
         }
     }
 }

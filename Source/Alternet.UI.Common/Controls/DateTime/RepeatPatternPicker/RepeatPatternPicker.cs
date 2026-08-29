@@ -13,19 +13,28 @@ namespace Alternet.UI
     [ControlCategory(KnownControlCategory.Date)]
     public partial class RepeatPatternPicker : HiddenBorder
     {
+        /// <summary>
+        /// Gets the default padding for the <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public static readonly Thickness DefaultPadding = 5;
+
         private readonly TabControl tabControl = new();
         private readonly DailyPatternPicker dailyPicker;
         private readonly WeeklyPatternPicker weeklyPicker;
         private readonly MonthlyPatternPicker monthlyPicker;
         private readonly YearlyPatternPicker yearlyPicker;
         private readonly HiddenBorder nonePicker = new();
+        private readonly CompositeRepeatPatternRule data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
         /// </summary>
         public RepeatPatternPicker()
         {
-            Padding = 5;
+            Padding = DefaultPadding;
+
+            data = new CompositeRepeatPatternRule();
+            data.PropertyChanged += OnValuePropertyChanged;
 
             dailyPicker = CreateDailyPatternPicker();
             weeklyPicker = CreateWeeklyPatternPicker();
@@ -89,22 +98,24 @@ namespace Alternet.UI
         public HiddenBorder NonePicker => nonePicker;
 
         /// <summary>
+        /// Gets the <see cref="CompositeRepeatPatternRule"/> instance representing the selected repeat
+        /// pattern and its associated rules.
+        /// </summary>
+        public virtual CompositeRepeatPatternRule Value => data;
+
+        /// <summary>
         /// Gets or sets the selected repeat pattern.
         /// </summary>
         public virtual ScheduleRepeatPattern SelectedPattern
         {
             get
             {
-                var index = tabControl.SelectedIndex;
-
-                if (index >= 0 && index <= (int)ScheduleRepeatPattern.Yearly)
-                    return (ScheduleRepeatPattern)index;
-                return ScheduleRepeatPattern.None;
+                return data.Kind;
             }
 
             set
             {
-                tabControl.SelectedIndex = (int)value;
+                data.Kind = value;
             }
         }
 
@@ -120,27 +131,37 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Called when a property of the repeat pattern rule changes.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+        protected virtual void OnValuePropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            tabControl.SelectedIndex = (int)data.Kind;
+        }
+
+        /// <summary>
         /// Creates a new instance of the <see cref="DailyPatternPicker"/> control.
         /// </summary>
         /// <returns></returns>
-        protected virtual DailyPatternPicker CreateDailyPatternPicker() => new();
+        protected virtual DailyPatternPicker CreateDailyPatternPicker() => new(data.DailyRule);
 
         /// <summary>
         /// Creates a new instance of the <see cref="WeeklyPatternPicker"/> control.
         /// </summary>
         /// <returns></returns>
-        protected virtual WeeklyPatternPicker CreateWeeklyPatternPicker() => new();
+        protected virtual WeeklyPatternPicker CreateWeeklyPatternPicker() => new(data.WeeklyRule);
 
         /// <summary>
         /// Creates a new instance of the <see cref="MonthlyPatternPicker"/> control.
         /// </summary>
         /// <returns></returns>
-        protected virtual MonthlyPatternPicker CreateMonthlyPatternPicker() => new();
+        protected virtual MonthlyPatternPicker CreateMonthlyPatternPicker() => new(data.MonthlyRule);
 
         /// <summary>
         /// Creates a new instance of the <see cref="YearlyPatternPicker"/> control.
         /// </summary>
         /// <returns></returns>
-        protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new();
+        protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new(data.YearlyRule);
     }
 }

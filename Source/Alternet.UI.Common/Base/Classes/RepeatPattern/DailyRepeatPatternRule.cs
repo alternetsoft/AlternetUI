@@ -7,10 +7,18 @@ namespace Alternet.UI
     /// <summary>
     /// Represents a daily repeat pattern rule.
     /// </summary>
-    public partial class DailyRepeatPatternRule : DateRepeatPatternRule
+    public partial class DailyRepeatPatternRule : OwnedRepeatPatternRule
     {
         private int intervalDays = 2;
         private RepeatKind kind = RepeatKind.EveryDay;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DailyRepeatPatternRule"/> class with the specified owner.
+        /// </summary>
+        /// <param name="owner">The owner <see cref="DateRepeatPatternRule"/> of this rule.</param>
+        public DailyRepeatPatternRule(DateRepeatPatternRule owner) : base(owner)
+        {
+        }
 
         /// <summary>
         /// Represents the kind of daily repeat pattern.
