@@ -38,6 +38,8 @@ namespace Alternet.UI
 
                 relativeWeekdayOfMonthPicker = new();
                 relativeWeekdayOfMonthPicker.IsMonthVisible = false;
+                relativeWeekdayOfMonthPicker.Value
+                    = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, CalendarMonth.January);
 
                 dayOfMonthPicker.PrefixText = CommonStrings.Default.OnDayPrefix;
                 dayOfMonthPicker.SuffixLabel.IsVisible = false;
@@ -58,7 +60,19 @@ namespace Alternet.UI
                     dayOfMonthRadioButton.IsChecked = true;
                 };
 
-                relativeWeekdayOfMonthPicker.Click += (s, e) =>
+                relativeWeekdayOfMonthPicker.ValueChanged += (s, e) =>
+                {
+                    var v = relativeWeekdayOfMonthPicker.Value;
+                    Value.DayOfWeekIndex = v.RelativeWeekday;
+                    Value.DayOfWeek = v.DayOfWeek;
+                };  
+
+                relativeWeekdayOfMonthPicker.FirstPanel.Click += (s, e) =>
+                {
+                    relativeWeekdayRadioButton.IsChecked = true;
+                };
+
+                relativeWeekdayOfMonthPicker.SecondPanel.Click += (s, e) =>
                 {
                     relativeWeekdayRadioButton.IsChecked = true;
                 };

@@ -71,7 +71,12 @@ namespace Alternet.UI
                     dayOfMonthRadioButton.IsChecked = true;
                 };
 
-                relativeWeekdayOfMonthPicker.Click += (s, e) =>
+                relativeWeekdayOfMonthPicker.FirstPanel.Click += (s, e) =>
+                {
+                    relativeWeekdayRadioButton.IsChecked = true;
+                };
+
+                relativeWeekdayOfMonthPicker.SecondPanel.Click += (s, e) =>
                 {
                     relativeWeekdayRadioButton.IsChecked = true;
                 };

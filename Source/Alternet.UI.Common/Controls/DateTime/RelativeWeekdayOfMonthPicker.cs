@@ -38,9 +38,6 @@ namespace Alternet.UI
             prefixLabel.VerticalAlignment = VerticalAlignment.Center;
             prefixLabel.InputTransparent = true;
 
-            firstPanel.InputTransparent = true;
-            secondPanel.InputTransparent = true;
-
             relativeWeekdayPicker = new RelativeWeekdayPicker();
 
             dayOfWeekPicker = new DayOfWeekPicker();
