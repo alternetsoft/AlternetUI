@@ -110,5 +110,63 @@ namespace Alternet.UI
                 SetProperty(ref dayOfWeekIndex, value);
             }
         }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current instance of <see cref="MonthlyRepeatPatternRule"/>.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not MonthlyRepeatPatternRule other)
+            {
+                return false;
+            }
+
+            return IntervalMonths == other.IntervalMonths &&
+                   DayOfWeek == other.DayOfWeek &&
+                   DayOfMonth == other.DayOfMonth &&
+                   DayOfWeekIndex == other.DayOfWeekIndex &&
+                   Kind == other.Kind;
+        }
+
+        /// <summary>
+        /// Assigns the values from another <see cref="DateRepeatPatternRule"/> instance to the current instance.
+        /// </summary>
+        /// <param name="other"></param>
+        public virtual void Assign(object? other)
+        {
+            if (other == null)
+            {
+                SuspendPropertyChanged();
+                IntervalMonths = 1;
+                DayOfWeek = ExtendedDayOfWeek.Day;
+                DayOfMonth = 1;
+                DayOfWeekIndex = RelativeWeekday.First;
+                Kind = RepeatKind.DayOfMonth;
+                ResumePropertyChanged();
+                return;
+            }
+
+            if (other is MonthlyRepeatPatternRule otherRule)
+            {
+                if (Equals(other))
+                    return;
+
+                SuspendPropertyChanged();
+                IntervalMonths = otherRule.IntervalMonths;
+                DayOfWeek = otherRule.DayOfWeek;
+                DayOfMonth = otherRule.DayOfMonth;
+                DayOfWeekIndex = otherRule.DayOfWeekIndex;
+                Kind = otherRule.Kind;
+                ResumePropertyChanged();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return (IntervalMonths, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, StartDate, EndDate, OccurrenceCount).GetHashCode();
+        }
     }
 }

@@ -31,7 +31,6 @@ namespace Alternet.UI
             get => owner.StartDate;
             set
             {
-                owner.StartDate = value;
             }
         }
 
@@ -41,7 +40,6 @@ namespace Alternet.UI
             get => owner.EndDate;
             set
             {
-                owner.EndDate = value;
             }
         }
 
@@ -51,9 +49,7 @@ namespace Alternet.UI
             get => owner.OccurrenceCount;
             set
             {
-                owner.OccurrenceCount = value;
             }
         }
-
     }
 }

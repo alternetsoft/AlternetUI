@@ -45,5 +45,54 @@ namespace Alternet.UI
                 SetProperty(ref days, value);
             }
         }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current instance of <see cref="WeeklyRepeatPatternRule"/>.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not WeeklyRepeatPatternRule other)
+            {
+                return false;
+            }
+
+            return IntervalWeeks == other.IntervalWeeks &&
+                   WeekDays == other.WeekDays;
+        }
+
+        /// <summary>
+        /// Assigns the values from another instance to the current instance.
+        /// </summary>
+        /// <param name="other">The instance from which to copy values.</param>
+        public virtual void Assign(object? other)
+        {
+            if (other == null)
+            {
+                SuspendPropertyChanged();
+                IntervalWeeks = 1;
+                WeekDays = DaysOfWeek.None;
+                ResumePropertyChanged();
+                return;
+            }
+
+            if (other is WeeklyRepeatPatternRule otherRule)
+            {
+                if (Equals(other))
+                    return;
+
+                SuspendPropertyChanged();
+                IntervalWeeks = otherRule.IntervalWeeks;
+                WeekDays = otherRule.WeekDays;
+                ResumePropertyChanged();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return (IntervalWeeks, WeekDays, StartDate, EndDate, OccurrenceCount).GetHashCode();
+        }
     }
 }

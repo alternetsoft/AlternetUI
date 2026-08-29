@@ -76,22 +76,94 @@ namespace Alternet.UI
         /// </summary>
         public IReadOnlyList<DateRepeatPatternRule> Rules => rules;
 
-        /// <inheritdoc/>
-        public override IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
+        /// <summary>
+        /// Creates a deep copy of the current <see cref="CompositeRepeatPatternRule"/> instance.
+        /// </summary>
+        /// <returns>A new <see cref="CompositeRepeatPatternRule"/> instance that is a deep copy of the current instance.</returns>
+        public virtual CompositeRepeatPatternRule Clone()
+        {
+            var clone = new CompositeRepeatPatternRule();
+            clone.Assign(this);
+            return clone;
+        }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current instance of <see cref="CompositeRepeatPatternRule"/>.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not CompositeRepeatPatternRule other)
+            {
+                return false;
+            }
+
+            return Kind == other.Kind &&
+                   DailyRule.Equals(other.DailyRule) &&
+                   WeeklyRule.Equals(other.WeeklyRule) &&
+                   MonthlyRule.Equals(other.MonthlyRule) &&
+                   YearlyRule.Equals(other.YearlyRule);
+        }
+
+        /// <summary>
+        /// Assigns the values from another instance to the current instance.
+        /// </summary>
+        /// <param name="other">The instance from which to copy values.</param>
+        public virtual void Assign(object? other)
+        {
+            if (other == null)
+            {
+                SuspendPropertyChanged();
+                DailyRule.Assign(null);
+                WeeklyRule.Assign(null);
+                MonthlyRule.Assign(null);
+                YearlyRule.Assign(null);
+                ResumePropertyChanged();
+                return;
+            }
+
+            if (other is CompositeRepeatPatternRule otherRule)
+            {
+                if (Equals(other))
+                    return;
+
+                SuspendPropertyChanged();
+                DailyRule.Assign(otherRule.dailyRule);
+                WeeklyRule.Assign(otherRule.weeklyRule);
+                MonthlyRule.Assign(otherRule.monthlyRule);
+                YearlyRule.Assign(otherRule.yearlyRule);
+                Kind = otherRule.Kind;
+                ResumePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets the currently selected repeat pattern rule based on the <see cref="Kind"/> property.
+        /// </summary>
+        /// <returns>The currently selected <see cref="OwnedRepeatPatternRule"/> instance,
+        /// or <c>null</c> if no rule is selected.</returns>
+        public virtual OwnedRepeatPatternRule? GetSelectedRule()
         {
             switch (Kind)
             {
                 case ScheduleRepeatPattern.Daily:
-                    return dailyRule.GetDates(minDate, maxDate);
+                    return dailyRule;
                 case ScheduleRepeatPattern.Weekly:
-                    return weeklyRule.GetDates(minDate, maxDate);
+                    return weeklyRule;
                 case ScheduleRepeatPattern.Monthly:
-                    return monthlyRule.GetDates(minDate, maxDate);
+                    return monthlyRule;
                 case ScheduleRepeatPattern.Yearly:
-                    return yearlyRule.GetDates(minDate, maxDate);
+                    return yearlyRule;
                 default:
-                    return Array.Empty<DateOnly>();
+                    return null;
             }
+        }
+
+        /// <inheritdoc/>
+        public override IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
+        {
+            return GetSelectedRule()?.GetDates(minDate, maxDate) ?? Array.Empty<DateOnly>();
         }
 
         /// <summary>
@@ -156,6 +228,12 @@ namespace Alternet.UI
         protected virtual DailyRepeatPatternRule CreateDailyRule()
         {
             return new DailyRepeatPatternRule(this);
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return (Kind, DailyRule, WeeklyRule, MonthlyRule, YearlyRule).GetHashCode();
         }
     }
 }

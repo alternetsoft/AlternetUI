@@ -121,5 +121,67 @@ namespace Alternet.UI
                 SetProperty(ref dayOfWeek, value);
             }
         }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current instance of <see cref="YearlyRepeatPatternRule"/>.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not YearlyRepeatPatternRule other)
+            {
+                return false;
+            }
+
+            return IntervalYears == other.IntervalYears &&
+                   Month == other.Month &&
+                   DayOfWeek == other.DayOfWeek &&
+                   DayOfMonth == other.DayOfMonth &&
+                   DayOfWeekIndex == other.DayOfWeekIndex &&
+                   Kind == other.Kind;
+        }
+
+        /// <summary>
+        /// Assigns the values from another instance to the current instance.
+        /// </summary>
+        /// <param name="other">The instance from which to copy values.</param>
+        public virtual void Assign(object? other)
+        {
+            if (other == null)
+            {
+                SuspendPropertyChanged();
+                IntervalYears = 1;
+                Month = CalendarMonth.January;
+                DayOfWeek = ExtendedDayOfWeek.Day;
+                DayOfMonth = 1;
+                DayOfWeekIndex = RelativeWeekday.First;
+                Kind = RepeatKind.DayOfMonth;
+                ResumePropertyChanged();
+                return;
+            }
+
+            if (other is YearlyRepeatPatternRule otherRule)
+            {
+                if (Equals(other))
+                    return;
+
+                SuspendPropertyChanged();
+                IntervalYears = otherRule.IntervalYears;
+                Month = otherRule.Month;
+                DayOfWeek = otherRule.DayOfWeek;
+                DayOfMonth = otherRule.DayOfMonth;
+                DayOfWeekIndex = otherRule.DayOfWeekIndex;
+                Kind = otherRule.Kind;
+                ResumePropertyChanged();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return (IntervalYears, Month, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, StartDate, EndDate, OccurrenceCount)
+                .GetHashCode();
+        }
     }
 }

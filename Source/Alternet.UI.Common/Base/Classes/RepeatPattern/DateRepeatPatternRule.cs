@@ -100,5 +100,5 @@ namespace Alternet.UI
 
             minDate = StartDate;
         }
-    }            
+    }
 }

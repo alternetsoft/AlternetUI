@@ -150,5 +150,54 @@ namespace Alternet.UI
                 return GetDays((d) => days.HasDay(d.DayOfWeek));
             }
         }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current instance of <see cref="DailyRepeatPatternRule"/>.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current instance.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object? obj)
+        {
+            if (obj is not DailyRepeatPatternRule other)
+            {
+                return false;
+            }
+
+            return IntervalDays == other.IntervalDays &&
+                   Kind == other.Kind;
+        }
+
+        /// <summary>
+        /// Assigns the values from another instance to the current instance.
+        /// </summary>
+        /// <param name="other">The instance from which to copy values.</param>
+        public virtual void Assign(object? other)
+        {
+            if (other == null)
+            {
+                SuspendPropertyChanged();
+                IntervalDays = 1;
+                Kind = RepeatKind.EveryDay;
+                ResumePropertyChanged();
+                return;
+            }
+
+            if (other is DailyRepeatPatternRule otherRule)
+            {
+                if (Equals(other))
+                    return;
+
+                SuspendPropertyChanged();
+                IntervalDays = otherRule.IntervalDays;
+                Kind = otherRule.Kind;
+                ResumePropertyChanged();
+            }
+        }
+
+        /// <inheritdoc/>
+        public override int GetHashCode()
+        {
+            return (IntervalDays, Kind, StartDate, EndDate, OccurrenceCount).GetHashCode();
+        }
     }
 }
