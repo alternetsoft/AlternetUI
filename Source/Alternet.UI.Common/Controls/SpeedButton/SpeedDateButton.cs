@@ -76,6 +76,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the selected date as <see cref="DateOnly"/> or today's date if no date is selected.
+        /// </summary>
+        [Browsable(false)]
+        public DateOnly AsDateOnlyOrToday
+        {
+            get
+            {
+                return AsDateOnly ?? DateOnly.FromDateTime(DateTime.Now);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets selected date as <see cref="DateOnly"/>.
         /// </summary>
         public virtual DateOnly? AsDateOnly
