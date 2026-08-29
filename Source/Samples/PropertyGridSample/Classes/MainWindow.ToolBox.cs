@@ -130,6 +130,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<XScrollBar>(ObjectInit.InitXScrollBar);
                 ToolBoxAdd<XSlider>(ObjectInit.InitXSlider);
                 ToolBoxAdd<XTreeView>(ObjectInit.InitXTreeView);
+                ToolBoxAdd<YearPicker>();
 
                 /*
                 ToolBoxAdd<Alternet.UI.HiddenBorder>();
