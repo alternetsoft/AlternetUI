@@ -39,8 +39,29 @@ namespace Alternet.UI
                 monthAndDayPicker = new();
                 monthAndDayPicker.Label.Text = CommonStrings.Default.OnPrefix;
                 monthAndDayPicker.Label.Visible = true;
+                monthAndDayPicker.MonthPicker.Value = Value.Month;
+                monthAndDayPicker.DayPicker.Value = Value.DayOfMonth;
+
+                monthAndDayPicker.MonthPicker.ValueChanged += (s, e) =>
+                {
+                    Value.Month = monthAndDayPicker.MonthPicker.Value;
+                };
+
+                monthAndDayPicker.DayPicker.ValueChanged += (s, e) =>
+                {
+                    Value.DayOfMonth = monthAndDayPicker.DayPicker.Value;
+                };
 
                 relativeWeekdayOfMonthPicker = new();
+                relativeWeekdayOfMonthPicker.Value = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, Value.Month);
+
+                relativeWeekdayOfMonthPicker.ValueChanged += (s, e) =>
+                {
+                    var v = relativeWeekdayOfMonthPicker.Value;
+                    Value.DayOfWeekIndex = v.RelativeWeekday;
+                    Value.DayOfWeek = v.DayOfWeek;
+                    Value.Month = v.Month;
+                };
 
                 dayOfMonthRadioButton = new(monthAndDayPicker);
                 relativeWeekdayRadioButton = new(relativeWeekdayOfMonthPicker);

@@ -43,6 +43,11 @@ namespace Alternet.UI
                 dayOfMonthPicker.SuffixLabel.IsVisible = false;
                 dayOfMonthPicker.Value = Value.DayOfMonth;
 
+                dayOfMonthPicker.ValueChanged += (s, e) =>
+                {
+                    Value.DayOfMonth = dayOfMonthPicker.Value;
+                };
+
                 dayOfMonthRadioButton = new(dayOfMonthPicker);
                 relativeWeekdayRadioButton = new(relativeWeekdayOfMonthPicker);
 

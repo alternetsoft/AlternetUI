@@ -66,7 +66,22 @@ namespace Alternet.UI
 
             firstPanel.Parent = this;
             secondPanel.Parent = this;
+
+            void OnValueChanged(object? sender, EventArgs e)
+            {
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+            }
+
+            RelativeWeekdayChanged += OnValueChanged;
+            DayOfWeekChanged += OnValueChanged;
+            MonthChanged += OnValueChanged;
         }
+
+        /// <summary>
+        /// Occurs when the selected relative weekday, day of the week, or month changes,
+        /// allowing external handlers to respond to the change.
+        /// </summary>
+        public event EventHandler? ValueChanged;
 
         /// <summary>
         /// Occurs when the selected relative weekday changes, allowing external handlers to respond to the change.
