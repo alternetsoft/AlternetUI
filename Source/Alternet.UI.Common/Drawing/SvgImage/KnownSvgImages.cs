@@ -110,6 +110,7 @@ namespace Alternet.UI
         private static SvgImage? imgCircleCheckmark;
         private static SvgImage? imgClock;
         private static SvgImage? imgCalendar;
+        private static SvgImage? imgCalendarCheck;
         private static SvgImage? imgRotate;
         private static SvgImage? imgArrowsSpin;
         private static SvgImage? imgBell;
@@ -222,6 +223,17 @@ namespace Alternet.UI
         {
             get => imgCalendar ??= new MonoSvgImage(KnownSvgUrls.UrlImageCalendar);
             set => imgCalendar = value;
+        }
+
+        /// <summary>
+        /// Gets or sets the SVG image with a checked calendar.
+        /// </summary>
+        /// <remarks>The default value is an SVG image loaded from a predefined URL. Assign a custom value
+        /// to override the default icon.</remarks>
+        public static SvgImage ImgCalendarCheck
+        {
+            get => imgCalendarCheck ??= new MonoSvgImage(KnownSvgUrls.UrlImageCalendarCheck);
+            set => imgCalendarCheck = value;
         }
 
         /// <summary>

@@ -349,5 +349,7 @@ namespace Alternet.UI.Localization
         public string Occurrences { get; set; } = "occurrences";
 
         public string Repeat { get; set; } = "Repeat";
+
+        public string Today { get; set; } = "Today";
     }
 }
