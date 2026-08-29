@@ -10,6 +10,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents list control for selecting font names.
     /// </summary>
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class FontListBox : VirtualListBox
     {
         /// <summary>

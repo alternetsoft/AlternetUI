@@ -17,6 +17,7 @@ namespace Alternet.UI
     /// <see cref="ListControlItem.Value"/> is <see cref="Color"/> and
     /// <see cref="ListControlItem.Text"/> is label of the color.
     /// </remarks>
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class ColorListBox : VirtualListBox
     {
         /// <summary>

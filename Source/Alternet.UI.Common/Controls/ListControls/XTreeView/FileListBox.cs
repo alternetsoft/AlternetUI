@@ -14,6 +14,7 @@ namespace Alternet.UI
     /// <summary>
     /// <see cref="VirtualListBox"/> descendant which allows to browse folder contents.
     /// </summary>
+    [ControlCategory(KnownControlCategory.Other)]
     public partial class FileListBox : XTreeView
     {
         /// <summary>
