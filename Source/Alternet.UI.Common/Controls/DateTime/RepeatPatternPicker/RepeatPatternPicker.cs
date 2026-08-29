@@ -24,7 +24,7 @@ namespace Alternet.UI
         private readonly MonthlyPatternPicker monthlyPicker;
         private readonly YearlyPatternPicker yearlyPicker;
         private readonly HiddenBorder nonePicker = new();
-        private readonly CompositeRepeatPatternRule data;
+        private readonly RepeatPatternRule data;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
@@ -98,10 +98,10 @@ namespace Alternet.UI
         public HiddenBorder NonePicker => nonePicker;
 
         /// <summary>
-        /// Gets the <see cref="CompositeRepeatPatternRule"/> instance representing the selected repeat
+        /// Gets the <see cref="RepeatPatternRule"/> instance representing the selected repeat
         /// pattern and its associated rules.
         /// </summary>
-        public virtual CompositeRepeatPatternRule Value => data;
+        public virtual RepeatPatternRule Value => data;
 
         /// <summary>
         /// Gets or sets the selected repeat pattern.
@@ -150,10 +150,10 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Creates a new instance of the <see cref="CompositeRepeatPatternRule"/> class.
+        /// Creates a new instance of the <see cref="RepeatPatternRule"/> class.
         /// </summary>
-        /// <returns> A new instance of the <see cref="CompositeRepeatPatternRule"/> class. </returns>
-        protected virtual CompositeRepeatPatternRule CreateRule() => new ();
+        /// <returns> A new instance of the <see cref="RepeatPatternRule"/> class. </returns>
+        protected virtual RepeatPatternRule CreateRule() => new ();
 
         /// <summary>
         /// Creates a new instance of the <see cref="DailyPatternPicker"/> control.

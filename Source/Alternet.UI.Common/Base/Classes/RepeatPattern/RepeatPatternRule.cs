@@ -9,7 +9,7 @@ namespace Alternet.UI
     /// Represents a composite repeat pattern rule that combines daily, weekly, monthly, yearly
     /// and other repeat pattern rules.
     /// </summary>
-    public partial class CompositeRepeatPatternRule : DateRepeatPatternRule
+    public partial class RepeatPatternRule : DateRepeatPatternRule
     {
         private readonly DailyRepeatPatternRule dailyRule;
         private readonly WeeklyRepeatPatternRule weeklyRule;
@@ -19,9 +19,9 @@ namespace Alternet.UI
         private ScheduleRepeatPattern kind = ScheduleRepeatPattern.None;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CompositeRepeatPatternRule"/> class.
+        /// Initializes a new instance of the <see cref="RepeatPatternRule"/> class.
         /// </summary>
-        public CompositeRepeatPatternRule()
+        public RepeatPatternRule()
         {
             dailyRule = CreateDailyRule();
             weeklyRule = CreateWeeklyRule();
@@ -77,24 +77,24 @@ namespace Alternet.UI
         public IReadOnlyList<DateRepeatPatternRule> Rules => rules;
 
         /// <summary>
-        /// Creates a deep copy of the current <see cref="CompositeRepeatPatternRule"/> instance.
+        /// Creates a deep copy of the current <see cref="RepeatPatternRule"/> instance.
         /// </summary>
-        /// <returns>A new <see cref="CompositeRepeatPatternRule"/> instance that is a deep copy of the current instance.</returns>
-        public virtual CompositeRepeatPatternRule Clone()
+        /// <returns>A new <see cref="RepeatPatternRule"/> instance that is a deep copy of the current instance.</returns>
+        public virtual RepeatPatternRule Clone()
         {
-            var clone = new CompositeRepeatPatternRule();
+            var clone = new RepeatPatternRule();
             clone.Assign(this);
             return clone;
         }
 
         /// <summary>
-        /// Determines whether the specified object is equal to the current instance of <see cref="CompositeRepeatPatternRule"/>.
+        /// Determines whether the specified object is equal to the current instance of <see cref="RepeatPatternRule"/>.
         /// </summary>
         /// <param name="obj">The object to compare with the current instance.</param>
         /// <returns><c>true</c> if the specified object is equal to the current instance; otherwise, <c>false</c>.</returns>
         public override bool Equals(object? obj)
         {
-            if (obj is not CompositeRepeatPatternRule other)
+            if (obj is not RepeatPatternRule other)
             {
                 return false;
             }
@@ -123,7 +123,7 @@ namespace Alternet.UI
                 return;
             }
 
-            if (other is CompositeRepeatPatternRule otherRule)
+            if (other is RepeatPatternRule otherRule)
             {
                 if (Equals(other))
                     return;

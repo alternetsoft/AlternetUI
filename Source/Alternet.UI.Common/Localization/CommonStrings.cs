@@ -235,6 +235,10 @@ namespace Alternet.UI.Localization
 
         public string SelectFileToPreview { get; set; } = "Select a file to preview.";
 
+        public string Starts { get; set; } = "Starts";
+
+        public string Ends { get; set; } = "Ends";
+
         // ========================
 
         public string FileListBoxColumnName { get; set; } = "Name";
