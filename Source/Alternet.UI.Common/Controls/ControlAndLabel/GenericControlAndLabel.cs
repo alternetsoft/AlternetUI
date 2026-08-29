@@ -1,0 +1,289 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Alternet.Drawing;
+
+namespace Alternet.UI
+{
+    /// <summary>
+    /// This is the base class for controls which consist of a label and an inner control.
+    /// </summary>
+    /// <typeparam name="TControl">Type of the inner control.</typeparam>
+    /// <typeparam name="TLabel">Type of the label.</typeparam>
+    [ControlCategory(KnownControlCategory.Hidden)]
+    public partial class GenericControlAndLabel<TControl, TLabel>
+        : GenericControlAndPicture, IControlAndLabel, INotifyDataErrorInfo
+        where TControl : GenericControl, new()
+        where TLabel : GenericControl, new()
+    {
+        /// <summary>
+        /// Gets or sets function that creates default labels used in the control.
+        /// </summary>
+        public static Func<GenericControl> CreateDefaultLabel = () => new TLabel();
+
+        private readonly GenericControl label;
+        private readonly TControl mainControl;
+
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="GenericControlAndLabel{TControl,TLabel}"/> class with
+        /// the specified parent control.
+        /// </summary>
+        /// <param name="parent">Parent of the control.</param>
+        public GenericControlAndLabel(AbstractControl parent)
+            : this(typeOfLabel: null)
+        {
+            Parent = parent;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndLabel{TControl,TLabel}"/> class
+        /// with the specified type of the label control.
+        /// </summary>
+        /// <param name="typeOfLabel">Type of the label control to use.</param>
+        /// <param name="typeOfControl">Type of the control to use.</param>
+        public GenericControlAndLabel(Type? typeOfLabel, Type? typeOfControl = null)
+        {
+            ParentBackColor = true;
+            ParentForeColor = true;
+            Layout = LayoutStyle.Horizontal;
+
+            label = CreateLabel(typeOfLabel);
+            label.VerticalAlignment = UI.VerticalAlignment.Center;
+            label.HorizontalAlignment = HorizontalAlignment.Left;
+            label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
+            label.Parent = this;
+
+            mainControl = CreateControl(typeOfControl);
+            mainControl.Alignment = (HorizontalAlignment.Fill, VerticalAlignment.Center);
+            mainControl.MinWidth = KnownMetrics.InnerControlMinWidth;
+            mainControl.Parent = this;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericControlAndLabel{TControl,TLabel}"/> class.
+        /// </summary>
+        public GenericControlAndLabel()
+            : this(typeOfLabel: null, typeOfControl: null)
+        {
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="AbstractControl.TextChanged"/> event of the
+        /// inner control is changed.
+        /// </summary>
+        public new event EventHandler? TextChanged
+        {
+            add => MainControl.TextChanged += value;
+            remove => MainControl.TextChanged -= value;
+        }
+
+        /// <summary>
+        /// Occurs when <see cref="AbstractControl.DelayedTextChanged"/> event of the
+        /// inner control is changed.
+        /// </summary>
+        public new event EventHandler<EventArgs>? DelayedTextChanged
+        {
+            add => MainControl.DelayedTextChanged += value;
+            remove => MainControl.DelayedTextChanged -= value;
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of
+        /// the main child control.
+        /// </summary>
+        [DefaultValue(Coord.PositiveInfinity)]
+        public virtual Coord LabelSuggestedWidth
+        {
+            get => Label.SuggestedWidth;
+            set => Label.SuggestedWidth = value;
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="AbstractControl.SuggestedWidth"/> property of
+        /// the main child control.
+        /// </summary>
+        [DefaultValue(Coord.NaN)]
+        public virtual Coord InnerSuggestedWidth
+        {
+            get => MainControl.SuggestedWidth;
+            set => MainControl.SuggestedWidth = value;
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="AbstractControl.SuggestedHeight"/> property of
+        /// the main child control.
+        /// </summary>
+        [DefaultValue(Coord.NaN)]
+        public virtual Coord InnerSuggestedHeight
+        {
+            get => MainControl.SuggestedHeight;
+            set => MainControl.SuggestedHeight = value;
+        }
+
+        /// <summary>
+        /// Gets or sets <see cref="AbstractControl.SuggestedSize"/> property
+        /// of the main child control.
+        /// </summary>
+        [Browsable(false)]
+        public virtual SizeD InnerSuggestedSize
+        {
+            get => MainControl.SuggestedSize;
+            set => MainControl.SuggestedSize = value;
+        }
+
+        /// <summary>
+        /// Gets attached <see cref="Label"/> control.
+        /// </summary>
+        [Browsable(false)]
+        public AbstractControl Label => label;
+
+        /// <summary>
+        /// Gets or sets visibility of the attached <see cref="Label"/> control.
+        /// </summary>
+        public virtual bool LabelVisible
+        {
+            get => Label.Visible;
+
+            set
+            {
+                if (LabelVisible == value)
+                    return;
+                Label.Visible = value;
+                UpdateInnerPictureLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets text of the attached <see cref="Label"/> control.
+        /// </summary>
+        public override object? TitleAsObject
+        {
+            get => Label.Text;
+            set => Label.Text = value?.ToString() ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Gets main child control.
+        /// </summary>
+        [Browsable(false)]
+        public TControl MainControl => mainControl;
+
+        /// <inheritdoc/>
+        public override bool HasErrors
+        {
+            get => (MainControl as INotifyDataErrorInfo)?.HasErrors ?? false;
+        }
+
+        AbstractControl IControlAndLabel.Label => Label;
+
+        AbstractControl IControlAndLabel.MainControl => MainControl;
+
+        /// <summary>
+        /// Gets or sets a value which specifies label and control alignment.
+        /// </summary>
+        public virtual StackPanelOrientation LabelToControl
+        {
+            get
+            {
+                if (Layout == LayoutStyle.Horizontal)
+                    return StackPanelOrientation.Horizontal;
+                else
+                    return StackPanelOrientation.Vertical;
+            }
+
+            set
+            {
+                if (value == LabelToControl)
+                    return;
+                PerformLayoutAndInvalidate(() =>
+                {
+                    if (value == StackPanelOrientation.Horizontal)
+                    {
+                        label.Margin = (0, 0, KnownMetrics.ControlLabelDistance, 0);
+                        Layout = LayoutStyle.Horizontal;
+                    }
+                    else
+                    {
+                        label.Margin = (0, 0, 0, KnownMetrics.ControlLabelDistance);
+                        Layout = LayoutStyle.Vertical;
+                    }
+
+                    UpdateInnerPictureLayout();
+                });
+            }
+        }
+
+        [Browsable(false)]
+        internal new LayoutStyle? Layout
+        {
+            get => base.Layout;
+            set => base.Layout = value;
+        }
+
+        /// <inheritdoc/>
+        public override IEnumerable GetErrors(string? propertyName)
+        {
+            return (MainControl as INotifyDataErrorInfo)?.GetErrors(propertyName)
+                ?? Array.Empty<string>();
+        }
+
+        /// <inheritdoc/>
+        public override bool SetFocus()
+        {
+            return MainControl.SetFocus();
+        }
+
+        /// <summary>
+        /// Creates main child control.
+        /// </summary>
+        /// <remarks>
+        /// For example, main control for the <see cref="TextBoxAndLabel"/>
+        /// is <see cref="TextBox"/>.
+        /// </remarks>
+        protected virtual TControl CreateControl(Type? typeOfControl)
+        {
+            if (typeOfControl is not null)
+            {
+                var control = Activator.CreateInstance(typeOfControl) as TControl;
+                if (control is not null)
+                    return control;
+            }
+
+            return new();
+        }
+
+        /// <summary>
+        /// Creates label control.
+        /// </summary>
+        /// <remarks>
+        /// By default <see cref="Label"/> is created.
+        /// </remarks>
+        protected virtual GenericControl CreateLabel(Type? typeOfLabel)
+        {
+            if (typeOfLabel is not null)
+            {
+                var label = Activator.CreateInstance(typeOfLabel) as GenericControl;
+                if (label is not null)
+                    return label;
+            }
+
+            return CreateDefaultLabel();
+        }
+
+        /// <inheritdoc/>
+        protected override void UpdateInnerPictureLayout()
+        {
+            if (!IsInnerPictureCreated)
+                return;
+
+            InnerPicture.IsImageCentered = !LabelVisible
+                || LabelToControl == StackPanelOrientation.Horizontal;
+        }
+    }
+}
