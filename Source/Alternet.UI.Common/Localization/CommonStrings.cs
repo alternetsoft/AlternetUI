@@ -152,6 +152,8 @@ namespace Alternet.UI.Localization
 
         public string WindowTitleProperties { get; set; } = "Properties";
 
+        public string WindowTitleInfo { get; set; } = "Info";
+
         public string WindowTitleApplicationAlert { get; set; } = "Application Says";
 
         public string WindowTitleSelectColor { get; set; } = "Select a Color";

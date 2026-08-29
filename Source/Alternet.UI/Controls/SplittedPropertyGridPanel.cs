@@ -13,6 +13,7 @@ namespace Alternet.UI
     public partial class SplittedPropertyGridPanel : SplittedControlsPanel
     {
         private PropertyGrid? propertyGrid;
+        private MultilineTextBox? infoTextBox;
 
         /// <summary>
         /// Gets <see cref="PropertyGrid"/> which can be used to show properties.
@@ -38,6 +39,34 @@ namespace Alternet.UI
                 }
 
                 return propertyGrid;
+            }
+        }
+
+        /// <summary>
+        /// Gets <see cref="MultilineTextBox"/> which can be used to show information.
+        /// </summary>
+        [Browsable(false)]
+        public virtual MultilineTextBox InfoTextBox
+        {
+            get
+            {
+                if (infoTextBox == null)
+                {
+                    infoTextBox = new()
+                    {
+                        HasBorder = false,
+                        ReadOnly = true,
+                        VerticalAlignment = UI.VerticalAlignment.Fill,
+                        Visible = false,
+                    };
+
+                    RightPanel.Add(
+                        CommonStrings.Default.WindowTitleInfo,
+                        infoTextBox);
+                    RightPanel.SelectFirstTab();
+                }
+
+                return infoTextBox;
             }
         }
     }
