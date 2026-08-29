@@ -92,7 +92,8 @@ namespace Alternet.UI
 
                     c.CheckedChanged += (s, e) =>
                     {
-                        Value.Kind = kind ?? DailyRepeatPatternRule.RepeatKind.EveryDay;
+                        if (c.IsChecked)
+                            Value.Kind = kind ?? DailyRepeatPatternRule.RepeatKind.EveryDay;
                     };
                 });
 
