@@ -10,8 +10,30 @@ namespace Alternet.UI
     public abstract partial class DateRepeatPatternRule : BaseObjectWithNotify
     {
         private DateOnly startDate;
-        private DateOnly? endDate;
+        private DateOnly endDate;
         private int occurrenceCount;
+        private EndConditionKind endCondtion = EndConditionKind.OnDate;
+
+        /// <summary>
+        /// Defines the types of end conditions for a repeat pattern.
+        /// </summary>
+        public enum EndConditionKind
+        {
+            /// <summary>
+            /// The repeat pattern has no end date and no occurrence limit.
+            /// </summary>
+            Never,
+
+            /// <summary>
+            /// The repeat pattern ends after a specific number of occurrences.
+            /// </summary>
+            AfterOccurrence,
+
+            /// <summary>
+            /// The repeat pattern ends on a specific date.
+            /// </summary>
+            OnDate,
+        }
 
         /// <summary>
         /// Gets or sets the start date of the repeat pattern range. 
@@ -26,10 +48,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets the end date of the repeat pattern range.
-        /// If not set, the repeat pattern is considered to have no end date.
+        /// Gets or sets the end condition of the repeat pattern, which determines
+        /// how the repeat pattern ends (never, after a number of occurrences, or on a specific date).
         /// </summary>
-        public virtual DateOnly? EndDate
+        public virtual EndConditionKind EndCondition
+        {
+            get
+            {
+                return endCondtion;
+            }
+
+            set
+            {
+                SetProperty(ref endCondtion, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the end date of the repeat pattern range.
+        /// </summary>
+        public virtual DateOnly EndDate
         {
             get => endDate;
             set
@@ -93,10 +131,8 @@ namespace Alternet.UI
         /// <param name="maxDate">The maximum date to consider.</param>
         protected virtual void CoerceMinMaxDate(ref DateOnly minDate, ref DateOnly maxDate)
         {
-            if (EndDate is not null && EndDate < maxDate)
-                maxDate = EndDate.Value;
-
-            // Here we can add optimization for some cases and to use minDate as is.
+            if (EndDate < maxDate)
+                maxDate = EndDate;
 
             minDate = StartDate;
         }

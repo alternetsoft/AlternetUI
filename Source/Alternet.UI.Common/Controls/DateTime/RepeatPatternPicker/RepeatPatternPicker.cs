@@ -18,6 +18,16 @@ namespace Alternet.UI
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
 
+        private readonly DatePicker startDatePicker = new();
+        private readonly GenericControlAndLabel<DatePicker, Label> endDatePicker = new();
+        private readonly Label startDateLabel = new();
+        private readonly Label endDateLabel = new();
+        private readonly XRadioButtonAndSuffix endsNeverRadioButton;
+        private readonly XRadioButtonAndSuffix endsOnRadioButton;
+        private readonly XRadioButtonAndSuffix endsAfterOccurrenceRadioButton;
+        private readonly XIntPickerWithLabels occurrencePicker = new();
+
+
         private readonly TabControl tabControl = new();
         private readonly DailyPatternPicker dailyPicker;
         private readonly WeeklyPatternPicker weeklyPicker;
@@ -25,15 +35,114 @@ namespace Alternet.UI
         private readonly YearlyPatternPicker yearlyPicker;
         private readonly HiddenBorder nonePicker = new();
         private readonly RepeatPatternRule data;
+        private readonly Label repeatLabel;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RepeatPatternPicker"/> class.
         /// </summary>
         public RepeatPatternPicker()
         {
+            Layout = LayoutStyle.Vertical;
             Padding = DefaultPadding;
+            MinChildMargin = 5;
 
             data = CreateRule();
+
+            startDateLabel.Text = CommonStrings.Default.Starts;
+            startDateLabel.IsBold = true;
+            startDateLabel.Parent = this;
+
+            startDatePicker.AsDateOnly = data.StartDate;
+            startDatePicker.Parent = this;
+            startDatePicker.ValueChanged += (s, e) =>
+            {
+                data.StartDate = startDatePicker.AsDateOnly ?? DateOnly.FromDateTime(DateTime.Now);
+            };
+
+            endDateLabel = new();
+            endDateLabel.Text = CommonStrings.Default.Ends;
+            endDateLabel.IsBold = true;
+            endDateLabel.Parent = this;
+
+            // End on date
+
+            endDatePicker.Label.Text = CommonStrings.Default.OnPrefix;
+            endDatePicker.Label.InputTransparent = true;
+            endDatePicker.MainControl.AsDateOnly = data.EndDate;
+            endDatePicker.MainControl.ValueChanged += (s, e) =>
+            {
+                data.EndDate = endDatePicker.MainControl.AsDateOnlyOrToday;
+            };
+            endsOnRadioButton = new(endDatePicker);
+            endsOnRadioButton.IsChecked = data.EndCondition == DateRepeatPatternRule.EndConditionKind.OnDate;
+            endsOnRadioButton.Parent = this;
+            endsOnRadioButton.CheckedChanged += (s, e) =>
+            {
+                if (endsOnRadioButton.IsChecked)
+                {
+                    data.EndCondition = DateRepeatPatternRule.EndConditionKind.OnDate;
+                }
+            };
+            endDatePicker.Click += (s, e) =>
+            {
+                endsOnRadioButton.IsChecked = true;
+            };
+
+            // Ends after cccurrence
+
+            occurrencePicker.PrefixText = CommonStrings.Default.After;
+            occurrencePicker.Value = data.OccurrenceCount;
+            occurrencePicker.ValueChanged += (s, e) =>
+            {
+                data.OccurrenceCount = occurrencePicker.Value;
+                UpdateOccurrenceText();
+            };
+
+            UpdateOccurrenceText();
+
+            void UpdateOccurrenceText()
+            {
+                occurrencePicker.SuffixText = data.OccurrenceCount == 1
+                    ? CommonStrings.Default.Occurrence : CommonStrings.Default.Occurrences;
+            }
+
+            endsAfterOccurrenceRadioButton = new(occurrencePicker);
+            endsAfterOccurrenceRadioButton.Parent = this;
+            endsAfterOccurrenceRadioButton.IsChecked = data.EndCondition == DateRepeatPatternRule.EndConditionKind.AfterOccurrence;
+            occurrencePicker.Click += (s, e) =>
+            {
+                endsAfterOccurrenceRadioButton.IsChecked = true;
+            };
+            endsAfterOccurrenceRadioButton.CheckedChanged += (s, e) =>
+            {
+                if (endsAfterOccurrenceRadioButton.IsChecked)
+                {
+                    data.EndCondition = DateRepeatPatternRule.EndConditionKind.AfterOccurrence;
+                }
+            };
+
+            // Ends never
+
+            endsNeverRadioButton = new();
+            endsNeverRadioButton.SuffixControl.Text = CommonStrings.Default.Never;
+            endsNeverRadioButton.Parent = this;
+            endsNeverRadioButton.IsChecked = data.EndCondition == DateRepeatPatternRule.EndConditionKind.Never;
+            endsNeverRadioButton.CheckedChanged += (s, e) =>
+            {
+                if (endsNeverRadioButton.IsChecked)
+                {
+                    data.EndCondition = DateRepeatPatternRule.EndConditionKind.Never;
+                }
+            };
+
+            // Other initializations
+
+            XRadioButton[] radioButtons
+                = { endsOnRadioButton.MainControl, endsAfterOccurrenceRadioButton.MainControl, endsNeverRadioButton.MainControl };
+
+            endsOnRadioButton.MainControl.RadioSiblings = radioButtons;
+            endsAfterOccurrenceRadioButton.MainControl.RadioSiblings = radioButtons;
+            endsNeverRadioButton.MainControl.RadioSiblings = radioButtons;
 
             dailyPicker = CreateDailyPatternPicker();
             weeklyPicker = CreateWeeklyPatternPicker();
@@ -54,6 +163,14 @@ namespace Alternet.UI
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternYearly, yearlyPicker);
 
             HasBorder = true;
+
+            new HorizontalLine().Parent = this;
+
+            repeatLabel = new Label(CommonStrings.Default.Repeat)
+            {
+                IsBold = true,
+                Parent = this,
+            };
 
             tabControl.Parent = this;
 
@@ -153,7 +270,7 @@ namespace Alternet.UI
         /// Creates a new instance of the <see cref="RepeatPatternRule"/> class.
         /// </summary>
         /// <returns> A new instance of the <see cref="RepeatPatternRule"/> class. </returns>
-        protected virtual RepeatPatternRule CreateRule() => new ();
+        protected virtual RepeatPatternRule CreateRule() => new();
 
         /// <summary>
         /// Creates a new instance of the <see cref="DailyPatternPicker"/> control.

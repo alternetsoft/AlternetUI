@@ -23,6 +23,9 @@ namespace Alternet.UI
         /// </summary>
         public RepeatPatternRule()
         {
+            StartDate = DateOnly.FromDateTime(DateTime.Now);
+            EndDate = StartDate;
+
             dailyRule = CreateDailyRule();
             weeklyRule = CreateWeeklyRule();
             monthlyRule = CreateMonthlyRule();

@@ -339,5 +339,15 @@ namespace Alternet.UI.Localization
         public string OnPrefix { get; set; } = "On";
 
         public string OnDayPrefix { get; set; } = "On day";
+
+        public string Never { get; set; } = "Never";
+
+        public string After { get; set; } = "After";
+
+        public string Occurrence { get; set; } = "occurrence";
+
+        public string Occurrences { get; set; } = "occurrences";
+
+        public string Repeat { get; set; } = "Repeat";
     }
 }

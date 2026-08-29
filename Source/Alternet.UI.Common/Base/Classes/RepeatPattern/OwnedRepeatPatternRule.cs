@@ -35,7 +35,7 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override DateOnly? EndDate
+        public override DateOnly EndDate
         {
             get => owner.EndDate;
             set

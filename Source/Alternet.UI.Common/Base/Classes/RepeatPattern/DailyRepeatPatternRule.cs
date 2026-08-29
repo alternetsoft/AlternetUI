@@ -86,69 +86,7 @@ namespace Alternet.UI
         /// <inheritdoc/>
         public override IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
         {
-            CoerceMinMaxDate(ref minDate, ref maxDate);
-
-            if (minDate > maxDate)
-                return Array.Empty<DateOnly>();
-
-            var currentDate = minDate;
-
-            switch (Kind)
-            {
-                case RepeatKind.EveryDay:
-                    return GetEveryDay();
-                case RepeatKind.EvenDays:
-                    return GetDays((d) => d.Day % 2 == 0);
-                case RepeatKind.OddDays:
-                    return GetDays((d) => d.Day % 2 != 0);
-                case RepeatKind.IntervalDays:
-                    return GetIntervalDays();
-                case RepeatKind.Weekends:
-                    return GetWeekDays(DaysOfWeek.Weekend);
-                case RepeatKind.Weekdays:
-                    return GetWeekDays(DaysOfWeek.Weekdays);
-                default:
-                    return Array.Empty<DateOnly>();
-            }
-
-            IEnumerable<DateOnly> GetIntervalDays()
-            {
-                var returnedCount = 0;
-                var occ = OccurrenceCount;
-
-                while (currentDate <= maxDate)
-                {
-                    yield return currentDate;
-                    currentDate = currentDate.AddDays(intervalDays);
-                    returnedCount++;
-                    if (occ > 0 && returnedCount >= occ)
-                        yield break;
-                }
-            }
-
-            IEnumerable<DateOnly> GetEveryDay()
-            {
-                while (currentDate <= maxDate)
-                {
-                    yield return currentDate;
-                    currentDate = currentDate.AddDays(1);
-                }
-            }
-
-            IEnumerable<DateOnly> GetDays(Func<DateOnly, bool> predicate)
-            {
-                while (currentDate <= maxDate)
-                {
-                    if (predicate(currentDate))
-                        yield return currentDate;
-                    currentDate = currentDate.AddDays(1);
-                }
-            }
-
-            IEnumerable<DateOnly> GetWeekDays(DaysOfWeek days)
-            {
-                return GetDays((d) => days.HasDay(d.DayOfWeek));
-            }
+            return base.GetDates(minDate, maxDate);
         }
 
         /// <summary>

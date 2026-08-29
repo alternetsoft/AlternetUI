@@ -27,6 +27,15 @@ namespace Alternet.UI
         {
         }
 
+        /// <summary>
+        /// Occurs when the checked state of the <see cref="XRadioButton"/> changes.
+        /// </summary>
+        public event EventHandler? CheckedChanged
+        {
+            add => MainControl.CheckedChanged += value;
+            remove => MainControl.CheckedChanged -= value;
+        }
+
         /// <inheritdoc/>
         protected override GenericControl CreateSuffixControl()
         {
