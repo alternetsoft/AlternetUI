@@ -609,6 +609,7 @@ namespace Alternet.UI
             private readonly XRadioButtonAndSuffix dayOfMonthRadioButton;
             private readonly XRadioButtonAndSuffix relativeWeekdayRadioButton;
             private readonly RelativeWeekdayOfMonthPicker relativeWeekdayOfMonthPicker;
+            private readonly MonthAndDayPicker monthAndDayPicker;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="YearlyPatternPicker"/> class.
@@ -624,9 +625,19 @@ namespace Alternet.UI
                 intervalYearPicker.ValueChanged += OnIntervalYearPickerValueChanged;
                 UpdateSuffixLabelText();
 
+                monthAndDayPicker = new();
+                monthAndDayPicker.Label.Text = CommonStrings.Default.OnPrefix;
+                monthAndDayPicker.Label.Visible = true;
+
                 relativeWeekdayOfMonthPicker = new();
-                dayOfMonthRadioButton = new();
+
+                dayOfMonthRadioButton = new(monthAndDayPicker);
                 relativeWeekdayRadioButton = new(relativeWeekdayOfMonthPicker);
+
+                monthAndDayPicker.Click += (s, e) =>
+                {
+                    dayOfMonthRadioButton.IsChecked = true;
+                };
 
                 relativeWeekdayOfMonthPicker.Click += (s, e) =>
                 {
@@ -657,6 +668,32 @@ namespace Alternet.UI
                 dayOfMonthRadioButton.Parent = this;
                 relativeWeekdayRadioButton.Parent = this;
             }
+
+            /// <summary>
+            /// Gets the integer picker control for selecting the interval year value in the yearly repeat pattern.
+            /// </summary>
+            public XIntPickerWithLabels IntervalYearPicker => intervalYearPicker;
+
+            /// <summary>
+            /// Gets the radio button for selecting the "Day of Month" repeat pattern in the yearly repeat pattern.
+            /// </summary>
+            public XRadioButtonAndSuffix DayOfMonthRadioButton => dayOfMonthRadioButton;
+
+            /// <summary>
+            /// Gets the radio button for selecting the "Relative Weekday" repeat pattern in the yearly repeat pattern.
+            /// </summary>
+            public XRadioButtonAndSuffix RelativeWeekdayRadioButton => relativeWeekdayRadioButton;
+
+            /// <summary>
+            /// Gets the <see cref="RelativeWeekdayOfMonthPicker"/> control used to select the
+            /// relative weekday of the month in the yearly repeat pattern.
+            /// </summary>
+            public RelativeWeekdayOfMonthPicker RelativeWeekdayOfMonthPicker => relativeWeekdayOfMonthPicker;
+
+            /// <summary>
+            /// Gets the <see cref="MonthAndDayPicker"/> control used to select the month and day in the yearly repeat pattern.
+            /// </summary>
+            public MonthAndDayPicker MonthAndDayPicker => monthAndDayPicker;
 
             /// <summary>
             /// Called when the value of the interval year picker changes.
