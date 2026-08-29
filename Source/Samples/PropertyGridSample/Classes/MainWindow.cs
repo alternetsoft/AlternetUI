@@ -123,6 +123,7 @@ namespace PropertyGridSample
                 panel.LogControl.BindApplicationLog();
 
                 panel.PropGrid.Required();
+                panel.InfoTextBox.Required();
                 panel.ActionsControl.Required();
 
                 panel.FillPanel.MinChildMargin = 10;
