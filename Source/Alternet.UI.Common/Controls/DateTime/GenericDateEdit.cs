@@ -13,15 +13,6 @@ namespace Alternet.UI
     /// </summary>
     public abstract partial class GenericDateEdit : TransparentPanel
     {
-        /// <summary>Specifies the maximum date value of the
-        /// <see cref="DateTimePicker"/> and other date editors.
-        /// This field is read-only.</summary>
-        public static readonly DateTime MaxDateTime = new(9998, 12, 31);
-
-        /// <summary>Gets the minimum date value of the
-        /// <see cref="DateTimePicker"/> and other date editors.</summary>
-        public static readonly DateTime MinDateTime = new(1753, 1, 1);
-
         private DateTime max = DateTime.MaxValue;
         private DateTime min = DateTime.MinValue;
         private bool useMinDate = false;
@@ -44,70 +35,34 @@ namespace Alternet.UI
         {
         }
 
-        /// <summary>Gets the maximum date value allowed for the control.</summary>
-        /// <returns>A <see cref="System.DateTime" /> representing the
-        /// maximum date value for the control.</returns>
-        public static DateTime MaximumDateTime
-        {
-            get
-            {
-                DateTime maxSupportedDateTime =
-                    CultureInfo.CurrentCulture.Calendar.MaxSupportedDateTime;
-                if (maxSupportedDateTime.Year > MaxDateTime.Year)
-                {
-                    return MaxDateTime;
-                }
-
-                return maxSupportedDateTime;
-            }
-        }
-
-        /// <summary>Gets the minimum date value allowed for the control.</summary>
-        /// <returns>A <see cref="System.DateTime"/> representing the
-        /// minimum date value for the control.</returns>
-        public static DateTime MinimumDateTime
-        {
-            get
-            {
-                DateTime minSupportedDateTime =
-                    CultureInfo.CurrentCulture.Calendar.MinSupportedDateTime;
-                if (minSupportedDateTime.Year < MinDateTime.Year)
-                {
-                    return MinDateTime;
-                }
-
-                return minSupportedDateTime;
-            }
-        }
-
         /// <summary>Gets or sets the maximum date and time that can be
         /// selected in the control.</summary>
         /// <returns>The maximum date and time that can be selected
         /// in the control. The default is determined as the minimum of the
         /// CurrentCulture's Calendar's
         /// <see cref="System.Globalization.Calendar.MaxSupportedDateTime" />
-        /// property and <see cref="MaxDateTime"/>.</returns>
+        /// property and <see cref="DateUtils.MaxDateTime"/>.</returns>
         /// <exception cref="System.ArgumentException">The value assigned is less
         /// than the <see cref="MinDate" />
         /// value.</exception>
         /// <exception cref="System.SystemException">The value assigned is greater
-        /// than the <see cref="MaxDateTime" />
+        /// than the <see cref="DateUtils.MaxDateTime" />
         /// value.</exception>
         public virtual DateTime MaxDate
         {
             get
             {
-                return EffectiveMaxDate(max);
+                return DateUtils.EffectiveMaxDate(max);
             }
 
             set
             {
                 if (value != max)
                 {
-                    if (value < EffectiveMinDate(min))
+                    if (value < DateUtils.EffectiveMinDate(min))
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
-                    if (value > MaximumDateTime)
+                    if (value > DateUtils.MaximumDateTime)
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
                     max = value;
@@ -186,28 +141,28 @@ namespace Alternet.UI
         /// <summary>Gets or sets the minimum date and time that can be
         /// selected in the control.</summary>
         /// <returns>The minimum date and time that can be selected in the
-        /// control. The default is <see cref="MinDateTime"/>.
+        /// control. The default is <see cref="DateUtils.MinDateTime"/>.
         /// </returns>
         /// <exception cref="System.ArgumentException">The value assigned is
         /// not less than the <see cref="MaxDate" /> value.
         /// </exception>
         /// <exception cref="System.SystemException">The value assigned is
-        /// less than the <see cref="MinDateTime" /> value.
+        /// less than the <see cref="DateUtils.MinimumDateTime" /> value.
         /// </exception>
         public virtual DateTime MinDate
         {
             get
             {
-                return EffectiveMinDate(min);
+                return DateUtils.EffectiveMinDate(min);
             }
 
             set
             {
                 if (value != min)
                 {
-                    if (value > EffectiveMaxDate(max))
+                    if (value > DateUtils.EffectiveMaxDate(max))
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
-                    if (value < MinimumDateTime)
+                    if (value < DateUtils.MinimumDateTime)
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
                     min = value;
                     SetRange();
@@ -220,28 +175,6 @@ namespace Alternet.UI
         {
             get => base.Layout;
             set => base.Layout = value;
-        }
-
-        internal static DateTime EffectiveMaxDate(DateTime maxDate)
-        {
-            DateTime maximumDateTime = MaximumDateTime;
-            if (maxDate > maximumDateTime)
-            {
-                return maximumDateTime;
-            }
-
-            return maxDate;
-        }
-
-        internal static DateTime EffectiveMinDate(DateTime minDate)
-        {
-            DateTime minimumDateTime = MinimumDateTime;
-            if (minDate < minimumDateTime)
-            {
-                return minimumDateTime;
-            }
-
-            return minDate;
         }
 
         /// <summary>
@@ -270,7 +203,7 @@ namespace Alternet.UI
                     Value = max;
             }
 
-            SetRange(EffectiveMinDate(min), EffectiveMaxDate(max));
+            SetRange(DateUtils.EffectiveMinDate(min), DateUtils.EffectiveMaxDate(max));
         }
     }
 }

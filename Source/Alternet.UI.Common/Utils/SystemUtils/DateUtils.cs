@@ -13,6 +13,15 @@ namespace Alternet.UI
     /// </summary>
     public static class DateUtils
     {
+        /// <summary>Specifies the maximum date value of the
+        /// <see cref="DateTimePicker"/> and other date editors.
+        /// This field is read-only.</summary>
+        public static readonly DateTime MaxDateTime = new(9998, 12, 31);
+
+        /// <summary>Gets the minimum date value of the
+        /// <see cref="DateTimePicker"/> and other date editors.</summary>
+        public static readonly DateTime MinDateTime = new(1753, 1, 1);
+
         /// <summary>
         /// Represents 12:00 AM (midnight) on the minimum date.
         /// </summary>
@@ -42,6 +51,42 @@ namespace Alternet.UI
         public static string? PmDesignatorOverride;
         
         private static DayOfWeek? systemFirstDayOfWeek;
+
+        /// <summary>Gets the maximum date value allowed for the control.</summary>
+        /// <returns>A <see cref="System.DateTime" /> representing the
+        /// maximum date value for the control.</returns>
+        public static DateTime MaximumDateTime
+        {
+            get
+            {
+                DateTime maxSupportedDateTime =
+                    CultureInfo.CurrentCulture.Calendar.MaxSupportedDateTime;
+                if (maxSupportedDateTime.Year > MaxDateTime.Year)
+                {
+                    return MaxDateTime;
+                }
+
+                return maxSupportedDateTime;
+            }
+        }
+
+        /// <summary>Gets the minimum date value allowed for the control.</summary>
+        /// <returns>A <see cref="System.DateTime"/> representing the
+        /// minimum date value for the control.</returns>
+        public static DateTime MinimumDateTime
+        {
+            get
+            {
+                DateTime minSupportedDateTime =
+                    CultureInfo.CurrentCulture.Calendar.MinSupportedDateTime;
+                if (minSupportedDateTime.Year < MinDateTime.Year)
+                {
+                    return MinDateTime;
+                }
+
+                return minSupportedDateTime;
+            }
+        }
 
         /// <summary>
         /// Gets <see cref="DateTime"/> format used in JavaScript
@@ -268,6 +313,38 @@ namespace Alternet.UI
         public static DateTime ToDateTimeToday(TimeOnly time)
         {
             return DateTime.Today.Add(time.ToTimeSpan());
+        }
+
+        /// <summary>
+        /// Gets the effective maximum date value, ensuring it does not exceed the defined maximum date limit.
+        /// </summary>
+        /// <param name="maxDate">The maximum date to evaluate.</param>
+        /// <returns>The effective maximum date.</returns>
+        public static DateTime EffectiveMaxDate(DateTime maxDate)
+        {
+            DateTime maximumDateTime = MaximumDateTime;
+            if (maxDate > maximumDateTime)
+            {
+                return maximumDateTime;
+            }
+
+            return maxDate;
+        }
+
+        /// <summary>
+        /// Gets the effective minimum date value, ensuring it does not fall below the defined minimum date limit.
+        /// </summary>
+        /// <param name="minDate">The minimum date to evaluate.</param>
+        /// <returns>The effective minimum date.</returns>
+        public static DateTime EffectiveMinDate(DateTime minDate)
+        {
+            DateTime minimumDateTime = MinimumDateTime;
+            if (minDate < minimumDateTime)
+            {
+                return minimumDateTime;
+            }
+
+            return minDate;
         }
 
         /// <summary>

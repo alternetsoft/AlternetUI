@@ -120,28 +120,28 @@ namespace Alternet.UI
         /// in the control. The default is determined as the minimum of the
         /// CurrentCulture's Calendar's
         /// <see cref="System.Globalization.Calendar.MaxSupportedDateTime" />
-        /// property and <see cref="CustomDateEdit.MaxDateTime"/>.</returns>
+        /// property and <see cref="DateUtils.MaxDateTime"/>.</returns>
         /// <exception cref="System.ArgumentException">The value assigned is less
         /// than the <see cref="MinDate" />
         /// value.</exception>
         /// <exception cref="System.SystemException">The value assigned is greater
-        /// than the <see cref="CustomDateEdit.MaxDateTime" />
+        /// than the <see cref="DateUtils.MaxDateTime" />
         /// value.</exception>
         public virtual DateTime MaxDate
         {
             get
             {
-                return CustomDateEdit.EffectiveMaxDate(max);
+                return DateUtils.EffectiveMaxDate(max);
             }
 
             set
             {
                 if (value != max)
                 {
-                    if (value < CustomDateEdit.EffectiveMinDate(min))
+                    if (value < DateUtils.EffectiveMinDate(min))
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
-                    if (value > CustomDateEdit.MaximumDateTime)
+                    if (value > DateUtils.MaximumDateTime)
                         throw new ArgumentOutOfRangeException(nameof(MaxDate));
 
                     max = value;
@@ -215,28 +215,28 @@ namespace Alternet.UI
         /// <summary>Gets or sets the minimum date and time that can be
         /// selected in the control.</summary>
         /// <returns>The minimum date and time that can be selected in the
-        /// control. The default is <see cref="CustomDateEdit.MinDateTime"/>.
+        /// control. The default is <see cref="DateUtils.MinDateTime"/>.
         /// </returns>
         /// <exception cref="System.ArgumentException">The value assigned is
         /// not less than the <see cref="MaxDate" /> value.
         /// </exception>
         /// <exception cref="System.SystemException">The value assigned is
-        /// less than the <see cref="CustomDateEdit.MinDateTime" /> value.
+        /// less than the <see cref="DateUtils.MinDateTime" /> value.
         /// </exception>
         public virtual DateTime MinDate
         {
             get
             {
-                return CustomDateEdit.EffectiveMinDate(min);
+                return DateUtils.EffectiveMinDate(min);
             }
 
             set
             {
                 if (value != min)
                 {
-                    if (value > CustomDateEdit.EffectiveMaxDate(max))
+                    if (value > DateUtils.EffectiveMaxDate(max))
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
-                    if (value < CustomDateEdit.MinimumDateTime)
+                    if (value < DateUtils.MinimumDateTime)
                         throw new ArgumentOutOfRangeException(nameof(MinDate));
                     min = value;
                     SetRange();
@@ -295,8 +295,8 @@ namespace Alternet.UI
             if (DisposingOrDisposed || !IsPopupWindowCreated)
                 return;
 
-            var effectiveMin = CustomDateEdit.EffectiveMinDate(min);
-            var effectiveMax = CustomDateEdit.EffectiveMaxDate(max);
+            var effectiveMin = DateUtils.EffectiveMinDate(min);
+            var effectiveMax = DateUtils.EffectiveMaxDate(max);
 
             Calendar.MinDate = effectiveMin;
             Calendar.MaxDate = effectiveMax;
