@@ -21,4 +21,11 @@ namespace Alternet.UI
         /// <returns></returns>
         T? Value { get; set; }
     }
+
+    /// <summary>
+    /// Provides access to the value of the object type.
+    /// </summary>
+    public interface IValueSource : IValueSource<object>
+    {
+    }
 }
