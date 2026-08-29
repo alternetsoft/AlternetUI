@@ -47,7 +47,7 @@ namespace Alternet.UI
             get => kind;
             set
             {
-                kind = GetNewFieldValue(kind, value);
+                SetProperty(ref kind, value);
             }
         }
 

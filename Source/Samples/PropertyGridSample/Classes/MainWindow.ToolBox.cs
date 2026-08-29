@@ -86,7 +86,6 @@ namespace PropertyGridSample
                 ToolBoxAdd<MonthPicker>();
                 ToolBoxAdd<MultilineTextBox>(ObjectInit.InitMultilineTextBox);
                 ToolBoxAdd<NumericUpDown>(ObjectInit.InitNumericUpDown);
-
                 ToolBoxAdd<Panel>(ObjectInit.InitPanel);
                 ToolBoxAdd<PanelOkCancelButtons>(ObjectInit.InitPanelOkCancelButtons);
                 ToolBoxAdd<PanelSettings>(ObjectInit.InitPanelSettings);
@@ -94,7 +93,7 @@ namespace PropertyGridSample
                 ToolBoxAdd<PinCodePicker>();
                 ToolBoxAdd<RelativeWeekdayOfMonthPicker>();
                 ToolBoxAdd<RelativeWeekdayPicker>();
-                ToolBoxAdd<RepeatPatternPicker>();
+                ToolBoxAdd<RepeatPatternPicker>(ObjectInit.InitRepeatPatternPicker);
                 ToolBoxAdd<ResizableBorder>(ObjectInit.InitResizableBorder);
                 ToolBoxAdd<ResizableWindowBorder>(ObjectInit.InitResizableWindowBorder);
                 ToolBoxAdd<RichToolTip>(ObjectInit.InitRichToolTip);

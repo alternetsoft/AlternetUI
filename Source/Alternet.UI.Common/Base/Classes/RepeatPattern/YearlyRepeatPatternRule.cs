@@ -48,7 +48,7 @@ namespace Alternet.UI
             get => kind;
             set
             {
-                kind = GetNewFieldValue(kind, value);
+                SetProperty(ref kind, value);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Alternet.UI
             {
                 if (value < 1)
                     value = 1;
-                intervalYears = GetNewFieldValue(intervalYears, value);
+                SetProperty(ref intervalYears, value);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Alternet.UI
             get => month;
             set
             {
-                month = GetNewFieldValue(month, value);
+                SetProperty(ref month, value);
             }
         }
 
@@ -90,7 +90,7 @@ namespace Alternet.UI
             get => dayOfMonth;
             set
             {
-                dayOfMonth = GetNewFieldValue(dayOfMonth, value);
+                SetProperty(ref dayOfMonth, value);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Alternet.UI
             get => dayOfWeekIndex;
             set
             {
-                dayOfWeekIndex = GetNewFieldValue(dayOfWeekIndex, value);
+                SetProperty(ref dayOfWeekIndex, value);
             }
         }
 
@@ -118,7 +118,7 @@ namespace Alternet.UI
             get => dayOfWeek;
             set
             {
-                dayOfWeek = GetNewFieldValue(dayOfWeek, value);
+                SetProperty(ref dayOfWeek, value);
             }
         }
     }

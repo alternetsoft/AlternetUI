@@ -60,7 +60,7 @@ namespace Alternet.UI
             public virtual IFormatProvider? FormatProvider { get; set; }
 
             /// <summary>
-            /// Gets or sets the value of the date repeat pattern rule.
+            /// Gets the value of the date repeat pattern rule.
             /// </summary>
             public virtual TValue Value
             {

@@ -33,8 +33,7 @@ namespace Alternet.UI
         {
             Padding = DefaultPadding;
 
-            data = new CompositeRepeatPatternRule();
-            data.PropertyChanged += OnValuePropertyChanged;
+            data = CreateRule();
 
             dailyPicker = CreateDailyPatternPicker();
             weeklyPicker = CreateWeeklyPatternPicker();
@@ -48,23 +47,24 @@ namespace Alternet.UI
             tabControl.TabTheme = SpeedButton.KnownTheme.Default;
             tabControl.ContentVisible = false;
 
-            tabControl.Parent = this;
-
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternNone, nonePicker);
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternDaily, dailyPicker);
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternWeekly, weeklyPicker);
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternMonthly, monthlyPicker);
             tabControl.Add(CommonStrings.Default.ScheduleRepeatPatternYearly, yearlyPicker);
 
-            tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
-
             HasBorder = true;
+
+            tabControl.Parent = this;
+
+            tabControl.SelectedIndexChanged += OnTabControlSelectedIndexChanged;
+            data.PropertyChanged += OnValuePropertyChanged;
         }
 
         /// <summary>
         /// Occurs when the selected repeat pattern changes.
         /// </summary>
-        public event EventHandler? SelectedPatternChanged;
+        public event EventHandler? ValueChanged;
 
         /// <summary>
         /// Gets the inner <see cref="TabControl"/> used for selecting the repeat pattern.
@@ -126,8 +126,16 @@ namespace Alternet.UI
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         protected virtual void OnTabControlSelectedIndexChanged(object? sender, EventArgs e)
         {
-            tabControl.ContentVisible = SelectedPattern != ScheduleRepeatPattern.None;
-            SelectedPatternChanged?.Invoke(this, EventArgs.Empty);
+            var index = tabControl.SelectedIndex;
+
+            var newPattern = ScheduleRepeatPattern.None;
+
+            if (index >= 0 && index <= (int)ScheduleRepeatPattern.Yearly)
+                newPattern = (ScheduleRepeatPattern)index;
+
+            tabControl.ContentVisible = newPattern != ScheduleRepeatPattern.None;
+
+            SelectedPattern = newPattern;
         }
 
         /// <summary>
@@ -137,31 +145,38 @@ namespace Alternet.UI
         /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected virtual void OnValuePropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            tabControl.SelectedIndex = (int)data.Kind;
+            tabControl.SelectedIndex = (int)SelectedPattern;
+            ValueChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="CompositeRepeatPatternRule"/> class.
+        /// </summary>
+        /// <returns> A new instance of the <see cref="CompositeRepeatPatternRule"/> class. </returns>
+        protected virtual CompositeRepeatPatternRule CreateRule() => new ();
 
         /// <summary>
         /// Creates a new instance of the <see cref="DailyPatternPicker"/> control.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> A new instance of the <see cref="DailyPatternPicker"/> control. </returns>
         protected virtual DailyPatternPicker CreateDailyPatternPicker() => new(data.DailyRule);
 
         /// <summary>
         /// Creates a new instance of the <see cref="WeeklyPatternPicker"/> control.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> A new instance of the <see cref="WeeklyPatternPicker"/> control. </returns>
         protected virtual WeeklyPatternPicker CreateWeeklyPatternPicker() => new(data.WeeklyRule);
 
         /// <summary>
         /// Creates a new instance of the <see cref="MonthlyPatternPicker"/> control.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> A new instance of the <see cref="MonthlyPatternPicker"/> control. </returns>
         protected virtual MonthlyPatternPicker CreateMonthlyPatternPicker() => new(data.MonthlyRule);
 
         /// <summary>
         /// Creates a new instance of the <see cref="YearlyPatternPicker"/> control.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> A new instance of the <see cref="YearlyPatternPicker"/> control. </returns>
         protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new(data.YearlyRule);
     }
 }

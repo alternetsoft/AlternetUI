@@ -21,7 +21,7 @@ namespace Alternet.UI
             get => startDate;
             set
             {
-                startDate = GetNewFieldValue(startDate, value, OnStartDateChanged);
+                SetProperty(ref startDate, value, OnStartDateChanged);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Alternet.UI
             get => endDate;
             set
             {
-                endDate = GetNewFieldValue(endDate, value, OnEndDateChanged);
+                SetProperty(ref endDate, value, OnEndDateChanged);
             }
         }
 
@@ -47,7 +47,7 @@ namespace Alternet.UI
             get => occurrenceCount;
             set
             {
-                occurrenceCount = GetNewFieldValue(occurrenceCount, value, OnOccurrenceCountChanged);
+                SetProperty(ref occurrenceCount, value, OnOccurrenceCountChanged);
             }
         }
 

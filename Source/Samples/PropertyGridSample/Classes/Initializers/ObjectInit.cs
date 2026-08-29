@@ -517,6 +517,14 @@ namespace PropertyGridSample
             contextMenu.Items.Add(menuItem2);
         }
 
+        public static void InitRepeatPatternPicker(RepeatPatternPicker picker)
+        {
+            picker.ValueChanged += (s, e) =>
+            {
+                App.Log("RepeatPatternPicker.ValueChanged");
+            };
+        }
+
         public static void InitVirtualTreeControl(XTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)

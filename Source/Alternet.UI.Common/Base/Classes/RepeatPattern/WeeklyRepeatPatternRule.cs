@@ -30,7 +30,7 @@ namespace Alternet.UI
             {
                 if (value < 1)
                     value = 1;
-                intervalWeeks = GetNewFieldValue(intervalWeeks, value);
+                SetProperty(ref intervalWeeks, value);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Alternet.UI
             get => days;
             set
             {
-                days = GetNewFieldValue(days, value);
+                SetProperty(ref days, value);
             }
         }
     }
