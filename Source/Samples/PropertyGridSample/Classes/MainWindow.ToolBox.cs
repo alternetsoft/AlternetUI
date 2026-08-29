@@ -34,6 +34,17 @@ namespace PropertyGridSample
             control.SetChildIndex(control.OkButton, -1);
         }
 
+        void ToolBoxAdd<T>()
+        {
+            LimitedTypes.Add(typeof(T));
+        }
+
+        void ToolBoxAdd<T>(Action<T> action)
+        {
+            LimitedTypes.Add(typeof(T));
+            ObjectInit.AddAction<T>(action);
+        }
+
         private void InitToolBox()
         {
             InitTestsAll();
@@ -48,80 +59,78 @@ namespace PropertyGridSample
                 bool logAddedControls = false;
                 bool logNotAddedControls = false;
 
-                ToolBoxAdd<Border>();
-                ToolBoxAdd<PictureBox>();
-                ToolBoxAdd<ToolBar>();
-                ToolBoxAdd<SplittedPanel>();
-                ToolBoxAdd<Calendar>();
-                ToolBoxAdd<XComboBox>();
-                ToolBoxAdd<HorizontalStackPanel>();
-                ToolBoxAdd<TabControl>();
-                ToolBoxAdd<LinkLabel>();
-                ToolBoxAdd<XListBox>();
-                ToolBoxAdd<MultilineTextBox>();
-                ToolBoxAdd<NumericUpDown>();
-                ToolBoxAdd<Panel>();
-                ToolBoxAdd<PanelOkCancelButtons>();
-                ToolBoxAdd<FindReplaceControl>();
-                ToolBoxAdd<XSlider>();
-                ToolBoxAdd<XProgressBar>();
-                ToolBoxAdd<StackPanel>();
-                ToolBoxAdd<TextBox>();
-                ToolBoxAdd<VerticalStackPanel>();
-                ToolBoxAdd<CardPanel>();
-                ToolBoxAdd<SpeedButton>();
-                ToolBoxAdd<TextBoxAndLabel>();
-                ToolBoxAdd<SpeedTextButton>();
-                ToolBoxAdd<SpeedColorButton>();
-                ToolBoxAdd<ToolBarSet>();
-                ToolBoxAdd<SideBarPanel>();
-                ToolBoxAdd<ColorListBox>();
-                ToolBoxAdd<VirtualListBox>();
-                ToolBoxAdd<UserControl>();
-                ToolBoxAdd<RichToolTip>();
-                ToolBoxAdd<TextBoxAndButton>();
-                ToolBoxAdd<FontNamePicker>();
+                ToolBoxAdd<Border>(ObjectInit.InitBorder);
                 ToolBoxAdd<Calculator>();
-                ToolBoxAdd<LabelAndButton>();
-                ToolBoxAdd<IntPicker>();
-                ToolBoxAdd<XIntPicker>();
-                ToolBoxAdd<DatePicker>();
-                ToolBoxAdd<DateTimePicker>();
-                ToolBoxAdd<TimePicker>();
-                ToolBoxAdd<ListPicker>();
-                ToolBoxAdd<EnumPicker>();
-                ToolBoxAdd<ColorPicker>();
-                ToolBoxAdd<TextBoxWithListPopup>();
-                ToolBoxAdd<CardPanelHeader>();
-                ToolBoxAdd<XTreeView>();
-                ToolBoxAdd<Label>();
-                ToolBoxAdd<FileListBox>();
-                ToolBoxAdd<FontListBox>();
-                ToolBoxAdd<GenericItemControl>();
-                ToolBoxAdd<XCheckBox>();
-                ToolBoxAdd<XRadioButton>();
-                ToolBoxAdd<XButton>();
-                ToolBoxAdd<ShapeControl>();
-                ToolBoxAdd<ResizableBorder>();
-                ToolBoxAdd<ResizableWindowBorder>();
-                ToolBoxAdd<XCheckListBox>();
-                ToolBoxAdd<EditableListPicker>();
-                ToolBoxAdd<TextPicker>();
-                ToolBoxAdd<XScrollBar>();
-                ToolBoxAdd<PanelSettings>();
-                ToolBoxAdd<ScrollViewer>();
-                ToolBoxAdd<ScrollablePanelSettings>();
-                ToolBoxAdd<RelativeWeekdayPicker>();
-                ToolBoxAdd<MonthPicker>();
+                ToolBoxAdd<Calendar>();
+                ToolBoxAdd<CardPanel>(ObjectInit.InitCardPanel);
+                ToolBoxAdd<CardPanelHeader>(ObjectInit.InitCardPanelHeader);
+                ToolBoxAdd<ColorListBox>();
+                ToolBoxAdd<ColorPicker>(ObjectInit.InitColorPicker);
+                ToolBoxAdd<ContextMenu>(ObjectInit.InitContextMenu);
+                ToolBoxAdd<DatePicker>(ObjectInit.InitDatePicker);
+                ToolBoxAdd<DateTimePicker>(ObjectInit.InitDateTimePicker);
                 ToolBoxAdd<DayOfWeekPicker>();
-                ToolBoxAdd<RepeatPatternPicker>();
+                ToolBoxAdd<EditableListPicker>(ObjectInit.InitListPicker);
+                ToolBoxAdd<EnumPicker>(ObjectInit.InitEnumPicker);
+                ToolBoxAdd<FileListBox>(ObjectInit.InitFileListBox);
+                ToolBoxAdd<FindReplaceControl>(ObjectInit.InitFindReplaceControl);
+                ToolBoxAdd<FontListBox>();
+                ToolBoxAdd<FontNamePicker>(ObjectInit.InitFontNamePicker);
+                ToolBoxAdd<GenericItemControl>(ObjectInit.InitGenericListItemControl);
+                ToolBoxAdd<HorizontalStackPanel>(ObjectInit.InitStackPanel);
+                ToolBoxAdd<IntPicker>();
+                ToolBoxAdd<Label>(ObjectInit.InitGenericLabel);
+                ToolBoxAdd<LabelAndButton>(ObjectInit.InitLabelAndButton);
+                ToolBoxAdd<LinkLabel>(ObjectInit.InitLinkLabel);
+                ToolBoxAdd<ListPicker>(ObjectInit.InitListPicker);
+                ToolBoxAdd<MonthPicker>();
+                ToolBoxAdd<MultilineTextBox>(ObjectInit.InitMultilineTextBox);
+                ToolBoxAdd<NumericUpDown>(ObjectInit.InitNumericUpDown);
+
+                ToolBoxAdd<Panel>(ObjectInit.InitPanel);
+                ToolBoxAdd<PanelOkCancelButtons>(ObjectInit.InitPanelOkCancelButtons);
+                ToolBoxAdd<PanelSettings>(ObjectInit.InitPanelSettings);
+                ToolBoxAdd<PictureBox>(ObjectInit.InitPictureBox);
                 ToolBoxAdd<PinCodePicker>();
                 ToolBoxAdd<RelativeWeekdayOfMonthPicker>();
-
-                void ToolBoxAdd<T>()
-                {
-                    LimitedTypes.Add(typeof(T));
-                }
+                ToolBoxAdd<RelativeWeekdayPicker>();
+                ToolBoxAdd<RepeatPatternPicker>();
+                ToolBoxAdd<ResizableBorder>(ObjectInit.InitResizableBorder);
+                ToolBoxAdd<ResizableWindowBorder>(ObjectInit.InitResizableWindowBorder);
+                ToolBoxAdd<RichToolTip>(ObjectInit.InitRichToolTip);
+                ToolBoxAdd<ScrollablePanelSettings>(ObjectInit.InitScrollablePanelSettings);
+                ToolBoxAdd<ScrollViewer>(ObjectInit.InitScrollViewer);
+                ToolBoxAdd<ShapeControl>(ObjectInit.InitShapeControl);
+                ToolBoxAdd<SideBarPanel>(ObjectInit.InitSideBarPanel);
+                ToolBoxAdd<SpeedButton>(ObjectInit.InitSpeedButton);
+                ToolBoxAdd<SpeedColorButton>(ObjectInit.InitSpeedColorButton);
+                ToolBoxAdd<SpeedTextButton>(ObjectInit.InitSpeedTextButton);
+                ToolBoxAdd<SplittedPanel>(ObjectInit.InitSplittedPanel);
+                ToolBoxAdd<StackPanel>(ObjectInit.InitStackPanel);
+                ToolBoxAdd<StatusBar>(ObjectInit.InitStatusBar);
+                ToolBoxAdd<TabControl>(ObjectInit.InitGenericTabControl);
+                ToolBoxAdd<TextBox>(ObjectInit.InitTextBox);
+                ToolBoxAdd<TextBoxAndButton>(ObjectInit.InitTextBoxAndButton);
+                ToolBoxAdd<TextBoxAndLabel>(ObjectInit.InitTextBoxAndLabel);
+                ToolBoxAdd<TextBoxWithListPopup>(ObjectInit.InitTextBoxWithListPopup);
+                ToolBoxAdd<TextPicker>();
+                ToolBoxAdd<TimePicker>(ObjectInit.InitTimePicker);
+                ToolBoxAdd<ToolBar>(ObjectInit.InitGenericToolBar);
+                ToolBoxAdd<ToolBarSet>(ObjectInit.InitGenericToolBarSet);
+                ToolBoxAdd<UserControl>(ObjectInit.InitUserControl);
+                ToolBoxAdd<VerticalStackPanel>(ObjectInit.InitStackPanel);
+                ToolBoxAdd<VirtualListBox>(DemoUtils.InitListBoxItems);
+                ToolBoxAdd<XButton>(ObjectInit.InitStdButton);
+                ToolBoxAdd<XCheckBox>(ObjectInit.InitXCheckBox);
+                ToolBoxAdd<XCheckListBox>(ObjectInit.InitCheckListBox);
+                ToolBoxAdd<XComboBox>(ObjectInit.InitStdComboBox);
+                ToolBoxAdd<XIntPicker>();
+                ToolBoxAdd<XListBox>(ObjectInit.InitStdListBox);
+                ToolBoxAdd<XProgressBar>(ObjectInit.InitXProgressBar);
+                ToolBoxAdd<XRadioButton>(ObjectInit.InitXRadioButton);
+                ToolBoxAdd<XScrollBar>(ObjectInit.InitXScrollBar);
+                ToolBoxAdd<XSlider>(ObjectInit.InitXSlider);
+                ToolBoxAdd<XTreeView>(ObjectInit.InitXTreeView);
 
                 /*
                 ToolBoxAdd<Alternet.UI.HiddenBorder>();
@@ -228,15 +237,14 @@ namespace PropertyGridSample
                 }
 
                 items.Add(CreateDialogItem<ColorDialog>());
-                items.Add(CreateDialogItem<OpenFileDialog>());
-                items.Add(CreateDialogItem<SaveFileDialog>());
+                items.Add(CreateDialogItem<OpenFileDialog>(ObjectInit.InitOpenFileDialog));
+                items.Add(CreateDialogItem<SaveFileDialog>(ObjectInit.InitSaveFileDialog));
                 items.Add(CreateDialogItem<SelectDirectoryDialog>());
                 items.Add(CreateDialogItem<FontDialog>());
-
-                items.Add(CreateDialogItem<PageSetupDialog>());
-                items.Add(CreateDialogItem<PrintPreviewDialog>());
-                items.Add(CreateDialogItem<PrintDialog>());
-
+                items.Add(CreateDialogItem<PageSetupDialog>(ObjectInit.InitPageSetupDialog));
+                items.Add(CreateDialogItem<PrintPreviewDialog>(ObjectInit.InitPrintPreviewDialog));
+                items.Add(CreateDialogItem<PrintDialog>(ObjectInit.InitPrintDialog));
+                
                 items.Sort();
 
                 BaseDictionary<string, TreeViewItem> categories = new();
@@ -287,9 +295,12 @@ namespace PropertyGridSample
             ToolBox.Add(new ControlListBoxItem(typeof(Window), this.ParentWindow));
         }
 
-        private ControlListBoxItem CreateDialogItem<T>()
+        private ControlListBoxItem CreateDialogItem<T>(Action<T>? action = null)
             where T : CommonDialog
         {
+            if (action != null)
+                ObjectInit.AddAction<T>(action);
+
             var dialog = (T)ControlListBoxItem.CreateInstance(typeof(T))!;
             var button = new ShowDialogButton
             {

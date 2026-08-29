@@ -19,197 +19,125 @@ namespace PropertyGridSample
         
         static ObjectInit()
         {
-            AddAction<ShapeControl>(InitShapeControl);
-            AddAction<GenericItemControl>(InitGenericListItemControl);
-            AddAction<CardPanelHeader>(InitCardPanelHeader);
-            AddAction<RichToolTip>(InitRichToolTip);
-            AddAction<DateTimePicker>(InitDateTimePicker);
-            AddAction<DatePicker>(InitDatePicker);
-            AddAction<TimePicker>(InitTimePicker);
-            AddAction<ListPicker>(InitListPicker);
-            AddAction<EditableListPicker>(InitListPicker);            
-            AddAction<EnumPicker>(InitEnumPicker);
-            AddAction<ColorPicker>(InitColorPicker);
-            AddAction<FontNamePicker>(InitFontNamePicker);
-            AddAction<TextBoxWithListPopup>(InitTextBoxWithListPopup);
-            AddAction<XSlider>(InitGenericSlider);
-            AddAction<XCheckBox>(InitStdCheckBox);
-            AddAction<XRadioButton>(InitStdRadioButton);
-
-            Actions.Add(typeof(PageSetupDialog), InitPageSetupDialog);
-            Actions.Add(typeof(PrintPreviewDialog), InitPrintPreviewDialog);
-            Actions.Add(typeof(PrintDialog), InitPrintDialog);
-            Actions.Add(typeof(ContextMenu), InitContextMenu);
-            Actions.Add(typeof(SplittedPanel), InitSplittedPanel);
-            Actions.Add(typeof(ScrollViewer), InitScrollViewer);
-            Actions.Add(typeof(ScrollablePanelSettings), InitScrollablePanelSettings);            
-            Actions.Add(typeof(HorizontalStackPanel), InitStackPanel);
-            Actions.Add(typeof(VerticalStackPanel), InitStackPanel);
-            Actions.Add(typeof(StackPanel), InitStackPanel);
-            Actions.Add(typeof(XScrollBar), InitXScrollBar);
-            Actions.Add(typeof(SpeedButton), InitSpeedButton);
-            Actions.Add(typeof(PictureBox), InitPictureBox);
-            Actions.Add(typeof(ToolBar), InitGenericToolBar);
-            Actions.Add(typeof(FindReplaceControl), InitFindReplaceControl);
-            Actions.Add(typeof(ToolBarSet), InitGenericToolBarSet);
-            Actions.Add(typeof(CardPanel), InitCardPanel);
-            Actions.Add(typeof(TextBox), InitTextBox);
-            Actions.Add(typeof(TextBoxAndLabel), InitTextBoxAndLabel);
-            Actions.Add(typeof(TextBoxAndButton), InitTextBoxAndButton);
-            Actions.Add(typeof(MultilineTextBox), InitMultilineTextBox);
-            Actions.Add(typeof(Label), InitGenericLabel);
-            Actions.Add(typeof(LabelAndButton), InitLabelAndButton);
-            Actions.Add(typeof(LinkLabel), InitLinkLabel);
-            Actions.Add(typeof(XButton), InitStdButton);
-            Actions.Add(typeof(SpeedTextButton), InitSpeedTextButton);
-            Actions.Add(typeof(SpeedColorButton), InitSpeedColorButton);
-            Actions.Add(typeof(SideBarPanel), InitSideBarPanel);
-            Actions.Add(typeof(TabControl), InitGenericTabControl);
-            Actions.Add(typeof(VirtualListBox), DemoUtils.InitListBoxItems);
-            Actions.Add(typeof(FileListBox), InitFileListBox);
-            Actions.Add(typeof(XListBox), InitStdListBox);
-            Actions.Add(typeof(XComboBox), InitStdComboBox);
-            Actions.Add(typeof(XCheckListBox), InitCheckListBox);
-
-            Actions.Add(typeof(UserControl), (c) =>
-            {
-                var control = (c as UserControl)!;
-                control.HasBorder = true;
-                control.SuggestedSize = 200;
-                control.ParentBackColor = true;
-                control.Paint += (sender, e) =>
-                {
-                    e.Graphics.FillRectangle(control.RealBackgroundColor.AsBrush, e.ClientRectangle);
-                    (sender as UserControl)?.DrawDefaultBackground(e);
-                };
-            });
-
-            Actions.Add(typeof(SaveFileDialog), (c) =>
-            {
-                var control = (c as SaveFileDialog)!;
-                control.Title = "Some title";
-            });
-
-            Actions.Add(typeof(OpenFileDialog), (c) =>
-            {
-                var control = (c as OpenFileDialog)!;
-                control.Title = "Some title";
-            });
-
-            Actions.Add(typeof(NumericUpDown), (c) =>
-            {
-                NumericUpDown control = (c as NumericUpDown)!;
-                control.SuggestedWidth = 200;
-            });
-
-            Actions.Add(typeof(Border), (c) =>
-            {
-                var border = (c as Border)!;
-                border.ParentBackColor = false;
-                border.ParentForeColor = false;
-                border.SuggestedSize = DemoUtils.DefaultListSize;
-                SetBackgrounds(border);
-
-                border.Layout = LayoutStyle.Vertical;
-                XButton button = new();
-                button.Text = "Click me";
-                button.Parent = border;
-                button.Click += Button_Click;
-
-                border.VisualStateChanged += Border_VisualStateChanged;
-
-                static void Button_Click(object? sender, EventArgs e)
-                {
-                    App.Log("Button in Border clicked.");
-                }
-
-                static void Border_VisualStateChanged(object? sender, EventArgs e)
-                {
-                    App.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
-                }
-            });
-
-            Actions.Add(typeof(StatusBar), (c) =>
-            {
-                (c as StatusBar)!.Panels.Add(new("text1"));
-                (c as StatusBar)!.Panels.Add(new("text2"));
-            });
-
-            Actions.Add(typeof(XTreeView), (c) =>
-            {
-                XTreeView treeView = (c as XTreeView)!;
-                treeView.SuggestedSize = DemoUtils.DefaultListSize;
-                InitVirtualTreeControl(treeView);
-            });
-
-            Actions.Add(typeof(Panel), InitPanel);
-            Actions.Add(typeof(PanelSettings), InitPanelSettings);
-
-            Actions.Add(typeof(ResizableWindowBorder), (c) =>
-            {
-                ResizableWindowBorder control = (c as ResizableWindowBorder)!;
-                control.IgnoreLayout = true;
-                control.Size = 300;
-                control.Location = (10, 10);
-                control.Title = "This is title";
-
-                control.MinimizeEnabled = true;
-                control.MaximizeEnabled = true;
-                control.HasSystemMenu = true;
-                control.MinimizeButtonClick += (s, e) => App.Log("Minimize button clicked");
-                control.MaximizeButtonClick += (s, e) => App.Log("Maximize button clicked");
-                control.CloseButtonClick += (s, e) => App.Log("Close button clicked");
-                control.IconClick += (s, e) => App.Log("Icon clicked");
-            });
-
-            Actions.Add(typeof(ResizableBorder), (c) =>
-            {
-                ResizableBorder control = (c as ResizableBorder)!;
-
-                control.HasBorder = true;
-                control.IgnoreLayout = true;
-                control.Size = 300;
-                control.Location = (10, 10);
-            });
-
-            Actions.Add(typeof(AbstractControl), (c) =>
-            {
-                AbstractControl control = (c as AbstractControl)!;
-                control.SuggestedSize = DemoUtils.DefaultListHeight;
-            });
-
-            Actions.Add(typeof(XProgressBar), (c) =>
-            {
-                XProgressBar control = (c as XProgressBar)!;
-                control.OrientationChanged += OrientationChanged;
-                control.Value = 50;
-                control.SuggestedWidth = 250;
-
-                static void OrientationChanged(object? sender, EventArgs e)
-                {
-                    if (sender is not XProgressBar control)
-                        return;
-                    if (control.IsVertical)
-                        control.SuggestedSize = (float.NaN, 250);
-                    else
-                        control.SuggestedSize = (250, float.NaN);
-                }
-
-            });
-
-            Actions.Add(typeof(PanelOkCancelButtons), (c) =>
-            {
-                PanelOkCancelButtons control = (c as PanelOkCancelButtons)!;
-                control.HasBorder = true;
-            });
         }
 
-        public static void InitStdCheckBox(XCheckBox control)
+        public static void InitUserControl(UserControl control)
+        {
+            control.HasBorder = true;
+            control.SuggestedSize = 200;
+            control.ParentBackColor = true;
+            control.Paint += (sender, e) =>
+            {
+                e.Graphics.FillRectangle(control.RealBackgroundColor.AsBrush, e.ClientRectangle);
+                (sender as UserControl)?.DrawDefaultBackground(e);
+            };
+        }
+
+        public static void InitSaveFileDialog(SaveFileDialog control)
+        {
+            control.Title = "Some title";
+        }
+
+        public static void InitOpenFileDialog(OpenFileDialog control)
+        {
+            control.Title = "Some title";
+        }
+
+        public static void InitNumericUpDown(NumericUpDown control)
+        {
+            control.SuggestedWidth = 200;
+        }
+
+        public static void InitBorder(Border border)
+        {
+            border.ParentBackColor = false;
+            border.ParentForeColor = false;
+            border.SuggestedSize = DemoUtils.DefaultListSize;
+            SetBackgrounds(border);
+
+            border.Layout = LayoutStyle.Vertical;
+            XButton button = new();
+            button.Text = "Click me";
+            button.Parent = border;
+            button.Click += Button_Click;
+
+            border.VisualStateChanged += Border_VisualStateChanged;
+
+            static void Button_Click(object? sender, EventArgs e)
+            {
+                App.Log("Button in Border clicked.");
+            }
+
+            static void Border_VisualStateChanged(object? sender, EventArgs e)
+            {
+                App.LogNameValue("Border.VisualState", (sender as Border)?.VisualState);
+            }
+        }
+
+        public static void InitStatusBar(StatusBar control)
+        {
+            control.Panels.Add(new("text1"));
+            control.Panels.Add(new("text2"));
+        }
+
+        public static void InitXTreeView(XTreeView treeView)
+        {
+            treeView.SuggestedSize = DemoUtils.DefaultListSize;
+            InitVirtualTreeControl(treeView);
+        }
+
+        public static void InitResizableWindowBorder(ResizableWindowBorder control)
+        {
+            control.IgnoreLayout = true;
+            control.Size = 300;
+            control.Location = (10, 10);
+            control.Title = "This is title";
+
+            control.MinimizeEnabled = true;
+            control.MaximizeEnabled = true;
+            control.HasSystemMenu = true;
+            control.MinimizeButtonClick += (s, e) => App.Log("Minimize button clicked");
+            control.MaximizeButtonClick += (s, e) => App.Log("Maximize button clicked");
+            control.CloseButtonClick += (s, e) => App.Log("Close button clicked");
+            control.IconClick += (s, e) => App.Log("Icon clicked");
+        }
+
+        public static void InitResizableBorder(ResizableBorder control)
+        {
+            control.HasBorder = true;
+            control.IgnoreLayout = true;
+            control.Size = 300;
+            control.Location = (10, 10);
+        }
+
+        public static void InitXProgressBar(XProgressBar control)
+        {
+            control.OrientationChanged += OrientationChanged;
+            control.Value = 50;
+            control.SuggestedWidth = 250;
+
+            static void OrientationChanged(object? sender, EventArgs e)
+            {
+                if (sender is not XProgressBar control)
+                    return;
+                if (control.IsVertical)
+                    control.SuggestedSize = (float.NaN, 250);
+                else
+                    control.SuggestedSize = (250, float.NaN);
+            }
+        }
+
+        public static void InitPanelOkCancelButtons(PanelOkCancelButtons control)
+        {
+            control.HasBorder = true;
+        }
+
+        public static void InitXCheckBox(XCheckBox control)
         {
             control.Text = "XCheckBox";
         }
 
-        public static void InitStdRadioButton(XRadioButton control)
+        public static void InitXRadioButton(XRadioButton control)
         {
             control.Text = "XRadioButton";
         }
@@ -257,24 +185,18 @@ namespace PropertyGridSample
             }            
         }
 
-        public static void InitPageSetupDialog(object control)
+        public static void InitPageSetupDialog(PageSetupDialog dialog)
         {
-            if (control is not PageSetupDialog dialog)
-                return;
             dialog.Document = CreatePrintDocument();
         }
 
-        public static void InitPrintPreviewDialog(object control)
+        public static void InitPrintPreviewDialog(PrintPreviewDialog dialog)
         {
-            if (control is not PrintPreviewDialog dialog)
-                return;
             dialog.Document = CreatePrintDocument();
         }
 
-        public static void InitPrintDialog(object control)
+        public static void InitPrintDialog(PrintDialog dialog)
         {
-            if (control is not PrintDialog dialog)
-                return;
             dialog.Document = CreatePrintDocument();
         }
 
@@ -364,7 +286,7 @@ namespace PropertyGridSample
             control.Value = HorizontalAlignment.Center;
         }
 
-        public static void InitGenericSlider(XSlider control)
+        public static void InitXSlider(XSlider control)
         {
             control.Value = 4;
             control.SuggestedWidth = 250;
@@ -513,10 +435,9 @@ namespace PropertyGridSample
             return items;
         }
 
-        public static void InitScrollViewer(object control)
+        public static void InitScrollViewer(ScrollViewer sv)
         {
-            ScrollViewer? sv = control as ScrollViewer;
-            sv!.SuggestedHeight = 250;
+            sv.SuggestedHeight = 250;
             Label label = new();
 
             StringBuilder sb = new();
@@ -534,19 +455,14 @@ namespace PropertyGridSample
             label.Parent = sv.Content;
         }
 
-        public static void InitScrollablePanelSettings(object control)
+        public static void InitScrollablePanelSettings(ScrollablePanelSettings sv)
         {
-            if(control is not ScrollablePanelSettings sv)
-                return;
             sv.SuggestedHeight = 300;
             InitPanelSettings(sv.Panel);
         }
 
-        public static void InitStackPanel(object control)
+        public static void InitStackPanel(StackPanel panel)
         {
-            if (control is not Control panel)
-                return;
-
             panel.SuggestedHeight = 250;
             panel.HasBorder = true;
 
@@ -583,10 +499,8 @@ namespace PropertyGridSample
 
         }
 
-        public static void InitContextMenu(object control)
+        public static void InitContextMenu(ContextMenu contextMenu)
         {
-            var contextMenu = (control as ContextMenu)!;
-
             MenuItem menuItem1 = new()
             {
                 Text = "Open...",
@@ -651,19 +565,6 @@ namespace PropertyGridSample
             }
 
             return new ImageLists(smallImageList, largeImageList);
-        }
-
-        public class ImageLists
-        {
-            public ImageLists(ImageList small, ImageList large)
-            {
-                Small = small;
-                Large = large;
-            }
-
-            public ImageList Small { get; }
-
-            public ImageList Large { get; }
         }
     }
 }
