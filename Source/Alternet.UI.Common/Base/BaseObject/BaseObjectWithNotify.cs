@@ -131,7 +131,6 @@ namespace Alternet.UI
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="changedAction">This action is called when property changes</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual bool SetProperty<T>(
             ref T? storage,
             T? value,
@@ -149,10 +148,27 @@ namespace Alternet.UI
         /// <summary>
         /// Sets field value and raises property changed events and methods.
         /// </summary>
+        /// <typeparam name="T">Type of the field value.</typeparam>
+        /// <param name="storage">Field where property is stored.</param>
+        /// <param name="value">New property value.</param>
+        /// <param name="changedAction">This action is called when property changes</param>
+        /// <returns>True if the property value was changed; otherwise, false.</returns>
+        protected virtual bool SetProperty<T>(ref T? storage, T? value, Action? changedAction = null)
+        {
+            if (Immutable || Equals(storage, value))
+                return false;
+            storage = value;
+            RaisePropertyChanged();
+            changedAction?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Sets field value and raises property changed events and methods.
+        /// </summary>
         /// <param name="storage">Field where property is stored.</param>
         /// <param name="value">New property value.</param>
         /// <returns>True if the property value was changed; otherwise, false.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual bool SetProperty<T>(ref T? storage, T? value)
         {
             if (Immutable || Equals(storage, value))
@@ -160,37 +176,6 @@ namespace Alternet.UI
             storage = value;
             RaisePropertyChanged();
             return true;
-        }
-
-        /// <summary>
-        /// Gets new field value and raises property changed events and methods.
-        /// </summary>
-        /// <param name="storage">Field value.</param>
-        /// <param name="value">New property value.</param>
-        /// <returns>New field value.</returns>
-        protected virtual T GetNewFieldValue<T>(T storage, T value)
-        {
-            if (Immutable || Equals(storage, value))
-                return storage;
-            RaisePropertyChanged();
-            return value;
-        }
-
-        /// <summary>
-        /// Gets new field value and raises property changed events and methods.
-        /// </summary>
-        /// <typeparam name="T">Type of the field value.</typeparam>
-        /// <param name="storage">Field value.</param>
-        /// <param name="value">New property value.</param>
-        /// <param name="changedAction">This action is called when property changes</param>
-        /// <returns>New field value.</returns>
-        protected virtual T GetNewFieldValue<T>(T storage, T value, Action changedAction)
-        {
-            if (Immutable || Equals(storage, value))
-                return storage;
-            RaisePropertyChanged();
-            changedAction();
-            return value;
         }
     }
 }

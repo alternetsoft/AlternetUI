@@ -52,7 +52,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.HorizontalAlignment = GetNewFieldValue(record.HorizontalAlignment, value);
+                SetProperty(ref record.HorizontalAlignment, value);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.VerticalAlignment = GetNewFieldValue(record.VerticalAlignment, value);
+                SetProperty(ref record.VerticalAlignment, value);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.Trimming = GetNewFieldValue(record.Trimming, value);
+                SetProperty(ref record.Trimming, value);
             }
         }
 
@@ -109,7 +109,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.Distance = GetNewFieldValue(record.Distance, value);
+                SetProperty(ref record.Distance, value);
             }
         }
 
@@ -157,7 +157,7 @@ namespace Alternet.Drawing
         public virtual Color? TextBackColor
         {
             get => record.TextBackColor;
-            set => record.TextBackColor = GetNewFieldValue(record.TextBackColor, value);
+            set => SetProperty(ref record.TextBackColor, value);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.Padding = GetNewFieldValue(record.Padding, value);
+                SetProperty(ref record.Padding, value);
             }
         }
 
@@ -188,7 +188,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.SuggestedWidth = GetNewFieldValue(record.SuggestedWidth, value);
+                SetProperty(ref record.SuggestedWidth, value);
             }
         }
 
@@ -204,7 +204,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.SuggestedHeight = GetNewFieldValue(record.SuggestedHeight, value);
+                SetProperty(ref record.SuggestedHeight, value);
             }
         }
 
@@ -220,7 +220,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.MaxWidth = GetNewFieldValue(record.MaxWidth, value);
+                SetProperty(ref record.MaxWidth, value);
             }
         }
 
@@ -236,7 +236,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.MaxHeight = GetNewFieldValue(record.MaxHeight, value);
+                SetProperty(ref record.MaxHeight, value);
             }
         }
 
@@ -258,7 +258,7 @@ namespace Alternet.Drawing
 
             set
             {
-                record.Wrapping = GetNewFieldValue(record.Wrapping, value);
+                SetProperty(ref record.Wrapping, value);
             }
         }
 

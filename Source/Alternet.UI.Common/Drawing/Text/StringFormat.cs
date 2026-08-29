@@ -71,7 +71,7 @@ public partial class StringFormat : DisposableObject, ICloneable
         get => data.FormatFlags;
         set
         {
-            data.FormatFlags = GetNewFieldValue(data.FormatFlags, value);
+            SetProperty(ref data.FormatFlags, value);
         }
     }
 
@@ -98,7 +98,7 @@ public partial class StringFormat : DisposableObject, ICloneable
         {
             if (value < StringAlignment.Near || value > StringAlignment.Far)
                 value = 0;
-            data.Alignment = GetNewFieldValue(data.Alignment, value);
+            SetProperty(ref data.Alignment, value);
         }
     }
 
@@ -115,7 +115,7 @@ public partial class StringFormat : DisposableObject, ICloneable
         {
             if (value < StringAlignment.Near || value > StringAlignment.Far)
                 value = 0;
-            data.LineAlignment = GetNewFieldValue(data.LineAlignment, value);
+            SetProperty(ref data.LineAlignment, value);
         }
     }
 
@@ -133,7 +133,7 @@ public partial class StringFormat : DisposableObject, ICloneable
             if (value < HotkeyPrefix.None || value > HotkeyPrefix.Hide)
                 value = 0;
 
-            data.HotkeyPrefix = GetNewFieldValue(data.HotkeyPrefix, value);
+            SetProperty(ref data.HotkeyPrefix, value);
         }
     }
 
@@ -182,7 +182,7 @@ public partial class StringFormat : DisposableObject, ICloneable
         {
             if (value < StringTrimming.None || value > StringTrimming.EllipsisPath)
                 value = StringTrimming.None;
-            data.Trimming = GetNewFieldValue(data.Trimming, value);
+            SetProperty(ref data.Trimming, value);
         }
     }
 
