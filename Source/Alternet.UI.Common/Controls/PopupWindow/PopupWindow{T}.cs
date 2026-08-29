@@ -48,6 +48,7 @@ namespace Alternet.UI
 
         private ModalResult popupResult;
         private T? mainControl;
+        private ToolBar? leftBottomToolBar;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupWindow{T}"/> class with specified parameters.
@@ -99,6 +100,8 @@ namespace Alternet.UI
 
             buttonOk.UseTheme = DefaultOkCancelTheme;
             buttonCancel.UseTheme = DefaultOkCancelTheme;
+
+            bottomToolBarPanel.Layout = LayoutStyle.Horizontal;
 
             bottomToolBar.ItemSize = Math.Max(bottomToolBar.ItemSize, MinElementSize);
             bottomToolBar.SuspendLayout();
@@ -223,6 +226,11 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets bottom toolbar panel which contains toolbar with 'Ok', 'Cancel' and other buttons.
+        /// </summary>
+        public AbstractControl BottomToolBarPanel => bottomToolBarPanel;
+
+        /// <summary>
         /// Gets or sets a boolean value indicating whether title bar is visible.
         /// </summary>
         public new virtual bool HasTitleBar
@@ -264,6 +272,46 @@ namespace Alternet.UI
                 if (ShowOkButton == value)
                     return;
                 SetButtonVisible(ButtonIdOk, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether left bottom toolbar is available.
+        /// </summary>
+        [Browsable(false)]
+        public bool HasLeftBottomToolBar
+        {
+            get
+            {
+                return leftBottomToolBar != null;
+            }
+        }
+
+        /// <summary>
+        /// Gets left bottom toolbar which is located at the bottom of the popup window and is aligned to the left.
+        /// ToolBar is created on demand when this property is accessed for the first time.
+        /// </summary>
+        [Browsable(false)]
+        public virtual ToolBar LeftBottomToolBar
+        {
+            get
+            {
+                if (leftBottomToolBar == null)
+                {
+                    leftBottomToolBar = new ToolBar();
+                    leftBottomToolBar.VerticalAlignment = VerticalAlignment.Stretch;
+                    leftBottomToolBar.HorizontalAlignment = HorizontalAlignment.Left;
+                    leftBottomToolBar.ItemSize = BottomToolBar.ItemSize;
+
+                    var padding = BottomToolBar.Padding;
+                    padding.Left = 0;
+
+                    leftBottomToolBar.Padding = padding;
+                    leftBottomToolBar.MinHeight = BottomToolBar.ItemSize + BottomToolBar.Padding.Vertical;
+                    leftBottomToolBar.Parent = BottomToolBarPanel;
+                }
+
+                return leftBottomToolBar;
             }
         }
 
