@@ -14,7 +14,15 @@ namespace Alternet.UI
     /// </summary>
     public partial class PopupCalendar : PopupWindow<Calendar>
     {
+        /// <summary>
+        /// Gets or sets a value indicating whether the "Today" button is visible by default.
+        /// </summary>
+        public static bool DefaultIsTodayButtonVisible = true;
+
         private static PopupCalendar? defaultCalendar;
+        
+        private readonly SpeedButton todayButton;
+        private readonly ToolBar calendarToolBar = new ();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PopupCalendar"/> class.
@@ -24,6 +32,14 @@ namespace Alternet.UI
             Title = CommonStrings.Default.WindowTitleSelectDate;
             HideOnClick = false;
             HideOnDoubleClick = false;
+
+            todayButton = LeftBottomToolBar.AddSpeedBtnCore(
+                CommonStrings.Default.Today,
+                KnownSvgImages.ImgCalendarCheck,
+                CommonStrings.Default.Today,
+                OnTodayButtonClick);
+            todayButton.UseTheme = ButtonOk.UseTheme;
+            todayButton.Visible = DefaultIsTodayButtonVisible;
         }
 
         /// <summary>
@@ -45,6 +61,17 @@ namespace Alternet.UI
             {
                 defaultCalendar = value;
             }
+        }
+
+        /// <summary>
+        /// Gets the "Today" button of the <see cref="PopupCalendar"/> control.
+        /// </summary>
+        public SpeedButton TodayButton => todayButton;
+
+        /// <inheritdoc/>
+        protected virtual void OnTodayButtonClick(object? sender, EventArgs e)
+        {
+            MainControl.Value = DateTime.Now;
         }
 
         /// <inheritdoc/>
