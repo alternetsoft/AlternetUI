@@ -665,7 +665,9 @@ namespace Alternet.Drawing
             }
             else
             {
-                if (prm.ImageParams.NextImage is null)
+                var additionalImages = prm.AdditionalImages;
+
+                if (additionalImages is null || additionalImages.Count == 0)
                 {
                     var imageElement = DrawElementParams.CreateImageElement(ref prm, ref prm.ImageParams);
 
@@ -682,7 +684,7 @@ namespace Alternet.Drawing
                 }
                 else
                 {
-                    List<DrawElementParams> elements = new();
+                    List<DrawElementParams> elements = new(additionalImages.Count + 1);
                     var textElement = DrawElementParams.CreateTextElement(ref prm);
 
                     if (prm.IsImageAfterText)
@@ -690,16 +692,17 @@ namespace Alternet.Drawing
                         elements.Add(textElement);
                     }
 
-                    DrawLabelImageParamsRef? imageParams = new(prm.ImageParams);
+                    var imageElement = DrawElementParams.CreateImageElement(ref prm, ref prm.ImageParams);
+                    elements.Add(imageElement);
 
-                    while (true)
+                    if (additionalImages is not null)
                     {
-                        var imageElement = DrawElementParams.CreateImageElement(ref prm, ref imageParams.Value);
-                        elements.Add(imageElement);
-                        imageParams = imageParams.Value.NextImage;
-
-                        if (imageParams is null)
-                            break;
+                        for (int i = 0; i < additionalImages.Count; i++)
+                        {
+                            var p = additionalImages[i];
+                            imageElement = DrawElementParams.CreateImageElement(ref prm, ref p);
+                            elements.Add(imageElement);
+                        }
                     }
 
                     if (!prm.IsImageAfterText)
@@ -1534,11 +1537,6 @@ namespace Alternet.Drawing
             public Image? Image;
 
             /// <summary>
-            /// Gets or sets the next image parameters for the draw label method.
-            /// </summary>
-            public DrawLabelImageParamsRef? NextImage;
-
-            /// <summary>
             /// Determines the image alignment based on the current orientation.
             /// </summary>
             /// <returns>A tuple containing the horizontal and vertical alignment.</returns>
@@ -1556,33 +1554,6 @@ namespace Alternet.Drawing
                         ImageHorizontalAlignment ?? HorizontalAlignment.Left,
                         ImageVerticalAlignment ?? VerticalAlignment.Center);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Contains a reference to <see cref="DrawLabelImageParams"/> for the draw label method.
-        /// </summary>
-        public class DrawLabelImageParamsRef
-        {
-            /// <summary>
-            /// Gets or sets the value of the image parameters for the draw label method.
-            /// </summary>
-            public DrawLabelImageParams Value;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="DrawLabelImageParamsRef"/> class.
-            /// </summary>
-            public DrawLabelImageParamsRef()
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="DrawLabelImageParamsRef"/> class with the specified image parameters.
-            /// </summary>
-            /// <param name="value">The image parameters to initialize the instance with.</param>
-            public DrawLabelImageParamsRef(DrawLabelImageParams value)
-            {
-                Value = value;
             }
         }
 
@@ -1650,6 +1621,11 @@ namespace Alternet.Drawing
                 readonly get => ImageParams.Image;
                 set => ImageParams.Image = value;
             }
+
+            /// <summary>
+            /// Gets or sets a list of additional images to be drawn alongside the main image.
+            /// </summary>
+            public List<DrawLabelImageParams>? AdditionalImages;
 
             /// <summary>
             /// Represents the minimum text width as a coordinate value.
@@ -1832,6 +1808,17 @@ namespace Alternet.Drawing
             }
 
             /// <summary>
+            /// Adds an additional image to the drawing parameters.
+            /// This method is intended for use in scenarios where multiple images need to be associated
+            /// with a single label or text element.
+            /// </summary>
+            /// <param name="image">The image to add as an additional image.</param>
+            /// <param name="imageInfo">The image information associated with the additional image.</param>
+            public void AddAdditionalImage(Image image, ListControlItem.ItemImageInfo imageInfo)
+            {
+            }
+
+            /// <summary>
             /// Sets value of the <see cref="MinTextWidth"/> property.
             /// </summary>
             /// <param name="value">The minimum text width.</param>
@@ -1847,25 +1834,29 @@ namespace Alternet.Drawing
             /// Specify <see langword="null"/> or an empty array to remove all existing images.</param>
             public void SetImages(Image[]? value)
             {
+                AdditionalImages?.Clear();
+
                 if (value is null || value.Length == 0)
                 {
                     ImageParams.Image = null;
-                    ImageParams.NextImage = null;
                     return;
                 }
 
                 ImageParams.Image = value[0];
 
-                for (int i = value.Length - 1; i >= 1; i--)
+                if (value.Length == 1)
+                    return;
+
+                AdditionalImages ??= new();
+
+                for (int i = 1; i < value.Length; i++)
                 {
-                    var newRef = new DrawLabelImageParamsRef(new DrawLabelImageParams
+                    var newItem = new DrawLabelImageParams
                     {
                         Image = value[i]
-                    });
+                    };
 
-                    newRef.Value.NextImage = ImageParams.NextImage;
-
-                    ImageParams.NextImage = newRef;
+                    AdditionalImages.Add(newItem);
                 }
             }
 

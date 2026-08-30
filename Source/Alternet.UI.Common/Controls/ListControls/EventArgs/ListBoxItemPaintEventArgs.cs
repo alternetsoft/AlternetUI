@@ -283,11 +283,12 @@ namespace Alternet.UI
         /// <param name="isSelected">true to retrieve the image for the selected state;
         /// false to retrieve the image for the normal or disabled
         /// state.</param>
+        /// <param name="imageToUse">Specifies which image to use.</param>
         /// <returns>An Image representing the item's visual state. Returns null if no image
         /// is defined for the current state.</returns>
-        public virtual Image? GetImage(bool isSelected)
+        public virtual Image? GetImage(bool isSelected, int imageToUse = 0)
         {
-            return GetImage(Item, ListBox, isSelected);
+            return GetImage(Item, ListBox, isSelected, imageToUse);
         }
 
         /// <summary>

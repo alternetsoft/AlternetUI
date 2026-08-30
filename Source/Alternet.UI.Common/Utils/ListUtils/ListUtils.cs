@@ -138,7 +138,8 @@ namespace Alternet.UI
         /// <typeparam name="T">The type of elements in the list.</typeparam>
         /// <param name="list">The list to trim. Elements will be removed from the end if the list contains more than <paramref
         /// name="maxCount"/> items.</param>
-        /// <param name="maxCount">The maximum number of elements the list should contain after trimming. If less than zero, the list will be
+        /// <param name="maxCount">The maximum number of elements the list should contain after trimming.
+        /// If less than zero, the list will be
         /// cleared.</param>
         public static void TrimCount<T>(IList<T> list, int maxCount)
         {

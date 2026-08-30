@@ -75,7 +75,7 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="state">Item state.</param>
         /// <param name="isDark">Light/dark theme flag.</param>
-        /// <returns></returns>
+        /// <returns><c>true</c> if an image exists for the specified state and theme; otherwise, <c>false</c>.</returns>
         public readonly bool HasImage(VisualControlState state, bool? isDark = null)
         {
             return GetImage(state, isDark) != null;
@@ -138,6 +138,24 @@ namespace Alternet.Drawing
                     svgImage?.AsNormal(RealSvgHeight(control), isDark),
                     isDark);
             }
+        }
+
+        /// <summary>
+        /// Sets svg size and resets cached images.
+        /// </summary>
+        /// <param name="size">The size of the <see cref="SvgImage"/> to set.</param>
+        public void SetSvgSize(SizeI? size)
+        {
+            SvgSize = size;
+        }
+
+        /// <summary>
+        /// Sets svg image and resets cached images.
+        /// </summary>
+        /// <param name="svgImage">The <see cref="SvgImage"/> to set.</param>
+        public void SetSvgImage(SvgImage? svgImage)
+        {
+            SvgImage = svgImage;
         }
 
         /// <summary>
