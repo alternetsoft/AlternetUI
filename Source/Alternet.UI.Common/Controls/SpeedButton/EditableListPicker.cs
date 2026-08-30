@@ -275,7 +275,13 @@ namespace Alternet.UI
                 },
             };
 
-            prm.SetTargetControl(this, () => Label.Bounds);
+            prm.SetTargetControl(this, () =>
+            {
+                var result = Label.Bounds;
+                result.Left -= 2;
+                result.Width += 4;
+                return result;
+            });
 
             return prm;
         }

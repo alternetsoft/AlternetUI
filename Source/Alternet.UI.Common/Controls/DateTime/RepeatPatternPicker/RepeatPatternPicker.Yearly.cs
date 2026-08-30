@@ -37,6 +37,7 @@ namespace Alternet.UI
                 UpdateSuffixLabelText();
 
                 monthAndDayPicker = new();
+                monthAndDayPicker.MonthPicker.ImageVisible = DefaultShowDropDownImage;
                 monthAndDayPicker.Label.Text = CommonStrings.Default.OnPrefix;
                 monthAndDayPicker.Label.Visible = true;
                 monthAndDayPicker.MonthPicker.Value = Value.Month;
@@ -53,6 +54,7 @@ namespace Alternet.UI
                 };
 
                 relativeWeekdayOfMonthPicker = new();
+                relativeWeekdayOfMonthPicker.ImageVisible = DefaultShowDropDownImage;
                 relativeWeekdayOfMonthPicker.Value = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, Value.Month);
 
                 relativeWeekdayOfMonthPicker.ValueChanged += (s, e) =>

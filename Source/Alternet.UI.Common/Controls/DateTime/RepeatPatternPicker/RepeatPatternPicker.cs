@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial class RepeatPatternPicker : HiddenBorder
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
+        /// </summary>
+        public static bool DefaultShowDropDownImage = false;
+
+        /// <summary>
         /// Gets the default padding for the <see cref="RepeatPatternPicker"/> control.
         /// </summary>
         public static readonly Thickness DefaultPadding = 5;
@@ -52,6 +57,7 @@ namespace Alternet.UI
             startDateLabel.IsBold = true;
             startDateLabel.Parent = this;
 
+            startDatePicker.ImageVisible = DefaultShowDropDownImage;
             startDatePicker.AsDateOnly = data.StartDate;
             startDatePicker.Parent = this;
             startDatePicker.ValueChanged += (s, e) =>
@@ -68,6 +74,7 @@ namespace Alternet.UI
 
             endDatePicker.Label.Text = CommonStrings.Default.OnPrefix;
             endDatePicker.Label.InputTransparent = true;
+            endDatePicker.MainControl.ImageVisible = DefaultShowDropDownImage;
             endDatePicker.MainControl.AsDateOnly = data.EndDate;
             endDatePicker.MainControl.ValueChanged += (s, e) =>
             {

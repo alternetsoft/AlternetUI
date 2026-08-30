@@ -14,6 +14,21 @@ namespace Alternet.UI
     public partial class SpeedColorButton : SpeedButton
     {
         /// <summary>
+        /// Gets or sets the default left padding for the text displayed in the control.
+        /// </summary>
+        public static float DefaultTextLeftPadding = 5;
+
+        /// <summary>
+        /// Gets or sets the default right padding for the text displayed in the control.
+        /// </summary>
+        public static float DefaultTextRightPadding = 5;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
+        /// </summary>
+        public static bool DefaultShowDropDownImage = true;
+
+        /// <summary>
         /// Gets or sets default shape of the color image.
         /// </summary>
         public static DrawingShapeType? DefaultColorImageShape = DrawingShapeType.Circle;
@@ -56,8 +71,9 @@ namespace Alternet.UI
             base.Text = GetColorAsString() ?? string.Empty;
             TextVisible = true;
             OnColorImageChanged(false);
-            ShowComboBoxImageAtRight();
+            ShowComboBoxImageAtRight(DefaultShowDropDownImage);
             ClickTrigger = ClickTriggerKind.MouseDown;
+            Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
         }
 
         /// <summary>

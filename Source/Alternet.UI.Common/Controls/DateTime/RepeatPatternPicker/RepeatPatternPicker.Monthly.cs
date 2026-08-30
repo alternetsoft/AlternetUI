@@ -37,6 +37,7 @@ namespace Alternet.UI
                 UpdateSuffixLabelText();
 
                 relativeWeekdayOfMonthPicker = new();
+                relativeWeekdayOfMonthPicker.ImageVisible = DefaultShowDropDownImage;
                 relativeWeekdayOfMonthPicker.IsMonthVisible = false;
                 relativeWeekdayOfMonthPicker.Value
                     = new RelativeWeekdayOfMonth(Value.DayOfWeekIndex, Value.DayOfWeek, CalendarMonth.January);

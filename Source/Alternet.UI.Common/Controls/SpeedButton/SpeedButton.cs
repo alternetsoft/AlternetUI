@@ -1677,10 +1677,10 @@ namespace Alternet.UI
         /// <summary>
         /// Shows default combo box image at the right side of the control.
         /// </summary>
-        public virtual void ShowComboBoxImageAtRight()
+        public virtual void ShowComboBoxImageAtRight(bool imageVisible = true)
         {
             SetDefaultComboBoxImage();
-            ImageVisible = true;
+            ImageVisible = imageVisible;
             SetContentHorizontalAlignment(
                         pictureAlignment: HorizontalAlignment.Right,
                         labelAlignment: HorizontalAlignment.Fill,

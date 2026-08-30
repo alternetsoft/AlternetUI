@@ -14,10 +14,15 @@ namespace Alternet.UI
     public partial class ListPicker : SpeedButtonWithListPopup
     {
         /// <summary>
-        /// Gets or sets default label padding.
+        /// Gets or sets the default left padding for the text displayed in the control.
         /// </summary>
-        public static Thickness DefaultLabelPadding = (3, 0, 3, 0);
+        public static float DefaultTextLeftPadding = 7;
 
+        /// <summary>
+        /// Gets or sets the default right padding for the text displayed in the control.
+        /// </summary>
+        public static float DefaultTextRightPadding = 7;
+        
         /// <summary>
         /// Gets or sets whether to assign default control colors
         /// in the constructor. Default is <c>true</c>.
@@ -39,7 +44,7 @@ namespace Alternet.UI
         /// </summary>
         public ListPicker()
         {
-            Label.Padding = DefaultLabelPadding;
+            Label.Margin = Label.Margin.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
             UseControlColors(DefaultUseControlColors);
         }
 

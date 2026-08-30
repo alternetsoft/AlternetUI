@@ -17,6 +17,21 @@ namespace Alternet.UI
     public partial class DrawingResourcePicker : SpeedButton
     {
         /// <summary>
+        /// Gets or sets the default value indicating whether to show the drop-down image.
+        /// </summary>
+        public static bool DefaultShowDropDownImage = true;
+
+        /// <summary>
+        /// Gets or sets the default left padding for the text displayed in the control.
+        /// </summary>
+        public static float DefaultTextLeftPadding = 7;
+
+        /// <summary>
+        /// Gets or sets the default right padding for the text displayed in the control.
+        /// </summary>
+        public static float DefaultTextRightPadding = 7;
+
+        /// <summary>
         /// Gets or sets default shape of the item image.
         /// </summary>
         public static DrawingShapeType? DefaultValueImageShape = DrawingShapeType.Circle;
@@ -54,10 +69,11 @@ namespace Alternet.UI
         {
             TextVisible = true;
             OnValueImageChanged(false);
-            ShowComboBoxImageAtRight();
+            ShowComboBoxImageAtRight(DefaultShowDropDownImage);
             ClickTrigger = ClickTriggerKind.MouseDown;
             UseTheme = KnownTheme.StaticBorder;
             UseControlColors(DefaultUseControlColors);
+            Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
         }
 
         /// <summary>

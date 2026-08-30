@@ -56,7 +56,10 @@ namespace Alternet.UI
             dayOfWeekAndMonthSeparatorLabel.Margin = (DefaultLabelAndPickerMargin, 0, DefaultLabelAndPickerMargin, 0);
 
             prefixLabel.Parent = firstPanel;
+
             relativeWeekdayPicker.Parent = firstPanel;
+            relativeWeekdayPicker.MarginRight = DefaultLabelAndPickerMargin;
+
             dayOfWeekPicker.Parent = firstPanel;
             dayOfWeekAndMonthSeparatorLabel.Parent = secondPanel;
             monthPicker.Parent = secondPanel;
@@ -124,6 +127,25 @@ namespace Alternet.UI
             remove
             {
                 monthPicker.ValueChanged -= value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the drop-down image for the combo controls is visible.
+        /// </summary>
+        public virtual bool ImageVisible
+        {
+            get
+            {
+                return relativeWeekdayPicker.ImageVisible &&
+                       dayOfWeekPicker.ImageVisible &&
+                       monthPicker.ImageVisible;
+            }
+            set
+            {
+                relativeWeekdayPicker.ImageVisible = value;
+                dayOfWeekPicker.ImageVisible = value;
+                monthPicker.ImageVisible = value;
             }
         }
 

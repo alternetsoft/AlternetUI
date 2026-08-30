@@ -18,6 +18,11 @@ namespace Alternet.UI
         /// </summary>
         public static float DefaultTextLeftPadding = 7;
 
+        /// <summary>
+        /// Gets or sets the default right padding for the text displayed in the control.
+        /// </summary>
+        public static float DefaultTextRightPadding = 7;
+
         private IFormatProvider? formatProvider;
         private string? format;
         private DateTime max = DateTime.MaxValue;
@@ -30,7 +35,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedDateButton()
         {
-            Label.PaddingLeft = DefaultTextLeftPadding;
+            Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectDate;
             Value = DateTime.Now;
         }

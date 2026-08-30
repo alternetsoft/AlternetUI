@@ -18,6 +18,11 @@ namespace Alternet.UI
         where TPopup : PopupWindow<TControl>, new()
     {
         /// <summary>
+        /// Gets or sets the default value indicating whether to show the drop-down image.
+        /// </summary>
+        public static bool DefaultShowDropDownImage = true;
+
+        /// <summary>
         /// Gets or sets the default color for the error border.
         /// </summary>
         public static LightDarkColor? DefaultErrorBorderColor = null;
@@ -47,7 +52,7 @@ namespace Alternet.UI
         public SpeedButtonWithPopup()
         {
             TextVisible = true;
-            ShowComboBoxImageAtRight();
+            ShowComboBoxImageAtRight(DefaultShowDropDownImage);
             ShowDropDownMenuWhenClicked = false;
             ClickTrigger = ClickTriggerKind.MouseDown;
         }

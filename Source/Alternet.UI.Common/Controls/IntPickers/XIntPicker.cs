@@ -63,12 +63,12 @@ namespace Alternet.UI
         public XIntPicker()
         {
             textPicker.Margin = DefaultTextPickerMargin;
+            textPicker.Label.Margin = textPicker.Label.Margin.WithLeftRight(0, 0);
             HasBorder = true;
             UseControlColors(true);
 
             textPicker.UseTheme = SpeedButton.KnownTheme.None;
             textPicker.IsEditable = true;
-            textPicker.MinWidth = 100;
             textPicker.ValueChanged += OnTextPickerValueChanged;
             textPicker.HorizontalAlignment = HorizontalAlignment.Fill;
             AddControl(textPicker);

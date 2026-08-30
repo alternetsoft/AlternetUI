@@ -15,6 +15,11 @@ namespace Alternet.UI
     public partial class SpeedEnumButton : SpeedButtonWithListPopup
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the drop-down image for the combo controls is shown by default.
+        /// </summary>
+        public static new bool DefaultShowDropDownImage = true;
+
+        /// <summary>
         /// Gets or sets the default kind of popup window used by the control.
         /// </summary>
         public static new PickerPopupKind DefaultPopupKind = PickerPopupKind.ListBox;
@@ -38,6 +43,7 @@ namespace Alternet.UI
         /// </summary>
         public SpeedEnumButton()
         {
+            ImageVisible = DefaultShowDropDownImage;
             PopupWindowTitle = CommonStrings.Default.WindowTitleSelectValue;
             PopupKind = DefaultPopupKind;
         }
