@@ -43,9 +43,7 @@ namespace ControlsSample
                 beginSelectedLabelEditingButton);
             buttons.MinWidthToMaxPreferred();
 
-            var imageLists = DemoResourceLoader.LoadImageLists();
-            listView.SmallImageList = imageLists.Small;
-            listView.LargeImageList = imageLists.Large;
+            var imageLists = DemoResourceLoader.LoadImageLists(generic: false);
 
             viewComboBox.EnumType = typeof(ListViewView);
             viewComboBox.Value = ListViewView.Details;
@@ -60,6 +58,9 @@ namespace ControlsSample
 
             columnWidthModeComboBox.EnumType = typeof(ListViewColumnWidthMode);
             columnWidthModeComboBox.Value = listView.Columns[0].WidthMode;
+
+            listView.SmallImageList = imageLists.Small;
+            listView.LargeImageList = imageLists.Large;
         }
 
         private void EditItemsButton_Click(object? sender, System.EventArgs e)

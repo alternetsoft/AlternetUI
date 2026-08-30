@@ -32,7 +32,7 @@ namespace ControlsSample
                 treeView.MouseLeftButtonDown += TreeView_MouseLeftButtonDown;
                 treeView.MouseMove += TreeView_MouseMove;
 
-                var imageLists = DemoResourceLoader.LoadImageLists();
+                var imageLists = DemoResourceLoader.LoadImageLists(generic: false);
 
                 if (App.SafeWindow.UseSmallImages)
                 {

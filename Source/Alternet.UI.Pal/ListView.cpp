@@ -596,8 +596,9 @@ namespace Alternet::UI
 
     void ListView::ApplySmallImageList(wxListView2* value)
     {
-        value->SetImageList(_smallImageList == nullptr ? nullptr :
-            _smallImageList->GetImageList(), wxIMAGE_LIST_SMALL);
+        auto img = _smallImageList == nullptr ? nullptr :
+            _smallImageList->GetImageList();
+        value->SetImageList(img, wxIMAGE_LIST_SMALL);
     }
 
     void ListView::OnSizeChanged(wxSizeEvent& event)

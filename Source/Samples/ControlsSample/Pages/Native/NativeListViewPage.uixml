@@ -42,9 +42,9 @@
 
           <HorizontalStackPanel>
             <XButton Name="editItemsButton" Text="Items..." Margin="0,3,0,0"
-                    Click="EditItemsButton_Click" IsTextLocalized="true"/>
+                    Click="EditItemsButton_Click" IsTextLocalized="true" IsEnabled="false"/>
             <XButton Name="editColumnsButton" Text="Columns..." Margin="3,3,0,0"
-                    Click="EditColumnsButton_Click" IsTextLocalized="true"/>
+                    Click="EditColumnsButton_Click" IsTextLocalized="true" IsEnabled="false"/>
           </HorizontalStackPanel>
 
           <HorizontalStackPanel>

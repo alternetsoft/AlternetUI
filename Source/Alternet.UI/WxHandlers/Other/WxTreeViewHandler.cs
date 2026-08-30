@@ -460,7 +460,9 @@ namespace Alternet.UI
 
         private void ApplyImageList()
         {
-            NativeControl.ImageList = (UI.Native.ImageList?)Control?.ImageList?.Handler;
+            object? hndl = Control?.ImageList?.Handler;
+            var native = hndl as UI.Native.ImageList;
+            NativeControl.ImageList = native;
         }
 
         internal void ApplyItems()
@@ -526,7 +528,7 @@ namespace Alternet.UI
                                 insertAfter,
                                 span,
                                 item.ImageIndex ?? Control.ImageIndex ?? -1,
-                                isRootChild ? false : item.Parent?.IsExpanded ?? false);
+                                !isRootChild && (item.Parent?.IsExpanded ?? false));
             });
 
             NativeControl.itemsByHandles.Add(handle, item);

@@ -27,7 +27,7 @@ namespace ControlsSample
                     focusLastItemButton,
                     modifyLastItemButton).MinWidth(150);
 
-                var imageLists = DemoResourceLoader.LoadImageLists();
+                var imageLists = DemoResourceLoader.LoadImageLists(generic: true);
 
                 if (App.SafeWindow.UseSmallImages)
                 {

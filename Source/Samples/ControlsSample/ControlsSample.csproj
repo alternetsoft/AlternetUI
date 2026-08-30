@@ -16,6 +16,8 @@
 
     <ItemGroup>
       <None Remove="ControlsSample.Dark.bat" />
+      <None Remove="*.bat" />
+      <None Remove="*.sh" />
     </ItemGroup>                 
 
   <ItemGroup>

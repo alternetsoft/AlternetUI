@@ -336,12 +336,16 @@ namespace Alternet.UI
 
         private void ApplySmallImageList()
         {
-            NativeControl.SmallImageList = (UI.Native.ImageList?)Control?.SmallImageList?.Handler;
+            object? hndl = Control?.SmallImageList?.Handler;
+            var native = hndl as UI.Native.ImageList;
+            NativeControl.SmallImageList = native;
         }
 
         private void ApplyLargeImageList()
         {
-            NativeControl.LargeImageList = (UI.Native.ImageList?)Control?.LargeImageList?.Handler;
+            object? hndl = Control?.LargeImageList?.Handler;
+            var native = hndl as UI.Native.ImageList;
+            NativeControl.LargeImageList = native;
         }
 
         internal void ApplyItems()

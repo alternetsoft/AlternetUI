@@ -18,7 +18,7 @@ namespace Alternet.Drawing
     /// You can add images to the <see cref="ImageList"/>, and the controls are
     /// able to use the images as they require.
     /// </remarks>
-    public class ImageList : AttachedImageContainer<IImageListHandler>
+    public partial class ImageList : AttachedImageContainer<IImageListHandler>
     {
         /// <summary>
         /// Gets an empty <see cref="ImageList"/>.

@@ -16,7 +16,8 @@ namespace PropertyGridSample
     public partial class ObjectInit
     {
         private static ImageLists? imageLists;
-        
+        private static ImageLists? genericImageLists;
+
         static ObjectInit()
         {
         }
@@ -142,11 +143,18 @@ namespace PropertyGridSample
             control.Text = "XRadioButton";
         }
 
-        public static ImageLists LoadImageLists()
+        public static ImageLists LoadImageLists(bool generic = false)
         {
-            imageLists ??= LoadImageListsCore();
-
-            return imageLists;
+            if (generic)
+            {
+                genericImageLists ??= LoadImageListsCore(generic);
+                return genericImageLists;
+            }
+            else
+            {
+                imageLists ??= LoadImageListsCore(generic);
+                return imageLists;
+            }
         }
 
         public static readonly Dictionary<Type, Action<Object>> Actions = new();
@@ -528,9 +536,9 @@ namespace PropertyGridSample
         public static void InitVirtualTreeControl(XTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
-                control.ImageList = LoadImageLists().Small;
+                control.ImageList = LoadImageLists(generic: true).Small;
             else
-                control.ImageList = LoadImageLists().Large;
+                control.ImageList = LoadImageLists(generic: true).Large;
 
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
             DemoUtils.AddItems(control, 10);
@@ -539,18 +547,32 @@ namespace PropertyGridSample
         public static void InitTreeView(XTreeView control)
         {
             if (App.SafeWindow.UseSmallImages)
-                control.ImageList = LoadImageLists().Small;
+                control.ImageList = LoadImageLists(generic: true).Small;
             else
-                control.ImageList = LoadImageLists().Large;
+                control.ImageList = LoadImageLists(generic: true).Large;
 
             control.HorizontalAlignment = HorizontalAlignment.Stretch;
             DemoUtils.AddItems(control, 10);
         }
 
-        private static ImageLists LoadImageListsCore()
+        private static ImageLists LoadImageListsCore(bool generic = false)
         {
-            var smallImageList = new ImageList();
-            var largeImageList = new ImageList() { ImageSize = new(32, 32) };
+            ImageList CreateImageList()
+            {
+                if(generic)
+                {
+                    return new GenericImageList();
+                }
+                else
+                {
+                    return new ImageList();
+                }
+            }
+
+            var smallImageList = CreateImageList();
+            var largeImageList = CreateImageList();
+
+            largeImageList.ImageSize = new(32, 32);
 
             var assembly = Assembly.GetExecutingAssembly();
             var allResourceNames = assembly.GetManifestResourceNames();
