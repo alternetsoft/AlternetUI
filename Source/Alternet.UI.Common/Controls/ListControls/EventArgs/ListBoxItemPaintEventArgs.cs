@@ -31,6 +31,19 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets an image that overrides the default image for the item being painted.
+        /// If this property is set to a non-null value, the specified image will be used instead
+        /// of the item's default image during the painting process. This allows for dynamic customization
+        /// of item appearance without modifying the underlying data model.
+        /// </summary>
+        public Image? ImageOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether checkboxes should be hidden for the item being painted.
+        /// </summary>
+        public bool HideCheckboxes { get; set; }
+
+        /// <summary>
         /// Gets index of the item.
         /// </summary>
         public virtual int ItemIndex
