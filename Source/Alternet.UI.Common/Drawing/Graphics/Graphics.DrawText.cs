@@ -1814,8 +1814,17 @@ namespace Alternet.Drawing
             /// </summary>
             /// <param name="image">The image to add as an additional image.</param>
             /// <param name="imageInfo">The image information associated with the additional image.</param>
-            public void AddAdditionalImage(Image image, ListControlItem.ItemImageInfo imageInfo)
+            public void AddAdditionalImage(Image image, ListControlItem.ItemImageInfoRef imageInfo)
             {
+                DrawLabelImageParams prm = new ();
+                prm.Image = image;
+                prm.IsImageAfterText = imageInfo.IsAfterText;
+                prm.ImageMargin = imageInfo.Margin;
+                prm.ImageHorizontalAlignment = imageInfo.HorizontalAlignment;
+                prm.ImageVerticalAlignment = imageInfo.VerticalAlignment;
+
+                AdditionalImages ??= new();
+                AdditionalImages.Add(prm);
             }
 
             /// <summary>

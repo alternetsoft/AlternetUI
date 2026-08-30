@@ -72,7 +72,7 @@ namespace Alternet.UI
         public static bool DrawDebugCornersOnElements = false;
 
         private ItemImageInfo imageInfo = new();
-        private BaseCollection<ItemImageInfo>? additionalImages;
+        private BaseCollection<ItemImageInfoRef>? additionalImages;
         private string? text;
         private string? displayText;
         private HVAlignment alignment = DefaultItemAlignment;
@@ -100,7 +100,6 @@ namespace Alternet.UI
         private Color? backgroundColor;
         private BorderSettings? border;
         private Thickness foregroundMargin;
-        private Thickness imageMargin;
         private DrawLabelFlags labelFlags;
         private object? value;
         private Action? action;
@@ -417,7 +416,7 @@ namespace Alternet.UI
         /// Gets or sets a reference to the additional image instances, allowing to specify multiple images for the item.
         /// </summary>
         [Browsable(false)]
-        public virtual BaseCollection<ItemImageInfo> AdditionalImages
+        public virtual BaseCollection<ItemImageInfoRef> AdditionalImages
         {
             get
             {
@@ -957,8 +956,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual Thickness ImageMargin
         {
-            get => imageMargin;
-            set => imageMargin = value;
+            get => imageInfo.Margin;
+            set => imageInfo.Margin = value;
         }
 
         /// <summary>
@@ -1102,10 +1101,11 @@ namespace Alternet.UI
             if (item is null)
                 return result;
 
-            var hasValidImageIndex = item.HasValidImageIndex;
             var imageIndex = item.ImageIndex;
-            var svgImage = item.SvgImage;
-            var svgImageSize = item.SvgImageSize;
+            var hasValidImageIndex = imageIndex is not null && imageIndex >= 0;
+
+            var svgImage = item.GetSvgImage(imageToUse);
+            var svgImageSize = item.GetSvgImageSize(imageToUse);
 
             if (hasValidImageIndex && container is not null)
             {
@@ -1182,12 +1182,12 @@ namespace Alternet.UI
 
             void SetResult(bool isDark)
             {
-                image ??= item.GetImage(VisualControlState.Normal, isDark);
+                image ??= item.GetImage(VisualControlState.Normal, isDark, imageToUse);
 
                 if (!onlyNormal)
                 {
-                    disabledImage ??= item.GetImage(VisualControlState.Disabled, isDark);
-                    selectedImage ??= item.GetImage(VisualControlState.Selected, isDark);
+                    disabledImage ??= item.GetImage(VisualControlState.Disabled, isDark, imageToUse);
+                    selectedImage ??= item.GetImage(VisualControlState.Selected, isDark, imageToUse);
                 }
             }
 
@@ -2155,7 +2155,7 @@ namespace Alternet.UI
                             for (int i = 0; i < item.AdditionalImages.Count; i++)
                             {
                                 var additionalImage = e.GetImage(isSelected, i + 1);
-                                if(additionalImage is not null)
+                                if (additionalImage is not null)
                                     prm.AddAdditionalImage(additionalImage, item.AdditionalImages[i]);
                             }
                         }
@@ -2619,7 +2619,7 @@ namespace Alternet.UI
                 if (imageToUse > additionalImages.Count)
                     return null;
 
-                return AdditionalImages[imageToUse - 1].CachedSvg.GetImage(state, isDark);
+                return AdditionalImages[imageToUse - 1].GetImage(state, isDark);
             }
         }
 
@@ -2640,7 +2640,7 @@ namespace Alternet.UI
                 if (imageToUse > additionalImages.Count)
                     return null;
 
-                return AdditionalImages[imageToUse - 1].CachedSvg.SvgImage;
+                return AdditionalImages[imageToUse - 1].SvgImage;
             }
         }
 
@@ -2661,7 +2661,7 @@ namespace Alternet.UI
                 if (imageToUse > additionalImages.Count)
                     return null;
 
-                return AdditionalImages[imageToUse - 1].CachedSvg.SvgSize;
+                return AdditionalImages[imageToUse - 1].SvgSize;
             }
         }
 
@@ -2676,8 +2676,8 @@ namespace Alternet.UI
                 imageInfo.CachedSvg.SvgImage = svgImage;
             else
             {
-                AdditionalImages.EnsureCountAtLeast(imageToUse, () => new ItemImageInfo());
-                AdditionalImages[imageToUse - 1].CachedSvg.SetSvgImage(svgImage);
+                AdditionalImages.EnsureCountAtLeast(imageToUse, () => new ItemImageInfoRef());
+                AdditionalImages[imageToUse - 1].SvgImage = svgImage;
             }
         }
 
@@ -2692,8 +2692,8 @@ namespace Alternet.UI
                 imageInfo.CachedSvg.SvgSize = svgSize;
             else
             {
-                AdditionalImages.EnsureCountAtLeast(imageToUse, () => new ItemImageInfo());
-                AdditionalImages[imageToUse - 1].CachedSvg.SetSvgSize(svgSize);
+                AdditionalImages.EnsureCountAtLeast(imageToUse, () => new ItemImageInfoRef());
+                AdditionalImages[imageToUse - 1].SvgSize = svgSize;
             }
         }
 
@@ -2723,8 +2723,8 @@ namespace Alternet.UI
                 imageInfo.CachedSvg.SetImage(state, image, isDark);
             else
             {
-                AdditionalImages.EnsureCountAtLeast(imageToUse, () => new ItemImageInfo());
-                AdditionalImages[imageToUse - 1].CachedSvg.SetImage(state, image, isDark);
+                AdditionalImages.EnsureCountAtLeast(imageToUse, () => new ItemImageInfoRef());
+                AdditionalImages[imageToUse - 1].SetImage(state, image, isDark);
             }
         }
 
@@ -3216,6 +3216,152 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Represents a container for <see cref="ItemImageInfo"/> instance.
+        /// </summary>
+        public class ItemImageInfoRef
+        {
+            private ItemImageInfo image = new();
+
+            /// <summary>
+            /// Gets or sets the index of the image.
+            /// </summary>
+            public virtual int? ImageIndex
+            {
+                get
+                {
+                    return image.ImageIndex;
+                }
+
+                set
+                {
+                    image.ImageIndex = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the image is displayed after the text.
+            /// </summary>  
+            public virtual bool IsAfterText
+            {
+                get
+                {
+                    return image.IsAfterText;
+                }
+                set
+                {
+                    image.IsAfterText = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating the vertical alignment of the image.
+            /// </summary>
+            public virtual VerticalAlignment? VerticalAlignment
+            {
+                get
+                {
+                    return image.VerticalAlignment;
+                }
+
+                set
+                {
+                    image.VerticalAlignment = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating the horizontal alignment of the image.
+            /// </summary>
+            public virtual HorizontalAlignment? HorizontalAlignment
+            {
+                get
+                {
+                    return image.HorizontalAlignment;
+                }
+                set
+                {
+                    image.HorizontalAlignment = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the margin of the image.
+            /// </summary>
+            public virtual Thickness Margin
+            {
+                get
+                {
+                    return image.Margin;
+                }
+
+                set
+                {
+                    image.Margin = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the SVG image associated with the item.
+            /// </summary>
+            public virtual SvgImage? SvgImage
+            {
+                get
+                {
+                    return image.CachedSvg.SvgImage;
+                }
+                set
+                {
+                    image.CachedSvg.SvgImage = value;
+                }
+            }
+
+            /// <summary>
+            /// Gets or sets the size of the SVG image associated with the item.
+            /// </summary>
+            public virtual SizeI? SvgSize
+            {
+                get
+                {
+                    return image.CachedSvg.SvgSize;
+                }
+                set
+                {
+                    image.CachedSvg.SvgSize = value;
+                }
+            }
+
+            /// <summary>
+            /// Sets the image associated with the specified visual control state and optional dark mode setting.
+            /// </summary>
+            /// <param name="state">The visual control state.</param>
+            /// <param name="image">The image to associate with the specified state.</param>
+            /// <param name="isDark">Optional parameter indicating whether dark mode is enabled.</param>
+            public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
+            {
+                this.image.CachedSvg.SetImage(state, image, isDark);
+            }
+
+            /// <summary>
+            /// Resets the cached images, clearing any previously stored image data and forcing svg to image conversion.
+            /// </summary>
+            public virtual void ResetCachedImages()
+            {
+                image.CachedSvg.ResetCachedImages();
+            }
+
+            /// <summary>
+            /// Gets the image associated with the specified visual control state and optional dark mode setting.
+            /// </summary>
+            /// <param name="state">The visual control state.</param>
+            /// <param name="isDark">Optional parameter indicating whether dark mode is enabled.</param>
+            /// <returns>The image associated with the specified state and dark mode setting.</returns> 
+            public virtual Image? GetImage(VisualControlState state, bool? isDark = null)
+            {
+                return image.CachedSvg.GetImage(state, isDark);
+            }
+        }
+
+        /// <summary>
         /// Contains information about the image associated with a list control item.
         /// </summary>
         public struct ItemImageInfo
@@ -3224,6 +3370,11 @@ namespace Alternet.UI
             /// Gets or sets the cached SVG image associated with the item.
             /// </summary>
             public CachedSvgImage<Image> CachedSvg = new();
+            
+            /// <summary>
+            /// Gets or sets the margin of the image.
+            /// </summary>  
+            public Thickness Margin;
 
             /// <summary>
             /// Gets or sets the index of the image.
@@ -3276,18 +3427,6 @@ namespace Alternet.UI
             {
                 CachedSvg.ResetCachedImages();
             }
-        }
-
-        /// <summary>
-        /// Contains a reference to an <see cref="ItemImageInfo"/> instance,
-        /// allowing for shared access and modification of the image information across different parts of the application.
-        /// </summary>
-        public class ItemImageInfoRef
-        {
-            /// <summary>
-            /// Gets or sets the <see cref="ItemImageInfo"/> instance that this reference points to.
-            /// </summary>
-            public ItemImageInfo Value;
         }
 
         /// <summary>

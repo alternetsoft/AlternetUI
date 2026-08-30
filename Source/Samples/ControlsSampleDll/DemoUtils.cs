@@ -80,6 +80,13 @@ Environment.NewLine + Environment.NewLine +
             addAction(CreateGreenBoldItem());
 
             item = new();
+            item.Text = "Three images";
+            item.SetSvgImage(0, KnownColorSvgImages.ImgInformation);
+            item.SetSvgImage(1, KnownColorSvgImages.ImgWarning);
+            item.SetSvgImage(2, KnownColorSvgImages.ImgError);
+            addAction(item);
+
+            item = new();
             item.Text = "H = 60 (bottom, center)";
             item.CheckBoxVisible = false;
             item.MinHeight = 60;
@@ -260,6 +267,13 @@ Environment.NewLine + Environment.NewLine +
             addAction(item);
 
             addAction(CreateGreenBoldItem());
+
+            item = new();
+            item.Text = "Three images";
+            item.SetSvgImage(0, KnownColorSvgImages.ImgInformation);
+            item.SetSvgImage(1, KnownColorSvgImages.ImgWarning);
+            item.SetSvgImage(2, KnownColorSvgImages.ImgError);
+            addAction(item);
 
             item = new();
             item.Text = "H = 60 (bottom, center)";
