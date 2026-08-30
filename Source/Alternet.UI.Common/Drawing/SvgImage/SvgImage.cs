@@ -203,7 +203,7 @@ namespace Alternet.Drawing
         /// Gets svg image as <see cref="Image"/> with default toolbar image size.
         /// This function caches the result, so subsequent calls with the same size will be faster.
         /// </summary>
-        public virtual Image? AsImage()
+        public virtual Image AsImage()
         {
             var result = AsImage(ToolBarUtils.GetDefaultImageSize().Width);
             return result;
@@ -215,9 +215,9 @@ namespace Alternet.Drawing
         /// </summary>
         /// <param name="size">Image size</param>
         /// <returns></returns>
-        public virtual Image? AsImage(int size)
+        public virtual Image AsImage(int size)
         {
-            var result = AsImageSet(size)?.AsImage();
+            var result = AsImageSet(size).AsImage();
             return result;
         }
 
@@ -228,9 +228,9 @@ namespace Alternet.Drawing
         /// <param name="size">Image size in pixels.</param>
         /// <param name="isDark">Whether color theme is dark.</param>
         /// <returns></returns>
-        public virtual Image? AsNormalImage(int size, bool isDark)
+        public virtual Image AsNormalImage(int size, bool isDark)
         {
-            return AsImageSet(size, KnownSvgColor.Normal, isDark)?.AsImage();
+            return AsImageSet(size, KnownSvgColor.Normal, isDark).AsImage();
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Alternet.Drawing
         /// color theme settings.
         /// This function caches the result, so subsequent calls with the same size and color theme will be faster.
         /// </summary>
-        public virtual Image? AsNormalImage(AbstractControl control)
+        public virtual Image AsNormalImage(AbstractControl control)
         {
             var size = ToolBarUtils.GetDefaultImageSize(control).Width;
             return AsNormalImage(size, control.IsDarkBackground);
@@ -250,12 +250,12 @@ namespace Alternet.Drawing
         /// <param name="size">Image size in pixels.</param>
         /// <param name="isDark">Whether color theme is dark.</param>
         /// <returns></returns>
-        public virtual Image? AsDisabledImage(int size, bool isDark)
+        public virtual Image AsDisabledImage(int size, bool isDark)
         {
             if (IsMono)
-                return AsImageSet(size, KnownSvgColor.Disabled, isDark)?.AsImage();
+                return AsImageSet(size, KnownSvgColor.Disabled, isDark).AsImage();
             else
-                return AsNormalImage(size, isDark)?.ToGrayScaleCached();
+                return AsNormalImage(size, isDark).ToGrayScaleCached();
         }
 
         /// <summary>
@@ -301,9 +301,9 @@ namespace Alternet.Drawing
         /// otherwise, <see langword="false"/>.</param>
         /// <returns>An <see cref="Image"/> containing the rendered SVG, or <see langword="null"/> if the image could not be
         /// created.</returns>
-        public virtual Image? AsImage(int size, KnownSvgColor knownColor, bool isDark)
+        public virtual Image AsImage(int size, KnownSvgColor knownColor, bool isDark)
         {
-            var result = AsImageSet(size, knownColor, isDark)?.AsImage();
+            var result = AsImageSet(size, knownColor, isDark).AsImage();
             return result;
         }
 
@@ -314,12 +314,12 @@ namespace Alternet.Drawing
         /// <param name="size">Svg image size.</param>
         /// <param name="color">Svg image color.</param>
         /// <returns></returns>
-        public virtual Image? ImageWithColor(int size, Color? color)
+        public virtual Image ImageWithColor(int size, Color? color)
         {
             if (color is null)
                 return AsImage(size);
             var imageSet = ImageSetWithColor(size, color);
-            return imageSet?.AsImage();
+            return imageSet.AsImage();
         }
 
         /// <summary>
@@ -477,9 +477,8 @@ namespace Alternet.Drawing
         /// image size if <paramref name="size"/> is null. Can be
         /// null.</param>
         /// <param name="color">The color to apply to the image, if applicable. Can be null.</param>
-        /// <returns>An <see cref="Image"/> instance representing the object at the specified size, or null if the image cannot
-        /// be created.</returns>
-        public virtual Image? ToImageWithDefaultSize(int? size = null, AbstractControl? control = null, Color? color = null)
+        /// <returns>An <see cref="Image"/> instance representing the object at the specified size.</returns>
+        public virtual Image ToImageWithDefaultSize(int? size = null, AbstractControl? control = null, Color? color = null)
         {
             size ??= ToolBarUtils.GetDefaultImageSize(control).Width;
             var image = ImageWithColor(size.Value, color);
@@ -503,7 +502,7 @@ namespace Alternet.Drawing
         /// <returns>An <see cref="Image"/> instance created with the specified parameters,
         /// or <see langword="null"/> if the
         /// image could not be created.</returns>
-        public virtual Image? ToImageWithDefaultSize(
+        public virtual Image ToImageWithDefaultSize(
             KnownSvgColor knownColor,
             bool isDark,
             int? size = null,
