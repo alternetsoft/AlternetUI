@@ -97,9 +97,11 @@ namespace ControlsSample
             });
 
             settings.VerticalAlignment = VerticalAlignment.Fill;
+            settings.MinChildMargin = settings.MinChildMargin?.WithLeft(0);
             settings.Parent = panel;
 
             settings.AddInput("Item Image Shape:", listBox, nameof(ColorListBox.ItemImageShape));
+            settings.AddInput("Show Checkboxes:", listBox, nameof(ColorListBox.CheckBoxVisible));
 
             this.ContextMenuStrip.Add("Toggle draw text over item image", () =>
             {
@@ -112,6 +114,11 @@ namespace ControlsSample
                     listBox.TextOverItemImageStyle = Color.Black;
                 else
                     listBox.TextOverItemImageStyle = Color.White;
+            });
+
+            this.ContextMenuStrip.Add("Toggle checkboxes", () =>
+            {
+                listBox.CheckBoxVisible = !listBox.CheckBoxVisible;
             });
         }
 

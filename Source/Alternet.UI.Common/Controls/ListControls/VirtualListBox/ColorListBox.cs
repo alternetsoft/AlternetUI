@@ -813,10 +813,16 @@ namespace Alternet.UI
                 var isRight = colorListBox.IsColorRightAligned;
                 var itemBrush = GetImageBrush(colorListBox, e);
 
+                e.HideCheckboxes = false;
+
+                var r = ListControlItem.DrawCheckBox(colorListBox, e);
+
+                e.HideCheckboxes = true;
+
                 if (colorListBox.TextVisible)
                 {
                     var (colorRect, itemRect) = ListControlItem.GetItemImageRect(
-                        e.ClientRectangle,
+                        r,
                         colorListBox.CoerceColorImageSize,
                         isRight);
                     e.ClientRectangle = itemRect;
@@ -825,7 +831,7 @@ namespace Alternet.UI
                 }
                 else
                 {
-                    colorListBox.PaintItemImage(e.Graphics, e.ClientRectangle, itemBrush);
+                    colorListBox.PaintItemImage(e.Graphics, r, itemBrush);
 
                     var item = e.Item;
 
@@ -840,7 +846,7 @@ namespace Alternet.UI
                         colorListBox.PaintText(
                                     e.Graphics,
                                     item.DisplayText ?? item.Text,
-                                    e.ClientRectangle,
+                                    r,
                                     foreColor,
                                     Color.Empty,
                                     HorizontalAlignment.Center,
