@@ -223,18 +223,22 @@ namespace Alternet.UI
         /// Retrieves the set of images associated with the specified list control item, taking into account its
         /// selection state and the containing list box.
         /// </summary>
+        /// <param name="imageToUse">Specifies which image to use.</param>
         /// <param name="item">The list control item for which to obtain images.
         /// This parameter can be null to indicate no specific item.</param>
         /// <param name="listBox">The container that holds the list control item.</param>
         /// <returns>An object containing the images representing the visual states of the specified item. The returned value
         /// reflects the item's current state within the provided container.</returns>
-        public virtual EnumArrayStateImages GetItemImages(ListControlItem? item, IListControlItemContainer? listBox)
+        public virtual EnumArrayStateImages GetItemImages(
+            ListControlItem? item,
+            IListControlItemContainer? listBox,
+            int imageToUse = 0)
         {
             if (item is not null)
-                return item.GetImages(listBox);
+                return item.GetImages(listBox, imageToUse);
 
             var color = ListControlItem.GetSelectedTextColor(item, listBox);
-            return ListControlItem.GetItemImages(item, listBox, color);
+            return ListControlItem.GetItemImages(item, listBox, color, onlyNormal: false, imageToUse);
         }
 
         /// <summary>
@@ -247,11 +251,19 @@ namespace Alternet.UI
         /// <param name="listBox">The container that holds the list control item. Can be null if
         /// the item is not associated with a container.</param>
         /// <param name="isSelected">true if the item is currently selected; otherwise, false.</param>
+        /// <param name="imageToUse">Specifies which image to use.</param>
         /// <returns>The image corresponding to the item's current state, or null if no image is available for the specified item
         /// and state.</returns>
-        public virtual Image? GetImage(ListControlItem? item, IListControlItemContainer? listBox, bool isSelected)
+        public virtual Image? GetImage(
+            ListControlItem? item,
+            IListControlItemContainer? listBox,
+            bool isSelected,
+            int imageToUse = 0)
         {
-            var itemImages = GetItemImages(item, listBox);
+            if (item is not null)
+                return item.GetImage(listBox, isSelected, imageToUse);
+
+            var itemImages = GetItemImages(item, listBox, imageToUse);
             var normalImage = itemImages[VisualControlState.Normal];
             var disabledImage = itemImages[VisualControlState.Disabled];
             var selectedImage = itemImages[VisualControlState.Selected];
