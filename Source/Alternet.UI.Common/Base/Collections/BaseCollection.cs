@@ -314,6 +314,18 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Ensures that the collection has at least the specified number of elements.
+        /// </summary>
+        /// <param name="newCount">The minimum number of elements the collection should have.</param>
+        /// <param name="createItem">Function which creates new item.</param>
+        public virtual void EnsureCountAtLeast(int newCount, Func<T> createItem)
+        {
+            if (Count >= newCount)
+                return;
+            ListUtils.SetCount(this, newCount, createItem);
+        }
+
+        /// <summary>
         /// Reduces the number of elements in the collection to the specified count, removing items from the end if
         /// necessary.
         /// </summary>
