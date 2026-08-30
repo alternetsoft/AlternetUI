@@ -225,13 +225,14 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="item">The list control item for which to obtain images.
         /// This parameter can be null to indicate no specific item.</param>
-        /// <param name="listBox">The container that holds the list control item.
-        /// This parameter can be null if the item is not associated
-        /// with a container.</param>
+        /// <param name="listBox">The container that holds the list control item.</param>
         /// <returns>An object containing the images representing the visual states of the specified item. The returned value
         /// reflects the item's current state within the provided container.</returns>
         public virtual EnumArrayStateImages GetItemImages(ListControlItem? item, IListControlItemContainer? listBox)
         {
+            if (item is not null)
+                return item.GetImages(listBox);
+
             var color = ListControlItem.GetSelectedTextColor(item, listBox);
             return ListControlItem.GetItemImages(item, listBox, color);
         }

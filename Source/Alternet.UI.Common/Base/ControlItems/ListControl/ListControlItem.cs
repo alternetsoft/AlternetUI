@@ -71,12 +71,7 @@ namespace Alternet.UI
         /// </summary>
         public static bool DrawDebugCornersOnElements = false;
 
-        private CachedSvgImage<Image> cachedSvg = new();
-        private int? imageIndex;
-        private bool isImageAfterText;
-        private VerticalAlignment? imageVerticalAlignment;
-        private HorizontalAlignment? imageHorizontalAlignment;
-
+        private ItemImageInfo imageInfo = new();
         private string? text;
         private string? displayText;
         private HVAlignment alignment = DefaultItemAlignment;
@@ -271,8 +266,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual VerticalAlignment? ImageVerticalAlignment
         {
-            get => imageVerticalAlignment;
-            set => imageVerticalAlignment = value;
+            get => imageInfo.VerticalAlignment;
+            set => imageInfo.VerticalAlignment = value;
         }
 
         /// <summary>
@@ -280,8 +275,8 @@ namespace Alternet.UI
         /// </summary>
         public virtual HorizontalAlignment? ImageHorizontalAlignment
         {
-            get => imageHorizontalAlignment;
-            set => imageHorizontalAlignment = value;
+            get => imageInfo.HorizontalAlignment;
+            set => imageInfo.HorizontalAlignment = value;
         }
 
         /// <summary>
@@ -367,8 +362,8 @@ namespace Alternet.UI
         /// </remarks>
         public virtual int? ImageIndex
         {
-            get => imageIndex;
-            set => imageIndex = value;
+            get => imageInfo.ImageIndex;
+            set => imageInfo.ImageIndex = value;
         }
 
         /// <summary>
@@ -705,11 +700,11 @@ namespace Alternet.UI
         /// </remarks>
         public virtual SvgImage? SvgImage
         {
-            get => cachedSvg.SvgImage;
+            get => imageInfo.CachedSvg.SvgImage;
 
             set
             {
-                cachedSvg.SvgImage = value;
+                imageInfo.CachedSvg.SvgImage = value;
             }
         }
 
@@ -724,8 +719,8 @@ namespace Alternet.UI
         [Browsable(false)]
         public virtual SizeI? SvgImageSize
         {
-            get => cachedSvg.SvgSize;
-            set => cachedSvg.SvgSize = value;
+            get => imageInfo.CachedSvg.SvgSize;
+            set => imageInfo.CachedSvg.SvgSize = value;
         }
 
         /// <summary>
@@ -965,8 +960,8 @@ namespace Alternet.UI
         /// property affects the visual arrangement of items that display both text and images.</remarks>
         public virtual bool IsImageAfterText
         {
-            get => isImageAfterText;
-            set => isImageAfterText = value;
+            get => imageInfo.IsAfterText;
+            set => imageInfo.IsAfterText = value;
         }
 
         /// <summary>
@@ -2095,26 +2090,31 @@ namespace Alternet.UI
                     e.ItemFont,
                     itemColor,
                     backColor: Color.Empty,
-                    image,
+                    null,
                     paintRectangle,
                     e.ItemAlignment);
 
                 prm.Visible = e.Visible;
 
+                void SetImageParams()
+                {
+                    prm.Image = image;
+                    prm.IsImageAfterText = item.IsImageAfterText;
+                    prm.ImageMargin = item.ImageMargin;
+                    prm.ImageHorizontalAlignment = item.ImageHorizontalAlignment;
+                    prm.ImageVerticalAlignment = item.ImageVerticalAlignment;
+                }
+
                 if (item is not null)
                 {
-
                     prm.IndexAccel = mnemonicCharIndex;
                     prm.SuffixElements = item.SuffixElements;
                     prm.PrefixElements = item.PrefixElements;
                     prm.Flags = item.LabelFlags;
                     prm.TextHorizontalAlignment = item.TextLineAlignment ?? TextHorizontalAlignment.Left;
                     prm.LineDistance = item.TextLineDistance ?? 0;
-                    prm.IsImageAfterText = item.IsImageAfterText;
                     prm.IsVertical = item.IsVerticalOrientation;
-                    prm.ImageMargin = item.ImageMargin;
-                    prm.ImageHorizontalAlignment = item.ImageHorizontalAlignment;
-                    prm.ImageVerticalAlignment = item.ImageVerticalAlignment;
+                    SetImageParams();
                     prm.TextVisible = container?.Defaults.TextVisible ?? true;
 
                     item.BeforeDrawLabel?.Invoke(item, ref prm);
@@ -2413,6 +2413,39 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the images associated with the item,
+        /// taking into account its state and the container's settings.
+        /// </summary>
+        /// <param name="listBox"> The container that holds the list control item.</param>
+        /// <returns>An <see cref="EnumArrayStateImages"/> object containing the images
+        /// for the different visual states of the item.</returns>
+        public virtual EnumArrayStateImages GetImages(IListControlItemContainer? listBox)
+        {
+            var color = ListControlItem.GetSelectedTextColor(this, listBox);
+            return ListControlItem.GetItemImages(this, listBox, color);
+        }
+
+        /// <summary>
+        /// Gets the appropriate image for the item based on its selection state and the container's settings.
+        /// </summary>
+        /// <param name="listBox">The container that holds the list control item.</param>
+        /// <param name="isSelected">true to retrieve the image for the selected state;
+        /// false to retrieve the image for the normal or disabled state.</param>
+        /// <returns>An Image representing the item's visual state. Returns null
+        /// if no image is defined for the current state.</returns>
+        public virtual Image? GetImage(IListControlItemContainer? listBox, bool isSelected)
+        {
+            var itemImages = GetImages(listBox);
+            var normalImage = itemImages[VisualControlState.Normal];
+            var disabledImage = itemImages[VisualControlState.Disabled];
+            var selectedImage = itemImages[VisualControlState.Selected];
+
+            var image = ListControlItem.IsContainerEnabled(listBox)
+                ? (isSelected ? selectedImage : normalImage) : disabledImage;
+            return image;
+        }
+
+        /// <summary>
         /// Retrieves the cell at the specified index if it exists; otherwise, returns null.
         /// It is safe method which does not throw exceptions.
         /// </summary>
@@ -2526,7 +2559,7 @@ namespace Alternet.UI
         /// <returns></returns>
         public virtual Image? GetImage(VisualControlState state, bool? isDark = null)
         {
-            var result = cachedSvg.GetImage(state, isDark);
+            var result = imageInfo.CachedSvg.GetImage(state, isDark);
             return result;
         }
 
@@ -2550,7 +2583,7 @@ namespace Alternet.UI
         /// <param name="isDark">Whether theme is dark.</param>
         public virtual void SetImage(VisualControlState state, Image? image, bool? isDark = null)
         {
-            cachedSvg.SetImage(state, image, isDark);
+            imageInfo.CachedSvg.SetImage(state, image, isDark);
         }
 
         /// <summary>
@@ -2688,7 +2721,7 @@ namespace Alternet.UI
             Alignment = assignFrom.Alignment;
             BackgroundColor = assignFrom.BackgroundColor;
             Border = assignFrom.Border;
-            cachedSvg = assignFrom.cachedSvg.Clone();
+            imageInfo = assignFrom.imageInfo.Clone();
             CanRemove = assignFrom.CanRemove;
             CheckBoxAllowAllStatesForUser = assignFrom.CheckBoxAllowAllStatesForUser;
             CheckBoxThreeState = assignFrom.CheckBoxThreeState;
@@ -2760,7 +2793,7 @@ namespace Alternet.UI
         /// any subsequent access to cached images will result in a reload operation.</remarks>
         public virtual void ResetCachedImages()
         {
-            cachedSvg.ResetCachedImages();
+            imageInfo.ResetCachedImages();
         }
 
         /// <summary>
@@ -3028,6 +3061,69 @@ namespace Alternet.UI
                         null,
                         BorderSettings.DebugBorder);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Contains information about the image associated with a list control item.
+        /// </summary>
+        public struct ItemImageInfo
+        {
+            /// <summary>
+            /// Gets or sets the cached SVG image associated with the item.
+            /// </summary>
+            public CachedSvgImage<Image> CachedSvg = new();
+            
+            /// <summary>
+            /// Gets or sets the index of the image.
+            /// </summary>
+            public int? ImageIndex;
+            
+            /// <summary>
+            /// Gets or sets a value indicating whether the image is displayed after the text.
+            /// </summary>  
+            public bool IsAfterText;
+
+            /// <summary>
+            /// Gets or sets a value indicating the vertical alignment of the image.
+            /// </summary>
+            public VerticalAlignment? VerticalAlignment;
+
+            /// <summary>
+            /// Gets or sets a value indicating the horizontal alignment of the image.
+            /// </summary>
+            public HorizontalAlignment? HorizontalAlignment;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="ItemImageInfo"/> struct.
+            /// </summary>
+            public ItemImageInfo()
+            {
+            }
+
+            /// <summary>
+            /// Creates a copy of the current <see cref="ItemImageInfo"/> instance.
+            /// </summary>
+            /// <returns>A new <see cref="ItemImageInfo"/> instance that is a copy of the current instance.</returns>
+            public ItemImageInfo Clone()
+            {
+                return new ItemImageInfo
+                {
+                    CachedSvg = CachedSvg.Clone(),
+                    ImageIndex = ImageIndex,
+                    IsAfterText = IsAfterText,
+                    VerticalAlignment = VerticalAlignment,
+                    HorizontalAlignment = HorizontalAlignment
+                };
+            }
+
+            /// <summary>
+            /// Resets the cached images, clearing any previously stored image data and forcing svg to image conversion
+            /// to be called on the next access.
+            /// </summary>
+            public void ResetCachedImages()
+            {
+                CachedSvg.ResetCachedImages();
             }
         }
 

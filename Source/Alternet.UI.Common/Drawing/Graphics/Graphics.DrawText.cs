@@ -1415,10 +1415,123 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Contains image parameters for the draw label method.
+        /// </summary>
+        public struct DrawLabelImageParams
+        {
+            /// <summary>
+            /// Gets or sets vertical alignment of the image.
+            /// </summary>
+            public VerticalAlignment? ImageVerticalAlignment;
+
+            /// <summary>
+            /// Gets or sets horizontal alignment of the image.
+            /// </summary>
+            public HorizontalAlignment? ImageHorizontalAlignment;
+
+            /// <summary>
+            /// Gets or sets margin around the image. This is used when image is drawn.
+            /// </summary>
+            public Thickness ImageMargin;
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the image is displayed after the text.
+            /// </summary>
+            public bool IsImageAfterText;
+
+            /// <summary>
+            /// Gets or sets distance between image and label. If Null,
+            /// <see cref="SpeedButton.DefaultImageLabelDistance"/> is used.
+            /// </summary>
+            public Coord? ImageLabelDistance;
+
+            /// <summary>
+            /// Gets or sets optional image which is shown near the text. Default is Null.
+            /// </summary>
+            public Image? Image;
+
+            /// <summary>
+            /// Gets or sets the next image parameters for the draw label method.
+            /// </summary>
+            public DrawLabelImageParamsRef? NextImage;
+        }
+
+        /// <summary>
+        /// Contains a reference to <see cref="DrawLabelImageParams"/> for the draw label method.
+        /// </summary>
+        public class DrawLabelImageParamsRef
+        {
+            /// <summary>
+            /// Gets or sets the value of the image parameters for the draw label method.
+            /// </summary>
+            public DrawLabelImageParams Value;
+        }
+
+        /// <summary>
         /// Contains parameters for the draw label method.
         /// </summary>
         public struct DrawLabelParams
         {
+            /// <summary>
+            /// Gets or sets image parameters, including alignment, margin, and other settings.
+            /// </summary>
+            public DrawLabelImageParams ImageParams;
+
+            /// <summary>
+            /// Gets or sets vertical alignment of the image.
+            /// </summary>
+            public VerticalAlignment? ImageVerticalAlignment
+            {
+                get => ImageParams.ImageVerticalAlignment;
+                set => ImageParams.ImageVerticalAlignment = value;
+            }
+
+            /// <summary>
+            /// Gets or sets horizontal alignment of the image.
+            /// </summary>
+            public HorizontalAlignment? ImageHorizontalAlignment
+            {
+                get => ImageParams.ImageHorizontalAlignment;
+                set => ImageParams.ImageHorizontalAlignment = value;
+            }
+
+            /// <summary>
+            /// Gets or sets margin around the image. This is used when image is drawn.
+            /// </summary>
+            public Thickness ImageMargin
+            {
+                get => ImageParams.ImageMargin;
+                set => ImageParams.ImageMargin = value;
+            }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether the image is displayed after the text.
+            /// </summary>
+            public bool IsImageAfterText
+            {
+                get => ImageParams.IsImageAfterText;
+                set => ImageParams.IsImageAfterText = value;
+            }
+
+            /// <summary>
+            /// Gets or sets distance between image and label. If Null,
+            /// <see cref="SpeedButton.DefaultImageLabelDistance"/> is used.
+            /// </summary>
+            public Coord? ImageLabelDistance
+            {
+                get => ImageParams.ImageLabelDistance;
+                set => ImageParams.ImageLabelDistance = value;
+            }
+
+            /// <summary>
+            /// Gets or sets optional image which is shown near the text. Default is Null.
+            /// </summary>
+            public Image? Image
+            {
+                get => ImageParams.Image;
+                set => ImageParams.Image = value;
+            }
+
             /// <summary>
             /// Represents the minimum text width as a coordinate value.
             /// </summary>
@@ -1435,16 +1548,6 @@ namespace Alternet.Drawing
             /// Gets or sets array of elements to draw after the label text and image.
             /// </summary>
             public DrawElementParams[]? SuffixElements;
-
-            /// <summary>
-            /// Gets or sets vertical alignment of the image.
-            /// </summary>
-            public VerticalAlignment? ImageVerticalAlignment;
-
-            /// <summary>
-            /// Gets or sets horizontal alignment of the image.
-            /// </summary>
-            public HorizontalAlignment? ImageHorizontalAlignment;
 
             /// <summary>
             /// Gets or sets distance between lines of text.
@@ -1479,22 +1582,6 @@ namespace Alternet.Drawing
             public bool IsVertical;
 
             /// <summary>
-            /// Gets or sets margin around the image. This is used when image is drawn.
-            /// </summary>
-            public Thickness ImageMargin;
-
-            /// <summary>
-            /// Gets or sets a value indicating whether the image is displayed after the text.
-            /// </summary>
-            public bool IsImageAfterText;
-
-            /// <summary>
-            /// Gets or sets distance between image and label. If Null,
-            /// <see cref="SpeedButton.DefaultImageLabelDistance"/> is used.
-            /// </summary>
-            public Coord? ImageLabelDistance;
-
-            /// <summary>
             /// Gets or sets whether painting is actually performed. This property may be useful
             /// when you need to calculate element sizes without painting.
             /// </summary>
@@ -1525,11 +1612,6 @@ namespace Alternet.Drawing
             /// to <see cref="Color.Empty"/> (default value), background will not be painted.
             /// </summary>
             public Color BackgroundColor = Color.Empty;
-
-            /// <summary>
-            /// Gets or sets optional image which is shown near the text. Default is Null.
-            /// </summary>
-            public Image? Image;
 
             /// <summary>
             /// Gets or sets rectangle in which drawing is performed.
@@ -1909,13 +1991,13 @@ namespace Alternet.Drawing
                 {
                     return (
                         HorizontalAlignment.Center,
-                        ImageVerticalAlignment ?? VerticalAlignment.Top);
+                        ImageParams.ImageVerticalAlignment ?? VerticalAlignment.Top);
                 }
                 else
                 {
                     return (
-                        ImageHorizontalAlignment ?? HorizontalAlignment.Left,
-                        ImageVerticalAlignment ?? VerticalAlignment.Center);
+                        ImageParams.ImageHorizontalAlignment ?? HorizontalAlignment.Left,
+                        ImageParams.ImageVerticalAlignment ?? VerticalAlignment.Center);
                 }
             }
 
