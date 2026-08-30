@@ -2071,6 +2071,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws the checkbox for the specified list control item within the given container and paint event arguments.
+        /// </summary>
+        /// <param name="container">The container that holds the list control item.</param>
+        /// <param name="e">The paint event arguments.</param>
+        /// <returns>The rectangle area where the checkbox was drawn.</returns>
+        public static RectD DrawCheckBox(IListControlItemContainer? container, ListBoxItemPaintEventArgs e)
+        {
+            var item = e.Item;
+            var paintRectangle = e.PaintRectangle;
+
+            if (item is null || e.HideCheckboxes)
+                return paintRectangle;
+
+            var isSelected = e.HasSelection;
+
+            var result = item.DrawCheckBox(
+                        e.Graphics,
+                        item,
+                        container,
+                        paintRectangle,
+                        isSelected);
+            return result;
+        }
+
+        /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
         public static void DefaultDrawForeground(
@@ -2080,35 +2105,22 @@ namespace Alternet.UI
             var item = e.Item;
             var itemMargin = item?.ForegroundMargin ?? 0;
             var isSelected = e.HasSelection;
-            var paintRectangle = e.PaintRectangle;
+            RectD paintRectangle;
             var s = e.VisibleTextForDisplay;
             var itemColor = e.GetTextColor(isSelected) ?? SystemColors.WindowText;
             var useColumns = item is not null && e.UseColumns && container is not null;
 
-            RectD InternalDrawCheckBox()
-            {
-                if (item is null)
-                    return paintRectangle;
-                var result = item.DrawCheckBox(
-                            e.Graphics,
-                            item,
-                            container,
-                            paintRectangle,
-                            isSelected);
-                return result;
-            }
-
             if (useColumns)
             {
-                paintRectangle = InternalDrawCheckBox();
+                paintRectangle = DrawCheckBox(container, e);
                 PaintWithColumns();
                 e.LabelMetrics = new();
             }
             else
             {
-                var image = e.GetImage(isSelected);
+                var image = e.ImageOverride ?? e.GetImage(isSelected);
 
-                paintRectangle = InternalDrawCheckBox();
+                paintRectangle = DrawCheckBox(container, e);
 
                 int mnemonicCharIndex = -1;
 
