@@ -469,6 +469,30 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets a copy of this object with changed <see cref="Top"/> and <see cref="Bottom"/> properties.
+        /// </summary>
+        /// <param name="atop">Top property value.</param>
+        /// <param name="abottom">Bottom property value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Thickness WithTopBottom(Coord atop, Coord abottom)
+        {
+            return new(left, atop, right, abottom);
+        }
+
+        /// <summary>
+        /// Gets a copy of this object with changed <see cref="Left"/> and <see cref="Right"/> properties.
+        /// </summary>
+        /// <param name="aleft">Left property value.</param>
+        /// <param name="aright">Right property value.</param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public readonly Thickness WithLeftRight(Coord aleft, Coord aright)
+        {
+            return new(aleft, top, aright, bottom);
+        }
+
+        /// <summary>
         /// Gets a copy of this object with changed <see cref="Left"/> property.
         /// </summary>
         /// <param name="value">Property value.</param>
