@@ -186,6 +186,14 @@ namespace DrawingSample
                     Color.Olive,
                     KnownColorSvgImages.ImgInformation.AsImage(64),
                     innerFrame.InflatedBy(-250, -250));
+
+                dc.DrawLabelWithImages(
+                    "Multiple images",
+                    Control.DefaultFont,
+                    Color.Yellow,
+                    Color.Brown,
+                    new[] { KnownColorSvgImages.ImgWarning.AsImage(64), KnownColorSvgImages.ImgError.AsImage(64) },
+                    innerFrame.WithOffset(200, 200));
             }
 
             dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
