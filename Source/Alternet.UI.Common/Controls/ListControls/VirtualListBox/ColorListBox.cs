@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using Alternet.Drawing;
 
 namespace Alternet.UI
@@ -721,11 +722,11 @@ namespace Alternet.UI
                 case ItemImageSizeKind.Ratio:
 
                     var hratio = colorImageRatio.Height;
-                    if(hratio <= 0)
+                    if (hratio <= 0)
                         hratio = 1;
                     var wratio = colorImageRatio.Width;
                     if (wratio <= 0)
-                        wratio  = 1;
+                        wratio = 1;
 
                     var height = size.Height;
                     var v = height / hratio;
@@ -782,7 +783,7 @@ namespace Alternet.UI
             {
                 var result = GetItemValueAsBrush(sender, e.ItemIndex);
 
-                if(result is null)
+                if (result is null)
                 {
                     result = GetImageColor(sender, e).AsBrush;
                     return result;
@@ -814,10 +815,13 @@ namespace Alternet.UI
                 var itemBrush = GetImageBrush(colorListBox, e);
 
                 e.HideCheckboxes = false;
+                e.HideAccentMarker = false;
 
                 var r = ListControlItem.DrawCheckBox(colorListBox, e);
+                r = ListControlItem.DrawAccentMarker(colorListBox, e, r);
 
                 e.HideCheckboxes = true;
+                e.HideAccentMarker = true;
 
                 if (colorListBox.TextVisible)
                 {

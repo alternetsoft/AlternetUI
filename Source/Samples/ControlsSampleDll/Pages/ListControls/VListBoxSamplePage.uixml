@@ -40,6 +40,8 @@
       <TextBox Name="findText" Margin="0,0,0,5" IsTextLocalized="true"/>
       <XCheckBox Text="Use other color theme" Name="otherThemeCheckBox"
                 Margin="0,0,0,5" IsTextLocalized="true" IsEnabled="false"/>
+      <XCheckBox Margin="0,0,0,5" Text="Show accent mark" IsTextLocalized="true"
+                Name="showAccentMarkCheckBox"/>
       <XCheckBox Margin="0,0,0,5" Text="Round Selection" IsTextLocalized="true"
                 Name="roundSelectionCheckBox"/>
     </StackPanel>

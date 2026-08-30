@@ -83,6 +83,7 @@ namespace Alternet.UI
         private Color? unfocusedSelectedItemBackColor;
         private Color? unfocusedSelectedItemTextColor;
 
+        private bool showAccentMarker;
         private Thickness itemMargin = DefaultItemMargin;
         private IListBoxItemPainter? painter;
         private Coord minItemHeight = DefaultMinItemHeight;
@@ -277,6 +278,25 @@ namespace Alternet.UI
                     columns.ItemRemoved += OnColumnsItemRemoved;
                     columns.CollectionChanged += OnColumnsChanged;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets whether to show accent marker for the current item.
+        /// </summary>
+        public virtual bool ShowAccentMarker
+        {
+            get
+            {
+                return showAccentMarker;
+            }
+
+            set
+            {
+                if (showAccentMarker == value)
+                    return;
+                showAccentMarker = value;
+                Invalidate();
             }
         }
 

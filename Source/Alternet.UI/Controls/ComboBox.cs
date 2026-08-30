@@ -646,6 +646,7 @@ namespace Alternet.UI
         IReadOnlyList<ListControlColumn> IListControlItemContainer.Columns => Array.Empty<ListControlColumn>();
 
         float? IListControlItemContainer.ColumnSeparatorWidth { get; }
+        bool IListControlItemContainer.ShowAccentMarker => false;
 
         /// <summary>
         /// Selects a range of text in the editable portion of the ComboBox.

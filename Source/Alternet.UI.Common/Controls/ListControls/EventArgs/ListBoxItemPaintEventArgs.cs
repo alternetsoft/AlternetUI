@@ -44,6 +44,11 @@ namespace Alternet.UI
         public bool HideCheckboxes { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether accent markers should be hidden for the item being painted.
+        /// </summary>
+        public bool HideAccentMarker { get; set; }
+
+        /// <summary>
         /// Gets index of the item.
         /// </summary>
         public virtual int ItemIndex

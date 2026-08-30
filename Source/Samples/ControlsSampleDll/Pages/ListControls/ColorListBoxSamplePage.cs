@@ -101,7 +101,8 @@ namespace ControlsSample
             settings.Parent = panel;
 
             settings.AddInput("Item Image Shape:", listBox, nameof(ColorListBox.ItemImageShape));
-            settings.AddInput("Show Checkboxes:", listBox, nameof(ColorListBox.CheckBoxVisible));
+            settings.AddInput("Show Checkboxes", listBox, nameof(ColorListBox.CheckBoxVisible));
+            settings.AddInput("Show Accent Marker", listBox, nameof(ColorListBox.ShowAccentMarker));
 
             this.ContextMenuStrip.Add("Toggle draw text over item image", () =>
             {

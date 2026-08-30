@@ -403,6 +403,8 @@ namespace Alternet.UI
             }
         }
 
+        bool IListControlItemContainer.ShowAccentMarker => false;
+
         /// <inheritdoc/>
         [Browsable(false)]
         public virtual object? CommandTarget

@@ -13,6 +13,11 @@ namespace Alternet.UI
     public interface IListControlItemContainer
     {
         /// <summary>
+        /// Gets a value indicating whether the container should show accent marker for the current item.
+        /// </summary>
+        bool ShowAccentMarker { get; }
+
+        /// <summary>
         /// Gets debug identifier of the list control item defaults.
         /// </summary>
         string? DebugIdentifier { get; }

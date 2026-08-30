@@ -831,6 +831,8 @@ namespace Alternet.UI
             }
         }
 
+        bool IListControlItemContainer.ShowAccentMarker => false;
+
         /// <summary>
         /// Expands all child tree items.
         /// </summary>

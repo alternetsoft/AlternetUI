@@ -45,6 +45,8 @@ namespace ControlsSample
 
             Title = "Virtual";
 
+            showAccentMarkCheckBox.BindBoolProp(listBox, nameof(VirtualListBox.ShowAccentMarker));
+
             listBox.DebugIdentifier = "DemoListBox";
             findExactCheckBox.BindBoolProp(this, nameof(FindExact));
             findIgnoreCaseCheckBox.BindBoolProp(this, nameof(FindIgnoreCase));
@@ -98,6 +100,11 @@ namespace ControlsSample
             {
                 ListControlItem.DrawDebugCornersOnElements = !ListControlItem.DrawDebugCornersOnElements;
                 listBox.Invalidate();
+            });
+
+            contextMenu.Add("Toggle accent marker", () =>
+            {
+                listBox.ShowAccentMarker = !listBox.ShowAccentMarker;
             });
 
             contextMenu.Add("Toggle hovered selection", () =>

@@ -23,9 +23,25 @@ namespace Alternet.UI
     public partial class ListControlItem : BaseControlItem, IComparable<ListControlItem>
     {
         /// <summary>
+        /// Gets or sets default color of the accent marker which is optionally painted for the current item in the list control.
+        /// If this property is null, default accent color is used.
+        /// </summary>
+        public static LightDarkColor? DefaultAccentMarkerColor;
+
+        /// <summary>
+        /// Gets or sets default margin of the accent marker which is optionally painted for the current item in the list control.
+        /// </summary>
+        public static Thickness DefaultAccentMargin = (2, 4, 4, 2);
+
+        /// <summary>
         /// Gets or sets default color of the image border.
         /// </summary>
         public static Color DefaultImageBorderColor = SystemColors.GrayText;
+
+        /// <summary>
+        /// Gets or sets default width of the accent marker.
+        /// </summary>
+        public static Coord DefaultAccentMarkerWidth = 6;
 
         /// <summary>
         /// Gets or sets default disabled text color.
@@ -115,7 +131,6 @@ namespace Alternet.UI
         private MnemonicMarkerHelper mnemonicMarkerHelper = new();
         private bool? checkBoxEnabled;
         private Thickness checkBoxMargin;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
         /// with the default value for the <see cref="Text"/> property.
@@ -2096,6 +2111,42 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Draws an accent marker for the current item in the list control, if applicable.
+        /// </summary>
+        /// <param name="container">The container that holds the list control item.</param>
+        /// <param name="e">The paint event arguments.</param>
+        /// <param name="rect">The rectangle area where the accent marker should be drawn.</param>
+        /// <returns>The rectangle area after drawing the accent marker.</returns>
+        public static RectD DrawAccentMarker(IListControlItemContainer? container, ListBoxItemPaintEventArgs e, RectD rect)
+        {
+            var result = rect;
+            var checkboxesVisible = rect.Width < e.PaintRectangle.Width;
+
+            var showAccentMarker = container?.ShowAccentMarker ?? false;
+
+            if (!checkboxesVisible && showAccentMarker && !e.HideAccentMarker)
+            {
+                var isDark = ListControlItem.IsContainerDark(container);
+                var accentColor = (DefaultAccentMarkerColor ?? DefaultColors.AccentColor).LightOrDark(isDark);
+                var accentWidth = DefaultAccentMarkerWidth;
+                Thickness accentMargin = DefaultAccentMargin;
+
+                var accentRect = new RectD(
+                    e.PaintRectangle.Left + accentMargin.Left,
+                    e.PaintRectangle.Top + accentMargin.Top,
+                    accentWidth,
+                    e.PaintRectangle.Height - accentMargin.Top - accentMargin.Bottom);
+
+                if (e.IsCurrent)
+                    e.Graphics.FillRoundedRectangle(accentColor.AsBrush, accentRect, 2);
+
+                result.Left += accentWidth + accentMargin.Horizontal;
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
         public static void DefaultDrawForeground(
@@ -2113,6 +2164,7 @@ namespace Alternet.UI
             if (useColumns)
             {
                 paintRectangle = DrawCheckBox(container, e);
+                paintRectangle = DrawAccentMarker(container, e, paintRectangle);
                 PaintWithColumns();
                 e.LabelMetrics = new();
             }
@@ -2121,6 +2173,7 @@ namespace Alternet.UI
                 var image = e.ImageOverride ?? e.GetImage(isSelected);
 
                 paintRectangle = DrawCheckBox(container, e);
+                paintRectangle = DrawAccentMarker(container, e, paintRectangle);
 
                 int mnemonicCharIndex = -1;
 
