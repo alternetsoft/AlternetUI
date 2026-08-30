@@ -627,7 +627,7 @@ namespace Alternet.Drawing
             }
             else
             {
-                var imageElement = DrawElementParams.CreateImageElement(ref prm);
+                var imageElement = DrawElementParams.CreateImageElement(ref prm, ref prm.ImageParams);
 
                 if (prm.TextVisible)
                 {
@@ -1089,7 +1089,20 @@ namespace Alternet.Drawing
             {
                 DrawLabelParams prm = new();
                 prm.Image = image;
-                return CreateImageElement(ref prm);
+                return CreateImageElement(ref prm, ref prm.ImageParams);
+            }
+
+            /// <summary>
+            /// Creates a new image element based on the specified drawing parameters.
+            /// </summary>
+            /// <param name="labelPrm">A reference to the <see cref="DrawLabelParams"/>
+            /// structure containing the parameters for drawing of the label.</param>
+            /// <param name="imageOverride">The <see cref="Image"/> to use as the image for the element,
+            /// overriding any image specified in <paramref name="labelPrm"/>.</param>
+            /// <returns>A <see cref="DrawElementParams"/> object representing the image element to be drawn.</returns>
+            public static DrawElementParams CreateImageElement(ref DrawLabelParams labelPrm, Image? imageOverride = null)
+            {
+                return CreateImageElement(ref labelPrm, ref labelPrm.ImageParams, imageOverride);
             }
 
             /// <summary>
@@ -1099,7 +1112,9 @@ namespace Alternet.Drawing
             /// the size calculation and drawing logic for the image, as well
             /// as alignment settings derived from the
             /// provided parameters.</remarks>
-            /// <param name="prm">A reference to the <see cref="DrawLabelParams"/>
+            /// <param name="labelPrm">A reference to the <see cref="DrawLabelParams"/>
+            /// structure containing the parameters for drawing of the label.</param>
+            /// <param name="prm">A reference to the <see cref="DrawLabelImageParams"/>
             /// structure containing the parameters for drawing
             /// the image, including the image source and alignment settings.</param>
             /// <param name="imageOverride">The <see cref="Image"/> to use as the image
@@ -1109,7 +1124,8 @@ namespace Alternet.Drawing
             /// the <see cref="DrawLabelParams.Image"/> property
             /// is <see langword="null"/>.</returns>
             public static DrawElementParams CreateImageElement(
-                ref DrawLabelParams prm,
+                ref DrawLabelParams labelPrm,
+                ref DrawLabelImageParams prm,
                 Image? imageOverride = null)
             {
                 var image = imageOverride ?? prm.Image;
@@ -1120,7 +1136,7 @@ namespace Alternet.Drawing
                 var imageMargin = prm.ImageMargin;
 
 #if DEBUG
-                var drawDebugCorners = prm.DrawDebugCorners || Graphics.DrawDebugCorners;
+                var drawDebugCorners = Graphics.DrawDebugCorners;
 #endif
 
                 DrawElementParams imageElement = new()
@@ -1148,12 +1164,9 @@ namespace Alternet.Drawing
                         }
 #endif
                     },
-                    Alignment = prm.GetImageAlignment(),
+                    Alignment = prm.GetImageAlignment(labelPrm.IsVertical),
                 };
 
-#if DEBUG
-                imageElement.DebugIdentifier = $"Image{prm.Text}";
-#endif
                 return imageElement;
             }
 
@@ -1454,6 +1467,26 @@ namespace Alternet.Drawing
             /// Gets or sets the next image parameters for the draw label method.
             /// </summary>
             public DrawLabelImageParamsRef? NextImage;
+
+            /// <summary>
+            /// Determines the image alignment based on the current orientation.
+            /// </summary>
+            /// <returns>A tuple containing the horizontal and vertical alignment.</returns>
+            public readonly HVAlignment GetImageAlignment(bool isVertical)
+            {
+                if (isVertical)
+                {
+                    return (
+                        HorizontalAlignment.Center,
+                        ImageVerticalAlignment ?? VerticalAlignment.Top);
+                }
+                else
+                {
+                    return (
+                        ImageHorizontalAlignment ?? HorizontalAlignment.Left,
+                        ImageVerticalAlignment ?? VerticalAlignment.Center);
+                }
+            }
         }
 
         /// <summary>
@@ -1482,7 +1515,7 @@ namespace Alternet.Drawing
             /// </summary>
             public VerticalAlignment? ImageVerticalAlignment
             {
-                get => ImageParams.ImageVerticalAlignment;
+                readonly get => ImageParams.ImageVerticalAlignment;
                 set => ImageParams.ImageVerticalAlignment = value;
             }
 
@@ -1491,7 +1524,7 @@ namespace Alternet.Drawing
             /// </summary>
             public HorizontalAlignment? ImageHorizontalAlignment
             {
-                get => ImageParams.ImageHorizontalAlignment;
+                readonly get => ImageParams.ImageHorizontalAlignment;
                 set => ImageParams.ImageHorizontalAlignment = value;
             }
 
@@ -1500,7 +1533,7 @@ namespace Alternet.Drawing
             /// </summary>
             public Thickness ImageMargin
             {
-                get => ImageParams.ImageMargin;
+                readonly get => ImageParams.ImageMargin;
                 set => ImageParams.ImageMargin = value;
             }
 
@@ -1509,7 +1542,7 @@ namespace Alternet.Drawing
             /// </summary>
             public bool IsImageAfterText
             {
-                get => ImageParams.IsImageAfterText;
+                readonly get => ImageParams.IsImageAfterText;
                 set => ImageParams.IsImageAfterText = value;
             }
 
@@ -1519,7 +1552,7 @@ namespace Alternet.Drawing
             /// </summary>
             public Coord? ImageLabelDistance
             {
-                get => ImageParams.ImageLabelDistance;
+                readonly get => ImageParams.ImageLabelDistance;
                 set => ImageParams.ImageLabelDistance = value;
             }
 
@@ -1528,7 +1561,7 @@ namespace Alternet.Drawing
             /// </summary>
             public Image? Image
             {
-                get => ImageParams.Image;
+                readonly get => ImageParams.Image;
                 set => ImageParams.Image = value;
             }
 
@@ -1979,26 +2012,6 @@ namespace Alternet.Drawing
             public void SetFlags(DrawLabelFlags value)
             {
                 Flags = value;
-            }
-
-            /// <summary>
-            /// Determines the image alignment based on the current orientation.
-            /// </summary>
-            /// <returns>A tuple containing the horizontal and vertical alignment.</returns>
-            public readonly HVAlignment GetImageAlignment()
-            {
-                if (IsVertical)
-                {
-                    return (
-                        HorizontalAlignment.Center,
-                        ImageParams.ImageVerticalAlignment ?? VerticalAlignment.Top);
-                }
-                else
-                {
-                    return (
-                        ImageParams.ImageHorizontalAlignment ?? HorizontalAlignment.Left,
-                        ImageParams.ImageVerticalAlignment ?? VerticalAlignment.Center);
-                }
             }
 
             /// <summary>
