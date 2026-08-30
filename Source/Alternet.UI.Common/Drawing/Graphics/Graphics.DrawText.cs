@@ -434,7 +434,7 @@ namespace Alternet.Drawing
 
                 var itemFont = font.WithStyle(item.FontStyle);
                 var measure = GetTextExtent(item.Text, itemFont);
-                
+
                 if (visible)
                 {
                     var myForeColor = item.ForeColor ?? foreColor;
@@ -492,6 +492,44 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws text with the specified font, background and foreground colors, and an array of images.
+        /// </summary>
+        /// <param name="text">The text to draw.</param>
+        /// <param name="font">The font to use for drawing the text.</param>
+        /// <param name="foreColor">The foreground color of the text.</param>
+        /// <param name="backColor">The background color of the text.</param>
+        /// <param name="images">An array of images to draw alongside the text.</param>
+        /// <param name="rect">The rectangle in which to draw the text and images.</param>
+        /// <param name="alignment">The alignment of the text within the rectangle.</param>
+        /// <param name="indexAccel">The index of the underlined mnemonic character.</param>
+        /// <returns>The bounding rectangle of the drawn text and images.</returns>
+        public virtual RectD DrawLabelWithImages(
+            ReadOnlySpan<char> text,
+            Font font,
+            Color foreColor,
+            Color backColor,
+            Image[]? images,
+            RectD rect,
+            HVAlignment? alignment = null,
+            int indexAccel = -1)
+        {
+            DrawLabelParams prm = new(
+                text.ToString(),
+                font,
+                foreColor,
+                backColor,
+                null,
+                rect,
+                alignment,
+                indexAccel);
+
+            prm.SetImages(images);
+
+            var result = DrawLabel(ref prm);
+            return result;
+        }
+
+        /// <summary>
         /// Draws text vertically starting from the bottom of the specified rectangle using the given font and colors.
         /// Text is centered within the rectangle, and the method handles
         /// rotation and translation to achieve the desired orientation.
@@ -508,7 +546,7 @@ namespace Alternet.Drawing
 
             var strSize = MeasureText(text, font);
 
-            PointD p = new (
+            PointD p = new(
                 rect.Top + Math.Max(0, (rect.Height - strSize.Width) / 2),
                 rect.Left + ((rect.Width - strSize.Height) / 2));
 
@@ -543,7 +581,7 @@ namespace Alternet.Drawing
                 DrawVertTextFromTop(text, font, foreColor, rect);
             }
         }
-        
+
         /// <summary>
         /// Draws text vertically starting from the top of the specified rectangle using the given font and colors.
         /// Text is centered within the rectangle, and the method handles
@@ -627,17 +665,49 @@ namespace Alternet.Drawing
             }
             else
             {
-                var imageElement = DrawElementParams.CreateImageElement(ref prm, ref prm.ImageParams);
-
-                if (prm.TextVisible)
+                if (prm.ImageParams.NextImage is null)
                 {
-                    var textElement = DrawElementParams.CreateTextElement(ref prm);
+                    var imageElement = DrawElementParams.CreateImageElement(ref prm, ref prm.ImageParams);
 
-                    drawParams.Elements = prm.IsImageAfterText ? [textElement, imageElement] : [imageElement, textElement];
+                    if (prm.TextVisible)
+                    {
+                        var textElement = DrawElementParams.CreateTextElement(ref prm);
+
+                        drawParams.Elements = prm.IsImageAfterText ? [textElement, imageElement] : [imageElement, textElement];
+                    }
+                    else
+                    {
+                        drawParams.Elements = [imageElement];
+                    }
                 }
                 else
                 {
-                    drawParams.Elements = [imageElement];
+                    List<DrawElementParams> elements = new();
+                    var textElement = DrawElementParams.CreateTextElement(ref prm);
+
+                    if (prm.IsImageAfterText)
+                    {
+                        elements.Add(textElement);
+                    }
+
+                    DrawLabelImageParamsRef? imageParams = new(prm.ImageParams);
+
+                    while (true)
+                    {
+                        var imageElement = DrawElementParams.CreateImageElement(ref prm, ref imageParams.Value);
+                        elements.Add(imageElement);
+                        imageParams = imageParams.Value.NextImage;
+
+                        if (imageParams is null)
+                            break;
+                    }
+
+                    if (!prm.IsImageAfterText)
+                    {
+                        elements.Add(textElement);
+                    }
+
+                    drawParams.Elements = elements.ToArray();
                 }
             }
 
@@ -1498,6 +1568,22 @@ namespace Alternet.Drawing
             /// Gets or sets the value of the image parameters for the draw label method.
             /// </summary>
             public DrawLabelImageParams Value;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DrawLabelImageParamsRef"/> class.
+            /// </summary>
+            public DrawLabelImageParamsRef()
+            {
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DrawLabelImageParamsRef"/> class with the specified image parameters.
+            /// </summary>
+            /// <param name="value">The image parameters to initialize the instance with.</param>
+            public DrawLabelImageParamsRef(DrawLabelImageParams value)
+            {
+                Value = value;
+            }
         }
 
         /// <summary>
@@ -1752,6 +1838,35 @@ namespace Alternet.Drawing
             public void SetMinTextWidth(Coord? value)
             {
                 MinTextWidth = value;
+            }
+
+            /// <summary>
+            /// Sets the collection of images to be used in subsequent drawing operations.
+            /// </summary>
+            /// <param name="value">An array of <see cref="Image"/> objects to set.
+            /// Specify <see langword="null"/> or an empty array to remove all existing images.</param>
+            public void SetImages(Image[]? value)
+            {
+                if (value is null || value.Length == 0)
+                {
+                    ImageParams.Image = null;
+                    ImageParams.NextImage = null;
+                    return;
+                }
+
+                ImageParams.Image = value[0];
+
+                for (int i = value.Length - 1; i >= 1; i--)
+                {
+                    var newRef = new DrawLabelImageParamsRef(new DrawLabelImageParams
+                    {
+                        Image = value[i]
+                    });
+
+                    newRef.Value.NextImage = ImageParams.NextImage;
+
+                    ImageParams.NextImage = newRef;
+                }
             }
 
             /// <summary>
