@@ -408,6 +408,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets a reference to the next image instance, allowing to specify multiple images for the item.
+        /// </summary>
+        [Browsable(false)]
+        public ItemImageInfoRef? NextImage
+        {
+            get
+            {
+                return imageInfo.NextImage;
+            }
+
+            set
+            {
+                imageInfo.NextImage = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the item is checked.
         /// Uses <see cref="CheckState"/> internally.
         /// </summary>
@@ -3095,6 +3112,11 @@ namespace Alternet.UI
             public HorizontalAlignment? HorizontalAlignment;
 
             /// <summary>
+            /// Gets or sets a reference to the next image instance, allowing to specify multiple images for the item.
+            /// </summary>
+            public ItemImageInfoRef? NextImage;
+
+            /// <summary>
             /// Initializes a new instance of the <see cref="ItemImageInfo"/> struct.
             /// </summary>
             public ItemImageInfo()
@@ -3125,6 +3147,18 @@ namespace Alternet.UI
             {
                 CachedSvg.ResetCachedImages();
             }
+        }
+
+        /// <summary>
+        /// Contains a reference to an <see cref="ItemImageInfo"/> instance,
+        /// allowing for shared access and modification of the image information across different parts of the application.
+        /// </summary>
+        public class ItemImageInfoRef
+        {
+            /// <summary>
+            /// Gets or sets the <see cref="ItemImageInfo"/> instance that this reference points to.
+            /// </summary>
+            public ItemImageInfo Value;
         }
 
         /// <summary>
