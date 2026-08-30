@@ -18,6 +18,7 @@ namespace Alternet.UI
     /// <summary>
     /// Represents an item used in list controls. This class has <see cref="Text"/>,
     /// <see cref="Value"/> and other properties which allow to customize look and behavior of the item.
+    /// After you change any property of the item, you need to repaint the control which contains this item.
     /// </summary>
     public partial class ListControlItem : BaseControlItem, IComparable<ListControlItem>
     {
@@ -71,6 +72,11 @@ namespace Alternet.UI
         public static bool DrawDebugCornersOnElements = false;
 
         private CachedSvgImage<Image> cachedSvg = new();
+        private int? imageIndex;
+        private bool isImageAfterText;
+        private VerticalAlignment? imageVerticalAlignment;
+        private HorizontalAlignment? imageHorizontalAlignment;
+
         private string? text;
         private string? displayText;
         private HVAlignment alignment = DefaultItemAlignment;
@@ -78,7 +84,6 @@ namespace Alternet.UI
         private TextHorizontalAlignment? textLineAlignment;
         private Coord? textLineDistance;
         private Coord minHeight;
-        private int? imageIndex;
         private CheckState checkState;
         private FontStyle? fontStyle;
         private Font? font;
@@ -87,8 +92,6 @@ namespace Alternet.UI
         private bool? checkBoxAllowAllStatesForUser;
         private bool? checkBoxVisible;
         private bool? isToolTipVisible;
-
-        private bool isImageAfterText;
         private bool isVerticalOrientation;
         private bool canRemove = true;
         private bool hideSelection;
@@ -116,6 +119,7 @@ namespace Alternet.UI
         private ObjectUniqueId? columnId;
         private MnemonicMarkerHelper mnemonicMarkerHelper = new();
         private bool? checkBoxEnabled;
+        private Thickness checkBoxMargin;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
@@ -265,12 +269,20 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets vertical alignment of the image inside the item.
         /// </summary>
-        public virtual VerticalAlignment? ImageVerticalAlignment { get; set; }
+        public virtual VerticalAlignment? ImageVerticalAlignment
+        {
+            get => imageVerticalAlignment;
+            set => imageVerticalAlignment = value;
+        }
 
         /// <summary>
         /// Gets or sets horizontal alignment of the image inside the item.
         /// </summary>
-        public virtual HorizontalAlignment? ImageHorizontalAlignment { get; set; }
+        public virtual HorizontalAlignment? ImageHorizontalAlignment
+        {
+            get => imageHorizontalAlignment;
+            set => imageHorizontalAlignment = value;
+        }
 
         /// <summary>
         /// Gets or sets horizontal alignment of the text line within text block.
@@ -519,7 +531,11 @@ namespace Alternet.UI
         /// Gets or sets margin around the check box.
         /// This property is used only if check box is visible for the item.
         /// </summary>
-        public virtual Thickness CheckBoxMargin { get; set; }
+        public virtual Thickness CheckBoxMargin
+        {
+            get => checkBoxMargin;
+            set => checkBoxMargin = value;
+        }
 
         /// <summary>
         /// Gets or sets whether to paint check box as radio button.
