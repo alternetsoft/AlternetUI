@@ -1,3 +1,59 @@
+# 1.1.8 (2026 August 31)
+
+- Create controls: PinCodePicker, YearPicker, GenericControlAndLabel, MonthAndDayPicker, RelativeWeekdayOfMonthPicker, ControlAndSuffix, XRadioButtonAndSuffix, XIntPickerWithLabels, ScrollableRepeatPatternPicker, ScrollViewer{TControl}, DayOfWeekPicker, MonthPicker, RelativeWeekdayPicker, ScrollableGenericControl, RelativeWeekdayPicker.
+- PanelSettings: Refactor type-to-control mapping. Replaced hardcoded type checks and method calls with extensible delegate maps (TypeCodeToControl, DefaultTypeDelegates and ItemToControlMethods).
+- PanelSettings: Introduced configurable defaults for button and link-label margins, and applied them when creating those controls.
+- PanelSettings.AddInputs.
+- Calendar: Add MarkWithRule method. It marks calendar days matching a RepeatPatternRule with given date attributes.
+- DateUtils: Add DateOnly related helper methods.
+- Demo: Add RepeatPatternPicker to calendar page and implement marking of days with repeat pattern rules.
+- Implement ShowAccentMarker feature in VirtualListBox and its descendants.
+- ColorListBox: Fix checkboxes painting position.
+- Extend ListBoxItemPaintEventArgs with customization properties: ImageOverride and HideCheckboxes.
+- VirtualListBox: Refactor list item checkbox drawing flow. Extracted checkbox rendering into a new static DrawCheckBox helper.
+- Add GenericImageList - a faster and more flexible replacement for the existing ImageList class. It can be used with generic controls.
+- ListControlItem: Allow to specify multiple images using AdditionalImages property and related methods.
+- Make SvgImage image APIs non-nullable.
+- Graphics.DrawLabelWithImages - it allows to draw a label with multiple linked images, respecting text visibility and image order.
+- Fix default layout for different picker controls.
+- Thickness: WithTopBottom and WithLeftRight.
+- PopupCalendar: Add Today button in the bottom toolbar.
+- PopupWindow: BottomToolBarPanel, LeftBottomToolBar.
+- BaseObjectWithNotify: Add new SetProperty overload.
+- BaseObjectWithNotify: Remove GetNewFieldValue as it raised changed event before setting the value.
+- Create classes: ImageLists.
+- Inherit TransparentPanel from HiddenGenericBorder.
+- Inherit GenericControlAndPicture from TransparentPanel.
+- Change VerticalLine to inherit from GenericControl.
+- PanelSettings: Fix exception if value is nulllable enum.
+- ColorListBox: TextOverItemImageStyle, DrawTextOverItemImage.
+- XIntPicker.DefaultMinWidth, BaseCollection.EnsureCountAtLeast, VirtualListBox.PaintText, Font.HasGlyph, SpeedButtonWithListPopup.ChangeItemsCase.
+- Calculator: IsDisplayReadOnly, IsPasswordDisplay.
+- Add IsPassword prop to Label, InnerPopupTextBox, EditableListPicker, SpeedButton
+- XRadioButton: Introduce a new RadioSiblings property to allow callers to define the radio buttons participating in group auto-uncheck behavior. 
+- Make font family names getter thread-safe.
+- Fix exception in system settings called on generic control.
+- FontFactory now provides a cached DefaultSymbolFont with lazy initialization and a setter for overrides.
+- Calculator: Reworks button system to use a typed ButtonKind enum, centralizing button text mapping and click handling. Adds public accessors and helpers to get buttons by kind and control visibility for operator, clear, clear-last, sign, decimal, parenthesis, and display elements. 
+- Fix generic control repaint on layout change.
+- Fix TabControl.ContentVisible property behavior.
+- Inherit VerticalLine from GenericControl.
+- Add culture-aware month and day name helpers.
+- SpeedEnumButton: Fix display text for enum elements.
+- Create date related enums and classes: MonthNamesKind, ExtendedDayOfWeek, DayNamesKind, DaysOfWeek, CalendarMonth, ScheduleRepeatPattern, RelativeWeekday.
+- Add RotateFlip to PictrureBox and ImageDrawable.
+- Inherit XScrollBar from generic control
+- Crteate RepeatPatternRule and other repeat pattern rule classses (for daily, weekly, monthly, yearly repeat patterns).
+- ImageDrawable and PictureBox: Fixed painting in disabled state.
+- PictureBox: ClearImage now also clears Icon property.
+- PictureBox: Remove extra invalidate on size changed.
+- ImageDrawable: Add Images and ImageSets properties
+- Bitmap: new constructor from SKBitmap.
+- IconSet: Fixed load exception.
+- New RepeatPatternPicker control (unfinished).
+
+---
+
 # 1.1.7 (2026 August 23)
 
 - Add controls: ScrollablePanelSettings, GenericDateEdit, GenericControlAndButton, GenericControlAndPicture, DrawingResourcePicker.
