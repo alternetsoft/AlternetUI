@@ -1112,11 +1112,11 @@ namespace Alternet.UI
                 return true;
             }
             else
-            if (member is FieldInfo fieldInfo)
-            {
-                fieldInfo.SetValue(instance, value);
-                return true;
-            }
+                if (member is FieldInfo fieldInfo)
+                {
+                    fieldInfo.SetValue(instance, value);
+                    return true;
+                }
 
             return false;
         }
@@ -1149,11 +1149,11 @@ namespace Alternet.UI
                 return true;
             }
             else
-            if (member is FieldInfo fieldInfo)
-            {
-                result = GetFieldValue(instance, fieldInfo, defValue);
-                return true;
-            }
+                if (member is FieldInfo fieldInfo)
+                {
+                    result = GetFieldValue(instance, fieldInfo, defValue);
+                    return true;
+                }
 
             result = defValue;
             return false;
@@ -1554,6 +1554,49 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Returns array of <see cref="TypeCode"/> values for signed and/or unsigned integer number types.
+        /// </summary>
+        /// <param name="signed">Whether to include signed integer types.</param>
+        /// <param name="unsigned">Whether to include unsigned integer types.</param>
+        /// <returns>Array of <see cref="TypeCode"/> values.</returns>
+        public static TypeCode[] GetIntTypeCodes(bool signed = true, bool unsigned = true)
+        {
+            if (signed)
+            {
+                if (unsigned)
+                {
+                    return new TypeCode[]
+                    {
+                        TypeCode.SByte,
+                        TypeCode.Int16,
+                        TypeCode.Int32,
+                        TypeCode.Int64,
+                        TypeCode.Byte,
+                        TypeCode.UInt16,
+                        TypeCode.UInt32,
+                        TypeCode.UInt64,
+                    };
+
+                }
+                else
+                {
+                    return new TypeCode[] { TypeCode.SByte, TypeCode.Int16, TypeCode.Int32, TypeCode.Int64 };
+                }
+            }
+            else
+            {
+                if (unsigned)
+                {
+                    return new TypeCode[] { TypeCode.Byte, TypeCode.UInt16, TypeCode.UInt32, TypeCode.UInt64 };
+                }
+                else
+                {
+                    return Array.Empty<TypeCode>();
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns <c>true</c> if <paramref name="typeCode"/> is a signed integer number type
         /// (sbyte, short, int, long).
         /// </summary>
@@ -1786,7 +1829,7 @@ namespace Alternet.UI
             var types = GetTypeDescendants(type);
             foreach (var item in types)
             {
-                if(item.FullName is null)
+                if (item.FullName is null)
                     continue;
 
                 result.Add(item.FullName, item);
@@ -2096,7 +2139,7 @@ namespace Alternet.UI
         {
             try
             {
-                if(methodInfo is null)
+                if (methodInfo is null)
                 {
                     if (paramTypes == null)
                     {
@@ -2106,7 +2149,7 @@ namespace Alternet.UI
                     }
                     else
                     {
-                        if(type is not null)
+                        if (type is not null)
                             methodInfo = FindNonGenericMethod(type, methodName, paramTypes);
                     }
                 }
