@@ -306,4 +306,39 @@ namespace Alternet.UI
             }
         }
     }
+
+    /// <summary>
+    /// Represents a scrollable area that can contain other visible elements, with a specific type of control hosted within it.
+    /// </summary>
+    /// <typeparam name="TControl">The type of the control to be hosted within the scrollable area.</typeparam>
+    public partial class ScrollViewer<TControl> : ScrollViewer
+        where TControl : AbstractControl, new()
+    {
+        private readonly TControl control;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollViewer{TControl}"/> class
+        /// with the specified instance of the control to be hosted within the scrollable area.
+        /// </summary>
+        /// <param name="instance">The instance of the control to be hosted within the scrollable area.</param>
+        public ScrollViewer(TControl? instance)
+        {
+            control = instance ?? new TControl();
+            control.Parent = base.Content;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollViewer{TControl}"/> class.
+        /// </summary>
+        public ScrollViewer()
+            : this(null)
+        {
+        }
+
+        /// <summary>
+        /// Gets the main control which is hosted within the <see cref="ScrollViewer{TControl}"/>.
+        /// </summary>
+        [Browsable(false)]
+        public TControl ScrolledControl => control;
+    }
 }
