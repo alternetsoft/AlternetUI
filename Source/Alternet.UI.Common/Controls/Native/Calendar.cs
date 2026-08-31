@@ -866,6 +866,27 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Marks all days that match the given <see cref="RepeatPatternRule"/> with
+        /// the given <see cref="ICalendarDateAttr"/> attributes. After current page is changed,
+        /// this method should be called again to mark dates in the new month.
+        /// </summary>
+        /// <param name="rule">The repeat pattern rule to match dates.</param>
+        /// <param name="attr">The attributes to apply to the matching dates. Pass <c>null</c> to reset attributes.</param>
+        public virtual void MarkWithRule(RepeatPatternRule rule, ICalendarDateAttr? attr)
+        {
+            RepeatPatternRule.RuleGetDatesParams prm = new();
+            prm.MinDate = FirstDateOfMonth;
+            prm.MaxDate = LastDateOfMonth;
+
+            var result = rule.GetDates(prm).Dates;
+
+            foreach (var date in result)
+            {
+                SetAttr(date.Day, attr);
+            }
+        }
+
+        /// <summary>
         /// Marks all weekends as holidays. After current page is changed,
         /// this method should be called again to mark weekends in the new month.
         /// </summary>

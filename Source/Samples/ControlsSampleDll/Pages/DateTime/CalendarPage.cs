@@ -244,16 +244,7 @@ namespace ControlsSample
 
             if (HighlightDates)
             {
-                RepeatPatternRule.RuleGetDatesParams prm = new();
-                prm.MinDate = calendar.FirstDateOfMonth;
-                prm.MaxDate = calendar.LastDateOfMonth;
-
-                var result = patternPicker.Value.GetDates(prm).Dates.ToArray();
-
-                foreach (var date in result)
-                {
-                    calendar.SetAttr(date.Day, greenColor);
-                }
+                calendar.MarkWithRule(patternPicker.Value, greenColor);
             }
             else
             {
