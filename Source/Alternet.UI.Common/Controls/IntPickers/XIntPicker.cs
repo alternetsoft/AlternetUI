@@ -14,6 +14,11 @@ namespace Alternet.UI
     public partial class XIntPicker : ToolBar
     {
         /// <summary>
+        /// Gets or sets default minimum width for the <see cref="XIntPicker"/> control.
+        /// </summary>
+        public static float DefaultMinWidth = 100;
+
+        /// <summary>
         /// Gets or sets default text picker margin.
         /// </summary>
         public static Thickness DefaultTextPickerMargin = (5, 0, 5, 0);
@@ -65,6 +70,7 @@ namespace Alternet.UI
             textPicker.Margin = DefaultTextPickerMargin;
             textPicker.Label.Margin = textPicker.Label.Margin.WithLeftRight(0, 0);
             HasBorder = true;
+            MinWidth = DefaultMinWidth;
             UseControlColors(true);
 
             textPicker.UseTheme = SpeedButton.KnownTheme.None;
