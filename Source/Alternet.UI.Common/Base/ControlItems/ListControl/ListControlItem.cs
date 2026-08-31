@@ -91,14 +91,35 @@ namespace Alternet.UI
         private BaseCollection<ItemImageInfoRef>? additionalImages;
         private string? text;
         private string? displayText;
-        private HVAlignment alignment = DefaultItemAlignment;
+        private object? value;
         private IndexedValues<ObjectUniqueId, ContainerRelatedData>? containerRelated;
+        private CheckState checkState;
+        private bool isVisible = true;
+        private Action? action;
+        private Action? doubleClickAction;
+        private ObjectUniqueId? group;
+        private Graphics.DrawElementParams[]? prefixElements;
+        private Graphics.DrawElementParams[]? suffixElements;
+        private BaseCollection<ListControlItem>? cells;
+        private object? toolTip;
+        private ObjectUniqueId? columnId;
+        private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawBackgroundAction;
+        private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawForegroundAction;
+        private MnemonicMarkerHelper mnemonicMarkerHelper = new();
+        private DrawLabelFlags labelFlags;
+
+
+        private HVAlignment alignment = DefaultItemAlignment;
         private TextHorizontalAlignment? textLineAlignment;
         private Coord? textLineDistance;
         private Coord minHeight;
-        private CheckState checkState;
         private FontStyle? fontStyle;
         private Font? font;
+        private Color? foregroundColor;
+        private Color? backgroundColor;
+        private BorderSettings? border;
+        private Thickness foregroundMargin;
+        private Thickness checkBoxMargin;
 
         private bool? checkBoxThreeState;
         private bool? checkBoxAllowAllStatesForUser;
@@ -110,27 +131,8 @@ namespace Alternet.UI
         private bool hideFocusRect;
         private bool isRadioButton;
         private bool isCheckRightAligned;
-        private bool isVisible = true;
-
-        private Color? foregroundColor;
-        private Color? backgroundColor;
-        private BorderSettings? border;
-        private Thickness foregroundMargin;
-        private DrawLabelFlags labelFlags;
-        private object? value;
-        private Action? action;
-        private Action? doubleClickAction;
-        private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawBackgroundAction;
-        private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawForegroundAction;
-        private ObjectUniqueId? group;
-        private Graphics.DrawElementParams[]? prefixElements;
-        private Graphics.DrawElementParams[]? suffixElements;
-        private BaseCollection<ListControlItem>? cells;
-        private object? toolTip;
-        private ObjectUniqueId? columnId;
-        private MnemonicMarkerHelper mnemonicMarkerHelper = new();
         private bool? checkBoxEnabled;
-        private Thickness checkBoxMargin;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
         /// with the default value for the <see cref="Text"/> property.
