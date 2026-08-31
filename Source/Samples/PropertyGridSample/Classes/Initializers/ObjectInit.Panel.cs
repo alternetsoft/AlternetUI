@@ -69,6 +69,10 @@ namespace PropertyGridSample
 
             panel.AddInput("This is TextBox:", samplePropContainer, nameof(SamplePropContainer.SampleString));
 
+            panel.AddLinkLabel("This is LinkLabel", () => App.Log("LinkLabel clicked"));
+
+            panel.AddButton("This is Button", () => App.Log("Button clicked"));
+
             panel.AddHorizontalLine();
 
             panel.AddRadioButtons<DayOfWeek>(

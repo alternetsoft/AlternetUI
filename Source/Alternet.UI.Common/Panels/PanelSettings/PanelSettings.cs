@@ -28,6 +28,16 @@ namespace Alternet.UI
         public static Thickness DefaultHorizontalLineMargin = (5, 10, 5, 10);
 
         /// <summary>
+        /// Gets or sets default button margin.
+        /// </summary>
+        public static Thickness DefaultButtonMargin = (5, 5, 5, 5);
+
+        /// <summary>
+        /// Gets or sets default link label margin.
+        /// </summary>
+        public static Thickness DefaultLinkLabelMargin = (5, 5, 5, 5);
+
+        /// <summary>
         /// Gets or sets default margin for the check image of <see cref="XCheckBox"/> control in this panel.
         /// </summary>
         public static Thickness DefaultCheckImageMargin = 0;
@@ -39,10 +49,22 @@ namespace Alternet.UI
         public static BaseDictionary<Type, Type> DefaultTypeConverters = new();
 
         /// <summary>
+        /// Gets or sets a default dictionary of item types to delegates conversions.
+        /// This dictionary is used to convert <see cref="PanelSettingsItem"/> to the appropriate control.
+        /// </summary>
+        public static BaseDictionary<Type, Func<ItemToControlDelegate?>?> DefaultTypeDelegates = new();
+
+        /// <summary>
         /// Gets or sets a value indicating whether the combo box mouse
         /// wheel is allowed by default when it is used in the <see cref="PanelSettings"/>.
         /// </summary>
         public static bool DefaultAllowComboBoxMouseWheel = false;
+
+        /// <summary>
+        /// Gets or sets a dictionary that maps <see cref="TypeCode"/> values
+        /// to corresponding <see cref="ItemToControlDelegate"/> methods.
+        /// </summary>
+        public static EnumArray<TypeCode, Func<ItemToControlDelegate?>?> TypeCodeToControl = new();
 
         /// <summary>
         /// Gets or sets default spacer size.
@@ -68,6 +90,14 @@ namespace Alternet.UI
             RegisterDefaultConversions(RegisterConversion);
 
             DefaultTypeConverters.Add(typeof(float), typeof(SingleConverter));
+
+            TypeCodeToControl.SetValues(() => CreateOrUpdateIntPickerOrTextBox, AssemblyUtils.GetIntTypeCodes(true, true));
+
+            DefaultTypeDelegates[typeof(bool)] = () => ItemToControlMethods.CreateOrUpdateCheckBox;
+            DefaultTypeDelegates[typeof(Color)] = () => ItemToControlMethods.CreateOrUpdateColorEdit;
+            DefaultTypeDelegates[typeof(TimeOnly)] = () => ItemToControlMethods.CreateOrUpdateTimeEdit;
+            DefaultTypeDelegates[typeof(DateOnly)] = () => ItemToControlMethods.CreateOrUpdateDateEdit;
+            DefaultTypeDelegates[typeof(DateTime)] = () => ItemToControlMethods.CreateOrUpdateDateTimeEdit;
         }
 
         /// <summary>
@@ -239,6 +269,7 @@ namespace Alternet.UI
             result.HorizontalAlignment = HorizontalAlignment.Left;
             result.LinkClicked -= LinkLabelClicked;
             result.LinkClicked += LinkLabelClicked;
+            result.Margin = DefaultLinkLabelMargin;
 
             void LinkLabelClicked(object? sender, CancelEventArgs e)
             {
@@ -287,45 +318,22 @@ namespace Alternet.UI
 
             Type realType = AssemblyUtils.GetRealType(item.ValueType);
             var typeCode = Type.GetTypeCode(realType);
-            var isIntNumber = AssemblyUtils.IsTypeCodeSignedInt(typeCode) || AssemblyUtils.IsTypeCodeUnsignedInt(typeCode);
 
-            if (isIntNumber)
+            var proc = TypeCodeToControl[typeCode]?.Invoke();
+
+            if (proc is not null)
             {
-                var useUpDown = item.CreateArg?.CustomFlags["UseUpDown"] ?? false;
+                return proc(sender, item, control);
+            }
 
-                if (useUpDown)
+            if (DefaultTypeDelegates.TryGetValue(realType, out var fnProc))
+            {
+                proc = fnProc?.Invoke();
+
+                if (proc is not null)
                 {
-                    return ItemToControlMethods.CreateOrUpdateIntPicker(sender, item, control);
+                    return proc(sender, item, control);
                 }
-                else
-                {
-                    return ItemToControlMethods.CreateOrUpdateTextBox(sender, item, control);
-                }
-            }
-
-            if (realType == typeof(bool))
-            {
-                return ItemToControlMethods.CreateOrUpdateCheckBox(sender, item, control);
-            }
-
-            if (realType == typeof(Color))
-            {
-                return ItemToControlMethods.CreateOrUpdateColorEdit(sender, item, control);
-            }
-
-            if (realType == typeof(TimeOnly))
-            {
-                return ItemToControlMethods.CreateOrUpdateTimeEdit(sender, item, control);
-            }
-
-            if (realType == typeof(DateOnly))
-            {
-                return ItemToControlMethods.CreateOrUpdateDateEdit(sender, item, control);
-            }
-
-            if (realType == typeof(DateTime))
-            {
-                return ItemToControlMethods.CreateOrUpdateDateTimeEdit(sender, item, control);
             }
 
             var result = ItemToControlMethods.CreateOrUpdateTextBox(sender, item, control);
@@ -346,6 +354,8 @@ namespace Alternet.UI
         {
             var result = CreateOrUpdateControl<XButton>(sender, item, control);
             UpdateText(sender, item, result);
+
+            result.Margin = DefaultButtonMargin;
 
             result.ClickAction = () =>
             {
@@ -544,6 +554,32 @@ namespace Alternet.UI
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Creates or updates an integer picker or text box control for the specified item.
+        /// Boolean flag "UseUpDown" in <see cref="PanelSettingsItem.CreateArg"/> is used to determine which control to create.
+        /// </summary>
+        /// <param name="sender">The <see cref="PanelSettings"/> instance that is sending the request.</param>
+        /// <param name="item">Item to convert.</param>
+        /// <param name="control">The existing control which properties should be updated using item's properties.
+        /// Can be null, in this case new control need to be created.</param>
+        /// <returns>The control used to represent <see cref="PanelSettingsItem"/>.</returns>
+        public static object? CreateOrUpdateIntPickerOrTextBox(
+            PanelSettings sender,
+            PanelSettingsItem item,
+            object? control)
+        {
+            var useUpDown = item.CreateArg?.CustomFlags["UseUpDown"] ?? false;
+
+            if (useUpDown)
+            {
+                return ItemToControlMethods.CreateOrUpdateIntPicker(sender, item, control);
+            }
+            else
+            {
+                return ItemToControlMethods.CreateOrUpdateTextBox(sender, item, control);
+            }
         }
 
         /// <summary>
