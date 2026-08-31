@@ -466,7 +466,7 @@ namespace PropertyGridSample
         public static void InitScrollablePanelSettings(ScrollablePanelSettings sv)
         {
             sv.SuggestedHeight = 300;
-            InitPanelSettings(sv.Panel);
+            InitPanelSettings(sv.ScrolledControl);
         }
 
         public static void InitStackPanel(StackPanel panel)

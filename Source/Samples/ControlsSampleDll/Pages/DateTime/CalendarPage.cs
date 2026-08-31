@@ -10,6 +10,7 @@ namespace ControlsSample
     {
         private readonly Calendar calendar = new();
         private readonly TabControl tabControl = new();
+        private bool highlightDates;
 
         static CalendarPage()
         {
@@ -141,6 +142,26 @@ namespace ControlsSample
 
                 panelSettings.AddInput("Selected date:", calendar, nameof(Calendar.AsDateOnly));
 
+                // Repeat Pattern Panel
+
+                var patternPickerContainer = new ScrollableRepeatPatternPicker();
+                var patternPicker = patternPickerContainer.ScrolledControl;
+
+                var patternSettings = new PanelSettings();
+                patternSettings.SetMinChildMarginLeftRight();
+                patternSettings.AddInput("Highlight dates", this, nameof(CalendarPage.HighlightDates));
+
+                patternPicker.Children.Prepend(patternSettings);
+
+                patternPickerContainer.Margin = 5;
+                patternPickerContainer.Title = "Highlight";
+                tabControl.Add(patternPickerContainer);
+
+                patternPickerContainer.ValueChanged += (s, e) =>
+                {
+                    App.Log($"RepeatPatternPicker: ValueChanged");
+                };
+
                 // Other initializations
 
                 useGenericCheckBox.BindBoolProp(setDayColorsButton, nameof(XButton.Enabled));
@@ -187,6 +208,15 @@ namespace ControlsSample
                 calendar.SetAttr(5, dateAttr);
                 calendar.SetAttr(7, dateAttr);
                 calendar.Refresh();
+            }
+        }
+
+        public bool HighlightDates
+        {
+            get => highlightDates;
+            set
+            {
+                highlightDates = value;
             }
         }
 
