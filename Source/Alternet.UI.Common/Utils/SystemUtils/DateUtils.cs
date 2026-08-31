@@ -379,6 +379,28 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the earlier of two <see cref="DateOnly"/> values.
+        /// </summary>
+        /// <param name="a">The first date to compare.</param>
+        /// <param name="b">The second date to compare.</param>
+        /// <returns>The earlier of the two dates.</returns>
+        public static DateOnly Min(DateOnly a, DateOnly b)
+        {
+            return a < b ? a : b;
+        }
+
+        /// <summary>
+        /// Gets the later of two <see cref="DateOnly"/> values.
+        /// </summary>
+        /// <param name="a">The first date to compare.</param>
+        /// <param name="b">The second date to compare.</param>
+        /// <returns>The later of the two dates.</returns>
+        public static DateOnly Max(DateOnly a, DateOnly b)
+        {
+            return a > b ? a : b;
+        }
+
+        /// <summary>
         /// Determines whether the specified <see cref="DateOnly"/> falls on a weekend (Saturday or Sunday).
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
