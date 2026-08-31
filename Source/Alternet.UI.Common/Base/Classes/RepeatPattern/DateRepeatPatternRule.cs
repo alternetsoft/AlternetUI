@@ -166,21 +166,25 @@ namespace Alternet.UI
 
             IEnumerable<DateOnly> GetDatesEndsAfterOccurrence()
             {
+                if (OccurrenceCount <= 0)
+                    yield break;
+
                 var currentDate = StartDate;
                 var maxDate = prm.MaxDate;
-                var returnedCount = 0;
+                var numProcessed = 0;
 
                 while (currentDate <= maxDate)
                 {
-                    if (currentDate >= prm.MinDate)
+                    if (predicate(currentDate))
                     {
-                        if (predicate(currentDate))
+                        if (currentDate >= prm.MinDate)
                         {
                             yield return currentDate;
-                            returnedCount++;
-                            if (returnedCount >= OccurrenceCount)
-                                yield break;
                         }
+
+                        numProcessed++;
+                        if (numProcessed >= OccurrenceCount)
+                            yield break;
                     }
 
                     currentDate = nextDate(currentDate);

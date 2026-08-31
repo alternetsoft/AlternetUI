@@ -80,6 +80,7 @@ namespace Alternet.UI
             {
                 data.EndDate = endDatePicker.MainControl.AsDateOnlyOrToday;
             };
+            
             endsOnRadioButton = new(endDatePicker);
             endsOnRadioButton.IsChecked = data.EndCondition == DateRepeatPatternRule.EndConditionKind.OnDate;
             endsOnRadioButton.Parent = this;

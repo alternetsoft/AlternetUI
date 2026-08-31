@@ -27,6 +27,7 @@ namespace ControlsSample
         {
             patternPickerContainer = new ScrollableRepeatPatternPicker();
             patternPicker = patternPickerContainer.ScrolledControl;
+            patternPicker.Value.Kind = ScheduleRepeatPattern.Daily;
 
             blueColor = calendar.CreateDateAttr();
             blueColor.TextColor = LightDarkColors.Blue;
@@ -241,8 +242,6 @@ namespace ControlsSample
         {
             calendar.ResetAttrAll();
 
-            calendar.MarkWeekendsAsHolidays();
-
             if (HighlightDates)
             {
                 RepeatPatternRule.RuleGetDatesParams prm = new();
@@ -255,6 +254,10 @@ namespace ControlsSample
                 {
                     calendar.SetAttr(date.Day, greenColor);
                 }
+            }
+            else
+            {
+                calendar.MarkWeekendsAsHolidays();
             }
         }
 

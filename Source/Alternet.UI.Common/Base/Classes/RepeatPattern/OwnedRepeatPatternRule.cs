@@ -51,5 +51,14 @@ namespace Alternet.UI
             {
             }
         }
+
+        /// <inheritdoc/>
+        public override EndConditionKind EndCondition
+        {
+            get => owner.EndCondition;
+            set
+            {
+            }
+        }
     }
 }
