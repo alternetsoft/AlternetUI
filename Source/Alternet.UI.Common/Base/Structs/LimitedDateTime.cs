@@ -26,11 +26,11 @@ namespace Alternet.UI
     /// </summary>
     internal partial class RestrictedDateTime : BaseObject
     {
+        private readonly IRestrictedDateTimeContainer container;
         private DateTime max = DateTime.MaxValue;
         private DateTime min = DateTime.MinValue;
         private bool useMinDate = false;
         private bool useMaxDate = false;
-        private IRestrictedDateTimeContainer container;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RestrictedDateTime"/> class.
