@@ -121,6 +121,18 @@ namespace ControlsSample
             {
                 listBox.CheckBoxVisible = !listBox.CheckBoxVisible;
             });
+
+            this.ContextMenuStrip.Add("Copy checked item to clipboard", () =>
+            {
+                StringBuilder sb = new();
+
+                foreach (var itemIndex in listBox.CheckedIndices)
+                {
+                    sb.AppendLine(listBox.Items[itemIndex].Text);
+                }
+
+                Clipboard.SetText(sb.ToString());
+            });
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)
