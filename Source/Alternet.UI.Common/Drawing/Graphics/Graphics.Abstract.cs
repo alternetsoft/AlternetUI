@@ -15,10 +15,9 @@ namespace Alternet.Drawing
         public abstract bool IsOk { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the SkiaSharp canvas is supported via <see cref="Canvas"/> property.
-        /// If false, the <see cref="Canvas"/> property will throw an exception if accessed.
+        /// Gets or sets the current smoothing mode for this <see cref="Graphics"/> instance.
         /// </summary>
-        public bool SkiaEnabled => BackendType == GraphicsBackendType.SkiaSharp;
+        public abstract SmoothingMode SmoothingMode { get; set; }
 
         /// <summary>
         /// Gets the SkiaSharp canvas associated with this Graphics object.
@@ -69,6 +68,36 @@ namespace Alternet.Drawing
             Brush brush,
             RectD rectangle,
             Coord cornerRadius);
+
+        /// <summary>
+        /// Saves the current state of the canvas.
+        /// </summary>
+        /// <remarks>
+        /// This call saves the current state (matrix, clip, and draw filter), and pushes a copy onto
+        /// a private stack. Subsequent calls to translate, scale, rotate, skew, concatenate
+        /// or clipping path or drawing filter all operate on this copy. When the call
+        /// to <see cref="Restore()"/> is made, the previous settings are restored.
+        /// This method should be overridden in a derived
+        /// class to implement the specific save logic.
+        /// </remarks>
+        public abstract GraphicsState Save();
+
+        /// <summary>
+        /// Restore the saved canvas state.
+        /// </summary>
+        /// <remarks>
+        /// This call balances a previous call to <see cref="Save()"/>, and is used to remove
+        /// all modifications to the matrix, clip and draw filter state since the last save call.
+        /// It is an error to restore more times than was previously saved.
+        /// This method should be overridden in a derived class to implement the specific restore logic.
+        /// </remarks>
+        public abstract void Restore();
+
+        /// <summary>
+        /// Restores the canvas to the specified state.
+        /// </summary>
+        /// <param name="state">The <see cref="GraphicsState"/> to restore.</param>
+        public abstract void Restore(GraphicsState state);
 
         /// <summary>
         /// Calls <see cref="FillRectangle(Brush, RectD)"/> and than <see cref="DrawRectangle"/>.

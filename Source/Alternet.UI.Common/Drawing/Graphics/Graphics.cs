@@ -53,9 +53,10 @@ namespace Alternet.Drawing
         public string? Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the current smoothing mode for this <see cref="Graphics"/> instance.
+        /// Gets a value indicating whether the SkiaSharp canvas is supported via <see cref="Canvas"/> property.
+        /// If false, the <see cref="Canvas"/> property will throw an exception if accessed.
         /// </summary>
-        public abstract SmoothingMode SmoothingMode { get; set; }
+        public bool SkiaEnabled => BackendType == GraphicsBackendType.SkiaSharp;
 
         /// <summary>
         /// Gets or sets a copy of the geometric world transformation for this
@@ -1024,36 +1025,6 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
-        /// Saves the current state of the canvas.
-        /// </summary>
-        /// <remarks>
-        /// This call saves the current state (matrix, clip, and draw filter), and pushes a copy onto
-        /// a private stack. Subsequent calls to translate, scale, rotate, skew, concatenate
-        /// or clipping path or drawing filter all operate on this copy. When the call
-        /// to <see cref="Restore()"/> is made, the previous settings are restored.
-        /// This method should be overridden in a derived
-        /// class to implement the specific save logic.
-        /// </remarks>
-        public abstract GraphicsState Save();
-
-        /// <summary>
-        /// Restore the saved canvas state.
-        /// </summary>
-        /// <remarks>
-        /// This call balances a previous call to <see cref="Save()"/>, and is used to remove
-        /// all modifications to the matrix, clip and draw filter state since the last save call.
-        /// It is an error to restore more times than was previously saved.
-        /// This method should be overridden in a derived class to implement the specific restore logic.
-        /// </remarks>
-        public abstract void Restore();
-
-        /// <summary>
-        /// Restores the canvas to the specified state.
-        /// </summary>
-        /// <param name="state">The <see cref="GraphicsState"/> to restore.</param>
-        public abstract void Restore(GraphicsState state);
-
-        /// <summary>
         /// Ensures that the transform stack depth remains balanced before
         /// and after the specified action is executed.
         /// </summary>
@@ -1061,7 +1032,7 @@ namespace Alternet.Drawing
         /// the balance of the transform stack.</param>
         /// <exception cref="InvalidOperationException">Thrown if the transform stack depth
         /// is unbalanced after the action is executed.</exception>
-        public void CheckTransformStackDepth(Action action)
+        public virtual void CheckTransformStackDepth(Action action)
         {
             var initialDepth = stack.Count;
             action();
@@ -1077,155 +1048,6 @@ namespace Alternet.Drawing
         protected virtual SKSamplingOptions GetEffectiveSamplingOptions()
         {
             return SamplingOptions ?? SKSamplingOptions.Default;
-        }
-
-        /// <summary>
-        /// Represents the parameters required to create a measure canvas.
-        /// </summary>
-        /// <remarks>This structure is used to encapsulate the configuration options or data necessary
-        /// for initializing a measure canvas. The specific parameters should
-        /// be defined within this structure to
-        /// ensure clarity and maintainability.</remarks>
-        public struct CanvasCreateParams : IEquatable<CanvasCreateParams>
-        {
-            private Coord scaleFactor;
-            private ControlRenderingFlags controlRenderingFlags;
-            private int? hashCode;
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="CanvasCreateParams"/> class.
-            /// </summary>
-            public CanvasCreateParams()
-                : this(null)
-            {
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="CanvasCreateParams"/>
-            /// class with the specified scale factor.
-            /// </summary>
-            /// <param name="scaleFactor">The scale factor to be applied to the canvas measurements.
-            /// If <see langword="null"/>, a default scale factor will be used.</param>
-            public CanvasCreateParams(Coord? scaleFactor)
-            {
-                this.scaleFactor = GraphicsFactory.ScaleFactorOrDefault(scaleFactor);
-            }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="CanvasCreateParams"/>
-            /// class with the specified scale factor and control rendering flags.
-            /// </summary>
-            /// <param name="scaleFactor">An optional scaling factor to be applied to the canvas.
-            /// If <see langword="null"/>, no scaling is applied.</param>
-            /// <param name="controlRenderingFlags">Flags that specify how controls should
-            /// be rendered on the canvas.</param>
-            public CanvasCreateParams(Coord? scaleFactor, ControlRenderingFlags controlRenderingFlags)
-                : this(scaleFactor)
-            {
-                this.controlRenderingFlags = controlRenderingFlags;
-            }
-
-            /// <summary>
-            /// Specifies the rendering options for a control.
-            /// </summary>
-            /// <remarks>This field defines the flags that determine how a control is rendered.
-            /// The value is typically a combination of flags from an enumeration,
-            /// allowing for fine-grained control over rendering behavior.</remarks>
-            public ControlRenderingFlags ControlRenderingFlags
-            {
-                readonly get => controlRenderingFlags;
-
-                set
-                {
-                    controlRenderingFlags = value;
-                    hashCode = null;
-                }
-            }
-
-            /// <summary>
-            /// Represents a scaling factor for a coordinate system.
-            /// </summary>
-            /// <remarks>This field can be used to adjust the scale of a coordinate system or
-            /// transform. Ensure that the value is appropriately set to avoid
-            /// unintended transformations.</remarks>
-            public Coord ScaleFactor
-            {
-                readonly get => scaleFactor;
-
-                set
-                {
-                    scaleFactor = value;
-                    hashCode = null;
-                }
-            }
-
-            /// <summary>
-            /// Determines whether two specified CanvasCreateParams instances are equal.
-            /// </summary>
-            /// <param name="left">The first CanvasCreateParams instance to compare.</param>
-            /// <param name="right">The second CanvasCreateParams instance to compare.</param>
-            /// <returns>true if the two CanvasCreateParams instances are equal; otherwise, false.</returns>
-            public static bool operator ==(CanvasCreateParams left, CanvasCreateParams right)
-            {
-                return left.Equals(right);
-            }
-
-            /// <summary>
-            /// Determines whether two CanvasCreateParams instances are not equal.
-            /// </summary>
-            /// <param name="left">The first CanvasCreateParams instance to compare.</param>
-            /// <param name="right">The second CanvasCreateParams instance to compare.</param>
-            /// <returns>true if the specified instances are not equal; otherwise, false.</returns>
-            public static bool operator !=(CanvasCreateParams left, CanvasCreateParams right)
-            {
-                return !(left == right);
-            }
-
-            /// <summary>
-            /// Gets the graphics backend type used for rendering.
-            /// </summary>
-            public readonly GraphicsBackendType GraphicsBackendType
-            {
-                get
-                {
-                    if (ControlRenderingFlags.HasFlag(ControlRenderingFlags.UseSkiaSharp))
-                        return GraphicsBackendType.SkiaSharp;
-                    else
-                        return GraphicsBackendType.WxWidgets;
-                }
-            }
-
-            /// <inheritdoc/>
-            public override int GetHashCode()
-            {
-                return hashCode ??= (ScaleFactor, controlRenderingFlags).GetHashCode();
-            }
-
-            /// <inheritdoc/>
-            public readonly override string ToString()
-            {
-                return $"ScaleFactor: {ScaleFactor}, ControlRenderingFlags: {ControlRenderingFlags}";
-            }
-
-            /// <inheritdoc/>
-            public readonly override bool Equals(object? obj)
-            {
-                return obj is CanvasCreateParams other && Equals(other);
-            }
-
-            /// <summary>
-            /// Determines whether the current instance is equal to another instance
-            /// of <see cref="CanvasCreateParams"/>.
-            /// </summary>
-            /// <param name="other">The <see cref="CanvasCreateParams"/> instance to compare
-            /// with the current instance.</param>
-            /// <returns><see langword="true"/> if the current instance is equal
-            /// to the <paramref name="other"/> instance; otherwise, <see langword="false"/>.</returns>
-            public readonly bool Equals(CanvasCreateParams other)
-            {
-                return ScaleFactor == other.ScaleFactor &&
-                    controlRenderingFlags == other.controlRenderingFlags;
-            }
         }
     }
 }
