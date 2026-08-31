@@ -136,7 +136,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets the currently selected date.
         /// </summary>
-        public abstract DateTime? Value { get; set; }
+        public abstract DateTime Value { get; set; }
 
         /// <summary>Gets or sets the minimum date and time that can be
         /// selected in the control.</summary>

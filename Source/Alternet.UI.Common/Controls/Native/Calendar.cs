@@ -197,25 +197,16 @@ namespace Alternet.UI
         /// <summary>
         /// Gets or sets selected date as <see cref="DateOnly"/>.
         /// </summary>
-        public virtual DateOnly? AsDateOnly
+        public virtual DateOnly AsDateOnly
         {
             get
             {
-                var value = Value;
-
-                if (value is null)
-                    return null;
-                return DateOnly.FromDateTime(value.Value);
+                return DateOnly.FromDateTime(Value);
             }
 
             set
             {
-                if (value is null)
-                    Value = null;
-                else
-                {
-                    Value = DateUtils.ToDateTime(TimeOnly.FromDateTime(Value ?? DateTime.Now), value.Value);
-                }
+                Value = DateUtils.ToDateTime(TimeOnly.FromDateTime(Value), value);
             }
         }
 
@@ -223,7 +214,7 @@ namespace Alternet.UI
         /// <remarks>
         /// When this property is changed from the code and not by the user, events are not fired.
         /// </remarks>
-        public override DateTime? Value
+        public override DateTime Value
         {
             get
             {
@@ -236,7 +227,7 @@ namespace Alternet.UI
             {
                 if (DisposingOrDisposed)
                     return;
-                Handler.Value = value ?? DateTime.Now;
+                Handler.Value = value;
             }
         }
 
@@ -317,6 +308,30 @@ namespace Alternet.UI
                     return;
                 Handler.SequentialMonthSelect = value;
                 PerformLayout();
+            }
+        }
+
+        /// <summary>
+        /// Gets the first date of the currently displayed month in the calendar.
+        /// </summary>
+        [Browsable(false)]
+        public DateOnly FirstDateOfMonth
+        {
+            get
+            {
+                return DateUtils.GetFirstDateOfMonth(AsDateOnly);
+            }
+        }
+
+        /// <summary>
+        /// Gets the last date of the currently displayed month in the calendar.
+        /// </summary>
+        [Browsable(false)]
+        public DateOnly LastDateOfMonth
+        {
+            get
+            {
+                return DateUtils.GetLastDateOfMonth(AsDateOnly);
             }
         }
 
@@ -463,16 +478,16 @@ namespace Alternet.UI
                     Handler.MondayFirst = false;
                 }
                 else
-                if (value == DayOfWeek.Monday)
-                {
-                    Handler.SundayFirst = false;
-                    Handler.MondayFirst = true;
-                }
-                else
-                {
-                    Handler.SundayFirst = false;
-                    Handler.MondayFirst = false;
-                }
+                    if (value == DayOfWeek.Monday)
+                    {
+                        Handler.SundayFirst = false;
+                        Handler.MondayFirst = true;
+                    }
+                    else
+                    {
+                        Handler.SundayFirst = false;
+                        Handler.MondayFirst = false;
+                    }
             }
         }
 
@@ -851,10 +866,26 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Marks all weekends as holidays. After current page is changed,
+        /// this method should be called again to mark weekends in the new month.
+        /// </summary>
+        public virtual void MarkWeekendsAsHolidays()
+        {
+            var weekEnds = DateUtils.GetWeekendsOfMonth(AsDateOnly);
+            foreach (var date in weekEnds)
+            {
+                SetHoliday(date.Day);
+            }
+        }
+
+        /// <summary>
         /// Sets the <see cref="ICalendarDateAttr"/> attributes for the given day.
         /// </summary>
         /// <param name="day">Day (in the range 1...31).</param>
         /// <param name="dateAttr">Day attributes. Pass <c>null</c> to reset attributes.</param>
+        /// <remarks>
+        /// After current page is changed, this method should be called again to set attributes for the new month.
+        /// </remarks>
         public virtual void SetAttr(int day, ICalendarDateAttr? dateAttr)
         {
             if (DisposingOrDisposed)

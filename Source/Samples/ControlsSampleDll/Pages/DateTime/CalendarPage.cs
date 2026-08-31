@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+
 using Alternet.UI;
 using Alternet.Drawing;
+using System.Collections.Generic;
 
 namespace ControlsSample
 {
@@ -11,6 +13,8 @@ namespace ControlsSample
         private readonly Calendar calendar = new();
         private readonly TabControl tabControl = new();
         private bool highlightDates;
+        private ICalendarDateAttr blueColor;
+        private ICalendarDateAttr greenColor;
 
         static CalendarPage()
         {
@@ -18,6 +22,12 @@ namespace ControlsSample
 
         public CalendarPage()
         {
+            blueColor = calendar.CreateDateAttr();
+            blueColor.TextColor = LightDarkColors.Blue;
+
+            greenColor = calendar.CreateDateAttr();
+            greenColor.TextColor = LightDarkColors.Green;
+
             Layout = LayoutStyle.Horizontal;
             calendar.Margin = 5;
             calendar.Alignment = (HorizontalAlignment.Left, VerticalAlignment.Top);
@@ -82,7 +92,7 @@ namespace ControlsSample
 
                 var markDaysButton = new XButton($"{GenericStrings.MarkDays} (2, 3)", MarkDays);
                 var selectTodayButton = new XButton(GenericStrings.Today, calendar.SelectToday);
-                var clearMarksButton = new XButton("Clear marks", ()=>calendar.MarkAll(false));
+                var clearMarksButton = new XButton("Clear marks", () => calendar.MarkAll(false));
                 var clearStylesButton = new XButton("Clear styles", calendar.ResetAttrAll);
 
                 new ControlSet(
@@ -97,7 +107,7 @@ namespace ControlsSample
                 rangePanel.Margin = 5;
                 rangePanel.Title = "Range";
                 tabControl.Add(rangePanel);
-                
+
                 var rangeAnyDateButton = new XButton(
                     $"{GenericStrings.Allow} {GenericStrings.AnyDate}",
                     RangeAnyDate_Click);
@@ -128,8 +138,8 @@ namespace ControlsSample
                     "First Day of Week:",
                     () => calendar.FirstDayOfWeek ?? DateUtils.SystemFirstDayOfWeek,
                     (value) => calendar.FirstDayOfWeek = value,
-                    itemTitles: [ "Sunday", "Monday" ],
-                    itemValues: [ DayOfWeek.Sunday, DayOfWeek.Monday ]);
+                    itemTitles: ["Sunday", "Monday"],
+                    itemValues: [DayOfWeek.Sunday, DayOfWeek.Monday]);
 
                 panelSettings.AddHorizontalLine();
 
@@ -160,6 +170,7 @@ namespace ControlsSample
                 patternPickerContainer.ValueChanged += (s, e) =>
                 {
                     App.Log($"RepeatPatternPicker: ValueChanged");
+                    UpdateHighlightedDates();
                 };
 
                 // Other initializations
@@ -216,7 +227,24 @@ namespace ControlsSample
             get => highlightDates;
             set
             {
+                if (highlightDates == value)
+                    return;
                 highlightDates = value;
+                UpdateHighlightedDates();
+            }
+        }
+
+        private void UpdateHighlightedDates()
+        {
+            calendar.ResetAttrAll();
+
+            calendar.MarkWeekendsAsHolidays();
+
+            if (HighlightDates)
+            {
+                calendar.SetAttr(5, blueColor);
+
+                calendar.SetAttr(8, greenColor);
             }
         }
 
@@ -249,7 +277,7 @@ namespace ControlsSample
 
         private void Calendar_DayDoubleClick(object? sender, EventArgs e)
         {
-            var s = calendar.Value?.ToString("yyyy-MM-dd");
+            var s = calendar.Value.ToString("yyyy-MM-dd");
             LogEvent($"DayDoubleClick {s}");
         }
 
@@ -266,11 +294,12 @@ namespace ControlsSample
         private void Calendar_PageChanged(object? sender, EventArgs e)
         {
             LogEvent("PageChanged");
+            UpdateHighlightedDates();
         }
 
         private void Calendar_SelectionChanged(object? sender, EventArgs e)
         {
-            var s = calendar.Value?.ToString("yyyy-MM-dd");
+            var s = calendar.Value.ToString("yyyy-MM-dd");
             LogEvent($"SelectionChanged {s}");
         }
 
