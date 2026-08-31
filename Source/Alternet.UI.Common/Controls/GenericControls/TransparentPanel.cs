@@ -10,7 +10,7 @@ namespace Alternet.UI
     /// It can be used to layout other generic controls.
     /// Do not add <see cref="Control"/> descendants to this panel, only generic control are allowed.
     /// </summary>
-    public partial class TransparentPanel : GenericControl
+    public partial class TransparentPanel : HiddenGenericBorder
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TransparentPanel"/> class.
