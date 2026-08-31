@@ -26,13 +26,13 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets the width of the line.
             /// </summary>
-            public Coord Width;
+            public Coord Width = 1f;
 
             /// <summary>
             /// Gets or sets the color of the first segment of the line.
             /// </summary>
             public Color? FirstColor;
-            
+
             /// <summary>
             /// Gets or sets the color of the second segment of the line.
             /// </summary>
@@ -51,17 +51,42 @@ namespace Alternet.Drawing
             /// <summary>
             /// Gets or sets the size of the first segment of the line.
             /// </summary>
-            public Coord FirstSize;             
+            public Coord FirstSize = 1f;
 
             /// <summary>
             /// Gets or sets the size of the second segment of the line.
             /// </summary>
-            public Coord SecondSize;
+            public Coord SecondSize = 1f;
 
             /// <summary>
             /// Gets or sets a value indicating whether the line is vertical or horizontal.
             /// </summary>
             public bool IsVertical;
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="DualColorLineParams"/> structure.
+            /// </summary>
+            public DualColorLineParams()
+            {
+            }
+
+            /// <summary>
+            /// Gets the bounds of the line based on the starting point, length, and width.
+            /// </summary>
+            public readonly RectD Bounds
+            {
+                get
+                {
+                    if (IsVertical)
+                    {
+                        return new RectD(StartPoint.X, StartPoint.Y, Width, Length);
+                    }
+                    else
+                    {
+                        return new RectD(StartPoint.X, StartPoint.Y, Length, Width);
+                    }
+                }
+            }
         }
 
         /// <summary>

@@ -1041,6 +1041,50 @@ namespace Alternet.Drawing
         }
 
         /// <summary>
+        /// Draws a dual-color line using the specified parameters.
+        /// </summary>
+        /// <param name="prm">The parameters for the dual-color line.</param>
+        public virtual void DrawDualColorLine(in DualColorLineParams prm)
+        {
+            var firstBrush = DrawingUtils.GetBrush(prm.FirstBrush, prm.FirstColor);
+            var secondBrush = DrawingUtils.GetBrush(prm.SecondBrush, prm.SecondColor);
+
+            if (firstBrush is null && secondBrush is null)
+                return;
+            if (prm.Width <= 0 || prm.Length <= 0)
+                return;
+
+            var currentPoint = prm.StartPoint;
+            var paintedLength = 0f;
+            var length = prm.Length;
+            var firstSize = prm.FirstSize;
+            var secondSize = prm.SecondSize;
+            var width = prm.Width;
+            var isVertical = prm.IsVertical;
+
+            DoInsideClipped(prm.Bounds, () =>
+            {
+                while (paintedLength < length)
+                {
+                    if (firstBrush is not null)
+                        this.DrawOrientedLine(firstBrush, currentPoint, firstSize, width, isVertical);
+
+                    currentPoint.IncLocation(isVertical, firstSize);
+                    paintedLength += firstSize;
+
+                    if (paintedLength >= length)
+                        break;
+
+                    if (secondBrush is not null)
+                        this.DrawOrientedLine(secondBrush, currentPoint, secondSize, width, isVertical);
+
+                    currentPoint.IncLocation(isVertical, secondSize);
+                    paintedLength += secondSize;
+                }
+            });
+        }
+
+        /// <summary>
         /// Gets the effective sampling options used for drawing images,
         /// taking into account the <see cref="SamplingOptions"/> property.
         /// </summary>

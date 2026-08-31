@@ -194,6 +194,20 @@ namespace DrawingSample
                     Color.Brown,
                     new[] { KnownColorSvgImages.ImgWarning.AsImage(64), KnownColorSvgImages.ImgError.AsImage(64) },
                     innerFrame.WithOffset(200, 200));
+
+                Graphics.DualColorLineParams prm =new()
+                {
+                    StartPoint = innerFrame.WithOffset(200, 235).Location,
+                    FirstColor = Color.Red,
+                    SecondColor = Color.Blue,
+                    Width = 5,
+                    Length = 150,
+                    FirstSize = 10,
+                    SecondSize = 5,
+                };
+
+                dc.DrawDualColorLine(in prm);
+                dc.DrawHorzLine(Color.Green.AsBrush, prm.StartPoint.OffsetBy(0, 10), prm.Length, 3);
             }
 
             dc.DrawImage(Resources.LogoImage, innerFrame.InflatedBy(-10, -10).TopLeft);
