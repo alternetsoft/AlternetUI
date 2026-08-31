@@ -10,11 +10,11 @@ namespace ControlsSample
     [IsCsLocalized(true)]
     public partial class CalendarPage : Panel
     {
+        private readonly ICalendarDateAttr blueColor;
+        private readonly ICalendarDateAttr greenColor;
         private readonly Calendar calendar = new();
         private readonly TabControl tabControl = new();
         private bool highlightDates;
-        private ICalendarDateAttr blueColor;
-        private ICalendarDateAttr greenColor;
 
         static CalendarPage()
         {

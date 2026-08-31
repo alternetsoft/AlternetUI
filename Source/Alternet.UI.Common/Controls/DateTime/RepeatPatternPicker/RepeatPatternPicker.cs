@@ -62,7 +62,7 @@ namespace Alternet.UI
             startDatePicker.Parent = this;
             startDatePicker.ValueChanged += (s, e) =>
             {
-                data.StartDate = startDatePicker.AsDateOnly ?? DateOnly.FromDateTime(DateTime.Now);
+                data.StartDate = startDatePicker.AsDateOnlyOrToday;
             };
 
             endDateLabel = new();

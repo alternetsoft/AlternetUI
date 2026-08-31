@@ -25,7 +25,7 @@ namespace Alternet.UI
     /// <summary>
     /// Provides access to the value of the object type.
     /// </summary>
-    public interface IValueSource : IValueSource<object>
+    public interface IValueSource : IValueSource<object?>
     {
     }
 }

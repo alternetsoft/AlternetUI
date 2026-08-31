@@ -7,7 +7,7 @@ namespace ControlsSample
 {
     public partial class DatePage : Panel
     {
-        private string?[] dateFormats = new[]
+        private readonly string?[] dateFormats = new[]
         {
             null,           // Default format
             "M/d/yyyy",     // 4/5/2017
@@ -19,7 +19,7 @@ namespace ControlsSample
             "dd-MMM-yy",     // 05-Apr-17,
         };
 
-        private ContextMenu dateFormatContextMenu;
+        private readonly ContextMenu dateFormatContextMenu;
 
         public DatePage()
         {
@@ -31,11 +31,6 @@ namespace ControlsSample
 
             dateFormatContextMenu = CreateDateFormatContextMenu();
             buttonDateFormats.DropDownMenu = dateFormatContextMenu;
-
-            buttonClearDate.Click += (s, e) =>
-            {
-                datePicker.Value = null;
-            };
         }
 
         public ContextMenu CreateDateFormatContextMenu()

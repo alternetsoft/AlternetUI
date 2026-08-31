@@ -19,8 +19,6 @@
         <VerticalStackPanel Margin="5" Title="Actions" MinChildMargin="5">
           <XButton Text="Date Formats" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonDateFormats"/>
-          <XButton Text="Clear Date" Margin="0,0,0,5" IsTextLocalized="true"
-                  Name="buttonClearDate"/>
           <XButton Text="Set Date/Time" Click="SetNow_Click" Margin="0,0,0,5" IsTextLocalized="true"
                   Name="buttonSetNow"/>
           <XButton Text="Set Date" Click="SetNowDate_Click" Margin="0,0,0,5" IsTextLocalized="true"

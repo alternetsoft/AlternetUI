@@ -54,6 +54,8 @@ namespace Alternet.UI
         /// </summary>
         public TimePicker()
         {
+            IgnoreTransparency = true;
+
             MainControl.IsTransparent = true;
             UseControlColors(DefaultUseControlColors);
             IsGraphicControl = false;
