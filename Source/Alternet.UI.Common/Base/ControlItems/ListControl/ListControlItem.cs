@@ -95,6 +95,7 @@ namespace Alternet.UI
         private IndexedValues<ObjectUniqueId, ContainerRelatedData>? containerRelated;
         private CheckState checkState;
         private bool isVisible = true;
+        private bool canRemove = true;
         private Action? action;
         private Action? doubleClickAction;
         private ObjectUniqueId? group;
@@ -107,7 +108,6 @@ namespace Alternet.UI
         private Action<IListControlItemContainer?, ListBoxItemPaintEventArgs>? drawForegroundAction;
         private MnemonicMarkerHelper mnemonicMarkerHelper = new();
         private DrawLabelFlags labelFlags;
-
 
         private HVAlignment alignment = DefaultItemAlignment;
         private TextHorizontalAlignment? textLineAlignment;
@@ -125,13 +125,12 @@ namespace Alternet.UI
         private bool? checkBoxAllowAllStatesForUser;
         private bool? checkBoxVisible;
         private bool? isToolTipVisible;
+        private bool? checkBoxEnabled;
         private bool isVerticalOrientation;
-        private bool canRemove = true;
         private bool hideSelection;
         private bool hideFocusRect;
         private bool isRadioButton;
         private bool isCheckRightAligned;
-        private bool? checkBoxEnabled;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ListControlItem"/> class
