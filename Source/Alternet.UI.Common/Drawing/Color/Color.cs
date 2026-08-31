@@ -1020,6 +1020,21 @@ namespace Alternet.Drawing
         public static Color FromArgb(int argb) => new(argb);
 
         /// <summary>
+        /// Returns <c>true</c> if color is visible (not null, initialized and not fully transparent).
+        /// </summary>
+        /// <param name="color">The color to check.</param>
+        /// <returns><c>true</c> if the color is visible (not null, initialized and not fully transparent);
+        /// otherwise, <c>false</c>.</returns>
+        public static bool IsVisible(Color? color)
+        {
+            if (color is null)
+                return false;
+            if (color.IsEmptyOrTransparent)
+                return false;
+            return true;
+        }
+
+        /// <summary>
         /// Creates a <see cref="Color"/> structure from the four ARGB
         /// component (alpha, red, green, and blue) values.
         /// </summary>
