@@ -83,12 +83,6 @@ namespace Alternet.UI
             }
         }
 
-        /// <inheritdoc/>
-        public override IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
-        {
-            return base.GetDates(minDate, maxDate);
-        }
-
         /// <summary>
         /// Determines whether the specified object is equal to the current instance of <see cref="DailyRepeatPatternRule"/>.
         /// </summary>

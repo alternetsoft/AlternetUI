@@ -12,6 +12,9 @@ namespace ControlsSample
     {
         private readonly ICalendarDateAttr blueColor;
         private readonly ICalendarDateAttr greenColor;
+        private readonly ScrollableRepeatPatternPicker patternPickerContainer;
+        private readonly RepeatPatternPicker patternPicker;
+
         private readonly Calendar calendar = new();
         private readonly TabControl tabControl = new();
         private bool highlightDates;
@@ -22,6 +25,9 @@ namespace ControlsSample
 
         public CalendarPage()
         {
+            patternPickerContainer = new ScrollableRepeatPatternPicker();
+            patternPicker = patternPickerContainer.ScrolledControl;
+
             blueColor = calendar.CreateDateAttr();
             blueColor.TextColor = LightDarkColors.Blue;
 
@@ -154,9 +160,6 @@ namespace ControlsSample
 
                 // Repeat Pattern Panel
 
-                var patternPickerContainer = new ScrollableRepeatPatternPicker();
-                var patternPicker = patternPickerContainer.ScrolledControl;
-
                 var patternSettings = new PanelSettings();
                 patternSettings.SetMinChildMarginLeftRight();
                 patternSettings.AddInput("Highlight dates", this, nameof(CalendarPage.HighlightDates));
@@ -242,9 +245,16 @@ namespace ControlsSample
 
             if (HighlightDates)
             {
-                calendar.SetAttr(5, blueColor);
+                RepeatPatternRule.RuleGetDatesParams prm = new();
+                prm.MinDate = calendar.FirstDateOfMonth;
+                prm.MaxDate = calendar.LastDateOfMonth;
 
-                calendar.SetAttr(8, greenColor);
+                var result = patternPicker.Value.GetDates(prm).Dates.ToArray();
+
+                foreach (var date in result)
+                {
+                    calendar.SetAttr(date.Day, greenColor);
+                }
             }
         }
 

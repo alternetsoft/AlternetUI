@@ -164,9 +164,9 @@ namespace Alternet.UI
         }
 
         /// <inheritdoc/>
-        public override IEnumerable<DateOnly> GetDates(DateOnly minDate, DateOnly maxDate)
+        public override RuleGetDatesResult GetDates(RuleGetDatesParams prm)
         {
-            return GetSelectedRule()?.GetDates(minDate, maxDate) ?? Array.Empty<DateOnly>();
+            return GetSelectedRule()?.GetDates(prm) ?? RuleGetDatesResult.Empty;
         }
 
         /// <summary>
