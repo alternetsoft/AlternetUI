@@ -246,6 +246,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Sets left and right margin values of the <see cref="MinChildMargin"/> property for the control.
+        /// </summary>
+        /// <param name="left">The left margin to set for the control. If not specified, the default is 0.</param>
+        /// <param name="right">The right margin to set for the control. If not specified, the default is 0.</param>
+        public void SetMinChildMarginLeftRight(float left = 0, float right = 0)
+        {
+            MinChildMargin = MinChildMargin?.WithLeftRight(left, right);
+        }
+
+        /// <summary>
         /// Sets <see cref="Margin"/> property for the control.
         /// </summary>
         /// <param name="margin">The margin to set for the control.</param>
