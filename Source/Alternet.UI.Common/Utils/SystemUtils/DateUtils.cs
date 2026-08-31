@@ -359,6 +359,114 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the first date of the month for the specified <see cref="DateOnly"/>.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns>The first date of the month.</returns>
+        public static DateOnly GetFirstDateOfMonth(DateOnly date)
+        {
+            return new DateOnly(date.Year, date.Month, 1);
+        }
+
+        /// <summary>
+        /// Gets the number of days in the month for the specified <see cref="DateOnly"/>.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns>The number of days in the month.</returns>
+        public static int GetDaysInMonth(DateOnly date)
+        {
+            return DateTime.DaysInMonth(date.Year, date.Month);
+        }
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DateOnly"/> falls on a weekend (Saturday or Sunday).
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns><c>true</c> if the date falls on a weekend; otherwise, <c>false</c>.</returns>
+        public static bool IsWeekend(DateOnly date)
+        {
+            return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+        }
+
+        /// <summary>
+        /// Gets the dates of the weekends (Saturdays and Sundays) for the specified <see cref="DateOnly"/> month.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns>An enumerable of dates that fall on weekends.</returns>
+        public static IEnumerable<DateOnly> GetWeekendsOfMonth(DateOnly date)
+        {
+            return GetDatesOfMonth(date, IsWeekend);
+        }
+
+        /// <summary>
+        /// Gets the dates of the month for the specified <see cref="DateOnly"/> that satisfy the given predicate.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <param name="predicate">A predicate to filter the dates. If null, all dates are returned.</param>
+        /// <returns>An enumerable of dates that satisfy the predicate.</returns>
+        public static IEnumerable<DateOnly> GetDatesOfMonth(DateOnly date, Predicate<DateOnly>? predicate = null)
+        {
+            int daysInMonth = GetDaysInMonth(date);
+            for (int day = 1; day <= daysInMonth; day++)
+            {
+                DateOnly currentDate = new (date.Year, date.Month, day);
+                if (predicate == null || predicate(currentDate))
+                {
+                    yield return currentDate;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Tries to get the date of the month for the specified <see cref="DateOnly"/> and day.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <param name="day">The day of the month. Must be between 1 and the number of days in the month.</param>
+        /// <param name="result">When this method returns, contains the date of the month if the day is valid;
+        /// otherwise, the default value.</param>
+        /// <returns><c>true</c> if the day is valid for the specified month; otherwise, <c>false</c>.</returns>
+        public static bool TryGetDateOfMonth(DateOnly date, int day, out DateOnly result)
+        {
+            if (day < 1 || day > GetDaysInMonth(date))
+            {
+                result = default;
+                return false;
+            }
+
+            result = new DateOnly(date.Year, date.Month, day);
+            return true;
+        }
+
+        /// <summary>
+        /// Gets the date of the month for the specified <see cref="DateOnly"/> and day.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <param name="day">The day of the month. Must be between 1 and the number of days in the month.</param>
+        /// <returns>The date of the month.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown when the day is not valid for the specified month.</exception>
+        public static DateOnly GetDateOfMonth(DateOnly date, int day)
+        {
+            if (day < 1 || day > GetDaysInMonth(date))
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(day),
+                    $"Day must be between 1 and {GetDaysInMonth(date)} for the specified month.");
+            }
+
+            return new DateOnly(date.Year, date.Month, day);
+        }
+
+        /// <summary>
+        /// Gets the last date of the month for the specified <see cref="DateOnly"/>.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns>The last date of the month.</returns>
+        public static DateOnly GetLastDateOfMonth(DateOnly date)
+        {
+            return new DateOnly(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+        }
+
+        /// <summary>
         /// Converts ticks to milliseconds.
         /// </summary>
         /// <param name="ticks">Value to convert.</param>
