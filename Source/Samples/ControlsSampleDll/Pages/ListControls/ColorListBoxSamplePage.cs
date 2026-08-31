@@ -133,6 +133,34 @@ namespace ControlsSample
 
                 Clipboard.SetText(sb.ToString());
             });
+
+            this.ContextMenuStrip.Add("Light Text Backgrounds", () =>
+            {
+                listBox.BeginUpdate();
+
+                listBox.Items.Clear();
+
+                foreach (var color in LightDarkColors.LightTextBackgrounds.AllColors)
+                {
+                    listBox.AddColor(color);
+                }
+
+                listBox.EndUpdate();
+            });
+
+            this.ContextMenuStrip.Add("Dark Text Backgrounds", () =>
+            {
+                listBox.BeginUpdate();
+
+                listBox.Items.Clear();
+
+                foreach (var color in LightDarkColors.DarkTextBackgrounds.AllColors)
+                {
+                    listBox.AddColor(color);
+                }
+
+                listBox.EndUpdate();
+            });
         }
 
         private void ComboBox_SelectedItemChanged(object? sender, EventArgs e)

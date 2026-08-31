@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Alternet.UI;
+
 namespace Alternet.Drawing
 {
     /// <summary>
@@ -318,6 +320,17 @@ namespace Alternet.Drawing
             /// Gets a background color which looks good with light text.
             /// </summary>
             public static Color Teal => Color.Teal;
+
+            /// <summary>
+            /// Gets all background colors which look good with light text.
+            /// </summary>
+            public static IEnumerable<Color> AllColors
+            {
+                get
+                {
+                    return AssemblyUtils.GetStaticPropertyValues<Color>(typeof(LightTextBackgrounds));
+                }
+            }
         }
 
         /// <summary>
@@ -494,6 +507,17 @@ namespace Alternet.Drawing
             /// Gets a background color which looks good with dark text.
             /// </summary>
             public static Color YellowGreen => Color.YellowGreen;
+
+            /// <summary>
+            /// Gets all background colors which look good with dark text.
+            /// </summary>
+            public static IEnumerable<Color> AllColors
+            {
+                get
+                {
+                    return AssemblyUtils.GetStaticPropertyValues<Color>(typeof(DarkTextBackgrounds));
+                }
+            }
         }
 
         /// <summary>
@@ -540,6 +564,17 @@ namespace Alternet.Drawing
             /// Gets a background color which looks good with light and dark text.
             /// </summary>
             public static Color Teal => Color.Teal;
+
+            /// <summary>
+            /// Gets all background colors which look good with light and dark text.
+            /// </summary>
+            public static IEnumerable<Color> AllColors
+            {
+                get
+                {
+                    return AssemblyUtils.GetStaticPropertyValues<Color>(typeof(LightDarkTextBackgrounds));
+                }
+            }
         }
 
     }

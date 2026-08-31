@@ -447,6 +447,24 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Enumerates the values of all public static properties of the specified
+        /// type that match the specified generic type parameter.
+        /// </summary>
+        /// <typeparam name="T">The type of the static properties to retrieve.</typeparam>
+        /// <param name="type">The type whose public static properties are to be retrieved.</param>
+        /// <returns>An enumerable of values of the specified type.</returns>
+        public static IEnumerable<T> GetStaticPropertyValues<T>(Type type)
+        {
+            foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Static))
+            {
+                if (prop.PropertyType == typeof(T))
+                {
+                    yield return (T)prop.GetValue(null)!;
+                }
+            }
+        }
+
+        /// <summary>
         /// Returns the types defined in the specified assembly, optionally including only the exported types.
         /// </summary>
         /// <param name="asm">The assembly from which to retrieve types. Can be null.</param>
