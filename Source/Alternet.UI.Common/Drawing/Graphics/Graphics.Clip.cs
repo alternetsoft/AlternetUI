@@ -35,6 +35,13 @@ namespace Alternet.Drawing
         public abstract void ClipRect(RectD rect, bool antialiasing = false);
 
         /// <summary>
+        /// Sets the clipping region of this <see cref="Graphics"/> object to the specified rectangle.
+        /// This is equivalent to calling <see cref="ClipRect(RectD, bool)"/> with the specified rectangle and no anti-aliasing.
+        /// </summary>
+        /// <param name="rect">The rectangle to set as the clipping region.</param>
+        public void SetClip(RectD rect) => ClipRect(rect);
+
+        /// <summary>
         /// Modify the current clip with the specified region.
         /// </summary>
         /// <param name="region">The region to clip to.</param>

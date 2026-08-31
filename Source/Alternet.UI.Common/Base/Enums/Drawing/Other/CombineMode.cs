@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Alternet.Drawing
+namespace Alternet.Drawing.Drawing2D
 {
     /// <summary>
     /// Specifies how different regions can be combined.
