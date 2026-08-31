@@ -28,7 +28,7 @@ namespace Alternet.UI
     /// </para>
     /// </remarks>
     [ControlCategory(KnownControlCategory.Hidden)]
-    public abstract partial class GenericControlAndPicture : HiddenGenericBorder
+    public abstract partial class GenericControlAndPicture : TransparentPanel
     {
         private PictureBox? pictureBox;
         private int? innerPictureSvgSize;
