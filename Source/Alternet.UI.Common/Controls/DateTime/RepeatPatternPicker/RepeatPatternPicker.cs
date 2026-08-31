@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
+using Alternet.Drawing;
 using Alternet.UI.Localization;
 
 namespace Alternet.UI
@@ -31,7 +32,6 @@ namespace Alternet.UI
         private readonly XRadioButtonAndSuffix endsOnRadioButton;
         private readonly XRadioButtonAndSuffix endsAfterOccurrenceRadioButton;
         private readonly XIntPickerWithLabels occurrencePicker = new();
-
 
         private readonly TabControl tabControl = new();
         private readonly DailyPatternPicker dailyPicker;
@@ -302,5 +302,33 @@ namespace Alternet.UI
         /// </summary>
         /// <returns> A new instance of the <see cref="YearlyPatternPicker"/> control. </returns>
         protected virtual YearlyPatternPicker CreateYearlyPatternPicker() => new(data.YearlyRule);
+    }
+
+    /// <summary>
+    /// Represents a scrollable version of the <see cref="RepeatPatternPicker"/> control.
+    /// </summary>
+    public class ScrollableRepeatPatternPicker : ScrollViewer<RepeatPatternPicker>
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScrollableRepeatPatternPicker"/> class.
+        /// </summary>
+        public ScrollableRepeatPatternPicker()
+        {
+            ScrolledControl.HasBorder = false;
+        }
+
+        /// <summary>
+        /// Occurs when the selected repeat pattern changes in the inner <see cref="RepeatPatternPicker"/> control.
+        /// </summary>
+        public event EventHandler? ValueChanged
+        {
+            add => ScrolledControl.ValueChanged += value;
+            remove => ScrolledControl.ValueChanged -= value;
+        }
+
+        /// <summary>
+        /// Gets the <see cref="RepeatPatternRule"/> instance representing the selected repeat pattern and its associated rules.
+        /// </summary>
+        public RepeatPatternRule Value => ScrolledControl.Value;
     }
 }
