@@ -295,6 +295,21 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the brush to use for drawing, based on the provided brush and color.
+        /// If the brush is not null, it is returned. If the brush is null and the color is visible,
+        /// a solid brush is created from the color and returned.
+        /// If both the brush is null and the color is not visible, null is returned.
+        /// </summary>
+        /// <param name="brush">The brush to use.</param>
+        /// <param name="color">The color to use if the brush is null.</param>
+        /// <returns>The brush to use for drawing.</returns>
+        public static Brush? GetBrush(Brush? brush, Color? color)
+        {
+            Brush? result = brush ?? (Color.IsVisible(color) ? color?.AsBrush : null);
+            return result;
+        }
+
+        /// <summary>
         /// Creates array of alpha components with the specified size and copies
         /// alpha component data from the <paramref name="source"/> pointer.
         /// </summary>
@@ -1338,6 +1353,34 @@ namespace Alternet.UI
         {
             var rect = new RectD(point, new SizeD(length, width));
             dc.FillRectangle(brush, rect);
+        }
+
+        /// <summary>
+        /// Draws either a vertical or horizontal line based on the specified orientation.
+        /// </summary>
+        /// <param name="dc">The graphics context.</param>
+        /// <param name="brush">The brush to draw the line.</param>
+        /// <param name="point">The starting point of the line.</param>
+        /// <param name="length">The length of the line.</param>
+        /// <param name="width">The width of the line.</param>
+        /// <param name="isVert">If true, draws a vertical line; otherwise, draws a horizontal line.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void DrawOrientedLine(
+            this Graphics dc,
+            Brush brush,
+            PointD point,
+            Coord length,
+            Coord width,
+            bool isVert)
+        {
+            if (isVert)
+            {
+                DrawVertLine(dc, brush, point, length, width);
+            }
+            else
+            {
+                DrawHorzLine(dc, brush, point, length, width);
+            }
         }
 
         /// <summary>
