@@ -18,8 +18,10 @@ namespace Alternet.UI
 
         private readonly CalendarCell[] cells = new CalendarCell[CellCount];
         private readonly VirtualListBox listBox = new();
+        private readonly CalendarHeader header = new ();
 
         private DateOnly date;
+        private int suspendHeaderEventsCounter;
 
         static XCalendar()
         {
@@ -52,9 +54,38 @@ namespace Alternet.UI
             MinimumSize = new (400, 400);
             Layout = LayoutStyle.Vertical;
 
+            header.Parent = this;
+            header.MarginBottom = 5;
+
+            ParentBackColor = false;
+            Padding = 10;
+            BackColor = listBox.BackColor;
+
+            listBox.VertGridLines = false;
+            listBox.HasBorder = false;
+            listBox.HorzGridLines = false;
             listBox.VerticalAlignment = VerticalAlignment.Fill;
             listBox.Parent = this;
+
+            listBox.KeyDown += (s, e) =>
+            {
+                e.Suppressed();
+            };
+
             AssignItemsToListBox(listBox);
+
+            header.ValueChanged += OnHeaderValueChanged;
+
+            listBox.BackColorChanged += (s, e) =>
+            {
+                BackColor = listBox.BackColor;
+            };
+        }
+
+        protected virtual void OnHeaderValueChanged(object? sender, EventArgs e)
+        {
+            if (suspendHeaderEventsCounter > 0) return;
+            Value = header.Value;
         }
 
         public virtual float GetTotalWidth(Graphics dc, Font font)
@@ -115,6 +146,17 @@ namespace Alternet.UI
                 if (this.date == value)
                     return;
                 this.date = value;
+
+                suspendHeaderEventsCounter++;
+                try
+                {
+                    header.Value = value;
+                }
+                finally
+                {
+                    suspendHeaderEventsCounter--;
+                }
+
                 OnValueChanged();
             }
         }
@@ -175,9 +217,8 @@ namespace Alternet.UI
 
         protected virtual void AssignItemsToListBox(VirtualListBox listBox)
         {
-            listBox.RemoveAll();
-            listBox.VertGridLines = false;
-            listBox.HorzGridLines = false;
+            var newSource = new ListSource<ListControlItem>();
+
             listBox.Columns.Clear();
 
             var minWidth = GetColumnWidth(listBox.MeasureCanvas, listBox.RealFont);
@@ -201,7 +242,7 @@ namespace Alternet.UI
                 cellItem.Text = dayNames[col];
             }
 
-            listBox.Add(headerItem);
+            newSource.Add(headerItem);
 
             for (var row = 0; row < XCalendar.RowCount; row++)
             {
@@ -224,8 +265,10 @@ namespace Alternet.UI
                     }
                 }
 
-                listBox.Add(rowItem);
+                newSource.Add(rowItem);
             }
+
+            listBox.Items = newSource;
         }
 
         protected virtual void OnValueChanged()
@@ -262,6 +305,95 @@ namespace Alternet.UI
                 cell.IsCurrentMonth = false;
                 cell.IsToday = false;
             }
+
+            AssignItemsToListBox(listBox);
+        }
+    }
+
+    public class CalendarHeader : TransparentPanel
+    {
+        private readonly MonthPicker monthPicker = new();
+        private readonly YearPicker yearPicker = new();
+
+        private DateOnly date = DateOnly.FromDateTime(DateTime.Now);
+        private int suspendCounter;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalendarHeader"/> class.
+        /// </summary>
+        public CalendarHeader()
+        {
+            Layout = LayoutStyle.Horizontal;
+
+            OnValueChanged();
+
+            monthPicker.MarginRight = 5;
+            monthPicker.ImageVisible = false;
+            monthPicker.ValueChanged += OnMonthPickerValueChanged;
+            yearPicker.ValueChanged += OnYearPickerValueChanged;
+
+            monthPicker.VerticalAlignment = VerticalAlignment.Stretch;
+            monthPicker.HorizontalAlignment = HorizontalAlignment.Center;
+            monthPicker.Parent = this;
+
+            yearPicker.HorizontalAlignment = HorizontalAlignment.Center;
+            yearPicker.VerticalAlignment = VerticalAlignment.Stretch;
+            yearPicker.Parent = this;
+        }
+
+        public event EventHandler? ValueChanged;
+
+        public virtual DateOnly Value
+        {
+            get
+            {
+                return date;
+            }
+
+            set
+            {
+                if (this.date == value)
+                    return;
+                this.date = value;
+                OnValueChanged();
+            }
+        }
+
+        public MonthPicker MonthPicker => monthPicker;
+
+        public YearPicker YearPicker => yearPicker;
+
+        protected virtual void OnValueChanged()
+        {
+            suspendCounter++;
+            try
+            {
+                monthPicker.ValueAsInt = date.Month;
+                yearPicker.Value = date.Year;
+            }
+            finally
+            {
+                suspendCounter--;
+            }
+
+            ValueChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        protected virtual void OnPickerValueChanged()
+        {
+            if (suspendCounter > 0)
+                return;
+            Value = new DateOnly(yearPicker.Value, monthPicker.ValueAsInt, 1);
+        }
+
+        protected virtual void OnYearPickerValueChanged(object? sender, EventArgs e)
+        {
+            OnPickerValueChanged();
+        }
+
+        protected virtual void OnMonthPickerValueChanged(object? sender, EventArgs e)
+        {
+            OnPickerValueChanged();
         }
     }
 
