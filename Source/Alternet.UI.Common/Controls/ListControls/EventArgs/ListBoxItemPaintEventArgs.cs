@@ -310,20 +310,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets text color.
+        /// Gets text color for the item being painted, taking into account its selection state.
         /// </summary>
         /// <param name="isSelected">Whether to get text color for the selected state.</param>
-        /// <returns></returns>
+        /// <returns>The text color for the item being painted.</returns>
         public virtual Color? GetTextColor(bool isSelected)
+        {
+            return GetTextColor(Item, isSelected);
+        }
+
+        /// <summary>
+        /// Gets text color for the specified item and selection state.
+        /// </summary>
+        /// <param name="item">The list control item for which to get the text color.</param>
+        /// <param name="isSelected">Whether to get text color for the selected state.</param>
+        /// <returns>The text color for the specified item and selection state.</returns>
+        public virtual Color? GetTextColor(ListControlItem? item, bool isSelected)
         {
             Color? textColor;
             if (isSelected)
             {
-                textColor = ListControlItem.GetSelectedTextColor(Item, ListBox);
+                textColor = ListControlItem.GetSelectedTextColor(item, ListBox);
             }
             else
             {
-                textColor = ListControlItem.GetItemTextColor(Item, ListBox);
+                textColor = ListControlItem.GetItemTextColor(item, ListBox);
             }
 
             return textColor;

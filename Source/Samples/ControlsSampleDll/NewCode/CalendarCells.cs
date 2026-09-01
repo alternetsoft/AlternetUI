@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace Alternet.UI
@@ -15,10 +16,17 @@ namespace Alternet.UI
         public int ColumnIndex { get; internal set; }
 
         public DateOnly Date { get; internal set; }
+
+        public bool IsCurrentMonth { get; internal set; }
+
+        public bool IsToday { get; internal set; }
     }
 
     public class CalendarCells
     {
+        public static DayNamesKind DefaultDayNamesKind = UI.DayNamesKind.Abbreviated;
+        public static BorderSettings DefaultTodayBorder;
+
         public const int CellCount = 42;
 
         public const int RowCount = 6;
@@ -27,6 +35,11 @@ namespace Alternet.UI
 
         private DateOnly date;
         private readonly CalendarCell[] cells = new CalendarCell[CellCount];
+
+        static CalendarCells()
+        {
+            DefaultTodayBorder = BorderSettings.Default.Clone();
+        }
 
         public CalendarCells()
         {
@@ -47,6 +60,39 @@ namespace Alternet.UI
 
             date = DateOnly.FromDateTime(DateTime.Now.Date);
             OnValueChanged();
+        }
+
+        public virtual float GetTotalWidth(Graphics dc, Font font)
+        {
+            var totalWidth = GetColumnWidth(dc, font) * ColumnCount;
+            return totalWidth;
+        }
+
+        public virtual float GetRowHeight(Graphics dc, Font font)
+        {
+            var rowHeight = dc.GetTextExtent("Wg00", font).Height + 4;
+            return rowHeight;
+        }
+
+        public virtual float GetTotalHeight(Graphics dc, Font font)
+        {
+            var totalHeight = GetRowHeight(dc, font) * RowCount;
+            return totalHeight;
+        }
+
+        public virtual float GetColumnWidth(Graphics dc, Font font)
+        {
+            var dayWidth = dc.GetTextExtent("00", font).Width;
+            var dayNames = GetDayNames();
+
+            foreach (var day in dayNames)
+            {
+                var dayNameWidth = dc.GetTextExtent(day, font).Width;
+                if (dayNameWidth > dayWidth)
+                    dayWidth = dayNameWidth;
+            }
+
+            return dayWidth + 4;
         }
 
         public CalendarCell GetCell(int rowIndex, int columnIndex)
@@ -78,25 +124,93 @@ namespace Alternet.UI
             }
         }
 
+        public BorderSettings? TodayBorder { get; set; }
+
+        public DayNamesKind? DayNamesKind { get; set; }
+
+        public virtual IFormatProvider? FormatProvider { get; set; }
+
+        public virtual DayOfWeek? FirstDayOfWeek { get; set; }
+
+        public virtual BorderSettings EffectiveTodayBorder()
+        {
+            return TodayBorder ?? DefaultTodayBorder;
+        }
+
+        public virtual DayOfWeek EffectiveDayOfWeek()
+        {
+            return FirstDayOfWeek ?? DateUtils.SystemFirstDayOfWeek;
+        }
+
+        public virtual IFormatProvider EffectiveFormatProvider()
+        {
+            return FormatProvider?? CultureInfo.CurrentCulture;
+        }
+
+        public virtual DayNamesKind EffectiveDayNamesKind()
+        {
+            return DayNamesKind ?? DefaultDayNamesKind;
+        }
+
+        /// <summary>
+        /// Gets the array of day names representing the days of the week.
+        /// The first day of the week is determined by the <see cref="EffectiveDayOfWeek"/> method.
+        /// </summary>
+        /// <returns>An array of day names.</returns>
+        public virtual string[] GetDayNames()
+        {
+            var dayNames = DateUtils.GetDayNames(EffectiveDayNamesKind(), EffectiveFormatProvider());
+            var result = new string[dayNames.Length];
+
+            for (var i = 0; i < dayNames.Length; i++)
+            {
+                var dayOfWeek = (DayOfWeek)i;
+                var index = GetDayOfWeekIndex(dayOfWeek);
+                result[index] = dayNames[i];
+            }
+
+            return result;
+        }
+
+        public virtual int GetDayOfWeekIndex(DayOfWeek dayOfWeek)
+        {
+            var index = DateUtils.GetDayOfWeekIndex(dayOfWeek, EffectiveDayOfWeek());
+            return index;
+        }
+
         protected virtual void OnValueChanged()
         {
             var firstDayOfMonth = DateUtils.GetFirstDateOfMonth(date);
             var lastDayOfMonth = DateUtils.GetLastDateOfMonth(date);
             var daysInMonth = DateUtils.GetDaysInMonth(date);
             var dayOfWeek = firstDayOfMonth.DayOfWeek;
-            var index = DateUtils.GetDayOfWeekIndex(dayOfWeek, DateUtils.SystemFirstDayOfWeek);
+            var index = GetDayOfWeekIndex(dayOfWeek);
+
+            var today = DateOnly.FromDateTime(DateTime.Now.Date);
 
             for (int i = 0; i < daysInMonth; i++)
             {
                 var cell = cells[index + i];
                 var d = firstDayOfMonth.AddDays(i);
                 cell.Date = d;
+                cell.IsCurrentMonth = true;
+                cell.IsToday = d == today;
             }
 
             for (int i = daysInMonth + index; i < CellCount; i++)
             {
                 var cell = cells[i];
                 cell.Date = lastDayOfMonth.AddDays(i - daysInMonth - index + 1);
+                cell.IsCurrentMonth = false;
+                cell.IsToday = false;
+            }
+
+            for (int i = index - 1; i >= 0; i--)
+            {
+                var cell = cells[i];
+                cell.Date = firstDayOfMonth.AddDays(i - index);
+                cell.IsCurrentMonth = false;
+                cell.IsToday = false;
             }
         }
     }

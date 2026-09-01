@@ -149,51 +149,7 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
-            contextMenu.Add("Test CalendarCells", () =>
-            {
-                listBox.RemoveAll();
-                listBox.VertGridLines = true;
-                listBox.HorzGridLines = true;
-                listBox.Columns.Clear();
-
-                for (var col = 0; col < CalendarCells.ColumnCount; col++)
-                {
-                    var column = new ListControlColumn($"Col{col}");
-                    column.SuggestedWidth = 100;
-                    listBox.Columns.Add(column);
-                }
-
-                ListControlItem headerItem = new();
-
-                var currentDay = DateUtils.SystemFirstDayOfWeek;
-
-                for (var col = 0; col < CalendarCells.ColumnCount; col++)
-                {
-                    var columnItem = new ListControlItem(currentDay.ToString());
-                    headerItem.Cells.Add(columnItem);
-                    currentDay = DateUtils.GetNextDayOfWeek(currentDay);
-                }
-
-                listBox.Add(headerItem);
-
-                CalendarCells calendarCells = new();
-
-                for (var row = 0; row < CalendarCells.RowCount; row++)
-                {
-                    ListControlItem rowItem = new();
-
-                    for (var col = 0; col < CalendarCells.ColumnCount; col++)
-                    {
-                        var cell = calendarCells.GetCell(row, col);
-                        var cellItem = rowItem.SafeCell(listBox.Columns[col]);
-                        cellItem.Text = cell.Date.ToString("yyyy-MM-dd");
-                    }
-
-                    listBox.Add(rowItem);
-                }
-
-                listBox.Invalidate();
-            });
+            contextMenu.Add("Test CalendarCells", TestCalendarCells);
 
             var item = listBox.GetItem(1);
 
@@ -223,6 +179,65 @@ namespace ControlsSample
                 },
                 editKey: Keys.F2,
                 doubleClickToEdit: true);
+        }
+
+        private void TestCalendarCells()
+        {
+            CalendarCells calendarCells = new();
+
+            listBox.RemoveAll();
+            listBox.VertGridLines = false;
+            listBox.HorzGridLines = false;
+            listBox.Columns.Clear();
+
+            var minWidth = calendarCells.GetColumnWidth(listBox.MeasureCanvas, listBox.RealFont);
+
+            for (var col = 0; col < CalendarCells.ColumnCount; col++)
+            {
+                var column = new ListControlColumn($"Col{col}");
+                column.SuggestedWidth = minWidth;
+                listBox.Columns.Add(column);
+            }
+
+            ListControlItem headerItem = new();
+            headerItem.HideSelection = true;
+
+            var dayNames = calendarCells.GetDayNames();
+
+            for (var col = 0; col < CalendarCells.ColumnCount; col++)
+            {
+                var cellItem = headerItem.SafeCell(listBox.Columns[col]);
+                cellItem.HorizontalAlignment = HorizontalAlignment.Center;
+                cellItem.Text = dayNames[col];
+            }
+
+            listBox.Add(headerItem);
+
+            for (var row = 0; row < CalendarCells.RowCount; row++)
+            {
+                ListControlItem rowItem = new();
+
+                for (var col = 0; col < CalendarCells.ColumnCount; col++)
+                {
+                    var cell = calendarCells.GetCell(row, col);
+                    var cellItem = rowItem.SafeCell(listBox.Columns[col]);
+                    cellItem.HorizontalAlignment = HorizontalAlignment.Center;
+                    cellItem.Text = cell.Date.Day.ToString();
+                    if (!cell.IsCurrentMonth)
+                    {
+                        cellItem.ForegroundColor = Color.Gray;
+                    }
+
+                    if (cell.IsToday)
+                    {
+                        cellItem.Border = calendarCells.EffectiveTodayBorder();
+                    }
+                }
+
+                listBox.Add(rowItem);
+            }
+
+            listBox.Invalidate();
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)

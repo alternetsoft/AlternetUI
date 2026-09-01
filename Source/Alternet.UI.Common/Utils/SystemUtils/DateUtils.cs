@@ -173,6 +173,8 @@ namespace Alternet.UI
 
         /// <summary>
         /// Gets the names of the days of the week in the Gregorian calendar, based on the specified kind and format provider. 
+        /// The result array contains names for
+        /// "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", and "Saturday".
         /// </summary>
         /// <param name="kind">The kind of day names to retrieve (full, abbreviated, or shortest).</param>
         /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
