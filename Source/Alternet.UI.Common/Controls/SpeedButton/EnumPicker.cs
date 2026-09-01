@@ -43,15 +43,31 @@ namespace Alternet.UI
         /// </summary>
         public EnumPicker()
         {
-            Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
-            UseTheme = KnownTheme.StaticBorder;
-            UseControlColors(DefaultUseControlColors);
+            if (!ShowAsSpeedButton())
+            {
+                Label.Padding = Label.Padding.WithLeftRight(DefaultTextLeftPadding, DefaultTextRightPadding);
+                UseTheme = KnownTheme.StaticBorder;
+                UseControlColors(DefaultUseControlColors);
+            }
+        }
+
+        /// <summary>
+        /// Determines whether the control should be displayed as a speed button or as a picker control.
+        /// </summary>
+        /// <returns><c>true</c> if the control should be displayed as a speed button; otherwise, <c>false</c>.</returns>
+        protected virtual bool ShowAsSpeedButton()
+        {
+            return false;
         }
 
         /// <inheritdoc/>
         protected override void OnSystemColorsChanged(EventArgs e)
         {
-            UseControlColors(DefaultUseControlColors);
+            if (!ShowAsSpeedButton())
+            {
+                UseControlColors(DefaultUseControlColors);
+            }
+
             base.OnSystemColorsChanged(e);
         }
     }
