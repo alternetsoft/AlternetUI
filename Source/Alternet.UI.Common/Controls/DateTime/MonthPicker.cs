@@ -82,6 +82,15 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets or sets the selected month as an integer value (1 for January, 2 for February, etc.).
+        /// </summary>
+        public int ValueAsInt
+        {
+            get => (int)Value;
+            set => Value = (CalendarMonth)value;
+        }
+
+        /// <summary>
         /// Gets or sets the selected month.
         /// </summary>
         public new virtual CalendarMonth Value
