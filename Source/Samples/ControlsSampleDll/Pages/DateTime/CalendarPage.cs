@@ -4,6 +4,7 @@ using System.Linq;
 using Alternet.UI;
 using Alternet.Drawing;
 using System.Collections.Generic;
+using Alternet.UI.Extensions;
 
 namespace ControlsSample
 {
@@ -166,6 +167,9 @@ namespace ControlsSample
                 patternSettings.AddInput("Highlight dates", this, nameof(CalendarPage.HighlightDates));
 
                 patternPicker.Children.Prepend(patternSettings);
+
+                patternPicker.Value.StartDate = DateUtils.GetFirstDateOfMonth(DateTime.Today.ToDateOnly());
+                patternPicker.Value.EndDate = DateUtils.GetLastDateOfMonth(DateTime.Today.ToDateOnly());
 
                 patternPickerContainer.Margin = 5;
                 patternPickerContainer.Title = "Highlight";
