@@ -125,10 +125,11 @@ namespace Alternet.UI
         /// Gets the occurrences of the repeat pattern within the specified range,
         /// filtered by a predicate, and up to the maximum date.
         /// </summary>
-        /// <param name="prm"></param>
-        /// <param name="predicate"></param>
-        /// <param name="nextDate"></param>
-        /// <returns></returns>
+        /// <param name="prm">The parameters specifying the minimum and maximum
+        /// dates to consider for the occurrences.</param>
+        /// <param name="predicate">A predicate to filter the dates.</param>
+        /// <param name="nextDate">A function to get the next date in the pattern.</param>
+        /// <returns>An enumerable of the occurrence dates.</returns>
         protected virtual RuleGetDatesResult GetDates(
             RuleGetDatesParams prm,
             Predicate<DateOnly> predicate,

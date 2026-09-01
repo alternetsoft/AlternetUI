@@ -183,5 +183,17 @@ namespace Alternet.UI
             return (IntervalYears, Month, DayOfWeek, DayOfMonth, DayOfWeekIndex, Kind, StartDate, EndDate, OccurrenceCount)
                 .GetHashCode();
         }
+
+        /// <inheritdoc/>
+        protected override bool IsDateInPattern(DateOnly date)
+        {
+            return base.IsDateInPattern(date);
+        }
+
+        /// <inheritdoc/>
+        protected override DateOnly GetNextDate(DateOnly date)
+        {
+            return base.GetNextDate(date);
+        }
     }
 }

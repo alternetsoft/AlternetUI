@@ -99,6 +99,18 @@ namespace Alternet.UI
                    Kind == other.Kind;
         }
 
+        /// <inheritdoc/>
+        protected override bool IsDateInPattern(DateOnly date)
+        {
+            return base.IsDateInPattern(date);
+        }
+
+        /// <inheritdoc/>
+        protected override DateOnly GetNextDate(DateOnly date)
+        {
+            return base.GetNextDate(date);
+        }
+
         /// <summary>
         /// Assigns the values from another instance to the current instance.
         /// </summary>
