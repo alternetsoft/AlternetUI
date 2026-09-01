@@ -136,4 +136,16 @@ namespace Alternet.UI
             Invalidate();
         }
     }
+
+    /// <summary>
+    /// Represents a specialized version of the <see cref="MonthPicker"/> control that is displayed as a speed button.
+    /// </summary>
+    public partial class MonthSpeedButton : MonthPicker
+    {
+        /// <inheritdoc/>
+        protected override bool ShowAsSpeedButton()
+        {
+            return true;
+        }
+    }
 }
