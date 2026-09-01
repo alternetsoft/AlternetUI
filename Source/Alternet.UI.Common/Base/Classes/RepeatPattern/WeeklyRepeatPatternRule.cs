@@ -94,5 +94,11 @@ namespace Alternet.UI
         {
             return (IntervalWeeks, WeekDays, StartDate, EndDate, OccurrenceCount).GetHashCode();
         }
+
+        /// <inheritdoc/>
+        public override RuleGetDatesResult GetDates(RuleGetDatesParams prm)
+        {
+            return RuleGetDatesResult.Empty;
+        }
     }
 }

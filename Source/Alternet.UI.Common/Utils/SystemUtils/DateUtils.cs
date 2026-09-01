@@ -359,6 +359,50 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the start of the week for the specified date, based on the system's first day of the week.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns>The start of the week for the specified date.</returns>
+        public static DateOnly GetStartOfWeek(DateOnly date)
+        {
+            return GetStartOfWeek(date, SystemFirstDayOfWeek);
+        }
+
+        /// <summary>
+        /// Gets the start of the week for the specified date, based on the system's first day of the week.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <returns>The start of the week for the specified date.</returns>
+        public static DateTime GetStartOfWeek(DateTime date)
+        {
+            return GetStartOfWeek(date, SystemFirstDayOfWeek);
+        }
+
+        /// <summary>
+        /// Gets the start of the week for the specified date, based on the provided first day of the week.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <param name="firstDayOfWeek">The first day of the week.</param>
+        /// <returns>The start of the week for the specified date.</returns>
+        public static DateTime GetStartOfWeek(DateTime date, DayOfWeek firstDayOfWeek)
+        {
+            int diff = (7 + (date.DayOfWeek - firstDayOfWeek)) % 7;
+            return date.AddDays(-diff).Date;
+        }
+
+        /// <summary>
+        /// Gets the start of the week for the specified date, based on the provided first day of the week.
+        /// </summary>
+        /// <param name="date">The date to evaluate.</param>
+        /// <param name="firstDayOfWeek">The first day of the week.</param>
+        /// <returns>The start of the week for the specified date.</returns>
+        public static DateOnly GetStartOfWeek(DateOnly date, DayOfWeek firstDayOfWeek)
+        {
+            int diff = (7 + (date.DayOfWeek - firstDayOfWeek)) % 7;
+            return date.AddDays(-diff);
+        }
+
+        /// <summary>
         /// Gets the first date of the month for the specified <see cref="DateOnly"/>.
         /// </summary>
         /// <param name="date">The date to evaluate.</param>
