@@ -16,8 +16,10 @@ namespace Alternet.UI
         public static DayNamesKind DefaultDayNamesKind = UI.DayNamesKind.Abbreviated;
         public static BorderSettings DefaultTodayBorder;
 
-        private DateOnly date;
         private readonly CalendarCell[] cells = new CalendarCell[CellCount];
+        private readonly VirtualListBox listBox = new();
+
+        private DateOnly date;
 
         static XCalendar()
         {
@@ -46,6 +48,13 @@ namespace Alternet.UI
 
             date = DateOnly.FromDateTime(DateTime.Now.Date);
             OnValueChanged();
+
+            MinimumSize = new (400, 400);
+            Layout = LayoutStyle.Vertical;
+
+            listBox.VerticalAlignment = VerticalAlignment.Fill;
+            listBox.Parent = this;
+            AssignItemsToListBox(listBox);
         }
 
         public virtual float GetTotalWidth(Graphics dc, Font font)
@@ -164,7 +173,7 @@ namespace Alternet.UI
             return index;
         }
 
-        public virtual void AssignItemsToListBox(VirtualListBox listBox)
+        protected virtual void AssignItemsToListBox(VirtualListBox listBox)
         {
             listBox.RemoveAll();
             listBox.VertGridLines = false;
