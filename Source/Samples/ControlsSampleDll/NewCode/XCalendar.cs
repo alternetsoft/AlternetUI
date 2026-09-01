@@ -18,7 +18,7 @@ namespace Alternet.UI
 
         private readonly CalendarCell[] cells = new CalendarCell[CellCount];
         private readonly VirtualListBox listBox = new();
-        private readonly CalendarHeader header = new ();
+        private readonly CalendarHeader header = new();
 
         private DateOnly date;
         private int suspendHeaderEventsCounter;
@@ -51,7 +51,7 @@ namespace Alternet.UI
             date = DateOnly.FromDateTime(DateTime.Now.Date);
             OnValueChanged();
 
-            MinimumSize = new (400, 400);
+            MinimumSize = new(400, 400);
             Layout = LayoutStyle.Vertical;
 
             header.Parent = this;
@@ -312,11 +312,13 @@ namespace Alternet.UI
 
     public class CalendarHeader : TransparentPanel
     {
-        private readonly MonthPicker monthPicker = new();
-        private readonly YearPicker yearPicker = new();
+        private readonly SpeedTextButton monthPicker = new();
+        private readonly SpeedTextButton yearPicker = new();
 
         private DateOnly date = DateOnly.FromDateTime(DateTime.Now);
         private int suspendCounter;
+        private MonthNamesKind kind = MonthNamesKind.Full;
+        private IFormatProvider? formatProvider;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CalendarHeader"/> class.
@@ -329,8 +331,6 @@ namespace Alternet.UI
 
             monthPicker.MarginRight = 5;
             monthPicker.ImageVisible = false;
-            monthPicker.ValueChanged += OnMonthPickerValueChanged;
-            yearPicker.ValueChanged += OnYearPickerValueChanged;
 
             monthPicker.VerticalAlignment = VerticalAlignment.Stretch;
             monthPicker.HorizontalAlignment = HorizontalAlignment.Center;
@@ -342,6 +342,28 @@ namespace Alternet.UI
         }
 
         public event EventHandler? ValueChanged;
+
+        public virtual MonthNamesKind Kind
+        {
+            get => kind;
+            set
+            {
+                if (value == kind) return;
+                kind = value;
+                UpdateLabels();
+            }
+        }
+
+        public virtual IFormatProvider? FormatProvider
+        {
+            get => formatProvider;
+            set
+            {
+                if (value == formatProvider) return;
+                formatProvider = value;
+                UpdateLabels();
+            }
+        }
 
         public virtual DateOnly Value
         {
@@ -359,17 +381,22 @@ namespace Alternet.UI
             }
         }
 
-        public MonthPicker MonthPicker => monthPicker;
+        public SpeedTextButton MonthPicker => monthPicker;
 
-        public YearPicker YearPicker => yearPicker;
+        public SpeedTextButton YearPicker => yearPicker;
+
+        protected virtual void UpdateLabels()
+        {
+            monthPicker.Text = DateUtils.GetMonthName((CalendarMonth)Value.Month, Kind, FormatProvider);
+            yearPicker.Text = date.Year.ToString();
+        }
 
         protected virtual void OnValueChanged()
         {
             suspendCounter++;
             try
             {
-                monthPicker.ValueAsInt = date.Month;
-                yearPicker.Value = date.Year;
+                UpdateLabels();
             }
             finally
             {
@@ -383,7 +410,6 @@ namespace Alternet.UI
         {
             if (suspendCounter > 0)
                 return;
-            Value = new DateOnly(yearPicker.Value, monthPicker.ValueAsInt, 1);
         }
 
         protected virtual void OnYearPickerValueChanged(object? sender, EventArgs e)

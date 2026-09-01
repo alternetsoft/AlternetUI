@@ -154,6 +154,23 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Gets the name of the specified month in the Gregorian calendar, based on the specified kind and format provider.
+        /// </summary>
+        /// <param name="month">The month for which to retrieve the name.</param>
+        /// <param name="kind">The kind of month name to retrieve (full or abbreviated).</param>
+        /// <param name="formatProvider">An optional object that supplies culture-specific formatting information.
+        /// If null, the current culture is used.</param>
+        /// <returns>The name of the specified month.</returns>
+        public static string GetMonthName(
+            CalendarMonth month,
+            MonthNamesKind kind = MonthNamesKind.Full,
+            IFormatProvider? formatProvider = null)
+        {
+            var monthNames = GetMonthNames(kind, formatProvider);
+            return monthNames[(int)month];
+        }
+
+        /// <summary>
         /// Gets the names of the months in the Gregorian calendar, based on the specified kind and format provider.
         /// </summary>
         /// <param name="kind">The kind of month names to retrieve (full or abbreviated).</param>
