@@ -21,5 +21,27 @@ namespace Alternet.UI.Extensions
         {
             return obj?.ToString() ?? string.Empty;
         }
+
+        /// <summary>
+        /// Converts a <see cref="DateTime"/> to a <see cref="DateOnly"/> by extracting the date component.
+        /// </summary>
+        /// <param name="dateTime">The <see cref="DateTime"/> to convert.</param>
+        /// <returns>A <see cref="DateOnly"/> representing the date component of the specified <see cref="DateTime"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static DateOnly ToDateOnly(this DateTime dateTime)
+        {
+            return DateOnly.FromDateTime(dateTime);
+        }
+
+        /// <summary>
+        /// Converts a <see cref="DateTime"/> to a <see cref="TimeOnly"/> by extracting the time component.
+        /// </summary>
+        /// <param name="dateTime">The <see cref="DateTime"/> to convert.</param>
+        /// <returns>A <see cref="TimeOnly"/> representing the time component of the specified <see cref="DateTime"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static TimeOnly ToTimeOnly(this DateTime dateTime)
+        {
+            return TimeOnly.FromDateTime(dateTime);
+        }
     }
 }
