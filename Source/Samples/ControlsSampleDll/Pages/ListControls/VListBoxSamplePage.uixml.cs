@@ -183,59 +183,8 @@ namespace ControlsSample
 
         private void TestCalendarCells()
         {
-            CalendarCells calendarCells = new();
-
-            listBox.RemoveAll();
-            listBox.VertGridLines = false;
-            listBox.HorzGridLines = false;
-            listBox.Columns.Clear();
-
-            var minWidth = calendarCells.GetColumnWidth(listBox.MeasureCanvas, listBox.RealFont);
-
-            for (var col = 0; col < CalendarCells.ColumnCount; col++)
-            {
-                var column = new ListControlColumn($"Col{col}");
-                column.SuggestedWidth = minWidth;
-                listBox.Columns.Add(column);
-            }
-
-            ListControlItem headerItem = new();
-            headerItem.HideSelection = true;
-
-            var dayNames = calendarCells.GetDayNames();
-
-            for (var col = 0; col < CalendarCells.ColumnCount; col++)
-            {
-                var cellItem = headerItem.SafeCell(listBox.Columns[col]);
-                cellItem.HorizontalAlignment = HorizontalAlignment.Center;
-                cellItem.Text = dayNames[col];
-            }
-
-            listBox.Add(headerItem);
-
-            for (var row = 0; row < CalendarCells.RowCount; row++)
-            {
-                ListControlItem rowItem = new();
-
-                for (var col = 0; col < CalendarCells.ColumnCount; col++)
-                {
-                    var cell = calendarCells.GetCell(row, col);
-                    var cellItem = rowItem.SafeCell(listBox.Columns[col]);
-                    cellItem.HorizontalAlignment = HorizontalAlignment.Center;
-                    cellItem.Text = cell.Date.Day.ToString();
-                    if (!cell.IsCurrentMonth)
-                    {
-                        cellItem.ForegroundColor = Color.Gray;
-                    }
-
-                    if (cell.IsToday)
-                    {
-                        cellItem.Border = calendarCells.EffectiveTodayBorder();
-                    }
-                }
-
-                listBox.Add(rowItem);
-            }
+            XCalendar calendar = new();
+            calendar.AssignItemsToListBox(listBox);
 
             listBox.Invalidate();
         }
