@@ -112,7 +112,23 @@ namespace Alternet.UI
         /// <returns><c>true</c> if the specified date is part of the repeat pattern; otherwise, <c>false</c>.</returns>
         protected virtual bool IsDateInPattern(DateOnly date)
         {
-            return true;
+            switch (Kind)
+            {
+                case RepeatKind.EveryDay:
+                    return true;
+                case RepeatKind.EvenDays:
+                    return date.Day % 2 == 0;
+                case RepeatKind.OddDays:
+                    return date.Day % 2 != 0;
+                case RepeatKind.IntervalDays:
+                    return true;
+                case RepeatKind.Weekdays:
+                    return date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday;
+                case RepeatKind.Weekends:
+                    return date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -122,6 +138,8 @@ namespace Alternet.UI
         /// <returns>The next date in the repeat pattern after the specified date.</returns>
         protected virtual DateOnly GetNextDate(DateOnly date)
         {
+            if (Kind == RepeatKind.IntervalDays)
+                return date.AddDays(IntervalDays);
             return date.AddDays(1);
         }
 
