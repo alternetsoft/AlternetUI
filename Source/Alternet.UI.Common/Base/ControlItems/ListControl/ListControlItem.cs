@@ -2154,6 +2154,8 @@ namespace Alternet.UI
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
         {
+            var isEnabled = IsContainerEnabled(container);
+            var control = container?.Control;
             var item = e.Item;
             var itemMargin = item?.ForegroundMargin ?? 0;
             var isSelected = e.HasSelection;
@@ -2278,10 +2280,12 @@ namespace Alternet.UI
 
                         var itemAlignment = cell.Alignment;
 
+                        var cellColor = e.GetTextColor(cell, isSelected) ?? itemColor;
+
                         Graphics.DrawLabelParams prm = new(
                             s,
                             e.ItemFont,
-                            itemColor,
+                            cellColor,
                             backColor: Color.Empty,
                             image: cellImage,
                             r,
@@ -2295,6 +2299,12 @@ namespace Alternet.UI
                         prm.DrawDebugCorners = false;
 
                         e.Graphics.DrawLabel(ref prm);
+
+                        if (cell.Border is not null)
+                        {
+                            var currentBorder = isEnabled ? cell.Border : cell.Border.ToGrayScale();
+                            DrawingUtils.DrawBorder(control, e.Graphics, r, currentBorder);
+                        }
                     }
 
                     var leftIncrement = width + columnSeparatorWidth + halfOfColumnSeparatorWidth;
