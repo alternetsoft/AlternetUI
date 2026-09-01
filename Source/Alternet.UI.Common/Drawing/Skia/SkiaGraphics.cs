@@ -377,6 +377,24 @@ namespace Alternet.Drawing
         }
 
         /// <inheritdoc/>
+        public override void SetClip(RectD rect, Drawing2D.CombineMode combineMode, bool antialiasing = false)
+        {
+            switch (combineMode)
+            {
+                case Drawing2D.CombineMode.Intersect:
+                    canvas.ClipRect(rect, SKClipOperation.Intersect, antialiasing);
+                    break;
+
+                case Drawing2D.CombineMode.Exclude:
+                    canvas.ClipRect(rect, SKClipOperation.Difference, antialiasing);
+                    break;
+
+                default:
+                    throw new NotSupportedException($"CombineMode {combineMode} not supported directly in SkiaSharp.");
+            }
+        }
+
+        /// <inheritdoc/>
         public override void RoundedRectangle(Pen pen, Brush brush, RectD rectangle, Coord cornerRadius)
         {
             var (fill, stroke) = SkiaUtils.GetFillAndStrokePaint(pen, brush);
