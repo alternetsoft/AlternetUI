@@ -98,99 +98,7 @@ namespace Alternet.UI
         /// <returns>An enumerable of the occurrence dates.</returns>
         public virtual RuleGetDatesResult GetDates(RuleGetDatesParams prm)
         {
-            return GetDates(prm, IsDateInPattern, GetNextDate);
-        }
-
-        /// <summary>
-        /// Determines whether the specified date is part of the repeat pattern.
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        protected virtual bool IsDateInPattern(DateOnly date)
-        {
-            return true;
-        }
-
-        /// <summary>
-        /// Gets the next date in the repeat pattern after the specified date.
-        /// </summary>
-        /// <param name="date"></param>
-        /// <returns></returns>
-        protected virtual DateOnly GetNextDate(DateOnly date)
-        {
-            return date.AddDays(1);
-        }
-
-        /// <summary>
-        /// Gets the occurrences of the repeat pattern within the specified range,
-        /// filtered by a predicate, and up to the maximum date.
-        /// </summary>
-        /// <param name="prm">The parameters specifying the minimum and maximum
-        /// dates to consider for the occurrences.</param>
-        /// <param name="predicate">A predicate to filter the dates.</param>
-        /// <param name="nextDate">A function to get the next date in the pattern.</param>
-        /// <returns>An enumerable of the occurrence dates.</returns>
-        protected virtual RuleGetDatesResult GetDates(
-            RuleGetDatesParams prm,
-            Predicate<DateOnly> predicate,
-            Func<DateOnly, DateOnly> nextDate)
-        {
-            switch (EndCondition)
-            {
-                case EndConditionKind.Never:
-                    return new(GetDatesEndsOnDate(prm.MaxDate));
-                case EndConditionKind.AfterOccurrence:
-                    return new(GetDatesEndsAfterOccurrence());
-                case EndConditionKind.OnDate:
-                    return new(GetDatesEndsOnDate(DateUtils.Min(EndDate, prm.MaxDate)));
-                default:
-                    return new();
-            }
-
-            IEnumerable<DateOnly> GetDatesEndsOnDate(DateOnly maxDate)
-            {
-                var currentDate = StartDate;
-
-                while (currentDate <= maxDate)
-                {
-                    if (currentDate >= prm.MinDate)
-                    {
-                        if (predicate(currentDate))
-                        {
-                            yield return currentDate;
-                        }
-                    }
-
-                    currentDate = nextDate(currentDate);
-                }
-            }
-
-            IEnumerable<DateOnly> GetDatesEndsAfterOccurrence()
-            {
-                if (OccurrenceCount <= 0)
-                    yield break;
-
-                var currentDate = StartDate;
-                var maxDate = prm.MaxDate;
-                var numProcessed = 0;
-
-                while (currentDate <= maxDate)
-                {
-                    if (predicate(currentDate))
-                    {
-                        if (currentDate >= prm.MinDate)
-                        {
-                            yield return currentDate;
-                        }
-
-                        numProcessed++;
-                        if (numProcessed >= OccurrenceCount)
-                            yield break;
-                    }
-
-                    currentDate = nextDate(currentDate);
-                }
-            }
+            return RuleGetDatesResult.Empty;
         }
 
         /// <summary>
@@ -218,22 +126,9 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Coerces the specified minimum and maximum dates based on the start and end dates of the repeat pattern.
-        /// </summary>
-        /// <param name="minDate">The minimum date to consider.</param>
-        /// <param name="maxDate">The maximum date to consider.</param>
-        protected virtual void CoerceMinMaxDate(ref DateOnly minDate, ref DateOnly maxDate)
-        {
-            if (EndDate < maxDate)
-                maxDate = EndDate;
-
-            minDate = StartDate;
-        }
-
-        /// <summary>
         /// Defines a structure to hold the result of getting dates from the repeat pattern rule.
         /// </summary>
-        public struct RuleGetDatesResult
+        public readonly struct RuleGetDatesResult
         {
             /// <summary>
             /// Gets an empty instance of the <see cref="RuleGetDatesResult"/> struct, representing no dates found.
