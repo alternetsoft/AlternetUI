@@ -161,13 +161,31 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Raises the <see cref="ProcessException"/> event and <see cref="OnProcessException"/> method.
+        /// Adds a new child control of the specified type to the current instance.
         /// </summary>
-        /// <param name="e">The <see cref="ThrowExceptionEventArgs"/> instance containing the event data.</param>
-        public void RaiseProcessException(ThrowExceptionEventArgs e)
+        /// <typeparam name="TControl">The type of the child control to add.</typeparam>
+        /// <returns>The newly added child control.</returns>
+        public virtual TControl Add<TControl>()
+            where TControl : AbstractControl, new()
         {
-            OnProcessException(e);
-            ProcessException?.Invoke(this, e);
+            var result = new TControl();
+            result.Parent = this;
+            return result;
+        }
+
+        /// <summary>
+        /// Adds a new child control of the specified type to the current instance and configures it using the provided action.
+        /// </summary>
+        /// <typeparam name="TControl">The type of the child control to add.</typeparam>
+        /// <param name="configure">An action to configure the newly added child control.</param>
+        /// <returns>The newly added and configured child control.</returns>
+        public virtual TControl Add<TControl>(Action<TControl> configure)
+            where TControl : AbstractControl, new()
+        {
+            var result = new TControl();
+            configure(result);
+            result.Parent = this;
+            return result;
         }
 
         /// <summary>

@@ -69,6 +69,16 @@ namespace Alternet.UI
         }
 
         /// <summary>
+        /// Raises the <see cref="ProcessException"/> event and <see cref="OnProcessException"/> method.
+        /// </summary>
+        /// <param name="e">The <see cref="ThrowExceptionEventArgs"/> instance containing the event data.</param>
+        public void RaiseProcessException(ThrowExceptionEventArgs e)
+        {
+            OnProcessException(e);
+            ProcessException?.Invoke(this, e);
+        }
+
+        /// <summary>
         /// Raises the cursor requested event to notify subscribers that a cursor-related action is required.
         /// </summary>
         /// <remarks>This method invokes the <see cref="OnCursorRequested"/> method unless the object is
