@@ -149,8 +149,6 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
-            contextMenu.Add("Test CalendarCells", TestCalendarCells);
-
             var item = listBox.GetItem(1);
 
             if (item is not null)
@@ -179,14 +177,6 @@ namespace ControlsSample
                 },
                 editKey: Keys.F2,
                 doubleClickToEdit: true);
-        }
-
-        private void TestCalendarCells()
-        {
-            XCalendar calendar = new();
-            calendar.AssignItemsToListBox(listBox);
-
-            listBox.Invalidate();
         }
 
         private void ListBox_CheckedChanged(object? sender, EventArgs e)

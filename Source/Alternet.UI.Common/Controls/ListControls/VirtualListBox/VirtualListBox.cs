@@ -607,7 +607,7 @@ namespace Alternet.UI
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the horizontal grid lines are drawn between items.
+        /// Gets or sets a value indicating whether the vertical grid lines are drawn between items.
         /// </summary>
         public bool VertGridLines
         {
