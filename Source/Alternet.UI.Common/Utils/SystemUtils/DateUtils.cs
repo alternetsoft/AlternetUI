@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,10 @@ namespace Alternet.UI
     /// </summary>
     public static class DateUtils
     {
+        static DateUtils()
+        {
+        }
+
         /// <summary>Specifies the maximum date value of the
         /// <see cref="DateTimePicker"/> and other date editors.
         /// This field is read-only.</summary>
@@ -183,6 +188,48 @@ namespace Alternet.UI
                 DayNamesKind.Shortest => info.ShortestDayNames,
                 _ => info.DayNames,
             };
+        }
+
+#if DEBUG
+        /// <summary>
+        /// Logs the day of week indexes for each day of the week, based on the specified first day of the week.
+        /// </summary>
+        /// <param name="firstDayOfWeek">The first day of the week.</param>
+        public static void LogDayOfWeekIndexes(DayOfWeek? firstDayOfWeek = null)
+        {
+            firstDayOfWeek ??= SystemFirstDayOfWeek;
+
+            var dayOfWeek = firstDayOfWeek.Value;
+
+            for (int i = 0; i < 7; i++)
+            {
+                var index = GetDayOfWeekIndex(dayOfWeek, firstDayOfWeek.Value);
+                Debug.WriteLine($"DayOfWeek: {dayOfWeek}, Index: {index}");
+                dayOfWeek = GetNextDayOfWeek(dayOfWeek);
+            }
+        }
+#endif
+
+        /// <summary>
+        /// Gets the index of the specified day of the week relative to the specified first day of the week.
+        /// First day of the week has index 0, second day has index 1, and so on.
+        /// </summary>
+        /// <param name="dayOfWeek">The day of the week to get the index for.</param>
+        /// <param name="firstDayOfWeek">The first day of the week.</param>
+        /// <returns>The index of the specified day of the week relative to the first day of the week.</returns>
+        public static int GetDayOfWeekIndex(DayOfWeek dayOfWeek, DayOfWeek firstDayOfWeek)
+        {
+            return ((int)dayOfWeek - (int)firstDayOfWeek + 7) % 7;
+        }
+
+        /// <summary>
+        /// Gets the next day of the week after the specified day.
+        /// </summary>
+        /// <param name="dayOfWeek">The day of the week to get the next day for.</param>
+        /// <returns>The next day of the week.</returns>
+        public static DayOfWeek GetNextDayOfWeek(DayOfWeek dayOfWeek)
+        {
+            return (DayOfWeek)(((int)dayOfWeek + 1) % 7);
         }
 
         /// <summary>

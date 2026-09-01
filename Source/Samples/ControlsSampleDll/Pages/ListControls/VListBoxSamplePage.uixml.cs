@@ -149,6 +149,52 @@ namespace ControlsSample
                 listBox.Invalidate();
             });
 
+            contextMenu.Add("Test CalendarCells", () =>
+            {
+                listBox.RemoveAll();
+                listBox.VertGridLines = true;
+                listBox.HorzGridLines = true;
+                listBox.Columns.Clear();
+
+                for (var col = 0; col < CalendarCells.ColumnCount; col++)
+                {
+                    var column = new ListControlColumn($"Col{col}");
+                    column.SuggestedWidth = 100;
+                    listBox.Columns.Add(column);
+                }
+
+                ListControlItem headerItem = new();
+
+                var currentDay = DateUtils.SystemFirstDayOfWeek;
+
+                for (var col = 0; col < CalendarCells.ColumnCount; col++)
+                {
+                    var columnItem = new ListControlItem(currentDay.ToString());
+                    headerItem.Cells.Add(columnItem);
+                    currentDay = DateUtils.GetNextDayOfWeek(currentDay);
+                }
+
+                listBox.Add(headerItem);
+
+                CalendarCells calendarCells = new();
+
+                for (var row = 0; row < CalendarCells.RowCount; row++)
+                {
+                    ListControlItem rowItem = new();
+
+                    for (var col = 0; col < CalendarCells.ColumnCount; col++)
+                    {
+                        var cell = calendarCells.GetCell(row, col);
+                        var cellItem = rowItem.SafeCell(listBox.Columns[col]);
+                        cellItem.Text = cell.Date.ToString("yyyy-MM-dd");
+                    }
+
+                    listBox.Add(rowItem);
+                }
+
+                listBox.Invalidate();
+            });
+
             var item = listBox.GetItem(1);
 
             if (item is not null)
