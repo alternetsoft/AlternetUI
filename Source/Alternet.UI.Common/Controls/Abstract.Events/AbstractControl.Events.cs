@@ -345,6 +345,18 @@ namespace Alternet.UI
         public event EventHandler? IsMouseOverChanged;
 
         /// <summary>
+        /// Occurs when the <see cref="BackColor"/> property value changes.
+        /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
+        public event EventHandler? BackColorChanged;
+
+        /// <summary>
+        /// Occurs when the <see cref="ForeColor"/> property value changes.
+        /// </summary>
+        [Category(KnownMemberCategory.PropertyChanged)]
+        public event EventHandler? ForeColorChanged;
+
+        /// <summary>
         /// Occurs when long tap gesture is recognized.
         /// </summary>
         [Category(KnownMemberCategory.Mouse)]

@@ -755,16 +755,19 @@ namespace Alternet.UI
             if (DisposingOrDisposed)
                 return;
 
-            if (HasChildren)
-            {
-                foreach (var child in Children)
-                {
-                    if (child.ParentBackColor)
-                        child.BackgroundColor = BackColor;
-                }
-            }
+            BackColorChanged?.Invoke(this, EventArgs.Empty);
 
-            Refresh();
+            DoInsideUpdate(() =>
+            {
+                if (HasChildren)
+                {
+                    foreach (var child in Children)
+                    {
+                        if (child.ParentBackColor)
+                            child.BackgroundColor = BackColor;
+                    }
+                }
+            });
         }
 
         /// <summary>
@@ -775,16 +778,20 @@ namespace Alternet.UI
         {
             if (DisposingOrDisposed)
                 return;
-            Refresh();
 
-            if (HasChildren)
+            ForeColorChanged?.Invoke(this, EventArgs.Empty);
+
+            DoInsideUpdate(() =>
             {
-                foreach (var child in Children)
+                if (HasChildren)
                 {
-                    if (child.ParentForeColor)
-                        child.ForegroundColor = ForeColor;
+                    foreach (var child in Children)
+                    {
+                        if (child.ParentForeColor)
+                            child.ForegroundColor = ForeColor;
+                    }
                 }
-            }
+            });
         }
 
         /// <summary>
