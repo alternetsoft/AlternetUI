@@ -312,7 +312,7 @@ namespace Alternet.UI
 
     public class CalendarHeader : TransparentPanel
     {
-        private readonly SpeedTextButton monthPicker = new();
+        private readonly MonthSpeedButton monthPicker = new();
         private readonly SpeedTextButton yearPicker = new();
 
         private DateOnly date = DateOnly.FromDateTime(DateTime.Now);
@@ -329,7 +329,7 @@ namespace Alternet.UI
 
             OnValueChanged();
 
-            monthPicker.MarginRight = 5;
+            monthPicker.MarginRight = 0;
             monthPicker.ImageVisible = false;
 
             monthPicker.VerticalAlignment = VerticalAlignment.Stretch;
@@ -350,7 +350,8 @@ namespace Alternet.UI
             {
                 if (value == kind) return;
                 kind = value;
-                UpdateLabels();
+                monthPicker.MonthNamesKind = value;
+                UpdatePickerValues();
             }
         }
 
@@ -361,7 +362,8 @@ namespace Alternet.UI
             {
                 if (value == formatProvider) return;
                 formatProvider = value;
-                UpdateLabels();
+                monthPicker.FormatProvider = value;
+                UpdatePickerValues();
             }
         }
 
@@ -381,13 +383,13 @@ namespace Alternet.UI
             }
         }
 
-        public SpeedTextButton MonthPicker => monthPicker;
+        public MonthPicker MonthPicker => monthPicker;
 
         public SpeedTextButton YearPicker => yearPicker;
 
-        protected virtual void UpdateLabels()
+        protected virtual void UpdatePickerValues()
         {
-            monthPicker.Text = DateUtils.GetMonthName((CalendarMonth)Value.Month, Kind, FormatProvider);
+            monthPicker.ValueAsInt = Value.Month;
             yearPicker.Text = date.Year.ToString();
         }
 
@@ -396,7 +398,7 @@ namespace Alternet.UI
             suspendCounter++;
             try
             {
-                UpdateLabels();
+                UpdatePickerValues();
             }
             finally
             {
