@@ -33,14 +33,36 @@ namespace ControlsSample
 
             void Fn()
             {
-
-                // Options panel
-
                 var checkboxPanel = new VerticalStackPanel();
                 checkboxPanel.Margin = 5;
                 checkboxPanel.Title = GenericStrings.Options;
                 tabControl.Add(checkboxPanel);
             }
+
+            calendar.DayClick += (s, e) =>
+            {
+                App.Log("Day clicked: " + e.Cell.Text);
+            };
+
+            calendar.HeaderClick += (s, e) =>
+            {
+                App.Log("Header clicked: " + e.Cell.Text);
+            };
+
+            calendar.ValueChanged += (s, e) =>
+            {
+                App.Log("Value changed: " + calendar.Value);
+            };
+
+            calendar.HeaderYearClick += (s, e) =>
+            {
+                App.Log("Year clicked");
+            };
+
+            calendar.HeaderMonthClick += (s, e) =>
+            {
+                App.Log("Month clicked");
+            };
         }
 
         private void LogEvent(string evName)

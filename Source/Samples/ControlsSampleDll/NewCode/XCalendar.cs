@@ -7,16 +7,19 @@ namespace Alternet.UI
 {
     public partial class XCalendar : HiddenBorder
     {
-        private const int DayCellCount = 42;
+        public const int DayCellCount = 42;
 
-        private const int DayRowCount = 6;
+        public const int DayRowCount = 6;
 
-        private const int ColumnCount = 7;
+        public const int ColumnCount = 7;
 
-        public static Color DefaultSurroundDayColor = Color.Gray;
-        
+        public static string RowHeightMeasureText = "Wg00";
+        public static string DayWidthMeasureText = "00";
+
+        public static LightDarkColor DefaultSurroundDayColor = new(Color.Gray);
+
         public static DayNamesKind DefaultDayNamesKind = UI.DayNamesKind.Abbreviated;
-        
+
         public static BorderSettings? DefaultTodayBorder;
 
         private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
@@ -26,7 +29,7 @@ namespace Alternet.UI
 
         private DateOnly date;
         private int suspendHeaderEventsCounter;
-        private Color? surroundDayColor;
+        private LightDarkColor? surroundDayColor;
         private BorderSettings? todayBorder;
         private DayNamesKind? dayNamesKind;
         private IFormatProvider? formatProvider;
@@ -92,18 +95,45 @@ namespace Alternet.UI
             header.ValueChanged += OnHeaderValueChanged;
 
             listBox.BackColorChanged += OnListBoxBackColorChanged;
+            listBox.CellClick += OnListBoxCellClick;
 
             header.Parent = this;
             listBox.Parent = this;
         }
 
-        public CalendarListBox ListBox => listBox;
-
-        protected virtual void OnHeaderValueChanged(object? sender, EventArgs e)
+        public event EventHandler? HeaderYearClick
         {
-            if (suspendHeaderEventsCounter > 0) return;
-            Value = header.Value;
+            add
+            {
+                header.YearPicker.Click += value;
+            }
+
+            remove
+            {
+                header.YearPicker.Click -= value;
+            }
         }
+
+        public event EventHandler? HeaderMonthClick
+        {
+            add
+            {
+                header.MonthPicker.Click += value;
+            }
+
+            remove
+            {
+                header.MonthPicker.Click -= value;
+            }
+        }
+
+        public event EventHandler? ValueChanged;
+
+        public event EventHandler<HeaderClickEventArgs>? HeaderClick;
+
+        public event EventHandler<DayClickEventArgs>? DayClick;
+
+        public CalendarListBox ListBox => listBox;
 
         public virtual float GetTotalWidth(Graphics dc, Font font)
         {
@@ -113,7 +143,7 @@ namespace Alternet.UI
 
         public virtual float GetRowHeight(Graphics dc, Font font)
         {
-            var rowHeight = dc.GetTextExtent("Wg00", font).Height + 4;
+            var rowHeight = dc.GetTextExtent(RowHeightMeasureText, font).Height + 4;
             return rowHeight;
         }
 
@@ -125,12 +155,12 @@ namespace Alternet.UI
 
         public virtual float GetColumnWidth(Graphics dc, Font font)
         {
-            var dayWidth = dc.GetTextExtent("00", font).Width;
+            var dayWidth = dc.GetTextExtent(DayWidthMeasureText, font).Width;
             var dayNames = GetDayNames();
 
             foreach (var day in dayNames)
             {
-                var dayNameWidth = dc.GetTextExtent(day, font).Width;
+                var dayNameWidth = dc.GetTextExtent(day.Text, font).Width;
                 if (dayNameWidth > dayWidth)
                     dayWidth = dayNameWidth;
             }
@@ -174,11 +204,14 @@ namespace Alternet.UI
                     suspendHeaderEventsCounter--;
                 }
 
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+
                 OnValueChanged();
             }
         }
 
-        public virtual Color? SurroundDayColor
+        [Browsable(false)]
+        public virtual LightDarkColor? SurroundDayColor
         {
             get => surroundDayColor;
             set
@@ -242,9 +275,9 @@ namespace Alternet.UI
             return TodayBorder ?? DefaultTodayBorder ?? BorderSettings.Default;
         }
 
-        public virtual Color EffectiveSurroundDayColor()
+        public virtual Color EffectiveSurroundDayColor(bool isDark)
         {
-            return SurroundDayColor ?? DefaultSurroundDayColor ?? Color.Gray;
+            return SurroundDayColor?.LightOrDark(isDark) ?? DefaultSurroundDayColor?.LightOrDark(isDark) ?? Color.Gray;
         }
 
         public virtual DayOfWeek EffectiveDayOfWeek()
@@ -267,16 +300,16 @@ namespace Alternet.UI
         /// The first day of the week is determined by the <see cref="EffectiveDayOfWeek"/> method.
         /// </summary>
         /// <returns>An array of day names.</returns>
-        public virtual string[] GetDayNames()
+        public virtual (string Text, DayOfWeek DayOfWeek)[] GetDayNames()
         {
             var dayNames = DateUtils.GetDayNames(EffectiveDayNamesKind(), EffectiveFormatProvider());
-            var result = new string[dayNames.Length];
+            var result = new (string Text, DayOfWeek DayOfWeek)[dayNames.Length];
 
             for (var i = 0; i < dayNames.Length; i++)
             {
                 var dayOfWeek = (DayOfWeek)i;
                 var index = GetDayOfWeekIndex(dayOfWeek);
-                result[index] = dayNames[i];
+                result[index] = (dayNames[i], dayOfWeek);
             }
 
             return result;
@@ -295,6 +328,27 @@ namespace Alternet.UI
             {
                 col.SuggestedWidth = minWidth;
             }
+        }
+
+        protected virtual void OnListBoxCellClick(object? sender, ListBoxCellClickEventArgs e)
+        {
+            if (e.Cell is CalendarHeaderCellItem headerCell)
+            {
+                HeaderClick?.Invoke(this, new HeaderClickEventArgs(e));
+                return;
+            }
+
+            if (e.Cell is CalendarCellItem itemCell)
+            {
+                DayClick?.Invoke(this, new DayClickEventArgs(e));
+                return;
+            }
+        }
+
+        protected virtual void OnHeaderValueChanged(object? sender, EventArgs e)
+        {
+            if (suspendHeaderEventsCounter > 0) return;
+            Value = header.Value;
         }
 
         protected virtual void CreateColumns()
@@ -316,8 +370,9 @@ namespace Alternet.UI
 
             for (var col = 0; col < XCalendar.ColumnCount; col++)
             {
-                var cellItem = headerItem.Cells[col];
-                cellItem.Text = dayNames[col];
+                var cellItem = (CalendarHeaderCellItem)headerItem.Cells[col];
+                cellItem.Text = dayNames[col].Text;
+                cellItem.DayOfWeek = dayNames[col].DayOfWeek;
             }
         }
 
@@ -328,15 +383,21 @@ namespace Alternet.UI
 
         protected virtual void UpdateDayItems()
         {
+            if (listBox.Items.Count == 0)
+                return;
+
+            var isDark = IsDarkBackground;
+            var otherMonthForeColor = EffectiveSurroundDayColor(isDark);
+
             for (var row = 1; row < XCalendar.DayRowCount; row++)
             {
                 for (var col = 0; col < XCalendar.ColumnCount; col++)
                 {
-                    var cell = GetCell(row, col);
                     var rowItem = listBox.Items[row];
                     var cellItem = (CalendarCellItem)rowItem.Cells[col];
-                    cellItem.Text = cell.Date.Day.ToString();
-                    cellItem.ForegroundColor = !cell.IsCurrentMonth ? EffectiveSurroundDayColor() : null;
+                    var cell = cellItem.Data;
+                    cellItem.Text = cell!.Date.Day.ToString();
+                    cellItem.ForegroundColor = !cell.IsCurrentMonth ? otherMonthForeColor : null;
                     cellItem.Border = cell.IsToday ? EffectiveTodayBorder() : null;
                 }
             }
@@ -354,6 +415,8 @@ namespace Alternet.UI
                 for (var col = 0; col < XCalendar.ColumnCount; col++)
                 {
                     var cellItem = rowItem.AddCell<CalendarCellItem>(listBox.Columns[col]);
+                    var cell = GetCell(row, col);
+                    cellItem.Data = cell;
                     cellItem.HorizontalAlignment = HorizontalAlignment.Center;
                 }
 
@@ -369,6 +432,14 @@ namespace Alternet.UI
             e.Suppressed();
         }
 
+        /// <inheritdoc/>
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            UpdateDayItems();
+        }
+
+        /// <inheritdoc/>
         protected override void OnFontChanged(EventArgs e)
         {
             base.OnFontChanged(e);
@@ -414,6 +485,9 @@ namespace Alternet.UI
         }
     }
 
+    /// <summary>
+    /// Represents the header of the calendar control, which includes month and year pickers.
+    /// </summary>
     public class CalendarHeader : TransparentPanel
     {
         private readonly MonthSpeedButton monthPicker = new();
@@ -529,22 +603,42 @@ namespace Alternet.UI
         }
     }
 
+    /// <summary>
+    /// Represents a row item in the calendar control, which contains cells for each day of the week.
+    /// </summary>
     public class CalendarRowItem : ListControlItem
     {
     }
 
+    /// <summary>
+    /// Represents a cell item in the calendar control, which corresponds to a specific day in the calendar.
+    /// </summary>
     public class CalendarCellItem : ListControlItem
     {
+        /// <summary>
+        /// Gets the data associated with the calendar cell.
+        /// </summary>
+        public CalendarCell? Data { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents the header item in the calendar control, which contains cells for the day names.
+    /// </summary>
     public class CalendarHeaderItem : ListControlItem
     {
     }
 
+    /// <summary>
+    /// Represents a header cell item in the calendar control, which corresponds to a specific day of the week.
+    /// </summary>
     public class CalendarHeaderCellItem : ListControlItem
     {
+        public DayOfWeek DayOfWeek { get; internal set; }
     }
 
+    /// <summary>
+    /// Represents a list box used in the calendar control, which displays the days of the month in a grid format.
+    /// </summary>
     public class CalendarListBox : VirtualListBox
     {
         public CalendarListBox()
@@ -553,6 +647,41 @@ namespace Alternet.UI
         }
     }
 
+    /// <summary>
+    /// Represents the event arguments for a day click event in the calendar control,
+    /// providing information about the clicked day cell.
+    /// </summary>
+    public class DayClickEventArgs : BaseEventArgs
+    {
+        public DayClickEventArgs(ListBoxCellClickEventArgs e)
+        {
+            OriginalEventArgs = e;
+        }
+
+        public ListBoxCellClickEventArgs OriginalEventArgs { get; set; }
+
+        public CalendarCellItem Cell => (CalendarCellItem)OriginalEventArgs.Cell!;
+    }
+
+    /// <summary>
+    /// Represents the event arguments for a header click event in the calendar control,
+    /// </summary>
+    public class HeaderClickEventArgs : BaseEventArgs
+    {
+        public HeaderClickEventArgs(ListBoxCellClickEventArgs e)
+        {
+            OriginalEventArgs = e;
+        }
+
+        public ListBoxCellClickEventArgs OriginalEventArgs { get; set; }
+
+        public CalendarHeaderCellItem Cell => (CalendarHeaderCellItem)OriginalEventArgs.Cell!;
+    }
+
+    /// <summary>
+    /// Represents a cell in the calendar control, which contains information about a specific day,
+    /// including its date, position in the grid, and whether it belongs to the current month or is today.
+    /// </summary>
     public class CalendarCell : BaseObject
     {
         internal CalendarCell()
