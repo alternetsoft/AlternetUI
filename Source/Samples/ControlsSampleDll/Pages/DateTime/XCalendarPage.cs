@@ -13,6 +13,7 @@ namespace ControlsSample
     {
         private readonly XCalendar calendar = new();
         private readonly TabControl tabControl = new();
+        private readonly Splitter splitter = new();
 
         static XCalendarPage()
         {
@@ -20,14 +21,15 @@ namespace ControlsSample
 
         public XCalendarPage()
         {
-            Layout = LayoutStyle.Horizontal;
-            calendar.Margin = 5;
-            calendar.Alignment = (HorizontalAlignment.Left, VerticalAlignment.Top);
-            calendar.Parent = this;
-            tabControl.HorizontalAlignment = HorizontalAlignment.Fill;
-            tabControl.Margin = 5;
-            tabControl.MinSizeGrowMode = WindowSizeToContentMode.Width;
-            tabControl.Parent = this;
+            Padding = 5;
+
+            splitter.Dock = DockStyle.Right;
+
+            Layout = LayoutStyle.Dock;
+            calendar.Dock = DockStyle.Fill;
+
+            tabControl.Dock = DockStyle.Right;
+            tabControl.Width = 400;
 
             DoInsideLayout(Fn);
 
@@ -63,6 +65,12 @@ namespace ControlsSample
             {
                 App.Log("Month clicked");
             };
+
+            calendar.HasBorder = true;
+
+            calendar.Parent = this;
+            splitter.Parent = this;
+            tabControl.Parent = this;
         }
 
         private void LogEvent(string evName)

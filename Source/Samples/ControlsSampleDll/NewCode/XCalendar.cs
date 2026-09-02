@@ -16,6 +16,8 @@ namespace Alternet.UI
         public static string RowHeightMeasureText = "Wg00";
         public static string DayWidthMeasureText = "00";
 
+        public bool DefaultShowMonthDropDown = true;
+
         public static LightDarkColor DefaultSurroundDayColor = new(Color.Gray);
 
         public static DayNamesKind DefaultDayNamesKind = UI.DayNamesKind.Abbreviated;
@@ -71,7 +73,6 @@ namespace Alternet.UI
 
             date = DateOnly.FromDateTime(DateTime.Now.Date);
 
-            MinimumSize = new(400, 400);
             Layout = LayoutStyle.Vertical;
 
             header.MarginBottom = 5;
@@ -99,6 +100,8 @@ namespace Alternet.UI
 
             header.Parent = this;
             listBox.Parent = this;
+
+            ShowMonthDropDown = DefaultShowMonthDropDown;
         }
 
         public event EventHandler? HeaderYearClick
@@ -135,50 +138,17 @@ namespace Alternet.UI
 
         public CalendarListBox ListBox => listBox;
 
-        public virtual float GetTotalWidth(Graphics dc, Font font)
+        public virtual bool ShowMonthDropDown
         {
-            var totalWidth = GetColumnWidth(dc, font) * ColumnCount;
-            return totalWidth;
-        }
-
-        public virtual float GetRowHeight(Graphics dc, Font font)
-        {
-            var rowHeight = dc.GetTextExtent(RowHeightMeasureText, font).Height + 4;
-            return rowHeight;
-        }
-
-        public virtual float GetTotalHeight(Graphics dc, Font font)
-        {
-            var totalHeight = GetRowHeight(dc, font) * DayRowCount;
-            return totalHeight;
-        }
-
-        public virtual float GetColumnWidth(Graphics dc, Font font)
-        {
-            var dayWidth = dc.GetTextExtent(DayWidthMeasureText, font).Width;
-            var dayNames = GetDayNames();
-
-            foreach (var day in dayNames)
+            get
             {
-                var dayNameWidth = dc.GetTextExtent(day.Text, font).Width;
-                if (dayNameWidth > dayWidth)
-                    dayWidth = dayNameWidth;
+                return header.ShowMonthDropDown;
             }
 
-            return dayWidth + 4;
-        }
-
-        public CalendarCell GetCell(int rowIndex, int columnIndex)
-        {
-            if (rowIndex < 0 || rowIndex >= DayRowCount)
-                throw new ArgumentOutOfRangeException(nameof(rowIndex));
-
-            if (columnIndex < 0 || columnIndex >= ColumnCount)
-                throw new ArgumentOutOfRangeException(nameof(columnIndex));
-
-            var index = rowIndex * ColumnCount + columnIndex;
-
-            return cells[index];
+            set
+            {
+                header.ShowMonthDropDown = value;
+            }
         }
 
         public virtual DateOnly Value
@@ -268,6 +238,52 @@ namespace Alternet.UI
                 firstDayOfWeek = value;
                 UpdateDayNames();
             }
+        }
+
+        public virtual float GetTotalWidth(Graphics dc, Font font)
+        {
+            var totalWidth = GetColumnWidth(dc, font) * ColumnCount;
+            return totalWidth;
+        }
+
+        public virtual float GetRowHeight(Graphics dc, Font font)
+        {
+            var rowHeight = dc.GetTextExtent(RowHeightMeasureText, font).Height + 4;
+            return rowHeight;
+        }
+
+        public virtual float GetTotalHeight(Graphics dc, Font font)
+        {
+            var totalHeight = GetRowHeight(dc, font) * DayRowCount;
+            return totalHeight;
+        }
+
+        public virtual float GetColumnWidth(Graphics dc, Font font)
+        {
+            var dayWidth = dc.GetTextExtent(DayWidthMeasureText, font).Width;
+            var dayNames = GetDayNames();
+
+            foreach (var day in dayNames)
+            {
+                var dayNameWidth = dc.GetTextExtent(day.Text, font).Width;
+                if (dayNameWidth > dayWidth)
+                    dayWidth = dayNameWidth;
+            }
+
+            return dayWidth + 4;
+        }
+
+        public CalendarCell GetCell(int rowIndex, int columnIndex)
+        {
+            if (rowIndex < 0 || rowIndex >= DayRowCount)
+                throw new ArgumentOutOfRangeException(nameof(rowIndex));
+
+            if (columnIndex < 0 || columnIndex >= ColumnCount)
+                throw new ArgumentOutOfRangeException(nameof(columnIndex));
+
+            var index = rowIndex * ColumnCount + columnIndex;
+
+            return cells[index];
         }
 
         public virtual BorderSettings EffectiveTodayBorder()
@@ -401,6 +417,8 @@ namespace Alternet.UI
                     cellItem.Border = cell.IsToday ? EffectiveTodayBorder() : null;
                 }
             }
+
+            listBox.Invalidate();
         }
 
         protected virtual void CreateDayItems()
@@ -492,6 +510,8 @@ namespace Alternet.UI
     {
         private readonly MonthSpeedButton monthPicker = new();
         private readonly SpeedTextButton yearPicker = new();
+        private readonly SpeedButton prevButton = new();
+        private readonly SpeedButton nextButton = new();
 
         private DateOnly date = DateOnly.FromDateTime(DateTime.Now);
         private int suspendCounter;
@@ -507,11 +527,23 @@ namespace Alternet.UI
 
             OnValueChanged();
 
+            prevButton.VerticalAlignment = VerticalAlignment.Center;
+            prevButton.SvgImage = KnownSvgImages.ImgAngleLeft;
+            prevButton.HorizontalAlignment = HorizontalAlignment.Left;
+            prevButton.Parent = this;
+            prevButton.Click += OnPrevButtonClick;
+
+            nextButton.VerticalAlignment = VerticalAlignment.Center;
+            nextButton.HorizontalAlignment = HorizontalAlignment.Right;
+            nextButton.SvgImage = KnownSvgImages.ImgAngleRight;
+            nextButton.Parent = this;
+            nextButton.Click += OnNextButtonClick;
+
             monthPicker.MarginRight = 0;
             monthPicker.ImageVisible = false;
-
             monthPicker.VerticalAlignment = VerticalAlignment.Stretch;
             monthPicker.HorizontalAlignment = HorizontalAlignment.Center;
+            monthPicker.ValueChanged += OnMonthPickerValueChanged;
             monthPicker.Parent = this;
 
             yearPicker.HorizontalAlignment = HorizontalAlignment.Center;
@@ -520,6 +552,20 @@ namespace Alternet.UI
         }
 
         public event EventHandler? ValueChanged;
+
+        public virtual bool ShowMonthDropDown
+        {
+            get
+            {
+                return monthPicker.AllowPopupWindow;
+            }
+
+            set
+            {
+                monthPicker.AllowPopupWindow = value;
+
+            }
+        }
 
         public virtual MonthNamesKind Kind
         {
@@ -561,6 +607,10 @@ namespace Alternet.UI
             }
         }
 
+        public SpeedButton PrevButton => prevButton;
+
+        public SpeedButton NextButton => nextButton;
+
         public MonthPicker MonthPicker => monthPicker;
 
         public SpeedTextButton YearPicker => yearPicker;
@@ -569,6 +619,16 @@ namespace Alternet.UI
         {
             monthPicker.ValueAsInt = Value.Month;
             yearPicker.Text = date.Year.ToString();
+        }
+
+        protected virtual void OnPrevButtonClick(object? sender, EventArgs e)
+        {
+            Value = Value.AddMonths(-1);
+        }
+
+        protected virtual void OnNextButtonClick(object? sender, EventArgs e)
+        {
+            Value = Value.AddMonths(1);
         }
 
         protected virtual void OnValueChanged()
@@ -586,20 +646,17 @@ namespace Alternet.UI
             ValueChanged?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnPickerValueChanged()
+        protected virtual void OnYearPickerValueChanged(object? sender, EventArgs e)
         {
             if (suspendCounter > 0)
                 return;
         }
 
-        protected virtual void OnYearPickerValueChanged(object? sender, EventArgs e)
-        {
-            OnPickerValueChanged();
-        }
-
         protected virtual void OnMonthPickerValueChanged(object? sender, EventArgs e)
         {
-            OnPickerValueChanged();
+            if (suspendCounter > 0)
+                return;
+            Value = new DateOnly(date.Year, monthPicker.ValueAsInt, date.Day);
         }
     }
 
