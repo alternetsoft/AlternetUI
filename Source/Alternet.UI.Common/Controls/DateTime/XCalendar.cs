@@ -251,18 +251,7 @@ namespace Alternet.UI
         /// Gets or sets a value indicating whether the month dropdown in the calendar header should be displayed,
         /// when the month picker is clicked, allowing users to select a specific month.
         /// </summary>
-        public virtual bool ShowMonthDropDown
-        {
-            get
-            {
-                return header.ShowMonthDropDown;
-            }
-
-            set
-            {
-                header.ShowMonthDropDown = value;
-            }
-        }
+        public virtual bool ShowMonthDropDown { get; set; } 
 
         /// <summary>
         /// Gets or sets a value indicating whether the year dropdown in the calendar header should be displayed
@@ -985,7 +974,7 @@ namespace Alternet.UI
     /// </summary>
     public class CalendarHeader : TransparentPanel
     {
-        private readonly MonthSpeedButton monthPicker = new();
+        private readonly SpeedTextButton monthPicker = new();
         private readonly SpeedTextButton yearPicker = new();
         private readonly SpeedButton prevButton = new();
         private readonly SpeedButton nextButton = new();
@@ -1020,7 +1009,6 @@ namespace Alternet.UI
             monthPicker.ImageVisible = false;
             monthPicker.VerticalAlignment = VerticalAlignment.Stretch;
             monthPicker.HorizontalAlignment = HorizontalAlignment.Center;
-            monthPicker.ValueChanged += OnMonthPickerValueChanged;
             monthPicker.Parent = this;
 
             yearPicker.HorizontalAlignment = HorizontalAlignment.Center;
@@ -1034,24 +1022,6 @@ namespace Alternet.UI
         public event EventHandler? ValueChanged;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the month
-        /// picker in the calendar header should display a dropdown list for selecting months.
-        /// </summary>
-        public virtual bool ShowMonthDropDown
-        {
-            get
-            {
-                return monthPicker.AllowPopupWindow;
-            }
-
-            set
-            {
-                monthPicker.AllowPopupWindow = value;
-
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the kind of month names displayed in the month picker,
         /// allowing customization of the month name format.
         /// </summary>
@@ -1062,7 +1032,6 @@ namespace Alternet.UI
             {
                 if (value == kind) return;
                 kind = value;
-                monthPicker.MonthNamesKind = value;
                 UpdatePickerValues();
             }
         }
@@ -1077,7 +1046,6 @@ namespace Alternet.UI
             {
                 if (value == formatProvider) return;
                 formatProvider = value;
-                monthPicker.FormatProvider = value;
                 UpdatePickerValues();
             }
         }
@@ -1116,7 +1084,7 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the month picker in the calendar header, which allows users to select a month from a dropdown list.
         /// </summary>
-        public MonthPicker MonthPicker => monthPicker;
+        public SpeedButton MonthPicker => monthPicker;
 
         /// <summary>
         /// Gets the year picker in the calendar header, which allows users to select a year from a dropdown list.
@@ -1128,7 +1096,7 @@ namespace Alternet.UI
         /// </summary>
         protected virtual void UpdatePickerValues()
         {
-            monthPicker.ValueAsInt = Value.Month;
+            monthPicker.Text = DateUtils.GetMonthName((CalendarMonth)date.Month, Kind, FormatProvider);
             yearPicker.Text = date.Year.ToString();
         }
 
@@ -1176,7 +1144,7 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event arguments.</param>
-        protected virtual void OnYearPickerValueChanged(object? sender, EventArgs e)
+        private void OnYearPickerValueChanged(object? sender, EventArgs e)
         {
             if (suspendCounter > 0)
                 return;
@@ -1187,11 +1155,10 @@ namespace Alternet.UI
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The event arguments.</param>
-        protected virtual void OnMonthPickerValueChanged(object? sender, EventArgs e)
+        private void OnMonthPickerValueChanged(object? sender, EventArgs e)
         {
             if (suspendCounter > 0)
                 return;
-            Value = new DateOnly(date.Year, monthPicker.ValueAsInt, date.Day);
         }
     }
 
