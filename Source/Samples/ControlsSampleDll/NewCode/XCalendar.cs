@@ -7,25 +7,33 @@ namespace Alternet.UI
 {
     public partial class XCalendar : HiddenBorder
     {
-        public const int CellCount = 42;
+        private const int DayCellCount = 42;
 
-        public const int RowCount = 6;
+        private const int DayRowCount = 6;
 
-        public const int ColumnCount = 7;
+        private const int ColumnCount = 7;
 
+        public static Color DefaultSurroundDayColor = Color.Gray;
+        
         public static DayNamesKind DefaultDayNamesKind = UI.DayNamesKind.Abbreviated;
-        public static BorderSettings DefaultTodayBorder;
+        
+        public static BorderSettings? DefaultTodayBorder;
 
-        private readonly CalendarCell[] cells = new CalendarCell[CellCount];
-        private readonly VirtualListBox listBox = new();
+        private readonly CalendarCell[] cells = new CalendarCell[DayCellCount];
+        private readonly CalendarListBox listBox = new();
         private readonly CalendarHeader header = new();
+        private readonly CalendarHeaderItem headerItem;
 
         private DateOnly date;
         private int suspendHeaderEventsCounter;
+        private Color? surroundDayColor;
+        private BorderSettings? todayBorder;
+        private DayNamesKind? dayNamesKind;
+        private IFormatProvider? formatProvider;
+        private DayOfWeek? firstDayOfWeek;
 
         static XCalendar()
         {
-            DefaultTodayBorder = BorderSettings.Default.Clone();
         }
 
         /// <summary>
@@ -33,12 +41,22 @@ namespace Alternet.UI
         /// </summary>
         public XCalendar()
         {
-            for (int i = 0; i < CellCount; i++)
+            CreateColumns();
+            headerItem = new();
+            headerItem.HideSelection = true;
+
+            for (var col = 0; col < XCalendar.ColumnCount; col++)
+            {
+                var cellItem = headerItem.AddCell<CalendarHeaderCellItem>(listBox.Columns[col]);
+                cellItem.HorizontalAlignment = HorizontalAlignment.Center;
+            }
+
+            for (int i = 0; i < DayCellCount; i++)
             {
                 cells[i] = new();
             }
 
-            for (int row = 0; row < RowCount; row++)
+            for (int row = 0; row < DayRowCount; row++)
             {
                 for (int col = 0; col < ColumnCount; col++)
                 {
@@ -49,12 +67,10 @@ namespace Alternet.UI
             }
 
             date = DateOnly.FromDateTime(DateTime.Now.Date);
-            OnValueChanged();
 
             MinimumSize = new(400, 400);
             Layout = LayoutStyle.Vertical;
 
-            header.Parent = this;
             header.MarginBottom = 5;
 
             ParentBackColor = false;
@@ -65,22 +81,23 @@ namespace Alternet.UI
             listBox.HasBorder = false;
             listBox.HorzGridLines = false;
             listBox.VerticalAlignment = VerticalAlignment.Fill;
-            listBox.Parent = this;
 
-            listBox.KeyDown += (s, e) =>
-            {
-                e.Suppressed();
-            };
+            listBox.KeyDown += OnListBoxKeyDown;
 
-            AssignItemsToListBox(listBox);
+            UpdateDayNames();
+            CreateDayItems();
+
+            OnValueChanged();
 
             header.ValueChanged += OnHeaderValueChanged;
 
-            listBox.BackColorChanged += (s, e) =>
-            {
-                BackColor = listBox.BackColor;
-            };
+            listBox.BackColorChanged += OnListBoxBackColorChanged;
+
+            header.Parent = this;
+            listBox.Parent = this;
         }
+
+        public CalendarListBox ListBox => listBox;
 
         protected virtual void OnHeaderValueChanged(object? sender, EventArgs e)
         {
@@ -102,7 +119,7 @@ namespace Alternet.UI
 
         public virtual float GetTotalHeight(Graphics dc, Font font)
         {
-            var totalHeight = GetRowHeight(dc, font) * RowCount;
+            var totalHeight = GetRowHeight(dc, font) * DayRowCount;
             return totalHeight;
         }
 
@@ -123,7 +140,7 @@ namespace Alternet.UI
 
         public CalendarCell GetCell(int rowIndex, int columnIndex)
         {
-            if (rowIndex < 0 || rowIndex >= RowCount)
+            if (rowIndex < 0 || rowIndex >= DayRowCount)
                 throw new ArgumentOutOfRangeException(nameof(rowIndex));
 
             if (columnIndex < 0 || columnIndex >= ColumnCount)
@@ -161,17 +178,73 @@ namespace Alternet.UI
             }
         }
 
-        public BorderSettings? TodayBorder { get; set; }
+        public virtual Color? SurroundDayColor
+        {
+            get => surroundDayColor;
+            set
+            {
+                if (surroundDayColor == value)
+                    return;
+                surroundDayColor = value;
+                UpdateDayItems();
+            }
+        }
 
-        public DayNamesKind? DayNamesKind { get; set; }
+        public virtual BorderSettings? TodayBorder
+        {
+            get => todayBorder;
+            set
+            {
+                if (todayBorder == value)
+                    return;
+                todayBorder = value;
+                UpdateDayItems();
+            }
+        }
 
-        public virtual IFormatProvider? FormatProvider { get; set; }
+        public virtual DayNamesKind? DayNamesKind
+        {
+            get => dayNamesKind;
+            set
+            {
+                if (dayNamesKind == value)
+                    return;
+                dayNamesKind = value;
+                UpdateDayNames();
+            }
+        }
 
-        public virtual DayOfWeek? FirstDayOfWeek { get; set; }
+        public virtual IFormatProvider? FormatProvider
+        {
+            get => formatProvider;
+            set
+            {
+                if (formatProvider == value) return;
+                formatProvider = value;
+                header.FormatProvider = value;
+                UpdateDayNames();
+            }
+        }
+
+        public virtual DayOfWeek? FirstDayOfWeek
+        {
+            get => firstDayOfWeek;
+            set
+            {
+                if (firstDayOfWeek == value) return;
+                firstDayOfWeek = value;
+                UpdateDayNames();
+            }
+        }
 
         public virtual BorderSettings EffectiveTodayBorder()
         {
-            return TodayBorder ?? DefaultTodayBorder;
+            return TodayBorder ?? DefaultTodayBorder ?? BorderSettings.Default;
+        }
+
+        public virtual Color EffectiveSurroundDayColor()
+        {
+            return SurroundDayColor ?? DefaultSurroundDayColor ?? Color.Gray;
         }
 
         public virtual DayOfWeek EffectiveDayOfWeek()
@@ -215,60 +288,91 @@ namespace Alternet.UI
             return index;
         }
 
-        protected virtual void AssignItemsToListBox(VirtualListBox listBox)
+        protected virtual void UpdateColumnWidth()
         {
-            var newSource = new ListSource<ListControlItem>();
-
-            listBox.Columns.Clear();
-
             var minWidth = GetColumnWidth(listBox.MeasureCanvas, listBox.RealFont);
+            foreach (var col in listBox.Columns)
+            {
+                col.SuggestedWidth = minWidth;
+            }
+        }
+
+        protected virtual void CreateColumns()
+        {
+            listBox.Columns.Clear();
 
             for (var col = 0; col < XCalendar.ColumnCount; col++)
             {
                 var column = new ListControlColumn($"Col{col}");
-                column.SuggestedWidth = minWidth;
                 listBox.Columns.Add(column);
             }
 
-            ListControlItem headerItem = new();
-            headerItem.HideSelection = true;
+            UpdateColumnWidth();
+        }
 
+        protected virtual void UpdateDayNames()
+        {
             var dayNames = GetDayNames();
 
             for (var col = 0; col < XCalendar.ColumnCount; col++)
             {
-                var cellItem = headerItem.SafeCell(listBox.Columns[col]);
-                cellItem.HorizontalAlignment = HorizontalAlignment.Center;
+                var cellItem = headerItem.Cells[col];
                 cellItem.Text = dayNames[col];
             }
+        }
 
-            newSource.Add(headerItem);
+        protected virtual void OnListBoxBackColorChanged(object? sender, EventArgs e)
+        {
+            BackColor = listBox.BackColor;
+        }
 
-            for (var row = 0; row < XCalendar.RowCount; row++)
+        protected virtual void UpdateDayItems()
+        {
+            for (var row = 1; row < XCalendar.DayRowCount; row++)
             {
-                ListControlItem rowItem = new();
-
                 for (var col = 0; col < XCalendar.ColumnCount; col++)
                 {
                     var cell = GetCell(row, col);
-                    var cellItem = rowItem.SafeCell(listBox.Columns[col]);
-                    cellItem.HorizontalAlignment = HorizontalAlignment.Center;
+                    var rowItem = listBox.Items[row];
+                    var cellItem = (CalendarCellItem)rowItem.Cells[col];
                     cellItem.Text = cell.Date.Day.ToString();
-                    if (!cell.IsCurrentMonth)
-                    {
-                        cellItem.ForegroundColor = Color.Gray;
-                    }
+                    cellItem.ForegroundColor = !cell.IsCurrentMonth ? EffectiveSurroundDayColor() : null;
+                    cellItem.Border = cell.IsToday ? EffectiveTodayBorder() : null;
+                }
+            }
+        }
 
-                    if (cell.IsToday)
-                    {
-                        cellItem.Border = EffectiveTodayBorder();
-                    }
+        protected virtual void CreateDayItems()
+        {
+            var newSource = new ListSource<ListControlItem>();
+            newSource.Add(headerItem);
+
+            for (var row = 0; row < XCalendar.DayRowCount; row++)
+            {
+                CalendarRowItem rowItem = new();
+
+                for (var col = 0; col < XCalendar.ColumnCount; col++)
+                {
+                    var cellItem = rowItem.AddCell<CalendarCellItem>(listBox.Columns[col]);
+                    cellItem.HorizontalAlignment = HorizontalAlignment.Center;
                 }
 
                 newSource.Add(rowItem);
             }
 
             listBox.Items = newSource;
+            UpdateDayItems();
+        }
+
+        protected virtual void OnListBoxKeyDown(object? sender, KeyEventArgs e)
+        {
+            e.Suppressed();
+        }
+
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            UpdateColumnWidth();
         }
 
         protected virtual void OnValueChanged()
@@ -290,7 +394,7 @@ namespace Alternet.UI
                 cell.IsToday = d == today;
             }
 
-            for (int i = daysInMonth + index; i < CellCount; i++)
+            for (int i = daysInMonth + index; i < DayCellCount; i++)
             {
                 var cell = cells[i];
                 cell.Date = lastDayOfMonth.AddDays(i - daysInMonth - index + 1);
@@ -306,7 +410,7 @@ namespace Alternet.UI
                 cell.IsToday = false;
             }
 
-            AssignItemsToListBox(listBox);
+            UpdateDayItems();
         }
     }
 
@@ -425,7 +529,31 @@ namespace Alternet.UI
         }
     }
 
-    public class CalendarCell
+    public class CalendarRowItem : ListControlItem
+    {
+    }
+
+    public class CalendarCellItem : ListControlItem
+    {
+    }
+
+    public class CalendarHeaderItem : ListControlItem
+    {
+    }
+
+    public class CalendarHeaderCellItem : ListControlItem
+    {
+    }
+
+    public class CalendarListBox : VirtualListBox
+    {
+        public CalendarListBox()
+        {
+            SelectionMode = ListBoxSelectionMode.None;
+        }
+    }
+
+    public class CalendarCell : BaseObject
     {
         internal CalendarCell()
         {
