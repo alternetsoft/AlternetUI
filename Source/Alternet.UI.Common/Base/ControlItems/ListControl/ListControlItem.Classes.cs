@@ -10,6 +10,33 @@ namespace Alternet.UI
     public partial class ListControlItem
     {
         /// <summary>
+        /// Parameters used for drawing a specific cell within a list control item.
+        /// </summary>
+        public struct DrawCellParams
+        {
+            /// <summary>
+            /// The container that holds the list control item.
+            /// </summary>
+            public IListControlItemContainer? Container;
+
+            /// <summary>
+            /// The paint event arguments containing details about the item being painted,
+            /// including its graphics context and item data.
+            /// </summary>
+            public ListBoxItemPaintEventArgs PaintArgs;
+
+            /// <summary>
+            /// The rectangle area where the cell should be drawn.
+            /// </summary>
+            public RectD Rect;
+
+            /// <summary>
+            /// The foreground color to be used for drawing the cell's text.
+            /// </summary>
+            public Color ForeColor;
+        }
+
+        /// <summary>
         /// Represents parameters of the measure item operation.
         /// </summary>
         public struct MeasureItemSizeParams

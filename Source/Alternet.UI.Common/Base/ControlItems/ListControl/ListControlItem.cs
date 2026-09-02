@@ -1752,6 +1752,8 @@ namespace Alternet.UI
         /// <summary>
         /// Draws default background for the item.
         /// </summary>
+        /// <param name="container">The container that holds the list control item.</param>
+        /// <param name="e">The paint event arguments.</param>
         public static void DefaultDrawBackground(
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
@@ -2150,6 +2152,8 @@ namespace Alternet.UI
         /// <summary>
         /// Default method which draws item foreground.
         /// </summary>
+        /// <param name="container">The container that holds the list control item.</param>
+        /// <param name="e">The paint event arguments.</param>  
         public static void DefaultDrawForeground(
             IListControlItemContainer? container,
             ListBoxItemPaintEventArgs e)
@@ -2242,6 +2246,8 @@ namespace Alternet.UI
 
             void PaintWithColumns()
             {
+                if (item is null)
+                    return;
                 var columnSeparatorWidth = GetColumnSeparatorWidth(container);
                 var halfOfColumnSeparatorWidth = (columnSeparatorWidth - 1) / 2;
 
@@ -2267,50 +2273,86 @@ namespace Alternet.UI
                         continue;
 
                     var width = column.SuggestedWidth - widthDelta - halfOfColumnSeparatorWidth;
-                    var cell = item?.GetCell(column.UniqueId);
+                    var cell = item.GetCell(column.UniqueId);
 
                     if (cell is not null)
                     {
-                        s = DefaultGetItemText(cell, forDisplay: true, container?.FormatProvider);
-
                         var r = paintRectangle;
                         r.Width = width;
 
-                        var cellImage = e.GetImage(cell, container, isSelected);
-
-                        var itemAlignment = cell.Alignment;
-
-                        var cellColor = e.GetTextColor(cell, isSelected) ?? itemColor;
-
-                        Graphics.DrawLabelParams prm = new(
-                            s,
-                            e.ItemFont,
-                            cellColor,
-                            backColor: Color.Empty,
-                            image: cellImage,
-                            r,
-                            itemAlignment);
-
-                        prm.SuffixElements = cell.SuffixElements;
-                        prm.PrefixElements = cell.PrefixElements;
-                        prm.Flags = cell.LabelFlags;
-                        prm.TextHorizontalAlignment = cell.TextLineAlignment ?? TextHorizontalAlignment.Left;
-                        prm.LineDistance = cell.TextLineDistance ?? 0;
-                        prm.DrawDebugCorners = false;
-
-                        e.Graphics.DrawLabel(ref prm);
-
-                        if (cell.Border is not null)
+                        DrawCellParams drawCellParams = new()
                         {
-                            var currentBorder = isEnabled ? cell.Border : cell.Border.ToGrayScale();
-                            DrawingUtils.DrawBorder(control, e.Graphics, r, currentBorder);
-                        }
+                            Container = container,
+                            PaintArgs = e,
+                            Rect = r,
+                            ForeColor = itemColor,
+                        };
+
+                        cell.DrawCellBackground(in drawCellParams);
+                        cell.DrawCellForeground(in drawCellParams);
                     }
 
                     var leftIncrement = width + columnSeparatorWidth + halfOfColumnSeparatorWidth;
                     paintRectangle.Left += leftIncrement;
                     paintRectangle.Width -= leftIncrement;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Called when item is a cell and needs to draw its background.
+        /// This method can be overridden in derived classes to provide custom background
+        /// drawing logic for cells within a list control item.
+        /// </summary>
+        /// <param name="prm">The parameters used for drawing the cell,
+        /// including its rectangle, colors, and other settings.</param>
+        public virtual void DrawCellBackground(in DrawCellParams prm)
+        {
+        }
+
+        /// <summary>
+        /// Called when item is a cell and needs to draw its foreground.
+        /// This method can be overridden in derived classes to provide custom foreground
+        /// drawing logic for cells within a list control item.
+        /// </summary>
+        /// <param name="prm">The parameters used for drawing the cell,
+        /// including its rectangle, colors, and other settings.</param>
+        public virtual void DrawCellForeground(in DrawCellParams prm)
+        {
+            var isEnabled = IsContainerEnabled(prm.Container);
+            var control = prm.Container?.Control;
+            var isSelected = prm.PaintArgs.HasSelection;
+
+            var s = DefaultGetItemText(this, forDisplay: true, prm.Container?.FormatProvider);
+
+            var cellImage = prm.PaintArgs.GetImage(this, prm.Container, isSelected);
+
+            var itemAlignment = this.Alignment;
+
+            var cellColor = prm.PaintArgs.GetTextColor(this, isSelected) ?? prm.ForeColor;
+
+            Graphics.DrawLabelParams labelPrm = new(
+                s,
+                prm.PaintArgs.ItemFont,
+                cellColor,
+                backColor: Color.Empty,
+                image: cellImage,
+                prm.Rect,
+                itemAlignment);
+
+            labelPrm.SuffixElements = this.SuffixElements;
+            labelPrm.PrefixElements = this.PrefixElements;
+            labelPrm.Flags = this.LabelFlags;
+            labelPrm.TextHorizontalAlignment = this.TextLineAlignment ?? TextHorizontalAlignment.Left;
+            labelPrm.LineDistance = this.TextLineDistance ?? 0;
+            labelPrm.DrawDebugCorners = false;
+
+            prm.PaintArgs.Graphics.DrawLabel(ref labelPrm);
+
+            if (this.Border is not null)
+            {
+                var currentBorder = isEnabled ? this.Border : this.Border.ToGrayScale();
+                DrawingUtils.DrawBorder(control, prm.PaintArgs.Graphics, prm.Rect, currentBorder);
             }
         }
 

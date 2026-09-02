@@ -86,8 +86,8 @@ namespace Alternet.UI
         /// <summary>
         /// Gets the rectangle, in client coordinates, that defines the area available for painting the item's content,
         /// excluding any padding. This property uses the padding settings defined by the associated list control to
-        /// determine the available painting area. <see cref="PaintEventArgs.ClientRectangle"/> is used as the base rectangle from which
-        /// the padding is applied.
+        /// determine the available painting area. <see cref="PaintEventArgs.ClientRectangle"/>
+        /// is used as the base rectangle from which the padding is applied.
         /// </summary>
         /// <remarks>The returned rectangle accounts for the item's padding as determined by the
         /// associated list control. Use this property when performing custom drawing to ensure content is rendered
