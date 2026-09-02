@@ -72,7 +72,10 @@ namespace Alternet.UI
                 catch (Exception e)
                 {
                     if (SuppressException ?? DefaultSuppressException)
+                    {
+                        LogUtils.LogException(e);
                         control = CreateErrorCard(e);
+                    }
                     else
                         throw;
                 }
